@@ -47,7 +47,7 @@ public class DecoderFunktion implements Serializable, IDecoderFunktion {
 	}
 
     @Override
-	@Column(name="WERT")
+	@Column(name="WERT", nullable=true, length=100)
 	public String getWert() {
 		return wert;
 	}
@@ -87,7 +87,7 @@ public class DecoderFunktion implements Serializable, IDecoderFunktion {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE)
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
 				.append("id", getId())
 				.append("wert", getWert())
 				.toString();

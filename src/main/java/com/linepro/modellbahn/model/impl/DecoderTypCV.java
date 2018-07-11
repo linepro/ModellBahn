@@ -74,7 +74,7 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
 	}
 
 	@Override
-    @Column(name="BEZEICHNUNG")
+    @Column(name="BEZEICHNUNG", length=100)
 	public String getBezeichnung() {
 		return bezeichnung;
 	}
@@ -85,7 +85,7 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
 	}
 
 	@Override
-    @Column(nullable=true)
+    @Column(name="MINIMAL", nullable=true)
 	public Long getMinimal() {
 		return minimal;
 	}
@@ -96,7 +96,7 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
 	}
 
 	@Override
-    @Column(nullable=true)
+    @Column(name="MAXIMAL", nullable=true)
 	public Long getMaximal() {
 		return maximal;
 	}
@@ -107,7 +107,7 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
 	}
 
 	@Override
-    @Column(nullable=true)
+    @Column(name="WERKSEINSTELLUNG", nullable=true)
 	public Long getWerkseinstellung() {
 		return werkseinstellung;
 	}
@@ -119,7 +119,7 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE).appendSuper(super.toString())
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString())
 				.append("cv", getCv())
 				.append("bezeichnung", getBezeichnung())
 				.append("minimal", getMinimal())

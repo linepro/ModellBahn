@@ -80,7 +80,7 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE).appendSuper(super.toString())
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString())
 				.append("Zug", getZug()).append("Position", getPosition())
 				.append("artikel", getArtikel()).toString();
 	}

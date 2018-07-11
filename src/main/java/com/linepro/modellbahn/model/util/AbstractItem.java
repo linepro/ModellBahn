@@ -51,8 +51,8 @@ public abstract class AbstractItem implements Serializable, IItem {
 	 * @param deleted the deleted
 	 */
 	public AbstractItem(Long id, Boolean deleted) {
-		this.id = id;
-		this.deleted = deleted;
+		setId(id);
+		setDeleted(deleted);
 	}
 
 	@Override
@@ -68,21 +68,11 @@ public abstract class AbstractItem implements Serializable, IItem {
 		this.id = id;
 	}
 
-	/**
-	 * Gets the deleted str.
-	 *
-	 * @return the deleted str
-	 */
-	@Column(name="DELETED")
+	@Column(name="DELETED", length=5)
 	public String getDeletedStr() {
 		return getDeleted() != null ? getDeleted().toString() : null;
 	}
 
-	/**
-	 * Sets the deleted str.
-	 *
-	 * @param deleted the new deleted str
-	 */
 	public void setDeletedStr(String deleted) {
 		setDeleted(Boolean.valueOf(deleted));
 	}
@@ -124,7 +114,7 @@ public abstract class AbstractItem implements Serializable, IItem {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE).append("id", getId())
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("id", getId())
 				.append("deleted", getDeleted()).toString();
 	}
 }

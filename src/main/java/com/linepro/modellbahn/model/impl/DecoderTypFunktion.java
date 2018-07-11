@@ -75,7 +75,7 @@ public class DecoderTypFunktion extends AbstractItem implements IDecoderTypFunkt
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE)
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
 				.appendSuper(super.toString())
 				.append("decoderTyp",decoderTyp)
 				.append("reihe", reihe)

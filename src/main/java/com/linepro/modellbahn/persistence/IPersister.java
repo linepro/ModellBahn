@@ -1,9 +1,29 @@
 package com.linepro.modellbahn.persistence;
 
-import com.linepro.modellbahn.model.IItem;
+import java.util.List;
 
-public interface IPersister<T extends IItem> {
+import javax.persistence.EntityManager;
 
-    T save(T entity);
+public interface IPersister<E, K> {
+
+    E save(E entity);
+
+    E findById(K id);
+
+    List<E> search(E template);
+
+    E update(E entity, K id);
+
+    void deleteById(K id);
+
+    void delete(E template);
+
+    EntityManager getEntityManager();
+
+    void begin();
+
+    void commit();
+
+    void rollback();
 
 }

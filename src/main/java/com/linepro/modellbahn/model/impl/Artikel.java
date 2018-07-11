@@ -202,7 +202,7 @@ public class Artikel extends AbstractItem implements IArtikel {
 	}
 
 	@Override
-    @Column(name = "ANMERKUNG", nullable=true)
+    @Column(name = "ANMERKUNG", nullable=true, length=100)
 	public String getAnmerkung() {
 		return anmerkung;
 	}
@@ -213,7 +213,7 @@ public class Artikel extends AbstractItem implements IArtikel {
 	}
 
 	@Override
-    @Column(name = "BELADUNG", nullable=true)
+    @Column(name = "BELADUNG", nullable=true, length=100)
 	public String getBeladung() {
 		return beladung;
 	}
@@ -237,7 +237,7 @@ public class Artikel extends AbstractItem implements IArtikel {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE).appendSuper(super.toString())
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString())
 				.append("Produkt", getProdukt()).append("kaufdatum", getKaufdatum()).append("Wahrung", getWahrung())
 				.append("Preis", getPreis()).append("stuck", getStuck()).append("steuerung", getSteuerung())
 				.append("motorTyp", getMotorTyp()).append("licht", getLicht()).append("kupplung", getKupplung())

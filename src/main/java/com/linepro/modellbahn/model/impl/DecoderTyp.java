@@ -28,7 +28,7 @@ import com.linepro.modellbahn.model.IProtokoll;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 
 @Entity
-@Table(name = "DECODER_TYP", uniqueConstraints = { @UniqueConstraint(columnNames = { "HERSTELLER_ID", "BESTELL_NR" }) })
+@Table(name = "DECODER_TYP", uniqueConstraints = { @UniqueConstraint(columnNames = { "HERSTELLER_ID", "BESTELLNR" }) })
 public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
     private static final long serialVersionUID = 8503812316290492490L;
@@ -86,7 +86,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 	}
 
 	@Override
-    @Column(name = "BESTELL_NR")
+    @Column(name = "BESTELLNR", length=30)
 	public String getBestellNr() {
 		return bestellNr;
 	}
@@ -189,7 +189,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE).appendSuper(super.toString())
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString())
 				.append("typ", getTyp()).append("hersteller", getHersteller()).append("bestellNr", getBestellNr())
 				.append("iMax", getiMax()).append("protokoll", getProtokoll()).append("fahrstufe", getFahrstufe())
 				.append("sound", getSound()).append("adressen", getAdressen()).append("cv", getCv())

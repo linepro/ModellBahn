@@ -42,6 +42,6 @@ public class Wahrung extends AbstractNamedItem implements IWahrung {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE).appendSuper(super.toString()).append("decimals", getDecimals()).toString();
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString()).append("decimals", getDecimals()).toString();
 	}
 }

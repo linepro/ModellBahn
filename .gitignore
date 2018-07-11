@@ -42,5 +42,7 @@ buildNumber.properties
 /machine_variables.py
 *.pyc
 
-/docs
+/ModellBahn.log
 /modellbahn.mv.db
+/modellbahn.trace.db
+/docs
