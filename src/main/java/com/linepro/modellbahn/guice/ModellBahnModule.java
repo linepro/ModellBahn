@@ -11,7 +11,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import com.linepro.modellbahn.ModellBahn;
 import com.linepro.modellbahn.persistence.IItemPersisterFactory;
-import com.linepro.modellbahn.persistence.ItemPersisterFactory;
+import com.linepro.modellbahn.persistence.impl.ItemPersisterFactory;
 
 public class ModellBahnModule extends AbstractModule {
 

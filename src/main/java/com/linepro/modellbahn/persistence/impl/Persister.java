@@ -1,4 +1,4 @@
-package com.linepro.modellbahn.persistence;
+package com.linepro.modellbahn.persistence.impl;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -24,8 +24,9 @@ import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 
 import com.google.inject.assistedinject.Assisted;
+import com.linepro.modellbahn.persistence.IPersister;
 
-public class AbstractPersister<E, K> {
+public class Persister<E, K> implements IPersister<E, K> {
 
     class Selector {
         final String name;
@@ -71,7 +72,7 @@ public class AbstractPersister<E, K> {
     private Set<Selector> selectors = new HashSet<>();
 
     @Inject
-    public AbstractPersister(final EntityManager entityManager, final ILoggerFactory logManager,
+    public Persister(final EntityManager entityManager, final ILoggerFactory logManager,
             @Assisted final Class<E> clazz) {
         this.entityManager = entityManager;
         this.logger = logManager.getLogger(clazz.getName());
@@ -99,6 +100,7 @@ public class AbstractPersister<E, K> {
         info(selectors.toString());
     }
 
+    @Override
     public E save(E entity) {
         E result = entity;
 
@@ -119,6 +121,7 @@ public class AbstractPersister<E, K> {
         return result;
     }
 
+    @Override
     public E findById(K id) {
         E result = null;
 
@@ -153,6 +156,7 @@ public class AbstractPersister<E, K> {
         return predicates;
     }
 
+    @Override
     public List<E> search(E template) {
         List<E> result = new ArrayList<>();
 
@@ -185,6 +189,7 @@ public class AbstractPersister<E, K> {
         return result;
     }
 
+    @Override
     public E update(E entity, K id) {
         E result = entity;
 
@@ -219,6 +224,7 @@ public class AbstractPersister<E, K> {
         return result;
     }
 
+    @Override
     public void deleteById(K id) {
         try {
             begin();
@@ -237,6 +243,7 @@ public class AbstractPersister<E, K> {
         }
     }
     
+    @Override
     public void delete(E template) {
         try {
             begin();
@@ -263,18 +270,22 @@ public class AbstractPersister<E, K> {
         }
     }
     
+    @Override
     public EntityManager getEntityManager() {
         return entityManager;
     }
 
+    @Override
     public void begin() {
         getEntityManager().getTransaction().begin();
     }
 
+    @Override
     public void commit() {
         getEntityManager().getTransaction().commit();
     }
 
+    @Override
     public void rollback() {
         getEntityManager().getTransaction().rollback();
     }

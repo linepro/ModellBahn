@@ -8,28 +8,23 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<!-- TODO: replace ??? with our github login -->
 	<name>ModellBahn</name>
-	<url>https://github.com/???/modellbahn</url>
+	<url>https://github.com/linepro/ModellBahn</url>
 
 	<developers>
 		<developer>
-			<email>andrew.goff@gmail.com</email>
 			<name>Andrew Goff</name>
-			<url>https://github.com/???</url>
-			<id>???</id>
+			<url>https://github.com/andrew-goff</url>
 		</developer>
 		<developer>
-			<email>john.goff@gmail.com</email>
 			<name>John Goff</name>
-			<url>https://github.com/???</url>
-			<id>???</id>
+			<url>https://github.com/linepro</url>
 		</developer>
 	</developers>
 
 	<issueManagement>
 		<system>GitHub Issues</system>
-		<url>https://github.com/???/modellbahn/issues</url>
+		<url>https://github.com/linepro/ModellBahn/issues</url>
 	</issueManagement>
 
 	<licenses>
@@ -41,9 +36,9 @@
 	</licenses>
 
 	<scm>
-		<url>https://github.com/???/modellbahn</url>
-		<connection>:git:git://github.com/???/modellbahn.git</connection>
-		<developerConnection>scm:git:git@github.com:???/modellbahn.git</developerConnection>
+		<url>https://github.com/linepro/ModellBahn</url>
+		<connection>scm:git:git://github.com/linepro/ModellBahn.git</connection>
+		<developerConnection>scm:git:git@github.com:linepro/ModellBahn.git</developerConnection>
 	</scm>
 
 	<properties>
