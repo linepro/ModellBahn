@@ -1,95 +1,113 @@
 package com.linepro.modellbahn;
 
-import java.util.Iterator;
 import java.util.List;
 
-import javax.persistence.EntityManager;
+import javax.inject.Inject;
 
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.linepro.modellbahn.guice.ModellBahnModule;
 import com.linepro.modellbahn.model.impl.Achsfolg;
-import com.linepro.modellbahn.persistence.EntityManagerUtil;
-
-//Hibernate JPA With H2 Example
+import com.linepro.modellbahn.persistence.IItemPersister;
+import com.linepro.modellbahn.persistence.IItemPersisterFactory;
 
 public class ModellBahn {
 
-    private EntityManager entityManager = EntityManagerUtil.getEntityManager();
+    @SuppressWarnings("unused")
+    private final IItemPersisterFactory persisterFactory;
+
+    private final IItemPersister<Achsfolg> achsfolgPersister;
+
+    private final Logger logger;
 
     public static void main(String[] args) {
-        ModellBahn example = new ModellBahn();
-
-        System.out.println("After Sucessfully insertion ");
-        Achsfolg achsfolg1 = example.saveAchsfolg("Sumith");
-        Achsfolg achsfolg2 = example.saveAchsfolg("Anoop");
-        example.listAchsfolg();
-
-        System.out.println("After Sucessfully modification ");
-        example.updateAchsfolg(achsfolg1.getId(), "Sumith Honai");
-        example.updateAchsfolg(achsfolg2.getId(), "Anoop Pavanai");
-        example.listAchsfolg();
-
-        System.out.println("After Sucessfully deletion ");
-        example.deleteAchsfolg(achsfolg2.getId());
-        example.listAchsfolg();
+        Injector injector = Guice.createInjector(new ModellBahnModule());
+        
+        ModellBahn example = injector.getInstance(ModellBahn.class);
+        
+        example.run();
     }
+    
+    @Inject
+    public ModellBahn(IItemPersisterFactory persisterFactory, ILoggerFactory logManger) {
+        this.persisterFactory = persisterFactory;
+        this.logger = logManger.getLogger(ModellBahn.class.getName());
 
-    public Achsfolg saveAchsfolg(String achsfolgName) {
+        achsfolgPersister = persisterFactory.create(Achsfolg.class);
+    }
+    
+    protected void run() {
+        logger.info("Start");
+
+        Achsfolg achsfolg1 = save("Sumith");
+        Achsfolg achsfolg2 = save("Anoop");
+
+        logger.info("After insertion");
+
+        list();
+
+        achsfolg1 = update(achsfolg1.getId(), "Sumith Honai");
+        achsfolg2 = update(achsfolg2.getId(), "Anoop Pavanai");
+
+        logger.info("After modification");
+
+        list();
+
+        delete(achsfolg2.getId());
+
+        logger.info("After deletion");
+
+        list();
+        
+        delete();
+        
+        logger.info("After delete all");
+
+        list();
+    }
+    
+     protected Achsfolg save(String achsfolgName) {
         Achsfolg achsfolg = new Achsfolg();
 
-        try {
-            entityManager.getTransaction().begin();
+        achsfolg.setName(achsfolgName);
 
-            achsfolg.setName(achsfolgName);
-            achsfolg = entityManager.merge(achsfolg);
-
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            entityManager.getTransaction().rollback();
-        }
-
-        return achsfolg;
+        return achsfolgPersister.save(achsfolg);
     }
 
-    public void listAchsfolg() {
-        try {
-            entityManager.getTransaction().begin();
+    protected void list() {
+        Achsfolg template = new Achsfolg();
+        
+        template.setDeleted(false);
+        
+        List<Achsfolg> achsfolgen = achsfolgPersister.search(template);
 
-            @SuppressWarnings("unchecked")
-            List<Achsfolg> Achsfolgs = entityManager.createQuery("from Achsfolg").getResultList();
-
-            for (Iterator<Achsfolg> iterator = Achsfolgs.iterator(); iterator.hasNext();) {
-                Achsfolg achsfolg = (Achsfolg) iterator.next();
-                System.out.println(achsfolg.getName());
-            }
-
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            entityManager.getTransaction().rollback();
+        for (Achsfolg achsfolg : achsfolgen) {
+            logger.info(achsfolg.toString());
         }
     }
 
-    public void updateAchsfolg(Long achsfolgId, String achsfolgName) {
-        try {
-            entityManager.getTransaction().begin();
+    protected Achsfolg update(Long achsfolgId, String achsfolgName) {
+        Achsfolg achsfolg = new Achsfolg();
 
-            Achsfolg achsfolg = (Achsfolg) entityManager.find(Achsfolg.class, achsfolgId);
-            achsfolg.setName(achsfolgName);
+        achsfolg.setId(achsfolgId);
+        achsfolg.setName(achsfolgName);
 
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            entityManager.getTransaction().rollback();
-        }
+        return achsfolgPersister.update(achsfolg);
     }
 
-    public void deleteAchsfolg(Long achsfolgId) {
-        try {
-            entityManager.getTransaction().begin();
-
-            Achsfolg achsfolg = (Achsfolg) entityManager.find(Achsfolg.class, achsfolgId);
-
-            entityManager.remove(achsfolg);
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            entityManager.getTransaction().rollback();
-        }
+    protected void delete(Long achsfolgId) {
+        achsfolgPersister.delete(achsfolgId);
     }
+
+    protected void delete() {
+        Achsfolg template = new Achsfolg();
+        
+        template.setDeleted(false);
+        
+        achsfolgPersister.delete(template);
+    }
+
 }

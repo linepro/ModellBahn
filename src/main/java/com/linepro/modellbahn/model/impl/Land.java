@@ -43,7 +43,7 @@ public class Land extends AbstractNamedItem implements ILand {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
                 .append("wahrung", getWahrung())
                 .toString();

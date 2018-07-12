@@ -112,7 +112,7 @@ public class Adress implements IAdress {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE).append("id", getId()).append("poles", getPoles())
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("id", getId()).append("poles", getPoles())
                 .append("switches", getSwitches()).toString();
     }
 }

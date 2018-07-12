@@ -46,7 +46,7 @@ public class UnterKategorie extends AbstractNamedItem implements IUnterKategorie
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE).appendSuper(super.toString())
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString())
 				.append("kategorie", getKategorie()).toString();
 	}
 }

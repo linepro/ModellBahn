@@ -1,6 +1,7 @@
 package com.linepro.modellbahn.model;
 
 import java.awt.Image;
+import java.util.Date;
 import java.util.List;
 
 public interface IProdukt {
@@ -81,9 +82,9 @@ public interface IProdukt {
 
     void setBetreibsnummer(String betreibsnummer);
 
-    String getBauzeit();
+    Date getBauzeit();
 
-    void setBauzeit(String bauzeit);
+    void setBauzeit(Date bauzeit);
 
     String getAnleitungen();
 

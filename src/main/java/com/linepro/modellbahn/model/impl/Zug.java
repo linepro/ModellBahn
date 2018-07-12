@@ -66,7 +66,7 @@ public class Zug extends AbstractNamedItem implements IZug {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE).appendSuper(super.toString())
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString())
 				.append("typ", getTyp()).append("Consist", getConsist()).toString();
 	}
 }

@@ -73,7 +73,7 @@ public abstract class AbstractNamedItem extends AbstractItem implements INamedIt
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE)
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
 				.appendSuper(super.toString())
 				.append("name", getName())
 				.append("bezeichnung", getBezeichnung())

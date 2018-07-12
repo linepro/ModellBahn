@@ -201,7 +201,7 @@ public class Vorbild extends AbstractItem implements IVorbild {
 	}
 
     @Override
-    @Column(name="HERSTELLER", nullable=true)
+    @Column(name="HERSTELLER", nullable=true, length=100)
 	public String getHersteller() {
 		return hersteller;
 	}
@@ -235,7 +235,7 @@ public class Vorbild extends AbstractItem implements IVorbild {
 	}
 
     @Override
-    @Column(name="BETRIEBS_NUMMER", nullable=true)
+    @Column(name="BETRIEBSNUMMER", nullable=true, length=100)
 	public String getBetriebsNummer() {
 		return betriebsNummer;
 	}
@@ -479,7 +479,7 @@ public class Vorbild extends AbstractItem implements IVorbild {
 	}
 
     @Override
-    @Column(name="MOTORBAUART", nullable=true)
+    @Column(name="MOTORBAUART", nullable=true, length=100)
 	public String getMotorbauart() {
 		return motorbauart;
 	}
@@ -577,7 +577,7 @@ public class Vorbild extends AbstractItem implements IVorbild {
 	}
 
     @Override
-    @Column(name="AUFBAUTEN", nullable=true)
+    @Column(name="AUFBAUTEN", nullable=true, length=100)
 	public String getAufbauten() {
 		return aufbauten;
 	}
@@ -643,7 +643,7 @@ public class Vorbild extends AbstractItem implements IVorbild {
 	}
 
     @Override
-    @Column(name="DREHGESTELLBAUART", nullable=true)
+    @Column(name="DREHGESTELLBAUART", nullable=true, length=100)
 	public String getDrehgestellBauart() {
 		return drehgestellBauart;
 	}
@@ -655,7 +655,7 @@ public class Vorbild extends AbstractItem implements IVorbild {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE).appendSuper(super.toString())
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString())
 				.append("Gattung", getGattung()).append("UnterKategorie", getUnterKategorie())
 				.append("Hersteller", getHersteller()).append("bauzeit", getBauzeit()).append("Anzahl", getAnzahl())
 				.append("BetriebsNummer", getBetriebsNummer()).append("Antrieb", getAntrieb())

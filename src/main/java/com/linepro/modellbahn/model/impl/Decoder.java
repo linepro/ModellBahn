@@ -117,7 +117,7 @@ public class Decoder extends AbstractItem implements IDecoder {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE).appendSuper(super.toString())
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString())
                 .append("typ", getTyp()).append("protokoll", getProtokoll()).append("fahrstufe", getFahrstufe())
                 .append("adressen", getAdressen()).append("cv", getCv()).append("funktionen", getFunktionen())
                 .toString();

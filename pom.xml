@@ -2,30 +2,258 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
-	<groupId>com.linepro</groupId>
+
+	<groupId>com.linepro.modellbahn</groupId>
 	<artifactId>ModellBahn</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
-<packaging>jar</packaging>
-
+	<!-- TODO: replace ??? with our github login -->
 	<name>ModellBahn</name>
-	<url>http://maven.apache.org</url>
+	<url>https://github.com/???/modellbahn</url>
+
+	<developers>
+		<developer>
+			<email>andrew.goff@gmail.com</email>
+			<name>Andrew Goff</name>
+			<url>https://github.com/???</url>
+			<id>???</id>
+		</developer>
+		<developer>
+			<email>john.goff@gmail.com</email>
+			<name>John Goff</name>
+			<url>https://github.com/???</url>
+			<id>???</id>
+		</developer>
+	</developers>
+
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/???/modellbahn/issues</url>
+	</issueManagement>
+
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<url>https://github.com/???/modellbahn</url>
+		<connection>:git:git://github.com/???/modellbahn.git</connection>
+		<developerConnection>scm:git:git@github.com:???/modellbahn.git</developerConnection>
+	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<mainClass>com.linepro.modellbahn.ModellBahn</mainClass>
+
+		<javac.version>1.8</javac.version>
+
+		<maven.failsafe.version>2.4.3-alpha-1</maven.failsafe.version>
+		<maven.compiler.version>2.5.1</maven.compiler.version>
+		<auto-factory-version>1.0-beta5</auto-factory-version>
+		<auto-service-version>1.0-rc4</auto-service-version>
+		<auto-value-version>1.6.2</auto-value-version>
+		<byte-buddy-version>1.8.12</byte-buddy-version>
+		<commons-lang3-version>3.7</commons-lang3-version>
+		<dagger-version>2.16</dagger-version>
+		<guava-version>23.6-android</guava-version>
+		<guice-assistedinject-version>4.2.0</guice-assistedinject-version>
+		<guice-version>4.2.0</guice-version>
+		<h2-version>1.4.197</h2-version>
+		<hibernate-core-version>5.3.1.Final</hibernate-core-version>
+		<jersey.version>2.17</jersey.version>
+		<jersey-guice.version>1.19.4</jersey-guice.version>
+		<jetty.version>9.4.11.v20180605</jetty.version>
+		<log4j-api-version>2.11.0</log4j-api-version>
+		<log4j-core-version>2.11.0</log4j-core-version>
+		<log4j-slf4j-impl-version>2.11.0</log4j-slf4j-impl-version>
+        <maven-jetty-plugin.version>9.4.11.v20180605</maven-jetty-plugin.version>
+		<mockito.version>1.9.0</mockito.version>
+		<slf4j-version>1.7.25</slf4j-version>
+		<testng-version>6.14.3</testng-version>
+		<validation-api-version>2.0.1.Final</validation-api-version>
 	</properties>
 
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>downloads-maven-plugin</artifactId>
+				<version>0.6</version>
+				<configuration>
+					<description>Official ${project.name} build of the
+						${project.version} release</description>
+					<override>true</override>
+					<includeAttached>true</includeAttached>
+					<server>github</server>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>upload</goal>
+						</goals>
+						<phase>install</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.7</version>
+				<configuration>
+					<message>Building site for ${project.version}</message>
+					<server>github</server>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>site</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.7.1</version>
+				<configuration>
+					<reportPlugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-project-info-reports-plugin</artifactId>
+							<version>3.0.0</version>
+							<configuration>
+								<dependencyDetailsEnabled>true</dependencyDetailsEnabled>
+								<dependencyLocationsEnabled>true</dependencyLocationsEnabled>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-javadoc-plugin</artifactId>
+							<version>3.0.1</version>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-surefire-report-plugin</artifactId>
+							<version>2.22.0</version>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-checkstyle-plugin</artifactId>
+							<version>3.0.0</version>
+						</plugin>
+					</reportPlugins>
+				</configuration>
+			</plugin>
+			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.5.1</version>
+				<version>3.7.0</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<id>package-jar</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.2.2</version>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>com.linepro.modellbahn.ModellBahn</mainClass>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+				<version>${maven-jetty-plugin.version}</version>
+				<configuration>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<connectors>
+						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+							<port>8080</port>
+							<maxIdleTime>60000</maxIdleTime>
+						</connector>
+					</connectors>
+					<stopKey/>
+					<stopPort/>
+				</configuration>
+			</plugin>
+			<!--
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>${jetty.version}</version>
+                <configuration>
+                    <httpConnector>
+                        <port>8680</port>
+                    </httpConnector>
+                </configuration>
+            </plugin>
+            -->
 		</plugins>
 	</build>
 
@@ -33,77 +261,131 @@
 		<dependency>
 			<groupId>com.google.auto.factory</groupId>
 			<artifactId>auto-factory</artifactId>
-			<version>1.0-beta5</version>
+			<version>${auto-factory-version}</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>com.google.auto.service</groupId>
 			<artifactId>auto-service</artifactId>
-			<version>1.0-rc4</version>
+			<version>${auto-service-version}</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>com.google.auto.value</groupId>
 			<artifactId>auto-value</artifactId>
-			<version>1.6.2</version>
+			<version>${auto-value-version}</version>
 			<optional>true</optional>
 		</dependency>
-		
-<!-- <dependency> <groupId>com.google.dagger</groupId> <artifactId>dagger</artifactId> 
-			<version>2.16</version> </dependency> -->
+		<!-- <dependency> <groupId>com.google.dagger</groupId> <artifactId>dagger</artifactId> 
+			<version>${dagger-version}</version> </dependency> -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava-version}</version>
+			<scope>runtime</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.google.inject</groupId>
 			<artifactId>guice</artifactId>
-			<version>4.2.0</version>
+			<version>${guice-version}</version>
 		</dependency>
 		<dependency>
-			<groupId>
-com.google.inject.extensions</groupId>
-			<artifactId>
-guice-assistedinject</artifactId>
-			<version>
-4.2.0</version>
+			<groupId>com.google.inject.extensions</groupId>
+			<artifactId>guice-assistedinject</artifactId>
+			<version>${guice-assistedinject-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>1.4.197</version>
+			<version>${h2-version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.bytebuddy</groupId>
-			<artifactId>byte-buddy</artifactId>
-			<version>1.8.12</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.7</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-			<version>2.11.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>2.11.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>5.3.1.Final</version>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>2.0.1.Final</version>
+			<version>${validation-api-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.bytebuddy</groupId>
+			<artifactId>byte-buddy</artifactId>
+			<version>${byte-buddy-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j-api-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j-core-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${log4j-slf4j-impl-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-server</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-grizzly2-http</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet-core</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-guice</artifactId>
+			<version>${jersey-guice.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		<!--
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-moxy</artifactId>
+            <version>${jersey.version}</version>
+		</dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-jetty-http</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+        -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate-core-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j-version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>6.14.3</version>
+			<version>${testng-version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

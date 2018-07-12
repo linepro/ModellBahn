@@ -2,6 +2,7 @@ package com.linepro.modellbahn.model.impl;
 
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Basic;
@@ -15,6 +16,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -40,7 +43,7 @@ import com.linepro.modellbahn.model.IVorbild;
 import com.linepro.modellbahn.model.util.AbstractItem;
 
 @Entity
-@Table(name = "PRODUKT", indexes = { @Index(columnList = "HERSTELLER_ID,BESTELL_NR", unique = true) })
+@Table(name = "PRODUKT", indexes = { @Index(columnList = "HERSTELLER_ID,BESTELLNR", unique = true) })
 public class Produkt extends AbstractItem implements IProdukt {
 
     private static final long serialVersionUID = 8098838727023710484L;
@@ -83,7 +86,7 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     private String betreibsnummer;
 
-    private String bauzeit;
+    private Date bauzeit;
 
     private String anleitungen;
 
@@ -296,7 +299,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     }
 
     @Override
-    @Column(name = "BESTELL_NR")
+    @Column(name = "BESTELLNR", length=30)
     public String getBestellNr() {
         return bestellNr;
     }
@@ -307,7 +310,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     }
 
     @Override
-    @Column(name = "ANMERKUNG", nullable = true)
+    @Column(name = "ANMERKUNG", nullable = true, length=100)
     public String getAnmerkung() {
         return anmerkung;
     }
@@ -318,7 +321,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     }
 
     @Override
-    @Column(name = "BETREIBSNUMMER", nullable = true)
+    @Column(name = "BETREIBSNUMMER", nullable = true, length=100)
     public String getBetreibsnummer() {
         return betreibsnummer;
     }
@@ -330,17 +333,18 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     @Override
     @Column(name = "BAUZEIT", nullable = true)
-    public String getBauzeit() {
+    @Temporal(TemporalType.DATE)
+    public Date getBauzeit() {
         return bauzeit;
     }
 
     @Override
-    public void setBauzeit(String bauzeit) {
+    public void setBauzeit(Date bauzeit) {
         this.bauzeit = bauzeit;
     }
 
     @Override
-    @Column(name = "ANLEITUNGEN", nullable = true)
+    @Column(name = "ANLEITUNGEN", nullable = true, length=512)
     public String getAnleitungen() {
         return anleitungen;
     }
@@ -351,7 +355,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     }
 
     @Override
-    @Column(name = "EXPLOSIONSZEICHNUNG", nullable = true)
+    @Column(name = "EXPLOSIONSZEICHNUNG", nullable = true, length=512)
     public String getExplosionszeichnung() {
         return explosionszeichnung;
     }
@@ -362,7 +366,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     }
 
     @Override
-    @Column(name = "Lange", nullable = true, precision = 5, scale = 2)
+    @Column(name = "LANGE", nullable = true, precision = 5, scale = 2)
     public Double getLange() {
         return lange;
     }
@@ -399,7 +403,7 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE).appendSuper(super.toString())
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString())
                 .append("epoch", getEpoch()).append("gattung", getGattung())
                 .append("bahnverwaltung", getBahnverwaltung())
                 .append("achsfolge", getAchsfolge()).append("massstab", getMassstab())

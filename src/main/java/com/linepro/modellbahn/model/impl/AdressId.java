@@ -117,7 +117,7 @@ public class AdressId implements Serializable, IAdressId {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE).append("typ", getTyp())
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("typ", getTyp())
 				.append("adress", getAdress()).toString();
 	}
 }
