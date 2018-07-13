@@ -34,9 +34,9 @@ public interface IProdukt {
 
     void setUnterKategorie(IUnterKategorie unterKategorie);
 
-    ISondermodel getSondermodel();
+    ISonderModell getSondermodel();
 
-    void setSondermodel(ISondermodel sondermodel);
+    void setSondermodel(ISonderModell sondermodel);
 
     IAufbau getAufbau();
 

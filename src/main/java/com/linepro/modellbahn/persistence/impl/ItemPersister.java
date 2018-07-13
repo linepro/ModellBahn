@@ -9,7 +9,7 @@ import com.google.inject.assistedinject.Assisted;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.persistence.IItemPersister;
 
-public class ItemPersister<E extends IItem> extends Persister<E, Long> implements IItemPersister<E> {
+public class ItemPersister<E extends IItem> extends Persister<Long, E> implements IItemPersister<E> {
 
     @Inject
     public ItemPersister(final EntityManager entityManager, final ILoggerFactory logManager, @Assisted final Class<E> clazz) {
@@ -18,11 +18,11 @@ public class ItemPersister<E extends IItem> extends Persister<E, Long> implement
 
     @Override
     public E update(E entity) {
-        return update(entity, entity.getId());
+        return update(entity.getId(), entity);
     }
 
     @Override
     public void delete(Long id) {
-        super.deleteById(id);
+        super.delete(id);
     }
 }

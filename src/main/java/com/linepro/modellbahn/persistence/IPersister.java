@@ -2,28 +2,20 @@ package com.linepro.modellbahn.persistence;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
+public interface IPersister<K, E> extends ISessionManager {
+    E add(E entity) throws Exception;
 
-public interface IPersister<E, K> {
+    E find(K id) throws Exception;
 
-    E save(E entity);
+    List<E> findAll() throws Exception;
 
-    E findById(K id);
+    List<E> findAll(E entity) throws Exception;
 
-    List<E> search(E template);
+    E update(K id, E entity) throws Exception;
 
-    E update(E entity, K id);
+    void delete(K id) throws Exception;
 
-    void deleteById(K id);
+    void deleteAll() throws Exception;
 
-    void delete(E template);
-
-    EntityManager getEntityManager();
-
-    void begin();
-
-    void commit();
-
-    void rollback();
-
+    void deleteAll(E template) throws Exception;
 }

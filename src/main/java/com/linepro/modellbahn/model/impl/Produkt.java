@@ -35,7 +35,7 @@ import com.linepro.modellbahn.model.IMassstab;
 import com.linepro.modellbahn.model.IMotorTyp;
 import com.linepro.modellbahn.model.IProdukt;
 import com.linepro.modellbahn.model.IProduktTeil;
-import com.linepro.modellbahn.model.ISondermodel;
+import com.linepro.modellbahn.model.ISonderModell;
 import com.linepro.modellbahn.model.ISpurweite;
 import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.IUnterKategorie;
@@ -66,7 +66,7 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     private IAchsfolg achsfolge;
 
-    private ISondermodel Sondermodel;
+    private ISonderModell Sondermodel;
 
     private IAufbau aufbau;
 
@@ -191,14 +191,14 @@ public class Produkt extends AbstractItem implements IProdukt {
     }
 
     @Override
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Sondermodel.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = SonderModell.class)
     @JoinColumn(name = "SONDERMODEL_ID", nullable = true, referencedColumnName = "ID")
-    public ISondermodel getSondermodel() {
+    public ISonderModell getSondermodel() {
         return Sondermodel;
     }
 
     @Override
-    public void setSondermodel(ISondermodel sondermodel) {
+    public void setSondermodel(ISonderModell sondermodel) {
         Sondermodel = sondermodel;
     }
 

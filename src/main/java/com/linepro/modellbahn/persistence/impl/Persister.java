@@ -1,10 +1,9 @@
 package com.linepro.modellbahn.persistence.impl;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.persistence.Column;
@@ -17,51 +16,15 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 
 import com.google.inject.assistedinject.Assisted;
 import com.linepro.modellbahn.persistence.IPersister;
+import com.linepro.modellbahn.util.Selector;
+import com.linepro.modellbahn.util.SelectorsBuilder;
 
-public class Persister<E, K> implements IPersister<E, K> {
-
-    class Selector {
-        final String name;
-
-        final Method getter;
-
-        final Method setter;
-
-        public Selector(String name, Method getter, Method setter) {
-            this.name = name;
-            this.getter = getter;
-            this.setter = setter;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public Method getGetter() {
-            return getter;
-        }
-
-        public Method getSetter() {
-            return setter;
-        }
-
-        @Override
-        public String toString() {
-            return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                    .append("name", getName())
-                    .append("getter", getGetter())
-                    .append("setter", getSetter())
-                    .toString();
-        }
-    }
+public class Persister<K, E> implements IPersister<K, E> {
 
     private final EntityManager entityManager;
 
@@ -69,7 +32,7 @@ public class Persister<E, K> implements IPersister<E, K> {
 
     private final Class<E> clazz;
 
-    private Set<Selector> selectors = new HashSet<>();
+    private final Map<String,Selector> selectors;
 
     @Inject
     public Persister(final EntityManager entityManager, final ILoggerFactory logManager,
@@ -78,30 +41,13 @@ public class Persister<E, K> implements IPersister<E, K> {
         this.logger = logManager.getLogger(clazz.getName());
         this.clazz = clazz;
 
-        for (Method getter : clazz.getMethods()) {
-            if (getter.isAnnotationPresent(Column.class) || getter.isAnnotationPresent(JoinColumn.class)) {
-                try {
-                    StringBuffer sb = new StringBuffer(getter.getName());
-
-                    sb.replace(0,1,"s");
-                            
-                    Method setter = clazz.getMethod(sb.toString(), getter.getReturnType());
-
-                    sb.delete(0,3);
-                    sb.replace(0,1,StringUtils.lowerCase(sb.substring(0,1)));
-
-                    selectors.add(new Selector(sb.toString(), getter, setter));
-                } catch (NoSuchMethodException | SecurityException e) {
-                    error("Error parsing " + clazz.getName(), e);
-                }
-            }
-        }
+        selectors = new SelectorsBuilder().build(clazz, Arrays.asList(Column.class, JoinColumn.class));
         
-        info(selectors.toString());
+        info(selectors.values().toString());
     }
 
     @Override
-    public E save(E entity) {
+    public E add(E entity) throws Exception {
         E result = entity;
 
         try {
@@ -112,17 +58,104 @@ public class Persister<E, K> implements IPersister<E, K> {
             commit();
 
             info("saved " + result);
-        } catch (Throwable e) {
+        } catch (Exception e) {
             rollback();
 
             error("error saving " + entity, e);
+            
+            throw e;
+        }
+
+        return result;
+    }
+    @Override
+    public E update(K id, E entity) {
+        E result = entity;
+
+        try {
+            begin();
+
+            E found = (E) getEntityManager().find(clazz, id);
+
+            if (found != null) {
+                for (Selector selector : selectors.values()) {
+                    Object value = selector.getGetter().invoke(entity);
+
+                    if (value != null) {
+                        selector.getSetter().invoke(found, value);
+                    }
+                }
+
+                result = found;
+            } else {
+                result = getEntityManager().find(clazz, id);
+            }
+
+            commit();
+
+            info("updated " + result);
+        } catch (Throwable e) {
+            rollback();
+
+            error("error updating " + entity, e);
         }
 
         return result;
     }
 
     @Override
-    public E findById(K id) {
+    public void delete(K id) {
+        try {
+            begin();
+
+            E entity = (E) getEntityManager().find(clazz, id);
+
+            getEntityManager().remove(entity);
+
+            commit();
+            
+            info("deleted " + entity);
+        } catch (Throwable e) {
+            rollback();
+
+            error("error deleting " + id, e);
+        }
+    }
+
+    @Override
+    public void deleteAll() {
+        deleteAll(null);
+    }
+    
+    @Override
+    public void deleteAll(E template) {
+        try {
+            begin();
+
+            CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+            CriteriaDelete<E> query = builder.createCriteriaDelete(clazz);
+            Root<E> root = query.from(clazz);
+
+            List<Predicate> predicates = getConditions(builder, query, root, template);
+
+            if (!predicates.isEmpty()) {
+                query.where(predicates.toArray(new Predicate[] {}));
+            }
+
+            getEntityManager().createQuery(query).executeUpdate();
+
+            commit();
+
+            info("deleted " + template);
+        } catch (Throwable e) {
+            rollback();
+
+            error("error deleting " + template, e);
+        }
+    }
+
+    @Override
+    public E find(K id) {
         E result = null;
 
         try {
@@ -142,22 +175,13 @@ public class Persister<E, K> implements IPersister<E, K> {
         return result;
     }
 
-    protected List<Predicate> getConditions(CriteriaBuilder builder, CommonAbstractCriteria query, Root<E> root, E template) throws Throwable {
-        List<Predicate> predicates = new ArrayList<Predicate>();
-        
-        for (Selector selector : selectors) {
-            Object value = selector.getGetter().invoke(template);
-
-            if (value != null) {
-                predicates.add(builder.equal(root.get(selector.getName()), value));
-            }
-        }
-        
-        return predicates;
-    }
-
     @Override
-    public List<E> search(E template) {
+    public List<E> findAll() {
+        return findAll(null);
+    }
+    
+    @Override
+    public List<E> findAll(E template) {
         List<E> result = new ArrayList<>();
 
         try {
@@ -189,85 +213,20 @@ public class Persister<E, K> implements IPersister<E, K> {
         return result;
     }
 
-    @Override
-    public E update(E entity, K id) {
-        E result = entity;
-
-        try {
-            begin();
-
-            E found = (E) getEntityManager().find(clazz, id);
-
-            if (found != null) {
-                for (Selector selector : selectors) {
-                    Object value = selector.getGetter().invoke(entity);
-
-                    if (value != null) {
-                        selector.getSetter().invoke(found, value);
-                    }
-                }
-
-                result = found;
-            } else {
-                result = getEntityManager().find(clazz, id);
-            }
-
-            commit();
-
-            info("updated " + result);
-        } catch (Throwable e) {
-            rollback();
-
-            error("error updating " + entity, e);
-        }
-
-        return result;
-    }
-
-    @Override
-    public void deleteById(K id) {
-        try {
-            begin();
-
-            E entity = (E) getEntityManager().find(clazz, id);
-
-            getEntityManager().remove(entity);
-
-            commit();
-            
-            info("deleted " + entity);
-        } catch (Throwable e) {
-            rollback();
-
-            error("error deleting " + id, e);
-        }
-    }
+    protected List<Predicate> getConditions(CriteriaBuilder builder, CommonAbstractCriteria query, Root<E> root, E template) throws Throwable {
+        List<Predicate> predicates = new ArrayList<Predicate>();
+ 
+        if (template != null) {
+            for (Selector selector : selectors.values()) {
+                Object value = selector.getGetter().invoke(template);
     
-    @Override
-    public void delete(E template) {
-        try {
-            begin();
-
-            CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
-            CriteriaDelete<E> query = builder.createCriteriaDelete(clazz);
-            Root<E> root = query.from(clazz);
-
-            List<Predicate> predicates = getConditions(builder, query, root, template);
-
-            if (!predicates.isEmpty()) {
-                query.where(predicates.toArray(new Predicate[] {}));
+                if (value != null) {
+                    predicates.add(builder.equal(root.get(selector.getName()), value));
+                }
             }
-
-            getEntityManager().createQuery(query).executeUpdate();
-
-            commit();
-
-            info("deleted " + template);
-        } catch (Throwable e) {
-            rollback();
-
-            error("error deleting " + template, e);
         }
+        
+        return predicates;
     }
     
     @Override

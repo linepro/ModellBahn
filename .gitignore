@@ -4,20 +4,12 @@
 .settings/*.prefs
 .svn/
 bin/
+eclipse/
 target/
 test-output/
 .checkstyle
 .classpath
 .project
-
-# ION artefacts
-LOGS/
-MkvDB/
-*.graphml
-/*.jinit
-*.log
-/entitlements.csv
-temp-testng-customsuite.xml
 
 # java artefacts
 *.class
@@ -39,10 +31,10 @@ dependency-reduced-pom.xml
 buildNumber.properties
 
 # python artefacts
-/machine_variables.py
 *.pyc
 
-/ModellBahn.log
+# ModellBahn artefacts
+*.log
 /modellbahn.mv.db
 /modellbahn.trace.db
-/docs
+docs/

@@ -1,4 +1,4 @@
-package com.linepro.modellbahn.persistence.impl;
+package com.linepro.modellbahn.guice;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -8,6 +8,7 @@ import org.slf4j.ILoggerFactory;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.persistence.IItemPersister;
 import com.linepro.modellbahn.persistence.IItemPersisterFactory;
+import com.linepro.modellbahn.persistence.impl.ItemPersister;
 
 public class ItemPersisterFactory implements IItemPersisterFactory {
     
