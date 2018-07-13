@@ -19,6 +19,8 @@ import javax.validation.constraints.Min;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.linepro.modellbahn.model.IAdressTyp;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypCV;
@@ -57,7 +59,8 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 		super();
 	}
 
-	public DecoderTyp(Long id, String name, String bezeichnung, Boolean deleted) {
+    @JsonCreator
+	public DecoderTyp(@JsonProperty(value="id", required=false) Long id, @JsonProperty(value="name", required=false) String name, @JsonProperty(value="description", required=false) String bezeichnung, @JsonProperty(value="deleted", required=false) Boolean deleted) {
 		super(id, name, bezeichnung, deleted);
 	}
 

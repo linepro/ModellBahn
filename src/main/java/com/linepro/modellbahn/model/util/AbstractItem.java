@@ -20,6 +20,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.linepro.modellbahn.model.IItem;
 
 /**
@@ -57,33 +60,39 @@ public abstract class AbstractItem implements Serializable, IItem {
 
 	@Override
     @Id
-	@Column(name="ID")
+	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@JsonGetter("id")
 	public Long getId() {
 		return id;
 	}
 
 	@Override
+    @JsonSetter("id")
     public void setId(Long id) {
 		this.id = id;
 	}
 
-	@Column(name="DELETED", length=5)
+	@Column(name="deleted", length=5)
+	@JsonIgnore
 	public String getDeletedStr() {
 		return getDeleted() != null ? getDeleted().toString() : null;
 	}
 
+    @JsonIgnore
 	public void setDeletedStr(String deleted) {
 		setDeleted(Boolean.valueOf(deleted));
 	}
 
 	@Override
     @Transient
+    @JsonGetter("deleted")
 	public Boolean getDeleted() {
 		return deleted;
 	}
 
 	@Override
+    @JsonSetter("deleted")
     public void setDeleted(Boolean deleted) {
 		this.deleted = deleted;
 	}

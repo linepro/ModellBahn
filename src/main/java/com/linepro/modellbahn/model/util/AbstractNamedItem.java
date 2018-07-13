@@ -11,6 +11,8 @@ import javax.persistence.MappedSuperclass;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.linepro.modellbahn.model.INamedItem;
 
 /**
@@ -50,23 +52,27 @@ public abstract class AbstractNamedItem extends AbstractItem implements INamedIt
 	}
 
 	@Override
-    @Column(name="NAME", length=50)
+    @Column(name="name", length=50)
+    @JsonGetter("name")
 	public String getName() {
 		return name;
 	}
 
 	@Override
+    @JsonSetter("name")
     public void setName(String name) {
 		this.name = name;
 	}
 
 	@Override
-    @Column(name="BEZEICHNUNG", nullable=true, length=100)
+    @Column(name="bezeichnung", nullable=true, length=100)
+    @JsonGetter("description")
 	public String getBezeichnung() {
 		return bezeichnung;
 	}
 
 	@Override
+    @JsonSetter("description")
     public void setBezeichnung(String bezeichnung) {
 		this.bezeichnung = bezeichnung;
 	}
