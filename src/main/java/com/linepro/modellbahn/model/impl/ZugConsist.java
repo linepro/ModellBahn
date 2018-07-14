@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IZug;
 import com.linepro.modellbahn.model.IZugConsist;
@@ -45,6 +46,7 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
 	@Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity=Zug.class)
 	@JoinColumn(name = "ZUG_ID", referencedColumnName="ID")
+	@JsonBackReference
 	public IZug getZug() {
 		return zug;
 	}
@@ -69,6 +71,7 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
 	@Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity=Artikel.class)
 	@JoinColumn(name = "ARTIKEL_ID", referencedColumnName="ID")
+    @JsonBackReference
 	public IArtikel getArtikel() {
 		return artikel;
 	}

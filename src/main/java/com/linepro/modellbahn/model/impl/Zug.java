@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.linepro.modellbahn.model.IZug;
 import com.linepro.modellbahn.model.IZugConsist;
 import com.linepro.modellbahn.model.IZugTyp;
@@ -43,6 +45,7 @@ public class Zug extends AbstractNamedItem implements IZug {
 	@Override
 	@ManyToOne(fetch=FetchType.LAZY, targetEntity=ZugTyp.class)
 	@JoinColumn(name = "TYP_ID")
+    @JsonBackReference
 	public IZugTyp getTyp() {
 		return typ;
 	}
@@ -54,6 +57,7 @@ public class Zug extends AbstractNamedItem implements IZug {
 
     @Override
 	@OneToMany(mappedBy = "zug", cascade=CascadeType.ALL, targetEntity=ZugConsist.class)
+    @JsonManagedReference
 	public List<IZugConsist> getConsist() {
 		return consist;
 	}

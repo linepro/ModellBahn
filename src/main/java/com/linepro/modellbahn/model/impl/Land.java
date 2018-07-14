@@ -9,6 +9,7 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.linepro.modellbahn.model.ILand;
 import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
@@ -32,6 +33,7 @@ public class Land extends AbstractNamedItem implements ILand {
 
     @Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=Wahrung.class)
+    @JsonBackReference
     public IWahrung getWahrung() {
         return wharung;
     }

@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.linepro.modellbahn.model.IKategorie;
 import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
@@ -35,6 +36,7 @@ public class UnterKategorie extends AbstractNamedItem implements IUnterKategorie
 	@Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=Kategorie.class)
 	@JoinColumn(name = "KATEGORIE_ID", referencedColumnName="ID")
+    @JsonBackReference
 	public IKategorie getKategorie() {
 		return kategorie;
 	}

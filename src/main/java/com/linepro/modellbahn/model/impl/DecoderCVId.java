@@ -12,6 +12,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderCVId;
 import com.linepro.modellbahn.model.IDecoderTypCV;
@@ -37,6 +38,7 @@ public class DecoderCVId implements Serializable, IDecoderCVId {
 	@Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=Decoder.class)
 	@JoinColumn(name="DECODER_ID", referencedColumnName="ID")
+    @JsonBackReference
 	public IDecoder getDecoder() {
 		return decoder;
 	}
@@ -49,6 +51,7 @@ public class DecoderCVId implements Serializable, IDecoderCVId {
 	@Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=DecoderTypCV.class)
 	@JoinColumn(name="CV_ID", referencedColumnName="ID")
+    @JsonBackReference
 	public IDecoderTypCV getCV() {
 		return cv;
 	}

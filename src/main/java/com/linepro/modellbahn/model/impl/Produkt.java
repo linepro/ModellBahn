@@ -22,6 +22,8 @@ import javax.persistence.TemporalType;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.IAufbau;
 import com.linepro.modellbahn.model.IBahnverwaltung;
@@ -109,6 +111,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Epoch.class)
     @JoinColumn(name = "EPOCH_ID", nullable = true, referencedColumnName = "ID")
+    @JsonBackReference
     public IEpoch getEpoch() {
         return epoch;
     }
@@ -121,6 +124,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gattung.class)
     @JoinColumn(name = "GATTUNG_ID", nullable = true, referencedColumnName = "ID")
+    @JsonBackReference
     public IGattung getGattung() {
         return gattung;
     }
@@ -133,6 +137,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Bahnverwaltung.class)
     @JoinColumn(name = "BAHNVERWALTUNG_ID", nullable = true, referencedColumnName = "ID")
+    @JsonBackReference
     public IBahnverwaltung getBahnverwaltung() {
         return bahnverwaltung;
     }
@@ -145,6 +150,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class)
     @JoinColumn(name = "ACHSFOLG_ID", nullable = true, referencedColumnName = "ID")
+    @JsonBackReference
     public IAchsfolg getAchsfolge() {
         return achsfolge;
     }
@@ -157,6 +163,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Massstab.class)
     @JoinColumn(name = "MASSSTAB_ID", referencedColumnName = "ID")
+    @JsonBackReference
     public IMassstab getMassstab() {
         return massstab;
     }
@@ -169,6 +176,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Spurweite.class)
     @JoinColumn(name = "SPURWEITE_ID", referencedColumnName = "ID")
+    @JsonBackReference
     public ISpurweite getSpurweite() {
         return spurweite;
     }
@@ -181,6 +189,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = UnterKategorie.class)
     @JoinColumn(name = "UNTER_KATEGORIE_ID", referencedColumnName = "ID")
+    @JsonBackReference
     public IUnterKategorie getUnterKategorie() {
         return unterKategorie;
     }
@@ -193,6 +202,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = SonderModell.class)
     @JoinColumn(name = "SONDERMODEL_ID", nullable = true, referencedColumnName = "ID")
+    @JsonBackReference
     public ISonderModell getSondermodel() {
         return Sondermodel;
     }
@@ -205,6 +215,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Aufbau.class)
     @JoinColumn(name = "AUFBAU_ID", nullable = true, referencedColumnName = "ID")
+    @JsonBackReference
     public IAufbau getAufbau() {
         return aufbau;
     }
@@ -217,6 +228,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Licht.class)
     @JoinColumn(name = "LICHT_ID", nullable = true, referencedColumnName = "ID")
+    @JsonBackReference
     public ILicht getLicht() {
         return licht;
     }
@@ -229,6 +241,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kupplung.class)
     @JoinColumn(name = "KUPPLUNG_ID", nullable = true, referencedColumnName = "ID")
+    @JsonBackReference
     public IKupplung getKupplung() {
         return kupplung;
     }
@@ -241,6 +254,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Vorbild.class)
     @JoinColumn(name = "VORBILD_ID", nullable = true, referencedColumnName = "ID")
+    @JsonBackReference
     public IVorbild getVorbild() {
         return vorbild;
     }
@@ -253,6 +267,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class)
     @JoinColumn(name = "STEUERUNG_ID", nullable = true, referencedColumnName = "ID")
+    @JsonBackReference
     public ISteuerung getSteuerung() {
         return steuerung;
     }
@@ -265,6 +280,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
     @JoinColumn(name = "DECODER_TYP_ID", nullable = true, referencedColumnName = "ID")
+    @JsonBackReference
     public IDecoderTyp getDecoderTyp() {
         return decoderTyp;
     }
@@ -277,6 +293,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = MotorTyp.class)
     @JoinColumn(name = "MOTOR_TYP_ID", nullable = true, referencedColumnName = "ID")
+    @JsonBackReference
     public IMotorTyp getMotorTyp() {
         return motorTyp;
     }
@@ -289,6 +306,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class)
     @JoinColumn(name = "HERSTELLER_ID", referencedColumnName = "ID")
+    @JsonBackReference
     public IHersteller getHersteller() {
         return hersteller;
     }
@@ -391,6 +409,7 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     @Override
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "produkt", targetEntity = ProduktTeil.class)
+    @JsonManagedReference
     public List<IProduktTeil> getTeilen() {
         return teilen;
     }

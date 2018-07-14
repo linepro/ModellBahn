@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.beanutils.ConvertUtils;
@@ -54,7 +55,7 @@ public abstract class ItemService<E extends IItem> {
             E entity = persister.find(id);
 
             if (entity == null) {
-                return getResponse(Response.noContent());
+                return getResponse(Response.status(Status.NOT_FOUND));
             }
 
             return getResponse(Response.ok().entity(entity));
@@ -82,7 +83,6 @@ public abstract class ItemService<E extends IItem> {
     }
 
     @POST
-    @Path("/add")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     public Response add(E entity) {
@@ -99,9 +99,15 @@ public abstract class ItemService<E extends IItem> {
     @Path("/{id: [0-9]+}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
-    public Response update(E entity) {
+    public Response update(@PathParam("id") Long id, E entity) {
         try {
+            entity.setId(id);
+
             E result = persister.update(entity);
+
+            if (result == null) {
+                return getResponse(Response.status(Status.NOT_FOUND));
+            }
 
             return getResponse(Response.accepted().entity(result));
         } catch (Exception e) {

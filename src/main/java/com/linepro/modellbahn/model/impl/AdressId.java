@@ -19,6 +19,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.linepro.modellbahn.model.IAdressId;
 import com.linepro.modellbahn.model.IAdressTyp;
 
@@ -74,6 +75,7 @@ public class AdressId implements Serializable, IAdressId {
 
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=AdressTyp.class)
     @JoinColumn(name = "TYP_ID", referencedColumnName="ID")
+    @JsonBackReference
     public AdressTyp getAdressTyp() {
         return typ;
     }

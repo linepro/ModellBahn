@@ -3,7 +3,6 @@ package com.linepro.modellbahn.rest;
 import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
 
-import org.glassfish.grizzly.utils.LogFilter;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 import org.slf4j.Logger;

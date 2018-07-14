@@ -70,37 +70,35 @@ public class Persister<K, E> implements IPersister<K, E> {
     }
     @Override
     public E update(K id, E entity) {
-        E result = entity;
-
         try {
             begin();
 
-            E found = (E) getEntityManager().find(clazz, id);
+            E result = (E) getEntityManager().find(clazz, id);
 
-            if (found != null) {
+            if (result != null) {
                 for (Selector selector : selectors.values()) {
                     Object value = selector.getGetter().invoke(entity);
 
                     if (value != null) {
-                        selector.getSetter().invoke(found, value);
+                        selector.getSetter().invoke(result, value);
                     }
                 }
 
-                result = found;
-            } else {
-                result = getEntityManager().find(clazz, id);
+                result = getEntityManager().merge(result);
             }
 
             commit();
 
             info("updated " + result);
+            
+            return result;
         } catch (Throwable e) {
             rollback();
 
             error("error updating " + entity, e);
         }
 
-        return result;
+        return null;
     }
 
     @Override

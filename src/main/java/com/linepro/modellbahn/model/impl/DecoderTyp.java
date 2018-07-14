@@ -19,7 +19,9 @@ import javax.validation.constraints.Min;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.linepro.modellbahn.model.IAdressTyp;
 import com.linepro.modellbahn.model.IDecoderTyp;
@@ -67,6 +69,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 	@Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=AdressTyp.class)
 	@JoinColumn(name = "ADRESS_TYP_ID", referencedColumnName="ID")
+    @JsonBackReference
 	public IAdressTyp getTyp() {
 		return typ;
 	}
@@ -79,6 +82,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 	@Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=Hersteller.class)
 	@JoinColumn(name = "HERSTELLER_ID", referencedColumnName="ID")
+    @JsonBackReference
 	public IHersteller getHersteller() {
 		return hersteller;
 	}
@@ -125,6 +129,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 	@Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=Protokoll.class)
 	@JoinColumn(name = "PROTOKOLL_ID", referencedColumnName="ID")
+    @JsonBackReference
 	public IProtokoll getProtokoll() {
 		return protokoll;
 	}
@@ -168,6 +173,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
 	@Override
     @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="decoderTyp", targetEntity=DecoderTypCV.class)
+    @JsonManagedReference
 	public Set<IDecoderTypCV> getCv() {
 		return cv;
 	}
@@ -180,6 +186,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
 	@Override
     @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="decoderTyp", targetEntity=DecoderTypFunktion.class)
+    @JsonManagedReference
 	public Set<IDecoderTypFunktion> getFunktion() {
 		return funktion;
 	}

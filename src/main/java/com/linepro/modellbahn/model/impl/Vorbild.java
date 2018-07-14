@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.IAntrieb;
 import com.linepro.modellbahn.model.IGattung;
@@ -179,6 +180,7 @@ public class Vorbild extends AbstractItem implements IVorbild {
 	@Override
 	@ManyToOne(fetch=FetchType.LAZY, targetEntity=Gattung.class)
 	@JoinColumn(name="GATTUNG_ID", referencedColumnName="ID")
+    @JsonBackReference
 	public IGattung getGattung() {
 		return gattung;
 	}
@@ -191,6 +193,7 @@ public class Vorbild extends AbstractItem implements IVorbild {
     @Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=UnterKategorie.class)
     @JoinColumn(name="UNTER_KATEGORIE_ID", referencedColumnName="ID")
+    @JsonBackReference
 	public IUnterKategorie getUnterKategorie() {
 		return unterKategorie;
 	}
@@ -248,6 +251,7 @@ public class Vorbild extends AbstractItem implements IVorbild {
     @Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=Antrieb.class)
     @JoinColumn(name="ANTRIEB_ID", referencedColumnName="ID")
+    @JsonBackReference
 	public IAntrieb getAntrieb() {
 		return antrieb;
 	}
@@ -259,6 +263,7 @@ public class Vorbild extends AbstractItem implements IVorbild {
     @Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=Achsfolg.class)
     @JoinColumn(name="ACHSFOLG_ID", referencedColumnName="ID")
+    @JsonBackReference
 	public IAchsfolg getAchsfolg() {
 		return achsfolg;
 	}
@@ -458,6 +463,7 @@ public class Vorbild extends AbstractItem implements IVorbild {
     @Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=Steuerung.class)
     @JoinColumn(name="STEUERUNG_ID", nullable=true, referencedColumnName="ID")
+    @JsonBackReference
 	public ISteuerung getSteuerung() {
 		return steuerung;
 	}

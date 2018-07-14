@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.linepro.modellbahn.model.IProdukt;
 import com.linepro.modellbahn.model.IProduktTeil;
 import com.linepro.modellbahn.model.util.AbstractItem;
@@ -42,6 +43,7 @@ public class ProduktTeil extends AbstractItem implements IProduktTeil {
 	@Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity=Produkt.class)
 	@JoinColumn(name = "PRODUKT_ID")
+    @JsonBackReference
 	public IProdukt getProdukt() {
 		return produkt;
 	}

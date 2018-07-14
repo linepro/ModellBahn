@@ -12,6 +12,7 @@ import javax.validation.constraints.Min;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.util.AbstractItem;
@@ -52,6 +53,7 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
 	@Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity=DecoderTyp.class)
 	@JoinColumn(name = "DECODER_TYP_ID", referencedColumnName="ID")
+    @JsonBackReference
 	public IDecoderTyp getDecoderTyp() {
 		return decoderTyp;
 	}

@@ -18,6 +18,7 @@ import javax.persistence.TemporalType;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IKupplung;
@@ -86,6 +87,7 @@ public class Artikel extends AbstractItem implements IArtikel {
 	@Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity=Produkt.class)
     @JoinColumn(name = "PRODUKT_ID", referencedColumnName="ID")
+    @JsonBackReference
 	public IProdukt getProdukt() {
 		return produkt;
 	}
@@ -110,6 +112,7 @@ public class Artikel extends AbstractItem implements IArtikel {
 	@Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity=Wahrung.class)
     @JoinColumn(name = "WAHRUNG_ID", nullable = true, referencedColumnName="ID")
+    @JsonBackReference
 	public IWahrung getWahrung() {
 		return wahrung;
 	}
@@ -144,6 +147,7 @@ public class Artikel extends AbstractItem implements IArtikel {
 	@Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity=Steuerung.class)
     @JoinColumn(name = "STEUERUNG_ID", nullable = true, referencedColumnName="ID")
+    @JsonBackReference
 	public ISteuerung getSteuerung() {
 		return steuerung;
 	}
@@ -156,6 +160,7 @@ public class Artikel extends AbstractItem implements IArtikel {
 	@Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity=MotorTyp.class)
     @JoinColumn(name = "MOTOR_TYP_ID", nullable = true, referencedColumnName="ID")
+    @JsonBackReference
 	public IMotorTyp getMotorTyp() {
 		return motorTyp;
 	}
@@ -168,6 +173,7 @@ public class Artikel extends AbstractItem implements IArtikel {
 	@Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity=Licht.class)
     @JoinColumn(name = "LICHT_ID", nullable = true, referencedColumnName="ID")
+    @JsonBackReference
 	public ILicht getLicht() {
 		return licht;
 	}
@@ -180,6 +186,7 @@ public class Artikel extends AbstractItem implements IArtikel {
 	@Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity=Kupplung.class)
     @JoinColumn(name = "KUPPLUNG_ID", nullable = true, referencedColumnName="ID")
+    @JsonBackReference
 	public IKupplung getKupplung() {
 		return kupplung;
 	}
@@ -192,6 +199,7 @@ public class Artikel extends AbstractItem implements IArtikel {
 	@Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity=Decoder.class)
     @JoinColumn(name = "DECODER_ID", nullable = true, referencedColumnName="ID")
+    @JsonBackReference
 	public IDecoder getDecoder() {
 		return decoder;
 	}

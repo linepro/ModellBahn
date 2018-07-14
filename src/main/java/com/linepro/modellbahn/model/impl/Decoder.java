@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IProtokoll;
@@ -54,6 +56,7 @@ public class Decoder extends AbstractItem implements IDecoder {
 
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=DecoderTyp.class)
     @JoinColumn(name="DECODER_TYP_ID", referencedColumnName="ID")
+    @JsonBackReference
     public IDecoderTyp getTyp() {
         return typ;
     }
@@ -64,6 +67,7 @@ public class Decoder extends AbstractItem implements IDecoder {
 
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=Protokoll.class)
     @JoinColumn(name="PROTOKOLL_ID", referencedColumnName="ID")
+    @JsonBackReference
     public IProtokoll getProtokoll() {
         return protokoll;
     }
@@ -95,6 +99,7 @@ public class Decoder extends AbstractItem implements IDecoder {
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "DECODER_CV", joinColumns = @JoinColumn(name = "DECODER_ID", referencedColumnName="ID"))
+    @JsonManagedReference
     public List<DecoderCV> getCv() {
         return cv;
     }
@@ -106,6 +111,7 @@ public class Decoder extends AbstractItem implements IDecoder {
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "DECODER_FUNKTIONEN", joinColumns = @JoinColumn(name = "DECODER_ID", referencedColumnName="ID"))
+    @JsonManagedReference
     public List<DecoderFunktion> getFunktionen() {
         return funktionen;
     }

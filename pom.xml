@@ -49,31 +49,33 @@
 
 		<javac.version>1.8</javac.version>
 
+        <maven.compiler.version>2.5.1</maven.compiler.version>
 		<maven.failsafe.version>2.4.3-alpha-1</maven.failsafe.version>
-		<maven.compiler.version>2.5.1</maven.compiler.version>
-		<auto-factory-version>1.0-beta5</auto-factory-version>
-		<auto-service-version>1.0-rc4</auto-service-version>
-		<auto-value-version>1.6.2</auto-value-version>
-		<byte-buddy-version>1.8.12</byte-buddy-version>
-        <commons-beanutils-version>1.9.3</commons-beanutils-version>
-		<commons-lang3-version>3.7</commons-lang3-version>
-		<dagger-version>2.16</dagger-version>
-		<guava-version>23.6-android</guava-version>
-		<guice-assistedinject-version>4.2.0</guice-assistedinject-version>
-		<guice-version>4.2.0</guice-version>
-		<h2-version>1.4.197</h2-version>
-		<hibernate-core-version>5.3.1.Final</hibernate-core-version>
+        <maven-jetty-plugin.version>9.4.11.v20180605</maven-jetty-plugin.version>
+		
+		<auto-factory.version>1.0-beta5</auto-factory.version>
+		<auto-service.version>1.0-rc4</auto-service.version>
+		<auto-value.version>1.6.2</auto-value.version>
+		<byte-buddy.version>1.8.12</byte-buddy.version>
+        <commons-beanutils.version>1.9.3</commons-beanutils.version>
+		<commons-lang3.version>3.7</commons-lang3.version>
+		<dagger.version>2.16</dagger.version>
+		<guava.version>23.6-android</guava.version>
+		<guice-assistedinject.version>4.2.0</guice-assistedinject.version>
+		<guice.version>4.2.0</guice.version>
+		<h2.version>1.4.197</h2.version>
+		<hibernate-core.version>5.3.1.Final</hibernate-core.version>
+        <jackson-datatype-jdk8.version>2.9.6</jackson-datatype-jdk8.version>
 		<jersey.version>2.27</jersey.version>
 		<jersey-guice.version>1.19.4</jersey-guice.version>
 		<jetty.version>9.4.11.v20180605</jetty.version>
-		<log4j-api-version>2.11.0</log4j-api-version>
-		<log4j-core-version>2.11.0</log4j-core-version>
-		<log4j-slf4j-impl-version>2.11.0</log4j-slf4j-impl-version>
-		<maven-jetty-plugin.version>9.4.11.v20180605</maven-jetty-plugin.version>
+		<log4j-api.version>2.11.0</log4j-api.version>
+		<log4j-core.version>2.11.0</log4j-core.version>
+		<log4j-slf4j-impl.version>2.11.0</log4j-slf4j-impl.version>
 		<mockito.version>1.9.0</mockito.version>
-		<slf4j-version>1.7.25</slf4j-version>
-		<testng-version>6.14.3</testng-version>
-		<validation-api-version>2.0.1.Final</validation-api-version>
+		<slf4j.version>1.7.25</slf4j.version>
+		<testng.version>6.14.3</testng.version>
+		<validation-api.version>2.0.1.Final</validation-api.version>
 	</properties>
 
 	<build>
@@ -257,50 +259,50 @@
 		<dependency>
 			<groupId>com.google.auto.factory</groupId>
 			<artifactId>auto-factory</artifactId>
-			<version>${auto-factory-version}</version>
+			<version>${auto-factory.version}</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>com.google.auto.service</groupId>
 			<artifactId>auto-service</artifactId>
-			<version>${auto-service-version}</version>
+			<version>${auto-service.version}</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>com.google.auto.value</groupId>
 			<artifactId>auto-value</artifactId>
-			<version>${auto-value-version}</version>
+			<version>${auto-value.version}</version>
 			<optional>true</optional>
 		</dependency>
 		<!--
         <dependency>
             <groupId>com.google.dagger</groupId>
             <artifactId>dagger</artifactId> 
-			<version>${dagger-version}</version>
+			<version>${dagger.version}</version>
         </dependency>
         -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>${guava-version}</version>
+			<version>${guava.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.inject</groupId>
 			<artifactId>guice</artifactId>
-			<version>${guice-version}</version>
+			<version>${guice.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.inject.extensions</groupId>
 			<artifactId>guice-assistedinject</artifactId>
-			<version>${guice-assistedinject-version}</version>
+			<version>${guice-assistedinject.version}</version>
 		</dependency>
 
         <!-- H2 -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>${h2-version}</version>
+			<version>${h2.version}</version>
 		</dependency>
 
         <!-- Javax -->
@@ -312,29 +314,36 @@
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>${validation-api-version}</version>
+			<version>${validation-api.version}</version>
 		</dependency>
 
         <!-- Byte Buddy -->
 		<dependency>
 			<groupId>net.bytebuddy</groupId>
 			<artifactId>byte-buddy</artifactId>
-			<version>${byte-buddy-version}</version>
+			<version>${byte-buddy.version}</version>
 		</dependency>
 
         <!-- Commons -->
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
-            <version>${commons-beanutils-version}</version>
+            <version>${commons-beanutils.version}</version>
         </dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>${commons-lang3-version}</version>
+			<version>${commons-lang3.version}</version>
 		</dependency>
 		
 		<!-- Jersey -->
+		<!-- 
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jdk8</artifactId>
+            <version>${jackson-datatype-jdk8.version}</version>
+        </dependency>
+        -->
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-common</artifactId>
@@ -415,39 +424,34 @@
             <artifactId>jersey-wadl-doclet</artifactId>
             <version>${jersey.version}</version>
         </dependency>
-		<dependency>
-		    <groupId>org.gwizard</groupId>
-		    <artifactId>gwizard-jersey</artifactId>
-		    <version>0.8</version>
-		</dependency>
 
         <!-- Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>${hibernate-core-version}</version>
+			<version>${hibernate-core.version}</version>
 		</dependency>
 
         <!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j-version}</version>
+			<version>${slf4j.version}</version>
 		</dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>${log4j-api-version}</version>
+            <version>${log4j-api.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>${log4j-core-version}</version>
+            <version>${log4j-core.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${log4j-slf4j-impl-version}</version>
+            <version>${log4j-slf4j-impl.version}</version>
         </dependency>
 
         <!-- Runtime -->
@@ -456,7 +460,7 @@
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>${testng-version}</version>
+			<version>${testng.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

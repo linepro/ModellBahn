@@ -28,8 +28,11 @@ public class Hersteller extends AbstractNamedItem implements IHersteller {
         super();
     }
 
-    public Hersteller(Long id, String name, String bezeichnung, URI uRL, String telefon, Boolean deleted) {
+    public Hersteller(Long id, String name, String bezeichnung, URI url, String telefon, Boolean deleted) {
         super(id, name, bezeichnung, deleted);
+        
+        setUrl(url);
+        setTelefon(telefon);
     }
 
     @Transient
@@ -48,7 +51,7 @@ public class Hersteller extends AbstractNamedItem implements IHersteller {
 
     public void setUrlStr(String url) {
         try {
-            setUrl(new URI(url));
+            setUrl(url != null ? new URI(url) : null);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
