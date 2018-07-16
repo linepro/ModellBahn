@@ -8,9 +8,8 @@ package com.linepro.modellbahn.model.impl;
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 
@@ -18,7 +17,8 @@ import com.linepro.modellbahn.model.util.AbstractNamedItem;
  * The Class Achsfolg represents Axle configuration using German nomenclature.
  */
 @Entity
-@Table(name = "achsfolgen", indexes = { @Index(columnList = "name", unique = true) })
+@Table(name = "achsfolgen", indexes = { @Index(columnList = "name", unique = true) }, 
+       uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 public class Achsfolg extends AbstractNamedItem implements IAchsfolg {
 
     /** The Constant serialVersionUID. */
@@ -28,22 +28,25 @@ public class Achsfolg extends AbstractNamedItem implements IAchsfolg {
      * Instantiates a new achsfolg.
      */
     public Achsfolg() {
-		super();
-	}
+        super();
+    }
 
-	/**
-	 * Instantiates a new achsfolg.
-	 *
-	 * @param id the id
-	 * @param name the name
-	 * @param bezeichnung the description
-	 * @param deleted if true this achsfold is soft deleted
-	 */
-    @JsonCreator
-	public Achsfolg(@JsonProperty(value="id", required=false) Long id, 
-	                @JsonProperty(value="name", required=false) String name, 
-	                @JsonProperty(value="description", required=false) String bezeichnung, 
-	                @JsonProperty(value="deleted", required=false) Boolean deleted) {
-		super(id, name, bezeichnung, deleted);
-	}
+    /**
+     * Instantiates a new achsfolg.
+     *
+     * @param id
+     *            the id
+     * @param name
+     *            the name
+     * @param bezeichnung
+     *            the description
+     * @param deleted
+     *            if true this achsfolg is soft deleted
+     */
+    public Achsfolg(Long id,
+            String name,
+            String bezeichnung,
+            Boolean deleted) {
+        super(id, name, bezeichnung, deleted);
+    }
 }

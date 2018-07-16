@@ -6,11 +6,13 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -22,8 +24,9 @@ import com.linepro.modellbahn.model.IZugConsist;
 import com.linepro.modellbahn.model.IZugTyp;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 
-@Entity(name = "ZUGEN")
-@Table(name = "DECODER", indexes = { @Index(columnList = "NAME", unique = true) })
+@Entity
+@Table(name = "zugen", indexes = { @Index(columnList = "name", unique = true), @Index(columnList = "zug_typ_id") }, 
+       uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 public class Zug extends AbstractNamedItem implements IZug {
 
     private static final long serialVersionUID = 7391674754023907975L;
@@ -44,7 +47,7 @@ public class Zug extends AbstractNamedItem implements IZug {
 
 	@Override
 	@ManyToOne(fetch=FetchType.LAZY, targetEntity=ZugTyp.class)
-	@JoinColumn(name = "TYP_ID")
+	@JoinColumn(name = "zug_typ_id", foreignKey = @ForeignKey(name = "zug_fk1"))
     @JsonBackReference
 	public IZugTyp getTyp() {
 		return typ;
@@ -56,7 +59,7 @@ public class Zug extends AbstractNamedItem implements IZug {
 	}
 
     @Override
-	@OneToMany(mappedBy = "zug", cascade=CascadeType.ALL, targetEntity=ZugConsist.class)
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "zug", targetEntity=ZugConsist.class)
     @JsonManagedReference
 	public List<IZugConsist> getConsist() {
 		return consist;

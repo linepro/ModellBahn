@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Index;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -16,7 +17,8 @@ import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderCV;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 
-@Table(name = "DECODER_CV", indexes = { @Index(columnList = "DECODER_ID,CV_ID", unique = true) })
+@Table(name = "decoder_cv", indexes = { @Index(columnList = "decoder_id,cv_id", unique = true) }, 
+       uniqueConstraints = { @UniqueConstraint(columnNames = { "decoder_id", "cv_id" }) })
 public class DecoderCV implements Serializable, IDecoderCV {
 
     private static final long serialVersionUID = 2660599652146536110L;
@@ -45,7 +47,7 @@ public class DecoderCV implements Serializable, IDecoderCV {
 	}
 
 	@Override
-    @Column(name="WERT")
+    @Column(name="wert")
 	public Integer getWert() {
 		return wert;
 	}

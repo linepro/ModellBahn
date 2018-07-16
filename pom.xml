@@ -69,6 +69,7 @@
 		<jersey.version>2.27</jersey.version>
 		<jersey-guice.version>1.19.4</jersey-guice.version>
 		<jetty.version>9.4.11.v20180605</jetty.version>
+        <jul-to-slf4j.version>1.7.25</jul-to-slf4j.version>
 		<log4j-api.version>2.11.0</log4j-api.version>
 		<log4j-core.version>2.11.0</log4j-core.version>
 		<log4j-slf4j-impl.version>2.11.0</log4j-slf4j-impl.version>
@@ -453,6 +454,11 @@
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>${log4j-slf4j-impl.version}</version>
         </dependency>
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>jul-to-slf4j</artifactId>
+		    <version>${jul-to-slf4j.version}</version>
+		</dependency>
 
         <!-- Runtime -->
 

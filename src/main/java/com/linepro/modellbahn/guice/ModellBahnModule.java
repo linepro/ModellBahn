@@ -12,7 +12,9 @@ import com.google.inject.Scopes;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.linepro.modellbahn.IModellBahn;
 import com.linepro.modellbahn.ModellBahn;
-import com.linepro.modellbahn.persistence.IItemPersisterFactory;
+import com.linepro.modellbahn.persistence.IPersisterFactory;
+import com.linepro.modellbahn.persistence.impl.PersisterFactory;
+import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 
 public class ModellBahnModule extends AbstractModule {
 
@@ -22,7 +24,7 @@ public class ModellBahnModule extends AbstractModule {
 
         bind(ILoggerFactory.class).toInstance(LoggerFactory.getILoggerFactory());
         bind(EntityManager.class).toInstance(entityManagerFactory.createEntityManager());
-        bind(IItemPersisterFactory.class).to(ItemPersisterFactory.class).in(Scopes.SINGLETON);
+        bind(IPersisterFactory.class).to(PersisterFactory.class).in(Scopes.SINGLETON);
 
         requestStaticInjection(StaticPersisterFactory.class);
 

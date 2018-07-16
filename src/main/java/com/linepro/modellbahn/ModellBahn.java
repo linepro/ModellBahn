@@ -4,30 +4,29 @@ import java.net.URI;
 
 import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
 
 import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.server.ServerProperties;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.google.inject.assistedinject.Assisted;
-import com.linepro.modellbahn.jersey.SecurityRequestFilter;
 import com.linepro.modellbahn.jersey.ServerBuilder;
-import com.linepro.modellbahn.persistence.DBPopulator;
-import com.linepro.modellbahn.persistence.IItemPersisterFactory;
-import com.linepro.modellbahn.rest.ModellBahnConfiguration;
+import com.linepro.modellbahn.rest.util.ModellBahnConfiguration;
+import com.linepro.modellbahn.util.DBPopulator;
 
-public class ModellBahn implements IModellBahn {
+@ApplicationPath("modellbahn")
+public class ModellBahn extends Application implements IModellBahn {
 
     protected final Logger logger;
-    protected final DBPopulator test;
+    protected final DBPopulator populator;
     protected final URI baseUri;
     
     @Inject
-    public ModellBahn(ILoggerFactory loggerFactory, DBPopulator test, @Assisted URI baseUri) {
+    public ModellBahn(ILoggerFactory loggerFactory, DBPopulator populator, @Assisted URI baseUri) {
         this.logger = loggerFactory.getLogger(getClass().getName());
-        this.test = test;
+        this.populator = populator;
         this.baseUri = baseUri;
     }
 
@@ -36,7 +35,7 @@ public class ModellBahn implements IModellBahn {
         try {
             logger.info(String.format("Application starting: " + baseUri.toString()));
 
-            test.populate();
+            populator.populate();
             
             HttpServer server = new ServerBuilder().getServer(baseUri, new ModellBahnConfiguration(logger));
 
@@ -46,7 +45,10 @@ public class ModellBahn implements IModellBahn {
                     server.shutdownNow();
                 }
             }));
-
+            
+            SLF4JBridgeHandler.removeHandlersForRootLogger();
+            SLF4JBridgeHandler.install();
+            
             server.start();
 
             logger.info("Application started.\nStop the application using CTRL+C");

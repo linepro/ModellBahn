@@ -74,7 +74,7 @@ public class AdressId implements Serializable, IAdressId {
 	}
 
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=AdressTyp.class)
-    @JoinColumn(name = "TYP_ID", referencedColumnName="ID")
+    @JoinColumn(name = "typ_id", referencedColumnName="id")
     @JsonBackReference
     public AdressTyp getAdressTyp() {
         return typ;
@@ -84,7 +84,7 @@ public class AdressId implements Serializable, IAdressId {
         this.typ = typ;
     }
 
-	@Column(name = "ADRESS")
+	@Column(name = "adress")
 	public Integer getAdress() {
 		return adress;
 	}

@@ -23,7 +23,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IItem;
+import com.linepro.modellbahn.rest.json.Views;
 
 /**
  * The Class AbstractItem.
@@ -63,6 +65,7 @@ public abstract class AbstractItem implements Serializable, IItem {
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@JsonGetter("id")
+	@JsonView(Views.Internal.class)
 	public Long getId() {
 		return id;
 	}
@@ -86,6 +89,7 @@ public abstract class AbstractItem implements Serializable, IItem {
 
 	@Override
     @Transient
+    @JsonView(Views.Public.class)
     @JsonGetter("deleted")
 	public Boolean getDeleted() {
 		return deleted;

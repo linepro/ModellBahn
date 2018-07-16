@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -37,7 +38,7 @@ public class DecoderFunktionId implements Serializable, IDecoderFunktionId {
 
     @Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=Decoder.class)
-	@JoinColumn(name="DECODER_ID", referencedColumnName="ID")
+	@JoinColumn(name="decoder_id", referencedColumnName="id", foreignKey = @ForeignKey(name = "decoder_fn_fk1"))
     @JsonBackReference
 	public IDecoder getDecoder() {
 		return decoder;
@@ -50,7 +51,7 @@ public class DecoderFunktionId implements Serializable, IDecoderFunktionId {
 
     @Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=DecoderTypFunktion.class)
-	@JoinColumn(name="FUNKTION_ID", referencedColumnName="ID")
+	@JoinColumn(name="funktion_id", referencedColumnName="id", foreignKey = @ForeignKey(name = "decoder_fn_fk2"))
     @JsonBackReference
 	public IDecoderTypFunktion getFunktion() {
 		return funktion;

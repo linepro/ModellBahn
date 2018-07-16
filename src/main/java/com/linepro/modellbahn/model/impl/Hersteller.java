@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -15,7 +16,8 @@ import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 
 @Entity
-@Table(name = "HERSTELLER", indexes = { @Index(columnList = "NAME", unique = true) })
+@Table(name = "hersteller", indexes = { @Index(columnList = "name", unique = true) }, 
+       uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 public class Hersteller extends AbstractNamedItem implements IHersteller {
 
     private static final long serialVersionUID = -2896366936132390553L;
@@ -44,7 +46,7 @@ public class Hersteller extends AbstractNamedItem implements IHersteller {
         url = uRL;
     }
 
-    @Column(name = "URL", nullable = true, length = 512)
+    @Column(name = "url", nullable = true, length = 512)
     public String getUrlStr() {
         return getUrl() != null ? getUrl().toString() : null;
     }
@@ -57,7 +59,7 @@ public class Hersteller extends AbstractNamedItem implements IHersteller {
         }
     }
 
-    @Column(name = "TELEFON", nullable = true, length = 20)
+    @Column(name = "telefon", nullable = true, length = 20)
     public String getTelefon() {
         return Telefon;
     }

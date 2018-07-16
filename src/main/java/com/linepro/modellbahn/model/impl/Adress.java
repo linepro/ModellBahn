@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -21,7 +22,8 @@ import com.linepro.modellbahn.model.IAdress;
  * The Class Adress represents a decoder Address.
  */
 @Entity
-@Table(name = "ADRESSEN", indexes = { @Index(columnList = "TYP_ID,ADRESS", unique = true) })
+@Table(name = "adressen", indexes = { @Index(columnList = "typ_id,adress", unique = true) }, 
+       uniqueConstraints = { @UniqueConstraint(columnNames = { "typ_id", "adress" }) })
 public class Adress implements IAdress {
 
     /** The id. */
@@ -65,7 +67,7 @@ public class Adress implements IAdress {
     }
 
     @Override
-    @Column(name = "POLES", nullable = true)
+    @Column(name = "poles", nullable = true)
     public Integer getPoles() {
         return poles;
     }
@@ -76,7 +78,7 @@ public class Adress implements IAdress {
     }
 
     @Override
-    @Column(name = "SWITCHES", nullable = true)
+    @Column(name = "switches", nullable = true)
     public Long getSwitches() {
         return switches;
     }

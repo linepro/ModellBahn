@@ -8,10 +8,12 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -21,11 +23,12 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IProtokoll;
-import com.linepro.modellbahn.model.util.AbstractItem;
+import com.linepro.modellbahn.model.util.AbstractNamedItem;
 
 @Entity
-@Table(name = "DECODER", indexes = { @Index(columnList = "ID", unique = true) })
-public class Decoder extends AbstractItem implements IDecoder {
+@Table(name = "decoder", indexes = { @Index(columnList = "name", unique = true), @Index(columnList = "decoder_typ_id"),
+        @Index(columnList = "protokoll_id") }, uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+public class Decoder extends AbstractNamedItem implements IDecoder {
 
     private static final long serialVersionUID = 44440227704021482L;
 
@@ -45,17 +48,18 @@ public class Decoder extends AbstractItem implements IDecoder {
         super();
     }
 
-    public Decoder(Long id, IDecoderTyp typ, IProtokoll protokoll, Long fahrstufe,
+    public Decoder(Long id, IDecoderTyp typ, IProtokoll protokoll, String decoderId, String beschreibung,
+            Long fahrstufe,
             Boolean deleted) {
-        super(id, deleted);
+        super(id, decoderId, beschreibung, deleted);
 
         this.typ = typ;
         this.protokoll = protokoll;
         this.fahrstufe = fahrstufe;
     }
 
-    @ManyToOne(fetch=FetchType.LAZY, targetEntity=DecoderTyp.class)
-    @JoinColumn(name="DECODER_TYP_ID", referencedColumnName="ID")
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
+    @JoinColumn(name = "decoder_typ_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_fk1"))
     @JsonBackReference
     public IDecoderTyp getTyp() {
         return typ;
@@ -65,8 +69,8 @@ public class Decoder extends AbstractItem implements IDecoder {
         this.typ = typ;
     }
 
-    @ManyToOne(fetch=FetchType.LAZY, targetEntity=Protokoll.class)
-    @JoinColumn(name="PROTOKOLL_ID", referencedColumnName="ID")
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Protokoll.class)
+    @JoinColumn(name = "protokoll_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_fk2"))
     @JsonBackReference
     public IProtokoll getProtokoll() {
         return protokoll;
@@ -76,7 +80,7 @@ public class Decoder extends AbstractItem implements IDecoder {
         this.protokoll = protokoll;
     }
 
-    @Column(name="FAHRSTUFE")
+    @Column(name = "fahrstufe")
     public Long getFahrstufe() {
         return fahrstufe;
     }
@@ -86,8 +90,8 @@ public class Decoder extends AbstractItem implements IDecoder {
     }
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @Column(name = "ADRESS")
-    @CollectionTable(name = "DECODER_ADRESSEN", joinColumns = @JoinColumn(name = "DECODER_ID", referencedColumnName="ID"))
+    @Column(name = "adress")
+    @CollectionTable(name = "decoder_adressen", joinColumns = @JoinColumn(name = "decoder_id", referencedColumnName = "id"), foreignKey = @ForeignKey(name = "decoder_fk3"))
     public List<Long> getAdressen() {
         return adressen;
     }
@@ -98,7 +102,7 @@ public class Decoder extends AbstractItem implements IDecoder {
     }
 
     @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "DECODER_CV", joinColumns = @JoinColumn(name = "DECODER_ID", referencedColumnName="ID"))
+    @CollectionTable(name = "decoder_cv", joinColumns = @JoinColumn(name = "decoder_id", referencedColumnName = "id"), foreignKey = @ForeignKey(name = "decoder_fk4"))
     @JsonManagedReference
     public List<DecoderCV> getCv() {
         return cv;
@@ -110,7 +114,7 @@ public class Decoder extends AbstractItem implements IDecoder {
     }
 
     @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "DECODER_FUNKTIONEN", joinColumns = @JoinColumn(name = "DECODER_ID", referencedColumnName="ID"))
+    @CollectionTable(name = "decoder_funktionen", joinColumns = @JoinColumn(name = "decoder_id", referencedColumnName = "id"), foreignKey = @ForeignKey(name = "decoder_fk5"))
     @JsonManagedReference
     public List<DecoderFunktion> getFunktionen() {
         return funktionen;

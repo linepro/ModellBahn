@@ -5,6 +5,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -15,7 +16,8 @@ import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 
 @Entity
-@Table(name = "LANDER", indexes = { @Index(columnList = "NAME", unique = true) })
+@Table(name = "lander", indexes = { @Index(columnList = "name", unique = true) }, 
+       uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 public class Land extends AbstractNamedItem implements ILand {
 
     private static final long serialVersionUID = -5352015940349871580L;

@@ -1,10 +1,13 @@
-package com.linepro.modellbahn.rest;
+package com.linepro.modellbahn.rest.util;
 
 import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
 
+import org.glassfish.jersey.linking.DeclarativeLinkingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
+import org.glassfish.jersey.server.TracingConfig;
+import org.glassfish.jersey.server.mvc.jsp.JspMvcFeature;
 import org.slf4j.Logger;
 
 import com.linepro.modellbahn.jersey.SecurityRequestFilter;
@@ -18,13 +21,17 @@ public class ModellBahnConfiguration extends ResourceConfig {
     public ModellBahnConfiguration(Logger logger) {
         packages(PACKAGES);
 
-        // Register my custom provider - not needed if it's in my.package.
         register(SecurityRequestFilter.class);
 
-        // Register an instance of LoggingFilter.
-        //register(new LogFilter(LOGGER, true));
-        
-        // Enable Tracing support.
-        property(ServerProperties.TRACING, "ALL");
+        // MVC.
+        register(JspMvcFeature.class);
+
+        // Logging.
+        //register(LoggingFilter.class);
+
+        // Tracing support.
+        register(DeclarativeLinkingFeature.class);
+
+        property(ServerProperties.TRACING, TracingConfig.ALL.name());
     }
 }

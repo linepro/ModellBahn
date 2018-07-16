@@ -5,7 +5,9 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -17,7 +19,8 @@ import com.linepro.modellbahn.model.IDecoderFunktion;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
 
 @Entity
-@Table(name = "DECODER_FUNKTION")
+@Table(name = "decoder_funktion", indexes = { @Index(columnList = "decoder_id,funktion_id", unique = true) },
+       uniqueConstraints = { @UniqueConstraint(columnNames = { "decoder_id", "funktion_id" })})
 public class DecoderFunktion implements Serializable, IDecoderFunktion {
 
     private static final long serialVersionUID = -3254516717556070251L;
@@ -47,7 +50,7 @@ public class DecoderFunktion implements Serializable, IDecoderFunktion {
 	}
 
     @Override
-	@Column(name="WERT", nullable=true, length=100)
+	@Column(name="wert", nullable=true, length=100)
 	public String getWert() {
 		return wert;
 	}

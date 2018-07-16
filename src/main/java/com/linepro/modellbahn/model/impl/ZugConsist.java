@@ -3,11 +3,13 @@ package com.linepro.modellbahn.model.impl;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -19,8 +21,9 @@ import com.linepro.modellbahn.model.IZugConsist;
 import com.linepro.modellbahn.model.util.AbstractItem;
 
 @Entity
-@Table(name = "CONSIST", indexes = { @Index(columnList = "ZUG_ID,ARTIKEL_ID", unique = true),
-		@Index(columnList = "ZUG_ID,POSITION", unique = true) })
+@Table(name = "consist", indexes = { @Index(columnList = "zug_id"),
+		@Index(columnList = "artikel_id", unique = true) }, 
+        uniqueConstraints = { @UniqueConstraint(columnNames = { "zug_id", "position" }) })
 public class ZugConsist extends AbstractItem implements IZugConsist {
 
     private static final long serialVersionUID = 3941436184732408563L;
@@ -45,7 +48,7 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
 
 	@Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity=Zug.class)
-	@JoinColumn(name = "ZUG_ID", referencedColumnName="ID")
+	@JoinColumn(name = "zug_id", referencedColumnName="id", foreignKey = @ForeignKey(name = "consist_fk1"))
 	@JsonBackReference
 	public IZug getZug() {
 		return zug;
@@ -58,7 +61,7 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
 
 	@Override
     @OrderColumn
-	@Column(name = "POSITION")
+	@Column(name = "position")
 	public Integer getPosition() {
 		return position;
 	}
@@ -70,7 +73,7 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
 
 	@Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity=Artikel.class)
-	@JoinColumn(name = "ARTIKEL_ID", referencedColumnName="ID")
+	@JoinColumn(name = "artikel_id", referencedColumnName="id", foreignKey = @ForeignKey(name = "consist_fk2"))
     @JsonBackReference
 	public IArtikel getArtikel() {
 		return artikel;

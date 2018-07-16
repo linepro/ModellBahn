@@ -12,13 +12,17 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.INamedItem;
+import com.linepro.modellbahn.rest.json.Views;
 
 /**
  * The Class AbstractNamedItem.
  */
 @MappedSuperclass
+@JsonPropertyOrder({"id","name","description","deleted"})
 public abstract class AbstractNamedItem extends AbstractItem implements INamedItem {
 
     /** The Constant serialVersionUID. */
@@ -52,8 +56,9 @@ public abstract class AbstractNamedItem extends AbstractItem implements INamedIt
 	}
 
 	@Override
-    @Column(name="name", length=50)
+    @Column(name="name", unique=true, length=50)
     @JsonGetter("name")
+    @JsonView(Views.DropDown.class)
 	public String getName() {
 		return name;
 	}
@@ -67,6 +72,7 @@ public abstract class AbstractNamedItem extends AbstractItem implements INamedIt
 	@Override
     @Column(name="bezeichnung", nullable=true, length=100)
     @JsonGetter("description")
+    @JsonView(Views.DropDown.class)
 	public String getBezeichnung() {
 		return bezeichnung;
 	}

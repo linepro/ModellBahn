@@ -3,14 +3,14 @@ package com.linepro.modellbahn.model.impl;
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.linepro.modellbahn.model.IKategorie;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 
 @Entity
-@Table(name = "KATEGORIEN", indexes = { @Index(columnList = "NAME", unique = true) })
+@Table(name = "kategorien", indexes = { @Index(columnList = "name", unique = true) }, 
+       uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 public class Kategorie extends AbstractNamedItem implements IKategorie {
 
     private static final long serialVersionUID = -2964561580499221297L;
@@ -19,8 +19,7 @@ public class Kategorie extends AbstractNamedItem implements IKategorie {
 		super();
 	}
 
-    @JsonCreator
-	public Kategorie(@JsonProperty(value="id", required=false) Long id, @JsonProperty(value="name", required=false) String name, @JsonProperty(value="description", required=false) String bezeichnung, @JsonProperty(value="deleted", required=false) Boolean deleted) {
+	public Kategorie( Long id, String name, String bezeichnung, Boolean deleted) {
 		super(id, name, bezeichnung, deleted);
 	}
 }

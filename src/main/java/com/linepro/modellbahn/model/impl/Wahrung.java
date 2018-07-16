@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -12,7 +13,8 @@ import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 
 @Entity
-@Table(name = "WAHRUNGEN", indexes = { @Index(columnList = "NAME", unique = true) })
+@Table(name = "wahrungen", indexes = { @Index(columnList = "name", unique = true) }, 
+       uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 public class Wahrung extends AbstractNamedItem implements IWahrung {
 	
     private static final long serialVersionUID = 9168067747478159138L;
@@ -30,7 +32,7 @@ public class Wahrung extends AbstractNamedItem implements IWahrung {
 	}
 
 	@Override
-    @Column(name="DECIMALS")
+    @Column(name="decimals")
 	public Long getDecimals() {
 		return decimals;
 	}
