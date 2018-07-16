@@ -60,6 +60,7 @@
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
 		<commons-lang3.version>3.7</commons-lang3.version>
 		<dagger.version>2.16</dagger.version>
+        <grizzly-http-servlet.version>2.4.3</grizzly-http-servlet.version>
 		<guava.version>23.6-android</guava.version>
 		<guice-assistedinject.version>4.2.0</guice-assistedinject.version>
 		<guice.version>4.2.0</guice.version>
@@ -426,6 +427,13 @@
             <version>${jersey.version}</version>
         </dependency>
 
+        <!-- Grizzly -->
+        <dependency>
+			<groupId>org.glassfish.grizzly</groupId>
+			<artifactId>grizzly-http-servlet</artifactId>
+			<version>${grizzly-http-servlet.version}</version>
+        </dependency>
+        
         <!-- Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>

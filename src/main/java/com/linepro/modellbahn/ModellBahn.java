@@ -3,8 +3,6 @@ package com.linepro.modellbahn;
 import java.net.URI;
 
 import javax.inject.Inject;
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.slf4j.ILoggerFactory;
@@ -16,8 +14,7 @@ import com.linepro.modellbahn.jersey.ServerBuilder;
 import com.linepro.modellbahn.rest.util.ModellBahnConfiguration;
 import com.linepro.modellbahn.util.DBPopulator;
 
-@ApplicationPath("modellbahn")
-public class ModellBahn extends Application implements IModellBahn {
+public class ModellBahn implements IModellBahn {
 
     protected final Logger logger;
     protected final DBPopulator populator;
@@ -37,7 +34,11 @@ public class ModellBahn extends Application implements IModellBahn {
 
             populator.populate();
             
-            HttpServer server = new ServerBuilder().getServer(baseUri, new ModellBahnConfiguration(logger));
+            SLF4JBridgeHandler.removeHandlersForRootLogger();
+            SLF4JBridgeHandler.install();
+            
+            ModellBahnConfiguration configuration = new ModellBahnConfiguration(logger);
+            HttpServer server = new ServerBuilder().getServer(baseUri, configuration);
 
             Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
                 @Override
@@ -45,15 +46,15 @@ public class ModellBahn extends Application implements IModellBahn {
                     server.shutdownNow();
                 }
             }));
-            
-            SLF4JBridgeHandler.removeHandlersForRootLogger();
-            SLF4JBridgeHandler.install();
-            
+
             server.start();
 
-            logger.info("Application started.\nStop the application using CTRL+C");
+            logger.info("Application started with WADL available at {}/application.wadl\nPress CTRL^C (SIGINT) to terminate.",
+                    baseUri);
 
             Thread.currentThread().join();
+
+            logger.info("Shutting server down..");
         } catch (Exception ex) {
             logger.error("Application start failed: ", ex);
         }

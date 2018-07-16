@@ -20,7 +20,8 @@ public class Main {
             StringBuilder url = new StringBuilder(PROTOCOL)
                     .append(InetAddress.getLocalHost().getCanonicalHostName())
                     .append(":")
-                    .append(PORT);
+                    .append(PORT)
+                    .append("/modellbahn");
 
             URI baseUri = URI.create(url.toString());
 
