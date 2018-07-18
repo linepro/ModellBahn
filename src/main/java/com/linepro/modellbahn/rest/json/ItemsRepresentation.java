@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.ws.rs.core.Link;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IItem;
 
@@ -21,7 +22,7 @@ public class ItemsRepresentation<E extends IItem> implements IRepresentation<Lis
     }
 
     @Override
-    @JsonGetter("")
+    @JsonUnwrapped
     public List<IRepresentation<?>> getItem() {
         return items;
     }

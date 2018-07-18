@@ -19,13 +19,13 @@ public class Wahrung extends AbstractNamedItem implements IWahrung {
 	
     private static final long serialVersionUID = 9168067747478159138L;
 
-    private Long decimals;
+    private Integer decimals;
 	
 	public Wahrung() {
 		super();
 	}
 
-	public Wahrung(Long id, String name, String bezeichnung, Long decimals, Boolean deleted) {
+	public Wahrung(Long id, String name, String bezeichnung, Integer decimals, Boolean deleted) {
 		super(id, name, bezeichnung, deleted);
 
 		this.decimals = decimals;
@@ -33,12 +33,12 @@ public class Wahrung extends AbstractNamedItem implements IWahrung {
 
 	@Override
     @Column(name="decimals")
-	public Long getDecimals() {
+	public Integer getDecimals() {
 		return decimals;
 	}
 
 	@Override
-    public void setDecimals(Long decimals) {
+    public void setDecimals(Integer decimals) {
 		this.decimals = decimals;
 	}
 

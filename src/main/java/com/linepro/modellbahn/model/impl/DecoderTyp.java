@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +22,11 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.linepro.modellbahn.model.IAdressTyp;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypCV;
@@ -33,7 +38,8 @@ import com.linepro.modellbahn.model.util.AbstractNamedItem;
 @Entity
 @Table(name = "decoder_typ", indexes = { @Index(columnList = "adress_typ_id"), @Index(columnList = "hersteller_id"),
         @Index(columnList = "protokoll_id") }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { "hersteller_id", "bestellnr" }) })
+                @UniqueConstraint(columnNames = { "hersteller_id", "name" }) })
+@AttributeOverride(name = "name", column = @Column(name = "name"))
 public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
     private static final long serialVersionUID = 8503812316290492490L;
@@ -41,8 +47,6 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     private IAdressTyp typ;
 
     private IHersteller hersteller;
-
-    private String bestellNr;
 
     private Integer adressen;
 
@@ -62,8 +66,14 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
         super();
     }
 
-    public DecoderTyp(Long id, String name, String bezeichnung, Boolean deleted) {
+    public DecoderTyp(Long id, IHersteller hersteller, IProtokoll protokoll, String name, String bezeichnung,
+            Integer adressen, Boolean sound, Boolean deleted) {
         super(id, name, bezeichnung, deleted);
+
+        setHersteller(hersteller);
+        setProtokoll(protokoll);
+        setAdressen(adressen);
+        setSound(sound);
     }
 
     @Override
@@ -82,7 +92,9 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class)
     @JoinColumn(name = "hersteller_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_typ_fk2"))
-    @JsonBackReference
+    @JsonProperty("hersteller")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IHersteller getHersteller() {
         return hersteller;
     }
@@ -90,17 +102,6 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     @Override
     public void setHersteller(IHersteller hersteller) {
         this.hersteller = hersteller;
-    }
-
-    @Override
-    @Column(name = "bestellnr", length = 30)
-    public String getBestellNr() {
-        return bestellNr;
-    }
-
-    @Override
-    public void setBestellNr(String bestellNr) {
-        this.bestellNr = bestellNr;
     }
 
     @Override
@@ -129,7 +130,9 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Protokoll.class)
     @JoinColumn(name = "protokoll_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_typ_fk3"))
-    @JsonBackReference
+    @JsonProperty("protokoll")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IProtokoll getProtokoll() {
         return protokoll;
     }
@@ -165,6 +168,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     @Override
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "decoderTyp", targetEntity = DecoderTypCV.class)
     @JsonManagedReference
+    @JsonProperty("cvs")
     public Set<IDecoderTypCV> getCv() {
         return cv;
     }
@@ -191,8 +195,8 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString())
-                .append("typ", getTyp()).append("hersteller", getHersteller()).append("bestellNr", getBestellNr())
-                .append("iMax", getiMax()).append("protokoll", getProtokoll()).append("fahrstufe", getFahrstufe())
+                .append("typ", getTyp()).append("hersteller", getHersteller()).append("iMax", getiMax())
+                .append("protokoll", getProtokoll()).append("fahrstufe", getFahrstufe())
                 .append("sound", getSound()).append("adressen", getAdressen()).append("cv", getCv())
                 .append("funktion", getFunktion()).toString();
     }

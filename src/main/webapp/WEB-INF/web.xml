@@ -13,6 +13,7 @@
 			<param-name>jersey.config.servlet.filter.staticContentRegex</param-name>
 			<param-value>/.*html</param-value>
 		</init-param>
+
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 

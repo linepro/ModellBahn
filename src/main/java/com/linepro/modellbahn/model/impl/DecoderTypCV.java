@@ -33,18 +33,18 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
 
     private String bezeichnung;
 
-    private Long minimal;
+    private Integer minimal;
 
-    private Long maximal;
+    private Integer maximal;
 
-    private Long werkseinstellung;
+    private Integer werkseinstellung;
 
     public DecoderTypCV() {
         super();
     }
 
-    public DecoderTypCV(IDecoderTyp decoderTyp, Long id, Integer cv, String bezeichnung, Long minimal, Long maximal,
-            Long werkseinstellung, Boolean deleted) {
+    public DecoderTypCV(Long id, IDecoderTyp decoderTyp, Integer cv, String bezeichnung, Integer minimal, Integer maximal,
+            Integer werkseinstellung, Boolean deleted) {
         super(id, deleted);
 
         this.cv = cv;
@@ -93,34 +93,34 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
 
     @Override
     @Column(name = "minimal", nullable = true)
-    public Long getMinimal() {
+    public Integer getMinimal() {
         return minimal;
     }
 
     @Override
-    public void setMinimal(Long minimal) {
+    public void setMinimal(Integer minimal) {
         this.minimal = minimal;
     }
 
     @Override
     @Column(name = "maximal", nullable = true)
-    public Long getMaximal() {
+    public Integer getMaximal() {
         return maximal;
     }
 
     @Override
-    public void setMaximal(Long maximal) {
+    public void setMaximal(Integer maximal) {
         this.maximal = maximal;
     }
 
     @Override
     @Column(name = "werkseinstellung", nullable = true)
-    public Long getWerkseinstellung() {
+    public Integer getWerkseinstellung() {
         return werkseinstellung;
     }
 
     @Override
-    public void setWerkseinstellung(Long werkseinstellung) {
+    public void setWerkseinstellung(Integer werkseinstellung) {
         this.werkseinstellung = werkseinstellung;
     }
 

@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.persistence.impl;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
@@ -21,10 +23,23 @@ public class NamedItemPersister<E extends INamedItem> extends ItemPersister<E> i
 
     @Override
     public E findByName(String name) throws Exception {
-        E template = create();
+        if (name != null) {
+            E template = create();
+    
+            template.setName(name);
+    
+            List<E> findAll = super.findAll(template);
+            
+            if (!findAll.isEmpty()) {
+                return findAll.get(0);
+            }
+        }
+        
+        return null;
+    }
 
-        template.setName(name);
-
-        return super.findAll(template).get(0);
+    @Override
+    public E find(E entity) throws Exception {
+        return findByName(entity.getName());
     }
 }

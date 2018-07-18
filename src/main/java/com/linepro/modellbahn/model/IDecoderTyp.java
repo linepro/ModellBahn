@@ -13,10 +13,6 @@ public interface IDecoderTyp {
 
     void setHersteller(IHersteller hersteller);
 
-    String getBestellNr();
-
-    void setBestellNr(String bestellNr);
-
     Integer getAdressen();
 
     void setAdressen(Integer adressen);

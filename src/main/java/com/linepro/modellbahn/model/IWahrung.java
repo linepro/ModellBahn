@@ -2,8 +2,8 @@ package com.linepro.modellbahn.model;
 
 public interface IWahrung extends INamedItem {
 
-    Long getDecimals();
+    Integer getDecimals();
 
-    void setDecimals(Long decimals);
+    void setDecimals(Integer decimals);
 
 }

@@ -14,16 +14,16 @@ public interface IDecoderTypCV {
 
     void setBezeichnung(String bezeichnung);
 
-    Long getMinimal();
+    Integer getMinimal();
 
-    void setMinimal(Long minimal);
+    void setMinimal(Integer minimal);
 
-    Long getMaximal();
+    Integer getMaximal();
 
-    void setMaximal(Long maximal);
+    void setMaximal(Integer maximal);
 
-    Long getWerkseinstellung();
+    Integer getWerkseinstellung();
 
-    void setWerkseinstellung(Long werkseinstellung);
+    void setWerkseinstellung(Integer werkseinstellung);
 
 }

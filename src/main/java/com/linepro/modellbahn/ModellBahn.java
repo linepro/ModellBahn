@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
-import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.google.inject.assistedinject.Assisted;
 import com.linepro.modellbahn.jersey.ServerBuilder;
@@ -34,10 +33,7 @@ public class ModellBahn implements IModellBahn {
 
             populator.populate();
             
-            SLF4JBridgeHandler.removeHandlersForRootLogger();
-            SLF4JBridgeHandler.install();
-            
-            ModellBahnConfiguration configuration = new ModellBahnConfiguration(logger);
+            ModellBahnConfiguration configuration = new ModellBahnConfiguration();
             HttpServer server = new ServerBuilder().getServer(baseUri, configuration);
 
             Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {

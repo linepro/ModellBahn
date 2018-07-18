@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.rest.util;
 
-import static javax.ws.rs.HttpMethod.*;
+import static javax.ws.rs.HttpMethod.GET;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -18,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.beanutils.ConvertUtils;
@@ -172,7 +173,7 @@ public abstract class AbstractService<E extends IItem> {
     }
 
     protected Link makeLink(URI uri, String path, String rel, String method) {
-        return Link.fromUri(uri + path).rel(rel).type(method).build();
+        return Link.fromUri(UriBuilder.fromUri(uri).path( path).build()).rel(rel).type(method).build();
     }
 
     protected void addHome(IRepresentation<?> representation) {

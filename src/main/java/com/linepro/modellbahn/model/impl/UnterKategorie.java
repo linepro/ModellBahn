@@ -34,7 +34,7 @@ public class UnterKategorie extends AbstractNamedItem implements IUnterKategorie
         super();
     }
 
-    public UnterKategorie(Long id, String name, IKategorie kategorie, String bezeichnung, Boolean deleted) {
+    public UnterKategorie(Long id, IKategorie kategorie, String name, String bezeichnung, Boolean deleted) {
         super(id, name, bezeichnung, deleted);
 
         this.kategorie = kategorie;

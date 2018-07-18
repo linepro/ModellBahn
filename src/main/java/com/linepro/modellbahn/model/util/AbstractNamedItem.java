@@ -51,8 +51,8 @@ public abstract class AbstractNamedItem extends AbstractItem implements INamedIt
 	public AbstractNamedItem(Long id, String name, String bezeichnung, Boolean deleted) {
 		super(id, deleted);
 		
-		this.name = name;
-		this.bezeichnung = bezeichnung;
+		setName(name);
+		setBezeichnung(bezeichnung);
 	}
 
 	@Override

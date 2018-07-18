@@ -2,6 +2,7 @@ package com.linepro.modellbahn.persistence.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -73,7 +74,7 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
         try {
             begin();
 
-            E result = (E) getEntityManager().find(entityClass, entity.getId());
+            E result = find(entity);
 
             if (result != null) {
                 for (Selector selector : selectors.values()) {
@@ -99,6 +100,17 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
         }
 
         return null;
+    }
+
+    @Override
+    public E save(E entity) throws Exception {
+        E result = update(entity);
+        
+        if (result == null) {
+            result = add(entity);
+        }
+
+        return result;
     }
 
     @Override
@@ -155,15 +167,17 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
     @Override
     public E find(E entity) throws Exception {
         try {
-            begin();
-
-            E result = getEntityManager().find(entityClass, entity.getId());
-
-            commit();
-
-            info("found " + result);
-
-            return result;
+            if (entity.getId() != null) {
+                begin();
+    
+                E result = getEntityManager().find(entityClass, entity.getId());
+    
+                commit();
+    
+                info("found " + result);
+    
+                return result;
+            }
         } catch (Exception e) {
             rollback();
 
@@ -231,23 +245,43 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
     }
 
     @Override
+    public void populateLazyCollection(Collection<?> collection) throws Exception {
+        begin();
+        
+        collection.size();
+        
+        commit();
+    }
+
+    @Override
+    public void populateLazyCollections() throws Exception {
+        
+    }
+
+    @Override
     public EntityManager getEntityManager() {
         return entityManager;
     }
 
     @Override
     public void begin() {
-        getEntityManager().getTransaction().begin();
+        if (!getEntityManager().getTransaction().isActive()) {
+            getEntityManager().getTransaction().begin();
+        }
     }
 
     @Override
     public void commit() {
-        getEntityManager().getTransaction().commit();
+        if (getEntityManager().getTransaction().isActive()) {
+            getEntityManager().getTransaction().commit();
+        }
     }
 
     @Override
     public void rollback() {
-        getEntityManager().getTransaction().rollback();
+        if (getEntityManager().getTransaction().isActive()) {
+            getEntityManager().getTransaction().rollback();
+        }
     }
 
     protected Logger getLogger() {
