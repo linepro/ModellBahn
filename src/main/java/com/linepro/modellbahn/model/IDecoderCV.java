@@ -1,12 +1,14 @@
 package com.linepro.modellbahn.model;
 
-import com.linepro.modellbahn.model.impl.DecoderCVId;
-
 public interface IDecoderCV {
 
-    DecoderCVId getId();
+    public IDecoder getDecoder();
 
-    void setId(DecoderCVId id);
+    public void setDecoder(IDecoder decoder);
+
+    public IDecoderTypCV getCV();
+
+    public void setCV(IDecoderTypCV cv);
 
     Integer getWert();
 

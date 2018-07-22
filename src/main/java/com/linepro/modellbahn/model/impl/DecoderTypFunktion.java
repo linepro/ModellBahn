@@ -13,41 +13,46 @@ import javax.persistence.UniqueConstraint;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
-import com.linepro.modellbahn.model.util.AbstractItem;
+import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.persistence.util.BusinessKey;
 
 @Entity
-@Table(name = "decoder_typ_funktionen", indexes = { @Index(columnList = "decoder_typ_id,reihe,nr", unique = true),
+@Table(name = "decoder_typ_funktionen", indexes = { @Index(columnList = "decoder_typ_id,reihe,name", unique = true),
         @Index(columnList = "decoder_typ_id") }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { "decoder_typ_id", "reihe", "nr" }) })
-public class DecoderTypFunktion extends AbstractItem implements IDecoderTypFunktion {
+                @UniqueConstraint(columnNames = { "decoder_typ_id", "reihe", "name" }) })
+public class DecoderTypFunktion extends AbstractNamedItem implements IDecoderTypFunktion {
 
     private static final long serialVersionUID = -9194895557054214626L;
 
     private IDecoderTyp decoderTyp;
 
-    private Long reihe;
+    private Integer reihe;
 
-    private String funktionNr;
+    private Boolean programmable;
 
     public DecoderTypFunktion() {
         super();
     }
 
-    public DecoderTypFunktion(Long id, IDecoderTyp decoderTyp, Long reihe, String funktionNr, Boolean deleted) {
-        super(id, deleted);
+    public DecoderTypFunktion(Long id, IDecoderTyp decoderTyp, Integer reihe, String funktionNr, String bezeichnung, Boolean programmable, Boolean deleted) {
+        super(id, funktionNr, bezeichnung, deleted);
 
-        this.decoderTyp = decoderTyp;
-        this.reihe = reihe;
-        this.funktionNr = funktionNr;
+        setDecoderTyp(decoderTyp);
+        setReihe(reihe);
+        setProgrammable(programmable);
     }
 
     @Override
+    @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
     @JoinColumn(name = "decoder_typ_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_typ_fn_fk1"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IDecoderTyp getDecoderTyp() {
         return decoderTyp;
     }
@@ -58,34 +63,35 @@ public class DecoderTypFunktion extends AbstractItem implements IDecoderTypFunkt
     }
 
     @Override
+    @BusinessKey
     @Column(name = "reihe", nullable = false)
-    public Long getReihe() {
+    public Integer getReihe() {
         return reihe;
     }
 
     @Override
-    public void setReihe(Long reihe) {
+    public void setReihe(Integer reihe) {
         this.reihe = reihe;
     }
 
     @Override
-    @Column(name = "nr", nullable = false, length = 4)
-    public String getFunktionNr() {
-        return funktionNr;
+    @Column(name = "programmable", nullable = false)
+    public Boolean getProgrammable() {
+        return programmable;
     }
 
     @Override
-    public void setFunktionNr(String funktionNr) {
-        this.funktionNr = funktionNr;
+    public void setProgrammable(Boolean programmable) {
+        this.programmable = programmable;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
-                .append("decoderTyp", decoderTyp)
-                .append("reihe", reihe)
-                .append("funktionNr", funktionNr)
+                .append("decoderTyp", getDecoderTyp())
+                .append("reihe", getReihe())
+                .append("programmable", getProgrammable())
                 .toString();
     }
 }

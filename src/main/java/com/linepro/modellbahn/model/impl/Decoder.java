@@ -18,8 +18,10 @@ import javax.persistence.UniqueConstraint;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IProtokoll;
@@ -38,7 +40,7 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
 
     private Long fahrstufe;
 
-    private List<Long> adressen = new ArrayList<>();
+    private List<DecoderAdress> adressen = new ArrayList<>();
 
     private List<DecoderCV> cv = new ArrayList<>();
 
@@ -60,7 +62,8 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
     @JoinColumn(name = "decoder_typ_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_fk1"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IDecoderTyp getTyp() {
         return typ;
     }
@@ -71,7 +74,8 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Protokoll.class)
     @JoinColumn(name = "protokoll_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_fk2"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IProtokoll getProtokoll() {
         return protokoll;
     }
@@ -92,11 +96,12 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
     @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = "adress")
     @CollectionTable(name = "decoder_adressen", joinColumns = @JoinColumn(name = "decoder_id", referencedColumnName = "id"), foreignKey = @ForeignKey(name = "decoder_fk3"))
-    public List<Long> getAdressen() {
+    @JsonManagedReference
+    public List<DecoderAdress> getAdressen() {
         return adressen;
     }
 
-    public void setAdressen(List<Long> adressen) {
+    public void setAdressen(List<DecoderAdress> adressen) {
         this.adressen.clear();
         this.adressen.addAll(adressen);
     }

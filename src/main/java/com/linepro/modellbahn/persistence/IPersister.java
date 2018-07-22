@@ -22,13 +22,22 @@ public interface IPersister<E extends IItem> extends ISessionManager {
     E add(E entity) throws Exception;
 
     /**
-     * Finds the entity by primary or business key (specify only one); convienence method on findAll(template).
+     * Finds the entity by primary key
      *
-     * @param entity the entity
+     * @param Long the id
      * @return the entity
      * @throws Exception if there more than one match or there is a DB error
      */
-    E find(E entity) throws Exception;
+    E findById(Long id) throws Exception;
+
+    /**
+     * Finds the entity by business key.
+     *
+     * @param key the key fields
+     * @return the entity
+     * @throws Exception if there more than one match or there is a DB error
+     */
+    E findByKey(Object... key) throws Exception;
 
     /**
      * Finds all the entities.

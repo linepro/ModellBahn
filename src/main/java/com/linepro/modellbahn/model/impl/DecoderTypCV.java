@@ -14,10 +14,13 @@ import javax.validation.constraints.Min;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.util.AbstractItem;
+import com.linepro.modellbahn.persistence.util.BusinessKey;
 
 @Entity
 @Table(name = "decoder_typ_cv", indexes = { @Index(columnList = "decoder_typ_id,cv", unique = true),
@@ -47,18 +50,20 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
             Integer werkseinstellung, Boolean deleted) {
         super(id, deleted);
 
+        this.decoderTyp = decoderTyp;
         this.cv = cv;
         this.bezeichnung = bezeichnung;
-        this.decoderTyp = decoderTyp;
         this.minimal = minimal;
         this.maximal = maximal;
         this.werkseinstellung = werkseinstellung;
     }
 
     @Override
+    @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
     @JoinColumn(name = "decoder_typ_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_typ_cv_fk1"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IDecoderTyp getDecoderTyp() {
         return decoderTyp;
     }
@@ -69,6 +74,7 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
     }
 
     @Override
+    @BusinessKey
     @Column(name = "cv", nullable = false)
     @Min(0)
     public Integer getCv() {
@@ -127,6 +133,7 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString())
+                .append("decoderTyp", getDecoderTyp())
                 .append("cv", getCv())
                 .append("bezeichnung", getBezeichnung())
                 .append("minimal", getMinimal())

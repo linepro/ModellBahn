@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.INamedItem;
+import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.Views;
 
 /**
@@ -24,6 +25,8 @@ import com.linepro.modellbahn.rest.json.Views;
 @MappedSuperclass
 @JsonPropertyOrder({"id","name","description","deleted"})
 public abstract class AbstractNamedItem extends AbstractItem implements INamedItem {
+
+    protected static final String[] BUSINESS_KEY = new String[] { "name" };
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -278823660682127691L;
@@ -56,6 +59,7 @@ public abstract class AbstractNamedItem extends AbstractItem implements INamedIt
 	}
 
 	@Override
+	@BusinessKey
     @Column(name="name", unique=true, length=50)
     @JsonGetter("name")
     @JsonView(Views.DropDown.class)

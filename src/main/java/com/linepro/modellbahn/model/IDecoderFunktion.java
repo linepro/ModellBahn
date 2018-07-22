@@ -1,12 +1,14 @@
 package com.linepro.modellbahn.model;
 
-import com.linepro.modellbahn.model.impl.DecoderFunktionId;
-
 public interface IDecoderFunktion {
 
-    DecoderFunktionId getId();
+    IDecoder getDecoder();
 
-    void setId(DecoderFunktionId id);
+    void setDecoder(IDecoder decoder);
+
+    IDecoderTypFunktion getFunktion();
+
+    void setFunktion(IDecoderTypFunktion funktion);
 
     String getWert();
 

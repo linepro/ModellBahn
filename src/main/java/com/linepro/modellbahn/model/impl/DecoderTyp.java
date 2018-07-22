@@ -8,6 +8,8 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.Index;
@@ -21,22 +23,23 @@ import javax.validation.constraints.Min;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.linepro.modellbahn.model.IAdressTyp;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.model.IProtokoll;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.model.util.AdressTyp;
+import com.linepro.modellbahn.model.util.Konfiguration;
+import com.linepro.modellbahn.persistence.util.BusinessKey;
 
 @Entity
-@Table(name = "decoder_typ", indexes = { @Index(columnList = "adress_typ_id"), @Index(columnList = "hersteller_id"),
+@Table(name = "decoder_typ", indexes = { @Index(columnList = "hersteller_id"),
         @Index(columnList = "protokoll_id") }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { "hersteller_id", "name" }) })
 @AttributeOverride(name = "name", column = @Column(name = "name"))
@@ -44,7 +47,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
     private static final long serialVersionUID = 8503812316290492490L;
 
-    private IAdressTyp typ;
+    private AdressTyp typ;
 
     private IHersteller hersteller;
 
@@ -57,6 +60,8 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     private Integer fahrstufe;
 
     private Boolean sound;
+    
+    private Konfiguration konfiguration;
 
     private Set<IDecoderTypCV> cv = new HashSet<IDecoderTypCV>();
 
@@ -67,7 +72,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     }
 
     public DecoderTyp(Long id, IHersteller hersteller, IProtokoll protokoll, String name, String bezeichnung,
-            Integer adressen, Boolean sound, Boolean deleted) {
+            Integer adressen, Boolean sound, Konfiguration konfiguration, Boolean deleted) {
         super(id, name, bezeichnung, deleted);
 
         setHersteller(hersteller);
@@ -77,24 +82,12 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     }
 
     @Override
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = AdressTyp.class)
-    @JoinColumn(name = "adress_typ_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_typ_fk1"))
-    @JsonBackReference
-    public IAdressTyp getTyp() {
-        return typ;
-    }
-
-    @Override
-    public void setTyp(IAdressTyp typ) {
-        this.typ = typ;
-    }
-
-    @Override
+    @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class)
     @JoinColumn(name = "hersteller_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_typ_fk2"))
     @JsonProperty("hersteller")
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "hersteller")
     public IHersteller getHersteller() {
         return hersteller;
     }
@@ -114,6 +107,18 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     @Override
     public void setAdressen(Integer adressen) {
         this.adressen = adressen;
+    }
+
+    @Override
+    @Enumerated(EnumType.STRING)
+    @Column(name = "adress_typ", length=15)
+    public AdressTyp getTyp() {
+        return typ;
+    }
+
+    @Override
+    public void setTyp(AdressTyp typ) {
+        this.typ = typ;
     }
 
     @Override
@@ -163,6 +168,18 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     @Override
     public void setSound(Boolean sound) {
         this.sound = sound;
+    }
+
+    @Override
+    @Enumerated(EnumType.STRING)
+    @Column(name = "konfiguration", nullable = false, length=15)
+    public Konfiguration getKonfiguration() {
+        return konfiguration;
+    }
+
+    @Override
+    public void setKonfiguration(Konfiguration konfiguration) {
+        this.konfiguration = konfiguration;
     }
 
     @Override

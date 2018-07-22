@@ -9,7 +9,9 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.persistence.Column;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.JoinColumn;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.criteria.CommonAbstractCriteria;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaDelete;
@@ -23,6 +25,7 @@ import org.slf4j.Logger;
 import com.google.inject.assistedinject.Assisted;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.persistence.IPersister;
+import com.linepro.modellbahn.persistence.util.BusinessKeyBuilder;
 import com.linepro.modellbahn.util.Selector;
 import com.linepro.modellbahn.util.SelectorsBuilder;
 
@@ -36,6 +39,8 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
 
     private final Map<String, Selector> selectors;
 
+    private final List<String> businessKeys;
+
     @Inject
     public ItemPersister(final EntityManager entityManager, final ILoggerFactory logManager,
             @Assisted final Class<E> entityClass) {
@@ -43,6 +48,7 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
         this.logger = logManager.getLogger(entityClass.getName());
         this.entityClass = entityClass;
 
+        businessKeys = new BusinessKeyBuilder().build(entityClass);
         selectors = new SelectorsBuilder().build(entityClass, Arrays.asList(Column.class, JoinColumn.class));
 
         info(selectors.values().toString());
@@ -64,19 +70,30 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
             rollback();
 
             error("error saving " + entity, e);
+            
+            throw e;
         }
-
-        return null;
     }
 
     @Override
     public E update(E entity) throws Exception {
+        return internalUpdate(entity, false);
+    }
+
+    @Override
+    public E save(E entity) throws Exception {
+        return internalUpdate(entity, true);
+    }
+
+    protected E internalUpdate(E entity, boolean addOrUpdate) throws Exception {
         try {
             begin();
 
-            E result = find(entity);
+            List<E> results = findAll(entity);
+            
+            if (results.size() == 1 || (results.size() == 0 && addOrUpdate)) {
+                E result = results.isEmpty() ? create() : results.get(0);
 
-            if (result != null) {
                 for (Selector selector : selectors.values()) {
                     Object value = selector.getGetter().invoke(entity);
 
@@ -86,31 +103,24 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
                 }
 
                 result = getEntityManager().merge(result);
+
+                commit();
+
+                info("updated " + result);
+
+                return result;
+            } else if (results.isEmpty()) {
+                throw new EntityNotFoundException();
+            } else {
+                throw new NonUniqueResultException(); 
             }
-
-            commit();
-
-            info("updated " + result);
-
-            return result;
         } catch (Exception e) {
             rollback();
 
             error("error updating " + entity, e);
+
+            throw e;
         }
-
-        return null;
-    }
-
-    @Override
-    public E save(E entity) throws Exception {
-        E result = update(entity);
-        
-        if (result == null) {
-            result = add(entity);
-        }
-
-        return result;
     }
 
     @Override
@@ -129,6 +139,8 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
             rollback();
 
             error("error deleting " + entity, e);
+            
+            throw e;
         }
     }
 
@@ -161,16 +173,18 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
             rollback();
 
             error("error deleting " + template, e);
+            
+            throw e;
         }
     }
 
     @Override
-    public E find(E entity) throws Exception {
+    public E findById(Long id) throws Exception {
         try {
-            if (entity.getId() != null) {
+            if (id != null) {
                 begin();
     
-                E result = getEntityManager().find(entityClass, entity.getId());
+                E result = getEntityManager().find(entityClass, id);
     
                 commit();
     
@@ -178,13 +192,53 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
     
                 return result;
             }
+            
+            return null;
         } catch (Exception e) {
             rollback();
 
-            error("error finding " + entity.getId(), e);
+            error("error finding " + id, e);
+            
+            throw e;
+       }
+    }
+
+    @Override
+    public E findByKey(Object... keys) throws Exception {
+        if (keys.length != businessKeys.size()) {
+            throw new IllegalArgumentException();
         }
 
-        return null;
+        try {
+            begin();
+
+            CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<E> query = builder.createQuery(entityClass);
+            Root<E> root = query.from(entityClass);
+
+            List<Predicate> predicates = new ArrayList<Predicate>(keys.length);
+
+            for (int i = 0; i < keys.length; i++) {
+                Object key = keys[i] instanceof IItem ? ((IItem) keys[i]).getId() : keys[i];
+                predicates.add(builder.equal(root.get(businessKeys.get(i)), key));
+            }
+
+            query.select(root).where(predicates.toArray(new Predicate[] {}));
+
+            E result = getEntityManager().createQuery(query).getSingleResult();
+
+            commit();
+
+            info("found " + result);
+
+            return result;
+        } catch (Exception e) {
+            rollback();
+
+            error("error finding " + keys, e);
+            
+            throw e;
+        }
     }
 
     @Override
@@ -222,9 +276,9 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
             rollback();
 
             error("error searching " + template, e);
+            
+            throw e;
         }
-
-        return null;
     }
 
     protected List<Predicate> getConditions(CriteriaBuilder builder, CommonAbstractCriteria query, Root<E> root,
@@ -298,6 +352,7 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
         throw e;
     }
 
+    
     @Override
     public Class<E> getEntityClass() {
         return entityClass;

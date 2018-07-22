@@ -1,31 +1,36 @@
 package com.linepro.modellbahn.model.impl;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderFunktion;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
+import com.linepro.modellbahn.model.util.AbstractItem;
 
 @Entity
 @Table(name = "decoder_funktion", indexes = { @Index(columnList = "decoder_id,funktion_id", unique = true) },
        uniqueConstraints = { @UniqueConstraint(columnNames = { "decoder_id", "funktion_id" })})
-public class DecoderFunktion implements Serializable, IDecoderFunktion {
+public class DecoderFunktion extends AbstractItem implements IDecoderFunktion {
 
     private static final long serialVersionUID = -3254516717556070251L;
 
-    private DecoderFunktionId id;
+    private IDecoder decoder;
+    
+    private IDecoderTypFunktion funktion;
 
 	private String wert;
 
@@ -34,20 +39,34 @@ public class DecoderFunktion implements Serializable, IDecoderFunktion {
 	}
 
 	public DecoderFunktion(IDecoder decoder, IDecoderTypFunktion funktion, String wert) {
-		setId(new DecoderFunktionId(decoder, funktion));
-		this.wert = wert;
+        this.decoder = decoder;
+        this.funktion = funktion;		
+        this.wert = wert;
 	}
 
-	@Override
-	@EmbeddedId
-	public DecoderFunktionId getId() {
-		return id;
-	}
+    @ManyToOne(fetch=FetchType.LAZY, targetEntity=Decoder.class)
+    @JoinColumn(name="decoder_id", referencedColumnName="id", foreignKey = @ForeignKey(name = "decoder_fn_fk1"))
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    public IDecoder getDecoder() {
+        return decoder;
+    }
 
-    @Override
-	public void setId(DecoderFunktionId id) {
-		this.id = id;
-	}
+    public void setDecoder(IDecoder decoder) {
+        this.decoder = decoder;
+    }
+
+    @ManyToOne(fetch=FetchType.LAZY, targetEntity=DecoderTypFunktion.class)
+    @JoinColumn(name="funktion_id", referencedColumnName="id", foreignKey = @ForeignKey(name = "decoder_fn_fk2"))
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    public IDecoderTypFunktion getFunktion() {
+        return funktion;
+    }
+
+    public void setFunktion(IDecoderTypFunktion funktion) {
+        this.funktion = funktion;
+    }
 
     @Override
 	@Column(name="wert", nullable=true, length=100)
@@ -61,36 +80,9 @@ public class DecoderFunktion implements Serializable, IDecoderFunktion {
 	}
 
 	@Override
-	public int hashCode() {
-		return new HashCodeBuilder()
-				.append(getId())
-				.hashCode();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (obj == null) {
-			return false;
-		}
-
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-
-		DecoderFunktion other = (DecoderFunktion) obj;
-
-		return new EqualsBuilder()
-				.append(getId(), other.getId())
-				.isEquals();
-	}
-
-	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("decoder", getDecoder())
 				.append("id", getId())
 				.append("wert", getWert())
 				.toString();

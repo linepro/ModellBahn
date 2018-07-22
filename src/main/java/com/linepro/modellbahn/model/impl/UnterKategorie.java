@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.linepro.modellbahn.model.IKategorie;
 import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.persistence.util.BusinessKey;
 
 @Entity
 @Table(name = "unter_kategorien", indexes = { @Index(columnList = "kategorie_id,name", unique = true),
@@ -41,6 +42,7 @@ public class UnterKategorie extends AbstractNamedItem implements IUnterKategorie
     }
 
     @Override
+    @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kategorie.class)
     @JoinColumn(name = "kategorie_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "unterkategorie_fk1"))
     @JsonProperty("kategorie")

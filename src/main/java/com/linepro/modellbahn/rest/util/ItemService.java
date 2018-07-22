@@ -28,7 +28,7 @@ public class ItemService<E extends IItem> extends AbstractService<E> {
     @JsonView(Views.Public.class)
     public Response get(@PathParam("id") Long id) {
         try {
-            E entity = getPersister().find(create(id));
+            E entity = getPersister().findById(id);
 
             if (entity == null) {
                 return getResponse(Response.status(Status.NOT_FOUND));

@@ -17,7 +17,9 @@ import javax.persistence.UniqueConstraint;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.IAntrieb;
 import com.linepro.modellbahn.model.IGattung;
@@ -189,7 +191,8 @@ public class Vorbild extends AbstractItem implements IVorbild {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gattung.class)
     @JoinColumn(name = "gattung_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "vorbild_fk1"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IGattung getGattung() {
         return gattung;
     }
@@ -202,7 +205,8 @@ public class Vorbild extends AbstractItem implements IVorbild {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = UnterKategorie.class)
     @JoinColumn(name = "unter_kategorie_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "vorbild_fk2"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IUnterKategorie getUnterKategorie() {
         return unterKategorie;
     }
@@ -260,7 +264,8 @@ public class Vorbild extends AbstractItem implements IVorbild {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Antrieb.class)
     @JoinColumn(name = "antrieb_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "vorbild_fk3"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IAntrieb getAntrieb() {
         return antrieb;
     }
@@ -272,7 +277,8 @@ public class Vorbild extends AbstractItem implements IVorbild {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class)
     @JoinColumn(name = "achsfolg_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "vorbild_fk4"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IAchsfolg getAchsfolg() {
         return achsfolg;
     }
@@ -472,7 +478,8 @@ public class Vorbild extends AbstractItem implements IVorbild {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class)
     @JoinColumn(name = "steuerung_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "vorbild_fk5"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public ISteuerung getSteuerung() {
         return steuerung;
     }

@@ -1,17 +1,16 @@
 package com.linepro.modellbahn.model;
 
-public interface IDecoderTypFunktion {
+public interface IDecoderTypFunktion extends INamedItem {
 
     IDecoderTyp getDecoderTyp();
 
     void setDecoderTyp(IDecoderTyp decoderTyp);
 
-    Long getReihe();
+    Integer getReihe();
 
-    void setReihe(Long reihe);
+    void setReihe(Integer reihe);
 
-    String getFunktionNr();
-
-    void setFunktionNr(String funktionNr);
-
+    Boolean getProgrammable();
+    
+    void setProgrammable(Boolean programmable);
 }

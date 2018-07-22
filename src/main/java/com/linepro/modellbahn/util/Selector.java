@@ -9,11 +9,11 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class Selector {
 
-    final String name;
+    protected final String name;
 
-    final Method getter;
+    protected final Method getter;
 
-    final Method setter;
+    protected final Method setter;
 
     public Selector(String name, Method getter, Method setter) {
         this.name = name;

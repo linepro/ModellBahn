@@ -24,8 +24,10 @@ import javax.persistence.UniqueConstraint;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.IAufbau;
 import com.linepro.modellbahn.model.IBahnverwaltung;
@@ -130,7 +132,8 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Epoch.class)
     @JoinColumn(name = "epoch_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk1"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IEpoch getEpoch() {
         return epoch;
     }
@@ -143,7 +146,8 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gattung.class)
     @JoinColumn(name = "gattung_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk2"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IGattung getGattung() {
         return gattung;
     }
@@ -156,7 +160,8 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Bahnverwaltung.class)
     @JoinColumn(name = "bahnverwaltung_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk3"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IBahnverwaltung getBahnverwaltung() {
         return bahnverwaltung;
     }
@@ -169,7 +174,8 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class)
     @JoinColumn(name = "achsfolg_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk4"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IAchsfolg getAchsfolge() {
         return achsfolge;
     }
@@ -182,7 +188,8 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Massstab.class)
     @JoinColumn(name = "massstab_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk5"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IMassstab getMassstab() {
         return massstab;
     }
@@ -195,7 +202,8 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Spurweite.class)
     @JoinColumn(name = "spurweite_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk6"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public ISpurweite getSpurweite() {
         return spurweite;
     }
@@ -208,7 +216,8 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = UnterKategorie.class)
     @JoinColumn(name = "unter_kategorie_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk7"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IUnterKategorie getUnterKategorie() {
         return unterKategorie;
     }
@@ -221,7 +230,8 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = SonderModell.class)
     @JoinColumn(name = "sondermodel_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk8"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public ISonderModell getSondermodel() {
         return Sondermodel;
     }
@@ -234,7 +244,8 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Aufbau.class)
     @JoinColumn(name = "aufbau_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk9"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IAufbau getAufbau() {
         return aufbau;
     }
@@ -247,7 +258,8 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Licht.class)
     @JoinColumn(name = "licht_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk10"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public ILicht getLicht() {
         return licht;
     }
@@ -260,7 +272,8 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kupplung.class)
     @JoinColumn(name = "kupplung_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk11"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IKupplung getKupplung() {
         return kupplung;
     }
@@ -273,7 +286,8 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Vorbild.class)
     @JoinColumn(name = "vorbild_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk12"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IVorbild getVorbild() {
         return vorbild;
     }
@@ -286,7 +300,8 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class)
     @JoinColumn(name = "steuerung_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk13"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public ISteuerung getSteuerung() {
         return steuerung;
     }
@@ -299,7 +314,8 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
     @JoinColumn(name = "decoder_typ_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk14"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IDecoderTyp getDecoderTyp() {
         return decoderTyp;
     }
@@ -312,7 +328,8 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = MotorTyp.class)
     @JoinColumn(name = "motor_typ_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk15"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IMotorTyp getMotorTyp() {
         return motorTyp;
     }
@@ -325,7 +342,8 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class)
     @JoinColumn(name = "hersteller_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk16"))
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IHersteller getHersteller() {
         return hersteller;
     }

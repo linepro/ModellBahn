@@ -17,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.INamedItem;
-import com.linepro.modellbahn.persistence.INamedItemPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.json.IRepresentation;
 import com.linepro.modellbahn.rest.json.Views;
@@ -25,7 +24,7 @@ import com.linepro.modellbahn.rest.json.Views;
 public abstract class NamedItemService<E extends INamedItem> extends AbstractService<E> {
 
     public NamedItemService(final Class<E> entityClass) {
-        super(entityClass, (INamedItemPersister<E>) StaticPersisterFactory.get().createNamedItemPersister(entityClass));
+        super(entityClass, StaticPersisterFactory.get().createNamedItemPersister(entityClass));
     }
 
     @JsonCreator
@@ -49,7 +48,7 @@ public abstract class NamedItemService<E extends INamedItem> extends AbstractSer
     @JsonView(Views.Public.class)
     public Response get(@PathParam("name") String name) {
         try {
-            E entity = ((INamedItemPersister<E>) getPersister()).findByName(name);
+            E entity = getPersister().findByKey(name);
 
             if (entity == null) {
                 return getResponse(Response.status(Status.NOT_FOUND));

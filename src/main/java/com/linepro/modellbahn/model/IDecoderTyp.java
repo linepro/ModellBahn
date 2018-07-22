@@ -3,11 +3,14 @@ package com.linepro.modellbahn.model;
 import java.math.BigDecimal;
 import java.util.Set;
 
+import com.linepro.modellbahn.model.util.AdressTyp;
+import com.linepro.modellbahn.model.util.Konfiguration;
+
 public interface IDecoderTyp {
 
-    IAdressTyp getTyp();
+    AdressTyp getTyp();
 
-    void setTyp(IAdressTyp typ);
+    void setTyp(AdressTyp typ);
 
     IHersteller getHersteller();
 
@@ -40,5 +43,9 @@ public interface IDecoderTyp {
     Set<IDecoderTypFunktion> getFunktion();
 
     void setFunktion(Set<IDecoderTypFunktion> funktion);
+
+    Konfiguration getKonfiguration();
+
+    void setKonfiguration(Konfiguration konfiguration);
 
 }
