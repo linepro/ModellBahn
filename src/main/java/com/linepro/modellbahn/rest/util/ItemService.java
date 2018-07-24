@@ -16,12 +16,32 @@ import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.rest.json.Views;
 
+/**
+ * ItemService.
+ * Basic service with CRUD functionality
+ * @author  $Author:$
+ * @version $Id:$
+ *
+ * @param <E> the element type
+ */
 public class ItemService<E extends IItem> extends AbstractService<E> {
 
+    /**
+     * Instantiates a new item service.
+     *
+     * @param entityClass the entity class
+     * @param persister the persister
+     */
     public ItemService(final Class<E> entityClass, IPersister<E> persister) {
         super(entityClass, persister);
     }
 
+    /**
+     * Gets the.
+     *
+     * @param id the id
+     * @return the response
+     */
     @GET
     @Path("/{id: [0-9]+}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -40,6 +60,13 @@ public class ItemService<E extends IItem> extends AbstractService<E> {
         }
     }
 
+    /**
+     * Update.
+     *
+     * @param id the id
+     * @param entity the entity
+     * @return the response
+     */
     @PUT
     @Path("/{id}")
     @Consumes({ MediaType.APPLICATION_JSON })
@@ -61,6 +88,12 @@ public class ItemService<E extends IItem> extends AbstractService<E> {
         }
     }
 
+    /**
+     * Delete.
+     *
+     * @param id the id
+     * @return the response
+     */
     @DELETE
     @Path("/{id: [0-9]+}")
     @Produces(MediaType.APPLICATION_JSON)

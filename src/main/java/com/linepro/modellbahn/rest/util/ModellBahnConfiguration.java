@@ -13,16 +13,25 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 import org.glassfish.jersey.server.mvc.MvcFeature;
 import org.glassfish.jersey.server.mvc.jsp.JspMvcFeature;
-import org.glassfish.jersey.servlet.ServletProperties;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.linepro.modellbahn.jersey.SecurityRequestFilter;
 
-@ApplicationPath("/modellbahn")
+/**
+ * ModellBahnConfiguration.
+ * Jersey configuration for the ModellBahn application 
+ * @author  $Author:$
+ * @version $Id:$
+ */
+@ApplicationPath("/ModellBahn")
 public class ModellBahnConfiguration extends ResourceConfig {
 
+    /** The Constant PACKAGES. */
     private static final String[] PACKAGES = { "com.linepro.modellbahn.rest" };
 
+    /**
+     * Instantiates a new modell bahn configuration.
+     */
     @Inject
     public ModellBahnConfiguration() {
         packages(PACKAGES);
@@ -38,8 +47,9 @@ public class ModellBahnConfiguration extends ResourceConfig {
         property(ServerProperties.TRACING_THRESHOLD, "VERBOSE");
         
         //property(ServletProperties.FILTER_CONTEXT_PATH, ""); 
+        /*
         property(ServletProperties.FILTER_FORWARD_ON_404, true);
-        property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "(image|css)");
+        property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "(image|css|)");
 
         /*
         property(ClassNamesResourceConfig.PROPERTY_CLASSNAMES, "");
@@ -67,13 +77,14 @@ public class ModellBahnConfiguration extends ResourceConfig {
         property(ResourceConfig.PROPERTY_MEDIA_TYPE_MAPPINGS, "");
         property(ResourceConfig.PROPERTY_RESOURCE_FILTER_FACTORIES, "");
         property(ResourceConfig.PROPERTY_WADL_GENERATOR_CONFIG, "");
-        property(ServletContainer.APPLICATION_CONFIG_CLASS, "");
-        property(ServletContainer.FEATURE_FILTER_FORWARD_ON_404, "");
-        property(ServletContainer.GLASSFISH_DEFAULT_ERROR_PAGE_RESPONSE, "");
-        property(ServletContainer.JSP_TEMPLATES_BASE_PATH, "");
-        property(ServletContainer.PROPERTY_FILTER_CONTEXT_PATH, "");
-        property(ServletContainer.PROPERTY_WEB_PAGE_CONTENT_REGEX, "");
-        property(ServletContainer.RESOURCE_CONFIG_CLASS, "");
+        property(ServletProperties.APPLICATION_CONFIG_CLASS, "");
+        property(ServletProperties.FILTER_FORWARD_ON_404, true);
+        property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, true);
+        property(ServletProperties.GLASSFISH_DEFAULT_ERROR_PAGE_RESPONSE, "");
+        property(ServletProperties.JSP_TEMPLATES_BASE_PATH, "");
+        property(ServletProperties.PROPERTY_FILTER_CONTEXT_PATH, "");
+        property(ServletProperties.PROPERTY_WEB_PAGE_CONTENT_REGEX, "");
+        property(ServletProperties.RESOURCE_CONFIG_CLASS, "");
         property(WebComponent.APPLICATION_CONFIG_CLASS, "");
         property(WebComponent.JSP_TEMPLATES_BASE_PATH, "");
         property(WebComponent.RESOURCE_CONFIG_CLASS, "");
@@ -91,6 +102,11 @@ public class ModellBahnConfiguration extends ResourceConfig {
         register(DeclarativeLinkingFeature.class);
     }
     
+    /**
+     * Gets the logger.
+     *
+     * @return the logger
+     */
     protected Logger getLogger() {
         Logger logger = java.util.logging.Logger.getLogger("ModellBahn");
         logger.setLevel(Level.FINEST);

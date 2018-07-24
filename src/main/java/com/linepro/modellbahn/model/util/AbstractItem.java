@@ -1,11 +1,8 @@
-/*
- * AbstractItem
- * Author:  JohnG
- * Version: $id$
- */
 package com.linepro.modellbahn.model.util;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -14,24 +11,31 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
+import javax.ws.rs.core.Link;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IItem;
+import com.linepro.modellbahn.rest.json.LinkSerializer;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
- * The Class AbstractItem.
+ * AbstractItem.
+ * The base class for all items 
+ * @author  $Author:$
+ * @version $Id:$
  */
 @MappedSuperclass
 @Cacheable
+//@JsonAutoDetect(fieldVisibility = Visibility.PUBLIC_ONLY)
 public abstract class AbstractItem implements Serializable, IItem {
 
     /** The Constant serialVersionUID. */
@@ -42,6 +46,8 @@ public abstract class AbstractItem implements Serializable, IItem {
 
 	/** The deleted. */
 	private Boolean deleted;
+	
+    protected final Set<Link> links = new HashSet<Link>();
 
 	/**
 	 * Instantiates a new abstract item.
@@ -62,7 +68,7 @@ public abstract class AbstractItem implements Serializable, IItem {
 
 	@Override
     @Id
-	@Column(name="id")
+	@Column(name="id", nullable = true)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@JsonGetter("id")
 	@JsonView(Views.Internal.class)
@@ -76,7 +82,7 @@ public abstract class AbstractItem implements Serializable, IItem {
 		this.id = id;
 	}
 
-	@Column(name="deleted", length=5)
+	@Column(name="deleted", length=5, nullable = true)
 	@JsonIgnore
 	public String getDeletedStr() {
 		return getDeleted() != null ? getDeleted().toString() : null;
@@ -100,6 +106,19 @@ public abstract class AbstractItem implements Serializable, IItem {
     public void setDeleted(Boolean deleted) {
 		this.deleted = deleted;
 	}
+
+    @Override
+    @Transient
+    @JsonGetter("links")
+    @JsonSerialize(contentUsing=LinkSerializer.class)
+    public Set<Link> getLinks() {
+        return links;
+    }
+    
+    @Override
+    public void addLink(Link link) {
+        links.add(link);
+    }
 
 	@Override
 	public int hashCode() {
@@ -127,7 +146,9 @@ public abstract class AbstractItem implements Serializable, IItem {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("id", getId())
-				.append("deleted", getDeleted()).toString();
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+		        .append("id", getId())
+				.append("deleted", getDeleted())
+				.toString();
 	}
 }

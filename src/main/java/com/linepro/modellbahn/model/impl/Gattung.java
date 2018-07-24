@@ -8,17 +8,39 @@ import javax.persistence.UniqueConstraint;
 import com.linepro.modellbahn.model.IGattung;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 
-@Entity
+/**
+ * Gattung.
+ * The Gattung (or Baureihe) for product
+ * @author  $Author:$
+ * @version $Id:$
+ */
+@Entity(name = "Gattung")
 @Table(name = "gattungen", indexes = { @Index(columnList = "name", unique = true) }, 
        uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 public class Gattung extends AbstractNamedItem implements IGattung {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6746062683096738117L;
 
+    /**
+     * Instantiates a new gattung.
+     */
     public Gattung() {
 		super();
 	}
 
+    public Gattung(String name) {
+        super(name);
+    }
+
+    /**
+	 * Instantiates a new gattung.
+	 *
+	 * @param id the id
+	 * @param name the name
+	 * @param bezeichnung the bezeichnung
+	 * @param deleted the deleted
+	 */
 	public Gattung( Long id, String name, String bezeichnung, Boolean deleted) {
 		super(id, name, bezeichnung, deleted);
 	}

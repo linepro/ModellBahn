@@ -13,12 +13,30 @@ import com.linepro.modellbahn.jersey.ServerBuilder;
 import com.linepro.modellbahn.rest.util.ModellBahnConfiguration;
 import com.linepro.modellbahn.util.DBPopulator;
 
+/**
+ * ModellBahn.
+ * The ModellBahn application
+ * @author  $Author:$
+ * @version $Id:$
+ */
 public class ModellBahn implements IModellBahn {
 
+    /** The logger. */
     protected final Logger logger;
+    
+    /** The populator. */
     protected final DBPopulator populator;
+    
+    /** The base uri. */
     protected final URI baseUri;
     
+    /**
+     * Instantiates a new modell bahn.
+     *
+     * @param loggerFactory the logger factory
+     * @param populator the populator
+     * @param baseUri the base uri
+     */
     @Inject
     public ModellBahn(ILoggerFactory loggerFactory, DBPopulator populator, @Assisted URI baseUri) {
         this.logger = loggerFactory.getLogger(getClass().getName());

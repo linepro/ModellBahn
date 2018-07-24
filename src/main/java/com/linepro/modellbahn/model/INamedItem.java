@@ -6,7 +6,9 @@
 package com.linepro.modellbahn.model;
 
 /**
- * The Interface INamedItem.
+ * INamedItem.
+ * @author   $Author$
+ * @version  $Id$
  */
 public interface INamedItem extends IItem {
 

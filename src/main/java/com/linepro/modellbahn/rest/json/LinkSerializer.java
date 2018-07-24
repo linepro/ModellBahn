@@ -1,12 +1,21 @@
 package com.linepro.modellbahn.rest.json;
 
+import java.io.IOException;
+
+import javax.ws.rs.core.Link;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import java.io.IOException;
-import javax.ws.rs.core.Link;
 
+/**
+ * LinkSerializer.
+ * Custom serializer for Link to ensure only the HATEOAS fields are provided 
+ * 
+ * @author   $Author$
+ * @version  $Id$
+ */
 public class LinkSerializer extends JsonSerializer<Link> {
 
     @Override

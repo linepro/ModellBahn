@@ -8,11 +8,25 @@ import com.google.inject.Injector;
 import com.linepro.modellbahn.guice.IModellBahnFactory;
 import com.linepro.modellbahn.guice.ModellBahnModule;
 
+/**
+ * Main.
+ * The ModellBahn launcher 
+ * @author  $Author:$
+ * @version $Id:$
+ */
 public class Main {
+    
+    /** The Constant PROTOCOL. */
     protected static final String PROTOCOL = "http://";
 
+    /** The Constant PORT. */
     protected static final int PORT = 8086;
 
+    /**
+     * The main method.
+     *
+     * @param args the arguments
+     */
     public static void main(String[] args) {
         try {
             Injector injector = Guice.createInjector(new ModellBahnModule());

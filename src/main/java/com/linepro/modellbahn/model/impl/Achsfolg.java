@@ -14,9 +14,12 @@ import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 
 /**
- * The Class Achsfolg represents Axle configuration using German nomenclature.
+ * Achsfolg
+ * Represents Axle configuration using German nomenclature.
+ * @author  $Author:$
+ * @version $Id:$
  */
-@Entity
+@Entity(name = "Achsfolg")
 @Table(name = "achsfolgen", indexes = { @Index(columnList = "name", unique = true) }, 
        uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 public class Achsfolg extends AbstractNamedItem implements IAchsfolg {
@@ -29,6 +32,10 @@ public class Achsfolg extends AbstractNamedItem implements IAchsfolg {
      */
     public Achsfolg() {
         super();
+    }
+
+    public Achsfolg(String name) {
+        super(name);
     }
 
     /**

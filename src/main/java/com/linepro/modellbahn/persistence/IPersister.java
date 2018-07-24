@@ -6,8 +6,10 @@ import java.util.List;
 import com.linepro.modellbahn.model.IItem;
 
 /**
- * The Interface IPersister.
- *
+ * IPersister.
+ * A data access object for the specified element
+ * @author   $Author$
+ * @version  $Id$
  * @param <E> the element type
  */
 public interface IPersister<E extends IItem> extends ISessionManager {
@@ -22,9 +24,9 @@ public interface IPersister<E extends IItem> extends ISessionManager {
     E add(E entity) throws Exception;
 
     /**
-     * Finds the entity by primary key
+     * Finds the entity by primary key.
      *
-     * @param Long the id
+     * @param id the id
      * @return the entity
      * @throws Exception if there more than one match or there is a DB error
      */
@@ -33,11 +35,11 @@ public interface IPersister<E extends IItem> extends ISessionManager {
     /**
      * Finds the entity by business key.
      *
-     * @param key the key fields
+     * @param template the template to scan for
      * @return the entity
      * @throws Exception if there more than one match or there is a DB error
      */
-    E findByKey(Object... key) throws Exception;
+    E findByKey(E template) throws Exception;
 
     /**
      * Finds all the entities.
@@ -57,7 +59,7 @@ public interface IPersister<E extends IItem> extends ISessionManager {
     List<E> findAll(E template) throws Exception;
 
     /**
-     * Updates the specified entity to match the supplied entity
+     * Updates the specified entity to match the supplied entity.
      *
      * @param entity the new state of the entity.
      * @return the updated entity.
@@ -97,14 +99,23 @@ public interface IPersister<E extends IItem> extends ISessionManager {
      */
     E save(E entity) throws Exception;
 
+    /**
+     * Populate lazy collection.
+     *
+     * @param collection the collection
+     * @throws Exception the exception
+     */
     void populateLazyCollection(Collection<?> collection) throws Exception;
 
     /**
      * Gets the entity class.
-     *
-     * @return the entity class
+     * @return the class
      */
     Class<E> getEntityClass();
 
+    /**
+     * Populates any lazy collections for the item
+     * @throws Exception if there is a DB error
+     */
     void populateLazyCollections() throws Exception;
 }

@@ -4,6 +4,11 @@ xmlns="http://xmlns.jcp.org/xml/ns/persistence"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
 	version="2.1">
 	
+	<!--
+	Perisistence definitions for ModellBahn project 
+	$Author$
+	$Id$
+	-->
 	<persistence-unit name="modellbahn" transaction-type="RESOURCE_LOCAL">
         <description>ModellBahn</description>
         <!--
@@ -11,8 +16,6 @@ xmlns="http://xmlns.jcp.org/xml/ns/persistence"
         -->
 		
         <class>com.linepro.modellbahn.model.impl.Achsfolg</class>
-        <class>com.linepro.modellbahn.model.impl.Adress</class>
-        <class>com.linepro.modellbahn.model.impl.AdressTyp</class>
         <class>com.linepro.modellbahn.model.impl.Antrieb</class>
         <class>com.linepro.modellbahn.model.impl.Artikel</class>
         <class>com.linepro.modellbahn.model.impl.Aufbau</class>
@@ -38,7 +41,6 @@ xmlns="http://xmlns.jcp.org/xml/ns/persistence"
         <class>com.linepro.modellbahn.model.impl.Sondermodel</class>
         <class>com.linepro.modellbahn.model.impl.Spurweite</class>
         <class>com.linepro.modellbahn.model.impl.Steuerung</class>
-        <class>com.linepro.modellbahn.model.impl.Student</class>
         <class>com.linepro.modellbahn.model.impl.UnterKategorie</class>
         <class>com.linepro.modellbahn.model.impl.Vorbild</class>
         <class>com.linepro.modellbahn.model.impl.Wahrung</class>
@@ -48,9 +50,9 @@ xmlns="http://xmlns.jcp.org/xml/ns/persistence"
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:h2:./modellbahn" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:h2:./modellbahn;TRACE_LEVEL_FILE=4;TRACE_LEVEL_SYSTEM_OUT=3;AUTO_SERVER=TRUE" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
-			<property name="javax.persistence.jdbc.password" value="" />
+			<property name="javax.persistence.jdbc.password" value="sa" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
 			<!--
 			<property name="hibernate.hbm2ddl.auto" value="update" />

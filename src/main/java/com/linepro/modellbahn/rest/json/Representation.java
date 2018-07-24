@@ -1,7 +1,6 @@
 package com.linepro.modellbahn.rest.json;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.ws.rs.core.Link;
@@ -9,22 +8,35 @@ import javax.ws.rs.core.Link;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.model.IItem;
 
-public class ItemsRepresentation<E extends IItem> implements IRepresentation<List<IRepresentation<?>>> {
+/**
+ * Representation.
+ * A holder to attach links in the response body (instead of the header).
+ * @author  $Author:$
+ * @version $Id:$
+ */
+public class Representation implements IRepresentation {
 
-    protected final List<IRepresentation<?>> items;
+    /** The item. */
+    protected final Object item;
 
+    /** The links. */
     protected final Set<Link> links = new HashSet<Link>();
 
-    public ItemsRepresentation(List<IRepresentation<?>> items) {
-        this.items = items;
+    /**
+     * Instantiates a new item representation.
+     *
+     * @param item the item
+     */
+    public Representation(Object item) {
+        this.item = item;
     }
 
     @Override
+    @JsonGetter
     @JsonUnwrapped
-    public List<IRepresentation<?>> getItem() {
-        return items;
+    public Object getEntity() {
+        return item;
     }
     
     @Override

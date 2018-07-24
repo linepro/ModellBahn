@@ -13,14 +13,26 @@ import com.linepro.modellbahn.model.INamedItem;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.IPersisterFactory;
 
+/**
+ * A factory for creating Persister objects.
+ */
 public class PersisterFactory implements IPersisterFactory {
 
+    /** The entity manager. */
     protected final EntityManager entityManager;
 
+    /** The log manager. */
     protected final ILoggerFactory logManager;
 
+    /** The persisters. */
     protected final Map<Class<? extends IItem>,IPersister<? extends IItem>> persisters = new HashMap<>();
     
+    /**
+     * Instantiates a new persister factory.
+     *
+     * @param entityManager the entity manager
+     * @param logManager the log manager
+     */
     @Inject
     public PersisterFactory(final EntityManager entityManager, final ILoggerFactory logManager) {
         this.entityManager = entityManager;

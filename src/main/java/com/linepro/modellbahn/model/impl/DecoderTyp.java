@@ -18,15 +18,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Min;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypCV;
@@ -37,40 +36,86 @@ import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.model.util.AdressTyp;
 import com.linepro.modellbahn.model.util.Konfiguration;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
+import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
-@Entity
+/**
+ * DecoderTyp.
+ * Represents a Decoder type (manufacturer : part numer) 
+ * @author  $Author:$
+ * @version $Id:$
+ */
+@Entity(name = "DecoderTyp")
 @Table(name = "decoder_typ", indexes = { @Index(columnList = "hersteller_id"),
         @Index(columnList = "protokoll_id") }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { "hersteller_id", "name" }) })
 @AttributeOverride(name = "name", column = @Column(name = "name"))
 public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8503812316290492490L;
 
-    private AdressTyp typ;
+    /** The typ. */
+    private AdressTyp adressTyp;
 
+    /** The hersteller. */
     private IHersteller hersteller;
 
+    /** The adressen. */
     private Integer adressen;
 
+    /** The i max. */
     private BigDecimal iMax;
 
+    /** The protokoll. */
     private IProtokoll protokoll;
 
+    /** The fahrstufe. */
     private Integer fahrstufe;
 
+    /** The sound. */
     private Boolean sound;
     
+    /** The konfiguration. */
     private Konfiguration konfiguration;
 
-    private Set<IDecoderTypCV> cv = new HashSet<IDecoderTypCV>();
+    /** The cv. */
+    private Set<IDecoderTypCV> CVs = new HashSet<IDecoderTypCV>();
 
-    private Set<IDecoderTypFunktion> funktion = new HashSet<IDecoderTypFunktion>();
+    /** The funktion. */
+    private Set<IDecoderTypFunktion> funktionen = new HashSet<IDecoderTypFunktion>();
 
+    /**
+     * Instantiates a new decoder typ.
+     */
     public DecoderTyp() {
         super();
     }
 
+    /**
+     * Convienience method for lookups
+     * @param hersteller
+     * @param name
+     */
+    public DecoderTyp(IHersteller hersteller, String name) {
+        super(name);
+
+        setHersteller(hersteller);
+    }
+    
+    /**
+     * Instantiates a new decoder typ.
+     *
+     * @param id the id
+     * @param hersteller the hersteller
+     * @param protokoll the protokoll
+     * @param name the name
+     * @param bezeichnung the bezeichnung
+     * @param adressen the adressen
+     * @param sound the sound
+     * @param konfiguration the konfiguration
+     * @param deleted the deleted
+     */
     public DecoderTyp(Long id, IHersteller hersteller, IProtokoll protokoll, String name, String bezeichnung,
             Integer adressen, Boolean sound, Konfiguration konfiguration, Boolean deleted) {
         super(id, name, bezeichnung, deleted);
@@ -79,13 +124,15 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
         setProtokoll(protokoll);
         setAdressen(adressen);
         setSound(sound);
+        setKonfiguration(konfiguration);
     }
 
     @Override
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class)
-    @JoinColumn(name = "hersteller_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_typ_fk2"))
-    @JsonProperty("hersteller")
+    @JoinColumn(name = "hersteller_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_typ_fk2"))
+    @JsonView(Views.DropDown.class)
+    @JsonGetter("hersteller")
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "hersteller")
     public IHersteller getHersteller() {
@@ -93,49 +140,58 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     }
 
     @Override
+    @JsonSetter("hersteller")
     public void setHersteller(IHersteller hersteller) {
         this.hersteller = hersteller;
     }
 
     @Override
-    @Column(name = "adressen", nullable = false, columnDefinition = "SMALLINT DEFAULT 1 NOT NULL")
-    @Min(1)
+    @Column(name = "adressen", nullable = false)
+    @JsonView(Views.Public.class)
+    @JsonGetter("adressen")
     public Integer getAdressen() {
         return adressen;
     }
 
     @Override
+    @JsonSetter("adressen")
     public void setAdressen(Integer adressen) {
         this.adressen = adressen;
     }
 
     @Override
     @Enumerated(EnumType.STRING)
-    @Column(name = "adress_typ", length=15)
-    public AdressTyp getTyp() {
-        return typ;
+    @Column(name = "adress_typ", length=15, nullable = true)
+    @JsonView(Views.Public.class)
+    @JsonGetter("adressTyp")
+    public AdressTyp getAdressTyp() {
+        return adressTyp;
     }
 
     @Override
-    public void setTyp(AdressTyp typ) {
-        this.typ = typ;
+    @JsonSetter("adressTyp")
+    public void setAdressTyp(AdressTyp typ) {
+        this.adressTyp = typ;
     }
 
     @Override
-    @Column(name = "i_max", nullable = true, precision = 6, scale = 3)
+    @Column(name = "i_max", nullable = true, precision = 6, scale = 2)
+    @JsonView(Views.Public.class)
+    @JsonGetter("iMax")
     public BigDecimal getiMax() {
         return iMax;
     }
 
     @Override
+    @JsonSetter("iMax")
     public void setiMax(BigDecimal iMax) {
         this.iMax = iMax;
     }
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Protokoll.class)
-    @JoinColumn(name = "protokoll_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_typ_fk3"))
-    @JsonProperty("protokoll")
+    @JoinColumn(name = "protokoll_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_typ_fk3"))
+    @JsonGetter("protokoll")
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IProtokoll getProtokoll() {
@@ -143,29 +199,36 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     }
 
     @Override
+    @JsonSetter("protokoll")
     public void setProtokoll(IProtokoll protokoll) {
         this.protokoll = protokoll;
     }
 
     @Override
     @Column(name = "fahrstufe", nullable = true)
-    @Min(1)
+    @JsonView(Views.Public.class)
+    @JsonGetter("fahrstufe")
     public Integer getFahrstufe() {
         return fahrstufe;
     }
 
     @Override
+    @JsonView(Views.Public.class)
+    @JsonSetter("fahrstufe")
     public void setFahrstufe(Integer fahrstufe) {
         this.fahrstufe = fahrstufe;
     }
 
     @Override
     @Column(name = "sound", nullable = false)
+    @JsonView(Views.Public.class)
+    @JsonGetter("sound")
     public Boolean getSound() {
         return sound;
     }
 
     @Override
+    @JsonSetter("sound")
     public void setSound(Boolean sound) {
         this.sound = sound;
     }
@@ -173,48 +236,80 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     @Override
     @Enumerated(EnumType.STRING)
     @Column(name = "konfiguration", nullable = false, length=15)
+    @JsonView(Views.Public.class)
+    @JsonGetter("konfiguration")
     public Konfiguration getKonfiguration() {
         return konfiguration;
     }
 
     @Override
+    @JsonSetter("konfiguration")
     public void setKonfiguration(Konfiguration konfiguration) {
         this.konfiguration = konfiguration;
     }
 
     @Override
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "decoderTyp", targetEntity = DecoderTypCV.class)
-    @JsonManagedReference
-    @JsonProperty("cvs")
-    public Set<IDecoderTypCV> getCv() {
-        return cv;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "decoderTyp", targetEntity = DecoderTypCV.class, orphanRemoval = true)
+    @JsonView(Views.Public.class)
+    @JsonGetter("cv")
+    public Set<IDecoderTypCV> getCVs() {
+        return CVs;
     }
 
     @Override
-    public void setCv(Set<IDecoderTypCV> cv) {
-        this.cv.clear();
-        this.cv.addAll(cv);
+    @JsonSetter("cv")
+    public void setCVs(Set<IDecoderTypCV> CVs) {
+        this.CVs = CVs;
     }
 
     @Override
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "decoderTyp", targetEntity = DecoderTypFunktion.class)
-    @JsonManagedReference
-    public Set<IDecoderTypFunktion> getFunktion() {
-        return funktion;
+    public void addCV(IDecoderTypCV CV) {
+        getCVs().add(CV);
     }
 
     @Override
-    public void setFunktion(Set<IDecoderTypFunktion> funktion) {
-        this.funktion.clear();
-        this.funktion.addAll(funktion);
+    public void removeCV(IDecoderTypCV CV) {
+        getCVs().remove(CV);
+    }
+
+    @Override
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "decoderTyp", targetEntity = DecoderTypFunktion.class, orphanRemoval = true)
+    @JsonView(Views.Public.class)
+    @JsonGetter("funktionen")
+    public Set<IDecoderTypFunktion> getFunktionen() {
+        return funktionen;
+    }
+
+    @Override
+    @JsonSetter("funktionen")
+    public void setFunktionen(Set<IDecoderTypFunktion> funktionen) {
+        this.funktionen = funktionen;
+    }
+
+    @Override
+    public void addFunktion(IDecoderTypFunktion funktion) {
+        getFunktionen().add(funktion);
+    }
+
+    @Override
+    public void removeFunktion(IDecoderTypFunktion Funktion) {
+        getFunktionen().remove(Funktion);
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString())
-                .append("typ", getTyp()).append("hersteller", getHersteller()).append("iMax", getiMax())
-                .append("protokoll", getProtokoll()).append("fahrstufe", getFahrstufe())
-                .append("sound", getSound()).append("adressen", getAdressen()).append("cv", getCv())
-                .append("funktion", getFunktion()).toString();
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .appendSuper(super.toString())
+                .append("hersteller", getHersteller())
+                .append("protokoll", getProtokoll())
+                .append("iMax", getiMax())
+                .append("adresTyp", getAdressTyp())
+                .append("fahrstufe", getFahrstufe())
+                .append("sound", getSound())
+                .append("konfiguration", getKonfiguration())
+                .append("adressen", getAdressen())
+                .append("cvs", getCVs())
+                .append("funktionen", getFunktionen())
+                .toString();
     }
 }

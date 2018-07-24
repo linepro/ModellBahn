@@ -16,6 +16,12 @@ import com.linepro.modellbahn.persistence.IPersisterFactory;
 import com.linepro.modellbahn.persistence.impl.PersisterFactory;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 
+/**
+ * ModellBahnModule.
+ * Guice bindings for ModellBahn
+ * @author   $Author$
+ * @version  $Id$
+ */
 public class ModellBahnModule extends AbstractModule {
 
     @Override

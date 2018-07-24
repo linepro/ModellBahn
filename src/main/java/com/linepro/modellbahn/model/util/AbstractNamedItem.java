@@ -1,14 +1,10 @@
-/*
- * AbstractNamedItem
- * Author:  JohnG
- * Version: $id$
- */
 package com.linepro.modellbahn.model.util;
+
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
@@ -18,18 +14,22 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.INamedItem;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
- * The Class AbstractNamedItem.
+ * AbstractNamedItem.
+ * Base class for items with a name (business key) and a description.
+ * @author   $Author$
+ * @version  $Id$
  */
 @MappedSuperclass
 @JsonPropertyOrder({"id","name","description","deleted"})
-public abstract class AbstractNamedItem extends AbstractItem implements INamedItem {
-
-    protected static final String[] BUSINESS_KEY = new String[] { "name" };
+public abstract class AbstractNamedItem extends AbstractItem implements INamedItem, Serializable {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -278823660682127691L;
+
+    protected static final String[] BUSINESS_KEY = new String[] { "name" };
 
     /** The name. */
     private String name;
@@ -42,6 +42,16 @@ public abstract class AbstractNamedItem extends AbstractItem implements INamedIt
 	 */
 	public AbstractNamedItem() {
 	}
+
+    /**
+     * Convienience method for lookups
+     * @param name
+     */
+    public AbstractNamedItem(String name) {
+        super(null, null);
+
+        setName(name);
+    }
 
 	/**
 	 * Instantiates a new abstract named item.
@@ -58,9 +68,9 @@ public abstract class AbstractNamedItem extends AbstractItem implements INamedIt
 		setBezeichnung(bezeichnung);
 	}
 
-	@Override
+    @Override
 	@BusinessKey
-    @Column(name="name", unique=true, length=50)
+    @Column(name="name", unique=true, length=50, nullable = true)
     @JsonGetter("name")
     @JsonView(Views.DropDown.class)
 	public String getName() {

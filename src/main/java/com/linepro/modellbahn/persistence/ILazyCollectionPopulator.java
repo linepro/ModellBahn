@@ -1,4 +1,4 @@
-package com.linepro.modellbahn.persistence.impl;
+package com.linepro.modellbahn.persistence;
 
 import java.util.Collection;
 

@@ -2,13 +2,14 @@ package com.linepro.modellbahn.persistence.impl;
 
 import java.util.Collection;
 
-import com.linepro.modellbahn.persistence.IPersister;
+import com.linepro.modellbahn.persistence.ILazyCollectionPopulator;
+import com.linepro.modellbahn.persistence.ISessionManager;
 
 public class LazyCollectionPopulator implements ILazyCollectionPopulator {
 
-    protected final IPersister<?> persister;
+    protected final ISessionManager persister;
     
-    public LazyCollectionPopulator(IPersister<?> persister) {
+    public LazyCollectionPopulator(ISessionManager persister) {
         this.persister = persister;
     }
     

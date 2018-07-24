@@ -18,15 +18,37 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.INamedItem;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
-import com.linepro.modellbahn.rest.json.IRepresentation;
 import com.linepro.modellbahn.rest.json.Views;
 
+/**
+ * NamedItemService.
+ * Basic CRUD for NamedItems
+ * @author  $Author:$
+ * @version $Id:$
+ *
+ * @param <E> the element type
+ */
 public abstract class NamedItemService<E extends INamedItem> extends AbstractService<E> {
 
+    /**
+     * Instantiates a new named item service.
+     *
+     * @param entityClass the entity class
+     */
     public NamedItemService(final Class<E> entityClass) {
         super(entityClass, StaticPersisterFactory.get().createNamedItemPersister(entityClass));
     }
 
+    /**
+     * Creates the.
+     *
+     * @param id the id
+     * @param name the name
+     * @param bezeichnung the bezeichnung
+     * @param deleted the deleted
+     * @return the e
+     * @throws Exception the exception
+     */
     @JsonCreator
     public E create(@JsonProperty(value="id", required=false) Long id, 
                     @JsonProperty(value="name", required=false) String name, 
@@ -42,13 +64,19 @@ public abstract class NamedItemService<E extends INamedItem> extends AbstractSer
         return entity;
     }
 
+    /**
+     * Gets the.
+     *
+     * @param name the name
+     * @return the response
+     */
     @GET
     @Path("/{name}")
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     public Response get(@PathParam("name") String name) {
         try {
-            E entity = getPersister().findByKey(name);
+            E entity = getPersister().findByKey(create(name));
 
             if (entity == null) {
                 return getResponse(Response.status(Status.NOT_FOUND));
@@ -60,6 +88,13 @@ public abstract class NamedItemService<E extends INamedItem> extends AbstractSer
         }
     }
 
+    /**
+     * Update.
+     *
+     * @param name the name
+     * @param entity the entity
+     * @return the response
+     */
     @PUT
     @Path("/{name}")
     @Consumes({ MediaType.APPLICATION_JSON })
@@ -77,6 +112,12 @@ public abstract class NamedItemService<E extends INamedItem> extends AbstractSer
         }
     }
 
+    /**
+     * Delete.
+     *
+     * @param name the name
+     * @return the response
+     */
     @DELETE
     @Path("/{name}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -91,15 +132,26 @@ public abstract class NamedItemService<E extends INamedItem> extends AbstractSer
         }
     }
 
+    /**
+     * Creates the.
+     *
+     * @param name the name
+     * @return the e
+     * @throws Exception the exception
+     */
     protected E create(String name) throws Exception {
         E template = getEntityClass().newInstance();
         template.setName(name);
         return template;
     }
 
-    @Override
-    protected void addSelf(IRepresentation<E> representation) {
-        representation.addLink(makeLink(uriInfo.getAbsolutePath(), representation.getItem().getName(), "self", GET));
+    /**
+     * Adds the self.
+     *
+     * @param item the item
+     */
+    protected void addSelf(INamedItem item) {
+        item.addLink(makeLink(uriInfo.getAbsolutePath(), item.getName(), "self", GET));
     }
 
 }

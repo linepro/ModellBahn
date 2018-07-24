@@ -5,10 +5,7 @@ import javax.inject.Inject;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 
-import com.linepro.modellbahn.model.IDecoderTyp;
-import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.model.IItem;
-import com.linepro.modellbahn.model.IKategorie;
 import com.linepro.modellbahn.model.IProtokoll;
 import com.linepro.modellbahn.model.impl.Achsfolg;
 import com.linepro.modellbahn.model.impl.Antrieb;
@@ -51,198 +48,41 @@ public class DBPopulator {
     public void populate() {
         logger.info("Start population");
 
-        try {
-            populateAchsfolg();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
+        populateAchsfolg();
+        populateAntrieb();
+        populateAufbau();
+        populateBahnverwaltung();
+        populateEpoch();
+        populateGattung();
+        populateHersteller();
+        populateKupplung();
+        populateLicht();
+        populateMassstab();
+        populateMotorTyp();
+        populateProtokoll();
+        populateSonderModell();
+        populateSpurweite();
+        populateSteuerung();
 
-        try {
-            populateAntrieb();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
+        populateKategorie();
 
-        try {
-            populateAufbau();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
+        populateWahrung();
+        populateLand();
 
-        try {
-            populateBahnverwaltung();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
+        populateDecoderTyp();
 
-        try {
-            populateEpoch();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
+        populateVorbild();
 
-        try {
-            populateGattung();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
+        populateDecoder();
 
-        try {
-            populateHersteller();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
+        populateProdukt();
+        populateProduktTeil();
 
-        try {
-            populateKategorie();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
+        populateArtikel();
 
-        try {
-            populateKupplung();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateLicht();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateMassstab();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateMotorTyp();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateProtokoll();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateSonderModell();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateSpurweite();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateSteuerung();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateWahrung();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateZugTyp();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateLand();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateDecoderTyp();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateDecoderTypCV();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateDecoderTypFunktion();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-
-            populateUnterKategorie();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateVorbild();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateProdukt();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateProduktTeil();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateDecoder();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateDecoderCV();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateDecoderFunktion();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateArtikel();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateZug();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            populateZugConsist();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
+        populateZugTyp();
+        populateZug();
+        populateZugConsist();
     }
 
     protected void populateAchsfolg() {
@@ -491,942 +331,1150 @@ public class DBPopulator {
     protected void populateDecoderFunktion() {
     }
 
+    /**
+     * Populate decoder typ.
+     */
     protected void populateDecoderTyp() {
-        IPersister<DecoderTyp> persister = persisterFactory.createNamedItemPersister(DecoderTyp.class);
-        IPersister<Hersteller> herstellerLookup = persisterFactory.createNamedItemPersister(Hersteller.class);
         IPersister<Protokoll> protokollLookup = persisterFactory.createNamedItemPersister(Protokoll.class);
 
-        IProtokoll delta = findByKey(protokollLookup, "DELTA");
-        IProtokoll fx = findByKey(protokollLookup, "fx");
-        IProtokoll mm = findByKey(protokollLookup, "MM");
-        IProtokoll mfx = findByKey(protokollLookup, "mfx");
-        IProtokoll weiche = findByKey(protokollLookup, "Weiche");
+        IProtokoll delta = findByKey(protokollLookup, new Protokoll("DELTA"));
+        IProtokoll fx = findByKey(protokollLookup, new Protokoll("fx"));
+        IProtokoll mm = findByKey(protokollLookup, new Protokoll("MM"));
+        IProtokoll mfx = findByKey(protokollLookup, new Protokoll("mfx"));
+        IProtokoll weiche = findByKey(protokollLookup, new Protokoll("Weiche"));
 
-        IHersteller digitalbahn = findByKey(herstellerLookup, "Digital-Bahn");
+        IPersister<Hersteller> herstellerLookup = persisterFactory.createNamedItemPersister(Hersteller.class);
 
-        save(persister, new DecoderTyp(null, digitalbahn, weiche, "DSD2010", "Drehscheibendekoder", 16, false, Konfiguration.CV, false));
+        Hersteller digitalbahn = findByKey(herstellerLookup, new Hersteller(null, "Digital-Bahn", null, null, null, null));
+        Hersteller esu = findByKey(herstellerLookup, new Hersteller(null, "ESU", null, null, null, null));
+        Hersteller marklin = findByKey(herstellerLookup, new Hersteller(null, "Märklin", null, null, null, null));
+        Hersteller uhlenbrock = findByKey(herstellerLookup, new Hersteller(null, "Uhlenbrock", null, null, null, null));
 
-        Hersteller esu = findByKey(herstellerLookup, "ESU");
+        IPersister<DecoderTyp> persister = persisterFactory.createNamedItemPersister(DecoderTyp.class);
 
-        save(persister, new DecoderTyp(null, esu, mfx, "61600", "LokPilot M4", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, esu, mfx, "61601", "LokPilot M4 21MTC", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, esu, mfx, "62400", "LokSound M4", 1, true, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, esu, mfx, "62499", "LokSound M4 21MTC", 1, true, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, esu, mm, "52620", "LokPilot FX", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, esu, mm, "52621", "LokPilot FX 21MTC", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, esu, weiche, "51800", "SwitchPilot", 8, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, esu, weiche, "51802", "SwitchPilot Servo", 4, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, esu, weiche, "51820", "SwitchPilot 2", 8, false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, digitalbahn, weiche, "DSD2010", "Drehscheibendekoder", 16, false, Konfiguration.CV, false));
 
-        Hersteller marklin = findByKey(herstellerLookup, "Märklin");
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "48 / 24 Positions", 0, 1, 1, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "DCC / Motorola", 0, 1, 1, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Position specification", 0, 1, 0, false));
 
-        save(persister, new DecoderTyp(null, marklin, delta, "602850", "602850", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, delta, "603999", "603999", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, delta, "6603", "Delta Modul", 1, false, Konfiguration.SWITCH, false));
-        save(persister, new DecoderTyp(null, marklin, delta, "66031", "Delta Modul mit Zusatzfunktion", 1, false, Konfiguration.SWITCH, false));
-        save(persister, new DecoderTyp(null, marklin, delta, "66032", "Delta Modul mit automatischer Systemerkennung", 1, 
-                false, Konfiguration.SWITCH, false));
-        save(persister, new DecoderTyp(null, marklin, delta, "670040", "670040", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, fx, "115798", "115798", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, fx, "150436", "150436", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, fx, "219574", "219574", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, fx, "46715", "46715", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, fx, "602756", "602756", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, fx, "60760", "Hochleistungsdecoder", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, fx, "608862", "608862", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, fx, "611105", "611105", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, fx, "611754", "611754", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, mfx, "103787", "103787", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, mfx, "115166", "115166", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, mfx, "115673", "115673", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, mfx, "116836", "116836", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, mfx, "123572", "123572", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, mfx, "140131", "140131", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, mfx, "148924", "148924", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, mfx, "156787", "156787", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, mfx, "162946", "162946", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, mfx, "169274", "169274", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, mfx, "253201", "253201", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, mfx, "269706", "269706", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, mfx, "39970", "39970", 1, true, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, mfx, "60902", "Hochleistungselektronik", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, mfx, "611077", "611077", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, mm, "209394", "209394", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, mm, "42973", "42973", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, mm, "49940", "49940", 1, false, Konfiguration.SWITCH, false));
-        save(persister, new DecoderTyp(null, marklin, mm, "49960", "49960", 1, true, Konfiguration.SWITCH, false));
-        save(persister, new DecoderTyp(null, marklin, mm, "49961", "49961", 1, false, Konfiguration.SWITCH, false));
-        save(persister, new DecoderTyp(null, marklin, mm, "606174", "606174", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, mm, "606896", "606896", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, mm, "608825", "608825", 1, false, Konfiguration.CV, false));
-        save(persister, new DecoderTyp(null, marklin, weiche, "74460", "Einbau-Digital-Decoder", 1, false, Konfiguration.SWITCH, false));
-        save(persister, new DecoderTyp(null, marklin, weiche, "7687", "Drehscheibendekoder", 16, false, Konfiguration.LINK, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K0", "Licht", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K1", "Step", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K2", "Turn", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K3", "Richtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K4", "Position", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K5", "Position", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K6", "Position", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K7", "Position", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K8", "Position", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K9", "Position", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K10", "Position", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K11", "Position", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K12", "Position", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K13", "Position", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K14", "Position", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K15", "Position", false, false));
 
-        IHersteller uhlenbrock = findByKey(herstellerLookup, "Uhlenbrock");
+        update(persister, decoderTyp);
 
-        save(persister, new DecoderTyp(null, uhlenbrock, mm, "67900", "67900", 1, false, Konfiguration.SWITCH, false));
+        decoderTyp = save(persister, new DecoderTyp(null, esu, mfx, "61600", "LokPilot M4", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, esu, mfx, "61601", "LokPilot M4 21MTC", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, esu, mfx, "62400", "LokSound M4", 1, true, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, esu, mfx, "62499", "LokSound M4 21MTC", 1, true, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, esu, mm, "52620", "LokPilot FX", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, esu, mm, "52621", "LokPilot FX 21MTC", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, esu, weiche, "51800", "SwitchPilot", 8, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, esu, weiche, "51802", "SwitchPilot Servo", 4, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, esu, weiche, "51820", "SwitchPilot 2", 8, false, Konfiguration.CV, false));
+
+
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, delta, "602850", "602850", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, delta, "603999", "603999", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, delta, "6603", "Delta Modul", 1, false, Konfiguration.SWITCH, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, delta, "66031", "Delta Modul mit Zusatzfunktion", 1, false, Konfiguration.SWITCH, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, delta, "66032", "Delta Modul mit automatischer Systemerkennung", 1, false, Konfiguration.SWITCH, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, delta, "670040", "670040", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, fx, "115798", "115798", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, fx, "150436", "150436", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, fx, "219574", "219574", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, fx, "46715", "46715", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, fx, "602756", "602756", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, fx, "60760", "Hochleistungsdecoder", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, fx, "608862", "608862", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, fx, "611105", "611105", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, fx, "611754", "611754", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "103787", "103787", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "115166", "115166", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "115673", "115673", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "116836", "116836", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "123572", "123572", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "140131", "140131", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "148924", "148924", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "156787", "156787", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "162946", "162946", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "169274", "169274", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "253201", "253201", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "269706", "269706", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "39970", "39970", 1, true, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "60902", "Hochleistungselektronik", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "611077", "611077", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mm, "209394", "209394", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mm, "42973", "42973", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mm, "49940", "49940", 1, false, Konfiguration.SWITCH, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mm, "49960", "49960", 1, true, Konfiguration.SWITCH, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mm, "49961", "49961", 1, false, Konfiguration.SWITCH, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mm, "606174", "606174", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mm, "606896", "606896", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, mm, "608825", "608825", 1, false, Konfiguration.CV, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, weiche, "74460", "Einbau-Digital-Decoder", 1, false, Konfiguration.SWITCH, false));
+        decoderTyp = save(persister, new DecoderTyp(null, marklin, weiche, "7687", "Drehscheibendekoder", 16, false, Konfiguration.LINK, false));
+
+        decoderTyp = save(persister, new DecoderTyp(null, uhlenbrock, mm, "67900", "67900", 1, false, Konfiguration.SWITCH, false));
     }
 
     protected void populateDecoderTypCV() {
-        IPersister<DecoderTypCV> persister = persisterFactory.createItemPersister(DecoderTypCV.class);
-        IPersister<DecoderTyp> decoderTypLookup = persisterFactory.createNamedItemPersister(DecoderTyp.class);
         IPersister<Hersteller> herstellerLookup = persisterFactory.createNamedItemPersister(Hersteller.class); 
-        IHersteller digitalbahn = findByKey(herstellerLookup, "Digital-Bahn"); 
-        Hersteller esu = findByKey(herstellerLookup, "ESU"); 
-        Hersteller marklin = findByKey(herstellerLookup, "Märklin"); 
-        IHersteller uhlenbrock = findByKey(herstellerLookup, "Uhlenbrock"); 
-        
-        IDecoderTyp _103787 = findByKey(decoderTypLookup, marklin, "103787");
-
-        save(persister, new DecoderTypCV(null, _103787, 1, "Adresse", 1, 80, 10, false));
-        save(persister, new DecoderTypCV(null, _103787, 3, "Anfahrverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _103787, 4, "Bremsverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _103787, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _103787, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        save(persister, new DecoderTypCV(null, _103787, 63, "Lautstärke", 1, 63, null, false));
-
-        IDecoderTyp _115166 = findByKey(decoderTypLookup, marklin, "115166");
-
-        save(persister, new DecoderTypCV(null, _115166, 1, "Adresse", 1, 80, null, false));
-        save(persister, new DecoderTypCV(null, _115166, 3, "Anfahrverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _115166, 4, "Bremsverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _115166, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _115166, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        save(persister, new DecoderTypCV(null, _115166, 63, "Lautstärke", 1, 63, null, false));
-
-        IDecoderTyp _115673 = findByKey(decoderTypLookup, marklin, "115673");
-
-        save(persister, new DecoderTypCV(null, _115673, 1, "Adresse", 1, 80, 64, false));
-        save(persister, new DecoderTypCV(null, _115673, 3, "Anfahrverzögerung", 1, 63, 63, false));
-        save(persister, new DecoderTypCV(null, _115673, 4, "Bremsverzögerung", 1, 63, 63, false));
-        save(persister, new DecoderTypCV(null, _115673, 5, "Höchstgeschwindigkeit", 1, 63, 63, false));
-        save(persister, new DecoderTypCV(null, _115673, 8, "Rückstellen auf Serienwerte", null, null, null, false));
-        save(persister, new DecoderTypCV(null, _115673, 63, "Lautstärke", 1, 63, 63, false));
-
-        IDecoderTyp _115798 = findByKey(decoderTypLookup, marklin, "115798");
-
-        save(persister, new DecoderTypCV(null, _115798, 1, "Adresse", 1, 255, null, false));
-        save(persister, new DecoderTypCV(null, _115798, 2, "Anfahrverzögerung/Bremsverzögerung", 1, 31, null, false));
-        save(persister, new DecoderTypCV(null, _115798, 3, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _115798, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _115798, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-
-        IDecoderTyp _116836 = findByKey(decoderTypLookup, marklin, "116836");
-
-        save(persister, new DecoderTypCV(null, _116836, 1, "Adresse", 1, 80, 70, false));
-        save(persister, new DecoderTypCV(null, _116836, 3, "Anfahrverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _116836, 4, "Bremsverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _116836, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _116836, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        save(persister, new DecoderTypCV(null, _116836, 63, "Lautstärke", 1, 63, null, false));
-
-        IDecoderTyp _123572 = findByKey(decoderTypLookup, marklin, "123572");
-
-        save(persister, new DecoderTypCV(null, _123572, 1, "Adresse", 0, 80, 42, false));
-        save(persister, new DecoderTypCV(null, _123572, 3, "Anfahrverzögerung", 0, 63, 63, false));
-        save(persister, new DecoderTypCV(null, _123572, 4, "Bremsverzögerung", 0, 63, 63, false));
-        save(persister, new DecoderTypCV(null, _123572, 5, "Höchstgeschwindigkeit", 0, 63, 63, false));
-        save(persister, new DecoderTypCV(null, _123572, 8, "Rückstellen auf Serienwerte", null, null, null, false));
-        save(persister, new DecoderTypCV(null, _123572, 63, "Lautstärke", 0, 63, 63, false));
-
-        IDecoderTyp _140131 = findByKey(decoderTypLookup, marklin, "140131");
-
-        save(persister, new DecoderTypCV(null, _140131, 1, "Adresse", 1, 80, null, false));
-        save(persister, new DecoderTypCV(null, _140131, 3, "Anfahrverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _140131, 4, "Bremsverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _140131, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _140131, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        save(persister, new DecoderTypCV(null, _140131, 63, "Lautstärke", 1, 63, null, false));
 
-        IDecoderTyp _148924 = findByKey(decoderTypLookup, marklin, "148924");
+        Hersteller digitalbahn = findByKey(herstellerLookup, new Hersteller(null, "Digital-Bahn", null, null, null, null)); 
+        Hersteller esu = findByKey(herstellerLookup, new Hersteller(null, "ESU", null, null, null, null)); 
+        Hersteller marklin = findByKey(herstellerLookup, new Hersteller(null, "Märklin", null, null, null, null)); 
+        Hersteller uhlenbrock = findByKey(herstellerLookup, new Hersteller(null, "Uhlenbrock", null, null, null, null)); 
 
-        save(persister, new DecoderTypCV(null, _148924, 1, "Adresse", 1, 80, null, false));
-        save(persister, new DecoderTypCV(null, _148924, 2, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _148924, 3, "Anfahrverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _148924, 4, "Bremsverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _148924, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _148924, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        save(persister, new DecoderTypCV(null, _148924, 63, "Lautstärke", 1, 63, null, false));
+        IPersister<DecoderTyp> persister = persisterFactory.createNamedItemPersister(DecoderTyp.class);
 
-        IDecoderTyp _150436 = findByKey(decoderTypLookup, marklin, "150436");
+        DecoderTyp decoderTyp = findByKey(persister, new DecoderTyp(marklin, "103787"));
 
-        save(persister, new DecoderTypCV(null, _150436, 1, "Adresse", 1, 255, 38, false));
-        save(persister, new DecoderTypCV(null, _150436, 3, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _150436, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _150436, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-
-        IDecoderTyp _156787 = findByKey(decoderTypLookup, marklin, "156787");
-
-        save(persister, new DecoderTypCV(null, _156787, 1, "Adresse", 1, 80, 49, false));
-        save(persister, new DecoderTypCV(null, _156787, 3, "Anfahrverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _156787, 4, "Bremsverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _156787, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _156787, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-
-        IDecoderTyp _162946 = findByKey(decoderTypLookup, marklin, "162946");
-
-        save(persister, new DecoderTypCV(null, _162946, 1, "Adresse", 1, 80, 11, false));
-        save(persister, new DecoderTypCV(null, _162946, 3, "Anfahrverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _162946, 4, "Bremsverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _162946, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _162946, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        save(persister, new DecoderTypCV(null, _162946, 63, "Lautstärke", 1, 63, null, false));
-
-        IDecoderTyp _169274 = findByKey(decoderTypLookup, marklin, "169274");
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 10, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, null, false));
 
-        save(persister, new DecoderTypCV(null, _169274, 1, "Adresse", 0, 80, 43, false));
-        save(persister, new DecoderTypCV(null, _169274, 3, "Anfahrverzögerung", 0, 63, 63, false));
-        save(persister, new DecoderTypCV(null, _169274, 4, "Bremsverzögerung", 0, 63, 63, false));
-        save(persister, new DecoderTypCV(null, _169274, 5, "Höchstgeschwindigkeit", 0, 63, 63, false));
-        save(persister, new DecoderTypCV(null, _169274, 8, "Rückstellen auf Serienwerte", null, null, null, false));
-        save(persister, new DecoderTypCV(null, _169274, 63, "Lautstärke", 0, 63, 63, false));
-
-        IDecoderTyp _209394 = findByKey(decoderTypLookup, marklin, "209394");
-
-        save(persister, new DecoderTypCV(null, _209394, 1, "Adresse", null, null, 54, false));
-        save(persister, new DecoderTypCV(null, _209394, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-
-        IDecoderTyp _219574 = findByKey(decoderTypLookup, marklin, "219574");
-
-        save(persister, new DecoderTypCV(null, _219574, 1, "Adresse", 1, 80, 45, false));
-        save(persister, new DecoderTypCV(null, _219574, 2, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _219574, 3, "Anfahrverzögerung", 1, 63, null, false));
-
-        IDecoderTyp _253201 = findByKey(decoderTypLookup, marklin, "253201");
-
-        save(persister, new DecoderTypCV(null, _253201, 1, "Adresse", 1, 80, null, false));
-        save(persister, new DecoderTypCV(null, _253201, 3, "Anfahrverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _253201, 4, "Bremsverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _253201, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _253201, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        save(persister, new DecoderTypCV(null, _253201, 63, "Lautstärke", 1, 63, null, false));
-
-        IDecoderTyp _269706 = findByKey(decoderTypLookup, marklin, "269706");
-
-        save(persister, new DecoderTypCV(null, _269706, 1, "Adresse", 1, 80, null, false));
-        save(persister, new DecoderTypCV(null, _269706, 3, "Anfahrverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _269706, 4, "Bremsverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _269706, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _269706, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        save(persister, new DecoderTypCV(null, _269706, 50, "Protokolle", 1, 15, 15, false));
-        save(persister, new DecoderTypCV(null, _269706, 63, "Lautstärke", 1, 63, null, false));
-
-        IDecoderTyp _39970 = findByKey(decoderTypLookup, marklin, "39970");
-
-        save(persister, new DecoderTypCV(null, _39970, 1, "Adresse", 1, 80, null, false));
-
-        IDecoderTyp _42973 = findByKey(decoderTypLookup, marklin, "42973");
-
-        save(persister, new DecoderTypCV(null, _42973, 1, "Adresse", 1, 80, null, false));
-        save(persister, new DecoderTypCV(null, _42973, 3, "Anfahrverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _42973, 4, "Bremsverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _42973, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _42973, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        save(persister, new DecoderTypCV(null, _42973, 63, "Lautstärke", 1, 63, 63, false));
-
-        IDecoderTyp _46715 = findByKey(decoderTypLookup, marklin, "46715");
-
-        save(persister, new DecoderTypCV(null, _46715, 1, "Adresse", 1, 80, null, false));
-        save(persister, new DecoderTypCV(null, _46715, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-
-        IDecoderTyp _49940 = findByKey(decoderTypLookup, marklin, "49940");
-
-        save(persister, new DecoderTypCV(null, _49940, 1, "Adresse", 1, 80, 78, false));
-
-        IDecoderTyp _49960 = findByKey(decoderTypLookup, marklin, "49960");
-
-        save(persister, new DecoderTypCV(null, _49960, 1, "Adresse", 1, 80, null, false));
-
-        IDecoderTyp _49961 = findByKey(decoderTypLookup, marklin, "49961");
+        update(persister, decoderTyp);
 
-        save(persister, new DecoderTypCV(null, _49961, 1, "Adresse", 1, 80, null, false));
-
-        IDecoderTyp _51800 = findByKey(decoderTypLookup, esu, "51800");
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "115166"));
 
-        save(persister, new DecoderTypCV(null, _51800, 1, "Decoderadresse 1, LSB", 1, 63, 1, false));
-        save(persister, new DecoderTypCV(null, _51800, 3, "Konfiguration Ausgang 1", 0, 64, 8, false));
-        save(persister, new DecoderTypCV(null, _51800, 4, "Konfiguration Ausgang 2", 0, 64, 8, false));
-        save(persister, new DecoderTypCV(null, _51800, 5, "Konfiguration Ausgang 3", 0, 64, 8, false));
-        save(persister, new DecoderTypCV(null, _51800, 6, "Konfiguration Ausgang 4", 0, 64, 8, false));
-        save(persister, new DecoderTypCV(null, _51800, 7, "Versionsnummer", null, null, 115, false));
-        save(persister, new DecoderTypCV(null, _51800, 8, "Herstellerkennung", null, null, 151, false));
-        save(persister, new DecoderTypCV(null, _51800, 9, "Decoderadresse 1, MSB", 0, 7, 0, false));
-        save(persister, new DecoderTypCV(null, _51800, 28, "RailCom Konfiguration", 0, 6, 0, false));
-        save(persister, new DecoderTypCV(null, _51800, 29, "Konfigurationsregister", 128, 136, 128, false));
-        save(persister, new DecoderTypCV(null, _51800, 33, "Funktionsausgangsstatus", 0, 255, null, false));
-        save(persister, new DecoderTypCV(null, _51800, 34, "„Zoom“-Konfiguration", 0, 15, 0, false));
-        save(persister, new DecoderTypCV(null, _51800, 35, "Decoderadresse 2, LSB", 1, 63, 1, false));
-        save(persister, new DecoderTypCV(null, _51800, 36, "Decoderadresse 2, MSB", 0, 8, 8, false));
-        save(persister, new DecoderTypCV(null, _51800, 37, "Servo 1, Drehgeschwindigkeit", 1, 63, 15, false));
-        save(persister, new DecoderTypCV(null, _51800, 38, "Servo 1, Stellung „A“", 1, 63, 24, false));
-        save(persister, new DecoderTypCV(null, _51800, 39, "Servo 1, Stellung „B“", 1, 63, 40, false));
-        save(persister, new DecoderTypCV(null, _51800, 40, "Servo 2, Drehgeschwindigkeit", 1, 63, 15, false));
-        save(persister, new DecoderTypCV(null, _51800, 41, "Servo 2, Stellung „A“", 1, 63, 24, false));
-        save(persister, new DecoderTypCV(null, _51800, 42, "Servo 2, Stellung „B“", 1, 63, 40, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, null, false));
 
-        IDecoderTyp _51802 = findByKey(decoderTypLookup, esu, "51802");
+        update(persister, decoderTyp);
 
-        save(persister, new DecoderTypCV(null, _51802, 1, "Decoderadresse 1, LSB", 1, 63, 1, false));
-        save(persister, new DecoderTypCV(null, _51802, 7, "Versionsnummer", null, null, 153, false));
-        save(persister, new DecoderTypCV(null, _51802, 8, "Herstellerkennung", null, null, 151, false));
-        save(persister, new DecoderTypCV(null, _51802, 9, "Decoderadresse 1, MSB", 0, 7, 0, false));
-        save(persister, new DecoderTypCV(null, _51802, 28, "RailCom Konfiguration", 0, 6, 0, false));
-        save(persister, new DecoderTypCV(null, _51802, 29, "Konfigurationsregister", 128, 136, 128, false));
-        save(persister, new DecoderTypCV(null, _51802, 37, "Servo 1, Drehgeschwindigkeit", 1, 63, 15, false));
-        save(persister, new DecoderTypCV(null, _51802, 38, "Servo 1, Stellung „A“", 1, 63, 24, false));
-        save(persister, new DecoderTypCV(null, _51802, 39, "Servo 1, Stellung „B“", 1, 63, 40, false));
-        save(persister, new DecoderTypCV(null, _51802, 40, "Servo 2, Drehgeschwindigkeit", 1, 63, 15, false));
-        save(persister, new DecoderTypCV(null, _51802, 41, "Servo 2, Stellung „A“", 1, 63, 24, false));
-        save(persister, new DecoderTypCV(null, _51802, 42, "Servo 2, Stellung „B“", 1, 63, 40, false));
-        save(persister, new DecoderTypCV(null, _51802, 43, "Servo 3, Drehgeschwindigkeit", 1, 63, 15, false));
-        save(persister, new DecoderTypCV(null, _51802, 44, "Servo 3, Stellung „A“", 1, 63, 24, false));
-        save(persister, new DecoderTypCV(null, _51802, 45, "Servo 3, Stellung „B“", 1, 63, 40, false));
-        save(persister, new DecoderTypCV(null, _51802, 46, "Servo 4, Drehgeschwindigkeit", 1, 63, 15, false));
-        save(persister, new DecoderTypCV(null, _51802, 47, "Servo 4, Stellung „A“", 1, 63, 24, false));
-        save(persister, new DecoderTypCV(null, _51802, 48, "Servo 4, Stellung „B“", 1, 63, 40, false));
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "115673"));
 
-        IDecoderTyp _51820 = findByKey(decoderTypLookup, esu, "51820");
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 64, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, 63, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, 63, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, 63, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, 63, false));
 
-        save(persister, new DecoderTypCV(null, _51820, 1, "Decoderadresse 1, LSB", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _51820, 3, "Konfiguration Ausgang 1", 0, 64, null, false));
-        save(persister, new DecoderTypCV(null, _51820, 4, "Konfiguration Ausgang 2", 0, 64, null, false));
-        save(persister, new DecoderTypCV(null, _51820, 5, "Konfiguration Ausgang 3", 0, 64, null, false));
-        save(persister, new DecoderTypCV(null, _51820, 6, "Konfiguration Ausgang 4", 0, 64, null, false));
-        save(persister, new DecoderTypCV(null, _51820, 7, "Versionsnummer", null, null, null, false));
-        save(persister, new DecoderTypCV(null, _51820, 8, "Herstellerkennung", null, null, 8, false));
-        save(persister, new DecoderTypCV(null, _51820, 9, "Decoderadresse 1, MSB", 0, 7, null, false));
-        save(persister, new DecoderTypCV(null, _51820, 28, "RailCom Konfiguration", 0, 6, null, false));
-        save(persister, new DecoderTypCV(null, _51820, 29, "Konfigurationsregister", 128, 136, null, false));
-        save(persister, new DecoderTypCV(null, _51820, 33, "Funktionsausgangsstatus", 0, 255, null, false));
-        save(persister, new DecoderTypCV(null, _51820, 34, "„Zoom“-Konfiguration", 0, 15, null, false));
-        save(persister, new DecoderTypCV(null, _51820, 35, "Decoderadresse 2, LSB", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _51820, 36, "Decoderadresse 2, MSB", 0, 8, null, false));
-        save(persister, new DecoderTypCV(null, _51820, 37, "Servo 1, Drehgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _51820, 38, "Servo 1, Stellung „A“", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _51820, 39, "Servo 1, Stellung „B“", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _51820, 40, "Servo 2, Drehgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _51820, 41, "Servo 2, Stellung „A“", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _51820, 42, "Servo 2, Stellung „B“", 1, 63, null, false));
-
-        IDecoderTyp _52620 = findByKey(decoderTypLookup, esu, "52620");
-
-        save(persister, new DecoderTypCV(null, _52620, 1, "Adresse", 1, 80, null, false));
-        save(persister, new DecoderTypCV(null, _52620, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-
-        IDecoderTyp _52621 = findByKey(decoderTypLookup, esu, "52621");
-
-        save(persister, new DecoderTypCV(null, _52621, 1, "Adresse", 1, 80, null, false));
-        save(persister, new DecoderTypCV(null, _52621, 8, "Rückstellen auf Serienwerte", null, null, null, false));
-
-        IDecoderTyp _602756 = findByKey(decoderTypLookup, marklin, "602756");
-
-        save(persister, new DecoderTypCV(null, _602756, 1, "Adresse", 1, 80, null, false));
-        save(persister, new DecoderTypCV(null, _602756, 2, "Lautstärke", 1, 63, null, false));
-
-        IDecoderTyp _602850 = findByKey(decoderTypLookup, marklin, "602850");
-
-        save(persister, new DecoderTypCV(null, _602850, 1, "Adresse", 1, 80, 11, false));
-
-        IDecoderTyp _603999 = findByKey(decoderTypLookup, marklin, "603999");
-
-        save(persister, new DecoderTypCV(null, _603999, 1, "Adresse", 2, 80, 54, false));
-
-        IDecoderTyp _606174 = findByKey(decoderTypLookup, marklin, "606174");
-
-        save(persister, new DecoderTypCV(null, _606174, 1, "Adresse", 1, 255, null, false));
-
-        IDecoderTyp _606896 = findByKey(decoderTypLookup, marklin, "606896");
-
-        save(persister, new DecoderTypCV(null, _606896, 1, "Adresse", 1, 80, null, false));
-        save(persister, new DecoderTypCV(null, _606896, 2, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _606896, 3, "Anfahrverzögerung", 1, 63, null, false));
-
-        IDecoderTyp _60760 = findByKey(decoderTypLookup, marklin, "60760");
-
-        save(persister, new DecoderTypCV(null, _60760, 1, "Adresse", 1, 80, null, false));
-        save(persister, new DecoderTypCV(null, _60760, 3, "Anfahrverzögerung/Bremsverzögerung", 1, 63, 16, false));
-        save(persister, new DecoderTypCV(null, _60760, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _60760, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-
-        IDecoderTyp _608825 = findByKey(decoderTypLookup, marklin, "608825");
-
-        save(persister, new DecoderTypCV(null, _608825, 1, "Adresse", 1, 80, 39, false));
-        save(persister, new DecoderTypCV(null, _608825, 2, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _608825, 3, "Anfahrverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _608825, 4, "Bremsverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _608825, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _608825, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        save(persister, new DecoderTypCV(null, _608825, 63, "Lautstärke", 1, 63, null, false));
-
-        IDecoderTyp _608862 = findByKey(decoderTypLookup, marklin, "608862");
-
-        save(persister, new DecoderTypCV(null, _608862, 1, "Adresse", 1, 80, 10, false));
-        save(persister, new DecoderTypCV(null, _608862, 2, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _608862, 3, "Anfahrverzögerung", 1, 63, null, false));
-
-        IDecoderTyp _60902 = findByKey(decoderTypLookup, marklin, "60902");
-
-        save(persister, new DecoderTypCV(null, _60902, 1, "Adresse", 1, 80, null, false));
-        save(persister, new DecoderTypCV(null, _60902, 2, "Anfahrverzögerung", 1, 63, 03, false));
-        save(persister, new DecoderTypCV(null, _60902, 3, "Anfahrverzögerung", 1, 63, null, false));
-
-        IDecoderTyp _611077 = findByKey(decoderTypLookup, marklin, "611077");
-
-        save(persister, new DecoderTypCV(null, _611077, 1, "Adresse", 1, 80, null, false));
-        save(persister, new DecoderTypCV(null, _611077, 3, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _611077, 4, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _611077, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _611077, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-
-        IDecoderTyp _611105 = findByKey(decoderTypLookup, marklin, "611105");
-
-        save(persister, new DecoderTypCV(null, _611105, 1, "Adresse", 1, 80, 71, false));
-        save(persister, new DecoderTypCV(null, _611105, 2, "Bedienung festgelegt", 0, 1, 0, false));
-        save(persister, new DecoderTypCV(null, _611105, 3, "Baggerschaufel Zeitbegrenzung", 0, 1, 0, false));
-
-        IDecoderTyp _611754 = findByKey(decoderTypLookup, marklin, "611754");
-
-        save(persister, new DecoderTypCV(null, _611754, 1, "Adresse", 1, 80, null, false));
-        save(persister, new DecoderTypCV(null, _611754, 2, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _611754, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _611754, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-
-        IDecoderTyp _61600 = findByKey(decoderTypLookup, esu, "61600");
-
-        save(persister, new DecoderTypCV(null, _61600, 1, "Adresse", 1, 80, 03, false));
-        save(persister, new DecoderTypCV(null, _61600, 2, "Anfahrverzögerung", 1, 63, 03, false));
-        save(persister, new DecoderTypCV(null, _61600, 3, "Beschleunigungszeit", 1, 63, 16, false));
-        save(persister, new DecoderTypCV(null, _61600, 4, "Bremsverzögerung", 1, 63, 12, false));
-        save(persister, new DecoderTypCV(null, _61600, 5, "Höchstgeschwindigkeit", 1, 63, 63, false));
-        save(persister, new DecoderTypCV(null, _61600, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        save(persister, new DecoderTypCV(null, _61600, 53, "Regelungsreferenz", 1, 63, 45, false));
-        save(persister, new DecoderTypCV(null, _61600, 54, "Lastregelung Param. K", 1, 63, 32, false));
-        save(persister, new DecoderTypCV(null, _61600, 55, "Lastregelung Param. L", 1, 63, 24, false));
-        save(persister, new DecoderTypCV(null, _61600, 56, "Regelungseinfluss", 1, 63, 63, false));
-        save(persister, new DecoderTypCV(null, _61600, 73, "Speicheroptionen", 0, 7, 03, false));
-        save(persister, new DecoderTypCV(null, _61600, 75, "Märklin Addresse 2", 1, 80, 04, false));
-        save(persister, new DecoderTypCV(null, _61600, 78, "Anfahrspannung Analog AC", 1, 63, 25, false));
-        save(persister, new DecoderTypCV(null, _61600, 79, "Höchstgeschwindigkeit Analog AC", 1, 63, 63, false));
-
-        IDecoderTyp _62400 = findByKey(decoderTypLookup, esu, "62400");
-
-        save(persister, new DecoderTypCV(null, _62400, 1, "Adresse", 1, 80, 03, false));
-        save(persister, new DecoderTypCV(null, _62400, 2, "Anfahrverzögerung", 1, 63, 03, false));
-        save(persister, new DecoderTypCV(null, _62400, 3, "Beschleunigungszeit", 1, 63, 16, false));
-        save(persister, new DecoderTypCV(null, _62400, 4, "Bremsverzögerung", 1, 63, 12, false));
-        save(persister, new DecoderTypCV(null, _62400, 5, "Höchstgeschwindigkeit", 1, 63, 63, false));
-        save(persister, new DecoderTypCV(null, _62400, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        save(persister, new DecoderTypCV(null, _62400, 53, "Regelungsreferenz", 1, 63, 56, false));
-        save(persister, new DecoderTypCV(null, _62400, 54, "Lastregelung Param. K", 1, 63, 32, false));
-        save(persister, new DecoderTypCV(null, _62400, 55, "Lastregelung Param. L", 1, 63, 24, false));
-        save(persister, new DecoderTypCV(null, _62400, 56, "Regelungseinfluss", 1, 63, 63, false));
-        save(persister, new DecoderTypCV(null, _62400, 57, "Geräuschmodus 1", 1, 63, 10, false));
-        save(persister, new DecoderTypCV(null, _62400, 58, "Geräuschmodus 2", 1, 63, 58, false));
-        save(persister, new DecoderTypCV(null, _62400, 59, "Fahrgeräusch", 1, 63, 32, false));
-        save(persister, new DecoderTypCV(null, _62400, 60, "Fahrgeräusch", 1, 63, 55, false));
-        save(persister, new DecoderTypCV(null, _62400, 63, "Geräuschlautstärke", 1, 63, 63, false));
-        save(persister, new DecoderTypCV(null, _62400, 64, "Bremssoundschwelle", 1, 63, 07, false));
-        save(persister, new DecoderTypCV(null, _62400, 73, "Speicheroptionen", 0, 7, 03, false));
-        save(persister, new DecoderTypCV(null, _62400, 74, "Märklin Addresse 2", 1, 63, null, false));
-        save(persister, new DecoderTypCV(null, _62400, 75, "Märklin Addresse 2", 1, 80, 04, false));
-        save(persister, new DecoderTypCV(null, _62400, 78, "Anfahrspannung Analog AC", 1, 63, 25, false));
-        save(persister, new DecoderTypCV(null, _62400, 79, "Höchstgeschwindigkeit Analog AC", 1, 63, 63, false));
-
-        IDecoderTyp _62499 = findByKey(decoderTypLookup, esu, "62499");
-
-        save(persister, new DecoderTypCV(null, _62499, 1, "Adresse", 1, 80, 03, false));
-        save(persister, new DecoderTypCV(null, _62499, 2, "Anfahrverzögerung", 1, 63, 03, false));
-        save(persister, new DecoderTypCV(null, _62499, 3, "Beschleunigungszeit", 1, 63, 16, false));
-        save(persister, new DecoderTypCV(null, _62499, 4, "Bremsverzögerung", 1, 63, 12, false));
-        save(persister, new DecoderTypCV(null, _62499, 5, "Höchstgeschwindigkeit", 1, 63, 63, false));
-        save(persister, new DecoderTypCV(null, _62499, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        save(persister, new DecoderTypCV(null, _62499, 53, "Regelungsreferenz", 1, 63, 56, false));
-        save(persister, new DecoderTypCV(null, _62499, 54, "Lastregelung Param. K", 1, 63, 32, false));
-        save(persister, new DecoderTypCV(null, _62499, 55, "Lastregelung Param. L", 1, 63, 24, false));
-        save(persister, new DecoderTypCV(null, _62499, 56, "Regelungseinfluss", 1, 63, 63, false));
-        save(persister, new DecoderTypCV(null, _62499, 57, "Geräuschmodus 1", 1, 63, 10, false));
-        save(persister, new DecoderTypCV(null, _62499, 58, "Geräuschmodus 2", 1, 63, 58, false));
-        save(persister, new DecoderTypCV(null, _62499, 59, "Fahrgeräusch", 1, 63, 32, false));
-        save(persister, new DecoderTypCV(null, _62499, 60, "Fahrgeräusch", 1, 63, 55, false));
-        save(persister, new DecoderTypCV(null, _62499, 63, "Geräuschlautstärke", 1, 63, 63, false));
-        save(persister, new DecoderTypCV(null, _62499, 64, "Bremssoundschwelle", 1, 63, 07, false));
-        save(persister, new DecoderTypCV(null, _62499, 73, "Speicheroptionen", 0, 7, 03, false));
-        save(persister, new DecoderTypCV(null, _62499, 75, "Märklin Addresse 2", 1, 80, 04, false));
-        save(persister, new DecoderTypCV(null, _62499, 78, "Anfahrspannung Analog AC", 1, 63, 25, false));
-        save(persister, new DecoderTypCV(null, _62499, 79, "Höchstgeschwindigkeit Analog AC", 1, 63, 63, false));
-
-        IDecoderTyp _6603 = findByKey(decoderTypLookup, marklin, "6603");
-
-        save(persister, new DecoderTypCV(null, _6603, 1, "Adresse", 2, 80, null, false));
-
-        IDecoderTyp _66031 = findByKey(decoderTypLookup, marklin, "66031");
-
-        save(persister, new DecoderTypCV(null, _66031, 1, "Adresse", 2, 80, null, false));
-
-        IDecoderTyp _66032 = findByKey(decoderTypLookup, marklin, "66032");
-
-        save(persister, new DecoderTypCV(null, _66032, 1, "Adresse", 2, 80, null, false));
-
-        IDecoderTyp _670040 = findByKey(decoderTypLookup, marklin, "670040");
-
-        save(persister, new DecoderTypCV(null, _670040, 1, "Adresse", 2, 80, 54, false));
-
-        IDecoderTyp _67900 = findByKey(decoderTypLookup, uhlenbrock, "67900");
-
-        save(persister, new DecoderTypCV(null, _67900, 1, "Adresse", 1, 127, 3, false));
-        save(persister, new DecoderTypCV(null, _67900, 2, "Minimale Geschwindigkeit", 1, 63, 5, false));
-        save(persister, new DecoderTypCV(null, _67900, 3, "Anfahrverzögerung", 1, 63, 2, false));
-        save(persister, new DecoderTypCV(null, _67900, 4, "Bremsverzögerung", 1, 63, 2, false));
-        save(persister, new DecoderTypCV(null, _67900, 5, "Maximale Geschwindigkeit", 1, 63, 20, false));
-        save(persister, new DecoderTypCV(null, _67900, 6, "Maximale Motorspannung", 1, 255, 64, false));
-        save(persister, new DecoderTypCV(null, _67900, 7, "Softwareversion", null, null, null, false));
-        save(persister, new DecoderTypCV(null, _67900, 8, "Herstellerkennung", null, null, 85, false));
-        save(persister, new DecoderTypCV(null, _67900, 17, "Lange Lokadresse MSB", 192, 231, 199, false));
-        save(persister, new DecoderTypCV(null, _67900, 18, "Lange Lokadresse LSB", 0, 255, 208, false));
-        save(persister, 
-                new DecoderTypCV(null, _67900, 20, "Konfiguration beider Motoren nach DCC-Norm", 0, 33, 0, false));
-        save(persister, new DecoderTypCV(null, _67900, 49, "Decoder-Konfiguration", 0, 195, 0, false));
-        save(persister, new DecoderTypCV(null, _67900, 65, "Motorola Programmierung Offset", 0, 255, 0, false));
-        save(persister, new DecoderTypCV(null, _67900, 67, "Maximale Geschwindigkeit für Taste 1", 0, 255, 40, false));
-        save(persister, new DecoderTypCV(null, _67900, 68, "Maximale Geschwindigkeit für Taste 2", 0, 255, 40, false));
-        save(persister, new DecoderTypCV(null, _67900, 69, "Maximale Geschwindigkeit für Taste 3", 0, 255, 50, false));
-        save(persister, new DecoderTypCV(null, _67900, 70, "Maximale Geschwindigkeit für Taste 4", 0, 255, 50, false));
-        save(persister, new DecoderTypCV(null, _67900, 71, "Anfahrverzögerung für Taste 1", 0, 255, 5, false));
-        save(persister, new DecoderTypCV(null, _67900, 72, "Anfahrverzögerung für Taste 2", 0, 255, 5, false));
-        save(persister, new DecoderTypCV(null, _67900, 73, "Anfahrverzögerung für Taste 3", 0, 255, 5, false));
-        save(persister, new DecoderTypCV(null, _67900, 74, "Anfahrverzögerung für Taste 4", 0, 255, 5, false));
-        save(persister, new DecoderTypCV(null, _67900, 75, "Bremsverzögerung für Taste 1", 0, 255, 1, false));
-        save(persister, new DecoderTypCV(null, _67900, 76, "Bremsverzögerung für Taste 2", 0, 255, 1, false));
-        save(persister, new DecoderTypCV(null, _67900, 77, "Bremsverzögerung für Taste 3", 0, 255, 1, false));
-        save(persister, new DecoderTypCV(null, _67900, 78, "Bremsverzögerung für Taste 4", 0, 255, 1, false));
-        save(persister, 
-                new DecoderTypCV(null, _67900, 79, "Maximale Motorspannung im Analogbetrieb", 0, 255, 180, false));
-        save(persister, 
-                new DecoderTypCV(null, _67900, 98, "Zeitbegrenztes Einschalten der Ausgänge A1 + A2", 0, 3, 3, false));
-        save(persister, new DecoderTypCV(null, _67900, 99, "Maximale Einschaltzeit in Sekunden", 0, 255, 45, false));
-
-        IDecoderTyp _74460 = findByKey(decoderTypLookup, marklin, "74460");
-
-        save(persister, new DecoderTypCV(null, _74460, 1, "Adresse", 1, 255, null, false));
-
-        IDecoderTyp _7687 = findByKey(decoderTypLookup, marklin, "7687");
-
-        save(persister, new DecoderTypCV(null, _7687, 1, "Adresse", 14, 15, 14, false));
-
-        IDecoderTyp _DSD2010 = findByKey(decoderTypLookup, digitalbahn, "DSD2010");
-
-        save(persister, new DecoderTypCV(null, _DSD2010, 1, "48 / 24 Positions", 0, 1, 1, false));
-        save(persister, new DecoderTypCV(null, _DSD2010, 2, "DCC / Motorola", 0, 1, 1, false));
-        save(persister, new DecoderTypCV(null, _DSD2010, 3, "Position specification", 0, 1, 0, false));
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "115798"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 255, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung/Bremsverzögerung", 1, 31, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "116836"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 70, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, null, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "123572"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 0, 80, 42, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 0, 63, 63, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 0, 63, 63, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 0, 63, 63, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 0, 63, 63, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "140131"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, null, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "148924"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, null, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "150436"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 255, 38, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "156787"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 49, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "162946"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 11, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, null, false));
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "169274"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 0, 80, 43, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 0, 63, 63, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 0, 63, 63, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 0, 63, 63, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 0, 63, 63, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "209394"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", null, null, 54, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "219574"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 45, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "253201"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, null, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "269706"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 50, "Protokolle", 1, 15, 15, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, null, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "39970"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "42973"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, 63, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "46715"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "49940"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 78, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "49960"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "49961"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(esu, "51800"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Decoderadresse 1, LSB", 1, 63, 1, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Konfiguration Ausgang 1", 0, 64, 8, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Konfiguration Ausgang 2", 0, 64, 8, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Konfiguration Ausgang 3", 0, 64, 8, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 6, "Konfiguration Ausgang 4", 0, 64, 8, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 7, "Versionsnummer", null, null, 115, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Herstellerkennung", null, null, 151, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 9, "Decoderadresse 1, MSB", 0, 7, 0, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 28, "RailCom Konfiguration", 0, 6, 0, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 29, "Konfigurationsregister", 128, 136, 128, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 33, "Funktionsausgangsstatus", 0, 255, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 34, "„Zoom“-Konfiguration", 0, 15, 0, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 35, "Decoderadresse 2, LSB", 1, 63, 1, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 36, "Decoderadresse 2, MSB", 0, 8, 8, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 37, "Servo 1, Drehgeschwindigkeit", 1, 63, 15, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 38, "Servo 1, Stellung „A“", 1, 63, 24, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 39, "Servo 1, Stellung „B“", 1, 63, 40, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 40, "Servo 2, Drehgeschwindigkeit", 1, 63, 15, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 41, "Servo 2, Stellung „A“", 1, 63, 24, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 42, "Servo 2, Stellung „B“", 1, 63, 40, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(esu, "51802"));
+
+        update(persister, decoderTyp);
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Decoderadresse 1, LSB", 1, 63, 1, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 7, "Versionsnummer", null, null, 153, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Herstellerkennung", null, null, 151, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 9, "Decoderadresse 1, MSB", 0, 7, 0, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 28, "RailCom Konfiguration", 0, 6, 0, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 29, "Konfigurationsregister", 128, 136, 128, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 37, "Servo 1, Drehgeschwindigkeit", 1, 63, 15, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 38, "Servo 1, Stellung „A“", 1, 63, 24, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 39, "Servo 1, Stellung „B“", 1, 63, 40, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 40, "Servo 2, Drehgeschwindigkeit", 1, 63, 15, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 41, "Servo 2, Stellung „A“", 1, 63, 24, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 42, "Servo 2, Stellung „B“", 1, 63, 40, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 43, "Servo 3, Drehgeschwindigkeit", 1, 63, 15, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 44, "Servo 3, Stellung „A“", 1, 63, 24, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 45, "Servo 3, Stellung „B“", 1, 63, 40, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 46, "Servo 4, Drehgeschwindigkeit", 1, 63, 15, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 47, "Servo 4, Stellung „A“", 1, 63, 24, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 48, "Servo 4, Stellung „B“", 1, 63, 40, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(esu, "51820"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Decoderadresse 1, LSB", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Konfiguration Ausgang 1", 0, 64, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Konfiguration Ausgang 2", 0, 64, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Konfiguration Ausgang 3", 0, 64, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 6, "Konfiguration Ausgang 4", 0, 64, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 7, "Versionsnummer", null, null, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Herstellerkennung", null, null, 8, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 9, "Decoderadresse 1, MSB", 0, 7, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 28, "RailCom Konfiguration", 0, 6, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 29, "Konfigurationsregister", 128, 136, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 33, "Funktionsausgangsstatus", 0, 255, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 34, "„Zoom“-Konfiguration", 0, 15, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 35, "Decoderadresse 2, LSB", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 36, "Decoderadresse 2, MSB", 0, 8, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 37, "Servo 1, Drehgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 38, "Servo 1, Stellung „A“", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 39, "Servo 1, Stellung „B“", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 40, "Servo 2, Drehgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 41, "Servo 2, Stellung „A“", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 42, "Servo 2, Stellung „B“", 1, 63, null, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(esu, "52620"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(esu, "52621"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, null, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "602756"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Lautstärke", 1, 63, null, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "602850"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 11, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "603999"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 2, 80, 54, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "606174"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 255, null, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "606896"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "60760"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung/Bremsverzögerung", 1, 63, 16, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "608825"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 39, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, null, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "608862"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 10, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "60902"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung", 1, 63, 03, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "611077"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "611105"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 71, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Bedienung festgelegt", 0, 1, 0, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Baggerschaufel Zeitbegrenzung", 0, 1, 0, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "611754"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(esu, "61600"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 03, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung", 1, 63, 03, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Beschleunigungszeit", 1, 63, 16, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, 12, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, 63, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 53, "Regelungsreferenz", 1, 63, 45, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 54, "Lastregelung Param. K", 1, 63, 32, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 55, "Lastregelung Param. L", 1, 63, 24, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 56, "Regelungseinfluss", 1, 63, 63, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 73, "Speicheroptionen", 0, 7, 03, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 75, "Märklin Addresse 2", 1, 80, 04, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 78, "Anfahrspannung Analog AC", 1, 63, 25, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 79, "Höchstgeschwindigkeit Analog AC", 1, 63, 63, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(esu, "62400"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 03, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung", 1, 63, 03, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Beschleunigungszeit", 1, 63, 16, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, 12, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, 63, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 53, "Regelungsreferenz", 1, 63, 56, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 54, "Lastregelung Param. K", 1, 63, 32, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 55, "Lastregelung Param. L", 1, 63, 24, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 56, "Regelungseinfluss", 1, 63, 63, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 57, "Geräuschmodus 1", 1, 63, 10, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 58, "Geräuschmodus 2", 1, 63, 58, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 59, "Fahrgeräusch", 1, 63, 32, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 60, "Fahrgeräusch", 1, 63, 55, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Geräuschlautstärke", 1, 63, 63, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 64, "Bremssoundschwelle", 1, 63, 07, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 73, "Speicheroptionen", 0, 7, 03, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 74, "Märklin Addresse 2", 1, 63, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 75, "Märklin Addresse 2", 1, 80, 04, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 78, "Anfahrspannung Analog AC", 1, 63, 25, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 79, "Höchstgeschwindigkeit Analog AC", 1, 63, 63, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(esu, "62499"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 03, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung", 1, 63, 03, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Beschleunigungszeit", 1, 63, 16, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, 12, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, 63, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 53, "Regelungsreferenz", 1, 63, 56, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 54, "Lastregelung Param. K", 1, 63, 32, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 55, "Lastregelung Param. L", 1, 63, 24, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 56, "Regelungseinfluss", 1, 63, 63, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 57, "Geräuschmodus 1", 1, 63, 10, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 58, "Geräuschmodus 2", 1, 63, 58, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 59, "Fahrgeräusch", 1, 63, 32, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 60, "Fahrgeräusch", 1, 63, 55, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Geräuschlautstärke", 1, 63, 63, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 64, "Bremssoundschwelle", 1, 63, 07, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 73, "Speicheroptionen", 0, 7, 03, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 75, "Märklin Addresse 2", 1, 80, 04, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 78, "Anfahrspannung Analog AC", 1, 63, 25, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 79, "Höchstgeschwindigkeit Analog AC", 1, 63, 63, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "6603"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 2, 80, null, false));
+
+        update(persister, decoderTyp);
+
+        DecoderTyp decoderTyp1 = findByKey(persister, new DecoderTyp(marklin, "66031"));
+
+        decoderTyp1.addCV(new DecoderTypCV(null, decoderTyp1, 1, "Adresse", 2, 80, null, false));
+
+        update(persister, decoderTyp);
+
+        DecoderTyp decoderTyp2 = findByKey(persister, new DecoderTyp(marklin, "66032"));
+
+        decoderTyp2.addCV(new DecoderTypCV(null, decoderTyp2, 1, "Adresse", 2, 80, null, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "670040"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 2, 80, 54, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(uhlenbrock, "67900"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 127, 3, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Minimale Geschwindigkeit", 1, 63, 5, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, 2, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, 2, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Maximale Geschwindigkeit", 1, 63, 20, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 6, "Maximale Motorspannung", 1, 255, 64, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 7, "Softwareversion", null, null, null, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Herstellerkennung", null, null, 85, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 17, "Lange Lokadresse MSB", 192, 231, 199, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 18, "Lange Lokadresse LSB", 0, 255, 208, false));
+        decoderTyp.addCV(
+                new DecoderTypCV(null, decoderTyp, 20, "Konfiguration beider Motoren nach DCC-Norm", 0, 33, 0, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 49, "Decoder-Konfiguration", 0, 195, 0, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 65, "Motorola Programmierung Offset", 0, 255, 0, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 67, "Maximale Geschwindigkeit für Taste 1", 0, 255, 40, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 68, "Maximale Geschwindigkeit für Taste 2", 0, 255, 40, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 69, "Maximale Geschwindigkeit für Taste 3", 0, 255, 50, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 70, "Maximale Geschwindigkeit für Taste 4", 0, 255, 50, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 71, "Anfahrverzögerung für Taste 1", 0, 255, 5, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 72, "Anfahrverzögerung für Taste 2", 0, 255, 5, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 73, "Anfahrverzögerung für Taste 3", 0, 255, 5, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 74, "Anfahrverzögerung für Taste 4", 0, 255, 5, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 75, "Bremsverzögerung für Taste 1", 0, 255, 1, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 76, "Bremsverzögerung für Taste 2", 0, 255, 1, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 77, "Bremsverzögerung für Taste 3", 0, 255, 1, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 78, "Bremsverzögerung für Taste 4", 0, 255, 1, false));
+        decoderTyp.addCV(
+                new DecoderTypCV(null, decoderTyp, 79, "Maximale Motorspannung im Analogbetrieb", 0, 255, 180, false));
+        decoderTyp.addCV(
+                new DecoderTypCV(null, decoderTyp, 98, "Zeitbegrenztes Einschalten der Ausgänge A1 + A2", 0, 3, 3, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 99, "Maximale Einschaltzeit in Sekunden", 0, 255, 45, false));
+
+        update(persister, decoderTyp);
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "74460"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 255, null, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "7687"));
+
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 14, 15, 14, false));
+
+        update(persister, decoderTyp);
+
     }
 
     protected void populateDecoderTypFunktion() {
-        IPersister<DecoderTyp> decoderTypLookup = persisterFactory.createNamedItemPersister(DecoderTyp.class);
-        IPersister<DecoderTypFunktion> persister = persisterFactory.createItemPersister(DecoderTypFunktion.class);
         IPersister<Hersteller> herstellerLookup = persisterFactory.createNamedItemPersister(Hersteller.class); 
-        IHersteller digitalbahn = findByKey(herstellerLookup, "Digital-Bahn"); 
-        Hersteller esu = findByKey(herstellerLookup, "ESU"); 
-        Hersteller marklin = findByKey(herstellerLookup, "Märklin"); 
-        IHersteller uhlenbrock = findByKey(herstellerLookup, "Uhlenbrock"); 
         
-        IDecoderTyp _103787 = findByKey(decoderTypLookup, marklin, "103787"); 
+        Hersteller digitalbahn = findByKey(herstellerLookup, new Hersteller("Digital-Bahn")); 
+        Hersteller esu = findByKey(herstellerLookup, new Hersteller("ESU")); 
+        Hersteller marklin = findByKey(herstellerLookup, new Hersteller("Märklin")); 
+        Hersteller uhlenbrock = findByKey(herstellerLookup, new Hersteller("Uhlenbrock")); 
 
-        save(persister, new DecoderTypFunktion(null, _103787, 0, "F0", "Spitzensignal", false, false));
-        save(persister, new DecoderTypFunktion(null, _103787, 0, "F0", "Strinbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _103787, 0, "F1", "Rauchgenerator", false, false));
-        save(persister, new DecoderTypFunktion(null, _103787, 0, "F2", "Lokpfeife", false, false));
-        save(persister, new DecoderTypFunktion(null, _103787, 0, "F3", "Fahrgeräusch", false, false));
-        save(persister, new DecoderTypFunktion(null, _103787, 0, "F4", "ABV", false, false));
-        save(persister, new DecoderTypFunktion(null, _103787, 0, "F5", "Luftpumpe", false, false));
-        save(persister, new DecoderTypFunktion(null, _103787, 0, "F6", "Triebwerksbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _103787, 0, "F7", "Bremsenquietschen aus", false, false));
-        save(persister, new DecoderTypFunktion(null, _103787, 0, "F8", "Rangierpfeife", false, false));
-        save(persister, new DecoderTypFunktion(null, _103787, 0, "F9", "Dampf ablassen", false, false));
+        IPersister<DecoderTyp> persister = persisterFactory.createNamedItemPersister(DecoderTyp.class);
 
-        IDecoderTyp _115166 = findByKey(decoderTypLookup, marklin, "115166"); 
+        DecoderTyp decoderTyp = findByKey(persister, new DecoderTyp(marklin, "103787")); 
 
-        save(persister, new DecoderTypFunktion(null, _115166, 0, "F0", "Strinbeleuchtung / Innenbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _115166, 0, "F1", "Schlusslicht ausschalten", false, false));
-        save(persister, new DecoderTypFunktion(null, _115166, 0, "F2", "Dieselmotor und Bremse", false, false));
-        save(persister, new DecoderTypFunktion(null, _115166, 0, "F3", "Signalhorn", false, false));
-        save(persister, new DecoderTypFunktion(null, _115166, 0, "F4", "ABV", false, false));
-        save(persister, new DecoderTypFunktion(null, _115166, 0, "F5", "Bremsenquietschen", false, false));
-        save(persister, new DecoderTypFunktion(null, _115166, 0, "F6", "Türe Zu", false, false));
-        save(persister, new DecoderTypFunktion(null, _115166, 0, "F7", "Glocke", false, false));
-        save(persister, new DecoderTypFunktion(null, _115166, 0, "F8", "Abfahrtspfiff", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Spitzensignal", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Rauchgenerator", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Lokpfeife", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Fahrgeräusch", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Luftpumpe", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Triebwerksbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Bremsenquietschen aus", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Rangierpfeife", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F9", "Dampf ablassen", false, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "115166")); 
+
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung / Innenbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Schlusslicht ausschalten", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Dieselmotor und Bremse", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Signalhorn", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Bremsenquietschen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Türe Zu", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Glocke", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Abfahrtspfiff", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _115673 = findByKey(decoderTypLookup, marklin, "115673"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "115673")); 
 
-        save(persister, new DecoderTypFunktion(null, _115673, 0, "F0", "Strinbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _115673, 0, "F1", "Rauchgenerator", false, false));
-        save(persister, new DecoderTypFunktion(null, _115673, 0, "F2", "Betriebsgeräusch", false, false));
-        save(persister, new DecoderTypFunktion(null, _115673, 0, "F3", "Pfeife", false, false));
-        save(persister, new DecoderTypFunktion(null, _115673, 0, "F4", "ABV", false, false));
-        save(persister, new DecoderTypFunktion(null, _115673, 0, "F5", "Luftpumpe", false, false));
-        save(persister, new DecoderTypFunktion(null, _115673, 0, "F6", "Kohleschaufeln", false, false));
-        save(persister, new DecoderTypFunktion(null, _115673, 0, "F7", "Glocke", false, false));
-        save(persister, new DecoderTypFunktion(null, _115673, 0, "F8", "Dampf ablassen", false, false));
-        save(persister, new DecoderTypFunktion(null, _115673, 0, "F9", "Bremsenquietschen", false, false));
-        save(persister, new DecoderTypFunktion(null, _115673, 0, "F10", "Schüttelrost", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Rauchgenerator", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Betriebsgeräusch", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Pfeife", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Luftpumpe", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Kohleschaufeln", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Glocke", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Dampf ablassen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F9", "Bremsenquietschen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F10", "Schüttelrost", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _115798 = findByKey(decoderTypLookup, marklin, "115798"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "115798")); 
 
-        IDecoderTyp _116836 = findByKey(decoderTypLookup, marklin, "116836"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "116836")); 
 
-        save(persister, new DecoderTypFunktion(null, _116836, 0, "F0", "Strinbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _116836, 0, "F2", "Betriebsgeräusch", false, false));
-        save(persister, new DecoderTypFunktion(null, _116836, 0, "F3", "Signalhorn", false, false));
-        save(persister, new DecoderTypFunktion(null, _116836, 0, "F4", "ABV", false, false));
-        save(persister, new DecoderTypFunktion(null, _116836, 0, "F5", "Bremsenquietschen", false, false));
-        save(persister, new DecoderTypFunktion(null, _116836, 0, "F6", "Metallsäge", false, false));
-        save(persister, new DecoderTypFunktion(null, _116836, 0, "F7", "Hämmern", false, false));
-        save(persister, new DecoderTypFunktion(null, _116836, 0, "F8", "Winkelschleifer", false, false));
-        save(persister, new DecoderTypFunktion(null, _116836, 0, "F9", "Elektroschweißen", false, false));
-        save(persister, new DecoderTypFunktion(null, _116836, 0, "F10", "Schleifbock", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Betriebsgeräusch", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Signalhorn", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Bremsenquietschen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Metallsäge", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Hämmern", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Winkelschleifer", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F9", "Elektroschweißen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F10", "Schleifbock", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _123572 = findByKey(decoderTypLookup, marklin, "123572"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "123572")); 
 
-        save(persister, new DecoderTypFunktion(null, _123572, 0, "F0", "Strinbeleuchtung / Innenbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _123572, 0, "F2", "Bahnhofsansage", false, false));
-        save(persister, new DecoderTypFunktion(null, _123572, 0, "F3", "Signalhorn", false, false));
-        save(persister, new DecoderTypFunktion(null, _123572, 0, "F4", "ABV", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung / Innenbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Bahnhofsansage", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Signalhorn", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "140131")); 
+
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung / Schlusslicht", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Schlusslicht ausschalten", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Betriebsgeräusch", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Signalhorn", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Druckluft ablassen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Bremsenquietschen", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _140131 = findByKey(decoderTypLookup, marklin, "140131"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "148924")); 
 
-        save(persister, new DecoderTypFunktion(null, _140131, 0, "F0", "Strinbeleuchtung / Schlusslicht", false, false));
-        save(persister, new DecoderTypFunktion(null, _140131, 0, "F1", "Schlusslicht ausschalten", false, false));
-        save(persister, new DecoderTypFunktion(null, _140131, 0, "F2", "Betriebsgeräusch", false, false));
-        save(persister, new DecoderTypFunktion(null, _140131, 0, "F3", "Signalhorn", false, false));
-        save(persister, new DecoderTypFunktion(null, _140131, 0, "F4", "ABV", false, false));
-        save(persister, new DecoderTypFunktion(null, _140131, 0, "F5", "Druckluft ablassen", false, false));
-        save(persister, new DecoderTypFunktion(null, _140131, 0, "F6", "Bremsenquietschen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Schlusslicht ausschalten", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Betriebsgeräusch", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Horn", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Druckluft ablassen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Bremsenquietschen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Führerstandsbeleuchtung vorn", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Führerstandsbeleuchtung hinten", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _148924 = findByKey(decoderTypLookup, marklin, "148924"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "150436")); 
 
-        save(persister, new DecoderTypFunktion(null, _148924, 0, "F0", "Strinbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _148924, 0, "F1", "Schlusslicht ausschalten", false, false));
-        save(persister, new DecoderTypFunktion(null, _148924, 0, "F2", "Betriebsgeräusch", false, false));
-        save(persister, new DecoderTypFunktion(null, _148924, 0, "F3", "Horn", false, false));
-        save(persister, new DecoderTypFunktion(null, _148924, 0, "F4", "ABV", false, false));
-        save(persister, new DecoderTypFunktion(null, _148924, 0, "F5", "Druckluft ablassen", false, false));
-        save(persister, new DecoderTypFunktion(null, _148924, 0, "F6", "Bremsenquietschen", false, false));
-        save(persister, new DecoderTypFunktion(null, _148924, 0, "F7", "Führerstandsbeleuchtung vorn", false, false));
-        save(persister, new DecoderTypFunktion(null, _148924, 0, "F8", "Führerstandsbeleuchtung hinten", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _150436 = findByKey(decoderTypLookup, marklin, "150436"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "156787")); 
 
-        save(persister, new DecoderTypFunktion(null, _150436, 0, "F0", "Strinbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _150436, 0, "F4", "ABV", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Innenbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Begrüßungs-Ansage", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Pfeife", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Innenbeleuchtung dimmen", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _156787 = findByKey(decoderTypLookup, marklin, "156787"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "162946")); 
 
-        save(persister, new DecoderTypFunktion(null, _156787, 0, "F0", "Strinbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _156787, 0, "F1", "Innenbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _156787, 0, "F2", "Begrüßungs-Ansage", false, false));
-        save(persister, new DecoderTypFunktion(null, _156787, 0, "F3", "Pfeife", false, false));
-        save(persister, new DecoderTypFunktion(null, _156787, 0, "F4", "ABV", false, false));
-        save(persister, new DecoderTypFunktion(null, _156787, 0, "F5", "Innenbeleuchtung dimmen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Innenbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Betriebsgeräusch ", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Horn", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Bremsenquietschen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Bahnhofsansage", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Türe zu", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Schaffnerpfiff", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F9", "Hilfsdiesel", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F10", "Lüfter", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F11", "Kompressor", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F12", "Überdruckventil", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F13", "Druckluft ablassen", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _162946 = findByKey(decoderTypLookup, marklin, "162946"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "169274")); 
 
-        save(persister, new DecoderTypFunktion(null, _162946, 0, "F0", "Strinbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _162946, 0, "F1", "Innenbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _162946, 0, "F2", "Betriebsgeräusch ", false, false));
-        save(persister, new DecoderTypFunktion(null, _162946, 0, "F3", "Horn", false, false));
-        save(persister, new DecoderTypFunktion(null, _162946, 0, "F4", "ABV", false, false));
-        save(persister, new DecoderTypFunktion(null, _162946, 0, "F5", "Bremsenquietschen", false, false));
-        save(persister, new DecoderTypFunktion(null, _162946, 0, "F6", "Bahnhofsansage", false, false));
-        save(persister, new DecoderTypFunktion(null, _162946, 0, "F7", "Türe zu", false, false));
-        save(persister, new DecoderTypFunktion(null, _162946, 0, "F8", "Schaffnerpfiff", false, false));
-        save(persister, new DecoderTypFunktion(null, _162946, 0, "F9", "Hilfsdiesel", false, false));
-        save(persister, new DecoderTypFunktion(null, _162946, 0, "F10", "Lüfter", false, false));
-        save(persister, new DecoderTypFunktion(null, _162946, 0, "F11", "Kompressor", false, false));
-        save(persister, new DecoderTypFunktion(null, _162946, 0, "F12", "Überdruckventil", false, false));
-        save(persister, new DecoderTypFunktion(null, _162946, 0, "F13", "Druckluft ablassen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Tischlampen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Betriebsgeräusch", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Horn", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Bremsenquietschen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Schaffnerpfiff", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Türen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Bahnhofsansage", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F9", "Rangierpfiff", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _169274 = findByKey(decoderTypLookup, marklin, "169274"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "209394")); 
 
-        save(persister, new DecoderTypFunktion(null, _169274, 0, "F0", "Strinbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _169274, 0, "F1", "Tischlampen", false, false));
-        save(persister, new DecoderTypFunktion(null, _169274, 0, "F2", "Betriebsgeräusch", false, false));
-        save(persister, new DecoderTypFunktion(null, _169274, 0, "F3", "Horn", false, false));
-        save(persister, new DecoderTypFunktion(null, _169274, 0, "F4", "ABV", false, false));
-        save(persister, new DecoderTypFunktion(null, _169274, 0, "F5", "Bremsenquietschen", false, false));
-        save(persister, new DecoderTypFunktion(null, _169274, 0, "F6", "Schaffnerpfiff", false, false));
-        save(persister, new DecoderTypFunktion(null, _169274, 0, "F7", "Türen", false, false));
-        save(persister, new DecoderTypFunktion(null, _169274, 0, "F8", "Bahnhofsansage", false, false));
-        save(persister, new DecoderTypFunktion(null, _169274, 0, "F9", "Rangierpfiff", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _209394 = findByKey(decoderTypLookup, marklin, "209394"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "219574")); 
 
-        save(persister, new DecoderTypFunktion(null, _209394, 0, "F0", "Strinbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Rauchgenerator", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F11", "Schüttelrost", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Lokpfeife", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Dampftriebwerk", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Luftpumpe", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Feuerschein - Feuerbüchse", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Bremsenquietschen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Rangierpfiff", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F9", "Dampf ablassen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F10", "Kohleschaufeln", false, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "253201")); 
+
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Innenbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Start / Stopp", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Pause", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "ein Lied vor", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ein Lied zurück", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Lauter", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Leiser", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Lichtorgel an / aus", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Barbeleuchtung an / aus", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F9", "Strom führende Kupplung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F10", "Stroboskop", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F11", "Umgebungsgeräusch 1", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F12", "Umgebungsgeräusch 2", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F13", "Betriebsgeräusch 1", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F14", "Betriebsgeräusch 2", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F15", "Betriebsgeräusch 3", false, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "269706")); 
+
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Spitzensignal", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Innenbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Fahrgeräusch", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Signalton", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "Direktsteuerung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Bremsenquietschen aus", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Spitzensignal Lokseite 2", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Schaffnerpfiff", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Spitzensignal Lokseite 1", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F9", "Türenschließen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F10", "Schienenstoß", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F11", "Bahnhofsansage", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F12", "Dialog", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F13", "Dialog", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F14", "Dialog", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F15", "Dialog ", false, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "39970")); 
+
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Arbeitsbühne heben", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Arbeitsbühne schwenken", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Stromabnehmer", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "Initialisierung", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _219574 = findByKey(decoderTypLookup, marklin, "219574"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "42973")); 
 
-        save(persister, new DecoderTypFunktion(null, _219574, 0, "F0", "Strinbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _219574, 0, "F1", "Rauchgenerator", false, false));
-        save(persister, new DecoderTypFunktion(null, _219574, 0, "F11", "Schüttelrost", false, false));
-        save(persister, new DecoderTypFunktion(null, _219574, 0, "F2", "Lokpfeife", false, false));
-        save(persister, new DecoderTypFunktion(null, _219574, 0, "F3", "Dampftriebwerk", false, false));
-        save(persister, new DecoderTypFunktion(null, _219574, 0, "F4", "ABV", false, false));
-        save(persister, new DecoderTypFunktion(null, _219574, 0, "F5", "Luftpumpe", false, false));
-        save(persister, new DecoderTypFunktion(null, _219574, 0, "F6", "Feuerschein - Feuerbüchse", false, false));
-        save(persister, new DecoderTypFunktion(null, _219574, 0, "F7", "Bremsenquietschen", false, false));
-        save(persister, new DecoderTypFunktion(null, _219574, 0, "F8", "Rangierpfiff", false, false));
-        save(persister, new DecoderTypFunktion(null, _219574, 0, "F9", "Dampf ablassen", false, false));
-        save(persister, new DecoderTypFunktion(null, _219574, 0, "F10", "Kohleschaufeln", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Pantograf", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Geräusch einer Schaffner", false, false));
 
-        IDecoderTyp _253201 = findByKey(decoderTypLookup, marklin, "253201"); 
+        update(persister, decoderTyp);
 
-        save(persister, new DecoderTypFunktion(null, _253201, 0, "F0", "Innenbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _253201, 0, "F1", "Start / Stopp", false, false));
-        save(persister, new DecoderTypFunktion(null, _253201, 0, "F2", "Pause", false, false));
-        save(persister, new DecoderTypFunktion(null, _253201, 0, "F3", "ein Lied vor", false, false));
-        save(persister, new DecoderTypFunktion(null, _253201, 0, "F4", "ein Lied zurück", false, false));
-        save(persister, new DecoderTypFunktion(null, _253201, 0, "F5", "Lauter", false, false));
-        save(persister, new DecoderTypFunktion(null, _253201, 0, "F6", "Leiser", false, false));
-        save(persister, new DecoderTypFunktion(null, _253201, 0, "F7", "Lichtorgel an / aus", false, false));
-        save(persister, new DecoderTypFunktion(null, _253201, 0, "F8", "Barbeleuchtung an / aus", false, false));
-        save(persister, new DecoderTypFunktion(null, _253201, 0, "F9", "Strom führende Kupplung", false, false));
-        save(persister, new DecoderTypFunktion(null, _253201, 0, "F10", "Stroboskop", false, false));
-        save(persister, new DecoderTypFunktion(null, _253201, 0, "F11", "Umgebungsgeräusch 1", false, false));
-        save(persister, new DecoderTypFunktion(null, _253201, 0, "F12", "Umgebungsgeräusch 2", false, false));
-        save(persister, new DecoderTypFunktion(null, _253201, 0, "F13", "Betriebsgeräusch 1", false, false));
-        save(persister, new DecoderTypFunktion(null, _253201, 0, "F14", "Betriebsgeräusch 2", false, false));
-        save(persister, new DecoderTypFunktion(null, _253201, 0, "F15", "Betriebsgeräusch 3", false, false));
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "46715")); 
 
-        IDecoderTyp _269706 = findByKey(decoderTypLookup, marklin, "269706"); 
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Kranhaus drehen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Kranausleger Heben heben", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Haken heben", false, false));
 
-        save(persister, new DecoderTypFunktion(null, _269706, 0, "F0", "Spitzensignal", false, false));
-        save(persister, new DecoderTypFunktion(null, _269706, 0, "F1", "Innenbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _269706, 0, "F2", "Fahrgeräusch", false, false));
-        save(persister, new DecoderTypFunktion(null, _269706, 0, "F3", "Signalton", false, false));
-        save(persister, new DecoderTypFunktion(null, _269706, 0, "F4", "Direktsteuerung", false, false));
-        save(persister, new DecoderTypFunktion(null, _269706, 0, "F5", "Bremsenquietschen aus", false, false));
-        save(persister, new DecoderTypFunktion(null, _269706, 0, "F6", "Spitzensignal Lokseite 2", false, false));
-        save(persister, new DecoderTypFunktion(null, _269706, 0, "F7", "Schaffnerpfiff", false, false));
-        save(persister, new DecoderTypFunktion(null, _269706, 0, "F8", "Spitzensignal Lokseite 1", false, false));
-        save(persister, new DecoderTypFunktion(null, _269706, 0, "F9", "Türenschließen", false, false));
-        save(persister, new DecoderTypFunktion(null, _269706, 0, "F10", "Schienenstoß", false, false));
-        save(persister, new DecoderTypFunktion(null, _269706, 0, "F11", "Bahnhofsansage", false, false));
-        save(persister, new DecoderTypFunktion(null, _269706, 0, "F12", "Dialog", false, false));
-        save(persister, new DecoderTypFunktion(null, _269706, 0, "F13", "Dialog", false, false));
-        save(persister, new DecoderTypFunktion(null, _269706, 0, "F14", "Dialog", false, false));
-        save(persister, new DecoderTypFunktion(null, _269706, 0, "F15", "Dialog ", false, false));
+        update(persister, decoderTyp);
 
-        IDecoderTyp _39970 = findByKey(decoderTypLookup, marklin, "39970"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "49940")); 
 
-        save(persister, new DecoderTypFunktion(null, _39970, 0, "F1", "Arbeitsbühne heben", false, false));
-        save(persister, new DecoderTypFunktion(null, _39970, 0, "F2", "Arbeitsbühne schwenken", false, false));
-        save(persister, new DecoderTypFunktion(null, _39970, 0, "F3", "Stromabnehmer", false, false));
-        save(persister, new DecoderTypFunktion(null, _39970, 0, "F4", "Initialisierung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Kamera", false, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "49960")); 
+
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Meßbereich", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Meßbereich", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Maßeinheit", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "Anzeigen", false, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "49961")); 
+
+        decoderTyp = findByKey(persister, new DecoderTyp(esu, "51800")); 
         
-        IDecoderTyp _42973 = findByKey(decoderTypLookup, marklin, "42973"); 
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K1", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K2", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K3", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K4", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "S1", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "S2", "", false, false));
 
-        save(persister, new DecoderTypFunktion(null, _42973, 0, "F2", "Pantograf", false, false));
-        save(persister, new DecoderTypFunktion(null, _42973, 0, "F3", "Geräusch einer Schaffner", false, false));
-
-        IDecoderTyp _46715 = findByKey(decoderTypLookup, marklin, "46715"); 
-
-        save(persister, new DecoderTypFunktion(null, _46715, 0, "F1", "Kranhaus drehen", false, false));
-        save(persister, new DecoderTypFunktion(null, _46715, 0, "F2", "Kranausleger Heben heben", false, false));
-        save(persister, new DecoderTypFunktion(null, _46715, 0, "F3", "Haken heben", false, false));
-
-        IDecoderTyp _49940 = findByKey(decoderTypLookup, marklin, "49940"); 
-
-        save(persister, new DecoderTypFunktion(null, _49940, 0, "F1", "Kamera", false, false));
-
-        IDecoderTyp _49960 = findByKey(decoderTypLookup, marklin, "49960"); 
-
-        save(persister, new DecoderTypFunktion(null, _49960, 0, "F1", "Meßbereich", false, false));
-        save(persister, new DecoderTypFunktion(null, _49960, 0, "F2", "Meßbereich", false, false));
-        save(persister, new DecoderTypFunktion(null, _49960, 0, "F3", "Maßeinheit", false, false));
-        save(persister, new DecoderTypFunktion(null, _49960, 0, "F4", "Anzeigen", false, false));
-
-        IDecoderTyp _49961 = findByKey(decoderTypLookup, marklin, "49961"); 
-
-        IDecoderTyp _51800 = findByKey(decoderTypLookup, esu, "51800"); 
+        update(persister, decoderTyp);
         
-        save(persister, new DecoderTypFunktion(null, _51800, 0, "K1", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _51800, 0, "K2", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _51800, 0, "K3", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _51800, 0, "K4", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _51800, 0, "S1", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _51800, 0, "S2", "", false, false));
+        decoderTyp = findByKey(persister, new DecoderTyp(esu, "51802")); 
+
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "S1", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "S2", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "S3", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "S4", "", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _51802 = findByKey(decoderTypLookup, esu, "51802"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(esu, "51820")); 
 
-        save(persister, new DecoderTypFunktion(null, _51802, 0, "S1", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _51802, 0, "S2", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _51802, 0, "S3", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _51802, 0, "S4", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K1", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K2", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K3", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K4", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "S1", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "S2", "", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _51820 = findByKey(decoderTypLookup, esu, "51820"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(esu, "52620")); 
 
-        save(persister, new DecoderTypFunktion(null, _51820, 0, "K1", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _51820, 0, "K2", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _51820, 0, "K3", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _51820, 0, "K4", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _51820, 0, "S1", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _51820, 0, "S2", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "", false, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(esu, "52621")); 
+
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _52620 = findByKey(decoderTypLookup, esu, "52620"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "602756")); 
 
-        save(persister, new DecoderTypFunktion(null, _52620, 0, "F0", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _52620, 0, "F1", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _52620, 0, "F2", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _52620, 0, "F3", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _52620, 0, "F4", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Schleuderrad Geräusch", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Schleuderrad", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Pfeife", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "Signalstreckenlampen", false, false));
 
-        IDecoderTyp _52621 = findByKey(decoderTypLookup, esu, "52621"); 
-
-        save(persister, new DecoderTypFunktion(null, _52621, 0, "F0", "", false, false));
+        update(persister, decoderTyp);
         
-        IDecoderTyp _602756 = findByKey(decoderTypLookup, marklin, "602756"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "602850")); 
 
-        save(persister, new DecoderTypFunktion(null, _602756, 0, "F0", "Strinbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _602756, 0, "F1", "Schleuderrad Geräusch", false, false));
-        save(persister, new DecoderTypFunktion(null, _602756, 0, "F2", "Schleuderrad", false, false));
-        save(persister, new DecoderTypFunktion(null, _602756, 0, "F3", "Pfeife", false, false));
-        save(persister, new DecoderTypFunktion(null, _602756, 0, "F4", "Signalstreckenlampen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _602850 = findByKey(decoderTypLookup, marklin, "602850"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "603999")); 
 
-        save(persister, new DecoderTypFunktion(null, _602850, 0, "F0", "Strinbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _603999 = findByKey(decoderTypLookup, marklin, "603999"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "606174")); 
 
-        save(persister, new DecoderTypFunktion(null, _603999, 0, "F0", "Strinbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _606174 = findByKey(decoderTypLookup, marklin, "606174"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "606896")); 
 
-        save(persister, new DecoderTypFunktion(null, _606174, 0, "F0", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _606896 = findByKey(decoderTypLookup, marklin, "606896"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "60760")); 
 
-        save(persister, new DecoderTypFunktion(null, _606896, 0, "F0", "Strinbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _606896, 0, "F4", "ABV", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _60760 = findByKey(decoderTypLookup, marklin, "60760"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "608825")); 
 
-        save(persister, new DecoderTypFunktion(null, _60760, 0, "F0", "", false, false));
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "608862")); 
+
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Maschinenraumbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Stromabnehmer vorn", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Stromabnehmer hinten", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+
+        update(persister, decoderTyp);
+       
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "60902")); 
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "611077")); 
+
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _608825 = findByKey(decoderTypLookup, marklin, "608825"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "611105")); 
 
-        IDecoderTyp _608862 = findByKey(decoderTypLookup, marklin, "608862"); 
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Kohleschaufe schließen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Laufgestell Motoren", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Führerhaus Beleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Kohleschaufe Heben", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "Führerhaus Drehen", false, false));
 
-        save(persister, new DecoderTypFunktion(null, _608862, 0, "F0", "Strinbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _608862, 0, "F1", "Maschinenraumbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _608862, 0, "F2", "Stromabnehmer vorn", false, false));
-        save(persister, new DecoderTypFunktion(null, _608862, 0, "F3", "Stromabnehmer hinten", false, false));
-        save(persister, new DecoderTypFunktion(null, _608862, 0, "F4", "ABV", false, false));
+        update(persister, decoderTyp);
         
-        IDecoderTyp _60902 = findByKey(decoderTypLookup, marklin, "60902"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "611754")); 
 
-        IDecoderTyp _611077 = findByKey(decoderTypLookup, marklin, "611077"); 
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Telex-Kupplung", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
 
-        save(persister, new DecoderTypFunktion(null, _611077, 0, "F0", "Strinbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _611077, 0, "F4", "ABV", false, false));
+        update(persister, decoderTyp);
         
-        IDecoderTyp _611105 = findByKey(decoderTypLookup, marklin, "611105"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(esu, "61600")); 
 
-        save(persister, new DecoderTypFunktion(null, _611105, 0, "F0", "Kohleschaufe schließen", false, false));
-        save(persister, new DecoderTypFunktion(null, _611105, 0, "F1", "Laufgestell Motoren", false, false));
-        save(persister, new DecoderTypFunktion(null, _611105, 0, "F2", "Führerhaus Beleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _611105, 0, "F3", "Kohleschaufe Heben", false, false));
-        save(persister, new DecoderTypFunktion(null, _611105, 0, "F4", "Führerhaus Drehen", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "", false, false));
+
+        update(persister, decoderTyp);
+       
+        decoderTyp = findByKey(persister, new DecoderTyp(esu, "62400")); 
+
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F9", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F10", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F11", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F12", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F13", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F14", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F15", "", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _611754 = findByKey(decoderTypLookup, marklin, "611754"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(esu, "62499")); 
 
-        save(persister, new DecoderTypFunktion(null, _611754, 0, "F0", "Strinbeleuchtung", false, false));
-        save(persister, new DecoderTypFunktion(null, _611754, 0, "F2", "Telex-Kupplung", false, false));
-        save(persister, new DecoderTypFunktion(null, _611754, 0, "F4", "ABV", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F9", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F10", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F11", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F12", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F13", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F14", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F15", "", false, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "6603")); 
+
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _61600 = findByKey(decoderTypLookup, esu, "61600"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "66031")); 
 
-        save(persister, new DecoderTypFunktion(null, _61600, 0, "F0", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _62400 = findByKey(decoderTypLookup, esu, "62400"); 
-
-        save(persister, new DecoderTypFunktion(null, _62400, 0, "F0", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62400, 0, "F1", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62400, 0, "F2", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62400, 0, "F3", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62400, 0, "F4", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62400, 0, "F5", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62400, 0, "F6", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62400, 0, "F7", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62400, 0, "F8", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62400, 0, "F9", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62400, 0, "F10", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62400, 0, "F11", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62400, 0, "F12", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62400, 0, "F13", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62400, 0, "F14", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62400, 0, "F15", "", false, false));
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "66032")); 
         
-        IDecoderTyp _62499 = findByKey(decoderTypLookup, esu, "62499"); 
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "", false, false));
 
-        save(persister, new DecoderTypFunktion(null, _62499, 0, "F0", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62499, 0, "F1", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62499, 0, "F2", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62499, 0, "F3", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62499, 0, "F4", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62499, 0, "F5", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62499, 0, "F6", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62499, 0, "F7", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62499, 0, "F8", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62499, 0, "F9", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62499, 0, "F10", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62499, 0, "F11", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62499, 0, "F12", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62499, 0, "F13", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62499, 0, "F14", "", false, false));
-        save(persister, new DecoderTypFunktion(null, _62499, 0, "F15", "", false, false));
+        update(persister, decoderTyp);
 
-        IDecoderTyp _6603 = findByKey(decoderTypLookup, marklin, "6603"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "670040")); 
 
-        save(persister, new DecoderTypFunktion(null, _6603, 0, "F0", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _66031 = findByKey(decoderTypLookup, marklin, "66031"); 
+        decoderTyp = findByKey(persister, new DecoderTyp(uhlenbrock, "67900")); 
 
-        save(persister, new DecoderTypFunktion(null, _66031, 0, "F0", "", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Kranhaken/Laufkatze", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "F1", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "F2", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "F3", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "F4", false, false));
+
+        update(persister, decoderTyp);
+
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "74460")); 
+
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "", false, false));
+
+        update(persister, decoderTyp);
         
-        IDecoderTyp _66032 = findByKey(decoderTypLookup, marklin, "66032"); 
-        
-        save(persister, new DecoderTypFunktion(null, _66032, 0, "F0", "", false, false));
+        decoderTyp = findByKey(persister, new DecoderTyp(marklin, "7687")); 
 
-        IDecoderTyp _670040 = findByKey(decoderTypLookup, marklin, "670040"); 
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "End", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Input", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Clear", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "180", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "Step >", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Step <", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Spoke 1", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Spoke 2", false, false));
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Spoke 3", false, false));
 
-        save(persister, new DecoderTypFunktion(null, _670040, 0, "F0", "", false, false));
-        
-        IDecoderTyp _67900 = findByKey(decoderTypLookup, uhlenbrock, "67900"); 
-
-        save(persister, new DecoderTypFunktion(null, _67900, 0, "F0", "Kranhaken/Laufkatze", false, false));
-        save(persister, new DecoderTypFunktion(null, _67900, 0, "F1", "F1", false, false));
-        save(persister, new DecoderTypFunktion(null, _67900, 0, "F2", "F2", false, false));
-        save(persister, new DecoderTypFunktion(null, _67900, 0, "F3", "F3", false, false));
-        save(persister, new DecoderTypFunktion(null, _67900, 0, "F4", "F4", false, false));
-
-        IDecoderTyp _74460 = findByKey(decoderTypLookup, marklin, "74460"); 
-
-        save(persister, new DecoderTypFunktion(null, _74460, 0, "F0", "", false, false));
-        
-        IDecoderTyp _7687 = findByKey(decoderTypLookup, marklin, "7687"); 
-
-        save(persister, new DecoderTypFunktion(null, _7687, 0, "F0", "End", false, false));
-        save(persister, new DecoderTypFunktion(null, _7687, 0, "F1", "Input", false, false));
-        save(persister, new DecoderTypFunktion(null, _7687, 0, "F2", "Clear", false, false));
-        save(persister, new DecoderTypFunktion(null, _7687, 0, "F3", "180", false, false));
-        save(persister, new DecoderTypFunktion(null, _7687, 0, "F4", "Step >", false, false));
-        save(persister, new DecoderTypFunktion(null, _7687, 0, "F5", "Step <", false, false));
-        save(persister, new DecoderTypFunktion(null, _7687, 0, "F6", "Spoke 1", false, false));
-        save(persister, new DecoderTypFunktion(null, _7687, 0, "F7", "Spoke 2", false, false));
-        save(persister, new DecoderTypFunktion(null, _7687, 0, "F8", "Spoke 3", false, false));
-        
-        IDecoderTyp _DSD2010 = findByKey(decoderTypLookup, digitalbahn, "DSD2010"); 
-
-        save(persister, new DecoderTypFunktion(null, _DSD2010, 0, "F0", "", false, false));
+        update(persister, decoderTyp);
     }
 
     protected void populateEpoch() {
@@ -1633,25 +1681,242 @@ public class DBPopulator {
 
     protected void populateKategorie() {
         IPersister<Kategorie> persister = persisterFactory.createNamedItemPersister(Kategorie.class);
+        
+        Kategorie kategorie = save(persister, new Kategorie(null, "Ausgestaltung", "Ausgestaltung", false));
 
-        save(persister, new Kategorie(null, "Ausgestaltung", "Ausgestaltung", false));
-        save(persister, new Kategorie(null, "Beleuchtung", "Beleuchtung", false));
-        save(persister, new Kategorie(null, "Decoder", "Decoder", false));
-        save(persister, new Kategorie(null, "Ersatzteil", "Ersatzteil", false));
-        save(persister, new Kategorie(null, "Fahrzeug", "Fahrzeug", false));
-        save(persister, new Kategorie(null, "Gebaüde", "Gebaüde", false));
-        save(persister, new Kategorie(null, "Gleismateriel", "Gleismateriel", false));
-        save(persister, new Kategorie(null, "Landschaftsbau", "Landschaftsbau", false));
-        save(persister, new Kategorie(null, "Lokomotiv", "Lokomotiv", false));
-        save(persister, new Kategorie(null, "Oberleitung", "Oberleitung", false));
-        save(persister, new Kategorie(null, "Set", "Set", false));
-        save(persister, new Kategorie(null, "Signaltechnik", "Signaltechnik", false));
-        save(persister, new Kategorie(null, "Sonstiges", "Sonstiges", false));
-        save(persister, new Kategorie(null, "Steuerungstechnik", "Steuerungstechnik", false));
-        save(persister, new Kategorie(null, "Treibwagen", "Treibwagen", false));
-        save(persister, new Kategorie(null, "Wagen", "Wagen", false));
-        save(persister, new Kategorie(null, "Werkzeug", "Werkzeug", false));
-        save(persister, new Kategorie(null, "Zubehör", "Zubehör", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Ausgestaltung", "Ausgestaltung", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Blühmen", "Blühmen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Bäume", "Bäume", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Büsche", "Büsche", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Figuren", "Figuren", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Hecken", "Hecken", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Ladegut", "Ladegut", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Pflanzen", "Pflanzen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Zeichen", "Zeichen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Zäune", "Zäune", false));
+
+        update(persister, kategorie);
+
+        kategorie = save(persister, new Kategorie(null, "Beleuchtung", "Beleuchtung", false));
+
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Beleuchtung", "Beleuchtung", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Gluehlampe", "Gluehlampe", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Innenbeleuchtung", "Innenbeleuchtung", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Leuchteinsatz", "Leuchteinsatz", false));
+        kategorie.addUnterKategorie(
+                new UnterKategorie(null, kategorie, "Stromführendekupplungen", "Stromführendekupplungen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Stromzuführung", "Stromzuführung", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Zugschlussbeleuchtung", "Zugschlussbeleuchtung", false));
+
+        update(persister, kategorie);
+
+        kategorie = save(persister, new Kategorie(null, "Decoder", "Decoder", false));
+
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Decoder", "Decoder", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Lautsprecher", "Lautsprecher", false));
+
+        update(persister, kategorie);
+
+        kategorie = save(persister, new Kategorie(null, "Ersatzteil", "Ersatzteil", false));
+
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Anker", "Anker", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Beschwerung", "Beschwerung", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Drehgestellrahmen", "Drehgestellrahmen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Drehgestell", "Drehgestell", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Entstördrossel", "Entstördrossel", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Ersatzteil", "Ersatzteil", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Feder", "Feder", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Feldmagnet", "Feldmagnet", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Fenster", "Fenster", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Grundplatte", "Grundplatte", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Haftreifen", "Haftreifen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Halteplatte", "Halteplatte", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Inneneinrichtung", "Inneneinrichtung", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Isolierung", "Isolierung", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kabel", "Kabel", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kabelklemmen", "Kabelklemmen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Klappe", "Klappe", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kohlbursten", "Kohlbursten", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kuppelstange", "Kuppelstange", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kupplung", "Kupplung", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kupplungsdeichsel", "Kupplungsdeichsel", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kupplungshaken", "Kupplungshaken", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kupplungskinematik", "Kupplungskinematik", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kupplungsschacht", "Kupplungsschacht", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kurzkupplung", "Kurzkupplung", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Leitschaufel", "Leitschaufel", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Lokumbausätze", "Lokumbausätze", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Massefeder", "Massefeder", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Messingblech", "Messingblech", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Motorschild", "Motorschild", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Mutter", "Mutter", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Pantograph", "Pantograph", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Prallplatte", "Prallplatte", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Puffer", "Puffer", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Rad", "Rad", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Relais", "Relais", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Relexkupplung", "Relexkupplung", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Schaltsfeder", "Schaltsfeder", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Schleifer", "Schleifer", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Schraube", "Schraube", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Schraubenkupplung", "Schraubenkupplung", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Senkschraube", "Senkschraube", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Stange", "Stange", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Telex", "Telex", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Traeger", "Traeger", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Wagenboden", "Wagenboden", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Weichenfeder", "Weichenfeder", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Zugfeder", "Zugfeder", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Zylinderschraube", "Zylinderschraube", false));
+
+        update(persister, kategorie);
+
+        kategorie = save(persister, new Kategorie(null, "Fahrzeug", "Fahrzeug", false));
+
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Fahrzeug", "Fahrzeug", false));
+
+        update(persister, kategorie);
+
+        kategorie = save(persister, new Kategorie(null, "Gebaüde", "Gebaüde", false));
+
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Bekohlung", "Bekohlung", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Bockkrän", "Bockkrän", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Drehscheibe", "Drehscheibe", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Gebaüde", "Gebaüde", false));
+
+        update(persister, kategorie);
+
+        kategorie = save(persister, new Kategorie(null, "Gleismateriel", "Gleismateriel", false));
+
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Gleismateriel", "Gleismateriel", false));
+
+        update(persister, kategorie);
+
+        kategorie = save(persister, new Kategorie(null, "Landschaftsbau", "Landschaftsbau", false));
+
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Landschaftsbau", "Landschaftsbau", false));
+
+        update(persister, kategorie);
+
+        kategorie = save(persister, new Kategorie(null, "Lokomotiv", "Lokomotiv", false));
+
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Lokomotiv", "Lokomotiv", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Akku", "Akku", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Dampf", "Dampf", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Diesel", "Diesel", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Elektro", "Elektro", false));
+
+        update(persister, kategorie);
+
+        kategorie = save(persister, new Kategorie(null, "Oberleitung", "Oberleitung", false));
+
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Oberleitung", "Oberleitung", false));
+
+        update(persister, kategorie);
+
+        kategorie = save(persister, new Kategorie(null, "Set", "Set", false));
+
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Set", "Set", false));
+
+        update(persister, kategorie);
+
+        kategorie = save(persister, new Kategorie(null, "Signaltechnik", "Signaltechnik", false));
+
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Signalbirne", "Signalbirne", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Signaltechnik", "Signaltechnik", false));
+
+        update(persister, kategorie);
+
+        kategorie = save(persister, new Kategorie(null, "Sonstiges", "Sonstiges", false));
+
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Sonstiges", "Sonstiges", false));
+
+        update(persister, kategorie);
+
+        kategorie = save(persister, new Kategorie(null, "Steuerungstechnik", "Steuerungstechnik", false));
+
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Steuerungstechnik", "Steuerungstechnik", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Stromversorgung", "Stromversorgung", false));
+
+        update(persister, kategorie);
+
+        kategorie = save(persister, new Kategorie(null, "Treibwagen", "Treibwagen", false));
+
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Beiwagen", "Beiwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Mittelwagen", "Mittelwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Steurwagen", "Steurwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Treibwagen", "Treibwagen", false));
+
+        update(persister, kategorie);
+
+        kategorie = save(persister, new Kategorie(null, "Wagen", "Wagen", false));
+
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Abteilwagen", "Abteilwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Aussichtswagen", "Aussichtswagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Autotransportwagen", "Autotransportwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Bahndienstwagen", "Bahndienstwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Bananenwagen", "Bananenwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Barwagen", "Barwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Behältertragwagen", "Behältertragwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Bierwagen", "Bierwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Carbid-Flaschenwagen", "Carbid-Flaschenwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Containertragwagen", "Containertragwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Doppelstockwagen", "Doppelstockwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Drehschemelwagen", "Drehschemelwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Fahrradtransportwagen", "Fahrradtransportwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Flachwagen", "Flachwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Gaswagen", "Gaswagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Gedeckter Güterwagen", "Gedeckter Güterwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Gepäckwagen", "Gepäckwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Gesellschaftswagen", "Gesellschaftswagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Großraumwagen", "Großraumwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Güterwagen", "Güterwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Güterzugbegleitwagen", "Güterzugbegleitwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Hochbordwagen", "Hochbordwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kesselwagen", "Kesselwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kränwagen", "Kränwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kühlwagen", "Kühlwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Mannschaftswagen", "Mannschaftswagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Messewagen", "Messewagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Nahverkehrswagen", "Nahverkehrswagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Niederbordwagen", "Niederbordwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Rolldachwagen", "Rolldachwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Schiebewandwagen", "Schiebewandwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Schneepflug", "Schneepflug", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Schotterwagen", "Schotterwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Schwerlastwagen", "Schwerlastwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Schüttgut-Kippwagen", "Schüttgut-Kippwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Seitenentladewagen", "Seitenentladewagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Silowagen", "Silowagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Sonderfahrzeug", "Sonderfahrzeug", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Speisewagen", "Speisewagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Taschenwagen", "Taschenwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Tiefladewagen", "Tiefladewagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Torpedopfannenwagen", "Torpedopfannenwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Umbauwagen", "Umbauwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Verschlagwagen", "Verschlagwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Viehwagen", "Viehwagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Wagen", "Wagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Weihnachtswagen", "Weihnachtswagen", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Weinwagen", "Weinwagen", false));
+
+        update(persister, kategorie);
+
+        Kategorie werkzeug = save(persister, new Kategorie(null, "Werkzeug", "Werkzeug", false));
+
+        werkzeug.addUnterKategorie(new UnterKategorie(null, werkzeug, "Bücher", "Bücher", false));
+        werkzeug.addUnterKategorie(new UnterKategorie(null, werkzeug, "Farbe", "Farbe", false));
+        werkzeug.addUnterKategorie(new UnterKategorie(null, werkzeug, "Kleb", "Kleb", false));
+        werkzeug.addUnterKategorie(new UnterKategorie(null, werkzeug, "Werkzeug", "Werkzeug", false));
+
+        save(persister, werkzeug);
+
+        Kategorie zubehor = save(persister, new Kategorie(null, "Zubehör", "Zubehör", false));
+
+        zubehor.addUnterKategorie(new UnterKategorie(null, zubehor, "Beschriftigung", "Beschriftigung", false));
+        zubehor.addUnterKategorie(new UnterKategorie(null, zubehor, "Zubehör", "Zubehör", false));
+
+        save(persister, zubehor);
     }
 
     protected void populateKupplung() {
@@ -1840,212 +2105,6 @@ public class DBPopulator {
         save(persister, new Steuerung(null, "Umschaltelektronik", "Umschaltelektronik", false));
     }
 
-    protected void populateUnterKategorie() {
-        IPersister<UnterKategorie> persister = persisterFactory.createNamedItemPersister(UnterKategorie.class);
-
-        IPersister<Kategorie> lookup = persisterFactory.createNamedItemPersister(Kategorie.class);
-
-        IKategorie ausgestaltung = findByKey(lookup, "Ausgestaltung");
-
-        save(persister, new UnterKategorie(null, ausgestaltung, "Ausgestaltung", "Ausgestaltung", false));
-        save(persister, new UnterKategorie(null, ausgestaltung, "Blühmen", "Blühmen", false));
-        save(persister, new UnterKategorie(null, ausgestaltung, "Bäume", "Bäume", false));
-        save(persister, new UnterKategorie(null, ausgestaltung, "Büsche", "Büsche", false));
-        save(persister, new UnterKategorie(null, ausgestaltung, "Figuren", "Figuren", false));
-        save(persister, new UnterKategorie(null, ausgestaltung, "Hecken", "Hecken", false));
-        save(persister, new UnterKategorie(null, ausgestaltung, "Ladegut", "Ladegut", false));
-        save(persister, new UnterKategorie(null, ausgestaltung, "Pflanzen", "Pflanzen", false));
-        save(persister, new UnterKategorie(null, ausgestaltung, "Zeichen", "Zeichen", false));
-        save(persister, new UnterKategorie(null, ausgestaltung, "Zäune", "Zäune", false));
-
-        IKategorie beleuchtung = findByKey(lookup, "Beleuchtung");
-
-        save(persister, new UnterKategorie(null, beleuchtung, "Beleuchtung", "Beleuchtung", false));
-        save(persister, new UnterKategorie(null, beleuchtung, "Gluehlampe", "Gluehlampe", false));
-        save(persister, new UnterKategorie(null, beleuchtung, "Innenbeleuchtung", "Innenbeleuchtung", false));
-        save(persister, new UnterKategorie(null, beleuchtung, "Leuchteinsatz", "Leuchteinsatz", false));
-        save(persister, 
-                new UnterKategorie(null, beleuchtung, "Stromführendekupplungen", "Stromführendekupplungen", false));
-        save(persister, new UnterKategorie(null, beleuchtung, "Stromzuführung", "Stromzuführung", false));
-        save(persister, new UnterKategorie(null, beleuchtung, "Zugschlussbeleuchtung", "Zugschlussbeleuchtung", false));
-
-        IKategorie decoder = findByKey(lookup, "Decoder");
-
-        save(persister, new UnterKategorie(null, decoder, "Decoder", "Decoder", false));
-        save(persister, new UnterKategorie(null, decoder, "Lautsprecher", "Lautsprecher", false));
-
-        IKategorie ersatzteil = findByKey(lookup, "Ersatzteil");
-
-        save(persister, new UnterKategorie(null, ersatzteil, "Anker", "Anker", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Beschwerung", "Beschwerung", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Drehgestellrahmen", "Drehgestellrahmen", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Drehgestell", "Drehgestell", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Entstördrossel", "Entstördrossel", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Ersatzteil", "Ersatzteil", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Feder", "Feder", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Feldmagnet", "Feldmagnet", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Fenster", "Fenster", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Grundplatte", "Grundplatte", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Haftreifen", "Haftreifen", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Halteplatte", "Halteplatte", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Inneneinrichtung", "Inneneinrichtung", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Isolierung", "Isolierung", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Kabel", "Kabel", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Kabelklemmen", "Kabelklemmen", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Klappe", "Klappe", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Kohlbursten", "Kohlbursten", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Kuppelstange", "Kuppelstange", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Kupplung", "Kupplung", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Kupplungsdeichsel", "Kupplungsdeichsel", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Kupplungshaken", "Kupplungshaken", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Kupplungskinematik", "Kupplungskinematik", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Kupplungsschacht", "Kupplungsschacht", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Kurzkupplung", "Kurzkupplung", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Leitschaufel", "Leitschaufel", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Lokumbausätze", "Lokumbausätze", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Massefeder", "Massefeder", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Messingblech", "Messingblech", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Motorschild", "Motorschild", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Mutter", "Mutter", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Pantograph", "Pantograph", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Prallplatte", "Prallplatte", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Puffer", "Puffer", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Rad", "Rad", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Relais", "Relais", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Relexkupplung", "Relexkupplung", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Schaltsfeder", "Schaltsfeder", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Schleifer", "Schleifer", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Schraube", "Schraube", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Schraubenkupplung", "Schraubenkupplung", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Senkschraube", "Senkschraube", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Stange", "Stange", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Telex", "Telex", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Traeger", "Traeger", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Wagenboden", "Wagenboden", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Weichenfeder", "Weichenfeder", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Zugfeder", "Zugfeder", false));
-        save(persister, new UnterKategorie(null, ersatzteil, "Zylinderschraube", "Zylinderschraube", false));
-
-        IKategorie fahrzeug = findByKey(lookup, "Fahrzeug");
-
-        save(persister, new UnterKategorie(null, fahrzeug, "Fahrzeug", "Fahrzeug", false));
-
-        IKategorie gebaude = findByKey(lookup, "Gebaüde");
-
-        save(persister, new UnterKategorie(null, gebaude, "Bekohlung", "Bekohlung", false));
-        save(persister, new UnterKategorie(null, gebaude, "Bockkrän", "Bockkrän", false));
-        save(persister, new UnterKategorie(null, gebaude, "Drehscheibe", "Drehscheibe", false));
-        save(persister, new UnterKategorie(null, gebaude, "Gebaüde", "Gebaüde", false));
-
-        IKategorie gleismateriel = findByKey(lookup, "Gleismateriel");
-
-        save(persister, new UnterKategorie(null, gleismateriel, "Gleismateriel", "Gleismateriel", false));
-
-        IKategorie landschaftsbau = findByKey(lookup, "Landschaftsbau");
-
-        save(persister, new UnterKategorie(null, landschaftsbau, "Landschaftsbau", "Landschaftsbau", false));
-
-        IKategorie lokomotive = findByKey(lookup, "Lokomotiv");
-
-        save(persister, new UnterKategorie(null, lokomotive, "Lokomotiv", "Lokomotiv", false));
-        save(persister, new UnterKategorie(null, lokomotive, "Akku", "Akku", false));
-        save(persister, new UnterKategorie(null, lokomotive, "Dampf", "Dampf", false));
-        save(persister, new UnterKategorie(null, lokomotive, "Diesel", "Diesel", false));
-        save(persister, new UnterKategorie(null, lokomotive, "Elektro", "Elektro", false));
-
-        IKategorie oberleitung = findByKey(lookup, "Oberleitung");
-
-        save(persister, new UnterKategorie(null, oberleitung, "Oberleitung", "Oberleitung", false));
-
-        IKategorie set = findByKey(lookup, "Set");
-
-        save(persister, new UnterKategorie(null, set, "Set", "Set", false));
-
-        IKategorie signaltechnik = findByKey(lookup, "Signaltechnik");
-
-        save(persister, new UnterKategorie(null, signaltechnik, "Signalbirne", "Signalbirne", false));
-        save(persister, new UnterKategorie(null, signaltechnik, "Signaltechnik", "Signaltechnik", false));
-
-        IKategorie sonstiges = findByKey(lookup, "Sonstiges");
-
-        save(persister, new UnterKategorie(null, sonstiges, "Sonstiges", "Sonstiges", false));
-
-        IKategorie steuerungstechnik = findByKey(lookup, "Steuerungstechnik");
-
-        save(persister, new UnterKategorie(null, steuerungstechnik, "Steuerungstechnik", "Steuerungstechnik", false));
-        save(persister, new UnterKategorie(null, steuerungstechnik, "Stromversorgung", "Stromversorgung", false));
-
-        IKategorie treibwagen = findByKey(lookup, "Treibwagen");
-
-        save(persister, new UnterKategorie(null, treibwagen, "Beiwagen", "Beiwagen", false));
-        save(persister, new UnterKategorie(null, treibwagen, "Mittelwagen", "Mittelwagen", false));
-        save(persister, new UnterKategorie(null, treibwagen, "Steurwagen", "Steurwagen", false));
-        save(persister, new UnterKategorie(null, treibwagen, "Treibwagen", "Treibwagen", false));
-
-        IKategorie wagen = findByKey(lookup, "Wagen");
-
-        save(persister, new UnterKategorie(null, wagen, "Abteilwagen", "Abteilwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Aussichtswagen", "Aussichtswagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Autotransportwagen", "Autotransportwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Bahndienstwagen", "Bahndienstwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Bananenwagen", "Bananenwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Barwagen", "Barwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Behältertragwagen", "Behältertragwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Bierwagen", "Bierwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Carbid-Flaschenwagen", "Carbid-Flaschenwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Containertragwagen", "Containertragwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Doppelstockwagen", "Doppelstockwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Drehschemelwagen", "Drehschemelwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Fahrradtransportwagen", "Fahrradtransportwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Flachwagen", "Flachwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Gaswagen", "Gaswagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Gedeckter Güterwagen", "Gedeckter Güterwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Gepäckwagen", "Gepäckwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Gesellschaftswagen", "Gesellschaftswagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Großraumwagen", "Großraumwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Güterwagen", "Güterwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Güterzugbegleitwagen", "Güterzugbegleitwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Hochbordwagen", "Hochbordwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Kesselwagen", "Kesselwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Kränwagen", "Kränwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Kühlwagen", "Kühlwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Mannschaftswagen", "Mannschaftswagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Messewagen", "Messewagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Nahverkehrswagen", "Nahverkehrswagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Niederbordwagen", "Niederbordwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Rolldachwagen", "Rolldachwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Schiebewandwagen", "Schiebewandwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Schneepflug", "Schneepflug", false));
-        save(persister, new UnterKategorie(null, wagen, "Schotterwagen", "Schotterwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Schwerlastwagen", "Schwerlastwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Schüttgut-Kippwagen", "Schüttgut-Kippwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Seitenentladewagen", "Seitenentladewagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Silowagen", "Silowagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Sonderfahrzeug", "Sonderfahrzeug", false));
-        save(persister, new UnterKategorie(null, wagen, "Speisewagen", "Speisewagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Taschenwagen", "Taschenwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Tiefladewagen", "Tiefladewagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Torpedopfannenwagen", "Torpedopfannenwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Umbauwagen", "Umbauwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Verschlagwagen", "Verschlagwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Viehwagen", "Viehwagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Wagen", "Wagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Weihnachtswagen", "Weihnachtswagen", false));
-        save(persister, new UnterKategorie(null, wagen, "Weinwagen", "Weinwagen", false));
-
-        IKategorie werkzeug = findByKey(lookup, "Werkzeug");
-
-        save(persister, new UnterKategorie(null, werkzeug, "Bücher", "Bücher", false));
-        save(persister, new UnterKategorie(null, werkzeug, "Farbe", "Farbe", false));
-        save(persister, new UnterKategorie(null, werkzeug, "Kleb", "Kleb", false));
-        save(persister, new UnterKategorie(null, werkzeug, "Werkzeug", "Werkzeug", false));
-
-        IKategorie zubehor = findByKey(lookup, "Zubehör");
-
-        save(persister, new UnterKategorie(null, zubehor, "Beschriftigung", "Beschriftigung", false));
-        save(persister, new UnterKategorie(null, zubehor, "Zubehör", "Zubehör", false));
-    }
-
     protected void populateVorbild() {
     }
 
@@ -2076,7 +2135,17 @@ public class DBPopulator {
         save(persister, new ZugTyp(null, "TEE Zug", "TEE Zug", false));
         save(persister, new ZugTyp(null, "Militär Zug", "Militär Zug", false));
     }
-    
+
+    <E extends IItem> E findByKey(IPersister<E> persister, E entity) {
+        try {
+            return persister.findByKey(entity);
+        } catch (Exception e) {
+            logger.error("Error finding " + entity, e);
+        }
+        
+        return null;
+    }
+
     <E extends IItem> E save(IPersister<E> persister, E item) {
         try {
             return persister.save(item);
@@ -2087,11 +2156,11 @@ public class DBPopulator {
         return null;
     }
 
-    <E extends IItem> E findByKey(IPersister<E> persister, Object... keys) {
+    <E extends IItem> E update(IPersister<E> persister, E item) {
         try {
-            return persister.findByKey(keys);
+            return persister.update(item);
         } catch (Exception e) {
-            logger.error("Error finding " + persister.getEntityClass().getSimpleName() + "(" + keys + ") : " + e.getMessage(), e);
+            logger.error("Failed to save " + item + " : " + e.getMessage(), e);
         }
         
         return null;

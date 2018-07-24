@@ -6,33 +6,57 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
-@Entity
+/**
+ * Wahrung.
+ * Currency for a price.
+ * @author  $Author:$
+ * @version $Id:$
+ */
+@Entity(name = "Wahrung")
 @Table(name = "wahrungen", indexes = { @Index(columnList = "name", unique = true) }, 
        uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 public class Wahrung extends AbstractNamedItem implements IWahrung {
 	
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 9168067747478159138L;
 
+    /** The decimals. */
     private Integer decimals;
 	
+	/**
+	 * Instantiates a new wahrung.
+	 */
 	public Wahrung() {
 		super();
 	}
 
+    public Wahrung(String name) {
+        super(name);
+    }
+
+    /**
+	 * Instantiates a new wahrung.
+	 *
+	 * @param id the id
+	 * @param name the name
+	 * @param bezeichnung the bezeichnung
+	 * @param decimals the decimals
+	 * @param deleted the deleted
+	 */
 	public Wahrung(Long id, String name, String bezeichnung, Integer decimals, Boolean deleted) {
 		super(id, name, bezeichnung, deleted);
 
-		this.decimals = decimals;
+		setDecimals(decimals);
 	}
 
 	@Override
-    @Column(name="decimals")
+    @Column(name="decimals", nullable = true)
 	public Integer getDecimals() {
 		return decimals;
 	}
@@ -44,6 +68,9 @@ public class Wahrung extends AbstractNamedItem implements IWahrung {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString()).append("decimals", getDecimals()).toString();
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+		        .appendSuper(super.toString())
+		        .append("decimals", getDecimals())
+		        .toString();
 	}
 }

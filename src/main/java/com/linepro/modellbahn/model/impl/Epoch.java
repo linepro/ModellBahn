@@ -8,17 +8,39 @@ import javax.persistence.UniqueConstraint;
 import com.linepro.modellbahn.model.IEpoch;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 
-@Entity
+/**
+ * Epoch.
+ * The NEM 800 Epoch for a product
+ * @author  $Author:$
+ * @version $Id:$
+ */
+@Entity(name = "Epoch")
 @Table(name = "epochen", indexes = { @Index(columnList = "name", unique = true) }, 
        uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 public class Epoch extends AbstractNamedItem implements IEpoch {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1742959707816247906L;
 
+    /**
+     * Instantiates a new epoch.
+     */
     public Epoch() {
 		super();
 	}
 
+    public Epoch(String name) {
+        super(name);
+    }
+
+	/**
+	 * Instantiates a new epoch.
+	 *
+	 * @param id the id
+	 * @param name the name
+	 * @param bezeichnung the bezeichnung
+	 * @param deleted the deleted
+	 */
 	public Epoch( Long id, String name, String bezeichnung, Boolean deleted) {
 		super(id, name, bezeichnung, deleted);
 	}

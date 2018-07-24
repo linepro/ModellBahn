@@ -7,10 +7,24 @@ import org.apache.commons.lang3.StringUtils;
 import com.linepro.modellbahn.model.INamedItem;
 import com.linepro.modellbahn.persistence.IPersister;
 
+/**
+ * NamedItemConverter.
+ * Converts from name to NamedItem.
+ * @author  $Author:$
+ * @version $Id:$
+ *
+ * @param <I> the generic type
+ */
 public class NamedItemConverter<I extends INamedItem> implements Converter {
     
+    /** The persister. */
     protected final IPersister<I> persister;
     
+    /**
+     * Instantiates a new named item converter.
+     *
+     * @param persister the persister
+     */
     public NamedItemConverter(IPersister<I> persister) {
         this.persister = persister;
     }
@@ -20,9 +34,12 @@ public class NamedItemConverter<I extends INamedItem> implements Converter {
     public <T> T convert(Class<T> type, Object value) {
         try {
             if (type.isAssignableFrom(persister.getEntityClass())) {
-                String valueStr = value.toString();
-                if (StringUtils.isNotBlank(valueStr)) {
-                    I entity = persister.findByKey(valueStr);
+                if (StringUtils.isNotBlank(value.toString())) {
+                    I entity = (I) type.newInstance();
+
+                    ((INamedItem) entity).setName(value.toString());
+
+                    entity = persister.findByKey(entity);
                     
                     if (entity != null) {
                         return (T) entity;

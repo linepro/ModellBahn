@@ -5,9 +5,18 @@ import javax.ws.rs.Path;
 import com.linepro.modellbahn.model.impl.Aufbau;
 import com.linepro.modellbahn.rest.util.NamedItemService;
 
+/**
+ * AufbauService.
+ * CRUD service for Aufbau
+ * @author  $Author:$
+ * @version $Id:$
+ */
 @Path("/aufbau")
 public class AufbauService extends NamedItemService<Aufbau> {
 
+    /**
+     * Instantiates a new aufbau service.
+     */
     public AufbauService() {
         super(Aufbau.class);
     }

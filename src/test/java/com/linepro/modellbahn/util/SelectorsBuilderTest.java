@@ -3,10 +3,7 @@ package com.linepro.modellbahn.util;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Basic;
@@ -42,16 +39,12 @@ public class SelectorsBuilderTest {
 
     protected SelectorsBuilder builder;
 
-    protected List<Class<? extends Annotation>> annotations;
-
     protected Selector idSelector;
 
     protected Selector nameSelector;
     
     @BeforeMethod
     public void setUp() throws Exception {
-        annotations = Arrays.asList(Column.class);
-
         builder = new SelectorsBuilder(); 
     }
 
@@ -73,7 +66,7 @@ public class SelectorsBuilderTest {
     public void testBuildBase() throws Exception {
         testObject = setObject(new Base());
         
-        Map<String,Selector> selectors = builder.build(testObject.getClass(), annotations);
+        Map<String,Selector> selectors = builder.build(testObject.getClass(), Column.class);
         
         assertEquals(selectors.size(), 0);
     }
@@ -82,7 +75,7 @@ public class SelectorsBuilderTest {
     public void testBuildAnnotated() throws Exception {
         testObject = setObject(new Annotated());
         
-        Map<String,Selector> selectors = builder.build(testObject.getClass(), annotations);
+        Map<String,Selector> selectors = builder.build(testObject.getClass(), Column.class);
         
         assertEquals(selectors.size(), 1);
         assertTrue(selectors.containsValue(nameSelector));
@@ -91,11 +84,9 @@ public class SelectorsBuilderTest {
 
     @Test
     public void testBuildDoubleAnnotated() throws Exception {
-        annotations = Arrays.asList(Column.class, JoinColumn.class);
-
         testObject = setObject(new DoubleAnnotated());
         
-        Map<String,Selector> selectors = builder.build(testObject.getClass(), annotations);
+        Map<String,Selector> selectors = builder.build(testObject.getClass(), Column.class, JoinColumn.class);
         
         assertEquals(selectors.size(), 2);
         assertTrue(selectors.containsValue(idSelector));
