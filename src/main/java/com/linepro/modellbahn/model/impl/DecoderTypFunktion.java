@@ -9,19 +9,25 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
+import com.linepro.modellbahn.rest.json.DecoderTypSerializer;
+import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
@@ -34,6 +40,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Table(name = "decoder_typ_funktionen", indexes = { @Index(columnList = "decoder_typ_id,reihe,name", unique = true),
         @Index(columnList = "decoder_typ_id") }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { "decoder_typ_id", "reihe", "name" }) })
+@JsonRootName(value = "function")
 @AttributeOverride(name = "name", column = @Column(name = "name", unique = false, length = 4))
 public class DecoderTypFunktion extends AbstractNamedItem implements IDecoderTypFunktion {
 
@@ -95,8 +102,8 @@ public class DecoderTypFunktion extends AbstractNamedItem implements IDecoderTyp
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
     @JoinColumn(name = "decoder_typ_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_typ_fn_fk1"))
     @JsonGetter("decoderTyp")
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonView(Views.DropDown.class)
+    @JsonSerialize(contentUsing=DecoderTypSerializer.class)
     public IDecoderTyp getDecoderTyp() {
         return decoderTyp;
     }
@@ -110,13 +117,14 @@ public class DecoderTypFunktion extends AbstractNamedItem implements IDecoderTyp
     @Override
     @BusinessKey
     @Column(name = "reihe", nullable = false)
-    @JsonGetter("reihe")
+    @JsonGetter("bank")
+    @JsonView(Views.DropDown.class)
     public Integer getReihe() {
         return reihe;
     }
 
     @Override
-    @JsonSetter("reihe")
+    @JsonSetter("bank")
     public void setReihe(Integer reihe) {
         this.reihe = reihe;
     }
@@ -124,6 +132,7 @@ public class DecoderTypFunktion extends AbstractNamedItem implements IDecoderTyp
     @Override
     @Column(name = "programmable", nullable = false)
     @JsonGetter("programmable")
+    @JsonView(Views.Public.class)
     public Boolean getProgrammable() {
         return programmable;
     }
@@ -132,6 +141,41 @@ public class DecoderTypFunktion extends AbstractNamedItem implements IDecoderTyp
     @JsonSetter("programmable")
     public void setProgrammable(Boolean programmable) {
         this.programmable = programmable;
+    }
+
+    @Override
+    @Transient
+    @JsonIgnore
+    public String getLinkId() {
+        return getDecoderTyp().getLinkId() + "/fn/" + getReihe() + "/" + getName();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(getDecoderTyp())
+                .append(getReihe())
+                .append(getName())
+                .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof DecoderTypFunktion)) {
+            return false;
+        }
+
+        DecoderTypFunktion other = (DecoderTypFunktion) obj;
+
+        return new EqualsBuilder()
+                .append(getDecoderTyp(), other.getDecoderTyp())
+                .append(getReihe(), other.getReihe())
+                .append(getName(), other.getName())
+                .isEquals();
     }
 
     @Override

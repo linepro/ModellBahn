@@ -1,6 +1,7 @@
 package com.linepro.modellbahn.guice;
 
 import java.net.URI;
+import java.util.Collection;
 
 import com.linepro.modellbahn.ModellBahn;
 
@@ -18,5 +19,5 @@ public interface IModellBahnFactory {
      * @param baseUri the base uri for the application
      * @return the application.
      */
-    ModellBahn create(URI baseUri);
+    ModellBahn create(URI baseUri, Collection<String> staticRoots);
 }

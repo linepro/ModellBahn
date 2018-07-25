@@ -27,19 +27,21 @@ public interface IPersister<E extends IItem> extends ISessionManager {
      * Finds the entity by primary key.
      *
      * @param id the id
+     * @param eager TODO
      * @return the entity
      * @throws Exception if there more than one match or there is a DB error
      */
-    E findById(Long id) throws Exception;
+    E findById(Long id, boolean eager) throws Exception;
 
     /**
      * Finds the entity by business key.
      *
      * @param template the template to scan for
+     * @param eager TODO
      * @return the entity
      * @throws Exception if there more than one match or there is a DB error
      */
-    E findByKey(E template) throws Exception;
+    E findByKey(E template, boolean eager) throws Exception;
 
     /**
      * Finds all the entities.

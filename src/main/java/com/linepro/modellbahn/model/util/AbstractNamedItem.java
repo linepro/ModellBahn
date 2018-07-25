@@ -4,10 +4,14 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -23,7 +27,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version  $Id$
  */
 @MappedSuperclass
-@JsonPropertyOrder({"id","name","description","deleted"})
+//@JsonPropertyOrder({"id","name","description","deleted", "links"})
 public abstract class AbstractNamedItem extends AbstractItem implements INamedItem, Serializable {
 
     /** The Constant serialVersionUID. */
@@ -97,7 +101,38 @@ public abstract class AbstractNamedItem extends AbstractItem implements INamedIt
 		this.bezeichnung = bezeichnung;
 	}
 
-	@Override
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(getName())
+                .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof AbstractNamedItem)) {
+            return false;
+        }
+
+        AbstractNamedItem other = (AbstractNamedItem) obj;
+
+        return new EqualsBuilder()
+                .append(getName(), other.getName())
+                .isEquals();
+    }
+
+    @Override
+    @Transient
+    @JsonIgnore
+    public String getLinkId() {
+        return getName();
+    }
+
+    @Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
 				.appendSuper(super.toString())

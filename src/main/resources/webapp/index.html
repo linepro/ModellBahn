@@ -1,86 +1,77 @@
-<html>
-  <head>
-  	<title>JAX-RS Calculator Client</title>
-    <link rel="stylesheet" href="js/jquery-ui.css" />
-    <script src="js/jquery-1.9.1.js"></script>    
-    
-    <script type="text/javascript">
-        (function($) {
-            $(document).ready(function() {
-            	var url = "/rest/calculator/calc/add/2/2";
-            	$('<p>').html('Request: ' + url).appendTo('#request');
-            	$.getJSON(url,
-            		function ( data ) {
-            			console.log( data );
-		            	$('<p>').html('Raw response: <code>' + JSON.stringify(data) + '</code>').appendTo('#raw');
-		            	$('<p>').html('Output: ').appendTo('#result');
-            			$('<p>').html('Operation: ' + data.operation).appendTo('#result');
-            			$('<p>').html('<br>Left: ' + data.left).appendTo('#result');
-            			$('<p>').html('<br>Right: ' + data.right).appendTo('#result');
-            			$('<p>').html('<br>Result: ' + data.result).appendTo('#result');
-            		})
-  					.fail(function() {
-    					console.log( "error" );
-					})
-  					.always(function() {
-  						$("#status").text("Status: Complete.");
-	  				});
-            });
-        })(jQuery);
-    </script>
-    <style>
-        ul{
-            list-style-type: none;
-            padding: 10px;
-            background-color: #E0EFAF;      
-        }
-        li{
-            margin: 5px;
-            margin-bottom: 15px;
-            padding: 15px;
-            background-color: #FFFFFF;      
-            color: #000000;
-        }
-    </style>
-    
-  </head>
-  <body>
-    <h4>JAX-RS Calculator Client</h4>
-    
-        <div id="content">
-                <ul id="contentList">
-                	<li id="request"></li>
-                    <li id="result"></li>
-                	<li id="raw"></li>
-                    <li><p id="status">Status: Waiting...</p></li>
-                </ul>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2013-2017 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://oss.oracle.com/licenses/CDDL+GPL-1.1
+    or LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Flight Demo Application</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <header class="page-header">
+                <h1>Flight Demo Application</h1>
+            </header>
         </div>
-
-<p>
-Welcome to the JAX-RS Example Application. This application provides a REST API for a very
-basic calculator. The following paths are supported for GET requests:
-</p>
-
-<pre>
-/rest/calculator/calc/add/{left}/{right}
-/rest/calculator/calc/subtract/{left}/{right}
-/rest/calculator/calc/multiply/{left}/{right}
-/rest/calculator/calc/divide/{left}/{right}
-</pre>
-
-<p>
-All of these paths return a JSON object containing the supplied parameters and the result. 
-</p>
-
-In addition the service supports POST requests for:
-<pre>
-/rest/calculator/calc2
-</pre>
-
-<p>
-The request body must be a JSON object similar to the above ("result" is of course optional). The
-response will be JSON as above.
-</p>
-
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <footer class="page-footer">
+                <ul class="nav nav-pills">
+                    <li><a href="/api/flights">All Flights</a></li>
+                    <li><a href="/api/aircrafts">All Aircrafts</a></li>
+                    <li><a href="/simulation.html">Simulation</a></li>
+                </ul>
+            </footer>
+        </div>
+    </div>
+</div>
+<script src="/js/bootstrap.js"></script>
 </body>
 </html>

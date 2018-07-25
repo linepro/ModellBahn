@@ -3,6 +3,7 @@ package com.linepro.modellbahn.rest.service;
 import javax.ws.rs.Path;
 
 import com.linepro.modellbahn.model.impl.DecoderTyp;
+import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.rest.util.NamedItemService;
 
 /**
@@ -11,7 +12,7 @@ import com.linepro.modellbahn.rest.util.NamedItemService;
  * @author  $Author:$
  * @version $Id:$
  */
-@Path("/decoderTyp")
+@Path(ApiPaths.DECODER_TYP)
 public class DecoderTypService extends NamedItemService<DecoderTyp> {
 
     /**

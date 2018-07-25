@@ -8,19 +8,26 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderCV;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.util.AbstractItem;
+import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
@@ -32,6 +39,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Entity(name = "DecoderCV")
 @Table(name = "decoder_cv", indexes = { @Index(columnList = "decoder_id,cv_id", unique = true) }, 
        uniqueConstraints = { @UniqueConstraint(columnNames = { "decoder_id", "cv_id" }) })
+@JsonRootName(value = "cv")
 public class DecoderCV extends AbstractItem implements IDecoderCV {
 
     /** The Constant serialVersionUID. */
@@ -70,6 +78,7 @@ public class DecoderCV extends AbstractItem implements IDecoderCV {
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=Decoder.class)
     @JoinColumn(name="decoder_id", nullable = false, referencedColumnName="id", foreignKey = @ForeignKey(name = "decoder_cv_fk1"))
 	@JsonGetter("decoder")
+    @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IDecoder getDecoder() {
@@ -86,8 +95,9 @@ public class DecoderCV extends AbstractItem implements IDecoderCV {
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=DecoderTypCV.class)
     @JoinColumn(name="cv_id", nullable = false, referencedColumnName="id", foreignKey = @ForeignKey(name = "decoder_cv_fk2"))
     @JsonGetter("cv")
+    @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "cv")
     public IDecoderTypCV getCV() {
         return cv;
     }
@@ -100,16 +110,50 @@ public class DecoderCV extends AbstractItem implements IDecoderCV {
 
 	@Override
     @Column(name="wert", nullable = true)
-    @JsonGetter("wert")
+    @JsonGetter("value")
+    @JsonView(Views.DropDown.class)
 	public Integer getWert() {
 		return wert;
 	}
 
 	@Override
-    @JsonSetter("wert")
+    @JsonSetter("value")
     public void setWert(Integer wert) {
 		this.wert = wert;
 	}
+
+    @Override
+    @Transient
+    @JsonIgnore
+    public String getLinkId() {
+        return getDecoder().getLinkId() + "/" + getCV();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(getDecoder())
+                .append(getCV())
+                .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof DecoderCV)) {
+            return false;
+        }
+
+        DecoderCV other = (DecoderCV) obj;
+
+        return new EqualsBuilder()
+                .append(getDecoder(), other.getDecoder())
+                .append(getCV(), other.getCV())
+                .isEquals();
+    }
 
 	@Override
 	public String toString() {

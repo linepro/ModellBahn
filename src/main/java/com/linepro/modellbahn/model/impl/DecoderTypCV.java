@@ -8,19 +8,28 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
+import com.linepro.modellbahn.rest.json.DecoderTypSerializer;
+import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
@@ -33,6 +42,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Table(name = "decoder_typ_cv", indexes = { @Index(columnList = "decoder_typ_id,cv", unique = true),
         @Index(columnList = "decoder_typ_id"), @Index(columnList = "cv") }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { "decoder_typ_id", "cv" }) })
+@JsonRootName(value = "cv")
 public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
 
     /** The Constant serialVersionUID. */
@@ -92,6 +102,7 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
     @JoinColumn(name = "decoder_typ_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_typ_cv_fk1"))
     @JsonGetter("decoderTyp")
+    @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IDecoderTyp getDecoderTyp() {
@@ -108,6 +119,7 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
     @BusinessKey
     @Column(name = "cv", nullable = false)
     @JsonGetter("cv")
+    @JsonSerialize(contentUsing=DecoderTypSerializer.class)
     public Integer getCV() {
         return cv;
     }
@@ -120,54 +132,91 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
 
     @Override
     @Column(name = "bezeichnung", nullable = true, length = 100)
-    @JsonGetter("bezeichnung")
+    @JsonGetter("description")
+    @JsonView(Views.DropDown.class)
     public String getBezeichnung() {
         return bezeichnung;
     }
 
     @Override
-    @JsonSetter("bezeichnung")
+    @JsonSetter("description")
     public void setBezeichnung(String bezeichnung) {
         this.bezeichnung = bezeichnung;
     }
 
     @Override
     @Column(name = "minimal", nullable = true)
-    @JsonGetter("minimal")
+    @JsonGetter("minimum")
+    @JsonView(Views.Public.class)
     public Integer getMinimal() {
         return minimal;
     }
 
     @Override
-    @JsonSetter("minimal")
+    @JsonSetter("minimum")
     public void setMinimal(Integer minimal) {
         this.minimal = minimal;
     }
 
     @Override
     @Column(name = "maximal", nullable = true)
-    @JsonGetter("maximal")
+    @JsonGetter("maximum")
+    @JsonView(Views.Public.class)
     public Integer getMaximal() {
         return maximal;
     }
 
     @Override
-    @JsonSetter("maximal")
+    @JsonSetter("maximum")
     public void setMaximal(Integer maximal) {
         this.maximal = maximal;
     }
 
     @Override
     @Column(name = "werkseinstellung", nullable = true)
-    @JsonGetter("werkseinstellung")
+    @JsonGetter("default")
+    @JsonView(Views.Public.class)
     public Integer getWerkseinstellung() {
         return werkseinstellung;
     }
 
     @Override
-    @JsonSetter("werkseinstellung")
+    @JsonSetter("default")
     public void setWerkseinstellung(Integer werkseinstellung) {
         this.werkseinstellung = werkseinstellung;
+    }
+
+    @Override
+    @Transient
+    @JsonIgnore
+    public String getLinkId() {
+        return getDecoderTyp().getLinkId() + "/cv/" + getCV();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(getDecoderTyp())
+                .append(getCV())
+                .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof DecoderTypCV)) {
+            return false;
+        }
+
+        DecoderTypCV other = (DecoderTypCV) obj;
+
+        return new EqualsBuilder()
+                .append(getDecoderTyp(), other.getDecoderTyp())
+                .append(getCV(), other.getCV())
+                .isEquals();
     }
 
     @Override

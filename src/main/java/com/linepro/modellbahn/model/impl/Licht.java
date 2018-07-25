@@ -5,6 +5,7 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.ILicht;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 
@@ -17,6 +18,7 @@ import com.linepro.modellbahn.model.util.AbstractNamedItem;
 @Entity(name = "Licht")
 @Table(name = "lichten", indexes = { @Index(columnList = "name", unique = true) }, 
        uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+@JsonRootName(value = "lightConfiguration")
 public class Licht extends AbstractNamedItem implements ILicht {
 
     /** The Constant serialVersionUID. */

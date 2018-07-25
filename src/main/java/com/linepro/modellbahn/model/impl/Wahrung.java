@@ -8,8 +8,13 @@ import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
@@ -21,6 +26,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Entity(name = "Wahrung")
 @Table(name = "wahrungen", indexes = { @Index(columnList = "name", unique = true) }, 
        uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+@JsonRootName(value = "currency")
 public class Wahrung extends AbstractNamedItem implements IWahrung {
 	
     /** The Constant serialVersionUID. */
@@ -57,11 +63,14 @@ public class Wahrung extends AbstractNamedItem implements IWahrung {
 
 	@Override
     @Column(name="decimals", nullable = true)
+	@JsonGetter("decimals")
+    @JsonView(Views.Public.class)
 	public Integer getDecimals() {
 		return decimals;
 	}
 
 	@Override
+    @JsonSetter("decimals")
     public void setDecimals(Integer decimals) {
 		this.decimals = decimals;
 	}

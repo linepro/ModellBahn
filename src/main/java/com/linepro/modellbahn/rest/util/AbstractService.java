@@ -29,7 +29,6 @@ import org.apache.commons.beanutils.ConvertUtils;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IItem;
-import com.linepro.modellbahn.model.INamedItem;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.rest.json.IRepresentation;
 import com.linepro.modellbahn.rest.json.Representation;
@@ -322,11 +321,7 @@ public abstract class AbstractService<E extends IItem> {
     }
 
     protected void addItemLink(IItem item, String relation, String method) {
-        if (item instanceof INamedItem) {
-            item.addLink(makeLink(uriInfo.getAbsolutePath(), ((INamedItem) item).getName(), relation, method));
-        } else {
-            item.addLink(makeLink(uriInfo.getAbsolutePath(), item.getId().toString(), relation, method));
-        }
+        item.addLink(makeLink(uriInfo.getAbsolutePath(), item.getLinkId(), relation, method));
     }
 
     /**

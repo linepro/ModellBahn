@@ -3,6 +3,7 @@ package com.linepro.modellbahn.jersey;
 import java.net.URI;
 
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.grizzly.http.server.StaticHttpHandler;
 import org.glassfish.grizzly.ssl.SSLEngineConfigurator;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -32,7 +33,7 @@ public class ServerBuilder {
                 secure,
                 sslEngineConfigurator,
                 false);
-
+        
         return server;
     }
 }

@@ -2,6 +2,16 @@ package com.linepro.modellbahn;
 
 import java.net.InetAddress;
 import java.net.URI;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -16,11 +26,17 @@ import com.linepro.modellbahn.guice.ModellBahnModule;
  */
 public class Main {
     
+    protected static final String STATIC_PATH = "./webapp";
+
+    protected static final String WEB_APP_ROOT = "ModellBahn";
+
     /** The Constant PROTOCOL. */
-    protected static final String PROTOCOL = "http://";
+    protected static final String HTTP = "http";
+
+    protected static final String HTTPS = "https";
 
     /** The Constant PORT. */
-    protected static final int PORT = 8086;
+    protected static final String PORT = "8086";
 
     /**
      * The main method.
@@ -28,24 +44,50 @@ public class Main {
      * @param args the arguments
      */
     public static void main(String[] args) {
+        Options options = new Options();
+
+        options.addOption(Option.builder("p").longOpt("port").argName("port").hasArg().desc("port number - default " + PORT).build());
+        options.addOption(Option.builder("k").longOpt("keystore").argName("keystore").hasArg().desc("keystore location").build());
+        options.addOption(Option.builder("y").longOpt("keypwd").argName("password").hasArg().desc("keystore password").build());
+        options.addOption(Option.builder("w").longOpt("webroot").argName("webroot").hasArg().desc("root url for application will be served as ${webroot}/api and ${webroot}/web - default " + WEB_APP_ROOT).build());
+        options.addOption(Option.builder("c").longOpt("content").argName("staticPath").hasArg().desc("comma separated list of folders for web content - default " + STATIC_PATH).build());
+
         try {
+            CommandLine commandLine = new DefaultParser().parse(options, args);
+
+            int port = Integer.valueOf(commandLine.getOptionValue("p", PORT));
+            String keystore = commandLine.getOptionValue("k");
+            String keypwd = commandLine.getOptionValue("y");
+            String webRoot = commandLine.getOptionValue("w", WEB_APP_ROOT);
+            String staticPath = commandLine.getOptionValue("c", STATIC_PATH);
+
+            // TODO: proper SSL validation
+            String protocol = (keystore == null || keypwd == null) ? HTTP : HTTPS;
+
             Injector injector = Guice.createInjector(new ModellBahnModule());
 
-            StringBuilder url = new StringBuilder(PROTOCOL)
+            StringBuilder url = new StringBuilder(protocol)
+                    .append("://")
                     .append(InetAddress.getLocalHost().getCanonicalHostName())
                     .append(":")
-                    .append(PORT)
-                    .append("/modellbahn");
+                    .append(port)
+                    .append("/")
+                    .append(webRoot);
 
             URI baseUri = URI.create(url.toString());
 
             System.out.println("Starting " + baseUri.toString());
 
+            // TODO: SSL configuration
             injector.getInstance(IModellBahnFactory.class)
-                    .create(baseUri)
+                    .create(baseUri, Arrays.asList(staticPath.split(",")))
                     .run();
+        } catch (ParseException e) {
+            System.err.println( e.getMessage() );
+
+            new HelpFormatter().printHelp( "ModellBahn", options, true );
         } catch (Exception e) {
-            System.err.println("Start failed");
+            System.err.println("Start failed" + e.getMessage());
 
             e.printStackTrace();
 

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -25,10 +24,14 @@ import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IAchsfolg;
@@ -51,6 +54,8 @@ import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.IVorbild;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.util.FileConverter;
+import com.linepro.modellbahn.rest.json.Formats;
+import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
@@ -78,6 +83,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = "motor_typ_id"),
         @Index(columnList = "hersteller_id") }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { "hersteller_id", "bestellnr" }) })
+@JsonRootName("product")
 public class Produkt extends AbstractItem implements IProdukt {
 
     /** The Constant serialVersionUID. */
@@ -179,73 +185,58 @@ public class Produkt extends AbstractItem implements IProdukt {
     }
 
     @Override
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Epoch.class)
-    @JoinColumn(name = "epoch_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk1"))
-    @JsonGetter("epoch")
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class)
+    @JoinColumn(name = "hersteller_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk16"))
+    @JsonGetter("hersteller")
+    @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
-    public IEpoch getEpoch() {
-        return epoch;
+    public IHersteller getHersteller() {
+        return hersteller;
     }
 
     @Override
-    @JsonSetter("epoch")
-    public void setEpoch(IEpoch epoch) {
-        this.epoch = epoch;
+    @JsonSetter("hersteller")
+    public void setHersteller(IHersteller hersteller) {
+        this.hersteller = hersteller;
     }
 
     @Override
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gattung.class)
-    @JoinColumn(name = "gattung_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk2"))
-    @JsonGetter("gattung")
+    @Column(name = "bestellnr", length = 30, nullable = true)
+    @JsonGetter("bestellNr")
+    @JsonView(Views.DropDown.class)
+    public String getBestellNr() {
+        return bestellNr;
+    }
+
+    @Override
+    @JsonSetter("bestellNr")
+    public void setBestellNr(String bestellNr) {
+        this.bestellNr = bestellNr;
+    }
+
+    @Override
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = UnterKategorie.class)
+    @JoinColumn(name = "unter_kategorie_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk7"))
+    @JsonGetter("unterKategorie")
+    @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
-    public IGattung getGattung() {
-        return gattung;
+    public IUnterKategorie getUnterKategorie() {
+        return unterKategorie;
     }
 
     @Override
-    @JsonSetter("gattung")
-    public void setGattung(IGattung gattung) {
-        this.gattung = gattung;
-    }
-
-    @Override
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Bahnverwaltung.class)
-    @JoinColumn(name = "bahnverwaltung_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk3"))
-    @JsonGetter("bahnverwaltung")
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
-    public IBahnverwaltung getBahnverwaltung() {
-        return bahnverwaltung;
-    }
-
-    @Override
-    @JsonSetter("bahnverwaltung")
-    public void setBahnverwaltung(IBahnverwaltung bahnverwaltung) {
-        this.bahnverwaltung = bahnverwaltung;
-    }
-
-    @Override
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class)
-    @JoinColumn(name = "achsfolg_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk4"))
-    @JsonGetter("achsfolge")
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
-    public IAchsfolg getAchsfolge() {
-        return achsfolge;
-    }
-
-    @Override
-    @JsonSetter("achsfolge")
-    public void setAchsfolge(IAchsfolg achsfolge) {
-        this.achsfolge = achsfolge;
+    @JsonSetter("unterKategorie")
+    public void setUnterKategorie(IUnterKategorie unterKategorie) {
+        this.unterKategorie = unterKategorie;
     }
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Massstab.class)
     @JoinColumn(name = "massstab_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk5"))
     @JsonGetter("massstab")
+    @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IMassstab getMassstab() {
@@ -262,6 +253,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Spurweite.class)
     @JoinColumn(name = "spurweite_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk6"))
     @JsonGetter("spurweite")
+    @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public ISpurweite getSpurweite() {
@@ -275,25 +267,139 @@ public class Produkt extends AbstractItem implements IProdukt {
     }
 
     @Override
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = UnterKategorie.class)
-    @JoinColumn(name = "unter_kategorie_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk7"))
-    @JsonGetter("unterKategorie")
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Epoch.class)
+    @JoinColumn(name = "epoch_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk1"))
+    @JsonGetter("epoch")
+    @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
-    public IUnterKategorie getUnterKategorie() {
-        return unterKategorie;
+    public IEpoch getEpoch() {
+        return epoch;
     }
 
     @Override
-    @JsonSetter("unterKategorie")
-    public void setUnterKategorie(IUnterKategorie unterKategorie) {
-        this.unterKategorie = unterKategorie;
+    @JsonSetter("epoch")
+    public void setEpoch(IEpoch epoch) {
+        this.epoch = epoch;
+    }
+
+    @Override
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Bahnverwaltung.class)
+    @JoinColumn(name = "bahnverwaltung_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk3"))
+    @JsonGetter("bahnverwaltung")
+    @JsonView(Views.Public.class)
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    public IBahnverwaltung getBahnverwaltung() {
+        return bahnverwaltung;
+    }
+
+    @Override
+    @JsonSetter("bahnverwaltung")
+    public void setBahnverwaltung(IBahnverwaltung bahnverwaltung) {
+        this.bahnverwaltung = bahnverwaltung;
+    }
+
+    @Override
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gattung.class)
+    @JoinColumn(name = "gattung_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk2"))
+    @JsonGetter("gattung")
+    @JsonView(Views.Public.class)
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    public IGattung getGattung() {
+        return gattung;
+    }
+
+    @Override
+    @JsonSetter("gattung")
+    public void setGattung(IGattung gattung) {
+        this.gattung = gattung;
+    }
+
+    @Override
+    @Column(name = "betreibsnummer", nullable = true, length = 100)
+    @JsonGetter("betreibsnummer")
+    @JsonView(Views.Public.class)
+    public String getBetreibsnummer() {
+        return betreibsnummer;
+    }
+
+    @Override
+    @JsonSetter("betreibsnummer")
+    public void setBetreibsnummer(String betreibsnummer) {
+        this.betreibsnummer = betreibsnummer;
+    }
+
+    @Override
+    @Column(name = "bauzeit", nullable = true)
+    @Temporal(TemporalType.DATE)
+    @JsonGetter("bauzeit")
+    @JsonView(Views.Public.class)
+    @JsonFormat(shape=Shape.STRING, pattern=Formats.ISO8601_DATE)
+    public Date getBauzeit() {
+        return bauzeit;
+    }
+
+    @Override
+    @JsonSetter("bauzeit")
+    public void setBauzeit(Date bauzeit) {
+        this.bauzeit = bauzeit;
+    }
+
+    @Override
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Vorbild.class)
+    @JoinColumn(name = "vorbild_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk12"))
+    @JsonGetter("vorbild")
+    @JsonView(Views.Public.class)
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    public IVorbild getVorbild() {
+        return vorbild;
+    }
+
+    @Override
+    @JsonSetter("vorbild")
+    public void setVorbild(IVorbild vorbild) {
+        this.vorbild = vorbild;
+    }
+
+    @Override
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class)
+    @JoinColumn(name = "achsfolg_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk4"))
+    @JsonGetter("achsfolge")
+    @JsonView(Views.Public.class)
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    public IAchsfolg getAchsfolge() {
+        return achsfolge;
+    }
+
+    @Override
+    @JsonSetter("achsfolge")
+    public void setAchsfolge(IAchsfolg achsfolge) {
+        this.achsfolge = achsfolge;
+    }
+
+    @Override
+    @Column(name = "anmerkung", nullable = true, length = 100)
+    @JsonGetter("anmerkung")
+    @JsonView(Views.DropDown.class)
+    public String getAnmerkung() {
+        return anmerkung;
+    }
+
+    @Override
+    @JsonSetter("anmerkung")
+    public void setAnmerkung(String anmerkung) {
+        this.anmerkung = anmerkung;
     }
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = SonderModell.class)
     @JoinColumn(name = "sondermodel_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk8"))
     @JsonGetter("sondermodel")
+    @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public ISonderModell getSondermodel() {
@@ -310,6 +416,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Aufbau.class)
     @JoinColumn(name = "aufbau_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk9"))
     @JsonGetter("aufbau")
+    @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IAufbau getAufbau() {
@@ -326,6 +433,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Licht.class)
     @JoinColumn(name = "licht_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk10"))
     @JsonGetter("licht")
+    @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public ILicht getLicht() {
@@ -342,6 +450,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kupplung.class)
     @JoinColumn(name = "kupplung_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk11"))
     @JsonGetter("kupplung")
+    @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IKupplung getKupplung() {
@@ -355,25 +464,10 @@ public class Produkt extends AbstractItem implements IProdukt {
     }
 
     @Override
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Vorbild.class)
-    @JoinColumn(name = "vorbild_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk12"))
-    @JsonGetter("vorbild")
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
-    public IVorbild getVorbild() {
-        return vorbild;
-    }
-
-    @Override
-    @JsonSetter("vorbild")
-    public void setVorbild(IVorbild vorbild) {
-        this.vorbild = vorbild;
-    }
-
-    @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class)
     @JoinColumn(name = "steuerung_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk13"))
     @JsonGetter("steuerung")
+    @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public ISteuerung getSteuerung() {
@@ -390,6 +484,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
     @JoinColumn(name = "decoder_typ_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk14"))
     @JsonGetter("decoderTyp")
+    @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IDecoderTyp getDecoderTyp() {
@@ -406,6 +501,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = MotorTyp.class)
     @JoinColumn(name = "motor_typ_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk15"))
     @JsonGetter("motorTyp")
+    @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IMotorTyp getMotorTyp() {
@@ -419,77 +515,23 @@ public class Produkt extends AbstractItem implements IProdukt {
     }
 
     @Override
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class)
-    @JoinColumn(name = "hersteller_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_fk16"))
-    @JsonGetter("hersteller")
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
-    public IHersteller getHersteller() {
-        return hersteller;
+    @Column(name = "lange", nullable = true, precision = 6, scale = 2)
+    @JsonGetter("lange")
+    @JsonView(Views.Public.class)
+    public BigDecimal getLange() {
+        return lange;
     }
 
     @Override
-    @JsonSetter("hersteller")
-    public void setHersteller(IHersteller hersteller) {
-        this.hersteller = hersteller;
-    }
-
-    @Override
-    @Column(name = "bestellnr", length = 30, nullable = true)
-    @JsonGetter("bestellNr")
-    public String getBestellNr() {
-        return bestellNr;
-    }
-
-    @Override
-    @JsonSetter("bestellNr")
-    public void setBestellNr(String bestellNr) {
-        this.bestellNr = bestellNr;
-    }
-
-    @Override
-    @Column(name = "anmerkung", nullable = true, length = 100)
-    @JsonGetter("anmerkung")
-    public String getAnmerkung() {
-        return anmerkung;
-    }
-
-    @Override
-    @JsonSetter("anmerkung")
-    public void setAnmerkung(String anmerkung) {
-        this.anmerkung = anmerkung;
-    }
-
-    @Override
-    @Column(name = "betreibsnummer", nullable = true, length = 100)
-    @JsonGetter("betreibsnummer")
-    public String getBetreibsnummer() {
-        return betreibsnummer;
-    }
-
-    @Override
-    @JsonSetter("betreibsnummer")
-    public void setBetreibsnummer(String betreibsnummer) {
-        this.betreibsnummer = betreibsnummer;
-    }
-
-    @Override
-    @Column(name = "bauzeit", nullable = true)
-    @Temporal(TemporalType.DATE)
-    @JsonGetter("bauzeit")
-    public Date getBauzeit() {
-        return bauzeit;
-    }
-
-    @Override
-    @JsonSetter("bauzeit")
-    public void setBauzeit(Date bauzeit) {
-        this.bauzeit = bauzeit;
+    @JsonSetter("lange")
+    public void setLange(BigDecimal lange) {
+        this.lange = lange;
     }
 
     @Override
     @Column(name = "anleitungen", nullable = true, length = 512)
     @JsonGetter("anleitungen")
+    @JsonView(Views.Public.class)
     public File getAnleitungen() {
         return anleitungen;
     }
@@ -503,6 +545,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @Column(name = "explosionszeichnung", nullable = true, length = 512)
     @JsonGetter("explosionszeichnung")
+    @JsonView(Views.Public.class)
     public File getExplosionszeichnung() {
         return explosionszeichnung;
     }
@@ -514,23 +557,10 @@ public class Produkt extends AbstractItem implements IProdukt {
     }
 
     @Override
-    @Column(name = "lange", nullable = true, precision = 6, scale = 2)
-    @JsonGetter("lange")
-    public BigDecimal getLange() {
-        return lange;
-    }
-
-    @Override
-    @JsonSetter("lange")
-    public void setLange(BigDecimal lange) {
-        this.lange = lange;
-    }
-
-    @Override
-    @Basic(optional = true, fetch = FetchType.LAZY)
     @Column(name = "abbildung", nullable = true)
     @Convert(converter = FileConverter.class)
     @JsonGetter("abbildung")
+    @JsonView(Views.DropDown.class)
     public File getAbbildung() {
         return abbildung;
     }
@@ -544,13 +574,14 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Override
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "produkt", targetEntity = ProduktTeil.class, orphanRemoval = true)
     @JsonGetter("teilen")
+    @JsonView(Views.Public.class)
     @JsonSerialize()
     public List<IProduktTeil> getTeilen() {
         return teilen;
     }
 
     @Override
-    @JsonGetter("teilen")
+    @JsonSetter("teilen")
     public void setTeilen(List<IProduktTeil> teilen) {
         this.teilen = teilen;
     }
@@ -561,15 +592,17 @@ public class Produkt extends AbstractItem implements IProdukt {
                 .appendSuper(super.toString())
                 .append("hersteller", getHersteller())
                 .append("bestellNr", getBestellNr())
-                .append("betreibsnummer", getBetreibsnummer())
                 .append("unterKategorie", getUnterKategorie())
-                .append("epoch", getEpoch())
-                .append("gattung", getGattung())
-                .append("bahnverwaltung", getBahnverwaltung())
                 .append("massstab", getMassstab())
                 .append("spurweite", getSpurweite())
-                .append("vorbild", getVorbild())
+                .append("betreibsnummer", getBetreibsnummer())
+                .append("epoch", getEpoch())
+                .append("bahnverwaltung", getBahnverwaltung())
+                .append("gattung", getGattung())
+                .append("bauzeit", getBauzeit())
                 .append("achsfolge", getAchsfolge())
+                .append("vorbild", getVorbild())
+                .append("anmerkung", getAnmerkung())
                 .append("sondermodel", getSondermodel())
                 .append("aufbau", getAufbau())
                 .append("licht", getLicht())
@@ -577,11 +610,10 @@ public class Produkt extends AbstractItem implements IProdukt {
                 .append("steuerung", getSteuerung())
                 .append("decoderTyp", getDecoderTyp())
                 .append("motorTyp", getMotorTyp())
-                .append("anmerkung", getAnmerkung())
-                .append("bauzeit", getBauzeit())
+                .append("lange", getLange())
                 .append("anleitungen", getAnleitungen())
                 .append("explosionszeichnung", getExplosionszeichnung())
-                .append("lange", getLange())
+                .append("abbildung", getAbbildung())
                 .append("teilen", getTeilen())
                 .toString();
     }

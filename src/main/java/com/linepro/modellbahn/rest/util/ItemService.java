@@ -43,12 +43,12 @@ public class ItemService<E extends IItem> extends AbstractService<E> {
      * @return the response
      */
     @GET
-    @Path("/{id: [0-9]+}")
+    @Path(ApiPaths.ID_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response get(@PathParam("id") Long id) {
+    public Response get(@PathParam(ApiPaths.ID_PARAM_NAME) Long id) {
         try {
-            E entity = getPersister().findById(id);
+            E entity = getPersister().findById(id, false);
 
             if (entity == null) {
                 return getResponse(Response.status(Status.NOT_FOUND));
@@ -68,11 +68,11 @@ public class ItemService<E extends IItem> extends AbstractService<E> {
      * @return the response
      */
     @PUT
-    @Path("/{id}")
+    @Path(ApiPaths.ID_PATH)
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response update(@PathParam("id") Long id, E entity) {
+    public Response update(@PathParam(ApiPaths.ID_PARAM_NAME) Long id, E entity) {
         try {
             entity.setId(id);
             
@@ -95,10 +95,10 @@ public class ItemService<E extends IItem> extends AbstractService<E> {
      * @return the response
      */
     @DELETE
-    @Path("/{id: [0-9]+}")
+    @Path(ApiPaths.ID_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response delete(@PathParam("id") Long id) {
+    public Response delete(@PathParam(ApiPaths.ID_PARAM_NAME) Long id) {
         try {
             getPersister().delete(create(id));
 

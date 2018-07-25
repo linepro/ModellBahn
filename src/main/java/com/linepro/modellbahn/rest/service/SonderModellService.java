@@ -3,6 +3,7 @@ package com.linepro.modellbahn.rest.service;
 import javax.ws.rs.Path;
 
 import com.linepro.modellbahn.model.impl.SonderModell;
+import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.rest.util.NamedItemService;
 
 /**
@@ -11,7 +12,7 @@ import com.linepro.modellbahn.rest.util.NamedItemService;
  * @author  $Author:$
  * @version $Id:$
  */
-@Path("/sonderModell")
+@Path(ApiPaths.SONDERMODELL)
 public class SonderModellService extends NamedItemService<SonderModell> {
 
     /**

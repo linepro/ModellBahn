@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.rest.util;
 
-import static javax.ws.rs.HttpMethod.GET;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -51,7 +49,7 @@ public abstract class NamedItemService<E extends INamedItem> extends AbstractSer
      */
     @JsonCreator
     public E create(@JsonProperty(value="id", required=false) Long id, 
-                    @JsonProperty(value="name", required=false) String name, 
+                    @JsonProperty(value=ApiPaths.NAME_PARAM_NAME, required=false) String name, 
                     @JsonProperty(value="description", required=false) String bezeichnung, 
                     @JsonProperty(value="deleted", required=false) Boolean deleted) throws Exception {
         E entity = create();
@@ -71,12 +69,12 @@ public abstract class NamedItemService<E extends INamedItem> extends AbstractSer
      * @return the response
      */
     @GET
-    @Path("/{name}")
+    @Path(ApiPaths.NAME_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response get(@PathParam("name") String name) {
+    public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         try {
-            E entity = getPersister().findByKey(create(name));
+            E entity = getPersister().findByKey(create(name), true);
 
             if (entity == null) {
                 return getResponse(Response.status(Status.NOT_FOUND));
@@ -96,11 +94,11 @@ public abstract class NamedItemService<E extends INamedItem> extends AbstractSer
      * @return the response
      */
     @PUT
-    @Path("/{name}")
+    @Path(ApiPaths.NAME_PATH)
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response update(@PathParam("name") String name, E entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, E entity) {
         try {
             entity.setName(name);
 
@@ -119,10 +117,10 @@ public abstract class NamedItemService<E extends INamedItem> extends AbstractSer
      * @return the response
      */
     @DELETE
-    @Path("/{name}")
+    @Path(ApiPaths.NAME_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response delete(@PathParam("name") String name) {
+    public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         try {
             getPersister().delete(create(name));
 
@@ -144,14 +142,4 @@ public abstract class NamedItemService<E extends INamedItem> extends AbstractSer
         template.setName(name);
         return template;
     }
-
-    /**
-     * Adds the self.
-     *
-     * @param item the item
-     */
-    protected void addSelf(INamedItem item) {
-        item.addLink(makeLink(uriInfo.getAbsolutePath(), item.getName(), "self", GET));
-    }
-
 }

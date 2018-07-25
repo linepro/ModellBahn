@@ -5,6 +5,7 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.IProtokoll;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 
@@ -17,6 +18,7 @@ import com.linepro.modellbahn.model.util.AbstractNamedItem;
 @Entity(name = "Protokoll")
 @Table(name = "protokollen", indexes = { @Index(columnList = "name", unique = true) }, 
        uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+@JsonRootName(value = "protocol")
 public class Protokoll extends AbstractNamedItem implements IProtokoll {
 
     /** The Constant serialVersionUID. */

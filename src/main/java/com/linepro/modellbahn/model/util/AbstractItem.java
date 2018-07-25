@@ -17,6 +17,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -35,7 +37,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  */
 @MappedSuperclass
 @Cacheable
-//@JsonAutoDetect(fieldVisibility = Visibility.PUBLIC_ONLY)
+@JsonAutoDetect(fieldVisibility = Visibility.PUBLIC_ONLY)
 public abstract class AbstractItem implements Serializable, IItem {
 
     /** The Constant serialVersionUID. */
@@ -82,19 +84,8 @@ public abstract class AbstractItem implements Serializable, IItem {
 		this.id = id;
 	}
 
-	@Column(name="deleted", length=5, nullable = true)
-	@JsonIgnore
-	public String getDeletedStr() {
-		return getDeleted() != null ? getDeleted().toString() : null;
-	}
-
-    @JsonIgnore
-	public void setDeletedStr(String deleted) {
-		setDeleted(Boolean.valueOf(deleted));
-	}
-
 	@Override
-    @Transient
+    @Column(name="deleted", length=5, nullable = true)
     @JsonView(Views.Public.class)
     @JsonGetter("deleted")
 	public Boolean getDeleted() {
@@ -118,6 +109,13 @@ public abstract class AbstractItem implements Serializable, IItem {
     @Override
     public void addLink(Link link) {
         links.add(link);
+    }
+
+    @Override
+    @Transient
+    @JsonIgnore
+    public String getLinkId() {
+        return getId().toString();
     }
 
 	@Override

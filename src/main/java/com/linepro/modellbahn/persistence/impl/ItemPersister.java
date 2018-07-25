@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.JoinColumn;
-import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.OneToMany;
 import javax.persistence.Query;
@@ -23,6 +22,7 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.collection.spi.PersistentCollection;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 
@@ -154,7 +154,7 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
         try {
             begin();
 
-            E result = findByKey(entity);
+            E result = findByKey(entity, false);
             
             if (result == null && !addOrUpdate) {
                 throw new EntityNotFoundException();
@@ -176,7 +176,7 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
                 }
             }
 
-            result = inflate(getEntityManager().merge(result));
+            result = inflate(getEntityManager().merge(result), true);
 
             commit();
 
@@ -248,12 +248,12 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
     }
 
     @Override
-    public E findById(Long id) throws Exception {
+    public E findById(Long id, boolean eager) throws Exception {
         try {
             if (id != null) {
                 begin();
     
-                E result = inflate(getEntityManager().find(entityClass, id));
+                E result = inflate(getEntityManager().find(entityClass, id), eager);
     
                 commit();
     
@@ -273,7 +273,7 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
     }
 
     @Override
-    public E findByKey(E entity) throws Exception {
+    public E findByKey(E entity, boolean eager) throws Exception {
         try {
             begin();
 
@@ -295,7 +295,7 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
             E result = null;
             
             if (results.size() == 1) {
-                result = inflate(results.get(0));
+                result = inflate(results.get(0), eager);
             }
             
             info("findByKey " + result);
@@ -488,10 +488,14 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
      * @return
      * @throws Exception
      */
-    protected E inflate(E entity) throws Exception {
-        if (entity != null) {
-            for (Selector collection : collections.values()) {
- //               ((Collection<?>) collection.getGetter().invoke(entity)).size();
+    protected E inflate(E entity, boolean eager) throws Exception {
+        if (eager && entity != null) {
+            for (Selector selector : collections.values()) {
+                Collection<?> collection = (Collection<?>) selector.getGetter().invoke(entity);
+                
+                if (collection instanceof PersistentCollection) {
+                    ((PersistentCollection) collection).forceInitialization();
+                }
             }
         }
         

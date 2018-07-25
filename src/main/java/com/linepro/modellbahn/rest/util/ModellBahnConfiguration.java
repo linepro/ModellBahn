@@ -13,6 +13,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 import org.glassfish.jersey.server.mvc.MvcFeature;
 import org.glassfish.jersey.server.mvc.jsp.JspMvcFeature;
+import org.glassfish.jersey.servlet.ServletProperties;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.linepro.modellbahn.jersey.SecurityRequestFilter;
@@ -23,7 +24,7 @@ import com.linepro.modellbahn.jersey.SecurityRequestFilter;
  * @author  $Author:$
  * @version $Id:$
  */
-@ApplicationPath("/ModellBahn")
+//@ApplicationPath("/ModellBahn")
 public class ModellBahnConfiguration extends ResourceConfig {
 
     /** The Constant PACKAGES. */
@@ -39,17 +40,17 @@ public class ModellBahnConfiguration extends ResourceConfig {
         property(JsonGenerator.PRETTY_PRINTING, true);
 
         // MVC.
-        property(MvcFeature.TEMPLATE_BASE_PATH, "/jsp");
+        //property(MvcFeature.TEMPLATE_BASE_PATH, "/jsp");
         property(ServerProperties.MONITORING_ENABLED, true);
         property(ServerProperties.MONITORING_STATISTICS_ENABLED, true);
         property(ServerProperties.MONITORING_STATISTICS_MBEANS_ENABLED, true);
+
         property(ServerProperties.TRACING, "ALL");
         property(ServerProperties.TRACING_THRESHOLD, "VERBOSE");
         
-        //property(ServletProperties.FILTER_CONTEXT_PATH, ""); 
-        /*
+        property(ServletProperties.FILTER_CONTEXT_PATH, "/ModellBahn"); 
         property(ServletProperties.FILTER_FORWARD_ON_404, true);
-        property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "(image|css|)");
+        property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "/web/**/*");
 
         /*
         property(ClassNamesResourceConfig.PROPERTY_CLASSNAMES, "");

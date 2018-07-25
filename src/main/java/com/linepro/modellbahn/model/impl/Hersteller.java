@@ -10,10 +10,13 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.util.URLConverter;
+import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
@@ -25,6 +28,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Entity(name = "Hersteller")
 @Table(name = "hersteller", indexes = { @Index(columnList = "name", unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { "name" }) })
+@JsonRootName(value = "manufacturer")
 public class Hersteller extends AbstractNamedItem implements IHersteller {
 
     /** The Constant serialVersionUID. */
@@ -79,6 +83,7 @@ public class Hersteller extends AbstractNamedItem implements IHersteller {
     @Column(name = "url", nullable = true)
     @Convert(converter = URLConverter.class)
     @JsonGetter("url")
+    @JsonView(Views.Public.class)
     public URL getUrl() {
         return url;
     }
@@ -103,6 +108,7 @@ public class Hersteller extends AbstractNamedItem implements IHersteller {
     @Override
     @Column(name = "telefon", nullable = true, length = 20)
     @JsonGetter("telefon")
+    @JsonView(Views.Public.class)
     public String getTelefon() {
         return Telefon;
     }

@@ -26,11 +26,11 @@ public class SelectorsBuilderTest {
     }
     
     public class Annotated extends Base {
-        @Column(name="name")
+        @Column(name="name", nullable = true)
         public String getName() { return super.getName(); }
     }
     
-    public class DoubleAnnotated extends Annotated {
+    public class BigDecimalAnnotated extends Annotated {
         @JoinColumn(name="id")
         public Integer getId() { return super.getId(); }
     }
@@ -83,8 +83,8 @@ public class SelectorsBuilderTest {
     }
 
     @Test
-    public void testBuildDoubleAnnotated() throws Exception {
-        testObject = setObject(new DoubleAnnotated());
+    public void testBuildBigDecimalAnnotated() throws Exception {
+        testObject = setObject(new BigDecimalAnnotated());
         
         Map<String,Selector> selectors = builder.build(testObject.getClass(), Column.class, JoinColumn.class);
         

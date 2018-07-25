@@ -11,7 +11,7 @@ import com.linepro.modellbahn.model.impl.DecoderFunktion;
  * @author   $Author$
  * @version  $Id$
  */
-public interface IDecoder extends IItem {
+public interface IDecoder extends INamedItem {
 
     /**
      * Gets the decoder typ.

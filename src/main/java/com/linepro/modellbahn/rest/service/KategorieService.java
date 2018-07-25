@@ -20,6 +20,7 @@ import com.linepro.modellbahn.model.impl.UnterKategorie;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.rest.util.NamedItemService;
 
 /**
@@ -28,7 +29,7 @@ import com.linepro.modellbahn.rest.util.NamedItemService;
  * @author  $Author:$
  * @version $Id:$
  */
-@Path("/kategorien")
+@Path(ApiPaths.KATEGORIE)
 public class KategorieService extends NamedItemService<Kategorie> {
 
     /** The unter kategorie persister. */
@@ -56,7 +57,7 @@ public class KategorieService extends NamedItemService<Kategorie> {
      */
     @JsonCreator
     public UnterKategorie create(@JsonProperty(value="id", required=false) Long id, 
-                    @JsonProperty(value="kategorie", required=false) String kategorieStr, 
+                    @JsonProperty(value=ApiPaths.KATEGORIE_PARAM_NAME, required=false) String kategorieStr, 
                     @JsonProperty(value="name", required=false) String name, 
                     @JsonProperty(value="description", required=false) String bezeichnung, 
                     @JsonProperty(value="deleted", required=false) Boolean deleted) throws Exception {
@@ -75,13 +76,13 @@ public class KategorieService extends NamedItemService<Kategorie> {
      * @throws Exception the exception
      */
     protected Kategorie findKategorie(String kategorieStr) throws Exception {
-        return ((IPersister<Kategorie>) getPersister()).findByKey(new Kategorie(kategorieStr));
+        return ((IPersister<Kategorie>) getPersister()).findByKey(new Kategorie(kategorieStr), false);
     }
 
     protected UnterKategorie findUnterKategorie(String kategorieStr, String name) throws Exception {
         Kategorie kategorie = findKategorie(kategorieStr);
 
-        return getUnterKategoriePersister().findByKey(new UnterKategorie(kategorie, name));
+        return getUnterKategoriePersister().findByKey(new UnterKategorie(kategorie, name), false);
     }
 
     /**
@@ -93,9 +94,9 @@ public class KategorieService extends NamedItemService<Kategorie> {
      * @throws Exception 
      */
     @GET
-    @Path("/{kategorie}/{name}")
+    @Path(ApiPaths.UNTER_KATEGORIE_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response get(@PathParam("kategorie") String kategorieStr, @PathParam("name") String name) {
+    public Response get(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String name) {
         try {
             UnterKategorie entity = findUnterKategorie(kategorieStr, name);
 
@@ -118,11 +119,11 @@ public class KategorieService extends NamedItemService<Kategorie> {
      * @throws Exception the exception
      */
     @POST
-    @Path("/{kategorie}")
+    @Path(ApiPaths.KATEGORIE_PATH)
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response add(@PathParam("kategorie") String kategorieStr, UnterKategorie unterkategorie) throws Exception {
+    public Response add(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, UnterKategorie unterkategorie) throws Exception {
         Kategorie kategorie = findKategorie(kategorieStr);
         
         return getResponse(null);
@@ -137,9 +138,9 @@ public class KategorieService extends NamedItemService<Kategorie> {
      * @return the response
      */
     @PUT
-    @Path("/{kategorie}/{name}")
+    @Path(ApiPaths.UNTER_KATEGORIE_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response update(@PathParam("kategorie") String kategorieStr, @PathParam("name") String name, UnterKategorie entity) throws Exception {
+    public Response update(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String name, UnterKategorie entity) throws Exception {
         Kategorie kategorie = findKategorie(kategorieStr);
         
         return getResponse(null);
@@ -154,9 +155,9 @@ public class KategorieService extends NamedItemService<Kategorie> {
      * @throws Exception 
      */
     @DELETE
-    @Path("/{kategorie}/{name}")
+    @Path(ApiPaths.UNTER_KATEGORIE_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response delete(@PathParam("kategorie") String kategorieStr, @PathParam("name") String name) throws Exception {
+    public Response delete(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String name) throws Exception {
         try {
             Kategorie entity = findKategorie(kategorieStr);
 

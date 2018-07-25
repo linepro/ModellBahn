@@ -12,11 +12,14 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.linepro.modellbahn.model.ILand;
 import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
@@ -28,6 +31,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Entity(name = "Land")
 @Table(name = "lander", indexes = { @Index(columnList = "name", unique = true) }, 
        uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+@JsonRootName(value = "country")
 public class Land extends AbstractNamedItem implements ILand {
 
     /** The Constant serialVersionUID. */
@@ -64,7 +68,8 @@ public class Land extends AbstractNamedItem implements ILand {
 
     @Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=Wahrung.class)
-    @JsonGetter("wahrung")
+    @JsonGetter("currency")
+    @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IWahrung getWahrung() {
@@ -72,7 +77,7 @@ public class Land extends AbstractNamedItem implements ILand {
     }
 
     @Override
-    @JsonSetter("wahrung")
+    @JsonSetter("currency")
     public void setWahrung(IWahrung wahrung) {
         this.wahrung = wahrung;
     }

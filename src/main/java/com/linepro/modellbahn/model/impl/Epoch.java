@@ -5,6 +5,7 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.IEpoch;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 
@@ -17,6 +18,7 @@ import com.linepro.modellbahn.model.util.AbstractNamedItem;
 @Entity(name = "Epoch")
 @Table(name = "epochen", indexes = { @Index(columnList = "name", unique = true) }, 
        uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+@JsonRootName(value = "era")
 public class Epoch extends AbstractNamedItem implements IEpoch {
 
     /** The Constant serialVersionUID. */

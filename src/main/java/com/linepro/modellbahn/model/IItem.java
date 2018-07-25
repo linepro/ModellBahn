@@ -56,4 +56,11 @@ public interface IItem {
      * @return the HATEOAS links
      */
     Set<Link> getLinks();
+
+    /**
+     * Gets the final part of the HATEOAS link
+     * e.g. ${id}, ${name}, $[parent.getLinkId()}/${name}...
+     * @return the link identifier
+     */
+    String getLinkId();
 }

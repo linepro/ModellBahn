@@ -5,6 +5,7 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 
@@ -17,6 +18,7 @@ import com.linepro.modellbahn.model.util.AbstractNamedItem;
 @Entity(name = "Steuerung")
 @Table(name = "steuerungen", indexes = { @Index(columnList = "name", unique = true) }, 
        uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+@JsonRootName(value = "control")
 public class Steuerung extends AbstractNamedItem implements ISteuerung {
 
     /** The Constant serialVersionUID. */

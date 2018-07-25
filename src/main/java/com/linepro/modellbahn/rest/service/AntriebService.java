@@ -3,6 +3,7 @@ package com.linepro.modellbahn.rest.service;
 import javax.ws.rs.Path;
 
 import com.linepro.modellbahn.model.impl.Antrieb;
+import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.rest.util.NamedItemService;
 
 /**
@@ -11,7 +12,7 @@ import com.linepro.modellbahn.rest.util.NamedItemService;
  * @author  $Author:$
  * @version $Id:$
  */
-@Path("/antrieb")
+@Path(ApiPaths.ANTRIEB)
 public class AntriebService extends NamedItemService<Antrieb> {
 
     /**

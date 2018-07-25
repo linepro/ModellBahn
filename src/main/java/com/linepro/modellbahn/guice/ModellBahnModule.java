@@ -26,7 +26,7 @@ public class ModellBahnModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("modellbahn");
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ModellBahn");
 
         bind(ILoggerFactory.class).toInstance(LoggerFactory.getILoggerFactory());
         bind(EntityManager.class).toInstance(entityManagerFactory.createEntityManager());

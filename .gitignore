@@ -39,3 +39,4 @@ buildNumber.properties
 /modellbahn.trace.db
 docs/
 /modellbahn.lock.db
+/webapp/

@@ -6,8 +6,8 @@ import javax.ws.rs.core.Link;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 /**
  * LinkSerializer.
@@ -16,15 +16,24 @@ import com.fasterxml.jackson.databind.SerializerProvider;
  * @author   $Author$
  * @version  $Id$
  */
-public class LinkSerializer extends JsonSerializer<Link> {
+public class LinkSerializer extends StdSerializer<Link> {
+
+    private static final long serialVersionUID = 5659169256684166251L;
+
+    public LinkSerializer() {
+        this(null);
+    }
+
+    public LinkSerializer(Class<Link> t) {
+        super(t);
+    }
 
     @Override
-    public void serialize(Link link, JsonGenerator jg, SerializerProvider sp)
-            throws IOException, JsonProcessingException {
-        jg.writeStartObject();
-        jg.writeStringField("href", link.getUri().toString());
-        jg.writeStringField("rel", link.getRel());
-        jg.writeStringField("method", link.getType());
-        jg.writeEndObject();
+    public void serialize(Link value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+        gen.writeStartObject();
+        gen.writeStringField("href", value.getUri().toString());
+        gen.writeStringField("rel", value.getRel());
+        gen.writeStringField("method", value.getType());
+        gen.writeEndObject();
     }
 }

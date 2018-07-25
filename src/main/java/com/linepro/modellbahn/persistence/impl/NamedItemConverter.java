@@ -39,7 +39,7 @@ public class NamedItemConverter<I extends INamedItem> implements Converter {
 
                     ((INamedItem) entity).setName(value.toString());
 
-                    entity = persister.findByKey(entity);
+                    entity = persister.findByKey(entity, false);
                     
                     if (entity != null) {
                         return (T) entity;

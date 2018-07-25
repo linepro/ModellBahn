@@ -9,19 +9,28 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IZug;
 import com.linepro.modellbahn.model.IZugConsist;
 import com.linepro.modellbahn.model.util.AbstractItem;
+import com.linepro.modellbahn.rest.json.ArtikelSerializer;
+import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
@@ -34,6 +43,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Table(name = "zug_consist", indexes = { @Index(columnList = "zug_id"),
         @Index(columnList = "artikel_id", unique = true) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { "zug_id", "position" }) })
+@JsonRootName(value = "consist")
 public class ZugConsist extends AbstractItem implements IZugConsist {
 
     /** The Constant serialVersionUID. */
@@ -76,6 +86,7 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Zug.class)
     @JoinColumn(name = "zug_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "consist_fk1"))
     @JsonGetter("zug")
+    @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IZug getZug() {
@@ -92,6 +103,7 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
     @OrderColumn
     @Column(name = "position", nullable=false)
     @JsonGetter("position")
+    @JsonView(Views.DropDown.class)
     public Integer getPosition() {
         return position;
     }
@@ -106,16 +118,49 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Artikel.class)
     @JoinColumn(name = "artikel_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "consist_fk2"))
     @JsonGetter("artikel")
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonView(Views.DropDown.class)
+    @JsonSerialize(contentUsing=ArtikelSerializer.class)
     public IArtikel getArtikel() {
         return artikel;
     }
 
     @Override
-    @JsonSetter("artikelId")
+    @JsonSetter("artikel")
     public void setArtikel(IArtikel artikel) {
         this.artikel = artikel;
+    }
+
+    @Override
+    @Transient
+    @JsonIgnore
+    public String getLinkId() {
+        return getZug().getLinkId() + "/" + getPosition();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(getZug())
+                .append(getPosition())
+                .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof ZugConsist)) {
+            return false;
+        }
+
+        ZugConsist other = (ZugConsist) obj;
+
+        return new EqualsBuilder()
+                .append(getZug(), other.getZug())
+                .append(getPosition(), other.getPosition())
+                .isEquals();
     }
 
     @Override

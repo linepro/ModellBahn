@@ -9,13 +9,19 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -37,6 +43,8 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = "kategorie_id") }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { "kategorie_id", "name" }) })
 @AttributeOverride(name = "name", column = @Column(name = "name", unique = false, length = 50))
+@JsonRootName(value = "subCategory")
+@JsonPropertyOrder({"id", "kategorie", "name", "description", "deleted", "links"})
 public class UnterKategorie extends AbstractNamedItem implements IUnterKategorie {
 
     /** The Constant serialVersionUID. */
@@ -77,8 +85,8 @@ public class UnterKategorie extends AbstractNamedItem implements IUnterKategorie
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kategorie.class)
     @JoinColumn(name = "kategorie_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "unterkategorie_fk1"))
-    @JsonView(Views.DropDown.class)
     @JsonGetter("kategorie")
+    @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IKategorie getKategorie() {
@@ -89,6 +97,38 @@ public class UnterKategorie extends AbstractNamedItem implements IUnterKategorie
     @JsonSetter("kategorie")
     public void setKategorie(IKategorie kategorie) {
         this.kategorie = kategorie;
+    }
+
+    @Override
+    @Transient
+    @JsonIgnore
+    public String getLinkId() {
+        return getKategorie().getLinkId() + "/" + getName();
+    }
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(getKategorie())
+                .append(getName())
+                .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof UnterKategorie)) {
+            return false;
+        }
+
+        UnterKategorie other = (UnterKategorie) obj;
+
+        return new EqualsBuilder()
+                .append(getKategorie(), other.getKategorie())
+                .append(getName(), other.getName())
+                .isEquals();
     }
 
     @Override

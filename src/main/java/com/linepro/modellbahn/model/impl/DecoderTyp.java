@@ -24,9 +24,12 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
@@ -36,13 +39,15 @@ import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.model.util.AdressTyp;
 import com.linepro.modellbahn.model.util.Konfiguration;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
+import com.linepro.modellbahn.rest.json.DecoderTypCVSerializer;
+import com.linepro.modellbahn.rest.json.DecoderTypFunktionSerializer;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
- * DecoderTyp.
- * Represents a Decoder type (manufacturer : part numer) 
- * @author  $Author:$
+ * DecoderTyp. Represents a Decoder type (manufacturer : part numer)
+ * 
+ * @author $Author:$
  * @version $Id:$
  */
 @Entity(name = "DecoderTyp")
@@ -50,6 +55,8 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = "protokoll_id") }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { "hersteller_id", "name" }) })
 @AttributeOverride(name = "name", column = @Column(name = "name"))
+@JsonRootName(value = "decoderType")
+@JsonPropertyOrder({"id", "hersteller", "bestellNr", "protokoll", "adressTyp", "adressen", "fahrstufe", "sound", "iMax", "konfiguration", "deleted", "cvs", "funktionen", "links"})
 public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
     /** The Constant serialVersionUID. */
@@ -75,7 +82,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
     /** The sound. */
     private Boolean sound;
-    
+
     /** The konfiguration. */
     private Konfiguration konfiguration;
 
@@ -94,6 +101,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
     /**
      * Convienience method for lookups
+     * 
      * @param hersteller
      * @param name
      */
@@ -102,19 +110,28 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
         setHersteller(hersteller);
     }
-    
+
     /**
      * Instantiates a new decoder typ.
      *
-     * @param id the id
-     * @param hersteller the hersteller
-     * @param protokoll the protokoll
-     * @param name the name
-     * @param bezeichnung the bezeichnung
-     * @param adressen the adressen
-     * @param sound the sound
-     * @param konfiguration the konfiguration
-     * @param deleted the deleted
+     * @param id
+     *            the id
+     * @param hersteller
+     *            the hersteller
+     * @param protokoll
+     *            the protokoll
+     * @param name
+     *            the name
+     * @param bezeichnung
+     *            the bezeichnung
+     * @param adressen
+     *            the adressen
+     * @param sound
+     *            the sound
+     * @param konfiguration
+     *            the konfiguration
+     * @param deleted
+     *            the deleted
      */
     public DecoderTyp(Long id, IHersteller hersteller, IProtokoll protokoll, String name, String bezeichnung,
             Integer adressen, Boolean sound, Konfiguration konfiguration, Boolean deleted) {
@@ -131,10 +148,10 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class)
     @JoinColumn(name = "hersteller_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_typ_fk2"))
-    @JsonView(Views.DropDown.class)
     @JsonGetter("hersteller")
+    @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "hersteller")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IHersteller getHersteller() {
         return hersteller;
     }
@@ -146,9 +163,21 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     }
 
     @Override
+    @JsonGetter("bestellNr")
+    public String getName() {
+        return super.getName();
+    }
+
+    @Override
+    @JsonSetter("bestellNr")
+    public void setName(String name) {
+        super.setName(name);
+    }
+
+    @Override
     @Column(name = "adressen", nullable = false)
-    @JsonView(Views.Public.class)
     @JsonGetter("adressen")
+    @JsonView(Views.Public.class)
     public Integer getAdressen() {
         return adressen;
     }
@@ -161,9 +190,9 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
     @Override
     @Enumerated(EnumType.STRING)
-    @Column(name = "adress_typ", length=15, nullable = true)
-    @JsonView(Views.Public.class)
+    @Column(name = "adress_typ", length = 15, nullable = true)
     @JsonGetter("adressTyp")
+    @JsonView(Views.Public.class)
     public AdressTyp getAdressTyp() {
         return adressTyp;
     }
@@ -176,8 +205,8 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
     @Override
     @Column(name = "i_max", nullable = true, precision = 6, scale = 2)
-    @JsonView(Views.Public.class)
     @JsonGetter("iMax")
+    @JsonView(Views.Public.class)
     public BigDecimal getiMax() {
         return iMax;
     }
@@ -192,6 +221,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Protokoll.class)
     @JoinColumn(name = "protokoll_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_typ_fk3"))
     @JsonGetter("protokoll")
+    @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
     public IProtokoll getProtokoll() {
@@ -206,8 +236,8 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
     @Override
     @Column(name = "fahrstufe", nullable = true)
-    @JsonView(Views.Public.class)
     @JsonGetter("fahrstufe")
+    @JsonView(Views.Public.class)
     public Integer getFahrstufe() {
         return fahrstufe;
     }
@@ -221,8 +251,8 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
     @Override
     @Column(name = "sound", nullable = false)
-    @JsonView(Views.Public.class)
     @JsonGetter("sound")
+    @JsonView(Views.DropDown.class)
     public Boolean getSound() {
         return sound;
     }
@@ -235,9 +265,9 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
     @Override
     @Enumerated(EnumType.STRING)
-    @Column(name = "konfiguration", nullable = false, length=15)
-    @JsonView(Views.Public.class)
+    @Column(name = "konfiguration", nullable = false, length = 15)
     @JsonGetter("konfiguration")
+    @JsonView(Views.DropDown.class)
     public Konfiguration getKonfiguration() {
         return konfiguration;
     }
@@ -250,50 +280,55 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
     @Override
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "decoderTyp", targetEntity = DecoderTypCV.class, orphanRemoval = true)
+    @JsonGetter("cvs")
     @JsonView(Views.Public.class)
-    @JsonGetter("cv")
+    @JsonSerialize(contentUsing = DecoderTypCVSerializer.class)
     public Set<IDecoderTypCV> getCVs() {
         return CVs;
     }
 
     @Override
-    @JsonSetter("cv")
+    @JsonSetter("cvs")
     public void setCVs(Set<IDecoderTypCV> CVs) {
         this.CVs = CVs;
     }
 
     @Override
-    public void addCV(IDecoderTypCV CV) {
-        getCVs().add(CV);
+    public void addCV(IDecoderTypCV cv) {
+        cv.setDecoderTyp(this);
+        getCVs().add(cv);
     }
 
     @Override
-    public void removeCV(IDecoderTypCV CV) {
-        getCVs().remove(CV);
+    public void removeCV(IDecoderTypCV cv) {
+        getCVs().remove(cv);
     }
 
     @Override
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "decoderTyp", targetEntity = DecoderTypFunktion.class, orphanRemoval = true)
-    @JsonView(Views.Public.class)
     @JsonGetter("funktionen")
+    @JsonView(Views.Public.class)
+    @JsonSerialize(contentUsing = DecoderTypFunktionSerializer.class)
     public Set<IDecoderTypFunktion> getFunktionen() {
         return funktionen;
     }
 
     @Override
     @JsonSetter("funktionen")
+    @JsonSerialize()
     public void setFunktionen(Set<IDecoderTypFunktion> funktionen) {
         this.funktionen = funktionen;
     }
 
     @Override
     public void addFunktion(IDecoderTypFunktion funktion) {
+        funktion.setDecoderTyp(this);
         getFunktionen().add(funktion);
     }
 
     @Override
-    public void removeFunktion(IDecoderTypFunktion Funktion) {
-        getFunktionen().remove(Funktion);
+    public void removeFunktion(IDecoderTypFunktion funktion) {
+        getFunktionen().remove(funktion);
     }
 
     @Override

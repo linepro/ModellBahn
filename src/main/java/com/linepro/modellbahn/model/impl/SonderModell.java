@@ -5,6 +5,7 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.ISonderModell;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 
@@ -18,6 +19,7 @@ import com.linepro.modellbahn.model.util.AbstractNamedItem;
 @Entity(name = "SonderModell")
 @Table(name = "sondermodell", indexes = { @Index(columnList = "name", unique = true) }, 
        uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+@JsonRootName(value = "special")
 public class SonderModell extends AbstractNamedItem implements ISonderModell {
 
 	/** The Constant serialVersionUID. */

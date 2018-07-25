@@ -19,14 +19,15 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IZug;
 import com.linepro.modellbahn.model.IZugConsist;
 import com.linepro.modellbahn.model.IZugTyp;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
@@ -38,6 +39,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Entity(name = "Zug")
 @Table(name = "zugen", indexes = { @Index(columnList = "name", unique = true), @Index(columnList = "zug_typ_id") }, 
        uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+@JsonRootName(value = "train")
 public class Zug extends AbstractNamedItem implements IZug {
 
     /** The Constant serialVersionUID. */
@@ -94,14 +96,13 @@ public class Zug extends AbstractNamedItem implements IZug {
     @Override
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "zug", targetEntity=ZugConsist.class, orphanRemoval = true)
     @JsonGetter("consist")
-    @JsonSerialize()
+    @JsonView(Views.Public.class)
 	public List<IZugConsist> getConsist() {
 		return consist;
 	}
 
     @Override
     @JsonSetter("consist")
-    @JsonDeserialize()
 	public void setConsist(List<IZugConsist> consist) {
 		this.consist = consist;
 	}

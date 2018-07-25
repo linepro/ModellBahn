@@ -5,6 +5,7 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.IBahnverwaltung;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 
@@ -17,6 +18,7 @@ import com.linepro.modellbahn.model.util.AbstractNamedItem;
 @Entity(name = "Bahnverwaltung")
 @Table(name = "bahnverwaltungen", indexes = { @Index(columnList = "name", unique = true) }, 
        uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+@JsonRootName(value = "railway")
 public class Bahnverwaltung extends AbstractNamedItem implements IBahnverwaltung {
 
     /** The Constant serialVersionUID. */
