@@ -18,6 +18,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -29,6 +30,8 @@ import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.DecoderTypSerializer;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.rest.util.ApiPaths;
 
 /**
  * DecoderTypFunktion. The Functions available for a DecoderTyp
@@ -37,11 +40,12 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name = "DecoderTypFunktion")
-@Table(name = "decoder_typ_funktionen", indexes = { @Index(columnList = "decoder_typ_id,reihe,name", unique = true),
+@Table(name = "DecoderTypFunktion", indexes = { @Index(columnList = "decoder_typ_id,reihe,name", unique = true),
         @Index(columnList = "decoder_typ_id") }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { "decoder_typ_id", "reihe", "name" }) })
-@JsonRootName(value = "function")
-@AttributeOverride(name = "name", column = @Column(name = "name", unique = false, length = 4))
+                @UniqueConstraint(columnNames = { "decoder_typ_id", ApiNames.REIHE, ApiNames.NAME }) })
+@AttributeOverride(name = ApiNames.NAME, column = @Column(name = ApiNames.NAME, unique = false, length = 4))
+@JsonRootName(ApiNames.FUNKTION)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.REIHE,  ApiNames.PROGRAMMABLE, ApiNames.DELETED, ApiNames.LINKS})
 public class DecoderTypFunktion extends AbstractNamedItem implements IDecoderTypFunktion {
 
     /** The Constant serialVersionUID. */
@@ -100,8 +104,8 @@ public class DecoderTypFunktion extends AbstractNamedItem implements IDecoderTyp
     @Override
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
-    @JoinColumn(name = "decoder_typ_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_typ_fn_fk1"))
-    @JsonGetter("decoderTyp")
+    @JoinColumn(name = "decoder_typ_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "decoder_typ_fn_fk1"))
+    @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(contentUsing=DecoderTypSerializer.class)
     public IDecoderTyp getDecoderTyp() {
@@ -109,36 +113,36 @@ public class DecoderTypFunktion extends AbstractNamedItem implements IDecoderTyp
     }
 
     @Override
-    @JsonSetter("decoderTyp")
+    @JsonSetter(ApiNames.DECODER_TYP)
     public void setDecoderTyp(IDecoderTyp decoderTyp) {
         this.decoderTyp = decoderTyp;
     }
 
     @Override
     @BusinessKey
-    @Column(name = "reihe", nullable = false)
-    @JsonGetter("bank")
+    @Column(name = ApiNames.REIHE, nullable = false)
+    @JsonGetter(ApiNames.REIHE)
     @JsonView(Views.DropDown.class)
     public Integer getReihe() {
         return reihe;
     }
 
     @Override
-    @JsonSetter("bank")
+    @JsonSetter(ApiNames.REIHE)
     public void setReihe(Integer reihe) {
         this.reihe = reihe;
     }
 
     @Override
-    @Column(name = "programmable", nullable = false)
-    @JsonGetter("programmable")
+    @Column(name = ApiNames.PROGRAMMABLE, nullable = false)
+    @JsonGetter(ApiNames.PROGRAMMABLE)
     @JsonView(Views.Public.class)
     public Boolean getProgrammable() {
         return programmable;
     }
 
     @Override
-    @JsonSetter("programmable")
+    @JsonSetter(ApiNames.PROGRAMMABLE)
     public void setProgrammable(Boolean programmable) {
         this.programmable = programmable;
     }
@@ -146,8 +150,15 @@ public class DecoderTypFunktion extends AbstractNamedItem implements IDecoderTyp
     @Override
     @Transient
     @JsonIgnore
+    public String getParentId() {
+        return getDecoderTyp().getLinkId();
+    }
+
+    @Override
+    @Transient
+    @JsonIgnore
     public String getLinkId() {
-        return getDecoderTyp().getLinkId() + "/fn/" + getReihe() + "/" + getName();
+        return String.format(ApiPaths.DECODER_TYP_FN_LINK, getParentId(), getName());
     }
 
     @Override
@@ -182,9 +193,9 @@ public class DecoderTypFunktion extends AbstractNamedItem implements IDecoderTyp
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
-                .append("decoderTyp", getDecoderTyp())
-                .append("reihe", getReihe())
-                .append("programmable", getProgrammable())
+                .append(ApiNames.DECODER_TYP, getDecoderTyp())
+                .append(ApiNames.REIHE, getReihe())
+                .append(ApiNames.PROGRAMMABLE, getProgrammable())
                 .toString();
     }
 }

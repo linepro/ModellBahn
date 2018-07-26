@@ -11,9 +11,10 @@ import org.slf4j.Logger;
 
 import com.google.inject.assistedinject.Assisted;
 import com.linepro.modellbahn.jersey.ServerBuilder;
-import com.linepro.modellbahn.rest.HttpService;
+import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.rest.util.ModellBahnConfiguration;
 import com.linepro.modellbahn.util.DBPopulator;
+import com.linepro.modellbahn.util.StaticContentFinder;
 
 /**
  * ModellBahn. The ModellBahn application
@@ -48,8 +49,8 @@ public class ModellBahn implements IModellBahn {
         this.logger = loggerFactory.getLogger(getClass().getName());
         this.populator = populator;
         this.baseUri = baseUri;
-
-        HttpService.addPaths(staticRoots);
+        
+        StaticContentFinder.get().addPaths(staticRoots);
     }
 
     @Override
@@ -63,23 +64,22 @@ public class ModellBahn implements IModellBahn {
 
             HttpServer server = new ServerBuilder().getServer(baseUri, configuration);
 
-            //StaticHttpHandler handler = new StaticHttpHandler(staticRoots);
-            //server.getServerConfiguration().addHttpHandler(handler);
-
             Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
                 @Override
                 public void run() {
                     server.shutdownNow();
                 }
             }));
-
+            
             server.start();
 
-            logger.info("Application started with WADL available at {}/api/application.wadl\n" +
-                    "Static content served from {}\n" +
+            logger.info("Application started with WADL available at {}{}\n" +
+                    "Static content served on {}{} from {}\n" +
+                    "API served on {}{}\n" +
                     "Press CTRL^C (SIGINT) to terminate.",
-                    baseUri,
-                    HttpService.getPaths());
+                    baseUri, ApiPaths.APPLICATION_WADL,
+                    baseUri, ApiPaths.WEB_ROOT, StaticContentFinder.get().getPaths(),
+                    baseUri, ApiPaths.API_ROOT);
 
             Thread.currentThread().join();
 

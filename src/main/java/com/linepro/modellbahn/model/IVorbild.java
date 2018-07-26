@@ -435,14 +435,14 @@ public interface IVorbild extends IItem {
      *
      * @return the kapazitaet
      */
-    BigDecimal getKapazitaet();
+    BigDecimal getKapazitat();
 
     /**
      * Sets the kapazitaet.
      *
      * @param kapazitaet the new kapazitaet
      */
-    void setKapazitaet(BigDecimal kapazitaet);
+    void setKapazitat(BigDecimal kapazitaet);
 
     /**
      * Gets the klasse.
@@ -519,14 +519,14 @@ public interface IVorbild extends IItem {
      *
      * @return the aufbauten
      */
-    String getAufbauten();
+    String getAufbau();
 
     /**
      * Sets the aufbauten.
      *
      * @param aufbauten the new aufbauten
      */
-    void setAufbauten(String aufbauten);
+    void setAufbau(String aufbauten);
 
     /**
      * Gets the triebzug anzeigen.

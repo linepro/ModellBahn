@@ -7,13 +7,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.linepro.modellbahn.model.impl.DecoderAdress;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 public class DecoderAdressSerializer extends StdSerializer<DecoderAdress> {
 
     private static final long serialVersionUID = 5732879150462954795L;
 
+    protected LinkUtils utils = new LinkUtils();
+
     public DecoderAdressSerializer() {
-        this(null);
+        this(DecoderAdress.class);
     }
 
     public DecoderAdressSerializer(Class<DecoderAdress> t) {
@@ -23,8 +26,8 @@ public class DecoderAdressSerializer extends StdSerializer<DecoderAdress> {
     @Override
     public void serialize(DecoderAdress value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
         gen.writeStartObject();
-        gen.writeObjectField("adressTyp", value.getAdressTyp());
-        gen.writeObjectField("adress", value.getAdress());
+        gen.writeObjectField(ApiNames.ADRESS_TYP, value.getAdressTyp());
+        gen.writeObjectField(ApiNames.ADRESS, value.getAdress());
         gen.writeEndObject();
     }
 }

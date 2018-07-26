@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.linepro.modellbahn.model.impl.Produkt;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
  * LinkSerializer.
@@ -17,13 +18,12 @@ import com.linepro.modellbahn.model.impl.Produkt;
  */
 public class ProduktSerializer extends StdSerializer<Produkt> {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -3541810693407134622L;
 
+    protected LinkUtils utils = new LinkUtils();
+
     public ProduktSerializer() {
-        this(null);
+        this(Produkt.class);
     }
 
     public ProduktSerializer(Class<Produkt> t) {
@@ -33,8 +33,9 @@ public class ProduktSerializer extends StdSerializer<Produkt> {
     @Override
     public void serialize(Produkt value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
         gen.writeStartObject();
-        gen.writeStringField("hersteller", value.getHersteller().getName());
-        gen.writeStringField("bestellNr", value.getBestellNr());
+        gen.writeStringField(ApiNames.HERSTELLER, value.getHersteller().getName());
+        gen.writeStringField(ApiNames.BESTELL_NR, value.getBestellNr());
+        utils.writeLinks(ApiNames.LINKS, value.getLinks(), gen, serializers);
         gen.writeEndObject();
     }
 }

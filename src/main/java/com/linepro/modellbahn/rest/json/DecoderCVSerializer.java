@@ -7,13 +7,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.linepro.modellbahn.model.impl.DecoderCV;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 public class DecoderCVSerializer extends StdSerializer<DecoderCV> {
 
     private static final long serialVersionUID = 3171815401312192228L;
 
+    protected LinkUtils utils = new LinkUtils();
+
     public DecoderCVSerializer() {
-        this(null);
+        this(DecoderCV.class);
     }
 
     public DecoderCVSerializer(Class<DecoderCV> t) {
@@ -23,8 +26,8 @@ public class DecoderCVSerializer extends StdSerializer<DecoderCV> {
     @Override
     public void serialize(DecoderCV value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
         gen.writeStartObject();
-        gen.writeObjectField("cv", value.getCV().getCV());
-        gen.writeObjectField("value", value.getWert());
+        gen.writeObjectField(ApiNames.CV, value.getCV().getCV());
+        gen.writeObjectField(ApiNames.WERT, value.getWert());
         gen.writeEndObject();
     }
 }

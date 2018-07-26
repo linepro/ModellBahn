@@ -1,6 +1,8 @@
 package com.linepro.modellbahn.util;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 import java.lang.reflect.Method;
 
@@ -37,7 +39,7 @@ public class SelectorTest {
         getter = getClass().getDeclaredMethod(GETTER);
         setter = getClass().getDeclaredMethod(SETTER, String.class);
         
-        selector = new Selector(NAME, getter, setter);
+        selector = new Selector(NAME, getter, setter, false);
     }
 
     @Test
@@ -60,8 +62,8 @@ public class SelectorTest {
         assertFalse(selector.equals(null));
         assertFalse(selector.equals(new Object()));
         assertTrue(selector.equals(selector));
-        assertTrue(selector.equals(new Selector(NAME, setter, getter)));
-        assertFalse(selector.equals(new Selector(NAME+"!", setter, getter)));
+        assertTrue(selector.equals(new Selector(NAME, setter, getter, false)));
+        assertFalse(selector.equals(new Selector(NAME+"!", setter, getter, true)));
     }
 
     @Test

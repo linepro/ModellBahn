@@ -24,6 +24,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -34,6 +35,7 @@ import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.model.util.AdressTyp;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
  * DecoderAdress.
@@ -42,9 +44,10 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name = "DecoderAdress")
-@Table(name = "decoder_adressen", indexes = { @Index(columnList = "decoder_id,typ,adress", unique = true) },
-       uniqueConstraints = { @UniqueConstraint(columnNames = { "decoder_id", "typ","adress" })})
-@JsonRootName(value = "address")
+@Table(name = "DecoderAdress", indexes = { @Index(columnList = "decoder_id,typ,adress", unique = true) },
+       uniqueConstraints = { @UniqueConstraint(columnNames = { "decoder_id", "typ",ApiNames.ADRESS })})
+@JsonRootName(value = ApiNames.ADRESS)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER,  ApiNames.ADRESS_TYP,  ApiNames.ADRESS, ApiNames.DELETED, ApiNames.LINKS})
 public class DecoderAdress extends AbstractItem implements IDecoderAdress {
 
     /** The Constant serialVersionUID. */
@@ -80,17 +83,17 @@ public class DecoderAdress extends AbstractItem implements IDecoderAdress {
 
     @Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=Decoder.class)
-    @JoinColumn(name="decoder_id", nullable = false, referencedColumnName="id", foreignKey = @ForeignKey(name = "decoder_address_fk1"))
-    @JsonGetter("decoder")
+    @JoinColumn(name="decoder_id", nullable = false, referencedColumnName=ApiNames.ID, foreignKey = @ForeignKey(name = "decoder_address_fk1"))
+    @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
     public IDecoder getDecoder() {
         return decoder;
     }
 
     @Override
-    @JsonSetter("decoder")
+    @JsonSetter(ApiNames.DECODER)
     public void setDecoder(IDecoder decoder) {
         this.decoder = decoder;
     }
@@ -98,28 +101,28 @@ public class DecoderAdress extends AbstractItem implements IDecoderAdress {
     @Override
     @Enumerated(EnumType.STRING)
     @Column(name = "typ", nullable = false, length=10)
-    @JsonGetter("adressTyp")
+    @JsonGetter(ApiNames.ADRESS_TYP)
     @JsonView(Views.DropDown.class)
     public AdressTyp getAdressTyp() {
         return adressTyp;
     }
 
     @Override
-    @JsonSetter("adressTyp")
+    @JsonSetter(ApiNames.ADRESS_TYP)
     public void setAdressTyp(AdressTyp adressTyp) {
         this.adressTyp = adressTyp;
     }
 
     @Override
-    @Column(name = "adress", nullable = false)
-    @JsonGetter("adress")
+    @Column(name = ApiNames.ADRESS, nullable = false)
+    @JsonGetter(ApiNames.ADRESS)
     @JsonView(Views.DropDown.class)
     public Integer getAdress() {
         return adress;
     }
 
     @Override
-    @JsonSetter("adress")
+    @JsonSetter(ApiNames.ADRESS)
     public void setAdress(Integer adress) {
         this.adress = adress;
     }
@@ -155,8 +158,8 @@ public class DecoderAdress extends AbstractItem implements IDecoderAdress {
    @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("decoder", getDecoder().getId())
+                .append(ApiNames.DECODER, getDecoder().getId())
                 .append("typ", getAdressTyp())
-                .append("adress", getAdress()).toString();
+                .append(ApiNames.ADRESS, getAdress()).toString();
     }
 }

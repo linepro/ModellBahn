@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -29,6 +30,8 @@ import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.rest.util.ApiPaths;
 
 /**
  * DecoderCV.
@@ -37,9 +40,10 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name = "DecoderCV")
-@Table(name = "decoder_cv", indexes = { @Index(columnList = "decoder_id,cv_id", unique = true) }, 
+@Table(name = "DecoderCV", indexes = { @Index(columnList = "decoder_id,cv_id", unique = true) }, 
        uniqueConstraints = { @UniqueConstraint(columnNames = { "decoder_id", "cv_id" }) })
-@JsonRootName(value = "cv")
+@JsonRootName(value = ApiNames.CV)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER,  ApiNames.CV, ApiNames.WERT, ApiNames.DELETED, ApiNames.LINKS})
 public class DecoderCV extends AbstractItem implements IDecoderCV {
 
     /** The Constant serialVersionUID. */
@@ -76,48 +80,48 @@ public class DecoderCV extends AbstractItem implements IDecoderCV {
 
 	@Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=Decoder.class)
-    @JoinColumn(name="decoder_id", nullable = false, referencedColumnName="id", foreignKey = @ForeignKey(name = "decoder_cv_fk1"))
-	@JsonGetter("decoder")
+    @JoinColumn(name="decoder_id", nullable = false, referencedColumnName=ApiNames.ID, foreignKey = @ForeignKey(name = "decoder_cv_fk1"))
+	@JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
     public IDecoder getDecoder() {
         return decoder;
     }
 
     @Override
-    @JsonSetter("decoder")
+    @JsonSetter(ApiNames.DECODER)
     public void setDecoder(IDecoder decoder) {
         this.decoder = decoder;
     }
 
     @Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=DecoderTypCV.class)
-    @JoinColumn(name="cv_id", nullable = false, referencedColumnName="id", foreignKey = @ForeignKey(name = "decoder_cv_fk2"))
-    @JsonGetter("cv")
+    @JoinColumn(name="cv_id", nullable = false, referencedColumnName=ApiNames.ID, foreignKey = @ForeignKey(name = "decoder_cv_fk2"))
+    @JsonGetter(ApiNames.CV)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "cv")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.CV)
     public IDecoderTypCV getCV() {
         return cv;
     }
 
     @Override
-    @JsonSetter("cv")
+    @JsonSetter(ApiNames.CV)
     public void setCV(IDecoderTypCV cv) {
         this.cv = cv;
     }
 
 	@Override
     @Column(name="wert", nullable = true)
-    @JsonGetter("value")
+    @JsonGetter(ApiNames.WERT)
     @JsonView(Views.DropDown.class)
 	public Integer getWert() {
 		return wert;
 	}
 
 	@Override
-    @JsonSetter("value")
+    @JsonSetter(ApiNames.WERT)
     public void setWert(Integer wert) {
 		this.wert = wert;
 	}
@@ -125,8 +129,15 @@ public class DecoderCV extends AbstractItem implements IDecoderCV {
     @Override
     @Transient
     @JsonIgnore
+    public String getParentId() {
+        return decoder.getLinkId();
+    }
+
+    @Override
+    @Transient
+    @JsonIgnore
     public String getLinkId() {
-        return getDecoder().getLinkId() + "/" + getCV();
+        return String.format(ApiPaths.DECODER_CV_LINK, getParentId(), getCV());
     }
 
     @Override
@@ -158,8 +169,8 @@ public class DecoderCV extends AbstractItem implements IDecoderCV {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("decoder", getDecoder().getId())
-                .append("cv", getCV())
+                .append(ApiNames.DECODER, getDecoder().getId())
+                .append(ApiNames.CV, getCV())
 				.append("wert", getWert())
 				.toString();
 	}

@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -42,6 +43,7 @@ import com.linepro.modellbahn.rest.json.Formats;
 import com.linepro.modellbahn.rest.json.ProduktSerializer;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
  * Artikel.
@@ -50,14 +52,15 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name = "Artikel")
-@Table(name = "artikelen", indexes = { @Index(columnList = "produkt_id"),
+@Table(name = "Artikel", indexes = { @Index(columnList = "produkt_id"),
         @Index(columnList = "wahrung_id"),
         @Index(columnList = "steuerung_id"),
         @Index(columnList = "motor_typ_id"),
         @Index(columnList = "licht_id"),
         @Index(columnList = "kupplung_id"),
         @Index(columnList = "decoder_id") })
-@JsonRootName(value = "article")
+@JsonRootName(value = ApiNames.ARTIKEL)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.PRODUKT, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.STUCK, ApiNames.STEUERUNG, ApiNames.MOTOR_TYP, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.DECODER, ApiNames.ANMERKUNG, ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.DELETED, ApiNames.LINKS})
 public class Artikel extends AbstractNamedItem implements IArtikel {
 
     /** The Constant serialVersionUID. */
@@ -153,8 +156,8 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
-    @JoinColumn(name = "produkt_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "artikel_fk1"))
-    @JsonGetter("produkt")
+    @JoinColumn(name = "produkt_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "artikel_fk1"))
+    @JsonGetter(ApiNames.PRODUKT)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonSerialize(contentUsing=ProduktSerializer.class)
@@ -163,15 +166,15 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
     }
 
     @Override
-    @JsonSetter("produkt")
+    @JsonSetter(ApiNames.PRODUKT)
     public void setProdukt(IProdukt produkt) {
         this.produkt = produkt;
     }
 
     @Override
-    @Column(name = "kaufdatum", nullable = true)
+    @Column(name = ApiNames.KAUFDATUM, nullable = true)
     @Temporal(TemporalType.DATE)
-    @JsonGetter("kaufdatum")
+    @JsonGetter(ApiNames.KAUFDATUM)
     @JsonView(Views.Public.class)
     @JsonFormat(shape=Shape.STRING, pattern=Formats.ISO8601_DATE)
     public Date getKaufdatum() {
@@ -179,180 +182,180 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
     }
 
     @Override
-    @JsonSetter("kaufdatum")
+    @JsonSetter(ApiNames.KAUFDATUM)
     public void setKaufdatum(Date kaufdatum) {
         Kaufdatum = kaufdatum;
     }
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Wahrung.class)
-    @JoinColumn(name = "wahrung_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "artikel_fk2"))
-    @JsonGetter("wahrung")
+    @JoinColumn(name = "wahrung_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "artikel_fk2"))
+    @JsonGetter(ApiNames.WAHRUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
     public IWahrung getWahrung() {
         return wahrung;
     }
 
     @Override
-    @JsonSetter("wahrung")
+    @JsonSetter(ApiNames.WAHRUNG)
     public void setWahrung(IWahrung wahrung) {
         this.wahrung = wahrung;
     }
 
     @Override
-    @Column(name = "preis", nullable = true, precision = 6, scale = 2)
-    @JsonGetter("preis")
+    @Column(name = ApiNames.PREIS, nullable = true, precision = 6, scale = 2)
+    @JsonGetter(ApiNames.PREIS)
     @JsonView(Views.Public.class)
     public BigDecimal getPreis() {
         return preis;
     }
 
     @Override
-    @JsonSetter("preis")
+    @JsonSetter(ApiNames.PREIS)
     public void setPreis(BigDecimal preis) {
         this.preis = preis;
     }
 
     @Override
-    @Column(name = "stuck", nullable = false)
-    @JsonGetter("stuck")
+    @Column(name = ApiNames.STUCK, nullable = false)
+    @JsonGetter(ApiNames.STUCK)
     @JsonView(Views.Public.class)
     public Integer getStuck() {
         return stuck;
     }
 
     @Override
-    @JsonSetter("stuck")
+    @JsonSetter(ApiNames.STUCK)
     public void setStuck(Integer stuck) {
         this.stuck = stuck;
     }
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class)
-    @JoinColumn(name = "steuerung_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "artikel_fk3"))
-    @JsonGetter("steuerung")
+    @JoinColumn(name = "steuerung_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "artikel_fk3"))
+    @JsonGetter(ApiNames.STEUERUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
     public ISteuerung getSteuerung() {
         return steuerung;
     }
 
     @Override
-    @JsonSetter("steuerung")
+    @JsonSetter(ApiNames.STEUERUNG)
     public void setSteuerung(ISteuerung steuerung) {
         this.steuerung = steuerung;
     }
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = MotorTyp.class)
-    @JoinColumn(name = "motor_typ_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "artikel_fk4"))
-    @JsonGetter("motorTyp")
+    @JoinColumn(name = "motor_typ_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "artikel_fk4"))
+    @JsonGetter(ApiNames.MOTOR_TYP)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
     public IMotorTyp getMotorTyp() {
         return motorTyp;
     }
 
     @Override
-    @JsonSetter("motorTyp")
+    @JsonSetter(ApiNames.MOTOR_TYP)
     public void setMotorTyp(IMotorTyp motorTyp) {
         this.motorTyp = motorTyp;
     }
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Licht.class)
-    @JoinColumn(name = "licht_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "artikel_fk5"))
-    @JsonGetter("licht")
+    @JoinColumn(name = "licht_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "artikel_fk5"))
+    @JsonGetter(ApiNames.LICHT)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
     public ILicht getLicht() {
         return licht;
     }
 
     @Override
-    @JsonSetter("licht")
+    @JsonSetter(ApiNames.LICHT)
     public void setLicht(ILicht licht) {
         this.licht = licht;
     }
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kupplung.class)
-    @JoinColumn(name = "kupplung_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "artikel_fk6"))
-    @JsonGetter("kupplung")
+    @JoinColumn(name = "kupplung_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "artikel_fk6"))
+    @JsonGetter(ApiNames.KUPPLUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
     public IKupplung getKupplung() {
         return kupplung;
     }
 
     @Override
-    @JsonSetter("kupplung")
+    @JsonSetter(ApiNames.KUPPLUNG)
     public void setKupplung(IKupplung kupplung) {
         this.kupplung = kupplung;
     }
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
-    @JoinColumn(name = "decoder_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "artikel_fk7"))
-    @JsonGetter("decoder")
+    @JoinColumn(name = "decoder_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "artikel_fk7"))
+    @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.ID)
     public IDecoder getDecoder() {
         return decoder;
     }
 
     @Override
-    @JsonSetter("decoder")
+    @JsonSetter(ApiNames.DECODER)
     public void setDecoder(IDecoder decoder) {
         this.decoder = decoder;
     }
 
     @Override
-    @Column(name = "anmerkung", length = 100, nullable = true)
-    @JsonGetter("anmerkung")
+    @Column(name = ApiNames.ANMERKUNG, length = 100, nullable = true)
+    @JsonGetter(ApiNames.ANMERKUNG)
     @JsonView(Views.DropDown.class)
     public String getAnmerkung() {
         return anmerkung;
     }
 
     @Override
-    @JsonSetter("anmerkung")
+    @JsonSetter(ApiNames.ANMERKUNG)
     public void setAnmerkung(String anmerkung) {
         this.anmerkung = anmerkung;
     }
 
     @Override
-    @Column(name = "beladung", length = 100, nullable = true)
-    @JsonGetter("beladung")
+    @Column(name = ApiNames.BELADUNG, length = 100, nullable = true)
+    @JsonGetter(ApiNames.BELADUNG)
     @JsonView(Views.Public.class)
     public String getBeladung() {
         return beladung;
     }
 
     @Override
-    @JsonSetter("beladung")
+    @JsonSetter(ApiNames.BELADUNG)
     public void setBeladung(String beladung) {
         this.beladung = beladung;
     }
 
     @Override
-    @Column(name = "status", nullable = false)
+    @Column(name = ApiNames.STATUS, nullable = false)
     @Enumerated(EnumType.STRING)
-    @JsonGetter("status")
+    @JsonGetter(ApiNames.STATUS)
     @JsonView(Views.DropDown.class)
     public Status getStatus() {
         return status;
     }
 
     @Override
-    @JsonSetter("status")
+    @JsonSetter(ApiNames.STATUS)
     public void setStatus(Status status) {
         this.status = status;
     }
@@ -361,19 +364,19 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
-                .append("Produkt", getProdukt())
-                .append("kaufdatum", getKaufdatum())
-                .append("Wahrung", getWahrung())
-                .append("Preis", getPreis())
-                .append("stuck", getStuck())
-                .append("steuerung", getSteuerung())
-                .append("motorTyp", getMotorTyp())
-                .append("licht", getLicht())
-                .append("kupplung", getKupplung())
-                .append("decoder", getDecoder())
-                .append("anmerkung", getAnmerkung())
-                .append("beladung", getBeladung())
-                .append("status", getStatus())
+                .append(ApiNames.PRODUKT, getProdukt())
+                .append(ApiNames.KAUFDATUM, getKaufdatum())
+                .append(ApiNames.WAHRUNG, getWahrung())
+                .append(ApiNames.PREIS, getPreis())
+                .append(ApiNames.STUCK, getStuck())
+                .append(ApiNames.STEUERUNG, getSteuerung())
+                .append(ApiNames.MOTOR_TYP, getMotorTyp())
+                .append(ApiNames.LICHT, getLicht())
+                .append(ApiNames.KUPPLUNG, getKupplung())
+                .append(ApiNames.DECODER, getDecoder())
+                .append(ApiNames.ANMERKUNG, getAnmerkung())
+                .append(ApiNames.BELADUNG, getBeladung())
+                .append(ApiNames.STATUS, getStatus())
                 .toString();
     }
 }

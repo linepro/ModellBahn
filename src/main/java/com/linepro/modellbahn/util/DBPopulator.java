@@ -40,6 +40,7 @@ import com.linepro.modellbahn.model.impl.ZugTyp;
 import com.linepro.modellbahn.model.util.Konfiguration;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.IPersisterFactory;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 public class DBPopulator {
 
@@ -50,7 +51,7 @@ public class DBPopulator {
     @Inject
     public DBPopulator(IPersisterFactory persisterFactory, ILoggerFactory logManger) {
         this.persisterFactory = persisterFactory;
-        this.logger = logManger.getLogger(DBPopulator.class.getName());
+        this.logger = logManger.getLogger(getClass().getName());
     }
 
     public void populate() {
@@ -1260,7 +1261,7 @@ public class DBPopulator {
         save(persister, new Epoch(null, "Ia", "1835 - 1875", false));
         save(persister, new Epoch(null, "Ib", "1875 - 1895", false));
         save(persister, new Epoch(null, "Ic", "1895 - 1910", false));
-        save(persister, new Epoch(null, "Id", "1910 - 1920", false));
+        save(persister, new Epoch(null, ApiNames.ID, "1910 - 1920", false));
         save(persister, new Epoch(null, "IIa", "1920 - 1925", false));
         save(persister, new Epoch(null, "IIb", "1925 - 1937", false));
         save(persister, new Epoch(null, "IIc", "1937 - 1950", false));
@@ -1509,7 +1510,7 @@ public class DBPopulator {
         kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Klappe", "Klappe", false));
         kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kohlbursten", "Kohlbursten", false));
         kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kuppelstange", "Kuppelstange", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kupplung", "Kupplung", false));
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, ApiNames.KUPPLUNG, ApiNames.KUPPLUNG, false));
         kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kupplungsdeichsel", "Kupplungsdeichsel", false));
         kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kupplungshaken", "Kupplungshaken", false));
         kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kupplungskinematik", "Kupplungskinematik", false));
@@ -1848,7 +1849,7 @@ public class DBPopulator {
         save(persister, new SonderModell(null, "Einmalige Serien", "Einmalige Serien", false));
         save(persister, new SonderModell(null, "Museumswagen", "Museumswagen", false));
         save(persister, new SonderModell(null, "Weihnachtswagen", "Weihnachtswagen", false));
-        save(persister, new SonderModell(null, "Sondermodel", "Sondermodel", false));
+        save(persister, new SonderModell(null, ApiNames.SONDERMODEL, ApiNames.SONDERMODEL, false));
     }
 
     protected void populateSpurweite() {

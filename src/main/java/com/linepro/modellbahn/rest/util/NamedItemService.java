@@ -26,7 +26,7 @@ import com.linepro.modellbahn.rest.json.Views;
  *
  * @param <E> the element type
  */
-public abstract class NamedItemService<E extends INamedItem> extends AbstractService<E> {
+public abstract class NamedItemService<E extends INamedItem> extends AbstractItemService<E> {
 
     /**
      * Instantiates a new named item service.
@@ -48,16 +48,18 @@ public abstract class NamedItemService<E extends INamedItem> extends AbstractSer
      * @throws Exception the exception
      */
     @JsonCreator
-    public E create(@JsonProperty(value="id", required=false) Long id, 
+    public E create(@JsonProperty(value=ApiNames.ID, required=false) Long id, 
                     @JsonProperty(value=ApiPaths.NAME_PARAM_NAME, required=false) String name, 
-                    @JsonProperty(value="description", required=false) String bezeichnung, 
-                    @JsonProperty(value="deleted", required=false) Boolean deleted) throws Exception {
+                    @JsonProperty(value=ApiNames.DESCRIPTION, required=false) String bezeichnung, 
+                    @JsonProperty(value=ApiNames.DELETED, required=false) Boolean deleted) throws Exception {
         E entity = create();
 
         entity.setId(id);
         entity.setName(name);
         entity.setBezeichnung(bezeichnung);
         entity.setDeleted(deleted);
+
+        info("create " + entity);
 
         return entity;
     }
@@ -74,13 +76,15 @@ public abstract class NamedItemService<E extends INamedItem> extends AbstractSer
     @JsonView(Views.Public.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         try {
+            info("GET " + name);
+
             E entity = getPersister().findByKey(create(name), true);
 
             if (entity == null) {
                 return getResponse(Response.status(Status.NOT_FOUND));
             }
 
-            return getResponse(Response.ok().entity(getRepresentation(entity)));
+            return getResponse(Response.ok().entity(entity.addLinks(getUriInfo(), true, true)));
         } catch (Exception e) {
             return serverError(e);
         }
@@ -100,11 +104,13 @@ public abstract class NamedItemService<E extends INamedItem> extends AbstractSer
     @JsonView(Views.Public.class)
     public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, E entity) {
         try {
+            info("PUT " + name + ": " + entity);
+
             entity.setName(name);
 
             E result = getPersister().update(entity);
 
-            return getResponse(Response.accepted().entity(getRepresentation(result)));
+            return getResponse(Response.accepted().entity(result.addLinks(getUriInfo(), true, true)));
         } catch (Exception e) {
             return serverError(e);
         }
@@ -122,6 +128,8 @@ public abstract class NamedItemService<E extends INamedItem> extends AbstractSer
     @JsonView(Views.Public.class)
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         try {
+            info("DELETE " + name);
+
             getPersister().delete(create(name));
 
             return getResponse(Response.noContent());

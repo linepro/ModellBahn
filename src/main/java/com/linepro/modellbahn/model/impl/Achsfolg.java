@@ -10,18 +10,23 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
- * Achsfolg
- * Represents Axle configuration using German nomenclature.
- * @author  $Author:$
+ * Achsfolg Represents Axle configuration using German nomenclature.
+ * 
+ * @author $Author:$
  * @version $Id:$
  */
 @Entity(name = "Achsfolg")
-@Table(name = "achsfolgen", indexes = { @Index(columnList = "name", unique = true) }, 
-       uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+@Table(name = "Achsfolg", indexes = { @Index(columnList = ApiNames.NAME, unique = true) }, uniqueConstraints = {
+        @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@JsonRootName(value = ApiNames.ACHSFOLG)
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
 public class Achsfolg extends AbstractNamedItem implements IAchsfolg {
 
     /** The Constant serialVersionUID. */

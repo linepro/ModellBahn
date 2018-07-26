@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
  * Selector.
@@ -23,6 +24,8 @@ public class Selector {
     /** The setter. */
     protected final Method setter;
 
+    protected final boolean collection;
+
     /**
      * Instantiates a new selector.
      *
@@ -30,10 +33,11 @@ public class Selector {
      * @param getter the getter
      * @param setter the setter
      */
-    public Selector(String name, Method getter, Method setter) {
+    public Selector(String name, Method getter, Method setter, boolean collection) {
         this.name = name;
         this.getter = getter;
         this.setter = setter;
+        this.collection = collection;
     }
 
     /**
@@ -63,6 +67,10 @@ public class Selector {
         return setter;
     }
 
+    public boolean isCollection() {
+        return collection;
+    }
+
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append(getName()).hashCode();
@@ -87,9 +95,10 @@ public class Selector {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("name", getName())
+                .append(ApiNames.NAME, getName())
                 .append("getter", getGetter().getName())
                 .append("setter", getSetter().getName())
+                .append("collection", isCollection())
                 .toString();
     }
 }

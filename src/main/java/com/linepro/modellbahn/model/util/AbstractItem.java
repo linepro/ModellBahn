@@ -1,6 +1,11 @@
 package com.linepro.modellbahn.model.util;
 
+import static javax.ws.rs.HttpMethod.DELETE;
+import static javax.ws.rs.HttpMethod.GET;
+import static javax.ws.rs.HttpMethod.PUT;
+
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.ws.rs.core.Link;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -27,6 +34,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.rest.json.LinkSerializer;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
@@ -43,12 +51,13 @@ public abstract class AbstractItem implements Serializable, IItem {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 938276986391979417L;
 
-    /** The id. */
+    /** The primary key id. */
     private Long id;
 
-	/** The deleted. */
+	/** The soft deleted state. */
 	private Boolean deleted;
 	
+	/** Set of HATEOAS links for Json serialization */
     protected final Set<Link> links = new HashSet<Link>();
 
 	/**
@@ -70,45 +79,48 @@ public abstract class AbstractItem implements Serializable, IItem {
 
 	@Override
     @Id
-	@Column(name="id", nullable = true)
+	@Column(name=ApiNames.ID, nullable = true)
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@JsonGetter("id")
+	@JsonGetter(ApiNames.ID)
 	@JsonView(Views.Internal.class)
 	public Long getId() {
 		return id;
 	}
 
 	@Override
-    @JsonSetter("id")
+    @JsonSetter(ApiNames.ID)
     public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Override
-    @Column(name="deleted", length=5, nullable = true)
+    @Column(name=ApiNames.DELETED, length=5, nullable = true)
     @JsonView(Views.Public.class)
-    @JsonGetter("deleted")
+    @JsonGetter(ApiNames.DELETED)
 	public Boolean getDeleted() {
 		return deleted;
 	}
 
 	@Override
-    @JsonSetter("deleted")
+    @JsonSetter(ApiNames.DELETED)
     public void setDeleted(Boolean deleted) {
 		this.deleted = deleted;
 	}
 
     @Override
     @Transient
-    @JsonGetter("links")
+    @JsonGetter(ApiNames.LINKS)
+    @JsonView(Views.DropDown.class)
     @JsonSerialize(contentUsing=LinkSerializer.class)
     public Set<Link> getLinks() {
         return links;
     }
-    
+
     @Override
-    public void addLink(Link link) {
-        links.add(link);
+    @Transient
+    @JsonIgnore
+    public String getParentId() {
+        return null;
     }
 
     @Override
@@ -116,6 +128,60 @@ public abstract class AbstractItem implements Serializable, IItem {
     @JsonIgnore
     public String getLinkId() {
         return getId().toString();
+    }
+
+    protected Link makeLink(UriInfo uri, String path, String rel, String method) {
+        return Link.fromUri(UriBuilder.fromUri(uri.getBaseUri()).path( path).build()).rel(rel).type(method).build();
+    }
+    
+    @Override
+    public IItem addLinks(UriInfo root, boolean update, boolean delete) {
+        getLinks().clear();
+
+        addParent(root);
+        addSelf(root);
+
+        if (update) {
+            addUpdate(root);
+        }
+        
+        if (delete) {
+            addDelete(root);
+        }
+
+        addChildLinks(root);
+
+        return this;
+    }
+    
+    protected void addChildLinks(UriInfo root) {
+    }
+
+    protected void addLinks(UriInfo root, Collection<? extends IItem> items, boolean update, boolean delete) {
+        if (!items.isEmpty()) {
+            for (IItem item : items) {
+                item.addLinks(root, update, delete);
+            }
+        }
+        
+    }
+
+    protected void addParent(UriInfo root) {
+        if (getParentId() != null) {
+            getLinks().add(makeLink(root, getParentId(), "parent", GET));
+        }
+    }
+
+    protected void addDelete(UriInfo root) {
+        getLinks().add(makeLink(root, getLinkId(), "delete", DELETE));
+    }
+
+    protected void addSelf(UriInfo root) {
+        getLinks().add(makeLink(root, getLinkId(), "self", GET));
+    }
+
+    protected void addUpdate(UriInfo root) {
+        getLinks().add(makeLink(root, getLinkId(), "update", PUT));
     }
 
 	@Override
@@ -145,8 +211,8 @@ public abstract class AbstractItem implements Serializable, IItem {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-		        .append("id", getId())
-				.append("deleted", getDeleted())
+		        .append(ApiNames.ID, getId())
+				.append(ApiNames.DELETED, getDeleted())
 				.toString();
 	}
 }

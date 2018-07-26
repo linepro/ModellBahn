@@ -12,7 +12,7 @@ import com.linepro.modellbahn.rest.util.NamedItemService;
  * @author  $Author:$
  * @version $Id:$
  */
-@Path(ApiPaths.SONDERMODELL)
+@Path(ApiPaths.SONDERMODEL)
 public class SonderModellService extends NamedItemService<SonderModell> {
 
     /**

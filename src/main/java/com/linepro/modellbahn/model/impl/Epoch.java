@@ -5,9 +5,11 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.IEpoch;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
  * Epoch.
@@ -16,9 +18,10 @@ import com.linepro.modellbahn.model.util.AbstractNamedItem;
  * @version $Id:$
  */
 @Entity(name = "Epoch")
-@Table(name = "epochen", indexes = { @Index(columnList = "name", unique = true) }, 
-       uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
-@JsonRootName(value = "era")
+@Table(name = "Epoch", indexes = { @Index(columnList = ApiNames.NAME, unique = true) }, 
+       uniqueConstraints = { @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@JsonRootName(value = ApiNames.EPOCH)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS})
 public class Epoch extends AbstractNamedItem implements IEpoch {
 
     /** The Constant serialVersionUID. */

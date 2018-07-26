@@ -5,9 +5,11 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.IMotorTyp;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
  * MotorTyp.
@@ -16,9 +18,10 @@ import com.linepro.modellbahn.model.util.AbstractNamedItem;
  * @version $Id:$
  */
 @Entity(name = "MotorTyp")
-@Table(name = "motortypen", indexes = { @Index(columnList = "name", unique = true) }, 
-       uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
-@JsonRootName(value = "motorType")
+@Table(name = "MotorTyp", indexes = { @Index(columnList = ApiNames.NAME, unique = true) }, 
+       uniqueConstraints = { @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@JsonRootName(value = ApiNames.MOTOR_TYP)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS})
 public class MotorTyp extends AbstractNamedItem implements IMotorTyp {
 
     /** The Constant serialVersionUID. */

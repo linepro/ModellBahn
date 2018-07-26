@@ -18,14 +18,15 @@ import javax.persistence.UniqueConstraint;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.IAntrieb;
 import com.linepro.modellbahn.model.IGattung;
@@ -35,6 +36,7 @@ import com.linepro.modellbahn.model.IVorbild;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.rest.json.Formats;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
@@ -44,13 +46,14 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name = "Vorbild")
-@Table(name = "vorbilder", indexes = { @Index(columnList = "gattung_id", unique = true),
+@Table(name = "Vorbild", indexes = { @Index(columnList = "gattung_id", unique = true),
         @Index(columnList = "unter_kategorie_id"),
         @Index(columnList = "antrieb_id"),
         @Index(columnList = "achsfolg_id"),
         @Index(columnList = "steuerung_id") }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { "gattung_id" }) })
-@JsonRootName(value = "prototype")
+@JsonRootName(value = ApiNames.VORBILD)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.GATTUNG, ApiNames.UNTER_KATEGORIE, ApiNames.HERSTELLER, ApiNames.BAUZEIT, ApiNames.ANZAHL, ApiNames.BETREIBSNUMMER, ApiNames.ANTRIEB, ApiNames.ACHSFOLG, ApiNames.ANFAHRZUGKRAFT, ApiNames.LEISTUNG, ApiNames.DIENSTGEWICHT, ApiNames.GESCHWINDIGKEIT, ApiNames.LANGE, ApiNames.AUSSERDIENST, ApiNames.DMTREIBRAD, ApiNames.DMLAUFRADVORN, ApiNames.DMLAUFRADHINTEN, ApiNames.ZYLINDER, ApiNames.DMZYLINDER, ApiNames.KOLBENHUB, ApiNames.KESSELUEBERDRUCK, ApiNames.ROSTFLAECHE, ApiNames.UEBERHITZERFLAECHE, ApiNames.WASSERVORRAT, ApiNames.VERDAMPFUNG, ApiNames.STEUERUNG, ApiNames.FAHRMOTOREN, ApiNames.MOTORBAUART, ApiNames.LEISTUNGSUEBERTRAGUNG, ApiNames.REICHWEITE, ApiNames.KAPAZITAT, ApiNames.KLASSE, ApiNames.SITZPLATZEKL1, ApiNames.SITZPLATZEKL2, ApiNames.SITZPLATZEKL3, ApiNames.SITZPLATZEKL4, ApiNames.AUFBAU, ApiNames.TRIEBZUGANZEIGEN, ApiNames.TRIEBKOEPFE, ApiNames.MITTELWAGEN, ApiNames.SITZPLATZETZKL1, ApiNames.SITZPLATZETZKL2, ApiNames.DREHGESTELLBAUART, ApiNames.DELETED, ApiNames.LINKS})
 public class Vorbild extends AbstractItem implements IVorbild {
 
     /** The Constant serialVersionUID. */
@@ -147,7 +150,7 @@ public class Vorbild extends AbstractItem implements IVorbild {
     private BigDecimal reichweite;
 
     /** The kapazitaet. */
-    private BigDecimal kapazitaet;
+    private BigDecimal kapazitat;
 
     /** The klasse. */
     private Integer klasse;
@@ -165,7 +168,7 @@ public class Vorbild extends AbstractItem implements IVorbild {
     private Long sitzplatzeKL4;
 
     /** The aufbauten. */
-    private String aufbauten;
+    private String aufbau;
 
     /** The triebzug anzeigen. */
     private Boolean triebzugAnzeigen;
@@ -285,13 +288,13 @@ public class Vorbild extends AbstractItem implements IVorbild {
         setMotorbauart(motorbauart);
         setLeistungsuebertragung(leistungsuebertragung);
         setReichweite(reichweite);
-        setKapazitaet(kapazitaet);
+        setKapazitat(kapazitaet);
         setKlasse(klasse);
         setSitzPlatzeKL1(sitzPlatzeKL1);
         setSitzPlatzeKL2(sitzPlatzeKL2);
         setSitzPlatzeKL3(sitzPlatzeKL3);
         setSitzPlatzeKL4(sitzPlatzeKL4);
-        setAufbauten(aufbauten);
+        setAufbau(aufbauten);
         setTriebzugAnzeigen(triebzugAnzeigen);
         setTriebkoepfe(triebkoepfe);
         setMittelwagen(mittelwagen);
@@ -302,56 +305,56 @@ public class Vorbild extends AbstractItem implements IVorbild {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gattung.class)
-    @JoinColumn(name = "gattung_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "vorbild_fk1"))
-    @JsonGetter("gattung")
+    @JoinColumn(name = "gattung_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "vorbild_fk1"))
+    @JsonGetter(ApiNames.GATTUNG)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
     public IGattung getGattung() {
         return gattung;
     }
 
     @Override
-    @JsonSetter("gattung")
+    @JsonSetter(ApiNames.GATTUNG)
     public void setGattung(IGattung gattung) {
         this.gattung = gattung;
     }
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = UnterKategorie.class)
-    @JoinColumn(name = "unter_kategorie_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "vorbild_fk2"))
-    @JsonGetter("unterKategorie")
+    @JoinColumn(name = "unter_kategorie_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "vorbild_fk2"))
+    @JsonGetter(ApiNames.UNTER_KATEGORIE)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
     public IUnterKategorie getUnterKategorie() {
         return unterKategorie;
     }
 
     @Override
-    @JsonSetter("unterKategorie")
+    @JsonSetter(ApiNames.UNTER_KATEGORIE)
     public void setUnterKategorie(IUnterKategorie unterKategorie) {
         this.unterKategorie = unterKategorie;
     }
 
     @Override
-    @Column(name = "hersteller", nullable = true, length = 100)
-    @JsonGetter("hersteller")
+    @Column(name = ApiNames.HERSTELLER, nullable = true, length = 100)
+    @JsonGetter(ApiNames.HERSTELLER)
     @JsonView(Views.DropDown.class)
     public String getHersteller() {
         return hersteller;
     }
 
     @Override
-    @JsonSetter("hersteller")
+    @JsonSetter(ApiNames.HERSTELLER)
     public void setHersteller(String hersteller) {
         this.hersteller = hersteller;
     }
 
     @Override
-    @Column(name = "bauzeit", nullable = true)
+    @Column(name = ApiNames.BAUZEIT, nullable = true)
     @Temporal(TemporalType.DATE)
-    @JsonGetter("bauzeit")
+    @JsonGetter(ApiNames.BAUZEIT)
     @JsonView(Views.DropDown.class)
     @JsonFormat(shape=Shape.STRING, pattern=Formats.ISO8601_DATE)
     public Date getBauzeit() {
@@ -359,146 +362,146 @@ public class Vorbild extends AbstractItem implements IVorbild {
     }
 
     @Override
-    @JsonSetter("bauzeit")
+    @JsonSetter(ApiNames.BAUZEIT)
     public void setBauzeit(Date bauzeit) {
         this.bauzeit = bauzeit;
     }
 
     @Override
-    @Column(name = "anzahl", nullable = true)
-    @JsonGetter("anzahl")
+    @Column(name = ApiNames.ANZAHL, nullable = true)
+    @JsonGetter(ApiNames.ANZAHL)
     @JsonView(Views.Public.class)
     public Integer getAnzahl() {
         return anzahl;
     }
 
     @Override
-    @JsonSetter("anzahl")
+    @JsonSetter(ApiNames.ANZAHL)
     public void setAnzahl(Integer anzahl) {
         this.anzahl = anzahl;
     }
 
     @Override
-    @Column(name = "betriebsnummer", nullable = true, length = 100)
-    @JsonGetter("betriebsNummer")
+    @Column(name = ApiNames.BETREIBSNUMMER, nullable = true, length = 100)
+    @JsonGetter(ApiNames.BETREIBSNUMMER)
     @JsonView(Views.DropDown.class)
     public String getBetriebsNummer() {
         return betriebsNummer;
     }
 
     @Override
-    @JsonSetter("betriebsNummer")
+    @JsonSetter(ApiNames.BETREIBSNUMMER)
     public void setBetriebsNummer(String betriebsNummer) {
         this.betriebsNummer = betriebsNummer;
     }
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Antrieb.class)
-    @JoinColumn(name = "antrieb_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "vorbild_fk3"))
-    @JsonGetter("antrieb")
+    @JoinColumn(name = "antrieb_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "vorbild_fk3"))
+    @JsonGetter(ApiNames.ANTRIEB)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
     public IAntrieb getAntrieb() {
         return antrieb;
     }
 
-    @JsonSetter("antrieb")
+    @JsonSetter(ApiNames.ANTRIEB)
     public void setAntrieb(IAntrieb antrieb) {
         this.antrieb = antrieb;
     }
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class)
-    @JoinColumn(name = "achsfolg_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "vorbild_fk4"))
-    @JsonGetter("achsfolg")
+    @JoinColumn(name = "achsfolg_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "vorbild_fk4"))
+    @JsonGetter(ApiNames.ACHSFOLG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
     public IAchsfolg getAchsfolg() {
         return achsfolg;
     }
 
     @Override
-    @JsonSetter("achsfolg")
+    @JsonSetter(ApiNames.ACHSFOLG)
     public void setAchsfolg(IAchsfolg achsfolg) {
         this.achsfolg = achsfolg;
     }
 
     @Override
-    @Column(name = "anfahrzugkraft", nullable = true)
-    @JsonGetter("anfahrzugkraft")
+    @Column(name = ApiNames.ANFAHRZUGKRAFT, nullable = true)
+    @JsonGetter(ApiNames.ANFAHRZUGKRAFT)
     @JsonView(Views.Public.class)
     public BigDecimal getAnfahrzugkraft() {
         return anfahrzugkraft;
     }
 
     @Override
-    @JsonSetter("anfahrzugkraft")
+    @JsonSetter(ApiNames.ANFAHRZUGKRAFT)
     public void setAnfahrzugkraft(BigDecimal anfahrzugkraft) {
         this.anfahrzugkraft = anfahrzugkraft;
     }
 
     @Override
-    @Column(name = "leistung", nullable = true)
-    @JsonGetter("leistung")
+    @Column(name = ApiNames.LEISTUNG, nullable = true)
+    @JsonGetter(ApiNames.LEISTUNG)
     @JsonView(Views.Public.class)
     public BigDecimal getLeistung() {
         return leistung;
     }
 
     @Override
-    @JsonSetter("leistung")
+    @JsonSetter(ApiNames.LEISTUNG)
     public void setLeistung(BigDecimal leistung) {
         this.leistung = leistung;
     }
 
     @Override
-    @Column(name = "dienstgewicht", nullable = true)
-    @JsonGetter("dienstgewicht")
+    @Column(name = ApiNames.DIENSTGEWICHT, nullable = true)
+    @JsonGetter(ApiNames.DIENSTGEWICHT)
     @JsonView(Views.Public.class)
     public BigDecimal getDienstgewicht() {
         return dienstgewicht;
     }
 
     @Override
-    @JsonSetter("dienstgewicht")
+    @JsonSetter(ApiNames.DIENSTGEWICHT)
     public void setDienstgewicht(BigDecimal dienstgewicht) {
         this.dienstgewicht = dienstgewicht;
     }
 
     @Override
-    @Column(name = "geschwindigkeit", nullable = true)
-    @JsonGetter("geschwindigkeit")
+    @Column(name = ApiNames.GESCHWINDIGKEIT, nullable = true)
+    @JsonGetter(ApiNames.GESCHWINDIGKEIT)
     @JsonView(Views.Public.class)
     public Long getGeschwindigkeit() {
         return geschwindigkeit;
     }
 
     @Override
-    @JsonSetter("geschwindigkeit")
+    @JsonSetter(ApiNames.GESCHWINDIGKEIT)
     public void setGeschwindigkeit(Long geschwindigkeit) {
         this.geschwindigkeit = geschwindigkeit;
     }
 
     @Override
-    @Column(name = "lange", nullable = true)
-    @JsonGetter("lange")
+    @Column(name = ApiNames.LANGE, nullable = true)
+    @JsonGetter(ApiNames.LANGE)
     @JsonView(Views.Public.class)
     public BigDecimal getLange() {
         return lange;
     }
 
     @Override
-    @JsonSetter("lange")
+    @JsonSetter(ApiNames.LANGE)
     public void setLange(BigDecimal lange) {
         this.lange = lange;
     }
 
     @Override
-    @Column(name = "ausserdienst", nullable = true)
+    @Column(name = ApiNames.AUSSERDIENST, nullable = true)
     @Temporal(TemporalType.DATE)
-    @JsonGetter("ausserdienst")
+    @JsonGetter(ApiNames.AUSSERDIENST)
     @JsonView(Views.DropDown.class)
     @JsonFormat(shape=Shape.STRING, pattern=Formats.ISO8601_DATE)
     public Date getAusserdienst() {
@@ -506,415 +509,415 @@ public class Vorbild extends AbstractItem implements IVorbild {
     }
 
     @Override
-    @JsonSetter("ausserdienst")
+    @JsonSetter(ApiNames.AUSSERDIENST)
     public void setAusserdienst(Date ausserdienst) {
         this.ausserdienst = ausserdienst;
     }
 
     @Override
-    @Column(name = "dmtreibrad", nullable = true)
-    @JsonGetter("dmTreibrad")
+    @Column(name = ApiNames.DMTREIBRAD, nullable = true)
+    @JsonGetter(ApiNames.DMTREIBRAD)
     @JsonView(Views.Public.class)
     public BigDecimal getDmTreibrad() {
         return dmTreibrad;
     }
 
     @Override
-    @JsonSetter("dmTreibrad")
+    @JsonSetter(ApiNames.DMTREIBRAD)
     public void setDmTreibrad(BigDecimal dmTreibrad) {
         this.dmTreibrad = dmTreibrad;
     }
 
     @Override
-    @Column(name = "dmlaufradvorn", nullable = true)
-    @JsonGetter("dmLaufradVorn")
+    @Column(name = ApiNames.DMLAUFRADVORN, nullable = true)
+    @JsonGetter(ApiNames.DMLAUFRADVORN)
     @JsonView(Views.Public.class)
     public BigDecimal getDmLaufradVorn() {
         return dmLaufradVorn;
     }
 
     @Override
-    @JsonSetter("dmLaufradVorn")
+    @JsonSetter(ApiNames.DMLAUFRADVORN)
     public void setDmLaufradVorn(BigDecimal dmLaufradVorn) {
         this.dmLaufradVorn = dmLaufradVorn;
     }
 
     @Override
-    @Column(name = "dmlaufradhinten", nullable = true)
-    @JsonGetter("dmLaufradHinten")
+    @Column(name = ApiNames.DMLAUFRADHINTEN, nullable = true)
+    @JsonGetter(ApiNames.DMLAUFRADHINTEN)
     @JsonView(Views.Public.class)
     public BigDecimal getDmLaufradHinten() {
         return dmLaufradHinten;
     }
 
     @Override
-    @JsonSetter("dmLaufradHinten")
+    @JsonSetter(ApiNames.DMLAUFRADHINTEN)
     public void setDmLaufradHinten(BigDecimal dmLaufradHinten) {
         this.dmLaufradHinten = dmLaufradHinten;
     }
 
     @Override
-    @Column(name = "zylinder", nullable = true)
-    @JsonGetter("zylinder")
+    @Column(name = ApiNames.ZYLINDER, nullable = true)
+    @JsonGetter(ApiNames.ZYLINDER)
     @JsonView(Views.Public.class)
     public Integer getZylinder() {
         return zylinder;
     }
 
     @Override
-    @JsonSetter("zylinder")
+    @JsonSetter(ApiNames.ZYLINDER)
     public void setZylinder(Integer zylinder) {
         this.zylinder = zylinder;
     }
 
     @Override
-    @Column(name = "dmzylinder", nullable = true)
-    @JsonGetter("dmZylinder")
+    @Column(name = ApiNames.DMZYLINDER, nullable = true)
+    @JsonGetter(ApiNames.DMZYLINDER)
     @JsonView(Views.Public.class)
     public BigDecimal getDmZylinder() {
         return dmZylinder;
     }
 
     @Override
-    @JsonSetter("dmZylinder")
+    @JsonSetter(ApiNames.DMZYLINDER)
     public void setDmZylinder(BigDecimal dmZylinder) {
         this.dmZylinder = dmZylinder;
     }
 
     @Override
-    @Column(name = "kolbenhub", nullable = true)
-    @JsonGetter("kolbenhub")
+    @Column(name = ApiNames.KOLBENHUB, nullable = true)
+    @JsonGetter(ApiNames.KOLBENHUB)
     @JsonView(Views.Public.class)
     public BigDecimal getKolbenhub() {
         return kolbenhub;
     }
 
     @Override
-    @JsonSetter("kolbenhub")
+    @JsonSetter(ApiNames.KOLBENHUB)
     public void setKolbenhub(BigDecimal kolbenhub) {
         this.kolbenhub = kolbenhub;
     }
 
     @Override
-    @Column(name = "kesselueberdruck", nullable = true)
-    @JsonGetter("kesselueberdruck")
+    @Column(name = ApiNames.KESSELUEBERDRUCK, nullable = true)
+    @JsonGetter(ApiNames.KESSELUEBERDRUCK)
     @JsonView(Views.Public.class)
     public BigDecimal getKesselueberdruck() {
         return kesselueberdruck;
     }
 
     @Override
-    @JsonSetter("kesselueberdruck")
+    @JsonSetter(ApiNames.KESSELUEBERDRUCK)
     public void setKesselueberdruck(BigDecimal kesselueberdruck) {
         this.kesselueberdruck = kesselueberdruck;
     }
 
     @Override
-    @Column(name = "rostflaeche", nullable = true)
-    @JsonGetter("rostflaeche")
+    @Column(name = ApiNames.ROSTFLAECHE, nullable = true)
+    @JsonGetter(ApiNames.ROSTFLAECHE)
     @JsonView(Views.Public.class)
     public BigDecimal getRostflaeche() {
         return rostflaeche;
     }
 
     @Override
-    @JsonSetter("rostflaeche")
+    @JsonSetter(ApiNames.ROSTFLAECHE)
     public void setRostflaeche(BigDecimal rostflaeche) {
         this.rostflaeche = rostflaeche;
     }
 
     @Override
-    @Column(name = "ueberhitzerflaeche", nullable = true)
-    @JsonGetter("ueberhitzerflaeche")
+    @Column(name = ApiNames.UEBERHITZERFLAECHE, nullable = true)
+    @JsonGetter(ApiNames.UEBERHITZERFLAECHE)
     @JsonView(Views.Public.class)
     public BigDecimal getUeberhitzerflaeche() {
         return ueberhitzerflaeche;
     }
 
     @Override
-    @JsonSetter("ueberhitzerflaeche")
+    @JsonSetter(ApiNames.UEBERHITZERFLAECHE)
     public void setUeberhitzerflaeche(BigDecimal ueberhitzerflaeche) {
         this.ueberhitzerflaeche = ueberhitzerflaeche;
     }
 
     @Override
-    @Column(name = "wasservorrat", nullable = true)
-    @JsonGetter("wasservorrat")
+    @Column(name = ApiNames.WASSERVORRAT, nullable = true)
+    @JsonGetter(ApiNames.WASSERVORRAT)
     @JsonView(Views.Public.class)
     public BigDecimal getWasservorrat() {
         return wasservorrat;
     }
 
     @Override
-    @JsonSetter("wasservorrat")
+    @JsonSetter(ApiNames.WASSERVORRAT)
     public void setWasservorrat(BigDecimal wasservorrat) {
         this.wasservorrat = wasservorrat;
     }
 
-    @Column(name = "verdampfung", nullable = true)
-    @JsonGetter("verdampfung")
+    @Column(name = ApiNames.VERDAMPFUNG, nullable = true)
+    @JsonGetter(ApiNames.VERDAMPFUNG)
     @JsonView(Views.Public.class)
     public BigDecimal getVerdampfung() {
         return verdampfung;
     }
 
     @Override
-    @JsonSetter("verdampfung")
+    @JsonSetter(ApiNames.VERDAMPFUNG)
     public void setVerdampfung(BigDecimal verdampfung) {
         this.verdampfung = verdampfung;
     }
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class)
-    @JoinColumn(name = "steuerung_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "vorbild_fk5"))
-    @JsonGetter("steuerung")
+    @JoinColumn(name = "steuerung_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "vorbild_fk5"))
+    @JsonGetter(ApiNames.STEUERUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
     public ISteuerung getSteuerung() {
         return steuerung;
     }
 
     @Override
-    @JsonSetter("steuerung")
+    @JsonSetter(ApiNames.STEUERUNG)
     public void setSteuerung(ISteuerung steuerung) {
         this.steuerung = steuerung;
     }
 
     @Override
-    @Column(name = "fahrmotoren", nullable = true)
-    @JsonGetter("fahrmotoren")
+    @Column(name = ApiNames.FAHRMOTOREN, nullable = true)
+    @JsonGetter(ApiNames.FAHRMOTOREN)
     @JsonView(Views.Public.class)
     public Integer getFahrmotoren() {
         return fahrmotoren;
     }
 
     @Override
-    @JsonSetter("fahrmotoren")
+    @JsonSetter(ApiNames.FAHRMOTOREN)
     public void setFahrmotoren(Integer fahrmotoren) {
         this.fahrmotoren = fahrmotoren;
     }
 
     @Override
-    @Column(name = "motorbauart", nullable = true, length = 100)
-    @JsonGetter("motorbauart")
+    @Column(name = ApiNames.MOTORBAUART, nullable = true, length = 100)
+    @JsonGetter(ApiNames.MOTORBAUART)
     @JsonView(Views.Public.class)
     public String getMotorbauart() {
         return motorbauart;
     }
 
     @Override
-    @JsonSetter("motorbauart")
+    @JsonSetter(ApiNames.MOTORBAUART)
     public void setMotorbauart(String motorbauart) {
         this.motorbauart = motorbauart;
     }
 
     @Override
-    @Column(name = "leistungsuebertragung", nullable = true)
-    @JsonGetter("leistungsuebertragung")
+    @Column(name = ApiNames.LEISTUNGSUEBERTRAGUNG, nullable = true)
+    @JsonGetter(ApiNames.LEISTUNGSUEBERTRAGUNG)
     @JsonView(Views.Public.class)
     public BigDecimal getLeistungsuebertragung() {
         return leistungsuebertragung;
     }
 
     @Override
-    @JsonSetter("leistungsuebertragung")
+    @JsonSetter(ApiNames.LEISTUNGSUEBERTRAGUNG)
     public void setLeistungsuebertragung(BigDecimal leistungsuebertragung) {
         this.leistungsuebertragung = leistungsuebertragung;
     }
 
     @Override
-    @Column(name = "reichweite", nullable = true)
-    @JsonGetter("reichweite")
+    @Column(name = ApiNames.REICHWEITE, nullable = true)
+    @JsonGetter(ApiNames.REICHWEITE)
     @JsonView(Views.Public.class)
     public BigDecimal getReichweite() {
         return reichweite;
     }
 
     @Override
-    @JsonSetter("reichweite")
+    @JsonSetter(ApiNames.REICHWEITE)
     public void setReichweite(BigDecimal reichweite) {
         this.reichweite = reichweite;
     }
 
     @Override
-    @Column(name = "kapazitaet", nullable = true)
-    @JsonGetter("kapazitaet")
+    @Column(name = ApiNames.KAPAZITAT, nullable = true)
+    @JsonGetter(ApiNames.KAPAZITAT)
     @JsonView(Views.Public.class)
-    public BigDecimal getKapazitaet() {
-        return kapazitaet;
+    public BigDecimal getKapazitat() {
+        return kapazitat;
     }
 
     @Override
-    @JsonSetter("kapazitaet")
-    public void setKapazitaet(BigDecimal kapazitaet) {
-        this.kapazitaet = kapazitaet;
+    @JsonSetter(ApiNames.KAPAZITAT)
+    public void setKapazitat(BigDecimal kapazitat) {
+        this.kapazitat = kapazitat;
     }
 
     @Override
-    @Column(name = "klasse", nullable = true)
-    @JsonGetter("klasse")
+    @Column(name = ApiNames.KLASSE, nullable = true)
+    @JsonGetter(ApiNames.KLASSE)
     @JsonView(Views.Public.class)
     public Integer getKlasse() {
         return klasse;
     }
 
     @Override
-    @JsonSetter("klasse")
+    @JsonSetter(ApiNames.KLASSE)
     public void setKlasse(Integer klasse) {
         this.klasse = klasse;
     }
 
     @Override
-    @Column(name = "sitzplatzekl1", nullable = true)
-    @JsonGetter("sitzplatzeKL1")
+    @Column(name = ApiNames.SITZPLATZEKL1, nullable = true)
+    @JsonGetter(ApiNames.SITZPLATZEKL1)
     @JsonView(Views.Public.class)
     public Long getSitzPlatzeKL1() {
         return sitzplatzeKL1;
     }
 
     @Override
-    @JsonSetter("sitzplatzeKL1")
+    @JsonSetter(ApiNames.SITZPLATZEKL1)
     public void setSitzPlatzeKL1(Long sitzPlatzeKL1) {
         this.sitzplatzeKL1 = sitzPlatzeKL1;
     }
 
     @Override
-    @Column(name = "sitzplatzekl2", nullable = true)
-    @JsonGetter("sitzplatzeKL2")
+    @Column(name = ApiNames.SITZPLATZEKL2, nullable = true)
+    @JsonGetter(ApiNames.SITZPLATZEKL2)
     @JsonView(Views.Public.class)
     public Long getSitzPlatzeKL2() {
         return sitzplatzeKL2;
     }
 
     @Override
-    @JsonSetter("sitzplatzeKL2")
+    @JsonSetter(ApiNames.SITZPLATZEKL2)
     public void setSitzPlatzeKL2(Long sitzPlatzeKL2) {
         sitzplatzeKL2 = sitzPlatzeKL2;
     }
 
     @Override
-    @Column(name = "sitzplatzekl3", nullable = true)
-    @JsonGetter("sitzplatzeKL3")
+    @Column(name = ApiNames.SITZPLATZEKL3, nullable = true)
+    @JsonGetter(ApiNames.SITZPLATZEKL3)
     @JsonView(Views.Public.class)
     public Long getSitzPlatzeKL3() {
         return sitzplatzeKL3;
     }
 
     @Override
-    @JsonSetter("sitzplatzeKL3")
+    @JsonSetter(ApiNames.SITZPLATZEKL3)
     public void setSitzPlatzeKL3(Long sitzPlatzeKL3) {
         sitzplatzeKL3 = sitzPlatzeKL3;
     }
 
     @Override
-    @Column(name = "sitzplatzekl4", nullable = true)
-    @JsonGetter("sitzplatzeKL4")
+    @Column(name = ApiNames.SITZPLATZEKL4, nullable = true)
+    @JsonGetter(ApiNames.SITZPLATZEKL4)
     @JsonView(Views.Public.class)
     public Long getSitzPlatzeKL4() {
         return sitzplatzeKL4;
     }
 
     @Override
-    @JsonSetter("sitzplatzeKL4")
+    @JsonSetter(ApiNames.SITZPLATZEKL4)
     public void setSitzPlatzeKL4(Long sitzPlatzeKL4) {
         this.sitzplatzeKL4 = sitzPlatzeKL4;
     }
 
     @Override
-    @Column(name = "aufbauten", nullable = true, length = 100)
-    @JsonGetter("aufbauten")
+    @Column(name = ApiNames.AUFBAU, nullable = true, length = 100)
+    @JsonGetter(ApiNames.AUFBAU)
     @JsonView(Views.Public.class)
-    public String getAufbauten() {
-        return aufbauten;
+    public String getAufbau() {
+        return aufbau;
     }
 
     @Override
-    @JsonSetter("aufbauten")
-    public void setAufbauten(String aufbauten) {
-        this.aufbauten = aufbauten;
+    @JsonSetter(ApiNames.AUFBAU)
+    public void setAufbau(String aufbau) {
+        this.aufbau = aufbau;
     }
 
     @Override
-    @Column(name = "triebzuganzeigen", nullable = true)
-    @JsonGetter("triebzugAnzeigen")
+    @Column(name = ApiNames.TRIEBZUGANZEIGEN, nullable = true)
+    @JsonGetter(ApiNames.TRIEBZUGANZEIGEN)
     @JsonView(Views.Public.class)
     public Boolean getTriebzugAnzeigen() {
         return triebzugAnzeigen;
     }
 
     @Override
-    @JsonSetter("triebzugAnzeigen")
+    @JsonSetter(ApiNames.TRIEBZUGANZEIGEN)
     public void setTriebzugAnzeigen(Boolean triebzugAnzeigen) {
         this.triebzugAnzeigen = triebzugAnzeigen;
     }
 
     @Override
-    @Column(name = "triebkoepfe", nullable = true)
-    @JsonGetter("triebkoepfe")
+    @Column(name = ApiNames.TRIEBKOEPFE, nullable = true)
+    @JsonGetter(ApiNames.TRIEBKOEPFE)
     @JsonView(Views.Public.class)
     public Long getTriebkoepfe() {
         return triebkoepfe;
     }
 
     @Override
-    @JsonSetter("triebkoepfe")
+    @JsonSetter(ApiNames.TRIEBKOEPFE)
     public void setTriebkoepfe(Long triebkoepfe) {
         this.triebkoepfe = triebkoepfe;
     }
 
     @Override
-    @Column(name = "mittelwagen", nullable = true)
-    @JsonGetter("mittelwagen")
+    @Column(name = ApiNames.MITTELWAGEN, nullable = true)
+    @JsonGetter(ApiNames.MITTELWAGEN)
     @JsonView(Views.Public.class)
     public Long getMittelwagen() {
         return mittelwagen;
     }
 
     @Override
-    @JsonSetter("mittelwagen")
+    @JsonSetter(ApiNames.MITTELWAGEN)
     public void setMittelwagen(Long mittelwagen) {
         this.mittelwagen = mittelwagen;
     }
 
     @Override
-    @Column(name = "sitzplatzetzkl1", nullable = true)
-    @JsonGetter("sitzplatzeTZKL1")
+    @Column(name = ApiNames.SITZPLATZETZKL1, nullable = true)
+    @JsonGetter(ApiNames.SITZPLATZETZKL1)
     @JsonView(Views.Public.class)
     public Long getSitzPlatzeTZKL1() {
         return sitzplatzeTZKL1;
     }
 
     @Override
-    @JsonSetter("sitzplatzeTZKL1")
+    @JsonSetter(ApiNames.SITZPLATZETZKL1)
     public void setSitzPlatzeTZKL1(Long sitzPlatzeTZKL1) {
         this.sitzplatzeTZKL1 = sitzPlatzeTZKL1;
     }
 
     @Override
-    @Column(name = "sitzplatzetzkl2", nullable = true)
-    @JsonGetter("sitzplatzeTzKL2")
+    @Column(name = ApiNames.SITZPLATZETZKL2, nullable = true)
+    @JsonGetter(ApiNames.SITZPLATZETZKL2)
     @JsonView(Views.Public.class)
     public Long getSitzPlatzeTzKL2() {
         return sitzplatzeTzKL2;
     }
 
     @Override
-    @JsonSetter("sitzplatzeTzKL2")
+    @JsonSetter(ApiNames.SITZPLATZETZKL2)
     public void setSitzPlatzeTzKL2(Long sitzPlatzeTzKL2) {
         this.sitzplatzeTzKL2 = sitzPlatzeTzKL2;
     }
 
     @Override
-    @Column(name = "drehgestellbauart", nullable = true, length = 100)
-    @JsonGetter("drehgestellBauart")
+    @Column(name = ApiNames.DREHGESTELLBAUART, nullable = true, length = 100)
+    @JsonGetter(ApiNames.DREHGESTELLBAUART)
     @JsonView(Views.Public.class)
     public String getDrehgestellBauart() {
         return drehgestellBauart;
     }
 
     @Override
-    @JsonSetter("drehgestellBauart")
+    @JsonSetter(ApiNames.DREHGESTELLBAUART)
     public void setDrehgestellBauart(String drehgestellbauart) {
         this.drehgestellBauart = drehgestellbauart;
     }
@@ -923,49 +926,49 @@ public class Vorbild extends AbstractItem implements IVorbild {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
-                .append("Gattung", getGattung())
-                .append("UnterKategorie", getUnterKategorie())
-                .append("Hersteller", getHersteller())
-                .append("bauzeit", getBauzeit())
-                .append("Anzahl", getAnzahl())
-                .append("BetriebsNummer", getBetriebsNummer())
-                .append("Antrieb", getAntrieb())
-                .append("Achsfolge", getAchsfolg())
-                .append("Anfahrzugkraft", getAnfahrzugkraft())
-                .append("Leistung", getLeistung())
-                .append("Dienstgewicht", getDienstgewicht())
-                .append("Geschwindigkeit", getGeschwindigkeit())
-                .append("lange", getLange())
-                .append("Ausserdienst", getAusserdienst())
-                .append("DmTreibrad", getDmTreibrad())
-                .append("DmLaufradVorn", getDmLaufradVorn())
-                .append("DmLaufradHinten", getDmLaufradHinten())
-                .append("Zylinder", getZylinder())
-                .append("DmZylinder", getDmZylinder())
-                .append("Kolbenhub", getKolbenhub())
-                .append("Kesselueberdruck", getKesselueberdruck())
-                .append("Rostflaeche", getRostflaeche())
-                .append("Ueberhitzerflaeche", getUeberhitzerflaeche())
-                .append("Wasservorrat", getWasservorrat())
-                .append("Verdampfung", getVerdampfung())
-                .append("Steuerung", getSteuerung())
-                .append("Fahrmotoren", getFahrmotoren())
-                .append("Motorbauart", getMotorbauart())
-                .append("Leistungsuebertragung", getLeistungsuebertragung())
-                .append("Reichweite", getReichweite())
-                .append("Kapazitaet", getKapazitaet())
-                .append("Klasse", getKlasse())
-                .append("sitzplatzeKL1", getSitzPlatzeKL1())
-                .append("sitzplatzeKL2", getSitzPlatzeKL2())
-                .append("sitzplatzeKL3", getSitzPlatzeKL3())
-                .append("sitzplatzeKL4", getSitzPlatzeKL4())
-                .append("Aufbauten", getAufbauten())
-                .append("TriebzugAnzeigen", getTriebzugAnzeigen())
-                .append("Triebkoepfe", getTriebkoepfe())
-                .append("Mittelwagen", getMittelwagen())
-                .append("sitzplatzeTZKL1", getSitzPlatzeTZKL1())
-                .append("sitzplatzeTzKL2", getSitzPlatzeTzKL2())
-                .append("drehgestellBauart", getDrehgestellBauart())
+                .append(ApiNames.GATTUNG, getGattung())
+                .append(ApiNames.UNTER_KATEGORIE, getUnterKategorie())
+                .append(ApiNames.HERSTELLER, getHersteller())
+                .append(ApiNames.BAUZEIT, getBauzeit())
+                .append(ApiNames.ANZAHL, getAnzahl())
+                .append(ApiNames.BETREIBSNUMMER, getBetriebsNummer())
+                .append(ApiNames.ANTRIEB, getAntrieb())
+                .append(ApiNames.ACHSFOLG, getAchsfolg())
+                .append(ApiNames.ANFAHRZUGKRAFT, getAnfahrzugkraft())
+                .append(ApiNames.LEISTUNG, getLeistung())
+                .append(ApiNames.DIENSTGEWICHT, getDienstgewicht())
+                .append(ApiNames.GESCHWINDIGKEIT, getGeschwindigkeit())
+                .append(ApiNames.LANGE, getLange())
+                .append(ApiNames.AUSSERDIENST, getAusserdienst())
+                .append(ApiNames.DMTREIBRAD, getDmTreibrad())
+                .append(ApiNames.DMLAUFRADVORN, getDmLaufradVorn())
+                .append(ApiNames.DMLAUFRADHINTEN, getDmLaufradHinten())
+                .append(ApiNames.ZYLINDER, getZylinder())
+                .append(ApiNames.DMZYLINDER, getDmZylinder())
+                .append(ApiNames.KOLBENHUB, getKolbenhub())
+                .append(ApiNames.KESSELUEBERDRUCK, getKesselueberdruck())
+                .append(ApiNames.ROSTFLAECHE, getRostflaeche())
+                .append(ApiNames.UEBERHITZERFLAECHE, getUeberhitzerflaeche())
+                .append(ApiNames.WASSERVORRAT, getWasservorrat())
+                .append(ApiNames.VERDAMPFUNG, getVerdampfung())
+                .append(ApiNames.STEUERUNG, getSteuerung())
+                .append(ApiNames.FAHRMOTOREN, getFahrmotoren())
+                .append(ApiNames.MOTORBAUART, getMotorbauart())
+                .append(ApiNames.LEISTUNGSUEBERTRAGUNG, getLeistungsuebertragung())
+                .append(ApiNames.REICHWEITE, getReichweite())
+                .append(ApiNames.KAPAZITAT, getKapazitat())
+                .append(ApiNames.KLASSE, getKlasse())
+                .append(ApiNames.SITZPLATZEKL1, getSitzPlatzeKL1())
+                .append(ApiNames.SITZPLATZEKL2, getSitzPlatzeKL2())
+                .append(ApiNames.SITZPLATZEKL3, getSitzPlatzeKL3())
+                .append(ApiNames.SITZPLATZEKL4, getSitzPlatzeKL4())
+                .append(ApiNames.AUFBAU, getAufbau())
+                .append(ApiNames.TRIEBZUGANZEIGEN, getTriebzugAnzeigen())
+                .append(ApiNames.TRIEBKOEPFE, getTriebkoepfe())
+                .append(ApiNames.MITTELWAGEN, getMittelwagen())
+                .append(ApiNames.SITZPLATZETZKL1, getSitzPlatzeTZKL1())
+                .append(ApiNames.SITZPLATZETZKL2, getSitzPlatzeTzKL2())
+                .append(ApiNames.DREHGESTELLBAUART, getDrehgestellBauart())
                 .toString();
     }
 }

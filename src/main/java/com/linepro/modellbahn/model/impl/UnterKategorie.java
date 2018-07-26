@@ -31,6 +31,8 @@ import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.rest.util.ApiPaths;
 
 /**
  * UnterKategorie.
@@ -39,12 +41,12 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name = "UnterKategorie")
-@Table(name = "unter_kategorien", indexes = { @Index(columnList = "kategorie_id,name", unique = true),
+@Table(name = "UnterKategorie", indexes = { @Index(columnList = "kategorie_id,name", unique = true),
         @Index(columnList = "kategorie_id") }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { "kategorie_id", "name" }) })
-@AttributeOverride(name = "name", column = @Column(name = "name", unique = false, length = 50))
-@JsonRootName(value = "subCategory")
-@JsonPropertyOrder({"id", "kategorie", "name", "description", "deleted", "links"})
+                @UniqueConstraint(columnNames = { "kategorie_id", ApiNames.NAME }) })
+@AttributeOverride(name = ApiNames.NAME, column = @Column(name = ApiNames.NAME, unique = false, length = 50))
+@JsonRootName(value = ApiNames.UNTER_KATEGORIE)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.KATEGORIE, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS})
 public class UnterKategorie extends AbstractNamedItem implements IUnterKategorie {
 
     /** The Constant serialVersionUID. */
@@ -84,26 +86,33 @@ public class UnterKategorie extends AbstractNamedItem implements IUnterKategorie
     @Override
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kategorie.class)
-    @JoinColumn(name = "kategorie_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "unterkategorie_fk1"))
-    @JsonGetter("kategorie")
+    @JoinColumn(name = "kategorie_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "unterkategorie_fk1"))
+    @JsonGetter(ApiNames.KATEGORIE)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
     public IKategorie getKategorie() {
         return kategorie;
     }
 
     @Override
-    @JsonSetter("kategorie")
+    @JsonSetter(ApiNames.KATEGORIE)
     public void setKategorie(IKategorie kategorie) {
         this.kategorie = kategorie;
+    }
+    
+    @Override
+    @Transient
+    @JsonIgnore
+    public String getParentId() {
+        return getKategorie().getLinkId();
     }
 
     @Override
     @Transient
     @JsonIgnore
     public String getLinkId() {
-        return getKategorie().getLinkId() + "/" + getName();
+        return String.format(ApiPaths.UNTER_KATEGORIE_LINK, getParentId(), getName());
     }
     @Override
     public int hashCode() {
@@ -135,7 +144,7 @@ public class UnterKategorie extends AbstractNamedItem implements IUnterKategorie
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
-                .append("kategorie", getKategorie())
+                .append(ApiNames.KATEGORIE, getKategorie())
                 .toString();
     }
 }

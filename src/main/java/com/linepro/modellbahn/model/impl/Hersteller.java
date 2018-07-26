@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -18,6 +19,7 @@ import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.util.URLConverter;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
  * Hersteller. The manufacturer for a product
@@ -26,9 +28,10 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name = "Hersteller")
-@Table(name = "hersteller", indexes = { @Index(columnList = "name", unique = true) }, uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "name" }) })
-@JsonRootName(value = "manufacturer")
+@Table(name = "Hersteller", indexes = { @Index(columnList = ApiNames.NAME, unique = true) }, uniqueConstraints = {
+        @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@JsonRootName(value = ApiNames.HERSTELLER)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.TELEFON, ApiNames.URL, ApiNames.DELETED, ApiNames.LINKS})
 public class Hersteller extends AbstractNamedItem implements IHersteller {
 
     /** The Constant serialVersionUID. */
@@ -80,9 +83,9 @@ public class Hersteller extends AbstractNamedItem implements IHersteller {
      * @return the url
      */
     @Override
-    @Column(name = "url", nullable = true)
+    @Column(name = ApiNames.URL, nullable = true)
     @Convert(converter = URLConverter.class)
-    @JsonGetter("url")
+    @JsonGetter(ApiNames.URL)
     @JsonView(Views.Public.class)
     public URL getUrl() {
         return url;
@@ -95,7 +98,7 @@ public class Hersteller extends AbstractNamedItem implements IHersteller {
      *            the new url
      */
     @Override
-    @JsonSetter("url")
+    @JsonSetter(ApiNames.URL)
     public void setUrl(URL uRL) {
         url = uRL;
     }
@@ -106,8 +109,8 @@ public class Hersteller extends AbstractNamedItem implements IHersteller {
      * @return the telefon
      */
     @Override
-    @Column(name = "telefon", nullable = true, length = 20)
-    @JsonGetter("telefon")
+    @Column(name = ApiNames.TELEFON, nullable = true, length = 20)
+    @JsonGetter(ApiNames.TELEFON)
     @JsonView(Views.Public.class)
     public String getTelefon() {
         return Telefon;
@@ -120,14 +123,14 @@ public class Hersteller extends AbstractNamedItem implements IHersteller {
      *            the new telefon
      */
     @Override
-    @JsonSetter("telefon")
+    @JsonSetter(ApiNames.TELEFON)
     public void setTelefon(String telefon) {
         Telefon = telefon;
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).appendSuper(super.toString()).append("url", getUrl())
-                .append("telefon", getTelefon()).toString();
+        return new ToStringBuilder(this).appendSuper(super.toString()).append(ApiNames.URL, getUrl())
+                .append(ApiNames.TELEFON, getTelefon()).toString();
     }
 }

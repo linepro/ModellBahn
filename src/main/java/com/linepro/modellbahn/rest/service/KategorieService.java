@@ -20,6 +20,7 @@ import com.linepro.modellbahn.model.impl.UnterKategorie;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.rest.util.NamedItemService;
 
@@ -56,11 +57,11 @@ public class KategorieService extends NamedItemService<Kategorie> {
      * @throws Exception the exception
      */
     @JsonCreator
-    public UnterKategorie create(@JsonProperty(value="id", required=false) Long id, 
+    public UnterKategorie create(@JsonProperty(value=ApiNames.ID, required=false) Long id, 
                     @JsonProperty(value=ApiPaths.KATEGORIE_PARAM_NAME, required=false) String kategorieStr, 
-                    @JsonProperty(value="name", required=false) String name, 
-                    @JsonProperty(value="description", required=false) String bezeichnung, 
-                    @JsonProperty(value="deleted", required=false) Boolean deleted) throws Exception {
+                    @JsonProperty(value=ApiNames.NAME, required=false) String name, 
+                    @JsonProperty(value=ApiNames.DESCRIPTION, required=false) String bezeichnung, 
+                    @JsonProperty(value=ApiNames.DELETED, required=false) Boolean deleted) throws Exception {
         Kategorie kat = findKategorie(kategorieStr);
 
         UnterKategorie entity = new UnterKategorie(id, kat, name, bezeichnung, deleted);
@@ -104,7 +105,7 @@ public class KategorieService extends NamedItemService<Kategorie> {
                 return getResponse(Response.status(Status.NOT_FOUND));
             }
 
-            return getResponse(Response.ok().entity(getRepresentation(entity)));
+            return getResponse(Response.ok().entity(entity.addLinks(getUriInfo(), true, true)));
         } catch (Exception e) {
             return serverError(e);
         }
@@ -165,7 +166,7 @@ public class KategorieService extends NamedItemService<Kategorie> {
                 return getResponse(Response.status(Status.NOT_FOUND));
             }
 
-            return getResponse(Response.ok().entity(getRepresentation(entity)));
+            return getResponse(Response.noContent());
         } catch (Exception e) {
             return serverError(e);
         }

@@ -3,8 +3,6 @@ package com.linepro.modellbahn;
 import java.net.InetAddress;
 import java.net.URI;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
@@ -59,7 +57,7 @@ public class Main {
             String keystore = commandLine.getOptionValue("k");
             String keypwd = commandLine.getOptionValue("y");
             String webRoot = commandLine.getOptionValue("w", WEB_APP_ROOT);
-            String staticPath = commandLine.getOptionValue("c", STATIC_PATH);
+            String staticPaths = commandLine.getOptionValue("c", STATIC_PATH);
 
             // TODO: proper SSL validation
             String protocol = (keystore == null || keypwd == null) ? HTTP : HTTPS;
@@ -80,7 +78,7 @@ public class Main {
 
             // TODO: SSL configuration
             injector.getInstance(IModellBahnFactory.class)
-                    .create(baseUri, Arrays.asList(staticPath.split(",")))
+                    .create(baseUri, Arrays.asList(staticPaths.split(",")))
                     .run();
         } catch (ParseException e) {
             System.err.println( e.getMessage() );

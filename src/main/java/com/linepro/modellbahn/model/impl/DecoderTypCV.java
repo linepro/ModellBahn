@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -31,6 +32,8 @@ import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.DecoderTypSerializer;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.rest.util.ApiPaths;
 
 /**
  * DecoderTypCV.
@@ -39,10 +42,11 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name = "DecoderTypCV")
-@Table(name = "decoder_typ_cv", indexes = { @Index(columnList = "decoder_typ_id,cv", unique = true),
-        @Index(columnList = "decoder_typ_id"), @Index(columnList = "cv") }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { "decoder_typ_id", "cv" }) })
-@JsonRootName(value = "cv")
+@Table(name = "DecoderTypCV", indexes = { @Index(columnList = "decoder_typ_id,cv", unique = true),
+        @Index(columnList = "decoder_typ_id"), @Index(columnList = ApiNames.CV) }, uniqueConstraints = {
+                @UniqueConstraint(columnNames = { "decoder_typ_id", ApiNames.CV }) })
+@JsonRootName(value = ApiNames.CV)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.CV,  ApiNames.DESCRIPTION,  ApiNames.MINIMAL,  ApiNames.MAXIMAL,  ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED, ApiNames.LINKS}) 
 public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
 
     /** The Constant serialVersionUID. */
@@ -100,88 +104,88 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
     @Override
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
-    @JoinColumn(name = "decoder_typ_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_typ_cv_fk1"))
-    @JsonGetter("decoderTyp")
+    @JoinColumn(name = "decoder_typ_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "decoder_typ_cv_fk1"))
+    @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
     public IDecoderTyp getDecoderTyp() {
         return decoderTyp;
     }
 
     @Override
-    @JsonSetter("decoderTyp")
+    @JsonSetter(ApiNames.DECODER_TYP)
     public void setDecoderTyp(IDecoderTyp decoderTyp) {
         this.decoderTyp = decoderTyp;
     }
 
     @Override
     @BusinessKey
-    @Column(name = "cv", nullable = false)
-    @JsonGetter("cv")
+    @Column(name = ApiNames.CV, nullable = false)
+    @JsonGetter(ApiNames.CV)
     @JsonSerialize(contentUsing=DecoderTypSerializer.class)
     public Integer getCV() {
         return cv;
     }
 
     @Override
-    @JsonSetter("cv")
+    @JsonSetter(ApiNames.CV)
     public void setCV(Integer cv) {
         this.cv = cv;
     }
 
     @Override
-    @Column(name = "bezeichnung", nullable = true, length = 100)
-    @JsonGetter("description")
+    @Column(name = ApiNames.DESCRIPTION, nullable = true, length = 100)
+    @JsonGetter(ApiNames.DESCRIPTION)
     @JsonView(Views.DropDown.class)
     public String getBezeichnung() {
         return bezeichnung;
     }
 
     @Override
-    @JsonSetter("description")
+    @JsonSetter(ApiNames.DESCRIPTION)
     public void setBezeichnung(String bezeichnung) {
         this.bezeichnung = bezeichnung;
     }
 
     @Override
-    @Column(name = "minimal", nullable = true)
-    @JsonGetter("minimum")
+    @Column(name = ApiNames.MINIMAL, nullable = true)
+    @JsonGetter(ApiNames.MINIMAL)
     @JsonView(Views.Public.class)
     public Integer getMinimal() {
         return minimal;
     }
 
     @Override
-    @JsonSetter("minimum")
+    @JsonSetter(ApiNames.MINIMAL)
     public void setMinimal(Integer minimal) {
         this.minimal = minimal;
     }
 
     @Override
-    @Column(name = "maximal", nullable = true)
-    @JsonGetter("maximum")
+    @Column(name = ApiNames.MAXIMAL, nullable = true)
+    @JsonGetter(ApiNames.MAXIMAL)
     @JsonView(Views.Public.class)
     public Integer getMaximal() {
         return maximal;
     }
 
     @Override
-    @JsonSetter("maximum")
+    @JsonSetter(ApiNames.MAXIMAL)
     public void setMaximal(Integer maximal) {
         this.maximal = maximal;
     }
 
     @Override
-    @Column(name = "werkseinstellung", nullable = true)
-    @JsonGetter("default")
+    @Column(name = ApiNames.WERKSEINSTELLUNG, nullable = true)
+    @JsonGetter(ApiNames.WERKSEINSTELLUNG)
     @JsonView(Views.Public.class)
     public Integer getWerkseinstellung() {
         return werkseinstellung;
     }
 
     @Override
-    @JsonSetter("default")
+    @JsonSetter(ApiNames.WERKSEINSTELLUNG)
     public void setWerkseinstellung(Integer werkseinstellung) {
         this.werkseinstellung = werkseinstellung;
     }
@@ -189,8 +193,15 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
     @Override
     @Transient
     @JsonIgnore
+    public String getParentId() {
+        return getDecoderTyp().getLinkId();
+    }
+
+    @Override
+    @Transient
+    @JsonIgnore
     public String getLinkId() {
-        return getDecoderTyp().getLinkId() + "/cv/" + getCV();
+        return String.format(ApiPaths.DECODER_TYP_CV_LINK, getParentId(), getCV());
     }
 
     @Override
@@ -223,12 +234,12 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
-                .append("decoderTyp", getDecoderTyp())
-                .append("cv", getCV())
-                .append("bezeichnung", getBezeichnung())
-                .append("minimal", getMinimal())
-                .append("maximal", getMaximal())
-                .append("werkseinstellung", getWerkseinstellung())
+                .append(ApiNames.DECODER_TYP, getDecoderTyp())
+                .append(ApiNames.CV, getCV())
+                .append(ApiNames.DESCRIPTION, getBezeichnung())
+                .append(ApiNames.MINIMAL, getMinimal())
+                .append(ApiNames.MAXIMAL, getMaximal())
+                .append(ApiNames.WERKSEINSTELLUNG, getWerkseinstellung())
                 .toString();
     }
 }

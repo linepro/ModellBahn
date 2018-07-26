@@ -19,6 +19,7 @@ import com.linepro.modellbahn.model.INamedItem;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
  * AbstractNamedItem.
@@ -27,13 +28,13 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version  $Id$
  */
 @MappedSuperclass
-//@JsonPropertyOrder({"id","name","description","deleted", "links"})
+@JsonPropertyOrder({ApiNames.ID,ApiNames.NAME,ApiNames.DESCRIPTION,ApiNames.DELETED, ApiNames.LINKS})
 public abstract class AbstractNamedItem extends AbstractItem implements INamedItem, Serializable {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -278823660682127691L;
 
-    protected static final String[] BUSINESS_KEY = new String[] { "name" };
+    protected static final String[] BUSINESS_KEY = new String[] { ApiNames.NAME };
 
     /** The name. */
     private String name;
@@ -74,29 +75,29 @@ public abstract class AbstractNamedItem extends AbstractItem implements INamedIt
 
     @Override
 	@BusinessKey
-    @Column(name="name", unique=true, length=50, nullable = true)
-    @JsonGetter("name")
+    @Column(name=ApiNames.NAME, unique=true, length=50, nullable = true)
+    @JsonGetter(ApiNames.NAME)
     @JsonView(Views.DropDown.class)
 	public String getName() {
 		return name;
 	}
 
 	@Override
-    @JsonSetter("name")
+    @JsonSetter(ApiNames.NAME)
     public void setName(String name) {
 		this.name = name;
 	}
 
 	@Override
-    @Column(name="bezeichnung", nullable=true, length=100)
-    @JsonGetter("description")
+    @Column(name=ApiNames.DESCRIPTION, nullable=true, length=100)
+    @JsonGetter(ApiNames.DESCRIPTION)
     @JsonView(Views.DropDown.class)
 	public String getBezeichnung() {
 		return bezeichnung;
 	}
 
 	@Override
-    @JsonSetter("description")
+    @JsonSetter(ApiNames.DESCRIPTION)
     public void setBezeichnung(String bezeichnung) {
 		this.bezeichnung = bezeichnung;
 	}
@@ -136,8 +137,8 @@ public abstract class AbstractNamedItem extends AbstractItem implements INamedIt
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
 				.appendSuper(super.toString())
-				.append("name", getName())
-				.append("bezeichnung", getBezeichnung())
+				.append(ApiNames.NAME, getName())
+				.append(ApiNames.DESCRIPTION, getBezeichnung())
 				.toString();
 	}
 }

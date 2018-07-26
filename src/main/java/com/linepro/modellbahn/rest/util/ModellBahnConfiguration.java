@@ -7,15 +7,12 @@ import javax.inject.Inject;
 import javax.json.stream.JsonGenerator;
 import javax.ws.rs.ApplicationPath;
 
-import org.glassfish.jersey.linking.DeclarativeLinkingFeature;
-import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
-import org.glassfish.jersey.server.mvc.MvcFeature;
-import org.glassfish.jersey.server.mvc.jsp.JspMvcFeature;
 import org.glassfish.jersey.servlet.ServletProperties;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
+import com.linepro.modellbahn.jersey.LoggingFilter;
 import com.linepro.modellbahn.jersey.SecurityRequestFilter;
 
 /**
@@ -24,7 +21,7 @@ import com.linepro.modellbahn.jersey.SecurityRequestFilter;
  * @author  $Author:$
  * @version $Id:$
  */
-//@ApplicationPath("/ModellBahn")
+@ApplicationPath("/")
 public class ModellBahnConfiguration extends ResourceConfig {
 
     /** The Constant PACKAGES. */
@@ -51,6 +48,7 @@ public class ModellBahnConfiguration extends ResourceConfig {
         property(ServletProperties.FILTER_CONTEXT_PATH, "/ModellBahn"); 
         property(ServletProperties.FILTER_FORWARD_ON_404, true);
         property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "/web/**/*");
+        property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "//web//**//*");
 
         /*
         property(ClassNamesResourceConfig.PROPERTY_CLASSNAMES, "");
@@ -91,16 +89,17 @@ public class ModellBahnConfiguration extends ResourceConfig {
         property(WebComponent.RESOURCE_CONFIG_CLASS, "");
         */
 
+        register(LoggingFilter.class);
         register(SecurityRequestFilter.class);
 
-        register(MvcFeature.class);
-        register(JspMvcFeature.class);
+        //register(MvcFeature.class);
+        //register(JspMvcFeature.class);
 
         // Logging.
-        register(new LoggingFeature(getLogger(), Level.FINEST, LoggingFeature.Verbosity.PAYLOAD_ANY, 8192));
+        //register(new LoggingFeature(getLogger(), Level.FINEST, LoggingFeature.Verbosity.PAYLOAD_ANY, 8192));
 
         // Tracing support.
-        register(DeclarativeLinkingFeature.class);
+        //register(DeclarativeLinkingFeature.class);
     }
     
     /**
@@ -112,7 +111,7 @@ public class ModellBahnConfiguration extends ResourceConfig {
         Logger logger = java.util.logging.Logger.getLogger("ModellBahn");
         logger.setLevel(Level.FINEST);
 
-        SLF4JBridgeHandler.removeHandlersForRootLogger();
+        //SLF4JBridgeHandler.removeHandlersForRootLogger();
         SLF4JBridgeHandler.install();
         
         return logger;

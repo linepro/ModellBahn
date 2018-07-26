@@ -7,13 +7,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.linepro.modellbahn.model.impl.Artikel;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 public class ArtikelSerializer extends StdSerializer<Artikel> {
 
     private static final long serialVersionUID = 5732879150462954795L;
 
+    protected LinkUtils utils = new LinkUtils();
+
     public ArtikelSerializer() {
-        this(null);
+        this(Artikel.class);
     }
 
     public ArtikelSerializer(Class<Artikel> t) {
@@ -24,8 +27,8 @@ public class ArtikelSerializer extends StdSerializer<Artikel> {
     public void serialize(Artikel value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
         gen.writeStartObject();
         gen.writeObjectField("artikelNr", value.getName());
-        gen.writeObjectField("hersteller", value.getProdukt().getHersteller().getName());
-        gen.writeObjectField("bestellNr", value.getProdukt().getBestellNr());
+        gen.writeObjectField(ApiNames.HERSTELLER, value.getProdukt().getHersteller().getName());
+        gen.writeObjectField(ApiNames.BESTELL_NR, value.getProdukt().getBestellNr());
         gen.writeEndObject();
     }
 }

@@ -5,9 +5,11 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.ISonderModell;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
  * SonderModell.
@@ -16,10 +18,11 @@ import com.linepro.modellbahn.model.util.AbstractNamedItem;
  * @author  $Author:$
  * @version $Id:$
  */
-@Entity(name = "SonderModell")
-@Table(name = "sondermodell", indexes = { @Index(columnList = "name", unique = true) }, 
-       uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
-@JsonRootName(value = "special")
+@Entity(name = "SonderModel")
+@Table(name = "SonderModel", indexes = { @Index(columnList = ApiNames.NAME, unique = true) }, 
+       uniqueConstraints = { @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@JsonRootName(value = ApiNames.SONDERMODEL)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS})
 public class SonderModell extends AbstractNamedItem implements ISonderModell {
 
 	/** The Constant serialVersionUID. */

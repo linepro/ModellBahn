@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -32,6 +33,8 @@ import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.rest.json.ArtikelSerializer;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.rest.util.ApiPaths;
 
 /**
  * ZugConsist.
@@ -40,10 +43,11 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name = "ZugConsist")
-@Table(name = "zug_consist", indexes = { @Index(columnList = "zug_id"),
+@Table(name = "ZugConsist", indexes = { @Index(columnList = "zug_id"),
         @Index(columnList = "artikel_id", unique = true) }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { "zug_id", "position" }) })
-@JsonRootName(value = "consist")
+                @UniqueConstraint(columnNames = { "zug_id", ApiNames.POSITION }) })
+@JsonRootName(value = ApiNames.CONSIST)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.ZUG,  ApiNames.POSITION,  ApiNames.ARTIKEL, ApiNames.DELETED, ApiNames.LINKS })
 public class ZugConsist extends AbstractItem implements IZugConsist {
 
     /** The Constant serialVersionUID. */
@@ -84,40 +88,40 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Zug.class)
-    @JoinColumn(name = "zug_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "consist_fk1"))
-    @JsonGetter("zug")
+    @JoinColumn(name = "zug_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "consist_fk1"))
+    @JsonGetter(ApiNames.ZUG)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
     public IZug getZug() {
         return zug;
     }
 
     @Override
-    @JsonSetter("zug")
+    @JsonSetter(ApiNames.ZUG)
     public void setZug(IZug zug) {
         this.zug = zug;
     }
 
     @Override
     @OrderColumn
-    @Column(name = "position", nullable=false)
-    @JsonGetter("position")
+    @Column(name = ApiNames.POSITION, nullable=false)
+    @JsonGetter(ApiNames.POSITION)
     @JsonView(Views.DropDown.class)
     public Integer getPosition() {
         return position;
     }
 
     @Override
-    @JsonSetter("position")
+    @JsonSetter(ApiNames.POSITION)
     public void setPosition(Integer position) {
         this.position = position;
     }
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Artikel.class)
-    @JoinColumn(name = "artikel_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "consist_fk2"))
-    @JsonGetter("artikel")
+    @JoinColumn(name = "artikel_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "consist_fk2"))
+    @JsonGetter(ApiNames.ARTIKEL)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(contentUsing=ArtikelSerializer.class)
     public IArtikel getArtikel() {
@@ -125,16 +129,23 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
     }
 
     @Override
-    @JsonSetter("artikel")
+    @JsonSetter(ApiNames.ARTIKEL)
     public void setArtikel(IArtikel artikel) {
         this.artikel = artikel;
+    }
+    
+    @Override
+    @Transient
+    @JsonIgnore
+    public String getParentId() {
+        return getZug().getLinkId();
     }
 
     @Override
     @Transient
     @JsonIgnore
     public String getLinkId() {
-        return getZug().getLinkId() + "/" + getPosition();
+        return String.format(ApiPaths.ZUG_CONSIST_LINK, getParentId(), getPosition());
     }
 
     @Override
@@ -168,7 +179,7 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString())
                 .append("Zug", getZug())
                 .append("Position", getPosition())
-                .append("artikel", getArtikel())
+                .append(ApiNames.ARTIKEL, getArtikel())
                 .toString();
     }
 }

@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -36,6 +37,7 @@ import com.linepro.modellbahn.rest.json.DecoderCVSerializer;
 import com.linepro.modellbahn.rest.json.DecoderFunktionSerializer;
 import com.linepro.modellbahn.rest.json.DecoderTypSerializer;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
@@ -45,10 +47,10 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name = "Decoder")
-@Table(name = "decoder", indexes = { @Index(columnList = "name", unique = true), @Index(columnList = "decoder_typ_id"),
-        @Index(columnList = "protokoll_id") }, uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
-@JsonRootName(value = "decoder")
-@JsonPropertyOrder({ "id", "decoderId", "hersteller", "bestellNr", "description", "protokoll", "fahrstufe", "adressen", "deleted", "cvs", "funktionen", "links" })
+@Table(name = "Decoder", indexes = { @Index(columnList = ApiNames.NAME, unique = true), @Index(columnList = "decoder_typ_id"),
+        @Index(columnList = "protokoll_id") }, uniqueConstraints = { @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@JsonRootName(value = ApiNames.DECODER)
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.DESCRIPTION, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.ADRESSEN, ApiNames.DELETED, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS })
 public class Decoder extends AbstractNamedItem implements IDecoder {
 
     /** The Constant serialVersionUID. */
@@ -103,13 +105,13 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
     }
 
     @Override
-    @JsonGetter("decoderId")
+    @JsonGetter(ApiNames.DECODER_ID)
     public String getName() {
         return super.getName();
     }
 
     @Override
-    @JsonSetter("decoderId")
+    @JsonSetter(ApiNames.DECODER_ID)
     public void setName(String name) {
         super.setName(name);
     }
@@ -121,9 +123,9 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
      */
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
-    @JoinColumn(name = "decoder_typ_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_fk1"))
+    @JoinColumn(name = "decoder_typ_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "decoder_fk1"))
     @JsonUnwrapped
-    @JsonGetter("decoderTyp")
+    @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(contentUsing=DecoderTypSerializer.class)
     public IDecoderTyp getDecoderTyp() {
@@ -136,7 +138,7 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
      * @param typ the new typ
      */
     @Override
-    @JsonSetter("decoderTyp")
+    @JsonSetter(ApiNames.DECODER_TYP)
     public void setDecoderTyp(IDecoderTyp decoderTyp) {
         this.decoderTyp = decoderTyp;
     }
@@ -148,11 +150,11 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
      */
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Protokoll.class)
-    @JoinColumn(name = "protokoll_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "decoder_fk2"))
-    @JsonGetter("protokoll")
+    @JoinColumn(name = "protokoll_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "decoder_fk2"))
+    @JsonGetter(ApiNames.PROTOKOLL)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
     public IProtokoll getProtokoll() {
         return protokoll;
     }
@@ -163,7 +165,7 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
      * @param protokoll the new protokoll
      */
     @Override
-    @JsonSetter("protokoll")
+    @JsonSetter(ApiNames.PROTOKOLL)
     public void setProtokoll(IProtokoll protokoll) {
         this.protokoll = protokoll;
     }
@@ -174,8 +176,8 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
      * @return the fahrstufe
      */
     @Override
-    @Column(name = "fahrstufe", nullable = true)
-    @JsonGetter("fahrstufe")
+    @Column(name = ApiNames.FAHRSTUFE, nullable = true)
+    @JsonGetter(ApiNames.FAHRSTUFE)
     @JsonView(Views.Public.class)
     public Long getFahrstufe() {
         return fahrstufe;
@@ -187,7 +189,7 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
      * @param fahrstufe the new fahrstufe
      */
     @Override
-    @JsonSetter("fahrstufe")
+    @JsonSetter(ApiNames.FAHRSTUFE)
     public void setFahrstufe(Long fahrstufe) {
         this.fahrstufe = fahrstufe;
     }
@@ -199,9 +201,9 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
      */
     @Override
     @ElementCollection(fetch = FetchType.LAZY)
-    @Column(name = "adressen")
-    @CollectionTable(name = "decoder_adressen", joinColumns = @JoinColumn(name = "decoder_id", nullable = false, referencedColumnName = "id"), foreignKey = @ForeignKey(name = "decoder_fk3"))
-    @JsonGetter("adressen")
+    @Column(name = ApiNames.ADRESSEN)
+    @CollectionTable(name = "DecoderAdress", joinColumns = @JoinColumn(name = "decoder_id", nullable = false, referencedColumnName = ApiNames.ID), foreignKey = @ForeignKey(name = "decoder_fk3"))
+    @JsonGetter(ApiNames.ADRESSEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentUsing=DecoderAdressSerializer.class)
     public List<DecoderAdress> getAdressen() {
@@ -214,7 +216,7 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
      * @param adressen the new adressen
      */
     @Override
-    @JsonSetter("adressen")
+    @JsonSetter(ApiNames.ADRESSEN)
     public void setAdressen(List<DecoderAdress> adressen) {
         this.adressen = adressen;
     }
@@ -226,8 +228,8 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
      */
     @Override
     @ElementCollection(fetch = FetchType.LAZY, targetClass=DecoderCV.class)
-    @CollectionTable(name = "decoder_cv", joinColumns = @JoinColumn(name = "decoder_id", nullable = false, referencedColumnName = "id"), foreignKey = @ForeignKey(name = "decoder_fk4"))
-    @JsonGetter("cvs")
+    @CollectionTable(name = "DecoderCV", joinColumns = @JoinColumn(name = "decoder_id", nullable = false, referencedColumnName = ApiNames.ID), foreignKey = @ForeignKey(name = "decoder_fk4"))
+    @JsonGetter(ApiNames.CVS)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentUsing=DecoderCVSerializer.class)
     public List<DecoderCV> getCVs() {
@@ -240,7 +242,7 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
      * @param cvs the new cvs
      */
     @Override
-    @JsonSetter("cvs")
+    @JsonSetter(ApiNames.CVS)
     public void setCVs(List<DecoderCV> cvs) {
         this.cvs = cvs;
     }
@@ -252,8 +254,8 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
      */
     @Override
     @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "decoder_funktionen", joinColumns = @JoinColumn(name = "decoder_id", nullable = false, referencedColumnName = "id"), foreignKey = @ForeignKey(name = "decoder_fk5"))
-    @JsonGetter("funktionen")
+    @CollectionTable(name = "DecoderFunktion", joinColumns = @JoinColumn(name = "decoder_id", nullable = false, referencedColumnName = ApiNames.ID), foreignKey = @ForeignKey(name = "decoder_fk5"))
+    @JsonGetter(ApiNames.FUNKTIONEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentUsing=DecoderFunktionSerializer.class)
     public List<DecoderFunktion> getFunktionen() {
@@ -266,21 +268,28 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
      * @param funktionen the new funktionen
      */
     @Override
-    @JsonSetter("funktionen")
+    @JsonSetter(ApiNames.FUNKTIONEN)
     public void setFunktionen(List<DecoderFunktion> funktionen) {
         this.funktionen = funktionen;
+    }
+
+    @Override
+    protected void addChildLinks(UriInfo root) {
+        addLinks(root, getAdressen(), false, false);
+        addLinks(root, getCVs(), false, false);
+        addLinks(root, getFunktionen(), false, false);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
-                .append("decoderTyp", getDecoderTyp())
-                .append("protokoll", getProtokoll())
-                .append("fahrstufe", getFahrstufe())
-                .append("adressen", getAdressen())
-                .append("cvs", getCVs())
-                .append("funktionen", getFunktionen())
+                .append(ApiNames.DECODER_TYP, getDecoderTyp())
+                .append(ApiNames.PROTOKOLL, getProtokoll())
+                .append(ApiNames.FAHRSTUFE, getFahrstufe())
+                .append(ApiNames.ADRESSEN, getAdressen())
+                .append(ApiNames.CVS, getCVs())
+                .append(ApiNames.FUNKTIONEN, getFunktionen())
                 .toString();
     }
 }

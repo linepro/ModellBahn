@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -31,6 +32,8 @@ import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.rest.json.DecoderTypSerializer;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.rest.util.ApiPaths;
 
 /**
  * DecoderFunktion.
@@ -39,9 +42,10 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name = "DecoderFunktion")
-@Table(name = "decoder_funktion", indexes = { @Index(columnList = "decoder_id,funktion_id", unique = true) },
+@Table(name = "DecoderFunktion", indexes = { @Index(columnList = "decoder_id,funktion_id", unique = true) },
        uniqueConstraints = { @UniqueConstraint(columnNames = { "decoder_id", "funktion_id" })})
-@JsonRootName(value = "function")
+@JsonRootName(value = ApiNames.FUNKTION)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER, ApiNames.FUNKTION,  ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS})
 public class DecoderFunktion extends AbstractItem implements IDecoderFunktion {
 
     /** The Constant serialVersionUID. */
@@ -54,7 +58,7 @@ public class DecoderFunktion extends AbstractItem implements IDecoderFunktion {
     private IDecoderTypFunktion funktion;
 
 	/** The wert. */
-	private String wert;
+	private String bezeichnung;
 
 	/**
 	 * Instantiates a new decoder funktion.
@@ -73,30 +77,30 @@ public class DecoderFunktion extends AbstractItem implements IDecoderFunktion {
 	public DecoderFunktion(IDecoder decoder, IDecoderTypFunktion funktion, String wert) {
         setDecoder(decoder);
         setFunktion(funktion);		
-        setWert(wert);
+        setBezeichnung(wert);
 	}
 
 	@Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=Decoder.class)
-    @JoinColumn(name="decoder_id", nullable = false, referencedColumnName="id", foreignKey = @ForeignKey(name = "decoder_fn_fk1"))
-    @JsonGetter("decoder")
+    @JoinColumn(name="decoder_id", nullable = false, referencedColumnName=ApiNames.ID, foreignKey = @ForeignKey(name = "decoder_fn_fk1"))
+    @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.ID)
     public IDecoder getDecoder() {
         return decoder;
     }
 
     @Override
-    @JsonSetter("decoder")
+    @JsonSetter(ApiNames.DECODER)
     public void setDecoder(IDecoder decoder) {
         this.decoder = decoder;
     }
 
     @Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=DecoderTypFunktion.class)
-    @JoinColumn(name="funktion_id", nullable = false, referencedColumnName="id", foreignKey = @ForeignKey(name = "decoder_fn_fk2"))
-    @JsonGetter("funktion")
+    @JoinColumn(name="funktion_id", nullable = false, referencedColumnName=ApiNames.ID, foreignKey = @ForeignKey(name = "decoder_fn_fk2"))
+    @JsonGetter(ApiNames.FUNKTION)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(contentUsing=DecoderTypSerializer.class)
     public IDecoderTypFunktion getFunktion() {
@@ -104,30 +108,37 @@ public class DecoderFunktion extends AbstractItem implements IDecoderFunktion {
     }
 
     @Override
-    @JsonSetter("funktion")
+    @JsonSetter(ApiNames.FUNKTION)
     public void setFunktion(IDecoderTypFunktion funktion) {
         this.funktion = funktion;
     }
 
     @Override
-	@Column(name="bezeichnung", nullable=true, length=100)
-    @JsonGetter("description")
+	@Column(name=ApiNames.DESCRIPTION, nullable=true, length=100)
+    @JsonGetter(ApiNames.DESCRIPTION)
     @JsonView(Views.DropDown.class)
-	public String getWert() {
-		return wert;
+	public String getBezeichnung() {
+		return bezeichnung;
 	}
 
     @Override
-    @JsonSetter("description")
-	public void setWert(String wert) {
-		this.wert = wert;
+    @JsonSetter(ApiNames.DESCRIPTION)
+	public void setBezeichnung(String bezeichnung) {
+		this.bezeichnung = bezeichnung;
 	}
 
     @Override
     @Transient
     @JsonIgnore
     public String getLinkId() {
-        return getDecoder().getLinkId() + "/" + getFunktion().getReihe() + "/" + getFunktion().getName();
+        return String.format(ApiPaths.DECODER_FN_LINK, getParentId(), getFunktion().getName());
+    }
+
+    @Override
+    @Transient
+    @JsonIgnore
+    public String getParentId() {
+        return getDecoder().getLinkId();
     }
 
     @Override
@@ -159,9 +170,9 @@ public class DecoderFunktion extends AbstractItem implements IDecoderFunktion {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("decoder", getDecoder())
-				.append("id", getId())
-				.append("wert", getWert())
+                .append(ApiNames.DECODER, getDecoder())
+				.append(ApiNames.ID, getId())
+				.append("wert", getBezeichnung())
 				.toString();
 	}
 }

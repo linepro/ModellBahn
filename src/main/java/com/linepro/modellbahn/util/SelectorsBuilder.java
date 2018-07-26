@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.mapping.Collection;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 
@@ -26,7 +27,7 @@ public class SelectorsBuilder {
      * Instantiates a new selectors builder.
      */
     public SelectorsBuilder() {
-        logger = Logger.getLogger("ModellBahn");
+        logger = Logger.getLogger(getClass().getName());
     }
 
     /**
@@ -56,7 +57,7 @@ public class SelectorsBuilder {
                             name = getJpaName(getter.getName());
                         }
 
-                        Selector selector = new Selector(name, getter, setter);
+                        Selector selector = new Selector(name, getter, setter, Collection.class.isAssignableFrom(getter.getReturnType()));
 
                         selectors.put(selector.getName(), selector);
                     }

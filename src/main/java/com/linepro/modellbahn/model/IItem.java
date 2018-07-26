@@ -3,6 +3,7 @@ package com.linepro.modellbahn.model;
 import java.util.Set;
 
 import javax.ws.rs.core.Link;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * IItem
@@ -44,11 +45,13 @@ public interface IItem {
     public void setDeleted(Boolean deleted);
 
     /**
-     * Adds an HATEOAS link to this item.
-     * 
-     * @param link the HATEOAS link
+     * Adds the HATEOAS links for this item.
+     * Always adds self and parent, optionally adds update and delete
+     * @param root the root uri
+     * @param update add an update link
+     * @param delete add a delete link
      */
-    void addLink(Link link);
+    IItem addLinks(UriInfo root, boolean update, boolean delete);
 
     /**
      * Gets the HATEOAS links to this item for Json serialization.
@@ -57,10 +60,7 @@ public interface IItem {
      */
     Set<Link> getLinks();
 
-    /**
-     * Gets the final part of the HATEOAS link
-     * e.g. ${id}, ${name}, $[parent.getLinkId()}/${name}...
-     * @return the link identifier
-     */
+    String getParentId();
+
     String getLinkId();
 }

@@ -10,10 +10,12 @@ import javax.persistence.Index;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -24,6 +26,7 @@ import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.rest.json.UnterKategorieSerializer;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
  * Kategorie.
@@ -32,9 +35,10 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name="Kategorie")
-@Table(name = "kategorien", indexes = { @Index(columnList = "name", unique = true) }, 
-       uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
-@JsonRootName(value = "category")
+@Table(name = "Kategorie", indexes = { @Index(columnList = ApiNames.NAME, unique = true) }, 
+       uniqueConstraints = { @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@JsonRootName(value = ApiNames.KATEGORIE)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.UNTER_KATEGORIEN, ApiNames.LINKS})
 public class Kategorie extends AbstractNamedItem implements IKategorie {
 
     /** The Constant serialVersionUID. */
@@ -66,8 +70,8 @@ public class Kategorie extends AbstractNamedItem implements IKategorie {
 	}
 
     @Override
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "kategorie", targetEntity = UnterKategorie.class, orphanRemoval = true)
-    @JsonGetter("unterKategorien")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = ApiNames.KATEGORIE, targetEntity = UnterKategorie.class, orphanRemoval = true)
+    @JsonGetter(ApiNames.UNTER_KATEGORIEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentUsing=UnterKategorieSerializer.class)
     public Set<IUnterKategorie> getUnterKategorien() {
@@ -75,7 +79,7 @@ public class Kategorie extends AbstractNamedItem implements IKategorie {
     }
 
     @Override
-    @JsonSetter("unterKategorien")
+    @JsonSetter(ApiNames.UNTER_KATEGORIEN)
     public void setUnterKategorien(Set<IUnterKategorie> unterKategorien) {
         this.unterKategorien = unterKategorien;
     }
@@ -91,10 +95,15 @@ public class Kategorie extends AbstractNamedItem implements IKategorie {
     }
 
     @Override
+    protected void addChildLinks(UriInfo root) {
+        addLinks(root, getUnterKategorien(), false, false);
+    }
+
+    @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
-                .append("unterKategorien", getUnterKategorien())
+                .append(ApiNames.UNTER_KATEGORIEN, getUnterKategorien())
                 .toString();
     }
 }

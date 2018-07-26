@@ -59,14 +59,14 @@ public interface IProdukt extends IItem {
      *
      * @return the achsfolge
      */
-    IAchsfolg getAchsfolge();
+    IAchsfolg getAchsfolg();
 
     /**
      * Sets the achsfolge.
      *
      * @param achsfolge the new achsfolge
      */
-    void setAchsfolge(IAchsfolg achsfolge);
+    void setAchsfolg(IAchsfolg achsfolge);
 
     /**
      * Gets the massstab.

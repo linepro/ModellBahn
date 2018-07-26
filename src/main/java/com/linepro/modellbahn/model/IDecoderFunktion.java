@@ -40,13 +40,13 @@ public interface IDecoderFunktion extends IItem {
      *
      * @return the wert
      */
-    String getWert();
+    String getBezeichnung();
 
     /**
      * Sets the wert.
      *
      * @param wert the new wert
      */
-    void setWert(String wert);
+    void setBezeichnung(String wert);
 
 }

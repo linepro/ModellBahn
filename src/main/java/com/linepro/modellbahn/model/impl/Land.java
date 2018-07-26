@@ -12,6 +12,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -21,6 +22,7 @@ import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
  * Land.
@@ -29,9 +31,10 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name = "Land")
-@Table(name = "lander", indexes = { @Index(columnList = "name", unique = true) }, 
-       uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
-@JsonRootName(value = "country")
+@Table(name = "Land", indexes = { @Index(columnList = ApiNames.NAME, unique = true) }, 
+       uniqueConstraints = { @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@JsonRootName(value = ApiNames.LAND)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.WAHRUNG,ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS})
 public class Land extends AbstractNamedItem implements ILand {
 
     /** The Constant serialVersionUID. */
@@ -68,16 +71,16 @@ public class Land extends AbstractNamedItem implements ILand {
 
     @Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=Wahrung.class)
-    @JsonGetter("currency")
+    @JsonGetter(ApiNames.WAHRUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
     public IWahrung getWahrung() {
         return wahrung;
     }
 
     @Override
-    @JsonSetter("currency")
+    @JsonSetter(ApiNames.WAHRUNG)
     public void setWahrung(IWahrung wahrung) {
         this.wahrung = wahrung;
     }
@@ -86,7 +89,7 @@ public class Land extends AbstractNamedItem implements ILand {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
-                .append("wahrung", getWahrung())
+                .append(ApiNames.WAHRUNG, getWahrung())
                 .toString();
     }
 }

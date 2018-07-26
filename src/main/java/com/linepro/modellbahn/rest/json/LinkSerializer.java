@@ -20,8 +20,10 @@ public class LinkSerializer extends StdSerializer<Link> {
 
     private static final long serialVersionUID = 5659169256684166251L;
 
+    protected LinkUtils utils = new LinkUtils();
+    
     public LinkSerializer() {
-        this(null);
+        this(Link.class);
     }
 
     public LinkSerializer(Class<Link> t) {
@@ -30,10 +32,6 @@ public class LinkSerializer extends StdSerializer<Link> {
 
     @Override
     public void serialize(Link value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
-        gen.writeStartObject();
-        gen.writeStringField("href", value.getUri().toString());
-        gen.writeStringField("rel", value.getRel());
-        gen.writeStringField("method", value.getType());
-        gen.writeEndObject();
+        utils.writeLink(value, gen, serializers);
     }
 }

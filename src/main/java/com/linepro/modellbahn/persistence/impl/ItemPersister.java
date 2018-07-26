@@ -58,6 +58,7 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
     /** The business keys. */
     private final Map<String, Selector> businessKeys;
 
+    /** Collections on the object */
     private final Map<String, Selector> collections;
 
     private final String entityName;

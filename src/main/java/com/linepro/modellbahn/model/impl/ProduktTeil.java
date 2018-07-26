@@ -17,6 +17,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -27,6 +28,8 @@ import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.rest.json.ProduktSerializer;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.rest.util.ApiPaths;
 
 /**
  * ProduktTeil.
@@ -40,7 +43,8 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = "produkt_id"),
         @Index(columnList = "teil_id") }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { "produkt_id", "teil_id" }) })
-@JsonRootName("part")
+@JsonRootName(value = ApiNames.TEIL)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.PRODUKT,ApiNames.TEIL, ApiNames.ANZAHL, ApiNames.DELETED, ApiNames.LINKS})
 public class ProduktTeil extends AbstractItem implements IProduktTeil {
 
     /** The Constant serialVersionUID. */
@@ -80,8 +84,8 @@ public class ProduktTeil extends AbstractItem implements IProduktTeil {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
-    @JoinColumn(name = "produkt_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "produkt_teil_fk1"))
-    @JsonGetter("produkt")
+    @JoinColumn(name = "produkt_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "produkt_teil_fk1"))
+    @JsonGetter(ApiNames.PRODUKT)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(contentUsing=ProduktSerializer.class)
     public IProdukt getProdukt() {
@@ -89,15 +93,15 @@ public class ProduktTeil extends AbstractItem implements IProduktTeil {
     }
 
     @Override
-    @JsonSetter("produkt")
+    @JsonSetter(ApiNames.PRODUKT)
     public void setProdukt(IProdukt produkt) {
         this.produkt = produkt;
     }
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
-    @JoinColumn(name = "teil_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "produkt_teil_fk2"))
-    @JsonGetter("teil")
+    @JoinColumn(name = "teil_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "produkt_teil_fk2"))
+    @JsonGetter(ApiNames.TEIL)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(contentUsing=ProduktSerializer.class)
     public IProdukt getTeil() {
@@ -105,21 +109,21 @@ public class ProduktTeil extends AbstractItem implements IProduktTeil {
     }
 
     @Override
-    @JsonSetter("teil")
+    @JsonSetter(ApiNames.TEIL)
     public void setTeil(IProdukt teil) {
         this.teil = teil;
     }
 
     @Override
-    @Column(name = "anzahl", nullable = false)
-    @JsonGetter("anzahl")
+    @Column(name = ApiNames.ANZAHL, nullable = false)
+    @JsonGetter(ApiNames.ANZAHL)
     @JsonView(Views.DropDown.class)
     public Integer getAnzahl() {
         return anzahl;
     }
 
     @Override
-    @JsonSetter("anzahl")
+    @JsonSetter(ApiNames.ANZAHL)
     public void setAnzahl(Integer anzahl) {
         this.anzahl = anzahl;
     }
@@ -131,12 +135,19 @@ public class ProduktTeil extends AbstractItem implements IProduktTeil {
                 .append(getTeil())
                 .hashCode();
     }
+    
+    @Override
+    @Transient
+    @JsonIgnore
+    public String getParentId() {
+        return getProdukt().getLinkId();
+    }
 
     @Override
     @Transient
     @JsonIgnore
     public String getLinkId() {
-        return getProdukt().getLinkId() + "/" + getTeil().getLinkId();
+        return String.format(ApiPaths.PRODUKT_TEIL_LINK, getParentId(), getTeil().getLinkId());
     }
 
     @Override
@@ -161,9 +172,9 @@ public class ProduktTeil extends AbstractItem implements IProduktTeil {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
-                .append("produkt", getProdukt())
-                .append("teil", getTeil())
-                .append("anzahl", getAnzahl())
+                .append(ApiNames.PRODUKT, getProdukt())
+                .append(ApiNames.TEIL, getTeil())
+                .append(ApiNames.ANZAHL, getAnzahl())
                 .toString();
     }
 }

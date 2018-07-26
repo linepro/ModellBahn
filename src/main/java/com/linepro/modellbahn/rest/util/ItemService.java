@@ -24,7 +24,7 @@ import com.linepro.modellbahn.rest.json.Views;
  *
  * @param <E> the element type
  */
-public class ItemService<E extends IItem> extends AbstractService<E> {
+public class ItemService<E extends IItem> extends AbstractItemService<E> {
 
     /**
      * Instantiates a new item service.
