@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -26,8 +27,8 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  * @version $Id:$
  */
 @Entity(name = "Wahrung")
-@Table(name = "Wahrung", indexes = { @Index(columnList = ApiNames.NAME, unique = true) }, 
-       uniqueConstraints = { @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@Table(name = "Wahrung", indexes = { @Index(columnList = DBNames.NAME, unique = true) }, 
+       uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.WAHRUNG)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.NAME,ApiNames.DESCRIPTION,ApiNames.DECIMALS, ApiNames.DELETED, ApiNames.LINKS})
 public class Wahrung extends AbstractNamedItem implements IWahrung {
@@ -65,7 +66,7 @@ public class Wahrung extends AbstractNamedItem implements IWahrung {
 	}
 
 	@Override
-    @Column(name=ApiNames.DECIMALS, nullable = true)
+    @Column(name=DBNames.DECIMALS, nullable = true)
 	@JsonGetter(ApiNames.DECIMALS)
     @JsonView(Views.Public.class)
 	public Integer getDecimals() {

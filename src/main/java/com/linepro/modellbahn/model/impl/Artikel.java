@@ -39,11 +39,12 @@ import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.model.util.Status;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Formats;
 import com.linepro.modellbahn.rest.json.ProduktSerializer;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
  * Artikel.
@@ -52,13 +53,13 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  * @version $Id:$
  */
 @Entity(name = "Artikel")
-@Table(name = "Artikel", indexes = { @Index(columnList = "produkt_id"),
-        @Index(columnList = "wahrung_id"),
-        @Index(columnList = "steuerung_id"),
-        @Index(columnList = "motor_typ_id"),
-        @Index(columnList = "licht_id"),
-        @Index(columnList = "kupplung_id"),
-        @Index(columnList = "decoder_id") })
+@Table(name = "Artikel", indexes = { @Index(columnList = DBNames.PRODUKT_ID),
+        @Index(columnList = DBNames.WAHRUNG_ID),
+        @Index(columnList = DBNames.STEUERUNG_ID),
+        @Index(columnList = DBNames.MOTOR_TYP_ID),
+        @Index(columnList = DBNames.LICHT_ID),
+        @Index(columnList = DBNames.KUPPLUNG_ID),
+        @Index(columnList = DBNames.DECODER_ID) })
 @JsonRootName(value = ApiNames.ARTIKEL)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.PRODUKT, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.STUCK, ApiNames.STEUERUNG, ApiNames.MOTOR_TYP, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.DECODER, ApiNames.ANMERKUNG, ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.DELETED, ApiNames.LINKS})
 public class Artikel extends AbstractNamedItem implements IArtikel {
@@ -156,7 +157,7 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
-    @JoinColumn(name = "produkt_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "artikel_fk1"))
+    @JoinColumn(name = DBNames.PRODUKT_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "artikel_fk1"))
     @JsonGetter(ApiNames.PRODUKT)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -172,7 +173,7 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
     }
 
     @Override
-    @Column(name = ApiNames.KAUFDATUM, nullable = true)
+    @Column(name = DBNames.KAUFDATUM, nullable = true)
     @Temporal(TemporalType.DATE)
     @JsonGetter(ApiNames.KAUFDATUM)
     @JsonView(Views.Public.class)
@@ -189,7 +190,7 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Wahrung.class)
-    @JoinColumn(name = "wahrung_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "artikel_fk2"))
+    @JoinColumn(name = DBNames.WAHRUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "artikel_fk2"))
     @JsonGetter(ApiNames.WAHRUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -205,7 +206,7 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
     }
 
     @Override
-    @Column(name = ApiNames.PREIS, nullable = true, precision = 6, scale = 2)
+    @Column(name = DBNames.PREIS, nullable = true, precision = 6, scale = 2)
     @JsonGetter(ApiNames.PREIS)
     @JsonView(Views.Public.class)
     public BigDecimal getPreis() {
@@ -219,7 +220,7 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
     }
 
     @Override
-    @Column(name = ApiNames.STUCK, nullable = false)
+    @Column(name = DBNames.STUCK, nullable = false)
     @JsonGetter(ApiNames.STUCK)
     @JsonView(Views.Public.class)
     public Integer getStuck() {
@@ -234,7 +235,7 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class)
-    @JoinColumn(name = "steuerung_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "artikel_fk3"))
+    @JoinColumn(name = DBNames.STEUERUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "artikel_fk3"))
     @JsonGetter(ApiNames.STEUERUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -251,7 +252,7 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = MotorTyp.class)
-    @JoinColumn(name = "motor_typ_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "artikel_fk4"))
+    @JoinColumn(name = DBNames.MOTOR_TYP_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "artikel_fk4"))
     @JsonGetter(ApiNames.MOTOR_TYP)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -268,7 +269,7 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Licht.class)
-    @JoinColumn(name = "licht_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "artikel_fk5"))
+    @JoinColumn(name = DBNames.LICHT_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "artikel_fk5"))
     @JsonGetter(ApiNames.LICHT)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -285,7 +286,7 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kupplung.class)
-    @JoinColumn(name = "kupplung_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "artikel_fk6"))
+    @JoinColumn(name = DBNames.KUPPLUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "artikel_fk6"))
     @JsonGetter(ApiNames.KUPPLUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -302,7 +303,7 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
-    @JoinColumn(name = "decoder_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "artikel_fk7"))
+    @JoinColumn(name = DBNames.DECODER_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "artikel_fk7"))
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -318,7 +319,7 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
     }
 
     @Override
-    @Column(name = ApiNames.ANMERKUNG, length = 100, nullable = true)
+    @Column(name = DBNames.ANMERKUNG, length = 100, nullable = true)
     @JsonGetter(ApiNames.ANMERKUNG)
     @JsonView(Views.DropDown.class)
     public String getAnmerkung() {
@@ -332,7 +333,7 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
     }
 
     @Override
-    @Column(name = ApiNames.BELADUNG, length = 100, nullable = true)
+    @Column(name = DBNames.BELADUNG, length = 100, nullable = true)
     @JsonGetter(ApiNames.BELADUNG)
     @JsonView(Views.Public.class)
     public String getBeladung() {
@@ -346,7 +347,7 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
     }
 
     @Override
-    @Column(name = ApiNames.STATUS, nullable = false)
+    @Column(name = DBNames.STATUS, nullable = false)
     @Enumerated(EnumType.STRING)
     @JsonGetter(ApiNames.STATUS)
     @JsonView(Views.DropDown.class)

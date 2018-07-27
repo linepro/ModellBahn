@@ -43,6 +43,7 @@ import com.linepro.modellbahn.model.IProtokoll;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.model.util.AdressTyp;
 import com.linepro.modellbahn.model.util.Konfiguration;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.DecoderTypCVSerializer;
 import com.linepro.modellbahn.rest.json.DecoderTypFunktionSerializer;
@@ -58,10 +59,10 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name = "DecoderTyp")
-@Table(name = "DecoderTyp", indexes = { @Index(columnList = "hersteller_id"),
-        @Index(columnList = "protokoll_id") }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { "hersteller_id", ApiNames.NAME }) })
-@AttributeOverride(name = ApiNames.NAME, column = @Column(name = ApiNames.NAME))
+@Table(name = "DecoderTyp", indexes = { @Index(columnList = DBNames.HERSTELLER_ID),
+        @Index(columnList = DBNames.PROTOKOLL_ID) }, uniqueConstraints = {
+                @UniqueConstraint(columnNames = { DBNames.HERSTELLER_ID, DBNames.NAME }) })
+@AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME))
 @JsonRootName(value = ApiNames.DECODER_TYP)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.PROTOKOLL, ApiNames.ADRESS_TYP, ApiNames.ADRESSEN, ApiNames.FAHRSTUFE, ApiNames.SOUND, ApiNames.I_MAX, ApiNames.KONFIGURATION, ApiNames.DELETED, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS})
 public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
@@ -154,7 +155,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     @Override
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class)
-    @JoinColumn(name = "hersteller_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "decoder_typ_fk2"))
+    @JoinColumn(name = DBNames.HERSTELLER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_typ_fk2"))
     @JsonGetter(ApiNames.HERSTELLER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -182,7 +183,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     }
 
     @Override
-    @Column(name = ApiNames.ADRESSEN, nullable = false)
+    @Column(name = DBNames.ADRESSEN, nullable = false)
     @JsonGetter(ApiNames.ADRESSEN)
     @JsonView(Views.Public.class)
     public Integer getAdressen() {
@@ -197,7 +198,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
     @Override
     @Enumerated(EnumType.STRING)
-    @Column(name = ApiNames.ADRESS_TYP, length = 15, nullable = true)
+    @Column(name = DBNames.ADRESS_TYP, length = 15, nullable = true)
     @JsonGetter(ApiNames.ADRESS_TYP)
     @JsonView(Views.Public.class)
     public AdressTyp getAdressTyp() {
@@ -211,7 +212,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     }
 
     @Override
-    @Column(name = ApiNames.I_MAX, nullable = true, precision = 6, scale = 2)
+    @Column(name = DBNames.I_MAX, nullable = true, precision = 6, scale = 2)
     @JsonGetter(ApiNames.I_MAX)
     @JsonView(Views.Public.class)
     public BigDecimal getiMax() {
@@ -226,7 +227,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Protokoll.class)
-    @JoinColumn(name = "protokoll_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "decoder_typ_fk3"))
+    @JoinColumn(name = DBNames.PROTOKOLL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_typ_fk3"))
     @JsonGetter(ApiNames.PROTOKOLL)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -242,7 +243,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     }
 
     @Override
-    @Column(name = ApiNames.FAHRSTUFE, nullable = true)
+    @Column(name = DBNames.FAHRSTUFE, nullable = true)
     @JsonGetter(ApiNames.FAHRSTUFE)
     @JsonView(Views.Public.class)
     public Integer getFahrstufe() {
@@ -257,7 +258,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     }
 
     @Override
-    @Column(name = ApiNames.SOUND, nullable = false)
+    @Column(name = DBNames.SOUND, nullable = false)
     @JsonGetter(ApiNames.SOUND)
     @JsonView(Views.DropDown.class)
     public Boolean getSound() {
@@ -272,7 +273,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
     @Override
     @Enumerated(EnumType.STRING)
-    @Column(name = ApiNames.KONFIGURATION, nullable = false, length = 15)
+    @Column(name = DBNames.KONFIGURATION, nullable = false, length = 15)
     @JsonGetter(ApiNames.KONFIGURATION)
     @JsonView(Views.DropDown.class)
     public Konfiguration getKonfiguration() {
@@ -286,7 +287,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     }
 
     @Override
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = ApiNames.DECODER_TYP, targetEntity = DecoderTypCV.class, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.DECODER_TYP, targetEntity = DecoderTypCV.class, orphanRemoval = true)
     @JsonGetter(ApiNames.CVS)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentUsing = DecoderTypCVSerializer.class)
@@ -312,7 +313,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     }
 
     @Override
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = ApiNames.DECODER_TYP, targetEntity = DecoderTypFunktion.class, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.DECODER_TYP, targetEntity = DecoderTypFunktion.class, orphanRemoval = true)
     @JsonGetter(ApiNames.FUNKTIONEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentUsing = DecoderTypFunktionSerializer.class)

@@ -29,6 +29,7 @@ import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderFunktion;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.util.AbstractItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.DecoderTypSerializer;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
@@ -42,8 +43,8 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @version $Id:$
  */
 @Entity(name = "DecoderFunktion")
-@Table(name = "DecoderFunktion", indexes = { @Index(columnList = "decoder_id,funktion_id", unique = true) },
-       uniqueConstraints = { @UniqueConstraint(columnNames = { "decoder_id", "funktion_id" })})
+@Table(name = "DecoderFunktion", indexes = { @Index(columnList = DBNames.DECODER_ID + "," + DBNames.FUNKTION_ID, unique = true) },
+       uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.FUNKTION_ID })})
 @JsonRootName(value = ApiNames.FUNKTION)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER, ApiNames.FUNKTION,  ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS})
 public class DecoderFunktion extends AbstractItem implements IDecoderFunktion {
@@ -82,7 +83,7 @@ public class DecoderFunktion extends AbstractItem implements IDecoderFunktion {
 
 	@Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=Decoder.class)
-    @JoinColumn(name="decoder_id", nullable = false, referencedColumnName=ApiNames.ID, foreignKey = @ForeignKey(name = "decoder_fn_fk1"))
+    @JoinColumn(name=DBNames.DECODER_ID, nullable = false, referencedColumnName=DBNames.ID, foreignKey = @ForeignKey(name = "decoder_fn_fk1"))
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -99,7 +100,7 @@ public class DecoderFunktion extends AbstractItem implements IDecoderFunktion {
 
     @Override
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=DecoderTypFunktion.class)
-    @JoinColumn(name="funktion_id", nullable = false, referencedColumnName=ApiNames.ID, foreignKey = @ForeignKey(name = "decoder_fn_fk2"))
+    @JoinColumn(name = DBNames.FUNKTION_ID, nullable = false, referencedColumnName=DBNames.ID, foreignKey = @ForeignKey(name = "decoder_fn_fk2"))
     @JsonGetter(ApiNames.FUNKTION)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(contentUsing=DecoderTypSerializer.class)
@@ -114,7 +115,7 @@ public class DecoderFunktion extends AbstractItem implements IDecoderFunktion {
     }
 
     @Override
-	@Column(name=ApiNames.DESCRIPTION, nullable=true, length=100)
+	@Column(name=DBNames.DESCRIPTION, nullable=true, length=100)
     @JsonGetter(ApiNames.DESCRIPTION)
     @JsonView(Views.DropDown.class)
 	public String getBezeichnung() {

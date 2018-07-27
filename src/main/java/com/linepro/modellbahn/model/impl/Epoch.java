@@ -9,19 +9,20 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.IEpoch;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
- * Epoch.
- * The NEM 800 Epoch for a product
- * @author  $Author:$
+ * Epoch. The NEM 800 Epoch for a product
+ * 
+ * @author $Author:$
  * @version $Id:$
  */
 @Entity(name = "Epoch")
-@Table(name = "Epoch", indexes = { @Index(columnList = ApiNames.NAME, unique = true) }, 
-       uniqueConstraints = { @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@Table(name = "Epoch", indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
+        @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.EPOCH)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
 public class Epoch extends AbstractNamedItem implements IEpoch {
 
     /** The Constant serialVersionUID. */
@@ -31,22 +32,26 @@ public class Epoch extends AbstractNamedItem implements IEpoch {
      * Instantiates a new epoch.
      */
     public Epoch() {
-		super();
-	}
+        super();
+    }
 
     public Epoch(String name) {
         super(name);
     }
 
-	/**
-	 * Instantiates a new epoch.
-	 *
-	 * @param id the id
-	 * @param name the name
-	 * @param bezeichnung the bezeichnung
-	 * @param deleted the deleted
-	 */
-	public Epoch( Long id, String name, String bezeichnung, Boolean deleted) {
-		super(id, name, bezeichnung, deleted);
-	}
+    /**
+     * Instantiates a new epoch.
+     *
+     * @param id
+     *            the id
+     * @param name
+     *            the name
+     * @param bezeichnung
+     *            the bezeichnung
+     * @param deleted
+     *            the deleted
+     */
+    public Epoch(Long id, String name, String bezeichnung, Boolean deleted) {
+        super(id, name, bezeichnung, deleted);
+    }
 }

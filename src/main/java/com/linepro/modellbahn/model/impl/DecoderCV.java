@@ -28,22 +28,25 @@ import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderCV;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.util.AbstractItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
- * DecoderCV.
- * Holds the CV values for a Decoder (when Konfiguration.CV is in force) 
- * @author  $Author:$
+ * DecoderCV. Holds the CV values for a Decoder (when Konfiguration.CV is in
+ * force)
+ * 
+ * @author $Author:$
  * @version $Id:$
  */
 @Entity(name = "DecoderCV")
-@Table(name = "DecoderCV", indexes = { @Index(columnList = "decoder_id,cv_id", unique = true) }, 
-       uniqueConstraints = { @UniqueConstraint(columnNames = { "decoder_id", "cv_id" }) })
+@Table(name = "DecoderCV", indexes = {
+        @Index(columnList = DBNames.DECODER_ID + "," + DBNames.CV_ID, unique = true) }, uniqueConstraints = {
+                @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.CV_ID }) })
 @JsonRootName(value = ApiNames.CV)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER,  ApiNames.CV, ApiNames.WERT, ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER, ApiNames.CV, ApiNames.WERT, ApiNames.DELETED, ApiNames.LINKS })
 public class DecoderCV extends AbstractItem implements IDecoderCV {
 
     /** The Constant serialVersionUID. */
@@ -58,30 +61,33 @@ public class DecoderCV extends AbstractItem implements IDecoderCV {
     /** The wert. */
     private Integer wert;
 
-	/**
-	 * Instantiates a new decoder CV.
-	 */
-	public DecoderCV() {
-		super();
-	}
+    /**
+     * Instantiates a new decoder CV.
+     */
+    public DecoderCV() {
+        super();
+    }
 
-	/**
-	 * Instantiates a new decoder CV.
-	 *
-	 * @param decoder the decoder
-	 * @param cv the cv
-	 * @param wert the wert
-	 */
-	public DecoderCV(IDecoder decoder, IDecoderTypCV cv, Integer wert) {
+    /**
+     * Instantiates a new decoder CV.
+     *
+     * @param decoder
+     *            the decoder
+     * @param cv
+     *            the cv
+     * @param wert
+     *            the wert
+     */
+    public DecoderCV(IDecoder decoder, IDecoderTypCV cv, Integer wert) {
         setDecoder(decoder);
         setCV(cv);
         setWert(wert);
-	}
+    }
 
-	@Override
-    @ManyToOne(fetch=FetchType.LAZY, targetEntity=Decoder.class)
-    @JoinColumn(name="decoder_id", nullable = false, referencedColumnName=ApiNames.ID, foreignKey = @ForeignKey(name = "decoder_cv_fk1"))
-	@JsonGetter(ApiNames.DECODER)
+    @Override
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
+    @JoinColumn(name = DBNames.DECODER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_cv_fk1"))
+    @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
@@ -96,8 +102,8 @@ public class DecoderCV extends AbstractItem implements IDecoderCV {
     }
 
     @Override
-    @ManyToOne(fetch=FetchType.LAZY, targetEntity=DecoderTypCV.class)
-    @JoinColumn(name="cv_id", nullable = false, referencedColumnName=ApiNames.ID, foreignKey = @ForeignKey(name = "decoder_cv_fk2"))
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTypCV.class)
+    @JoinColumn(name = DBNames.CV_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_cv_fk2"))
     @JsonGetter(ApiNames.CV)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -112,19 +118,19 @@ public class DecoderCV extends AbstractItem implements IDecoderCV {
         this.cv = cv;
     }
 
-	@Override
-    @Column(name="wert", nullable = true)
+    @Override
+    @Column(name = "wert", nullable = true)
     @JsonGetter(ApiNames.WERT)
     @JsonView(Views.DropDown.class)
-	public Integer getWert() {
-		return wert;
-	}
+    public Integer getWert() {
+        return wert;
+    }
 
-	@Override
+    @Override
     @JsonSetter(ApiNames.WERT)
     public void setWert(Integer wert) {
-		this.wert = wert;
-	}
+        this.wert = wert;
+    }
 
     @Override
     @Transient
@@ -166,12 +172,12 @@ public class DecoderCV extends AbstractItem implements IDecoderCV {
                 .isEquals();
     }
 
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append(ApiNames.DECODER, getDecoder().getId())
                 .append(ApiNames.CV, getCV())
-				.append("wert", getWert())
-				.toString();
-	}
+                .append("wert", getWert())
+                .toString();
+    }
 }

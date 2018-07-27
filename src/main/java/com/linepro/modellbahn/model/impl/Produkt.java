@@ -54,6 +54,7 @@ import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.IVorbild;
 import com.linepro.modellbahn.model.util.AbstractItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.FileConverter;
 import com.linepro.modellbahn.rest.json.Formats;
 import com.linepro.modellbahn.rest.json.Views;
@@ -67,24 +68,24 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  * @version $Id:$
  */
 @Entity(name = "Produkt")
-@Table(name = "Produkt", indexes = { @Index(columnList = "hersteller_id,bestellnr", unique = true),
-        @Index(columnList = "epoch_id"),
-        @Index(columnList = "gattung_id"),
-        @Index(columnList = "bahnverwaltung_id"),
-        @Index(columnList = "achsfolg_id"),
-        @Index(columnList = "massstab_id"),
-        @Index(columnList = "spurweite_id"),
-        @Index(columnList = "unter_kategorie_id"),
-        @Index(columnList = "sondermodel_id"),
-        @Index(columnList = "aufbau_id"),
-        @Index(columnList = "licht_id"),
-        @Index(columnList = "kupplung_id"),
-        @Index(columnList = "vorbild_id"),
-        @Index(columnList = "steuerung_id"),
-        @Index(columnList = "decoder_typ_id"),
-        @Index(columnList = "motor_typ_id"),
-        @Index(columnList = "hersteller_id") }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { "hersteller_id", ApiNames.BESTELL_NR }) })
+@Table(name = "Produkt", indexes = { @Index(columnList = DBNames.HERSTELLER_ID + "," + DBNames.BESTELL_NR, unique = true),
+        @Index(columnList = DBNames.EPOCH_ID),
+        @Index(columnList = DBNames.GATTUNG_ID),
+        @Index(columnList = DBNames.BAHNVERWALTUNG_ID),
+        @Index(columnList = DBNames.ACHSFOLG_ID),
+        @Index(columnList = DBNames.MASSSTAB_ID),
+        @Index(columnList = DBNames.SPURWEITE_ID),
+        @Index(columnList = DBNames.UNTER_KATEGORIE_ID),
+        @Index(columnList = DBNames.SONDERMODEL_ID),
+        @Index(columnList = DBNames.AUFBAU_ID),
+        @Index(columnList = DBNames.LICHT_ID),
+        @Index(columnList = DBNames.KUPPLUNG_ID),
+        @Index(columnList = DBNames.VORBILD_ID),
+        @Index(columnList = DBNames.STEUERUNG_ID),
+        @Index(columnList = DBNames.DECODER_TYP_ID),
+        @Index(columnList = DBNames.MOTOR_TYP_ID),
+        @Index(columnList = DBNames.HERSTELLER_ID) }, uniqueConstraints = {
+                @UniqueConstraint(columnNames = { DBNames.HERSTELLER_ID, DBNames.BESTELL_NR }) })
 @JsonRootName(value = ApiNames.PRODUKT)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.UNTER_KATEGORIE, ApiNames.MASSSTAB, ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER, ApiNames.BAUZEIT, ApiNames.VORBILD, ApiNames.ACHSFOLG, ApiNames.ANMERKUNG, ApiNames.SONDERMODEL, ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG, ApiNames.DECODER_TYP, ApiNames.MOTOR_TYP, ApiNames.LANGE, ApiNames.ANLEITUNGEN, ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.TEILEN, ApiNames.DELETED, ApiNames.LINKS})
 public class Produkt extends AbstractItem implements IProdukt {
@@ -189,7 +190,7 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class)
-    @JoinColumn(name = "hersteller_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "product_fk16"))
+    @JoinColumn(name = DBNames.HERSTELLER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk16"))
     @JsonGetter(ApiNames.HERSTELLER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -205,7 +206,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     }
 
     @Override
-    @Column(name = ApiNames.BESTELL_NR, length = 30, nullable = true)
+    @Column(name = DBNames.BESTELL_NR, length = 30, nullable = true)
     @JsonGetter(ApiNames.BESTELL_NR)
     @JsonView(Views.DropDown.class)
     public String getBestellNr() {
@@ -220,7 +221,7 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = UnterKategorie.class)
-    @JoinColumn(name = "unter_kategorie_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "product_fk7"))
+    @JoinColumn(name = DBNames.UNTER_KATEGORIE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk7"))
     @JsonGetter(ApiNames.UNTER_KATEGORIE)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -237,7 +238,7 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Massstab.class)
-    @JoinColumn(name = "massstab_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "product_fk5"))
+    @JoinColumn(name = DBNames.MASSSTAB_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk5"))
     @JsonGetter(ApiNames.MASSSTAB)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -254,7 +255,7 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Spurweite.class)
-    @JoinColumn(name = "spurweite_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "product_fk6"))
+    @JoinColumn(name = DBNames.SPURWEITE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk6"))
     @JsonGetter(ApiNames.SPURWEITE)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -271,7 +272,7 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Epoch.class)
-    @JoinColumn(name = "epoch_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "product_fk1"))
+    @JoinColumn(name = DBNames.EPOCH_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk1"))
     @JsonGetter(ApiNames.EPOCH)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -288,7 +289,7 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Bahnverwaltung.class)
-    @JoinColumn(name = "bahnverwaltung_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "product_fk3"))
+    @JoinColumn(name = DBNames.BAHNVERWALTUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk3"))
     @JsonGetter(ApiNames.BAHNVERWALTUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -305,7 +306,7 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gattung.class)
-    @JoinColumn(name = "gattung_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "product_fk2"))
+    @JoinColumn(name = DBNames.GATTUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk2"))
     @JsonGetter(ApiNames.GATTUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -321,7 +322,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     }
 
     @Override
-    @Column(name = ApiNames.BETREIBSNUMMER, nullable = true, length = 100)
+    @Column(name = DBNames.BETREIBSNUMMER, nullable = true, length = 100)
     @JsonGetter(ApiNames.BETREIBSNUMMER)
     @JsonView(Views.Public.class)
     public String getBetreibsnummer() {
@@ -335,7 +336,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     }
 
     @Override
-    @Column(name = ApiNames.BAUZEIT, nullable = true)
+    @Column(name = DBNames.BAUZEIT, nullable = true)
     @Temporal(TemporalType.DATE)
     @JsonGetter(ApiNames.BAUZEIT)
     @JsonView(Views.Public.class)
@@ -352,7 +353,7 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Vorbild.class)
-    @JoinColumn(name = "vorbild_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "product_fk12"))
+    @JoinColumn(name = DBNames.VORBILD_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk12"))
     @JsonGetter(ApiNames.VORBILD)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -369,7 +370,7 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class)
-    @JoinColumn(name = "achsfolg_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "product_fk4"))
+    @JoinColumn(name = DBNames.ACHSFOLG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk4"))
     @JsonGetter(ApiNames.ACHSFOLG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -385,7 +386,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     }
 
     @Override
-    @Column(name = ApiNames.ANMERKUNG, nullable = true, length = 100)
+    @Column(name = DBNames.ANMERKUNG, nullable = true, length = 100)
     @JsonGetter(ApiNames.ANMERKUNG)
     @JsonView(Views.DropDown.class)
     public String getAnmerkung() {
@@ -400,7 +401,7 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = SonderModell.class)
-    @JoinColumn(name = "sondermodel_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "product_fk8"))
+    @JoinColumn(name = DBNames.SONDERMODEL_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk8"))
     @JsonGetter(ApiNames.SONDERMODEL)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -417,7 +418,7 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Aufbau.class)
-    @JoinColumn(name = "aufbau_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "product_fk9"))
+    @JoinColumn(name = DBNames.AUFBAU_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk9"))
     @JsonGetter(ApiNames.AUFBAU)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -434,7 +435,7 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Licht.class)
-    @JoinColumn(name = "licht_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "product_fk10"))
+    @JoinColumn(name = DBNames.LICHT_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk10"))
     @JsonGetter(ApiNames.LICHT)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -451,7 +452,7 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kupplung.class)
-    @JoinColumn(name = "kupplung_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "product_fk11"))
+    @JoinColumn(name = DBNames.KUPPLUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk11"))
     @JsonGetter(ApiNames.KUPPLUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -468,7 +469,7 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class)
-    @JoinColumn(name = "steuerung_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "product_fk13"))
+    @JoinColumn(name = DBNames.STEUERUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk13"))
     @JsonGetter(ApiNames.STEUERUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -485,7 +486,7 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
-    @JoinColumn(name = "decoder_typ_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "product_fk14"))
+    @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk14"))
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -502,7 +503,7 @@ public class Produkt extends AbstractItem implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = MotorTyp.class)
-    @JoinColumn(name = "motor_typ_id", nullable = true, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "product_fk15"))
+    @JoinColumn(name = DBNames.MOTOR_TYP_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk15"))
     @JsonGetter(ApiNames.MOTOR_TYP)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -518,7 +519,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     }
 
     @Override
-    @Column(name = ApiNames.LANGE, nullable = true, precision = 6, scale = 2)
+    @Column(name = DBNames.LANGE, nullable = true, precision = 6, scale = 2)
     @JsonGetter(ApiNames.LANGE)
     @JsonView(Views.Public.class)
     public BigDecimal getLange() {
@@ -532,7 +533,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     }
 
     @Override
-    @Column(name = ApiNames.ANLEITUNGEN, nullable = true, length = 512)
+    @Column(name = DBNames.ANLEITUNGEN, nullable = true, length = 512)
     @JsonGetter(ApiNames.ANLEITUNGEN)
     @JsonView(Views.Public.class)
     public File getAnleitungen() {
@@ -546,7 +547,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     }
 
     @Override
-    @Column(name = ApiNames.EXPLOSIONSZEICHNUNG, nullable = true, length = 512)
+    @Column(name = DBNames.EXPLOSIONSZEICHNUNG, nullable = true, length = 512)
     @JsonGetter(ApiNames.EXPLOSIONSZEICHNUNG)
     @JsonView(Views.Public.class)
     public File getExplosionszeichnung() {
@@ -560,7 +561,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     }
 
     @Override
-    @Column(name = ApiNames.ABBILDUNG, nullable = true)
+    @Column(name = DBNames.ABBILDUNG, nullable = true)
     @Convert(converter = FileConverter.class)
     @JsonGetter(ApiNames.ABBILDUNG)
     @JsonView(Views.DropDown.class)
@@ -575,7 +576,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     }
 
     @Override
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = ApiNames.PRODUKT, targetEntity = ProduktTeil.class, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.PRODUKT, targetEntity = ProduktTeil.class, orphanRemoval = true)
     @JsonGetter(ApiNames.TEILEN)
     @JsonView(Views.Public.class)
     @JsonSerialize()
@@ -587,6 +588,17 @@ public class Produkt extends AbstractItem implements IProdukt {
     @JsonSetter(ApiNames.TEILEN)
     public void setTeilen(List<IProduktTeil> teilen) {
         this.teilen = teilen;
+    }
+
+    @Override
+    public void addTeil(IProduktTeil funktion) {
+        funktion.setProdukt(this);
+        getTeilen().add(funktion);
+    }
+
+    @Override
+    public void removeTeil(IProduktTeil funktion) {
+        getTeilen().remove(funktion);
     }
 
     @Override

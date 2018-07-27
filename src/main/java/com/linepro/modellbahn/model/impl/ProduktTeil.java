@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IProdukt;
 import com.linepro.modellbahn.model.IProduktTeil;
 import com.linepro.modellbahn.model.util.AbstractItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.ProduktSerializer;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
@@ -39,10 +40,10 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @version $Id:$
  */
 @Entity(name = "ProduktTeil")
-@Table(name = "ProduktTeil", indexes = { @Index(columnList = "produkt_id,teil_id", unique = true),
-        @Index(columnList = "produkt_id"),
-        @Index(columnList = "teil_id") }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { "produkt_id", "teil_id" }) })
+@Table(name = "ProduktTeil", indexes = { @Index(columnList = DBNames.PRODUKT_ID + "," + DBNames.TEIL_ID, unique = true),
+        @Index(columnList = DBNames.PRODUKT_ID),
+        @Index(columnList = DBNames.TEIL_ID) }, uniqueConstraints = {
+                @UniqueConstraint(columnNames = { DBNames.PRODUKT_ID, DBNames.TEIL_ID }) })
 @JsonRootName(value = ApiNames.TEIL)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.PRODUKT,ApiNames.TEIL, ApiNames.ANZAHL, ApiNames.DELETED, ApiNames.LINKS})
 public class ProduktTeil extends AbstractItem implements IProduktTeil {
@@ -84,7 +85,7 @@ public class ProduktTeil extends AbstractItem implements IProduktTeil {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
-    @JoinColumn(name = "produkt_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "produkt_teil_fk1"))
+    @JoinColumn(name = DBNames.PRODUKT_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "produkt_teil_fk1"))
     @JsonGetter(ApiNames.PRODUKT)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(contentUsing=ProduktSerializer.class)
@@ -100,7 +101,7 @@ public class ProduktTeil extends AbstractItem implements IProduktTeil {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
-    @JoinColumn(name = "teil_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "produkt_teil_fk2"))
+    @JoinColumn(name = DBNames.TEIL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "produkt_teil_fk2"))
     @JsonGetter(ApiNames.TEIL)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(contentUsing=ProduktSerializer.class)
@@ -115,7 +116,7 @@ public class ProduktTeil extends AbstractItem implements IProduktTeil {
     }
 
     @Override
-    @Column(name = ApiNames.ANZAHL, nullable = false)
+    @Column(name = DBNames.ANZAHL, nullable = false)
     @JsonGetter(ApiNames.ANZAHL)
     @JsonView(Views.DropDown.class)
     public Integer getAnzahl() {

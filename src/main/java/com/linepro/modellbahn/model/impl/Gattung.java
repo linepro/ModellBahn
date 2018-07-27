@@ -9,19 +9,20 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.IGattung;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
- * Gattung.
- * The Gattung (or Baureihe) for product
- * @author  $Author:$
+ * Gattung. The Gattung (or Baureihe) for product
+ * 
+ * @author $Author:$
  * @version $Id:$
  */
 @Entity(name = "Gattung")
-@Table(name = "Gattung", indexes = { @Index(columnList = ApiNames.NAME, unique = true) }, 
-       uniqueConstraints = { @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@Table(name = "Gattung", indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
+        @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.GATTUNG)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
 public class Gattung extends AbstractNamedItem implements IGattung {
 
     /** The Constant serialVersionUID. */
@@ -31,22 +32,26 @@ public class Gattung extends AbstractNamedItem implements IGattung {
      * Instantiates a new gattung.
      */
     public Gattung() {
-		super();
-	}
+        super();
+    }
 
     public Gattung(String name) {
         super(name);
     }
 
     /**
-	 * Instantiates a new gattung.
-	 *
-	 * @param id the id
-	 * @param name the name
-	 * @param bezeichnung the bezeichnung
-	 * @param deleted the deleted
-	 */
-	public Gattung( Long id, String name, String bezeichnung, Boolean deleted) {
-		super(id, name, bezeichnung, deleted);
-	}
+     * Instantiates a new gattung.
+     *
+     * @param id
+     *            the id
+     * @param name
+     *            the name
+     * @param bezeichnung
+     *            the bezeichnung
+     * @param deleted
+     *            the deleted
+     */
+    public Gattung(Long id, String name, String bezeichnung, Boolean deleted) {
+        super(id, name, bezeichnung, deleted);
+    }
 }

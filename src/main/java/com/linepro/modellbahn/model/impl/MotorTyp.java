@@ -9,19 +9,20 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.IMotorTyp;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
- * MotorTyp.
- * The (Märklin) motor type for a product
- * @author  $Author:$
+ * MotorTyp. The (Märklin) motor type for a product
+ * 
+ * @author $Author:$
  * @version $Id:$
  */
 @Entity(name = "MotorTyp")
-@Table(name = "MotorTyp", indexes = { @Index(columnList = ApiNames.NAME, unique = true) }, 
-       uniqueConstraints = { @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@Table(name = "MotorTyp", indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
+        @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.MOTOR_TYP)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
 public class MotorTyp extends AbstractNamedItem implements IMotorTyp {
 
     /** The Constant serialVersionUID. */
@@ -31,22 +32,26 @@ public class MotorTyp extends AbstractNamedItem implements IMotorTyp {
      * Instantiates a new motor typ.
      */
     public MotorTyp() {
-		super();
-	}
+        super();
+    }
 
     public MotorTyp(String name) {
         super(name);
     }
 
     /**
-	 * Instantiates a new motor typ.
-	 *
-	 * @param id the id
-	 * @param name the name
-	 * @param bezeichnung the bezeichnung
-	 * @param deleted the deleted
-	 */
-	public MotorTyp( Long id, String name, String bezeichnung, Boolean deleted) {
-		super(id, name, bezeichnung, deleted);
-	}
+     * Instantiates a new motor typ.
+     *
+     * @param id
+     *            the id
+     * @param name
+     *            the name
+     * @param bezeichnung
+     *            the bezeichnung
+     * @param deleted
+     *            the deleted
+     */
+    public MotorTyp(Long id, String name, String bezeichnung, Boolean deleted) {
+        super(id, name, bezeichnung, deleted);
+    }
 }

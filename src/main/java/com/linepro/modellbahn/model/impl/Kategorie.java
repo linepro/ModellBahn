@@ -23,22 +23,24 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IKategorie;
 import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.UnterKategorieSerializer;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
- * Kategorie.
- * The category for a product
- * @author  $Author:$
+ * Kategorie. The category for a product
+ * 
+ * @author $Author:$
  * @version $Id:$
  */
-@Entity(name="Kategorie")
-@Table(name = "Kategorie", indexes = { @Index(columnList = ApiNames.NAME, unique = true) }, 
-       uniqueConstraints = { @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@Entity(name = "Kategorie")
+@Table(name = "Kategorie", indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
+        @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.KATEGORIE)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.UNTER_KATEGORIEN, ApiNames.LINKS})
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.UNTER_KATEGORIEN,
+        ApiNames.LINKS })
 public class Kategorie extends AbstractNamedItem implements IKategorie {
 
     /** The Constant serialVersionUID. */
@@ -50,30 +52,34 @@ public class Kategorie extends AbstractNamedItem implements IKategorie {
      * Instantiates a new kategorie.
      */
     public Kategorie() {
-		super();
-	}
+        super();
+    }
 
     public Kategorie(String name) {
         super(name);
     }
 
     /**
-	 * Instantiates a new kategorie.
-	 *
-	 * @param id the id
-	 * @param name the name
-	 * @param bezeichnung the bezeichnung
-	 * @param deleted the deleted
-	 */
-	public Kategorie( Long id, String name, String bezeichnung, Boolean deleted) {
-		super(id, name, bezeichnung, deleted);
-	}
+     * Instantiates a new kategorie.
+     *
+     * @param id
+     *            the id
+     * @param name
+     *            the name
+     * @param bezeichnung
+     *            the bezeichnung
+     * @param deleted
+     *            the deleted
+     */
+    public Kategorie(Long id, String name, String bezeichnung, Boolean deleted) {
+        super(id, name, bezeichnung, deleted);
+    }
 
     @Override
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = ApiNames.KATEGORIE, targetEntity = UnterKategorie.class, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.KATEGORIE, targetEntity = UnterKategorie.class, orphanRemoval = true)
     @JsonGetter(ApiNames.UNTER_KATEGORIEN)
     @JsonView(Views.Public.class)
-    @JsonSerialize(contentUsing=UnterKategorieSerializer.class)
+    @JsonSerialize(contentUsing = UnterKategorieSerializer.class)
     public Set<IUnterKategorie> getUnterKategorien() {
         return unterKategorien;
     }
@@ -86,6 +92,7 @@ public class Kategorie extends AbstractNamedItem implements IKategorie {
 
     @Override
     public void addUnterKategorie(IUnterKategorie unterKategorie) {
+        unterKategorie.setKategorie(this);
         getUnterKategorien().add(unterKategorie);
     }
 

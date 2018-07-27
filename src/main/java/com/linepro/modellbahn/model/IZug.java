@@ -37,4 +37,8 @@ public interface IZug extends INamedItem {
      */
     void setConsist(List<IZugConsist> consist);
 
+    void addConsist(IZugConsist consist);
+
+    void removeConsist(IZugConsist consist);
+
 }

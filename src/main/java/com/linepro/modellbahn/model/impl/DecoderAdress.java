@@ -33,21 +33,22 @@ import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderAdress;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.model.util.AdressTyp;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
- * DecoderAdress.
- * An address for a decoder (several have more than one) 
- * @author  $Author:$
+ * DecoderAdress. An address for a decoder (several have more than one)
+ * 
+ * @author $Author:$
  * @version $Id:$
  */
 @Entity(name = "DecoderAdress")
-@Table(name = "DecoderAdress", indexes = { @Index(columnList = "decoder_id,typ,adress", unique = true) },
-       uniqueConstraints = { @UniqueConstraint(columnNames = { "decoder_id", "typ",ApiNames.ADRESS })})
+@Table(name = "DecoderAdress", indexes = { @Index(columnList = DBNames.DECODER_ID + "," + DBNames.ADRESS_TYP + "," + DBNames.ADRESS, unique = true) },
+        uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.ADRESS_TYP, DBNames.ADRESS }) })
 @JsonRootName(value = ApiNames.ADRESS)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER,  ApiNames.ADRESS_TYP,  ApiNames.ADRESS, ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER, ApiNames.ADRESS_TYP, ApiNames.ADRESS, ApiNames.DELETED, ApiNames.LINKS })
 public class DecoderAdress extends AbstractItem implements IDecoderAdress {
 
     /** The Constant serialVersionUID. */
@@ -71,9 +72,12 @@ public class DecoderAdress extends AbstractItem implements IDecoderAdress {
     /**
      * Instantiates a new adress.
      *
-     * @param decoder the decoder
-     * @param typ the typ
-     * @param adress the adress
+     * @param decoder
+     *            the decoder
+     * @param typ
+     *            the typ
+     * @param adress
+     *            the adress
      */
     public DecoderAdress(IDecoder decoder, AdressTyp typ, Integer adress) {
         setDecoder(decoder);
@@ -82,8 +86,8 @@ public class DecoderAdress extends AbstractItem implements IDecoderAdress {
     }
 
     @Override
-    @ManyToOne(fetch=FetchType.LAZY, targetEntity=Decoder.class)
-    @JoinColumn(name="decoder_id", nullable = false, referencedColumnName=ApiNames.ID, foreignKey = @ForeignKey(name = "decoder_address_fk1"))
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
+    @JoinColumn(name = DBNames.DECODER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_address_fk1"))
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -100,7 +104,7 @@ public class DecoderAdress extends AbstractItem implements IDecoderAdress {
 
     @Override
     @Enumerated(EnumType.STRING)
-    @Column(name = "typ", nullable = false, length=10)
+    @Column(name = DBNames.ADRESS_TYP, nullable = false, length = 10)
     @JsonGetter(ApiNames.ADRESS_TYP)
     @JsonView(Views.DropDown.class)
     public AdressTyp getAdressTyp() {
@@ -114,7 +118,7 @@ public class DecoderAdress extends AbstractItem implements IDecoderAdress {
     }
 
     @Override
-    @Column(name = ApiNames.ADRESS, nullable = false)
+    @Column(name = DBNames.ADRESS, nullable = false)
     @JsonGetter(ApiNames.ADRESS)
     @JsonView(Views.DropDown.class)
     public Integer getAdress() {
@@ -155,11 +159,11 @@ public class DecoderAdress extends AbstractItem implements IDecoderAdress {
                 .isEquals();
     }
 
-   @Override
+    @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append(ApiNames.DECODER, getDecoder().getId())
-                .append("typ", getAdressTyp())
+                .append(ApiNames.ADRESS_TYP, getAdressTyp())
                 .append(ApiNames.ADRESS, getAdress()).toString();
     }
 }

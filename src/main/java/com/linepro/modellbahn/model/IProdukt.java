@@ -7,8 +7,9 @@ import java.util.List;
 
 /**
  * IProdukt.
- * @author   $Author$
- * @version  $Id$
+ * 
+ * @author $Author$
+ * @version $Id$
  */
 public interface IProdukt extends IItem {
 
@@ -22,7 +23,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the epoch.
      *
-     * @param epoch the new epoch
+     * @param epoch
+     *            the new epoch
      */
     void setEpoch(IEpoch epoch);
 
@@ -36,7 +38,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the gattung.
      *
-     * @param gattung the new gattung
+     * @param gattung
+     *            the new gattung
      */
     void setGattung(IGattung gattung);
 
@@ -50,7 +53,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the bahnverwaltung.
      *
-     * @param bahnverwaltung the new bahnverwaltung
+     * @param bahnverwaltung
+     *            the new bahnverwaltung
      */
     void setBahnverwaltung(IBahnverwaltung bahnverwaltung);
 
@@ -64,7 +68,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the achsfolge.
      *
-     * @param achsfolge the new achsfolge
+     * @param achsfolge
+     *            the new achsfolge
      */
     void setAchsfolg(IAchsfolg achsfolge);
 
@@ -78,7 +83,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the massstab.
      *
-     * @param massstab the new massstab
+     * @param massstab
+     *            the new massstab
      */
     void setMassstab(IMassstab massstab);
 
@@ -92,7 +98,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the spurweite.
      *
-     * @param spurweite the new spurweite
+     * @param spurweite
+     *            the new spurweite
      */
     void setSpurweite(ISpurweite spurweite);
 
@@ -106,7 +113,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the unter kategorie.
      *
-     * @param unterKategorie the new unter kategorie
+     * @param unterKategorie
+     *            the new unter kategorie
      */
     void setUnterKategorie(IUnterKategorie unterKategorie);
 
@@ -120,7 +128,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the sondermodel.
      *
-     * @param sondermodel the new sondermodel
+     * @param sondermodel
+     *            the new sondermodel
      */
     void setSondermodel(ISonderModell sondermodel);
 
@@ -134,7 +143,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the aufbau.
      *
-     * @param aufbau the new aufbau
+     * @param aufbau
+     *            the new aufbau
      */
     void setAufbau(IAufbau aufbau);
 
@@ -148,7 +158,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the licht.
      *
-     * @param licht the new licht
+     * @param licht
+     *            the new licht
      */
     void setLicht(ILicht licht);
 
@@ -162,7 +173,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the kupplung.
      *
-     * @param kupplung the new kupplung
+     * @param kupplung
+     *            the new kupplung
      */
     void setKupplung(IKupplung kupplung);
 
@@ -176,7 +188,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the vorbild.
      *
-     * @param vorbild the new vorbild
+     * @param vorbild
+     *            the new vorbild
      */
     void setVorbild(IVorbild vorbild);
 
@@ -190,7 +203,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the steuerung.
      *
-     * @param steuerung the new steuerung
+     * @param steuerung
+     *            the new steuerung
      */
     void setSteuerung(ISteuerung steuerung);
 
@@ -204,7 +218,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the decoder typ.
      *
-     * @param decoderTyp the new decoder typ
+     * @param decoderTyp
+     *            the new decoder typ
      */
     void setDecoderTyp(IDecoderTyp decoderTyp);
 
@@ -218,7 +233,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the motor typ.
      *
-     * @param motorTyp the new motor typ
+     * @param motorTyp
+     *            the new motor typ
      */
     void setMotorTyp(IMotorTyp motorTyp);
 
@@ -232,7 +248,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the hersteller.
      *
-     * @param hersteller the new hersteller
+     * @param hersteller
+     *            the new hersteller
      */
     void setHersteller(IHersteller hersteller);
 
@@ -246,7 +263,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the bestell nr.
      *
-     * @param bestellNr the new bestell nr
+     * @param bestellNr
+     *            the new bestell nr
      */
     void setBestellNr(String bestellNr);
 
@@ -260,7 +278,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the anmerkung.
      *
-     * @param anmerkung the new anmerkung
+     * @param anmerkung
+     *            the new anmerkung
      */
     void setAnmerkung(String anmerkung);
 
@@ -274,7 +293,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the betreibsnummer.
      *
-     * @param betreibsnummer the new betreibsnummer
+     * @param betreibsnummer
+     *            the new betreibsnummer
      */
     void setBetreibsnummer(String betreibsnummer);
 
@@ -288,7 +308,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the bauzeit.
      *
-     * @param bauzeit the new bauzeit
+     * @param bauzeit
+     *            the new bauzeit
      */
     void setBauzeit(Date bauzeit);
 
@@ -302,7 +323,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the anleitungen.
      *
-     * @param anleitungen the new anleitungen
+     * @param anleitungen
+     *            the new anleitungen
      */
     void setAnleitungen(File anleitungen);
 
@@ -316,7 +338,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the explosionszeichnung.
      *
-     * @param explosionszeichnung the new explosionszeichnung
+     * @param explosionszeichnung
+     *            the new explosionszeichnung
      */
     void setExplosionszeichnung(File explosionszeichnung);
 
@@ -330,7 +353,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the lange.
      *
-     * @param lange the new lange
+     * @param lange
+     *            the new lange
      */
     void setLange(BigDecimal lange);
 
@@ -344,7 +368,8 @@ public interface IProdukt extends IItem {
     /**
      * Sets the abbildung.
      *
-     * @param abbildung the new abbildung
+     * @param abbildung
+     *            the new abbildung
      */
     void setAbbildung(File abbildung);
 
@@ -358,7 +383,12 @@ public interface IProdukt extends IItem {
     /**
      * Sets the teilen.
      *
-     * @param teilen the new teilen
+     * @param teilen
+     *            the new teilen
      */
     void setTeilen(List<IProduktTeil> teilen);
+
+    void addTeil(IProduktTeil funktion);
+
+    void removeTeil(IProduktTeil funktion);
 }

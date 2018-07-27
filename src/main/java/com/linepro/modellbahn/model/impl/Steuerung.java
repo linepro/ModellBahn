@@ -9,19 +9,20 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
- * Steuerung.
- * The steering method for a product.
- * @author  $Author:$
+ * Steuerung. The steering method for a product.
+ * 
+ * @author $Author:$
  * @version $Id:$
  */
 @Entity(name = "Steuerung")
-@Table(name = "Steuerung", indexes = { @Index(columnList = ApiNames.NAME, unique = true) }, 
-       uniqueConstraints = { @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@Table(name = "Steuerung", indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
+        @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.STEUERUNG)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
 public class Steuerung extends AbstractNamedItem implements ISteuerung {
 
     /** The Constant serialVersionUID. */
@@ -31,22 +32,26 @@ public class Steuerung extends AbstractNamedItem implements ISteuerung {
      * Instantiates a new steuerung.
      */
     public Steuerung() {
-		super();
-	}
+        super();
+    }
 
     public Steuerung(String name) {
         super(name);
     }
 
     /**
-	 * Instantiates a new steuerung.
-	 *
-	 * @param id the id
-	 * @param name the name
-	 * @param bezeichnung the bezeichnung
-	 * @param deleted the deleted
-	 */
-	public Steuerung( Long id, String name, String bezeichnung, Boolean deleted) {
-		super(id, name, bezeichnung, deleted);
-	}
+     * Instantiates a new steuerung.
+     *
+     * @param id
+     *            the id
+     * @param name
+     *            the name
+     * @param bezeichnung
+     *            the bezeichnung
+     * @param deleted
+     *            the deleted
+     */
+    public Steuerung(Long id, String name, String bezeichnung, Boolean deleted) {
+        super(id, name, bezeichnung, deleted);
+    }
 }

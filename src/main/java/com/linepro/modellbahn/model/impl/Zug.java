@@ -28,6 +28,7 @@ import com.linepro.modellbahn.model.IZug;
 import com.linepro.modellbahn.model.IZugConsist;
 import com.linepro.modellbahn.model.IZugTyp;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -39,8 +40,8 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  * @version $Id:$
  */
 @Entity(name = "Zug")
-@Table(name = "Zug", indexes = { @Index(columnList = ApiNames.NAME, unique = true), @Index(columnList = "zug_typ_id") }, 
-       uniqueConstraints = { @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@Table(name = "Zug", indexes = { @Index(columnList = DBNames.NAME, unique = true), @Index(columnList = DBNames.ZUG_TYP_ID) }, 
+       uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.ZUG)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.ZUG_TYP, ApiNames.NAME,ApiNames.DESCRIPTION,ApiNames.DELETED, ApiNames.CONSIST, ApiNames.LINKS})
 public class Zug extends AbstractNamedItem implements IZug {
@@ -82,7 +83,7 @@ public class Zug extends AbstractNamedItem implements IZug {
 
 	@Override
 	@ManyToOne(fetch=FetchType.LAZY, targetEntity=ZugTyp.class)
-	@JoinColumn(name = "zug_typ_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "zug_fk1"))
+	@JoinColumn(name = DBNames.ZUG_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "zug_fk1"))
 	@JsonGetter(ApiNames.ZUG_TYP)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
@@ -97,7 +98,7 @@ public class Zug extends AbstractNamedItem implements IZug {
 	}
 
     @Override
-	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = ApiNames.ZUG, targetEntity=ZugConsist.class, orphanRemoval = true)
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.ZUG, targetEntity=ZugConsist.class, orphanRemoval = true)
     @JsonGetter(ApiNames.CONSIST)
     @JsonView(Views.Public.class)
 	public List<IZugConsist> getConsist() {
@@ -109,6 +110,18 @@ public class Zug extends AbstractNamedItem implements IZug {
 	public void setConsist(List<IZugConsist> consist) {
 		this.consist = consist;
 	}
+   
+    @Override
+    public void addConsist(IZugConsist consist) {
+        consist.setZug(this);
+        getConsist().add(consist);
+    }
+
+    @Override
+    public void removeConsist(IZugConsist consist) {
+        getConsist().remove(consist);
+    }
+
 
 	@Override
 	public String toString() {

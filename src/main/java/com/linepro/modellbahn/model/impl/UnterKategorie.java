@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.linepro.modellbahn.model.IKategorie;
 import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
@@ -41,10 +42,10 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @version $Id:$
  */
 @Entity(name = "UnterKategorie")
-@Table(name = "UnterKategorie", indexes = { @Index(columnList = "kategorie_id,name", unique = true),
-        @Index(columnList = "kategorie_id") }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { "kategorie_id", ApiNames.NAME }) })
-@AttributeOverride(name = ApiNames.NAME, column = @Column(name = ApiNames.NAME, unique = false, length = 50))
+@Table(name = "UnterKategorie", indexes = { @Index(columnList = DBNames.KATEGORIE_ID +"," + DBNames.NAME, unique = true),
+        @Index(columnList = DBNames.KATEGORIE_ID) }, uniqueConstraints = {
+                @UniqueConstraint(columnNames = { DBNames.KATEGORIE_ID, DBNames.NAME }) })
+@AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, unique = false, length = 50))
 @JsonRootName(value = ApiNames.UNTER_KATEGORIE)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.KATEGORIE, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS})
 public class UnterKategorie extends AbstractNamedItem implements IUnterKategorie {
@@ -86,7 +87,7 @@ public class UnterKategorie extends AbstractNamedItem implements IUnterKategorie
     @Override
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kategorie.class)
-    @JoinColumn(name = "kategorie_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "unterkategorie_fk1"))
+    @JoinColumn(name = DBNames.KATEGORIE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "unterkategorie_fk1"))
     @JsonGetter(ApiNames.KATEGORIE)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)

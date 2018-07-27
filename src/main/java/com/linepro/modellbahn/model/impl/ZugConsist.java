@@ -30,24 +30,25 @@ import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IZug;
 import com.linepro.modellbahn.model.IZugConsist;
 import com.linepro.modellbahn.model.util.AbstractItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.ArtikelSerializer;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
- * ZugConsist.
- * A component of a train
- * @author  $Author:$
+ * ZugConsist. A component of a train
+ * 
+ * @author $Author:$
  * @version $Id:$
  */
 @Entity(name = "ZugConsist")
-@Table(name = "ZugConsist", indexes = { @Index(columnList = "zug_id"),
-        @Index(columnList = "artikel_id", unique = true) }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { "zug_id", ApiNames.POSITION }) })
+@Table(name = "ZugConsist", indexes = { @Index(columnList = DBNames.ZUG_ID),
+        @Index(columnList = DBNames.ARTIKEL_ID, unique = true) }, uniqueConstraints = {
+                @UniqueConstraint(columnNames = { DBNames.ZUG_ID, DBNames.POSITION }) })
 @JsonRootName(value = ApiNames.CONSIST)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.ZUG,  ApiNames.POSITION,  ApiNames.ARTIKEL, ApiNames.DELETED, ApiNames.LINKS })
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.ZUG, ApiNames.POSITION, ApiNames.ARTIKEL, ApiNames.DELETED, ApiNames.LINKS })
 public class ZugConsist extends AbstractItem implements IZugConsist {
 
     /** The Constant serialVersionUID. */
@@ -72,11 +73,16 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
     /**
      * Instantiates a new zug consist.
      *
-     * @param id the id
-     * @param zug the zug
-     * @param position the position
-     * @param artikel the artikel
-     * @param deleted the deleted
+     * @param id
+     *            the id
+     * @param zug
+     *            the zug
+     * @param position
+     *            the position
+     * @param artikel
+     *            the artikel
+     * @param deleted
+     *            the deleted
      */
     public ZugConsist(Long id, IZug zug, Integer position, IArtikel artikel, Boolean deleted) {
         super(id, deleted);
@@ -88,7 +94,7 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Zug.class)
-    @JoinColumn(name = "zug_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "consist_fk1"))
+    @JoinColumn(name = DBNames.ZUG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "consist_fk1"))
     @JsonGetter(ApiNames.ZUG)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -105,7 +111,7 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
 
     @Override
     @OrderColumn
-    @Column(name = ApiNames.POSITION, nullable=false)
+    @Column(name = DBNames.POSITION, nullable = false)
     @JsonGetter(ApiNames.POSITION)
     @JsonView(Views.DropDown.class)
     public Integer getPosition() {
@@ -120,10 +126,10 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Artikel.class)
-    @JoinColumn(name = "artikel_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "consist_fk2"))
+    @JoinColumn(name = DBNames.ARTIKEL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "consist_fk2"))
     @JsonGetter(ApiNames.ARTIKEL)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(contentUsing=ArtikelSerializer.class)
+    @JsonSerialize(contentUsing = ArtikelSerializer.class)
     public IArtikel getArtikel() {
         return artikel;
     }
@@ -133,7 +139,7 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
     public void setArtikel(IArtikel artikel) {
         this.artikel = artikel;
     }
-    
+
     @Override
     @Transient
     @JsonIgnore

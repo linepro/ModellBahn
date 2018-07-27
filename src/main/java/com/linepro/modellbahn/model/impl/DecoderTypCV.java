@@ -28,6 +28,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.util.AbstractItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.DecoderTypSerializer;
 import com.linepro.modellbahn.rest.json.Views;
@@ -42,9 +43,9 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @version $Id:$
  */
 @Entity(name = "DecoderTypCV")
-@Table(name = "DecoderTypCV", indexes = { @Index(columnList = "decoder_typ_id,cv", unique = true),
-        @Index(columnList = "decoder_typ_id"), @Index(columnList = ApiNames.CV) }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { "decoder_typ_id", ApiNames.CV }) })
+@Table(name = "DecoderTypCV", indexes = { @Index(columnList = DBNames.DECODER_TYP_ID +"," + DBNames.CV, unique = true),
+        @Index(columnList = DBNames.DECODER_TYP_ID), @Index(columnList = DBNames.CV) }, uniqueConstraints = {
+                @UniqueConstraint(columnNames = { DBNames.DECODER_TYP_ID, DBNames.CV }) })
 @JsonRootName(value = ApiNames.CV)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.CV,  ApiNames.DESCRIPTION,  ApiNames.MINIMAL,  ApiNames.MAXIMAL,  ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED, ApiNames.LINKS}) 
 public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
@@ -104,7 +105,7 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
     @Override
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
-    @JoinColumn(name = "decoder_typ_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "decoder_typ_cv_fk1"))
+    @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_typ_cv_fk1"))
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -121,7 +122,7 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
 
     @Override
     @BusinessKey
-    @Column(name = ApiNames.CV, nullable = false)
+    @Column(name = DBNames.CV, nullable = false)
     @JsonGetter(ApiNames.CV)
     @JsonSerialize(contentUsing=DecoderTypSerializer.class)
     public Integer getCV() {
@@ -135,7 +136,7 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
     }
 
     @Override
-    @Column(name = ApiNames.DESCRIPTION, nullable = true, length = 100)
+    @Column(name = DBNames.DESCRIPTION, nullable = true, length = 100)
     @JsonGetter(ApiNames.DESCRIPTION)
     @JsonView(Views.DropDown.class)
     public String getBezeichnung() {
@@ -149,7 +150,7 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
     }
 
     @Override
-    @Column(name = ApiNames.MINIMAL, nullable = true)
+    @Column(name = DBNames.MINIMAL, nullable = true)
     @JsonGetter(ApiNames.MINIMAL)
     @JsonView(Views.Public.class)
     public Integer getMinimal() {
@@ -163,7 +164,7 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
     }
 
     @Override
-    @Column(name = ApiNames.MAXIMAL, nullable = true)
+    @Column(name = DBNames.MAXIMAL, nullable = true)
     @JsonGetter(ApiNames.MAXIMAL)
     @JsonView(Views.Public.class)
     public Integer getMaximal() {
@@ -177,7 +178,7 @@ public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
     }
 
     @Override
-    @Column(name = ApiNames.WERKSEINSTELLUNG, nullable = true)
+    @Column(name = DBNames.WERKSEINSTELLUNG, nullable = true)
     @JsonGetter(ApiNames.WERKSEINSTELLUNG)
     @JsonView(Views.Public.class)
     public Integer getWerkseinstellung() {

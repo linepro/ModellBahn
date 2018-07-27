@@ -20,21 +20,23 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.linepro.modellbahn.model.ILand;
 import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
- * Land.
- * The country of a product.
- * @author  $Author:$
+ * Land. The country of a product.
+ * 
+ * @author $Author:$
  * @version $Id:$
  */
 @Entity(name = "Land")
-@Table(name = "Land", indexes = { @Index(columnList = ApiNames.NAME, unique = true) }, 
-       uniqueConstraints = { @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@Table(name = "Land", indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
+        @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.LAND)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.WAHRUNG,ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.WAHRUNG, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED,
+        ApiNames.LINKS })
 public class Land extends AbstractNamedItem implements ILand {
 
     /** The Constant serialVersionUID. */
@@ -57,11 +59,16 @@ public class Land extends AbstractNamedItem implements ILand {
     /**
      * Instantiates a new land.
      *
-     * @param id the id
-     * @param name the name
-     * @param bezeichnung the bezeichnung
-     * @param wahrung the wahrung
-     * @param deleted the deleted
+     * @param id
+     *            the id
+     * @param name
+     *            the name
+     * @param bezeichnung
+     *            the bezeichnung
+     * @param wahrung
+     *            the wahrung
+     * @param deleted
+     *            the deleted
      */
     public Land(Long id, String name, String bezeichnung, IWahrung wahrung, Boolean deleted) {
         super(id, name, bezeichnung, deleted);
@@ -70,7 +77,7 @@ public class Land extends AbstractNamedItem implements ILand {
     }
 
     @Override
-    @ManyToOne(fetch=FetchType.LAZY, targetEntity=Wahrung.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Wahrung.class)
     @JsonGetter(ApiNames.WAHRUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)

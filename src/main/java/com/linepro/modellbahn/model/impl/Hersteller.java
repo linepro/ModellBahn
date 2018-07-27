@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.URLConverter;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
@@ -28,8 +29,8 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  * @version $Id:$
  */
 @Entity(name = "Hersteller")
-@Table(name = "Hersteller", indexes = { @Index(columnList = ApiNames.NAME, unique = true) }, uniqueConstraints = {
-        @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@Table(name = "Hersteller", indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
+        @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.HERSTELLER)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.TELEFON, ApiNames.URL, ApiNames.DELETED, ApiNames.LINKS})
 public class Hersteller extends AbstractNamedItem implements IHersteller {
@@ -83,7 +84,7 @@ public class Hersteller extends AbstractNamedItem implements IHersteller {
      * @return the url
      */
     @Override
-    @Column(name = ApiNames.URL, nullable = true)
+    @Column(name = DBNames.URL, nullable = true)
     @Convert(converter = URLConverter.class)
     @JsonGetter(ApiNames.URL)
     @JsonView(Views.Public.class)
@@ -109,7 +110,7 @@ public class Hersteller extends AbstractNamedItem implements IHersteller {
      * @return the telefon
      */
     @Override
-    @Column(name = ApiNames.TELEFON, nullable = true, length = 20)
+    @Column(name = DBNames.TELEFON, nullable = true, length = 20)
     @JsonGetter(ApiNames.TELEFON)
     @JsonView(Views.Public.class)
     public String getTelefon() {

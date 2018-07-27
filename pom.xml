@@ -105,7 +105,7 @@
 		<commons-lang3.version>3.7</commons-lang3.version>
 		<dagger.version>2.16</dagger.version>
         <grizzly-http-servlet.version>2.4.3</grizzly-http-servlet.version>
-		<guava.version>23.6-android</guava.version>
+		<guava.version>25.1-jre</guava.version>
 		<guice-assistedinject.version>4.2.0</guice-assistedinject.version>
 		<guice.version>4.2.0</guice.version>
 		<h2.version>1.4.197</h2.version>
@@ -155,12 +155,17 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.inject</groupId>
 			<artifactId>guice</artifactId>
 			<version>${guice.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.google.inject.extensions</groupId>
@@ -577,21 +582,84 @@
 								<keepDependenciesWithProvidedScope>true</keepDependenciesWithProvidedScope>
 								<minimizeJar>false</minimizeJar>
 								<artifactSet>
-									<excludes>
-										<exclude>junit:junit:*</exclude>
-										<exclude>org.testng:testng:*</exclude>
-										<exclude>cglib:cglib-nodep:*</exclude>
-										<exclude>org.apache.ant:ant-nodeps:*</exclude>
-									</excludes>
+									<includes>
+										<include>antlr:antlr:*</include>
+										<include>aopalliance:aopalliance:*</include>
+										<include>com.fasterxml:classmate:*</include>
+										<include>com.fasterxml.jackson.core:jackson-annotations:*</include>
+										<include>com.fasterxml.jackson.core:jackson-core:*</include>
+										<include>com.fasterxml.jackson.core:jackson-databind:*</include>
+										<include>com.fasterxml:jackson:module:jackson-module-jaxb-annotations:*</include>
+										<include>com.google.guava:guava:*</include>
+										<include>com.google.inject.extensions:guice-assistedinject:*</include>
+										<include>com.google.inject:guice:*</include>
+										<include>com.h2database:h2:*</include>
+										<include>commons-beanutils:commons-beanutils:*</include>
+										<include>commons-cli:commons-cli:*</include>
+										<include>commons-logging:commons-logging:*</include>
+										<include>dom4j:dom4j:*</include>
+										<include>javax.annotation:javax.annotation-api:*</include>
+										<include>javax.el:javax.el-api:*</include>
+										<include>javax.inject:javax.inject:*</include>
+										<include>javax.persistence:javax.persistence-api:*</include>
+										<include>javax.servlet:javax.servlet-api:*</include>
+										<include>javax.validation:validation-api:*</include>
+										<include>javax.ws.rs:javax.ws.rs-api:*</include>
+										<include>net.bytebuddy:byte-buddy:*</include>
+                                        <include>org.apache-extras.beanshell:org.bsh:*</include>
+										<include>org.apache.commons:commons-lang3:*</include>
+										<include>org.apache.logging.log4j:log4j-api:*</include>
+										<include>org.apache.logging.log4j:log4j-core:*</include>
+										<include>org.apache.logging.log4j:log4j-slf4j-impl:*</include>
+										<include>org.glassfish.grizzly:grizzly-framework:*</include>
+										<include>org.glassfish.grizzly:grizzly-http-server:*</include>
+										<include>org.glassfish.grizzly:grizzly-http:*</include>
+										<include>org.glassfish.hk2:hk2-api:*</include>
+										<include>org.glassfish.hk2:hk2-locator:*</include>
+										<include>org.glassfish.hk2:hk2-utils:*</include>
+										<include>org.glassfish.hk2:osgi-resource-locator:*</include>
+										<include>org.glassfish.jersey:containers:jersey-container-grizzly2-http:*</include>
+										<include>org.glassfish.jersey.core:jersey-client:*</include>
+										<include>org.glassfish.jersey.core:jersey-common:*</include>
+										<include>org.glassfish.jersey.core:jersey-server:*</include>
+										<include>org.glassfish.jersey.ext:jersey-bean-validation:*</include>
+										<include>org.glassfish.jersey.ext:jersey-entity-filtering:*</include>
+										<include>org.glassfish.jersey.ext:jersey-wadl-doclet:*</include>
+										<include>org.glassfish.jersey.inject:jersey-hk2:*</include>
+										<include>org.glassfish.jersey.media:jersey-media-jaxb:*</include>
+										<include>org.glassfish.jersey.media:jersey-media-json-jackson:*</include>
+										<include>org.glassfish.jersey.media:jersey-media-json-processing:*</include>
+										<include>org.glassfish.jersey.media:jersey-media-sse:*</include>
+                                        <include>org.glassfish:javax.json:*</include>
+										<include>org.glassfish:jsonp-jaxrs:*</include>
+										<include>org.hibernate.common:hibernate-commons-annotations:*</include>
+										<include>org.hibernate.hibernate-core:*</include>
+										<include>org.hibernate.hibernate-validator:*</include>
+										<include>org.javassist:javassist:*</include>
+										<include>org.jboss.logging:jboss-logging:*</include>
+										<include>org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec:*</include>
+										<include>org.slf4j:jul-to-slf4j:*</include>
+										<include>org.slf4j:slf4j-api:*</include>
+										<include>xerces:xercesImpl:*</include>
+										<include>xml-apis:xml-apis:*</include>
+									</includes>
 								</artifactSet>
+                                <artifactSet>
+                                    <excludes>
+                                        <exclude>junit:junit:*</exclude>
+                                        <exclude>org.testng:testng:*</exclude>
+                                        <exclude>cglib:cglib-nodep:*</exclude>
+                                        <exclude>org.apache.ant:ant-nodeps:*</exclude>
+                                    </excludes>
+                                </artifactSet>
 								<filters>
 									<filter>
-									<artifact>*:*</artifact>
-									<excludes>
-										<exclude>META-INF/*.SF</exclude>
-										<exclude>META-INF/*.DSA</exclude>
-										<exclude>META-INF/*.RSA</exclude>
-									</excludes>
+										<artifact>*:*</artifact>
+										<excludes>
+											<exclude>META-INF/*.SF</exclude>
+											<exclude>META-INF/*.DSA</exclude>
+											<exclude>META-INF/*.RSA</exclude>
+										</excludes>
 									</filter>
 								</filters>
 								<transformers>
@@ -676,10 +744,12 @@
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>${maven-surefire-plugin.version}</version>
 					<configuration>
-						<suiteXmlFiles>
-							<suiteXmlFile>src/test/resources/testng.xml
-							</suiteXmlFile>
-						</suiteXmlFiles>
+						<includes>
+							<include>**/Test*.java</include>
+							<include>**/*Test.java</include>
+							<include>**/*Tests.java</include>
+							<include>**/*TestCase.java</include>
+						</includes>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -771,6 +841,10 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
 			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
 		
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>

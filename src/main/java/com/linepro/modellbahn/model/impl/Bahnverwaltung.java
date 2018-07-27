@@ -9,19 +9,20 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.IBahnverwaltung;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
- * Bahnverwaltung.
- * Represents a Railway company. 
- * @author  $Author:$
+ * Bahnverwaltung. Represents a Railway company.
+ * 
+ * @author $Author:$
  * @version $Id:$
  */
 @Entity(name = "Bahnverwaltung")
-@Table(name = "Bahnverwaltung", indexes = { @Index(columnList = ApiNames.NAME, unique = true) }, 
-       uniqueConstraints = { @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@Table(name = "Bahnverwaltung", indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
+        @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.BAHNVERWALTUNG)
-@JsonPropertyOrder({ApiNames.ID,ApiNames.NAME,ApiNames.DESCRIPTION,ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
 public class Bahnverwaltung extends AbstractNamedItem implements IBahnverwaltung {
 
     /** The Constant serialVersionUID. */
@@ -31,22 +32,26 @@ public class Bahnverwaltung extends AbstractNamedItem implements IBahnverwaltung
      * Instantiates a new bahnverwaltung.
      */
     public Bahnverwaltung() {
-		super();
-	}
+        super();
+    }
 
     public Bahnverwaltung(String name) {
         super(name);
     }
 
     /**
-	 * Instantiates a new bahnverwaltung.
-	 *
-	 * @param id the id
-	 * @param name the name
-	 * @param bezeichnung the bezeichnung
-	 * @param deleted the deleted
-	 */
-	public Bahnverwaltung( Long id, String name, String bezeichnung, Boolean deleted) {
-		super(id, name, bezeichnung, deleted);
-	}
+     * Instantiates a new bahnverwaltung.
+     *
+     * @param id
+     *            the id
+     * @param name
+     *            the name
+     * @param bezeichnung
+     *            the bezeichnung
+     * @param deleted
+     *            the deleted
+     */
+    public Bahnverwaltung(Long id, String name, String bezeichnung, Boolean deleted) {
+        super(id, name, bezeichnung, deleted);
+    }
 }

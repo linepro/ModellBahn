@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.DecoderTypSerializer;
 import com.linepro.modellbahn.rest.json.Views;
@@ -40,10 +41,10 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @version $Id:$
  */
 @Entity(name = "DecoderTypFunktion")
-@Table(name = "DecoderTypFunktion", indexes = { @Index(columnList = "decoder_typ_id,reihe,name", unique = true),
-        @Index(columnList = "decoder_typ_id") }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { "decoder_typ_id", ApiNames.REIHE, ApiNames.NAME }) })
-@AttributeOverride(name = ApiNames.NAME, column = @Column(name = ApiNames.NAME, unique = false, length = 4))
+@Table(name = "DecoderTypFunktion", indexes = { @Index(columnList = DBNames.DECODER_TYP_ID + "," + DBNames.REIHE + "," + DBNames.NAME, unique = true),
+        @Index(columnList = DBNames.DECODER_TYP_ID) }, uniqueConstraints = {
+                @UniqueConstraint(columnNames = { DBNames.DECODER_TYP_ID, DBNames.REIHE, DBNames.NAME }) })
+@AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, unique = false, length = 4))
 @JsonRootName(ApiNames.FUNKTION)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.REIHE,  ApiNames.PROGRAMMABLE, ApiNames.DELETED, ApiNames.LINKS})
 public class DecoderTypFunktion extends AbstractNamedItem implements IDecoderTypFunktion {
@@ -104,7 +105,7 @@ public class DecoderTypFunktion extends AbstractNamedItem implements IDecoderTyp
     @Override
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
-    @JoinColumn(name = "decoder_typ_id", nullable = false, referencedColumnName = ApiNames.ID, foreignKey = @ForeignKey(name = "decoder_typ_fn_fk1"))
+    @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_typ_fn_fk1"))
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(contentUsing=DecoderTypSerializer.class)
@@ -120,7 +121,7 @@ public class DecoderTypFunktion extends AbstractNamedItem implements IDecoderTyp
 
     @Override
     @BusinessKey
-    @Column(name = ApiNames.REIHE, nullable = false)
+    @Column(name = DBNames.REIHE, nullable = false)
     @JsonGetter(ApiNames.REIHE)
     @JsonView(Views.DropDown.class)
     public Integer getReihe() {
@@ -134,7 +135,7 @@ public class DecoderTypFunktion extends AbstractNamedItem implements IDecoderTyp
     }
 
     @Override
-    @Column(name = ApiNames.PROGRAMMABLE, nullable = false)
+    @Column(name = DBNames.PROGRAMMABLE, nullable = false)
     @JsonGetter(ApiNames.PROGRAMMABLE)
     @JsonView(Views.Public.class)
     public Boolean getProgrammable() {

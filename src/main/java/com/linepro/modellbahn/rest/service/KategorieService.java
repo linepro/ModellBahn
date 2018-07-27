@@ -115,7 +115,7 @@ public class KategorieService extends NamedItemService<Kategorie> {
      * Adds the.
      *
      * @param kategorieStr the kategorie
-     * @param unterkategorie the unterkategorie
+     * @param unterkategorie the unterKategorie
      * @return the response
      * @throws Exception the exception
      */
@@ -124,10 +124,24 @@ public class KategorieService extends NamedItemService<Kategorie> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response add(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, UnterKategorie unterkategorie) throws Exception {
-        Kategorie kategorie = findKategorie(kategorieStr);
-        
-        return getResponse(null);
+    public Response add(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, UnterKategorie entity) throws Exception {
+        try {
+            logger.info("POST " + kategorieStr + "/" + entity);
+
+            Kategorie kategorie = findKategorie(kategorieStr);
+
+            if (kategorie == null) {
+                return getResponse(Response.status(Status.NOT_FOUND));
+            }
+
+            entity.setKategorie(kategorie);
+            
+            UnterKategorie result = getUnterKategoriePersister().add(entity);
+
+            return getResponse(Response.ok().entity(result.addLinks(getUriInfo(), true, true)));
+        } catch (Exception e) {
+            return serverError(e);
+        }
     }
 
     /**
@@ -141,10 +155,25 @@ public class KategorieService extends NamedItemService<Kategorie> {
     @PUT
     @Path(ApiPaths.UNTER_KATEGORIE_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response update(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String name, UnterKategorie entity) throws Exception {
-        Kategorie kategorie = findKategorie(kategorieStr);
-        
-        return getResponse(null);
+    public Response update(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr, UnterKategorie entity) throws Exception {
+        try {
+            info("PUT " + kategorieStr + "/" + unterKategorieStr + ": " + entity);
+
+            Kategorie      kategorie      = findKategorie(kategorieStr);
+            UnterKategorie unterKategorie = findUnterKategorie(kategorieStr, unterKategorieStr);
+
+            if (kategorie == null || unterKategorie == null) {
+                return getResponse(Response.status(Status.NOT_FOUND));
+            }
+
+            entity.setKategorie(kategorie);
+
+            UnterKategorie result = getUnterKategoriePersister().update(unterKategorie);
+
+            return getResponse(Response.accepted().entity(result.addLinks(getUriInfo(), true, true)));
+        } catch (Exception e) {
+            return serverError(e);
+        }
     }
 
     /**
@@ -158,14 +187,20 @@ public class KategorieService extends NamedItemService<Kategorie> {
     @DELETE
     @Path(ApiPaths.UNTER_KATEGORIE_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response delete(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String name) throws Exception {
+    public Response delete(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) throws Exception {
         try {
-            Kategorie entity = findKategorie(kategorieStr);
+            UnterKategorie unterKategorie = findUnterKategorie(kategorieStr, unterKategorieStr);
 
-            if (entity == null) {
+            if (unterKategorie == null) {
                 return getResponse(Response.status(Status.NOT_FOUND));
             }
 
+            Kategorie kategorie = (Kategorie) unterKategorie.getKategorie();
+
+            kategorie.removeUnterKategorie(unterKategorie);
+            
+            getPersister().update(kategorie);
+            
             return getResponse(Response.noContent());
         } catch (Exception e) {
             return serverError(e);

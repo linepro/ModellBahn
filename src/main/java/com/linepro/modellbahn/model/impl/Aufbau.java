@@ -9,19 +9,20 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.IAufbau;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
- * Aufbau.
- * Represents a construction method.
- * @author  $Author:$
+ * Aufbau. Represents a construction method.
+ * 
+ * @author $Author:$
  * @version $Id:$
  */
 @Entity(name = "Aufbau")
-@Table(name = "Aufbau", indexes = { @Index(columnList = ApiNames.NAME, unique = true) }, 
-       uniqueConstraints = { @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@Table(name = "Aufbau", indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
+        @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.AUFBAU)
-@JsonPropertyOrder({ApiNames.ID,ApiNames.NAME,ApiNames.DESCRIPTION,ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
 public class Aufbau extends AbstractNamedItem implements IAufbau {
 
     /** The Constant serialVersionUID. */
@@ -31,22 +32,26 @@ public class Aufbau extends AbstractNamedItem implements IAufbau {
      * Instantiates a new aufbau.
      */
     public Aufbau() {
-		super();
-	}
+        super();
+    }
 
-	public Aufbau(String name) {
+    public Aufbau(String name) {
         super(name);
     }
 
     /**
-	 * Instantiates a new aufbau.
-	 *
-	 * @param id the id
-	 * @param name the name
-	 * @param bezeichnung the bezeichnung
-	 * @param deleted the deleted
-	 */
-	public Aufbau(Long id, String name, String bezeichnung, Boolean deleted) {
-		super(id, name, bezeichnung, deleted);
-	}
+     * Instantiates a new aufbau.
+     *
+     * @param id
+     *            the id
+     * @param name
+     *            the name
+     * @param bezeichnung
+     *            the bezeichnung
+     * @param deleted
+     *            the deleted
+     */
+    public Aufbau(Long id, String name, String bezeichnung, Boolean deleted) {
+        super(id, name, bezeichnung, deleted);
+    }
 }

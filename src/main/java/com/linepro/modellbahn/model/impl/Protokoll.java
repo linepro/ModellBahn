@@ -9,19 +9,20 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.IProtokoll;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
- * Protokoll.
- * The communications protocol used by a Decoder
- * @author  $Author:$
+ * Protokoll. The communications protocol used by a Decoder
+ * 
+ * @author $Author:$
  * @version $Id:$
  */
 @Entity(name = "Protokoll")
-@Table(name = "Protokoll", indexes = { @Index(columnList = ApiNames.NAME, unique = true) }, 
-       uniqueConstraints = { @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@Table(name = "Protokoll", indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
+        @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.PROTOKOLL)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
 public class Protokoll extends AbstractNamedItem implements IProtokoll {
 
     /** The Constant serialVersionUID. */
@@ -31,22 +32,26 @@ public class Protokoll extends AbstractNamedItem implements IProtokoll {
      * Instantiates a new protokoll.
      */
     public Protokoll() {
-		super();
-	}
+        super();
+    }
 
     public Protokoll(String name) {
         super(name);
     }
 
-	/**
-	 * Instantiates a new protokoll.
-	 *
-	 * @param id the id
-	 * @param name the name
-	 * @param bezeichnung the bezeichnung
-	 * @param deleted the deleted
-	 */
-	public Protokoll( Long id, String name, String bezeichnung, Boolean deleted) {
-		super(id, name, bezeichnung, deleted);
-	}
+    /**
+     * Instantiates a new protokoll.
+     *
+     * @param id
+     *            the id
+     * @param name
+     *            the name
+     * @param bezeichnung
+     *            the bezeichnung
+     * @param deleted
+     *            the deleted
+     */
+    public Protokoll(Long id, String name, String bezeichnung, Boolean deleted) {
+        super(id, name, bezeichnung, deleted);
+    }
 }

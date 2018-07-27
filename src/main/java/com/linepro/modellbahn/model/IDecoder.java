@@ -2,10 +2,6 @@ package com.linepro.modellbahn.model;
 
 import java.util.List;
 
-import com.linepro.modellbahn.model.impl.DecoderAdress;
-import com.linepro.modellbahn.model.impl.DecoderCV;
-import com.linepro.modellbahn.model.impl.DecoderFunktion;
-
 /**
  * IDecoder.
  * @author   $Author$
@@ -60,40 +56,52 @@ public interface IDecoder extends INamedItem {
      *
      * @return the adressen
      */
-    List<DecoderAdress> getAdressen();
+    List<IDecoderAdress> getAdressen();
 
     /**
      * Sets the adressen.
      *
      * @param adressen the new adressen
      */
-    void setAdressen(List<DecoderAdress> adressen);
+    void setAdressen(List<IDecoderAdress> adressen);
+
+    void addAdress(IDecoderAdress adress);
+
+    void removeAdress(IDecoderAdress adress);
 
     /**
      * Gets the cv.
      *
      * @return the cv
      */
-    List<DecoderCV> getCVs();
+    List<IDecoderCV> getCVs();
 
     /**
      * Sets the cv.
      *
      * @param cv the new cv
      */
-    void setCVs(List<DecoderCV> cv);
+    void setCVs(List<IDecoderCV> cv);
+
+    void addCV(IDecoderCV cv);
+
+    void removeCV(IDecoderCV cv);
 
     /**
      * Gets the funktionen.
      *
      * @return the funktionen
      */
-    List<DecoderFunktion> getFunktionen();
+    List<IDecoderFunktion> getFunktionen();
 
     /**
      * Sets the funktionen.
      *
      * @param funktionen the new funktionen
      */
-    void setFunktionen(List<DecoderFunktion> funktionen);
+    void setFunktionen(List<IDecoderFunktion> funktionen);
+
+    void addFunktion(IDecoderFunktion cv);
+
+    void removeFunktion(IDecoderFunktion cv);
 }

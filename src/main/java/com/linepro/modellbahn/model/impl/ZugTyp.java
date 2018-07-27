@@ -9,19 +9,20 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.IZugTyp;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
- * ZugTyp.
- * The type of a train 
- * @author  $Author:$
+ * ZugTyp. The type of a train
+ * 
+ * @author $Author:$
  * @version $Id:$
  */
 @Entity(name = "ZugTyp")
-@Table(name = "ZugTyp", indexes = { @Index(columnList = ApiNames.NAME, unique = true) }, 
-       uniqueConstraints = { @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@Table(name = "ZugTyp", indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
+        @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.ZUG_TYP)
-@JsonPropertyOrder({ApiNames.ID,ApiNames.NAME,ApiNames.DESCRIPTION,ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
 public class ZugTyp extends AbstractNamedItem implements IZugTyp {
 
     /** The Constant serialVersionUID. */
@@ -31,22 +32,26 @@ public class ZugTyp extends AbstractNamedItem implements IZugTyp {
      * Instantiates a new zug typ.
      */
     public ZugTyp() {
-		super();
-	}
+        super();
+    }
 
     public ZugTyp(String name) {
         super(name);
     }
 
-	/**
-	 * Instantiates a new zug typ.
-	 *
-	 * @param id the id
-	 * @param name the name
-	 * @param bezeichnung the bezeichnung
-	 * @param deleted the deleted
-	 */
-	public ZugTyp( Long id, String name, String bezeichnung, Boolean deleted) {
-		super(id, name, bezeichnung, deleted);
-	}
+    /**
+     * Instantiates a new zug typ.
+     *
+     * @param id
+     *            the id
+     * @param name
+     *            the name
+     * @param bezeichnung
+     *            the bezeichnung
+     * @param deleted
+     *            the deleted
+     */
+    public ZugTyp(Long id, String name, String bezeichnung, Boolean deleted) {
+        super(id, name, bezeichnung, deleted);
+    }
 }

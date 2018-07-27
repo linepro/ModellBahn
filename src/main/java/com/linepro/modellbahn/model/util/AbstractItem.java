@@ -32,6 +32,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.LinkSerializer;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -79,7 +80,7 @@ public abstract class AbstractItem implements Serializable, IItem {
 
 	@Override
     @Id
-	@Column(name=ApiNames.ID, nullable = true)
+	@Column(name=DBNames.ID, nullable = true)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@JsonGetter(ApiNames.ID)
 	@JsonView(Views.Internal.class)
@@ -94,7 +95,7 @@ public abstract class AbstractItem implements Serializable, IItem {
 	}
 
 	@Override
-    @Column(name=ApiNames.DELETED, length=5, nullable = true)
+    @Column(name=DBNames.DELETED, length=5, nullable = true)
     @JsonView(Views.Public.class)
     @JsonGetter(ApiNames.DELETED)
 	public Boolean getDeleted() {

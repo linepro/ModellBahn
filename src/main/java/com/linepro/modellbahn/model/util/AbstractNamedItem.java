@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.INamedItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
@@ -75,7 +76,7 @@ public abstract class AbstractNamedItem extends AbstractItem implements INamedIt
 
     @Override
 	@BusinessKey
-    @Column(name=ApiNames.NAME, unique=true, length=50, nullable = true)
+    @Column(name=DBNames.NAME, unique=true, length=50, nullable = true)
     @JsonGetter(ApiNames.NAME)
     @JsonView(Views.DropDown.class)
 	public String getName() {
@@ -89,7 +90,7 @@ public abstract class AbstractNamedItem extends AbstractItem implements INamedIt
 	}
 
 	@Override
-    @Column(name=ApiNames.DESCRIPTION, nullable=true, length=100)
+    @Column(name=DBNames.DESCRIPTION, nullable=true, length=100)
     @JsonGetter(ApiNames.DESCRIPTION)
     @JsonView(Views.DropDown.class)
 	public String getBezeichnung() {

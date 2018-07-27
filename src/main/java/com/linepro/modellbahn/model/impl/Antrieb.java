@@ -9,19 +9,20 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.IAntrieb;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
- * Antrieb.
- * Represents a drive method.
- * @author  $Author:$
+ * Antrieb. Represents a drive method.
+ * 
+ * @author $Author:$
  * @version $Id:$
  */
 @Entity(name = "Antrieb")
-@Table(name = "Antrieb", indexes = { @Index(columnList = ApiNames.NAME, unique = true) }, 
-       uniqueConstraints = { @UniqueConstraint(columnNames = { ApiNames.NAME }) })
+@Table(name = "Antrieb", indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
+        @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.ANTRIEB)
-@JsonPropertyOrder({ApiNames.ID,ApiNames.NAME,ApiNames.DESCRIPTION,ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
 public class Antrieb extends AbstractNamedItem implements IAntrieb {
 
     /** The Constant serialVersionUID. */
@@ -31,8 +32,8 @@ public class Antrieb extends AbstractNamedItem implements IAntrieb {
      * Instantiates a new antrieb.
      */
     public Antrieb() {
-		super();
-	}
+        super();
+    }
 
     public Antrieb(String name) {
         super(name);
@@ -41,12 +42,16 @@ public class Antrieb extends AbstractNamedItem implements IAntrieb {
     /**
      * Instantiates a new antrieb.
      *
-     * @param id the id
-     * @param name the name
-     * @param bezeichnung the bezeichnung
-     * @param deleted the deleted
+     * @param id
+     *            the id
+     * @param name
+     *            the name
+     * @param bezeichnung
+     *            the bezeichnung
+     * @param deleted
+     *            the deleted
      */
     public Antrieb(Long id, String name, String bezeichnung, Boolean deleted) {
-		super(id, name, bezeichnung, deleted);
-	}
+        super(id, name, bezeichnung, deleted);
+    }
 }
