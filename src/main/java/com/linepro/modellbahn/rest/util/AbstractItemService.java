@@ -6,7 +6,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.OneToMany;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -16,9 +15,9 @@ import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang3.builder.RecursiveToStringStyle;
