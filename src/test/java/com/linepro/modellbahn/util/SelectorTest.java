@@ -19,7 +19,7 @@ public class SelectorTest {
     
     protected static final int HASH_CODE = 3374336;
     
-    protected static final String TO_STRING = "Selector[name=name,getter=protected java.lang.String com.linepro.modellbahn.util.SelectorTest.getter(),setter=protected void com.linepro.modellbahn.util.SelectorTest.setter(java.lang.String)]";
+    protected static final String TO_STRING = "Selector[name=" + NAME + ",getter=" + GETTER + ",setter=" + SETTER + ",collection=false]";
 
     protected Selector selector;
     
