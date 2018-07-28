@@ -274,7 +274,13 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
     }
 
     @Override
-    public E findByKey(E entity, boolean eager) throws Exception {
+    public E findByKey(Object key, boolean eager) throws Exception {
+        E entity = create();
+        entity.setKey(key);
+        return findByKey(entity, eager);
+    }
+
+    protected E findByKey(E entity, boolean eager) throws Exception {
         try {
             begin();
 
@@ -282,7 +288,6 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
 
             for (Selector businessKey : businessKeys.values()) {
                 Object value = businessKey.getGetter().invoke(entity);
-                //value = value instanceof IItem ? ((IItem) value).getId() : value;
                 query = query.setParameter(businessKey.getName(), value);
             }
             
@@ -317,6 +322,8 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
     public List<E> findAll() throws Exception {
         return findAll(null);
     }
+
+    @Override
     public List<E> findAll(E template) throws Exception {
         return findAll(template, selectors);
     }
@@ -475,19 +482,20 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
      * Creates the.
      *
      * @return the e
-     * @throws InstantiationException the instantiation exception
-     * @throws IllegalAccessException the illegal access exception
+     * @throws Exception if we are naughty
      */
-    protected E create() throws InstantiationException, IllegalAccessException {
+    protected E create() throws Exception {
         E template = (E) getEntityClass().newInstance();
         return template;
     }
 
     /**
      * You can't easily override FetchType.LAZY so touch each collection to fill it in as required
-     * @param entity
-     * @return
-     * @throws Exception
+     * only goes one level deep.
+     * @param entity the entity to inflate
+     * @param inflate true if inflation is required
+     * @return the same entity you passed in with it's lazy collections populated
+     * @throws Exception if there is a DB error
      */
     protected E inflate(E entity, boolean eager) throws Exception {
         if (eager && entity != null) {

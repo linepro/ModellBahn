@@ -133,7 +133,7 @@ public class DBPopulator {
     }
 
     protected void populateAchsfolg() {
-        IPersister<Achsfolg> persister = persisterFactory.createNamedItemPersister(Achsfolg.class);
+        IPersister<Achsfolg> persister = persisterFactory.createPersister(Achsfolg.class);
 
         save(persister, new Achsfolg(null, "(1'C)D 3'2'T35", "(1'C)D 3'2'T35", false));
         save(persister, new Achsfolg(null, "1'C 1' h2t", "1'C 1' h2t", false));
@@ -166,7 +166,7 @@ public class DBPopulator {
     }
 
     protected void populateAntrieb() {
-        IPersister<Antrieb> persister = persisterFactory.createNamedItemPersister(Antrieb.class);
+        IPersister<Antrieb> persister = persisterFactory.createPersister(Antrieb.class);
 
         save(persister, new Antrieb(null, "Akku", "Akku", false));
         save(persister, new Antrieb(null, "Dampf", "Dampf", false));
@@ -179,7 +179,7 @@ public class DBPopulator {
     }
 
     protected void populateAufbau() {
-        IPersister<Aufbau> persister = persisterFactory.createNamedItemPersister(Aufbau.class);
+        IPersister<Aufbau> persister = persisterFactory.createPersister(Aufbau.class);
 
         save(persister, new Aufbau(null, "Lok Kunststoff", "Fahrgestell der Lok aus Metall", false));
         save(persister, new Aufbau(null, "Lok Metall / Kunststoff", 
@@ -194,7 +194,7 @@ public class DBPopulator {
     }
 
     protected void populateBahnverwaltung() {
-        IPersister<Bahnverwaltung> persister = persisterFactory.createNamedItemPersister(Bahnverwaltung.class);
+        IPersister<Bahnverwaltung> persister = persisterFactory.createPersister(Bahnverwaltung.class);
 
         save(persister, new Bahnverwaltung(null, "AAE", "AAE", false));
         save(persister, new Bahnverwaltung(null, "ADtranz", "ABB Daimler-Benz Transportation (ADtranz)", false));
@@ -382,22 +382,22 @@ public class DBPopulator {
      * Populate decoder typ.
      */
     protected void populateDecoderTyp() {
-        IPersister<Protokoll> protokollLookup = persisterFactory.createNamedItemPersister(Protokoll.class);
+        IPersister<Protokoll> protokollLookup = persisterFactory.createPersister(Protokoll.class);
 
-        IProtokoll delta = findByKey(protokollLookup, new Protokoll("DELTA"));
-        IProtokoll fx = findByKey(protokollLookup, new Protokoll("fx"));
-        IProtokoll mm = findByKey(protokollLookup, new Protokoll("MM"));
-        IProtokoll mfx = findByKey(protokollLookup, new Protokoll("mfx"));
-        IProtokoll weiche = findByKey(protokollLookup, new Protokoll("Weiche"));
+        IProtokoll delta = findByKey(protokollLookup, "DELTA");
+        IProtokoll fx = findByKey(protokollLookup, "fx");
+        IProtokoll mm = findByKey(protokollLookup, "MM");
+        IProtokoll mfx = findByKey(protokollLookup, "mfx");
+        IProtokoll weiche = findByKey(protokollLookup, "Weiche");
 
-        IPersister<Hersteller> herstellerLookup = persisterFactory.createNamedItemPersister(Hersteller.class);
+        IPersister<Hersteller> herstellerLookup = persisterFactory.createPersister(Hersteller.class);
 
-        Hersteller digitalbahn = findByKey(herstellerLookup, new Hersteller(null, "Digital-Bahn", null, null, null, null));
-        Hersteller esu = findByKey(herstellerLookup, new Hersteller(null, "ESU", null, null, null, null));
-        Hersteller marklin = findByKey(herstellerLookup, new Hersteller(null, "Märklin", null, null, null, null));
-        Hersteller uhlenbrock = findByKey(herstellerLookup, new Hersteller(null, "Uhlenbrock", null, null, null, null));
+        Hersteller digitalbahn = findByKey(herstellerLookup, "Digital-Bahn");
+        Hersteller esu = findByKey(herstellerLookup, "ESU");
+        Hersteller marklin = findByKey(herstellerLookup, "Märklin");
+        Hersteller uhlenbrock = findByKey(herstellerLookup, "Uhlenbrock");
 
-        IPersister<DecoderTyp> persister = persisterFactory.createNamedItemPersister(DecoderTyp.class);
+        IPersister<DecoderTyp> persister = persisterFactory.createPersister(DecoderTyp.class);
 
         addDSD2010(weiche, digitalbahn, persister);
 
@@ -1250,7 +1250,7 @@ public class DBPopulator {
     }
 
     protected void populateEpoch() {
-        IPersister<Epoch> persister = persisterFactory.createNamedItemPersister(Epoch.class);
+        IPersister<Epoch> persister = persisterFactory.createPersister(Epoch.class);
 
         save(persister, new Epoch(null, "I", "1835 - 1920", false));
         save(persister, new Epoch(null, "II", "1920 - 1950", false));
@@ -1276,7 +1276,7 @@ public class DBPopulator {
     }
 
     protected void populateGattung() {
-        IPersister<Gattung> persister = persisterFactory.createNamedItemPersister(Gattung.class);
+        IPersister<Gattung> persister = persisterFactory.createPersister(Gattung.class);
 
         save(persister, new Gattung(null, "AB3yge", "AB3yge", false));
         save(persister, new Gattung(null, "ADümh 101", "ADümh 101", false));
@@ -1381,7 +1381,7 @@ public class DBPopulator {
     }
 
     protected void populateHersteller() {
-        IPersister<Hersteller> persister = persisterFactory.createNamedItemPersister(Hersteller.class);
+        IPersister<Hersteller> persister = persisterFactory.createPersister(Hersteller.class);
 
         save(persister, new Hersteller(null, "Avago Technologies", null, null, null, false));
         save(persister, new Hersteller(null, "4MFOR", null, null, null, false));
@@ -1452,7 +1452,7 @@ public class DBPopulator {
     }
 
     protected void populateKategorie() {
-        IPersister<Kategorie> persister = persisterFactory.createNamedItemPersister(Kategorie.class);
+        IPersister<Kategorie> persister = persisterFactory.createPersister(Kategorie.class);
         
         Kategorie kategorie = save(persister, new Kategorie(null, "Ausgestaltung", "Ausgestaltung", false));
 
@@ -1692,7 +1692,7 @@ public class DBPopulator {
     }
 
     protected void populateKupplung() {
-        IPersister<Kupplung> persister = persisterFactory.createNamedItemPersister(Kupplung.class);
+        IPersister<Kupplung> persister = persisterFactory.createPersister(Kupplung.class);
 
         save(persister, new Kupplung(null, "Relex", "Relex Kupplung", false));
         save(persister, new Kupplung(null, "KK", "Märklin-Kurzkupplungen mit Drehpunkt", false));
@@ -1708,7 +1708,7 @@ public class DBPopulator {
     }
 
     protected void populateLicht() {
-        IPersister<Licht> persister = persisterFactory.createNamedItemPersister(Licht.class);
+        IPersister<Licht> persister = persisterFactory.createPersister(Licht.class);
 
         save(persister, new Licht(null, "L1V", "Einfach-Spitzensignal vorne", false));
         save(persister, new Licht(null, "L1W", "Einfach-Spitzensignal mit der Fahrtrichtung wechselnd.", false));
@@ -1733,7 +1733,7 @@ public class DBPopulator {
     }
 
     protected void populateMassstab() {
-        IPersister<Massstab> persister = persisterFactory.createNamedItemPersister(Massstab.class);
+        IPersister<Massstab> persister = persisterFactory.createPersister(Massstab.class);
 
         save(persister, new Massstab(null, "0", "1:45 32 mm", false));
         save(persister, new Massstab(null, "0e", "1:45 16.5 mm", false));
@@ -1803,7 +1803,7 @@ public class DBPopulator {
     }
 
     protected void populateMotorTyp() {
-        IPersister<MotorTyp> persister = persisterFactory.createNamedItemPersister(MotorTyp.class);
+        IPersister<MotorTyp> persister = persisterFactory.createPersister(MotorTyp.class);
 
         save(persister, new MotorTyp(null, "C-Sinus", "C-Sinus", false));
         save(persister, new MotorTyp(null, "DCM", "DCM", false));
@@ -1828,7 +1828,7 @@ public class DBPopulator {
     }
 
     protected void populateProtokoll() {
-        IPersister<Protokoll> persister = persisterFactory.createNamedItemPersister(Protokoll.class);
+        IPersister<Protokoll> persister = persisterFactory.createPersister(Protokoll.class);
 
         save(persister, new Protokoll(null, "DELTA", "Märklin DELTA", false));
         save(persister, new Protokoll(null, "fx", "Märklin fx", false));
@@ -1839,7 +1839,7 @@ public class DBPopulator {
     }
 
     protected void populateSonderModell() {
-        IPersister<SonderModell> persister = persisterFactory.createNamedItemPersister(SonderModell.class);
+        IPersister<SonderModell> persister = persisterFactory.createPersister(SonderModell.class);
 
         save(persister, new SonderModell(null, "Märklin Magazin", "Märklin Magazin", false));
         save(persister, new SonderModell(null, "Märklin Insider", "Märklin Insider", false));
@@ -1853,7 +1853,7 @@ public class DBPopulator {
     }
 
     protected void populateSpurweite() {
-        IPersister<Spurweite> persister = persisterFactory.createNamedItemPersister(Spurweite.class);
+        IPersister<Spurweite> persister = persisterFactory.createPersister(Spurweite.class);
 
         save(persister, new Spurweite(null, "0", "32mm", false));
         save(persister, new Spurweite(null, "TT", "12mm", false));
@@ -1870,7 +1870,7 @@ public class DBPopulator {
     }
 
     protected void populateSteuerung() {
-        IPersister<Steuerung> persister = persisterFactory.createNamedItemPersister(Steuerung.class);
+        IPersister<Steuerung> persister = persisterFactory.createPersister(Steuerung.class);
 
         save(persister, new Steuerung(null, "digital", "digital", false));
         save(persister, new Steuerung(null, "mechanisch", "mechanisch (FRU)", false));
@@ -1881,7 +1881,7 @@ public class DBPopulator {
     }
 
     protected void populateWahrung() {
-        IPersister<Wahrung> persister = persisterFactory.createNamedItemPersister(Wahrung.class);
+        IPersister<Wahrung> persister = persisterFactory.createPersister(Wahrung.class);
 
         save(persister, new Wahrung(null, "AUD", "Australian Dollar", 2, false));
         save(persister, new Wahrung(null, "DEM", "Deutschemark", 2, false));
@@ -1897,7 +1897,7 @@ public class DBPopulator {
     }
 
     protected void populateZugTyp() {
-        IPersister<ZugTyp> persister = persisterFactory.createNamedItemPersister(ZugTyp.class);
+        IPersister<ZugTyp> persister = persisterFactory.createPersister(ZugTyp.class);
 
         save(persister, new ZugTyp(null, "Gütterzug", "Gütterzug", false));
         save(persister, new ZugTyp(null, "Nahvekerszug", "Nahvekerszug", false));
@@ -1908,11 +1908,11 @@ public class DBPopulator {
         save(persister, new ZugTyp(null, "Militär Zug", "Militär Zug", false));
     }
 
-    <E extends IItem> E findByKey(IPersister<E> persister, E entity) {
+    <E extends IItem> E findByKey(IPersister<E> persister, Object key) {
         try {
-            return persister.findByKey(entity, false);
+            return persister.findByKey(key, false);
         } catch (Exception e) {
-            logger.error("Error finding " + entity, e);
+            logger.error("Error finding " + key, e);
         }
         
         return null;
@@ -1940,7 +1940,7 @@ public class DBPopulator {
 
     <E extends IItem> void dump(Class<E> entityClass) {
         try {
-            IPersister<E> persister = persisterFactory.createItemPersister(entityClass);
+            IPersister<E> persister = persisterFactory.createPersister(entityClass);
         
             int i = 0;
     

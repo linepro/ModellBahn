@@ -27,6 +27,8 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.IAntrieb;
 import com.linepro.modellbahn.model.IGattung;
@@ -37,6 +39,11 @@ import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Formats;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.resolver.AchsfolgResolver;
+import com.linepro.modellbahn.rest.json.resolver.AntriebResolver;
+import com.linepro.modellbahn.rest.json.resolver.GattungResolver;
+import com.linepro.modellbahn.rest.json.resolver.SteuerungResolver;
+import com.linepro.modellbahn.rest.json.serialization.UnterKategorieSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
@@ -310,13 +317,14 @@ public class Vorbild extends AbstractItem implements IVorbild {
     @JsonGetter(ApiNames.GATTUNG)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=GattungResolver.class)
     public IGattung getGattung() {
         return gattung;
     }
 
     @Override
     @JsonSetter(ApiNames.GATTUNG)
+    @JsonDeserialize(as=Gattung.class)
     public void setGattung(IGattung gattung) {
         this.gattung = gattung;
     }
@@ -326,14 +334,14 @@ public class Vorbild extends AbstractItem implements IVorbild {
     @JoinColumn(name = DBNames.UNTER_KATEGORIE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "vorbild_fk2"))
     @JsonGetter(ApiNames.UNTER_KATEGORIE)
     @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonSerialize(using=UnterKategorieSerializer.class)
     public IUnterKategorie getUnterKategorie() {
         return unterKategorie;
     }
 
     @Override
     @JsonSetter(ApiNames.UNTER_KATEGORIE)
+    @JsonDeserialize(as=UnterKategorie.class)
     public void setUnterKategorie(IUnterKategorie unterKategorie) {
         this.unterKategorie = unterKategorie;
     }
@@ -402,12 +410,14 @@ public class Vorbild extends AbstractItem implements IVorbild {
     @JsonGetter(ApiNames.ANTRIEB)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=AntriebResolver.class)
     public IAntrieb getAntrieb() {
         return antrieb;
     }
 
+    @Override
     @JsonSetter(ApiNames.ANTRIEB)
+    @JsonDeserialize(as=Antrieb.class)
     public void setAntrieb(IAntrieb antrieb) {
         this.antrieb = antrieb;
     }
@@ -418,13 +428,14 @@ public class Vorbild extends AbstractItem implements IVorbild {
     @JsonGetter(ApiNames.ACHSFOLG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=AchsfolgResolver.class)
     public IAchsfolg getAchsfolg() {
         return achsfolg;
     }
 
     @Override
     @JsonSetter(ApiNames.ACHSFOLG)
+    @JsonDeserialize(as=Achsfolg.class)
     public void setAchsfolg(IAchsfolg achsfolg) {
         this.achsfolg = achsfolg;
     }
@@ -674,13 +685,14 @@ public class Vorbild extends AbstractItem implements IVorbild {
     @JsonGetter(ApiNames.STEUERUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=SteuerungResolver.class)
     public ISteuerung getSteuerung() {
         return steuerung;
     }
 
     @Override
     @JsonSetter(ApiNames.STEUERUNG)
+    @JsonDeserialize(as=Steuerung.class)
     public void setSteuerung(ISteuerung steuerung) {
         this.steuerung = steuerung;
     }

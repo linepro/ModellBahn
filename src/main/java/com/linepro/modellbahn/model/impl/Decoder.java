@@ -24,9 +24,9 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderAdress;
@@ -36,11 +36,12 @@ import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IProtokoll;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.rest.json.DecoderAdressSerializer;
-import com.linepro.modellbahn.rest.json.DecoderCVSerializer;
-import com.linepro.modellbahn.rest.json.DecoderFunktionSerializer;
-import com.linepro.modellbahn.rest.json.DecoderTypSerializer;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.resolver.ProtokollResolver;
+import com.linepro.modellbahn.rest.json.serialization.DecoderAdressSerializer;
+import com.linepro.modellbahn.rest.json.serialization.DecoderCVSerializer;
+import com.linepro.modellbahn.rest.json.serialization.DecoderFunktionSerializer;
+import com.linepro.modellbahn.rest.json.serialization.DecoderTypSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
@@ -120,65 +121,41 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
         super.setName(name);
     }
 
-    /**
-     * Gets the typ.
-     *
-     * @return the typ
-     */
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
     @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_fk1"))
-    @JsonUnwrapped
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(contentUsing=DecoderTypSerializer.class)
+    @JsonSerialize(using=DecoderTypSerializer.class)
     public IDecoderTyp getDecoderTyp() {
         return decoderTyp;
     }
 
-    /**
-     * Sets the typ.
-     *
-     * @param typ the new typ
-     */
     @Override
     @JsonSetter(ApiNames.DECODER_TYP)
+    @JsonDeserialize(as=DecoderTyp.class)
     public void setDecoderTyp(IDecoderTyp decoderTyp) {
         this.decoderTyp = decoderTyp;
     }
 
-    /**
-     * Gets the protokoll.
-     *
-     * @return the protokoll
-     */
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Protokoll.class)
     @JoinColumn(name = DBNames.PROTOKOLL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_fk2"))
     @JsonGetter(ApiNames.PROTOKOLL)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=ProtokollResolver.class)
     public IProtokoll getProtokoll() {
         return protokoll;
     }
 
-    /**
-     * Sets the protokoll.
-     *
-     * @param protokoll the new protokoll
-     */
     @Override
     @JsonSetter(ApiNames.PROTOKOLL)
+    @JsonDeserialize(as=Protokoll.class)
     public void setProtokoll(IProtokoll protokoll) {
         this.protokoll = protokoll;
     }
 
-    /**
-     * Gets the fahrstufe.
-     *
-     * @return the fahrstufe
-     */
     @Override
     @Column(name = DBNames.FAHRSTUFE, nullable = true)
     @JsonGetter(ApiNames.FAHRSTUFE)
@@ -187,22 +164,12 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
         return fahrstufe;
     }
 
-    /**
-     * Sets the fahrstufe.
-     *
-     * @param fahrstufe the new fahrstufe
-     */
     @Override
     @JsonSetter(ApiNames.FAHRSTUFE)
     public void setFahrstufe(Long fahrstufe) {
         this.fahrstufe = fahrstufe;
     }
 
-    /**
-     * Gets the adressen.
-     *
-     * @return the adressen
-     */
     @Override
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.DECODER, targetEntity = DecoderAdress.class, orphanRemoval = true)
     @JsonGetter(ApiNames.ADRESSEN)
@@ -212,13 +179,9 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
         return adressen;
     }
 
-    /**
-     * Sets the adressen.
-     *
-     * @param adressen the new adressen
-     */
     @Override
     @JsonSetter(ApiNames.ADRESSEN)
+    @JsonDeserialize(contentAs=DecoderAdress.class)
     public void setAdressen(List<IDecoderAdress> adressen) {
         this.adressen = adressen;
     }
@@ -234,11 +197,6 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
         getAdressen().remove(adress);
     }
 
-    /**
-     * Gets the cvs.
-     *
-     * @return the cvs
-     */
     @Override
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.DECODER, targetEntity = DecoderCV.class, orphanRemoval = true)
     @JsonGetter(ApiNames.CVS)
@@ -248,13 +206,9 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
         return cvs;
     }
 
-    /**
-     * Sets the cvs.
-     *
-     * @param cvs the new cvs
-     */
     @Override
     @JsonSetter(ApiNames.CVS)
+    @JsonDeserialize(contentAs=DecoderCV.class)
     public void setCVs(List<IDecoderCV> cvs) {
         this.cvs = cvs;
     }
@@ -270,11 +224,6 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
         getCVs().remove(cv);
     }
 
-    /**
-     * Gets the funktionen.
-     *
-     * @return the funktionen
-     */
     @Override
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.DECODER, targetEntity = DecoderFunktion.class, orphanRemoval = true)
     @JsonGetter(ApiNames.FUNKTIONEN)
@@ -284,13 +233,9 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
         return funktionen;
     }
 
-    /**
-     * Sets the funktionen.
-     *
-     * @param funktionen the new funktionen
-     */
     @Override
     @JsonSetter(ApiNames.FUNKTIONEN)
+    @JsonDeserialize(contentAs=DecoderFunktion.class)
     public void setFunktionen(List<IDecoderFunktion> funktionen) {
         this.funktionen = funktionen;
     }

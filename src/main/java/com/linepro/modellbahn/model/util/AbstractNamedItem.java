@@ -90,6 +90,12 @@ public abstract class AbstractNamedItem extends AbstractItem implements INamedIt
 	}
 
 	@Override
+    @JsonIgnore
+    public void setKey(Object id) {
+	    setName(id.toString());
+    }
+
+	@Override
     @Column(name=DBNames.DESCRIPTION, nullable=true, length=100)
     @JsonGetter(ApiNames.DESCRIPTION)
     @JsonView(Views.DropDown.class)

@@ -24,17 +24,19 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderFunktion;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.rest.json.DecoderTypSerializer;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.rest.json.resolver.DecoderResolver;
+import com.linepro.modellbahn.rest.json.serialization.DecoderTypFunktionSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
  * DecoderFunktion.
@@ -87,13 +89,14 @@ public class DecoderFunktion extends AbstractItem implements IDecoderFunktion {
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.ID)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.ID, resolver=DecoderResolver.class)
     public IDecoder getDecoder() {
         return decoder;
     }
 
     @Override
     @JsonSetter(ApiNames.DECODER)
+    @JsonDeserialize(as=Decoder.class)
     public void setDecoder(IDecoder decoder) {
         this.decoder = decoder;
     }
@@ -103,13 +106,14 @@ public class DecoderFunktion extends AbstractItem implements IDecoderFunktion {
     @JoinColumn(name = DBNames.FUNKTION_ID, nullable = false, referencedColumnName=DBNames.ID, foreignKey = @ForeignKey(name = "decoder_fn_fk2"))
     @JsonGetter(ApiNames.FUNKTION)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(contentUsing=DecoderTypSerializer.class)
+    @JsonSerialize(using=DecoderTypFunktionSerializer.class)
     public IDecoderTypFunktion getFunktion() {
         return funktion;
     }
 
     @Override
     @JsonSetter(ApiNames.FUNKTION)
+    @JsonDeserialize(as=DecoderTypFunktion.class)
     public void setFunktion(IDecoderTypFunktion funktion) {
         this.funktion = funktion;
     }

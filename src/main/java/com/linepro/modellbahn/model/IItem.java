@@ -30,6 +30,8 @@ public interface IItem {
      */
     public void setId(Long id);
 
+    public void setKey(Object key);
+
     /**
      * Gets the state of this item.
      *

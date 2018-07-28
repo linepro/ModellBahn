@@ -6,28 +6,20 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Link;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.lang3.builder.RecursiveToStringStyle;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.persistence.IPersister;
-import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.util.Selector;
 import com.linepro.modellbahn.util.SelectorsBuilder;
 
@@ -39,7 +31,7 @@ import com.linepro.modellbahn.util.SelectorsBuilder;
  * 
  * @param <E> the element type
  */
-public abstract class AbstractItemService<E extends IItem> extends AbstractService {
+public abstract class AbstractItemService<K, E extends IItem> extends AbstractService {
 
     /** The persister. */
     protected final IPersister<E> persister;
@@ -56,11 +48,31 @@ public abstract class AbstractItemService<E extends IItem> extends AbstractServi
      * @param entityClass the entity class
      * @param persister the persister
      */
-    public AbstractItemService(final Class<E> entityClass, IPersister<E> persister) {
-        this.persister = persister;
+    public AbstractItemService(final Class<E> entityClass) {
         this.entityClass = entityClass;
+        this.persister = StaticPersisterFactory.get().createPersister(entityClass);
         this.selectors = new SelectorsBuilder().build(entityClass, JsonGetter.class);
    }
+
+    /**
+     * Gets the.
+     *
+     * @param id the id
+     * @return the response
+     */
+    public Response get(K id) {
+        try {
+            E entity = getPersister().findByKey(id, false);
+
+            if (entity == null) {
+                return getResponse(Response.status(Status.NOT_FOUND));
+            }
+
+            return getResponse(Response.ok().entity(entity));
+        } catch (Exception e) {
+            return serverError(e);
+        }
+    }
 
     /**
      * Adds a new entity.
@@ -68,10 +80,6 @@ public abstract class AbstractItemService<E extends IItem> extends AbstractServi
      * @param entity the entity
      * @return the response
      */
-    @POST
-    @Consumes({ MediaType.APPLICATION_JSON })
-    @Produces(MediaType.APPLICATION_JSON)
-    @JsonView(Views.Public.class)
     public Response add(E entity) {
         try {
             logger.info("POST " + entity);
@@ -85,19 +93,59 @@ public abstract class AbstractItemService<E extends IItem> extends AbstractServi
     }
 
     /**
+     * Update.
+     *
+     * @param id the id
+     * @param entity the entity
+     * @return the response
+     */
+    public Response update(K id, E entity) {
+        try {
+            logger.info("PUT " + id + ": " + entity);
+
+            entity.setKey(id);
+            
+            E result = getPersister().update(entity);
+
+            if (result == null) {
+                return getResponse(Response.status(Status.NOT_FOUND));
+            }
+
+            return getResponse(Response.accepted().entity(result));
+        } catch (Exception e) {
+            return serverError(e);
+        }
+    }
+
+    /**
+     * Delete.
+     *
+     * @param id the id
+     * @return the response
+     */
+    public Response delete(K id) {
+        try {
+            logger.info("DELETE " + id);
+
+            getPersister().delete(create(id));
+
+            return getResponse(Response.noContent());
+        } catch (Exception e) {
+            return serverError(e);
+        }
+    }
+
+    /**
      * Searches for entities (by example using Uri query parameters).
      *
      * @param info the info
      * @return the response
      */
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @JsonView(Views.DropDown.class)
-    public Response search(@Context UriInfo info) {
+    public Response search(UriInfo info) {
         try {
-            info("GET " + ReflectionToStringBuilder.toString(info.getQueryParameters(), RecursiveToStringStyle.SHORT_PREFIX_STYLE));
-
             E template = getTemplate(info.getQueryParameters());
+
+            info("GET " + template);
 
             @SuppressWarnings("unchecked")
             List<IItem> entities = (List<IItem>) getPersister().findAll(template);
@@ -187,9 +235,9 @@ public abstract class AbstractItemService<E extends IItem> extends AbstractServi
      * @return the e
      * @throws Exception the exception
      */
-    protected E create(Long id) throws Exception {
-        E template = create();
-        template.setId(id);
+    E create(K id) throws Exception {
+        E template = getEntityClass().newInstance();
+        template.setKey(id);
         return template;
     }
 

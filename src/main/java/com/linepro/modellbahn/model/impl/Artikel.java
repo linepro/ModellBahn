@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IDecoder;
@@ -41,8 +42,14 @@ import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.model.util.Status;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Formats;
-import com.linepro.modellbahn.rest.json.ProduktSerializer;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.resolver.DecoderResolver;
+import com.linepro.modellbahn.rest.json.resolver.KupplungResolver;
+import com.linepro.modellbahn.rest.json.resolver.LichtResolver;
+import com.linepro.modellbahn.rest.json.resolver.MotorTypResolver;
+import com.linepro.modellbahn.rest.json.resolver.SteuerungResolver;
+import com.linepro.modellbahn.rest.json.resolver.WahrungResolver;
+import com.linepro.modellbahn.rest.json.serialization.ProduktSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
@@ -160,14 +167,14 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
     @JoinColumn(name = DBNames.PRODUKT_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "artikel_fk1"))
     @JsonGetter(ApiNames.PRODUKT)
     @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonSerialize(contentUsing=ProduktSerializer.class)
+    @JsonSerialize(using=ProduktSerializer.class)
     public IProdukt getProdukt() {
         return produkt;
     }
 
     @Override
     @JsonSetter(ApiNames.PRODUKT)
+    @JsonDeserialize(as=Produkt.class)
     public void setProdukt(IProdukt produkt) {
         this.produkt = produkt;
     }
@@ -194,13 +201,14 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
     @JsonGetter(ApiNames.WAHRUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=WahrungResolver.class)
     public IWahrung getWahrung() {
         return wahrung;
     }
 
     @Override
     @JsonSetter(ApiNames.WAHRUNG)
+    @JsonDeserialize(as=Wahrung.class)
     public void setWahrung(IWahrung wahrung) {
         this.wahrung = wahrung;
     }
@@ -239,13 +247,14 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
     @JsonGetter(ApiNames.STEUERUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=SteuerungResolver.class)
     public ISteuerung getSteuerung() {
         return steuerung;
     }
 
     @Override
     @JsonSetter(ApiNames.STEUERUNG)
+    @JsonDeserialize(as=Steuerung.class)
     public void setSteuerung(ISteuerung steuerung) {
         this.steuerung = steuerung;
     }
@@ -256,13 +265,14 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
     @JsonGetter(ApiNames.MOTOR_TYP)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=MotorTypResolver.class)
     public IMotorTyp getMotorTyp() {
         return motorTyp;
     }
 
     @Override
     @JsonSetter(ApiNames.MOTOR_TYP)
+    @JsonDeserialize(as=MotorTyp.class)
     public void setMotorTyp(IMotorTyp motorTyp) {
         this.motorTyp = motorTyp;
     }
@@ -273,13 +283,14 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
     @JsonGetter(ApiNames.LICHT)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=LichtResolver.class)
     public ILicht getLicht() {
         return licht;
     }
 
     @Override
     @JsonSetter(ApiNames.LICHT)
+    @JsonDeserialize(as=Licht.class)
     public void setLicht(ILicht licht) {
         this.licht = licht;
     }
@@ -290,13 +301,14 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
     @JsonGetter(ApiNames.KUPPLUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=KupplungResolver.class)
     public IKupplung getKupplung() {
         return kupplung;
     }
 
     @Override
     @JsonSetter(ApiNames.KUPPLUNG)
+    @JsonDeserialize(as=Kupplung.class)
     public void setKupplung(IKupplung kupplung) {
         this.kupplung = kupplung;
     }
@@ -307,13 +319,14 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.ID)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.ID, resolver=DecoderResolver.class)
     public IDecoder getDecoder() {
         return decoder;
     }
 
     @Override
     @JsonSetter(ApiNames.DECODER)
+    @JsonDeserialize(as=Decoder.class)
     public void setDecoder(IDecoder decoder) {
         this.decoder = decoder;
     }

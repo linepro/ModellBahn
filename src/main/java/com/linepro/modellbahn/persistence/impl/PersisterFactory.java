@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import org.apache.commons.beanutils.ConvertUtils;
 import org.slf4j.ILoggerFactory;
 
 import com.linepro.modellbahn.model.IItem;
@@ -40,28 +41,24 @@ public class PersisterFactory implements IPersisterFactory {
     }
 
     @Override
-    public synchronized <E extends IItem> IPersister<E> createItemPersister(Class<E> clazz) {
+    public synchronized <E extends IItem> IPersister<E> createPersister(Class<E> entityClass) {
         @SuppressWarnings("unchecked")
-        IPersister<E> persister = (IPersister<E>) persisters.get(clazz);
+        IPersister<E> persister = (IPersister<E>) persisters.get(entityClass);
         
         if (persister == null) {
-            persister = new ItemPersister<E>(entityManager, logManager, clazz);
-            persisters.put(clazz, persister);
+            persister = new ItemPersister<E>(entityManager, logManager, entityClass);
+            
+            registerConverter(persister, entityClass);
+
+            persisters.put(entityClass, persister);
         }
         
         return persister;
     }
-
-    @Override
-    public synchronized <E extends INamedItem> IPersister<E> createNamedItemPersister(Class<E> clazz) {
-        @SuppressWarnings("unchecked")
-        IPersister<E> persister = (IPersister<E>) persisters.get(clazz);
-        
-        if (persister == null) {
-            persister = new NamedItemPersister<E>(entityManager, logManager, clazz);
-            persisters.put(clazz, persister);
+    
+    void registerConverter(IPersister<?> persister, Class<?> entityClass) {
+        if (INamedItem.class.isAssignableFrom(entityClass)) {
+            ConvertUtils.register(new NamedItemConverter(persister), entityClass);
         }
-        
-        return persister;
     }
 }

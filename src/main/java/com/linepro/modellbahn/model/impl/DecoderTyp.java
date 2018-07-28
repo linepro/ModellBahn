@@ -34,6 +34,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypCV;
@@ -45,9 +46,11 @@ import com.linepro.modellbahn.model.util.AdressTyp;
 import com.linepro.modellbahn.model.util.Konfiguration;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
-import com.linepro.modellbahn.rest.json.DecoderTypCVSerializer;
-import com.linepro.modellbahn.rest.json.DecoderTypFunktionSerializer;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.resolver.HerstellerResolver;
+import com.linepro.modellbahn.rest.json.resolver.ProtokollResolver;
+import com.linepro.modellbahn.rest.json.serialization.DecoderTypCVSerializer;
+import com.linepro.modellbahn.rest.json.serialization.DecoderTypFunktionSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.util.ToStringBuilder;
@@ -159,13 +162,14 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     @JsonGetter(ApiNames.HERSTELLER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=HerstellerResolver.class)
     public IHersteller getHersteller() {
         return hersteller;
     }
 
     @Override
     @JsonSetter(ApiNames.HERSTELLER)
+    @JsonDeserialize(as=Hersteller.class)
     public void setHersteller(IHersteller hersteller) {
         this.hersteller = hersteller;
     }
@@ -231,13 +235,14 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     @JsonGetter(ApiNames.PROTOKOLL)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=ProtokollResolver.class)
     public IProtokoll getProtokoll() {
         return protokoll;
     }
 
     @Override
     @JsonSetter(ApiNames.PROTOKOLL)
+    @JsonDeserialize(as=Protokoll.class)
     public void setProtokoll(IProtokoll protokoll) {
         this.protokoll = protokoll;
     }
@@ -297,6 +302,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
     @Override
     @JsonSetter(ApiNames.CVS)
+    @JsonDeserialize(contentAs = DecoderTypCV.class)
     public void setCVs(Set<IDecoderTypCV> CVs) {
         this.CVs = CVs;
     }
@@ -323,7 +329,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
 
     @Override
     @JsonSetter(ApiNames.FUNKTIONEN)
-    @JsonSerialize()
+    @JsonDeserialize(contentAs = DecoderTypFunktion.class)
     public void setFunktionen(Set<IDecoderTypFunktion> funktionen) {
         this.funktionen = funktionen;
     }

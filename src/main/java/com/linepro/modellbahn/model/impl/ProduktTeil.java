@@ -21,16 +21,18 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IProdukt;
 import com.linepro.modellbahn.model.IProduktTeil;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.rest.json.ProduktSerializer;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.rest.json.serialization.ProduktSerializer;
+import com.linepro.modellbahn.rest.json.serialization.ProduktTeilSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
  * ProduktTeil.
@@ -88,13 +90,14 @@ public class ProduktTeil extends AbstractItem implements IProduktTeil {
     @JoinColumn(name = DBNames.PRODUKT_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "produkt_teil_fk1"))
     @JsonGetter(ApiNames.PRODUKT)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(contentUsing=ProduktSerializer.class)
+    @JsonSerialize(using=ProduktSerializer.class)
     public IProdukt getProdukt() {
         return produkt;
     }
 
     @Override
     @JsonSetter(ApiNames.PRODUKT)
+    @JsonDeserialize(as=Produkt.class)
     public void setProdukt(IProdukt produkt) {
         this.produkt = produkt;
     }
@@ -104,13 +107,14 @@ public class ProduktTeil extends AbstractItem implements IProduktTeil {
     @JoinColumn(name = DBNames.TEIL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "produkt_teil_fk2"))
     @JsonGetter(ApiNames.TEIL)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(contentUsing=ProduktSerializer.class)
+    @JsonSerialize(using=ProduktTeilSerializer.class)
     public IProdukt getTeil() {
         return teil;
     }
 
     @Override
     @JsonSetter(ApiNames.TEIL)
+    @JsonDeserialize(as=ProduktTeil.class)
     public void setTeil(IProdukt teil) {
         this.teil = teil;
     }

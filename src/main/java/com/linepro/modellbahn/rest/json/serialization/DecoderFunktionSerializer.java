@@ -1,4 +1,4 @@
-package com.linepro.modellbahn.rest.json;
+package com.linepro.modellbahn.rest.json.serialization;
 
 import java.io.IOException;
 
@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.linepro.modellbahn.model.impl.DecoderFunktion;
+import com.linepro.modellbahn.rest.json.LinkUtils;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 public class DecoderFunktionSerializer extends StdSerializer<DecoderFunktion> {

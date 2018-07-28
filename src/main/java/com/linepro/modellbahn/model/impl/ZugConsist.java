@@ -25,14 +25,15 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IZug;
 import com.linepro.modellbahn.model.IZugConsist;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.rest.json.ArtikelSerializer;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.resolver.ArtikelResolver;
+import com.linepro.modellbahn.rest.json.resolver.ZugResolver;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.util.ToStringBuilder;
@@ -98,13 +99,14 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
     @JsonGetter(ApiNames.ZUG)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=ZugResolver.class)
     public IZug getZug() {
         return zug;
     }
 
     @Override
     @JsonSetter(ApiNames.ZUG)
+    @JsonDeserialize(as=Zug.class)
     public void setZug(IZug zug) {
         this.zug = zug;
     }
@@ -129,13 +131,15 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
     @JoinColumn(name = DBNames.ARTIKEL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "consist_fk2"))
     @JsonGetter(ApiNames.ARTIKEL)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(contentUsing = ArtikelSerializer.class)
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=ArtikelResolver.class)
     public IArtikel getArtikel() {
         return artikel;
     }
 
     @Override
     @JsonSetter(ApiNames.ARTIKEL)
+    @JsonDeserialize(contentAs = Artikel.class)
     public void setArtikel(IArtikel artikel) {
         this.artikel = artikel;
     }

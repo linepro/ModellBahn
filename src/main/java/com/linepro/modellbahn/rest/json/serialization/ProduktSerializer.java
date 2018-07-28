@@ -1,4 +1,4 @@
-package com.linepro.modellbahn.rest.json;
+package com.linepro.modellbahn.rest.json.serialization;
 
 import java.io.IOException;
 
@@ -6,7 +6,8 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import com.linepro.modellbahn.model.impl.UnterKategorie;
+import com.linepro.modellbahn.model.impl.Produkt;
+import com.linepro.modellbahn.rest.json.LinkUtils;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
@@ -16,25 +17,25 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  * @author   $Author$
  * @version  $Id$
  */
-public class UnterKategorieSerializer extends StdSerializer<UnterKategorie> {
+public class ProduktSerializer extends StdSerializer<Produkt> {
 
-    private static final long serialVersionUID = -4711405906405775674L;
+    private static final long serialVersionUID = -3541810693407134622L;
 
     protected LinkUtils utils = new LinkUtils();
 
-    public UnterKategorieSerializer() {
-        this(UnterKategorie.class);
+    public ProduktSerializer() {
+        this(Produkt.class);
     }
 
-    public UnterKategorieSerializer(Class<UnterKategorie> t) {
+    public ProduktSerializer(Class<Produkt> t) {
         super(t);
     }
 
     @Override
-    public void serialize(UnterKategorie value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+    public void serialize(Produkt value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
         gen.writeStartObject();
-        gen.writeStringField(ApiNames.UNTER_KATEGORIE, value.getName());
-        gen.writeStringField(ApiNames.DESCRIPTION, value.getBezeichnung());
+        gen.writeStringField(ApiNames.HERSTELLER, value.getHersteller().getName());
+        gen.writeStringField(ApiNames.BESTELL_NR, value.getBestellNr());
         utils.writeLinks(ApiNames.LINKS, value.getLinks(), gen, serializers);
         gen.writeEndObject();
     }

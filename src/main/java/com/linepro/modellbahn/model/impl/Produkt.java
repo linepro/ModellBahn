@@ -34,6 +34,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.IAufbau;
@@ -58,17 +59,35 @@ import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.FileConverter;
 import com.linepro.modellbahn.rest.json.Formats;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.rest.json.resolver.AchsfolgResolver;
+import com.linepro.modellbahn.rest.json.resolver.AufbauResolver;
+import com.linepro.modellbahn.rest.json.resolver.BahnverwaltungResolver;
+import com.linepro.modellbahn.rest.json.resolver.EpochResolver;
+import com.linepro.modellbahn.rest.json.resolver.GattungResolver;
+import com.linepro.modellbahn.rest.json.resolver.HerstellerResolver;
+import com.linepro.modellbahn.rest.json.resolver.KupplungResolver;
+import com.linepro.modellbahn.rest.json.resolver.LichtResolver;
+import com.linepro.modellbahn.rest.json.resolver.MassstabResolver;
+import com.linepro.modellbahn.rest.json.resolver.MotorTypResolver;
+import com.linepro.modellbahn.rest.json.resolver.SonderModellResolver;
+import com.linepro.modellbahn.rest.json.resolver.SpurweiteResolver;
+import com.linepro.modellbahn.rest.json.resolver.SteuerungResolver;
+import com.linepro.modellbahn.rest.json.resolver.VorbildResolver;
+import com.linepro.modellbahn.rest.json.serialization.DecoderTypSerializer;
+import com.linepro.modellbahn.rest.json.serialization.ProduktTeilSerializer;
+import com.linepro.modellbahn.rest.json.serialization.UnterKategorieSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
- * Produkt.
- * A product.
- * @author  $Author:$
+ * Produkt. A product.
+ * 
+ * @author $Author:$
  * @version $Id:$
  */
 @Entity(name = "Produkt")
-@Table(name = "Produkt", indexes = { @Index(columnList = DBNames.HERSTELLER_ID + "," + DBNames.BESTELL_NR, unique = true),
+@Table(name = "Produkt", indexes = {
+        @Index(columnList = DBNames.HERSTELLER_ID + "," + DBNames.BESTELL_NR, unique = true),
         @Index(columnList = DBNames.EPOCH_ID),
         @Index(columnList = DBNames.GATTUNG_ID),
         @Index(columnList = DBNames.BAHNVERWALTUNG_ID),
@@ -87,7 +106,12 @@ import com.linepro.modellbahn.rest.util.ApiNames;
         @Index(columnList = DBNames.HERSTELLER_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.HERSTELLER_ID, DBNames.BESTELL_NR }) })
 @JsonRootName(value = ApiNames.PRODUKT)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.UNTER_KATEGORIE, ApiNames.MASSSTAB, ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER, ApiNames.BAUZEIT, ApiNames.VORBILD, ApiNames.ACHSFOLG, ApiNames.ANMERKUNG, ApiNames.SONDERMODEL, ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG, ApiNames.DECODER_TYP, ApiNames.MOTOR_TYP, ApiNames.LANGE, ApiNames.ANLEITUNGEN, ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.TEILEN, ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.UNTER_KATEGORIE, ApiNames.MASSSTAB,
+        ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER,
+        ApiNames.BAUZEIT, ApiNames.VORBILD, ApiNames.ACHSFOLG, ApiNames.ANMERKUNG, ApiNames.SONDERMODEL,
+        ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG, ApiNames.DECODER_TYP,
+        ApiNames.MOTOR_TYP, ApiNames.LANGE, ApiNames.ANLEITUNGEN, ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.ABBILDUNG,
+        ApiNames.TEILEN, ApiNames.DELETED, ApiNames.LINKS })
 public class Produkt extends AbstractItem implements IProdukt {
 
     /** The Constant serialVersionUID. */
@@ -178,11 +202,16 @@ public class Produkt extends AbstractItem implements IProdukt {
     /**
      * Instantiates a new produkt.
      *
-     * @param id the id
-     * @param name the name
-     * @param bezeichnung the bezeichnung
-     * @param abbildung the abbildung
-     * @param deleted the deleted
+     * @param id
+     *            the id
+     * @param name
+     *            the name
+     * @param bezeichnung
+     *            the bezeichnung
+     * @param abbildung
+     *            the abbildung
+     * @param deleted
+     *            the deleted
      */
     public Produkt(Long id, String name, String bezeichnung, Image abbildung, Boolean deleted) {
         super(id, deleted);
@@ -194,13 +223,14 @@ public class Produkt extends AbstractItem implements IProdukt {
     @JsonGetter(ApiNames.HERSTELLER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = HerstellerResolver.class)
     public IHersteller getHersteller() {
         return hersteller;
     }
 
     @Override
     @JsonSetter(ApiNames.HERSTELLER)
+    @JsonDeserialize(as=Hersteller.class)
     public void setHersteller(IHersteller hersteller) {
         this.hersteller = hersteller;
     }
@@ -224,14 +254,14 @@ public class Produkt extends AbstractItem implements IProdukt {
     @JoinColumn(name = DBNames.UNTER_KATEGORIE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk7"))
     @JsonGetter(ApiNames.UNTER_KATEGORIE)
     @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonSerialize(using = UnterKategorieSerializer.class)
     public IUnterKategorie getUnterKategorie() {
         return unterKategorie;
     }
 
     @Override
     @JsonSetter(ApiNames.UNTER_KATEGORIE)
+    @JsonDeserialize(as = UnterKategorie.class)
     public void setUnterKategorie(IUnterKategorie unterKategorie) {
         this.unterKategorie = unterKategorie;
     }
@@ -242,13 +272,14 @@ public class Produkt extends AbstractItem implements IProdukt {
     @JsonGetter(ApiNames.MASSSTAB)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = MassstabResolver.class)
     public IMassstab getMassstab() {
         return massstab;
     }
 
     @Override
     @JsonSetter(ApiNames.MASSSTAB)
+    @JsonDeserialize(as=Massstab.class)
     public void setMassstab(IMassstab massstab) {
         this.massstab = massstab;
     }
@@ -259,13 +290,14 @@ public class Produkt extends AbstractItem implements IProdukt {
     @JsonGetter(ApiNames.SPURWEITE)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = SpurweiteResolver.class)
     public ISpurweite getSpurweite() {
         return spurweite;
     }
 
     @Override
     @JsonSetter(ApiNames.SPURWEITE)
+    @JsonDeserialize(as=Spurweite.class)
     public void setSpurweite(ISpurweite spurweite) {
         this.spurweite = spurweite;
     }
@@ -276,13 +308,14 @@ public class Produkt extends AbstractItem implements IProdukt {
     @JsonGetter(ApiNames.EPOCH)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = EpochResolver.class)
     public IEpoch getEpoch() {
         return epoch;
     }
 
     @Override
     @JsonSetter(ApiNames.EPOCH)
+    @JsonDeserialize(as=Epoch.class)
     public void setEpoch(IEpoch epoch) {
         this.epoch = epoch;
     }
@@ -293,13 +326,14 @@ public class Produkt extends AbstractItem implements IProdukt {
     @JsonGetter(ApiNames.BAHNVERWALTUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = BahnverwaltungResolver.class)
     public IBahnverwaltung getBahnverwaltung() {
         return bahnverwaltung;
     }
 
     @Override
     @JsonSetter(ApiNames.BAHNVERWALTUNG)
+    @JsonDeserialize(as=Bahnverwaltung.class)
     public void setBahnverwaltung(IBahnverwaltung bahnverwaltung) {
         this.bahnverwaltung = bahnverwaltung;
     }
@@ -310,13 +344,14 @@ public class Produkt extends AbstractItem implements IProdukt {
     @JsonGetter(ApiNames.GATTUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = GattungResolver.class)
     public IGattung getGattung() {
         return gattung;
     }
 
     @Override
     @JsonSetter(ApiNames.GATTUNG)
+    @JsonDeserialize(as=Gattung.class)
     public void setGattung(IGattung gattung) {
         this.gattung = gattung;
     }
@@ -340,7 +375,7 @@ public class Produkt extends AbstractItem implements IProdukt {
     @Temporal(TemporalType.DATE)
     @JsonGetter(ApiNames.BAUZEIT)
     @JsonView(Views.Public.class)
-    @JsonFormat(shape=Shape.STRING, pattern=Formats.ISO8601_DATE)
+    @JsonFormat(shape = Shape.STRING, pattern = Formats.ISO8601_DATE)
     public Date getBauzeit() {
         return bauzeit;
     }
@@ -357,13 +392,15 @@ public class Produkt extends AbstractItem implements IProdukt {
     @JsonGetter(ApiNames.VORBILD)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = VorbildResolver.class)
+    @JsonSerialize(as=Vorbild.class)
     public IVorbild getVorbild() {
         return vorbild;
     }
 
     @Override
     @JsonSetter(ApiNames.VORBILD)
+    @JsonDeserialize(as=Vorbild.class)
     public void setVorbild(IVorbild vorbild) {
         this.vorbild = vorbild;
     }
@@ -374,13 +411,15 @@ public class Produkt extends AbstractItem implements IProdukt {
     @JsonGetter(ApiNames.ACHSFOLG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = AchsfolgResolver.class)
+    @JsonSerialize(as=Achsfolg.class)
     public IAchsfolg getAchsfolg() {
         return achsfolge;
     }
 
     @Override
     @JsonSetter(ApiNames.ACHSFOLG)
+    @JsonDeserialize(as=Achsfolg.class)
     public void setAchsfolg(IAchsfolg achsfolge) {
         this.achsfolge = achsfolge;
     }
@@ -405,13 +444,15 @@ public class Produkt extends AbstractItem implements IProdukt {
     @JsonGetter(ApiNames.SONDERMODEL)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = SonderModellResolver.class)
+    @JsonSerialize(as=SonderModell.class)
     public ISonderModell getSondermodel() {
         return sondermodel;
     }
 
     @Override
     @JsonSetter(ApiNames.SONDERMODEL)
+    @JsonDeserialize(as=SonderModell.class)
     public void setSondermodel(ISonderModell sondermodel) {
         this.sondermodel = sondermodel;
     }
@@ -422,13 +463,15 @@ public class Produkt extends AbstractItem implements IProdukt {
     @JsonGetter(ApiNames.AUFBAU)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = AufbauResolver.class)
+    @JsonSerialize(as=Aufbau.class)
     public IAufbau getAufbau() {
         return aufbau;
     }
 
     @Override
     @JsonSetter(ApiNames.AUFBAU)
+    @JsonDeserialize(as=Aufbau.class)
     public void setAufbau(IAufbau aufbau) {
         this.aufbau = aufbau;
     }
@@ -439,13 +482,15 @@ public class Produkt extends AbstractItem implements IProdukt {
     @JsonGetter(ApiNames.LICHT)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = LichtResolver.class)
+    @JsonSerialize(as=Licht.class)
     public ILicht getLicht() {
         return licht;
     }
 
     @Override
     @JsonSetter(ApiNames.LICHT)
+    @JsonDeserialize(as=Licht.class)
     public void setLicht(ILicht licht) {
         this.licht = licht;
     }
@@ -456,13 +501,15 @@ public class Produkt extends AbstractItem implements IProdukt {
     @JsonGetter(ApiNames.KUPPLUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = KupplungResolver.class)
+    @JsonSerialize(as=Kupplung.class)
     public IKupplung getKupplung() {
         return kupplung;
     }
 
     @Override
     @JsonSetter(ApiNames.KUPPLUNG)
+    @JsonDeserialize(as=Kupplung.class)
     public void setKupplung(IKupplung kupplung) {
         this.kupplung = kupplung;
     }
@@ -473,13 +520,15 @@ public class Produkt extends AbstractItem implements IProdukt {
     @JsonGetter(ApiNames.STEUERUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = SteuerungResolver.class)
+    @JsonSerialize(as=Steuerung.class)
     public ISteuerung getSteuerung() {
         return steuerung;
     }
 
     @Override
     @JsonSetter(ApiNames.STEUERUNG)
+    @JsonDeserialize(as=Steuerung.class)
     public void setSteuerung(ISteuerung steuerung) {
         this.steuerung = steuerung;
     }
@@ -489,14 +538,14 @@ public class Produkt extends AbstractItem implements IProdukt {
     @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk14"))
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonSerialize(using=DecoderTypSerializer.class)
     public IDecoderTyp getDecoderTyp() {
         return decoderTyp;
     }
 
     @Override
     @JsonSetter(ApiNames.DECODER_TYP)
+    @JsonDeserialize(as=DecoderTyp.class)
     public void setDecoderTyp(IDecoderTyp decoderTyp) {
         this.decoderTyp = decoderTyp;
     }
@@ -507,13 +556,14 @@ public class Produkt extends AbstractItem implements IProdukt {
     @JsonGetter(ApiNames.MOTOR_TYP)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = MotorTypResolver.class)
     public IMotorTyp getMotorTyp() {
         return motorTyp;
     }
 
     @Override
     @JsonSetter(ApiNames.MOTOR_TYP)
+    @JsonDeserialize(as=MotorTyp.class)
     public void setMotorTyp(IMotorTyp motorTyp) {
         this.motorTyp = motorTyp;
     }
@@ -579,13 +629,14 @@ public class Produkt extends AbstractItem implements IProdukt {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.PRODUKT, targetEntity = ProduktTeil.class, orphanRemoval = true)
     @JsonGetter(ApiNames.TEILEN)
     @JsonView(Views.Public.class)
-    @JsonSerialize()
+    @JsonSerialize(contentUsing = ProduktTeilSerializer.class)
     public List<IProduktTeil> getTeilen() {
         return teilen;
     }
 
     @Override
     @JsonSetter(ApiNames.TEILEN)
+    @JsonDeserialize(contentAs = ProduktTeil.class)
     public void setTeilen(List<IProduktTeil> teilen) {
         this.teilen = teilen;
     }

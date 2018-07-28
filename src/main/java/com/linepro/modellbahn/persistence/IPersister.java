@@ -41,7 +41,7 @@ public interface IPersister<E extends IItem> extends ISessionManager {
      * @return the entity
      * @throws Exception if there more than one match or there is a DB error
      */
-    E findByKey(E template, boolean eager) throws Exception;
+    E findByKey(Object key, boolean eager) throws Exception;
 
     /**
      * Finds all the entities.

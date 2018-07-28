@@ -1,4 +1,4 @@
-package com.linepro.modellbahn.rest.json;
+package com.linepro.modellbahn.rest.json.serialization;
 
 import java.io.IOException;
 
@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.linepro.modellbahn.model.impl.Artikel;
+import com.linepro.modellbahn.rest.json.LinkUtils;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 public class ArtikelSerializer extends StdSerializer<Artikel> {
@@ -26,7 +27,7 @@ public class ArtikelSerializer extends StdSerializer<Artikel> {
     @Override
     public void serialize(Artikel value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
         gen.writeStartObject();
-        gen.writeObjectField("artikelNr", value.getName());
+        gen.writeObjectField(ApiNames.NAME, value.getName());
         gen.writeObjectField(ApiNames.HERSTELLER, value.getProdukt().getHersteller().getName());
         gen.writeObjectField(ApiNames.BESTELL_NR, value.getProdukt().getBestellNr());
         gen.writeEndObject();

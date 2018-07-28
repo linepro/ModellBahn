@@ -4,7 +4,7 @@ import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.beanutils.Converter;
 import org.apache.commons.lang3.StringUtils;
 
-import com.linepro.modellbahn.model.INamedItem;
+import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.persistence.IPersister;
 
 /**
@@ -15,43 +15,45 @@ import com.linepro.modellbahn.persistence.IPersister;
  *
  * @param <I> the generic type
  */
-public class NamedItemConverter<I extends INamedItem> implements Converter {
+public class NamedItemConverter implements Converter {
     
     /** The persister. */
-    protected final IPersister<I> persister;
+    protected final IPersister<?> persister;
     
     /**
      * Instantiates a new named item converter.
      *
      * @param persister the persister
      */
-    public NamedItemConverter(IPersister<I> persister) {
+    public NamedItemConverter(IPersister<?> persister) {
         this.persister = persister;
     }
     
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T convert(Class<T> type, Object value) {
+    public <E> E convert(Class<E> type, Object value) {
         try {
-            if (type.isAssignableFrom(persister.getEntityClass())) {
-                if (StringUtils.isNotBlank(value.toString())) {
-                    I entity = (I) type.newInstance();
+            if (StringUtils.isNotBlank(value.toString())) {
+                if (persister.getEntityClass().isAssignableFrom(type)) {
+                    IItem entity = (IItem) type.newInstance();
 
-                    ((INamedItem) entity).setName(value.toString());
+                    entity.setKey(value.toString());
 
                     entity = persister.findByKey(entity, false);
                     
                     if (entity != null) {
-                        return (T) entity;
+                        return (E) entity;
                     }
     
                     throw new IllegalArgumentException(value + " does not exist");
                 }
-            }
 
-            throw new IllegalArgumentException(type + " not supported");
+                throw new IllegalArgumentException(type + " not supported");
+            }
         } catch (Exception e) {
             throw new ConversionException(e);
         }
+        
+        return null;
     }
 }

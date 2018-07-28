@@ -33,8 +33,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.rest.json.LinkSerializer;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.LinkSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
@@ -93,6 +93,12 @@ public abstract class AbstractItem implements Serializable, IItem {
     public void setId(Long id) {
 		this.id = id;
 	}
+
+	@Override
+    @JsonIgnore
+    public void setKey(Object id) {
+        setId(Long.valueOf(id.toString()));
+    }
 
 	@Override
     @Column(name=DBNames.DELETED, length=5, nullable = true)
