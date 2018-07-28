@@ -286,7 +286,7 @@ public class KategorieService extends AbstractItemService<String, Kategorie> {
 
             getPersister().update(kategorie);
 
-            return getResponse(Response.accepted().entity(newUnterKategorie.addLinks(getUriInfo(), true, true)));
+            return getResponse(Response.accepted().entity(unterKategorie.addLinks(getUriInfo(), true, true)));
         } catch (Exception e) {
             return serverError(e);
         }
