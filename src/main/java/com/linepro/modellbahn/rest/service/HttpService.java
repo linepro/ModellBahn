@@ -42,6 +42,6 @@ public class HttpService extends AbstractService {
             return Response.ok(file).build();
         }
 
-        return Response.noContent().build();
+        return noContent().build();
     }
 }

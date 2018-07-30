@@ -1,11 +1,12 @@
 package com.linepro.modellbahn.model;
+import com.linepro.modellbahn.model.keys.UnterKategorieKey;
 
 /**
  * IUnterKategorie.
  * @author   $Author$
  * @version  $Id$
  */
-public interface IUnterKategorie extends INamedItem {
+public interface IUnterKategorie extends INamedItem<UnterKategorieKey> {
 
     /**
      * Gets the kategorie.

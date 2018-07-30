@@ -11,6 +11,7 @@ import com.linepro.modellbahn.model.IProtokoll;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * Protokoll. The communications protocol used by a Decoder
@@ -23,7 +24,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.PROTOKOLL)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
-public class Protokoll extends AbstractNamedItem implements IProtokoll {
+public class Protokoll extends AbstractNamedItem<NameKey> implements IProtokoll {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2601992994975232884L;

@@ -61,6 +61,7 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
                 .append("Request")
                 .append("eventId", id)
                 .append("uri", context.getUriInfo().getAbsolutePath().toString())
+                .append("method", context.getMethod())
                 .append("parameters", context.getUriInfo().getQueryParameters())
                 .toString();
     }

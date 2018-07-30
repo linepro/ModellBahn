@@ -26,6 +26,7 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.resolver.WahrungResolver;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * Land. The country of a product.
@@ -39,7 +40,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @JsonRootName(value = ApiNames.LAND)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.WAHRUNG, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED,
         ApiNames.LINKS })
-public class Land extends AbstractNamedItem implements ILand {
+public class Land extends AbstractNamedItem<NameKey> implements ILand {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5352015940349871580L;

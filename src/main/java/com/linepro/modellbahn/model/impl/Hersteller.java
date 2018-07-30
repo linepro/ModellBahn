@@ -15,12 +15,13 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IHersteller;
+import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.URLConverter;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
  * Hersteller. The manufacturer for a product
@@ -33,7 +34,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.HERSTELLER)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.TELEFON, ApiNames.URL, ApiNames.DELETED, ApiNames.LINKS})
-public class Hersteller extends AbstractNamedItem implements IHersteller {
+public class Hersteller extends AbstractNamedItem<NameKey> implements IHersteller {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2896366936132390553L;

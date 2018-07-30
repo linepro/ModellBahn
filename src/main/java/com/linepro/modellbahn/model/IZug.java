@@ -1,13 +1,14 @@
 package com.linepro.modellbahn.model;
 
 import java.util.List;
+import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * IZug.
  * @author   $Author$
  * @version  $Id$
  */
-public interface IZug extends INamedItem {
+public interface IZug extends INamedItem<NameKey> {
 
     /**
      * Gets the typ.

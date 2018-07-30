@@ -11,15 +11,21 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.linepro.modellbahn.model.IKategorie;
 import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.impl.Kategorie;
 import com.linepro.modellbahn.model.impl.UnterKategorie;
+import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.model.keys.UnterKategorieKey;
+import com.linepro.modellbahn.persistence.IPersister;
+import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -32,13 +38,17 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @version $Id:$
  */
 @Path(ApiPaths.KATEGORIE)
-public class KategorieService extends AbstractItemService<String, Kategorie> {
+public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
+
+    private final IPersister<UnterKategorie> unterKategoriePersister;
 
     /**
      * Instantiates a new kategorie service.
      */
     public KategorieService() {
         super(Kategorie.class);
+
+        unterKategoriePersister = StaticPersisterFactory.get().createPersister(UnterKategorie.class) ;
     }
 
     /**
@@ -69,6 +79,36 @@ public class KategorieService extends AbstractItemService<String, Kategorie> {
         entity.setDeleted(deleted);
 
         info("create " + entity);
+
+        return entity;
+    }
+
+    /**
+     * Creates the.
+     *
+     * @param id
+     *            the id
+     * @param kategorieStr
+     *            the kategorie str
+     * @param name
+     *            the name
+     * @param bezeichnung
+     *            the bezeichnung
+     * @param deleted
+     *            the deleted
+     * @return the unter kategorie
+     * @throws Exception
+     *             the exception
+     */
+    @JsonCreator
+    public UnterKategorie create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
+            @JsonProperty(value = ApiPaths.KATEGORIE_PARAM_NAME, required = false) String kategorieStr,
+            @JsonProperty(value = ApiNames.NAME, required = false) String name,
+            @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
+            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
+        Kategorie kategorie = findKategorie(kategorieStr, false);
+
+        UnterKategorie entity = new UnterKategorie(id, kategorie, name, bezeichnung, deleted);
 
         return entity;
     }
@@ -129,49 +169,6 @@ public class KategorieService extends AbstractItemService<String, Kategorie> {
     }
 
     /**
-     * Creates the.
-     *
-     * @param id
-     *            the id
-     * @param kategorieStr
-     *            the kategorie str
-     * @param name
-     *            the name
-     * @param bezeichnung
-     *            the bezeichnung
-     * @param deleted
-     *            the deleted
-     * @return the unter kategorie
-     * @throws Exception
-     *             the exception
-     */
-    @JsonCreator
-    public UnterKategorie create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiPaths.KATEGORIE_PARAM_NAME, required = false) String kategorieStr,
-            @JsonProperty(value = ApiNames.NAME, required = false) String name,
-            @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
-        Kategorie kategorie = findKategorie(kategorieStr);
-
-        UnterKategorie entity = new UnterKategorie(id, kategorie, name, bezeichnung, deleted);
-
-        return entity;
-    }
-
-    /**
-     * Find kategorie.
-     *
-     * @param kategorieStr
-     *            the kategorie str
-     * @return the kategorie
-     * @throws Exception
-     *             the exception
-     */
-    protected Kategorie findKategorie(String kategorieStr) throws Exception {
-        return getPersister().findByKey(kategorieStr, true);
-    }
-
-    /**
      * Gets the.
      *
      * @param kategorieStr
@@ -187,21 +184,21 @@ public class KategorieService extends AbstractItemService<String, Kategorie> {
     public Response get(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) {
         try {
-            Kategorie kategorie = findKategorie(kategorieStr);
+            Kategorie kategorie = findKategorie(kategorieStr, true);
 
             if (kategorie == null) {
-                return getResponse(Response.status(Status.NOT_FOUND));
+                return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
             }
 
-            IUnterKategorie unterKategorie = findUnterKategorie(kategorie, unterKategorieStr);
+            IUnterKategorie unterKategorie = findUnterKategorie(kategorieStr, unterKategorieStr);
 
             if (unterKategorie != null) {
-                return getResponse(Response.ok().entity(unterKategorie.addLinks(getUriInfo(), true, true)));
+                return getResponse(ok(), unterKategorie, true, true);
             }
 
-            return getResponse(Response.status(Status.NOT_FOUND));
+            return getResponse(notFound());
         } catch (Exception e) {
-            return serverError(e);
+            return getResponse(serverError(e));
         }
     }
 
@@ -224,21 +221,21 @@ public class KategorieService extends AbstractItemService<String, Kategorie> {
     public Response add(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, UnterKategorie unterKategorie)
             throws Exception {
         try {
-            logger.info("POST " + kategorieStr + "/" + unterKategorie);
+            info("POST " + kategorieStr + "/" + unterKategorie);
 
-            Kategorie kategorie = findKategorie(kategorieStr);
+            Kategorie kategorie = findKategorie(kategorieStr, true);
 
             if (kategorie == null) {
-                return getResponse(Response.status(Status.NOT_FOUND));
+                return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
             }
 
             kategorie.addUnterKategorie(unterKategorie);
 
             getPersister().update(kategorie);
 
-            return getResponse(Response.ok().entity(unterKategorie.addLinks(getUriInfo(), true, true)));
+            return getResponse(created(), unterKategorie, true, true);
         } catch (Exception e) {
-            return serverError(e);
+            return getResponse(serverError(e));
         }
     }
 
@@ -262,33 +259,28 @@ public class KategorieService extends AbstractItemService<String, Kategorie> {
         try {
             info("PUT " + kategorieStr + "/" + unterKategorieStr + ": " + newUnterKategorie);
 
-            // You are not permitted to update the kategorie of an
-            // unterkategorie : you must do add new delete old
-            Kategorie kategorie = findKategorie(kategorieStr);
+            Kategorie kategorie = findKategorie(kategorieStr, false);
 
             if (kategorie == null) {
-                return getResponse(Response.status(Status.NOT_FOUND));
+                return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
             }
 
-            IUnterKategorie unterKategorie = findUnterKategorie(kategorie, unterKategorieStr);
+            IUnterKategorie unterKategorie = findUnterKategorie(kategorieStr, unterKategorieStr);
 
             if (unterKategorie == null) {
-                return getResponse(Response.status(Status.NOT_FOUND));
+                return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
+            } else if (newUnterKategorie.getKategorie() == null) {
+                newUnterKategorie.setKategorie(kategorie);
+            } else if (StringUtils.indexOfDifference(newUnterKategorie.getKategorie().getName(), kategorieStr) != -1) {
+                // Attempt to change kategorie not allowed
+                return getResponse(badRequest(null, "You cannot change the kategorie for an unterkategorie, create a new one"));
             }
 
-            if (newUnterKategorie.getBezeichnung() != null) {
-                unterKategorie.setBezeichnung(newUnterKategorie.getBezeichnung());
-            }
-            
-            if (newUnterKategorie.getDeleted() != null) {
-                unterKategorie.setDeleted(newUnterKategorie.getDeleted());
-            }
+            unterKategorie = getUnterKategoriePersister().update(newUnterKategorie);
 
-            getPersister().update(kategorie);
-
-            return getResponse(Response.accepted().entity(unterKategorie.addLinks(getUriInfo(), true, true)));
+            return getResponse(accepted(), unterKategorie, true, true);
         } catch (Exception e) {
-            return serverError(e);
+            return getResponse(serverError(e));
         }
     }
 
@@ -308,34 +300,49 @@ public class KategorieService extends AbstractItemService<String, Kategorie> {
     public Response delete(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) throws Exception {
         try {
-            Kategorie kategorie = findKategorie(kategorieStr);
-
-            if (kategorie == null) {
-                return getResponse(Response.status(Status.NOT_FOUND));
-            }
-
-            IUnterKategorie unterKategorie = findUnterKategorie(kategorie, unterKategorieStr);
+            UnterKategorie unterKategorie = (UnterKategorie) findUnterKategorie(kategorieStr, unterKategorieStr);
 
             if (unterKategorie == null) {
-                return getResponse(Response.status(Status.NOT_FOUND));
+                return getResponse(badRequest(null, "UnterKategorie " + kategorieStr + "/" + unterKategorieStr + " does not exist"));
             }
+
+            Kategorie kategorie = (Kategorie) unterKategorie.getKategorie();
 
             kategorie.removeUnterKategorie(unterKategorie);
 
+            //getUnterKategoriePersister().delete(unterKategorie);
+
             getPersister().update(kategorie);
 
-            return getResponse(Response.noContent());
+            return getResponse(noContent());
         } catch (Exception e) {
-            return serverError(e);
+            return getResponse(serverError(e));
         }
     }
 
-    protected IUnterKategorie findUnterKategorie(Kategorie kategorie, String unterKategorieStr) {
-        for (IUnterKategorie unterKategorie : kategorie.getUnterKategorien()) {
-            if (unterKategorieStr.equals(unterKategorie.getName())) {
-                return unterKategorie;
-            }
-        }
-        return null;
+    /**
+     * Find kategorie.
+     *
+     * @param kategorieStr
+     *            the kategorie str
+     * @param eager TODO
+     * @return the kategorie
+     * @throws Exception
+     *             the exception
+     */
+    protected Kategorie findKategorie(String kategorieStr, boolean eager) throws Exception {
+        return getPersister().findByKey(kategorieStr, eager);
+    }
+
+    protected IUnterKategorie findUnterKategorie(String kategorieStr, String unterKategorieStr) throws Exception {
+        return getUnterKategoriePersister().findByKey(new UnterKategorieKey(findKategorie(kategorieStr, false), unterKategorieStr), true);
+    }
+    
+    protected IUnterKategorie findUnterKategorie(IKategorie kategorie, String unterKategorieStr) throws Exception {
+        return getUnterKategoriePersister().findByKey(new UnterKategorieKey(kategorie, unterKategorieStr), true);
+    }
+
+    protected IPersister<UnterKategorie> getUnterKategoriePersister() {
+        return unterKategoriePersister;
     }
 }

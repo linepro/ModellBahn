@@ -13,6 +13,7 @@ import javax.persistence.UniqueConstraint;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.IAchsfolg;
+import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -28,7 +29,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.ACHSFOLG)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
-public class Achsfolg extends AbstractNamedItem implements IAchsfolg {
+public class Achsfolg extends AbstractNamedItem<NameKey> implements IAchsfolg {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 210058293067560474L;

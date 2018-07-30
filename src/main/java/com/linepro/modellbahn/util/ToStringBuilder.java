@@ -321,12 +321,12 @@ public class ToStringBuilder extends org.apache.commons.lang3.builder.ToStringBu
         return this;
     }
 
-    public ToStringBuilder append(String fieldName, IItem value) {
+    public ToStringBuilder append(String fieldName, IItem<?> value) {
         super.append(fieldName, value != null ? value.getId() : null);
         return this;
     }
 
-    public ToStringBuilder append(String fieldName, INamedItem value) {
+    public ToStringBuilder append(String fieldName, INamedItem<?> value) {
         super.append(fieldName, value != null ? value.getName() : null);
         return this;
     }

@@ -35,7 +35,8 @@ import com.linepro.modellbahn.model.IGattung;
 import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.IVorbild;
-import com.linepro.modellbahn.model.util.AbstractItem;
+import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Formats;
 import com.linepro.modellbahn.rest.json.Views;
@@ -62,7 +63,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
                 @UniqueConstraint(columnNames = { DBNames.GATTUNG_ID }) })
 @JsonRootName(value = ApiNames.VORBILD)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.GATTUNG, ApiNames.UNTER_KATEGORIE, ApiNames.HERSTELLER, ApiNames.BAUZEIT, ApiNames.ANZAHL, ApiNames.BETREIBSNUMMER, ApiNames.ANTRIEB, ApiNames.ACHSFOLG, ApiNames.ANFAHRZUGKRAFT, ApiNames.LEISTUNG, ApiNames.DIENSTGEWICHT, ApiNames.GESCHWINDIGKEIT, ApiNames.LANGE, ApiNames.AUSSERDIENST, ApiNames.DMTREIBRAD, ApiNames.DMLAUFRADVORN, ApiNames.DMLAUFRADHINTEN, ApiNames.ZYLINDER, ApiNames.DMZYLINDER, ApiNames.KOLBENHUB, ApiNames.KESSELUEBERDRUCK, ApiNames.ROSTFLAECHE, ApiNames.UEBERHITZERFLAECHE, ApiNames.WASSERVORRAT, ApiNames.VERDAMPFUNG, ApiNames.STEUERUNG, ApiNames.FAHRMOTOREN, ApiNames.MOTORBAUART, ApiNames.LEISTUNGSUEBERTRAGUNG, ApiNames.REICHWEITE, ApiNames.KAPAZITAT, ApiNames.KLASSE, ApiNames.SITZPLATZEKL1, ApiNames.SITZPLATZEKL2, ApiNames.SITZPLATZEKL3, ApiNames.SITZPLATZEKL4, ApiNames.AUFBAU, ApiNames.TRIEBZUGANZEIGEN, ApiNames.TRIEBKOEPFE, ApiNames.MITTELWAGEN, ApiNames.SITZPLATZETZKL1, ApiNames.SITZPLATZETZKL2, ApiNames.DREHGESTELLBAUART, ApiNames.DELETED, ApiNames.LINKS})
-public class Vorbild extends AbstractItem implements IVorbild {
+public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -4852882107081643608L;
@@ -251,20 +252,18 @@ public class Vorbild extends AbstractItem implements IVorbild {
      * @param sitzPlatzeTzKL2 the sitz platze tz KL 2
      * @param drehgestellbauart the drehgestellbauart
      * @param deleted the deleted
+     * @param anmerkung 
      */
     public Vorbild(Long id, IGattung gattung, IUnterKategorie unterKategorie, String hersteller, Date bauzeit,
-            Integer anzahl,
-            String betriebsNummer, IAntrieb antrieb, IAchsfolg achsfolg, BigDecimal anfahrzugkraft,
+            Integer anzahl, String betriebsNummer, IAntrieb antrieb, IAchsfolg achsfolg, BigDecimal anfahrzugkraft,
             BigDecimal leistung, BigDecimal dienstgewicht, Long geschwindigkeit, BigDecimal lange, Date ausserdienst,
             BigDecimal dmTreibrad, BigDecimal dmLaufradVorn, BigDecimal dmLaufradHinten, Integer zylinder, BigDecimal dmZylinder,
-            BigDecimal kolbenhub,
-            BigDecimal kesselueberdruck, BigDecimal rostflaeche, BigDecimal ueberhitzerflaeche, BigDecimal wasservorrat,
-            BigDecimal verdampfung, ISteuerung steuerung, Integer fahrmotoren, String motorbauart,
-            BigDecimal leistungsuebertragung, BigDecimal reichweite, BigDecimal kapazitaet, Integer klasse, Long sitzPlatzeKL1,
+            BigDecimal kolbenhub, BigDecimal kesselueberdruck, BigDecimal rostflaeche, BigDecimal ueberhitzerflaeche, BigDecimal wasservorrat,
+            BigDecimal verdampfung, ISteuerung steuerung, Integer fahrmotoren, String motorbauart, BigDecimal leistungsuebertragung, BigDecimal reichweite, BigDecimal kapazitaet, Integer klasse, Long sitzPlatzeKL1,
             Long sitzPlatzeKL2, Long sitzPlatzeKL3, Long sitzPlatzeKL4, String aufbauten, Boolean triebzugAnzeigen,
             Long triebkoepfe, Long mittelwagen, Long sitzPlatzeTZKL1, Long sitzPlatzeTzKL2,
-            String drehgestellbauart, Boolean deleted) {
-        super(id, deleted);
+            String drehgestellbauart, Boolean deleted, String anmerkung) {
+        super(id, gattung.getName(), anmerkung, deleted);
 
         setGattung(gattung);
         setUnterKategorie(unterKategorie);

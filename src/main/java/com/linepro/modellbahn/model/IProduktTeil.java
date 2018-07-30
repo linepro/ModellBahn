@@ -1,11 +1,13 @@
 package com.linepro.modellbahn.model;
 
+import com.linepro.modellbahn.model.keys.ProduktTeilKey;
+
 /**
  * IProduktTeil.
  * @author   $Author$
  * @version  $Id$
  */
-public interface IProduktTeil extends IItem {
+public interface IProduktTeil extends IItem<ProduktTeilKey> {
 
     /**
      * Gets the produkt.

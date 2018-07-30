@@ -1,11 +1,13 @@
 package com.linepro.modellbahn.model;
 
+import com.linepro.modellbahn.model.keys.DecoderFunktionKey;
+
 /**
  * IDecoderFunktion.
  * @author   $Author$
  * @version  $Id$
  */
-public interface IDecoderFunktion extends IItem {
+public interface IDecoderFunktion extends IItem<DecoderFunktionKey> {
 
     /**
      * Gets the decoder.
@@ -20,6 +22,10 @@ public interface IDecoderFunktion extends IItem {
      * @param decoder the new decoder
      */
     void setDecoder(IDecoder decoder);
+
+    String getFunktionStr();
+
+    void setFunktionStr(String funktion);
 
     /**
      * Gets the funktion.

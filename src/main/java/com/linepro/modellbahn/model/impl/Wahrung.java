@@ -19,6 +19,7 @@ import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * Wahrung.
@@ -31,7 +32,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
        uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.WAHRUNG)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.NAME,ApiNames.DESCRIPTION,ApiNames.DECIMALS, ApiNames.DELETED, ApiNames.LINKS})
-public class Wahrung extends AbstractNamedItem implements IWahrung {
+public class Wahrung extends AbstractNamedItem<NameKey> implements IWahrung {
 	
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 9168067747478159138L;

@@ -52,9 +52,20 @@ public class FileFinder implements IFileFinder {
     }
 
     @Override
+    public Set<String> getAbsolutePaths() {
+        Set<String> absolutePaths = new HashSet<String>(getPaths().size());
+        
+        for (String contentPath : getPaths()) {
+            absolutePaths.add(Paths.get(contentPath).normalize().toAbsolutePath().toString());
+        }
+        
+        return absolutePaths;
+    }
+
+    @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("contentPaths", contentPaths)
+                .append("contentPaths", getAbsolutePaths())
                 .toString();
     }
 }

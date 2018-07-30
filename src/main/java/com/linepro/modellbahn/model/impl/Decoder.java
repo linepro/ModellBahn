@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.model.impl;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -34,6 +34,7 @@ import com.linepro.modellbahn.model.IDecoderCV;
 import com.linepro.modellbahn.model.IDecoderFunktion;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IProtokoll;
+import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Views;
@@ -56,7 +57,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.PROTOKOLL_ID) }, uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.DECODER)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.DESCRIPTION, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.ADRESSEN, ApiNames.DELETED, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS })
-public class Decoder extends AbstractNamedItem implements IDecoder {
+public class Decoder extends AbstractNamedItem<NameKey> implements IDecoder {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 44440227704021482L;
@@ -68,7 +69,7 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
     private IProtokoll protokoll;
 
     /** The fahrstufe. */
-    private Long fahrstufe;
+    private Integer fahrstufe;
 
     /** The adressen. */
     private List<IDecoderAdress> adressen = new ArrayList<>();
@@ -97,12 +98,12 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
      * @param typ the typ
      * @param protokoll the protokoll
      * @param decoderId the decoder id
-     * @param beschreibung the beschreibung
+     * @param bezeichnung the bezeichnung
      * @param fahrstufe the fahrstufe
      * @param deleted the deleted
      */
-    public Decoder(Long id, IDecoderTyp typ, IProtokoll protokoll, String decoderId, String beschreibung, Long fahrstufe, Boolean deleted) {
-        super(id, decoderId, beschreibung, deleted);
+    public Decoder(Long id, IDecoderTyp typ, IProtokoll protokoll, String decoderId, String bezeichnung, Integer fahrstufe, Boolean deleted) {
+        super(id, decoderId, bezeichnung, deleted);
 
         setDecoderTyp(typ);
         setProtokoll(protokoll);
@@ -160,13 +161,13 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
     @Column(name = DBNames.FAHRSTUFE, nullable = true)
     @JsonGetter(ApiNames.FAHRSTUFE)
     @JsonView(Views.Public.class)
-    public Long getFahrstufe() {
+    public Integer getFahrstufe() {
         return fahrstufe;
     }
 
     @Override
     @JsonSetter(ApiNames.FAHRSTUFE)
-    public void setFahrstufe(Long fahrstufe) {
+    public void setFahrstufe(Integer fahrstufe) {
         this.fahrstufe = fahrstufe;
     }
 
@@ -252,7 +253,7 @@ public class Decoder extends AbstractNamedItem implements IDecoder {
     }
 
     @Override
-    protected void addChildLinks(UriInfo root) {
+    protected void addChildLinks(URI root) {
         addLinks(root, getAdressen(), false, false);
         addLinks(root, getCVs(), false, false);
         addLinks(root, getFunktionen(), false, false);

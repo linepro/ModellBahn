@@ -5,38 +5,40 @@
  */
 package com.linepro.modellbahn.model;
 
+import com.linepro.modellbahn.persistence.IKey;
+
 /**
  * INamedItem.
  * @author   $Author$
  * @version  $Id$
  */
-public interface INamedItem extends IItem {
+public interface INamedItem<K extends IKey> extends IItem<K> {
 
     /**
      * Gets the name.
      *
      * @return the name
      */
-    public String getName();
+    String getName();
 
     /**
      * Sets the name.
      *
      * @param name the new name
      */
-    public void setName(String name);
+    void setName(String name);
 
     /**
      * Gets the bezeichnung.
      *
      * @return the bezeichnung
      */
-    public String getBezeichnung();
+    String getBezeichnung();
 
     /**
      * Sets the bezeichnung.
      *
      * @param bezeichnung the new bezeichnung
      */
-    public void setBezeichnung(String bezeichnung);
+    void setBezeichnung(String bezeichnung);
 }

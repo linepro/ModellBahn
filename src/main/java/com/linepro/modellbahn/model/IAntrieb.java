@@ -1,4 +1,5 @@
 package com.linepro.modellbahn.model;
+import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * IAchsfolg.
@@ -6,6 +7,6 @@ package com.linepro.modellbahn.model;
  * @author   $Author$
  * @version  $Id$
  */
-public interface IAntrieb extends INamedItem {
+public interface IAntrieb extends INamedItem<NameKey> {
 
 }

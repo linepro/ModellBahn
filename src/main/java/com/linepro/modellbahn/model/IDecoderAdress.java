@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.model;
 
+import com.linepro.modellbahn.model.keys.DecoderAdressKey;
 import com.linepro.modellbahn.model.util.AdressTyp;
 
 /**
@@ -7,7 +8,7 @@ import com.linepro.modellbahn.model.util.AdressTyp;
  * @author   $Author$
  * @version  $Id$
  */
-public interface IDecoderAdress extends IItem {
+public interface IDecoderAdress extends IItem<DecoderAdressKey> {
 
     /**
      * Gets the decoder.

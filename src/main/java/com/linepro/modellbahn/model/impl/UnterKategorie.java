@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.linepro.modellbahn.model.IKategorie;
 import com.linepro.modellbahn.model.IUnterKategorie;
+import com.linepro.modellbahn.model.keys.UnterKategorieKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
@@ -50,7 +51,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, unique = false, length = 50))
 @JsonRootName(value = ApiNames.UNTER_KATEGORIE)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.KATEGORIE, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS})
-public class UnterKategorie extends AbstractNamedItem implements IUnterKategorie {
+public class UnterKategorie extends AbstractNamedItem<UnterKategorieKey> implements IUnterKategorie {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5346529720680464691L;

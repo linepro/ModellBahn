@@ -1,6 +1,7 @@
 package com.linepro.modellbahn.model.impl;
 
 import java.math.BigDecimal;
+import java.net.URI;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +20,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
-import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -41,6 +41,7 @@ import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.model.IProtokoll;
+import com.linepro.modellbahn.model.keys.ProduktKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.model.util.AdressTyp;
 import com.linepro.modellbahn.model.util.Konfiguration;
@@ -68,7 +69,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME))
 @JsonRootName(value = ApiNames.DECODER_TYP)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.PROTOKOLL, ApiNames.ADRESS_TYP, ApiNames.ADRESSEN, ApiNames.FAHRSTUFE, ApiNames.SOUND, ApiNames.I_MAX, ApiNames.KONFIGURATION, ApiNames.DELETED, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS})
-public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
+public class DecoderTyp extends AbstractNamedItem<ProduktKey> implements IDecoderTyp {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8503812316290492490L;
@@ -175,6 +176,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     }
 
     @Override
+    @BusinessKey
     @JsonGetter(ApiNames.BESTELL_NR)
     public String getName() {
         return super.getName();
@@ -353,7 +355,7 @@ public class DecoderTyp extends AbstractNamedItem implements IDecoderTyp {
     }
 
     @Override
-    protected void addChildLinks(UriInfo root) {
+    protected void addChildLinks(URI root) {
         addLinks(root, getCVs(), false, false);
         addLinks(root, getFunktionen(), false, false);
     }

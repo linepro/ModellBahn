@@ -1,9 +1,11 @@
 package com.linepro.modellbahn.model;
 
+import java.net.URI;
 import java.util.Set;
 
 import javax.ws.rs.core.Link;
-import javax.ws.rs.core.UriInfo;
+
+import com.linepro.modellbahn.persistence.IKey;
 
 /**
  * IItem
@@ -14,37 +16,35 @@ import javax.ws.rs.core.UriInfo;
  * 
  * NB. All properties are objects because they may need to be null for template matching.
  */
-public interface IItem {
+public interface IItem<K extends IKey> {
 
     /**
      * Gets the primary key of this item
      *
      * @return the primary key (unique by class but can be repeated in other classes).
      */
-    public Long getId();
+    Long getId();
 
     /**
      * Sets the primary key for this item
      *
      * @param id the primary key (unique by class but can be repeated in other classes).
      */
-    public void setId(Long id);
-
-    public void setKey(Object key);
+    void setId(Long id);
 
     /**
      * Gets the state of this item.
      *
      * @return true if this item is soft deleted otherwise false.
      */
-    public Boolean getDeleted();
+    Boolean getDeleted();
 
     /**
      * Sets the state for this item.
      *
      * @param deleted - true if this item is soft deleted otherwise false.
      */
-    public void setDeleted(Boolean deleted);
+    void setDeleted(Boolean deleted);
 
     /**
      * Adds the HATEOAS links for this item.
@@ -53,7 +53,7 @@ public interface IItem {
      * @param update add an update link
      * @param delete add a delete link
      */
-    IItem addLinks(UriInfo root, boolean update, boolean delete);
+    IItem<?> addLinks(URI root, boolean update, boolean delete);
 
     /**
      * Gets the HATEOAS links to this item for Json serialization.

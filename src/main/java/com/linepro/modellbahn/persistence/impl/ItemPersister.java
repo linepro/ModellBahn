@@ -28,6 +28,10 @@ import org.slf4j.Logger;
 
 import com.google.inject.assistedinject.Assisted;
 import com.linepro.modellbahn.model.IItem;
+import com.linepro.modellbahn.model.keys.IdKey;
+import com.linepro.modellbahn.model.keys.ItemKey;
+import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.persistence.IKey;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.util.Selector;
@@ -41,7 +45,7 @@ import com.linepro.modellbahn.util.SelectorsBuilder;
  *
  * @param <E> the element type
  */
-public class ItemPersister<E extends IItem> implements IPersister<E> {
+public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
     /** The entity manager. */
     private final EntityManager entityManager;
@@ -133,13 +137,23 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
     }
 
     @Override
+    public E update(Long id, E entity) throws Exception {
+        return internalUpdate(new IdKey(id), entity, false);
+    }
+
+    @Override
     public E update(E entity) throws Exception {
-        return internalUpdate(entity, false);
+        return internalUpdate(getItemKey(entity), entity, false);
+    }
+
+    @Override
+    public E update(IKey key, E entity) throws Exception {
+        return internalUpdate(key, entity, false);
     }
 
     @Override
     public E save(E entity) throws Exception {
-        return internalUpdate(entity, true);
+        return internalUpdate(getItemKey(entity), entity, true);
     }
 
     /**
@@ -151,7 +165,7 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
      * @throws Exception the exception
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    protected E internalUpdate(E entity, boolean addOrUpdate) throws Exception {
+    protected E internalUpdate(IKey key, E entity, boolean addOrUpdate) throws Exception {
         try {
             begin();
 
@@ -194,21 +208,50 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
     }
 
     @Override
-    public void delete(E entity) throws Exception {
+    public void delete(Long id) throws Exception {
         try {
             begin();
 
-            E found = (E) getEntityManager().find(entityClass, entity.getId());
+            E found = findById(id, false);
 
             getEntityManager().remove(found);
 
             commit();
 
-            info("delete " + entity);
+            info("delete " + id);
         } catch (Exception e) {
             rollback();
 
-            error("error delete " + entity, e);
+            error("error delete " + id, e);
+            
+            throw e;
+        }
+    }
+
+    public void delete(E entity) throws Exception {
+        delete(getItemKey(entity));
+    }
+
+    protected ItemKey getItemKey(E entity) {
+        return new ItemKey(entity, businessKeys.values());
+    }
+
+    @Override
+    public void delete(IKey key) throws Exception {
+        try {
+            begin();
+
+            E found = findByKey(key, false);
+
+            getEntityManager().remove(found);
+
+            commit();
+            
+            info("delete " + key);
+        } catch (Exception e) {
+            rollback();
+
+            error("error delete " + key, e);
             
             throw e;
         }
@@ -274,22 +317,28 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
     }
 
     @Override
-    public E findByKey(Object key, boolean eager) throws Exception {
-        E entity = create();
-        entity.setKey(key);
-        return findByKey(entity, eager);
+    public E findByKey(Long id, boolean eager) throws Exception {
+        return findById(id, eager);
     }
 
-    protected E findByKey(E entity, boolean eager) throws Exception {
+    @Override
+    public E findByKey(String name, boolean eager) throws Exception {
+        return findByKey(new NameKey(name), eager);
+    }
+
+    @Override
+    public E findByKey(E entity, boolean eager) throws Exception {
+        return findByKey(getItemKey(entity), eager);
+    }
+
+    @Override
+    public E findByKey(IKey key, boolean eager) throws Exception {
         try {
             begin();
 
             Query query = getEntityManager().createQuery(businessKeyQuery);
 
-            for (Selector businessKey : businessKeys.values()) {
-                Object value = businessKey.getGetter().invoke(entity);
-                query = query.setParameter(businessKey.getName(), value);
-            }
+            key.addCriteria(query);
             
             @SuppressWarnings("unchecked")
             List<E> results = (List<E>) query.getResultList();
@@ -312,7 +361,7 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
         } catch (Exception e) {
             rollback();
 
-            error("error findByKey " + entity, e);
+            error("error findByKey " + key, e);
             
             throw e;
         }
@@ -381,7 +430,7 @@ public class ItemPersister<E extends IItem> implements IPersister<E> {
                 Object value = selector.getGetter().invoke(template);
 
                 if (value != null) {
-                    value = value instanceof IItem ? ((IItem) value).getId() : value;
+                    value = value instanceof IItem ? ((IItem<?>) value).getId() : value;
                     Path<Object> field = root.get(selector.getName());
                     Predicate predicate = builder.equal(field, value);
                     predicates.add(predicate);

@@ -25,8 +25,10 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IProdukt;
 import com.linepro.modellbahn.model.IProduktTeil;
+import com.linepro.modellbahn.model.keys.ProduktTeilKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.ProduktSerializer;
 import com.linepro.modellbahn.rest.json.serialization.ProduktTeilSerializer;
@@ -48,7 +50,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
                 @UniqueConstraint(columnNames = { DBNames.PRODUKT_ID, DBNames.TEIL_ID }) })
 @JsonRootName(value = ApiNames.TEIL)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.PRODUKT,ApiNames.TEIL, ApiNames.ANZAHL, ApiNames.DELETED, ApiNames.LINKS})
-public class ProduktTeil extends AbstractItem implements IProduktTeil {
+public class ProduktTeil extends AbstractItem<ProduktTeilKey> implements IProduktTeil {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7684916028825247336L;
@@ -96,6 +98,7 @@ public class ProduktTeil extends AbstractItem implements IProduktTeil {
     }
 
     @Override
+    @BusinessKey
     @JsonSetter(ApiNames.PRODUKT)
     @JsonDeserialize(as=Produkt.class)
     public void setProdukt(IProdukt produkt) {
@@ -103,6 +106,7 @@ public class ProduktTeil extends AbstractItem implements IProduktTeil {
     }
 
     @Override
+    @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
     @JoinColumn(name = DBNames.TEIL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "produkt_teil_fk2"))
     @JsonGetter(ApiNames.TEIL)

@@ -25,15 +25,15 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderCV;
 import com.linepro.modellbahn.model.IDecoderTypCV;
+import com.linepro.modellbahn.model.keys.DecoderCVKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.resolver.DecoderResolver;
-import com.linepro.modellbahn.rest.json.serialization.DecoderTypCVSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.util.ToStringBuilder;
@@ -51,7 +51,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
                 @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.CV_ID }) })
 @JsonRootName(value = ApiNames.CV)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER, ApiNames.CV, ApiNames.WERT, ApiNames.DELETED, ApiNames.LINKS })
-public class DecoderCV extends AbstractItem implements IDecoderCV {
+public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2660599652146536110L;
@@ -64,6 +64,8 @@ public class DecoderCV extends AbstractItem implements IDecoderCV {
 
     /** The wert. */
     private Integer wert;
+
+    private Integer cvValue;
 
     /**
      * Instantiates a new decoder CV.
@@ -89,6 +91,7 @@ public class DecoderCV extends AbstractItem implements IDecoderCV {
     }
 
     @Override
+    @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
     @JoinColumn(name = DBNames.DECODER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_cv_fk1"))
     @JsonGetter(ApiNames.DECODER)
@@ -107,20 +110,31 @@ public class DecoderCV extends AbstractItem implements IDecoderCV {
     }
 
     @Override
+    @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTypCV.class)
     @JoinColumn(name = DBNames.CV_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_cv_fk2"))
-    @JsonGetter(ApiNames.CV)
-    @JsonView(Views.DropDown.class)
-    @JsonSerialize(using=DecoderTypCVSerializer.class)
+    @JsonIgnore
     public IDecoderTypCV getCV() {
         return cv;
     }
 
     @Override
-    @JsonSetter(ApiNames.CV)
-    @JsonDeserialize(as=DecoderTypCV.class)
+    @JsonIgnore
     public void setCV(IDecoderTypCV cv) {
         this.cv = cv;
+    }
+
+    @Override
+    @JsonGetter(ApiNames.CV)
+    @JsonView(Views.DropDown.class)
+    public Integer getCVValue() {
+        return cvValue;
+    }
+
+    @Override
+    @JsonSetter(ApiNames.CV)
+    public void setCVValue(Integer cv) {
+        this.cvValue = cv;
     }
 
     @Override

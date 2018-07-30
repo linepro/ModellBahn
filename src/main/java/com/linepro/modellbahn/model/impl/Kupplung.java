@@ -11,6 +11,7 @@ import com.linepro.modellbahn.model.IKupplung;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * Kupplung. The coupling configuration for a product
@@ -23,7 +24,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.KUPPLUNG)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
-public class Kupplung extends AbstractNamedItem implements IKupplung {
+public class Kupplung extends AbstractNamedItem<NameKey> implements IKupplung {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3158490202101950479L;

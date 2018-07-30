@@ -40,4 +40,6 @@ public interface IFileFinder {
      * @return the file
      */
     File findFile(String path);
+
+    Set<String> getAbsolutePaths();
 }

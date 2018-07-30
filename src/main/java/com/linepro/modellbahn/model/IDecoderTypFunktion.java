@@ -1,11 +1,13 @@
 package com.linepro.modellbahn.model;
 
+import com.linepro.modellbahn.model.keys.DecoderTypFunktionKey;
+
 /**
  * IDecoderTypFunktion.
  * @author   $Author$
  * @version  $Id$
  */
-public interface IDecoderTypFunktion extends INamedItem {
+public interface IDecoderTypFunktion extends INamedItem<DecoderTypFunktionKey> {
 
     /**
      * Gets the decoder typ.

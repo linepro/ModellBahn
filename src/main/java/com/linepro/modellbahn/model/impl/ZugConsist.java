@@ -29,8 +29,10 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IZug;
 import com.linepro.modellbahn.model.IZugConsist;
+import com.linepro.modellbahn.model.keys.ZugConsistKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.resolver.ArtikelResolver;
 import com.linepro.modellbahn.rest.json.resolver.ZugResolver;
@@ -50,7 +52,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
                 @UniqueConstraint(columnNames = { DBNames.ZUG_ID, DBNames.POSITION }) })
 @JsonRootName(value = ApiNames.CONSIST)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.ZUG, ApiNames.POSITION, ApiNames.ARTIKEL, ApiNames.DELETED, ApiNames.LINKS })
-public class ZugConsist extends AbstractItem implements IZugConsist {
+public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsist {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3941436184732408563L;
@@ -94,6 +96,7 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
     }
 
     @Override
+    @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Zug.class)
     @JoinColumn(name = DBNames.ZUG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "consist_fk1"))
     @JsonGetter(ApiNames.ZUG)
@@ -112,6 +115,7 @@ public class ZugConsist extends AbstractItem implements IZugConsist {
     }
 
     @Override
+    @BusinessKey
     @OrderColumn
     @Column(name = DBNames.POSITION, nullable = false)
     @JsonGetter(ApiNames.POSITION)

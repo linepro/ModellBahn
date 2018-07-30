@@ -38,6 +38,7 @@ import com.linepro.modellbahn.model.IMotorTyp;
 import com.linepro.modellbahn.model.IProdukt;
 import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.IWahrung;
+import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.model.util.Status;
 import com.linepro.modellbahn.persistence.DBNames;
@@ -69,7 +70,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.DECODER_ID) })
 @JsonRootName(value = ApiNames.ARTIKEL)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.PRODUKT, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.STUCK, ApiNames.STEUERUNG, ApiNames.MOTOR_TYP, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.DECODER, ApiNames.ANMERKUNG, ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.DELETED, ApiNames.LINKS})
-public class Artikel extends AbstractNamedItem implements IArtikel {
+public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8652624782179487496L;
@@ -135,7 +136,7 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
      * @param kupplung the kupplung
      * @param decoder the decoder
      * @param artikelNr the artikel nr
-     * @param beschreibung the beschreibung
+     * @param bezeichnung the bezeichnung
      * @param anmerkung the anmerkung
      * @param beladung the beladung
      * @param status the status
@@ -143,9 +144,9 @@ public class Artikel extends AbstractNamedItem implements IArtikel {
      */
     public Artikel(Long id, IProdukt produkt, Date kaufdatum, IWahrung wahrung, BigDecimal preis, Integer stuck,
             ISteuerung steuerung, IMotorTyp motorTyp, ILicht licht, IKupplung kupplung, IDecoder decoder,
-            String artikelNr, String beschreibung, String anmerkung,
+            String artikelNr, String bezeichnung, String anmerkung,
             String beladung, Status status, Boolean deleted) {
-        super(id, artikelNr, beschreibung, deleted);
+        super(id, artikelNr, bezeichnung, deleted);
 
         setProdukt(produkt);
         setKaufdatum(kaufdatum);

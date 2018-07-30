@@ -26,7 +26,7 @@ public class PersisterFactory implements IPersisterFactory {
     protected final ILoggerFactory logManager;
 
     /** The persisters. */
-    protected final Map<Class<? extends IItem>,IPersister<? extends IItem>> persisters = new HashMap<>();
+    protected final Map<Class<? extends IItem<?>>,IPersister<? extends IItem<?>>> persisters = new HashMap<>();
     
     /**
      * Instantiates a new persister factory.
@@ -41,7 +41,7 @@ public class PersisterFactory implements IPersisterFactory {
     }
 
     @Override
-    public synchronized <E extends IItem> IPersister<E> createPersister(Class<E> entityClass) {
+    public synchronized <E extends IItem<?>> IPersister<E> createPersister(Class<E> entityClass) {
         @SuppressWarnings("unchecked")
         IPersister<E> persister = (IPersister<E>) persisters.get(entityClass);
         

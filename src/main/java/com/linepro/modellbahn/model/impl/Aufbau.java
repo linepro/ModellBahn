@@ -8,6 +8,7 @@ import javax.persistence.UniqueConstraint;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.IAufbau;
+import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -23,7 +24,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.AUFBAU)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
-public class Aufbau extends AbstractNamedItem implements IAufbau {
+public class Aufbau extends AbstractNamedItem<NameKey> implements IAufbau {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 233985591709407388L;

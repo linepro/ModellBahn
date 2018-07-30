@@ -5,13 +5,15 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import com.linepro.modellbahn.model.keys.ProduktKey;
+
 /**
  * IProdukt.
  * 
  * @author $Author$
  * @version $Id$
  */
-public interface IProdukt extends IItem {
+public interface IProdukt extends IItem<ProduktKey> {
 
     /**
      * Gets the epoch.

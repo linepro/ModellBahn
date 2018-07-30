@@ -25,15 +25,15 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderFunktion;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
+import com.linepro.modellbahn.model.keys.DecoderFunktionKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.resolver.DecoderResolver;
-import com.linepro.modellbahn.rest.json.serialization.DecoderTypFunktionSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.util.ToStringBuilder;
@@ -49,7 +49,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
        uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.FUNKTION_ID })})
 @JsonRootName(value = ApiNames.FUNKTION)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER, ApiNames.FUNKTION,  ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS})
-public class DecoderFunktion extends AbstractItem implements IDecoderFunktion {
+public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements IDecoderFunktion {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3254516717556070251L;
@@ -63,6 +63,8 @@ public class DecoderFunktion extends AbstractItem implements IDecoderFunktion {
 	/** The wert. */
 	private String bezeichnung;
 
+    private String funktionStr;
+
 	/**
 	 * Instantiates a new decoder funktion.
 	 */
@@ -75,15 +77,16 @@ public class DecoderFunktion extends AbstractItem implements IDecoderFunktion {
 	 *
 	 * @param decoder the decoder
 	 * @param funktion the funktion
-	 * @param wert the wert
+	 * @param bezeichnung the bezeichnung
 	 */
-	public DecoderFunktion(IDecoder decoder, IDecoderTypFunktion funktion, String wert) {
+	public DecoderFunktion(IDecoder decoder, IDecoderTypFunktion funktion, String bezeichnung) {
         setDecoder(decoder);
         setFunktion(funktion);		
-        setBezeichnung(wert);
+        setBezeichnung(bezeichnung);
 	}
 
 	@Override
+    @BusinessKey
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=Decoder.class)
     @JoinColumn(name=DBNames.DECODER_ID, nullable = false, referencedColumnName=DBNames.ID, foreignKey = @ForeignKey(name = "decoder_fn_fk1"))
     @JsonGetter(ApiNames.DECODER)
@@ -101,21 +104,40 @@ public class DecoderFunktion extends AbstractItem implements IDecoderFunktion {
         this.decoder = decoder;
     }
 
+    @Transient
     @Override
-    @ManyToOne(fetch=FetchType.LAZY, targetEntity=DecoderTypFunktion.class)
-    @JoinColumn(name = DBNames.FUNKTION_ID, nullable = false, referencedColumnName=DBNames.ID, foreignKey = @ForeignKey(name = "decoder_fn_fk2"))
     @JsonGetter(ApiNames.FUNKTION)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(using=DecoderTypFunktionSerializer.class)
-    public IDecoderTypFunktion getFunktion() {
-        return funktion;
+    public String getFunktionStr() {
+        return funktionStr;
     }
 
     @Override
     @JsonSetter(ApiNames.FUNKTION)
-    @JsonDeserialize(as=DecoderTypFunktion.class)
+    public void setFunktionStr(String funktion) {
+        this.funktionStr = funktion;
+    }
+
+    @Override
+    @BusinessKey
+    @ManyToOne(fetch=FetchType.LAZY, targetEntity=DecoderTypFunktion.class)
+    @JoinColumn(name = DBNames.FUNKTION_ID, nullable = false, referencedColumnName=DBNames.ID, foreignKey = @ForeignKey(name = "decoder_fn_fk2"))
+    public IDecoderTypFunktion getFunktion() {
+        if (funktion != null) {
+            funktionStr = funktion.getName();
+        }
+
+        return funktion;
+    }
+
+    @Override
+    @JsonIgnore
     public void setFunktion(IDecoderTypFunktion funktion) {
         this.funktion = funktion;
+
+        if (funktion != null) {
+            funktionStr = funktion.getName();
+        }
     }
 
     @Override
@@ -136,7 +158,7 @@ public class DecoderFunktion extends AbstractItem implements IDecoderFunktion {
     @Transient
     @JsonIgnore
     public String getLinkId() {
-        return String.format(ApiPaths.DECODER_FN_LINK, getParentId(), getFunktion().getName());
+        return String.format(ApiPaths.DECODER_FUNKTION_LINK, getParentId(), getFunktion().getName());
     }
 
     @Override

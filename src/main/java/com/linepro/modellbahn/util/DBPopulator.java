@@ -37,7 +37,9 @@ import com.linepro.modellbahn.model.impl.Wahrung;
 import com.linepro.modellbahn.model.impl.Zug;
 import com.linepro.modellbahn.model.impl.ZugConsist;
 import com.linepro.modellbahn.model.impl.ZugTyp;
+import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.Konfiguration;
+import com.linepro.modellbahn.persistence.IKey;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.IPersisterFactory;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -384,18 +386,18 @@ public class DBPopulator {
     protected void populateDecoderTyp() {
         IPersister<Protokoll> protokollLookup = persisterFactory.createPersister(Protokoll.class);
 
-        IProtokoll delta = findByKey(protokollLookup, "DELTA");
-        IProtokoll fx = findByKey(protokollLookup, "fx");
-        IProtokoll mm = findByKey(protokollLookup, "MM");
-        IProtokoll mfx = findByKey(protokollLookup, "mfx");
-        IProtokoll weiche = findByKey(protokollLookup, "Weiche");
+        IProtokoll delta = findByKey(protokollLookup, new NameKey("DELTA"));
+        IProtokoll fx = findByKey(protokollLookup, new NameKey("fx"));
+        IProtokoll mm = findByKey(protokollLookup, new NameKey("MM"));
+        IProtokoll mfx = findByKey(protokollLookup, new NameKey("mfx"));
+        IProtokoll weiche = findByKey(protokollLookup, new NameKey("Weiche"));
 
         IPersister<Hersteller> herstellerLookup = persisterFactory.createPersister(Hersteller.class);
 
-        Hersteller digitalbahn = findByKey(herstellerLookup, "Digital-Bahn");
-        Hersteller esu = findByKey(herstellerLookup, "ESU");
-        Hersteller marklin = findByKey(herstellerLookup, "Märklin");
-        Hersteller uhlenbrock = findByKey(herstellerLookup, "Uhlenbrock");
+        Hersteller digitalbahn = findByKey(herstellerLookup, new NameKey("Digital-Bahn"));
+        Hersteller esu = findByKey(herstellerLookup, new NameKey("ESU"));
+        Hersteller marklin = findByKey(herstellerLookup, new NameKey("Märklin"));
+        Hersteller uhlenbrock = findByKey(herstellerLookup, new NameKey("Uhlenbrock"));
 
         IPersister<DecoderTyp> persister = persisterFactory.createPersister(DecoderTyp.class);
 
@@ -1908,7 +1910,7 @@ public class DBPopulator {
         save(persister, new ZugTyp(null, "Militär Zug", "Militär Zug", false));
     }
 
-    <E extends IItem> E findByKey(IPersister<E> persister, Object key) {
+    <E extends IItem<?>> E findByKey(IPersister<E> persister, IKey key) {
         try {
             return persister.findByKey(key, false);
         } catch (Exception e) {
@@ -1918,7 +1920,7 @@ public class DBPopulator {
         return null;
     }
 
-    <E extends IItem> E save(IPersister<E> persister, E item) {
+    <E extends IItem<?>> E save(IPersister<E> persister, E item) {
         try {
             return persister.save(item);
         } catch (Exception e) {
@@ -1928,7 +1930,7 @@ public class DBPopulator {
         return null;
     }
 
-    <E extends IItem> E update(IPersister<E> persister, E item) {
+    <E extends IItem<?>> E update(IPersister<E> persister, E item) {
         try {
             return persister.update(item);
         } catch (Exception e) {
@@ -1938,7 +1940,7 @@ public class DBPopulator {
         return null;
     }
 
-    <E extends IItem> void dump(Class<E> entityClass) {
+    <E extends IItem<?>> void dump(Class<E> entityClass) {
         try {
             IPersister<E> persister = persisterFactory.createPersister(entityClass);
         

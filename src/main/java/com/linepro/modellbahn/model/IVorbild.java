@@ -1,14 +1,15 @@
 package com.linepro.modellbahn.model;
-
 import java.math.BigDecimal;
 import java.util.Date;
+
+import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * IVorbild.
  * @author   $Author$
  * @version  $Id$
  */
-public interface IVorbild extends IItem {
+public interface IVorbild extends INamedItem<NameKey> {
     
     /**
      * Gets the gattung.

@@ -11,6 +11,7 @@ import com.linepro.modellbahn.model.ISpurweite;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * Spurweite. Represents a NEM 010 Spurweite (track guage)
@@ -23,7 +24,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.SPURWEITE)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
-public class Spurweite extends AbstractNamedItem implements ISpurweite {
+public class Spurweite extends AbstractNamedItem<NameKey> implements ISpurweite {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3673395807313729165L;

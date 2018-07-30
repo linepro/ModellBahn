@@ -5,6 +5,7 @@ import org.apache.commons.beanutils.Converter;
 import org.apache.commons.lang3.StringUtils;
 
 import com.linepro.modellbahn.model.IItem;
+import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.persistence.IPersister;
 
 /**
@@ -34,17 +35,17 @@ public class NamedItemConverter implements Converter {
     public <E> E convert(Class<E> type, Object value) {
         try {
             if (StringUtils.isNotBlank(value.toString())) {
-                if (persister.getEntityClass().isAssignableFrom(type)) {
-                    IItem entity = (IItem) type.newInstance();
+                Class<? extends IItem<?>> entityClass = getPersister().getEntityClass();
 
-                    entity.setKey(value.toString());
+                if (entityClass.isAssignableFrom(type)) {
+                    IItem<?> entity = entityClass.newInstance();
 
-                    entity = persister.findByKey(entity, false);
-                    
+                    entity = getPersister().findByKey(new NameKey(value.toString()), false);
+
                     if (entity != null) {
                         return (E) entity;
                     }
-    
+
                     throw new IllegalArgumentException(value + " does not exist");
                 }
 
@@ -55,5 +56,9 @@ public class NamedItemConverter implements Converter {
         }
         
         return null;
+    }
+
+    private IPersister<?> getPersister() {
+        return persister;
     }
 }

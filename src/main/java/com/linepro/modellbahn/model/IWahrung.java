@@ -1,11 +1,12 @@
 package com.linepro.modellbahn.model;
+import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * IWahrung.
  * @author   $Author$
  * @version  $Id$
  */
-public interface IWahrung extends INamedItem {
+public interface IWahrung extends INamedItem<NameKey> {
 
     /**
      * Gets the decimals.

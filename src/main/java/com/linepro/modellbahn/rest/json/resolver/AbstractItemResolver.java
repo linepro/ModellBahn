@@ -2,13 +2,14 @@ package com.linepro.modellbahn.rest.json.resolver;
 
 import com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey;
 import com.fasterxml.jackson.annotation.ObjectIdResolver;
-import com.linepro.modellbahn.model.IItem;
+import com.linepro.modellbahn.model.INamedItem;
+import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 
-public class AbstractItemResolver<E extends IItem> implements ObjectIdResolver {
+public class AbstractItemResolver<E extends INamedItem<?>> implements ObjectIdResolver {
 
-    protected final IPersister<E> persister;
+    protected final IPersister<?> persister;
     
     public AbstractItemResolver(Class<E> entityClass) {
         persister = StaticPersisterFactory.get().createPersister(entityClass);
@@ -22,7 +23,7 @@ public class AbstractItemResolver<E extends IItem> implements ObjectIdResolver {
     @Override
     public Object resolveId(IdKey id) {
         try {
-            return persister.findByKey(id.key, false);
+            return persister.findByKey(new NameKey(id.key.toString()), false);
         } catch (Exception e) {
             e.printStackTrace();
         }

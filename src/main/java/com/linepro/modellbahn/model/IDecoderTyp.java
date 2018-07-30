@@ -3,6 +3,7 @@ package com.linepro.modellbahn.model;
 import java.math.BigDecimal;
 import java.util.Set;
 
+import com.linepro.modellbahn.model.keys.ProduktKey;
 import com.linepro.modellbahn.model.util.AdressTyp;
 import com.linepro.modellbahn.model.util.Konfiguration;
 
@@ -11,7 +12,7 @@ import com.linepro.modellbahn.model.util.Konfiguration;
  * @author   $Author$
  * @version  $Id$
  */
-public interface IDecoderTyp extends INamedItem {
+public interface IDecoderTyp extends INamedItem<ProduktKey> {
 
     /**
      * Gets the typ.

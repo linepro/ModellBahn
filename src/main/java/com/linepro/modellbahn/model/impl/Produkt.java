@@ -54,6 +54,7 @@ import com.linepro.modellbahn.model.ISpurweite;
 import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.IVorbild;
+import com.linepro.modellbahn.model.keys.ProduktKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.FileConverter;
@@ -112,7 +113,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG, ApiNames.DECODER_TYP,
         ApiNames.MOTOR_TYP, ApiNames.LANGE, ApiNames.ANLEITUNGEN, ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.ABBILDUNG,
         ApiNames.TEILEN, ApiNames.DELETED, ApiNames.LINKS })
-public class Produkt extends AbstractItem implements IProdukt {
+public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8098838727023710484L;

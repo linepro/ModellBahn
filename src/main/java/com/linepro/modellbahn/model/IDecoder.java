@@ -1,13 +1,14 @@
 package com.linepro.modellbahn.model;
 
 import java.util.List;
+import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * IDecoder.
  * @author   $Author$
  * @version  $Id$
  */
-public interface IDecoder extends INamedItem {
+public interface IDecoder extends INamedItem<NameKey> {
 
     /**
      * Gets the decoder typ.
@@ -42,14 +43,14 @@ public interface IDecoder extends INamedItem {
      *
      * @return the fahrstufe
      */
-    Long getFahrstufe();
+    Integer getFahrstufe();
 
     /**
      * Sets the fahrstufe.
      *
      * @param fahrstufe the new fahrstufe
      */
-    void setFahrstufe(Long fahrstufe);
+    void setFahrstufe(Integer fahrstufe);
 
     /**
      * Gets the adressen.

@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.model.impl;
 
+import java.net.URI;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,7 +11,6 @@ import javax.persistence.Index;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -29,6 +29,7 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.UnterKategorieSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * Kategorie. The category for a product
@@ -42,7 +43,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @JsonRootName(value = ApiNames.KATEGORIE)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.UNTER_KATEGORIEN,
         ApiNames.LINKS })
-public class Kategorie extends AbstractNamedItem implements IKategorie {
+public class Kategorie extends AbstractNamedItem<NameKey> implements IKategorie {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2964561580499221297L;
@@ -104,7 +105,7 @@ public class Kategorie extends AbstractNamedItem implements IKategorie {
     }
 
     @Override
-    protected void addChildLinks(UriInfo root) {
+    protected void addChildLinks(URI root) {
         addLinks(root, getUnterKategorien(), false, false);
     }
 

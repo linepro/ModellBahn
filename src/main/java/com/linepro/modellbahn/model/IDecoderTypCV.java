@@ -1,11 +1,13 @@
 package com.linepro.modellbahn.model;
 
+import com.linepro.modellbahn.model.keys.DecoderTypCVKey;
+
 /**
  * IDecoderTypCV.
  * @author   $Author$
  * @version  $Id$
  */
-public interface IDecoderTypCV extends IItem {
+public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
 
     /**
      * Gets the decoder typ.

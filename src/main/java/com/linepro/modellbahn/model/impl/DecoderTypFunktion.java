@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
+import com.linepro.modellbahn.model.keys.DecoderTypFunktionKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
@@ -48,7 +49,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, unique = false, length = 4))
 @JsonRootName(ApiNames.FUNKTION)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.REIHE,  ApiNames.PROGRAMMABLE, ApiNames.DELETED, ApiNames.LINKS})
-public class DecoderTypFunktion extends AbstractNamedItem implements IDecoderTypFunktion {
+public class DecoderTypFunktion extends AbstractNamedItem<DecoderTypFunktionKey> implements IDecoderTypFunktion {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -9194895557054214626L;
@@ -161,7 +162,7 @@ public class DecoderTypFunktion extends AbstractNamedItem implements IDecoderTyp
     @Transient
     @JsonIgnore
     public String getLinkId() {
-        return String.format(ApiPaths.DECODER_TYP_FN_LINK, getParentId(), getName());
+        return String.format(ApiPaths.DECODER_TYP_FUNKTION_LINK, getParentId(), getReihe(), getName());
     }
 
     @Override

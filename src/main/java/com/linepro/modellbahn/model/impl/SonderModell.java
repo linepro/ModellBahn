@@ -11,6 +11,7 @@ import com.linepro.modellbahn.model.ISonderModell;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * SonderModell. Special category for a product. E.g. MHI, Einmaligeserien
@@ -23,7 +24,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.SONDERMODEL)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
-public class SonderModell extends AbstractNamedItem implements ISonderModell {
+public class SonderModell extends AbstractNamedItem<NameKey> implements ISonderModell {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1654429154794267608L;

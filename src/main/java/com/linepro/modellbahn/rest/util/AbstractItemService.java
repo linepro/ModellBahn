@@ -10,7 +10,6 @@ import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
-import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
@@ -18,6 +17,9 @@ import org.apache.commons.beanutils.ConvertUtils;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.linepro.modellbahn.model.IItem;
+import com.linepro.modellbahn.model.keys.IdKey;
+import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.persistence.IKey;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.util.Selector;
@@ -31,7 +33,7 @@ import com.linepro.modellbahn.util.SelectorsBuilder;
  * 
  * @param <E> the element type
  */
-public abstract class AbstractItemService<K, E extends IItem> extends AbstractService {
+public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> extends AbstractService {
 
     /** The persister. */
     protected final IPersister<E> persister;
@@ -41,6 +43,12 @@ public abstract class AbstractItemService<K, E extends IItem> extends AbstractSe
 
     /** The selectors. */
     protected final Map<String, Selector> selectors;
+
+    protected Link homeLink;
+
+    protected Link wadlLink;
+
+    protected URI serviceURI;
 
     /**
      * Instantiates a new abstract service.
@@ -54,23 +62,33 @@ public abstract class AbstractItemService<K, E extends IItem> extends AbstractSe
         this.selectors = new SelectorsBuilder().build(entityClass, JsonGetter.class);
    }
 
+    @SuppressWarnings("unchecked")
+    public Response get(Long id) {
+        return get((K) new IdKey(id));
+    }
+
+    @SuppressWarnings("unchecked")
+    public Response get(String name) {
+        return get((K) new NameKey(name));
+    }
+
     /**
      * Gets the.
      *
      * @param id the id
      * @return the response
      */
-    public Response get(K id) {
+    public Response get(K key) {
         try {
-            E entity = getPersister().findByKey(id, false);
+            E entity = getPersister().findByKey(key, false);
 
             if (entity == null) {
-                return getResponse(Response.status(Status.NOT_FOUND));
+                return getResponse(notFound());
             }
 
-            return getResponse(Response.ok().entity(entity));
+            return getResponse(ok(), entity, true, true);
         } catch (Exception e) {
-            return serverError(e);
+            return getResponse(serverError(e));
         }
     }
 
@@ -82,14 +100,24 @@ public abstract class AbstractItemService<K, E extends IItem> extends AbstractSe
      */
     public Response add(E entity) {
         try {
-            logger.info("POST " + entity);
+            info("POST " + entity);
 
             E result = getPersister().add(entity);
 
-            return getResponse(Response.ok().entity(result.addLinks(getUriInfo(), true, true)));
+            return getResponse(ok(), result, true, true);
         } catch (Exception e) {
-            return serverError(e);
+            return getResponse(serverError(e));
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public Response update(Long id, E entity) {
+        return update((K) new IdKey(id), entity);
+    }
+
+    @SuppressWarnings("unchecked")
+    public Response update(String name, E entity) {
+        return update((K) new NameKey(name), entity);
     }
 
     /**
@@ -101,20 +129,28 @@ public abstract class AbstractItemService<K, E extends IItem> extends AbstractSe
      */
     public Response update(K id, E entity) {
         try {
-            logger.info("PUT " + id + ": " + entity);
+            info("PUT " + id + ": " + entity);
 
-            entity.setKey(id);
-            
-            E result = getPersister().update(entity);
+            E result = getPersister().update(id, entity);
 
             if (result == null) {
-                return getResponse(Response.status(Status.NOT_FOUND));
+                return getResponse(notFound());
             }
 
-            return getResponse(Response.accepted().entity(result));
+            return getResponse(accepted(), result, true, true);
         } catch (Exception e) {
-            return serverError(e);
+            return getResponse(serverError(e));
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public Response delete(Long id) {
+        return delete((K) new IdKey(id));
+    }
+
+    @SuppressWarnings("unchecked")
+    public Response delete(String name) {
+        return delete((K) new NameKey(name));
     }
 
     /**
@@ -125,13 +161,13 @@ public abstract class AbstractItemService<K, E extends IItem> extends AbstractSe
      */
     public Response delete(K id) {
         try {
-            logger.info("DELETE " + id);
+            info("DELETE " + id);
 
-            getPersister().delete(create(id));
+            getPersister().delete(id);
 
-            return getResponse(Response.noContent());
+            return getResponse(noContent());
         } catch (Exception e) {
-            return serverError(e);
+            return getResponse(serverError(e));
         }
     }
 
@@ -148,19 +184,15 @@ public abstract class AbstractItemService<K, E extends IItem> extends AbstractSe
             info("GET " + template);
 
             @SuppressWarnings("unchecked")
-            List<IItem> entities = (List<IItem>) getPersister().findAll(template);
+            List<IItem<?>> entities = (List<IItem<?>>) getPersister().findAll(template);
             
             if (entities.isEmpty()) {
-                return getResponse(Response.noContent());
+                return getResponse(noContent());
             }
 
-            for (IItem entity : entities) {
-                entity.addLinks(getUriInfo(), true, true);
-            }
-            
-            return getResponse(Response.ok().entity(entities));
+            return getResponse(ok(), entities, true, true);
         } catch (Exception e) {
-            return serverError(e);
+            return getResponse(serverError(e));
         }
     }
 
@@ -229,31 +261,6 @@ public abstract class AbstractItemService<K, E extends IItem> extends AbstractSe
     }
 
     /**
-     * Creates the.
-     *
-     * @param id the id
-     * @return the e
-     * @throws Exception the exception
-     */
-    E create(K id) throws Exception {
-        E template = getEntityClass().newInstance();
-        template.setKey(id);
-        return template;
-    }
-
-    /**
-     * Server error.
-     *
-     * @param e the e
-     * @return the response
-     */
-    protected Response serverError(Exception e) {
-        error("serverError", e);
-
-        return getResponse(Response.serverError());
-    }
-
-    /**
      * Make link.
      *
      * @param uri the uri
@@ -265,6 +272,19 @@ public abstract class AbstractItemService<K, E extends IItem> extends AbstractSe
     protected Link makeLink(URI uri, String path, String rel, String method) {
         return Link.fromUri(UriBuilder.fromUri(uri).path( path).build()).rel(rel).type(method).build();
     }
+
+    protected Response getResponse(ResponseBuilder builder, IItem<?> entity, boolean update, boolean delete) {
+        entity.addLinks(getServiceURI(), update, delete);
+        return getResponse(builder.entity(entity));
+    }
+
+    protected Response getResponse(ResponseBuilder builder, List<IItem<?>> entities, boolean update, boolean delete) {
+        for (IItem<?> entity : entities) {
+            entity.addLinks(getServiceURI(), update, delete);
+        }
+
+        return getResponse(builder.entity(entities));
+    }
     
     /**
      * Gets the response.
@@ -273,13 +293,33 @@ public abstract class AbstractItemService<K, E extends IItem> extends AbstractSe
      * @return the response
      */
     protected Response getResponse(ResponseBuilder builder) {
-        // TODO: build these once an keep
-        Link home = Link.fromUri(UriBuilder.fromUri(uriInfo.getBaseUri()).build()).rel("home").type(GET).build();
-        Link wdl  = Link.fromUri(UriBuilder.fromUri(uriInfo.getBaseUri()).path(ApiPaths.APPLICATION_WADL).build()).rel("wdl").type(GET).build();
-
         return builder.links(
-                home,
-                wdl)
+                getHomeLink(),
+                getWADLLink())
                 .build();
+    }
+
+    protected URI getServiceURI() {
+        if (serviceURI == null) {
+            serviceURI = getUriInfo().getBaseUriBuilder().path(getClass()).build();
+        }
+        
+        return serviceURI;
+    }
+
+    protected Link getHomeLink() {
+        if (homeLink == null) {
+            homeLink = Link.fromUri(UriBuilder.fromUri(getUriInfo().getBaseUri()).build()).rel("home").type(GET).build();
+        }
+        
+        return homeLink;
+    }
+
+    protected Link getWADLLink() {
+        if (wadlLink == null) {
+            wadlLink = Link.fromUri(UriBuilder.fromUri(getUriInfo().getBaseUri()).path(ApiPaths.APPLICATION_WADL).build()).rel("wdl").type(GET).build();
+        }
+
+        return wadlLink;
     }
 }

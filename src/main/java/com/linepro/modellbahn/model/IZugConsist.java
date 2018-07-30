@@ -1,11 +1,13 @@
 package com.linepro.modellbahn.model;
 
+import com.linepro.modellbahn.model.keys.ZugConsistKey;
+
 /**
  * IZugConsist.
  * @author   $Author$
  * @version  $Id$
  */
-public interface IZugConsist extends IItem {
+public interface IZugConsist extends IItem<ZugConsistKey> {
 
     /**
      * Gets the zug.

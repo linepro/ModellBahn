@@ -34,6 +34,7 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.resolver.ZugTypResolver;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * Zug.
@@ -46,7 +47,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
        uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.ZUG)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.ZUG_TYP, ApiNames.NAME,ApiNames.DESCRIPTION,ApiNames.DELETED, ApiNames.CONSIST, ApiNames.LINKS})
-public class Zug extends AbstractNamedItem implements IZug {
+public class Zug extends AbstractNamedItem<NameKey> implements IZug {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7391674754023907975L;

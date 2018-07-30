@@ -17,10 +17,11 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.INamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.persistence.IKey;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
  * AbstractNamedItem.
@@ -30,7 +31,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  */
 @MappedSuperclass
 @JsonPropertyOrder({ApiNames.ID,ApiNames.NAME,ApiNames.DESCRIPTION,ApiNames.DELETED, ApiNames.LINKS})
-public abstract class AbstractNamedItem extends AbstractItem implements INamedItem, Serializable {
+public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> implements INamedItem<K>, Serializable {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -278823660682127691L;
@@ -90,12 +91,6 @@ public abstract class AbstractNamedItem extends AbstractItem implements INamedIt
 	}
 
 	@Override
-    @JsonIgnore
-    public void setKey(Object id) {
-	    setName(id.toString());
-    }
-
-	@Override
     @Column(name=DBNames.DESCRIPTION, nullable=true, length=100)
     @JsonGetter(ApiNames.DESCRIPTION)
     @JsonView(Views.DropDown.class)
@@ -108,6 +103,13 @@ public abstract class AbstractNamedItem extends AbstractItem implements INamedIt
     public void setBezeichnung(String bezeichnung) {
 		this.bezeichnung = bezeichnung;
 	}
+
+    @Override
+    @Transient
+    @JsonIgnore
+    public String getLinkId() {
+        return getName();
+    }
 
     @Override
     public int hashCode() {
@@ -126,18 +128,11 @@ public abstract class AbstractNamedItem extends AbstractItem implements INamedIt
             return false;
         }
 
-        AbstractNamedItem other = (AbstractNamedItem) obj;
+        AbstractNamedItem<?> other = (AbstractNamedItem<?>) obj;
 
         return new EqualsBuilder()
                 .append(getName(), other.getName())
                 .isEquals();
-    }
-
-    @Override
-    @Transient
-    @JsonIgnore
-    public String getLinkId() {
-        return getName();
     }
 
     @Override

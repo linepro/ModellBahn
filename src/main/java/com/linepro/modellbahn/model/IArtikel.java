@@ -4,13 +4,14 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import com.linepro.modellbahn.model.util.Status;
+import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * IArtikel.
  * @author   $Author$
  * @version  $Id$
  */
-public interface IArtikel extends INamedItem {
+public interface IArtikel extends INamedItem<NameKey> {
 
     /**
      * Gets the produkt.

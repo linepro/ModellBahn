@@ -11,6 +11,7 @@ import com.linepro.modellbahn.model.ILicht;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * Licht. The NEM 006 / Märklin light configuration for a product
@@ -23,7 +24,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.LICHT)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
-public class Licht extends AbstractNamedItem implements ILicht {
+public class Licht extends AbstractNamedItem<NameKey> implements ILicht {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6288751316098975414L;

@@ -16,19 +16,20 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.impl.Spurweite;
+import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 
 /**
- * SpurweiteService.
- * CRUD service for Spurweite
- * @author  $Author:$
+ * SpurweiteService. CRUD service for Spurweite
+ * 
+ * @author $Author:$
  * @version $Id:$
  */
 @Path(ApiPaths.SPURWEITE)
-public class SpurweiteService extends AbstractItemService<String,Spurweite> {
+public class SpurweiteService extends AbstractItemService<NameKey, Spurweite> {
 
     /**
      * Instantiates a new spurweite service.
@@ -40,18 +41,23 @@ public class SpurweiteService extends AbstractItemService<String,Spurweite> {
     /**
      * Creates the.
      *
-     * @param id the id
-     * @param name the name
-     * @param bezeichnung the bezeichnung
-     * @param deleted the deleted
+     * @param id
+     *            the id
+     * @param name
+     *            the name
+     * @param bezeichnung
+     *            the bezeichnung
+     * @param deleted
+     *            the deleted
      * @return the e
-     * @throws Exception the exception
+     * @throws Exception
+     *             the exception
      */
     @JsonCreator
-    public Spurweite create(@JsonProperty(value=ApiNames.ID, required=false) Long id, 
-                    @JsonProperty(value=ApiPaths.NAME_PARAM_NAME, required=false) String name, 
-                    @JsonProperty(value=ApiNames.DESCRIPTION, required=false) String bezeichnung, 
-                    @JsonProperty(value=ApiNames.DELETED, required=false) Boolean deleted) throws Exception {
+    public Spurweite create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
+            @JsonProperty(value = ApiPaths.NAME_PARAM_NAME, required = false) String name,
+            @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
+            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
         Spurweite entity = create();
 
         entity.setId(id);
@@ -67,7 +73,8 @@ public class SpurweiteService extends AbstractItemService<String,Spurweite> {
     /**
      * Gets the.
      *
-     * @param name the name
+     * @param name
+     *            the name
      * @return the response
      */
     @GET
@@ -88,8 +95,10 @@ public class SpurweiteService extends AbstractItemService<String,Spurweite> {
     /**
      * Update.
      *
-     * @param name the name
-     * @param entity the entity
+     * @param name
+     *            the name
+     * @param entity
+     *            the entity
      * @return the response
      */
     @PUT
@@ -104,7 +113,8 @@ public class SpurweiteService extends AbstractItemService<String,Spurweite> {
     /**
      * Delete.
      *
-     * @param name the name
+     * @param name
+     *            the name
      * @return the response
      */
     @DELETE

@@ -32,9 +32,11 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderAdress;
+import com.linepro.modellbahn.model.keys.DecoderAdressKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.model.util.AdressTyp;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.resolver.DecoderResolver;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -51,7 +53,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.ADRESS_TYP, DBNames.ADRESS }) })
 @JsonRootName(value = ApiNames.ADRESS)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER, ApiNames.ADRESS_TYP, ApiNames.ADRESS, ApiNames.DELETED, ApiNames.LINKS })
-public class DecoderAdress extends AbstractItem implements IDecoderAdress {
+public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDecoderAdress {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1845658968133212205L;
@@ -88,6 +90,7 @@ public class DecoderAdress extends AbstractItem implements IDecoderAdress {
     }
 
     @Override
+    @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
     @JoinColumn(name = DBNames.DECODER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_address_fk1"))
     @JsonGetter(ApiNames.DECODER)
@@ -106,6 +109,7 @@ public class DecoderAdress extends AbstractItem implements IDecoderAdress {
     }
 
     @Override
+    @BusinessKey
     @Enumerated(EnumType.STRING)
     @Column(name = DBNames.ADRESS_TYP, nullable = false, length = 10)
     @JsonGetter(ApiNames.ADRESS_TYP)

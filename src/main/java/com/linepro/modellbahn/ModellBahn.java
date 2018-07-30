@@ -73,12 +73,12 @@ public class ModellBahn implements IModellBahn {
             
             server.start();
 
-            logger.info("Application started with WADL available at {}{}\n" +
+            logger.info("Application started with WADL available at {}/{}\n" +
                     "Static content served on {}{} from {}\n" +
                     "API served on {}{}\n" +
                     "Press CTRL^C (SIGINT) to terminate.",
                     baseUri, ApiPaths.APPLICATION_WADL,
-                    baseUri, ApiPaths.WEB_ROOT, StaticContentFinder.get().getPaths(),
+                    baseUri, ApiPaths.WEB_ROOT, StaticContentFinder.get().getAbsolutePaths(),
                     baseUri, ApiPaths.API_ROOT);
 
             Thread.currentThread().join();

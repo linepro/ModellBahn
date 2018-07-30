@@ -6,13 +6,14 @@
 package com.linepro.modellbahn.model;
 
 import java.util.Set;
+import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * IKategorie.
  * @author   $Author$
  * @version  $Id$
  */
-public interface IKategorie extends INamedItem {
+public interface IKategorie extends INamedItem<NameKey> {
     
     /**
      * Gets the unter kategorien.

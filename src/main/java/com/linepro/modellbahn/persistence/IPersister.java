@@ -12,7 +12,7 @@ import com.linepro.modellbahn.model.IItem;
  * @version  $Id$
  * @param <E> the element type
  */
-public interface IPersister<E extends IItem> extends ISessionManager {
+public interface IPersister<E extends IItem<?>> extends ISessionManager {
     
     /**
      * Adds the entity checking the primary key; fails if the entity all ready exists.
@@ -33,15 +33,21 @@ public interface IPersister<E extends IItem> extends ISessionManager {
      */
     E findById(Long id, boolean eager) throws Exception;
 
+    E findByKey(Long id, boolean eager) throws Exception;
+
+    E findByKey(String name, boolean eager) throws Exception;
+
     /**
      * Finds the entity by business key.
      *
-     * @param template the template to scan for
+     * @param key the key to scan for only fields annotated with @BusinessKey are considered
      * @param eager TODO
      * @return the entity
      * @throws Exception if there more than one match or there is a DB error
      */
-    E findByKey(Object key, boolean eager) throws Exception;
+     E findByKey(IKey key, boolean eager) throws Exception;
+
+     E findByKey(E entity, boolean eager) throws Exception;
 
     /**
      * Finds all the entities.
@@ -67,15 +73,36 @@ public interface IPersister<E extends IItem> extends ISessionManager {
      * @return the updated entity.
      * @throws Exception if the entity does not exist or there is a DB error
      */
-    E update(E entity) throws Exception;
+    E update(Long id, E entity) throws Exception;
 
     /**
-     * Deletes the specified entity by primary key or business key (specify only one).
+     * Updates the specified entity to match the supplied entity.
+     *
+     * @param entity the new state of the entity.
+     * @return the updated entity.
+     * @throws Exception if the entity does not exist or there is a DB error
+     */
+    E update(E entity) throws Exception;
+
+    E update(IKey key, E entity) throws Exception;
+
+    /**
+     * Deletes the specified entity by primary key.
      *
      * @param entity the entity
      * @throws Exception if there is a DB error
      */
+    void delete(Long id) throws Exception;
+
     void delete(E entity) throws Exception;
+
+    /**
+     * Deletes the specified entity by business key.
+     *
+     * @param entity the entity
+     * @throws Exception if there is a DB error
+     */
+    void delete(IKey key) throws Exception;
 
     /**
      * Deletes all entities.

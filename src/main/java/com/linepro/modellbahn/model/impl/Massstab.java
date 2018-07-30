@@ -11,6 +11,7 @@ import com.linepro.modellbahn.model.IMassstab;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * Massstab. The NEM 010 Maßstäb (scale) of a product.
@@ -23,7 +24,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.MASSSTAB)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
-public class Massstab extends AbstractNamedItem implements IMassstab {
+public class Massstab extends AbstractNamedItem<NameKey> implements IMassstab {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3531688695840325563L;

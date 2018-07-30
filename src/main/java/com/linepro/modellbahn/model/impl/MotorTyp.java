@@ -11,6 +11,7 @@ import com.linepro.modellbahn.model.IMotorTyp;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * MotorTyp. The (Märklin) motor type for a product
@@ -23,7 +24,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.MOTOR_TYP)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
-public class MotorTyp extends AbstractNamedItem implements IMotorTyp {
+public class MotorTyp extends AbstractNamedItem<NameKey> implements IMotorTyp {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -4407612983152968677L;

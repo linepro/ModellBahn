@@ -5,6 +5,7 @@ import static javax.ws.rs.HttpMethod.GET;
 import static javax.ws.rs.HttpMethod.PUT;
 
 import java.io.Serializable;
+import java.net.URI;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +19,6 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -33,6 +33,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.persistence.IKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.LinkSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -47,7 +48,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @MappedSuperclass
 @Cacheable
 @JsonAutoDetect(fieldVisibility = Visibility.PUBLIC_ONLY)
-public abstract class AbstractItem implements Serializable, IItem {
+public abstract class AbstractItem<K extends IKey> implements Serializable, IItem<K> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 938276986391979417L;
@@ -95,12 +96,6 @@ public abstract class AbstractItem implements Serializable, IItem {
 	}
 
 	@Override
-    @JsonIgnore
-    public void setKey(Object id) {
-        setId(Long.valueOf(id.toString()));
-    }
-
-	@Override
     @Column(name=DBNames.DELETED, length=5, nullable = true)
     @JsonView(Views.Public.class)
     @JsonGetter(ApiNames.DELETED)
@@ -137,12 +132,12 @@ public abstract class AbstractItem implements Serializable, IItem {
         return getId().toString();
     }
 
-    protected Link makeLink(UriInfo uri, String path, String rel, String method) {
-        return Link.fromUri(UriBuilder.fromUri(uri.getBaseUri()).path( path).build()).rel(rel).type(method).build();
+    protected Link makeLink(URI uri, String path, String rel, String method) {
+        return Link.fromUri(UriBuilder.fromUri(uri).path( path).build()).rel(rel).type(method).build();
     }
     
     @Override
-    public IItem addLinks(UriInfo root, boolean update, boolean delete) {
+    public IItem<K> addLinks(URI root, boolean update, boolean delete) {
         getLinks().clear();
 
         addParent(root);
@@ -161,33 +156,33 @@ public abstract class AbstractItem implements Serializable, IItem {
         return this;
     }
     
-    protected void addChildLinks(UriInfo root) {
+    protected void addChildLinks(URI root) {
     }
 
-    protected void addLinks(UriInfo root, Collection<? extends IItem> items, boolean update, boolean delete) {
+    protected void addLinks(URI root, Collection<? extends IItem<?>> items, boolean update, boolean delete) {
         if (!items.isEmpty()) {
-            for (IItem item : items) {
+            for (IItem<?> item : items) {
                 item.addLinks(root, update, delete);
             }
         }
         
     }
 
-    protected void addParent(UriInfo root) {
+    protected void addParent(URI root) {
         if (getParentId() != null) {
             getLinks().add(makeLink(root, getParentId(), "parent", GET));
         }
     }
 
-    protected void addDelete(UriInfo root) {
+    protected void addDelete(URI root) {
         getLinks().add(makeLink(root, getLinkId(), "delete", DELETE));
     }
 
-    protected void addSelf(UriInfo root) {
+    protected void addSelf(URI root) {
         getLinks().add(makeLink(root, getLinkId(), "self", GET));
     }
 
-    protected void addUpdate(UriInfo root) {
+    protected void addUpdate(URI root) {
         getLinks().add(makeLink(root, getLinkId(), "update", PUT));
     }
 
@@ -206,11 +201,11 @@ public abstract class AbstractItem implements Serializable, IItem {
 			return false;
 		}
 
-		if (getClass() != obj.getClass()) {
+		if (!(obj instanceof AbstractItem)) {
 			return false;
 		}
 
-		IItem other = (IItem) obj;
+		IItem<?> other = (IItem<?>) obj;
 
 		return new EqualsBuilder().append(getId(), other.getId()).isEquals();
 	}

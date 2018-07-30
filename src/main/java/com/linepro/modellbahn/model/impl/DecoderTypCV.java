@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypCV;
+import com.linepro.modellbahn.model.keys.DecoderTypCVKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
@@ -46,7 +47,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
                 @UniqueConstraint(columnNames = { DBNames.DECODER_TYP_ID, DBNames.CV }) })
 @JsonRootName(value = ApiNames.CV)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.CV,  ApiNames.DESCRIPTION,  ApiNames.MINIMAL,  ApiNames.MAXIMAL,  ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED, ApiNames.LINKS}) 
-public class DecoderTypCV extends AbstractItem implements IDecoderTypCV {
+public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDecoderTypCV {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5202372019371973750L;
