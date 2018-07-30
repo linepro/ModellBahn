@@ -3,6 +3,7 @@ package com.linepro.modellbahn.rest.service;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -31,31 +32,13 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
 @Path(ApiPaths.AUFBAU)
 public class AufbauService extends AbstractItemService<NameKey, Aufbau> {
 
-    /**
-     * Instantiates a new aufbau service.
-     */
     public AufbauService() {
         super(Aufbau.class);
     }
 
-    /**
-     * Creates the.
-     *
-     * @param id
-     *            the id
-     * @param name
-     *            the name
-     * @param bezeichnung
-     *            the bezeichnung
-     * @param deleted
-     *            the deleted
-     * @return the e
-     * @throws Exception
-     *             the exception
-     */
     @JsonCreator
     public Aufbau create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiPaths.NAME_PARAM_NAME, required = false) String name,
+            @JsonProperty(value = ApiNames.NAME, required = false) String name,
             @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
         Aufbau entity = create();
@@ -70,13 +53,6 @@ public class AufbauService extends AbstractItemService<NameKey, Aufbau> {
         return entity;
     }
 
-    /**
-     * Gets the.
-     *
-     * @param name
-     *            the name
-     * @return the response
-     */
     @GET
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
@@ -92,15 +68,14 @@ public class AufbauService extends AbstractItemService<NameKey, Aufbau> {
         return super.search(uriInfo);
     }
 
-    /**
-     * Update.
-     *
-     * @param name
-     *            the name
-     * @param entity
-     *            the entity
-     * @return the response
-     */
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response add(Aufbau entity) {
+        return super.add(entity);
+    }
+
     @PUT
     @Path(ApiPaths.NAME_PART)
     @Consumes({ MediaType.APPLICATION_JSON })
@@ -110,13 +85,6 @@ public class AufbauService extends AbstractItemService<NameKey, Aufbau> {
         return super.update(name, entity);
     }
 
-    /**
-     * Delete.
-     *
-     * @param name
-     *            the name
-     * @return the response
-     */
     @DELETE
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)

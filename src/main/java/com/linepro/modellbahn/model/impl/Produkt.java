@@ -1,6 +1,5 @@
 package com.linepro.modellbahn.model.impl;
 
-import java.awt.Image;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -193,29 +192,41 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
     /** The teilen. */
     private List<IProduktTeil> teilen = new ArrayList<>();
 
-    /**
-     * Instantiates a new produkt.
-     */
     public Produkt() {
         super();
     }
 
-    /**
-     * Instantiates a new produkt.
-     *
-     * @param id
-     *            the id
-     * @param name
-     *            the name
-     * @param bezeichnung
-     *            the bezeichnung
-     * @param abbildung
-     *            the abbildung
-     * @param deleted
-     *            the deleted
-     */
-    public Produkt(Long id, String name, String bezeichnung, Image abbildung, Boolean deleted) {
+    public Produkt(Long id, IHersteller hersteller, String bestellNr, IUnterKategorie unterKategorie,
+            IMassstab massstab, ISpurweite spurweite, IEpoch epoch, IBahnverwaltung bahnverwaltung, IGattung gattung,
+            String betreibsnummer, Date bauzeit, IVorbild vorbild, IAchsfolg achsfolge, String anmerkung,
+            ISonderModell sondermodel, IAufbau aufbau, ILicht licht, IKupplung kupplung, ISteuerung steuerung,
+            IDecoderTyp decoderTyp, IMotorTyp motorTyp, BigDecimal lange, File anleitungen, File explosionszeichnung,
+            File abbildung, Boolean deleted) {
         super(id, deleted);
+        setHersteller(hersteller);
+        setBestellNr(bestellNr);
+        setUnterKategorie(unterKategorie);
+        setMassstab(massstab);
+        setSpurweite(spurweite);
+        setEpoch(epoch);
+        setBahnverwaltung(bahnverwaltung);
+        setGattung(gattung);
+        setBetreibsnummer(betreibsnummer);
+        setBauzeit(bauzeit);
+        setVorbild(vorbild);
+        setAchsfolg(achsfolge);
+        setAnmerkung(anmerkung);
+        setSondermodel(sondermodel);
+        setAufbau(aufbau);
+        setLicht(licht);
+        setKupplung(kupplung);
+        setSteuerung(steuerung);
+        setDecoderTyp(decoderTyp);
+        setMotorTyp(motorTyp);
+        setLange(lange);
+        setAnleitungen(anleitungen);
+        setExplosionszeichnung(explosionszeichnung);
+        setAbbildung(abbildung);
     }
 
     @Override
@@ -231,7 +242,7 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
 
     @Override
     @JsonSetter(ApiNames.HERSTELLER)
-    @JsonDeserialize(as=Hersteller.class)
+    @JsonDeserialize(as = Hersteller.class)
     public void setHersteller(IHersteller hersteller) {
         this.hersteller = hersteller;
     }
@@ -280,7 +291,7 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
 
     @Override
     @JsonSetter(ApiNames.MASSSTAB)
-    @JsonDeserialize(as=Massstab.class)
+    @JsonDeserialize(as = Massstab.class)
     public void setMassstab(IMassstab massstab) {
         this.massstab = massstab;
     }
@@ -298,7 +309,7 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
 
     @Override
     @JsonSetter(ApiNames.SPURWEITE)
-    @JsonDeserialize(as=Spurweite.class)
+    @JsonDeserialize(as = Spurweite.class)
     public void setSpurweite(ISpurweite spurweite) {
         this.spurweite = spurweite;
     }
@@ -316,7 +327,7 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
 
     @Override
     @JsonSetter(ApiNames.EPOCH)
-    @JsonDeserialize(as=Epoch.class)
+    @JsonDeserialize(as = Epoch.class)
     public void setEpoch(IEpoch epoch) {
         this.epoch = epoch;
     }
@@ -334,7 +345,7 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
 
     @Override
     @JsonSetter(ApiNames.BAHNVERWALTUNG)
-    @JsonDeserialize(as=Bahnverwaltung.class)
+    @JsonDeserialize(as = Bahnverwaltung.class)
     public void setBahnverwaltung(IBahnverwaltung bahnverwaltung) {
         this.bahnverwaltung = bahnverwaltung;
     }
@@ -352,7 +363,7 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
 
     @Override
     @JsonSetter(ApiNames.GATTUNG)
-    @JsonDeserialize(as=Gattung.class)
+    @JsonDeserialize(as = Gattung.class)
     public void setGattung(IGattung gattung) {
         this.gattung = gattung;
     }
@@ -394,14 +405,14 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = VorbildResolver.class)
-    @JsonSerialize(as=Vorbild.class)
+    @JsonSerialize(as = Vorbild.class)
     public IVorbild getVorbild() {
         return vorbild;
     }
 
     @Override
     @JsonSetter(ApiNames.VORBILD)
-    @JsonDeserialize(as=Vorbild.class)
+    @JsonDeserialize(as = Vorbild.class)
     public void setVorbild(IVorbild vorbild) {
         this.vorbild = vorbild;
     }
@@ -413,14 +424,14 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = AchsfolgResolver.class)
-    @JsonSerialize(as=Achsfolg.class)
+    @JsonSerialize(as = Achsfolg.class)
     public IAchsfolg getAchsfolg() {
         return achsfolge;
     }
 
     @Override
     @JsonSetter(ApiNames.ACHSFOLG)
-    @JsonDeserialize(as=Achsfolg.class)
+    @JsonDeserialize(as = Achsfolg.class)
     public void setAchsfolg(IAchsfolg achsfolge) {
         this.achsfolge = achsfolge;
     }
@@ -446,14 +457,14 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = SonderModellResolver.class)
-    @JsonSerialize(as=SonderModell.class)
+    @JsonSerialize(as = SonderModell.class)
     public ISonderModell getSondermodel() {
         return sondermodel;
     }
 
     @Override
     @JsonSetter(ApiNames.SONDERMODEL)
-    @JsonDeserialize(as=SonderModell.class)
+    @JsonDeserialize(as = SonderModell.class)
     public void setSondermodel(ISonderModell sondermodel) {
         this.sondermodel = sondermodel;
     }
@@ -465,14 +476,14 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = AufbauResolver.class)
-    @JsonSerialize(as=Aufbau.class)
+    @JsonSerialize(as = Aufbau.class)
     public IAufbau getAufbau() {
         return aufbau;
     }
 
     @Override
     @JsonSetter(ApiNames.AUFBAU)
-    @JsonDeserialize(as=Aufbau.class)
+    @JsonDeserialize(as = Aufbau.class)
     public void setAufbau(IAufbau aufbau) {
         this.aufbau = aufbau;
     }
@@ -484,14 +495,14 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = LichtResolver.class)
-    @JsonSerialize(as=Licht.class)
+    @JsonSerialize(as = Licht.class)
     public ILicht getLicht() {
         return licht;
     }
 
     @Override
     @JsonSetter(ApiNames.LICHT)
-    @JsonDeserialize(as=Licht.class)
+    @JsonDeserialize(as = Licht.class)
     public void setLicht(ILicht licht) {
         this.licht = licht;
     }
@@ -503,14 +514,14 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = KupplungResolver.class)
-    @JsonSerialize(as=Kupplung.class)
+    @JsonSerialize(as = Kupplung.class)
     public IKupplung getKupplung() {
         return kupplung;
     }
 
     @Override
     @JsonSetter(ApiNames.KUPPLUNG)
-    @JsonDeserialize(as=Kupplung.class)
+    @JsonDeserialize(as = Kupplung.class)
     public void setKupplung(IKupplung kupplung) {
         this.kupplung = kupplung;
     }
@@ -522,14 +533,14 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = SteuerungResolver.class)
-    @JsonSerialize(as=Steuerung.class)
+    @JsonSerialize(as = Steuerung.class)
     public ISteuerung getSteuerung() {
         return steuerung;
     }
 
     @Override
     @JsonSetter(ApiNames.STEUERUNG)
-    @JsonDeserialize(as=Steuerung.class)
+    @JsonDeserialize(as = Steuerung.class)
     public void setSteuerung(ISteuerung steuerung) {
         this.steuerung = steuerung;
     }
@@ -539,14 +550,14 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
     @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk14"))
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(using=DecoderTypSerializer.class)
+    @JsonSerialize(using = DecoderTypSerializer.class)
     public IDecoderTyp getDecoderTyp() {
         return decoderTyp;
     }
 
     @Override
     @JsonSetter(ApiNames.DECODER_TYP)
-    @JsonDeserialize(as=DecoderTyp.class)
+    @JsonDeserialize(as = DecoderTyp.class)
     public void setDecoderTyp(IDecoderTyp decoderTyp) {
         this.decoderTyp = decoderTyp;
     }
@@ -564,7 +575,7 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
 
     @Override
     @JsonSetter(ApiNames.MOTOR_TYP)
-    @JsonDeserialize(as=MotorTyp.class)
+    @JsonDeserialize(as = MotorTyp.class)
     public void setMotorTyp(IMotorTyp motorTyp) {
         this.motorTyp = motorTyp;
     }

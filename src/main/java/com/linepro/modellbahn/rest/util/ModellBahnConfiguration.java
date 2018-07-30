@@ -9,7 +9,6 @@ import javax.ws.rs.ApplicationPath;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
-import org.glassfish.jersey.servlet.ServletProperties;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.linepro.modellbahn.jersey.LoggingFilter;
@@ -45,12 +44,11 @@ public class ModellBahnConfiguration extends ResourceConfig {
         property(ServerProperties.TRACING, "ALL");
         property(ServerProperties.TRACING_THRESHOLD, "VERBOSE");
         
+        /*
         property(ServletProperties.FILTER_CONTEXT_PATH, "/ModellBahn"); 
         property(ServletProperties.FILTER_FORWARD_ON_404, true);
-        property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "/web/**/*");
         property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "//web//**//*");
-
-        /*
+    
         property(ClassNamesResourceConfig.PROPERTY_CLASSNAMES, "");
         property(ClasspathResourceConfig.PROPERTY_CLASSPATH, "");
         property(FeaturesAndProperties.FEATURE_DISABLE_XML_SECURITY, "");

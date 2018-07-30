@@ -3,6 +3,7 @@ package com.linepro.modellbahn.rest.service;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IDecoder;
+import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.impl.Decoder;
@@ -40,34 +42,14 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
 @Path(ApiPaths.DECODER)
 public class DecoderService extends AbstractItemService<NameKey, Decoder> {
 
-    /**
-     * Instantiates a new decoder typ service.
-     */
     public DecoderService() {
         super(Decoder.class);
     }
 
-    /**
-     * Creates the.
-     *
-     * @param id
-     *            the id
-     * @param name
-     *            the name
-     * @param bezeichnung
-     *            the bezeichnung
-     * @param deleted
-     *            the deleted
-     * @param decoderTyp
-     * @param fahrstufe
-     * @return the e
-     * @throws Exception
-     *             the exception
-     */
     @JsonCreator
     public Decoder create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiPaths.DECODER_TYP, required = false) DecoderTyp decoderTyp,
-            @JsonProperty(value = ApiPaths.PROTOKOLL, required = false) Protokoll protokoll,
+            @JsonProperty(value = ApiNames.DECODER_TYP, required = false) DecoderTyp decoderTyp,
+            @JsonProperty(value = ApiNames.PROTOKOLL, required = false) Protokoll protokoll,
             @JsonProperty(value = ApiNames.DECODER_ID, required = false) String decoderId,
             @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.FAHRSTUFE, required = false) Integer fahrstufe,
@@ -99,7 +81,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
             @JsonProperty(value = ApiNames.WERT, required = false) Integer wert) throws Exception {
         IDecoder decoder = findDecoder(decoderId, false);
 
-        IDecoderTypCV decoderTypCV = findDecoderTypeCV(decoder, cvValue, true);
+        IDecoderTypCV decoderTypCV = findDecoderTypCV(decoder.getDecoderTyp(), cvValue, true);
 
         DecoderCV entity = new DecoderCV(decoder, decoderTypCV, wert);
 
@@ -110,11 +92,12 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
 
     @JsonCreator
     public DecoderFunktion createFunktion(@JsonProperty(value = ApiNames.DECODER_ID, required = false) String decoderId,
-            @JsonProperty(value = ApiPaths.NAME_PARAM_NAME, required = false) String funktion,
+            @JsonProperty(value = ApiNames.REIHE, required = false) Integer reihe,
+            @JsonProperty(value = ApiNames.FUNKTION, required = false) String funktion,
             @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung) throws Exception {
         IDecoder decoder = findDecoder(decoderId, false);
 
-        IDecoderTypFunktion decoderTypFunktion = findDecoderTypeFunktion(decoder, funktion);
+        IDecoderTypFunktion decoderTypFunktion = findDecoderTypFunktion(decoder.getDecoderTyp(), reihe, funktion);
 
         DecoderFunktion entity = new DecoderFunktion(decoder, decoderTypFunktion, bezeichnung);
 
@@ -123,13 +106,6 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
         return entity;
     }
 
-    /**
-     * Gets the.
-     *
-     * @param name
-     *            the name
-     * @return the response
-     */
     @GET
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
@@ -145,15 +121,14 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
         return super.search(uriInfo);
     }
 
-    /**
-     * Update.
-     *
-     * @param name
-     *            the name
-     * @param entity
-     *            the entity
-     * @return the response
-     */
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response add(Decoder entity) {
+        return super.add(entity);
+    }
+
     @PUT
     @Path(ApiPaths.NAME_PART)
     @Consumes({ MediaType.APPLICATION_JSON })
@@ -163,13 +138,6 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
         return super.update(name, entity);
     }
 
-    /**
-     * Delete.
-     *
-     * @param name
-     *            the name
-     * @return the response
-     */
     @DELETE
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
@@ -182,11 +150,11 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
         return getPersister().findByKey(decoderId, true);
     }
 
-    protected IDecoderTypCV findDecoderTypeCV(IDecoder decoder, Integer cvValue, boolean eager) throws Exception {
+    protected IDecoderTypCV findDecoderTypCV(IDecoderTyp decoderTyp, Integer cv, boolean eager) throws Exception {
         return null;
     }
 
-    protected IDecoderTypFunktion findDecoderTypeFunktion(IDecoder decoder, String funktion) throws Exception {
+    protected IDecoderTypFunktion findDecoderTypFunktion(IDecoderTyp decoderTyp, Integer reihe, String funktion) throws Exception {
         return null;
     }
 }

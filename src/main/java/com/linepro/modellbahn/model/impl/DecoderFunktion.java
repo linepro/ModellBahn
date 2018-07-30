@@ -65,6 +65,8 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
 
     private String funktionStr;
 
+    private Integer reihe;
+
 	/**
 	 * Instantiates a new decoder funktion.
 	 */
@@ -106,6 +108,20 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
 
     @Transient
     @Override
+    @JsonGetter(ApiNames.REIHE)
+    @JsonView(Views.DropDown.class)
+    public Integer getReihe() {
+        return reihe;
+    }
+
+    @Override
+    @JsonSetter(ApiNames.REIHE)
+    public void setReihe(Integer reihe) {
+        this.reihe = reihe;
+    }
+
+    @Transient
+    @Override
     @JsonGetter(ApiNames.FUNKTION)
     @JsonView(Views.DropDown.class)
     public String getFunktionStr() {
@@ -125,6 +141,7 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
     public IDecoderTypFunktion getFunktion() {
         if (funktion != null) {
             funktionStr = funktion.getName();
+            reihe = funktion.getReihe();
         }
 
         return funktion;
@@ -137,6 +154,7 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
 
         if (funktion != null) {
             funktionStr = funktion.getName();
+            reihe = funktion.getReihe();
         }
     }
 

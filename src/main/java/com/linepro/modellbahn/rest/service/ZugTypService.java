@@ -16,7 +16,7 @@ import javax.ws.rs.core.UriInfo;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.linepro.modellbahn.model.impl.Bahnverwaltung;
+import com.linepro.modellbahn.model.impl.ZugTyp;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
@@ -24,24 +24,24 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 
 /**
- * BahnverwaltungService. CRUD service for Bahnverwaltung
+ * ZugTypService. CRUD service for ZugTyp
  * 
  * @author $Author:$
  * @version $Id:$
  */
-@Path(ApiPaths.BAHNVERWALTUNG)
-public class BahnverwaltungService extends AbstractItemService<NameKey, Bahnverwaltung> {
+@Path(ApiPaths.ZUG_TYP)
+public class ZugTypService extends AbstractItemService<NameKey, ZugTyp> {
 
-    public BahnverwaltungService() {
-        super(Bahnverwaltung.class);
+    public ZugTypService() {
+        super(ZugTyp.class);
     }
 
     @JsonCreator
-    public Bahnverwaltung create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
+    public ZugTyp create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
             @JsonProperty(value = ApiNames.NAME, required = false) String name,
             @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
-        Bahnverwaltung entity = create();
+        ZugTyp entity = create();
 
         entity.setId(id);
         entity.setName(name);
@@ -72,7 +72,7 @@ public class BahnverwaltungService extends AbstractItemService<NameKey, Bahnverw
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response add(Bahnverwaltung entity) {
+    public Response add(ZugTyp entity) {
         return super.add(entity);
     }
 
@@ -81,7 +81,7 @@ public class BahnverwaltungService extends AbstractItemService<NameKey, Bahnverw
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Bahnverwaltung entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, ZugTyp entity) {
         return super.update(name, entity);
     }
 

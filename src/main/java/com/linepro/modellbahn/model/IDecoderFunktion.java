@@ -55,4 +55,8 @@ public interface IDecoderFunktion extends IItem<DecoderFunktionKey> {
      */
     void setBezeichnung(String wert);
 
+    Integer getReihe();
+
+    void setReihe(Integer reihe);
+
 }

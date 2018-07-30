@@ -83,8 +83,8 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     /** The anzahl. */
     private Integer anzahl;
 
-    /** The betriebs nummer. */
-    private String betriebsNummer;
+    /** The betreibs nummer. */
+    private String betreibsNummer;
 
     /** The antrieb. */
     private IAntrieb antrieb;
@@ -213,7 +213,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
      * @param hersteller the hersteller
      * @param bauzeit the bauzeit
      * @param anzahl the anzahl
-     * @param betriebsNummer the betriebs nummer
+     * @param betreibsNummer the betreibs nummer
      * @param antrieb the antrieb
      * @param achsfolg the achsfolg
      * @param anfahrzugkraft the anfahrzugkraft
@@ -255,7 +255,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
      * @param anmerkung 
      */
     public Vorbild(Long id, IGattung gattung, IUnterKategorie unterKategorie, String hersteller, Date bauzeit,
-            Integer anzahl, String betriebsNummer, IAntrieb antrieb, IAchsfolg achsfolg, BigDecimal anfahrzugkraft,
+            Integer anzahl, String betreibsNummer, IAntrieb antrieb, IAchsfolg achsfolg, BigDecimal anfahrzugkraft,
             BigDecimal leistung, BigDecimal dienstgewicht, Long geschwindigkeit, BigDecimal lange, Date ausserdienst,
             BigDecimal dmTreibrad, BigDecimal dmLaufradVorn, BigDecimal dmLaufradHinten, Integer zylinder, BigDecimal dmZylinder,
             BigDecimal kolbenhub, BigDecimal kesselueberdruck, BigDecimal rostflaeche, BigDecimal ueberhitzerflaeche, BigDecimal wasservorrat,
@@ -270,7 +270,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
         setHersteller(hersteller);
         setBauzeit(bauzeit);
         setAnzahl(anzahl);
-        setBetriebsNummer(betriebsNummer);
+        setBetreibsNummer(betreibsNummer);
         setAntrieb(antrieb);
         setAchsfolg(achsfolg);
         setAnfahrzugkraft(anfahrzugkraft);
@@ -393,14 +393,14 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Column(name = DBNames.BETREIBSNUMMER, nullable = true, length = 100)
     @JsonGetter(ApiNames.BETREIBSNUMMER)
     @JsonView(Views.DropDown.class)
-    public String getBetriebsNummer() {
-        return betriebsNummer;
+    public String getBetreibsNummer() {
+        return betreibsNummer;
     }
 
     @Override
     @JsonSetter(ApiNames.BETREIBSNUMMER)
-    public void setBetriebsNummer(String betriebsNummer) {
-        this.betriebsNummer = betriebsNummer;
+    public void setBetreibsNummer(String betreibsNummer) {
+        this.betreibsNummer = betreibsNummer;
     }
 
     @Override
@@ -943,7 +943,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
                 .append(ApiNames.HERSTELLER, getHersteller())
                 .append(ApiNames.BAUZEIT, getBauzeit())
                 .append(ApiNames.ANZAHL, getAnzahl())
-                .append(ApiNames.BETREIBSNUMMER, getBetriebsNummer())
+                .append(ApiNames.BETREIBSNUMMER, getBetreibsNummer())
                 .append(ApiNames.ANTRIEB, getAntrieb())
                 .append(ApiNames.ACHSFOLG, getAchsfolg())
                 .append(ApiNames.ANFAHRZUGKRAFT, getAnfahrzugkraft())

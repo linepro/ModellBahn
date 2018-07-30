@@ -15,6 +15,7 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -24,6 +25,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -40,6 +42,7 @@ import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.resolver.DecoderResolver;
 import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
@@ -137,6 +140,20 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
     public void setAdress(Integer adress) {
         this.adress = adress;
     }
+
+    @Override
+    @Transient
+    @JsonIgnore
+    public String getParentId() {
+        return decoder.getLinkId();
+     }
+
+     @Override
+     @Transient
+     @JsonIgnore
+     public String getLinkId() {
+         return String.format(ApiPaths.DECODER_ADRESS_LINK, getParentId(), getAdressTyp(), getAdress());
+     }
 
     @Override
     public int hashCode() {

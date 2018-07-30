@@ -82,18 +82,18 @@ public interface IVorbild extends INamedItem<NameKey> {
     void setAnzahl(Integer anzahl);
 
     /**
-     * Gets the betriebs nummer.
+     * Gets the betreibs nummer.
      *
-     * @return the betriebs nummer
+     * @return the betreibs nummer
      */
-    String getBetriebsNummer();
+    String getBetreibsNummer();
 
     /**
-     * Sets the betriebs nummer.
+     * Sets the betreibs nummer.
      *
-     * @param betriebsNummer the new betriebs nummer
+     * @param betreibsNummer the new betreibs nummer
      */
-    void setBetriebsNummer(String betriebsNummer);
+    void setBetreibsNummer(String betreibsNummer);
 
     /**
      * Gets the antrieb.

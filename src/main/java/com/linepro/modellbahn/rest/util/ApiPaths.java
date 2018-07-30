@@ -9,6 +9,12 @@ public interface ApiPaths {
 
     public static final String ARTIKEL_ID_PARAM_NAME = ApiNames.ARTIKEL_ID;
 
+    public static final String ADRESS_TYP_PARAM_NAME = ApiNames.ADRESS_TYP;
+
+    public static final String ADRESS_PARAM_NAME = ApiNames.ADRESS;
+
+    public static final String BESTELL_NR_PARAM_NAME = ApiNames.BESTELL_NR;
+
     public static final String CV_PARAM_NAME = ApiNames.CV;
 
     public static final String DECODER_ID_PARAM_NAME = ApiNames.DECODER_ID;
@@ -28,14 +34,14 @@ public interface ApiPaths {
     public static final String TEIL_ID_PARAM_NAME = ApiNames.TEIL_ID;
 
     public static final String UNTER_KATEGORIE_PARAM_NAME = ApiNames.UNTER_KATEGORIE;
-    
+
     public static final String ZUG_PARAM_NAME = ApiNames.ZUG;
 
     /** Root paths */
 
     public static final String API_ROOT = "/api/";
 
-    public static final String WEB_ROOT = "/web/";
+    public static final String WEB_ROOT = "/web";
 
     public static final String APPLICATION_WADL = "application.wadl";
     
@@ -50,8 +56,6 @@ public interface ApiPaths {
     
     public static final String BAHNVERWALTUNG = API_ROOT + ApiNames.BAHNVERWALTUNG;
 
-    public static final String BESTELL_NR_PARAM_NAME = ApiNames.BESTELL_NR;  
-   
     public static final String DECODER = API_ROOT + ApiNames.DECODER;
     
     public static final String DECODER_TYP = API_ROOT + ApiNames.DECODER_TYP;
@@ -86,55 +90,73 @@ public interface ApiPaths {
 
     public static final String ZUG = API_ROOT + ApiNames.ZUG;
 
+    public static final String ZUG_TYP = API_ROOT + ApiNames.ZUG_TYP;
+
     /** Function paths */
+    public static final String FIELD_START = "/{";
+
+    public static final String FIELD_END = "}";
+
     public static final String NOT_NULL_REGEX = ": [^//]+";
 
     public static final String NULL_REGEX = ": ^$";
 
-    public static final String NUMBER_REGEX = ": [0-9]+";
+    public static final String NUMBER_REGEX = ": \\d+";
 
-    public static final String ID_PART = "/{" + ID_PARAM_NAME + NUMBER_REGEX + "}";
+    public static final String ID_PART = FIELD_START + ID_PARAM_NAME + NUMBER_REGEX + FIELD_END;
 
-    public static final String NAME_PART = "/{" + NAME_PARAM_NAME + NOT_NULL_REGEX + "}";
+    public static final String NAME_PART = FIELD_START + NAME_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;
 
-    public static final String BESTELL_NR_PART = "/{" + BESTELL_NR_PARAM_NAME + NOT_NULL_REGEX + "}";
+    public static final String ADRESS_TYP_PART = FIELD_START + ADRESS_TYP_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;
 
-    public static final String CV_PART = "/{" + CV_PARAM_NAME + NUMBER_REGEX + "}";
+    public static final String ADRESS_PART = FIELD_START + ADRESS_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;
 
-    public static final String DECODER_PART = "/{" + DECODER_ID_PARAM_NAME + NUMBER_REGEX  + "}";
+    public static final String BESTELL_NR_PART = FIELD_START + BESTELL_NR_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;
 
-    public static final String FUNKTION_PART = "/{" + FUNKTION_PARAM_NAME + NOT_NULL_REGEX +"}";  
+    public static final String CV_PART = FIELD_START + CV_PARAM_NAME + NUMBER_REGEX + FIELD_END;
 
-    public static final String HERSTELLER_PART = "/{" + HERSTELLER_PARAM_NAME + NOT_NULL_REGEX + "}";
+    public static final String DECODER_PART = FIELD_START + DECODER_ID_PARAM_NAME + NUMBER_REGEX  + FIELD_END;
 
-    public static final String KATEGORIE_PART = "/{" + KATEGORIE_PARAM_NAME + NOT_NULL_REGEX + "}";
+    public static final String FUNKTION_PART = FIELD_START + FUNKTION_PARAM_NAME + NOT_NULL_REGEX +FIELD_END;  
 
-    public static final String POSITION_PATH = "/{" + POSITION_PARAM_NAME + NUMBER_REGEX + "}";
+    public static final String HERSTELLER_PART = FIELD_START + HERSTELLER_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;
 
-    public static final String PRODUKT_PART = "/{" + PRODUKT_ID_PARAM_NAME + NUMBER_REGEX + "}";
+    public static final String KATEGORIE_PART = FIELD_START + KATEGORIE_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;
 
-    public static final String REIHE_PART = "/{" + REIHE_PARAM_NAME + NUMBER_REGEX + "}";
+    public static final String POSITION_PATH = FIELD_START + POSITION_PARAM_NAME + NUMBER_REGEX + FIELD_END;
 
-    public static final String TEIL_PART = "/{" + TEIL_ID_PARAM_NAME + NUMBER_REGEX + "}";
+    public static final String PRODUKT_PART = FIELD_START + PRODUKT_ID_PARAM_NAME + NUMBER_REGEX + FIELD_END;
 
-    public static final String UNTER_KATEGORIE_PART = "/{" + UNTER_KATEGORIE_PARAM_NAME + NOT_NULL_REGEX + "}";
+    public static final String REIHE_PART = FIELD_START + REIHE_PARAM_NAME + NUMBER_REGEX + FIELD_END;
 
-    public static final String ZUG_PART = "/{" + ZUG_PARAM_NAME + NOT_NULL_REGEX + "}";
+    public static final String TEIL_PART = FIELD_START + TEIL_ID_PARAM_NAME + NUMBER_REGEX + FIELD_END;
+
+    public static final String UNTER_KATEGORIE_PART = FIELD_START + UNTER_KATEGORIE_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;
+
+    public static final String ZUG_PART = FIELD_START + ZUG_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;
 
     /** Parameterized child paths */
-    public static final String DECODER_CV_PATH = DECODER_PART + "/" + ApiNames.CV + CV_PART;
+    public static final String DECODER_ADRESS_ROOT = DECODER_PART + "/" + ApiNames.ADRESS;
+    public static final String DECODER_ADRESS_PATH = DECODER_ADRESS_ROOT + ADRESS_TYP_PART + "/" + ADRESS_PART;
+    public static final String DECODER_ADRESS_LINK = "%s/" + ApiNames.ADRESS + "/%s/%d";  
+
+    public static final String DECODER_CV_ROOT = DECODER_PART + "/" + ApiNames.CV;
+    public static final String DECODER_CV_PATH = DECODER_CV_ROOT + CV_PART;
     public static final String DECODER_CV_LINK = "%s/" + ApiNames.CV + "/%d";  
 
-    public static final String DECODER_FUNKTION_PATH = DECODER_PART + "/" + ApiNames.FUNKTION + REIHE_PART + FUNKTION_PART;
+    public static final String DECODER_FUNKTION_ROOT = DECODER_PART + "/" + ApiNames.FUNKTION;
+    public static final String DECODER_FUNKTION_PATH = DECODER_FUNKTION_ROOT + REIHE_PART + FUNKTION_PART;
     public static final String DECODER_FUNKTION_LINK = "%s/" + ApiNames.FUNKTION + "/%d/%s";
 
-    public static final String DECODER_TYP_PATH = HERSTELLER_PART + BESTELL_NR_PART;  
+    public static final String DECODER_TYP_PATH = HERSTELLER_PART + BESTELL_NR_PART;
     public static final String DECODER_TYP_LINK = "%s/%s";  
 
-    public static final String DECODER_TYP_CV_PATH = DECODER_TYP_PATH + "/" + ApiNames.CV + CV_PART;  
+    public static final String DECODER_TYP_CV_ROOT = DECODER_TYP_PATH + "/" + ApiNames.CV;  
+    public static final String DECODER_TYP_CV_PATH = DECODER_TYP_CV_ROOT + CV_PART;  
     public static final String DECODER_TYP_CV_LINK = "%s/" + ApiNames.CV + "/%d";  
 
-    public static final String DECODER_TYP_FUNKTION_PATH = DECODER_TYP_PATH + "/" + ApiNames.FUNKTION + REIHE_PART + FUNKTION_PART;  
+    public static final String DECODER_TYP_FUNKTION_ROOT = DECODER_TYP_PATH + "/" + ApiNames.FUNKTION;  
+    public static final String DECODER_TYP_FUNKTION_PATH = DECODER_TYP_FUNKTION_ROOT + REIHE_PART + FUNKTION_PART;  
     public static final String DECODER_TYP_FUNKTION_LINK = "%s/" + ApiNames.FUNKTION + "/%d/%s";
    
     public static final String UNTER_KATEGORIE_PATH = KATEGORIE_PART + UNTER_KATEGORIE_PART;

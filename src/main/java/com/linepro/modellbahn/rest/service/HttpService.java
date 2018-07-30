@@ -5,7 +5,6 @@ import java.net.URI;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -16,21 +15,21 @@ import com.linepro.modellbahn.rest.util.AbstractService;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.util.StaticContentFinder;
 
-@Path(ApiPaths.WEB_ROOT)
+@Path("/")
 public class HttpService extends AbstractService {
 
-    private static final String WEB_ROOT = StringUtils.stripStart(ApiPaths.WEB_ROOT, "//");
-
+    protected static final String WEB_ROOT = StringUtils.strip(ApiPaths.WEB_ROOT, "/");
     public HttpService() {
     }
 
     @GET
-    @Path("{docPath:.*}")
+    @Path("{path: .*}")
     @Produces({MediaType.WILDCARD})
-    public Response getFolder(@PathParam("docPath") String docPath) {
+    public Response getFile() {
         URI requested = uriInfo.getBaseUri().relativize(uriInfo.getRequestUri());
 
-        String stripedPath = StringUtils.removeStart(requested.getPath(), WEB_ROOT);
+        // We really really don't want leading or trailing slashes
+        String stripedPath = StringUtils.strip(StringUtils.removeStart(StringUtils.strip(requested.getPath(), "/"), WEB_ROOT), "/");
 
         String path = StringUtils.isBlank(stripedPath) ? "index.html" :stripedPath;
 
@@ -42,6 +41,6 @@ public class HttpService extends AbstractService {
             return Response.ok(file).build();
         }
 
-        return noContent().build();
+        return notFound().build();
     }
 }

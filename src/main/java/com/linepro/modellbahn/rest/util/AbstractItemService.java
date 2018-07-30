@@ -16,7 +16,30 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.beanutils.ConvertUtils;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.linepro.modellbahn.model.IAchsfolg;
+import com.linepro.modellbahn.model.IAntrieb;
+import com.linepro.modellbahn.model.IArtikel;
+import com.linepro.modellbahn.model.IAufbau;
+import com.linepro.modellbahn.model.IBahnverwaltung;
+import com.linepro.modellbahn.model.IDecoder;
+import com.linepro.modellbahn.model.IDecoderTyp;
+import com.linepro.modellbahn.model.IEpoch;
+import com.linepro.modellbahn.model.IGattung;
+import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.model.IItem;
+import com.linepro.modellbahn.model.IKupplung;
+import com.linepro.modellbahn.model.ILicht;
+import com.linepro.modellbahn.model.IMassstab;
+import com.linepro.modellbahn.model.IMotorTyp;
+import com.linepro.modellbahn.model.IProdukt;
+import com.linepro.modellbahn.model.ISonderModell;
+import com.linepro.modellbahn.model.ISpurweite;
+import com.linepro.modellbahn.model.ISteuerung;
+import com.linepro.modellbahn.model.IUnterKategorie;
+import com.linepro.modellbahn.model.IVorbild;
+import com.linepro.modellbahn.model.IWahrung;
+import com.linepro.modellbahn.model.IZug;
+import com.linepro.modellbahn.model.IZugTyp;
 import com.linepro.modellbahn.model.keys.IdKey;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.persistence.IKey;
@@ -322,4 +345,28 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
 
         return wadlLink;
     }
+
+    protected IAntrieb findAntrieb(String name) throws Exception { return null; }
+    protected IAchsfolg findAchsfolg(String name) throws Exception { return null; }
+    protected IArtikel findArtikel(String name) throws Exception { return null; }
+    protected IAufbau findAufbau(String name) throws Exception { return null; }
+    protected IBahnverwaltung findBahnverwaltung(String name) throws Exception { return null; }
+    protected IDecoder findDecoder(String decoderId) { return null; }
+    protected IDecoderTyp findDecoderTyp(String hersteller, String bestellNr) { return null; }
+    protected IEpoch findEpoch(String name) throws Exception { return null; }
+    protected IGattung findGattung(String name) throws Exception { return null; }
+    protected IHersteller findHersteller(String name) throws Exception { return null; }
+    protected IKupplung findKupplung(String name) throws Exception { return null; }
+    protected ILicht findLicht(String name) throws Exception { return null; }
+    protected IMotorTyp findMotorTyp(String name) throws Exception { return null; }
+    protected IMassstab findMassstab(String name) throws Exception { return null; }
+    protected IProdukt findProdukt(String herstellerStr, String bestellNr) { return null; }
+    protected ISonderModell findSonderModell(String name) throws Exception { return null; }
+    protected ISpurweite findSpurweite(String name) throws Exception { return null; }
+    protected ISteuerung findSteuerung(String name) throws Exception { return null; }
+    protected IUnterKategorie findUnterKategorie(String kategorie, String unterKategorie) throws Exception { return null; }
+    protected IVorbild findVorbild(String name) throws Exception { return null; }
+    protected IWahrung findWahrung(String name) throws Exception { return null; }
+    protected IZug findZug(String name) throws Exception { return null; }
+    protected IZugTyp findZugTyp(String name) throws Exception { return null; }
 }

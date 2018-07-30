@@ -3,6 +3,7 @@ package com.linepro.modellbahn.rest.service;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -31,23 +32,10 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
 @Path(ApiPaths.LICHT)
 public class LichtService extends AbstractItemService<NameKey, Licht> {
 
-    /**
-     * Instantiates a new licht service.
-     */
     public LichtService() {
         super(Licht.class);
     }
 
-    /**
-     * Creates the.
-     *
-     * @param id the id
-     * @param name the name
-     * @param bezeichnung the bezeichnung
-     * @param deleted the deleted
-     * @return the e
-     * @throws Exception the exception
-     */
     @JsonCreator
     public Licht create(@JsonProperty(value=ApiNames.ID, required=false) Long id, 
                     @JsonProperty(value=ApiPaths.NAME_PARAM_NAME, required=false) String name, 
@@ -65,12 +53,6 @@ public class LichtService extends AbstractItemService<NameKey, Licht> {
         return entity;
     }
 
-    /**
-     * Gets the.
-     *
-     * @param name the name
-     * @return the response
-     */
     @GET
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
@@ -86,13 +68,14 @@ public class LichtService extends AbstractItemService<NameKey, Licht> {
         return super.search(uriInfo);
     }
 
-    /**
-     * Update.
-     *
-     * @param name the name
-     * @param entity the entity
-     * @return the response
-     */
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response add(Licht entity) {
+        return super.add(entity);
+    }
+
     @PUT
     @Path(ApiPaths.NAME_PART)
     @Consumes({ MediaType.APPLICATION_JSON })
@@ -102,12 +85,6 @@ public class LichtService extends AbstractItemService<NameKey, Licht> {
         return super.update(name, entity);
     }
 
-    /**
-     * Delete.
-     *
-     * @param name the name
-     * @return the response
-     */
     @DELETE
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
