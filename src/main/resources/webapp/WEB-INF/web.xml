@@ -19,7 +19,7 @@
 	</filter>
 
 	<filter-mapping>
-		<filter-name>ModellBahn</servlet-name>
-		<url-pattern>/modellbahn/*</url-pattern>
+		<filter-name>ModellBahn</filter-name>
+		<url-pattern>/ModellBahn/*</url-pattern>
 	</filter-mapping>
 </web-app>
