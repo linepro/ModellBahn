@@ -86,7 +86,7 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
      */
     public DecoderCV(IDecoder decoder, IDecoderTypCV cv, Integer wert) {
         setDecoder(decoder);
-        setCV(cv);
+        setCv(cv);
         setWert(wert);
     }
 
@@ -114,26 +114,26 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTypCV.class)
     @JoinColumn(name = DBNames.CV_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_cv_fk2"))
     @JsonIgnore
-    public IDecoderTypCV getCV() {
+    public IDecoderTypCV getCv() {
         return cv;
     }
 
     @Override
     @JsonIgnore
-    public void setCV(IDecoderTypCV cv) {
+    public void setCv(IDecoderTypCV cv) {
         this.cv = cv;
     }
 
     @Override
     @JsonGetter(ApiNames.CV)
     @JsonView(Views.DropDown.class)
-    public Integer getCVValue() {
+    public Integer getCvValue() {
         return cvValue;
     }
 
     @Override
     @JsonSetter(ApiNames.CV)
-    public void setCVValue(Integer cv) {
+    public void setCvValue(Integer cv) {
         this.cvValue = cv;
     }
 
@@ -162,14 +162,14 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     @Transient
     @JsonIgnore
     public String getLinkId() {
-        return String.format(ApiPaths.DECODER_CV_LINK, getParentId(), getCV());
+        return String.format(ApiPaths.DECODER_CV_LINK, getParentId(), getCv());
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
                 .append(getDecoder())
-                .append(getCV())
+                .append(getCv())
                 .hashCode();
     }
 
@@ -187,7 +187,7 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
 
         return new EqualsBuilder()
                 .append(getDecoder(), other.getDecoder())
-                .append(getCV(), other.getCV())
+                .append(getCv(), other.getCv())
                 .isEquals();
     }
 
@@ -195,7 +195,7 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append(ApiNames.DECODER, getDecoder().getId())
-                .append(ApiNames.CV, getCV())
+                .append(ApiNames.CV, getCv())
                 .append("wert", getWert())
                 .toString();
     }

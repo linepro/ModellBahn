@@ -27,7 +27,7 @@ public class DecoderCVSerializer extends StdSerializer<DecoderCV> {
     @Override
     public void serialize(DecoderCV value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
         gen.writeStartObject();
-        gen.writeObjectField(ApiNames.CV, value.getCV().getCV());
+        gen.writeObjectField(ApiNames.CV, value.getCv().getCv());
         gen.writeObjectField(ApiNames.WERT, value.getWert());
         gen.writeEndObject();
     }

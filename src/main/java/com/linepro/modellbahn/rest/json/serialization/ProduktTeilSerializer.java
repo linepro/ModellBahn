@@ -35,7 +35,7 @@ public class ProduktTeilSerializer extends StdSerializer<ProduktTeil> {
     public void serialize(ProduktTeil value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
         gen.writeStartObject();
         gen.writeStringField(ApiNames.HERSTELLER, value.getTeil().getHersteller().getName());
-        gen.writeStringField(ApiNames.BESTELL_NR, value.getTeil().getBestellNr());
+        gen.writeStringField(ApiNames.BESTELL_NR, value.getTeil().getName());
         gen.writeNumberField(ApiNames.ANZAHL, value.getAnzahl());
         utils.writeLinks(ApiNames.LINKS, value.getLinks(), gen, serializers);
         gen.writeEndObject();

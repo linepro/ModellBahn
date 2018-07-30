@@ -29,7 +29,7 @@ public class ArtikelSerializer extends StdSerializer<Artikel> {
         gen.writeStartObject();
         gen.writeObjectField(ApiNames.NAME, value.getName());
         gen.writeObjectField(ApiNames.HERSTELLER, value.getProdukt().getHersteller().getName());
-        gen.writeObjectField(ApiNames.BESTELL_NR, value.getProdukt().getBestellNr());
+        gen.writeObjectField(ApiNames.BESTELL_NR, value.getProdukt().getName());
         gen.writeEndObject();
     }
 }

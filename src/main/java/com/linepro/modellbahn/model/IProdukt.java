@@ -13,7 +13,7 @@ import com.linepro.modellbahn.model.keys.ProduktKey;
  * @author $Author$
  * @version $Id$
  */
-public interface IProdukt extends IItem<ProduktKey> {
+public interface IProdukt extends INamedItem<ProduktKey> {
 
     /**
      * Gets the epoch.
@@ -254,21 +254,6 @@ public interface IProdukt extends IItem<ProduktKey> {
      *            the new hersteller
      */
     void setHersteller(IHersteller hersteller);
-
-    /**
-     * Gets the bestell nr.
-     *
-     * @return the bestell nr
-     */
-    String getBestellNr();
-
-    /**
-     * Sets the bestell nr.
-     *
-     * @param bestellNr
-     *            the new bestell nr
-     */
-    void setBestellNr(String bestellNr);
 
     /**
      * Gets the anmerkung.

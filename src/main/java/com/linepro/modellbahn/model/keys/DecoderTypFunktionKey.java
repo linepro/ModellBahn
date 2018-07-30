@@ -35,6 +35,6 @@ public class DecoderTypFunktionKey extends BaseKey {
     public void addCriteria(Query query) {
         query.setParameter(DBNames.DECODER_TYP, getDecoderTyp());
         query.setParameter(DBNames.REIHE, getReihe());
-        query.setParameter(DBNames.FUNKTION, getFunktion());
+        query.setParameter(DBNames.NAME, getFunktion());
     }
 }

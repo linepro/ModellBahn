@@ -28,18 +28,18 @@ public interface IDecoderCV extends IItem<DecoderCVKey> {
      *
      * @return the cv
      */
-    IDecoderTypCV getCV();
+    IDecoderTypCV getCv();
 
     /**
      * Sets the cv.
      *
      * @param cv the new cv
      */
-    void setCV(IDecoderTypCV cv);
+    void setCv(IDecoderTypCV cv);
 
-    Integer getCVValue();
+    Integer getCvValue();
 
-    void setCVValue(Integer cv);
+    void setCvValue(Integer cv);
 
     /**
      * Gets the wert.

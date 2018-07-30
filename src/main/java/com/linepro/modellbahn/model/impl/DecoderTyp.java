@@ -41,7 +41,7 @@ import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.model.IProtokoll;
-import com.linepro.modellbahn.model.keys.ProduktKey;
+import com.linepro.modellbahn.model.keys.DecoderTypKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.model.util.AdressTyp;
 import com.linepro.modellbahn.model.util.Konfiguration;
@@ -69,7 +69,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME))
 @JsonRootName(value = ApiNames.DECODER_TYP)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.PROTOKOLL, ApiNames.ADRESS_TYP, ApiNames.ADRESSEN, ApiNames.FAHRSTUFE, ApiNames.SOUND, ApiNames.I_MAX, ApiNames.KONFIGURATION, ApiNames.DELETED, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS})
-public class DecoderTyp extends AbstractNamedItem<ProduktKey> implements IDecoderTyp {
+public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDecoderTyp {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8503812316290492490L;
@@ -178,6 +178,7 @@ public class DecoderTyp extends AbstractNamedItem<ProduktKey> implements IDecode
     @Override
     @BusinessKey
     @JsonGetter(ApiNames.BESTELL_NR)
+    @JsonView(Views.DropDown.class)
     public String getName() {
         return super.getName();
     }

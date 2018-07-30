@@ -94,7 +94,7 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
         super(id, deleted);
 
         setDecoderTyp(decoderTyp);
-        setCV(cv);
+        setCv(cv);
         setBezeichnung(bezeichnung);
         setMinimal(minimal);
         setMaximal(maximal);
@@ -122,13 +122,13 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
     @Override
     @BusinessKey
     @Column(name = DBNames.CV, nullable = false)
-    public Integer getCV() {
+    public Integer getCv() {
         return cv;
     }
 
     @Override
     @JsonSetter(ApiNames.CV)
-    public void setCV(Integer cv) {
+    public void setCv(Integer cv) {
         this.cv = cv;
     }
 
@@ -199,14 +199,14 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
     @Transient
     @JsonIgnore
     public String getLinkId() {
-        return String.format(ApiPaths.DECODER_TYP_CV_LINK, getParentId(), getCV());
+        return String.format(ApiPaths.DECODER_TYP_CV_LINK, getParentId(), getCv());
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
                 .append(getDecoderTyp())
-                .append(getCV())
+                .append(getCv())
                 .hashCode();
     }
 
@@ -224,7 +224,7 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
 
         return new EqualsBuilder()
                 .append(getDecoderTyp(), other.getDecoderTyp())
-                .append(getCV(), other.getCV())
+                .append(getCv(), other.getCv())
                 .isEquals();
     }
 
@@ -233,7 +233,7 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
                 .append(ApiNames.DECODER_TYP, getDecoderTyp())
-                .append(ApiNames.CV, getCV())
+                .append(ApiNames.CV, getCv())
                 .append(ApiNames.DESCRIPTION, getBezeichnung())
                 .append(ApiNames.MINIMAL, getMinimal())
                 .append(ApiNames.MAXIMAL, getMaximal())

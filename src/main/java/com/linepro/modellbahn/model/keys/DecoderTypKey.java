@@ -5,13 +5,13 @@ import javax.persistence.Query;
 import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.persistence.DBNames;
 
-public class ProduktKey extends BaseKey {
+public class DecoderTypKey extends BaseKey {
 
     protected final IHersteller hersteller;
     
     protected final String bestellNr;
 
-    public ProduktKey(final IHersteller hersteller, final String bestellNr) {
+    public DecoderTypKey(final IHersteller hersteller, final String bestellNr) {
         this.hersteller = hersteller;
         this.bestellNr = bestellNr;
     }

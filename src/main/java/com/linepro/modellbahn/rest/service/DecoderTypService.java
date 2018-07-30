@@ -28,8 +28,8 @@ import com.linepro.modellbahn.model.impl.Hersteller;
 import com.linepro.modellbahn.model.impl.Protokoll;
 import com.linepro.modellbahn.model.keys.DecoderTypCVKey;
 import com.linepro.modellbahn.model.keys.DecoderTypFunktionKey;
+import com.linepro.modellbahn.model.keys.DecoderTypKey;
 import com.linepro.modellbahn.model.keys.NameKey;
-import com.linepro.modellbahn.model.keys.ProduktKey;
 import com.linepro.modellbahn.model.util.Konfiguration;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
@@ -45,7 +45,7 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @version $Id:$
  */
 @Path(ApiPaths.DECODER_TYP)
-public class DecoderTypService extends AbstractItemService<ProduktKey, DecoderTyp> {
+public class DecoderTypService extends AbstractItemService<DecoderTypKey, DecoderTyp> {
 
     protected final IPersister<Protokoll> protokollPersister;
 
@@ -148,7 +148,7 @@ public class DecoderTypService extends AbstractItemService<ProduktKey, DecoderTy
     public Response get(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
             @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
         try {
-            return super.get(new ProduktKey(findHersteller(herstellerStr), bestellNr));
+            return super.get(new DecoderTypKey(findHersteller(herstellerStr), bestellNr));
         } catch (Exception e) {
             return getResponse(serverError(e));
         }
@@ -177,7 +177,7 @@ public class DecoderTypService extends AbstractItemService<ProduktKey, DecoderTy
     public Response update(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
             @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, DecoderTyp entity) {
         try {
-            return super.update(new ProduktKey(findHersteller(herstellerStr), bestellNr), entity);
+            return super.update(new DecoderTypKey(findHersteller(herstellerStr), bestellNr), entity);
         } catch (Exception e) {
             return getResponse(serverError(e));
         }
@@ -190,7 +190,7 @@ public class DecoderTypService extends AbstractItemService<ProduktKey, DecoderTy
     public Response delete(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
             @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
         try {
-            return super.delete(new ProduktKey(findHersteller(herstellerStr), bestellNr));
+            return super.delete(new DecoderTypKey(findHersteller(herstellerStr), bestellNr));
         } catch (Exception e) {
             return getResponse(serverError(e));
         }
@@ -417,7 +417,7 @@ public class DecoderTypService extends AbstractItemService<ProduktKey, DecoderTy
     }
 
     protected IDecoderTyp findDecoderTyp(String herstellerStr, String bestellNr, boolean eager) throws Exception {
-        return getPersister().findByKey(new ProduktKey(findHersteller(herstellerStr), bestellNr), eager);
+        return getPersister().findByKey(new DecoderTyp(findHersteller(herstellerStr), bestellNr), eager);
     }
 
     protected IDecoderTypCV findDecoderTypCV(String herstellerStr, String bestellNr, Integer cv, boolean eager) throws Exception {

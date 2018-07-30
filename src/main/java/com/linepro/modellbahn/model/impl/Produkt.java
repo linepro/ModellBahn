@@ -54,7 +54,7 @@ import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.IVorbild;
 import com.linepro.modellbahn.model.keys.ProduktKey;
-import com.linepro.modellbahn.model.util.AbstractItem;
+import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.FileConverter;
 import com.linepro.modellbahn.rest.json.Formats;
@@ -87,7 +87,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  */
 @Entity(name = "Produkt")
 @Table(name = "Produkt", indexes = {
-        @Index(columnList = DBNames.HERSTELLER_ID + "," + DBNames.BESTELL_NR, unique = true),
+        @Index(columnList = DBNames.HERSTELLER_ID ),
         @Index(columnList = DBNames.EPOCH_ID),
         @Index(columnList = DBNames.GATTUNG_ID),
         @Index(columnList = DBNames.BAHNVERWALTUNG_ID),
@@ -102,9 +102,8 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.VORBILD_ID),
         @Index(columnList = DBNames.STEUERUNG_ID),
         @Index(columnList = DBNames.DECODER_TYP_ID),
-        @Index(columnList = DBNames.MOTOR_TYP_ID),
-        @Index(columnList = DBNames.HERSTELLER_ID) }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { DBNames.HERSTELLER_ID, DBNames.BESTELL_NR }) })
+        @Index(columnList = DBNames.MOTOR_TYP_ID) }, uniqueConstraints = {
+                @UniqueConstraint(columnNames = { DBNames.HERSTELLER_ID, DBNames.NAME }) })
 @JsonRootName(value = ApiNames.PRODUKT)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.UNTER_KATEGORIE, ApiNames.MASSSTAB,
         ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER,
@@ -112,16 +111,13 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG, ApiNames.DECODER_TYP,
         ApiNames.MOTOR_TYP, ApiNames.LANGE, ApiNames.ANLEITUNGEN, ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.ABBILDUNG,
         ApiNames.TEILEN, ApiNames.DELETED, ApiNames.LINKS })
-public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
+public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8098838727023710484L;
 
     /** The hersteller. */
     private IHersteller hersteller;
-
-    /** The bestell nr. */
-    private String bestellNr;
 
     /** The unter kategorie. */
     private IUnterKategorie unterKategorie;
@@ -196,15 +192,14 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
         super();
     }
 
-    public Produkt(Long id, IHersteller hersteller, String bestellNr, IUnterKategorie unterKategorie,
+    public Produkt(Long id, IHersteller hersteller, String bestellNr, String bezeichnung, IUnterKategorie unterKategorie,
             IMassstab massstab, ISpurweite spurweite, IEpoch epoch, IBahnverwaltung bahnverwaltung, IGattung gattung,
             String betreibsnummer, Date bauzeit, IVorbild vorbild, IAchsfolg achsfolge, String anmerkung,
             ISonderModell sondermodel, IAufbau aufbau, ILicht licht, IKupplung kupplung, ISteuerung steuerung,
             IDecoderTyp decoderTyp, IMotorTyp motorTyp, BigDecimal lange, File anleitungen, File explosionszeichnung,
             File abbildung, Boolean deleted) {
-        super(id, deleted);
+        super(id, bestellNr, bezeichnung, deleted);
         setHersteller(hersteller);
-        setBestellNr(bestellNr);
         setUnterKategorie(unterKategorie);
         setMassstab(massstab);
         setSpurweite(spurweite);
@@ -248,17 +243,16 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
     }
 
     @Override
-    @Column(name = DBNames.BESTELL_NR, length = 30, nullable = true)
     @JsonGetter(ApiNames.BESTELL_NR)
     @JsonView(Views.DropDown.class)
-    public String getBestellNr() {
-        return bestellNr;
+    public String getName() {
+        return super.getName();
     }
 
     @Override
     @JsonSetter(ApiNames.BESTELL_NR)
-    public void setBestellNr(String bestellNr) {
-        this.bestellNr = bestellNr;
+    public void setName(String bestellNr) {
+        super.setName(bestellNr);
     }
 
     @Override
@@ -669,7 +663,7 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
                 .append(ApiNames.HERSTELLER, getHersteller())
-                .append(ApiNames.BESTELL_NR, getBestellNr())
+                .append(ApiNames.BESTELL_NR, getName())
                 .append(ApiNames.UNTER_KATEGORIE, getUnterKategorie())
                 .append(ApiNames.MASSSTAB, getMassstab())
                 .append(ApiNames.SPURWEITE, getSpurweite())
