@@ -196,7 +196,7 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     public String toString() {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
-                .append(ApiNames.DECODER, getDecoder().getId())
+                .append(ApiNames.DECODER, getDecoder())
                 .append(ApiNames.CV, getCv())
                 .append("wert", getWert())
                 .toString();

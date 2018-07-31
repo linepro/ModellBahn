@@ -65,14 +65,14 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @JsonCreator
     public DecoderAdress createAdress(@JsonProperty(value = ApiNames.ID, required = false) Long id,
             @JsonProperty(value = ApiNames.DECODER_ID, required = false) String decoderId,
-            @JsonProperty(value = ApiNames.OFFSET, required = false) Integer offset,
+            @JsonProperty(value = ApiNames.REIHE, required = false) Integer reihe,
             @JsonProperty(value = ApiNames.ADRESS_TYP, required = false) String adressTypStr,
             @JsonProperty(value = ApiNames.ADRESS, required = false) Integer adress,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
         IDecoder decoder = findDecoder(decoderId, false);
         AdressTyp adressTyp = AdressTyp.valueOf(adressTypStr);
 
-        DecoderAdress entity = new DecoderAdress(id, decoder, offset, adressTyp, adress, deleted);
+        DecoderAdress entity = new DecoderAdress(id, decoder, reihe, adressTyp, adress, deleted);
 
         debug("created: " + entity);
 
@@ -141,7 +141,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
                 return getResponse(badRequest(null, "DecoderTyp " + herstellerStr + "/" + bestellNr + " does not exist"));
             }
 
-            Decoder decoder = new Decoder(null, decoderTyp, decoderTyp.getProtokoll(), decoderId, decoderTyp.getBezeichnung(), decoderTyp.getFahrstufe(), false);
+            Decoder decoder = new Decoder(null, decoderTyp, decoderTyp.getProtokoll(), getNextDecoderId(), decoderTyp.getBezeichnung(), decoderTyp.getFahrstufe(), false);
             
             decoder = getPersister().add(decoder);
 
@@ -186,7 +186,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Path(ApiPaths.DECODER_ADRESS_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response getAdress(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.OFFSET_PARAM_NAME) Integer offset) {
+    public Response getAdress(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe) {
         return notFound().build();
     }
 
@@ -195,7 +195,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response updateAdress(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.OFFSET_PARAM_NAME) Integer offset, @QueryParam(ApiNames.WERT) Integer wert) {
+    public Response updateAdress(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @QueryParam(ApiNames.WERT) Integer wert) {
         return notFound().build();
     }
 
@@ -231,6 +231,25 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @JsonView(Views.Public.class)
     public Response updateFunktion(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion, @QueryParam(ApiNames.DESCRIPTION) String descirption) {
         return notFound().build();
+    }
+
+    public String getNextDecoderId() {
+        Long decoderId = 1L;
+        
+        getPersister().begin();
+        
+        StringBuffer queryString = new StringBuffer("SELECT COUNT(e) FROM ")
+                .append(getPersister().getEntityName());
+
+        Long decoders = (Long) getPersister().getEntityManager().createQuery(queryString.toString()).getSingleResult();
+
+        if (decoders != null) {
+            decoderId = decoders + 1L;
+        }
+
+        getPersister().commit();
+        
+        return decoderId.toString();
     }
 
     protected IDecoder findDecoder(String decoderId, boolean eager) throws Exception {

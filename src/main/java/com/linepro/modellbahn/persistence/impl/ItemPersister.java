@@ -531,11 +531,11 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         return entityClass;
     }
 
-    /**
-     * Gets the selectors.
-     *
-     * @return the selectors
-     */
+    @Override
+    public String getEntityName() {
+        return entityName;
+    }
+
     protected Map<String, Selector> getSelectors() {
         return selectors;
     }

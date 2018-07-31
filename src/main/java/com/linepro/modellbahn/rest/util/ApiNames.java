@@ -21,6 +21,7 @@ public interface ApiNames {
     public static final String BELADUNG = "beladung";
     public static final String BESTELL_NR = "bestellNr";
     public static final String BETREIBSNUMMER = "betreibsnummer";
+    public static final String CONNECTOR = "connector";
     public static final String CONSIST = "consist";
     public static final String CV = "cv";
     public static final String CVS = "cvs";
@@ -68,7 +69,6 @@ public interface ApiNames {
     public static final String MOTORBAUART = "motorbauart";
     public static final String MOTOR_TYP = "motorTyp";
     public static final String NAME = "name";
-    public static final String OFFSET = "offset";
     public static final String POSITION = "position";
     public static final String PREIS = "preis";
     public static final String PRODUKT = "produkt";

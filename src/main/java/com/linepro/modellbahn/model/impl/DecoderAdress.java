@@ -51,10 +51,10 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name = "DecoderAdress")
-@Table(name = "DecoderAdress", indexes = { @Index(columnList = DBNames.DECODER_ID + "," + DBNames.OFFSET, unique = true) },
-        uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.OFFSET }) })
+@Table(name = "DecoderAdress", indexes = { @Index(columnList = DBNames.DECODER_ID + "," + DBNames.REIHE, unique = true) },
+        uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.REIHE }) })
 @JsonRootName(value = ApiNames.ADRESS)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER, ApiNames.OFFSET, ApiNames.ADRESS_TYP, ApiNames.ADRESS, ApiNames.DELETED, ApiNames.LINKS })
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER, ApiNames.REIHE, ApiNames.ADRESS_TYP, ApiNames.ADRESS, ApiNames.DELETED, ApiNames.LINKS })
 public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDecoderAdress {
 
     /** The Constant serialVersionUID. */
@@ -64,7 +64,7 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
     private IDecoder decoder;
 
     /** The adress. */
-    private Integer offset;
+    private Integer reihe;
 
     /** The typ. */
     private AdressTyp adressTyp;
@@ -75,10 +75,10 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
     public DecoderAdress() {
     }
 
-    public DecoderAdress(Long id, IDecoder decoder, Integer offset, AdressTyp typ, Integer adress, Boolean deleted) {
+    public DecoderAdress(Long id, IDecoder decoder, Integer reihe, AdressTyp typ, Integer adress, Boolean deleted) {
         super(id, deleted);
         setDecoder(decoder);
-        setOffset(offset);
+        setReihe(reihe);
         setAdressTyp(typ);
         setAdress(adress);
     }
@@ -103,17 +103,17 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
     }
 
     @Override
-    @Column(name = DBNames.OFFSET, nullable = false)
-    @JsonGetter(ApiNames.OFFSET)
+    @Column(name = DBNames.REIHE, nullable = false)
+    @JsonGetter(ApiNames.REIHE)
     @JsonView(Views.DropDown.class)
-    public Integer getOffset() {
-        return offset;
+    public Integer getReihe() {
+        return reihe;
     }
 
     @Override
-    @JsonSetter(ApiNames.OFFSET)
-    public void setOffset(Integer offset) {
-        this.offset = offset;
+    @JsonSetter(ApiNames.REIHE)
+    public void setReihe(Integer reihe) {
+        this.reihe = reihe;
     }
 
     @Override
@@ -157,14 +157,14 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
      @Transient
      @JsonIgnore
      public String getLinkId() {
-         return String.format(ApiPaths.DECODER_ADRESS_LINK, getParentId(), getOffset());
+         return String.format(ApiPaths.DECODER_ADRESS_LINK, getParentId(), getReihe());
      }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
                 .append(getDecoder())
-                .append(getOffset())
+                .append(getReihe())
                 .hashCode();
     }
 
@@ -182,7 +182,7 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
 
         return new EqualsBuilder()
                 .append(getDecoder(), other.getDecoder())
-                .append(getOffset(), other.getOffset())
+                .append(getReihe(), other.getReihe())
                 .isEquals();
     }
 
@@ -190,8 +190,8 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
     public String toString() {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
-                .append(ApiNames.DECODER, getDecoder().getId())
-                .append(ApiNames.OFFSET, getOffset())
+                .append(ApiNames.DECODER, getDecoder())
+                .append(ApiNames.REIHE, getReihe())
                 .append(ApiNames.ADRESS_TYP, getAdressTyp())
                 .append(ApiNames.ADRESS, getAdress())
                 .toString();

@@ -25,8 +25,6 @@ public interface ApiPaths {
 
     public static final String KATEGORIE_PARAM_NAME = ApiNames.KATEGORIE;
 
-    public static final String OFFSET_PARAM_NAME = ApiNames.OFFSET;
-
     public static final String POSITION_PARAM_NAME = ApiNames.POSITION;
 
     public static final String PRODUKT_ID_PARAM_NAME = ApiNames.PRODUKT_ID;
@@ -65,7 +63,9 @@ public interface ApiPaths {
     public static final String DECODER_TYP = API_ROOT + ApiNames.DECODER_TYP;
     
     public static final String EPOCH = API_ROOT + ApiNames.EPOCH;
-    
+
+    public static final String ENUMS = API_ROOT + "enums/";
+
     public static final String GATTUNG = API_ROOT + ApiNames.GATTUNG;
     
     public static final String KATEGORIE = API_ROOT + ApiNames.KATEGORIE;
@@ -127,8 +127,6 @@ public interface ApiPaths {
 
     public static final String KATEGORIE_PART = FIELD_START + KATEGORIE_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;
 
-    public static final String OFFSET_PART = FIELD_START + OFFSET_PARAM_NAME + NUMBER_REGEX + FIELD_END;
-
     public static final String POSITION_PATH = FIELD_START + POSITION_PARAM_NAME + NUMBER_REGEX + FIELD_END;
 
     public static final String PRODUKT_PART = FIELD_START + PRODUKT_ID_PARAM_NAME + NUMBER_REGEX + FIELD_END;
@@ -143,7 +141,7 @@ public interface ApiPaths {
 
     /** Parameterized child paths */
     public static final String DECODER_ADRESS_ROOT = DECODER_PART + "/" + ApiNames.ADRESS;
-    public static final String DECODER_ADRESS_PATH = DECODER_ADRESS_ROOT + OFFSET_PART;
+    public static final String DECODER_ADRESS_PATH = DECODER_ADRESS_ROOT + REIHE_PART;
     public static final String DECODER_ADRESS_LINK = "%s/" + ApiNames.ADRESS + "/%d";  
 
     public static final String DECODER_CV_ROOT = DECODER_PART + "/" + ApiNames.CV;
@@ -165,6 +163,11 @@ public interface ApiPaths {
     public static final String DECODER_TYP_FUNKTION_PATH = DECODER_TYP_FUNKTION_ROOT + REIHE_PART + FUNKTION_PART;  
     public static final String DECODER_TYP_FUNKTION_LINK = "%s/" + ApiNames.FUNKTION + "/%d/%s";
    
+    public static final String ENUMS_ADRESS_TYP_PATH = ApiNames.ADRESS_TYP; 
+    public static final String ENUMS_CONNECTOR_PATH = ApiNames.CONNECTOR; 
+    public static final String ENUMS_KONFIGURATION_PATH = ApiNames.KONFIGURATION; 
+    public static final String ENUMS_STATUS_PATH = ApiNames.STATUS; 
+
     public static final String UNTER_KATEGORIE_PATH = KATEGORIE_PART + UNTER_KATEGORIE_PART;
     public static final String UNTER_KATEGORIE_LINK = "%s/%s";
 

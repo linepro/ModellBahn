@@ -1,5 +1,8 @@
 package com.linepro.modellbahn.rest.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
@@ -8,6 +11,8 @@ import javax.ws.rs.core.UriInfo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.linepro.modellbahn.model.IDescribedEnum;
 
 /**
  * AbstractService.
@@ -35,24 +40,43 @@ public abstract class AbstractService {
         this.logger = LoggerFactory.getILoggerFactory().getLogger(getClass().getName());
    }
 
-    /**
-     * Gets the uri info.
-     *
-     * @return the uri info
-     */
     protected UriInfo getUriInfo() {
         return uriInfo;
     }
 
-    /**
-     * Gets the logger.
-     *
-     * @return the logger
-     */
     protected Logger getLogger() {
         return logger;
     }
 
+    protected List<DescribedEnumWrapper> getEnumList(IDescribedEnum[] values) {
+        List<DescribedEnumWrapper> result = new ArrayList<>(values.length);
+        
+        for (IDescribedEnum value : values) {
+            result.add(new DescribedEnumWrapper(value));
+        }
+        
+        return result;
+    }
+
+    protected void debug(final String message) {
+        getLogger().debug(message);
+    }
+
+    protected void error(final String message) {
+        getLogger().error(message);
+    }
+
+    protected void error(String message, Exception e) {
+        getLogger().error(message, e);
+    }
+
+    protected void info(final String message) {
+        getLogger().info(message);
+    }
+    
+    protected void warn(final String message) {
+        getLogger().warn(message);
+    }
 
     protected void logDelete(String message) {
         info("DELETE : " + message);
@@ -68,22 +92,6 @@ public abstract class AbstractService {
 
     protected void logPut(String message) {
         info("PUT : " + message);
-    }
-
-    protected void debug(final String message) {
-        getLogger().debug(message);
-    }
-
-    protected void error(final String message) {
-        getLogger().error(message);
-    }
-
-    protected void info(final String message) {
-        getLogger().info(message);
-    }
-    
-    protected void warn(final String message) {
-        getLogger().warn(message);
     }
 
     protected ResponseBuilder accepted() {
@@ -114,6 +122,10 @@ public abstract class AbstractService {
         return Response.ok();
     }
 
+    protected ResponseBuilder ok(Object entity) {
+        return Response.ok(entity);
+    }
+
     protected ResponseBuilder serverError(Exception e) {
         error("serverError", e);
 
@@ -123,16 +135,5 @@ public abstract class AbstractService {
 
     protected ResponseBuilder serverError(final String errorCode, final String userMessage) {
         return Response.serverError().entity(new ErrorMessage(errorCode, userMessage));
-    }
-
-    /**
-     * Error.
-     *
-     * @param message the message
-     * @param e the e
-     * @throws Exception the exception
-     */
-    protected void error(String message, Exception e) {
-        getLogger().error(message, e);
     }
 }

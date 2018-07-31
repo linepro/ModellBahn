@@ -142,6 +142,8 @@ public interface IPersister<E extends IItem<?>> extends ISessionManager {
      */
     Class<E> getEntityClass();
 
+    String getEntityName();
+
     /**
      * Populates any lazy collections for the item
      * @throws Exception if there is a DB error

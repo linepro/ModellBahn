@@ -24,9 +24,9 @@ public interface IDecoderAdress extends IItem<DecoderAdressKey> {
      */
     void setDecoder(IDecoder decoder);
 
-    Integer getOffset();
+    Integer getReihe();
 
-    void setOffset(Integer offset);
+    void setReihe(Integer reihe);
     
     /**
      * Gets the typ.

@@ -530,7 +530,7 @@ public class DBPopulator {
             decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 18, "Lange Lokadresse LSB", 0, 255, 208, false));
             decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 20, "Konfiguration beider Motoren nach DCC-Norm", 0, 33, 0, false));
             decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 49, "Decoder-Konfiguration", 0, 195, 0, false));
-            decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 65, "Motorola Programmierung Offset", 0, 255, 0, false));
+            decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 65, "Motorola Programmierung Reihe", 0, 255, 0, false));
             decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 67, "Maximale Geschwindigkeit für Taste 1", 0, 255, 40, false));
             decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 68, "Maximale Geschwindigkeit für Taste 2", 0, 255, 40, false));
             decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 69, "Maximale Geschwindigkeit für Taste 3", 0, 255, 50, false));

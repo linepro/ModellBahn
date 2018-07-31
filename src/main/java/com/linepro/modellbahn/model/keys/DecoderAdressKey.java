@@ -11,32 +11,32 @@ public class DecoderAdressKey extends BaseKey {
 
     protected final IDecoder decoder;
     
-    protected final Integer offset;
+    protected final Integer reihe;
 
-    public DecoderAdressKey(final IDecoder decoder, final Integer offset) {
+    public DecoderAdressKey(final IDecoder decoder, final Integer reihe) {
         this.decoder = decoder;
-        this.offset = offset;
+        this.reihe = reihe;
     }
 
     public IDecoder getDecoder() {
         return decoder;
     }
 
-    public Integer getOffset() {
-        return offset;
+    public Integer getReihe() {
+        return reihe;
     }
 
     @Override
     public void addCriteria(Query query) {
         query.setParameter(DBNames.DECODER, getDecoder());
-        query.setParameter(DBNames.OFFSET, getOffset());
+        query.setParameter(DBNames.REIHE, getReihe());
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append(ApiNames.DECODER, getDecoder())
-                .append(ApiNames.OFFSET, getOffset())
+                .append(ApiNames.REIHE, getReihe())
                 .toString();
     }
 }

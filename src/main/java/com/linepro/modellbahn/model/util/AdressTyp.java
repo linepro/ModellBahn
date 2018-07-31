@@ -1,28 +1,40 @@
 package com.linepro.modellbahn.model.util;
 
+import com.linepro.modellbahn.model.IDescribedEnum;
+
 /**
  * AdressTyp.
  * Enum defining the supported address types.
  * @author   $Author$
  * @version  $Id$
  */
-public enum AdressTyp {
+public enum AdressTyp implements IDescribedEnum {
 
-    /** A DCC address. */
-    DCC,
+    DCC("A DCC address."),
     
-    /** A DCC short address. */
-    DCC_SHORT,
+    DCC_SHORT("A DCC short address."),
     
-    /** A Märklin DELTA (locomotive) address. */
-    DELTA,
+    DELTA("A Märklin DELTA (locomotive) address."),
     
-    /** A Märklin Motorola (locomotive) address (version 1 or 2). */
-    MM,
+    MM("A Märklin Motorola (locomotive) address (version 1 or 2)."),
     
-    /** A Märklin Digital (locomotive) address (fx or mfx). */
-    DIGITAL,
+    DIGITAL("A Märklin Digital (locomotive) address (fx or mfx)."),
     
-    /** A Märklin Motorola accessory address. */
-    WEICHE;
+    WEICHE("A Märklin Motorola accessory address.");
+
+    protected final String description;
+    
+    private AdressTyp(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public String getName() {
+        return this.name();
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
+    }
 }
