@@ -121,19 +121,19 @@ public interface IProdukt extends INamedItem<ProduktKey> {
     void setUnterKategorie(IUnterKategorie unterKategorie);
 
     /**
-     * Gets the sondermodel.
+     * Gets the sondermodell.
      *
-     * @return the sondermodel
+     * @return the sondermodell
      */
-    ISonderModell getSondermodel();
+    ISonderModell getSondermodell();
 
     /**
-     * Sets the sondermodel.
+     * Sets the sondermodell.
      *
-     * @param sondermodel
-     *            the new sondermodel
+     * @param sondermodell
+     *            the new sondermodell
      */
-    void setSondermodel(ISonderModell sondermodel);
+    void setSondermodell(ISonderModell sondermodell);
 
     /**
      * Gets the aufbau.

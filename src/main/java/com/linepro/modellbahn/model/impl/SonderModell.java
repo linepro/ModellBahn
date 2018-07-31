@@ -22,7 +22,7 @@ import com.linepro.modellbahn.model.keys.NameKey;
 @Entity(name = "SonderModel")
 @Table(name = "SonderModel", indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
-@JsonRootName(value = ApiNames.SONDERMODEL)
+@JsonRootName(value = ApiNames.SONDERMODELL)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
 public class SonderModell extends AbstractNamedItem<NameKey> implements ISonderModell {
 

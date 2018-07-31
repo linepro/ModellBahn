@@ -73,7 +73,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
             @JsonProperty(value=ApiNames.ACHSFOLG, required=false) String achsfolgStr,
             @JsonProperty(value=ApiNames.VORBILD, required=false) String vorbildStr,
             @JsonProperty(value=ApiNames.ANMERKUNG, required=false) String anmerkung,
-            @JsonProperty(value=ApiNames.SONDERMODEL, required=false) String sondermodelStr,
+            @JsonProperty(value=ApiNames.SONDERMODELL, required=false) String sondermodellStr,
             @JsonProperty(value=ApiNames.AUFBAU, required=false) String aufbauStr,
             @JsonProperty(value=ApiNames.LICHT, required=false) String lichtStr,
             @JsonProperty(value=ApiNames.KUPPLUNG, required=false) String kupplungStr,
@@ -94,7 +94,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
         IGattung gattung = findGattung(gattungStr);
         IVorbild vorbild = findVorbild(gattungStr);
         IAchsfolg achsfolg = findAchsfolg(achsfolgStr);
-        ISonderModell sondermodel = findSonderModell(sondermodelStr);
+        ISonderModell sondermodell = findSonderModell(sondermodellStr);
         IAufbau aufbau = findAufbau(aufbauStr);
         ILicht licht = findLicht(lichtStr);
         IKupplung kupplung = findKupplung(kupplungStr);
@@ -120,7 +120,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
                 vorbild,
                 achsfolg,
                 anmerkung,
-                sondermodel,
+                sondermodell,
                 aufbau,
                 licht,
                 kupplung,

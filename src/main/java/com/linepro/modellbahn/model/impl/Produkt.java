@@ -95,7 +95,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.MASSSTAB_ID),
         @Index(columnList = DBNames.SPURWEITE_ID),
         @Index(columnList = DBNames.UNTER_KATEGORIE_ID),
-        @Index(columnList = DBNames.SONDERMODEL_ID),
+        @Index(columnList = DBNames.SONDERMODELL_ID),
         @Index(columnList = DBNames.AUFBAU_ID),
         @Index(columnList = DBNames.LICHT_ID),
         @Index(columnList = DBNames.KUPPLUNG_ID),
@@ -107,7 +107,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @JsonRootName(value = ApiNames.PRODUKT)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.UNTER_KATEGORIE, ApiNames.MASSSTAB,
         ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER,
-        ApiNames.BAUZEIT, ApiNames.VORBILD, ApiNames.ACHSFOLG, ApiNames.ANMERKUNG, ApiNames.SONDERMODEL,
+        ApiNames.BAUZEIT, ApiNames.VORBILD, ApiNames.ACHSFOLG, ApiNames.ANMERKUNG, ApiNames.SONDERMODELL,
         ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG, ApiNames.DECODER_TYP,
         ApiNames.MOTOR_TYP, ApiNames.LANGE, ApiNames.ANLEITUNGEN, ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.ABBILDUNG,
         ApiNames.TEILEN, ApiNames.DELETED, ApiNames.LINKS })
@@ -141,7 +141,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     private IAchsfolg achsfolge;
 
     /** The Sondermodel. */
-    private ISonderModell sondermodel;
+    private ISonderModell sondermodell;
 
     /** The aufbau. */
     private IAufbau aufbau;
@@ -211,7 +211,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
         setVorbild(vorbild);
         setAchsfolg(achsfolge);
         setAnmerkung(anmerkung);
-        setSondermodel(sondermodel);
+        setSondermodell(sondermodel);
         setAufbau(aufbau);
         setLicht(licht);
         setKupplung(kupplung);
@@ -446,21 +446,21 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = SonderModell.class)
-    @JoinColumn(name = DBNames.SONDERMODEL_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk8"))
-    @JsonGetter(ApiNames.SONDERMODEL)
+    @JoinColumn(name = DBNames.SONDERMODELL_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "product_fk8"))
+    @JsonGetter(ApiNames.SONDERMODELL)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = SonderModellResolver.class)
     @JsonSerialize(as = SonderModell.class)
-    public ISonderModell getSondermodel() {
-        return sondermodel;
+    public ISonderModell getSondermodell() {
+        return sondermodell;
     }
 
     @Override
-    @JsonSetter(ApiNames.SONDERMODEL)
+    @JsonSetter(ApiNames.SONDERMODELL)
     @JsonDeserialize(as = SonderModell.class)
-    public void setSondermodel(ISonderModell sondermodel) {
-        this.sondermodel = sondermodel;
+    public void setSondermodell(ISonderModell sondermodell) {
+        this.sondermodell = sondermodell;
     }
 
     @Override
@@ -675,7 +675,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
                 .append(ApiNames.ACHSFOLG, getAchsfolg())
                 .append(ApiNames.VORBILD, getVorbild())
                 .append(ApiNames.ANMERKUNG, getAnmerkung())
-                .append(ApiNames.SONDERMODEL, getSondermodel())
+                .append(ApiNames.SONDERMODELL, getSondermodell())
                 .append(ApiNames.AUFBAU, getAufbau())
                 .append(ApiNames.LICHT, getLicht())
                 .append(ApiNames.KUPPLUNG, getKupplung())

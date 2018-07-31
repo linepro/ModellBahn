@@ -15,15 +15,16 @@ import com.linepro.modellbahn.rest.util.AbstractService;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.util.StaticContentFinder;
 
-@Path("/")
+@Path(ApiPaths.WEB_ROOT)
 public class HttpService extends AbstractService {
 
     protected static final String WEB_ROOT = StringUtils.strip(ApiPaths.WEB_ROOT, "/");
+
     public HttpService() {
     }
 
     @GET
-    @Path("{path: .*}")
+    @Path(ApiPaths.WEB_PART)
     @Produces({MediaType.WILDCARD})
     public Response getFile() {
         URI requested = uriInfo.getBaseUri().relativize(uriInfo.getRequestUri());
@@ -31,7 +32,7 @@ public class HttpService extends AbstractService {
         // We really really don't want leading or trailing slashes
         String stripedPath = StringUtils.strip(StringUtils.removeStart(StringUtils.strip(requested.getPath(), "/"), WEB_ROOT), "/");
 
-        String path = StringUtils.isBlank(stripedPath) ? "index.html" :stripedPath;
+        String path = StringUtils.isBlank(stripedPath) ? "index.html" : stripedPath;
 
         info("GET " + path);
 

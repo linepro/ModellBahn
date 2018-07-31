@@ -1851,7 +1851,7 @@ public class DBPopulator {
         save(persister, new SonderModell(null, "Einmalige Serien", "Einmalige Serien", false));
         save(persister, new SonderModell(null, "Museumswagen", "Museumswagen", false));
         save(persister, new SonderModell(null, "Weihnachtswagen", "Weihnachtswagen", false));
-        save(persister, new SonderModell(null, ApiNames.SONDERMODEL, ApiNames.SONDERMODEL, false));
+        save(persister, new SonderModell(null, ApiNames.SONDERMODELL, ApiNames.SONDERMODELL, false));
     }
 
     protected void populateSpurweite() {

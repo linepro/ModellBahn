@@ -29,7 +29,7 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @author $Author:$
  * @version $Id:$
  */
-@Path(ApiPaths.SONDERMODEL)
+@Path(ApiPaths.SONDERMODELL)
 public class SonderModellService extends AbstractItemService<NameKey, SonderModell> {
 
     public SonderModellService() {

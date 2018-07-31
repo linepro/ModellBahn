@@ -41,7 +41,9 @@ public interface ApiPaths {
 
     public static final String API_ROOT = "/api/";
 
-    public static final String WEB_ROOT = "/web";
+    public static final String WEB_ROOT = "/";
+
+    public static final String WEB_PART = "{path: .*}";
 
     public static final String APPLICATION_WADL = "application.wadl";
     
@@ -78,7 +80,7 @@ public interface ApiPaths {
 
     public static final String PROTOKOLL = API_ROOT + ApiNames.PROTOKOLL;
     
-    public static final String SONDERMODEL = API_ROOT + ApiNames.SONDERMODEL;
+    public static final String SONDERMODELL = API_ROOT + ApiNames.SONDERMODELL;
     
     public static final String SPURWEITE = API_ROOT + ApiNames.SPURWEITE;
     

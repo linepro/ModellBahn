@@ -83,7 +83,7 @@ public interface ApiNames {
     public static final String SITZPLATZEKL4 = "sitzplatzeKL4";
     public static final String SITZPLATZETZKL1 = "sitzplatzeTZKL1";
     public static final String SITZPLATZETZKL2 = "sitzplatzeTzKL2";
-    public static final String SONDERMODEL = "sondermodel";
+    public static final String SONDERMODELL = "sondermodell";
     public static final String SOUND = "sound";
     public static final String SPURWEITE = "spurweite";
     public static final String STATUS = "status";
