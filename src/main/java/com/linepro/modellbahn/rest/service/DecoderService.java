@@ -29,6 +29,8 @@ import com.linepro.modellbahn.model.impl.DecoderTyp;
 import com.linepro.modellbahn.model.impl.Protokoll;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AdressTyp;
+import com.linepro.modellbahn.persistence.IIdGenerator;
+import com.linepro.modellbahn.persistence.impl.IdGenerator;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -141,7 +143,9 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
                 return getResponse(badRequest(null, "DecoderTyp " + herstellerStr + "/" + bestellNr + " does not exist"));
             }
 
-            Decoder decoder = new Decoder(null, decoderTyp, decoderTyp.getProtokoll(), getNextDecoderId(), decoderTyp.getBezeichnung(), decoderTyp.getFahrstufe(), false);
+            IIdGenerator idGenerator = new IdGenerator(getPersister());
+            
+            Decoder decoder = new Decoder(null, decoderTyp, decoderTyp.getProtokoll(), idGenerator.getNextId(), decoderTyp.getBezeichnung(), decoderTyp.getFahrstufe(), false);
             
             decoder = getPersister().add(decoder);
 
@@ -231,25 +235,6 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @JsonView(Views.Public.class)
     public Response updateFunktion(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion, @QueryParam(ApiNames.DESCRIPTION) String descirption) {
         return notFound().build();
-    }
-
-    public String getNextDecoderId() {
-        Long decoderId = 1L;
-        
-        getPersister().begin();
-        
-        StringBuffer queryString = new StringBuffer("SELECT COUNT(e) FROM ")
-                .append(getPersister().getEntityName());
-
-        Long decoders = (Long) getPersister().getEntityManager().createQuery(queryString.toString()).getSingleResult();
-
-        if (decoders != null) {
-            decoderId = decoders + 1L;
-        }
-
-        getPersister().commit();
-        
-        return decoderId.toString();
     }
 
     protected IDecoder findDecoder(String decoderId, boolean eager) throws Exception {

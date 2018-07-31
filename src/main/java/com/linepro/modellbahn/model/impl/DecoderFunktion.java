@@ -218,8 +218,8 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
 		return new ToStringBuilder(this)
                 .appendSuper(super.toString())
                 .append(ApiNames.DECODER, getDecoder())
-				.append(ApiNames.ID, getId())
-				.append("wert", getBezeichnung())
+				.append(ApiNames.FUNKTION, getFunktion())
+				.append(ApiNames.DESCRIPTION, getBezeichnung())
 				.toString();
 	}
 }

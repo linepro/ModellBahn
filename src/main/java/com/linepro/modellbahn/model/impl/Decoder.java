@@ -35,6 +35,7 @@ import com.linepro.modellbahn.model.IProtokoll;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.resolver.ProtokollResolver;
 import com.linepro.modellbahn.rest.json.serialization.DecoderAdressSerializer;
@@ -109,7 +110,10 @@ public class Decoder extends AbstractNamedItem<NameKey> implements IDecoder {
     }
 
     @Override
+    @BusinessKey
+    @Column(name=DBNames.NAME, unique=true, length=50, nullable = true)
     @JsonGetter(ApiNames.DECODER_ID)
+    @JsonView(Views.DropDown.class)
     public String getName() {
         return super.getName();
     }
