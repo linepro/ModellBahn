@@ -4,6 +4,8 @@ import javax.persistence.Query;
 
 import com.linepro.modellbahn.model.IKategorie;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 public class UnterKategorieKey extends BaseKey {
 
@@ -28,5 +30,13 @@ public class UnterKategorieKey extends BaseKey {
     public void addCriteria(Query query) {
         query.setParameter(DBNames.KATEGORIE, getKategorie());
         query.setParameter(DBNames.NAME, getUnterKategorie());
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append(ApiNames.KATEGORIE, getKategorie())
+                .append(ApiNames.NAME, getUnterKategorie())
+                .toString();
     }
 }

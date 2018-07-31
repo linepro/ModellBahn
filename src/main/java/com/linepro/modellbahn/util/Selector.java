@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
@@ -94,7 +94,7 @@ public class Selector {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(this)
                 .append(ApiNames.NAME, getName())
                 .append("getter", getGetter().getName())
                 .append("setter", getSetter().getName())

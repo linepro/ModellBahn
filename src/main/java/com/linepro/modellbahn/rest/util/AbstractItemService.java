@@ -23,10 +23,13 @@ import com.linepro.modellbahn.model.IAufbau;
 import com.linepro.modellbahn.model.IBahnverwaltung;
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderTyp;
+import com.linepro.modellbahn.model.IDecoderTypCV;
+import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.IEpoch;
 import com.linepro.modellbahn.model.IGattung;
 import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.model.IItem;
+import com.linepro.modellbahn.model.IKategorie;
 import com.linepro.modellbahn.model.IKupplung;
 import com.linepro.modellbahn.model.ILicht;
 import com.linepro.modellbahn.model.IMassstab;
@@ -40,8 +43,39 @@ import com.linepro.modellbahn.model.IVorbild;
 import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.IZug;
 import com.linepro.modellbahn.model.IZugTyp;
+import com.linepro.modellbahn.model.impl.Achsfolg;
+import com.linepro.modellbahn.model.impl.Antrieb;
+import com.linepro.modellbahn.model.impl.Artikel;
+import com.linepro.modellbahn.model.impl.Aufbau;
+import com.linepro.modellbahn.model.impl.Bahnverwaltung;
+import com.linepro.modellbahn.model.impl.Decoder;
+import com.linepro.modellbahn.model.impl.DecoderTyp;
+import com.linepro.modellbahn.model.impl.DecoderTypCV;
+import com.linepro.modellbahn.model.impl.DecoderTypFunktion;
+import com.linepro.modellbahn.model.impl.Epoch;
+import com.linepro.modellbahn.model.impl.Gattung;
+import com.linepro.modellbahn.model.impl.Hersteller;
+import com.linepro.modellbahn.model.impl.Kategorie;
+import com.linepro.modellbahn.model.impl.Kupplung;
+import com.linepro.modellbahn.model.impl.Licht;
+import com.linepro.modellbahn.model.impl.Massstab;
+import com.linepro.modellbahn.model.impl.MotorTyp;
+import com.linepro.modellbahn.model.impl.Produkt;
+import com.linepro.modellbahn.model.impl.SonderModell;
+import com.linepro.modellbahn.model.impl.Spurweite;
+import com.linepro.modellbahn.model.impl.Steuerung;
+import com.linepro.modellbahn.model.impl.UnterKategorie;
+import com.linepro.modellbahn.model.impl.Vorbild;
+import com.linepro.modellbahn.model.impl.Wahrung;
+import com.linepro.modellbahn.model.impl.Zug;
+import com.linepro.modellbahn.model.impl.ZugTyp;
+import com.linepro.modellbahn.model.keys.DecoderTypCVKey;
+import com.linepro.modellbahn.model.keys.DecoderTypFunktionKey;
+import com.linepro.modellbahn.model.keys.DecoderTypKey;
 import com.linepro.modellbahn.model.keys.IdKey;
 import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.model.keys.ProduktKey;
+import com.linepro.modellbahn.model.keys.UnterKategorieKey;
 import com.linepro.modellbahn.persistence.IKey;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
@@ -103,6 +137,8 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      */
     public Response get(K key) {
         try {
+            logGet(getEntityClassName() + ": " + key);
+
             E entity = getPersister().findByKey(key, false);
 
             if (entity == null) {
@@ -123,7 +159,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      */
     public Response add(E entity) {
         try {
-            info("POST " + entity);
+            logPost(getEntityClassName() + ": " + entity);
 
             E result = getPersister().add(entity);
 
@@ -152,7 +188,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      */
     public Response update(K id, E entity) {
         try {
-            info("PUT " + id + ": " + entity);
+            logPut(id + ": " + entity);
 
             E result = getPersister().update(id, entity);
 
@@ -184,7 +220,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      */
     public Response delete(K id) {
         try {
-            info("DELETE " + id);
+            logDelete(getEntityClassName() + ": " + id);
 
             getPersister().delete(id);
 
@@ -204,7 +240,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         try {
             E template = getTemplate(info.getQueryParameters());
 
-            info("GET " + template);
+            logGet(getEntityClassName() + ": " + template);
 
             @SuppressWarnings("unchecked")
             List<IItem<?>> entities = (List<IItem<?>>) getPersister().findAll(template);
@@ -261,6 +297,10 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      */
     protected Class<E> getEntityClass() {
         return entityClass;
+    }
+
+    protected String getEntityClassName() {
+        return entityClass.getSimpleName();
     }
 
     /**
@@ -346,27 +386,120 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return wadlLink;
     }
 
-    protected IAntrieb findAntrieb(String name) throws Exception { return null; }
-    protected IAchsfolg findAchsfolg(String name) throws Exception { return null; }
-    protected IArtikel findArtikel(String name) throws Exception { return null; }
-    protected IAufbau findAufbau(String name) throws Exception { return null; }
-    protected IBahnverwaltung findBahnverwaltung(String name) throws Exception { return null; }
-    protected IDecoder findDecoder(String decoderId) { return null; }
-    protected IDecoderTyp findDecoderTyp(String hersteller, String bestellNr) { return null; }
-    protected IEpoch findEpoch(String name) throws Exception { return null; }
-    protected IGattung findGattung(String name) throws Exception { return null; }
-    protected IHersteller findHersteller(String name) throws Exception { return null; }
-    protected IKupplung findKupplung(String name) throws Exception { return null; }
-    protected ILicht findLicht(String name) throws Exception { return null; }
-    protected IMotorTyp findMotorTyp(String name) throws Exception { return null; }
-    protected IMassstab findMassstab(String name) throws Exception { return null; }
-    protected IProdukt findProdukt(String herstellerStr, String bestellNr) { return null; }
-    protected ISonderModell findSonderModell(String name) throws Exception { return null; }
-    protected ISpurweite findSpurweite(String name) throws Exception { return null; }
-    protected ISteuerung findSteuerung(String name) throws Exception { return null; }
-    protected IUnterKategorie findUnterKategorie(String kategorie, String unterKategorie) throws Exception { return null; }
-    protected IVorbild findVorbild(String name) throws Exception { return null; }
-    protected IWahrung findWahrung(String name) throws Exception { return null; }
-    protected IZug findZug(String name) throws Exception { return null; }
-    protected IZugTyp findZugTyp(String name) throws Exception { return null; }
+    /** Lookups that are used by more than one service */
+    protected IAntrieb findAntrieb(String name, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(Antrieb.class).findByKey(name, eager); 
+    }
+
+    protected IAchsfolg findAchsfolg(String name, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(Achsfolg.class).findByKey(name, eager); 
+    }
+
+    protected IArtikel findArtikel(String name, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(Artikel.class).findByKey(name, eager); 
+    }
+
+    protected IAufbau findAufbau(String name, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(Aufbau.class).findByKey(name, eager); 
+    }
+
+    protected IBahnverwaltung findBahnverwaltung(String name, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(Bahnverwaltung.class).findByKey(name, eager); 
+    }
+
+    protected IDecoder findDecoder(String decoderId, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(Decoder.class).findByKey(decoderId, eager); 
+    }
+
+    protected IDecoderTyp findDecoderTyp(String herstellerStr, String bestellNr, boolean eager) throws Exception { 
+        return findDecoderTyp(findHersteller(herstellerStr, eager), bestellNr, eager); 
+    }
+
+    protected IDecoderTyp findDecoderTyp(IHersteller hersteller, String bestellNr, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(DecoderTyp.class).findByKey(new DecoderTypKey(hersteller, bestellNr), eager); 
+    }
+
+    protected IDecoderTypCV findDecoderTypCV(IDecoderTyp decoderTyp, Integer cv, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(DecoderTypCV.class).findByKey(new DecoderTypCVKey(decoderTyp, cv), eager); 
+    }
+
+    protected IDecoderTypFunktion findDecoderTypFunktion(IDecoderTyp decoderTyp, Integer reihe, String funktion, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(DecoderTypFunktion.class).findByKey(new DecoderTypFunktionKey(decoderTyp, reihe, funktion), eager); 
+    }
+
+    protected IEpoch findEpoch(String name, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(Epoch.class).findByKey(name, eager); 
+    }
+
+    protected IGattung findGattung(String name, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(Gattung.class).findByKey(name, eager); 
+    }
+
+    protected IHersteller findHersteller(String name, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(Hersteller.class).findByKey(name, eager); 
+    }
+
+    protected IKategorie findKategorie(String name, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(Kategorie.class).findByKey(name, eager); 
+    }
+
+    protected IKupplung findKupplung(String name, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(Kupplung.class).findByKey(name, eager); 
+    }
+
+    protected ILicht findLicht(String name, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(Licht.class).findByKey(name, eager); 
+    }
+
+    protected IMotorTyp findMotorTyp(String name, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(MotorTyp.class).findByKey(name, eager); 
+    }
+
+    protected IMassstab findMassstab(String name, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(Massstab.class).findByKey(name, eager); 
+    }
+
+    protected IProdukt findProdukt(String herstellerStr, String bestellNr, boolean eager) throws Exception {
+        return findProdukt(findHersteller(herstellerStr, false), bestellNr, eager); 
+    }
+    
+    protected IProdukt findProdukt(IHersteller hersteller, String bestellNr, boolean eager) throws Exception {
+        return StaticPersisterFactory.get().createPersister(Produkt.class).findByKey(new ProduktKey(hersteller, bestellNr), eager); 
+    }
+
+    protected ISonderModell findSonderModell(String name, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(SonderModell.class).findByKey(name, eager); 
+    }
+
+    protected ISpurweite findSpurweite(String name, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(Spurweite.class).findByKey(name, eager); 
+    }
+
+    protected ISteuerung findSteuerung(String name, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(Steuerung.class).findByKey(name, eager); 
+    }
+
+    protected IUnterKategorie findUnterKategorie(String kategorie, String unterKategorie, boolean eager) throws Exception { 
+        return findUnterKategorie(findKategorie(kategorie, false), unterKategorie, eager); 
+    }
+
+    protected IUnterKategorie findUnterKategorie(IKategorie kategorie, String unterKategorie, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(UnterKategorie.class).findByKey(new UnterKategorieKey(kategorie, unterKategorie), eager); 
+    }
+
+    protected IVorbild findVorbild(String name, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(Vorbild.class).findByKey(name, eager); 
+    }
+
+    protected IWahrung findWahrung(String name, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(Wahrung.class).findByKey(name, eager); 
+    }
+
+    protected IZug findZug(String name, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(Zug.class).findByKey(name, eager); 
+    }
+
+    protected IZugTyp findZugTyp(String name, boolean eager) throws Exception { 
+        return StaticPersisterFactory.get().createPersister(ZugTyp.class).findByKey(name, eager); 
+    }
 }

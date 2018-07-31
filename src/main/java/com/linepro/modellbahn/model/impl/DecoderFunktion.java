@@ -13,7 +13,6 @@ import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -81,7 +80,9 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
 	 * @param funktion the funktion
 	 * @param bezeichnung the bezeichnung
 	 */
-	public DecoderFunktion(IDecoder decoder, IDecoderTypFunktion funktion, String bezeichnung) {
+	public DecoderFunktion(Long id, IDecoder decoder, IDecoderTypFunktion funktion, String bezeichnung, Boolean deleted) {
+	    super(id, deleted);
+
         setDecoder(decoder);
         setFunktion(funktion);		
         setBezeichnung(bezeichnung);
@@ -214,7 +215,8 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+		return new ToStringBuilder(this)
+                .appendSuper(super.toString())
                 .append(ApiNames.DECODER, getDecoder())
 				.append(ApiNames.ID, getId())
 				.append("wert", getBezeichnung())

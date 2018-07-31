@@ -93,7 +93,7 @@ public class VorbildService extends AbstractItemService<NameKey, Vorbild> {
             @JsonProperty(value=ApiNames.DELETED, required=false) Boolean deleted) throws Exception {
         Vorbild entity = new Vorbild(sitzPlatzeTzKL2, null, null, anmerkung, null, klasse, anmerkung, null, null, null, null, null, sitzPlatzeTzKL2, null, null, null, null, null, klasse, null, null, null, null, null, null, null, null, klasse, anmerkung, null, null, null, klasse, sitzPlatzeTzKL2, sitzPlatzeTzKL2, sitzPlatzeTzKL2, sitzPlatzeTzKL2, anmerkung, deleted, sitzPlatzeTzKL2, sitzPlatzeTzKL2, sitzPlatzeTzKL2, sitzPlatzeTzKL2, anmerkung, deleted, anmerkung);
 
-        info("create " + entity);
+        debug("created: " + entity);
 
         return entity;
     }

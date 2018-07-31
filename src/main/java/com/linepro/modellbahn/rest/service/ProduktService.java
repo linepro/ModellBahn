@@ -86,20 +86,20 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
             @JsonProperty(value=ApiNames.ABBILDUNG, required=false) String abbildungStr,
             @JsonProperty(value=ApiNames.DELETED, required=false) Boolean deleted) throws Exception {
         // Just see if Jackson can work out the embedded objects...
-        IHersteller hersteller = findHersteller(herstellerStr);
-        IMassstab massstab = findMassstab(massstabStr);
-        ISpurweite spurweite = findSpurweite(spurweiteStr);
-        IEpoch epoch = findEpoch(epochStr);
-        IBahnverwaltung bahnverwaltung = findBahnverwaltung(bahnverwaltungStr);
-        IGattung gattung = findGattung(gattungStr);
-        IVorbild vorbild = findVorbild(gattungStr);
-        IAchsfolg achsfolg = findAchsfolg(achsfolgStr);
-        ISonderModell sondermodell = findSonderModell(sondermodellStr);
-        IAufbau aufbau = findAufbau(aufbauStr);
-        ILicht licht = findLicht(lichtStr);
-        IKupplung kupplung = findKupplung(kupplungStr);
-        ISteuerung steuerung = findSteuerung(steuerungStr);
-        IMotorTyp motorTyp = findMotorTyp(motorTypStr);
+        IHersteller hersteller = findHersteller(herstellerStr, false);
+        IMassstab massstab = findMassstab(massstabStr, false);
+        ISpurweite spurweite = findSpurweite(spurweiteStr, false);
+        IEpoch epoch = findEpoch(epochStr, false);
+        IBahnverwaltung bahnverwaltung = findBahnverwaltung(bahnverwaltungStr, false);
+        IGattung gattung = findGattung(gattungStr, false);
+        IVorbild vorbild = findVorbild(gattungStr, false);
+        IAchsfolg achsfolg = findAchsfolg(achsfolgStr, false);
+        ISonderModell sondermodell = findSonderModell(sondermodellStr, false);
+        IAufbau aufbau = findAufbau(aufbauStr, false);
+        ILicht licht = findLicht(lichtStr, false);
+        IKupplung kupplung = findKupplung(kupplungStr, false);
+        ISteuerung steuerung = findSteuerung(steuerungStr, false);
+        IMotorTyp motorTyp = findMotorTyp(motorTypStr, false);
 
         File anleitungen = null;
         File abbildung = null;
@@ -133,7 +133,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
                 abbildung,
                 deleted);
 
-        info("create " + entity);
+        debug("created: " + entity);
 
         return entity;
     }
@@ -146,7 +146,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
             @JsonProperty(value=ApiNames.DELETED, required=false) Boolean deleted) {
         ProduktTeil entity = new ProduktTeil(id, produkt, teil, anzahl, deleted);
 
-        info("create " + entity);
+        debug("created: " + entity);
 
         return entity;
     }

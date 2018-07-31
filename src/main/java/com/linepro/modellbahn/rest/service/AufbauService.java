@@ -48,7 +48,7 @@ public class AufbauService extends AbstractItemService<NameKey, Aufbau> {
         entity.setBezeichnung(bezeichnung);
         entity.setDeleted(deleted);
 
-        info("create " + entity);
+        debug("created: " + entity);
 
         return entity;
     }

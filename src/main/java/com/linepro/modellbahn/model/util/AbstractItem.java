@@ -22,7 +22,6 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
@@ -212,7 +211,7 @@ public abstract class AbstractItem<K extends IKey> implements Serializable, IIte
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+		return new ToStringBuilder(this)
 		        .append(ApiNames.ID, getId())
 				.append(ApiNames.DELETED, getDeleted())
 				.toString();

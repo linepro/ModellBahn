@@ -34,7 +34,7 @@ public class HttpService extends AbstractService {
 
         String path = StringUtils.isBlank(stripedPath) ? "index.html" : stripedPath;
 
-        info("GET " + path);
+        logGet(path);
 
         File file = StaticContentFinder.get().findFile(path);
 

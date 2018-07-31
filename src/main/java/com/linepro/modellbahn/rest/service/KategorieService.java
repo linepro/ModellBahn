@@ -58,7 +58,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
         entity.setBezeichnung(bezeichnung);
         entity.setDeleted(deleted);
 
-        info("create " + entity);
+        debug("created: " + entity);
 
         return entity;
     }
@@ -148,7 +148,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     public Response add(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, UnterKategorie unterKategorie)
             throws Exception {
         try {
-            info("POST " + kategorieStr + "/" + unterKategorie);
+            logPost(kategorieStr + "/" + unterKategorie);
 
             Kategorie kategorie = findKategorie(kategorieStr, true);
 
@@ -173,7 +173,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
             @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr, UnterKategorie newUnterKategorie)
             throws Exception {
         try {
-            info("PUT " + kategorieStr + "/" + unterKategorieStr + ": " + newUnterKategorie);
+            logPut(kategorieStr + "/" + unterKategorieStr + ": " + newUnterKategorie);
 
             Kategorie kategorie = findKategorie(kategorieStr, false);
 

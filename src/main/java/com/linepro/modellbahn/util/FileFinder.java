@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +41,7 @@ public class FileFinder implements IFileFinder {
             File file = Paths.get(contentPath).resolve(path).toFile();
             
             if (file.exists() && file.isFile() && file.canRead()) {
-                logger.info("Found " + file);
+                logger.info("Found: " + file);
     
                 return file;
             }
@@ -64,7 +63,7 @@ public class FileFinder implements IFileFinder {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(this)
                 .append("contentPaths", getAbsolutePaths())
                 .toString();
     }

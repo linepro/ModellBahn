@@ -48,7 +48,7 @@ public class KupplungService extends AbstractItemService<NameKey, Kupplung> {
         entity.setBezeichnung(bezeichnung);
         entity.setDeleted(deleted);
 
-        info("create " + entity);
+        debug("created: " + entity);
 
         return entity;
     }

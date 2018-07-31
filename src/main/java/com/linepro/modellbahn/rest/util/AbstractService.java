@@ -53,11 +53,31 @@ public abstract class AbstractService {
         return logger;
     }
 
-    /**
-     * Info.
-     *
-     * @param message the message
-     */
+
+    protected void logDelete(String message) {
+        info("DELETE : " + message);
+    }
+
+    protected void logGet(String message) {
+        info("GET : " + message);
+    }
+
+    protected void logPost(String message) {
+        info("POST : " + message);
+    }
+
+    protected void logPut(String message) {
+        info("PUT : " + message);
+    }
+
+    protected void debug(final String message) {
+        getLogger().debug(message);
+    }
+
+    protected void error(final String message) {
+        getLogger().error(message);
+    }
+
     protected void info(final String message) {
         getLogger().info(message);
     }

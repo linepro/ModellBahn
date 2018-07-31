@@ -48,7 +48,7 @@ public class EpochService extends AbstractItemService<NameKey, Epoch> {
         entity.setBezeichnung(bezeichnung);
         entity.setDeleted(deleted);
 
-        info("create " + entity);
+        debug("created: " + entity);
 
         return entity;
     }

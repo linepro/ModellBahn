@@ -46,11 +46,11 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
             @JsonProperty(value = ApiNames.NAME, required = false) String name,
             @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
-        IZugTyp zugTyp = findZugTyp(zugTypStr);
+        IZugTyp zugTyp = findZugTyp(zugTypStr, false);
 
         Zug entity = new Zug(id, name, bezeichnung, zugTyp, deleted);
 
-        info("create " + entity);
+        debug("created: " + entity);
 
         return entity;
     }
@@ -61,12 +61,12 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
             @JsonProperty(value = ApiNames.POSITION, required = false) Integer position,
             @JsonProperty(value = ApiNames.ARTIKEL, required = false) String artikelStr,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
-        IZug zug = findZug(zugStr);
-        IArtikel artikel = findArtikel(artikelStr);
+        IZug zug = findZug(zugStr, true);
+        IArtikel artikel = findArtikel(artikelStr, false);
         
         ZugConsist entity = new ZugConsist(id,  zug, position, artikel, deleted);
 
-        info("create " + entity);
+        debug("created: " + entity);
 
         return entity;
     }

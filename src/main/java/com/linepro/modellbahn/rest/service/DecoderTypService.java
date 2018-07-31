@@ -64,23 +64,6 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
         funktionPersister = StaticPersisterFactory.get().createPersister(DecoderTypFunktion.class);
     }
 
-    /**
-     * Creates the.
-     *
-     * @param id
-     *            the id
-     * @param name
-     *            the name
-     * @param bezeichnung
-     *            the bezeichnung
-     * @param deleted
-     *            the deleted
-     * @param adressen
-     * @param sound
-     * @return the e
-     * @throws Exception
-     *             the exception
-     */
     @JsonCreator
     public DecoderTyp create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
             @JsonProperty(value = ApiNames.HERSTELLER, required = false) String herstellerStr,
@@ -98,7 +81,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
         DecoderTyp entity = new DecoderTyp(id, hersteller, protokoll, name, bezeichnung, adressen, sound, konfiguration,
                 deleted);
 
-        info("create " + entity);
+        debug("created: " + entity);
 
         return entity;
     }
@@ -117,7 +100,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
 
         DecoderTypCV entity = new DecoderTypCV(id, decoderTyp, cv, bezeichnung, cv, min, max, deleted);
 
-        info("create " + entity);
+        debug("created: " + entity);
 
         return entity;
     }
@@ -136,7 +119,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
         DecoderTypFunktion entity = new DecoderTypFunktion(id, decoderTyp, reihe, funktion, bezeichnung, programmable,
                 deleted);
 
-        info("create " + entity);
+        debug("created: " + entity);
 
         return entity;
     }
@@ -228,7 +211,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     public Response add(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, DecoderTypCV decoderTypCV)
             throws Exception {
         try {
-            info("POST " + herstellerStr + "/" + bestellNr + "/" + decoderTypCV);
+            logPost(herstellerStr + "/" + bestellNr + "/" + decoderTypCV);
 
             DecoderTyp decoderTyp = (DecoderTyp) findDecoderTyp(herstellerStr, bestellNr, false);
 
@@ -253,7 +236,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
             @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv, DecoderTypCV newDecoderTypCV)
             throws Exception {
         try {
-            info("PUT " + herstellerStr + "/" + bestellNr + "/" + cv + ": " + newDecoderTypCV);
+            logPut(herstellerStr + "/" + bestellNr + "/" + cv + ": " + newDecoderTypCV);
 
             DecoderTyp decoderTyp = (DecoderTyp) findDecoderTyp(herstellerStr, bestellNr, false);
 
@@ -338,7 +321,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     public Response add(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, DecoderTypFunktion decoderTypFunktion)
             throws Exception {
         try {
-            info("POST " + herstellerStr + "/" + bestellNr + "/" + decoderTypFunktion);
+            logPost(herstellerStr + "/" + bestellNr + "/" + decoderTypFunktion);
 
             DecoderTyp decoderTyp = (DecoderTyp) findDecoderTyp(herstellerStr, bestellNr, false);
 
@@ -363,7 +346,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
             @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion, DecoderTypFunktion newDecoderTypFunktion)
             throws Exception {
         try {
-            info("PUT " + herstellerStr + "/" + bestellNr + "/" + reihe + "/" + funktion + ": " + newDecoderTypFunktion);
+            logPost(herstellerStr + "/" + bestellNr + "/" + reihe + "/" + funktion + ": " + newDecoderTypFunktion);
 
             DecoderTyp decoderTyp = (DecoderTyp) findDecoderTyp(herstellerStr, bestellNr, false);
 

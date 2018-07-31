@@ -132,7 +132,10 @@ public class Hersteller extends AbstractNamedItem<NameKey> implements IHerstelle
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).appendSuper(super.toString()).append(ApiNames.URL, getUrl())
-                .append(ApiNames.TELEFON, getTelefon()).toString();
+        return new ToStringBuilder(this)
+                .appendSuper(super.toString())
+                .append(ApiNames.URL, getUrl())
+                .append(ApiNames.TELEFON, getTelefon())
+                .toString();
     }
 }

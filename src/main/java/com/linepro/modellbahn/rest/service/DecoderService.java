@@ -8,6 +8,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -56,52 +57,59 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
         Decoder entity = new Decoder(id, decoderTyp, protokoll, decoderId, bezeichnung, fahrstufe, deleted);
 
-        info("create " + entity);
+        debug("created: " + entity);
 
         return entity;
     }
 
     @JsonCreator
-    public DecoderAdress createAdress(@JsonProperty(value = ApiNames.DECODER_ID, required = false) String decoderId,
+    public DecoderAdress createAdress(@JsonProperty(value = ApiNames.ID, required = false) Long id,
+            @JsonProperty(value = ApiNames.DECODER_ID, required = false) String decoderId,
+            @JsonProperty(value = ApiNames.OFFSET, required = false) Integer offset,
             @JsonProperty(value = ApiNames.ADRESS_TYP, required = false) String adressTypStr,
-            @JsonProperty(value = ApiNames.ADRESS, required = false) Integer adress) throws Exception {
+            @JsonProperty(value = ApiNames.ADRESS, required = false) Integer adress,
+            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
         IDecoder decoder = findDecoder(decoderId, false);
         AdressTyp adressTyp = AdressTyp.valueOf(adressTypStr);
 
-        DecoderAdress entity = new DecoderAdress(decoder, adressTyp, adress);
+        DecoderAdress entity = new DecoderAdress(id, decoder, offset, adressTyp, adress, deleted);
 
-        info("create " + entity);
+        debug("created: " + entity);
 
         return entity;
     }
 
     @JsonCreator
-    public DecoderCV createCV(@JsonProperty(value = ApiNames.DECODER_ID, required = false) String decoderId,
+    public DecoderCV createCV(@JsonProperty(value = ApiNames.ID, required = false) Long id,
+            @JsonProperty(value = ApiNames.DECODER_ID, required = false) String decoderId,
             @JsonProperty(value = ApiNames.CV, required = false) Integer cvValue,
-            @JsonProperty(value = ApiNames.WERT, required = false) Integer wert) throws Exception {
+            @JsonProperty(value = ApiNames.WERT, required = false) Integer wert,
+            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
         IDecoder decoder = findDecoder(decoderId, false);
 
         IDecoderTypCV decoderTypCV = findDecoderTypCV(decoder.getDecoderTyp(), cvValue, true);
 
-        DecoderCV entity = new DecoderCV(decoder, decoderTypCV, wert);
+        DecoderCV entity = new DecoderCV(id, decoder, decoderTypCV, wert, deleted);
 
-        info("create " + entity);
+        debug("created: " + entity);
 
         return entity;
     }
 
     @JsonCreator
-    public DecoderFunktion createFunktion(@JsonProperty(value = ApiNames.DECODER_ID, required = false) String decoderId,
+    public DecoderFunktion createFunktion(@JsonProperty(value = ApiNames.ID, required = false) Long id,
+            @JsonProperty(value = ApiNames.DECODER_ID, required = false) String decoderId,
             @JsonProperty(value = ApiNames.REIHE, required = false) Integer reihe,
             @JsonProperty(value = ApiNames.FUNKTION, required = false) String funktion,
-            @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung) throws Exception {
+            @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
+            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
         IDecoder decoder = findDecoder(decoderId, false);
 
         IDecoderTypFunktion decoderTypFunktion = findDecoderTypFunktion(decoder.getDecoderTyp(), reihe, funktion);
 
-        DecoderFunktion entity = new DecoderFunktion(decoder, decoderTypFunktion, bezeichnung);
+        DecoderFunktion entity = new DecoderFunktion(id, decoder, decoderTypFunktion, bezeichnung, deleted);
 
-        info("create " + entity);
+        debug("created: " + entity);
 
         return entity;
     }
@@ -110,8 +118,8 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
-        return super.get(name);
+    public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId) {
+        return super.get(decoderId);
     }
 
     @GET
@@ -125,8 +133,36 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response add(Decoder entity) {
-        return super.add(entity);
+    public Response add(@QueryParam(ApiNames.HERSTELLER) String herstellerStr, @QueryParam(ApiNames.BESTELL_NR) String bestellNr, @QueryParam(ApiNames.DECODER_ID) String decoderId) {
+        try {
+            IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, true);
+
+            if (decoderTyp == null) {
+                return getResponse(badRequest(null, "DecoderTyp " + herstellerStr + "/" + bestellNr + " does not exist"));
+            }
+
+            Decoder decoder = new Decoder(null, decoderTyp, decoderTyp.getProtokoll(), decoderId, decoderTyp.getBezeichnung(), decoderTyp.getFahrstufe(), false);
+            
+            decoder = getPersister().add(decoder);
+
+            for (int i = 0; i < decoderTyp.getAdressen() ; i++) {
+                decoder.addAdress(new DecoderAdress(null, decoder, i, null, null, false));
+            }
+
+            for (IDecoderTypCV cv : decoderTyp.getCVs()) {
+                decoder.addCV(new DecoderCV(null, decoder, cv, cv.getWerkseinstellung(), false));
+            }
+
+            for (IDecoderTypFunktion funktion : decoderTyp.getFunktionen()) {
+                decoder.addFunktion(new DecoderFunktion(null, decoder, funktion, funktion.getBezeichnung(), false));
+            }
+
+            decoder = getPersister().save(decoder);
+
+            return getResponse(created(), decoder, true, true);
+        } catch (Exception e) {
+            return serverError(e).build();
+        }
     }
 
     @PUT
@@ -134,16 +170,67 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Decoder entity) {
-        return super.update(name, entity);
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, Decoder entity) {
+        return super.update(decoderId, entity);
     }
 
     @DELETE
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
-        return super.delete(name);
+    public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId) {
+        return super.delete(decoderId);
+    }
+
+    @GET
+    @Path(ApiPaths.DECODER_ADRESS_PATH)
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response getAdress(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.OFFSET_PARAM_NAME) Integer offset) {
+        return notFound().build();
+    }
+
+    @PUT
+    @Path(ApiPaths.DECODER_ADRESS_PATH)
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response updateAdress(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.OFFSET_PARAM_NAME) Integer offset, @QueryParam(ApiNames.WERT) Integer wert) {
+        return notFound().build();
+    }
+
+    @GET
+    @Path(ApiPaths.DECODER_CV_PATH)
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response getCv(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv) {
+        return notFound().build();
+    }
+
+    @PUT
+    @Path(ApiPaths.DECODER_CV_PATH)
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response updateCv(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv, @QueryParam(ApiNames.WERT) Integer wert) {
+        return notFound().build();
+    }
+
+    @GET
+    @Path(ApiPaths.DECODER_FUNKTION_PATH)
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response getFunktion(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion) {
+        return notFound().build();
+    }
+
+    @PUT
+    @Path(ApiPaths.DECODER_FUNKTION_PATH)
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response updateFunktion(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion, @QueryParam(ApiNames.DESCRIPTION) String descirption) {
+        return notFound().build();
     }
 
     protected IDecoder findDecoder(String decoderId, boolean eager) throws Exception {

@@ -4,8 +4,10 @@ import java.io.File;
 
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.INamedItem;
+import com.linepro.modellbahn.model.IProdukt;
 
 /**
  * TODO: by proxy??
@@ -15,15 +17,15 @@ import com.linepro.modellbahn.model.INamedItem;
 public class ToStringBuilder extends org.apache.commons.lang3.builder.ToStringBuilder {
 
     public ToStringBuilder(Object object) {
-        super(object);
-    }
-
-    public ToStringBuilder(Object object, ToStringStyle style, StringBuffer buffer) {
-        super(object, style, buffer);
+        super(object, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
     public ToStringBuilder(Object object, ToStringStyle style) {
-        super(object, style);
+        super(object, ToStringStyle.SHORT_PREFIX_STYLE);
+    }
+
+    public ToStringBuilder(Object object, ToStringStyle style, StringBuffer buffer) {
+        super(object, ToStringStyle.SHORT_PREFIX_STYLE, buffer);
     }
 
     @Override
@@ -201,8 +203,7 @@ public class ToStringBuilder extends org.apache.commons.lang3.builder.ToStringBu
     }
 
     @Override
-    public ToStringBuilder append(String fieldName, double[] array,
-            boolean fullDetail) {
+    public ToStringBuilder append(String fieldName, double[] array, boolean fullDetail) {
         super.append(fieldName, array, fullDetail);
         return this;
     }
@@ -326,8 +327,18 @@ public class ToStringBuilder extends org.apache.commons.lang3.builder.ToStringBu
         return this;
     }
 
+    public ToStringBuilder append(String fieldName, IDecoderTyp value) {
+        super.append(fieldName, value != null ?  new Object[] { value.getHersteller(), value.getName() } : null);
+        return this;
+    }
+
     public ToStringBuilder append(String fieldName, INamedItem<?> value) {
         super.append(fieldName, value != null ? value.getName() : null);
+        return this;
+    }
+
+    public ToStringBuilder append(String fieldName, IProdukt value) {
+        super.append(fieldName, value != null ? new Object[] { value.getHersteller(), value.getName() } : null);
         return this;
     }
 

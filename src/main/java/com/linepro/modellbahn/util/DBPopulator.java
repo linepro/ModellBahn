@@ -1951,9 +1951,9 @@ public class DBPopulator {
                 System.out.println(item);
             }
             
-            logger.info("found " + i + " " + entityClass.getSimpleName());
+            logger.debug("dumped: " + i + " " + entityClass.getSimpleName());
         } catch (Exception e) {
-            logger.error("Failed to dump " + entityClass.getSimpleName());
+            logger.error("dump error: " + entityClass.getSimpleName());
         }
     }
 }

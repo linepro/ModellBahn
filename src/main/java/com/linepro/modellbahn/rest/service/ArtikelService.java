@@ -66,13 +66,13 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
             @JsonProperty(value = ApiNames.BELADUNG, required = false) String beladung,
             @JsonProperty(value = ApiNames.STATUS, required = false) String statusStr,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
-        IProdukt produkt = findProdukt(herstellerStr, bestellNr);
-        IWahrung wahrung = findWahrung(wahrungStr);
-        ISteuerung steuerung = findSteuerung(steuerungStr);
-        IMotorTyp motorTyp = findMotorTyp(motorTypStr);
-        ILicht licht = findLicht(lichtStr);
-        IKupplung kupplung = findKupplung(kupplungStr);
-        IDecoder decoder = findDecoder(decoderId);
+        IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
+        IWahrung wahrung = findWahrung(wahrungStr, false);
+        ISteuerung steuerung = findSteuerung(steuerungStr, false);
+        IMotorTyp motorTyp = findMotorTyp(motorTypStr, false);
+        ILicht licht = findLicht(lichtStr, false);
+        IKupplung kupplung = findKupplung(kupplungStr, false);
+        IDecoder decoder = findDecoder(decoderId, false);
         Status status = Status.valueOf(statusStr);
         return new Artikel(id, produkt, kaufdatum, wahrung, preis, stuck,
                 steuerung, motorTyp, licht, kupplung, decoder,

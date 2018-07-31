@@ -48,7 +48,7 @@ public class ZugTypService extends AbstractItemService<NameKey, ZugTyp> {
         entity.setBezeichnung(bezeichnung);
         entity.setDeleted(deleted);
 
-        info("create " + entity);
+        debug("created: " + entity);
 
         return entity;
     }

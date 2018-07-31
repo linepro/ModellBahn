@@ -4,6 +4,8 @@ import javax.persistence.Query;
 
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 public class DecoderTypFunktionKey extends BaseKey {
 
@@ -36,5 +38,13 @@ public class DecoderTypFunktionKey extends BaseKey {
         query.setParameter(DBNames.DECODER_TYP, getDecoderTyp());
         query.setParameter(DBNames.REIHE, getReihe());
         query.setParameter(DBNames.NAME, getFunktion());
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append(ApiNames.DECODER_TYP, getDecoderTyp())
+                .append(ApiNames.REIHE, getReihe())
+                .toString();
     }
 }

@@ -4,6 +4,8 @@ import javax.persistence.Query;
 
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 public class DecoderCVKey extends BaseKey {
 
@@ -28,5 +30,13 @@ public class DecoderCVKey extends BaseKey {
     public void addCriteria(Query query) {
         query.setParameter(DBNames.DECODER, getDecoder());
         query.setParameter(DBNames.CV, getCv());
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append(ApiNames.DECODER, getDecoder())
+                .append(ApiNames.CV, getCv())
+                .toString();
     }
 }

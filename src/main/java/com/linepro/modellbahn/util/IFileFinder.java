@@ -1,11 +1,11 @@
 package com.linepro.modellbahn.util;
 
+import java.io.File;
+import java.util.Collection;
 /**
  * The Interface IFileFinder.
  */
 import java.util.Set;
-import java.io.File;
-import java.util.Collection;
 
 /**
  * The Interface IFileFinder.

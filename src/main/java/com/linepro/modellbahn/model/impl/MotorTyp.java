@@ -8,10 +8,10 @@ import javax.persistence.UniqueConstraint;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.IMotorTyp;
+import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
-import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * MotorTyp. The (Märklin) motor type for a product

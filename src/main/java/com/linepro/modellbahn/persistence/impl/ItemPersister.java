@@ -109,10 +109,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
         businessKeyQuery = queryString.toString();
 
-        info(businessKeys.values().toString());
-        info(businessKeyQuery);
-        info(collections.values().toString());
-        info(selectors.values().toString());
+        debug(businessKeyQuery);
     }
 
     @Override
@@ -120,17 +117,19 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         try {
             begin();
 
+            entity.setDeleted(false);
+
             getEntityManager().persist(entity);
 
             commit();
 
-            info("add " + entity);
+            debug("added: " + entity);
 
             return entity;
         } catch (Exception e) {
             rollback();
 
-            error("error add " + entity, e);
+            error("add error: " + entity, e);
             
             throw e;
         }
@@ -169,22 +168,26 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         try {
             begin();
 
-            E result = findByKey(entity, false);
+            E found = findByKey(entity, false);
             
-            if (result == null && !addOrUpdate) {
+            if (found == null && !addOrUpdate) {
                 throw new EntityNotFoundException();
             }
+
+            E result;
             
-            if (result == null) {
+            if (found == null) {
                 // Save the new entity
                 result = entity;
             } else {
+                result = found;
+
                 // Copy updated values into existing entity
                 for (Selector selector : selectors.values()) {
                     Object value = selector.getGetter().invoke(entity);
 
                     if (value instanceof Collection) {
-                        ((Collection) selector.getSetter().invoke(result)).addAll((Collection) value);
+                        ((Collection) selector.getSetter().invoke(found)).addAll((Collection) value);
                     } else if (value != null) {
                         selector.getSetter().invoke(result, value);
                     }
@@ -195,13 +198,13 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
             commit();
 
-            info("internalUpdate " + result);
+            debug((found == null ? "added" : "updated") + ": " + result);
 
             return result;
         } catch (Exception e) {
             rollback();
 
-            error("error internalUpdate " + entity, e);
+            error("Update error: " + entity, e);
 
             throw e;
         }
@@ -218,11 +221,11 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
             commit();
 
-            info("delete " + id);
+            debug("deleted: " + id);
         } catch (Exception e) {
             rollback();
 
-            error("error delete " + id, e);
+            error("delete error : " + id, e);
             
             throw e;
         }
@@ -247,11 +250,11 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
             commit();
             
-            info("delete " + key);
+            debug("deleted: " + key);
         } catch (Exception e) {
             rollback();
 
-            error("error delete " + key, e);
+            error("delete error: " + key, e);
             
             throw e;
         }
@@ -281,11 +284,11 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
             commit();
 
-            info("deleteAll " + template);
+            debug("deleteAll: " + template);
         } catch (Exception e) {
             rollback();
 
-            error("error deleteAll " + template, e);
+            error("deleteAll error: " + template, e);
             
             throw e;
         }
@@ -301,7 +304,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
     
                 commit();
     
-                info("findById " + result);
+                debug("findById found: " + result);
     
                 return result;
             }
@@ -310,7 +313,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         } catch (Exception e) {
             rollback();
 
-            error("error findById " + id, e);
+            error("findById error: " + id, e);
             
             throw e;
        }
@@ -353,7 +356,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
                 result = inflate(results.get(0), eager);
             }
             
-            info("findByKey " + result);
+            debug("findByKey found: " + result);
 
             commit();
 
@@ -361,7 +364,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         } catch (Exception e) {
             rollback();
 
-            error("error findByKey " + key, e);
+            error("findByKey error: " + key, e);
             
             throw e;
         }
@@ -399,13 +402,13 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
             commit();
 
-            info("findAll " + result);
+            debug("findAll found: " + result);
 
             return result;
         } catch (Exception e) {
             rollback();
 
-            error("error findAll " + template, e);
+            error("findAll error: " + template, e);
             
             throw e;
         }
@@ -490,13 +493,14 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         return logger;
     }
 
+
     /**
      * Info.
      *
      * @param message the message
      */
-    protected void info(String message) {
-        getLogger().info(message);
+    protected void debug(String message) {
+        getLogger().debug(message);
     }
 
     /**
@@ -510,6 +514,15 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         getLogger().error(message, e);
 
         throw e;
+    }
+
+    /**
+     * Info.
+     *
+     * @param message the message
+     */
+    protected void info(String message) {
+        getLogger().info(message);
     }
 
     

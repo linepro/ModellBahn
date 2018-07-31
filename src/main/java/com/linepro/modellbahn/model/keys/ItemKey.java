@@ -4,8 +4,11 @@ import java.util.Collection;
 
 import javax.persistence.Query;
 
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.util.Selector;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 public class ItemKey extends BaseKey {
 
@@ -32,5 +35,21 @@ public class ItemKey extends BaseKey {
             Object value = businessKey.getGetter().invoke(getItem());
             query = query.setParameter(businessKey.getName(), value);
         }
+    }
+
+    @Override
+    public String toString() {
+        ToStringBuilder builder = new ToStringBuilder(item, ToStringStyle.SHORT_PREFIX_STYLE);
+
+        for (Selector businessKey : getBusinessKeys()) {
+            Object value = null;
+            try {
+                value = businessKey.getGetter().invoke(getItem());
+            } catch (Exception e) {
+            }
+            builder.append(businessKey.getName(), value);
+        }
+
+        return builder.toString();
     }
 }

@@ -13,7 +13,6 @@ import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -84,7 +83,9 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
      * @param wert
      *            the wert
      */
-    public DecoderCV(IDecoder decoder, IDecoderTypCV cv, Integer wert) {
+    public DecoderCV(Long id, IDecoder decoder, IDecoderTypCV cv, Integer wert, Boolean deleted) {
+        super(id, deleted);
+
         setDecoder(decoder);
         setCv(cv);
         setWert(wert);
@@ -193,7 +194,8 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(this)
+                .appendSuper(super.toString())
                 .append(ApiNames.DECODER, getDecoder().getId())
                 .append(ApiNames.CV, getCv())
                 .append("wert", getWert())

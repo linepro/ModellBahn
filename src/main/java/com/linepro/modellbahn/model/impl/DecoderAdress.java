@@ -20,7 +20,6 @@ import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -52,10 +51,10 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name = "DecoderAdress")
-@Table(name = "DecoderAdress", indexes = { @Index(columnList = DBNames.DECODER_ID + "," + DBNames.ADRESS_TYP + "," + DBNames.ADRESS, unique = true) },
-        uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.ADRESS_TYP, DBNames.ADRESS }) })
+@Table(name = "DecoderAdress", indexes = { @Index(columnList = DBNames.DECODER_ID + "," + DBNames.OFFSET, unique = true) },
+        uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.OFFSET }) })
 @JsonRootName(value = ApiNames.ADRESS)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER, ApiNames.ADRESS_TYP, ApiNames.ADRESS, ApiNames.DELETED, ApiNames.LINKS })
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER, ApiNames.OFFSET, ApiNames.ADRESS_TYP, ApiNames.ADRESS, ApiNames.DELETED, ApiNames.LINKS })
 public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDecoderAdress {
 
     /** The Constant serialVersionUID. */
@@ -64,30 +63,22 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
     /** The decoder. */
     private IDecoder decoder;
 
+    /** The adress. */
+    private Integer offset;
+
     /** The typ. */
     private AdressTyp adressTyp;
 
     /** The adress. */
     private Integer adress;
 
-    /**
-     * Instantiates a new adress.
-     */
     public DecoderAdress() {
     }
 
-    /**
-     * Instantiates a new adress.
-     *
-     * @param decoder
-     *            the decoder
-     * @param typ
-     *            the typ
-     * @param adress
-     *            the adress
-     */
-    public DecoderAdress(IDecoder decoder, AdressTyp typ, Integer adress) {
+    public DecoderAdress(Long id, IDecoder decoder, Integer offset, AdressTyp typ, Integer adress, Boolean deleted) {
+        super(id, deleted);
         setDecoder(decoder);
+        setOffset(offset);
         setAdressTyp(typ);
         setAdress(adress);
     }
@@ -109,6 +100,20 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
     @JsonDeserialize(as=Decoder.class)
     public void setDecoder(IDecoder decoder) {
         this.decoder = decoder;
+    }
+
+    @Override
+    @Column(name = DBNames.OFFSET, nullable = false)
+    @JsonGetter(ApiNames.OFFSET)
+    @JsonView(Views.DropDown.class)
+    public Integer getOffset() {
+        return offset;
+    }
+
+    @Override
+    @JsonSetter(ApiNames.OFFSET)
+    public void setOffset(Integer offset) {
+        this.offset = offset;
     }
 
     @Override
@@ -152,15 +157,14 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
      @Transient
      @JsonIgnore
      public String getLinkId() {
-         return String.format(ApiPaths.DECODER_ADRESS_LINK, getParentId(), getAdressTyp(), getAdress());
+         return String.format(ApiPaths.DECODER_ADRESS_LINK, getParentId(), getOffset());
      }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
                 .append(getDecoder())
-                .append(getAdressTyp())
-                .append(getAdress())
+                .append(getOffset())
                 .hashCode();
     }
 
@@ -178,16 +182,18 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
 
         return new EqualsBuilder()
                 .append(getDecoder(), other.getDecoder())
-                .append(getAdressTyp(), other.getAdressTyp())
-                .append(getAdress(), other.getAdress())
+                .append(getOffset(), other.getOffset())
                 .isEquals();
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(this)
+                .appendSuper(super.toString())
                 .append(ApiNames.DECODER, getDecoder().getId())
+                .append(ApiNames.OFFSET, getOffset())
                 .append(ApiNames.ADRESS_TYP, getAdressTyp())
-                .append(ApiNames.ADRESS, getAdress()).toString();
+                .append(ApiNames.ADRESS, getAdress())
+                .toString();
     }
 }

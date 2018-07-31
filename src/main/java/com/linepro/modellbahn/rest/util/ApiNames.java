@@ -68,6 +68,7 @@ public interface ApiNames {
     public static final String MOTORBAUART = "motorbauart";
     public static final String MOTOR_TYP = "motorTyp";
     public static final String NAME = "name";
+    public static final String OFFSET = "offset";
     public static final String POSITION = "position";
     public static final String PREIS = "preis";
     public static final String PRODUKT = "produkt";

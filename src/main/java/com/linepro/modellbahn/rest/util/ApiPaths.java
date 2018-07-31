@@ -25,6 +25,8 @@ public interface ApiPaths {
 
     public static final String KATEGORIE_PARAM_NAME = ApiNames.KATEGORIE;
 
+    public static final String OFFSET_PARAM_NAME = ApiNames.OFFSET;
+
     public static final String POSITION_PARAM_NAME = ApiNames.POSITION;
 
     public static final String PRODUKT_ID_PARAM_NAME = ApiNames.PRODUKT_ID;
@@ -125,6 +127,8 @@ public interface ApiPaths {
 
     public static final String KATEGORIE_PART = FIELD_START + KATEGORIE_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;
 
+    public static final String OFFSET_PART = FIELD_START + OFFSET_PARAM_NAME + NUMBER_REGEX + FIELD_END;
+
     public static final String POSITION_PATH = FIELD_START + POSITION_PARAM_NAME + NUMBER_REGEX + FIELD_END;
 
     public static final String PRODUKT_PART = FIELD_START + PRODUKT_ID_PARAM_NAME + NUMBER_REGEX + FIELD_END;
@@ -139,8 +143,8 @@ public interface ApiPaths {
 
     /** Parameterized child paths */
     public static final String DECODER_ADRESS_ROOT = DECODER_PART + "/" + ApiNames.ADRESS;
-    public static final String DECODER_ADRESS_PATH = DECODER_ADRESS_ROOT + ADRESS_TYP_PART + "/" + ADRESS_PART;
-    public static final String DECODER_ADRESS_LINK = "%s/" + ApiNames.ADRESS + "/%s/%d";  
+    public static final String DECODER_ADRESS_PATH = DECODER_ADRESS_ROOT + OFFSET_PART;
+    public static final String DECODER_ADRESS_LINK = "%s/" + ApiNames.ADRESS + "/%d";  
 
     public static final String DECODER_CV_ROOT = DECODER_PART + "/" + ApiNames.CV;
     public static final String DECODER_CV_PATH = DECODER_CV_ROOT + CV_PART;
