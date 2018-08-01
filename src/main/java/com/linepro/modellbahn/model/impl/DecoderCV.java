@@ -163,7 +163,7 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     @Transient
     @JsonIgnore
     public String getLinkId() {
-        return String.format(ApiPaths.DECODER_CV_LINK, getParentId(), getCv());
+        return String.format(ApiPaths.DECODER_CV_LINK, getParentId(), getCv().getCv());
     }
 
     @Override

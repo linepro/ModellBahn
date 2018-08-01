@@ -150,7 +150,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
             decoder = getPersister().add(decoder);
 
             for (int i = 0; i < decoderTyp.getAdressen() ; i++) {
-                decoder.addAdress(new DecoderAdress(null, decoder, i, null, null, false));
+                decoder.addAdress(new DecoderAdress(null, decoder, i, AdressTyp.MM, 0, false));
             }
 
             for (IDecoderTypCV cv : decoderTyp.getCVs()) {

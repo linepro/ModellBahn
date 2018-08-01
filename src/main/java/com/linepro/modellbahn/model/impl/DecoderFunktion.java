@@ -177,7 +177,7 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
     @Transient
     @JsonIgnore
     public String getLinkId() {
-        return String.format(ApiPaths.DECODER_FUNKTION_LINK, getParentId(), getFunktion().getName());
+        return String.format(ApiPaths.DECODER_FUNKTION_LINK, getParentId(), getFunktion().getReihe(), getFunktion().getName());
     }
 
     @Override
