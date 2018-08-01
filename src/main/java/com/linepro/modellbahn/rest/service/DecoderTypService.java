@@ -21,6 +21,10 @@ import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.model.IProtokoll;
+import com.linepro.modellbahn.model.impl.Decoder;
+import com.linepro.modellbahn.model.impl.DecoderAdress;
+import com.linepro.modellbahn.model.impl.DecoderCV;
+import com.linepro.modellbahn.model.impl.DecoderFunktion;
 import com.linepro.modellbahn.model.impl.DecoderTyp;
 import com.linepro.modellbahn.model.impl.DecoderTypCV;
 import com.linepro.modellbahn.model.impl.DecoderTypFunktion;
@@ -30,8 +34,11 @@ import com.linepro.modellbahn.model.keys.DecoderTypCVKey;
 import com.linepro.modellbahn.model.keys.DecoderTypFunktionKey;
 import com.linepro.modellbahn.model.keys.DecoderTypKey;
 import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.model.util.AdressTyp;
 import com.linepro.modellbahn.model.util.Konfiguration;
+import com.linepro.modellbahn.persistence.IIdGenerator;
 import com.linepro.modellbahn.persistence.IPersister;
+import com.linepro.modellbahn.persistence.impl.IdGenerator;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
@@ -55,6 +62,8 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
 
     protected final IPersister<DecoderTypFunktion> funktionPersister;
 
+    protected final IPersister<Decoder> decoderPersister;
+
     public DecoderTypService() {
         super(DecoderTyp.class);
         
@@ -62,6 +71,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
         herstellerPersister = StaticPersisterFactory.get().createPersister(Hersteller.class);
         cvPersister = StaticPersisterFactory.get().createPersister(DecoderTypCV.class);
         funktionPersister = StaticPersisterFactory.get().createPersister(DecoderTypFunktion.class);
+        decoderPersister = StaticPersisterFactory.get().createPersister(Decoder.class);
     }
 
     @JsonCreator
@@ -69,7 +79,8 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
             @JsonProperty(value = ApiNames.HERSTELLER, required = false) String herstellerStr,
             @JsonProperty(value = ApiNames.PROTOKOLL, required = false) String protokollStr,
             @JsonProperty(value = ApiNames.NAME, required = false) String name,
-            @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
+            @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung, 
+            @JsonProperty(value = ApiNames.ADRESS_TYP, required = false) String adressTypStr,
             @JsonProperty(value = ApiNames.ADRESSEN, required = false) Integer adressen,
             @JsonProperty(value = ApiNames.SOUND, required = false) Boolean sound,
             @JsonProperty(value = ApiNames.KONFIGURATION, required = false) String konfigurationStr,
@@ -77,8 +88,9 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
         IHersteller hersteller = findHersteller(herstellerStr);
         IProtokoll protokoll = findProtokoll(protokollStr);
         Konfiguration konfiguration = Konfiguration.valueOf(konfigurationStr);
+        AdressTyp adressTyp = AdressTyp.valueOf(adressTypStr);
 
-        DecoderTyp entity = new DecoderTyp(id, hersteller, protokoll, name, bezeichnung, adressen, sound, konfiguration,
+        DecoderTyp entity = new DecoderTyp(id, hersteller, protokoll, name, bezeichnung, adressTyp, adressen, sound, konfiguration,
                 deleted);
 
         debug("created: " + entity);
@@ -150,6 +162,46 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @JsonView(Views.Public.class)
     public Response add(DecoderTyp entity) {
         return super.add(entity);
+    }
+
+
+    @POST
+    @Path(ApiPaths.DECODER_TYP_PATH)
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response addDecoder(@PathParam(ApiNames.HERSTELLER) String herstellerStr, @PathParam(ApiNames.BESTELL_NR) String bestellNr) {
+        try {
+            IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, true);
+
+            if (decoderTyp == null) {
+                return getResponse(badRequest(null, "DecoderTyp " + herstellerStr + "/" + bestellNr + " does not exist"));
+            }
+
+            IIdGenerator idGenerator = new IdGenerator(getDecoderPersister());
+            
+            Decoder decoder = new Decoder(null, decoderTyp, decoderTyp.getProtokoll(), idGenerator.getNextId(), decoderTyp.getBezeichnung(), decoderTyp.getFahrstufe(), false);
+            
+            decoder = getDecoderPersister().add(decoder);
+
+            for (int i = 0; i < decoderTyp.getAdressen() ; i++) {
+                decoder.addAdress(new DecoderAdress(null, decoder, i, decoderTyp.getAdressTyp(), 0, false));
+            }
+
+            for (IDecoderTypCV cv : decoderTyp.getCVs()) {
+                decoder.addCV(new DecoderCV(null, decoder, cv, cv.getWerkseinstellung(), false));
+            }
+
+            for (IDecoderTypFunktion funktion : decoderTyp.getFunktionen()) {
+                decoder.addFunktion(new DecoderFunktion(null, decoder, funktion, funktion.getBezeichnung(), false));
+            }
+
+            decoder = getDecoderPersister().save(decoder);
+
+            return getResponse(created(), decoder, true, true);
+        } catch (Exception e) {
+            return serverError(e).build();
+        }
     }
 
     @PUT
@@ -400,7 +452,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     }
 
     protected IDecoderTyp findDecoderTyp(String herstellerStr, String bestellNr, boolean eager) throws Exception {
-        return getPersister().findByKey(new DecoderTyp(findHersteller(herstellerStr), bestellNr), eager);
+        return getPersister().findByKey(new DecoderTypKey(findHersteller(herstellerStr), bestellNr), eager);
     }
 
     protected IDecoderTypCV findDecoderTypCV(String herstellerStr, String bestellNr, Integer cv, boolean eager) throws Exception {
@@ -441,5 +493,9 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
 
     public IPersister<DecoderTypFunktion> getFunktionPersister() {
         return funktionPersister;
+    }
+
+    public IPersister<Decoder> getDecoderPersister() {
+        return decoderPersister;
     }
 }

@@ -3,7 +3,6 @@ package com.linepro.modellbahn.rest.service;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -29,8 +28,6 @@ import com.linepro.modellbahn.model.impl.DecoderTyp;
 import com.linepro.modellbahn.model.impl.Protokoll;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AdressTyp;
-import com.linepro.modellbahn.persistence.IIdGenerator;
-import com.linepro.modellbahn.persistence.impl.IdGenerator;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -129,44 +126,6 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @JsonView(Views.DropDown.class)
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
-    }
-
-    @POST
-    @Consumes({ MediaType.APPLICATION_JSON })
-    @Produces(MediaType.APPLICATION_JSON)
-    @JsonView(Views.Public.class)
-    public Response add(@QueryParam(ApiNames.HERSTELLER) String herstellerStr, @QueryParam(ApiNames.BESTELL_NR) String bestellNr, @QueryParam(ApiNames.DECODER_ID) String decoderId) {
-        try {
-            IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, true);
-
-            if (decoderTyp == null) {
-                return getResponse(badRequest(null, "DecoderTyp " + herstellerStr + "/" + bestellNr + " does not exist"));
-            }
-
-            IIdGenerator idGenerator = new IdGenerator(getPersister());
-            
-            Decoder decoder = new Decoder(null, decoderTyp, decoderTyp.getProtokoll(), idGenerator.getNextId(), decoderTyp.getBezeichnung(), decoderTyp.getFahrstufe(), false);
-            
-            decoder = getPersister().add(decoder);
-
-            for (int i = 0; i < decoderTyp.getAdressen() ; i++) {
-                decoder.addAdress(new DecoderAdress(null, decoder, i, AdressTyp.MM, 0, false));
-            }
-
-            for (IDecoderTypCV cv : decoderTyp.getCVs()) {
-                decoder.addCV(new DecoderCV(null, decoder, cv, cv.getWerkseinstellung(), false));
-            }
-
-            for (IDecoderTypFunktion funktion : decoderTyp.getFunktionen()) {
-                decoder.addFunktion(new DecoderFunktion(null, decoder, funktion, funktion.getBezeichnung(), false));
-            }
-
-            decoder = getPersister().save(decoder);
-
-            return getResponse(created(), decoder, true, true);
-        } catch (Exception e) {
-            return serverError(e).build();
-        }
     }
 
     @PUT

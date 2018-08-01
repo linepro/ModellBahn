@@ -110,46 +110,13 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
         super();
     }
 
-    /**
-     * Convienience method for lookups
-     * 
-     * @param hersteller
-     * @param name
-     */
-    public DecoderTyp(IHersteller hersteller, String name) {
-        super(name);
-
-        setHersteller(hersteller);
-    }
-
-    /**
-     * Instantiates a new decoder typ.
-     *
-     * @param id
-     *            the id
-     * @param hersteller
-     *            the hersteller
-     * @param protokoll
-     *            the protokoll
-     * @param name
-     *            the name
-     * @param bezeichnung
-     *            the bezeichnung
-     * @param adressen
-     *            the adressen
-     * @param sound
-     *            the sound
-     * @param konfiguration
-     *            the konfiguration
-     * @param deleted
-     *            the deleted
-     */
     public DecoderTyp(Long id, IHersteller hersteller, IProtokoll protokoll, String name, String bezeichnung,
-            Integer adressen, Boolean sound, Konfiguration konfiguration, Boolean deleted) {
+            AdressTyp adressTyp, Integer adressen, Boolean sound, Konfiguration konfiguration, Boolean deleted) {
         super(id, name, bezeichnung, deleted);
 
         setHersteller(hersteller);
         setProtokoll(protokoll);
+        setAdressTyp(adressTyp);
         setAdressen(adressen);
         setSound(sound);
         setKonfiguration(konfiguration);
