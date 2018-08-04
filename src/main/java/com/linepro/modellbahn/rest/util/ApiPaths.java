@@ -2,6 +2,8 @@ package com.linepro.modellbahn.rest.util;
 
 public interface ApiPaths {
 
+    public static final String VERSION = "1.0.0";
+
     /** Parameter names */
     public static final String ID_PARAM_NAME = ApiNames.ID;
 

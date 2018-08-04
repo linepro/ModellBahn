@@ -16,6 +16,8 @@ import com.linepro.modellbahn.rest.util.ModellBahnConfiguration;
 import com.linepro.modellbahn.util.DBPopulator;
 import com.linepro.modellbahn.util.StaticContentFinder;
 
+import io.swagger.jaxrs.config.BeanConfig;
+
 /**
  * ModellBahn. The ModellBahn application
  * 
@@ -61,6 +63,16 @@ public class ModellBahn implements IModellBahn {
             populator.populate();
 
             ModellBahnConfiguration configuration = new ModellBahnConfiguration();
+
+            BeanConfig swaggerConfig = new BeanConfig();
+            swaggerConfig.setVersion(ApiPaths.VERSION);
+            swaggerConfig.setSchemes(new String[] { baseUri.getScheme() });
+            swaggerConfig.setHost(baseUri.getHost());
+            swaggerConfig.setBasePath(ApiPaths.API_ROOT);
+            swaggerConfig.setResourcePackage(configuration.getPackages());
+            swaggerConfig.setScan(true);
+
+            configuration.register();
 
             HttpServer server = new ServerBuilder().getServer(baseUri, configuration);
 

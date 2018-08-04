@@ -14,6 +14,9 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 import com.linepro.modellbahn.jersey.LoggingFilter;
 import com.linepro.modellbahn.jersey.SecurityRequestFilter;
 
+import io.swagger.jaxrs.listing.ApiListingResource;
+import io.swagger.jaxrs.listing.SwaggerSerializers;
+
 /**
  * ModellBahnConfiguration.
  * Jersey configuration for the ModellBahn application 
@@ -23,15 +26,17 @@ import com.linepro.modellbahn.jersey.SecurityRequestFilter;
 @ApplicationPath("/")
 public class ModellBahnConfiguration extends ResourceConfig {
 
-    /** The Constant PACKAGES. */
-    private static final String[] PACKAGES = { "com.linepro.modellbahn.rest" };
+    private static final String PACKAGES = "com.linepro.modellbahn.rest";
 
     /**
      * Instantiates a new modell bahn configuration.
      */
     @Inject
     public ModellBahnConfiguration() {
-        packages(PACKAGES);
+    }
+    
+    public void register() {
+        packages(new String[] { PACKAGES } );
         
         property(JsonGenerator.PRETTY_PRINTING, true);
 
@@ -98,9 +103,14 @@ public class ModellBahnConfiguration extends ResourceConfig {
 
         // Tracing support.
         //register(DeclarativeLinkingFeature.class);
+        
+        register(ApiListingResource.class);
+        register(SwaggerSerializers.class);
     }
-    
+
     /**
+     * 
+     * 
      * Gets the logger.
      *
      * @return the logger
@@ -113,5 +123,9 @@ public class ModellBahnConfiguration extends ResourceConfig {
         SLF4JBridgeHandler.install();
         
         return logger;
+    }
+
+    public String getPackages() {
+        return PACKAGES;
     }
 }
