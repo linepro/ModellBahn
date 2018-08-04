@@ -141,8 +141,8 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
     @JoinColumn(name = DBNames.FUNKTION_ID, nullable = false, referencedColumnName=DBNames.ID, foreignKey = @ForeignKey(name = "decoder_fn_fk2"))
     public IDecoderTypFunktion getFunktion() {
         if (funktion != null) {
-            funktionStr = funktion.getName();
-            reihe = funktion.getReihe();
+            setFunktionStr(funktion.getName());
+            setReihe(funktion.getReihe());
         }
 
         return funktion;
@@ -154,8 +154,8 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
         this.funktion = funktion;
 
         if (funktion != null) {
-            funktionStr = funktion.getName();
-            reihe = funktion.getReihe();
+            setFunktionStr(funktion.getName());
+            setReihe(funktion.getReihe());
         }
     }
 

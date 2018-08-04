@@ -62,9 +62,6 @@ public class DecoderTypFunktion extends AbstractNamedItem<DecoderTypFunktionKey>
     /** The programmable. */
     private Boolean programmable;
 
-    /**
-     * Instantiates a new decoder typ funktion.
-     */
     public DecoderTypFunktion() {
         super();
     }
@@ -76,24 +73,6 @@ public class DecoderTypFunktion extends AbstractNamedItem<DecoderTypFunktionKey>
         setReihe(reihe);
     }
 
-    /**
-     * Instantiates a new decoder typ funktion.
-     *
-     * @param id
-     *            the id
-     * @param decoderTyp
-     *            the decoder typ
-     * @param reihe
-     *            the reihe
-     * @param funktionNr
-     *            the funktion nr
-     * @param bezeichnung
-     *            the bezeichnung
-     * @param programmable
-     *            the programmable
-     * @param deleted
-     *            the deleted
-     */
     public DecoderTypFunktion(Long id, IDecoderTyp decoderTyp, Integer reihe, String funktionNr, String bezeichnung,
             Boolean programmable, Boolean deleted) {
         super(id, funktionNr, bezeichnung, deleted);

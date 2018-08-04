@@ -8,6 +8,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -92,6 +93,21 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @JsonView(Views.Public.class)
     public Response add(Zug entity) {
         return super.add(entity);
+    }
+
+    /**
+     * Add a consist to the Zug
+     * @param name
+     * @param artikelId
+     * @return
+     */
+    @POST
+    @Path(ApiPaths.NAME_PART)
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response addConsist(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, @QueryParam(ApiPaths.ARTIKEL) String artikelId) {
+        return getResponse(noContent());
     }
 
     @PUT

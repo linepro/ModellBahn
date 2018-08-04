@@ -3,6 +3,7 @@ package com.linepro.modellbahn.rest.service;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -17,6 +18,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IDecoder;
+import com.linepro.modellbahn.model.IDecoderAdress;
+import com.linepro.modellbahn.model.IDecoderCV;
+import com.linepro.modellbahn.model.IDecoderFunktion;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
@@ -28,6 +32,8 @@ import com.linepro.modellbahn.model.impl.DecoderTyp;
 import com.linepro.modellbahn.model.impl.Protokoll;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AdressTyp;
+import com.linepro.modellbahn.persistence.IIdGenerator;
+import com.linepro.modellbahn.persistence.impl.IdGenerator;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -104,13 +110,52 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
         IDecoder decoder = findDecoder(decoderId, false);
 
-        IDecoderTypFunktion decoderTypFunktion = findDecoderTypFunktion(decoder.getDecoderTyp(), reihe, funktion);
+        IDecoderTypFunktion decoderTypFunktion = findDecoderTypFunktion(decoder.getDecoderTyp(), reihe, funktion, true);
 
         DecoderFunktion entity = new DecoderFunktion(id, decoder, decoderTypFunktion, bezeichnung, deleted);
 
         debug("created: " + entity);
 
         return entity;
+    }
+
+    @POST
+    @Path(ApiPaths.DECODER_TYP_PATH)
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response addDecoder(@PathParam(ApiNames.HERSTELLER) String herstellerStr, @PathParam(ApiNames.BESTELL_NR) String bestellNr) {
+        try {
+            IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, true);
+
+            if (decoderTyp == null) {
+                return getResponse(badRequest(null, "DecoderTyp " + herstellerStr + "/" + bestellNr + " does not exist"));
+            }
+
+            IIdGenerator idGenerator = new IdGenerator(getPersister());
+            
+            Decoder decoder = new Decoder(null, decoderTyp, decoderTyp.getProtokoll(), idGenerator.getNextId(), decoderTyp.getBezeichnung(), decoderTyp.getFahrstufe(), false);
+            
+            decoder = getPersister().add(decoder);
+
+            for (int i = 0; i < decoderTyp.getAdressen() ; i++) {
+                decoder.addAdress(new DecoderAdress(null, decoder, i, decoderTyp.getAdressTyp(), 0, false));
+            }
+
+            for (IDecoderTypCV cv : decoderTyp.getCVs()) {
+                decoder.addCV(new DecoderCV(null, decoder, cv, cv.getWerkseinstellung(), false));
+            }
+
+            for (IDecoderTypFunktion funktion : decoderTyp.getFunktionen()) {
+                decoder.addFunktion(new DecoderFunktion(null, decoder, funktion, funktion.getBezeichnung(), false));
+            }
+
+            decoder = getPersister().save(decoder);
+
+            return getResponse(created(), decoder, true, true);
+        } catch (Exception e) {
+            return serverError(e).build();
+        }
     }
 
     @GET
@@ -159,6 +204,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     public Response updateAdress(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @QueryParam(ApiNames.WERT) Integer wert) {
+        // Validate min(adressTyp) < adress < max(adressTyp) {TODO: find ranges for each}
         return notFound().build();
     }
 
@@ -200,11 +246,15 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
         return getPersister().findByKey(decoderId, true);
     }
 
-    protected IDecoderTypCV findDecoderTypCV(IDecoderTyp decoderTyp, Integer cv, boolean eager) throws Exception {
+    protected IDecoderAdress findDecoderAdress(IDecoder decoder, Integer reihe, boolean eager) throws Exception {
         return null;
     }
 
-    protected IDecoderTypFunktion findDecoderTypFunktion(IDecoderTyp decoderTyp, Integer reihe, String funktion) throws Exception {
+    protected IDecoderCV findDecoderCV(IDecoderTyp decoderTyp, Integer cv, boolean eager) throws Exception {
+        return null;
+    }
+
+    protected IDecoderFunktion findDecoderFunktion(IDecoderTyp decoderTyp, Integer reihe, String funktion) throws Exception {
         return null;
     }
 }

@@ -73,16 +73,6 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
         super();
     }
 
-    /**
-     * Instantiates a new decoder CV.
-     *
-     * @param decoder
-     *            the decoder
-     * @param cv
-     *            the cv
-     * @param wert
-     *            the wert
-     */
     public DecoderCV(Long id, IDecoder decoder, IDecoderTypCV cv, Integer wert, Boolean deleted) {
         super(id, deleted);
 
@@ -114,8 +104,11 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTypCV.class)
     @JoinColumn(name = DBNames.CV_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_cv_fk2"))
-    @JsonIgnore
     public IDecoderTypCV getCv() {
+        if (cv != null) {
+            setCvValue(cv.getCv());
+        }
+
         return cv;
     }
 
@@ -123,6 +116,10 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     @JsonIgnore
     public void setCv(IDecoderTypCV cv) {
         this.cv = cv;
+
+        if (cv != null) {
+            setCvValue(cv.getCv());
+        }
     }
 
     @Override
