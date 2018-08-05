@@ -104,6 +104,7 @@
         <commons-cli.version>1.4</commons-cli.version>
 		<commons-lang3.version>3.7</commons-lang3.version>
 		<dagger.version>2.16</dagger.version>
+        <esapi.version>2.1.0.1</esapi.version>
         <grizzly-http-servlet.version>2.4.3</grizzly-http-servlet.version>
 		<guava.version>25.1-jre</guava.version>
 		<guice-assistedinject.version>4.2.0</guice-assistedinject.version>
@@ -127,7 +128,7 @@
 		<swagger-jersey2-jaxrs.version>1.5.9</swagger-jersey2-jaxrs.version>
 		<testng.version>6.14.3</testng.version>
 		<validation-api.version>2.0.1.Final</validation-api.version>
-	</properties>
+    </properties>
 
 	<dependencies>
         <!-- Google -->
@@ -201,6 +202,11 @@
 			<artifactId>validation-api</artifactId>
 			<version>${validation-api.version}</version>
 		</dependency>
+        <dependency>
+            <groupId>org.owasp.esapi</groupId>
+            <artifactId>esapi</artifactId>
+            <version>${esapi.version}</version>
+        </dependency>
 
         <!-- Byte Buddy -->
 		<dependency>
@@ -617,11 +623,16 @@
 									<includes>
 										<include>antlr:antlr:*</include>
 										<include>aopalliance:aopalliance:*</include>
-										<include>com.fasterxml:classmate:*</include>
 										<include>com.fasterxml.jackson.core:jackson-annotations:*</include>
 										<include>com.fasterxml.jackson.core:jackson-core:*</include>
 										<include>com.fasterxml.jackson.core:jackson-databind:*</include>
+										<include>com.fasterxml.jackson.datatype:jackson-datatype-jdk8:*</include>
+										<include>com.fasterxml:classmate:*</include>
 										<include>com.fasterxml:jackson:module:jackson-module-jaxb-annotations:*</include>
+										<include>com.google.auto.factory:auto-factory:*</include>
+										<include>com.google.auto.service:auto-service:*</include>
+										<include>com.google.auto.value:auto-value:*</include>
+										<include>com.google.guava:guava com.google.inject.extensions:guice-assistedinject:*</include>
 										<include>com.google.guava:guava:*</include>
 										<include>com.google.inject.extensions:guice-assistedinject:*</include>
 										<include>com.google.inject:guice:*</include>
@@ -630,6 +641,7 @@
 										<include>commons-cli:commons-cli:*</include>
 										<include>commons-logging:commons-logging:*</include>
 										<include>dom4j:dom4j:*</include>
+										<include>io.swagger:swagger-jersey2-jaxrs:*</include>
 										<include>javax.annotation:javax.annotation-api:*</include>
 										<include>javax.el:javax.el-api:*</include>
 										<include>javax.inject:javax.inject:*</include>
@@ -638,40 +650,52 @@
 										<include>javax.validation:validation-api:*</include>
 										<include>javax.ws.rs:javax.ws.rs-api:*</include>
 										<include>net.bytebuddy:byte-buddy:*</include>
-                                        <include>org.apache-extras.beanshell:org.bsh:*</include>
+										<include>org.apache-extras.beanshell:org.bsh:*</include>
 										<include>org.apache.commons:commons-lang3:*</include>
 										<include>org.apache.logging.log4j:log4j-api:*</include>
 										<include>org.apache.logging.log4j:log4j-core:*</include>
 										<include>org.apache.logging.log4j:log4j-slf4j-impl:*</include>
 										<include>org.glassfish.grizzly:grizzly-framework:*</include>
-										<include>org.glassfish.grizzly:grizzly-http-server:*</include>
 										<include>org.glassfish.grizzly:grizzly-http:*</include>
+										<include>org.glassfish.grizzly:grizzly-http-server:*</include>
+										<include>org.glassfish.grizzly:grizzly-http-servlet:*</include>
 										<include>org.glassfish.hk2:hk2-api:*</include>
 										<include>org.glassfish.hk2:hk2-locator:*</include>
 										<include>org.glassfish.hk2:hk2-utils:*</include>
 										<include>org.glassfish.hk2:osgi-resource-locator:*</include>
-										<include>org.glassfish.jersey:containers:jersey-container-grizzly2-http:*</include>
+										<include>org.glassfish.jersey.containers:jersey-container-grizzly2-http:*</include>
+										<include>org.glassfish.jersey.containers:jersey-container-servlet:*</include>
 										<include>org.glassfish.jersey.core:jersey-client:*</include>
 										<include>org.glassfish.jersey.core:jersey-common:*</include>
 										<include>org.glassfish.jersey.core:jersey-server:*</include>
 										<include>org.glassfish.jersey.ext:jersey-bean-validation:*</include>
+										<include>org.glassfish.jersey.ext:jersey-declarative-linking:*</include>
 										<include>org.glassfish.jersey.ext:jersey-entity-filtering:*</include>
+										<include>org.glassfish.jersey.ext:jersey-mvc:*</include>
+										<include>org.glassfish.jersey.ext:jersey-mvc-bean-validation:*</include>
+										<include>org.glassfish.jersey.ext:jersey-mvc-jsp:*</include>
 										<include>org.glassfish.jersey.ext:jersey-wadl-doclet:*</include>
 										<include>org.glassfish.jersey.inject:jersey-hk2:*</include>
 										<include>org.glassfish.jersey.media:jersey-media-jaxb:*</include>
 										<include>org.glassfish.jersey.media:jersey-media-json-jackson:*</include>
 										<include>org.glassfish.jersey.media:jersey-media-json-processing:*</include>
+										<include>org.glassfish.jersey.media:jersey-media-multipart:*</include>
 										<include>org.glassfish.jersey.media:jersey-media-sse:*</include>
-                                        <include>org.glassfish:javax.json:*</include>
+										<include>org.glassfish.jersey:containers:jersey-container-grizzly2-http:*</include>
+										<include>org.glassfish.web:javax.el:*</include>
+										<include>org.glassfish:javax.json:*</include>
 										<include>org.glassfish:jsonp-jaxrs:*</include>
 										<include>org.hibernate.common:hibernate-commons-annotations:*</include>
 										<include>org.hibernate.hibernate-core:*</include>
 										<include>org.hibernate.hibernate-validator:*</include>
+										<include>org.hibernate.validator:hibernate-validator:*</include>
+										<include>org.hibernate.validator:hibernate-validator-annotation-processor:*</include>
 										<include>org.javassist:javassist:*</include>
 										<include>org.jboss.logging:jboss-logging:*</include>
 										<include>org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec:*</include>
+										<include>org.owasp.esapi:esapi:*</include>
 										<include>org.slf4j:jul-to-slf4j:*</include>
-										<include>org.slf4j:slf4j-api:*</include>
+										<include>org.slf4j:slf4j-api:</include>
 										<include>xerces:xercesImpl:*</include>
 										<include>xml-apis:xml-apis:*</include>
 									</includes>

@@ -10,9 +10,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotEmpty;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.validator.constraints.Range;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -55,18 +57,23 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
     private IDecoderTyp decoderTyp;
 
     /** The cv. */
+    @Range(min=1,max=255)
     private Integer cv;
 
     /** The bezeichnung. */
+    @NotEmpty
     private String bezeichnung;
 
     /** The minimal. */
+    @Range(min=0,max=255)
     private Integer minimal;
 
     /** The maximal. */
+    @Range(min=0,max=255)
     private Integer maximal;
 
     /** The werkseinstellung. */
+    @Range(min=0,max=255)
     private Integer werkseinstellung;
 
     /**

@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Positive;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -79,6 +80,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     private Date bauzeit;
 
     /** The anzahl. */
+    @Positive
     private Integer anzahl;
 
     /** The betreibs nummer. */
@@ -91,87 +93,112 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     private IAchsfolg achsfolg;
 
     /** The anfahrzugkraft. */
+    @Positive
     private BigDecimal anfahrzugkraft;
 
     /** The leistung. */
+    @Positive
     private BigDecimal leistung;
 
     /** The dienstgewicht. */
+    @Positive
     private BigDecimal dienstgewicht;
 
     /** The geschwindigkeit. */
+    @Positive
     private Long geschwindigkeit;
 
     /** The lange. */
+    @Positive
     private BigDecimal lange;
 
     /** The ausserdienst. */
     private Date ausserdienst;
 
     /** The dm treibrad. */
+    @Positive
     private BigDecimal dmTreibrad;
 
     /** The dm laufrad vorn. */
+    @Positive
     private BigDecimal dmLaufradVorn;
 
     /** The dm laufrad hinten. */
+    @Positive
     private BigDecimal dmLaufradHinten;
 
     /** The zylinder. */
+    @Positive
     private Integer zylinder;
 
     /** The dm zylinder. */
+    @Positive
     private BigDecimal dmZylinder;
 
     /** The kolbenhub. */
+    @Positive
     private BigDecimal kolbenhub;
 
     /** The kesselueberdruck. */
+    @Positive
     private BigDecimal kesselueberdruck;
 
     /** The rostflaeche. */
+    @Positive
     private BigDecimal rostflaeche;
 
     /** The ueberhitzerflaeche. */
+    @Positive
     private BigDecimal ueberhitzerflaeche;
 
     /** The wasservorrat. */
+    @Positive
     private BigDecimal wasservorrat;
 
     /** The verdampfung. */
+    @Positive
     private BigDecimal verdampfung;
 
     /** The steuerung. */
     private ISteuerung steuerung;
 
     /** The fahrmotoren. */
+    @Positive
     private Integer fahrmotoren;
 
     /** The motorbauart. */
     private String motorbauart;
 
     /** The leistungsuebertragung. */
+    @Positive
     private BigDecimal leistungsuebertragung;
 
     /** The reichweite. */
+    @Positive
     private BigDecimal reichweite;
 
     /** The kapazitaet. */
+    @Positive
     private BigDecimal kapazitat;
 
     /** The klasse. */
+    @Positive
     private Integer klasse;
 
     /** The sitzplatze KL 1. */
+    @Positive
     private Long sitzplatzeKL1;
 
     /** The sitzplatze KL 2. */
+    @Positive
     private Long sitzplatzeKL2;
 
     /** The sitzplatze KL 3. */
+    @Positive
     private Long sitzplatzeKL3;
 
     /** The sitzplatze KL 4. */
+    @Positive
     private Long sitzplatzeKL4;
 
     /** The aufbauten. */
@@ -181,18 +208,23 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     private Boolean triebzugAnzeigen;
 
     /** The triebkoepfe. */
+    @Positive
     private Long triebkoepfe;
 
     /** The mittelwagen. */
+    @Positive
     private Long mittelwagen;
 
     /** The sitzplatze TZKL 1. */
+    @Positive
     private Long sitzplatzeTZKL1;
 
     /** The sitzplatze tz KL 2. */
+    @Positive
     private Long sitzplatzeTzKL2;
 
     /** The drehgestell bauart. */
+    @Positive
     private String drehgestellBauart;
 
     /**

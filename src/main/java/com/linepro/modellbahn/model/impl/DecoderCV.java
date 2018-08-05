@@ -10,9 +10,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.validator.constraints.Range;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -56,12 +58,15 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     private static final long serialVersionUID = 2660599652146536110L;
 
     /** The decoder. */
+    @NotNull
     private IDecoder decoder;
 
     /** The cv. */
+    @NotNull
     private IDecoderTypCV cv;
 
     /** The wert. */
+    @Range(min=0,max=255)
     private Integer wert;
 
     private Integer cvValue;

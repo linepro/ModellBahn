@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -38,9 +39,11 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
     protected static final String[] BUSINESS_KEY = new String[] { ApiNames.NAME };
 
     /** The name. */
+    @NotEmpty
     private String name;
 
 	/** The bezeichnung. */
+    @NotEmpty
 	private String bezeichnung;
 
 	/**

@@ -11,9 +11,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.validator.constraints.Range;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -57,9 +59,11 @@ public class DecoderTypFunktion extends AbstractNamedItem<DecoderTypFunktionKey>
     private IDecoderTyp decoderTyp;
 
     /** The reihe. */
+    @Range(min=0,max=1)
     private Integer reihe;
 
     /** The programmable. */
+    @NotNull
     private Boolean programmable;
 
     public DecoderTypFunktion() {

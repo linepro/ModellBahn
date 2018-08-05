@@ -30,9 +30,8 @@ public class NamedItemConverter implements Converter {
         this.persister = persister;
     }
     
-    @SuppressWarnings("unchecked")
     @Override
-    public <E> E convert(Class<E> type, Object value) {
+    public Object convert(@SuppressWarnings("rawtypes") Class type, Object value) {
         try {
             if (StringUtils.isNotBlank(value.toString())) {
                 Class<? extends IItem<?>> entityClass = getPersister().getEntityClass();
@@ -43,7 +42,7 @@ public class NamedItemConverter implements Converter {
                     entity = getPersister().findByKey(new NameKey(value.toString()), false);
 
                     if (entity != null) {
-                        return (E) entity;
+                        return entity;
                     }
 
                     throw new IllegalArgumentException(value + " does not exist");

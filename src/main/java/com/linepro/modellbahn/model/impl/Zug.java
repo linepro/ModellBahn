@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -51,6 +52,7 @@ public class Zug extends AbstractNamedItem<NameKey> implements IZug {
     private static final long serialVersionUID = 7391674754023907975L;
 
     /** The zugTyp. */
+    @NotNull
     private IZugTyp zugTyp;
 
 	/** The consist. */
@@ -115,13 +117,22 @@ public class Zug extends AbstractNamedItem<NameKey> implements IZug {
    
     @Override
     public void addConsist(IZugConsist consist) {
+        // Add at end semantics
         consist.setZug(this);
+        consist.setPosition(getConsist().size());
         getConsist().add(consist);
     }
 
     @Override
     public void removeConsist(IZugConsist consist) {
         getConsist().remove(consist);
+        
+        // Just renumber the whole lot; don't try and work out from where - it's just as expensive
+        int position = 0;
+
+        for (IZugConsist zc : getConsist()) {
+            zc.setPosition(position++);
+        }
     }
 
 

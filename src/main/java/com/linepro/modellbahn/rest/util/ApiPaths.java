@@ -33,7 +33,9 @@ public interface ApiPaths {
 
     public static final String REIHE_PARAM_NAME = ApiNames.REIHE;
 
-    public static final String TEIL_ID_PARAM_NAME = ApiNames.TEIL_ID;
+    public static final String TEIL_BESTELL_NR_PARAM_NAME = ApiNames.TEIL_BESTELL_NR;
+
+    public static final String TEIL_HERSTELLER_PARAM_NAME = ApiNames.TEIL_HERSTELLER;
 
     public static final String UNTER_KATEGORIE_PARAM_NAME = ApiNames.UNTER_KATEGORIE;
 
@@ -131,11 +133,11 @@ public interface ApiPaths {
 
     public static final String POSITION_PATH = FIELD_START + POSITION_PARAM_NAME + NUMBER_REGEX + FIELD_END;
 
-    public static final String PRODUKT_PART = FIELD_START + PRODUKT_ID_PARAM_NAME + NUMBER_REGEX + FIELD_END;
-
     public static final String REIHE_PART = FIELD_START + REIHE_PARAM_NAME + NUMBER_REGEX + FIELD_END;
 
-    public static final String TEIL_PART = FIELD_START + TEIL_ID_PARAM_NAME + NUMBER_REGEX + FIELD_END;
+    public static final String TEIL_BESTELL_NR_PART = FIELD_START + TEIL_BESTELL_NR_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;;  
+
+    public static final String TEIL_HERSTELLER_PART =  FIELD_START + TEIL_HERSTELLER_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;;
 
     public static final String UNTER_KATEGORIE_PART = FIELD_START + UNTER_KATEGORIE_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;
 
@@ -173,8 +175,13 @@ public interface ApiPaths {
     public static final String UNTER_KATEGORIE_PATH = KATEGORIE_PART + UNTER_KATEGORIE_PART;
     public static final String UNTER_KATEGORIE_LINK = "%s/%s";
 
-    public static final String PRODUKT_TEIL_PATH = PRODUKT_PART + TEIL_PART;
-    public static final String PRODUKT_TEIL_LINK = "%s/%s";
+    public static final String PRODUKT_PATH = HERSTELLER_PART + BESTELL_NR_PART;
+    public static final String PRODUKT_LINK = "%s/%s";
+
+    public static final String TEIL_PART = FIELD_START + TEIL_HERSTELLER_PART + TEIL_BESTELL_NR_PART;
+
+    public static final String PRODUKT_TEIL_LINK = PRODUKT_LINK + "/" + PRODUKT_LINK ;
+    public static final String PRODUKT_TEIL_PATH = PRODUKT_PATH + TEIL_PART;
     
     public static final String ZUG_CONSIST_PATH = ZUG_PART + POSITION_PATH;
     public static final String ZUG_CONSIST_LINK = "%s/%d";

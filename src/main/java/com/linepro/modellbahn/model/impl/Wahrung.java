@@ -6,6 +6,8 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.validator.constraints.Range;
+
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -36,6 +38,7 @@ public class Wahrung extends AbstractNamedItem<NameKey> implements IWahrung {
     private static final long serialVersionUID = 9168067747478159138L;
 
     /** The decimals. */
+    @Range(min=0,max=2)
     private Integer decimals;
 	
 	/**

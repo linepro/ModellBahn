@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -56,6 +57,7 @@ public class UnterKategorie extends AbstractNamedItem<UnterKategorieKey> impleme
     private static final long serialVersionUID = 5346529720680464691L;
 
     /** The kategorie. */
+    @NotNull
     private IKategorie kategorie;
 
     /**

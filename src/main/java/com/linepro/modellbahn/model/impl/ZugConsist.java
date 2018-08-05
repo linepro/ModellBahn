@@ -11,6 +11,8 @@ import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -57,12 +59,15 @@ public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsi
     private static final long serialVersionUID = 3941436184732408563L;
 
     /** The zug. */
+    @NotNull
     private IZug zug;
 
     /** The position. */
+    @Positive
     private Integer position;
 
     /** The artikel. */
+    @NotNull
     private IArtikel artikel;
 
     /**

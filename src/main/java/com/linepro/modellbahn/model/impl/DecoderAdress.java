@@ -17,9 +17,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.validator.constraints.Range;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -61,12 +63,15 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
     private static final long serialVersionUID = -1845658968133212205L;
 
     /** The decoder. */
+    @NotNull
     private IDecoder decoder;
 
     /** The adress. */
+    @Range(min=0,max=5)
     private Integer reihe;
 
     /** The typ. */
+    @NotNull
     private AdressTyp adressTyp;
 
     /** The adress. */

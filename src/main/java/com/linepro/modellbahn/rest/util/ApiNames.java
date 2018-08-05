@@ -91,7 +91,8 @@ public interface ApiNames {
     public static final String STEUERUNG = "steuerung";
     public static final String STUCK = "stuck";
     public static final String TEIL = "teil";
-    public static final String TEIL_ID = "teilId";
+    public static final String TEIL_BESTELL_NR = "teilBestellNr";
+    public static final String TEIL_HERSTELLER = "teilHersteller";
     public static final String TEILEN = "teilen";
     public static final String TELEFON = "telefon";
     public static final String TRIEBKOEPFE = "triebkoepfe";

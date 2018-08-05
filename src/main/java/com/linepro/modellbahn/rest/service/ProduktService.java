@@ -30,6 +30,7 @@ import com.linepro.modellbahn.model.IKupplung;
 import com.linepro.modellbahn.model.ILicht;
 import com.linepro.modellbahn.model.IMassstab;
 import com.linepro.modellbahn.model.IMotorTyp;
+import com.linepro.modellbahn.model.IProdukt;
 import com.linepro.modellbahn.model.ISonderModell;
 import com.linepro.modellbahn.model.ISpurweite;
 import com.linepro.modellbahn.model.ISteuerung;
@@ -39,6 +40,9 @@ import com.linepro.modellbahn.model.impl.Produkt;
 import com.linepro.modellbahn.model.impl.ProduktTeil;
 import com.linepro.modellbahn.model.impl.UnterKategorie;
 import com.linepro.modellbahn.model.keys.ProduktKey;
+import com.linepro.modellbahn.model.keys.ProduktTeilKey;
+import com.linepro.modellbahn.persistence.IPersister;
+import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -53,8 +57,12 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
 @Path(ApiPaths.PRODUKT)
 public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
 
+    protected final IPersister<ProduktTeil> teilPersister;
+    
     public ProduktService() {
         super(Produkt.class);
+
+        teilPersister = StaticPersisterFactory.get().createPersister(ProduktTeil.class);
     }
 
     @JsonCreator
@@ -152,11 +160,15 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     }
 
     @GET
-    @Path(ApiPaths.ID_PART)
+    @Path(ApiPaths.PRODUKT_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response get(@PathParam(ApiPaths.ID_PARAM_NAME) Long name) {
-        return super.get(name);
+    public Response get(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
+        try {
+            return super.get(new ProduktKey(findHersteller(herstellerStr, false), bestellNr));
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
     }
 
     @GET
@@ -171,23 +183,135 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     public Response add(Produkt entity) {
-        return super.add(entity);
+        try {
+            return super.add(entity);
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
     }
 
     @PUT
-    @Path(ApiPaths.ID_PART)
+    @Path(ApiPaths.PRODUKT_PATH)
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response update(@PathParam(ApiPaths.ID_PARAM_NAME) Long name, Produkt entity) {
-        return super.update(name, entity);
+    public Response update(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, Produkt entity) {
+        try {
+            return super.update(new ProduktKey(findHersteller(herstellerStr, false), bestellNr), entity);
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
     }
 
     @DELETE
-    @Path(ApiPaths.ID_PART)
+    @Path(ApiPaths.PRODUKT_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response delete(@PathParam(ApiPaths.ID_PARAM_NAME) Long name) {
-        return super.delete(name);
+    public Response delete(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
+        try {
+            return super.delete(new ProduktKey(findHersteller(herstellerStr, false), bestellNr));
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+    }
+
+    @POST
+    @Path(ApiPaths.PRODUKT_TEIL_PATH)
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response addTeil(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathParam(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr, @PathParam(ApiPaths.TEIL_BESTELL_NR_PARAM_NAME) String teilBestellNr) {
+        try {
+            logPost(herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr);
+
+            Produkt produkt = (Produkt) findProdukt(herstellerStr, bestellNr, true);
+
+            if (produkt == null) {
+                return getResponse(badRequest(null, "Produkt " + herstellerStr + "/" + bestellNr + " does not exist"));
+            }
+
+            
+            Produkt teil =  (Produkt) findProdukt(teilHerstellerStr, teilBestellNr, true);
+
+            if (teil == null) {
+                return getResponse(badRequest(null, "Produkt " + teilHerstellerStr + "/" + teilBestellNr + " does not exist"));
+            }
+
+            // TODO: check for cycles
+
+            ProduktTeil produktTeil = new ProduktTeil(null, produkt, teil, 1, false);
+
+            produkt.addTeil(produktTeil);
+
+            getPersister().update(produkt);
+
+            return getResponse(created(), produktTeil, true, true);
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+    }
+
+    @PUT
+    @Path(ApiPaths.PRODUKT_TEIL_PATH)
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response updateTeil(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathParam(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr, @PathParam(ApiPaths.TEIL_BESTELL_NR_PARAM_NAME) String teilBestellNr) {
+        try {
+            logPut(herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr);
+
+            ProduktTeil produktTeil = (ProduktTeil) findProduktTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, true);
+
+            if (produktTeil == null) {
+                return getResponse(badRequest(null, "ProduktTeil " + herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr + " does not exist"));
+            }
+
+            @SuppressWarnings("unused")
+            IProdukt produkt = produktTeil.getProdukt();
+
+            // TODO: update produktTeil
+
+            produktTeil = getTeilPersister().update(produktTeil);
+
+            return getResponse(created(), produktTeil, true, true);
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+    }
+
+    @DELETE
+    @Path(ApiPaths.PRODUKT_TEIL_PATH)
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response deleteTeil(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathParam(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr, @PathParam(ApiPaths.TEIL_BESTELL_NR_PARAM_NAME) String teilBestellNr) {
+        try {
+            logDelete(herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr);
+
+            ProduktTeil produktTeil = (ProduktTeil) findProduktTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, true);
+
+            if (produktTeil == null) {
+                return getResponse(badRequest(null, "ProduktTeil " + herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr + " does not exist"));
+            }
+
+            Produkt produkt = (Produkt) produktTeil.getProdukt();
+
+            produkt.removeTeil(produktTeil);
+
+            //getProduktTeilPersister().delete(produktTeil);
+
+            getPersister().update(produkt);
+
+            return getResponse(noContent());
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+    }
+
+    private ProduktTeil findProduktTeil(String herstellerStr, String bestellNr, String teilHerstellerStr, String teilBestellNr, boolean eager) throws Exception {
+        return getTeilPersister().findByKey(new ProduktTeilKey(findProdukt(herstellerStr, bestellNr, false), findProdukt(teilHerstellerStr, teilBestellNr, false)), eager);
+    }
+
+    protected IPersister<ProduktTeil> getTeilPersister() {
+        return teilPersister;
     }
 }

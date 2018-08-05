@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -55,12 +57,15 @@ public class ProduktTeil extends AbstractItem<ProduktTeilKey> implements IProduk
     private static final long serialVersionUID = 7684916028825247336L;
     
     /** The produkt. */
+    @NotNull
     private IProdukt produkt;
 
     /** The component produkt */
+    @NotNull
     private IProdukt teil;
     
     /** The count of this component. */
+    @Positive
     private Integer anzahl;
 
     /**

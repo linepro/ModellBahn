@@ -10,17 +10,17 @@ import com.linepro.modellbahn.model.IDescribedEnum;
  */
 public enum AdressTyp implements IDescribedEnum {
 
-    DCC("A DCC address."),
+    DCC("A DCC address 0 - 10239."),
     
-    DCC_SHORT("A DCC short address."),
+    DCC_SHORT("A DCC short address 1 - 27."),
     
-    DELTA("A Märklin DELTA (locomotive) address."),
+    DELTA("A Märklin DELTA (locomotive) address 2,6,8,18,20,24,26,54,56,60,62,72,74,78,80."),
     
-    MM("A Märklin Motorola (locomotive) address (version 1 or 2)."),
+    MM("A Märklin Motorola (locomotive) address (version 1 or 2) 1 - 80."),
     
-    DIGITAL("A Märklin Digital (locomotive) address (fx or mfx)."),
+    DIGITAL("A Märklin Digital (locomotive) address (fx or mfx) 1 - 255."),
     
-    WEICHE("A Märklin Motorola accessory address.");
+    WEICHE("A Märklin Motorola accessory address 1 - 256.");
 
     protected final String description;
     

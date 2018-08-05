@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -54,12 +56,15 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
     private static final long serialVersionUID = -3254516717556070251L;
 
     /** The decoder. */
+    @NotNull
     private IDecoder decoder;
     
     /** The funktion. */
+    @NotNull
     private IDecoderTypFunktion funktion;
 
 	/** The wert. */
+    @NotEmpty
 	private String bezeichnung;
 
     private String funktionStr;

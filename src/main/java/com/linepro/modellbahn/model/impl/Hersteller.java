@@ -40,9 +40,11 @@ public class Hersteller extends AbstractNamedItem<NameKey> implements IHerstelle
     private static final long serialVersionUID = -2896366936132390553L;
 
     /** The url. */
+    @org.hibernate.validator.constraints.URL
     private URL url;
 
     /** The Telefon. */
+    //@Telephone
     private String Telefon;
 
     /**

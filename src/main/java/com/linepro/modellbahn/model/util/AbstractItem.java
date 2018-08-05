@@ -17,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.UriBuilder;
 
@@ -53,9 +54,11 @@ public abstract class AbstractItem<K extends IKey> implements Serializable, IIte
     private static final long serialVersionUID = 938276986391979417L;
 
     /** The primary key id. */
+    @NotNull
     private Long id;
 
 	/** The soft deleted state. */
+    @NotNull
 	private Boolean deleted;
 	
 	/** Set of HATEOAS links for Json serialization */

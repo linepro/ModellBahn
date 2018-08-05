@@ -19,10 +19,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IZug;
+import com.linepro.modellbahn.model.IZugConsist;
 import com.linepro.modellbahn.model.IZugTyp;
+import com.linepro.modellbahn.model.impl.Artikel;
 import com.linepro.modellbahn.model.impl.Zug;
 import com.linepro.modellbahn.model.impl.ZugConsist;
 import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.model.keys.ZugConsistKey;
+import com.linepro.modellbahn.persistence.IPersister;
+import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -37,8 +42,12 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
 @Path(ApiPaths.ZUG)
 public class ZugService extends AbstractItemService<NameKey, Zug> {
 
+    private IPersister<ZugConsist> consistPersister;
+
     public ZugService() {
         super(Zug.class);
+        
+        consistPersister = StaticPersisterFactory.get().createPersister(ZugConsist.class);
     }
 
     @JsonCreator
@@ -95,21 +104,6 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
         return super.add(entity);
     }
 
-    /**
-     * Add a consist to the Zug
-     * @param name
-     * @param artikelId
-     * @return
-     */
-    @POST
-    @Path(ApiPaths.NAME_PART)
-    @Consumes({ MediaType.APPLICATION_JSON })
-    @Produces(MediaType.APPLICATION_JSON)
-    @JsonView(Views.Public.class)
-    public Response addConsist(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, @QueryParam(ApiPaths.ARTIKEL) String artikelId) {
-        return getResponse(noContent());
-    }
-
     @PUT
     @Path(ApiPaths.NAME_PART)
     @Consumes({ MediaType.APPLICATION_JSON })
@@ -125,5 +119,107 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @JsonView(Views.Public.class)
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
+    }
+
+    @POST
+    @Path(ApiPaths.NAME_PART)
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response addConsist(@PathParam(ApiPaths.NAME_PARAM_NAME) String zugStr, @QueryParam(ApiPaths.ARTIKEL) String artikelId) {
+        try {
+            logPost(zugStr + "/" + artikelId);
+
+            Zug zug = (Zug) findZug(zugStr, true);
+
+            if (zug == null) {
+                return getResponse(badRequest(null, "Zug " + zugStr + " does not exist"));
+            }
+
+            Artikel artikel = (Artikel) findArtikel(artikelId, true);
+
+            if (artikel == null) {
+                return getResponse(badRequest(null, "Artikel " + artikelId + " does not exist"));
+            }
+
+            ZugConsist zugConsist = new ZugConsist(null, zug, null, artikel, false);
+
+            zug.addConsist(zugConsist);
+
+            getPersister().update(zug);
+
+            return getResponse(created(), zugConsist, true, true);
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+    }
+
+    @PUT
+    @Path(ApiPaths.ZUG_CONSIST_PATH)
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response updateConsist(@PathParam(ApiPaths.ZUG_PARAM_NAME) String zugStr, @PathParam(ApiPaths.POSITION_PARAM_NAME) Integer position, @QueryParam(ApiPaths.ARTIKEL) String artikelId) {
+        try {
+            logPost(zugStr + "/" + position + "?" + artikelId);
+
+            ZugConsist consist = (ZugConsist) findZugConsist(zugStr, position, true);
+
+            if (consist == null) {
+                return getResponse(badRequest(null, "ZugConsist " + zugStr + "/" + position + " does not exist"));
+            }
+
+            Artikel artikel = (Artikel) findArtikel(artikelId, true);
+
+            if (artikel == null) {
+                return getResponse(badRequest(null, "Artikel " + artikelId + " does not exist"));
+            }
+
+            consist.setArtikel(artikel);
+
+            consist = getConsistPersister().update(consist);
+
+            return getResponse(created(), consist, true, true);
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+    }
+
+    @DELETE
+    @Path(ApiPaths.ZUG_CONSIST_PATH)
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response deleteConsist(@PathParam(ApiPaths.ZUG_PARAM_NAME) String zugStr, @PathParam(ApiPaths.POSITION_PARAM_NAME) Integer position) {
+        try {
+            ZugConsist zugConsist = (ZugConsist) findZugConsist(zugStr, position, true);
+
+            if (zugConsist == null) {
+                return getResponse(badRequest(null, "ZugConsist " + zugStr + "/" + position + " does not exist"));
+            }
+
+            Zug zug = (Zug) zugConsist.getZug();
+
+            zug.removeConsist(zugConsist);
+
+            //getZugConsistPersister().delete(zugConsist);
+
+            getPersister().update(zug);
+
+            return getResponse(noContent());
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+    }
+
+    protected IZugConsist findZugConsist(String zugStr, Integer position, boolean eager) throws Exception {
+        return findZugConsist(findZug(zugStr, eager), position, eager) ;
+    }
+
+    protected IZugConsist findZugConsist(IZug zug, Integer position, boolean eager) throws Exception {
+        return getConsistPersister().findByKey(new ZugConsistKey(zug, position), eager);
+    }
+
+    protected IPersister<ZugConsist> getConsistPersister() {
+        return consistPersister;
     }
 }
