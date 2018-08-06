@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -74,6 +76,7 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     private static final long serialVersionUID = 8652624782179487496L;
 
     /** The produkt. */
+    @NotNull
     private IProdukt produkt;
 
     /** The Kaufdatum. */
@@ -86,6 +89,7 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     private BigDecimal preis;
 
     /** The stuck. */
+    @Positive
     private Integer stuck;
 
     /** The steuerung. */
@@ -110,6 +114,7 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     private String beladung;
 
     /** The status. */
+    @NotNull
     private Status status;
 
     /**

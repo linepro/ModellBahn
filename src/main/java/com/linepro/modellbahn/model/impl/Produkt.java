@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -116,12 +117,15 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     private static final long serialVersionUID = 8098838727023710484L;
 
     /** The hersteller. */
+    @NotNull
     private IHersteller hersteller;
 
     /** The unter kategorie. */
+    @NotNull
     private IUnterKategorie unterKategorie;
 
     /** The massstab. */
+    @NotNull
     private IMassstab massstab;
 
     /** The spurweite. */
