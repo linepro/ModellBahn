@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -62,12 +63,15 @@ public class Decoder extends AbstractNamedItem<NameKey> implements IDecoder {
     private static final long serialVersionUID = 44440227704021482L;
 
     /** The typ. */
+    @NotNull
     private IDecoderTyp decoderTyp;
 
     /** The protokoll. */
+    @NotNull
     private IProtokoll protokoll;
 
     /** The fahrstufe. */
+    //@Fahrstufe
     private Integer fahrstufe;
 
     /** The adressen. */

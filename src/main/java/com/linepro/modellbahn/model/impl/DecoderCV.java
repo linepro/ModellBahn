@@ -14,7 +14,6 @@ import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.validator.constraints.Range;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -31,6 +30,7 @@ import com.linepro.modellbahn.model.IDecoderCV;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.keys.DecoderCVKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
+import com.linepro.modellbahn.model.validation.CVValue;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.Views;
@@ -66,7 +66,7 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     private IDecoderTypCV cv;
 
     /** The wert. */
-    @Range(min=0,max=255)
+    @CVValue
     private Integer wert;
 
     private Integer cvValue;

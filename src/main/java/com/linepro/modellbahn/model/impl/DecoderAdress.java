@@ -38,6 +38,7 @@ import com.linepro.modellbahn.model.IDecoderAdress;
 import com.linepro.modellbahn.model.keys.DecoderAdressKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.model.util.AdressTyp;
+import com.linepro.modellbahn.model.validation.Adress;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.Views;
@@ -53,10 +54,11 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name = "DecoderAdress")
-@Table(name = "DecoderAdress", indexes = { @Index(columnList = DBNames.DECODER_ID + "," + DBNames.REIHE, unique = true) },
-        uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.REIHE }) })
+@Table(name = "DecoderAdress", indexes = { @Index(columnList = DBNames.DECODER_ID + "," + DBNames.INDEX, unique = true) },
+        uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.INDEX }) })
 @JsonRootName(value = ApiNames.ADRESS)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER, ApiNames.REIHE, ApiNames.ADRESS_TYP, ApiNames.ADRESS, ApiNames.DELETED, ApiNames.LINKS })
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER, ApiNames.INDEX, ApiNames.ADRESS_TYP, ApiNames.ADRESS, ApiNames.DELETED, ApiNames.LINKS })
+@Adress
 public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDecoderAdress {
 
     /** The Constant serialVersionUID. */
@@ -68,7 +70,7 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
 
     /** The adress. */
     @Range(min=0,max=5)
-    private Integer reihe;
+    private Integer index;
 
     /** The typ. */
     @NotNull
@@ -80,10 +82,10 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
     public DecoderAdress() {
     }
 
-    public DecoderAdress(Long id, IDecoder decoder, Integer reihe, AdressTyp typ, Integer adress, Boolean deleted) {
+    public DecoderAdress(Long id, IDecoder decoder, Integer index, AdressTyp typ, Integer adress, Boolean deleted) {
         super(id, deleted);
         setDecoder(decoder);
-        setReihe(reihe);
+        setIndex(index);
         setAdressTyp(typ);
         setAdress(adress);
     }
@@ -108,17 +110,17 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
     }
 
     @Override
-    @Column(name = DBNames.REIHE, nullable = false)
-    @JsonGetter(ApiNames.REIHE)
+    @Column(name = DBNames.INDEX, nullable = false)
+    @JsonGetter(ApiNames.INDEX)
     @JsonView(Views.DropDown.class)
-    public Integer getReihe() {
-        return reihe;
+    public Integer getIndex() {
+        return index;
     }
 
     @Override
-    @JsonSetter(ApiNames.REIHE)
-    public void setReihe(Integer reihe) {
-        this.reihe = reihe;
+    @JsonSetter(ApiNames.INDEX)
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 
     @Override
@@ -162,14 +164,14 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
      @Transient
      @JsonIgnore
      public String getLinkId() {
-         return String.format(ApiPaths.DECODER_ADRESS_LINK, getParentId(), getReihe());
+         return String.format(ApiPaths.DECODER_ADRESS_LINK, getParentId(), getIndex());
      }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
                 .append(getDecoder())
-                .append(getReihe())
+                .append(getIndex())
                 .hashCode();
     }
 
@@ -187,7 +189,7 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
 
         return new EqualsBuilder()
                 .append(getDecoder(), other.getDecoder())
-                .append(getReihe(), other.getReihe())
+                .append(getIndex(), other.getIndex())
                 .isEquals();
     }
 
@@ -196,7 +198,7 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
                 .append(ApiNames.DECODER, getDecoder())
-                .append(ApiNames.REIHE, getReihe())
+                .append(ApiNames.INDEX, getIndex())
                 .append(ApiNames.ADRESS_TYP, getAdressTyp())
                 .append(ApiNames.ADRESS, getAdress())
                 .toString();

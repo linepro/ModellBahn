@@ -21,7 +21,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -183,7 +182,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     private File explosionszeichnung;
 
     /** The lange. */
-    @Positive
+    //@Positive
     private BigDecimal lange;
 
     /** The abbildung. */

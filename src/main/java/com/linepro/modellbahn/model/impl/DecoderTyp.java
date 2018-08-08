@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -75,21 +76,27 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     private static final long serialVersionUID = 8503812316290492490L;
 
     /** The hersteller. */
+    @NotNull
     private IHersteller hersteller;
 
     /** The i max. */
+    //@IMax
     private BigDecimal iMax;
 
     /** The protokoll. */
+    @NotNull
     private IProtokoll protokoll;
 
     /** The fahrstufe. */
+    //@Fahrstufe
     private Integer fahrstufe;
 
     /** The sound. */
+    @NotNull
     private Boolean sound;
 
     /** The konfiguration. */
+    @NotNull
     private Konfiguration konfiguration;
 
     /** The cv. */

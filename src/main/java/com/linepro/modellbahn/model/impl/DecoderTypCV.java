@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -28,6 +29,7 @@ import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.keys.DecoderTypCVKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
+import com.linepro.modellbahn.model.validation.CVValue;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.Views;
@@ -54,6 +56,7 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
     private static final long serialVersionUID = -5202372019371973750L;
 
     /** The decoder typ. */
+    @NotNull
     private IDecoderTyp decoderTyp;
 
     /** The cv. */
@@ -65,15 +68,15 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
     private String bezeichnung;
 
     /** The minimal. */
-    @Range(min=0,max=255)
+    @CVValue
     private Integer minimal;
 
     /** The maximal. */
-    @Range(min=0,max=255)
+    @CVValue
     private Integer maximal;
 
     /** The werkseinstellung. */
-    @Range(min=0,max=255)
+    @CVValue
     private Integer werkseinstellung;
 
     /**

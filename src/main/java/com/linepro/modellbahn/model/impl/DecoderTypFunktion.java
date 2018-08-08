@@ -56,6 +56,7 @@ public class DecoderTypFunktion extends AbstractNamedItem<DecoderTypFunktionKey>
     private static final long serialVersionUID = -9194895557054214626L;
 
     /** The decoder typ. */
+    @NotNull
     private IDecoderTyp decoderTyp;
 
     /** The reihe. */

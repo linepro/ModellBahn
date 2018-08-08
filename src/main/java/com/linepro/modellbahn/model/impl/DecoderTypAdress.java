@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -29,6 +30,8 @@ import com.linepro.modellbahn.model.IDecoderTypAdress;
 import com.linepro.modellbahn.model.keys.DecoderTypAdressKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.model.util.AdressTyp;
+import com.linepro.modellbahn.model.validation.Adress;
+import com.linepro.modellbahn.model.validation.CVValue;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.Views;
@@ -48,29 +51,31 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.DECODER_TYP_ID), @Index(columnList = DBNames.INDEX) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.DECODER_TYP_ID, DBNames.INDEX }) })
 @JsonRootName(value = ApiNames.ADRESS)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.INDEX,  ApiNames.ADRESS_TYP,  ApiNames.SPAN,  ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED, ApiNames.LINKS}) 
+@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.INDEX,  ApiNames.ADRESS_TYP,  ApiNames.SPAN,  ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED, ApiNames.LINKS})
+@Adress
 public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implements IDecoderTypAdress {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5202372019371973750L;
 
     /** The decoder typ. */
+    @NotNull
     private IDecoderTyp decoderTyp;
 
     /** The index. */
-    @Range(min=1,max=255)
+    @Range(min=1,max=10)
     private Integer index;
 
     /** The adressTyp. */
     @NotEmpty
     private AdressTyp adressTyp;
 
-    /** The minimal. */
-    @Range(min=0,max=255)
-    private Integer minimal;
+    /** The span. */
+    @Range(min=1,max=32)
+    private Integer span;
 
     /** The werkseinstellung. */
-    @Range(min=0,max=255)
+    @CVValue
     private Integer werkseinstellung;
 
     /**
@@ -87,19 +92,19 @@ public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implemen
      * @param decoderTyp the decoder typ
      * @param index the index
      * @param adressTyp the adressTyp
-     * @param minimal the minimal
+     * @param span the span
      * @param maximal the maximal
      * @param werkseinstellung the werkseinstellung
      * @param deleted the deleted
      */
-    public DecoderTypAdress(Long id, IDecoderTyp decoderTyp, Integer index, AdressTyp adressTyp, Integer length,
+    public DecoderTypAdress(Long id, IDecoderTyp decoderTyp, Integer index, AdressTyp adressTyp, Integer span,
             Integer werkseinstellung, Boolean deleted) {
         super(id, deleted);
 
         setDecoderTyp(decoderTyp);
         setIndex(index);
         setAdressTyp(adressTyp);
-        setSpan(minimal);
+        setSpan(span);
         setWerkseinstellung(werkseinstellung);
     }
 
@@ -153,13 +158,13 @@ public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implemen
     @JsonGetter(ApiNames.SPAN)
     @JsonView(Views.Public.class)
     public Integer getSpan() {
-        return minimal;
+        return span;
     }
 
     @Override
     @JsonSetter(ApiNames.SPAN)
-    public void setSpan(Integer minimal) {
-        this.minimal = minimal;
+    public void setSpan(Integer span) {
+        this.span = span;
     }
 
     @Override
@@ -176,6 +181,13 @@ public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implemen
         this.werkseinstellung = werkseinstellung;
     }
 
+    @Override
+    @Transient
+    @JsonIgnore
+    public Integer getAdress() {
+        return getWerkseinstellung();
+    }
+    
     @Override
     @Transient
     @JsonIgnore

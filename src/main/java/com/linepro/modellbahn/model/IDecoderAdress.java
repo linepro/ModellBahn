@@ -8,7 +8,7 @@ import com.linepro.modellbahn.model.util.AdressTyp;
  * @author   $Author$
  * @version  $Id$
  */
-public interface IDecoderAdress extends IItem<DecoderAdressKey> {
+public interface IDecoderAdress extends IItem<DecoderAdressKey>, IAdress {
 
     /**
      * Gets the decoder.
@@ -24,9 +24,9 @@ public interface IDecoderAdress extends IItem<DecoderAdressKey> {
      */
     void setDecoder(IDecoder decoder);
 
-    Integer getReihe();
+    Integer getIndex();
 
-    void setReihe(Integer reihe);
+    void setIndex(Integer index);
     
     /**
      * Gets the typ.

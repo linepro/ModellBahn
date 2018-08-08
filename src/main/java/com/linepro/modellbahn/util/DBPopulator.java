@@ -468,7 +468,7 @@ public class DBPopulator {
     protected DecoderTyp add60760(IProtokoll fx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, fx, "60760", "Hochleistungsdecoder", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung/Bremsverzögerung", 1, 63, 16, false));
@@ -483,7 +483,7 @@ public class DBPopulator {
     protected DecoderTyp add46715(IProtokoll fx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, fx, "46715", "46715", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
@@ -498,7 +498,7 @@ public class DBPopulator {
     protected DecoderTyp addWeicheDecoder(IProtokoll weiche, Hersteller marklin, String bestellNr, String bezeichnung, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, weiche, bestellNr, bezeichnung, false, Konfiguration.SWITCH, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.WEICHE, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.WEICHE, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 255, null, false));
 
@@ -508,7 +508,7 @@ public class DBPopulator {
     protected DecoderTyp addDrehscheibendekoder(IProtokoll weiche, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, weiche, "7687", "Drehscheibendekoder", false, Konfiguration.LINK, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.WEICHE, 1, 16, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.WEICHE, 1, 16, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 14, 15, 14, false));
 
@@ -528,7 +528,7 @@ public class DBPopulator {
     protected DecoderTyp addUhlenbrock67900(IProtokoll mm, Hersteller uhlenbrock, IPersister<DecoderTyp> persister) {
             DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, uhlenbrock, mm, "67900", "67900", false, Konfiguration.SWITCH, false));
 
-            decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.MM, 1, 8, false));
+            decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.MM, 1, 8, false));
 
             decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 127, 3, false));
             decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Minimale Geschwindigkeit", 1, 63, 5, false));
@@ -571,7 +571,7 @@ public class DBPopulator {
     private DecoderTyp addMarklinDELTADecoder(IProtokoll mm, Hersteller marklin, String bestellNr, String bezeichnung, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, mm, bestellNr, bezeichnung, false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DELTA, 1, 80, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DELTA, 1, 80, false));
         
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 11, false));
 
@@ -583,7 +583,7 @@ public class DBPopulator {
     protected DecoderTyp addSwitchPilotServo(IProtokoll weiche, Hersteller esu, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, esu, weiche, "51802", "SwitchPilot Servo", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.WEICHE, 1, 4, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.WEICHE, 1, 4, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Decoderadresse 1, LSB", 1, 63, 1, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 7, "Versionsnummer", null, null, 153, false));
@@ -615,8 +615,8 @@ public class DBPopulator {
     protected DecoderTyp addSwitchPilot(IProtokoll weiche, Hersteller esu, String bestellNr, String bezeichnung, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, esu, weiche, bestellNr, bezeichnung, false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.WEICHE, 1, 8, false));
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.WEICHE, 1, 2, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.WEICHE, 1, 8, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 2, AdressTyp.WEICHE, 1, 2, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Decoderadresse 1, LSB", 1, 63, 1, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Konfiguration Ausgang 1", 0, 64, 8, false));
@@ -652,8 +652,8 @@ public class DBPopulator {
     protected DecoderTyp addLokPilotFX(IProtokoll mm, Hersteller esu, String bestellNr, String bezeichnung, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, esu, mm, bestellNr, bezeichnung, false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 2, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
@@ -670,8 +670,8 @@ public class DBPopulator {
     protected DecoderTyp addLokSoundM4(IProtokoll mfx, Hersteller esu, String bestellNr, String bezeichnung, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, esu, mfx, bestellNr, bezeichnung, true, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 2, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 03, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung", 1, 63, 03, false));
@@ -718,7 +718,7 @@ public class DBPopulator {
     protected DecoderTyp addLokPilotM4(IProtokoll mfx, Hersteller esu, String bestellNr, String bezeichnung, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, esu, mfx, bestellNr, bezeichnung, false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 03, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung", 1, 63, 03, false));
@@ -743,7 +743,7 @@ public class DBPopulator {
     protected DecoderTyp addMarklinSoundDecoder(IProtokoll mfx, Hersteller marklin, String bestellNr, String bezeichnung, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, bestellNr, bezeichnung, false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 10, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
@@ -769,7 +769,7 @@ public class DBPopulator {
     protected DecoderTyp add115798(IProtokoll fx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, fx, "115798", "115798", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 255, null, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung/Bremsverzögerung", 1, 31, null, false));
@@ -783,7 +783,7 @@ public class DBPopulator {
     protected DecoderTyp add150436(IProtokoll fx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, fx, "150436", "150436", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 255, 38, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null, false));
@@ -799,7 +799,7 @@ public class DBPopulator {
     protected DecoderTyp add219574(IProtokoll fx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, fx, "219574", "219574", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 45, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null, false));
@@ -824,7 +824,7 @@ public class DBPopulator {
     protected DecoderTyp add602756(IProtokoll fx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, fx, "602756", "602756", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Lautstärke", 1, 63, null, false));
@@ -841,7 +841,7 @@ public class DBPopulator {
     protected DecoderTyp add608862(IProtokoll fx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, fx, "608862", "608862", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 10, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null, false));
@@ -859,7 +859,7 @@ public class DBPopulator {
     protected DecoderTyp add611105(IProtokoll fx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, fx, "611105", "611105", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 71, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Bedienung festgelegt", 0, 1, 0, false));
@@ -877,7 +877,7 @@ public class DBPopulator {
     protected DecoderTyp add611754(IProtokoll fx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, fx, "611754", "611754", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null, false));
@@ -894,7 +894,7 @@ public class DBPopulator {
     protected DecoderTyp add115166(IProtokoll mfx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "115166", "115166", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
@@ -919,7 +919,7 @@ public class DBPopulator {
     protected DecoderTyp add115673(IProtokoll mfx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "115673", "115673", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 64, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, 63, false));
@@ -946,7 +946,7 @@ public class DBPopulator {
     protected DecoderTyp add116836(IProtokoll mfx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "116836", "116836", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 70, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
@@ -972,7 +972,7 @@ public class DBPopulator {
     protected DecoderTyp add123572(IProtokoll mfx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "123572", "123572", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 0, 80, 42, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 0, 63, 63, false));
@@ -993,7 +993,7 @@ public class DBPopulator {
     protected DecoderTyp add140131(IProtokoll mfx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "140131", "140131", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
@@ -1016,7 +1016,7 @@ public class DBPopulator {
     protected DecoderTyp add148924(IProtokoll mfx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "148924", "148924", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null, false));
@@ -1043,7 +1043,7 @@ public class DBPopulator {
     protected DecoderTyp add156787(IProtokoll mfx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "156787", "156787", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 49, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
@@ -1064,7 +1064,7 @@ public class DBPopulator {
     protected DecoderTyp add162946(IProtokoll mfx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "162946", "162946", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 11, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
@@ -1094,7 +1094,7 @@ public class DBPopulator {
     protected DecoderTyp add169274(IProtokoll mfx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "169274", "169274", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 0, 80, 43, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 0, 63, 63, false));
@@ -1120,7 +1120,7 @@ public class DBPopulator {
     protected DecoderTyp add253201(IProtokoll mfx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "253201", "253201", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
@@ -1152,7 +1152,7 @@ public class DBPopulator {
     protected DecoderTyp add269706(IProtokoll mfx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "269706", "269706", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
@@ -1185,7 +1185,7 @@ public class DBPopulator {
     protected DecoderTyp add39970(IProtokoll mfx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "39970", "39970", true, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
 
@@ -1200,7 +1200,7 @@ public class DBPopulator {
     protected DecoderTyp add60902(IProtokoll mfx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "60902", "Hochleistungselektronik", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung", 1, 63, 03, false));
@@ -1212,7 +1212,7 @@ public class DBPopulator {
     protected DecoderTyp add611077(IProtokoll mfx, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, mfx, "611077", "611077", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null, false));
@@ -1229,7 +1229,7 @@ public class DBPopulator {
     protected DecoderTyp add209394(IProtokoll protokoll, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, protokoll, "209394", "209394", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", null, null, 54, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
@@ -1242,7 +1242,7 @@ public class DBPopulator {
     protected DecoderTyp add42973(IProtokoll protokoll, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, protokoll, "42973", "42973", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
@@ -1261,7 +1261,7 @@ public class DBPopulator {
     protected DecoderTyp add49960(IProtokoll protokoll, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, protokoll, "49960", "49960", true, Konfiguration.SWITCH, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
 
@@ -1277,7 +1277,7 @@ public class DBPopulator {
     protected DecoderTyp add606896(IProtokoll protokoll, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, protokoll, "606896", "606896", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null, false));
@@ -1292,7 +1292,7 @@ public class DBPopulator {
     protected DecoderTyp add608825(IProtokoll protokoll, Hersteller marklin, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, marklin, protokoll, "608825", "608825", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.DIGITAL, 1, 1, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 39, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null, false));
@@ -1308,7 +1308,7 @@ public class DBPopulator {
     protected DecoderTyp addDSD2010(IProtokoll weiche, Hersteller digitalbahn, IPersister<DecoderTyp> persister) {
         DecoderTyp decoderTyp = save(persister, new DecoderTyp(null, digitalbahn, weiche, "DSD2010", "Drehscheibendekoder", false, Konfiguration.CV, false));
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 0, AdressTyp.WEICHE, 1, 16, false));
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.WEICHE, 1, 16, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "48 / 24 Positions", 0, 1, 1, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "DCC / Motorola", 0, 1, 1, false));
