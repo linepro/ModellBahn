@@ -41,12 +41,7 @@ public class EpochService extends AbstractItemService<NameKey, Epoch> {
             @JsonProperty(value = ApiNames.NAME, required = false) String name,
             @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
-        Epoch entity = create();
-
-        entity.setId(id);
-        entity.setName(name);
-        entity.setBezeichnung(bezeichnung);
-        entity.setDeleted(deleted);
+        Epoch entity = new Epoch(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
 

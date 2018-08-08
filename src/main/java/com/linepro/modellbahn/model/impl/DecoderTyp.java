@@ -36,19 +36,20 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IDecoderTyp;
+import com.linepro.modellbahn.model.IDecoderTypAdress;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.model.IProtokoll;
 import com.linepro.modellbahn.model.keys.DecoderTypKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
-import com.linepro.modellbahn.model.util.AdressTyp;
 import com.linepro.modellbahn.model.util.Konfiguration;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.resolver.HerstellerResolver;
 import com.linepro.modellbahn.rest.json.resolver.ProtokollResolver;
+import com.linepro.modellbahn.rest.json.serialization.DecoderTypAdressSerializer;
 import com.linepro.modellbahn.rest.json.serialization.DecoderTypCVSerializer;
 import com.linepro.modellbahn.rest.json.serialization.DecoderTypFunktionSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -67,20 +68,14 @@ import com.linepro.modellbahn.util.ToStringBuilder;
                 @UniqueConstraint(columnNames = { DBNames.HERSTELLER_ID, DBNames.NAME }) })
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME))
 @JsonRootName(value = ApiNames.DECODER_TYP)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.PROTOKOLL, ApiNames.ADRESS_TYP, ApiNames.ADRESSEN, ApiNames.FAHRSTUFE, ApiNames.SOUND, ApiNames.I_MAX, ApiNames.KONFIGURATION, ApiNames.DELETED, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS})
+@JsonPropertyOrder({ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.SOUND, ApiNames.I_MAX, ApiNames.KONFIGURATION, ApiNames.DELETED, ApiNames.ADRESSEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS})
 public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDecoderTyp {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8503812316290492490L;
 
-    /** The typ. */
-    private AdressTyp adressTyp;
-
     /** The hersteller. */
     private IHersteller hersteller;
-
-    /** The adressen. */
-    private Integer adressen;
 
     /** The i max. */
     private BigDecimal iMax;
@@ -98,6 +93,9 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     private Konfiguration konfiguration;
 
     /** The cv. */
+    private Set<IDecoderTypAdress> adressen = new HashSet<IDecoderTypAdress>();
+
+    /** The cv. */
     private Set<IDecoderTypCV> CVs = new HashSet<IDecoderTypCV>();
 
     /** The funktion. */
@@ -111,13 +109,11 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     }
 
     public DecoderTyp(Long id, IHersteller hersteller, IProtokoll protokoll, String name, String bezeichnung,
-            AdressTyp adressTyp, Integer adressen, Boolean sound, Konfiguration konfiguration, Boolean deleted) {
+            Boolean sound, Konfiguration konfiguration, Boolean deleted) {
         super(id, name, bezeichnung, deleted);
 
         setHersteller(hersteller);
         setProtokoll(protokoll);
-        setAdressTyp(adressTyp);
-        setAdressen(adressen);
         setSound(sound);
         setKonfiguration(konfiguration);
     }
@@ -153,35 +149,6 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     @JsonSetter(ApiNames.BESTELL_NR)
     public void setName(String name) {
         super.setName(name);
-    }
-
-    @Override
-    @Column(name = DBNames.ADRESSEN, nullable = false)
-    @JsonGetter(ApiNames.ADRESSEN)
-    @JsonView(Views.Public.class)
-    public Integer getAdressen() {
-        return adressen;
-    }
-
-    @Override
-    @JsonSetter(ApiNames.ADRESSEN)
-    public void setAdressen(Integer adressen) {
-        this.adressen = adressen;
-    }
-
-    @Override
-    @Enumerated(EnumType.STRING)
-    @Column(name = DBNames.ADRESS_TYP, length = 15, nullable = true)
-    @JsonGetter(ApiNames.ADRESS_TYP)
-    @JsonView(Views.Public.class)
-    public AdressTyp getAdressTyp() {
-        return adressTyp;
-    }
-
-    @Override
-    @JsonSetter(ApiNames.ADRESS_TYP)
-    public void setAdressTyp(AdressTyp typ) {
-        this.adressTyp = typ;
     }
 
     @Override
@@ -259,6 +226,34 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     public void setKonfiguration(Konfiguration konfiguration) {
         this.konfiguration = konfiguration;
     }
+
+    @Override
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.DECODER_TYP, targetEntity = DecoderTypAdress.class, orphanRemoval = true)
+    @JsonGetter(ApiNames.ADRESSEN)
+    @JsonView(Views.Public.class)
+    @JsonSerialize(contentUsing = DecoderTypAdressSerializer.class)
+    public Set<IDecoderTypAdress> getAdressen() {
+        return adressen;
+    }
+
+    @Override
+    @JsonSetter(ApiNames.ADRESSEN)
+    @JsonDeserialize(contentAs = DecoderTypAdress.class)
+    public void setAdressen(Set<IDecoderTypAdress> adressen) {
+        this.adressen = adressen;
+    }
+
+    @Override
+    public void addAdress(IDecoderTypAdress adress) {
+        adress.setDecoderTyp(this);
+        getAdressen().add(adress);
+    }
+
+    @Override
+    public void removeAdress(IDecoderTypAdress adress) {
+        getAdressen().remove(adress);
+    }
+
 
     @Override
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.DECODER_TYP, targetEntity = DecoderTypCV.class, orphanRemoval = true)
@@ -360,7 +355,6 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
                 .append(ApiNames.HERSTELLER, getHersteller())
                 .append(ApiNames.PROTOKOLL, getProtokoll())
                 .append(ApiNames.I_MAX, getiMax())
-                .append(ApiNames.ADRESS_TYP, getAdressTyp())
                 .append(ApiNames.FAHRSTUFE, getFahrstufe())
                 .append(ApiNames.SOUND, getSound())
                 .append(ApiNames.KONFIGURATION, getKonfiguration())

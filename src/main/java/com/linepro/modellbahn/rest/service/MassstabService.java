@@ -41,13 +41,8 @@ public class MassstabService extends AbstractItemService<NameKey, Massstab> {
             @JsonProperty(value = ApiNames.NAME, required = false) String name,
             @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
-        Massstab entity = create();
-
-        entity.setId(id);
-        entity.setName(name);
-        entity.setBezeichnung(bezeichnung);
-        entity.setDeleted(deleted);
-
+        Massstab entity = new Massstab(id, name, bezeichnung, deleted);
+        
         debug("created: " + entity);
 
         return entity;

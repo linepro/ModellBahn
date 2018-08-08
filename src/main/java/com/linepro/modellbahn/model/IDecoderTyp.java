@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 import com.linepro.modellbahn.model.keys.DecoderTypKey;
-import com.linepro.modellbahn.model.util.AdressTyp;
 import com.linepro.modellbahn.model.util.Konfiguration;
 
 /**
@@ -13,20 +12,6 @@ import com.linepro.modellbahn.model.util.Konfiguration;
  * @version  $Id$
  */
 public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
-
-    /**
-     * Gets the typ.
-     *
-     * @return the typ
-     */
-    AdressTyp getAdressTyp();
-
-    /**
-     * Sets the typ.
-     *
-     * @param typ the new typ
-     */
-    void setAdressTyp(AdressTyp typ);
 
     /**
      * Gets the hersteller.
@@ -41,20 +26,6 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
      * @param hersteller the new hersteller
      */
     void setHersteller(IHersteller hersteller);
-
-    /**
-     * Gets the adressen.
-     *
-     * @return the adressen
-     */
-    Integer getAdressen();
-
-    /**
-     * Sets the adressen.
-     *
-     * @param adressen the new adressen
-     */
-    void setAdressen(Integer adressen);
 
     /**
      * Gets the i max.
@@ -113,6 +84,20 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
     void setSound(Boolean sound);
 
     /**
+     * Gets the adressen.
+     *
+     * @return the adressen
+     */
+    Set<IDecoderTypAdress> getAdressen();
+
+    /**
+     * Sets the adressen.
+     *
+     * @param adressen the new adressen
+     */
+    void setAdressen(Set<IDecoderTypAdress> adressen);
+
+    /**
      * Gets the cv.
      *
      * @return the cv
@@ -153,6 +138,10 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
      * @param konfiguration the new konfiguration
      */
     void setKonfiguration(Konfiguration konfiguration);
+
+    void addAdress(IDecoderTypAdress adress);
+
+    void removeAdress(IDecoderTypAdress adress);
 
     void addCV(IDecoderTypCV CV);
 

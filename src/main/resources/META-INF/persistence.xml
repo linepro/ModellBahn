@@ -21,9 +21,11 @@ xmlns="http://xmlns.jcp.org/xml/ns/persistence"
         <class>com.linepro.modellbahn.model.impl.Aufbau</class>
         <class>com.linepro.modellbahn.model.impl.Bahnverwaltung</class>
         <class>com.linepro.modellbahn.model.impl.Decoder</class>
+        <class>com.linepro.modellbahn.model.impl.DecoderAdress</class>
         <class>com.linepro.modellbahn.model.impl.DecoderCV</class>
         <class>com.linepro.modellbahn.model.impl.DecoderFunktion</class>
         <class>com.linepro.modellbahn.model.impl.DecoderTyp</class>
+        <class>com.linepro.modellbahn.model.impl.DecoderTypAdress</class>
         <class>com.linepro.modellbahn.model.impl.DecoderTypCV</class>
         <class>com.linepro.modellbahn.model.impl.DecoderTypFunktion</class>
         <class>com.linepro.modellbahn.model.impl.Epoch</class>

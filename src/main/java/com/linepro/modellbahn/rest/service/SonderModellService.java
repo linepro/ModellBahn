@@ -41,12 +41,7 @@ public class SonderModellService extends AbstractItemService<NameKey, SonderMode
             @JsonProperty(value = ApiNames.NAME, required = false) String name,
             @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
-        SonderModell entity = create();
-
-        entity.setId(id);
-        entity.setName(name);
-        entity.setBezeichnung(bezeichnung);
-        entity.setDeleted(deleted);
+        SonderModell entity = new SonderModell(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
 

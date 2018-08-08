@@ -41,12 +41,7 @@ public class LichtService extends AbstractItemService<NameKey, Licht> {
                     @JsonProperty(value=ApiPaths.NAME_PARAM_NAME, required=false) String name, 
                     @JsonProperty(value=ApiNames.DESCRIPTION, required=false) String bezeichnung, 
                     @JsonProperty(value=ApiNames.DELETED, required=false) Boolean deleted) throws Exception {
-        Licht entity = create();
-
-        entity.setId(id);
-        entity.setName(name);
-        entity.setBezeichnung(bezeichnung);
-        entity.setDeleted(deleted);
+        Licht entity = new Licht(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
 

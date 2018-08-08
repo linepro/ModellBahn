@@ -51,12 +51,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
             @JsonProperty(value = ApiNames.NAME, required = false) String name,
             @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
-        Kategorie entity = create();
-
-        entity.setId(id);
-        entity.setName(name);
-        entity.setBezeichnung(bezeichnung);
-        entity.setDeleted(deleted);
+        Kategorie entity = new Kategorie(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
 

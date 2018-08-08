@@ -57,6 +57,7 @@ public interface DBNames {
     public static final String HERSTELLER_ID = "hersteller_id";
     public static final String I_MAX = "i_max";
     public static final String ID = "id";
+    public static final String INDEX = "index";
     public static final String KAPAZITAT = "kapazitat";
     public static final String KATEGORIE = "kategorie";
     public static final String KATEGORIE_ID = "kategorie_id";
@@ -102,6 +103,7 @@ public interface DBNames {
     public static final String SONDERMODELL = "sondermodell";
     public static final String SONDERMODELL_ID = "sondermodell_id";
     public static final String SOUND = "sound";
+    public static final String SPAN = "span";
     public static final String SPURWEITE = "spurweite";
     public static final String SPURWEITE_ID = "spurweite_id";
     public static final String STATUS = "status";

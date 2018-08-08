@@ -48,6 +48,7 @@ public interface ApiNames {
     public static final String HERSTELLER = "hersteller";
     public static final String ID = "id";
     public static final String I_MAX = "iMax";
+    public static final String INDEX = "index";
     public static final String KAPAZITAT = "kapazitat";
     public static final String KATEGORIE = "kategorie";
     public static final String KAUFDATUM = "kaufdatum";
@@ -86,6 +87,7 @@ public interface ApiNames {
     public static final String SITZPLATZETZKL2 = "sitzplatzeTzKL2";
     public static final String SONDERMODELL = "sondermodell";
     public static final String SOUND = "sound";
+    public static final String SPAN = "span";
     public static final String SPURWEITE = "spurweite";
     public static final String STATUS = "status";
     public static final String STEUERUNG = "steuerung";

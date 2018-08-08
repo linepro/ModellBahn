@@ -41,12 +41,7 @@ public class AntriebService extends AbstractItemService<NameKey, Antrieb> {
             @JsonProperty(value = ApiNames.NAME, required = false) String name,
             @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
-        Antrieb entity = create();
-
-        entity.setId(id);
-        entity.setName(name);
-        entity.setBezeichnung(bezeichnung);
-        entity.setDeleted(deleted);
+        Antrieb entity = new Antrieb(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
 

@@ -41,12 +41,7 @@ public class AchsfolgService extends AbstractItemService<NameKey, Achsfolg> {
             @JsonProperty(value = ApiNames.NAME, required = false) String name,
             @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
-        Achsfolg entity = create();
-
-        entity.setId(id);
-        entity.setName(name);
-        entity.setBezeichnung(bezeichnung);
-        entity.setDeleted(deleted);
+        Achsfolg entity = new Achsfolg(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
 

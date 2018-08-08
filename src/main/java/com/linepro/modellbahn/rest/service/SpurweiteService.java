@@ -41,12 +41,7 @@ public class SpurweiteService extends AbstractItemService<NameKey, Spurweite> {
             @JsonProperty(value = ApiNames.NAME, required = false) String name,
             @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
-        Spurweite entity = create();
-
-        entity.setId(id);
-        entity.setName(name);
-        entity.setBezeichnung(bezeichnung);
-        entity.setDeleted(deleted);
+        Spurweite entity = new Spurweite(id, name, bezeichnung, deleted);;
 
         debug("created: " + entity);
 

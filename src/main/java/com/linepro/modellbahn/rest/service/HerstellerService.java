@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.rest.service;
 
+import java.net.URL;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -16,7 +18,7 @@ import javax.ws.rs.core.UriInfo;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.linepro.modellbahn.model.impl.Gattung;
+import com.linepro.modellbahn.model.impl.Hersteller;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
@@ -24,24 +26,26 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 
 /**
- * GattungService. CRUD service for Gattung
+ * HerstellerService. CRUD service for Hersteller
  * 
  * @author $Author:$
  * @version $Id:$
  */
-@Path(ApiPaths.GATTUNG)
-public class GattungService extends AbstractItemService<NameKey, Gattung> {
+@Path(ApiPaths.HERSTELLER)
+public class HerstellerService extends AbstractItemService<NameKey, Hersteller> {
 
-    public GattungService() {
-        super(Gattung.class);
+    public HerstellerService() {
+        super(Hersteller.class);
     }
 
     @JsonCreator
-    public Gattung create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
+    public Hersteller create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
             @JsonProperty(value = ApiNames.NAME, required = false) String name,
             @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
+            @JsonProperty(value = ApiNames.TELEFON, required = false) String telefon,
+            @JsonProperty(value = ApiNames.URL, required = false) URL url,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
-        Gattung entity = new Gattung(id, name, bezeichnung, deleted);
+        Hersteller entity = new Hersteller(id, name, bezeichnung, url, telefon, deleted);
 
         debug("created: " + entity);
 
@@ -67,7 +71,7 @@ public class GattungService extends AbstractItemService<NameKey, Gattung> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response add(Gattung entity) {
+    public Response add(Hersteller entity) {
         return super.add(entity);
     }
 
@@ -76,7 +80,7 @@ public class GattungService extends AbstractItemService<NameKey, Gattung> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Gattung entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Hersteller entity) {
         return super.update(name, entity);
     }
 

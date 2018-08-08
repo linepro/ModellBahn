@@ -22,6 +22,7 @@ import com.linepro.modellbahn.model.IDecoderAdress;
 import com.linepro.modellbahn.model.IDecoderCV;
 import com.linepro.modellbahn.model.IDecoderFunktion;
 import com.linepro.modellbahn.model.IDecoderTyp;
+import com.linepro.modellbahn.model.IDecoderTypAdress;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.impl.Decoder;
@@ -138,8 +139,8 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
             
             decoder = getPersister().add(decoder);
 
-            for (int i = 0; i < decoderTyp.getAdressen() ; i++) {
-                decoder.addAdress(new DecoderAdress(null, decoder, i, decoderTyp.getAdressTyp(), 0, false));
+            for (IDecoderTypAdress adress : decoderTyp.getAdressen()) {
+                decoder.addAdress(new DecoderAdress(null, decoder, adress.getIndex(), adress.getAdressTyp(), adress.getWerkseinstellung(), false));
             }
 
             for (IDecoderTypCV cv : decoderTyp.getCVs()) {

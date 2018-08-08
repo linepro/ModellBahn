@@ -17,15 +17,18 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IDecoderTyp;
+import com.linepro.modellbahn.model.IDecoderTypAdress;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.model.IProtokoll;
 import com.linepro.modellbahn.model.impl.DecoderTyp;
+import com.linepro.modellbahn.model.impl.DecoderTypAdress;
 import com.linepro.modellbahn.model.impl.DecoderTypCV;
 import com.linepro.modellbahn.model.impl.DecoderTypFunktion;
 import com.linepro.modellbahn.model.impl.Hersteller;
 import com.linepro.modellbahn.model.impl.Protokoll;
+import com.linepro.modellbahn.model.keys.DecoderTypAdressKey;
 import com.linepro.modellbahn.model.keys.DecoderTypCVKey;
 import com.linepro.modellbahn.model.keys.DecoderTypFunktionKey;
 import com.linepro.modellbahn.model.keys.DecoderTypKey;
@@ -52,6 +55,8 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
 
     protected final IPersister<Hersteller> herstellerPersister;
 
+    protected final IPersister<DecoderTypAdress> adressPersister;
+
     protected final IPersister<DecoderTypCV> cvPersister;
 
     protected final IPersister<DecoderTypFunktion> funktionPersister;
@@ -61,6 +66,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
         
         protokollPersister = StaticPersisterFactory.get().createPersister(Protokoll.class);
         herstellerPersister = StaticPersisterFactory.get().createPersister(Hersteller.class);
+        adressPersister = StaticPersisterFactory.get().createPersister(DecoderTypAdress.class);
         cvPersister = StaticPersisterFactory.get().createPersister(DecoderTypCV.class);
         funktionPersister = StaticPersisterFactory.get().createPersister(DecoderTypFunktion.class);
     }
@@ -71,18 +77,34 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
             @JsonProperty(value = ApiNames.PROTOKOLL, required = false) String protokollStr,
             @JsonProperty(value = ApiNames.NAME, required = false) String name,
             @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung, 
-            @JsonProperty(value = ApiNames.ADRESS_TYP, required = false) String adressTypStr,
-            @JsonProperty(value = ApiNames.ADRESSEN, required = false) Integer adressen,
             @JsonProperty(value = ApiNames.SOUND, required = false) Boolean sound,
             @JsonProperty(value = ApiNames.KONFIGURATION, required = false) String konfigurationStr,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
         IHersteller hersteller = findHersteller(herstellerStr);
         IProtokoll protokoll = findProtokoll(protokollStr);
         Konfiguration konfiguration = Konfiguration.valueOf(konfigurationStr);
-        AdressTyp adressTyp = AdressTyp.valueOf(adressTypStr);
 
-        DecoderTyp entity = new DecoderTyp(id, hersteller, protokoll, name, bezeichnung, adressTyp, adressen, sound, konfiguration,
+        DecoderTyp entity = new DecoderTyp(id, hersteller, protokoll, name, bezeichnung, sound, konfiguration,
                 deleted);
+
+        debug("created: " + entity);
+
+        return entity;
+    }
+
+    @JsonCreator
+    public DecoderTypAdress createAdress(@JsonProperty(value = ApiNames.ID, required = false) Long id,
+            @JsonProperty(value = ApiNames.HERSTELLER, required = false) String herstellerStr,
+            @JsonProperty(value = ApiNames.BESTELL_NR, required = false) String bestellNr,
+            @JsonProperty(value = ApiNames.INDEX, required = false) Integer index,
+            @JsonProperty(value = ApiNames.ADRESS_TYP, required = false) String adressTypStr,
+            @JsonProperty(value = ApiNames.SPAN, required = false) Integer span,
+            @JsonProperty(value = ApiNames.WERKSEINSTELLUNG, required = false) Integer werkeinstellung,
+            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
+        IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, false);
+        AdressTyp adressTyp = AdressTyp.valueOf(adressTypStr);
+        
+        DecoderTypAdress entity = new DecoderTypAdress(id, decoderTyp, index, adressTyp, span, werkeinstellung, deleted);
 
         debug("created: " + entity);
 
@@ -177,6 +199,123 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
             @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
         try {
             return super.delete(new DecoderTypKey(findHersteller(herstellerStr), bestellNr));
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+    }
+
+    @GET
+    @Path(ApiPaths.DECODER_TYP_ADRESS_PATH)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
+            @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index) {
+        try {
+            DecoderTyp decoderTyp = (DecoderTyp) findDecoderTyp(herstellerStr, bestellNr, true);
+
+            if (decoderTyp == null) {
+                return getResponse(badRequest(null, "DecoderTyp " + herstellerStr + "/" + bestellNr + " does not exist"));
+            }
+
+            IDecoderTypAdress decoderTypAdress = findDecoderTypAdress(decoderTyp, index, true);
+
+            if (decoderTypAdress != null) {
+                return getResponse(ok(), decoderTypAdress, true, true);
+            }
+
+            return getResponse(notFound());
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+    }
+
+    @POST
+    @Path(ApiPaths.DECODER_TYP_ADRESS_ROOT)
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response addAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, DecoderTypAdress decoderTypAdress)
+            throws Exception {
+        try {
+            logPost(herstellerStr + "/" + bestellNr + "/" + decoderTypAdress);
+
+            DecoderTyp decoderTyp = (DecoderTyp) findDecoderTyp(herstellerStr, bestellNr, false);
+
+            if (decoderTyp == null) {
+                return getResponse(badRequest(null, "DecoderTyp " + herstellerStr + "/" + bestellNr + " does not exist"));
+            }
+
+            decoderTyp.addAdress(decoderTypAdress);
+
+            getPersister().update(decoderTyp);
+
+            return getResponse(created(), decoderTypAdress, true, true);
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+    }
+
+    @PUT
+    @Path(ApiPaths.DECODER_TYP_ADRESS_PATH)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
+            @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index, DecoderTypAdress newDecoderTypAdress)
+            throws Exception {
+        try {
+            logPut(herstellerStr + "/" + bestellNr + "/" + index + ": " + newDecoderTypAdress);
+
+            DecoderTyp decoderTyp = (DecoderTyp) findDecoderTyp(herstellerStr, bestellNr, false);
+
+            if (decoderTyp == null) {
+                return getResponse(badRequest(null, "DecoderTyp " + herstellerStr + "/" + bestellNr + " does not exist"));
+            }
+
+            IDecoderTypAdress decoderTypAdress = findDecoderTypAdress(decoderTyp, index, true);
+
+            if (decoderTypAdress == null) {
+                return getResponse(badRequest(null, "DecoderTyp " + herstellerStr + "/" + bestellNr + " does not exist"));
+            } else if (newDecoderTypAdress.getDecoderTyp() == null) {
+                newDecoderTypAdress.setDecoderTyp(decoderTyp);
+            } else if (!newDecoderTypAdress.getDecoderTyp().equals(decoderTyp)) {
+                // Attempt to change decoderTyp not allowed
+                return getResponse(badRequest(null, "You cannot change the decoderTyp for an decoderTypAdress, create a new one"));
+            }
+
+            // Validate  0 < Adress < 256 
+            // Validate  0 <= Maximal <= 255
+            // Validate  0 <= Minimal <= 255
+            // Validate  0 <= Werkeinstelling <= 255
+            // Validate  Minimal <= Maximal 
+            // Validate bezeichnung unique by decoderTyp
+
+            decoderTypAdress = getAdressPersister().update(newDecoderTypAdress);
+
+            return getResponse(accepted(), decoderTypAdress, true, true);
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+    }
+
+    @DELETE
+    @Path(ApiPaths.DECODER_TYP_ADRESS_PATH)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
+            @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index) throws Exception {
+        try {
+            DecoderTypAdress decoderTypAdress = (DecoderTypAdress) findDecoderTypAdress(herstellerStr, bestellNr, index, true);
+
+            if (decoderTypAdress == null) {
+                return getResponse(badRequest(null, "DecoderTypAdress " + herstellerStr + "/" + bestellNr + "/" + index + " does not exist"));
+            }
+
+            DecoderTyp decoderTyp = (DecoderTyp) decoderTypAdress.getDecoderTyp();
+
+            decoderTyp.removeAdress(decoderTypAdress);
+
+            //getDecoderTypAdressPersister().delete(decoderTypAdress);
+
+            getPersister().update(decoderTyp);
+
+            return getResponse(noContent());
         } catch (Exception e) {
             return getResponse(serverError(e));
         }
@@ -417,6 +556,14 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
         return getPersister().findByKey(new DecoderTypKey(findHersteller(herstellerStr), bestellNr), eager);
     }
 
+    protected IDecoderTypAdress findDecoderTypAdress(String herstellerStr, String bestellNr, Integer index, boolean eager) throws Exception {
+        return findDecoderTypAdress(findDecoderTyp(herstellerStr, bestellNr, eager), index, eager) ;
+    }
+
+    protected IDecoderTypAdress findDecoderTypAdress(IDecoderTyp decoderTyp, Integer index, boolean eager) throws Exception {
+        return getAdressPersister().findByKey(new DecoderTypAdressKey(decoderTyp, index), eager);
+    }
+
     protected IDecoderTypCV findDecoderTypCV(String herstellerStr, String bestellNr, Integer cv, boolean eager) throws Exception {
         return findDecoderTypCV(findDecoderTyp(herstellerStr, bestellNr, eager), cv, eager) ;
     }
@@ -447,6 +594,10 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
 
     protected IPersister<Hersteller> getHerstellerPersister() {
         return herstellerPersister;
+    }
+
+    public IPersister<DecoderTypAdress> getAdressPersister() {
+        return adressPersister;
     }
 
     public IPersister<DecoderTypCV> getCVPersister() {

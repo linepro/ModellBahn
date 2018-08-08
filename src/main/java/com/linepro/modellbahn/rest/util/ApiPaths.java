@@ -25,6 +25,8 @@ public interface ApiPaths {
     
     public static final String HERSTELLER_PARAM_NAME = ApiNames.HERSTELLER;
 
+    public static final String INDEX_PARAM_NAME = ApiNames.INDEX;
+
     public static final String KATEGORIE_PARAM_NAME = ApiNames.KATEGORIE;
 
     public static final String POSITION_PARAM_NAME = ApiNames.POSITION;
@@ -71,6 +73,8 @@ public interface ApiPaths {
     public static final String ENUMS = API_ROOT + "enums/";
 
     public static final String GATTUNG = API_ROOT + ApiNames.GATTUNG;
+
+    public static final String HERSTELLER = ApiNames.HERSTELLER;  
     
     public static final String KATEGORIE = API_ROOT + ApiNames.KATEGORIE;
     
@@ -129,6 +133,8 @@ public interface ApiPaths {
 
     public static final String HERSTELLER_PART = FIELD_START + HERSTELLER_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;
 
+    public static final String INDEX_PART = FIELD_START + INDEX_PARAM_NAME + NUMBER_REGEX + FIELD_END;
+
     public static final String KATEGORIE_PART = FIELD_START + KATEGORIE_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;
 
     public static final String POSITION_PATH = FIELD_START + POSITION_PARAM_NAME + NUMBER_REGEX + FIELD_END;
@@ -145,7 +151,7 @@ public interface ApiPaths {
 
     /** Parameterized child paths */
     public static final String DECODER_ADRESS_ROOT = DECODER_PART + "/" + ApiNames.ADRESS;
-    public static final String DECODER_ADRESS_PATH = DECODER_ADRESS_ROOT + REIHE_PART;
+    public static final String DECODER_ADRESS_PATH = DECODER_ADRESS_ROOT + INDEX_PART;
     public static final String DECODER_ADRESS_LINK = "%s/" + ApiNames.ADRESS + "/%d";  
 
     public static final String DECODER_CV_ROOT = DECODER_PART + "/" + ApiNames.CV;
@@ -158,6 +164,10 @@ public interface ApiPaths {
 
     public static final String DECODER_TYP_PATH = HERSTELLER_PART + BESTELL_NR_PART;
     public static final String DECODER_TYP_LINK = "%s/%s";  
+
+    public static final String DECODER_TYP_ADRESS_ROOT = DECODER_TYP_PATH + "/" + ApiNames.ADRESS;  
+    public static final String DECODER_TYP_ADRESS_PATH = DECODER_TYP_ADRESS_ROOT + ADRESS_PART;  
+    public static final String DECODER_TYP_ADRESS_LINK = "%s/" + ApiNames.ADRESS + "/%d";  
 
     public static final String DECODER_TYP_CV_ROOT = DECODER_TYP_PATH + "/" + ApiNames.CV;  
     public static final String DECODER_TYP_CV_PATH = DECODER_TYP_CV_ROOT + CV_PART;  

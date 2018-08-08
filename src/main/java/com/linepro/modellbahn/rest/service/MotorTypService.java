@@ -41,12 +41,7 @@ public class MotorTypService extends AbstractItemService<NameKey, MotorTyp> {
             @JsonProperty(value = ApiNames.NAME, required = false) String name,
             @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
-        MotorTyp entity = create();
-
-        entity.setId(id);
-        entity.setName(name);
-        entity.setBezeichnung(bezeichnung);
-        entity.setDeleted(deleted);
+        MotorTyp entity = new MotorTyp(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
 

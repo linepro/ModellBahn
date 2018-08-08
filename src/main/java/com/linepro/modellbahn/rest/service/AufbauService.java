@@ -41,12 +41,7 @@ public class AufbauService extends AbstractItemService<NameKey, Aufbau> {
             @JsonProperty(value = ApiNames.NAME, required = false) String name,
             @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
-        Aufbau entity = create();
-
-        entity.setId(id);
-        entity.setName(name);
-        entity.setBezeichnung(bezeichnung);
-        entity.setDeleted(deleted);
+        Aufbau entity = new Aufbau(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
 

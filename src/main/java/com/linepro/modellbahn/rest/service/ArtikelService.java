@@ -74,10 +74,15 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
         IKupplung kupplung = findKupplung(kupplungStr, false);
         IDecoder decoder = findDecoder(decoderId, false);
         Status status = Status.valueOf(statusStr);
-        return new Artikel(id, produkt, kaufdatum, wahrung, preis, stuck,
+        
+        Artikel entity = new Artikel(id, produkt, kaufdatum, wahrung, preis, stuck,
                 steuerung, motorTyp, licht, kupplung, decoder,
                 artikelNr, bezeichnung, anmerkung,
                 beladung, status, deleted);
+
+        debug("created: " + entity);
+
+       return entity;
     }
 
     @GET

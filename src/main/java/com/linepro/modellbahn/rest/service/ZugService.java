@@ -202,7 +202,8 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
             zug.removeConsist(zugConsist);
 
             //getZugConsistPersister().delete(zugConsist);
-
+            // TODO: resequence position for remaining items
+            
             getPersister().update(zug);
 
             return getResponse(noContent());
