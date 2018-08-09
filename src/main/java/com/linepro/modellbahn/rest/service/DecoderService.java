@@ -195,8 +195,24 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Path(ApiPaths.DECODER_ADRESS_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response getAdress(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe) {
-        return notFound().build();
+    public Response getAdress(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index) {
+        try {
+            Decoder decoder = (Decoder) findDecoder(decoderId, true);
+
+            if (decoder == null) {
+                return getResponse(badRequest(null, "Decoder " + decoderId + " does not exist"));
+            }
+
+            IDecoderAdress decoderAdress = findDecoderAdress(decoder, index, true);
+
+            if (decoderAdress != null) {
+                return getResponse(ok(), decoderAdress, true, true);
+            }
+
+            return getResponse(notFound());
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
     }
 
     @PUT
@@ -204,9 +220,30 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response updateAdress(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @QueryParam(ApiNames.WERT) Integer wert) {
-        // Validate min(adressTyp) < adress < max(adressTyp) {TODO: find ranges for each}
-        return notFound().build();
+    public Response updateAdress(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index, @QueryParam(ApiNames.ADRESS) Integer adress) {
+        try {
+            logPut(decoderId + "/" + index + ": " + adress);
+
+            Decoder decoder = (Decoder) findDecoder(decoderId, true);
+
+            if (decoder == null) {
+                return getResponse(badRequest(null, "Decoder " + decoderId + " does not exist"));
+            }
+
+            IDecoderAdress decoderAdress = findDecoderAdress(decoder, index, true);
+
+            if (decoderAdress == null) {
+                return getResponse(badRequest(null, "Decoder Adress " + decoderId + "/" + index + " does not exist"));
+            }
+
+            decoderAdress.setAdress(adress);
+
+            getPersister().save(decoder);
+
+            return getResponse(accepted(), decoderAdress, true, true);
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
     }
 
     @GET
@@ -214,7 +251,23 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     public Response getCv(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv) {
-        return notFound().build();
+        try {
+            Decoder decoder = (Decoder) findDecoder(decoderId, true);
+
+            if (decoder == null) {
+                return getResponse(badRequest(null, "Decoder " + decoderId + " does not exist"));
+            }
+
+            IDecoderCV decoderCV = findDecoderCV(decoder, cv, true);
+
+            if (decoderCV != null) {
+                return getResponse(ok(), decoderCV, true, true);
+            }
+
+            return getResponse(notFound());
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
     }
 
     @PUT
@@ -223,7 +276,29 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     public Response updateCv(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv, @QueryParam(ApiNames.WERT) Integer wert) {
-        return notFound().build();
+        try {
+            logPut(decoderId + "/" + cv + ": " + wert);
+
+            Decoder decoder = (Decoder) findDecoder(decoderId, true);
+
+            if (decoder == null) {
+                return getResponse(badRequest(null, "Decoder " + decoderId + " does not exist"));
+            }
+
+            IDecoderCV decoderCV = findDecoderCV(decoder, cv, true);
+
+            if (decoderCV == null) {
+                return getResponse(badRequest(null, "Decoder CV " + decoderId + "/" + cv + " does not exist"));
+            }
+
+            decoderCV.setWert(wert);
+
+            getPersister().save(decoder);
+
+            return getResponse(accepted(), decoderCV, true, true);
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
     }
 
     @GET
@@ -231,7 +306,23 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     public Response getFunktion(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion) {
-        return notFound().build();
+        try {
+            Decoder decoder = (Decoder) findDecoder(decoderId, true);
+
+            if (decoder == null) {
+                return getResponse(badRequest(null, "Decoder " + decoderId + " does not exist"));
+            }
+
+            IDecoderFunktion decoderFunktion = findDecoderFunktion(decoder, reihe, funktion, true);
+
+            if (decoderFunktion != null) {
+                return getResponse(ok(), decoderFunktion, true, true);
+            }
+
+            return getResponse(notFound());
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
     }
 
     @PUT
@@ -240,22 +331,68 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     public Response updateFunktion(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion, @QueryParam(ApiNames.DESCRIPTION) String descirption) {
-        return notFound().build();
+        try {
+            logPut(decoderId + "/" + reihe + "/" + funktion + ": " + descirption);
+
+            Decoder decoder = (Decoder) findDecoder(decoderId, true);
+
+            if (decoder == null) {
+                return getResponse(badRequest(null, "Decoder " + decoderId + " does not exist"));
+            }
+
+            IDecoderFunktion decoderFunktion = findDecoderFunktion(decoder, reihe, funktion, true);
+
+            if (decoderFunktion == null) {
+                return getResponse(badRequest(null, "Decoder Funktion " + decoderId + "/" + reihe + "/" + funktion + " does not exist"));
+            }
+
+            decoderFunktion.setBezeichnung(descirption);
+
+            getPersister().save(decoder);
+
+            return getResponse(accepted(), decoderFunktion, true, true);
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
     }
 
     protected IDecoder findDecoder(String decoderId, boolean eager) throws Exception {
         return getPersister().findByKey(decoderId, true);
     }
 
-    protected IDecoderAdress findDecoderAdress(IDecoder decoder, Integer reihe, boolean eager) throws Exception {
+    protected IDecoderAdress findDecoderAdress(IDecoder decoder, Integer index, boolean eager) throws Exception {
+        try {
+            return decoder.getAdressen().get(index);
+        } catch (IndexOutOfBoundsException | NullPointerException e) {
+        }
+        
         return null;
     }
 
-    protected IDecoderCV findDecoderCV(IDecoderTyp decoderTyp, Integer cv, boolean eager) throws Exception {
+    protected IDecoderCV findDecoderCV(IDecoder decoder, Integer cv, boolean eager) throws Exception {
+        try {
+            for (IDecoderCV decoderCV : decoder.getCVs()) {
+                if (cv.equals(decoderCV.getCvValue())) {
+                    return decoderCV;
+                }
+            }
+        } catch (IndexOutOfBoundsException | NullPointerException e) {
+        }
+        
         return null;
     }
 
-    protected IDecoderFunktion findDecoderFunktion(IDecoderTyp decoderTyp, Integer reihe, String funktion) throws Exception {
+    protected IDecoderFunktion findDecoderFunktion(IDecoder decoder, Integer reihe, String funktion, boolean eager) throws Exception {
+        try {
+            for (IDecoderFunktion decoderFunktion : decoder.getFunktionen()) {
+                if (reihe.equals(decoderFunktion.getReihe()) &&
+                    funktion.equals(decoderFunktion.getFunktionStr())) {
+                    return decoderFunktion;
+                }
+            }
+        } catch (IndexOutOfBoundsException | NullPointerException e) {
+        }
+        
         return null;
     }
 }

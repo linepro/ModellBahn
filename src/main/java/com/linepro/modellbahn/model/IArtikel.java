@@ -3,8 +3,8 @@ package com.linepro.modellbahn.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import com.linepro.modellbahn.model.util.Status;
 import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.model.util.Status;
 
 /**
  * IArtikel.

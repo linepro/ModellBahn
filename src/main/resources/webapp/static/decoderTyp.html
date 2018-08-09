@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>	
+	<link href= "css/site.css" rel="stylesheet"/>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+	<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">	</script>
+	<script type="text/javascript">
+		function getData() {
+			/* Script to call userHome.php with userID using jQuery and print the response as a table in div books
+			 * https://www.html5andbeyond.com/jquery-ajax-json-php/
+			 * http://labs.jonsuh.com/jquery-ajax-php-json/
+			 * http://api.jquery.com/jquery.post/
+			 */
+			$.get("http://linepro2:8086/ModellBahn/api/decoderTyp", 
+				{
+				},
+				function (data, status){
+					var out = "<table border = '1.5'><tr><th>SIN</th><th>Title</th><th>Genre</th><th>Publisher</th><th>Publication Date</th></tr>";
+					
+					for(i = 0; i < data.length; i++) {
+						out += "<tr><td>" +
+						data[i].hersteller +
+						"</td><td>" +
+						data[i].bestellNr +
+						"</td><td>" +
+						data[i].protokoll +
+						"</td><td>" +
+						data[i].konfiguration +
+						"</td><td>";
+						data[i].sound +
+						"</td></tr>";
+					}
+					out += "</table>";
+					document.getElementById("listing").innerHTML = out;
+				}
+			);
+		};
+	</script>
+	<title>Decoder Typ List</title>
+</head>
+<body onload="javascript:getData()">
+	<h1>Decoder Typ</h1>
+
+	<h2>Available Decoder Typ:</h2>
+	
+	<div id="listing">
+	</div>
+	<p>
+		<a class="btn btn-info btn-sm" href='ebook_home.html'>Home</a>  
+		<a class="btn btn-info btn-sm" href="search.html">Search for an eBook</a> 
+		<a class="btn btn-info btn-sm" href='ebook_rating_view.html'>View an eBook Rating</a>
+		<a class="btn btn-info btn-sm" href='ebook_account.html'>Account Login</a>
+	</p>
+	
+	<div id="links">
+	</div>
+	
+	<div id="footer">
+		<hr class="highlight" />
+		<p>Copyright &copy; 2018 ModellBahn Website</p>
+	</div>
+</body>
+</html>

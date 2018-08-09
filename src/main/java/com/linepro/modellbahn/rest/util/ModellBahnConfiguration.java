@@ -14,6 +14,7 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 import com.linepro.modellbahn.jersey.LoggingFilter;
 import com.linepro.modellbahn.jersey.SecurityRequestFilter;
 
+import io.swagger.annotations.Api;
 import io.swagger.jaxrs.listing.ApiListingResource;
 import io.swagger.jaxrs.listing.SwaggerSerializers;
 
@@ -23,6 +24,7 @@ import io.swagger.jaxrs.listing.SwaggerSerializers;
  * @author  $Author:$
  * @version $Id:$
  */
+@Api()
 @ApplicationPath("/")
 public class ModellBahnConfiguration extends ResourceConfig {
 
@@ -46,8 +48,8 @@ public class ModellBahnConfiguration extends ResourceConfig {
         property(ServerProperties.MONITORING_STATISTICS_ENABLED, true);
         property(ServerProperties.MONITORING_STATISTICS_MBEANS_ENABLED, true);
 
-        property(ServerProperties.TRACING, "ALL");
-        property(ServerProperties.TRACING_THRESHOLD, "VERBOSE");
+        property(ServerProperties.TRACING, "ON_DEMAND");
+        property(ServerProperties.TRACING_THRESHOLD, "SUMMARY");
         
         /*
         property(ServletProperties.FILTER_CONTEXT_PATH, "/ModellBahn"); 

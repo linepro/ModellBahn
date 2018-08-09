@@ -280,13 +280,6 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
                 return getResponse(badRequest(null, "You cannot change the decoderTyp for an decoderTypAdress, create a new one"));
             }
 
-            // Validate  0 < Adress < 256 
-            // Validate  0 <= Maximal <= 255
-            // Validate  0 <= Minimal <= 255
-            // Validate  0 <= Werkeinstelling <= 255
-            // Validate  Minimal <= Maximal 
-            // Validate bezeichnung unique by decoderTyp
-
             decoderTypAdress = getAdressPersister().update(newDecoderTypAdress);
 
             return getResponse(accepted(), decoderTypAdress, true, true);

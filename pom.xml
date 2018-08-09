@@ -125,7 +125,8 @@
 		<log4j-slf4j-impl.version>2.11.0</log4j-slf4j-impl.version>
 		<mockito.version>1.9.0</mockito.version>
 		<slf4j.version>1.7.25</slf4j.version>
-		<swagger-jersey2-jaxrs.version>1.5.9</swagger-jersey2-jaxrs.version>
+        <swagger-annotations.version>1.5.20</swagger-annotations.version>
+		<swagger-jersey2-jaxrs.version>1.5.20</swagger-jersey2-jaxrs.version>
 		<testng.version>6.14.3</testng.version>
 		<validation-api.version>2.0.1.Final</validation-api.version>
     </properties>
@@ -378,6 +379,11 @@
 		</dependency>
 
         <!-- Swagger -->
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>${swagger-annotations.version}</version>
+		</dependency>
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-jersey2-jaxrs</artifactId>
