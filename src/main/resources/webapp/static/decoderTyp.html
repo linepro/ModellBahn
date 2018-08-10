@@ -14,27 +14,78 @@
 			 * http://labs.jonsuh.com/jquery-ajax-php-json/
 			 * http://api.jquery.com/jquery.post/
 			 */
-			$.get("http://linepro2:8086/ModellBahn/api/decoderTyp", 
+			$.getJSON(window.location.protocol + "//" + window.location.host + "/ModellBahn/api/decoderTyp", 
 				{
 				},
 				function (data, status){
-					var out = "<table border = '1.5'><tr><th>SIN</th><th>Title</th><th>Genre</th><th>Publisher</th><th>Publication Date</th></tr>";
-					
-					for(i = 0; i < data.length; i++) {
-						out += "<tr><td>" +
-						data[i].hersteller +
-						"</td><td>" +
-						data[i].bestellNr +
-						"</td><td>" +
-						data[i].protokoll +
-						"</td><td>" +
-						data[i].konfiguration +
-						"</td><td>";
-						data[i].sound +
-						"</td></tr>";
+					var table = document.createElement("listing");
+					table.setAttribute("border", "1.5");
+
+					var heading = document.createElement("tr");
+
+					var th = document.createElement("th");
+					th.textContent = "Hersteller";
+					heading.appendChild(th);
+
+					th = document.createElement("th");
+					th.textContent = "Bestell Nr";
+					heading.appendChild(th);
+
+					th = document.createElement("th");
+					th.textContent = "Protokoll";
+					heading.appendChild(th);
+
+					th = document.createElement("th");
+					th.textContent = "Konfiguration";
+					heading.appendChild(th);
+
+					th = document.createElement("th");
+					th.textContent = "Sound";
+					heading.appendChild(th);
+
+					th = document.createElement("th");
+                    th.textContent = "X";
+                    heading.appendChild(th);
+
+					table.appendChild(heading);
+
+					for (i = 0; i < data.length; i++) {
+						var tr = document.createElement("tr");
+		                  
+						var td = document.createElement("td");
+						td.textContent = data[i].hersteller;
+						tr.appendChild(td);
+
+						td = document.createElement("td");
+						td.textContent = data[i].bestellNr;
+						tr.appendChild(td);
+
+						td = document.createElement("td");
+						td.textContent = data[i].protokoll;
+						tr.appendChild(td);
+
+						td = document.createElement("td");
+						td.textContent = data[i].konfiguration;
+						tr.appendChild(td);
+
+						td = document.createElement("td");
+						td.textContent = data[i].sound;
+
+                        td = document.createElement("td");
+
+                        var del = data[i].links.find(function(element) { return element.method == "DELETE"; });
+                        var a = document.createElement("a");
+                        a.appendChild(document.createTextNode("X"));
+                        a.title = del.rel;
+                        a.href = del.href;
+                        td.append(a);
+
+						tr.appendChild(td);
+
+						table.appendChild(tr);
 					}
-					out += "</table>";
-					document.getElementById("listing").innerHTML = out;
+
+					document.getElementById("listing").appendChild(table);
 				}
 			);
 		};
