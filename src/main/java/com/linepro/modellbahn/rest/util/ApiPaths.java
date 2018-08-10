@@ -145,6 +145,8 @@ public interface ApiPaths {
 
     public static final String TEIL_HERSTELLER_PART =  FIELD_START + TEIL_HERSTELLER_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;;
 
+    public static final String TEIL_PART = TEIL_HERSTELLER_PART + TEIL_BESTELL_NR_PART;
+
     public static final String UNTER_KATEGORIE_PART = FIELD_START + UNTER_KATEGORIE_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;
 
     public static final String ZUG_PART = FIELD_START + ZUG_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;
@@ -187,8 +189,6 @@ public interface ApiPaths {
 
     public static final String PRODUKT_PATH = HERSTELLER_PART + BESTELL_NR_PART;
     public static final String PRODUKT_LINK = "%s/%s";
-
-    public static final String TEIL_PART = FIELD_START + TEIL_HERSTELLER_PART + TEIL_BESTELL_NR_PART;
 
     public static final String PRODUKT_TEIL_LINK = PRODUKT_LINK + "/" + PRODUKT_LINK ;
     public static final String PRODUKT_TEIL_PATH = PRODUKT_PATH + TEIL_PART;

@@ -1,6 +1,8 @@
 package com.linepro.modellbahn.rest.util;
 
 public interface ApiNames {
+    
+    // Field names
     public static final String ABBILDUNG = "abbildung";
     public static final String ACHSFOLG = "achsfolg";
     public static final String ADRESS = "adress";
@@ -112,4 +114,20 @@ public interface ApiNames {
     public static final String ZUG = "zug";
     public static final String ZUG_TYP = "zugTyp";
     public static final String ZYLINDER = "zylinder";
+
+    // Navigation names
+    public static final String PAGE_NUMBER = "pageNumber";
+    public static final String PAGE_SIZE = "pageSize";
+
+    public static final String API = "api";
+    public static final String HOME = "home";
+    public static final String WADL = "wadl";
+
+    public static final String PARENT = "parent";
+    public static final String SELF = "self";
+    public static final String UPDATE = "update";
+    public static final String DELETE = "delete";
+
+    public static final String PREVIOUS = "previous";
+    public static final String NEXT = "next";
 }

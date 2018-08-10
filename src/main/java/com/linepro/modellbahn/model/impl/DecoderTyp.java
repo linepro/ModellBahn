@@ -325,6 +325,7 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
 
     @Override
     protected void addChildLinks(URI root) {
+        addLinks(root, getAdressen(), false, false);
         addLinks(root, getCVs(), false, false);
         addLinks(root, getFunktionen(), false, false);
     }

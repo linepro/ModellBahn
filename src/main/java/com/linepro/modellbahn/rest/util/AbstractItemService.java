@@ -3,10 +3,13 @@ package com.linepro.modellbahn.rest.util;
 import static javax.ws.rs.HttpMethod.GET;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.Link;
+import javax.ws.rs.core.Link.Builder;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
@@ -14,6 +17,7 @@ import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.linepro.modellbahn.model.IAchsfolg;
@@ -92,6 +96,12 @@ import com.linepro.modellbahn.util.SelectorsBuilder;
  */
 public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> extends AbstractService {
 
+    public static final List<String> PAGE_FIELDS = Arrays.asList(ApiNames.PAGE_NUMBER, ApiNames.PAGE_SIZE);
+
+    public static final Integer FIRST_PAGE = 0;
+
+    public static final Integer DEFAULT_PAGE_SIZE = 30;
+
     /** The persister. */
     protected final IPersister<E> persister;
 
@@ -101,11 +111,13 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
     /** The selectors. */
     protected final Map<String, Selector> selectors;
 
+    protected Link apiLink;
+
     protected Link homeLink;
 
     protected Link wadlLink;
 
-    protected URI serviceURI;
+    private URI serviceURI;
 
     /**
      * Instantiates a new abstract service.
@@ -242,17 +254,57 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
 
             logGet(getEntityClassName() + ": " + template);
 
+            Integer pageNumber = null;
+            Integer pageSize   = null;
+            Integer maxPage    = null;
+            
+            String pageNumberStr = info.getQueryParameters().getFirst(ApiNames.PAGE_NUMBER);
+            String pageSizeStr   = info.getQueryParameters().getFirst(ApiNames.PAGE_SIZE);
+
+            if (pageNumberStr != null || pageSizeStr != null) {
+                pageNumber = NumberUtils.toInt(pageNumberStr, FIRST_PAGE);
+                pageSize   = NumberUtils.toInt(pageSizeStr, DEFAULT_PAGE_SIZE);
+
+                Long rowCount = getPersister().countAll(template);
+
+                maxPage = new Double(Math.floor(rowCount.doubleValue() / pageSize.doubleValue())).intValue();
+            }
+            
             @SuppressWarnings("unchecked")
-            List<IItem<?>> entities = (List<IItem<?>>) getPersister().findAll(template);
+            List<IItem<?>> entities = (List<IItem<?>>) getPersister().findAll(template, pageNumber, pageSize);
             
             if (entities.isEmpty()) {
                 return getResponse(noContent());
             }
 
-            return getResponse(ok(), entities, true, true);
+            List<Link> navigation = new ArrayList<Link>();
+
+            if (pageNumber != null) {
+                if (pageNumber > 0) {
+                    navigation.add(getPageLink(info, pageNumber-1, pageSize, ApiNames.PREVIOUS));
+                }
+
+                if (pageNumber < maxPage) {
+                    navigation.add(getPageLink(info, pageNumber+1, pageSize, ApiNames.NEXT));
+                }
+            }
+
+            return getResponse(ok(), entities, true, true, navigation);
         } catch (Exception e) {
             return getResponse(serverError(e));
         }
+    }
+
+    protected Link getPageLink(UriInfo info, Integer pageNumber, Integer pageSize, String rel) {
+        UriBuilder uri = info.getAbsolutePathBuilder();
+        // copy any non paging query parameters
+        info.getQueryParameters().forEach((k, v) -> { if (!PAGE_FIELDS.contains(k)) { v.forEach(x -> uri.queryParam(k, x)); } });
+        uri.queryParam(ApiNames.PAGE_NUMBER, pageNumber.toString());
+        uri.queryParam(ApiNames.PAGE_SIZE, pageSize.toString());
+
+        Builder link = Link.fromUri(uri.toString());
+
+        return link.rel(rel).type(GET).build();
     }
 
     /**
@@ -341,14 +393,14 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return getResponse(builder.entity(entity));
     }
 
-    protected Response getResponse(ResponseBuilder builder, List<IItem<?>> entities, boolean update, boolean delete) {
+    protected Response getResponse(ResponseBuilder builder, List<IItem<?>> entities, boolean update, boolean delete, List<Link> navigation) {
         for (IItem<?> entity : entities) {
             entity.addLinks(getServiceURI(), update, delete);
         }
-
-        return getResponse(builder.entity(entities));
+        
+        return getResponse(builder.entity(new ListWithLinks<>(entities, navigation)));
     }
-    
+
     /**
      * Gets the response.
      *
@@ -356,10 +408,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      * @return the response
      */
     protected Response getResponse(ResponseBuilder builder) {
-        return builder.links(
-                getHomeLink(),
-                getWADLLink())
-                .build();
+        return builder.links(getHomeLink(), getApiLink(), getWADLLink()).build();
     }
 
     protected URI getServiceURI() {
@@ -370,9 +419,17 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return serviceURI;
     }
 
+    protected Link getApiLink() {
+        if (apiLink == null) {
+            apiLink = Link.fromUri(UriBuilder.fromUri(getUriInfo().getBaseUri() + ApiPaths.API_ROOT).build()).rel(ApiNames.API).type(GET).build();
+        }
+        
+        return apiLink;
+    }
+
     protected Link getHomeLink() {
         if (homeLink == null) {
-            homeLink = Link.fromUri(UriBuilder.fromUri(getUriInfo().getBaseUri()).build()).rel("home").type(GET).build();
+            homeLink = Link.fromUri(UriBuilder.fromUri(getUriInfo().getBaseUri()).build()).rel(ApiNames.HOME).type(GET).build();
         }
         
         return homeLink;
@@ -380,7 +437,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
 
     protected Link getWADLLink() {
         if (wadlLink == null) {
-            wadlLink = Link.fromUri(UriBuilder.fromUri(getUriInfo().getBaseUri()).path(ApiPaths.APPLICATION_WADL).build()).rel("wdl").type(GET).build();
+            wadlLink = Link.fromUri(UriBuilder.fromUri(getUriInfo().getBaseUri()).path(ApiPaths.APPLICATION_WADL).build()).rel(ApiNames.WADL).type(GET).build();
         }
 
         return wadlLink;
@@ -501,5 +558,9 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
 
     protected IZugTyp findZugTyp(String name, boolean eager) throws Exception { 
         return StaticPersisterFactory.get().createPersister(ZugTyp.class).findByKey(name, eager); 
+    }
+
+    protected void setServiceURI(URI serviceURI) {
+        this.serviceURI = serviceURI;
     }
 }

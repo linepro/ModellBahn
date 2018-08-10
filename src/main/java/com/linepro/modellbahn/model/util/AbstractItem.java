@@ -172,20 +172,20 @@ public abstract class AbstractItem<K extends IKey> implements Serializable, IIte
 
     protected void addParent(URI root) {
         if (getParentId() != null) {
-            getLinks().add(makeLink(root, getParentId(), "parent", GET));
+            getLinks().add(makeLink(root, getParentId(), ApiNames.PARENT, GET));
         }
     }
 
     protected void addDelete(URI root) {
-        getLinks().add(makeLink(root, getLinkId(), "delete", DELETE));
+        getLinks().add(makeLink(root, getLinkId(), ApiNames.DELETE, DELETE));
     }
 
     protected void addSelf(URI root) {
-        getLinks().add(makeLink(root, getLinkId(), "self", GET));
+        getLinks().add(makeLink(root, getLinkId(), ApiNames.SELF, GET));
     }
 
     protected void addUpdate(URI root) {
-        getLinks().add(makeLink(root, getLinkId(), "update", PUT));
+        getLinks().add(makeLink(root, getLinkId(), ApiNames.UPDATE, PUT));
     }
 
 	@Override

@@ -14,7 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.OneToMany;
 import javax.persistence.Query;
-import javax.persistence.criteria.CommonAbstractCriteria;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
@@ -271,10 +271,10 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
             begin();
 
             CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
-            CriteriaDelete<E> query = builder.createCriteriaDelete(entityClass);
-            Root<E> root = query.from(entityClass);
+            CriteriaDelete<E> query = builder.createCriteriaDelete(getEntityClass());
+            Root<E> root = query.from(getEntityClass());
 
-            List<Predicate> predicates = getConditions(builder, query, root, template, selectors);
+            List<Predicate> predicates = getConditions(builder, root, template, selectors);
 
             if (!predicates.isEmpty()) {
                 query.where(predicates.toArray(new Predicate[] {}));
@@ -300,7 +300,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
             if (id != null) {
                 begin();
     
-                E result = inflate(getEntityManager().find(entityClass, id), eager);
+                E result = inflate(getEntityManager().find(getEntityClass(), id), eager);
     
                 commit();
     
@@ -371,34 +371,93 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
     }
 
     @Override
+    public Long countAll() throws Exception {
+        return countAll(null);
+    }
+
+    @Override
+    public Long countAll(E template) throws Exception {
+        try {
+            Long result = 0L;
+
+            begin();
+
+            CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
+            Root<E> root = countQuery.from(getEntityClass());
+            countQuery.select(builder.count(root));
+
+            List<Predicate> predicates = getConditions(builder, root, template, selectors);
+
+            if (!predicates.isEmpty()) {
+                countQuery.where(predicates.toArray(new Predicate[] {}));
+            }
+
+            result = entityManager.createQuery(countQuery).getSingleResult();
+
+            commit();
+
+            debug("countAll found: " + result);
+
+            return result;
+        } catch (Exception e) {
+            rollback();
+
+            error("countAll error: " + template, e);
+            
+            throw e;
+        }
+    }
+
+    @Override
     public List<E> findAll() throws Exception {
-        return findAll(null);
+        return findAll(null, null);
+    }
+
+    @Override
+    public List<E> findAll(Integer startPosition, Integer maxSize) throws Exception {
+        return findAll(null, startPosition, maxSize);
     }
 
     @Override
     public List<E> findAll(E template) throws Exception {
-        return findAll(template, selectors);
+        return findAll(template, null, null);
+    }
+    
+    @Override
+    public List<E> findAll(E template, Integer startPosition, Integer maxSize) throws Exception {
+        return findAll(template, selectors, startPosition, maxSize);
     }
 
-    protected List<E> findAll(E template, Map<String,Selector> selectors) throws Exception {
+    protected List<E> findAll(E template, Map<String,Selector> selectors, Integer startPosition, Integer maxResult) throws Exception {
         try {
             List<E> result = new ArrayList<>();
 
             begin();
 
             CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
-            CriteriaQuery<E> query = builder.createQuery(entityClass);
-            Root<E> root = query.from(entityClass);
+            CriteriaQuery<E> criteria = builder.createQuery(getEntityClass());
+            Root<E> root = criteria.from(getEntityClass());
 
-            List<Predicate> predicates = getConditions(builder, query, root, template, selectors);
+            List<Predicate> predicates = getConditions(builder, root, template, selectors);
 
             if (!predicates.isEmpty()) {
-                query.select(root).where(predicates.toArray(new Predicate[] {}));
+                criteria.select(root).where(predicates.toArray(new Predicate[] {}));
             } else {
-                query.select(root);
+                criteria.select(root);
             }
 
-            result.addAll(getEntityManager().createQuery(query).getResultList());
+            TypedQuery<E> query = getEntityManager().createQuery(criteria);
+
+            if (startPosition != null) {
+                query.setFirstResult(startPosition * maxResult);
+            }
+
+            if (maxResult != null) {
+                query.setMaxResults(maxResult);
+            }
+
+            result.addAll(query.getResultList());
 
             commit();
 
@@ -418,13 +477,12 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
      * Gets the conditions.
      *
      * @param builder the builder
-     * @param query the query
      * @param root the root
      * @param template the template
      * @return the conditions
      * @throws Exception the exception
      */
-    protected List<Predicate> getConditions(CriteriaBuilder builder, CommonAbstractCriteria query, Root<E> root,
+    protected List<Predicate> getConditions(CriteriaBuilder builder, Root<E> root,
             E template, Map<String,Selector> selectors) throws Exception {
         List<Predicate> predicates = new ArrayList<Predicate>();
 

@@ -1,114 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1"/>	
-	<link href= "css/site.css" rel="stylesheet"/>
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
-	<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
-	<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">	</script>
-	<script type="text/javascript">
-		function getData() {
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="css/site.css" rel="stylesheet" />
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript"
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">	</script>
+<script type="text/javascript">
+	    function loadData() {
+	    	getData(window.location.protocol + "//" + window.location.host + "/ModellBahn/api/decoderTyp?pageNumber=0&pageSize=10")
+	    };
+		function deleteRow(deleteUrl) {
+			$.ajax( { url: deleteUrl, type: 'DELETE', success: function(result) {} } );
+		};
+		function getData(restUrl) {
 			/* Script to call userHome.php with userID using jQuery and print the response as a table in div books
 			 * https://www.html5andbeyond.com/jquery-ajax-json-php/
 			 * http://labs.jonsuh.com/jquery-ajax-php-json/
 			 * http://api.jquery.com/jquery.post/
 			 */
-			$.getJSON(window.location.protocol + "//" + window.location.host + "/ModellBahn/api/decoderTyp", 
-				{
-				},
-				function (data, status){
-					var table = document.createElement("listing");
-					table.setAttribute("border", "1.5");
+			$.getJSON(restUrl, {},
+				function (data, status) {
+					var table = document.getElementById("listing");
 
-					var heading = document.createElement("tr");
+					table.deleteTHead();
+                    table.deleteTFoot();
+					
+					for (i = 0; i < data.entities.length; i++) {
+						if (i < table.rows.length) {
+							table.deleteRow(i);
+						}
 
-					var th = document.createElement("th");
-					th.textContent = "Hersteller";
-					heading.appendChild(th);
+						var tr = table.insertRow(i);
 
-					th = document.createElement("th");
-					th.textContent = "Bestell Nr";
-					heading.appendChild(th);
+						var td = tr.insertCell(0);
+						td.textContent = data.entities[i].hersteller;
 
-					th = document.createElement("th");
-					th.textContent = "Protokoll";
-					heading.appendChild(th);
+						td = tr.insertCell(1);
+						td.textContent = data.entities[i].bestellNr;
 
-					th = document.createElement("th");
-					th.textContent = "Konfiguration";
-					heading.appendChild(th);
+						td = tr.insertCell(2);
+						td.textContent = data.entities[i].protokoll;
 
-					th = document.createElement("th");
-					th.textContent = "Sound";
-					heading.appendChild(th);
+						td = tr.insertCell(3);
+						td.textContent = data.entities[i].konfiguration;
 
-					th = document.createElement("th");
-                    th.textContent = "X";
-                    heading.appendChild(th);
+						td = tr.insertCell(4);
+						td.textContent = data.entities[i].sound;
 
-					table.appendChild(heading);
+                        td = tr.insertCell(5);
 
-					for (i = 0; i < data.length; i++) {
-						var tr = document.createElement("tr");
-		                  
-						var td = document.createElement("td");
-						td.textContent = data[i].hersteller;
-						tr.appendChild(td);
-
-						td = document.createElement("td");
-						td.textContent = data[i].bestellNr;
-						tr.appendChild(td);
-
-						td = document.createElement("td");
-						td.textContent = data[i].protokoll;
-						tr.appendChild(td);
-
-						td = document.createElement("td");
-						td.textContent = data[i].konfiguration;
-						tr.appendChild(td);
-
-						td = document.createElement("td");
-						td.textContent = data[i].sound;
-
-                        td = document.createElement("td");
-
-                        var del = data[i].links.find(function(element) { return element.method == "DELETE"; });
-                        var a = document.createElement("a");
-                        a.appendChild(document.createTextNode("X"));
-                        a.title = del.rel;
-                        a.href = del.href;
-                        td.append(a);
-
-						tr.appendChild(td);
-
-						table.appendChild(tr);
+                        var del = data.entities[i].links.find(function(element) { return element.method == "DELETE"; });
+                        var x = document.createElement("BUTTON");
+                        x.appendChild(document.createTextNode("X"));
+						x.setAttribute("value", del.href);
+						x.setAttribute("onclick", "deleteRow(this.value)");
+                        td.append(x);
 					}
+ 
+                    var header = table.createTHead();
+                    var headRow = header.insertRow(0);
+                    
+                    var th = headRow.insertCell(0);
+                    th.append(document.createTextNode("Hersteller"));
+                    
+                    th = headRow.insertCell(1);
+                   	th.append(document.createTextNode("Bestell Nr"));
+                    
+                   	th = headRow.insertCell(2);
+                    th.append(document.createTextNode("Protokoll"));
 
-					document.getElementById("listing").appendChild(table);
+                    th = headRow.insertCell(3);
+                    th.append(document.createTextNode("Konfiguration"));
+
+                    th = headRow.insertCell(4);
+                    th.append(document.createTextNode("Sound"));
+                    
+                    th = headRow.insertCell(5);
+                    
+		            var footer = table.createTFoot();
+		            var navRow = footer.insertRow(0);
+		            
+                    var prev = navRow.insertCell(0);
+					var prevRef = data.links.find(function(element) { return element.rel == "previous"; });
+                    if (prevRef) {
+	                    var prevButton = document.createElement("BUTTON");
+						prevButton.appendChild(document.createTextNode(prevRef.rel));
+						prevButton.setAttribute("value", prevRef.href);
+						prevButton.setAttribute("onclick", "getData(this.value)");
+	                    prev.appendChild(prevButton);
+                    }
+
+					th = navRow.insertCell(1);
+					th = navRow.insertCell(2);
+                    th = navRow.insertCell(3);
+                    th = navRow.insertCell(4);
+                    
+                    var next = navRow.insertCell(5);
+					var nextRef = data.links.find(function(element) { return element.rel == "next"; });
+                    if (nextRef) {
+	                    var nextButton = document.createElement("BUTTON");
+	                    nextButton.appendChild(document.createTextNode(nextRef.rel));
+						nextButton.setAttribute("value", nextRef.href);
+						nextButton.setAttribute("onclick", "getData(this.value)");
+	                    next.appendChild(nextButton);
+                    }
 				}
 			);
 		};
 	</script>
-	<title>Decoder Typ List</title>
+<title>Decoder Typ List</title>
 </head>
-<body onload="javascript:getData()">
+<body onload="javascript:loadData()">
 	<h1>Decoder Typ</h1>
 
 	<h2>Available Decoder Typ:</h2>
-	
-	<div id="listing">
+
+	<div id="data">
+	    <table id="listing">
+		    <thead>
+		       <tr>
+	           </tr>
+           </thead>
+           <tfoot>
+			   <tr>
+			   </tr>
+           </tfoot>
+           <tbody>
+	           <tr>
+	           </tr>
+           </tbody>
+	    </table>
 	</div>
+
 	<p>
-		<a class="btn btn-info btn-sm" href='ebook_home.html'>Home</a>  
-		<a class="btn btn-info btn-sm" href="search.html">Search for an eBook</a> 
-		<a class="btn btn-info btn-sm" href='ebook_rating_view.html'>View an eBook Rating</a>
-		<a class="btn btn-info btn-sm" href='ebook_account.html'>Account Login</a>
+		<a class="btn btn-info btn-sm" href='ebook_home.html'>Home</a> <a
+			class="btn btn-info btn-sm" href="search.html">Search for an
+			eBook</a> <a class="btn btn-info btn-sm" href='ebook_rating_view.html'>View
+			an eBook Rating</a> <a class="btn btn-info btn-sm"
+			href='ebook_account.html'>Account Login</a>
 	</p>
-	
-	<div id="links">
-	</div>
-	
+
+	<div id="links"></div>
+
 	<div id="footer">
 		<hr class="highlight" />
 		<p>Copyright &copy; 2018 ModellBahn Website</p>
