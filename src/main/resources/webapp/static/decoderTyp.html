@@ -4,135 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="css/site.css" rel="stylesheet" />
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
 <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
-<script type="text/javascript"
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">	</script>
+<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-	    function loadData() {
-	    	getData(window.location.protocol + "//" + window.location.host + "/ModellBahn/api/decoderTyp?pageNumber=0&pageSize=10")
-	    };
-		function deleteRow(deleteUrl) {
-			$.ajax( { url: deleteUrl, type: 'DELETE', success: function(result) {} } );
-		};
-		function getData(restUrl) {
-			/* Script to call userHome.php with userID using jQuery and print the response as a table in div books
-			 * https://www.html5andbeyond.com/jquery-ajax-json-php/
-			 * http://labs.jonsuh.com/jquery-ajax-php-json/
-			 * http://api.jquery.com/jquery.post/
-			 */
-			$.getJSON(restUrl, {},
-				function (data, status) {
-					var table = document.getElementById("listing");
-
-					table.deleteTHead();
-                    table.deleteTFoot();
-					
-					for (i = 0; i < data.entities.length; i++) {
-						if (i < table.rows.length) {
-							table.deleteRow(i);
-						}
-
-						var tr = table.insertRow(i);
-
-						var td = tr.insertCell(0);
-						td.textContent = data.entities[i].hersteller;
-
-						td = tr.insertCell(1);
-						td.textContent = data.entities[i].bestellNr;
-
-						td = tr.insertCell(2);
-						td.textContent = data.entities[i].protokoll;
-
-						td = tr.insertCell(3);
-						td.textContent = data.entities[i].konfiguration;
-
-						td = tr.insertCell(4);
-						td.textContent = data.entities[i].sound;
-
-                        td = tr.insertCell(5);
-
-                        var del = data.entities[i].links.find(function(element) { return element.method == "DELETE"; });
-                        var x = document.createElement("BUTTON");
-                        x.appendChild(document.createTextNode("X"));
-						x.setAttribute("value", del.href);
-						x.setAttribute("onclick", "deleteRow(this.value)");
-                        td.append(x);
-					}
- 
-                    var header = table.createTHead();
-                    var headRow = header.insertRow(0);
-                    
-                    var th = headRow.insertCell(0);
-                    th.append(document.createTextNode("Hersteller"));
-                    
-                    th = headRow.insertCell(1);
-                   	th.append(document.createTextNode("Bestell Nr"));
-                    
-                   	th = headRow.insertCell(2);
-                    th.append(document.createTextNode("Protokoll"));
-
-                    th = headRow.insertCell(3);
-                    th.append(document.createTextNode("Konfiguration"));
-
-                    th = headRow.insertCell(4);
-                    th.append(document.createTextNode("Sound"));
-                    
-                    th = headRow.insertCell(5);
-                    
-		            var footer = table.createTFoot();
-		            var navRow = footer.insertRow(0);
-		            
-                    var prev = navRow.insertCell(0);
-					var prevRef = data.links.find(function(element) { return element.rel == "previous"; });
-                    if (prevRef) {
-	                    var prevButton = document.createElement("BUTTON");
-						prevButton.appendChild(document.createTextNode(prevRef.rel));
-						prevButton.setAttribute("value", prevRef.href);
-						prevButton.setAttribute("onclick", "getData(this.value)");
-	                    prev.appendChild(prevButton);
-                    }
-
-					th = navRow.insertCell(1);
-					th = navRow.insertCell(2);
-                    th = navRow.insertCell(3);
-                    th = navRow.insertCell(4);
-                    
-                    var next = navRow.insertCell(5);
-					var nextRef = data.links.find(function(element) { return element.rel == "next"; });
-                    if (nextRef) {
-	                    var nextButton = document.createElement("BUTTON");
-	                    nextButton.appendChild(document.createTextNode(nextRef.rel));
-						nextButton.setAttribute("value", nextRef.href);
-						nextButton.setAttribute("onclick", "getData(this.value)");
-	                    next.appendChild(nextButton);
-                    }
-				}
-			);
-		};
-	</script>
+var listing = new ItemGrid(10, window.location.protocol + "//" + window.location.host + "/ModellBahn/api/decoderTyp", "listing", [
+	new Column("Hersteller", "hersteller"),
+	new Column("Bestell Nr", "bestellNr"),
+	new Column("Protokoll", "protokoll"),
+	new Column("Sound", "sound"),
+	new Column("Delete", "delete") 
+	]);
+</script>
 <title>Decoder Typ List</title>
 </head>
-<body onload="javascript:loadData()">
+<body onload="javascript:listing.init()">
 	<h1>Decoder Typ</h1>
 
 	<h2>Available Decoder Typ:</h2>
 
 	<div id="data">
 	    <table id="listing">
-		    <thead>
-		       <tr>
-	           </tr>
-           </thead>
-           <tfoot>
-			   <tr>
-			   </tr>
-           </tfoot>
-           <tbody>
-	           <tr>
-	           </tr>
-           </tbody>
 	    </table>
 	</div>
 
