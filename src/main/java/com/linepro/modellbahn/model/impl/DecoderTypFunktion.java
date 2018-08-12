@@ -8,6 +8,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -91,6 +92,7 @@ public class DecoderTypFunktion extends AbstractNamedItem<DecoderTypFunktionKey>
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
     @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_typ_fn_fk1"))
+    @OrderColumn
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using=DecoderTypSerializer.class)
@@ -108,6 +110,7 @@ public class DecoderTypFunktion extends AbstractNamedItem<DecoderTypFunktionKey>
     @Override
     @BusinessKey
     @Column(name = DBNames.REIHE, nullable = false)
+    @OrderColumn
     @JsonGetter(ApiNames.REIHE)
     @JsonView(Views.DropDown.class)
     public Integer getReihe() {

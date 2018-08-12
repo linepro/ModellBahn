@@ -103,6 +103,7 @@ public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsi
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Zug.class)
     @JoinColumn(name = DBNames.ZUG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "consist_fk1"))
+    @OrderColumn
     @JsonGetter(ApiNames.ZUG)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)

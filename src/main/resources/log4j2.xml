@@ -19,7 +19,7 @@ $Id$
 
 	<Loggers>
 		<!-- Log everything in hibernate -->
-		<Logger name="org.hibernate" level="debug" additivity="false">
+		<Logger name="org.hibernate" level="info" additivity="false">
             <AppenderRef ref="File" />
 		</Logger>
 
@@ -54,23 +54,27 @@ $Id$
         </Logger>
         
         <!-- Hibernate writes the DDL SQL queries executed during schema migration to this log category. -->
-        <Logger name="org.hibernate.tool.hbm2ddl" level="debug" additivity="false">
+        <Logger name="org.hibernate.tool.hbm2ddl" level="info" additivity="false">
             <AppenderRef ref="File" />
         </Logger>
         
 		<!-- Log custom packages -->
-		<Logger name="com.linepro.modellbahn" level="debug" additivity="false">
+		<Logger name="com.linepro.modellbahn" level="info" additivity="false">
 			<AppenderRef ref="Console" />
             <AppenderRef ref="File" />
 		</Logger>
 		
-        <Logger name="org.glassfish.grizzly" level="debug" additivity="false">
-            <AppenderRef ref="Console" />
+        <Logger name="org.apache" level="info" additivity="false">
+            <AppenderRef ref="File" />
+        </Logger>
+
+        <Logger name="org.glassfish.grizzly" level="info" additivity="false">
             <AppenderRef ref="File" />
         </Logger>
 
 		<Root level="error">
-			<AppenderRef ref="File" />
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="File" />
 		</Root>
 	</Loggers>
 </Configuration>

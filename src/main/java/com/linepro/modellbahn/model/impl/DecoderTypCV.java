@@ -7,6 +7,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -124,6 +125,7 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
     @Override
     @JsonSetter(ApiNames.DECODER_TYP)
     @JsonDeserialize(as=DecoderTyp.class)
+    @OrderColumn
     public void setDecoderTyp(IDecoderTyp decoderTyp) {
         this.decoderTyp = decoderTyp;
     }
@@ -131,6 +133,7 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
     @Override
     @BusinessKey
     @Column(name = DBNames.CV, nullable = false)
+    @OrderColumn
     public Integer getCv() {
         return cv;
     }

@@ -7,6 +7,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -94,6 +95,7 @@ public class ProduktTeil extends AbstractItem<ProduktTeilKey> implements IProduk
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
     @JoinColumn(name = DBNames.PRODUKT_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "produkt_teil_fk1"))
+    @OrderColumn
     @JsonGetter(ApiNames.PRODUKT)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using=ProduktSerializer.class)
@@ -113,6 +115,7 @@ public class ProduktTeil extends AbstractItem<ProduktTeilKey> implements IProduk
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
     @JoinColumn(name = DBNames.TEIL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "produkt_teil_fk2"))
+    @OrderColumn
     @JsonGetter(ApiNames.TEIL)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using=ProduktTeilSerializer.class)

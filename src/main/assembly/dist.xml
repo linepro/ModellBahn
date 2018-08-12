@@ -24,5 +24,14 @@
 				<include>StartModellBahn.sh</include>
 			</includes>
 		</fileSet>
-	</fileSets>
+        <fileSet>
+            <directory>src/main/resources/webapp</directory>
+            <outputDirectory>/webapp</outputDirectory>
+            <fileMode>0755</fileMode>
+            <lineEnding>keep</lineEnding>
+            <includes>
+                <include>**/*</include>
+            </includes>
+        </fileSet>
+    </fileSets>
 </assembly>

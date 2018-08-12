@@ -14,6 +14,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -94,6 +95,7 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
     @JoinColumn(name = DBNames.DECODER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_address_fk1"))
+    @OrderColumn
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -111,6 +113,7 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
 
     @Override
     @Column(name = DBNames.INDEX, nullable = false)
+    @OrderColumn
     @JsonGetter(ApiNames.INDEX)
     @JsonView(Views.DropDown.class)
     public Integer getIndex() {

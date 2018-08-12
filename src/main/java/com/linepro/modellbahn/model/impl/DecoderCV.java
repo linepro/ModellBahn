@@ -7,6 +7,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -90,6 +91,7 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
     @JoinColumn(name = DBNames.DECODER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_cv_fk1"))
+    @OrderColumn
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -109,6 +111,7 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTypCV.class)
     @JoinColumn(name = DBNames.CV_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_cv_fk2"))
+    @OrderColumn
     public IDecoderTypCV getCv() {
         if (cv != null) {
             setCvValue(cv.getCv());

@@ -25,10 +25,20 @@ public class HttpService extends AbstractService {
     }
 
     @GET
-    @POST
     @Path(ApiPaths.WEB_PART)
     @Produces({MediaType.WILDCARD})
     public Response getFile() {
+        return handleRequest();
+    }
+
+    @POST
+    @Path(ApiPaths.WEB_PART)
+    @Produces({MediaType.WILDCARD})
+    public Response postFile() {
+        return handleRequest();
+    }
+
+    public Response handleRequest() {
         URI requested = uriInfo.getBaseUri().relativize(uriInfo.getRequestUri());
 
         // We really really don't want leading or trailing slashes
