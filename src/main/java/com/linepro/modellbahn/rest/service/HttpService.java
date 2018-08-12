@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.URI;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -24,6 +25,7 @@ public class HttpService extends AbstractService {
     }
 
     @GET
+    @POST
     @Path(ApiPaths.WEB_PART)
     @Produces({MediaType.WILDCARD})
     public Response getFile() {

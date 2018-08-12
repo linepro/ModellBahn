@@ -6,14 +6,28 @@ class Column {
 }
 
 class ItemGrid {
-	constructor(pageSize, apiRoot, tableName, columns) {
+	constructor(pageSize, apiRoot, collection, tableName, columns, paged, deleteButtons, updateLink, addLink, children) {
 		this.pageSize = pageSize;
-		this.current = apiRoot + "?pageNumber=0&pageSize=" + pageSize;
+		this.current = apiRoot + (paged ? "?pageNumber=0&pageSize=" + pageSize : "");
+		this.collection = collection;
 		this.tableName = tableName;
 		this.columns = columns;
+		this.paged = paged;
+		this.deleteButtons = deleteButtons;
+		this.addLink = addLink;
+		this.updateLink = updateLink;
+		this.columnCount = this.columns.length + (this.deleteButtons ? 1 : 0);
+		this.children = children;
+		this.initialized = false;
 	}
 
 	init() {
+		this.loadData();
+	}
+
+	initGrid(pageSize) {
+		this.pageSize = this.paged ? this.pageSize : pageSize;
+
 		var table = document.getElementById(this.tableName);
 
 		while (table.rows.length) {
@@ -29,7 +43,7 @@ class ItemGrid {
 			var tr = table.insertRow(0);
 
 			var i;
-			for (i = 0; i < this.columns.length; i++) {
+			for (i = 0; i < this.columnCount; i++) {
 				var td = tr.insertCell(i);
 				td.appendChild(document.createTextNode(""));
 				td.style.paddingBottom = "2px";
@@ -43,25 +57,33 @@ class ItemGrid {
 		var headRow = header.insertRow(0);
 
 		var i;
-		for (i = 0; i < this.columns.length; i++) {
+		for (i = 0; i < this.columnCount; i++) {
 			var th = headRow.insertCell(i);
 			th.style.height = "40px";
-			th.append(document.createTextNode(this.columns[i].heading));
+			if (!this.deleteButtons || i < (this.columnCount-1)) {
+				th.append(document.createTextNode(this.columns[i].heading));
+			}
 		}
 
 		table.deleteTFoot();
 
-		var footer = table.createTFoot();
-		var navRow = footer.insertRow(0);
+		if (this.paged) {
+			var footer = table.createTFoot();
+			var navRow = footer.insertRow(0);
 
-		for (i = 0; i < this.columns.length; i++) {
-			var td = navRow.insertCell(i);
-			td.style.height = "40px";
-			td.style.textAlign = (i == 0 ? "left" : "right");
-			td.appendChild(document.createTextNode(""));
+			for (i = 0; i < this.columnCount; i++) {
+				var td = navRow.insertCell(i);
+				td.style.height = "40px";
+				td.style.paddingBottom = "2px";
+				td.style.paddingLeft = "5px";
+				td.style.paddingRight = "5px";
+				td.style.paddingTop = "2px";
+				td.style.textAlign = (i == 0 ? "left" : "right");
+				td.appendChild(document.createTextNode(""));
+			}
 		}
-
-		this.loadData();
+		
+		this.initialized = true;
 	}
 
 	loadData() {
@@ -111,41 +133,74 @@ class ItemGrid {
 		} 
 	}
 
-	renderJson(jsonData, textStatus, jqXHR, restUrl) {
-		if (jqXHR.status == 200) {
-			var table = document.getElementById(this.tableName);
+	renderData(jsonData) {
+		var entities = (this.collection ? jsonData[this.collection] : jsonData.entities ? jsonData.entities : [ jsonData ]);
 
-			var p;
-			for (p = 0; p < this.pageSize; p++) {
-				var tr = table.tBodies[0].rows[p];
+		if (!this.initialized) {
+			this.initGrid(entities.length);
+		}
 
-				var c;
-				for (c = 0; c < this.columns.length; c++) {
-					var td = tr.cells[c];
-					
-					if (p < jsonData.entities.length) {
-						if (c == (this.columns.length - 1)) {
-							this.addDeleteButton(jsonData.entities[p].links.find(function(e) { return e.method == "DELETE"; }), td);
-						} else {
-							td.removeChild(td.childNodes[0]);
-							td.appendChild(document.createTextNode(jsonData.entities[p][this.columns[c].binding]));
-						}
+		var table = document.getElementById(this.tableName);
+
+		var p;
+		for (p = 0; p < this.pageSize; p++) {
+			var tr = table.tBodies[0].rows[p];
+
+			var c;
+			for (c = 0; c < this.columnCount; c++) {
+				var td = tr.cells[c];
+
+				if (p < entities.length) {
+					if (c == (this.columnCount-1) && this.deleteButtons) {
+						this.addDeleteButton(entities[p].links.find(function(e) { return e.method == "DELETE"; }), td);
 					} else {
 						td.removeChild(td.childNodes[0]);
-						td.appendChild(document.createTextNode(""));
+						
+						var txt = document.createTextNode(entities[p][this.columns[c].binding]);
+						
+						if (c == 0 && this.updateLink) {
+							var item = entities[p].links.find(function(e) { return e.rel == "self"; })
+							if (item) {
+								var a = document.createElement('a');
+								var ref = this.updateLink + "?self=" + item.href;
+								a.setAttribute('href', ref);
+								a.appendChild(txt);
+								td.appendChild(a);
+							}
+						} else {
+							td.appendChild(txt);
+						}
 					}
+				} else {
+					td.removeChild(td.childNodes[0]);
+					td.appendChild(document.createTextNode(""));
+				}
+			}
+		}
+	}
+
+	renderJson(jsonData, textStatus, jqXHR, restUrl) {
+		if (jqXHR.status == 200) {
+			this.renderData(jsonData);
+
+			if (this.children) {
+				var i;
+				for (i = 0 ; i < this.children.length ; i++) {
+					this.children[i].renderData(jsonData);
 				}
 			}
 
-			var tfoot = table.tFoot;
+			if (this.paged) {
+				var tfoot = document.getElementById(this.tableName).tFoot;
 
-			var prev = tfoot.rows[0].cells[0];
+				var prev = tfoot.rows[0].cells[0];
 
-			this.addLinkButton(jsonData.links.find(function(e) { return e.rel == "previous"; }), prev);
+				this.addLinkButton(jsonData.links.find(function(e) { return e.rel == "previous"; }), prev);
 
-			var next = tfoot.rows[0].cells[tfoot.rows[0].cells.length-1];
+				var next = tfoot.rows[0].cells[tfoot.rows[0].cells.length-1];
 
-			this.addLinkButton(jsonData.links.find(function(e) { return e.rel == "next"; }), next);
+				this.addLinkButton(jsonData.links.find(function(e) { return e.rel == "next"; }), next);
+			}
 
 			this.current = restUrl;
 		}
@@ -158,6 +213,6 @@ class ItemGrid {
 	getData(restUrl) {
 		var grid = this;
 		$.getJSON(restUrl, function( data, textStatus, jqXHR ) { grid.renderJson(data, textStatus, jqXHR, restUrl) })
-			.fail( function() { grid.reportError(  jqXHR, textStatus, errorThrown  ); });
+			.fail( function( jqXHR, textStatus, errorThrown ) { grid.reportError(  jqXHR, textStatus, errorThrown  ); });
 	}
 };

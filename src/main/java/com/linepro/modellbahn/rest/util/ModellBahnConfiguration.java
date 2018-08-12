@@ -9,6 +9,7 @@ import javax.ws.rs.ApplicationPath;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
+import org.glassfish.jersey.server.mvc.jsp.JspMvcFeature;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.linepro.modellbahn.jersey.LoggingFilter;
@@ -85,12 +86,10 @@ public class ModellBahnConfiguration extends ResourceConfig {
         property(ServletProperties.FILTER_FORWARD_ON_404, true);
         property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, true);
         property(ServletProperties.GLASSFISH_DEFAULT_ERROR_PAGE_RESPONSE, "");
-        property(ServletProperties.JSP_TEMPLATES_BASE_PATH, "");
         property(ServletProperties.PROPERTY_FILTER_CONTEXT_PATH, "");
         property(ServletProperties.PROPERTY_WEB_PAGE_CONTENT_REGEX, "");
         property(ServletProperties.RESOURCE_CONFIG_CLASS, "");
         property(WebComponent.APPLICATION_CONFIG_CLASS, "");
-        property(WebComponent.JSP_TEMPLATES_BASE_PATH, "");
         property(WebComponent.RESOURCE_CONFIG_CLASS, "");
         */
 
@@ -98,7 +97,7 @@ public class ModellBahnConfiguration extends ResourceConfig {
         register(SecurityRequestFilter.class);
 
         //register(MvcFeature.class);
-        //register(JspMvcFeature.class);
+        register(JspMvcFeature.class);
 
         // Logging.
         //register(new LoggingFeature(getLogger(), Level.FINEST, LoggingFeature.Verbosity.PAYLOAD_ANY, 8192));

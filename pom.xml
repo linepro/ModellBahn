@@ -105,6 +105,9 @@
 		<commons-lang3.version>3.7</commons-lang3.version>
 		<dagger.version>2.16</dagger.version>
         <esapi.version>2.1.0.1</esapi.version>
+        <grizzly-http.version>2.4.3</grizzly-http.version>
+        <grizzly-http-all.version>2.4.3</grizzly-http-all.version>
+        <grizzly-http-server.version>2.4.3</grizzly-http-server.version>
         <grizzly-http-servlet.version>2.4.3</grizzly-http-servlet.version>
 		<guava.version>25.1-jre</guava.version>
 		<guice-assistedinject.version>4.2.0</guice-assistedinject.version>
@@ -116,7 +119,10 @@
         <jackson-datatype-jdk8.version>2.9.6</jackson-datatype-jdk8.version>
         <javax.el.version>2.2.6</javax.el.version>
         <javax.el-api.version>3.0.0</javax.el-api.version>
+        <javax.servlet.jsp.version>2.3.4</javax.servlet.jsp.version>
+        <javax.servlet.jsp.jstl.version>1.2.5</javax.servlet.jsp.jstl.version>
 		<jersey.version>2.27</jersey.version>
+        <jersey-container-grizzly2-servlet.version>2.27</jersey-container-grizzly2-servlet.version>
 		<jersey-guice.version>1.19.4</jersey-guice.version>
 		<jetty.version>9.4.11.v20180605</jetty.version>
         <jul-to-slf4j.version>1.7.25</jul-to-slf4j.version>
@@ -172,6 +178,10 @@
 					<groupId>com.google.guava</groupId>
 					<artifactId>guava</artifactId>
 				</exclusion>
+                <exclusion>
+					<groupId>javax.inject</groupId>
+					<artifactId>javax.inject</artifactId>
+                </exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -204,9 +214,27 @@
 			<version>${validation-api.version}</version>
 		</dependency>
         <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>javax.servlet.jsp</artifactId>
+            <version>${javax.servlet.jsp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>javax.servlet.jsp.jstl</artifactId>
+            <version>${javax.servlet.jsp.jstl.version}</version>
+        </dependency>
+        
+        <!-- OWASP XSS filters -->
+        <dependency>
             <groupId>org.owasp.esapi</groupId>
             <artifactId>esapi</artifactId>
             <version>${esapi.version}</version>
+            <exclusions>
+	            <exclusion>
+					<groupId>commons-beanutils</groupId>
+					<artifactId>commons-beanutils-core</artifactId>
+	            </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- Byte Buddy -->
@@ -256,6 +284,11 @@
 			<artifactId>jersey-container-grizzly2-http</artifactId>
 			<version>${jersey.version}</version>
 		</dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-grizzly2-servlet</artifactId>
+            <version>${jersey-container-grizzly2-servlet.version}</version>
+        </dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
 			<artifactId>jersey-container-servlet</artifactId>
@@ -328,6 +361,21 @@
 		</dependency>
 
         <!-- Grizzly -->
+        <dependency>
+            <groupId>org.glassfish.grizzly</groupId>
+            <artifactId>grizzly-http</artifactId>
+            <version>${grizzly-http.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.grizzly</groupId>
+            <artifactId>grizzly-http-all</artifactId>
+            <version>${grizzly-http-all.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.grizzly</groupId>
+            <artifactId>grizzly-http-server</artifactId>
+            <version>${grizzly-http-server.version}</version>
+        </dependency>
         <dependency>
 			<groupId>org.glassfish.grizzly</groupId>
 			<artifactId>grizzly-http-servlet</artifactId>

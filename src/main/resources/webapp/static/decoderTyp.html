@@ -3,45 +3,90 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="x-ua-compatible" content="ie=edge">
 <link href="css/site.css" rel="stylesheet" />
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
-<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var listing = new ItemGrid(10, window.location.protocol + "//" + window.location.host + "/ModellBahn/api/decoderTyp", "listing", [
+var decoderRef = new URL(window.location.href).searchParams.get("self");
+var decoder = new ItemGrid(1, decoderRef, undefined, "decoder", [
 	new Column("Hersteller", "hersteller"),
 	new Column("Bestell Nr", "bestellNr"),
 	new Column("Protokoll", "protokoll"),
+	new Column("Fahrstufe", "fahrstufe"),
 	new Column("Sound", "sound"),
-	new Column("Delete", "delete") 
-	]);
+	new Column("I Max", "iMax"),
+	new Column("Konfiguration", "konfiguration")],
+	false, false, undefined, undefined, [
+		new ItemGrid(2, decoderRef, "adressen", "adressen", [
+			new Column("Index", "index"),
+			new Column("AdressTyp", "adressTyp"),
+			new Column("Span", "span"),
+			new Column("Werkseinstellung", "werkseinstellung")],
+			false, true, undefined, undefined),
+		new ItemGrid(10, decoderRef, "cvs", "cvs", [
+			new Column("CV", "cv"),
+			new Column("Description", "description"),
+			new Column("Werkseinstellung", "werkseinstellung")],
+			false, true, undefined, undefined),
+		new ItemGrid(10, decoderRef, "funktionen", "funktionen", [
+			new Column("Bank", "bank"),
+			new Column("Funktion", "funktion"),
+			new Column("Description", "description"),
+			new Column("Programmable", "programmable")],
+			false, true, undefined, undefined)]);
+
+function init() {
+	decoder.init();
+}
 </script>
 <title>Decoder Typ List</title>
 </head>
-<body onload="javascript:listing.init()">
-	<h1>Decoder Typ</h1>
-
-	<h2>Available Decoder Typ:</h2>
-
-	<div id="data">
-	    <table id="listing">
-	    </table>
-	</div>
-
-	<p>
-		<a class="btn btn-info btn-sm" href='ebook_home.html'>Home</a> <a
-			class="btn btn-info btn-sm" href="search.html">Search for an
-			eBook</a> <a class="btn btn-info btn-sm" href='ebook_rating_view.html'>View
-			an eBook Rating</a> <a class="btn btn-info btn-sm"
-			href='ebook_account.html'>Account Login</a>
-	</p>
-
-	<div id="links"></div>
-
-	<div id="footer">
+<body onload="javascript:init()">
+	<header>
 		<hr class="highlight" />
-		<p>Copyright &copy; 2018 ModellBahn Website</p>
-	</div>
+		<nav>
+			<ul>
+				<a class="btn btn-info btn-sm" href='../index.html'>Home</a>
+			</ul>
+		</nav>
+	</header>
+	
+	<section>
+		<article>
+			<header>
+				<h1>Decoder Typ</h1>
+			</header>
+
+			<div id="data">
+				<div>
+					<table id="decoder">
+					</table>
+				</div>
+				<div>
+					<table id="adressen">
+					</table>
+				</div>
+				<div>
+					<table id="cvs">
+					</table>
+				</div>
+				<div>
+					<table id="funktionen">
+					</table>
+				</div>
+			</div>
+		</article>
+	</section>
+
+	<footer>
+		<div id="footer">
+			<hr class="highlight" />
+			<p>Copyright &copy; 2018 ModellBahn Website</p>
+		</div>
+	<footer>
 </body>
 </html>

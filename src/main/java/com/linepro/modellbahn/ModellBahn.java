@@ -2,10 +2,19 @@ package com.linepro.modellbahn;
 
 import java.net.URI;
 import java.util.Collection;
+import java.util.EnumSet;
 
 import javax.inject.Inject;
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
+import javax.servlet.ServletRegistration;
 
+import org.apache.jasper.servlet.JspServlet;
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.grizzly.servlet.WebappContext;
+import org.glassfish.jersey.server.mvc.jsp.JspMvcFeature;
+import org.glassfish.jersey.servlet.ServletContainer;
+import org.glassfish.jersey.servlet.ServletProperties;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 
@@ -25,6 +34,10 @@ import io.swagger.jaxrs.config.BeanConfig;
  * @version $Id:$
  */
 public class ModellBahn implements IModellBahn {
+    
+    public static final String JERSEY_SERVLET_CONTEXT_PATH = "";
+    
+    public static final String JSP_CLASSPATH_ATTRIBUTE = "org.apache.catalina.jsp_classpath";
 
     /** The logger. */
     protected final Logger logger;
@@ -55,6 +68,31 @@ public class ModellBahn implements IModellBahn {
         StaticContentFinder.get().addPaths(staticRoots);
     }
 
+    protected WebappContext configureJsp() {
+        WebappContext context = new WebappContext("WebappContext", JERSEY_SERVLET_CONTEXT_PATH);
+        
+        // Initialize and register Jersey Servlet
+        FilterRegistration registration = context.addFilter("ServletContainer", ServletContainer.class);
+        registration.setInitParameter("javax.ws.rs.Application", ModellBahn.class.getName());
+        registration.setInitParameter(JspMvcFeature.TEMPLATE_BASE_PATH, "/WEB-INF/jsp");
+        // configure Jersey to bypass non-Jersey requests (static resources and jsps)
+        registration.setInitParameter(ServletProperties.FILTER_STATIC_CONTENT_REGEX,
+                "(/(image|js|css)/?.*)|(/.*\\.jsp)|(/WEB-INF/.*\\.jsp)|"
+                + "(/WEB-INF/.*\\.jspf)|(/.*\\.html)|(/favicon\\.ico)|"
+                + "(/robots\\.txt)");
+        
+        registration.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+
+        // Initialize and register JSP Servlet        
+        ServletRegistration jspRegistration = context.addServlet("JSPContainer", JspServlet.class.getName());
+        jspRegistration.addMapping("/*");
+        
+        // Set classpath for Jasper compiler based on the current classpath
+        context.setAttribute(JSP_CLASSPATH_ATTRIBUTE, System.getProperty("java.class.path"));
+        
+        return context;
+    }
+    
     @Override
     public void run() {
         try {
@@ -75,6 +113,8 @@ public class ModellBahn implements IModellBahn {
             configuration.register();
 
             HttpServer server = new ServerBuilder().getServer(baseUri, configuration);
+
+            configureJsp().deploy(server);
 
             Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
                 @Override
