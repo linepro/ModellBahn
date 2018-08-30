@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.net.URI;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
@@ -22,6 +23,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -41,6 +43,7 @@ import com.linepro.modellbahn.model.IDecoderTypAdress;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.IHersteller;
+import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.IProtokoll;
 import com.linepro.modellbahn.model.keys.DecoderTypKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
@@ -236,11 +239,17 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
 
     @Override
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.DECODER_TYP, targetEntity = DecoderTypAdress.class, orphanRemoval = true)
+    @JsonIgnore
+    public Set<IDecoderTypAdress> getAdressen() {
+        return adressen;
+    }
+
+    @Transient
     @JsonGetter(ApiNames.ADRESSEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentUsing = DecoderTypAdressSerializer.class)
-    public Set<IDecoderTypAdress> getAdressen() {
-        return adressen;
+    public Set<IDecoderTypAdress> getSortedAdressen() {
+        return new TreeSet<>(getAdressen());
     }
 
     @Override
@@ -264,11 +273,17 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
 
     @Override
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.DECODER_TYP, targetEntity = DecoderTypCV.class, orphanRemoval = true)
+    @JsonIgnore
+    public Set<IDecoderTypCV> getCVs() {
+        return CVs;
+    }
+
+    @Transient
     @JsonGetter(ApiNames.CVS)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentUsing = DecoderTypCVSerializer.class)
-    public Set<IDecoderTypCV> getCVs() {
-        return CVs;
+    public Set<IDecoderTypCV> getSortedCVs() {
+        return new TreeSet<IDecoderTypCV>(getCVs());
     }
 
     @Override
@@ -281,21 +296,27 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     @Override
     public void addCV(IDecoderTypCV cv) {
         cv.setDecoderTyp(this);
-        getCVs().add(cv);
+        CVs.add(cv);
     }
 
     @Override
     public void removeCV(IDecoderTypCV cv) {
-        getCVs().remove(cv);
+        CVs.remove(cv);
     }
 
     @Override
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.DECODER_TYP, targetEntity = DecoderTypFunktion.class, orphanRemoval = true)
+    @JsonIgnore
+    public Set<IDecoderTypFunktion> getFunktionen() {
+        return funktionen;
+    }
+
+    @Transient
     @JsonGetter(ApiNames.FUNKTIONEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentUsing = DecoderTypFunktionSerializer.class)
-    public Set<IDecoderTypFunktion> getFunktionen() {
-        return funktionen;
+    public Set<IDecoderTypFunktion> getSortedFunktionen() {
+        return new TreeSet<IDecoderTypFunktion>(getFunktionen());
     }
 
     @Override
@@ -328,6 +349,18 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
         addLinks(root, getAdressen(), false, false);
         addLinks(root, getCVs(), false, false);
         addLinks(root, getFunktionen(), false, false);
+    }
+    
+    @Override
+    public int compareTo(IItem<?> other) {
+        if (other instanceof DecoderTyp) {
+            return new CompareToBuilder()
+                    .append(getHersteller(), ((DecoderTyp) other).getHersteller())
+                    .append(getName(), ((DecoderTyp) other).getName())
+                    .toComparison();
+        }
+        
+        return super.compareTo(other);
     }
 
     @Override

@@ -151,7 +151,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         try {
             logGet(getEntityClassName() + ": " + key);
 
-            E entity = getPersister().findByKey(key, false);
+            E entity = getPersister().findByKey(key, true);
 
             if (entity == null) {
                 return getResponse(notFound());

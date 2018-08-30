@@ -7,13 +7,13 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.IProdukt;
 import com.linepro.modellbahn.model.IProduktTeil;
 import com.linepro.modellbahn.model.keys.ProduktTeilKey;
@@ -95,7 +96,6 @@ public class ProduktTeil extends AbstractItem<ProduktTeilKey> implements IProduk
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
     @JoinColumn(name = DBNames.PRODUKT_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "produkt_teil_fk1"))
-    @OrderColumn
     @JsonGetter(ApiNames.PRODUKT)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using=ProduktSerializer.class)
@@ -115,7 +115,6 @@ public class ProduktTeil extends AbstractItem<ProduktTeilKey> implements IProduk
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
     @JoinColumn(name = DBNames.TEIL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "produkt_teil_fk2"))
-    @OrderColumn
     @JsonGetter(ApiNames.TEIL)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using=ProduktTeilSerializer.class)
@@ -143,14 +142,6 @@ public class ProduktTeil extends AbstractItem<ProduktTeilKey> implements IProduk
     public void setAnzahl(Integer anzahl) {
         this.anzahl = anzahl;
     }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .append(getProdukt())
-                .append(getTeil())
-                .hashCode();
-    }
     
     @Override
     @Transient
@@ -164,6 +155,26 @@ public class ProduktTeil extends AbstractItem<ProduktTeilKey> implements IProduk
     @JsonIgnore
     public String getLinkId() {
         return String.format(ApiPaths.PRODUKT_TEIL_LINK, getParentId(), getTeil().getLinkId());
+    }
+
+    @Override
+    public int compareTo(IItem<?> other) {
+        if (other instanceof ProduktTeil) {
+            return new CompareToBuilder()
+                    .append(getProdukt(), ((ProduktTeil) other).getProdukt())
+                    .append(getTeil(), ((ProduktTeil) other).getTeil())
+                    .toComparison();
+        }
+        
+        return super.compareTo(other);
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(getProdukt())
+                .append(getTeil())
+                .hashCode();
     }
 
     @Override

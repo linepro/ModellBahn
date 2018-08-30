@@ -7,13 +7,13 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Range;
@@ -28,6 +28,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypAdress;
+import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.keys.DecoderTypAdressKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.model.util.AdressTyp;
@@ -113,7 +114,6 @@ public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implemen
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
     @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_typ_adress_fk1"))
-    @OrderColumn
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using=DecoderTypSerializer.class)
@@ -131,7 +131,6 @@ public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implemen
     @Override
     @BusinessKey
     @Column(name = DBNames.INDEX, nullable = false)
-    @OrderColumn
     public Integer getIndex() {
         return index;
     }
@@ -203,6 +202,18 @@ public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implemen
     @JsonIgnore
     public String getLinkId() {
         return String.format(ApiPaths.DECODER_TYP_ADRESS_LINK, getParentId(), getIndex());
+    }
+
+    @Override
+    public int compareTo(IItem<?> other) {
+        if (other instanceof DecoderTypAdress) {
+            return new CompareToBuilder()
+                    .append(getDecoderTyp(), ((DecoderTypAdress) other).getDecoderTyp())
+                    .append(getIndex(), ((DecoderTypAdress) other).getIndex())
+                    .toComparison();
+        }
+        
+        return super.compareTo(other);
     }
 
     @Override

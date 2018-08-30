@@ -7,6 +7,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.INamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.IKey;
@@ -111,6 +113,17 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
     @JsonIgnore
     public String getLinkId() {
         return getName();
+    }
+
+    @Override
+    public int compareTo(IItem<?> other) {
+        if (other instanceof AbstractNamedItem) {
+            return new CompareToBuilder()
+                    .append(getName(), ((AbstractNamedItem<?>) other).getName())
+                    .toComparison();
+        }
+        
+        return super.compareTo(other);
     }
 
     @Override

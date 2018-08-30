@@ -7,12 +7,12 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderCV;
 import com.linepro.modellbahn.model.IDecoderTypCV;
+import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.keys.DecoderCVKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.model.validation.CVValue;
@@ -91,7 +92,6 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
     @JoinColumn(name = DBNames.DECODER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_cv_fk1"))
-    @OrderColumn
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -111,7 +111,6 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTypCV.class)
     @JoinColumn(name = DBNames.CV_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_cv_fk2"))
-    @OrderColumn
     public IDecoderTypCV getCv() {
         if (cv != null) {
             setCvValue(cv.getCv());
@@ -169,6 +168,18 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     @JsonIgnore
     public String getLinkId() {
         return String.format(ApiPaths.DECODER_CV_LINK, getParentId(), getCv().getCv());
+    }
+
+    @Override
+    public int compareTo(IItem<?> other) {
+        if (other instanceof DecoderCV) {
+            return new CompareToBuilder()
+                    .append(getDecoder(), ((DecoderCV) other).getDecoder())
+                    .append(getCv(), ((DecoderCV) other).getCv())
+                    .toComparison();
+        }
+        
+        return super.compareTo(other);
     }
 
     @Override

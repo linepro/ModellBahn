@@ -7,13 +7,13 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.linepro.modellbahn.model.IArtikel;
+import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.IZug;
 import com.linepro.modellbahn.model.IZugConsist;
 import com.linepro.modellbahn.model.keys.ZugConsistKey;
@@ -103,7 +104,6 @@ public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsi
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Zug.class)
     @JoinColumn(name = DBNames.ZUG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "consist_fk1"))
-    @OrderColumn
     @JsonGetter(ApiNames.ZUG)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -121,7 +121,6 @@ public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsi
 
     @Override
     @BusinessKey
-    @OrderColumn
     @Column(name = DBNames.POSITION, nullable = false)
     @JsonGetter(ApiNames.POSITION)
     @JsonView(Views.DropDown.class)
@@ -165,6 +164,18 @@ public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsi
     @JsonIgnore
     public String getLinkId() {
         return String.format(ApiPaths.ZUG_CONSIST_LINK, getParentId(), getPosition());
+    }
+
+    @Override
+    public int compareTo(IItem<?> other) {
+        if (other instanceof ZugConsist) {
+            return new CompareToBuilder()
+                    .append(getZug(), ((ZugConsist) other).getZug())
+                    .append(getPosition(), ((ZugConsist) other).getPosition())
+                    .toComparison();
+        }
+        
+        return super.compareTo(other);
     }
 
     @Override

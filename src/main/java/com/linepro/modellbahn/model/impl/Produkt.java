@@ -22,6 +22,10 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonGetter;
@@ -41,6 +45,7 @@ import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IEpoch;
 import com.linepro.modellbahn.model.IGattung;
 import com.linepro.modellbahn.model.IHersteller;
+import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.IKupplung;
 import com.linepro.modellbahn.model.ILicht;
 import com.linepro.modellbahn.model.IMassstab;
@@ -659,6 +664,44 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Override
     public void removeTeil(IProduktTeil funktion) {
         getTeilen().remove(funktion);
+    }
+
+    @Override
+    public int compareTo(IItem<?> other) {
+        if (other instanceof Produkt) {
+            return new CompareToBuilder()
+                    .append(getHersteller(), ((Produkt) other).getHersteller())
+                    .append(getName(), ((Produkt) other).getName())
+                    .toComparison();
+        }
+        
+        return super.compareTo(other);
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(getHersteller())
+                .append(getName())
+                .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Produkt)) {
+            return false;
+        }
+
+        Produkt other = (Produkt) obj;
+
+        return new EqualsBuilder()
+                .append(getHersteller(), other.getHersteller())
+                .append(getName(), other.getName())
+                .isEquals();
     }
 
     @Override

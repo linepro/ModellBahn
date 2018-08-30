@@ -8,12 +8,12 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Range;
@@ -28,6 +28,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
+import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.keys.DecoderTypFunktionKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
@@ -92,7 +93,6 @@ public class DecoderTypFunktion extends AbstractNamedItem<DecoderTypFunktionKey>
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
     @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_typ_fn_fk1"))
-    @OrderColumn
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using=DecoderTypSerializer.class)
@@ -110,7 +110,6 @@ public class DecoderTypFunktion extends AbstractNamedItem<DecoderTypFunktionKey>
     @Override
     @BusinessKey
     @Column(name = DBNames.REIHE, nullable = false)
-    @OrderColumn
     @JsonGetter(ApiNames.REIHE)
     @JsonView(Views.DropDown.class)
     public Integer getReihe() {
@@ -149,6 +148,19 @@ public class DecoderTypFunktion extends AbstractNamedItem<DecoderTypFunktionKey>
     @JsonIgnore
     public String getLinkId() {
         return String.format(ApiPaths.DECODER_TYP_FUNKTION_LINK, getParentId(), getReihe(), getName());
+    }
+
+    @Override
+    public int compareTo(IItem<?> other) {
+        if (other instanceof DecoderTypFunktion) {
+            return new CompareToBuilder()
+                    .append(getDecoderTyp(), ((DecoderTypFunktion) other).getDecoderTyp())
+                    .append(getReihe(), ((DecoderTypFunktion) other).getReihe())
+                    .append(Integer.valueOf(getName().substring(1)), Integer.valueOf(((DecoderTypFunktion) other).getName().substring(1)))
+                    .toComparison();
+        }
+        
+        return super.compareTo(other);
     }
 
     @Override

@@ -21,6 +21,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.UriBuilder;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -48,7 +49,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @MappedSuperclass
 @Cacheable
 @JsonAutoDetect(fieldVisibility = Visibility.PUBLIC_ONLY)
-public abstract class AbstractItem<K extends IKey> implements Serializable, IItem<K> {
+public abstract class AbstractItem<K extends IKey> implements Serializable, IItem<K>, Comparable<IItem<?>> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 938276986391979417L;
@@ -188,6 +189,13 @@ public abstract class AbstractItem<K extends IKey> implements Serializable, IIte
         getLinks().add(makeLink(root, getLinkId(), ApiNames.UPDATE, PUT));
     }
 
+    @Override
+    public int compareTo(IItem<?> other) {
+        return new CompareToBuilder()
+                .append(getId(), other.getId())
+                .toComparison();
+    }
+    
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder().append(getId()).hashCode();

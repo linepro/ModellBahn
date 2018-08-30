@@ -14,12 +14,12 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Range;
@@ -36,6 +36,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderAdress;
+import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.keys.DecoderAdressKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.model.util.AdressTyp;
@@ -95,7 +96,6 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
     @JoinColumn(name = DBNames.DECODER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_address_fk1"))
-    @OrderColumn
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -113,7 +113,6 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
 
     @Override
     @Column(name = DBNames.INDEX, nullable = false)
-    @OrderColumn
     @JsonGetter(ApiNames.INDEX)
     @JsonView(Views.DropDown.class)
     public Integer getIndex() {
@@ -168,6 +167,18 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
      @JsonIgnore
      public String getLinkId() {
          return String.format(ApiPaths.DECODER_ADRESS_LINK, getParentId(), getIndex());
+     }
+
+     @Override
+     public int compareTo(IItem<?> other) {
+         if (other instanceof DecoderAdress) {
+             return new CompareToBuilder()
+                     .append(getDecoder(), ((DecoderAdress) other).getDecoder())
+                     .append(getIndex(), ((DecoderAdress) other).getIndex())
+                     .toComparison();
+         }
+         
+         return super.compareTo(other);
      }
 
     @Override

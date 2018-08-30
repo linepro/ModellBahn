@@ -7,13 +7,13 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Range;
@@ -28,6 +28,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypCV;
+import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.keys.DecoderTypCVKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.model.validation.CVValue;
@@ -125,7 +126,6 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
     @Override
     @JsonSetter(ApiNames.DECODER_TYP)
     @JsonDeserialize(as=DecoderTyp.class)
-    @OrderColumn
     public void setDecoderTyp(IDecoderTyp decoderTyp) {
         this.decoderTyp = decoderTyp;
     }
@@ -133,7 +133,6 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
     @Override
     @BusinessKey
     @Column(name = DBNames.CV, nullable = false)
-    @OrderColumn
     public Integer getCv() {
         return cv;
     }
@@ -212,6 +211,18 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
     @JsonIgnore
     public String getLinkId() {
         return String.format(ApiPaths.DECODER_TYP_CV_LINK, getParentId(), getCv());
+    }
+
+    @Override
+    public int compareTo(IItem<?> other) {
+        if (other instanceof DecoderTypCV) {
+            return new CompareToBuilder()
+                    .append(getDecoderTyp(), ((DecoderTypCV) other).getDecoderTyp())
+                    .append(getCv(), ((DecoderTypCV) other).getCv())
+                    .toComparison();
+        }
+        
+        return super.compareTo(other);
     }
 
     @Override

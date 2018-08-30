@@ -67,20 +67,27 @@ class ItemGrid {
 
 		table.deleteTFoot();
 
-		if (this.paged) {
-			var footer = table.createTFoot();
-			var navRow = footer.insertRow(0);
+		var footer = table.createTFoot();
+		var navRow = footer.insertRow(0);
 
-			for (i = 0; i < this.columnCount; i++) {
-				var td = navRow.insertCell(i);
-				td.style.height = "40px";
-				td.style.paddingBottom = "2px";
-				td.style.paddingLeft = "5px";
-				td.style.paddingRight = "5px";
-				td.style.paddingTop = "2px";
-				td.style.textAlign = (i == 0 ? "left" : "right");
-				td.appendChild(document.createTextNode(""));
+		for (i = 0; i < this.columnCount; i++) {
+			var td = navRow.insertCell(i);
+			td.style.height = "40px";
+			td.style.paddingBottom = "2px";
+			td.style.paddingLeft = "5px";
+			td.style.paddingRight = "5px";
+			td.style.paddingTop = "2px";
+			if (i == 0) {
+				td.style.textAlign = "left";
+				td.colspan = 1;
+			} else if (i == this.columnCount-1) {
+				td.style.textAlign = "right";
+				td.colspan = 1;
+			} else {
+				td.style.textAlign = "center";
+				td.colspan = this.columnCount-2;
 			}
+			td.appendChild(document.createTextNode(""));
 		}
 		
 		this.initialized = true;
@@ -101,7 +108,7 @@ class ItemGrid {
 			cell.removeChild(cell.childNodes[0]);
 		}
 
-		cell.style.textAlign = "center";
+		cell.style.textAlign = "right";
 		cell.style.color = "white";
 		cell.style.paddingBottom = "2px";
 		cell.style.paddingLeft = "2px";
@@ -197,7 +204,7 @@ class ItemGrid {
 
 				this.addLinkButton(jsonData.links.find(function(e) { return e.rel == "previous"; }), prev);
 
-				var next = tfoot.rows[0].cells[tfoot.rows[0].cells.length-1];
+				var next = tfoot.rows[0].cells[this.columnCount-1];
 
 				this.addLinkButton(jsonData.links.find(function(e) { return e.rel == "next"; }), next);
 			}
