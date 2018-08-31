@@ -46,6 +46,7 @@ class ItemGrid {
 			for (i = 0; i < this.columnCount; i++) {
 				var td = tr.insertCell(i);
 				td.appendChild(document.createTextNode(""));
+				td.style.height = "40px";
 				td.style.paddingBottom = "2px";
 				td.style.paddingLeft = "2px";
 				td.style.paddingRight = "2px";
@@ -68,26 +69,29 @@ class ItemGrid {
 		table.deleteTFoot();
 
 		var footer = table.createTFoot();
-		var navRow = footer.insertRow(0);
-
-		for (i = 0; i < this.columnCount; i++) {
-			var td = navRow.insertCell(i);
-			td.style.height = "40px";
-			td.style.paddingBottom = "2px";
-			td.style.paddingLeft = "5px";
-			td.style.paddingRight = "5px";
-			td.style.paddingTop = "2px";
-			if (i == 0) {
-				td.style.textAlign = "left";
-				td.colspan = 1;
-			} else if (i == this.columnCount-1) {
-				td.style.textAlign = "right";
-				td.colspan = 1;
-			} else {
-				td.style.textAlign = "center";
-				td.colspan = this.columnCount-2;
+		
+		if (this.paged) {
+			var navRow = footer.insertRow(0);
+	
+			for (i = 0; i < this.columnCount; i++) {
+				var td = navRow.insertCell(i);
+				td.style.height = "40px";
+				td.style.paddingBottom = "2px";
+				td.style.paddingLeft = "5px";
+				td.style.paddingRight = "5px";
+				td.style.paddingTop = "2px";
+				if (i == 0) {
+					td.style.textAlign = "left";
+					td.colspan = 1;
+				} else if (i == this.columnCount-1) {
+					td.style.textAlign = "right";
+					td.colspan = 1;
+				} else {
+					td.style.textAlign = "center";
+					td.colspan = this.columnCount-2;
+				}
+				td.appendChild(document.createTextNode(""));
 			}
-			td.appendChild(document.createTextNode(""));
 		}
 		
 		this.initialized = true;

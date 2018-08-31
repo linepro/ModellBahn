@@ -72,7 +72,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
                 @UniqueConstraint(columnNames = { DBNames.HERSTELLER_ID, DBNames.NAME }) })
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME))
 @JsonRootName(value = ApiNames.DECODER_TYP)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.SOUND, ApiNames.I_MAX, ApiNames.KONFIGURATION, ApiNames.DELETED, ApiNames.ADRESSEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS})
+@JsonPropertyOrder({ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.DESCRIPTION, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.SOUND, ApiNames.I_MAX, ApiNames.KONFIGURATION, ApiNames.DELETED, ApiNames.ADRESSEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS})
 public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDecoderTyp {
 
     /** The Constant serialVersionUID. */

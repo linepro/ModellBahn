@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.rest.util;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.ws.rs.core.Link;
@@ -23,6 +24,8 @@ public class ListWithLinks<E extends IItem<?>> {
     public ListWithLinks(List<E> entities, List<Link> links) {
         this.entities = entities;
         this.links = links;
+
+        Collections.sort(entities, null);
     }
 
     @JsonGetter
