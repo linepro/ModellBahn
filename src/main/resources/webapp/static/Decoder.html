@@ -15,7 +15,10 @@
 				
 				function (data, status)
 				{
+					var table = document.createElement("DecoderListing");
+					table.setAttribute("border", "1.5");
 					
+					var heading = document.createElement("tr");
 				}
 				
 				document.getElementById("DecoderListing").appendChild(table);
@@ -24,7 +27,7 @@
 	</script>
 	<title>Decoder list</title>
 </head>
-<body onload="javascript:GetData()">
+<body onload="javascript:getData()">
 	<h1>Decoder</h1>
 
 	<h2>Available Decoder:</h2>
