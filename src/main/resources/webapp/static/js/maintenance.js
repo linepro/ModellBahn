@@ -29,68 +29,79 @@ class ItemGrid {
 		this.pageSize = this.paged ? this.pageSize : pageSize;
 
 		var table = document.getElementById(this.tableName);
+		table.innerHtml = "";
+		table.className = "table";
 
-		while (table.rows.length) {
-			table.deleteRow(0);
-		}
+		var header = document.createElement('div');
+		header.className = "thead";
+		table.append(header);
 
-		var body = document.createElement('tbody');
-
-		table.appendChild(body);
-
-		var p;
-		for (p = 0; p < this.pageSize; p++) {
-			var tr = table.insertRow(0);
-
-			var i;
-			for (i = 0; i < this.columnCount; i++) {
-				var td = tr.insertCell(i);
-				td.appendChild(document.createTextNode(""));
-				td.style.height = "40px";
-				td.style.paddingBottom = "2px";
-				td.style.paddingLeft = "2px";
-				td.style.paddingRight = "2px";
-				td.style.paddingTop = "2px";
-			}
-		}
-		
-		var header = table.createTHead();
-		var headRow = header.insertRow(0);
+		var headRow = document.createElement('div');
+		headRow.className = "table-row";
+		headRow.id = this.tableName + "Head";
+		header.append(headRow);
 
 		var i;
 		for (i = 0; i < this.columnCount; i++) {
-			var th = headRow.insertCell(i);
-			th.style.height = "40px";
+			var th = document.createElement('div');
+			th.className = "table-heading";
+
 			if (!this.deleteButtons || i < (this.columnCount-1)) {
 				th.append(document.createTextNode(this.columns[i].heading));
 			}
+			
+			headRow.append(th);
 		}
 
-		table.deleteTFoot();
+		var body = document.createElement('div');
+		body.className = "tbody";
+		table.append(body);
 
-		var footer = table.createTFoot();
-		
-		if (this.paged) {
-			var navRow = footer.insertRow(0);
-	
+		var p;
+		for (p = 0; p < this.pageSize; p++) {
+			var tr = document.createElement('div');
+			tr.className = "table-row";
+			tr.id = this.tableName + p;
+			body.append(tr);
+
+			var i;
 			for (i = 0; i < this.columnCount; i++) {
-				var td = navRow.insertCell(i);
-				td.style.height = "40px";
-				td.style.paddingBottom = "2px";
-				td.style.paddingLeft = "5px";
-				td.style.paddingRight = "5px";
-				td.style.paddingTop = "2px";
-				if (i == 0) {
-					td.style.textAlign = "left";
-					td.colspan = 1;
-				} else if (i == this.columnCount-1) {
-					td.style.textAlign = "right";
-					td.colspan = 1;
-				} else {
-					td.style.textAlign = "center";
-					td.colspan = this.columnCount-2;
-				}
+				var td = document.createElement('div');
+				td.className = (this.deleteButtons && (i == (this.columnCount-1)) ? "table-del" : "table-cell");
+				
 				td.appendChild(document.createTextNode(""));
+				tr.append(td);
+			}
+		}
+		
+		var footer = document.createElement('div');
+		footer.className = "tfoot";
+		table.append(footer);
+
+		if (this.paged) {
+			var navRow = document.createElement('div');
+			navRow.className = "table-row";
+			navRow.id = this.tableName + "Foot";
+			footer.append(navRow);
+
+			for (i = 0; i < this.columnCount; i++) {
+				var tf = document.createElement('div');
+
+				if (i == 0) {
+					tf.className = "table-prev";
+					tf.id = this.tableName + "Prev";
+				} else if (i == (this.columnCount-1)) {
+					tf.className = "table-next";
+					tf.id = this.tableName + "Next";
+				} else {
+					tf.className = "table-add";
+					if (i == Math.trunc(this.columnCount/2)) {
+						tf.id = this.tableName + "Add";
+					}
+				}
+
+				tf.appendChild(document.createTextNode(""));
+				navRow.append(tf);
 			}
 		}
 		
@@ -112,20 +123,17 @@ class ItemGrid {
 			cell.removeChild(cell.childNodes[0]);
 		}
 
-		cell.style.textAlign = "right";
-		cell.style.color = "white";
-		cell.style.paddingBottom = "2px";
-		cell.style.paddingLeft = "2px";
-		cell.style.paddingRight = "2px";
-		cell.style.paddingTop = "2px";
-	
 		if (lnk) {
-			var btn = document.createElement("BUTTON");
-			btn.appendChild(document.createTextNode(lnk.rel));
+			var btn = document.createElement("button");
 			btn.setAttribute("value", lnk.href);
 			btn.setAttribute("onclick", this.tableName + ".deleteRow(this.value)");
 			btn.style.width = "65px";
 			cell.appendChild(btn);
+			
+			var img = document.createElement("img");
+			img.alt = lnk.rel;
+			img.src = "img/" + lnk.rel + ".png";
+			btn.appendChild(img);
 		} 
 	}
 	
@@ -135,12 +143,16 @@ class ItemGrid {
 		}
 
 		if (lnk) {
-			var btn = document.createElement("BUTTON");
-			btn.appendChild(document.createTextNode(lnk.rel));
+			var btn = document.createElement("button");
 			btn.setAttribute("value", lnk.href);
 			btn.setAttribute("onclick", this.tableName + ".getData(this.value)");
-			btn.style.width = "65px";
+		    btn.style.width = "65px";
 			cell.appendChild(btn);
+		    
+			var img = document.createElement("img");
+			img.alt = lnk.rel;
+			img.src = "img/" + lnk.rel + ".png";
+			btn.appendChild(img);
 		} 
 	}
 
@@ -155,11 +167,11 @@ class ItemGrid {
 
 		var p;
 		for (p = 0; p < this.pageSize; p++) {
-			var tr = table.tBodies[0].rows[p];
+			var tr = document.getElementById(this.tableName + p);
 
 			var c;
 			for (c = 0; c < this.columnCount; c++) {
-				var td = tr.cells[c];
+				var td = tr.childNodes[c];
 
 				if (p < entities.length) {
 					if (c == (this.columnCount-1) && this.deleteButtons) {
@@ -202,13 +214,11 @@ class ItemGrid {
 			}
 
 			if (this.paged) {
-				var tfoot = document.getElementById(this.tableName).tFoot;
-
-				var prev = tfoot.rows[0].cells[0];
+				var prev = document.getElementById(this.tableName + "Prev");
 
 				this.addLinkButton(jsonData.links.find(function(e) { return e.rel == "previous"; }), prev);
 
-				var next = tfoot.rows[0].cells[this.columnCount-1];
+				var next = document.getElementById(this.tableName + "Next");
 
 				this.addLinkButton(jsonData.links.find(function(e) { return e.rel == "next"; }), next);
 			}
