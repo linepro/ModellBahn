@@ -19,6 +19,34 @@
 					table.setAttribute("border", "1.5");
 					
 					var heading = document.createElement("tr");
+					
+					var th = document.createElement("th");
+					th.textContext = "Decoder ID";
+					heading.appendChild(th);
+					
+					var th = document.createElement("th");
+					th.textContext = "Hersteller";
+					heading.appendChild(th);
+					
+					var th = document.createElement("th");
+					th.textContext = "Bestell Nr";
+					heading.appendChild(th);
+					
+					var th = document.createElement("th");
+					th.textContext = "Description";
+					heading.appendChild(th);
+					
+					table.appendChild(heading);
+					
+					for (i = 0; i < data.length; i++)
+					{
+						var tr = document.createElement("tr");
+						
+						var td = document.createElement("td");
+						table.appendChild(td);
+						
+						table.appendChild(tr);
+					}
 				}
 				
 				document.getElementById("DecoderListing").appendChild(table);
