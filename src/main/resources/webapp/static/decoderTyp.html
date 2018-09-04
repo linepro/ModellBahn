@@ -1,116 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1"/>	
-	<link href= "css/site.css" rel="stylesheet"/>
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
-	<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
-	<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">	</script>
-	<script type="text/javascript">
-		function getData() {
-			/* Script to call userHome.php with userID using jQuery and print the response as a table in div books
-			 * https://www.html5andbeyond.com/jquery-ajax-json-php/
-			 * http://labs.jonsuh.com/jquery-ajax-php-json/
-			 * http://api.jquery.com/jquery.post/
-			 */
-			$.getJSON(window.location.protocol + "//" + window.location.host + "/ModellBahn/api/decoderTyp", 
-				{
-				},
-				function (data, status){
-					var table = document.createElement("listing");
-					table.setAttribute("border", "1.5");
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<script type="text/javascript" src="js/lib/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="js/lib/popper.min-1.14.3.js"></script>
+<link rel="stylesheet" href="css/bootstrap.min-4.1.3.css"/>
+<script type="text/javascript" src="js/lib/bootstrap.min-4.1.3.js"></script>
+<link rel="stylesheet" href="css/site.css"/>
+<script type="text/javascript" src="js/maintenance.js"></script>
+<script type="text/javascript">
+var decoderRef = new URL(window.location.href).searchParams.get("self");
+var decoder = new ItemGrid(1, decoderRef, undefined, "decoder", [
+    new Column("Hersteller", "hersteller"),
+    new Column("Bestell Nr", "bestellNr"),
+    new Column("Bezeichnung", "description"),
+    new Column("Protokoll", "protokoll"),
+    new Column("Fahrstufe", "fahrstufe"),
+    new Column("Sound", "sound"),
+    new Column("I Max", "iMax"),
+    new Column("Konfiguration", "konfiguration")],
+    false, false, undefined, undefined, [
+        new ItemGrid(2, decoderRef, "adressen", "adressen", [
+            new Column("Index", "index"),
+            new Column("AdressTyp", "adressTyp"),
+            new Column("Span", "span"),
+            new Column("Werkseinstellung", "werkseinstellung")],
+            false, true, undefined, undefined),
+        new ItemGrid(10, decoderRef, "cvs", "cvs", [
+            new Column("CV", "cv"),
+            new Column("Bezeichnung", "description"),
+            new Column("Werkseinstellung", "werkseinstellung")],
+            false, true, undefined, undefined),
+        new ItemGrid(10, decoderRef, "funktionen", "funktionen", [
+            new Column("Bank", "bank"),
+            new Column("Funktion", "funktion"),
+            new Column("Bezeichnung", "description"),
+            new Column("Programmable", "programmable")],
+            false, true, undefined, undefined)]);
 
-					var heading = document.createElement("tr");
-
-					var th = document.createElement("th");
-					th.textContent = "Hersteller";
-					heading.appendChild(th);
-
-					th = document.createElement("th");
-					th.textContent = "Bestell Nr";
-					heading.appendChild(th);
-
-					th = document.createElement("th");
-					th.textContent = "Protokoll";
-					heading.appendChild(th);
-
-					th = document.createElement("th");
-					th.textContent = "Konfiguration";
-					heading.appendChild(th);
-
-					th = document.createElement("th");
-					th.textContent = "Sound";
-					heading.appendChild(th);
-
-					th = document.createElement("th");
-                    th.textContent = "X";
-                    heading.appendChild(th);
-
-					table.appendChild(heading);
-
-					for (i = 0; i < data.length; i++) {
-						var tr = document.createElement("tr");
-		                  
-						var td = document.createElement("td");
-						td.textContent = data[i].hersteller;
-						tr.appendChild(td);
-
-						td = document.createElement("td");
-						td.textContent = data[i].bestellNr;
-						tr.appendChild(td);
-
-						td = document.createElement("td");
-						td.textContent = data[i].protokoll;
-						tr.appendChild(td);
-
-						td = document.createElement("td");
-						td.textContent = data[i].konfiguration;
-						tr.appendChild(td);
-
-						td = document.createElement("td");
-						td.textContent = data[i].sound;
-
-                        td = document.createElement("td");
-
-                        var del = data[i].links.find(function(element) { return element.method == "DELETE"; });
-                        var a = document.createElement("a");
-                        a.appendChild(document.createTextNode("X"));
-                        a.title = del.rel;
-                        a.href = del.href;
-                        td.append(a);
-
-						tr.appendChild(td);
-
-						table.appendChild(tr);
-					}
-
-					document.getElementById("listing").appendChild(table);
-				}
-			);
-		};
-	</script>
-	<title>Decoder Typ List</title>
+function init() {
+    decoder.init();
+}
+</script>
+<title>Decoder Typ List</title>
 </head>
-<body onload="javascript:getData()">
-	<h1>Decoder Typ</h1>
+<body onload="javascript:init()">
+    <header>
+        <hr class="highlight" />
+        <nav>
+            <a class="btn btn-info btn-sm" href='../index.html'>Home</a>
+        </nav>
+    </header>
+        
+    <section>
+        <article>
+            <header>
+                <h1>Decoder Typ</h1>
+            </header>
 
-	<h2>Available Decoder Typ:</h2>
-	
-	<div id="listing">
-	</div>
-	<p>
-		<a href="home.html" class="btn btn-info btn-sm">Home</a>
-		<a href="Decoder.html" class="btn btn-info btn-sm">Decoder JSON List</a> 
-		<a href='decoderTypen.html' class="btn btn-info btn-sm">decoderTypen JSON List</a>
-	</p>
-	
-	<div id="links">
-	</div>
-	
-	<div id="footer">
-		<hr class="highlight" />
-		<p>Copyright &copy; 2018 ModellBahn Website</p>
-	</div>
+            <div id="data">
+                <div>
+                    <div id="decoder">
+                    </div>
+                </div>
+                <div>
+                    <div id="adressen">
+                    </div>
+                </div>
+                <div>
+                    <div id="cvs">
+                    </div>
+                </div>
+                <div>
+                    <div id="funktionen">
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <embed src="footer.html"  type="text/html" />
 </body>
 </html>

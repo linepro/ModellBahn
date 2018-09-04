@@ -6,9 +6,9 @@
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <script type="text/javascript" src="js/lib/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="js/lib/popper.min-1.14.3.js"></script>
-<link href="css/bootstrap.min-4.1.3.css" rel="stylesheet" />
-<script src="js/lib/bootstrap.min-4.1.3.js"></script>
-<link href="css/site.css" rel="stylesheet" />
+<link rel="stylesheet" href="css/bootstrap.min-4.1.3.css"/>
+<script type="text/javascript" src="js/lib/bootstrap.min-4.1.3.js"></script>
+<link rel="stylesheet" href="css/site.css"/>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
 var listing = new ItemGrid(10, window.location.protocol + "//" + window.location.host + "/ModellBahn/api/decoderTyp", undefined, "listing", [
@@ -25,15 +25,13 @@ function init() {
 <title>Decoder Typ List</title>
 </head>
 <body onload="javascript:init()">
-	<header>
-		<hr class="highlight" />
-		<nav>
-			<ul>
-				<a class="btn btn-info btn-sm" href='../index.html' target="_blank">Home</a>
-			</ul>
-		</nav>
-	</header>
-	
+    <header>
+        <hr class="highlight" />
+        <nav>
+            <a class="btn btn-info btn-sm" href='../index.html'>Home</a>
+        </nav>
+    </header>
+    	
 	<section>
 		<article>
 			<header>
@@ -41,17 +39,12 @@ function init() {
 			</header>
 
 			<div id="data">
-				<table id="listing">
-				</table>
+				<div id="listing">
+				</div>
 			</div>
 		</article>
 	</section>
 
-	<footer>
-		<div id="footer">
-			<hr class="highlight" />
-			<p>Copyright &copy; 2018 ModellBahn Website</p>
-		</div>
-	<footer>
+    <embed src="footer.html"  type="text/html" />
 </body>
 </html>
