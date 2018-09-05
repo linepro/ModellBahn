@@ -8,11 +8,10 @@
 	<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">	</script>
 	<script type="text/javascript">
-	function getData()	{
-		$get.JSON(window.location.protocol + "//" + window.location.host + "Modellbahn/api/Decoder",
+		function getData()	{
+			  $.getJSON(window.location.protocol + "//" + window.location.host + "/ModellBahn/api/decoder",
 				{
 				},
-				
 				function (data, status)
 				{
 					var table = document.createElement("DecoderListing");
@@ -24,16 +23,28 @@
 					th.textContext = "Decoder ID";
 					heading.appendChild(th);
 					
-					var th = document.createElement("th");
+					th = document.createElement("th");
 					th.textContext = "Hersteller";
 					heading.appendChild(th);
 					
-					var th = document.createElement("th");
+					th = document.createElement("th");
 					th.textContext = "Bestell Nr";
 					heading.appendChild(th);
 					
-					var th = document.createElement("th");
+					th = document.createElement("th");
 					th.textContext = "Description";
+					heading.appendChild(th);
+					
+					th = document.createElement("th");
+					th.textContext = "Fahrstufe";
+					heading.appendChild(th);
+					
+					th = document.createElement("th");
+					th.textContext = "Addressen";
+					heading.appendChild(th);
+					
+					th = document.createElement("th");
+					th.textContext = "X";
 					heading.appendChild(th);
 					
 					table.appendChild(heading);
@@ -43,15 +54,49 @@
 						var tr = document.createElement("tr");
 						
 						var td = document.createElement("td");
-						table.appendChild(td);
+						td.textContext = data[i].Decoder_ID;
+						tr.appendChild(td);
+						
+						td = document.createElement("td");
+						td.textContext = data[i].Hersteller;
+						tr.appendChild(td);
+						
+						td = document.createElement("td");
+						td.textContext = data[i].BestellNr;
+						tr.appendChild(td);
+						
+						td = document.createElement("td");
+						td.textContext = data[i].Description;
+						tr.appendChild(td);
+						
+						td = document.createElement("td");
+						td.textContext = data[i].Fahrstufe;
+						tr.appendChild(td);
+						
+						td = document.createElement("td");
+						td.textContext = data[i].Adressen;
+						tr.appendChild(td);
+						
+						td = document.createElement("td");
+						
+						var del = data[i].links.find(function(element) {
+							return element.method == "DELETE"
+						});
+						var a = document.createElement("a");
+						a.appendChild(document.createTextNode("X"));
+						
+						td.append(a);
+						a.title = del.rel;
+						a.href = del.href;
+						tr.appendChild(td);
 						
 						table.appendChild(tr);
 					}
-				}
 				
 				document.getElementById("DecoderListing").appendChild(table);
-		)
-	}
+			}
+		);
+	};
 	</script>
 	<title>Decoder list</title>
 </head>
