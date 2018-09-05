@@ -1,12 +1,13 @@
 class Column {
-	constructor(heading, binding) {
+	constructor(heading, binding, inputType) {
 		this.heading = heading;
 		this.binding = binding;
+		this.inputType = inputType;
 	}
 }
 
 class ItemGrid {
-	constructor(pageSize, apiRoot, collection, tableName, columns, paged, deleteButtons, updateLink, addLink, children) {
+	constructor(pageSize, apiRoot, collection, tableName, columns, paged, deleteButtons, updateLink, addLink, editable, children) {
 		this.pageSize = pageSize;
 		this.current = apiRoot + (paged ? "?pageNumber=0&pageSize=" + pageSize : "");
 		this.collection = collection;
@@ -14,9 +15,9 @@ class ItemGrid {
 		this.columns = columns;
 		this.paged = paged;
 		this.deleteButtons = deleteButtons;
-		this.addLink = addLink;
 		this.updateLink = updateLink;
-		this.columnCount = this.columns.length + (this.deleteButtons ? 1 : 0);
+		this.addLink = addLink;
+		this.editable = editable;
 		this.children = children;
 		this.initialized = false;
 	}
@@ -26,8 +27,13 @@ class ItemGrid {
 	}
 
 	initGrid(pageSize) {
-		this.pageSize = this.paged ? this.pageSize : pageSize;
-
+		var columns = this.columns;
+		var columnCount = this.columns.length + (this.deleteButtons ? 1 : 0);
+		var deleteButtons = this.deleteButtons;
+		var paged = this.paged;
+		var pageSize = paged ? this.pageSize : pageSize;
+		var tableName = this.tableName;
+		
 		var table = document.getElementById(this.tableName);
 		table.innerHtml = "";
 		table.className = "table";
@@ -38,16 +44,16 @@ class ItemGrid {
 
 		var headRow = document.createElement('div');
 		headRow.className = "table-row";
-		headRow.id = this.tableName + "Head";
+		headRow.id = tableName + "Head";
 		header.append(headRow);
 
 		var i;
-		for (i = 0; i < this.columnCount; i++) {
+		for (i = 0; i < columnCount; i++) {
 			var th = document.createElement('div');
 			th.className = "table-heading";
 
-			if (!this.deleteButtons || i < (this.columnCount-1)) {
-				th.append(document.createTextNode(this.columns[i].heading));
+			if (!deleteButtons || i < (columnCount-1)) {
+				th.append(document.createTextNode(columns[i].heading));
 			}
 			
 			headRow.append(th);
@@ -58,17 +64,18 @@ class ItemGrid {
 		table.append(body);
 
 		var p;
-		for (p = 0; p < this.pageSize; p++) {
+		for (p = 0; p < pageSize; p++) {
 			var tr = document.createElement('div');
 			tr.className = "table-row";
-			tr.id = this.tableName + p;
+			tr.id = tableName + p;
 			body.append(tr);
 
 			var i;
-			for (i = 0; i < this.columnCount; i++) {
+			for (i = 0; i < columnCount; i++) {
 				var td = document.createElement('div');
-				td.className = (this.deleteButtons && (i == (this.columnCount-1)) ? "table-del" : "table-cell");
-				
+				const delCell = deleteButtons && (i == (columnCount-1));
+				td.className = delCell ? "table-del" : "table-cell";
+				if (!delCell) { td.id = tableName + "_" + columns[i].binding + p };
 				td.appendChild(document.createTextNode(""));
 				tr.append(td);
 			}
@@ -78,25 +85,25 @@ class ItemGrid {
 		footer.className = "tfoot";
 		table.append(footer);
 
-		if (this.paged) {
+		if (paged) {
 			var navRow = document.createElement('div');
 			navRow.className = "table-row";
-			navRow.id = this.tableName + "Foot";
+			navRow.id = tableName + "Foot";
 			footer.append(navRow);
 
-			for (i = 0; i < this.columnCount; i++) {
+			for (i = 0; i < columnCount; i++) {
 				var tf = document.createElement('div');
 
 				if (i == 0) {
 					tf.className = "table-prev";
-					tf.id = this.tableName + "Prev";
-				} else if (i == (this.columnCount-1)) {
+					tf.id = tableName + "Prev";
+				} else if (i == (columnCount-1)) {
 					tf.className = "table-next";
-					tf.id = this.tableName + "Next";
+					tf.id = tableName + "Next";
 				} else {
 					tf.className = "table-add";
-					if (i == Math.trunc(this.columnCount/2)) {
-						tf.id = this.tableName + "Add";
+					if (i == Math.trunc(columnCount/2)) {
+						tf.id = tableName + "Add";
 					}
 				}
 
@@ -109,7 +116,9 @@ class ItemGrid {
 	}
 
 	loadData() {
-		this.getData(this.current);
+		if (this.current) {
+			this.getData(this.current);
+		}
 	}
 
 	deleteRow(deleteUrl) {
@@ -119,6 +128,8 @@ class ItemGrid {
 	}
 
 	addDeleteButton(lnk, cell) {
+		var tableName = this.tableName;
+
 		if (cell.childNodes[0]) {
 			cell.removeChild(cell.childNodes[0]);
 		}
@@ -126,18 +137,21 @@ class ItemGrid {
 		if (lnk) {
 			var btn = document.createElement("button");
 			btn.setAttribute("value", lnk.href);
-			btn.setAttribute("onclick", this.tableName + ".deleteRow(this.value)");
+			btn.setAttribute("onclick", tableName + ".deleteRow(this.value)");
 			btn.style.width = "65px";
 			cell.appendChild(btn);
 			
 			var img = document.createElement("img");
 			img.alt = lnk.rel;
 			img.src = "img/" + lnk.rel + ".png";
+			img.style.height = "18px";
 			btn.appendChild(img);
 		} 
 	}
 	
 	addLinkButton(lnk, cell) {
+		var tableName = this.tableName;
+
 		if (cell.childNodes[0]) {
 			cell.removeChild(cell.childNodes[0]);
 		}
@@ -145,53 +159,71 @@ class ItemGrid {
 		if (lnk) {
 			var btn = document.createElement("button");
 			btn.setAttribute("value", lnk.href);
-			btn.setAttribute("onclick", this.tableName + ".getData(this.value)");
+			btn.setAttribute("onclick", tableName + ".getData(this.value)");
 		    btn.style.width = "65px";
 			cell.appendChild(btn);
 		    
 			var img = document.createElement("img");
 			img.alt = lnk.rel;
 			img.src = "img/" + lnk.rel + ".png";
+			img.style.height = "18px";
 			btn.appendChild(img);
 		} 
 	}
 
 	renderData(jsonData) {
+		var columns = this.columns;
+		var columnCount = this.columns.length + (this.deleteButtons ? 1 : 0);
+		var deleteButtons = this.deleteButtons;
+		var editable = this.editable;
 		var entities = (this.collection ? jsonData[this.collection] : jsonData.entities ? jsonData.entities : [ jsonData ]);
+		var paged = this.paged;
+		var pageSize = paged ? this.pageSize : pageSize;
+		var tableName = this.tableName;
+		var updateLink = this.updateLink;
 
 		if (!this.initialized) {
 			this.initGrid(entities.length);
 		}
 
-		var table = document.getElementById(this.tableName);
+		var table = document.getElementById(tableName);
 
 		var p;
-		for (p = 0; p < this.pageSize; p++) {
-			var tr = document.getElementById(this.tableName + p);
+		for (p = 0; p < pageSize; p++) {
+			var tr = document.getElementById(tableName + p);
 
 			var c;
-			for (c = 0; c < this.columnCount; c++) {
+			for (c = 0; c < columnCount; c++) {
 				var td = tr.childNodes[c];
 
 				if (p < entities.length) {
-					if (c == (this.columnCount-1) && this.deleteButtons) {
+					if (c == (columnCount-1) && deleteButtons) {
 						this.addDeleteButton(entities[p].links.find(function(e) { return e.method == "DELETE"; }), td);
 					} else {
 						td.removeChild(td.childNodes[0]);
+
+						var ctl;
+						var data = entities[p][columns[c].binding];
+
+						if (editable && columns[c].inputType && !(columns[c].inputType == "select")) {
+							ctl = document.createElement("input");
+							ctl.type = columns[c].inputType;
+							ctl.value = data;
+						} else {
+							ctl = document.createTextNode(data);
+						}
 						
-						var txt = document.createTextNode(entities[p][this.columns[c].binding]);
-						
-						if (c == 0 && this.updateLink) {
+						if (c == 0 && updateLink) {
 							var item = entities[p].links.find(function(e) { return e.rel == "self"; })
 							if (item) {
 								var a = document.createElement('a');
-								var ref = this.updateLink + "?self=" + item.href;
+								var ref = updateLink + "?self=" + item.href;
 								a.setAttribute('href', ref);
-								a.appendChild(txt);
+								a.appendChild(ctl);
 								td.appendChild(a);
 							}
 						} else {
-							td.appendChild(txt);
+							td.appendChild(ctl);
 						}
 					}
 				} else {
@@ -205,20 +237,23 @@ class ItemGrid {
 	renderJson(jsonData, textStatus, jqXHR, restUrl) {
 		if (jqXHR.status == 200) {
 			this.renderData(jsonData);
+			var children = this.children;
+			var paged = this.paged;
+			var tableName = this.tableName;
 
-			if (this.children) {
+			if (children) {
 				var i;
-				for (i = 0 ; i < this.children.length ; i++) {
-					this.children[i].renderData(jsonData);
+				for (i = 0 ; i < children.length ; i++) {
+					children[i].renderData(jsonData);
 				}
 			}
 
-			if (this.paged) {
-				var prev = document.getElementById(this.tableName + "Prev");
+			if (paged) {
+				var prev = document.getElementById(tableName + "Prev");
 
 				this.addLinkButton(jsonData.links.find(function(e) { return e.rel == "previous"; }), prev);
 
-				var next = document.getElementById(this.tableName + "Next");
+				var next = document.getElementById(tableName + "Next");
 
 				this.addLinkButton(jsonData.links.find(function(e) { return e.rel == "next"; }), next);
 			}
