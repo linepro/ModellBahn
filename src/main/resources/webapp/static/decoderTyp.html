@@ -11,34 +11,37 @@
 <link rel="stylesheet" href="css/site.css"/>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var decoderRef = new URL(window.location.href).searchParams.get("self");
-var decoder = new ItemGrid(1, decoderRef, undefined, "decoder", [
+var fetchUrl = new URL(window.location.href).searchParams.get("self");
+var adressen = new ItemGrid(2, undefined, "adressen", "adressen", [
+    new Column("Index", "index"),
+    new Column("AdressTyp", "adressTyp"),
+    new Column("Span", "span", "number"),
+    new Column("Werkseinstellung", "werkseinstellung", "number")],
+    false, true, undefined, undefined, true, undefined);
+var cvs = new ItemGrid(10, undefined, "cvs", "cvs", [
+    new Column("CV", "cv"),
+    new Column("Bezeichnung", "description"),
+    new Column("Werkseinstellung", "werkseinstellung")],
+    false, true, undefined, undefined, true, undefined);
+var funktionen = new ItemGrid(10, undefined, "funktionen", "funktionen", [
+    new Column("Bank", "bank"),
+    new Column("Funktion", "funktion"),
+    new Column("Bezeichnung", "description"),
+    new Column("Programmable", "programmable", "checkbox")],
+    false, true, undefined, undefined, true, undefined);
+var decoder = new ItemGrid(1, fetchUrl, undefined, "decoder", [
     new Column("Hersteller", "hersteller"),
     new Column("Bestell Nr", "bestellNr"),
-    new Column("Bezeichnung", "description"),
+    new Column("Bezeichnung", "description", "text"),
     new Column("Protokoll", "protokoll"),
-    new Column("Fahrstufe", "fahrstufe"),
-    new Column("Sound", "sound"),
-    new Column("I Max", "iMax"),
+    new Column("Fahrstufe", "fahrstufe", "number"),
+    new Column("Sound", "sound", "checkbox"),
+    new Column("I Max", "iMax", "number"),
     new Column("Konfiguration", "konfiguration")],
-    false, false, undefined, undefined, [
-        new ItemGrid(2, decoderRef, "adressen", "adressen", [
-            new Column("Index", "index"),
-            new Column("AdressTyp", "adressTyp"),
-            new Column("Span", "span"),
-            new Column("Werkseinstellung", "werkseinstellung")],
-            false, true, undefined, undefined),
-        new ItemGrid(10, decoderRef, "cvs", "cvs", [
-            new Column("CV", "cv"),
-            new Column("Bezeichnung", "description"),
-            new Column("Werkseinstellung", "werkseinstellung")],
-            false, true, undefined, undefined),
-        new ItemGrid(10, decoderRef, "funktionen", "funktionen", [
-            new Column("Bank", "bank"),
-            new Column("Funktion", "funktion"),
-            new Column("Bezeichnung", "description"),
-            new Column("Programmable", "programmable")],
-            false, true, undefined, undefined)]);
+    false, false, undefined, undefined, true, [
+    	adressen,
+        cvs,
+        funktionen]);
 
 function init() {
     decoder.init();
@@ -51,6 +54,8 @@ function init() {
         <hr class="highlight" />
         <nav>
             <a class="btn btn-info btn-sm" href='../index.html'>Home</a>
+            <a class="btn btn-info btn-sm" href='../index.html'>Back</a>
+            <button type="button" class="btn btn-info btn-sm" onclick="">Save</button>
         </nav>
     </header>
         

@@ -7,7 +7,7 @@ class Column {
 }
 
 class ItemGrid {
-	constructor(pageSize, apiRoot, collection, tableName, columns, paged, deleteButtons, editButtons, updateLink, addLink, editable, children) {
+	constructor(pageSize, apiRoot, collection, tableName, columns, paged, deleteButtons, updateLink, addLink, editable, children) {
 		this.pageSize = pageSize;
 		this.current = apiRoot + (paged ? "?pageNumber=0&pageSize=" + pageSize : "");
 		this.collection = collection;
@@ -15,7 +15,6 @@ class ItemGrid {
 		this.columns = columns;
 		this.paged = paged;
 		this.deleteButtons = deleteButtons;
-		this.editButtons = editButtons;
 		this.updateLink = updateLink;
 		this.addLink = addLink;
 		this.editable = editable;
@@ -29,9 +28,8 @@ class ItemGrid {
 
 	initGrid(pageSize) {
 		var columns = this.columns;
-		var columnCount = this.columns.length + (this.deleteButtons + this.editButtons + this.addLink ? 1 : 0);
+		var columnCount = this.columns.length + (this.deleteButtons ? 1 : 0);
 		var deleteButtons = this.deleteButtons;
-		var editButtons = this.editButtons
 		var paged = this.paged;
 		var pageSize = paged ? this.pageSize : pageSize;
 		var tableName = this.tableName;
@@ -129,10 +127,12 @@ class ItemGrid {
 			.fail(function( jqXHR, textStatus, errorThrown ) { grid.reportError(jqXHR, textStatus, errorThrown); });
 	}
 	
-	editRow(editUrl)
-	{
+	save(editUrl) {
+		// addUrl typically the fetch URL with POST
+		// editUrl typically the fetch URL with PUT
 		var grid = this;
-		$.ajax( { url: editUrl, type: 'EDIT'', success: function( data, textStatus, jqXHR ) { grid.loadData(); } } )
+		var jsonData = ""; // TODO: json serialize fields for row
+		$.ajax( { url: editUrl, type: 'POST', success: function( data, textStatus, jqXHR ) { jsonData; } } )
 			.fail(function( jqXHR, textStatus, errorThrown ) { grid.reportError(jqXHR, textStatus, errorThrown); });
 	}
 
@@ -157,31 +157,8 @@ class ItemGrid {
 			btn.appendChild(img);
 		} 
 	}
-	
-	addEditButton(lnk, cell)
-	{
-		var tableName = this.tableName;
-		if (cell.childNodes[0])
-		{
-			cell.removeChild(cell.childNodes[0]);
-		}
-		
-		if (lnk)
-		{
-			var btn = document.createElement("button");
-			btn.setAttribute("value", lnk.href);
-			btn.setAttribute("onclick", tableName + ".editRow(this.value)");
-			btn.style.width = "65px";
-			cell.appendChild(btn);
-			
-			var img = document.createElement("img");
-			img.alt = lnk.rel;
-			img.src = "img/" + lnk.rel + ".png";
-			img.style.height = "18px";
-			btn.appendChild(img);
-		}
-	}
-	addLinkButton(lnk, cell) {
+
+	addNavButton(lnk, cell) {
 		var tableName = this.tableName;
 
 		if (cell.childNodes[0]) {
@@ -205,17 +182,17 @@ class ItemGrid {
 
 	renderData(jsonData) {
 		var columns = this.columns;
-		var columnCount = this.columns.length + (this.deleteButtons + this.editButtons + this.addLink ? 1 : 0);
+		var columnCount = this.columns.length + (this.deleteButtons ? 1 : 0);
 		var deleteButtons = this.deleteButtons;
 		var editable = this.editable;
 		var entities = (this.collection ? jsonData[this.collection] : jsonData.entities ? jsonData.entities : [ jsonData ]);
 		var paged = this.paged;
-		var pageSize = paged ? this.pageSize : pageSize;
+		var pageSize = paged ? this.pageSize : entities.length < this.pageSize ? entities.length : this.pageSize;
 		var tableName = this.tableName;
 		var updateLink = this.updateLink;
 
 		if (!this.initialized) {
-			this.initGrid(entities.length);
+			this.initGrid(pageSize);
 		}
 
 		var table = document.getElementById(tableName);
@@ -246,6 +223,7 @@ class ItemGrid {
 						}
 						
 						if (c == 0 && updateLink) {
+							// Add a link to the page where this row can be edited passing the item href in the link (should be a post??)
 							var item = entities[p].links.find(function(e) { return e.rel == "self"; })
 							if (item) {
 								var a = document.createElement('a');
@@ -283,11 +261,11 @@ class ItemGrid {
 			if (paged) {
 				var prev = document.getElementById(tableName + "Prev");
 
-				this.addLinkButton(jsonData.links.find(function(e) { return e.rel == "previous"; }), prev);
+				this.addNavButton(jsonData.links.find(function(e) { return e.rel == "previous"; }), prev);
 
 				var next = document.getElementById(tableName + "Next");
 
-				this.addLinkButton(jsonData.links.find(function(e) { return e.rel == "next"; }), next);
+				this.addNavButton(jsonData.links.find(function(e) { return e.rel == "next"; }), next);
 			}
 
 			this.current = restUrl;
