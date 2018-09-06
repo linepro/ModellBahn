@@ -11,12 +11,12 @@
 <link rel="stylesheet" href="css/site.css"/>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var listing = new ItemGrid(10, window.location.protocol + "//" + window.location.host + "/ModellBahn/api/decoderTyp", undefined, "listing", [
+var listing = new ItemGrid(10, window.location.protocol + "//" + window.location.host + "/ModellBahn/api/decoderTyp", true, "listing", [
 	new Column("Hersteller", "hersteller"),
 	new Column("Bestell Nr", "bestellNr"),
 	new Column("Protokoll", "protokoll", "select"),
 	new Column("Sound", "sound", "checkbox") 
-	], true, true, "decoderTyp.html", "decoderTyp.html", true, undefined);
+	], true, true, "decoderTyp.html", "decoderTyp.html", true, true);
 	
 function init() {
 	listing.init();
@@ -29,6 +29,8 @@ function init() {
         <hr class="highlight" />
         <nav>
             <a class="btn btn-info btn-sm" href='../index.html'>Home</a>
+            <a class="btn btn-info btn-sm" href="../Decoder.html">Decoder JSON List</a> 
+			<a class="btn btn-info btn-sm" href='../decoderTypen.html'>decoderTypen JSON List</a>           
         </nav>
     </header>
     	

@@ -7,7 +7,7 @@ class Column {
 }
 
 class ItemGrid {
-	constructor(pageSize, apiRoot, collection, tableName, columns, paged, deleteButtons, updateLink, addLink, editable, children) {
+	constructor(pageSize, apiRoot, collection, tableName, columns, paged, deleteButtons, editButtons, updateLink, addLink, editable, children) {
 		this.pageSize = pageSize;
 		this.current = apiRoot + (paged ? "?pageNumber=0&pageSize=" + pageSize : "");
 		this.collection = collection;
@@ -15,6 +15,7 @@ class ItemGrid {
 		this.columns = columns;
 		this.paged = paged;
 		this.deleteButtons = deleteButtons;
+		this.editButtons = editButtons;
 		this.updateLink = updateLink;
 		this.addLink = addLink;
 		this.editable = editable;
@@ -28,8 +29,9 @@ class ItemGrid {
 
 	initGrid(pageSize) {
 		var columns = this.columns;
-		var columnCount = this.columns.length + (this.deleteButtons ? 1 : 0);
+		var columnCount = this.columns.length + (this.deleteButtons + this.editButtons + this.addLink ? 1 : 0);
 		var deleteButtons = this.deleteButtons;
+		var editButtons = this.editButtons
 		var paged = this.paged;
 		var pageSize = paged ? this.pageSize : pageSize;
 		var tableName = this.tableName;
@@ -126,6 +128,13 @@ class ItemGrid {
 		$.ajax( { url: deleteUrl, type: 'DELETE', success: function( data, textStatus, jqXHR ) { grid.loadData(); } } )
 			.fail(function( jqXHR, textStatus, errorThrown ) { grid.reportError(jqXHR, textStatus, errorThrown); });
 	}
+	
+	editRow(editUrl)
+	{
+		var grid = this;
+		$.ajax( { url: editUrl, type: 'EDIT'', success: function( data, textStatus, jqXHR ) { grid.loadData(); } } )
+			.fail(function( jqXHR, textStatus, errorThrown ) { grid.reportError(jqXHR, textStatus, errorThrown); });
+	}
 
 	addDeleteButton(lnk, cell) {
 		var tableName = this.tableName;
@@ -149,6 +158,29 @@ class ItemGrid {
 		} 
 	}
 	
+	addEditButton(lnk, cell)
+	{
+		var tableName = this.tableName;
+		if (cell.childNodes[0])
+		{
+			cell.removeChild(cell.childNodes[0]);
+		}
+		
+		if (lnk)
+		{
+			var btn = document.createElement("button");
+			btn.setAttribute("value", lnk.href);
+			btn.setAttribute("onclick", tableName + ".editRow(this.value)");
+			btn.style.width = "65px";
+			cell.appendChild(btn);
+			
+			var img = document.createElement("img");
+			img.alt = lnk.rel;
+			img.src = "img/" + lnk.rel + ".png";
+			img.style.height = "18px";
+			btn.appendChild(img);
+		}
+	}
 	addLinkButton(lnk, cell) {
 		var tableName = this.tableName;
 
@@ -173,7 +205,7 @@ class ItemGrid {
 
 	renderData(jsonData) {
 		var columns = this.columns;
-		var columnCount = this.columns.length + (this.deleteButtons ? 1 : 0);
+		var columnCount = this.columns.length + (this.deleteButtons + this.editButtons + this.addLink ? 1 : 0);
 		var deleteButtons = this.deleteButtons;
 		var editable = this.editable;
 		var entities = (this.collection ? jsonData[this.collection] : jsonData.entities ? jsonData.entities : [ jsonData ]);
