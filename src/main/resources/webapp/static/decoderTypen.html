@@ -14,9 +14,9 @@
 var listing = new ItemGrid(10, window.location.protocol + "//" + window.location.host + "/ModellBahn/api/decoderTyp", undefined, "listing", [
 	new Column("Hersteller", "hersteller"),
 	new Column("Bestell Nr", "bestellNr"),
-	new Column("Protokoll", "protokoll"),
-	new Column("Sound", "sound") 
-	], true, true, "decoderTyp.html", undefined, undefined);
+	new Column("Protokoll", "protokoll", "select"),
+	new Column("Sound", "sound", "checkbox") 
+	], true, true, "decoderTyp.html", "decoderTyp.html", true, undefined);
 	
 function init() {
 	listing.init();
