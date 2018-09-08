@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.slf4j.ILoggerFactory;
 
+import com.linepro.modellbahn.guice.ISessionManagerFactory;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.INamedItem;
 import com.linepro.modellbahn.persistence.IPersister;
@@ -20,7 +20,7 @@ import com.linepro.modellbahn.persistence.IPersisterFactory;
 public class PersisterFactory implements IPersisterFactory {
 
     /** The entity manager. */
-    protected final EntityManager entityManager;
+    protected final ISessionManagerFactory sessionManagerFactory;
 
     /** The log manager. */
     protected final ILoggerFactory logManager;
@@ -31,12 +31,12 @@ public class PersisterFactory implements IPersisterFactory {
     /**
      * Instantiates a new persister factory.
      *
-     * @param entityManager the entity manager
+     * @param sessionManager the session manager
      * @param logManager the log manager
      */
     @Inject
-    public PersisterFactory(final EntityManager entityManager, final ILoggerFactory logManager) {
-        this.entityManager = entityManager;
+    public PersisterFactory(final ISessionManagerFactory sessionManagerFactory, final ILoggerFactory logManager) {
+        this.sessionManagerFactory = sessionManagerFactory;
         this.logManager = logManager;
     }
 
@@ -46,7 +46,7 @@ public class PersisterFactory implements IPersisterFactory {
         IPersister<E> persister = (IPersister<E>) persisters.get(entityClass);
         
         if (persister == null) {
-            persister = new ItemPersister<E>(entityManager, logManager, entityClass);
+            persister = new ItemPersister<E>(sessionManagerFactory, logManager, entityClass);
             
             registerConverter(persister, entityClass);
 

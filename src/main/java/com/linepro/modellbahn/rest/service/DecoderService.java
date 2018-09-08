@@ -33,8 +33,6 @@ import com.linepro.modellbahn.model.impl.DecoderTyp;
 import com.linepro.modellbahn.model.impl.Protokoll;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AdressTyp;
-import com.linepro.modellbahn.persistence.IIdGenerator;
-import com.linepro.modellbahn.persistence.impl.IdGenerator;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -133,9 +131,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
                 return getResponse(badRequest(null, "DecoderTyp " + herstellerStr + "/" + bestellNr + " does not exist"));
             }
 
-            IIdGenerator idGenerator = new IdGenerator(getPersister());
-            
-            Decoder decoder = new Decoder(null, decoderTyp, decoderTyp.getProtokoll(), idGenerator.getNextId(), decoderTyp.getBezeichnung(), decoderTyp.getFahrstufe(), false);
+            Decoder decoder = new Decoder(null, decoderTyp, decoderTyp.getProtokoll(), getPersister().getNextId(), decoderTyp.getBezeichnung(), decoderTyp.getFahrstufe(), false);
             
             decoder = getPersister().add(decoder);
 

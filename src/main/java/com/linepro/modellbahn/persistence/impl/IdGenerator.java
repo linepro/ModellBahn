@@ -2,48 +2,52 @@ package com.linepro.modellbahn.persistence.impl;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import com.linepro.modellbahn.guice.ISessionManagerFactory;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.IIdGenerator;
-import com.linepro.modellbahn.persistence.IPersister;
+import com.linepro.modellbahn.persistence.ISessionManager;
 
 public class IdGenerator implements IIdGenerator {
 
-    protected final IPersister<?> persister;
-
-    protected final String queryString;
+    protected final ISessionManagerFactory sessionManagerFactory;
     
-    public IdGenerator(IPersister<?> persister) {
-        this.persister = persister;
+    @Inject
+    public IdGenerator(final ISessionManagerFactory sessionManagerFactory) {
+        this.sessionManagerFactory = sessionManagerFactory;
+    }
 
-        queryString = new StringBuffer("SELECT e.")
+    @Override
+    public String getNextId(String entityName) {
+        Long id = 1L;
+        
+        ISessionManager session = getSession();
+
+        String queryString = new StringBuffer("SELECT e.")
                 .append(DBNames.NAME)
                 .append(" FROM ")
-                .append(getPersister().getEntityName())
+                .append(entityName)
                 .append(" e ORDER BY e.")
                 .append(DBNames.NAME)
                 .append(" DESC")
                 .toString();
-    }
-
-    @Override
-    public String getNextId() {
-        Long id = 1L;
-        
-        getPersister().begin();
 
         @SuppressWarnings("unchecked")
-        List<String> names = getPersister().getEntityManager().createQuery(queryString.toString()).getResultList();
+        List<String> names = session.getEntityManager().createQuery(queryString.toString()).getResultList();
 
         if (!names.isEmpty()) {
             id = Long.parseLong(names.get(0)) + 1;
         }
 
-        getPersister().commit();
+        session.commit();
         
         return String.format("%05d", id);
     }
 
-    protected IPersister<?> getPersister() {
-        return persister;
+    protected ISessionManager getSession() {
+        SessionManager sessionManager = sessionManagerFactory.create();
+        sessionManager.begin();
+        return sessionManager;
     }
 }

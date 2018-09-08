@@ -2,6 +2,5 @@ package com.linepro.modellbahn.persistence;
 
 public interface IIdGenerator {
 
-    String getNextId();
-
+    String getNextId(String entityName);
 }

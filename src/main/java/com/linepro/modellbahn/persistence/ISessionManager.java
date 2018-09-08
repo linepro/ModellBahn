@@ -1,6 +1,7 @@
 package com.linepro.modellbahn.persistence;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 /**
  * ISessionManager.
@@ -31,4 +32,6 @@ public interface ISessionManager {
      * Rolls back a transaction.
      */
     void rollback();
+
+    EntityTransaction getTransaction();
 }

@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.JoinColumn;
 import javax.persistence.NonUniqueResultException;
@@ -27,12 +26,15 @@ import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 
 import com.google.inject.assistedinject.Assisted;
+import com.linepro.modellbahn.guice.ISessionManagerFactory;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.keys.IdKey;
 import com.linepro.modellbahn.model.keys.ItemKey;
 import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.persistence.IIdGenerator;
 import com.linepro.modellbahn.persistence.IKey;
 import com.linepro.modellbahn.persistence.IPersister;
+import com.linepro.modellbahn.persistence.ISessionManager;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.util.Selector;
 import com.linepro.modellbahn.util.SelectorsBuilder;
@@ -48,7 +50,7 @@ import com.linepro.modellbahn.util.SelectorsBuilder;
 public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
     /** The entity manager. */
-    private final EntityManager entityManager;
+    private final ISessionManagerFactory sessionManagerFactory;
 
     /** The logger. */
     private final Logger logger;
@@ -67,8 +69,10 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
     private final String entityName;
 
-    private String businessKeyQuery;
+    private final IIdGenerator idGenerator;
 
+    private String businessKeyQuery;
+    
     /**
      * Instantiates a new item persister.
      *
@@ -77,15 +81,16 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
      * @param entityClass the entity class
      */
     @Inject
-    public ItemPersister(final EntityManager entityManager, final ILoggerFactory logManager,
+    public ItemPersister(final ISessionManagerFactory sessionManagerFactory, final ILoggerFactory logManager,
             @Assisted final Class<E> entityClass) {
-        this.entityManager = entityManager;
+        this.sessionManagerFactory = sessionManagerFactory;
         this.logger = logManager.getLogger(entityClass.getName());
         this.entityClass = entityClass;
+        this.idGenerator = new IdGenerator(sessionManagerFactory);
 
         businessKeys = new SelectorsBuilder().build(entityClass, BusinessKey.class);
         collections = new SelectorsBuilder().build(entityClass, OneToMany.class);
-        selectors = new SelectorsBuilder().build(entityClass, Column.class, JoinColumn.class);
+        selectors = new SelectorsBuilder().build(entityClass, Column.class, JoinColumn.class, OneToMany.class);
 
         Entity entityAnnotation = ((Entity) entityClass.getAnnotation(Entity.class));
         entityName = entityAnnotation != null ? entityAnnotation.name() : entityClass.getSimpleName();
@@ -114,23 +119,23 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
     @Override
     public E add(E entity) throws Exception {
-        try {
-            begin();
+        ISessionManager session = getSession();
 
+        try {
             entity.setDeleted(false);
 
-            getEntityManager().persist(entity);
-
-            commit();
+            session.getEntityManager().persist(entity);
 
             debug("added: " + entity);
 
+            session.commit();
+
             return entity;
         } catch (Exception e) {
-            rollback();
-
             error("add error: " + entity, e);
             
+            session.rollback();
+
             throw e;
         }
     }
@@ -165,10 +170,10 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     protected E internalUpdate(IKey key, E entity, boolean addOrUpdate) throws Exception {
-        try {
-            begin();
+        ISessionManager session = getSession();
 
-            E found = findByKey(entity, false);
+        try {
+            E found = internalFindByKey(session, key, false);
             
             if (found == null && !addOrUpdate) {
                 throw new EntityNotFoundException();
@@ -187,24 +192,24 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
                     Object value = selector.getGetter().invoke(entity);
 
                     if (value instanceof Collection) {
-                        ((Collection) selector.getSetter().invoke(found)).addAll((Collection) value);
+                        ((Collection) selector.getGetter().invoke(found)).addAll((Collection) value);
                     } else if (value != null) {
                         selector.getSetter().invoke(result, value);
                     }
                 }
             }
 
-            result = inflate(getEntityManager().merge(result), true);
-
-            commit();
+            result = inflate(session.getEntityManager().merge(result), true);
 
             debug((found == null ? "added" : "updated") + ": " + result);
 
+            session.commit();
+
             return result;
         } catch (Exception e) {
-            rollback();
-
             error("Update error: " + entity, e);
+
+            session.rollback();
 
             throw e;
         }
@@ -212,21 +217,21 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
     @Override
     public void delete(Long id) throws Exception {
-        try {
-            begin();
+        ISessionManager session = getSession();
+            try {
 
             E found = findById(id, false);
 
-            getEntityManager().remove(found);
-
-            commit();
+            session.getEntityManager().remove(found);
 
             debug("deleted: " + id);
-        } catch (Exception e) {
-            rollback();
 
+            session.commit();
+        } catch (Exception e) {
             error("delete error : " + id, e);
             
+            session.rollback();
+
             throw e;
         }
     }
@@ -241,21 +246,21 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
     @Override
     public void delete(IKey key) throws Exception {
+        ISessionManager session = getSession();
+
         try {
-            begin();
+            E found = internalFindByKey(session, key, false);
 
-            E found = findByKey(key, false);
-
-            getEntityManager().remove(found);
-
-            commit();
+            session.getEntityManager().remove(found);
             
             debug("deleted: " + key);
-        } catch (Exception e) {
-            rollback();
 
+            session.commit();
+        } catch (Exception e) {
             error("delete error: " + key, e);
             
+            session.rollback();
+
             throw e;
         }
     }
@@ -267,10 +272,10 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
     @Override
     public void deleteAll(E template) throws Exception {
-        try {
-            begin();
+        ISessionManager session = getSession();
 
-            CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+        try {
+            CriteriaBuilder builder = session.getEntityManager().getCriteriaBuilder();
             CriteriaDelete<E> query = builder.createCriteriaDelete(getEntityClass());
             Root<E> root = query.from(getEntityClass());
 
@@ -280,15 +285,15 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
                 query.where(predicates.toArray(new Predicate[] {}));
             }
 
-            getEntityManager().createQuery(query).executeUpdate();
-
-            commit();
+            session.getEntityManager().createQuery(query).executeUpdate();
 
             debug("deleteAll: " + template);
-        } catch (Exception e) {
-            rollback();
 
+            session.commit();
+        } catch (Exception e) {
             error("deleteAll error: " + template, e);
+
+            session.rollback();
             
             throw e;
         }
@@ -296,24 +301,24 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
     @Override
     public E findById(Long id, boolean eager) throws Exception {
-        try {
-            if (id != null) {
-                begin();
-    
-                E result = inflate(getEntityManager().find(getEntityClass(), id), eager);
-    
-                commit();
-    
-                debug("findById found: " + result);
-    
-                return result;
-            }
-            
-            return null;
-        } catch (Exception e) {
-            rollback();
+        ISessionManager session = getSession();
 
+        try {
+            E result = null;
+            
+            if (id != null) {
+                result = inflate(session.getEntityManager().find(getEntityClass(), id), eager);
+            }
+
+            debug("findById found: " + result);
+    
+            session.commit();
+
+            return result;
+        } catch (Exception e) {
             error("findById error: " + id, e);
+
+            session.rollback();
             
             throw e;
        }
@@ -336,38 +341,43 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
     @Override
     public E findByKey(IKey key, boolean eager) throws Exception {
+        ISessionManager session = getSession();
+
         try {
-            begin();
-
-            Query query = getEntityManager().createQuery(businessKeyQuery);
-
-            key.addCriteria(query);
-            
-            @SuppressWarnings("unchecked")
-            List<E> results = (List<E>) query.getResultList();
-            
-            if (results.size() > 1) {
-                throw new NonUniqueResultException();
-            }
-            
-            E result = null;
-            
-            if (results.size() == 1) {
-                result = inflate(results.get(0), eager);
-            }
+            E result = internalFindByKey(session, key, eager);
             
             debug("findByKey found: " + result);
 
-            commit();
+            session.commit();
 
             return result;
         } catch (Exception e) {
-            rollback();
-
             error("findByKey error: " + key, e);
-            
+
+            session.rollback();
+           
             throw e;
         }
+    }
+
+    protected E internalFindByKey(ISessionManager session, IKey key, boolean eager) throws Exception {
+        Query query = session.getEntityManager().createQuery(businessKeyQuery);
+
+        key.addCriteria(query);
+        
+        @SuppressWarnings("unchecked")
+        List<E> results = (List<E>) query.getResultList();
+        
+        if (results.size() > 1) {
+            throw new NonUniqueResultException();
+        }
+        
+        E result = null;
+        
+        if (results.size() == 1) {
+            result = inflate(results.get(0), eager);
+        }
+        return result;
     }
 
     @Override
@@ -377,12 +387,12 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
     @Override
     public Long countAll(E template) throws Exception {
+        ISessionManager session = getSession();
+
         try {
             Long result = 0L;
 
-            begin();
-
-            CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+            CriteriaBuilder builder = session.getEntityManager().getCriteriaBuilder();
             CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
             Root<E> root = countQuery.from(getEntityClass());
             countQuery.select(builder.count(root));
@@ -393,17 +403,17 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
                 countQuery.where(predicates.toArray(new Predicate[] {}));
             }
 
-            result = entityManager.createQuery(countQuery).getSingleResult();
-
-            commit();
+            result = session.getEntityManager().createQuery(countQuery).getSingleResult();
 
             debug("countAll found: " + result);
 
+            session.commit();
+
             return result;
         } catch (Exception e) {
-            rollback();
-
             error("countAll error: " + template, e);
+
+            session.rollback();
             
             throw e;
         }
@@ -430,12 +440,12 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
     }
 
     protected List<E> findAll(E template, Map<String,Selector> selectors, Integer startPosition, Integer maxResult) throws Exception {
+        ISessionManager session = getSession();
+
         try {
             List<E> result = new ArrayList<>();
 
-            begin();
-
-            CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+            CriteriaBuilder builder = session.getEntityManager().getCriteriaBuilder();
             CriteriaQuery<E> criteria = builder.createQuery(getEntityClass());
             Root<E> root = criteria.from(getEntityClass());
 
@@ -447,7 +457,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
                 criteria.select(root);
             }
 
-            TypedQuery<E> query = getEntityManager().createQuery(criteria);
+            TypedQuery<E> query = session.getEntityManager().createQuery(criteria);
 
             if (startPosition != null) {
                 query.setFirstResult(startPosition * maxResult);
@@ -459,16 +469,16 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
             result.addAll(query.getResultList());
 
-            commit();
-
             debug("findAll found: " + result);
+
+            session.commit();
 
             return result;
         } catch (Exception e) {
-            rollback();
-
             error("findAll error: " + template, e);
             
+            session.rollback();
+
             throw e;
         }
     }
@@ -504,42 +514,16 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
     @Override
     public void populateLazyCollection(Collection<?> collection) throws Exception {
-        begin();
+        ISessionManager session = getSession();
         
         collection.size();
         
-        commit();
+        session.commit();
     }
 
     @Override
     public void populateLazyCollections() throws Exception {
         
-    }
-
-    @Override
-    public EntityManager getEntityManager() {
-        return entityManager;
-    }
-
-    @Override
-    public void begin() {
-        if (!getEntityManager().getTransaction().isActive()) {
-            getEntityManager().getTransaction().begin();
-        }
-    }
-
-    @Override
-    public void commit() {
-        if (getEntityManager().getTransaction().isActive()) {
-            getEntityManager().getTransaction().commit();
-        }
-    }
-
-    @Override
-    public void rollback() {
-        if (getEntityManager().getTransaction().isActive()) {
-            getEntityManager().getTransaction().rollback();
-        }
     }
 
     /**
@@ -629,5 +613,16 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         }
         
         return entity;
+    }
+
+    protected ISessionManager getSession() {
+        SessionManager sessionManager = sessionManagerFactory.create();
+        sessionManager.begin();
+        return sessionManager;
+    }
+
+    @Override
+    public String getNextId() {
+        return idGenerator.getNextId(getEntityName());
     }
 }

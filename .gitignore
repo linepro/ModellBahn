@@ -40,3 +40,12 @@ buildNumber.properties
 docs/
 /modellbahn.lock.db
 /webapp/
+
+# Windows shit
+Thumbs.db
+
+# Unused icons
+src/main/resources/webapp/static/img/18/
+src/main/resources/webapp/static/img/24/
+src/main/resources/webapp/static/img/36/
+src/main/resources/webapp/static/img/48/

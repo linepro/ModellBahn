@@ -74,7 +74,7 @@ public interface ApiPaths {
 
     public static final String GATTUNG = API_ROOT + ApiNames.GATTUNG;
 
-    public static final String HERSTELLER = ApiNames.HERSTELLER;  
+    public static final String HERSTELLER = API_ROOT + ApiNames.HERSTELLER;  
     
     public static final String KATEGORIE = API_ROOT + ApiNames.KATEGORIE;
     

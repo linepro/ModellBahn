@@ -12,7 +12,7 @@ import com.linepro.modellbahn.model.IItem;
  * @version  $Id$
  * @param <E> the element type
  */
-public interface IPersister<E extends IItem<?>> extends ISessionManager {
+public interface IPersister<E extends IItem<?>> {
     
     /**
      * Adds the entity checking the primary key; fails if the entity all ready exists.
@@ -157,4 +157,6 @@ public interface IPersister<E extends IItem<?>> extends ISessionManager {
      * @throws Exception if there is a DB error
      */
     void populateLazyCollections() throws Exception;
+
+    String getNextId();
 }

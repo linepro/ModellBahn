@@ -1,10 +1,5 @@
-class Column {
-	constructor(heading, binding, inputType) {
-		this.heading = heading;
-		this.binding = binding;
-		this.inputType = inputType;
-	}
-}
+// module "maintenance.js"
+"use strict"
 
 class ItemGrid {
 	constructor(pageSize, apiRoot, collection, tableName, columns, paged, deleteButtons, updateLink, addLink, editable, children) {
@@ -53,7 +48,7 @@ class ItemGrid {
 			th.className = "table-heading";
 
 			if (!deleteButtons || i < (columnCount-1)) {
-				th.append(document.createTextNode(columns[i].heading));
+				addText(th, columns[i].heading);
 			}
 			
 			headRow.append(th);
@@ -76,7 +71,7 @@ class ItemGrid {
 				const delCell = deleteButtons && (i == (columnCount-1));
 				td.className = delCell ? "table-del" : "table-cell";
 				if (!delCell) { td.id = tableName + "_" + columns[i].binding + p };
-				td.appendChild(document.createTextNode(""));
+				addText(td, "");
 				tr.append(td);
 			}
 		}
@@ -126,59 +121,6 @@ class ItemGrid {
 		$.ajax( { url: deleteUrl, type: 'DELETE', success: function( data, textStatus, jqXHR ) { grid.loadData(); } } )
 			.fail(function( jqXHR, textStatus, errorThrown ) { grid.reportError(jqXHR, textStatus, errorThrown); });
 	}
-	
-	save(editUrl) {
-		// addUrl typically the fetch URL with POST
-		// editUrl typically the fetch URL with PUT
-		var grid = this;
-		var jsonData = ""; // TODO: json serialize fields for row
-		$.ajax( { url: editUrl, type: 'POST', success: function( data, textStatus, jqXHR ) { jsonData; } } )
-			.fail(function( jqXHR, textStatus, errorThrown ) { grid.reportError(jqXHR, textStatus, errorThrown); });
-	}
-
-	addDeleteButton(lnk, cell) {
-		var tableName = this.tableName;
-
-		if (cell.childNodes[0]) {
-			cell.removeChild(cell.childNodes[0]);
-		}
-
-		if (lnk) {
-			var btn = document.createElement("button");
-			btn.setAttribute("value", lnk.href);
-			btn.setAttribute("onclick", tableName + ".deleteRow(this.value)");
-			btn.style.width = "65px";
-			cell.appendChild(btn);
-			
-			var img = document.createElement("img");
-			img.alt = lnk.rel;
-			img.src = "img/" + lnk.rel + ".png";
-			img.style.height = "18px";
-			btn.appendChild(img);
-		} 
-	}
-
-	addNavButton(lnk, cell) {
-		var tableName = this.tableName;
-
-		if (cell.childNodes[0]) {
-			cell.removeChild(cell.childNodes[0]);
-		}
-
-		if (lnk) {
-			var btn = document.createElement("button");
-			btn.setAttribute("value", lnk.href);
-			btn.setAttribute("onclick", tableName + ".getData(this.value)");
-		    btn.style.width = "65px";
-			cell.appendChild(btn);
-		    
-			var img = document.createElement("img");
-			img.alt = lnk.rel;
-			img.src = "img/" + lnk.rel + ".png";
-			img.style.height = "18px";
-			btn.appendChild(img);
-		} 
-	}
 
 	renderData(jsonData) {
 		var columns = this.columns;
@@ -187,7 +129,7 @@ class ItemGrid {
 		var editable = this.editable;
 		var entities = (this.collection ? jsonData[this.collection] : jsonData.entities ? jsonData.entities : [ jsonData ]);
 		var paged = this.paged;
-		var pageSize = paged ? this.pageSize : entities.length < this.pageSize ? entities.length : this.pageSize;
+		var pageSize = paged ? this.pageSize : Math.max(1, entities.length);
 		var tableName = this.tableName;
 		var updateLink = this.updateLink;
 
@@ -206,39 +148,49 @@ class ItemGrid {
 				var td = tr.childNodes[c];
 
 				if (p < entities.length) {
+					var entity = entities[p];
+
 					if (c == (columnCount-1) && deleteButtons) {
-						this.addDeleteButton(entities[p].links.find(function(e) { return e.method == "DELETE"; }), td);
+						var lnk = entity.links.find(function(e) { return e.method == "DELETE"; });
+						addButton(lnk, td, tableName, "deleteRow(this.value)");
 					} else {
-						td.removeChild(td.childNodes[0]);
+						removeChildren(td);
 
 						var ctl;
-						var data = entities[p][columns[c].binding];
+						var data = entity[columns[c].binding];
 
-						if (editable && columns[c].inputType && !(columns[c].inputType == "select")) {
-							ctl = document.createElement("input");
-							ctl.type = columns[c].inputType;
-							ctl.value = data;
+						if (editable && columns[c].inputType) {
+							if (columns[c].inputType == "select" && columns[c].select) {
+								ctl = document.createElement("select");
+								columns[c].select.addOptions(ctl, 1, data);
+							} else {
+								ctl = document.createElement("input");
+								ctl.type = columns[c].inputType;
+								ctl.value = data;
+							}
 						} else {
 							ctl = document.createTextNode(data);
 						}
 						
 						if (c == 0 && updateLink) {
 							// Add a link to the page where this row can be edited passing the item href in the link (should be a post??)
-							var item = entities[p].links.find(function(e) { return e.rel == "self"; })
-							if (item) {
+							var lnk = entity.links.find(function(e) { return e.rel == "self"; })
+
+							if (lnk) {
 								var a = document.createElement('a');
-								var ref = updateLink + "?self=" + item.href;
+								var ref = updateLink + "?self=" + lnk.href;
 								a.setAttribute('href', ref);
 								a.appendChild(ctl);
-								td.appendChild(a);
+
+								ctl = a;
 							}
-						} else {
-							td.appendChild(ctl);
 						}
+
+						td.appendChild(ctl);
 					}
 				} else {
-					td.removeChild(td.childNodes[0]);
-					td.appendChild(document.createTextNode(""));
+					removeChildren(td);
+					addText(td, "");
 				}
 			}
 		}
@@ -246,39 +198,33 @@ class ItemGrid {
 
 	renderJson(jsonData, textStatus, jqXHR, restUrl) {
 		if (jqXHR.status == 200) {
-			this.renderData(jsonData);
 			var children = this.children;
 			var paged = this.paged;
 			var tableName = this.tableName;
 
-			if (children) {
-				var i;
-				for (i = 0 ; i < children.length ; i++) {
-					children[i].renderData(jsonData);
-				}
-			}
+			this.renderData(jsonData);
+
+			if (children) { children.forEach(function(child){child.renderData(jsonData);}) };
 
 			if (paged) {
 				var prev = document.getElementById(tableName + "Prev");
+				var lnk = jsonData.links.find(function(e) { return e.rel == "previous"; });
 
-				this.addNavButton(jsonData.links.find(function(e) { return e.rel == "previous"; }), prev);
+				addButton(lnk, prev, tableName, "getData(this.value)");
 
 				var next = document.getElementById(tableName + "Next");
+				lnk = jsonData.links.find(function(e) { return e.rel == "next"; });
 
-				this.addNavButton(jsonData.links.find(function(e) { return e.rel == "next"; }), next);
+				addButton(lnk, next, tableName, "getData(this.value)");
 			}
 
 			this.current = restUrl;
 		}
 	}
 	
-	reportError( jqxhr, textStatus, error ) {
-		alert( "error: " + error );
-	}
-	
 	getData(restUrl) {
 		var grid = this;
 		$.getJSON(restUrl, function( data, textStatus, jqXHR ) { grid.renderJson(data, textStatus, jqXHR, restUrl) })
-			.fail( function( jqXHR, textStatus, errorThrown ) { grid.reportError(  jqXHR, textStatus, errorThrown  ); });
+			.fail( function( jqXHR, textStatus, errorThrown ) { reportError(  jqXHR, textStatus, errorThrown  ); });
 	}
-};
+}

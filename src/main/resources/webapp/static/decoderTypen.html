@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="css/bootstrap.min-4.1.3.css"/>
 <script type="text/javascript" src="js/lib/bootstrap.min-4.1.3.js"></script>
 <link rel="stylesheet" href="css/site.css"/>
+<script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
 var fetchUrl = window.location.protocol + "//" + window.location.host + "/ModellBahn/api/decoderTyp";
@@ -30,7 +31,7 @@ function init() {
         <hr class="highlight" />
         <nav>
             <a class="btn btn-info btn-sm" href='../index.html'>Home</a>
-            <a class="btn btn-info btn-sm" href='../index.html'>Back</a>
+            <button class="btn btn-info btn-sm" onclick="window.history.back();">Back</button>
         </nav>
     </header>
     	
