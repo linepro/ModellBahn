@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>	
+	<link href= "css/site.css" rel="stylesheet"/>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+	<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">	</script>
+	<script type="text/javascript">
+		function getData()	{
+			  $.getJSON(window.location.protocol + "//" + window.location.host + "/ModellBahn/api/artikel",
+				{
+				},
+				function (data, status)
+				{
+					var table = document.createElement("artikelListing");
+					table.setAttribute("border", "1.5");
+					
+					var heading = document.createElement("tr");
+					
+					var th = document.createElement("th");
+					th.textContext = "Artikel ID";
+					heading.appendChild(th);
+					
+					th = document.createElement("th");
+					th.textContext = "Produkt";
+					heading.appendChild(th);
+					
+					th = document.createElement("th");
+					th.textContext = "Kaufdatum";
+					heading.appendChild(th);
+					
+					th = document.createElement("th");
+					th.textContext = "Wahrung";
+					heading.appendChild(th);
+					
+					th = document.createElement("th");
+					th.textContext = "Preis";
+					heading.appendChild(th);
+					
+					th = document.createElement("th");
+					th.textContext = "Stuck";
+					heading.appendChild(th);
+					
+					th = document.createElement("th");
+					th.textContext = "Steuerung";
+					heading.appendChild(th);
+					
+					th = document.createElement("th");
+					th.textContext = "X";
+					heading.appendChild(th);
+					
+					table.appendChild(heading);
+					
+					for (i = 0; i < data.length; i++)
+					{
+						var tr = document.createElement("tr");
+						
+						var td = document.createElement("td");
+						td.textContext = data[i].artikelId;
+						tr.appendChild(td);
+						
+						td = document.createElement("td");
+						td.textContext = data[i].kaufdatum;
+						tr.appendChild(td);
+						
+						td = document.createElement("td");
+						td.textContext = data[i].wahrung;
+						tr.appendChild(td);
+						
+						td = document.createElement("td");
+						td.textContext = data[i].preis;
+						tr.appendChild(td);
+						
+						td = document.createElement("td");
+						td.textContext = data[i].stuck;
+						tr.appendChild(td);
+						
+						td = document.createElement("td");
+						td.textContext = data[i].steuerung;
+						tr.appendChild(td);
+						
+						td = document.createElement("td");
+						
+						var del = data[i].links.find(function(element) {
+							return element.method == "DELETE"
+						});
+						var a = document.createElement("a");
+						a.appendChild(document.createTextNode("X"));
+						
+						td.append(a);
+						a.title = del.rel;
+						a.href = del.href;
+						tr.appendChild(td);
+						
+						table.appendChild(tr);
+					}
+				
+				document.getElementById("artikelListing").appendChild(table);
+			}
+		);
+	};
+	</script>
+	<title>Artikel JSON list</title>
+</head>
+<body onload="javascript:getData()">
+	<h1>Artikel</h1>
+	
+	<div id="artikellisting">
+	</div>
+	<p>
+		<a href="home.html" class="btn btn-info btn-sm">Home</a>
+		<a href="decoders.html" class="btn btn-info btn-sm">Decoder JSON List</a> 
+		<a href="Decoder.html" class="btn btn-info btn-sm">Decoder JSON List</a> 
+		<a href="decoderTyp.html" class="btn btn-info btn-sm">DecoderType JSON List</a> 
+		<a href='decoderTypen.html' class="btn btn-info btn-sm">decoderTypen JSON List</a>
+	</p>
+	
+	<div id="links">
+	</div>
+	
+	<div id="footer">
+		<hr class="highlight" />
+		<p>Copyright &copy; 2018 ModellBahn Website</p>
+	</div>
+</body>
+</html>
