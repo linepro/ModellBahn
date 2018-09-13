@@ -14,13 +14,13 @@
 	<script type="text/javascript" src="js/maintenance.js">
 	</script>
 	<script type="text/javascript">
-		function getData()	{
-			  $.getJSON(window.location.protocol + "//" + window.location.host + "/ModellBahn/api/antrieb",
+		function getLichtData()	{
+			  $.getJSON(window.location.protocol + "//" + window.location.host + "/ModellBahn/api/licht",
 				{
 				},
 				function (data, status)
 				{
-					var table = document.createElement("antrieblisting");
+					var table = document.createElement("lichtlisting");
 					table.setAttribute("border", "1.5");
 					
 					var heading = document.createElement("tr");
@@ -91,35 +91,37 @@
 						table.appendChild(tr);
 					}
 				
-				document.getElementById("antrieblisting").appendChild(table);
+				document.getElementById("lichtlisting").appendChild(table);
 			}
 		);
 	};
 	</script>
-	<title>Antrieb JSON list</title>
+	<title>Aufbau JSON list</title>
 </head>
-<body onload="javascript:getData()">
+<body onload="javascript:getLichtData()">
 	<section>
 		<header>
 			<hr class="highlight" />
+			
 			<nav>
-				<a class="btn btn-info btn-sm" href="../index.html">Home</a>
+				<a class="btn btn-info btn-sm" href="../index.html" >Home</a>
 				<a class="btn btn-info btn-sm" href="artikel.html">Artikel JSON List</a>
 				<a class="btn btn-info btn-sm" href="aufbau.html">Aufbau JSON List</a>	
+				<a class="btn btn-info btn-sm" href="antrieb.html">Antrieb JSON List</a>			
 				<a class="btn btn-info btn-sm" href="decoders.html">Decoder JSON List</a> 
 				<a class="btn btn-info btn-sm" href="Decoder.html">Decoder JSON List</a> 
 				<a class="btn btn-info btn-sm" href="decoderTyp.html">DecoderType JSON List</a> 
 				<a class="btn btn-info btn-sm" href='decoderTypen.html'>decoderTypen JSON List</a>
-				<a class="btn btn-info btn-sm" href="licht.html">Licht JSON List</a>	
+				
 			</nav>
 		</header>
 		
 		<article>
-			<h1>Antrieb</h1>
+			<h1>Licht</h1>
 		</article>
 		
 		<div id="data">
-			<div id="antrieblisting"></div>
+			<div id="lichtlisting"></div>
 		</div>	
 	</section>
 	

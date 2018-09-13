@@ -15,12 +15,12 @@
 	</script>
 	<script type="text/javascript">
 		function getData()	{
-			  $.getJSON(window.location.protocol + "//" + window.location.host + "/ModellBahn/api/antrieb",
+			  $.getJSON(window.location.protocol + "//" + window.location.host + "/ModellBahn/api/aufbau",
 				{
 				},
 				function (data, status)
 				{
-					var table = document.createElement("antrieblisting");
+					var table = document.createElement("aufbaulisting");
 					table.setAttribute("border", "1.5");
 					
 					var heading = document.createElement("tr");
@@ -91,21 +91,22 @@
 						table.appendChild(tr);
 					}
 				
-				document.getElementById("antrieblisting").appendChild(table);
+				document.getElementById("aufbaulisting").appendChild(table);
 			}
 		);
 	};
 	</script>
-	<title>Antrieb JSON list</title>
+	<title>Aufbau JSON list</title>
 </head>
 <body onload="javascript:getData()">
 	<section>
 		<header>
 			<hr class="highlight" />
+			
 			<nav>
-				<a class="btn btn-info btn-sm" href="../index.html">Home</a>
+				<a class="btn btn-info btn-sm" href="../index.html" >Home</a>
 				<a class="btn btn-info btn-sm" href="artikel.html">Artikel JSON List</a>
-				<a class="btn btn-info btn-sm" href="aufbau.html">Aufbau JSON List</a>	
+				<a class="btn btn-info btn-sm" href="antrieb.html">Antrieb JSON List</a>			
 				<a class="btn btn-info btn-sm" href="decoders.html">Decoder JSON List</a> 
 				<a class="btn btn-info btn-sm" href="Decoder.html">Decoder JSON List</a> 
 				<a class="btn btn-info btn-sm" href="decoderTyp.html">DecoderType JSON List</a> 
@@ -115,11 +116,11 @@
 		</header>
 		
 		<article>
-			<h1>Antrieb</h1>
+			<h1>Aufbau</h1>
 		</article>
 		
 		<div id="data">
-			<div id="antrieblisting"></div>
+			<div id="aufbaulisting"></div>
 		</div>	
 	</section>
 	
