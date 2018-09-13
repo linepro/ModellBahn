@@ -500,7 +500,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
             for (Selector selector : selectors.values()) {
                 Object value = selector.getGetter().invoke(template);
 
-                if (value != null) {
+                if (value != null && !(value instanceof Collection)) {
                     value = value instanceof IItem ? ((IItem<?>) value).getId() : value;
                     Path<Object> field = root.get(selector.getName());
                     Predicate predicate = builder.equal(field, value);

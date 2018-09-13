@@ -1,26 +1,26 @@
 html {
-	-ms-text-size-adjust:100%;
-	-webkit-text-size-adjust:100%;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
 	background-color: #fffbd0;
-	box-sizing:border-box;
-	overflow-x:hidden
+	box-sizing: border-box;
+	overflow-x: hidden
 }
 
 aside, details, figcaption, figure, main, menu, section, summary {
-	display:block
+	display: block
 }
 
-audio:not([controls]) {
-	display:none;
-	height:0
+audio: not([controls]) {
+	display: none;
+	height: 0
 }
 
 audio, canvas, progress, video {
-	display:inline-block
+	display: inline-block
 }
 
 progress {
-	vertical-align:baseline
+	vertical-align: baseline
 }
 
 header.navbar {
@@ -35,34 +35,53 @@ footer {
 }
 
 body {
-	margin:0
+	margin: 0
 }
 
 html, body {
     background-color: #fffbd0;
-	font-family:Verdana, sans-serif;
-	font-size:15px;
-	line-height:1.5
+	font-family: Verdana, sans-serif;
+	font-size: 15px;
+	line-height: 1.5
 }
 
 a {
-	background-color:transparent;
-	-webkit-text-decoration-skip:objects
+	background-color: transparent;
+	-webkit-text-decoration-skip: objects
 }
 
-a:active, a:hover {
-	outline-width:0
+a: active, a: hover {
+	outline-width: 0
 }
 
 abbr[title] {
-	border-bottom:none;
-	text-decoration:underline;
-	text-decoration:underline dotted
+	border-bottom: none;
+	text-decoration: underline;
+	text-decoration: underline dotted
 }
 
 input, select, textarea {
-	font:inherit;
-	margin:0
+    font: inherit;
+	background-color: #ffffff;
+    color: #0;
+    height: 27px;
+    margin: 0
+}
+
+input: disabled, select: disabled, textarea: disabled {
+    font: inherit;
+	background-color: #ffffff;
+    color: #0;
+    height: 27px;
+    margin: 0
+}
+
+input: readOnly, select: readOnly, textarea: readOnly {
+    font: inherit;
+	background-color: #ffffff;
+    color: #0;
+    height: 27px;
+    margin: 0
 }
 
 button {
@@ -76,110 +95,113 @@ button {
 }
 
 code, kbd, pre, samp {
-	font-family:monospace, monospace;
-	font-size:1em
+	font-family: monospace, monospace;
+	font-size: 1px
 }
 
 dfn {
-	font-style:italic
+	font-style: italic
 }
 
 h1 {
-	font-size:36px
+	font-size: 36px
 }
 
 h2 {
-	font-size:30px
+	font-size: 30px
 }
 h3 {
-	font-size:24px
+	font-size: 24px
 }
 h4 {
-	font-size:20px
+	font-size: 20px
 }
 
 h5 {
-	font-size:18px
+	font-size: 18px
 }
 
 h6 {
-	font-size:16px
+	font-size: 16px
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family:"Segoe UI", Arial, sans-serif;
-	font-weight:400;
-	margin:10px 0
+	font-family: "Segoe UI", Arial, sans-serif;
+	font-weight: 400;
+	margin: 10px 0
 }
 
 fieldset {
-	border:1px solid #c0c0c0;
-	margin:0 2px;
-	padding:.35em .625em .75em
+	border: 1px solid #c0c0c0;
+	margin: 0 2px;
+	padding: .35px .625px .75px
 }
 
 figure {
-	margin:1em 40px
+	margin: 1px 40px
 }
 
 hr {
-	border:0;
+	border: 0;
     display: block;
-	border-top:1px solid #eee;
-	box-sizing:content-box;
-	height:0;
-	margin:20px 0;
-	overflow:visible
-    width: 90%;
+	border-top: 1px solid #eee;
+	box-sizing: content-box;
+	height: 0;
+	margin: 20px 0;
+	overflow: visible;
+    width: 90%
 }
 
 img {
-	border-style:none
+	border-style: none;
+    height: 35px;
+    text-align: center;
+    width: 35px
 }
 
 legend {
-	color:inherit;
-	display:table;
-	max-width:100%;
-	padding:0;
-	white-space:normal
+	color: inherit;
+	display: table;
+	max-width: 100%;
+	padding: 0;
+	white-space: normal;
 }
 
 mark {
-	background:#ff0;
-	color:#000
+	background: #ff0;
+	color: #0
 }
 
 nav {
 	display: block;
-    color:inherit;
+    color: inherit;
 }
 
 optgroup {
-	font-weight:bold
+	font-weight: bold
 }
 
 small {
-	font-size:80%
+	font-size: 80%
 }
 
 sub {
-	bottom:-0.25em
+	bottom: -0.25px
 }
 
 sup {
-	top:-0.5em
+	top: -0.5px
 }
 
 sub, sup {
-	font-size:75%;
-	line-height:0;
-	position:relative;
-	vertical-align:baseline
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline
 }
 
-svg:not(:root) {
-	overflow:hidden
+svg: not(: root) {
+	overflow: hidden
 }
 
 table {
@@ -193,7 +215,7 @@ table {
 thead {
 	background-color: #99D9EA;
     color: white;
-	font-weight:bold;
+	font-weight: bold;
 	height: 25px;
 	padding-bottom: 10px;
 	padding-left: 5px;
@@ -204,7 +226,7 @@ thead {
 
 tfoot {
 	background-color: #99D9EA;
-	font-weight:bold;
+	font-weight: bold;
     color: white;
 	height: 25px;
 	padding-bottom: 10px;
@@ -221,24 +243,24 @@ tbody {
 	padding-top: 5px;
 }
 
-td:center {
+td: center {
 	text-align: center;
 }
 
-tr:hover {
+tr: hover {
 	background-color: #ddd;
 }
 
-tr:nth-child(even) {
+tr: nth-child(even) {
 	background-color: #f2f2f2;
 } 
 
-[hidden], template {
-	display:none
+[hidden], tpxplate {
+	display: none
 }
 
 textarea {
-	overflow:auto
+	overflow: auto
 }
 
 div.table {
@@ -254,7 +276,7 @@ div.table > div.thead {
     display: table-header-group;
     background-color: #99D9EA;
     color: white;
-    font-weight:bold;
+    font-weight: bold;
     padding-bottom: 10px;
     padding-left: 5px;
     padding-right: 5px;
@@ -276,7 +298,7 @@ div.table > div.tfoot {
     display: table-row-group;
     background-color: #99D9EA;
     color: white;
-    font-weight:bold;
+    font-weight: bold;
     padding-bottom: 10px;
     padding-left: 5px;
     padding-right: 5px;
@@ -293,7 +315,14 @@ div.table > div.tfoot > div.table-row {
 div.table > div.thead > div.table-row > div.table-heading {
     display: table-cell;
     font-weight: bold;
-    height: 25px;
+    height: 35px;
+}
+
+div.table > div.thead > div.table-row > div.table-heading-btn {
+    display: table-cell;
+    text-align: center;
+    height: 35px;
+    vertical-align: baseline;
 }
 
 div.table > div.tbody > div.table-row > div.table-cell {
@@ -301,10 +330,11 @@ div.table > div.tbody > div.table-row > div.table-cell {
     height: 25px;
 }
 
-div.table > div.tbody > div.table-row > div.table-del {
+div.table > div.tbody > div.table-row > div.table-btn {
     display: table-cell;
-    text-align: right;
-    height: 50;
+    text-align: center;
+    height: 25px;
+    vertical-align: baseline;
 }
 
 div.table > div.tfoot > div.table-row > div.table-prev {
@@ -314,7 +344,7 @@ div.table > div.tfoot > div.table-row > div.table-prev {
     height: 25px;
 }
 
-div.table > div.tfoot > div.table-row > div.table-add {
+div.table > div.tfoot > div.table-row > div.table-foot {
     display: table-cell;
     font-weight: bold;
     text-align: center;

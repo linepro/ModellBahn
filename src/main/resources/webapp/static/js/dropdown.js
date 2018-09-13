@@ -1,5 +1,5 @@
-// module "utils.js"
-"use strict"
+// module 'utils.js'
+'use strict'
 
 class Option {
 	constructor(display,value) {
@@ -25,7 +25,7 @@ class DropDown {
 
 		var i = 0;
 		this.options.forEach(function(option) {
-			var opt = document.createElement("option");
+			var opt = document.createElement('option');
 			opt.value = option.value;
 			opt.text  = option.display;
 			select.add(opt);
@@ -43,19 +43,19 @@ class DropDown {
 			var select = this;
 			var entities = jsonData.entities ? jsonData.entities : jsonData; 
 			entities.forEach(function(entity) {
-				var display = "";
+				var display = '';
 				var value;
 
 				select.displayColumns.forEach(function(name) {
-					display = display + " " + entity[name];
+					display = display + ' ' + entity[name];
 				});
 
 				select.valueColumns.forEach(function(name) {
-					value = (value ? "" : value + ", ") + name + ": " + entity[name];
+					value = (value ? '' : value + ', ') + name + ': ' + entity[name];
 				});
 
 				display = display.trim();
-				value =  "{" + value.trim() + "}";
+				value =  '{' + value.trim() + '}';
 
 				select.options.push(new Option(display,value));
 			});
