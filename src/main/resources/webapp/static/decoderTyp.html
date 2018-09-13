@@ -9,53 +9,57 @@
 <link rel="stylesheet" href="css/bootstrap.min-4.1.3.css"/>
 <script type="text/javascript" src="js/lib/bootstrap.min-4.1.3.js"></script>
 <link rel="stylesheet" href="css/site.css"/>
+<script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
-<script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript">
-var apiRoot = window.location.protocol + "//" + window.location.host + "/ModellBahn/api/";
 var fetchUrl = new URL(window.location.href).searchParams.get("self");
-var hersteller = new DropDown(apiRoot + "hersteller", [ "name" ], [ "name" ]);
-var protokoll = new DropDown(apiRoot + "protokoll", [ "name" ], [ "name" ]);
-var konfiguration = new DropDown(apiRoot + "enums/konfiguration", [ "name" ], [ "name" ]);
-var adressTyp = new DropDown(apiRoot + "enums/adressTyp", [ "name" ], [ "name" ]);
+var hersteller = new DropDown(apiRoot() + "hersteller", [ "name" ], [ "name" ]);
+var protokoll = new DropDown(apiRoot() + "protokoll", [ "name" ], [ "name" ]);
+var konfiguration = new DropDown(apiRoot() + "enums/konfiguration", [ "name" ], [ "name" ]);
+var adressTyp = new DropDown(apiRoot() + "enums/adressTyp", [ "name" ], [ "name" ]);
 var adressen = new ItemGrid(2, undefined, "adressen", "adressen", [
-    new Column("Index", "index"),
-    new Column("AdressTyp", "adressTyp", "select", adressTyp),
-    new Column("Span", "span", "number"),
-    new Column("Werkseinstellung", "werkseinstellung", "number")],
-    false, true, undefined, undefined, true, undefined);
+    new NumberColumn("Index", "index"),
+    new SelectColumn("AdressTyp", "adressTyp", adressTyp, false),
+    new NumberColumn("Span", "span", false),
+    new NumberColumn("Werkseinstellung", "werkseinstellung", false),
+    new ButtonColumn([],[])],
+    false, true, undefined);
 var cvs = new ItemGrid(10, undefined, "cvs", "cvs", [
-    new Column("CV", "cv"),
-    new Column("Bezeichnung", "description"),
-    new Column("Werkseinstellung", "werkseinstellung")],
+    new NumberColumn("CV", "cv"),
+    new TextColumn("Bezeichnung", "description"),
+    new NumberColumn("Werkseinstellung", "werkseinstellung", false),
+    new ButtonColumn([],[])],
     false, true, undefined, undefined, true, undefined);
 var funktionen = new ItemGrid(10, undefined, "funktionen", "funktionen", [
-    new Column("Bank", "bank"),
-    new Column("Funktion", "funktion"),
-    new Column("Bezeichnung", "description"),
-    new Column("Programmable", "programmable", "checkbox")],
-    false, true, undefined, undefined, true, undefined);
+    new NumberColumn("Bank", "bank", false),
+    new TextColumn("Funktion", "funktion", false),
+    new TextColumn("Bezeichnung", "description", false),
+    new BoolColumn("Programmable", "programmable", false),
+    new ButtonColumn([],[])],
+    false, true, undefined);
 var decoder = new ItemGrid(1, fetchUrl, undefined, "decoder", [
-    new Column("Hersteller", "hersteller", "select", hersteller),
-    new Column("Bestell Nr", "bestellNr"),
-    new Column("Bezeichnung", "description", "text"),
-    new Column("Protokoll", "protokoll", "select", protokoll),
-    new Column("Fahrstufe", "fahrstufe", "number"),
-    new Column("Sound", "sound", "checkbox"),
-    new Column("I Max", "iMax", "number"),
-    new Column("Konfiguration", "konfiguration", "select", konfiguration)],
-    false, false, undefined, undefined, true, [
+    new SelectColumn("Hersteller", "hersteller", hersteller),
+    new TextColumn("Bestell Nr", "bestellNr"),
+    new TextColumn("Bezeichnung", "description", false),
+    new SelectColumn("Protokoll", "protokoll", protokoll, false),
+    new NumberColumn("Fahrstufe", "fahrstufe", false),
+    new BoolColumn("Sound", "sound", false),
+    new NumberColumn("I Max", "iMax", false),
+    new SelectColumn("Konfiguration", "konfiguration", konfiguration, false),
+    new ButtonColumn([],
+    		         [])],
+    false, true, [
     	adressen,
         cvs,
         funktionen]);
 
 function init() {
-    decoder.init();
     hersteller.init();
     protokoll.init();
     konfiguration.init();
     adressTyp.init();
+    decoder.init();
 }
 </script>
 <title>Decoder Typ List</title>

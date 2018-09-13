@@ -9,18 +9,27 @@
 <link rel="stylesheet" href="css/bootstrap.min-4.1.3.css"/>
 <script type="text/javascript" src="js/lib/bootstrap.min-4.1.3.js"></script>
 <link rel="stylesheet" href="css/site.css"/>
+<script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var fetchUrl = window.location.protocol + "//" + window.location.host + "/ModellBahn/api/decoderTyp";
-var listing = new ItemGrid(10, fetchUrl, undefined, "listing", [
-	new Column("Hersteller", "hersteller"),
-	new Column("Bestell Nr", "bestellNr"),
-	new Column("Protokoll", "protokoll", "select"),
-	new Column("Sound", "sound", "checkbox") 
-	], true, true, "decoderTyp.html", "decoderTyp.html", true, undefined);
+var fetchUrl = apiRoot() + "decoderTyp";
+var hersteller = new DropDown(apiRoot() + "hersteller", [ "name" ], [ "name" ]);
+var protokoll = new DropDown(apiRoot() + "protokoll", [ "name" ], [ "name" ]);
+var columns = [
+    new SelectColumn("Hersteller", "hersteller", hersteller),
+    new TextColumn("Bestell Nr", "bestellNr"),
+    new SelectColumn("Protokoll", "protokoll", protokoll, false),
+    new BoolColumn("Sound", "sound", false),
+    new ButtonColumn([new PageLinkage(siteRoot() + "decoderTyp.html", "add", "add")],
+    		[new FormLinkage(siteRoot() + "decoderTyp.html", "update", "self"), 
+    		 new RestLinkage("delete", "delete", "deleteRow")])
+    ];
+var listing = new ItemGrid(10, fetchUrl, undefined, "listing", columns, true, true, undefined);
 	
 function init() {
+    hersteller.init();
+    protokoll.init();
 	listing.init();
 }
 </script>
