@@ -8,6 +8,22 @@ function siteRoot() {
   return window.location.protocol + "//" + window.location.host + "/ModellBahn/static/";
 };
 
+function getRowId(tableName, i) {
+    return tableName + "_" + i;
+};
+
+function getFieldId(tableName, i, binding) {
+   return getRowId(tableName, i) + "_" + binding;
+};
+
+function getCellId(tableName, p, column) {
+  if (column.binding) {
+    return getFieldId(tableName, p, column.binding);
+  } else {
+	return getFieldId(tableName, p, "buttons");
+  }
+};
+
 function removeChildren(node) {
   while (node.firstChild) {
     node.removeChild(node.firstChild);
@@ -16,8 +32,12 @@ function removeChildren(node) {
 
 function reportError( jqXHR, textStatus, error ) {
   alert( "error:    " + error +
-       "\njqXHR:  " + jqXHR +
-       "\nstatus: " + textStatus);
+         "\njqXHR:  " + jqXHR +
+         "\nstatus: " + textStatus);
+};
+
+function getLink(links, rel) {
+	return links.find(function(lnk) { return lnk.rel == rel; });
 };
 
 function getImg(action) {
@@ -332,7 +352,7 @@ class FormLinkage {
 
   extractLink(entity) {
     var linkage = this;
-    var lnk = entity.links.find(function(e) { return e.rel == linkage.rel; });
+    var lnk = getLink(entity.links, linkage.rel);
   
     if (lnk) {
       this.url    = this.page + "?" + lnk.rel + "=" + lnk.href;
@@ -363,7 +383,7 @@ class RestLinkage {
 
   extractLink(entity) {
     var linkage = this;
-    var lnk = entity.links.find(function(e) { return e.rel == linkage.rel; });
+    var lnk = getLink(entity.links, linkage.rel);
   
     if (lnk) {
       this.url    = lnk.href;
@@ -394,7 +414,7 @@ class FunctionLinkage {
 
   extractLink(entity) {
     var linkage = this;
-    var lnk = entity.links.find(function(e) { return e.rel == linkage.rel; });
+    var lnk = getLink(entity.links, linkage.rel);
   
     if (lnk) {
       this.url    = lnk.href;

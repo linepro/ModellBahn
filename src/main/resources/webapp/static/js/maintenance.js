@@ -19,7 +19,7 @@ class ItemGrid {
   init() {
     this.loadData();
   }
-
+  
   initGrid(pageSize) {
     var columns = this.columns;
     var columnCount = this.columns.length + (this.deleteButtons ? 1 : 0);
@@ -42,15 +42,17 @@ class ItemGrid {
     for (p = 0; p < pageSize; p++) {
       var tr = document.createElement("div");
       tr.className = "table-row";
-      tr.id = tableName + +"_" + p;
+      tr.id = getRowId(tableName, p);
       body.append(tr);
 
-      var i;
+      var key = document.createElement("input");
+      key.type = "hidden";
+      key.id = getFieldId(tableName, p, "key");
+      tr.append(key);
+
       columns.forEach(function(column) {
         var td = document.createElement("div");
-        if (column.binding) {
-          td.id = tr.id + "_" +  column.binding;
-        }
+        td.id = getCellId(tableName, p, column);
         td.className = "table-cell";
         addText(td, "");
         tr.append(td);
@@ -93,12 +95,18 @@ class ItemGrid {
 
       var entity;
 
-      if (p < entities.length) { entity = entities[p] };
+      var key = document.getElementById(getFieldId(tableName, p, "key"));
 
-      var c;
-      for (c = 0; c < columnCount; c++) {
-        var td = tr.childNodes[c];
-        var column = columns[c];
+      if (p < entities.length) {
+        entity = entities[p]
+        var lnk = getLink(entity.links, "self");
+        key.value = lnk.href;
+      } else {
+        key.value = "";
+      }
+
+      columns.forEach(function(column) {
+    	var td = document.getElementById(getCellId(tableName, p, column));
 
         removeChildren(td);
 
@@ -108,7 +116,8 @@ class ItemGrid {
         } else {
           addText(td, "");
         }
-      }
+      });
+      
     }
   }
 
@@ -124,7 +133,7 @@ class ItemGrid {
       var prev    = document.getElementById(tableName + "Prev");
 
       if (prev) {
-        var prevLnk = jsonData.links.find(function(e) { return e.rel == "previous"; });
+        var prevLnk = getLink(jsonData.links, "previous");
 
         addButton(prev, prevLnk, tableName + ".getData(this.value)");
       }
@@ -132,7 +141,7 @@ class ItemGrid {
       var next    = document.getElementById(tableName + "Next");
     
       if (next) {
-        var nextlnk = jsonData.links.find(function(e) { return e.rel == "next"; });
+        var nextlnk = getLink(jsonData.links, "next");
 
         addButton(next, nextlnk, tableName + ".getData(this.value)");
       }
@@ -147,22 +156,39 @@ class ItemGrid {
       .fail( function( jqXHR, textStatus, errorThrown ) { reportError(  jqXHR, textStatus, errorThrown  ); });
   }
 
-  rowData(rowId) {
+  rowData() {
     var data = [];
-
-    var i;
-    for (i = 0 ; i < this.pageSize; i++) {
-      if (rowId) {
-        this.columns.forEach(function(column) {
-        if (column.binding) {
-          data.push(column.binding: );
-        }
+    var tableName = this.tableName;
+    
+    for (p = 0 ; p < this.pageSize; p++) {
+    	var row = rowData(getRowId(tableName, p));
+    	if (row.length) {
+    		data.push(row);
+    	}
       }
-        this.children.forEach(function(child) {data.push(child.rowData());});
-    });
+
+    return data;
   }
 
-    return $.param(data);
+  rowData(rowId) {
+    var data = {};
+    var tableName = this.tableName;
+
+    var key = document.getElementById(getFieldId(tableName, p, "key"));
+	  if (key) {
+	    this.columns.forEach(function(column) {
+	      if (column.binding) {
+	        var td = document.getElementById(getFieldId(tableName, p, column.binding));
+	        data[column.binding] = td.value;
+	      }
+	    });
+	
+	    this.children.forEach(function(child) {
+	    	data[child.collection] = child.rowData();
+	    	});
+	  }
+
+    return data;
   }
 
   addRow(addUrl) {
@@ -182,7 +208,7 @@ class ItemGrid {
   updateRow(updateUrl, rowId) {
     var grid = this;
     var data = grid.rowData(rowId);
-    $.ajax( { url: updateUrl, type: "PUT", data: data, success: function( data, textStatus, jqXHR ) { grid.loadData(); } } )
+    $.ajax( { url: updateUrl, type: "PUT", data: $.param(data), success: function( data, textStatus, jqXHR ) { grid.loadData(); } } )
       .fail(function( jqXHR, textStatus, errorThrown ) { grid.reportError(jqXHR, textStatus, errorThrown); });
   }
 }
