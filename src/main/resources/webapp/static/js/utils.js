@@ -1,44 +1,29 @@
 // module "utils.js"
 "use strict"
+
 function apiRoot() {
   return window.location.protocol + "//" + window.location.host + "/ModellBahn/api/";
-};
+}
 
 function siteRoot() {
   return window.location.protocol + "//" + window.location.host + "/ModellBahn/static/";
-};
-
-function getRowId(tableName, i) {
-    return tableName + "_" + i;
-};
-
-function getFieldId(tableName, i, binding) {
-   return getRowId(tableName, i) + "_" + binding;
-};
-
-function getCellId(tableName, p, column) {
-  if (column.binding) {
-    return getFieldId(tableName, p, column.binding);
-  } else {
-	return getFieldId(tableName, p, "buttons");
-  }
-};
+}
 
 function removeChildren(node) {
   while (node.firstChild) {
     node.removeChild(node.firstChild);
   }
-};
+}
 
 function reportError( jqXHR, textStatus, error ) {
   alert( "error:    " + error +
          "\njqXHR:  " + jqXHR +
          "\nstatus: " + textStatus);
-};
+}
 
 function getLink(links, rel) {
-	return links.find(function(lnk) { return lnk.rel == rel; });
-};
+  return links.find(function(lnk) { return lnk.rel == rel; });
+}
 
 function getImg(action) {
   var img = document.createElement("img");
@@ -47,30 +32,22 @@ function getImg(action) {
   img.src = "img/" + action + ".png";
 
   return img;
-};
+}
 
-function getButton(href, alt, action) {
+function getButton(value, alt, action) {
   var btn = document.createElement("button");
 
-  btn.setAttribute("value", href);
+  btn.setAttribute("value", value);
   btn.setAttribute("onclick", action);
 
   btn.appendChild(getImg(alt));
 
   return btn;
-};
-
-function addButton(cell, lnk, action) {
-  removeChildren(cell);
-
-  if (lnk) {
-    cell.appendChild(getButton(lnk.href, lnk.rel, action));
-  }
-};
+}
 
 function addText(cell, text) {
   cell.appendChild(document.createTextNode(text));
-};
+}
 
 function getButtonLink(href, action) {
     var a = document.createElement("a");
@@ -84,11 +61,11 @@ function getButtonLink(href, action) {
 
 function addButtonLink(element, href, action) {
   if (href) {
-  	element.appendChild(getButtonLink(href, action));
+    element.appendChild(getButtonLink(href, action));
   }
 
   return element;
-};
+}
 
 function addLink(element, href) {
   if (href) {
@@ -101,62 +78,13 @@ function addLink(element, href) {
   }
 
   return element;
-};
-
-function addHeader(tableName, table, columns) {
-  var header = document.createElement("div");
-  header.className = "thead";
-  table.append(header);
-
-  var headRow = document.createElement("div");
-  headRow.className = "table-row";
-  headRow.id = tableName + "Head";
-  header.append(headRow);
-
-  columns.forEach(function(column) {
-    var th = document.createElement("div");
-    th.className = "table-heading";
-    headRow.append(column.getHeading());
-  });
-};
-
-function addFooter(tableName, table, columns, paged) {
-  if (paged) {
-    var footer = document.createElement("div");
-    footer.className = "tfoot";
-    table.append(footer);
-
-    var navRow = document.createElement("div");
-    navRow.className = "table-row";
-    navRow.id = tableName + "Foot";
-    footer.append(navRow);
-
-    var i;
-    for (i = 0; i < columns.length; i++) {
-      var tf = document.createElement("div");
-
-      if (i == 0) {
-        tf.className = "table-prev";
-        tf.id = tableName + "Prev";
-      } else if (i == (columns.length-1)) {
-        tf.className = "table-next";
-        tf.id = tableName + "Next";
-      } else {
-        tf.className = "table-foot";
-      }
-
-      addText(tf, "");
-    
-      navRow.append(tf);
-    }
-  }
-};
+}
 
 class TextColumn {
-  constructor(heading, binding, readOnly) {
+  constructor(heading, binding, mutable) {
     this.heading    = heading;
     this.binding    = binding;
-    this.readOnly   = readOnly ? readOnly : true;
+    this.readOnly   = mutable ? false : true;
   }
 
   setTableName(tableName) {
@@ -172,24 +100,32 @@ class TextColumn {
 
   getControl(cell, entity, editMode) {
     var ctl;
-    var value = entity[this.binding];
 
     ctl = document.createElement("input");
     ctl.type = "text";
     ctl.disabled = this.readOnly || !editMode;
-    ctl.value = value;
 
-    ctl = addLink(ctl, entity[this.linkBinding]);
+    if (entity) {
+    	ctl.value = entity[this.binding];
+    	ctl = addLink(ctl, entity[this.linkBinding]);
+    }
 
     return ctl;
   }
-};
+
+  getValue(cell) {
+	    var input = cell.firstChild;
+    if (input && input.nodeName == "INPUT") {
+      return input.value;
+    }
+  }
+}
 
 class NumberColumn {
-  constructor(heading, binding, readOnly, maxBinding, minBinding) {
+  constructor(heading, binding, mutable, maxBinding, minBinding) {
     this.heading    = heading;
     this.binding    = binding;
-    this.readOnly   = readOnly ? readOnly : true;
+    this.readOnly   = mutable ? false : true;
     this.maxBinding = maxBinding;
     this.minBinding = minBinding;
   }
@@ -207,26 +143,33 @@ class NumberColumn {
 
   getControl(cell, entity, editMode) {
     var ctl;
-    var value = entity[this.binding];
-    var max = this.maxBinding ? entity[this.maxBinding] : undefined;
-    var min = this.minBinding ? entity[this.minBinding] : undefined;
   
     ctl = document.createElement("input");
     ctl.type = "number";
     ctl.disabled = this.readOnly || !editMode;
-    ctl.min = min;
-    ctl.max = max;
-    ctl.value = value;
+    
+    if (entity) {
+    	ctl.min = this.minBinding ? entity[this.minBinding] : undefined;
+    	ctl.max = this.maxBinding ? entity[this.maxBinding] : undefined;
+    	ctl.value = entity[this.binding];
+    }
 
     return ctl;
   }
-};
+
+  getValue(cell) {
+	    var input = cell.firstChild;
+    if (input && input.nodeName == "INPUT") {
+      return input.value;
+    }
+  }
+}
 
 class BoolColumn {
-  constructor(heading, binding, readOnly) {
+  constructor(heading, binding, mutable) {
     this.heading   = heading;
     this.binding   = binding;
-    this.readOnly  = readOnly ? readOnly : true;
+    this.readOnly  = mutable ? false : true;
   }
 
   setTableName(tableName) {
@@ -242,22 +185,31 @@ class BoolColumn {
 
   getControl(cell, entity, editMode) {
     var ctl;
-    var value = entity[this.binding];
 
     ctl = document.createElement("input");
     ctl.type = "checkbox";
     ctl.disabled = this.readOnly || !editMode;
-    ctl.checked = value;
+    
+    if (entity) {
+        ctl.checked = entity[this.binding];
+    }
 
     return ctl;
   }
-};
+
+  getValue(cell) {
+	    var input = cell.firstChild;
+    if (input && input.nodeName == "INPUT") {
+      return input.checked;
+    }
+  }
+}
 
 class DateColumn {
-  constructor(heading, binding, readOnly) {
+  constructor(heading, binding, mutable) {
     this.heading   = heading;
     this.binding   = binding;
-    this.readOnly  = readOnly ? readOnly : true;
+    this.readOnly  = mutable ? false : true;
   }
 
   setTableName(tableName) {
@@ -273,23 +225,32 @@ class DateColumn {
 
   getControl(cell, entity, editMode) {
     var ctl;
-    var value = entity[this.binding];
 
     ctl = document.createElement("input");
     ctl.type = "text";
     ctl.disabled = this.readOnly || !editMode;
-    ctl.value = value;
-
+    
+    if (entity) {
+    	ctl.value = entity[this.binding];
+  	}
+  
     return ctl;
   }
-};
+
+  getValue(cell) {
+    var input = cell.firstChild;
+    if (input && input.nodeName == "INPUT") {
+      return input.value;
+    }
+  }
+}
 
 class SelectColumn {
-  constructor(heading, binding, dropDown, readOnly) {
+  constructor(heading, binding, dropDown, mutable) {
     this.heading   = heading;
     this.binding   = binding;
     this.dropDown  = dropDown;
-    this.readOnly  = readOnly ? readOnly : true;
+    this.readOnly  = mutable ? false : true;
   }
 
   setTableName(tableName) {
@@ -305,7 +266,9 @@ class SelectColumn {
 
   getControl(cell, entity, editMode) {
     var ctl;
-    var value = entity[this.binding];
+    var value;
+    
+    if (entity) value = entity[this.binding];
 
     ctl = document.createElement("select");
   
@@ -315,7 +278,14 @@ class SelectColumn {
 
     return ctl;
   }
-};
+
+  getValue(cell) {
+    var select = input;
+    if (select && select.nodeName == "SELECT") {
+      return select.options[select.selectedIndex].value;
+    }
+  }
+}
 
 class PageLinkage {
   constructor(page, alt, action) {
@@ -329,14 +299,14 @@ class PageLinkage {
     this.tableName = tableName;
   }
 
-  extractLink(entity) {
+  extractLink(entity, cell) {
     return true;
   }
 
   getButton() {
     return getButtonLink(this.page, this.action);
   }
-};
+}
 
 class FormLinkage {
   constructor(page, alt, rel) {
@@ -350,13 +320,11 @@ class FormLinkage {
     this.tableName = tableName;
   }
 
-  extractLink(entity) {
-    var linkage = this;
-    var lnk = getLink(entity.links, linkage.rel);
+  extractLink(entity, cell) {
+    var lnk = getLink(entity.links, this.rel);
   
     if (lnk) {
       this.url    = this.page + "?" + lnk.rel + "=" + lnk.href;
-      this.method = lnk.method;
 
       return true;
     }
@@ -367,7 +335,7 @@ class FormLinkage {
   getButton() {
     return getButtonLink(this.url, this.alt);
   }
-};
+}
 
 class RestLinkage {
   constructor(alt, rel, action) {
@@ -381,7 +349,7 @@ class RestLinkage {
     this.tableName = tableName;
   }
 
-  extractLink(entity) {
+  extractLink(entity, cell) {
     var linkage = this;
     var lnk = getLink(entity.links, linkage.rel);
   
@@ -398,13 +366,12 @@ class RestLinkage {
   getButton() {
     return getButton(this.url, this.rel, this.tableName +"." + this.action + "(this.value);");
   }
-};
+}
 
 class FunctionLinkage {
-  constructor(alt, rel, action) {
+  constructor(alt, action) {
     this.alt       = alt;
     this.img       = getImg(alt);
-    this.rel       = rel;
     this.action    = action;
   }
   
@@ -412,24 +379,15 @@ class FunctionLinkage {
     this.tableName = tableName;
   }
 
-  extractLink(entity) {
-    var linkage = this;
-    var lnk = getLink(entity.links, linkage.rel);
-  
-    if (lnk) {
-      this.url    = lnk.href;
-      this.method = lnk.method;
-
-      return true;
-    }
-
-    return false;
+  extractLink(entity, cell) {
+    this.cellId = cell.id.replace("_buttons", "");
+    return true;
   }
 
   getButton() {
-    return getButton(this.url, this.rel, this.tableName +"." + this.action + "(this.value);");
+    return getButton(this.cellId, this.alt, this.action);
   }
-};
+}
 
 class ButtonColumn {
   constructor(headLinkage, btnLinkage) {
@@ -466,7 +424,7 @@ class ButtonColumn {
 
     if (editMode && this.btnLinkage) {
       this.btnLinkage.forEach(function(linkage) {
-        if (linkage.extractLink(entity)) {
+        if (entity && linkage.extractLink(entity, cell)) {
           ctl.append(linkage.getButton());
         }
       });
@@ -476,4 +434,4 @@ class ButtonColumn {
 
     return ctl;
   }
-};
+}
