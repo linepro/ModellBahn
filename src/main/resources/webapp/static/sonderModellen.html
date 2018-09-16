@@ -13,27 +13,12 @@
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var fetchUrl = apiRoot() + "decoderTyp";
-var hersteller = new DropDown(apiRoot() + "hersteller", [ "name" ], [ "name" ]);
-var protokoll = new DropDown(apiRoot() + "protokoll", [ "name" ], [ "name" ]);
-var columns = [
-    new SelectColumn("Hersteller", "hersteller", hersteller),
-    new TextColumn("Bestell Nr", "bestellNr"),
-    new SelectColumn("Protokoll", "protokoll", protokoll, false),
-    new BoolColumn("Sound", "sound", false),
-    new ButtonColumn([new PageLinkage(siteRoot() + "decoderTyp.html", "add", "add")],
-    		[new FormLinkage(siteRoot() + "decoderTyp.html", "update", "self"), 
-    		 new RestLinkage("delete", "delete", "deleteRow")])
-    ];
-var listing = new ItemGrid(10, fetchUrl, undefined, "listing", columns, true, true, undefined);
-	
+var listing = new EditableGrid("sondermodell", "listing");
+
 function init() {
-    hersteller.init();
-    protokoll.init();
 	listing.init();
 }
 </script>
-<title>Decoder Typ List</title>
 </head>
 <body onload="javascript:init()">
     <header>
@@ -63,7 +48,7 @@ function init() {
 	<section>
 		<article>
 			<header>
-				<h1>Decoder Typ</h1>
+				<h1 id="heading"></h1>
 			</header>
 
 			<div id="data">

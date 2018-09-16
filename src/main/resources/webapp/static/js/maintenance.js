@@ -4,6 +4,7 @@
 class ItemGrid {
   constructor(pageSize, restRoot, collection, tableName, columns, paged, editable, children) {
     this.pageSize = pageSize;
+    this.restRoot = restRoot;
     this.current = restRoot + (paged ? "?pageNumber=0&pageSize=" + pageSize : "");
     this.collection = collection;
     this.tableName = tableName;
@@ -241,9 +242,9 @@ var p;
         var prevLnk = getLink(jsonData.links, "previous");
 
         if (prevLnk) {
-          addButton(prev, prevLnk, tableName + ".getData(grid.value)");
+          grid.addButton(prev, prevLnk, tableName + ".getData(grid.value)");
         } else {
-           addText(prev, "");
+          addText(prev, "");
         }
       }
     
@@ -255,9 +256,9 @@ var p;
         var nextLnk = getLink(jsonData.links, "next");
 
         if (nextLnk) {
-          addButton(next, nextLnk, tableName + ".getData(grid.value)");
+           grid.addButton(next, nextLnk, tableName + ".getData(grid.value)");
         } else {
-          addText(next, "");
+           addText(next, "");
         }
       }
 
@@ -330,6 +331,10 @@ var p;
 	  var ctl = column.getControl(td, undefined, true, grid.tableName);
 	  td.appendChild(ctl);
     });
+    
+    var td = document.getElementById(grid.getCellId(rowId, "buttons"));
+    var save = getButton(rowId, "save", grid.tableName + ".saveRow(this.value)");
+    td.appendChild(save);
   }
 
   deleteRow(rowId) {
@@ -356,7 +361,7 @@ var p;
 
   saveRow(rowId) {
     var grid = this;
-    var saveUrl = grid.getKeyValue(rowId);
+    var saveUrl = grid.restRoot;
     var data = grid.rowData(rowId);
     var jsonData = JSON.stringify(data);
     if (data) {

@@ -103,11 +103,13 @@ class TextColumn {
 
     ctl = document.createElement("input");
     ctl.type = "text";
-    ctl.disabled = this.readOnly || !editMode;
 
     if (entity) {
     	ctl.value = entity[this.binding];
     	ctl = addLink(ctl, entity[this.linkBinding]);
+        ctl.disabled = this.readOnly || !editMode;
+    } else {
+        ctl.disabled = false;
     }
 
     return ctl;
@@ -146,12 +148,14 @@ class NumberColumn {
   
     ctl = document.createElement("input");
     ctl.type = "number";
-    ctl.disabled = this.readOnly || !editMode;
     
     if (entity) {
     	ctl.min = this.minBinding ? entity[this.minBinding] : undefined;
     	ctl.max = this.maxBinding ? entity[this.maxBinding] : undefined;
     	ctl.value = entity[this.binding];
+        ctl.disabled = this.readOnly || !editMode;
+    } else {
+        ctl.disabled = false;
     }
 
     return ctl;
@@ -188,10 +192,12 @@ class BoolColumn {
 
     ctl = document.createElement("input");
     ctl.type = "checkbox";
-    ctl.disabled = this.readOnly || !editMode;
     
     if (entity) {
         ctl.checked = entity[this.binding];
+        ctl.disabled = this.readOnly || !editMode;
+    } else {
+        ctl.disabled = false;
     }
 
     return ctl;
@@ -227,12 +233,14 @@ class DateColumn {
     var ctl;
 
     ctl = document.createElement("input");
-    ctl.type = "text";
-    ctl.disabled = this.readOnly || !editMode;
+    ctl.type = "date";
     
     if (entity) {
     	ctl.value = entity[this.binding];
-  	}
+        ctl.disabled = this.readOnly || !editMode;
+    } else {
+        ctl.disabled = false;
+    }
   
     return ctl;
   }
@@ -274,7 +282,11 @@ class SelectColumn {
   
     this.dropDown.addOptions(ctl, 1, value);
 
-    ctl.disabled = this.readOnly || !editMode;
+    if (value) {
+      ctl.disabled = this.readOnly || !editMode;
+    } else {
+      ctl.disabled = false;
+    }
 
     return ctl;
   }

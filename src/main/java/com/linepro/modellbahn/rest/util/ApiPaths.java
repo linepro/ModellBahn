@@ -80,6 +80,8 @@ public interface ApiPaths {
     
     public static final String KUPPLUNG = API_ROOT + ApiNames.KUPPLUNG;
     
+    public static final String LAND = API_ROOT + ApiNames.LAND;
+    
     public static final String LICHT = API_ROOT + ApiNames.LICHT;
     
     public static final String MASSSTAB = API_ROOT + ApiNames.MASSSTAB;

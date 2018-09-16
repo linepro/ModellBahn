@@ -1,54 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>	
-	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<link href= "css/site.css" rel="stylesheet"/>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
 	<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
-	<script type="text/javascript" src="js/lib/popper.min-1.14.3.js"></script>
 	<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">	</script>
-	<link rel="stylesheet" href="css/bootstrap.min-4.1.3.css"/>
-	<script type="text/javascript" src="js/lib/bootstrap.min-4.1.3.js"></script>
-	<link rel="stylesheet" href="css/site.css"/>
-	<script type="text/javascript" src="js/utils.js"></script>
-	<script type="text/javascript" src="js/maintenance.js"></script>
 	<script type="text/javascript">
 		function getData()	{
-			  $.getJSON(window.location.protocol + "//" + window.location.host + "/ModellBahn/api/artikel",
+			  $.getJSON(window.location.protocol + "//" + window.location.host + "/ModellBahn/api/decoder",
 				{
 				},
 				function (data, status)
 				{
-					var table = document.createElement("artikelListing");
+					var table = document.createElement("DecoderListing");
 					table.setAttribute("border", "1.5");
 					
 					var heading = document.createElement("tr");
 					
 					var th = document.createElement("th");
-					th.textContext = "Artikel ID";
+					th.textContext = "Decoder ID";
 					heading.appendChild(th);
 					
 					th = document.createElement("th");
-					th.textContext = "Produkt";
+					th.textContext = "Hersteller";
 					heading.appendChild(th);
 					
 					th = document.createElement("th");
-					th.textContext = "Kaufdatum";
+					th.textContext = "Bestell Nr";
 					heading.appendChild(th);
 					
 					th = document.createElement("th");
-					th.textContext = "Wahrung";
+					th.textContext = "Description";
 					heading.appendChild(th);
 					
 					th = document.createElement("th");
-					th.textContext = "Preis";
+					th.textContext = "Fahrstufe";
 					heading.appendChild(th);
 					
 					th = document.createElement("th");
-					th.textContext = "Stuck";
-					heading.appendChild(th);
-					
-					th = document.createElement("th");
-					th.textContext = "Steuerung";
+					th.textContext = "Addressen";
 					heading.appendChild(th);
 					
 					th = document.createElement("th");
@@ -62,27 +54,27 @@
 						var tr = document.createElement("tr");
 						
 						var td = document.createElement("td");
-						td.textContext = data[i].artikelId;
+						td.textContext = data[i].Decoder_ID;
 						tr.appendChild(td);
 						
 						td = document.createElement("td");
-						td.textContext = data[i].kaufdatum;
+						td.textContext = data[i].Hersteller;
 						tr.appendChild(td);
 						
 						td = document.createElement("td");
-						td.textContext = data[i].wahrung;
+						td.textContext = data[i].BestellNr;
 						tr.appendChild(td);
 						
 						td = document.createElement("td");
-						td.textContext = data[i].preis;
+						td.textContext = data[i].Description;
 						tr.appendChild(td);
 						
 						td = document.createElement("td");
-						td.textContext = data[i].stuck;
+						td.textContext = data[i].Fahrstufe;
 						tr.appendChild(td);
 						
 						td = document.createElement("td");
-						td.textContext = data[i].steuerung;
+						td.textContext = data[i].Adressen;
 						tr.appendChild(td);
 						
 						td = document.createElement("td");
@@ -101,35 +93,34 @@
 						table.appendChild(tr);
 					}
 				
-				document.getElementById("artikelListing").appendChild(table);
+				document.getElementById("DecoderListing").appendChild(table);
 			}
 		);
 	};
 	</script>
-	<title>Artikel JSON list</title>
+	<title>Decoder list</title>
 </head>
 <body onload="javascript:getData()">
-	<section>
-		<header>
-			<hr class="highlight" />
-			<nav>
-				<a href="home.html" class="btn btn-info btn-sm">Home</a>
-				<a href="antrieb.html" class="btn btn-info btn-sm">Antrieb JSON List</a>
-				<a href="decoders.html" class="btn btn-info btn-sm">Decoder JSON List</a> 
-				<a href="Decoder.html" class="btn btn-info btn-sm">Decoder JSON List</a> 
-				<a href="decoderTyp.html" class="btn btn-info btn-sm">DecoderType JSON List</a> 
-				<a href='decoderTypen.html' class="btn btn-info btn-sm">decoderTypen JSON List</a>
-			</nav>
-		</header>
-		<article>
-			<h1>Artikel</h1>
-		</article>
-		
-		<div id="data">
-			<div id="artikellisting"></div>
-		</div>		
-	</section>
+	<h1>Decoder</h1>
+
+	<h2>Available Decoder:</h2>
+	<p>
+	Needs to be a parent child edit form similar to decoder decoderTyp but with filtering (in fact filtering in general and printing is required
+	</p>
+	<div id="Decoderlisting">
+	</div>
+	<p>
+		<a href="home.html" class="btn btn-info btn-sm">Home</a>
+		<a href="decoderTyp.html" class="btn btn-info btn-sm">DecoderType JSON List</a> 
+		<a href='decoderTypen.html' class="btn btn-info btn-sm">decoderTypen JSON List</a>
+	</p>
 	
-	<embed src="footer.html" type="text/html" />
+	<div id="links">
+	</div>
+	
+	<div id="footer">
+		<hr class="highlight" />
+		<p>Copyright &copy; 2018 ModellBahn Website</p>
+	</div>
 </body>
 </html>
