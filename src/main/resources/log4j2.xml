@@ -68,6 +68,10 @@ $Id$
             <AppenderRef ref="File" />
         </Logger>
 
+        <Logger name="org.apache.commons.beanutils.converters.BooleanConverter" level="info" additivity="false">
+            <AppenderRef ref="File" />
+        </Logger>
+        
         <Logger name="org.glassfish.grizzly" level="info" additivity="false">
             <AppenderRef ref="File" />
         </Logger>

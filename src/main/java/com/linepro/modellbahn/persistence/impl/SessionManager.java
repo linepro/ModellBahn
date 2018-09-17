@@ -33,7 +33,7 @@ public class SessionManager implements ISessionManager {
         if (!getTransaction().isActive()) {
             getTransaction().begin();
             getEntityManager().setFlushMode(FlushModeType.COMMIT);
-            logger.info("begin(" + getTransaction() + ")");
+            logger.debug("begin(" + getTransaction() + ")");
         } else {
             Exception e = new SQLException("nested transaction");
             e.fillInStackTrace();
@@ -48,7 +48,7 @@ public class SessionManager implements ISessionManager {
     public void commit() {
         if (getTransaction().isActive()) {
             getTransaction().commit();
-            logger.info("commit(" + getTransaction() + ")");
+            logger.debug("commit(" + getTransaction() + ")");
         }
         getEntityManager().close();
     }
@@ -57,7 +57,7 @@ public class SessionManager implements ISessionManager {
     public void rollback() {
         if (getTransaction().isActive()) {
             getTransaction().rollback();
-            logger.info("rollback(" +  getTransaction() + ")");
+            logger.debug("rollback(" +  getTransaction() + ")");
         }
         getEntityManager().close();
     }

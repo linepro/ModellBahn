@@ -16,8 +16,12 @@ import javax.ws.rs.core.UriInfo;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.impl.Land;
+import com.linepro.modellbahn.model.impl.Wahrung;
 import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.persistence.IPersister;
+import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -32,16 +36,23 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
 @Path(ApiPaths.LAND)
 public class LandService extends AbstractItemService<NameKey, Land> {
 
+    private final IPersister<Wahrung> wahrungPersister;
+
     public LandService() {
         super(Land.class);
+
+        wahrungPersister = StaticPersisterFactory.get().createPersister(Wahrung.class) ;
     }
 
     @JsonCreator
     public Land create(@JsonProperty(value=ApiNames.ID, required=false) Long id, 
                     @JsonProperty(value=ApiPaths.NAME_PARAM_NAME, required=false) String name, 
+                    @JsonProperty(value=ApiNames.WAHRUNG, required=false) String wahrungStr, 
                     @JsonProperty(value=ApiNames.DESCRIPTION, required=false) String bezeichnung, 
                     @JsonProperty(value=ApiNames.DELETED, required=false) Boolean deleted) throws Exception {
-        Land entity = new Land(id, name, bezeichnung, deleted);
+        IWahrung wahrung = findWahrung(wahrungStr, false);
+ 
+        Land entity = new Land(id, name, bezeichnung, wahrung, deleted);
 
         debug("created: " + entity);
 
@@ -86,5 +97,13 @@ public class LandService extends AbstractItemService<NameKey, Land> {
     @JsonView(Views.Public.class)
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
+    }
+    
+    protected IWahrung findWahrung(String wahrungStr) throws Exception {
+        return getWahrungPersister().findByKey(new NameKey(wahrungStr), true);
+    }
+    
+    protected IPersister<Wahrung> getWahrungPersister() {
+        return wahrungPersister;
     }
 }
