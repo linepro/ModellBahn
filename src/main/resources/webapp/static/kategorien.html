@@ -14,9 +14,20 @@
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
 var listing = new EditableGrid("kategorie", "listing");
+var fetchUrl = apiRoot() + "unterkategorien";
+var columns = [
+    new TextColumn("name", "name"),
+    new TextColumn("Bezeichnung", "description"),
+    new ButtonColumn([new PageLinkage(siteRoot() + "unterkategorien.html", "add", "add")],
+    		[new FormLinkage(siteRoot() + "unterkategorien.html", "update", "self"), 
+       		 new RestLinkage("delete", "delete", "deleteRow")])
+];	
+
+var listing = new ItemGrid(5, fetchUrl, undefined, "listing", columns, true, true, undefined);
 
 function init() {
 	listing.init();
+	kategorie.init();
 }
 </script>
 </head>
@@ -48,12 +59,11 @@ function init() {
 	<section>
 		<article>
 			<header>
-				<h1 id="heading"></h1>
+				<h1 id="heading">Kategorie:</h1>
 			</header>
 
 			<div id="data">
-                TODO Child form for Unterkategorie
-				<div id="listing">
+				<div id="kategorie">
 				</div>
 			</div>
 		</article>
