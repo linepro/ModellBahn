@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.IProtokoll;
+import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.impl.Achsfolg;
 import com.linepro.modellbahn.model.impl.Antrieb;
 import com.linepro.modellbahn.model.impl.Artikel;
@@ -1790,6 +1791,22 @@ public class DBPopulator {
     }
 
     protected void populateLand() {
+        IPersister<Wahrung> wahrungLookup = persisterFactory.createPersister(Wahrung.class);
+        IPersister<Land> persister = persisterFactory.createPersister(Land.class);
+        
+        IWahrung aud = findByKey(wahrungLookup, new NameKey("AUD"));
+        IWahrung eur = findByKey(wahrungLookup, new NameKey("EUR"));
+        IWahrung gbp = findByKey(wahrungLookup, new NameKey("GBP"));
+        IWahrung usd = findByKey(wahrungLookup, new NameKey("USD"));
+        
+        save(persister, new Land(null, "AU", "Australien", aud, false));
+        save(persister, new Land(null, "BE", "Belgien", eur, false));
+        save(persister, new Land(null, "DE", "Deutschland", eur, false));
+        save(persister, new Land(null, "FR", "Frankreich", eur, false));
+        save(persister, new Land(null, "IT", "Italien", eur, false));
+        save(persister, new Land(null, "NL", "Niederland", eur, false));
+        save(persister, new Land(null, "UK", "Vereinigtes Königreich", gbp, false));
+        save(persister, new Land(null, "US", "Vereinigte Staaten", usd, false));
     }
 
     protected void populateLicht() {

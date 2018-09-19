@@ -242,7 +242,7 @@ var p;
         var prevLnk = getLink(jsonData.links, "previous");
 
         if (prevLnk) {
-          grid.addButton(prev, prevLnk, tableName + ".getData(grid.value)");
+          grid.addButton(prev, prevLnk, tableName + ".getData(this.value)");
         } else {
           addText(prev, "");
         }
@@ -256,7 +256,7 @@ var p;
         var nextLnk = getLink(jsonData.links, "next");
 
         if (nextLnk) {
-           grid.addButton(next, nextLnk, tableName + ".getData(grid.value)");
+           grid.addButton(next, nextLnk, tableName + ".getData(this.value)");
         } else {
            addText(next, "");
         }
@@ -412,7 +412,7 @@ class EditableGrid {
   }
 
   getData(restUrl) {
-    this.grid.addRow(restUrl);
+    this.grid.getData(restUrl);
   }
 
   addRow(rowId) {
