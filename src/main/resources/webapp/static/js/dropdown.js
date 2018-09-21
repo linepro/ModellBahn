@@ -9,10 +9,12 @@ class Option {
 }
 
 class DropDown {
-  constructor(apiQuery, valueColumns, displayColumns) {
+  constructor(apiQuery, valueColumns, displayColumns, wrapped) {
     this.apiQuery = apiQuery;
     this.valueColumns = valueColumns;
     this.displayColumns = displayColumns;
+    this.wrapped = wrapped;
+
     this.options = new Array();
   }
 
@@ -44,18 +46,26 @@ class DropDown {
       var entities = jsonData.entities ? jsonData.entities : jsonData; 
       entities.forEach(function(entity) {
         var display = '';
-        var value;
+        var value = '';
 
         select.displayColumns.forEach(function(name) {
           display = display + ' ' + entity[name];
         });
 
         select.valueColumns.forEach(function(name) {
-          value = (value ? '' : value + ', ') + name + ': ' + entity[name];
+          if (this.wrapped) {
+            value = (value ? '' : value + ', ') + name + ': ' + entity[name];
+          } else {
+              value = entity[name];
+          }
         });
 
         display = display.trim();
-        value =  '{' + value.trim() + '}';
+        value = value.trim();
+
+        if (this.wrapped) {
+          value =  '{' + value.trim() + '}';
+        }
 
         select.options.push(new Option(display,value));
       });

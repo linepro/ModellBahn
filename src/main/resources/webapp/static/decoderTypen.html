@@ -21,11 +21,11 @@ var columns = [
     new TextColumn("Bestell Nr", "bestellNr"),
     new SelectColumn("Protokoll", "protokoll", protokoll, false),
     new BoolColumn("Sound", "sound", false),
-    new ButtonColumn([new PageLinkage(siteRoot() + "decoderTyp.html", "add", "add")],
-    		[new FormLinkage(siteRoot() + "decoderTyp.html", "update", "self"), 
-    		 new RestLinkage("delete", "delete", "deleteRow")])
+    new ButtonColumn([new HeaderLinkage("add", "listing.newRow()")],
+    		[new FunctionLinkage("update", "listing.editRow(this.value)"), 
+    		 new FunctionLinkage("delete", "listing.deleteRow(this.value)")])
     ];
-var listing = new ItemGrid(10, fetchUrl, undefined, "listing", columns, true, true, undefined);
+var listing = new ItemGrid(10, fetchUrl, "listing", columns, true, true, undefined, "decoderTyp.html");
 	
 function init() {
     hersteller.init();

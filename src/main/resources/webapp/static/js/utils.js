@@ -1,12 +1,14 @@
 // module "utils.js"
-"use strict"
+"use strict";
 
 function apiRoot() {
-  return window.location.protocol + "//" + window.location.host + "/ModellBahn/api/";
+  return window.location.protocol + "//" +
+    window.location.host + "/ModellBahn/api/";
 }
 
 function siteRoot() {
-  return window.location.protocol + "//" + window.location.host + "/ModellBahn/static/";
+  return window.location.protocol + "//" +
+    window.location.host + "/ModellBahn/static/";
 }
 
 function removeChildren(node) {
@@ -49,7 +51,7 @@ function addText(cell, text) {
   cell.appendChild(document.createTextNode(text));
 }
 
-function getButtonLink(href, action) {
+function getButtonLink(href, alt, action) {
     var a = document.createElement("a");
 
     a.setAttribute("href", href);
@@ -61,7 +63,7 @@ function getButtonLink(href, action) {
 
 function addButtonLink(element, href, action) {
   if (href) {
-    element.appendChild(getButtonLink(href, action));
+    element.appendChild(getButtonLink(href, action, action));
   }
 
   return element;
@@ -80,7 +82,7 @@ function addLink(element, href) {
   return element;
 }
 
-class TextColumn {
+class Column {
   constructor(heading, binding, mutable) {
     this.heading    = heading;
     this.binding    = binding;
@@ -90,7 +92,7 @@ class TextColumn {
   setTableName(tableName) {
     this.tableName = tableName;
   }
-  
+ 
   getHeading() {
     var td = document.createElement("div");
     td.className = "table-heading";
@@ -98,16 +100,19 @@ class TextColumn {
     return td;
   }
 
+  entityValue(entity) {
+    return entity[this.binding];
+  }
+  
   getControl(cell, entity, editMode) {
-    var ctl;
+    var ctl = this.createControl();
+    var value;
 
-    ctl = document.createElement("input");
-    ctl.type = "text";
+    if (entity) value = this.entityValue(entity);
 
-    if (entity) {
-    	ctl.value = entity[this.binding];
-    	ctl = addLink(ctl, entity[this.linkBinding]);
-        ctl.disabled = this.readOnly || !editMode;
+    if (value) {
+      this.setValue(ctl, value);
+      ctl.disabled = this.readOnly || !editMode;
     } else {
         ctl.disabled = false;
     }
@@ -116,288 +121,134 @@ class TextColumn {
   }
 
   getValue(cell) {
-	    var input = cell.firstChild;
-    if (input && input.nodeName == "INPUT") {
-      return input.value;
+    var ctl = cell.firstChild;
+    if (ctl) {
+      return this.getControlValue(ctl);
     }
+  }
+
+  getControlValue(ctl) {
+    return ctl.value;
+  }
+  
+  setValue(ctl, value) {
+    ctl.value = value;
   }
 }
 
-class NumberColumn {
+class TextColumn extends Column {
+  constructor(heading, binding, mutable) {
+    super(heading, binding, mutable);
+  }
+
+  createControl() {
+    var ctl = document.createElement("input");
+    ctl.type = "text";
+    return ctl;
+  }
+}
+
+class NumberColumn extends Column {
   constructor(heading, binding, mutable, maxBinding, minBinding) {
-    this.heading    = heading;
-    this.binding    = binding;
-    this.readOnly   = mutable ? false : true;
+    super(heading, binding, mutable);
     this.maxBinding = maxBinding;
     this.minBinding = minBinding;
   }
 
-  setTableName(tableName) {
-    this.tableName = tableName;
-  }
-
-  getHeading() {
-    var td = document.createElement("div");
-    td.className = "table-heading";
-    addText(td, this.heading);
-    return td;
-  }
-
-  getControl(cell, entity, editMode) {
-    var ctl;
-  
-    ctl = document.createElement("input");
+  createControl() {
+    var ctl = document.createElement("input");
     ctl.type = "number";
-    
-    if (entity) {
-    	ctl.min = this.minBinding ? entity[this.minBinding] : undefined;
-    	ctl.max = this.maxBinding ? entity[this.maxBinding] : undefined;
-    	ctl.value = entity[this.binding];
-        ctl.disabled = this.readOnly || !editMode;
-    } else {
-        ctl.disabled = false;
-    }
-
     return ctl;
-  }
-
-  getValue(cell) {
-	    var input = cell.firstChild;
-    if (input && input.nodeName == "INPUT") {
-      return input.value;
-    }
   }
 }
 
-class BoolColumn {
+class BoolColumn extends Column {
   constructor(heading, binding, mutable) {
-    this.heading   = heading;
-    this.binding   = binding;
-    this.readOnly  = mutable ? false : true;
+    super(heading, binding, mutable);
   }
 
-  setTableName(tableName) {
-    this.tableName = tableName;
-  }
-
-  getHeading() {
-    var td = document.createElement("div");
-    td.className = "table-heading";
-    addText(td, this.heading);
-    return td;
-  }
-
-  getControl(cell, entity, editMode) {
-    var ctl;
-
-    ctl = document.createElement("input");
+  createControl() {
+    var ctl = document.createElement("div");
     ctl.type = "checkbox";
-    
-    if (entity) {
-        ctl.checked = entity[this.binding];
-        ctl.disabled = this.readOnly || !editMode;
-    } else {
-        ctl.disabled = false;
-    }
-
     return ctl;
   }
 
-  getValue(cell) {
-	    var input = cell.firstChild;
-    if (input && input.nodeName == "INPUT") {
-      return input.checked;
-    }
+  getControlValue(ctl) {
+    return ctl.checked;
+  }
+
+  setValue(ctl, value) {
+    ctl.checked = value;
   }
 }
 
-class DateColumn {
+class DateColumn extends Column {
   constructor(heading, binding, mutable) {
-    this.heading   = heading;
-    this.binding   = binding;
-    this.readOnly  = mutable ? false : true;
+    super(heading, binding, mutable);
   }
 
-  setTableName(tableName) {
-    this.tableName = tableName;
-  }
-
-  getHeading() {
-    var td = document.createElement("div");
-    td.className = "table-heading";
-    addText(td, this.heading);
-    return td;
-  }
-
-  getControl(cell, entity, editMode) {
-    var ctl;
-
-    ctl = document.createElement("input");
+  createControl() {
+    var ctl = document.createElement("input");
     ctl.type = "date";
-    
-    if (entity) {
-    	ctl.value = entity[this.binding];
-        ctl.disabled = this.readOnly || !editMode;
-    } else {
-        ctl.disabled = false;
-    }
-  
     return ctl;
-  }
-
-  getValue(cell) {
-    var input = cell.firstChild;
-    if (input && input.nodeName == "INPUT") {
-      return input.value;
-    }
   }
 }
 
-class SelectColumn {
+class SelectColumn extends Column {
   constructor(heading, binding, dropDown, mutable) {
-    this.heading   = heading;
-    this.binding   = binding;
+    super(heading, binding, mutable);
     this.dropDown  = dropDown;
-    this.readOnly  = mutable ? false : true;
   }
 
-  setTableName(tableName) {
-    this.tableName = tableName;
-  }
-
-  getHeading() {
-    var td = document.createElement("div");
-    td.className = "table-heading";
-    addText(td, this.heading);
-    return td;
-  }
-
-  getControl(cell, entity, editMode) {
-    var ctl;
-    var value;
-    
-    if (entity) value = entity[this.binding];
-
-    ctl = document.createElement("select");
-  
-    this.dropDown.addOptions(ctl, 1, value);
-
-    if (value) {
-      ctl.disabled = this.readOnly || !editMode;
-    } else {
-      ctl.disabled = false;
-    }
-
+  createControl() {
+    var ctl = document.createElement("select");
+    this.dropDown.addOptions(ctl, 1);
     return ctl;
   }
-
-  getValue(cell) {
-    var select = input;
-    if (select && select.nodeName == "SELECT") {
-      return select.options[select.selectedIndex].value;
-    }
+  
+  getControlValue(select) {
+    return select.options[select.selectedIndex].value;
+  }
+ 
+  setValue(ctl, value) {
+	 var i;
+	 for (i = 0; i < ctl.options.length; i++) {
+	   if (ctl.options[i].value == value) {
+		  ctl.selectedIndex = i;
+		  return;
+	   }
+	 }
   }
 }
 
-class PageLinkage {
-  constructor(page, alt, action) {
-    this.page      = page;
-    this.alt       = alt;
-    this.img       = getImg(alt);
-    this.action    = action;
+class HeaderLinkage {
+  constructor(alt, method) {
+    this.alt    = alt;
+    this.method = method;
+
+    this.img    = getImg(alt);
   }
   
-  setTableName(tableName) {
-    this.tableName = tableName;
-  }
-
-  extractLink(entity, cell) {
-    return true;
-  }
-
   getButton() {
-    return getButtonLink(this.page, this.action);
+    return getButton(this.value, this.alt, this.method);
   }
 }
 
-class FormLinkage {
-  constructor(page, alt, rel) {
-    this.page      = page;
-    this.alt       = alt;
-    this.img       = getImg(alt);
-    this.rel       = rel;
-  }
-  
-  setTableName(tableName) {
-    this.tableName = tableName;
+class FunctionLinkage extends HeaderLinkage {
+  constructor(alt, method) {
+    super(alt, method);
   }
 
   extractLink(entity, cell) {
-    var lnk = getLink(entity.links, this.rel);
-  
-    if (lnk) {
-      this.url    = this.page + "?" + lnk.rel + "=" + lnk.href;
+	var lnk = getLink(entity.links, this.alt);
+	  
+	if (lnk) {
+        this.value = cell.id.replace("_buttons", "");
 
-      return true;
-    }
+	    return true;
+  	}
 
     return false;
-  }
-
-  getButton() {
-    return getButtonLink(this.url, this.alt);
-  }
-}
-
-class RestLinkage {
-  constructor(alt, rel, action) {
-    this.alt       = alt;
-    this.img       = getImg(alt);
-    this.rel       = rel;
-    this.action    = action;
-  }
-  
-  setTableName(tableName) {
-    this.tableName = tableName;
-  }
-
-  extractLink(entity, cell) {
-    var linkage = this;
-    var lnk = getLink(entity.links, linkage.rel);
-  
-    if (lnk) {
-      this.url    = lnk.href;
-      this.method = lnk.method;
-
-      return true;
-    }
-
-    return false;
-  }
-
-  getButton() {
-    return getButton(this.url, this.rel, this.tableName +"." + this.action + "(this.value);");
-  }
-}
-
-class FunctionLinkage {
-  constructor(alt, action) {
-    this.alt       = alt;
-    this.img       = getImg(alt);
-    this.action    = action;
-  }
-  
-  setTableName(tableName) {
-    this.tableName = tableName;
-  }
-
-  extractLink(entity, cell) {
-    this.cellId = cell.id.replace("_buttons", "");
-    return true;
-  }
-
-  getButton() {
-    return getButton(this.cellId, this.alt, this.action);
   }
 }
 
@@ -407,11 +258,7 @@ class ButtonColumn {
     this.btnLinkage  = btnLinkage;
     }
 
-  setTableName(tableName) {
-    this.tableName = tableName;
-    
-    this.headLinkage.forEach(function(l) { l.setTableName(tableName);});
-    this.btnLinkage.forEach(function(l) { l.setTableName(tableName);});
+  setTableName() {
   }
 
   getHeading() {
