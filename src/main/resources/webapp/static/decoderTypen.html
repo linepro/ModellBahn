@@ -13,23 +13,23 @@
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var fetchUrl = apiRoot() + "decoderTyp";
+var fetchUrl = fetchUrl("decoderTyp");
 var hersteller = new DropDown(apiRoot() + "hersteller", [ "name" ], [ "name" ]);
 var protokoll = new DropDown(apiRoot() + "protokoll", [ "name" ], [ "name" ]);
 var columns = [
-    new SelectColumn("Hersteller", "hersteller", hersteller),
-    new TextColumn("Bestell Nr", "bestellNr"),
-    new SelectColumn("Protokoll", "protokoll", protokoll, false),
-    new BoolColumn("Sound", "sound", false),
+    new SelectColumn("Hersteller", "hersteller", hersteller, Editable.ADD),
+    new TextColumn("Bestell Nr", "bestellNr", Editable.ADD),
+    new SelectColumn("Protokoll", "protokoll", protokoll, Editable.UPDATE),
+    new BoolColumn("Sound", "sound", Editable.UPDATE),
     new ButtonColumn([new HeaderLinkage("add", "listing.newRow()")],
     		[new FunctionLinkage("update", "listing.editRow(this.value)"), 
     		 new FunctionLinkage("delete", "listing.deleteRow(this.value)")])
     ];
-var listing = new ItemGrid(10, fetchUrl, "listing", columns, true, true, undefined, "decoderTyp.html");
+var listing = new ItemGrid(10, fetchUrl, "listing", columns, true, EditMode.UPDATE, undefined, "decoderTyp.html");
 	
-function init() {
-    hersteller.init();
-    protokoll.init();
+async function init() {
+	await await hersteller.init();
+	await protokoll.init();
 	listing.init();
 }
 </script>

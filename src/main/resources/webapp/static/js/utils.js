@@ -1,14 +1,47 @@
 // module "utils.js"
 "use strict";
 
+var Editable = {
+  NEVER: 0,
+  UPDATE: 1,
+  ADD: 2,
+}
+
+var EditMode = {
+  VIEW: 0,
+  UPDATE: 1,
+  ADD: 2,
+}
+
+function shouldDisable(editable, editMode) {
+  if (editable === Editable.NEVER || editMode === EditMode.VIEW) {
+    return true;
+  }
+
+  if (editable < editMode) {
+    return false;
+  }
+
+  return true;
+}
+
 function apiRoot() {
-  return window.location.protocol + "//" +
-    window.location.host + "/ModellBahn/api/";
+  return location.protocol + "//" + location.host + "/ModellBahn/api/";
 }
 
 function siteRoot() {
-  return window.location.protocol + "//" +
-    window.location.host + "/ModellBahn/static/";
+  return location.protocol + "//" + location.host + "/ModellBahn/static/";
+}
+
+function fetchUrl(dataType) {
+  var fetchUrl = apiRoot() + dataType;
+  var searchParams  = new URLSearchParams(location.search);
+
+  if (searchParams.has("self")) {
+    fetchUrl = searchParams.get("self");
+  }
+
+  return fetchUrl;
 }
 
 function removeChildren(node) {
@@ -17,10 +50,8 @@ function removeChildren(node) {
   }
 }
 
-function reportError( jqXHR, textStatus, error ) {
-  alert( "error:    " + error +
-         "\njqXHR:  " + jqXHR +
-         "\nstatus: " + textStatus);
+function reportError( error ) {
+  alert( "error: " + error.toString() );
 }
 
 function getLink(links, rel) {
@@ -83,10 +114,11 @@ function addLink(element, href) {
 }
 
 class Column {
-  constructor(heading, binding, mutable) {
-    this.heading    = heading;
-    this.binding    = binding;
-    this.readOnly   = mutable ? false : true;
+  constructor(heading, binding, editable, required) {
+    this.heading  = heading;
+    this.binding  = binding;
+    this.editable = editable ? editable : Editable.NEVER;
+    this.required = required;
   }
 
   setTableName(tableName) {
@@ -112,9 +144,11 @@ class Column {
 
     if (value) {
       this.setValue(ctl, value);
-      ctl.disabled = this.readOnly || !editMode;
+      ctl.disabled = shouldDisable(this.editable, editMode);
+    } else if (this.editable != Editable.NEVER && editMode == EditMode.ADD){
+      ctl.disabled = false;
     } else {
-        ctl.disabled = false;
+        ctl.disabled = true;
     }
 
     return ctl;
@@ -137,8 +171,8 @@ class Column {
 }
 
 class TextColumn extends Column {
-  constructor(heading, binding, mutable) {
-    super(heading, binding, mutable);
+  constructor(heading, binding, editable) {
+    super(heading, binding, editable);
   }
 
   createControl() {
@@ -149,8 +183,8 @@ class TextColumn extends Column {
 }
 
 class NumberColumn extends Column {
-  constructor(heading, binding, mutable, maxBinding, minBinding) {
-    super(heading, binding, mutable);
+  constructor(heading, binding, editable, maxBinding, minBinding) {
+    super(heading, binding, editable);
     this.maxBinding = maxBinding;
     this.minBinding = minBinding;
   }
@@ -163,8 +197,8 @@ class NumberColumn extends Column {
 }
 
 class BoolColumn extends Column {
-  constructor(heading, binding, mutable) {
-    super(heading, binding, mutable);
+  constructor(heading, binding, editable) {
+    super(heading, binding, editable);
   }
 
   createControl() {
@@ -183,8 +217,8 @@ class BoolColumn extends Column {
 }
 
 class DateColumn extends Column {
-  constructor(heading, binding, mutable) {
-    super(heading, binding, mutable);
+  constructor(heading, binding, editable) {
+    super(heading, binding, editable);
   }
 
   createControl() {
@@ -195,8 +229,8 @@ class DateColumn extends Column {
 }
 
 class SelectColumn extends Column {
-  constructor(heading, binding, dropDown, mutable) {
-    super(heading, binding, mutable);
+  constructor(heading, binding, dropDown, editable) {
+    super(heading, binding, editable);
     this.dropDown  = dropDown;
   }
 
@@ -211,13 +245,13 @@ class SelectColumn extends Column {
   }
  
   setValue(ctl, value) {
-	 var i;
-	 for (i = 0; i < ctl.options.length; i++) {
-	   if (ctl.options[i].value == value) {
-		  ctl.selectedIndex = i;
-		  return;
-	   }
-	 }
+   var i;
+   for (i = 0; i < ctl.options.length; i++) {
+     if (ctl.options[i].value == value) {
+      ctl.selectedIndex = i;
+      return;
+     }
+   }
   }
 }
 
@@ -240,13 +274,13 @@ class FunctionLinkage extends HeaderLinkage {
   }
 
   extractLink(entity, cell) {
-	var lnk = getLink(entity.links, this.alt);
-	  
-	if (lnk) {
-        this.value = cell.id.replace("_buttons", "");
+    var lnk = getLink(entity.links, this.alt);
+    
+    if (lnk) {
+      this.value = cell.id.replace("_buttons", "");
 
-	    return true;
-  	}
+      return true;
+    }
 
     return false;
   }
@@ -293,4 +327,12 @@ class ButtonColumn {
 
     return ctl;
   }
+}
+
+async function checkResponse(response) {
+	if (response.ok) {
+		return response.json();
+	}
+
+	throw new Error(response.statusText);
 }

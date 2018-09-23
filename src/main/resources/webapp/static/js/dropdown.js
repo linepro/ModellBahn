@@ -1,5 +1,5 @@
-// module 'dropdown.js'
-'use strict'
+// module "dropdown.js"
+"use strict"
 
 class Option {
   constructor(display,value) {
@@ -27,7 +27,7 @@ class DropDown {
 
     var i = 0;
     this.options.forEach(function(option) {
-      var opt = document.createElement('option');
+      var opt = document.createElement("option");
       opt.value = option.value;
       opt.text  = option.display;
       select.add(opt);
@@ -40,41 +40,41 @@ class DropDown {
     });
   }
 
-  loadOptions(jsonData, textStatus, jqXHR) {
-    if (jqXHR.status == 200) {
-      var select = this;
-      var entities = jsonData.entities ? jsonData.entities : jsonData; 
-      entities.forEach(function(entity) {
-        var display = '';
-        var value = '';
+  loadOptions(jsonData) {
+    var select = this;
+    var entities = jsonData.entities ? jsonData.entities : jsonData; 
+    entities.forEach(function(entity) {
+      var display = "";
+      var value = "";
 
-        select.displayColumns.forEach(function(name) {
-          display = display + ' ' + entity[name];
-        });
-
-        select.valueColumns.forEach(function(name) {
-          if (this.wrapped) {
-            value = (value ? '' : value + ', ') + name + ': ' + entity[name];
-          } else {
-              value = entity[name];
-          }
-        });
-
-        display = display.trim();
-        value = value.trim();
-
-        if (this.wrapped) {
-          value =  '{' + value.trim() + '}';
-        }
-
-        select.options.push(new Option(display,value));
+      select.displayColumns.forEach(function(name) {
+        display = display + " " + entity[name];
       });
-    }
+
+      select.valueColumns.forEach(function(name) {
+        if (select.wrapped) {
+          value = (value ? "" : value + ", ") + name + ": " + entity[name];
+        } else {
+          value = entity[name];
+        }
+        });
+
+      display = display.trim();
+      value = value.trim();
+
+      if (select.wrapped) {
+        value = "{" + value.trim() + "}";
+      }
+
+      select.options.push(new Option(display,value));
+    });
   }
 
-  init() {
+  async init() {
     var select = this;
-    $.getJSON(this.apiQuery, function( jsonData, textStatus, jqXHR ) { select.loadOptions(jsonData, textStatus, jqXHR);})
-     .fail( function( jqXHR, textStatus, errorThrown ) { reportError(  jqXHR, textStatus, errorThrown  );});
+    await fetch(select.apiQuery, { method: "get", headers: { "Content-type": "application/json" } })
+      .then(response => checkResponse(response))
+      .then(jsonData => select.loadOptions(jsonData))
+      .catch(error => reportError(error));
   }
 }

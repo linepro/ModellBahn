@@ -13,52 +13,52 @@
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var fetchUrl = new URL(window.location.href).searchParams.get("self");
+var fetchUrl = fetchUrl("decoderTyp");
 var hersteller = new DropDown(apiRoot() + "hersteller", [ "name" ], [ "name" ]);
 var protokoll = new DropDown(apiRoot() + "protokoll", [ "name" ], [ "name" ]);
 var konfiguration = new DropDown(apiRoot() + "enums/konfiguration", [ "name" ], [ "name" ]);
 var adressTyp = new DropDown(apiRoot() + "enums/adressTyp", [ "name" ], [ "name" ]);
 var adressen = new ItemGrid(2, undefined, "adressen", [
-    new NumberColumn("Index", "index"),
-    new SelectColumn("AdressTyp", "adressTyp", adressTyp, false),
-    new NumberColumn("Span", "span", false),
-    new NumberColumn("Werkseinstellung", "werkseinstellung", false),
+    new NumberColumn("Index", "index", Editable.ADD),
+    new SelectColumn("AdressTyp", "adressTyp", adressTyp, Editable.UPDATE),
+    new NumberColumn("Span", "span", Editable.UPDATE),
+    new NumberColumn("Werkseinstellung", "werkseinstellung", Editable.UPDATE),
     new ButtonColumn([],[])],
     false, true, undefined);
 var cvs = new ItemGrid(10, undefined, "cvs", [
-    new NumberColumn("CV", "cv"),
-    new TextColumn("Bezeichnung", "description"),
-    new NumberColumn("Werkseinstellung", "werkseinstellung", false),
+    new NumberColumn("CV", "cv", Editable.ADD),
+    new TextColumn("Bezeichnung", "description", Editable.UPDATE),
+    new NumberColumn("Werkseinstellung", "werkseinstellung", Editable.UPDATE),
     new ButtonColumn([],[])],
     false, true, undefined, undefined, true, undefined);
 var funktionen = new ItemGrid(10, undefined, "funktionen", [
-    new NumberColumn("Bank", "bank", false),
-    new TextColumn("Funktion", "funktion", false),
-    new TextColumn("Bezeichnung", "description", false),
-    new BoolColumn("Programmable", "programmable", false),
+    new NumberColumn("Bank", "bank", Editable.ADD),
+    new TextColumn("Funktion", "funktion", Editable.ADD),
+    new TextColumn("Bezeichnung", "description", Editable.UPDATE),
+    new BoolColumn("Programmable", "programmable", Editable.UPDATE),
     new ButtonColumn([],[])],
     false, true, undefined);
-var decoder = new ItemGrid(1, fetchUrl, "decoder", [
-    new SelectColumn("Hersteller", "hersteller", hersteller),
-    new TextColumn("Bestell Nr", "bestellNr"),
-    new TextColumn("Bezeichnung", "description", false),
-    new SelectColumn("Protokoll", "protokoll", protokoll, false),
-    new NumberColumn("Fahrstufe", "fahrstufe", false),
-    new BoolColumn("Sound", "sound", false),
-    new NumberColumn("I Max", "iMax", false),
-    new SelectColumn("Konfiguration", "konfiguration", konfiguration, false),
+var decoder = new ItemGrid(1, fetchUrl, "decoderTyp", [
+    new SelectColumn("Hersteller", "hersteller", hersteller, Editable.ADD),
+    new TextColumn("Bestell Nr", "bestellNr", Editable.ADD),
+    new TextColumn("Bezeichnung", "description", Editable.UPDATE),
+    new SelectColumn("Protokoll", "protokoll", protokoll, Editable.UPDATE),
+    new NumberColumn("Fahrstufe", "fahrstufe", Editable.UPDATE),
+    new BoolColumn("Sound", "sound", Editable.UPDATE),
+    new NumberColumn("I Max", "iMax", Editable.UPDATE),
+    new SelectColumn("Konfiguration", "konfiguration", konfiguration, Editable.UPDATE),
     new ButtonColumn([],
     		         [])],
-    false, true, [
+    false, EditMode.UPDATE, [
     	adressen,
         cvs,
         funktionen]);
 
-function init() {
-    hersteller.init();
-    protokoll.init();
-    konfiguration.init();
-    adressTyp.init();
+async function init() {
+    await hersteller.init();
+    await protokoll.init();
+    await konfiguration.init();
+    await adressTyp.init();
     decoder.init();
 }
 </script>
@@ -81,7 +81,7 @@ function init() {
 
             <div id="data">
                 <div>
-                    <div id="decoder">
+                    <div id="decoderTyp">
                     </div>
                 </div>
                 <div>
