@@ -63,6 +63,7 @@ function getImg(action) {
 
   img.alt = action;
   img.src = "img/" + action + ".png";
+  img.className = "nav-img";
 
   return img;
 }
@@ -72,8 +73,12 @@ function getButton(value, alt, action) {
 
   btn.setAttribute("value", value);
   btn.setAttribute("onclick", action);
+  btn.className = "nav-button";
 
-  btn.appendChild(getImg(alt));
+  var img = getImg(alt);
+  img.className = "nav-button";
+  
+  btn.appendChild(img);
 
   return btn;
 }
@@ -86,7 +91,7 @@ function getButtonLink(href, alt, action) {
     var a = document.createElement("a");
 
     a.setAttribute("href", href);
-    a.className = "btn btn-info btn-sm";
+    a.className = "nav-button";
     a.appendChild(getImg(action));
 
     return a;
@@ -183,15 +188,17 @@ class TextColumn extends Column {
 }
 
 class NumberColumn extends Column {
-  constructor(heading, binding, editable, maxBinding, minBinding) {
+  constructor(heading, binding, editable, max, min) {
     super(heading, binding, editable);
-    this.maxBinding = maxBinding;
-    this.minBinding = minBinding;
+    this.max = max ? max : 255;
+    this.min = min ? min : 0;
   }
 
   createControl() {
     var ctl = document.createElement("input");
     ctl.type = "number";
+    if (this.min) ctl.min = this.min;
+    if (this.max) ctl.max = this.max;
     return ctl;
   }
 }
@@ -212,7 +219,7 @@ class BoolColumn extends Column {
   }
 
   setValue(ctl, value) {
-    ctl.checked = value;
+    ctl.value = value;
   }
 }
 
@@ -278,7 +285,7 @@ class FunctionLinkage extends HeaderLinkage {
     
     if (lnk) {
       this.value = cell.id.replace("_buttons", "");
-
+      
       return true;
     }
 
@@ -292,16 +299,20 @@ class ButtonColumn {
     this.btnLinkage  = btnLinkage;
     }
 
-  setTableName() {
+  setTableName(tableName) {
+	this.tableName = tableName;
   }
 
   getHeading() {
     var td = document.createElement("div");
     td.className = "table-heading-btn";
 
+    var col = this;
     if (this.headLinkage) {
       this.headLinkage.forEach(function(linkage) {
-        td.append(linkage.getButton());
+    	var btn = linkage.getButton();
+    	btn.id = col.tableName + "_" + btn.id;
+        td.append(btn);
       });
     } else {
       addText(td, "");
@@ -318,7 +329,9 @@ class ButtonColumn {
     if (editMode && this.btnLinkage) {
       this.btnLinkage.forEach(function(linkage) {
         if (entity && linkage.extractLink(entity, cell)) {
-          ctl.append(linkage.getButton());
+          var btn = linkage.getButton();
+          btn.id = cell.id + "_" + btn.id;
+          ctl.append(btn);
         }
       });
     } else {

@@ -392,6 +392,8 @@ class ItemGrid {
         .then(response => checkResponse(response))
         .then(jsonData => grid.loadData())
         .catch(error => reportError(error));
+    } else {
+    	grid.removeRow(rowId);
     }
   }
 
@@ -408,6 +410,10 @@ class ItemGrid {
     window.location.href = grid.editForm + "?new=true";
   }
 
+  removeRow(rowId) {
+	var grid = this;  
+  }
+  
   async saveRow(rowId) {
     var grid = this;
     var saveUrl = grid.restRoot;

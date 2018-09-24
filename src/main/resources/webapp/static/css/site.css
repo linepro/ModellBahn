@@ -357,3 +357,21 @@ div.table > div.tfoot > div.table-row > div.table-next {
     text-align: right;
     height: 25px;
 }
+
+.nav-button {
+    background-color: #5bc0de;
+    border: 1px solid transparent;
+    border-color: #46b8da;
+    border-radius: 3px;
+    color: white;
+    font-size: 12px;
+    padding: 3px 3px;
+}
+
+.nav-img{
+    background-color: inherit;
+	border: none;
+    height: 90%;
+    margin: none;
+	width: 90%;
+}

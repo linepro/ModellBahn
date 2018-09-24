@@ -21,34 +21,40 @@ var adressTyp = new DropDown(apiRoot() + "enums/adressTyp", [ "name" ], [ "name"
 var adressen = new ItemGrid(2, undefined, "adressen", [
     new NumberColumn("Index", "index", Editable.ADD),
     new SelectColumn("AdressTyp", "adressTyp", adressTyp, Editable.UPDATE),
-    new NumberColumn("Span", "span", Editable.UPDATE),
-    new NumberColumn("Werkseinstellung", "werkseinstellung", Editable.UPDATE),
-    new ButtonColumn([],[])],
-    false, true, undefined);
+    new NumberColumn("Span", "span", Editable.UPDATE, 16, 1),
+    new NumberColumn("Werkseinstellung", "werkseinstellung", Editable.UPDATE, 65535, 1),
+    new ButtonColumn([new HeaderLinkage("add", "adressen.addRow()")],
+            [new FunctionLinkage("update", "adressen.updateRow(this.value)"), 
+             new FunctionLinkage("delete", "adressen.deleteRow(this.value)")])],
+    false, EditMode.ADD, undefined);
 var cvs = new ItemGrid(10, undefined, "cvs", [
-    new NumberColumn("CV", "cv", Editable.ADD),
+    new NumberColumn("CV", "cv", Editable.ADD, 127, 1),
     new TextColumn("Bezeichnung", "description", Editable.UPDATE),
     new NumberColumn("Werkseinstellung", "werkseinstellung", Editable.UPDATE),
-    new ButtonColumn([],[])],
-    false, true, undefined, undefined, true, undefined);
+    new ButtonColumn([new HeaderLinkage("add", "cvs.addRow()")],
+            [new FunctionLinkage("update", "cvs.updateRow(this.value)"), 
+             new FunctionLinkage("delete", "cvs.deleteRow(this.value)")])],
+    false, EditMode.ADD, undefined);
 var funktionen = new ItemGrid(10, undefined, "funktionen", [
-    new NumberColumn("Bank", "bank", Editable.ADD),
+    new NumberColumn("Bank", "bank", Editable.ADD, 1, 0),
     new TextColumn("Funktion", "funktion", Editable.ADD),
     new TextColumn("Bezeichnung", "description", Editable.UPDATE),
     new BoolColumn("Programmable", "programmable", Editable.UPDATE),
-    new ButtonColumn([],[])],
-    false, true, undefined);
+    new ButtonColumn([new HeaderLinkage("add", "funktionen.addRow()")],
+            [new FunctionLinkage("update", "funktionen.updateRow(this.value)"), 
+             new FunctionLinkage("delete", "funktionen.deleteRow(this.value)")])],
+    false, EditMode.ADD, undefined);
 var decoder = new ItemGrid(1, fetchUrl, "decoderTyp", [
     new SelectColumn("Hersteller", "hersteller", hersteller, Editable.ADD),
     new TextColumn("Bestell Nr", "bestellNr", Editable.ADD),
     new TextColumn("Bezeichnung", "description", Editable.UPDATE),
     new SelectColumn("Protokoll", "protokoll", protokoll, Editable.UPDATE),
-    new NumberColumn("Fahrstufe", "fahrstufe", Editable.UPDATE),
+    new NumberColumn("Fahrstufe", "fahrstufe", Editable.UPDATE, 127, 1),
     new BoolColumn("Sound", "sound", Editable.UPDATE),
-    new NumberColumn("I Max", "iMax", Editable.UPDATE),
+    new NumberColumn("I Max", "iMax", Editable.UPDATE, 1000, 1),
     new SelectColumn("Konfiguration", "konfiguration", konfiguration, Editable.UPDATE),
     new ButtonColumn([],
-    		         [])],
+            [new FunctionLinkage("update", "decoderTyp.updateRow(this.value)")])],
     false, EditMode.UPDATE, [
     	adressen,
         cvs,
@@ -68,8 +74,8 @@ async function init() {
     <header>
         <hr class="highlight" />
         <nav>
-            <a class="btn btn-info btn-sm" href='../index.html'>Home</a>
-            <button class="btn btn-info btn-sm" onclick="window.history.back();">Back</button>
+            <a class="nav-button" href='../index.html'>Home</a>
+            <button class="nav-button" onclick="window.history.back();">Back</button>
         </nav>
     </header>
         
