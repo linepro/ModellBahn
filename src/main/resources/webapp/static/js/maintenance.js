@@ -455,7 +455,7 @@ class EditableGrid extends ItemGrid {
   }
   
   async init() {
-    await super.init();
+    super.init();
     
     var h1 = document.getElementById("heading");
 
