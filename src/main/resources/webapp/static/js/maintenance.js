@@ -315,7 +315,7 @@ class ItemGrid {
 
     fetch(restUrl, { method: "get", headers: { "Content-type": "application/json" }})
       .then(response => checkResponse(response))
-      .then(jsonData => grid.renderJson(jsonData))
+      .then(jsonData => grid.renderJson(jsonData, restUrl))
       .catch(error => reportError(error));
   }
 
@@ -388,10 +388,9 @@ class ItemGrid {
     var grid = this;
     var deleteUrl = grid.getKeyValue(rowId);
     if (deleteUrl) {
-        await fetch(deleteUrl, { method: "DELETE", headers: { "Content-type": "application/json" } } )
-        .then(response => checkResponse(response))
-        .then(jsonData => grid.loadData())
-        .catch(error => reportError(error));
+        var response = await fetch(deleteUrl, { method: "DELETE", headers: { "Content-type": "application/json" } } )
+        	                      .catch(error => reportError(error));
+        grid.loadData();
     } else {
     	grid.removeRow(rowId);
     }
@@ -444,7 +443,7 @@ class ItemGrid {
 
 class EditableGrid extends ItemGrid {
   constructor(dataType, elementName) {
-  super(10, fetchUrl(dataType), elementName, [
+    super(10, fetchUrl(dataType), elementName, [
         new TextColumn("Name", "name", Editable.ADD),
         new TextColumn("Description", "description", Editable.UPDATE),
         new ButtonColumn(
