@@ -21,16 +21,16 @@ var columns = [
     new TextColumn("Bestell Nr", "bestellNr", Editable.ADD),
     new SelectColumn("Protokoll", "protokoll", protokoll, Editable.UPDATE),
     new BoolColumn("Sound", "sound", Editable.UPDATE),
-    new ButtonColumn([new HeaderLinkage("add", "listing.newRow()")],
-    		[new FunctionLinkage("update", "listing.editRow(this.value)"), 
-    		 new FunctionLinkage("delete", "listing.deleteRow(this.value)")])
+    new ButtonColumn([new HeaderLinkage("add", "decoderTyp.newRow()")],
+    		[new FunctionLinkage("update", "decoderTyp.editRow(this.value)"), 
+    		 new FunctionLinkage("delete", "decoderTyp.deleteRow(this.value)")])
     ];
-var listing = new ItemGrid(10, fetchUrl, "listing", columns, true, EditMode.UPDATE, undefined, "decoderTyp.html");
+var decoderTyp = new ItemGrid(10, fetchUrl, "decoderTyp", columns, true, EditMode.UPDATE, undefined, "decoderTyp.html");
 	
 async function init() {
 	await await hersteller.init();
 	await protokoll.init();
-	listing.init();
+	await decoderTyp.init();
 }
 </script>
 <title>Decoder Typ List</title>
@@ -68,7 +68,7 @@ async function init() {
 			</header>
 
 			<div id="data">
-				<div id="listing">
+				<div id="decoderTyp">
 				</div>
 			</div>
 		</article>

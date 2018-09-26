@@ -13,10 +13,11 @@
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var listing = new EditableGrid("land", "listing");
+
+var land = new EditableGrid("land", "land");
 
 function init() {
-	listing.init();
+	land.init();
 }
 </script>
 </head>
@@ -49,12 +50,12 @@ function init() {
 	<section>
 		<article>
 			<header>
-				<h1 id="heading"></h1>
+				<h1 id="heading">Lander:</h1>
 			</header>
 
 			<div id="data">
-			     TODO extra fields for wahrung
-				<div id="listing">
+			    <div>Wahrung child form:</div>
+				<div id="land">
 				</div>
 			</div>
 		</article>

@@ -1,6 +1,9 @@
 package com.linepro.modellbahn.model.util;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;

@@ -12,29 +12,38 @@
 <script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
+<script type="text/javascript">
+var fetchUrl = new URL(window.location.href).searchParams.get("self");
+var kategorie = new DropDown(apiRoot() + "kategorie", [ "name" ], [ "name" ]);
+var columns = [
+    new TextColumn("name", "name"),
+    new TextColumn("Bezeichnung", "description"),
+];	
+
+
+function init() {
+	await kategorie.init();	
+}
+</script>
 </head>
-<body>
+<body onload="javascript:init()">
     <header>
         <hr class="highlight" />
         <nav>
-            <a class="nav-button" href='../index.html'>Home</a>
-            <button class="nav-button" onclick="window.history.back();">Back</button>
-            <a class="nav-button" href="produkten.html">Produkt</a>
-            <a class="nav-button" href="vorbilder.html">Vorbild</a>      
-            <a class="nav-button" href="artikelen.html">Artikel</a>      
-            <a class="nav-button" href="zugen.html">Zug</a>
+            <a class="btn btn-info btn-sm" href='../index.html'>Home</a>
+            <a class="btn btn-info btn-sm" href="kategorien.html">Katogorie</a>
+            <button class="btn btn-info btn-sm" onclick="window.history.back();">Back</button>
         </nav>
     </header>
     	
 	<section>
 		<article>
 			<header>
-				<h1 id="heading">Zug</h1>
+				<h1 id="heading">Unter Kategorie:</h1>
 			</header>
 
 			<div id="data">
-				<div id="zug">
-				TODO
+				<div id="kategorie">
 				</div>
 			</div>
 		</article>

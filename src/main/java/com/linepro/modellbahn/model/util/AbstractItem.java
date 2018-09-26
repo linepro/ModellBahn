@@ -9,6 +9,8 @@ import java.net.URI;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -21,6 +23,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.UriBuilder;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -136,7 +139,15 @@ public abstract class AbstractItem<K extends IKey> implements Serializable, IIte
     }
 
     protected Link makeLink(URI uri, String path, String rel, String method) {
-        return Link.fromUri(UriBuilder.fromUri(uri).path( path).build()).rel(rel).type(method).build();
+        String encoded = path.codePoints()
+                             .mapToObj(ch -> (48 <= ch && ch <= 57) || 
+                                             (65 <= ch && ch <= 90) || 
+                                             (97 <= ch && ch <= 122) ? 
+                                         Character.toString((char) ch) : 
+                                         String.format("%%%02x", ch))
+                             .collect(Collectors.joining(""));
+
+        return Link.fromUri(UriBuilder.fromUri(uri).path(encoded).build()).rel(rel).type(method).build();
     }
     
     @Override

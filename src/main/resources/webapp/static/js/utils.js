@@ -63,7 +63,6 @@ function getImg(action) {
 
   img.alt = action;
   img.src = "img/" + action + ".png";
-  img.className = "nav-img";
 
   return img;
 }
