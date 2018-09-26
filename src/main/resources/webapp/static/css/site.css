@@ -3,6 +3,7 @@ html {
 	-webkit-text-size-adjust: 100%;
 	background-color: #fffbd0;
 	box-sizing: border-box;
+	border-radius: 25px;
 	overflow-x: hidden
 }
 
@@ -40,6 +41,7 @@ body {
 
 html, body {
     background-color: #fffbd0;
+    padding: 0.5em;
 	font-family: Verdana, sans-serif;
 	font-size: 15px;
 	line-height: 1.5
@@ -88,10 +90,10 @@ button {
     background-color: #5bc0de;
 	border: 1px solid transparent;
     border-color: #46b8da;
-    border-radius: 3px;
+    border-radius: 3rem;
     color: white;
-    font-size: 12px;
-	padding: 3px 3px;
+    font-size: 4px;
+	padding: 3em 3em;
 }
 
 code, kbd, pre, samp {
@@ -134,7 +136,7 @@ h1, h2, h3, h4, h5, h6 {
 fieldset {
 	border: 1px solid #c0c0c0;
 	margin: 0 2px;
-	padding: .35px .625px .75px
+	padding: 0.35em .625em .75em
 }
 
 figure {
@@ -208,7 +210,7 @@ table {
 	border-collapse: collapse;
 	border-bottom: 1px solid #ddd;
 	vertical-align: middle;
-	padding: 5px;
+	padding: 5em;
 	width: 90%;
 }
 
@@ -216,11 +218,11 @@ thead {
 	background-color: #99D9EA;
     color: white;
 	font-weight: bold;
-	height: 25px;
-	padding-bottom: 10px;
-	padding-left: 5px;
-	padding-right: 5px;
-	padding-top: 10px;
+	height: 4px;
+	padding-bottom: 5em;
+	padding-left: 5rem;
+	padding-right: 5rem;
+	padding-top: 5em;
 	text-align: left;
 }
 
@@ -229,18 +231,18 @@ tfoot {
 	font-weight: bold;
     color: white;
 	height: 25px;
-	padding-bottom: 10px;
-	padding-left: 5px;
-	padding-right: 5px;
-	padding-top: 10px;
+	padding-bottom: 2em;
+	padding-left: 2em;
+	padding-right: 2em;
+	padding-top: 2em;
 	text-align: center;
 }
 
 tbody {
-	padding-bottom: 5px;
-	padding-left: 5px;
-	padding-right: 5px;
-	padding-top: 5px;
+	padding-bottom: 5em;
+	padding-left: 5em;
+	padding-right: 5em;
+	padding-top: 5em;
 }
 
 td: center {
@@ -315,13 +317,13 @@ div.table > div.tfoot > div.table-row {
 div.table > div.thead > div.table-row > div.table-heading {
     display: table-cell;
     font-weight: bold;
-    height: 35px;
+    height: 4px;
 }
 
 div.table > div.thead > div.table-row > div.table-heading-btn {
     display: table-cell;
     text-align: center;
-    height: 35px;
+    height: 4px;
     vertical-align: baseline;
 }
 
