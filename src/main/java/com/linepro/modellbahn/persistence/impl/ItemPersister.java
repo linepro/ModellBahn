@@ -176,7 +176,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
             E found = internalFindByKey(session, key, false);
             
             if (found == null && !addOrUpdate) {
-                throw new EntityNotFoundException();
+                return null;
             }
 
             E result;

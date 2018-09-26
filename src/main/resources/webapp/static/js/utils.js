@@ -1,12 +1,47 @@
 // module "utils.js"
-"use strict"
+"use strict";
+
+var Editable = {
+  NEVER: 0,
+  UPDATE: 1,
+  ADD: 2,
+}
+
+var EditMode = {
+  VIEW: 0,
+  UPDATE: 1,
+  ADD: 2,
+}
+
+function shouldDisable(editable, editMode) {
+  if (editable === Editable.NEVER || editMode === EditMode.VIEW) {
+    return true;
+  }
+
+  if (editable < editMode) {
+    return false;
+  }
+
+  return true;
+}
 
 function apiRoot() {
-  return window.location.protocol + "//" + window.location.host + "/ModellBahn/api/";
+  return location.protocol + "//" + location.host + "/ModellBahn/api/";
 }
 
 function siteRoot() {
-  return window.location.protocol + "//" + window.location.host + "/ModellBahn/static/";
+  return location.protocol + "//" + location.host + "/ModellBahn/static/";
+}
+
+function fetchUrl(dataType) {
+  var fetchUrl = apiRoot() + dataType;
+  var searchParams  = new URLSearchParams(location.search);
+
+  if (searchParams.has("self")) {
+    fetchUrl = searchParams.get("self");
+  }
+
+  return fetchUrl;
 }
 
 function removeChildren(node) {
@@ -15,10 +50,8 @@ function removeChildren(node) {
   }
 }
 
-function reportError( jqXHR, textStatus, error ) {
-  alert( "error:    " + error +
-         "\njqXHR:  " + jqXHR +
-         "\nstatus: " + textStatus);
+function reportError( error ) {
+  alert( "error: " + error.toString() );
 }
 
 function getLink(links, rel) {
@@ -30,6 +63,7 @@ function getImg(action) {
 
   img.alt = action;
   img.src = "img/" + action + ".png";
+  img.className = "nav-img";
 
   return img;
 }
@@ -39,8 +73,12 @@ function getButton(value, alt, action) {
 
   btn.setAttribute("value", value);
   btn.setAttribute("onclick", action);
+  btn.className = "nav-button";
 
-  btn.appendChild(getImg(alt));
+  var img = getImg(alt);
+  img.className = "nav-button";
+  
+  btn.appendChild(img);
 
   return btn;
 }
@@ -49,11 +87,11 @@ function addText(cell, text) {
   cell.appendChild(document.createTextNode(text));
 }
 
-function getButtonLink(href, action) {
+function getButtonLink(href, alt, action) {
     var a = document.createElement("a");
 
     a.setAttribute("href", href);
-    a.className = "btn btn-info btn-sm";
+    a.className = "nav-button";
     a.appendChild(getImg(action));
 
     return a;
@@ -61,7 +99,7 @@ function getButtonLink(href, action) {
 
 function addButtonLink(element, href, action) {
   if (href) {
-    element.appendChild(getButtonLink(href, action));
+    element.appendChild(getButtonLink(href, action, action));
   }
 
   return element;
@@ -80,324 +118,178 @@ function addLink(element, href) {
   return element;
 }
 
-class TextColumn {
-  constructor(heading, binding, mutable) {
-    this.heading    = heading;
-    this.binding    = binding;
-    this.readOnly   = mutable ? false : true;
+class Column {
+  constructor(heading, binding, editable, required) {
+    this.heading  = heading;
+    this.binding  = binding;
+    this.editable = editable ? editable : Editable.NEVER;
+    this.required = required;
   }
 
   setTableName(tableName) {
     this.tableName = tableName;
+  }
+ 
+  getHeading() {
+    var td = document.createElement("div");
+    td.className = "table-heading";
+    addText(td, this.heading);
+    return td;
+  }
+
+  entityValue(entity) {
+    return entity[this.binding];
   }
   
-  getHeading() {
-    var td = document.createElement("div");
-    td.className = "table-heading";
-    addText(td, this.heading);
-    return td;
-  }
-
   getControl(cell, entity, editMode) {
-    var ctl;
-
-    ctl = document.createElement("input");
-    ctl.type = "text";
-
-    if (entity) {
-    	ctl.value = entity[this.binding];
-    	ctl = addLink(ctl, entity[this.linkBinding]);
-        ctl.disabled = this.readOnly || !editMode;
-    } else {
-        ctl.disabled = false;
-    }
-
-    return ctl;
-  }
-
-  getValue(cell) {
-	    var input = cell.firstChild;
-    if (input && input.nodeName == "INPUT") {
-      return input.value;
-    }
-  }
-}
-
-class NumberColumn {
-  constructor(heading, binding, mutable, maxBinding, minBinding) {
-    this.heading    = heading;
-    this.binding    = binding;
-    this.readOnly   = mutable ? false : true;
-    this.maxBinding = maxBinding;
-    this.minBinding = minBinding;
-  }
-
-  setTableName(tableName) {
-    this.tableName = tableName;
-  }
-
-  getHeading() {
-    var td = document.createElement("div");
-    td.className = "table-heading";
-    addText(td, this.heading);
-    return td;
-  }
-
-  getControl(cell, entity, editMode) {
-    var ctl;
-  
-    ctl = document.createElement("input");
-    ctl.type = "number";
-    
-    if (entity) {
-    	ctl.min = this.minBinding ? entity[this.minBinding] : undefined;
-    	ctl.max = this.maxBinding ? entity[this.maxBinding] : undefined;
-    	ctl.value = entity[this.binding];
-        ctl.disabled = this.readOnly || !editMode;
-    } else {
-        ctl.disabled = false;
-    }
-
-    return ctl;
-  }
-
-  getValue(cell) {
-	    var input = cell.firstChild;
-    if (input && input.nodeName == "INPUT") {
-      return input.value;
-    }
-  }
-}
-
-class BoolColumn {
-  constructor(heading, binding, mutable) {
-    this.heading   = heading;
-    this.binding   = binding;
-    this.readOnly  = mutable ? false : true;
-  }
-
-  setTableName(tableName) {
-    this.tableName = tableName;
-  }
-
-  getHeading() {
-    var td = document.createElement("div");
-    td.className = "table-heading";
-    addText(td, this.heading);
-    return td;
-  }
-
-  getControl(cell, entity, editMode) {
-    var ctl;
-
-    ctl = document.createElement("input");
-    ctl.type = "checkbox";
-    
-    if (entity) {
-        ctl.checked = entity[this.binding];
-        ctl.disabled = this.readOnly || !editMode;
-    } else {
-        ctl.disabled = false;
-    }
-
-    return ctl;
-  }
-
-  getValue(cell) {
-	    var input = cell.firstChild;
-    if (input && input.nodeName == "INPUT") {
-      return input.checked;
-    }
-  }
-}
-
-class DateColumn {
-  constructor(heading, binding, mutable) {
-    this.heading   = heading;
-    this.binding   = binding;
-    this.readOnly  = mutable ? false : true;
-  }
-
-  setTableName(tableName) {
-    this.tableName = tableName;
-  }
-
-  getHeading() {
-    var td = document.createElement("div");
-    td.className = "table-heading";
-    addText(td, this.heading);
-    return td;
-  }
-
-  getControl(cell, entity, editMode) {
-    var ctl;
-
-    ctl = document.createElement("input");
-    ctl.type = "date";
-    
-    if (entity) {
-    	ctl.value = entity[this.binding];
-        ctl.disabled = this.readOnly || !editMode;
-    } else {
-        ctl.disabled = false;
-    }
-  
-    return ctl;
-  }
-
-  getValue(cell) {
-    var input = cell.firstChild;
-    if (input && input.nodeName == "INPUT") {
-      return input.value;
-    }
-  }
-}
-
-class SelectColumn {
-  constructor(heading, binding, dropDown, mutable) {
-    this.heading   = heading;
-    this.binding   = binding;
-    this.dropDown  = dropDown;
-    this.readOnly  = mutable ? false : true;
-  }
-
-  setTableName(tableName) {
-    this.tableName = tableName;
-  }
-
-  getHeading() {
-    var td = document.createElement("div");
-    td.className = "table-heading";
-    addText(td, this.heading);
-    return td;
-  }
-
-  getControl(cell, entity, editMode) {
-    var ctl;
+    var ctl = this.createControl();
     var value;
-    
-    if (entity) value = entity[this.binding];
 
-    ctl = document.createElement("select");
-  
-    this.dropDown.addOptions(ctl, 1, value);
+    if (entity) value = this.entityValue(entity);
 
     if (value) {
-      ctl.disabled = this.readOnly || !editMode;
-    } else {
+      this.setValue(ctl, value);
+      ctl.disabled = shouldDisable(this.editable, editMode);
+    } else if (this.editable != Editable.NEVER && editMode == EditMode.ADD){
       ctl.disabled = false;
+    } else {
+        ctl.disabled = true;
     }
 
     return ctl;
   }
 
   getValue(cell) {
-    var select = input;
-    if (select && select.nodeName == "SELECT") {
-      return select.options[select.selectedIndex].value;
+    var ctl = cell.firstChild;
+    if (ctl) {
+      return this.getControlValue(ctl);
     }
   }
-}
 
-class PageLinkage {
-  constructor(page, alt, action) {
-    this.page      = page;
-    this.alt       = alt;
-    this.img       = getImg(alt);
-    this.action    = action;
+  getControlValue(ctl) {
+    return ctl.value;
   }
   
-  setTableName(tableName) {
-    this.tableName = tableName;
+  setValue(ctl, value) {
+    ctl.value = value;
+  }
+}
+
+class TextColumn extends Column {
+  constructor(heading, binding, editable) {
+    super(heading, binding, editable);
   }
 
-  extractLink(entity, cell) {
-    return true;
+  createControl() {
+    var ctl = document.createElement("input");
+    ctl.type = "text";
+    return ctl;
+  }
+}
+
+class NumberColumn extends Column {
+  constructor(heading, binding, editable, max, min) {
+    super(heading, binding, editable);
+    this.max = max ? max : 255;
+    this.min = min ? min : 0;
   }
 
+  createControl() {
+    var ctl = document.createElement("input");
+    ctl.type = "number";
+    if (this.min) ctl.min = this.min;
+    if (this.max) ctl.max = this.max;
+    return ctl;
+  }
+}
+
+class BoolColumn extends Column {
+  constructor(heading, binding, editable) {
+    super(heading, binding, editable);
+  }
+
+  createControl() {
+    var ctl = document.createElement("div");
+    ctl.type = "checkbox";
+    return ctl;
+  }
+
+  getControlValue(ctl) {
+    return ctl.checked;
+  }
+
+  setValue(ctl, value) {
+    ctl.value = value;
+  }
+}
+
+class DateColumn extends Column {
+  constructor(heading, binding, editable) {
+    super(heading, binding, editable);
+  }
+
+  createControl() {
+    var ctl = document.createElement("input");
+    ctl.type = "date";
+    return ctl;
+  }
+}
+
+class SelectColumn extends Column {
+  constructor(heading, binding, dropDown, editable) {
+    super(heading, binding, editable);
+    this.dropDown  = dropDown;
+  }
+
+  createControl() {
+    var ctl = document.createElement("select");
+    this.dropDown.addOptions(ctl, 1);
+    return ctl;
+  }
+  
+  getControlValue(select) {
+    return select.options[select.selectedIndex].value;
+  }
+ 
+  setValue(ctl, value) {
+   var i;
+   for (i = 0; i < ctl.options.length; i++) {
+     if (ctl.options[i].value == value) {
+      ctl.selectedIndex = i;
+      return;
+     }
+   }
+  }
+}
+
+class HeaderLinkage {
+  constructor(alt, method) {
+    this.alt    = alt;
+    this.method = method;
+
+    this.img    = getImg(alt);
+  }
+  
   getButton() {
-    return getButtonLink(this.page, this.action);
+    return getButton(this.value, this.alt, this.method);
   }
 }
 
-class FormLinkage {
-  constructor(page, alt, rel) {
-    this.page      = page;
-    this.alt       = alt;
-    this.img       = getImg(alt);
-    this.rel       = rel;
-  }
-  
-  setTableName(tableName) {
-    this.tableName = tableName;
+class FunctionLinkage extends HeaderLinkage {
+  constructor(alt, method) {
+    super(alt, method);
   }
 
   extractLink(entity, cell) {
-    var lnk = getLink(entity.links, this.rel);
-  
+    var lnk = getLink(entity.links, this.alt);
+    
     if (lnk) {
-      this.url    = this.page + "?" + lnk.rel + "=" + lnk.href;
-
+      this.value = cell.id.replace("_buttons", "");
+      
       return true;
     }
 
     return false;
-  }
-
-  getButton() {
-    return getButtonLink(this.url, this.alt);
-  }
-}
-
-class RestLinkage {
-  constructor(alt, rel, action) {
-    this.alt       = alt;
-    this.img       = getImg(alt);
-    this.rel       = rel;
-    this.action    = action;
-  }
-  
-  setTableName(tableName) {
-    this.tableName = tableName;
-  }
-
-  extractLink(entity, cell) {
-    var linkage = this;
-    var lnk = getLink(entity.links, linkage.rel);
-  
-    if (lnk) {
-      this.url    = lnk.href;
-      this.method = lnk.method;
-
-      return true;
-    }
-
-    return false;
-  }
-
-  getButton() {
-    return getButton(this.url, this.rel, this.tableName +"." + this.action + "(this.value);");
-  }
-}
-
-class FunctionLinkage {
-  constructor(alt, action) {
-    this.alt       = alt;
-    this.img       = getImg(alt);
-    this.action    = action;
-  }
-  
-  setTableName(tableName) {
-    this.tableName = tableName;
-  }
-
-  extractLink(entity, cell) {
-    this.cellId = cell.id.replace("_buttons", "");
-    return true;
-  }
-
-  getButton() {
-    return getButton(this.cellId, this.alt, this.action);
   }
 }
 
@@ -408,19 +300,19 @@ class ButtonColumn {
     }
 
   setTableName(tableName) {
-    this.tableName = tableName;
-    
-    this.headLinkage.forEach(function(l) { l.setTableName(tableName);});
-    this.btnLinkage.forEach(function(l) { l.setTableName(tableName);});
+	this.tableName = tableName;
   }
 
   getHeading() {
     var td = document.createElement("div");
     td.className = "table-heading-btn";
 
+    var col = this;
     if (this.headLinkage) {
       this.headLinkage.forEach(function(linkage) {
-        td.append(linkage.getButton());
+    	var btn = linkage.getButton();
+    	btn.id = col.tableName + "_" + btn.id;
+        td.append(btn);
       });
     } else {
       addText(td, "");
@@ -437,7 +329,9 @@ class ButtonColumn {
     if (editMode && this.btnLinkage) {
       this.btnLinkage.forEach(function(linkage) {
         if (entity && linkage.extractLink(entity, cell)) {
-          ctl.append(linkage.getButton());
+          var btn = linkage.getButton();
+          btn.id = cell.id + "_" + btn.id;
+          ctl.append(btn);
         }
       });
     } else {
@@ -446,4 +340,12 @@ class ButtonColumn {
 
     return ctl;
   }
+}
+
+async function checkResponse(response) {
+	if (response.ok) {
+		return response.json();
+	}
+
+	throw new Error(response.statusText);
 }

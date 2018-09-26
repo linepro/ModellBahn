@@ -13,23 +13,23 @@
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var fetchUrl = apiRoot() + "decoderTyp";
+var fetchUrl = fetchUrl("decoderTyp");
 var hersteller = new DropDown(apiRoot() + "hersteller", [ "name" ], [ "name" ]);
 var protokoll = new DropDown(apiRoot() + "protokoll", [ "name" ], [ "name" ]);
 var columns = [
-    new SelectColumn("Hersteller", "hersteller", hersteller),
-    new TextColumn("Bestell Nr", "bestellNr"),
-    new SelectColumn("Protokoll", "protokoll", protokoll, false),
-    new BoolColumn("Sound", "sound", false),
-    new ButtonColumn([new PageLinkage(siteRoot() + "decoderTyp.html", "add", "add")],
-    		[new FormLinkage(siteRoot() + "decoderTyp.html", "update", "self"), 
-    		 new RestLinkage("delete", "delete", "deleteRow")])
+    new SelectColumn("Hersteller", "hersteller", hersteller, Editable.ADD),
+    new TextColumn("Bestell Nr", "bestellNr", Editable.ADD),
+    new SelectColumn("Protokoll", "protokoll", protokoll, Editable.UPDATE),
+    new BoolColumn("Sound", "sound", Editable.UPDATE),
+    new ButtonColumn([new HeaderLinkage("add", "listing.newRow()")],
+    		[new FunctionLinkage("update", "listing.editRow(this.value)"), 
+    		 new FunctionLinkage("delete", "listing.deleteRow(this.value)")])
     ];
-var listing = new ItemGrid(10, fetchUrl, undefined, "listing", columns, true, true, undefined);
+var listing = new ItemGrid(10, fetchUrl, "listing", columns, true, EditMode.UPDATE, undefined, "decoderTyp.html");
 	
-function init() {
-    hersteller.init();
-    protokoll.init();
+async function init() {
+	await await hersteller.init();
+	await protokoll.init();
 	listing.init();
 }
 </script>
@@ -39,25 +39,25 @@ function init() {
     <header>
         <hr class="highlight" />
         <nav>
-            <a class="btn btn-info btn-sm" href='../index.html'>Home</a>
-            <a class="btn btn-info btn-sm" href="aufbauten.html">Aufbau</a>
-            <a class="btn btn-info btn-sm" href="antrieben.html">Antrieb</a>      
-            <a class="btn btn-info btn-sm" href="bahnverwaltungen.html">Bahnverwaltung</a>      
-            <a class="btn btn-info btn-sm" href="decoderTypen.html">Decoder Typ</a>
-            <a class="btn btn-info btn-sm" href="herstellern.html">Hersteller</a>
-            <a class="btn btn-info btn-sm" href="kategorien.html">Katogorie</a>
-            <a class="btn btn-info btn-sm" href="kupplungen.html">Kupplung</a>
-            <a class="btn btn-info btn-sm" href="lander.html">Land</a>
-            <a class="btn btn-info btn-sm" href="lichten.html">Licht</a>
-            <a class="btn btn-info btn-sm" href="massstaben.html">Massstab</a>
-            <a class="btn btn-info btn-sm" href="motorTypen.html">Motor Typ</a>
-            <a class="btn btn-info btn-sm" href="protokollen.html">Protokoll</a>
-            <a class="btn btn-info btn-sm" href="sonderModellen.html">Sonder Modell</a>
-            <a class="btn btn-info btn-sm" href="spurweiten.html">Spurwiete</a>
-            <a class="btn btn-info btn-sm" href="steuerungen.html">Steuerung</a>
-            <a class="btn btn-info btn-sm" href="wahrungen.html">Wahrung</a>
-            <a class="btn btn-info btn-sm" href="zugtypen.html">Zug Typ</a>
-            <button class="btn btn-info btn-sm" onclick="window.history.back();">Back</button>
+            <a class="nav-button" href='../index.html'>Home</a>
+            <button class="nav-button" onclick="window.history.back();">Back</button>
+            <a class="nav-button" href="aufbauten.html">Aufbau</a>
+            <a class="nav-button" href="antrieben.html">Antrieb</a>      
+            <a class="nav-button" href="bahnverwaltungen.html">Bahnverwaltung</a>      
+            <a class="nav-button" href="decoderTypen.html">Decoder Typ</a>
+            <a class="nav-button" href="herstellern.html">Hersteller</a>
+            <a class="nav-button" href="kategorien.html">Katogorie</a>
+            <a class="nav-button" href="kupplungen.html">Kupplung</a>
+            <a class="nav-button" href="lander.html">Land</a>
+            <a class="nav-button" href="lichten.html">Licht</a>
+            <a class="nav-button" href="massstaben.html">Massstab</a>
+            <a class="nav-button" href="motorTypen.html">Motor Typ</a>
+            <a class="nav-button" href="protokollen.html">Protokoll</a>
+            <a class="nav-button" href="sonderModellen.html">Sonder Modell</a>
+            <a class="nav-button" href="spurweiten.html">Spurwiete</a>
+            <a class="nav-button" href="steuerungen.html">Steuerung</a>
+            <a class="nav-button" href="wahrungen.html">Wahrung</a>
+            <a class="nav-button" href="zugtypen.html">Zug Typ</a>
         </nav>
     </header>
     	
