@@ -30,7 +30,7 @@ header.navbar {
 
 footer {
 	background-color: #fffbd0;
-	padding: 20px 20px 40px 20px;
+	padding: 2em 2em 4em 2em;
 	color: grey;
 	width: 90%;
 }
@@ -43,8 +43,7 @@ html, body {
     background-color: #fffbd0;
     padding: 0.5em;
 	font-family: Verdana, sans-serif;
-	font-size: 12pt;
-	line-height: 0.5em
+	line-height: 1.5em
 }
 
 a {
@@ -62,11 +61,12 @@ abbr[title] {
 	text-decoration: underline dotted
 }
 
-input, select, textarea {
+input, option, select, textarea {
 	border: none;
     font: inherit;
 	background-color: inherit;
     color: inherit;
+    height: 2em;
     margin: 0.3rem
 }
 
@@ -75,6 +75,7 @@ input: disabled, select: disabled, textarea: disabled {
 	font: inherit;
 	background-color: inherit;
     color: inherit;
+    height: 2em;
     margin: 0.3rem
 }
 
@@ -83,6 +84,7 @@ input: readOnly, select: readOnly, textarea: readOnly {
 	font: inherit;
 	background-color: inherit;
     color: inherit;
+    height: 2em;
     margin: 0.3rem
 }
 
@@ -90,15 +92,13 @@ button {
     background-color: #5bc0de;
 	border: 0.1em solid transparent;
     border-color: #46b8da;
-    border-radius: 3rem;
+    border-radius: 0.25em;
     color: white;
-    font-size: 12pt;
-	padding: 3em 3em;
+	padding: 0.25em 0.25em;
 }
 
 code, kbd, pre, samp {
 	font-family: monospace, monospace;
-	font-size: 12pt
 }
 
 dfn {
@@ -106,31 +106,31 @@ dfn {
 }
 
 h1 {
-	font-size: 36pt
+	font-size: 3em
 }
 
 h2 {
-	font-size: 30pt
+	font-size: 2.5em
 }
 h3 {
-	font-size: 24pt
+	font-size: 2em
 }
 h4 {
-	font-size: 20pt
+	font-size: 1.75em
 }
 
 h5 {
-	font-size: 18pt
+	font-size: 1.5em
 }
 
 h6 {
-	font-size: 16pt
+	font-size: 1.25em
 }
 
 h1, h2, h3, h4, h5, h6 {
 	font-family: "Segoe UI", Arial, sans-serif;
 	font-weight: 400;
-	margin: 0.3em 0
+	margin: 0.8em 0
 }
 
 fieldset {
@@ -140,7 +140,7 @@ fieldset {
 }
 
 figure {
-	margin: 1px 40px
+	margin: 0.1em 3.5en
 }
 
 hr {
@@ -149,16 +149,16 @@ hr {
 	border-top: 0.1em solid #eee;
 	box-sizing: content-box;
 	height: 0;
-	margin: 20px 0;
+	margin: 1.75em 0;
 	overflow: visible;
     width: 90%
 }
 
 img {
 	border-style: none;
-    height: 2em;
+    height: 1.5em;
     text-align: center;
-    width: 2em
+    width: 1.5em
 }
 
 legend {
@@ -211,7 +211,7 @@ table {
 	border-collapse: collapse;
 	border-bottom: 0.3em solid #ddd;
 	vertical-align: middle;
-	padding: 2em;
+	padding: 0.5em;
 	width: 90%;
 }
 
@@ -220,10 +220,10 @@ thead {
     color: white;
 	font-weight: bold;
 	height: 2em;
-	padding-bottom: 0.5em;
+	padding-bottom: 1em;
 	padding-left: 0.5rem;
 	padding-right: 0.5rem;
-	padding-top: 0.5em;
+	padding-top: 1em;
 	text-align: left;
 }
 
@@ -231,19 +231,19 @@ tfoot {
 	background-color: #99D9EA;
 	font-weight: bold;
     color: white;
-	height: 25px;
-	padding-bottom: 0.5em;
+	height: 2em;
+	padding-bottom: 1em;
 	padding-left: 0.5rem;
 	padding-right: 0.5rem;
-	padding-top: 0.5em;
+	padding-top: 1em;
 	text-align: center;
 }
 
 tbody {
-	padding-bottom: 0.5em;
+	padding-bottom: 1em;
 	padding-left: 0.5em;
 	padding-right: 0.5em;
-	padding-top: 0.5em;
+	padding-top: 1em;
 }
 
 td: center {
@@ -269,9 +269,9 @@ textarea {
 div.table {
 	display: table;
     border-collapse: collapse;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 0.1em solid #ddd;
     vertical-align: middle;
-    padding: 5px;
+    padding: 0.5em;
     width: 90%;
 }
  
@@ -280,20 +280,20 @@ div.table > div.thead {
     background-color: #99D9EA;
     color: white;
     font-weight: bold;
-    padding-bottom: 0.5em;
+    padding-bottom: 1em;
     padding-left: 0.5em;
     padding-right: 0.5em;
-    padding-top: 0.5em;
+    padding-top: 1em;
     text-align: left;
     width: 90%;
 }
  
 div.table > div.tbody {
     display: table-row-group;
-    padding-bottom: 0.5em;
+    padding-bottom: 1em;
     padding-left: 0.5em;
     padding-right: 0.5em;
-    padding-top: 0.5em;
+    padding-top: 1em;
     width: 90%;
 }
  
@@ -302,10 +302,10 @@ div.table > div.tfoot {
     background-color: #99D9EA;
     color: white;
     font-weight: bold;
-    padding-bottom: 0.5em;
+    padding-bottom: 1em;
     padding-left: 0.5em;
     padding-right: 0.5em;
-    padding-top: 0.5em;
+    padding-top: 1em;
     width: 90%;
 }
  
@@ -374,7 +374,6 @@ div.table > div.tfoot > div.table-row > div.table-next {
     border-color: #46b8da;
     border-radius: 0.3em;
     color: white;
-    font-size: 12pt;
     padding: 0.3em 0.3em;
 }
 
