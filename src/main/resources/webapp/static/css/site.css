@@ -3,7 +3,7 @@ html {
 	-webkit-text-size-adjust: 100%;
 	background-color: #fffbd0;
 	box-sizing: border-box;
-	border-radius: 25px;
+	border-radius: .25em;
 	overflow-x: hidden
 }
 
@@ -43,8 +43,8 @@ html, body {
     background-color: #fffbd0;
     padding: 0.5em;
 	font-family: Verdana, sans-serif;
-	font-size: 15px;
-	line-height: 1.5
+	font-size: 12pt;
+	line-height: 0.5em
 }
 
 a {
@@ -63,42 +63,42 @@ abbr[title] {
 }
 
 input, select, textarea {
+	border: none;
     font: inherit;
-	background-color: #ffffff;
-    color: #0;
-    height: 27px;
-    margin: 0
+	background-color: inherit;
+    color: inherit;
+    margin: 0.3rem
 }
 
 input: disabled, select: disabled, textarea: disabled {
-    font: inherit;
-	background-color: #ffffff;
-    color: #0;
-    height: 27px;
-    margin: 0
+    border: none;
+	font: inherit;
+	background-color: inherit;
+    color: inherit;
+    margin: 0.3rem
 }
 
 input: readOnly, select: readOnly, textarea: readOnly {
-    font: inherit;
-	background-color: #ffffff;
-    color: #0;
-    height: 27px;
-    margin: 0
+    border: none;
+	font: inherit;
+	background-color: inherit;
+    color: inherit;
+    margin: 0.3rem
 }
 
 button {
     background-color: #5bc0de;
-	border: 1px solid transparent;
+	border: 0.1em solid transparent;
     border-color: #46b8da;
     border-radius: 3rem;
     color: white;
-    font-size: 4px;
+    font-size: 12pt;
 	padding: 3em 3em;
 }
 
 code, kbd, pre, samp {
 	font-family: monospace, monospace;
-	font-size: 1px
+	font-size: 12pt
 }
 
 dfn {
@@ -106,37 +106,37 @@ dfn {
 }
 
 h1 {
-	font-size: 36px
+	font-size: 36pt
 }
 
 h2 {
-	font-size: 30px
+	font-size: 30pt
 }
 h3 {
-	font-size: 24px
+	font-size: 24pt
 }
 h4 {
-	font-size: 20px
+	font-size: 20pt
 }
 
 h5 {
-	font-size: 18px
+	font-size: 18pt
 }
 
 h6 {
-	font-size: 16px
+	font-size: 16pt
 }
 
 h1, h2, h3, h4, h5, h6 {
 	font-family: "Segoe UI", Arial, sans-serif;
 	font-weight: 400;
-	margin: 10px 0
+	margin: 0.3em 0
 }
 
 fieldset {
-	border: 1px solid #c0c0c0;
-	margin: 0 2px;
-	padding: 0.35em .625em .75em
+	border: 0.1em solid #c0c0c0;
+	margin: 0 0.2em;
+	padding: 0.35em 0.625em 0.75em
 }
 
 figure {
@@ -144,9 +144,9 @@ figure {
 }
 
 hr {
-	border: 0;
+	border: none;
     display: block;
-	border-top: 1px solid #eee;
+	border-top: 0.1em solid #eee;
 	box-sizing: content-box;
 	height: 0;
 	margin: 20px 0;
@@ -156,9 +156,9 @@ hr {
 
 img {
 	border-style: none;
-    height: 35px;
+    height: 2em;
     text-align: center;
-    width: 35px
+    width: 2em
 }
 
 legend {
@@ -188,11 +188,11 @@ small {
 }
 
 sub {
-	bottom: -0.25px
+	bottom: -0.25em
 }
 
 sup {
-	top: -0.5px
+	top: -0.5em
 }
 
 sub, sup {
@@ -207,9 +207,9 @@ svg: not(: root) {
 }
 
 table {
-	border: 0;
+	border: none;
 	border-collapse: collapse;
-	border-bottom: 1px solid #ddd;
+	border-bottom: 0.3em solid #ddd;
 	vertical-align: middle;
 	padding: 2em;
 	width: 90%;
@@ -219,11 +219,11 @@ thead {
 	background-color: #99D9EA;
     color: white;
 	font-weight: bold;
-	height: 4px;
-	padding-bottom: 5em;
-	padding-left: 5rem;
-	padding-right: 5rem;
-	padding-top: 5em;
+	height: 2em;
+	padding-bottom: 0.5em;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	padding-top: 0.5em;
 	text-align: left;
 }
 
@@ -232,18 +232,18 @@ tfoot {
 	font-weight: bold;
     color: white;
 	height: 25px;
-	padding-bottom: 2em;
-	padding-left: 2em;
-	padding-right: 2em;
-	padding-top: 2em;
+	padding-bottom: 0.5em;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	padding-top: 0.5em;
 	text-align: center;
 }
 
 tbody {
-	padding-bottom: 5em;
-	padding-left: 5em;
-	padding-right: 5em;
-	padding-top: 5em;
+	padding-bottom: 0.5em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	padding-top: 0.5em;
 }
 
 td: center {
@@ -258,7 +258,7 @@ tr: nth-child(even) {
 	background-color: #f2f2f2;
 } 
 
-[hidden], tpxplate {
+[hidden], template {
 	display: none
 }
 
@@ -280,20 +280,20 @@ div.table > div.thead {
     background-color: #99D9EA;
     color: white;
     font-weight: bold;
-    padding-bottom: 5em;
-    padding-left: 5em;
-    padding-right: 5em;
-    padding-top: 5em;
+    padding-bottom: 0.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-top: 0.5em;
     text-align: left;
     width: 90%;
 }
  
 div.table > div.tbody {
     display: table-row-group;
-    padding-bottom: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 5px;
+    padding-bottom: 0.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-top: 0.5em;
     width: 90%;
 }
  
@@ -302,10 +302,10 @@ div.table > div.tfoot {
     background-color: #99D9EA;
     color: white;
     font-weight: bold;
-    padding-bottom: 2em;
-    padding-left: 5em;
-    padding-right: 5em;
-    padding-top: 2em;
+    padding-bottom: 0.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-top: 0.5em;
     width: 90%;
 }
  
@@ -316,14 +316,14 @@ div.table > div.tfoot > div.table-row {
 }
  
 div.table > div.thead > div.table-row > div.table-heading {
-	border: 0;
+	border: none;
     display: table-cell;
     font-weight: bold;
     height: 1em;
 }
 
 div.table > div.thead > div.table-row > div.table-heading-btn {
-	border: 0;
+	border: none;
     display: table-cell;
     text-align: center;
     height: 1em;
@@ -331,21 +331,21 @@ div.table > div.thead > div.table-row > div.table-heading-btn {
 }
 
 div.table > div.tbody > div.table-row > div.table-cell {
-	border: 0;
+	border: none;
     display: table-cell;
-    height: 25px;
+    height: 1.5em;
 }
 
 div.table > div.tbody > div.table-row > div.table-btn {
-	border: 0;
+	border: none;
     display: table-cell;
     text-align: center;
-    height: 25px;
+    height: 1.5em;
     vertical-align: baseline;
 }
 
 div.table > div.tfoot > div.table-row > div.table-prev {
-	border: 0;
+	border: none;
     display: table-cell;
     font-weight: bold;
     text-align: left;
@@ -353,7 +353,7 @@ div.table > div.tfoot > div.table-row > div.table-prev {
 }
 
 div.table > div.tfoot > div.table-row > div.table-foot {
-	border: 0;
+	border: none;
     display: table-cell;
     font-weight: bold;
     text-align: center;
@@ -361,7 +361,7 @@ div.table > div.tfoot > div.table-row > div.table-foot {
 }
 
 div.table > div.tfoot > div.table-row > div.table-next {
-	border: 0;
+	border: none;
     display: table-cell;
     font-weight: bold;
     text-align: right;
@@ -370,12 +370,12 @@ div.table > div.tfoot > div.table-row > div.table-next {
 
 .nav-button {
     background-color: #5bc0de;
-    border: 1px solid transparent;
+    border: 0.1em solid transparent;
     border-color: #46b8da;
-    border-radius: 3px;
+    border-radius: 0.3em;
     color: white;
-    font-size: 12px;
-    padding: 3px 3px;
+    font-size: 12pt;
+    padding: 0.3em 0.3em;
 }
 
 .nav-img{
