@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.JoinColumn;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.OneToMany;

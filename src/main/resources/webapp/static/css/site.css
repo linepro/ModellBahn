@@ -28,22 +28,25 @@ header {
     background-color: LightYellow;
 	margin-bottom: 0.3rem;
     opacity: 1;
+    padding: 0.5rem;
     position: sticky;
-    top: 0
+    top: 0;
+    width: 100%;
 }
 
 footer {
     background-color: LightYellow;
     bottom: 0;
     color: grey;
-    margin-top:0.3rem
-    padding: 1rem;
+    margin-top: 0.3rem;
+    padding: 0.5rem;
     position: sticky;
     width: 100%;
 }
 
 body {
-    margin: 0
+    margin: 0;
+    padding: 0.5rem
 }
 
 html, body {
@@ -176,7 +179,7 @@ hr {
     margin: 0.5rem 0;
     overflow: visible;
     text-align: center;
-    width: 90%
+    width: 100%
 }
 
 img {
@@ -237,7 +240,7 @@ table {
     border-bottom: 0.1rem solid LightSkyBlue;
     vertical-align: middle;
     padding: 0.5rem;
-    width: 90%;
+    width: 100%;
 }
 
 thead {
@@ -245,10 +248,10 @@ thead {
     color: white;
     font-weight: bold;
     height: 2rem;
-    padding-bottom: 1rem;
+    padding-bottom: 0.5rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    padding-top: 1rem;
+    padding-top: 0.5rem;
     text-align: left;
 }
 
@@ -257,10 +260,10 @@ tfoot {
     font-weight: bold;
     color: white;
     height: 2rem;
-    padding-bottom: 1rem;
+    padding-bottom: 0.5rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    padding-top: 1rem;
+    padding-top: 0.5rem;
     text-align: center;
 }
 
@@ -296,8 +299,8 @@ div.table {
     border-collapse: collapse;
     border-bottom: 0.1rem solid LightSkyBlue;
     vertical-align: middle;
-    padding: 1rem;
-    width: 90%;
+    padding: 0.5rem;
+    width: 100%;
 }
  
 div.table > div.thead {
@@ -305,12 +308,12 @@ div.table > div.thead {
     background-color: LightSkyBlue;
     color: white;
     font-weight: bold;
-    padding-bottom: 1rem;
+    padding-bottom: 0.5rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    padding-top: 1rem;
+    padding-top: 0.5rem;
     text-align: left;
-    width: 90%;
+    width: 100%;
 }
  
 div.table > div.tbody {
@@ -319,7 +322,7 @@ div.table > div.tbody {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     padding-top: 0.5rem;
-    width: 90%;
+    width: 100%;
 }
  
 div.table > div.tfoot {
@@ -327,11 +330,11 @@ div.table > div.tfoot {
     background-color: LightSkyBlue;
     color: white;
     font-weight: bold;
-    padding-bottom: 1rem;
+    padding-bottom: 0.5rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    padding-top: 1rem;
-    width: 90%;
+    padding-top: 0.5rem;
+    width: 100%;
 }
  
 div.table > div.thead > div.table-row,
@@ -409,16 +412,31 @@ ul.nav {
 	line-height: 2.5rem;
     margin: 0;
     overflow: hidden;
-    padding: 0;
-    width: 90%
+    padding: 0.5rem;
+    width: 100%
 }
 
-ul.nav > li {
+li.nav {
    display: block;
    float: left;
 }
 
-ul.nav > li:last-child {
-   display: block;
-   float: right;
+ul.footer {
+    border: none;
+    display: inline;
+    list-style-type: none;
+    line-height: 2.5rem;
+    margin-left: 0;
+    overflow: hidden;
+    padding: 0.5rem;
+    width: 100%
+}
+
+ul.footer li {
+   display: inline;
+   float: left;
+}
+
+ul.footer li:last-of-type {
+    float: right;
 }
