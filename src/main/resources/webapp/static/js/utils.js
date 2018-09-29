@@ -18,7 +18,7 @@ function shouldDisable(editable, editMode) {
     return true;
   }
 
-  if (editable < editMode) {
+  if (editable <= editMode) {
     return false;
   }
 
@@ -148,11 +148,14 @@ class Column {
 
     if (value) {
       this.setValue(ctl, value);
+    }
+    
+    if (value || entity) {
       ctl.disabled = shouldDisable(this.editable, editMode);
-    } else if (this.editable != Editable.NEVER && editMode == EditMode.ADD){
+    } else if (editMode == EditMode.ADD && this.editable != Editable.NEVER) {
       ctl.disabled = false;
     } else {
-        ctl.disabled = true;
+      ctl.disabled = true;
     }
 
     return ctl;
@@ -175,8 +178,9 @@ class Column {
 }
 
 class TextColumn extends Column {
-  constructor(heading, binding, editable) {
+  constructor(heading, binding, editable, length) {
     super(heading, binding, editable);
+    this.length = length ? length : 50;
   }
 
   createControl() {
@@ -208,7 +212,7 @@ class BoolColumn extends Column {
   }
 
   createControl() {
-    var ctl = document.createElement("div");
+    var ctl = document.createElement("input");
     ctl.type = "checkbox";
     return ctl;
   }
@@ -218,7 +222,7 @@ class BoolColumn extends Column {
   }
 
   setValue(ctl, value) {
-    ctl.value = value;
+    ctl.checked = value;
   }
 }
 

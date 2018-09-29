@@ -375,7 +375,7 @@ class ItemGrid {
 
       removeChildren(td);
 
-      var ctl = column.getControl(td, undefined, grid.editMode);
+      var ctl = column.getControl(td, undefined, EditMode.ADD);
       td.appendChild(ctl);
     });
     
@@ -415,7 +415,7 @@ class ItemGrid {
   
   async saveRow(rowId) {
     var grid = this;
-    var saveUrl = grid.restRoot;
+    var saveUrl = grid.apiUrl;
     var data = grid.rowData(rowId);
     var jsonData = JSON.stringify(data);
     if (data) {
@@ -450,7 +450,7 @@ class EditableGrid extends ItemGrid {
           [new HeaderLinkage("add", elementName + ".addRow()")],
           [new FunctionLinkage("update", elementName + ".updateRow(this.value)"), 
            new FunctionLinkage("delete", elementName + ".deleteRow(this.value)")]
-          )], true, true, undefined);
+          )], true, EditMode.UPDATE, undefined);
     this.dataType = dataType;
   }
   

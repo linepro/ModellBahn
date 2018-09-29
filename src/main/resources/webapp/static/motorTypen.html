@@ -6,46 +6,48 @@
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <script type="text/javascript" src="js/lib/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="js/lib/popper.min-1.14.3.js"></script>
-<link rel="stylesheet" href="css/bootstrap.min-4.1.3.css"/>
+<link rel="stylesheet" href="css/bootstrap.min-4.1.3.css" />
 <script type="text/javascript" src="js/lib/bootstrap.min-4.1.3.js"></script>
-<link rel="stylesheet" href="css/site.css"/>
+<link rel="stylesheet" href="css/site.css" />
 <script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var motorTyp = new EditableGrid("motorTyp", "motorTyp");
+    var motorTyp = new EditableGrid("motorTyp", "motorTyp");
 
-function init() {
-	motorTyp.init();
-}
+    function init() {
+        motorTyp.init();
+    }
 </script>
 </head>
 <body onload="javascript:init()">
-    <header>
-        <hr class="highlight" />
+	<header>
         <nav>
-            <a class="nav-button" href='../index.html'>Home</a>
-            <button class="nav-button" onclick="window.history.back();">Back</button>
-            <a class="nav-button" href="aufbauten.html">Aufbau</a>
-            <a class="nav-button" href="antrieben.html">Antrieb</a>      
-            <a class="nav-button" href="bahnverwaltungen.html">Bahnverwaltung</a>      
-            <a class="nav-button" href="decoderTypen.html">Decoder Typ</a>
-            <a class="nav-button" href="herstellern.html">Hersteller</a>
-            <a class="nav-button" href="kategorien.html">Katogorie</a>
-            <a class="nav-button" href="kupplungen.html">Kupplung</a>
-            <a class="nav-button" href="lander.html">Land</a>
-            <a class="nav-button" href="lichten.html">Licht</a>
-            <a class="nav-button" href="massstaben.html">Massstab</a>
-            <a class="nav-button" href="motorTypen.html">Motor Typ</a>
-            <a class="nav-button" href="protokollen.html">Protokoll</a>
-            <a class="nav-button" href="sonderModellen.html">Sonder Modell</a>
-            <a class="nav-button" href="spurweiten.html">Spurwiete</a>
-            <a class="nav-button" href="steuerungen.html">Steuerung</a>
-            <a class="nav-button" href="wahrungen.html">Wahrung</a>
-            <a class="nav-button" href="zugtypen.html">Zug Typ</a>
+            <ul class="nav">
+                <li><a class="nav-button" href='../index.html'>Home</a></li>
+                <li><a class="nav-button" href="#" onclick="history.go(-1)">Back</a></li>
+                <li><a class="nav-button" href="aufbauten.html">Aufbau</a></li>
+                <li><a class="nav-button" href="antrieben.html">Antrieb</a></li>
+                <li><a class="nav-button" href="bahnverwaltungen.html">Bahnverwaltung</a></li>  
+                <li><a class="nav-button" href="decoderTypen.html">Decoder Typ</a></li>
+                <li><a class="nav-button" href="herstellern.html">Hersteller</a></li>
+                <li><a class="nav-button" href="kategorien.html">Katogorie</a></li>
+                <li><a class="nav-button" href="kupplungen.html">Kupplung</a></li>
+                <li><a class="nav-button" href="lander.html">Land</a></li>
+                <li><a class="nav-button" href="lichten.html">Licht</a></li>
+                <li><a class="nav-button" href="massstaben.html">Massstab</a></li>
+                <li><a class="nav-button" href="motorTypen.html">Motor Typ</a></li>
+                <li><a class="nav-button" href="protokollen.html">Protokoll</a></li>
+                <li><a class="nav-button" href="sonderModellen.html">Sonder Modell</a></li>
+                <li><a class="nav-button" href="spurweiten.html">Spurwiete</a></li>
+                <li><a class="nav-button" href="steuerungen.html">Steuerung</a></li>
+                <li><a class="nav-button" href="wahrungen.html">Wahrung</a></li>
+                <li><a class="nav-button" href="zugtypen.html">Zug Typ</a></li>
+            </ul>
         </nav>
-    </header>
-    	
+        <hr class="highlight" />
+	</header>
+
 	<section>
 		<article>
 			<header>
@@ -53,12 +55,22 @@ function init() {
 			</header>
 
 			<div id="data">
-				<div id="motorTyp">
-				</div>
+				<div id="motorTyp"></div>
 			</div>
 		</article>
 	</section>
 
-    <embed src="footer.html"  type="text/html" />
+	<footer>
+		<div id="footer">
+			<div>
+				<hr class="highlight" />
+				<ul class="nav">
+					<li>Copyright &copy; 2018 ModellBahn Website</li>
+					<li style="float: right"><a class="nav-button" href='LICENSE'
+						target="_blank">License</a></li>
+				</ul>
+			</div>
+		</div>
+	</footer>
 </body>
 </html>

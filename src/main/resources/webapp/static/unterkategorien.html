@@ -28,12 +28,13 @@ function init() {
 </head>
 <body onload="javascript:init()">
     <header>
-        <hr class="highlight" />
         <nav>
-            <a class="btn btn-info btn-sm" href='../index.html'>Home</a>
-            <a class="btn btn-info btn-sm" href="kategorien.html">Katogorie</a>
-            <button class="btn btn-info btn-sm" onclick="window.history.back();">Back</button>
+            <ul class="nav">
+                <li><a class="nav-button" href='../index.html'>Home</a></li>
+                <li><a class="nav-button" href="#" onclick="history.go(-1)">Back</a></li>
+            </ul>
         </nav>
+        <hr class="highlight" />
     </header>
     	
 	<section>
@@ -49,6 +50,16 @@ function init() {
 		</article>
 	</section>
 
-    <embed src="footer.html"  type="text/html" />
+    <footer>
+        <div id="footer">
+            <div>
+                <hr class="highlight" />
+                <ul class="nav">
+                    <li>Copyright &copy; 2018 ModellBahn Website</li>
+                    <li><a class="nav-button" href='LICENSE' target="_blank">License</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

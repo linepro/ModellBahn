@@ -15,15 +15,17 @@
 </head>
 <body>
     <header>
-        <hr class="highlight" />
         <nav>
-            <a class="nav-button" href='../index.html'>Home</a>
-            <button class="nav-button" onclick="window.history.back();">Back</button>
-            <a class="nav-button" href="produkten.html">Produkt</a>
-            <a class="nav-button" href="vorbilder.html">Vorbild</a>      
-            <a class="nav-button" href="artikelen.html">Artikel</a>      
-            <a class="nav-button" href="zugen.html">Zug</a>
+            <ul class="nav">
+                <li><a class="nav-button" href='../index.html'>Home</a></li>
+                <li><a class="nav-button" href="#" onclick="history.go(-1)">Back</a></li>
+	            <li><a class="nav-button" href="produkten.html">Produkt</a></li>
+	            <li><a class="nav-button" href="vorbilder.html">Vorbild</a></li>
+	            <li><a class="nav-button" href="artikelen.html">Artikel</a></li>      
+	            <li><a class="nav-button" href="zugen.html">Zug</a></li>
+            </ul>
         </nav>
+        <hr class="highlight" />
     </header>
     	
 	<section>
@@ -40,6 +42,16 @@
 		</article>
 	</section>
 
-    <embed src="footer.html"  type="text/html" />
+    <footer>
+        <div id="footer">
+            <div>
+                <hr class="highlight" />
+                <ul class="nav">
+                    <li>Copyright &copy; 2018 ModellBahn Website</li>
+                    <li><a class="nav-button" href='LICENSE' target="_blank">License</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
