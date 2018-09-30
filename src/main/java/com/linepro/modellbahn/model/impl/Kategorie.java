@@ -103,8 +103,8 @@ public class Kategorie extends AbstractNamedItem<NameKey> implements IKategorie 
     }
 
     @Override
-    protected void addChildLinks(URI root) {
-        addLinks(root, getUnterKategorien(), false, false);
+    protected void addChildLinks(URI root, boolean update, boolean delete) {
+        addLinks(root, getUnterKategorien(), update, delete);
     }
 
     @Override

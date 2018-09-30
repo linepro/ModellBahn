@@ -147,7 +147,7 @@ public class DecoderTypFunktion extends AbstractNamedItem<DecoderTypFunktionKey>
     @Transient
     @JsonIgnore
     public String getLinkId() {
-        return String.format(ApiPaths.DECODER_TYP_FUNKTION_LINK, getParentId(), getReihe(), getName());
+        return String.format(ApiPaths.DECODER_TYP_FUNKTION_LINK, getParentId(), getReihe(), super.getLinkId());
     }
 
     @Override

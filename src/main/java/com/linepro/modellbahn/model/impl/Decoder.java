@@ -259,10 +259,10 @@ public class Decoder extends AbstractNamedItem<NameKey> implements IDecoder {
     }
 
     @Override
-    protected void addChildLinks(URI root) {
-        addLinks(root, getAdressen(), false, false);
-        addLinks(root, getCVs(), false, false);
-        addLinks(root, getFunktionen(), false, false);
+    protected void addChildLinks(URI root, boolean update, boolean delete) {
+        addLinks(root, getAdressen(), update, delete);
+        addLinks(root, getCVs(), update, delete);
+        addLinks(root, getFunktionen(), update, delete);
     }
 
     @Override

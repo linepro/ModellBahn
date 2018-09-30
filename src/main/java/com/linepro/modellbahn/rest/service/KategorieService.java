@@ -151,6 +151,8 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
                 return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
             }
 
+            unterKategorie.setDeleted(false);
+
             kategorie.addUnterKategorie(unterKategorie);
 
             getPersister().update(kategorie);

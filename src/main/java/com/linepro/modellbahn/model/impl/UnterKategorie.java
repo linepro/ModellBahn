@@ -118,7 +118,7 @@ public class UnterKategorie extends AbstractNamedItem<UnterKategorieKey> impleme
     @Transient
     @JsonIgnore
     public String getLinkId() {
-        return String.format(ApiPaths.UNTER_KATEGORIE_LINK, getParentId(), getName());
+        return String.format(ApiPaths.UNTER_KATEGORIE_LINK, getParentId(), super.getLinkId());
     }
     @Override
     public int hashCode() {

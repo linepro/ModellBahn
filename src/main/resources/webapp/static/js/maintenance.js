@@ -48,6 +48,7 @@ class ItemGrid {
 
   setParent(parent) {
     this.parent = parent;
+    this.apiUrl = parent.apiUrl;
   }
   
   async init() {
@@ -382,6 +383,8 @@ class ItemGrid {
     var td = document.getElementById(grid.getCellId(rowId, "buttons"));
     var save = getButton(rowId, "save", grid.tableName + ".saveRow(this.value)");
     td.appendChild(save);
+    var del = getButton(rowId, "delete", grid.tableName + ".removeRow(this.value)");
+    td.appendChild(del);
   }
 
   async deleteRow(rowId) {
@@ -411,6 +414,17 @@ class ItemGrid {
 
   removeRow(rowId) {
 	var grid = this;  
+
+    var key = document.getElementById(grid.getKeyId(rowId));
+    key.value = "";
+
+    grid.columns.forEach(function(column){
+      var td = document.getElementById(grid.getCellId(rowId, column));
+
+      removeChildren(td);
+
+      addText(td, "");
+    });
   }
   
   async saveRow(rowId) {

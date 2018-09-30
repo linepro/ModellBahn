@@ -1,9 +1,7 @@
 package com.linepro.modellbahn.model.util;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -115,7 +113,21 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
     @Transient
     @JsonIgnore
     public String getLinkId() {
-        return getName();
+        return getName().codePoints()
+                .mapToObj(ch -> encodeChar(ch))
+                .collect(Collectors.joining(""));
+    }
+
+    protected String encodeChar(int ch) {
+        return isAsciiAlphaNum(ch) ? 
+                   Character.toString((char) ch) : 
+                   String.format("%%%02x", ch);
+    }
+
+    protected boolean isAsciiAlphaNum(int ch) {
+        return (48 <= ch && ch <= 57) || 
+               (65 <= ch && ch <= 90) || 
+               (97 <= ch && ch <= 122);
     }
 
     @Override

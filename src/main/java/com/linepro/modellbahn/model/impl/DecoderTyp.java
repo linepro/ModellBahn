@@ -341,14 +341,14 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     @Transient
     @JsonIgnore
     public String getLinkId() {
-        return String.format(ApiPaths.DECODER_TYP_LINK, getHersteller().getLinkId(), getName());
+        return String.format(ApiPaths.DECODER_TYP_LINK, getHersteller().getLinkId(), super.getLinkId());
     }
 
     @Override
-    protected void addChildLinks(URI root) {
-        addLinks(root, getAdressen(), false, false);
-        addLinks(root, getCVs(), false, false);
-        addLinks(root, getFunktionen(), false, false);
+    protected void addChildLinks(URI root, boolean update, boolean delete) {
+        addLinks(root, getAdressen(), update, delete);
+        addLinks(root, getCVs(), update, delete);
+        addLinks(root, getFunktionen(), update, delete);
     }
     
     @Override

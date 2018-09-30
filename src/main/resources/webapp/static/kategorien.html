@@ -13,7 +13,15 @@
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var kategorie = new EditableGrid("kategorie", "kategorie");
+var fetchUrl = fetchUrl("kategorie");
+var columns = [
+    new TextColumn("Name", "name", Editable.ADD),
+    new TextColumn("Description", "description", Editable.UPDATE),
+    new ButtonColumn([new HeaderLinkage("add", "kategorie.newRow()")],
+    		[new FunctionLinkage("update", "kategorie.editRow(this.value)"), 
+    		 new FunctionLinkage("delete", "kategorie.deleteRow(this.value)")])
+    ];
+var kategorie = new ItemGrid(10, fetchUrl, "kategorie", columns, true, EditMode.UPDATE, undefined, "unterkategorien.html");
 
 function init() {
 	kategorie.init();

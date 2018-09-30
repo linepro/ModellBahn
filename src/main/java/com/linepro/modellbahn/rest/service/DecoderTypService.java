@@ -244,6 +244,8 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
                 return getResponse(badRequest(null, "DecoderTyp " + herstellerStr + "/" + bestellNr + " does not exist"));
             }
 
+            decoderTypAdress.setDeleted(false);
+
             decoderTyp.addAdress(decoderTypAdress);
 
             getPersister().update(decoderTyp);
@@ -353,6 +355,8 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
             if (decoderTyp == null) {
                 return getResponse(badRequest(null, "DecoderTyp " + herstellerStr + "/" + bestellNr + " does not exist"));
             }
+
+            decoderTypCV.setDeleted(false);
 
             decoderTyp.addCV(decoderTypCV);
 
@@ -474,6 +478,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
             // Validate decoderTypFunktion like F\d{1,2}|K\d{1,2}|S[1-4]
             // Validate reihe [01]
             // Validate bezeichnung unique by reihe / decoderTyp
+            decoderTypFunktion.setDeleted(false);
 
             decoderTyp.addFunktion(decoderTypFunktion);
 
