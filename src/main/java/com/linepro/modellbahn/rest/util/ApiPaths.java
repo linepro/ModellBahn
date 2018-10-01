@@ -2,6 +2,8 @@ package com.linepro.modellbahn.rest.util;
 
 public interface ApiPaths {
 
+    public static final String SEPARATOR = "/";
+
     public static final String VERSION = "1.0.0";
 
     /** Parameter names */
@@ -45,9 +47,9 @@ public interface ApiPaths {
 
     /** Root paths */
 
-    public static final String API_ROOT = "/api/";
+    public static final String API_ROOT = SEPARATOR + "api" + SEPARATOR;
 
-    public static final String WEB_ROOT = "/";
+    public static final String WEB_ROOT = SEPARATOR;
 
     public static final String WEB_PART = "{path: .*}";
 
@@ -70,7 +72,7 @@ public interface ApiPaths {
     
     public static final String EPOCH = API_ROOT + ApiNames.EPOCH;
 
-    public static final String ENUMS = API_ROOT + "enums/";
+    public static final String ENUMS = API_ROOT + "enums" + SEPARATOR;
 
     public static final String GATTUNG = API_ROOT + ApiNames.GATTUNG;
 
@@ -106,8 +108,8 @@ public interface ApiPaths {
 
     public static final String ZUG_TYP = API_ROOT + ApiNames.ZUG_TYP;
 
-    /** Function paths */
-    public static final String FIELD_START = "/{";
+    /** Simple identifiers */
+    public static final String FIELD_START = SEPARATOR + "{";
 
     public static final String FIELD_END = "}";
 
@@ -139,7 +141,7 @@ public interface ApiPaths {
 
     public static final String KATEGORIE_PART = FIELD_START + KATEGORIE_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;
 
-    public static final String POSITION_PATH = FIELD_START + POSITION_PARAM_NAME + NUMBER_REGEX + FIELD_END;
+    public static final String POSITION_PART = FIELD_START + POSITION_PARAM_NAME + NUMBER_REGEX + FIELD_END;
 
     public static final String REIHE_PART = FIELD_START + REIHE_PARAM_NAME + NUMBER_REGEX + FIELD_END;
 
@@ -153,48 +155,55 @@ public interface ApiPaths {
 
     public static final String ZUG_PART = FIELD_START + ZUG_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;
 
-    /** Parameterized child paths */
-    public static final String DECODER_ADRESS_ROOT = DECODER_PART + "/" + ApiNames.ADRESS;
-    public static final String DECODER_ADRESS_PATH = DECODER_ADRESS_ROOT + INDEX_PART;
-    public static final String DECODER_ADRESS_LINK = "%s/" + ApiNames.ADRESS + "/%d";  
+    /** Compound identifiers */
+    public static final String DECODER_TYP_PART = HERSTELLER_PART + BESTELL_NR_PART;
+    public static final String DECODER_TYP_LINK = "%s" + SEPARATOR + "%s";  
 
-    public static final String DECODER_CV_ROOT = DECODER_PART + "/" + ApiNames.CV;
-    public static final String DECODER_CV_PATH = DECODER_CV_ROOT + CV_PART;
-    public static final String DECODER_CV_LINK = "%s/" + ApiNames.CV + "/%d";  
+    public static final String PRODUKT_PART = HERSTELLER_PART + BESTELL_NR_PART;
+    public static final String PRODUKT_LINK = "%s" + SEPARATOR + "%s";
 
-    public static final String DECODER_FUNKTION_ROOT = DECODER_PART + "/" + ApiNames.FUNKTION;
-    public static final String DECODER_FUNKTION_PATH = DECODER_FUNKTION_ROOT + REIHE_PART + FUNKTION_PART;
-    public static final String DECODER_FUNKTION_LINK = "%s/" + ApiNames.FUNKTION + "/%d/%s";
-
-    public static final String DECODER_TYP_PATH = HERSTELLER_PART + BESTELL_NR_PART;
-    public static final String DECODER_TYP_LINK = "%s/%s";  
-
-    public static final String DECODER_TYP_ADRESS_ROOT = DECODER_TYP_PATH + "/" + ApiNames.ADRESS;  
-    public static final String DECODER_TYP_ADRESS_PATH = DECODER_TYP_ADRESS_ROOT + ADRESS_PART;  
-    public static final String DECODER_TYP_ADRESS_LINK = "%s/" + ApiNames.ADRESS + "/%d";  
-
-    public static final String DECODER_TYP_CV_ROOT = DECODER_TYP_PATH + "/" + ApiNames.CV;  
-    public static final String DECODER_TYP_CV_PATH = DECODER_TYP_CV_ROOT + CV_PART;  
-    public static final String DECODER_TYP_CV_LINK = "%s/" + ApiNames.CV + "/%d";  
-
-    public static final String DECODER_TYP_FUNKTION_ROOT = DECODER_TYP_PATH + "/" + ApiNames.FUNKTION;  
-    public static final String DECODER_TYP_FUNKTION_PATH = DECODER_TYP_FUNKTION_ROOT + REIHE_PART + FUNKTION_PART;  
-    public static final String DECODER_TYP_FUNKTION_LINK = "%s/" + ApiNames.FUNKTION + "/%d/%s";
-   
+    /** Enum functions */
     public static final String ENUMS_ADRESS_TYP_PATH = ApiNames.ADRESS_TYP; 
     public static final String ENUMS_CONNECTOR_PATH = ApiNames.CONNECTOR; 
     public static final String ENUMS_KONFIGURATION_PATH = ApiNames.KONFIGURATION; 
     public static final String ENUMS_STATUS_PATH = ApiNames.STATUS; 
 
-    public static final String UNTER_KATEGORIE_PATH = KATEGORIE_PART + UNTER_KATEGORIE_PART;
-    public static final String UNTER_KATEGORIE_LINK = "%s/%s";
+    /** Parameterized child paths */
+    public static final String DECODER_ADRESS_ROOT = DECODER_PART + SEPARATOR + ApiNames.ADRESSEN;
+    public static final String DECODER_ADRESS_PATH = DECODER_ADRESS_ROOT + INDEX_PART;
+    public static final String DECODER_ADRESS_LINK = "%s" + SEPARATOR + ApiNames.ADRESSEN + SEPARATOR + "%d";  
 
-    public static final String PRODUKT_PATH = HERSTELLER_PART + BESTELL_NR_PART;
-    public static final String PRODUKT_LINK = "%s/%s";
+    public static final String DECODER_CV_ROOT = DECODER_PART + SEPARATOR + ApiNames.CVS;
+    public static final String DECODER_CV_PATH = DECODER_CV_ROOT + CV_PART;
+    public static final String DECODER_CV_LINK = "%s" + SEPARATOR + ApiNames.CVS + SEPARATOR + "%d";  
 
-    public static final String PRODUKT_TEIL_LINK = PRODUKT_LINK + "/" + PRODUKT_LINK ;
-    public static final String PRODUKT_TEIL_PATH = PRODUKT_PATH + TEIL_PART;
+    public static final String DECODER_FUNKTION_ROOT = DECODER_PART + SEPARATOR + ApiNames.FUNKTIONEN;
+    public static final String DECODER_FUNKTION_PATH = DECODER_FUNKTION_ROOT + REIHE_PART + FUNKTION_PART;
+    public static final String DECODER_FUNKTION_LINK = "%s" + SEPARATOR + ApiNames.FUNKTIONEN + SEPARATOR + "%d" + SEPARATOR + "%s";
+
+    public static final String DECODER_TYP_PATH = DECODER_TYP_PART;
+
+    public static final String DECODER_TYP_ADRESS_ROOT = DECODER_TYP_PART + SEPARATOR + ApiNames.ADRESSEN;  
+    public static final String DECODER_TYP_ADRESS_PATH = DECODER_TYP_ADRESS_ROOT + ADRESS_PART;  
+    public static final String DECODER_TYP_ADRESS_LINK = DECODER_TYP_LINK + SEPARATOR + ApiNames.ADRESSEN + SEPARATOR + "%d";  
+
+    public static final String DECODER_TYP_CV_ROOT = DECODER_TYP_PART + SEPARATOR + ApiNames.CVS;  
+    public static final String DECODER_TYP_CV_PATH = DECODER_TYP_CV_ROOT + CV_PART;  
+    public static final String DECODER_TYP_CV_LINK = DECODER_TYP_LINK + SEPARATOR + ApiNames.CVS + SEPARATOR + "%d";  
+
+    public static final String DECODER_TYP_FUNKTION_ROOT = DECODER_TYP_PART + SEPARATOR + ApiNames.FUNKTIONEN;  
+    public static final String DECODER_TYP_FUNKTION_PATH = DECODER_TYP_FUNKTION_ROOT + REIHE_PART + FUNKTION_PART;  
+    public static final String DECODER_TYP_FUNKTION_LINK = DECODER_TYP_LINK + SEPARATOR + ApiNames.FUNKTIONEN + SEPARATOR + "%d" + SEPARATOR + "%s";
+   
+    public static final String PRODUKT_TEIL_ROOT = PRODUKT_PART + SEPARATOR + ApiNames.TEILEN;
+    public static final String PRODUKT_TEIL_PATH = PRODUKT_TEIL_ROOT + TEIL_PART;
+    public static final String PRODUKT_TEIL_LINK = PRODUKT_LINK + SEPARATOR + ApiNames.TEILEN + PRODUKT_LINK ;
     
-    public static final String ZUG_CONSIST_PATH = ZUG_PART + POSITION_PATH;
-    public static final String ZUG_CONSIST_LINK = "%s/%d";
+    public static final String UNTER_KATEGORIE_ROOT = KATEGORIE_PART + SEPARATOR + ApiNames.UNTER_KATEGORIEN; 
+    public static final String UNTER_KATEGORIE_PATH = UNTER_KATEGORIE_ROOT + UNTER_KATEGORIE_PART;
+    public static final String UNTER_KATEGORIE_LINK = "%s" + SEPARATOR + ApiNames.UNTER_KATEGORIEN + SEPARATOR + "%s";
+
+    public static final String ZUG_CONSIST_ROOT = ZUG_PART + SEPARATOR + ApiNames.CONSIST;
+    public static final String ZUG_CONSIST_PATH = ZUG_CONSIST_ROOT + POSITION_PART;
+    public static final String ZUG_CONSIST_LINK = "%s" + SEPARATOR  + ApiNames.CONSIST + SEPARATOR + "%d";
 }

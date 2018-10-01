@@ -160,7 +160,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     }
 
     @GET
-    @Path(ApiPaths.PRODUKT_PATH)
+    @Path(ApiPaths.PRODUKT_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     public Response get(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
@@ -191,7 +191,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     }
 
     @PUT
-    @Path(ApiPaths.PRODUKT_PATH)
+    @Path(ApiPaths.PRODUKT_PART)
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
@@ -204,7 +204,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     }
 
     @DELETE
-    @Path(ApiPaths.PRODUKT_PATH)
+    @Path(ApiPaths.PRODUKT_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     public Response delete(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
