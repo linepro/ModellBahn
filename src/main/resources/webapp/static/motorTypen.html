@@ -13,12 +13,13 @@
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-    var motorTyp = new EditableGrid("motorTyp", "motorTyp");
+var motorTyp = new EditableGrid("motorTyp", "motorTyp");
 
-    function init() {
-        motorTyp.init();
-    }
+async function init() {
+    await motorTyp.init();
+}
 </script>
+<title>MotorTypen</title>
 </head>
 <body onload="javascript:init()">
 	<header>
@@ -63,7 +64,7 @@
 				<hr class="highlight" />
 				<ul class="footer">
 					<li>Copyright &copy; 2018 ModellBahn Website</li>
-					<li style="float: right"><a class="nav-button" href='LICENSE'
+					<li style="float: right"><a id="license" class="nav-button" href='LICENSE'
 						target="_blank">License</a></li>
 				</ul>
 			</div>

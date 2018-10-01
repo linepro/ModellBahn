@@ -185,15 +185,15 @@ public interface ApiPaths {
 
     public static final String DECODER_TYP_ADRESS_ROOT = DECODER_TYP_PART + SEPARATOR + ApiNames.ADRESSEN;  
     public static final String DECODER_TYP_ADRESS_PATH = DECODER_TYP_ADRESS_ROOT + ADRESS_PART;  
-    public static final String DECODER_TYP_ADRESS_LINK = DECODER_TYP_LINK + SEPARATOR + ApiNames.ADRESSEN + SEPARATOR + "%d";  
+    public static final String DECODER_TYP_ADRESS_LINK = "%s" + SEPARATOR + ApiNames.ADRESSEN + SEPARATOR + "%d";  
 
     public static final String DECODER_TYP_CV_ROOT = DECODER_TYP_PART + SEPARATOR + ApiNames.CVS;  
     public static final String DECODER_TYP_CV_PATH = DECODER_TYP_CV_ROOT + CV_PART;  
-    public static final String DECODER_TYP_CV_LINK = DECODER_TYP_LINK + SEPARATOR + ApiNames.CVS + SEPARATOR + "%d";  
+    public static final String DECODER_TYP_CV_LINK = "%s" + SEPARATOR + ApiNames.CVS + SEPARATOR + "%d";  
 
     public static final String DECODER_TYP_FUNKTION_ROOT = DECODER_TYP_PART + SEPARATOR + ApiNames.FUNKTIONEN;  
     public static final String DECODER_TYP_FUNKTION_PATH = DECODER_TYP_FUNKTION_ROOT + REIHE_PART + FUNKTION_PART;  
-    public static final String DECODER_TYP_FUNKTION_LINK = DECODER_TYP_LINK + SEPARATOR + ApiNames.FUNKTIONEN + SEPARATOR + "%d" + SEPARATOR + "%s";
+    public static final String DECODER_TYP_FUNKTION_LINK = "%s" + SEPARATOR + ApiNames.FUNKTIONEN + SEPARATOR + "%d" + SEPARATOR + "%s";
    
     public static final String PRODUKT_TEIL_ROOT = PRODUKT_PART + SEPARATOR + ApiNames.TEILEN;
     public static final String PRODUKT_TEIL_PATH = PRODUKT_TEIL_ROOT + TEIL_PART;

@@ -9,9 +9,14 @@
 <link rel="stylesheet" href="static/css/bootstrap.min-4.1.3.css"/>
 <script type="text/javascript" src="static/js/lib/bootstrap.min-4.1.3.js"></script>
 <link rel="stylesheet"  href="static/css/site.css"/>
-<title>ModellBahn Application</title>
+<script type="text/javascript" src="static/js/utils.js"></script>
+<script type="text/javascript">
+async function init() {
+}
+</script>
+<title>ModellBahn</title>
 </head>
-<body>
+<body onload="javascript:init()">
     <header>
         <h1>ModellBahn</h1>
         <hr class="highlight" />
@@ -45,6 +50,7 @@
                     <li><a class="nav-button" href="static/produkten.html">Produkt</a></li>
                     <li><a class="nav-button" href="static/decoderen.html">Decoder</a></li>
                     <li><a class="nav-button" href="static/artikelen.html">Artikel</a></li>
+                    <li><a class="nav-button" href="static/decoderen.html">Decoder</a></li>
                     <li><a class="nav-button" href="static/vorbilder.html">Vorbild</a></li>
                     <li><a class="nav-button" href="static/zugen.html">Zug</a></li>
                 </ul>
@@ -65,7 +71,7 @@
                 <hr class="highlight" />
                 <ul class="footer">
 	                <li>Copyright &copy; 2018 ModellBahn Website</li>
-	                <li><a class="nav-button" href="LICENSE" target="_blank">License</a></li>
+                    <li><a id="license" class="nav-button" href='LICENSE' target="_blank">License</a></li>
                 </ul>
             </div>
         </div>
