@@ -315,7 +315,7 @@ class ButtonColumn {
       this.headLinkage.forEach(function(linkage) {
     	var btn = linkage.getButton();
     	btn.id = col.tableName + "_" + btn.id;
-        td.append(btn);
+        td.appendChild(btn);
       });
     } else {
       addText(td, "");
@@ -334,7 +334,7 @@ class ButtonColumn {
         if (entity && linkage.extractLink(entity, cell)) {
           var btn = linkage.getButton();
           btn.id = cell.id + "_" + btn.id;
-          ctl.append(btn);
+          ctl.appendChild(btn);
         }
       });
     } else {
@@ -351,4 +351,64 @@ async function checkResponse(response) {
 	}
 
 	throw new Error(response.statusText);
+}
+
+async function modal(elementName, title, contentUrl) {
+    
+  var anchor = document.getElementById(elementName);
+  var modal = document.getElementById("modal");
+  
+  if (anchor && !modal) {
+      modal = document.createElement("div");
+      modal.id="modal";
+      modal.className="modal";
+
+      var content = document.createElement("div");
+      content.className="modal-content";
+
+      var head = document.createElement("div");
+      head.className="modal-header";
+
+      var heading = document.createElement("h2");
+      addText(heading, title);
+      head.appendChild(heading);
+      content.appendChild(head);
+
+      var body = document.createElement("div");
+      body.className="modal-body";
+      
+      var text = await fetch(contentUrl)
+            .then(response => response.text())
+            .catch(error => reportError(error));
+
+      var area = document.createElement('textarea');
+      area.value = text;
+      area.color = 'black';
+      area.height = "100%";
+      area.width = "100%";
+      area.readOnly = true;
+
+      body.appendChild(area);
+      content.appendChild(body);
+
+      var foot = document.createElement("div");
+      foot.className="modal-footer";
+
+      content.appendChild(foot);
+      modal.appendChild(content);
+
+      anchor.appendChild(modal);
+      anchor.href = "#";
+      anchor.onclick = function() { modal.style.display = "block"; };
+
+      window.onclick = function(event) {
+          if (event.target == modal) {
+              modal.style.display = "none";
+          }
+      }
+   }
+}
+
+function about() {
+    modal("license", "About ModellBahn", siteRoot() + "LICENSE");
 }
