@@ -19,8 +19,8 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  * @author $Author:$
  * @version $Id:$
  */
-@Entity(name = "Epoch")
-@Table(name = "Epoch", indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
+@Entity(name = DBNames.EPOCH)
+@Table(name = DBNames.EPOCH, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.EPOCH)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })

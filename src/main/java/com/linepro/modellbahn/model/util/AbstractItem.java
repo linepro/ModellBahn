@@ -4,7 +4,6 @@ import static javax.ws.rs.HttpMethod.DELETE;
 import static javax.ws.rs.HttpMethod.GET;
 import static javax.ws.rs.HttpMethod.PUT;
 
-import java.io.Serializable;
 import java.net.URI;
 import java.util.Collection;
 import java.util.HashSet;
@@ -49,7 +48,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @MappedSuperclass
 @Cacheable
 @JsonAutoDetect(fieldVisibility = Visibility.PUBLIC_ONLY)
-public abstract class AbstractItem<K extends IKey> implements Serializable, IItem<K>, Comparable<IItem<?>> {
+public abstract class AbstractItem<K extends IKey> implements IItem<K> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 938276986391979417L;

@@ -44,8 +44,8 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author  $Author:$
  * @version $Id:$
  */
-@Entity(name = "UnterKategorie")
-@Table(name = "UnterKategorie", indexes = { @Index(columnList = DBNames.KATEGORIE_ID +"," + DBNames.NAME, unique = true),
+@Entity(name = DBNames.UNTER_KATEGORIE)
+@Table(name = DBNames.UNTER_KATEGORIE, indexes = { @Index(columnList = DBNames.KATEGORIE_ID +"," + DBNames.NAME, unique = true),
         @Index(columnList = DBNames.KATEGORIE_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.KATEGORIE_ID, DBNames.NAME }) })
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, unique = false, length = 50))
@@ -91,7 +91,7 @@ public class UnterKategorie extends AbstractNamedItem<UnterKategorieKey> impleme
     @Override
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kategorie.class)
-    @JoinColumn(name = DBNames.KATEGORIE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "unterkategorie_fk1"))
+    @JoinColumn(name = DBNames.KATEGORIE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.UNTER_KATEGORIE + "_fk1"))
     @JsonGetter(ApiNames.KATEGORIE)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)

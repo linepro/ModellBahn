@@ -3,7 +3,8 @@
 
 class ItemGrid {
   constructor(pageSize, apiUrl, tableName, columns, paged, editMode, children, editForm) {
-    this.pageSize = pageSize;
+    this.pageSize = pageSize ? pageSize : 10;
+    this.rowCount = pageSize;
     this.apiUrl = apiUrl;
     this.tableName = tableName;
     this.columns = columns;
@@ -38,10 +39,7 @@ class ItemGrid {
     }
   
     this.initialized = false;
-    this.rowCount = 0;
 
-    this.columns.forEach(function(column) { column.setTableName(tableName);});
-    
     var grid = this;
     if (this.children) this.children.forEach(function(child) { child.setParent(grid);});
   }
@@ -96,46 +94,55 @@ class ItemGrid {
   addHeader(tableName, table, columns) {
     var grid = this;
     var header = document.createElement("div");
+    header.id = tableName + "_thead"
     header.className = "thead";
     table.append(header);
   
     var headRow = document.createElement("div");
-    headRow.className = "table-row";
+    headRow.className = "table-head";
     headRow.id = tableName + "Head";
     header.append(headRow);
   
     grid.columns.forEach(function(column) {
-      var th = document.createElement("div");
-      th.className = "table-heading";
-      headRow.append(column.getHeading());
+      var th = column.getHeading();
+      th.style.width = column.width;
+      th.style.maxWidth = column.width;
+      
+      headRow.append(th);
     });
   }
   
-  addBody(tableName, table, columns, pageSize) {
+  addBody(tableName, table, columns, rowCount) {
     var grid = this;
     var body = document.createElement("div");
+    body.id = tableName + "_tbody"
     body.className = "tbody";
-      table.append(body);
+    table.append(body);
 
-  var p;
-  for (p = 0; p < grid.pageSize; p++) {
-    var tr = document.createElement("div");
-    var rowId = grid.getRowId(p);
-    tr.className = "table-row";
-    tr.id = rowId;
-    body.append(tr);
+    var row;
+    var maxRow = Math.max(rowCount, grid.pageSize);
+    for (row = 0; row < maxRow; row++) {
+      var tr = document.createElement("div");
+      var rowId = grid.getRowId(row);
+      tr.className = "table-row";
+      tr.id = rowId;
+      body.append(tr);
   
-    var key = document.createElement("input");
-    key.type = "hidden";
-    key.id = grid.getKeyId(rowId);
-    tr.append(key);
+      var key = document.createElement("input");
+      key.type = "hidden";
+      key.id = grid.getKeyId(rowId);
+      tr.append(key);
 
-    columns.forEach(function(column) {
-      var td = document.createElement("div");
-      td.id = grid.getCellId(rowId, column);
-      td.className = "table-cell";
-      addText(td, "");
-      tr.append(td);
+      columns.forEach(function(column) {
+        var td = document.createElement("div");
+        td.id = grid.getCellId(rowId, column);
+        td.className = "table-cell";
+        td.style.width = column.width;
+        td.style.maxWidth = column.width;
+        
+        addText(td, "");
+        
+        tr.append(td);
       });
     }
   }
@@ -145,27 +152,31 @@ class ItemGrid {
 
     if (paged) {
       var footer = document.createElement("div");
+      footer.id = tableName + "_tfoot"
       footer.className = "tfoot";
       table.append(footer);
       
       var navRow = document.createElement("div");
-      navRow.className = "table-row";
+      navRow.className = "table-foot";
       navRow.id = tableName + "Foot";
       footer.append(navRow);
       
       var i;
-      for (i = 0; i < grid.columns.length; i++) {
+      for (i = 0; i < columns.length; i++) {
         var tf = document.createElement("div");
         if (i == 0) {
           tf.className = "table-prev";
           tf.id = tableName + "Prev";
-      } else if (i == (columns.length-1)) {
-        tf.className = "table-next";
-        tf.id = tableName + "Next";
-      } else {
-        tf.className = "table-foot";
-      }
-        
+        } else if (i == (columns.length-1)) {
+          tf.className = "table-next";
+          tf.id = tableName + "Next";
+        } else {
+          tf.className = "table-footer";
+        }
+
+        tf.style.width = columns[i].width;
+        tf.style.maxWidth = columns[i].width;
+
         addText(tf, "");
         
         navRow.append(tf);
@@ -173,22 +184,34 @@ class ItemGrid {
     }
   }
   
-  initGrid(pageSize) {
+  initGrid(rowCount) {
     var grid = this;
+    grid.rowCount = rowCount;
+
     var columns = grid.columns;
-    var columnCount = grid.columns.length + (grid.deleteButtons ? 1 : 0);
-    var deleteButtons = grid.deleteButtons;
+    var columnCount = grid.columns.length;
     var paged = grid.paged;
-    var pageSize = paged ? grid.pageSize : pageSize;
     var tableName = grid.tableName;
 
+    var totalWidth = 0;
+
+    columns.forEach(function(column) { 
+        column.setTableName(tableName);
+        totalWidth += column.getLength();
+        });
+
+    columns.forEach(function(column) {
+        column.setWidth(Math.round((column.getLength()*100)/totalWidth)+"%");
+        });
+    
+
     var table = document.getElementById(grid.tableName);
-    table.innerHtml = "";
+    removeChildren(table);
     table.className = "table";
   
     grid.addHeader(tableName, table, columns);
 
-    grid.addBody(tableName, table, columns, pageSize);
+    grid.addBody(tableName, table, columns, rowCount);
 
     grid.addFooter(tableName, table, columns, paged);
 
@@ -197,14 +220,16 @@ class ItemGrid {
 
   async loadData() {
     var grid = this;
-    if (grid.editMode === EditMode.ADD) {
-       grid.initGrid(grid.pageSize);
+    if (grid.parent) {
+        grid.parent.loadData();
+    } else if (grid.editMode === EditMode.ADD) {
+       grid.initGrid(grid.rowCount);
        grid.addRow();
 
        if (grid.children) {
          grid.children.forEach(function(child) {
            child.editMode = grid.editMode;
-             child.initGrid(child.pageSize);
+             child.initGrid(child.rowCount);
              child.addRow();
            });
        }
@@ -216,67 +241,59 @@ class ItemGrid {
   renderData(jsonData) {
     var grid = this;
     var columns = grid.columns;
-    var columnCount = grid.columns.length + (grid.deleteButtons ? 1 : 0);
+    var columnCount = grid.columns.length;
     var editMode = grid.editMode;
     var entities = (grid.parent ? jsonData[grid.tableName] : jsonData.entities ? jsonData.entities : [ jsonData ]);
-    grid.pageSize = grid.paged ? grid.pageSize : Math.max(1, entities.length);
-    var pageSize = grid.pageSize;
     var tableName = grid.tableName;
     var updateLink = grid.updateLink;
 
-    if (!grid.initialized) {
-      grid.initGrid(pageSize);
+    var rowCount = grid.paged ? grid.pageSize : Math.max(grid.pageSize, entities.length);
+
+    if (!grid.initialized || (rowCount > grid.pageSize)) {
+      grid.initGrid(rowCount);
     }
 
     var table = document.getElementById(tableName);
 
-    var p;
-    grid.rowCount = 0;
-    for (p = 0; p < pageSize; p++) {
-      var rowId = grid.getRowId(p);
+    var row;
+    var rowsFilled = 0;
+    for (row = 0; row < rowCount; row++) {
+      var rowId = grid.getRowId(row);
       var tr = document.getElementById(rowId);
 
       var entity;
 
       var key = document.getElementById(grid.getKeyId(rowId));
 
-      if (p < entities.length) {
-        entity = entities[p];
+      if (row < entities.length) {
+        entity = entities[row];
         var lnk = getLink(entity.links, "self");
         key.value = lnk.href;
-        grid.rowCount++;    
+        rowsFilled++;    
       } else {
         entity = undefined;
         key.value = "";
       }
 
       columns.forEach(function(column) {
-        var td = document.getElementById(grid.getCellId(rowId, column));
+        var cell = document.getElementById(grid.getCellId(rowId, column));
 
-        removeChildren(td);
+        removeChildren(cell);
 
-        if (entity) {
-          var ctl = column.getControl(td, entity, editMode);
-          td.appendChild(ctl);
-        } else {
-          addText(td, "");
-        }
-        });
-      
-    }
-  }
+		var ctl;
+		if (entity || cell.id.endsWith("_buttons")) {
+          ctl = column.getControl(cell, entity, editMode);
+		} else {
+		  cell.style.width = column.width;
+          cell.style.maxWidth = column.width;
 
-  renderJson(jsonData, restUrl) {
-    var grid = this;
-    var children = grid.children;
-    var tableName = grid.tableName;
+		  ctl = document.createElement("input");
+          ctl.type = "text";
+          ctl.disabled = true;
+          ctl.required = false;
+		}
 
-    grid.renderData(jsonData);
-
-    if (children) {
-      children.forEach(function(child) { 
-        child.editMode = grid.editMode;
-        child.renderData(jsonData);
+        cell.appendChild(ctl);
       });
     }
 
@@ -307,6 +324,21 @@ class ItemGrid {
         addText(next, "");
       }
     }
+  }
+
+  renderJson(jsonData, restUrl) {
+    var grid = this;
+    var children = grid.children;
+    var tableName = grid.tableName;
+
+    grid.renderData(jsonData);
+
+    if (children) {
+      children.forEach(function(child) { 
+        child.editMode = grid.editMode;
+        child.renderData(jsonData);
+      });
+    }
 
     grid.current = restUrl;
   }
@@ -325,8 +357,8 @@ class ItemGrid {
     var data = [];
     var tableName = grid.tableName;
     
-    for (p = 0 ; p < grid.pageSize; p++) {
-      var row = rowData(grid.getRowId(p));
+    for (row = 0 ; row < grid.rowCount; row++) {
+      var row = rowData(grid.getRowId(row));
       if (row.length) {
         data.push(row);
       }
@@ -365,7 +397,7 @@ class ItemGrid {
 
   addRow(rowId) {
     var grid = this;
-    var rowNum = grid.rowCount == grid.pageSize ? grid.pageSize - 1 : grid.rowCount; 
+    var rowNum = grid.rowCount == grid.rowCount ? grid.rowCount - 1 : grid.rowCount; //TODO: add row for non paged if not exists
     var rowId = grid.getRowId(rowNum);
 
     var key = document.getElementById(grid.getKeyId(rowId));
@@ -392,6 +424,7 @@ class ItemGrid {
     var deleteUrl = grid.getKeyValue(rowId);
     if (deleteUrl) {
         var response = await fetch(deleteUrl, { method: "DELETE", headers: { "Content-type": "application/json" } } )
+                                  .then(response => { if (!response.ok) { throw new Error(response.statusText); } } )
         	                      .catch(error => reportError(error));
         grid.loadData();
     } else {
@@ -413,6 +446,7 @@ class ItemGrid {
   }
 
   removeRow(rowId) {
+    //TODO: remove grid row for non paged if exists
 	var grid = this;  
 
     var key = document.getElementById(grid.getKeyId(rowId));
@@ -458,8 +492,8 @@ class ItemGrid {
 class EditableGrid extends ItemGrid {
   constructor(dataType, elementName) {
     super(10, fetchUrl(dataType), elementName, [
-        new TextColumn("Name", "name", Editable.ADD),
-        new TextColumn("Description", "description", Editable.UPDATE),
+        new TextColumn("Namen", "name", Editable.ADD, true, 30),
+        new TextColumn("Description", "description", Editable.UPDATE, false, 100),
         new ButtonColumn(
           [new HeaderLinkage("add", elementName + ".addRow()")],
           [new FunctionLinkage("update", elementName + ".updateRow(this.value)"), 

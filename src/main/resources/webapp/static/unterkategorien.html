@@ -15,15 +15,15 @@
 <script type="text/javascript">
 var fetchUrl = fetchUrl("kategorie");
 var unterKategorien = new ItemGrid(10, undefined, "unterKategorien", [
-    new TextColumn("Name", "name", Editable.ADD),
-    new TextColumn("Description", "description", Editable.UPDATE),
+    new TextColumn("Namen", "name", Editable.ADD, true, 30),
+    new TextColumn("Bezeichnung", "description", Editable.UPDATE, false, 50),
     new ButtonColumn([new HeaderLinkage("add", "unterKategorien.addRow()")],
             [new FunctionLinkage("update", "unterKategorien.updateRow(this.value)"), 
              new FunctionLinkage("delete", "unterKategorien.deleteRow(this.value)")])],
     false, EditMode.ADD, undefined);
 var kategorie = new ItemGrid(1, fetchUrl, "kategorie", [
-    new TextColumn("Name", "name", Editable.ADD),
-    new TextColumn("Description", "description", Editable.UPDATE),
+    new TextColumn("Namen", "name", Editable.ADD, true, 30),
+    new TextColumn("Bezeichnung", "description", Editable.UPDATE, false, 50),
     new ButtonColumn([],
             [new FunctionLinkage("update", "kategorie.updateRow(this.value)")])],
     false, EditMode.UPDATE, [

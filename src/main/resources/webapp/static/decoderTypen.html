@@ -17,10 +17,10 @@ var fetchUrl = fetchUrl("decoderTyp");
 var hersteller = new DropDown(apiRoot() + "hersteller", [ "name" ], [ "name" ]);
 var protokoll = new DropDown(apiRoot() + "protokoll", [ "name" ], [ "name" ]);
 var columns = [
-    new SelectColumn("Hersteller", "hersteller", hersteller, Editable.ADD),
-    new TextColumn("Bestell Nr", "bestellNr", Editable.ADD),
-    new SelectColumn("Protokoll", "protokoll", protokoll, Editable.UPDATE),
-    new BoolColumn("Sound", "sound", Editable.UPDATE),
+    new SelectColumn("Hersteller", "hersteller", hersteller, Editable.ADD, true),
+    new TextColumn("Bestell Nr", "bestellNr", Editable.ADD, true, 10),
+    new SelectColumn("Protokoll", "protokoll", protokoll, Editable.UPDATE, true),
+    new BoolColumn("Sound", "sound", Editable.UPDATE, true),
     new ButtonColumn([new HeaderLinkage("add", "decoderTyp.newRow()")],
     		[new FunctionLinkage("update", "decoderTyp.editRow(this.value)"), 
     		 new FunctionLinkage("delete", "decoderTyp.deleteRow(this.value)")])

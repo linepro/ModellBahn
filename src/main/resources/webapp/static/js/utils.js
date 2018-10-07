@@ -118,11 +118,12 @@ function addLink(element, href) {
 }
 
 class Column {
-  constructor(heading, binding, editable, required) {
+  constructor(heading, binding, editable, required, length) {
     this.heading  = heading;
     this.binding  = binding;
     this.editable = editable ? editable : Editable.NEVER;
-    this.required = required;
+    this.required = required ? required : false;
+    this.length   = Math.max(length ? length : heading.length, heading.length);
   }
 
   setTableName(tableName) {
@@ -139,9 +140,20 @@ class Column {
   entityValue(entity) {
     return entity[this.binding];
   }
+
+  getLength() {
+    return this.length;
+  }
+
+  setWidth(width) {
+     this.width = width;
+  }
   
   getControl(cell, entity, editMode) {
     var ctl = this.createControl();
+    cell.style.width = this.width;
+    cell.style.maxWidth = this.width;
+
     var value;
 
     if (entity) value = this.entityValue(entity);
@@ -158,6 +170,8 @@ class Column {
       ctl.disabled = true;
     }
 
+    ctl.required = this.required;
+    
     return ctl;
   }
 
@@ -178,37 +192,38 @@ class Column {
 }
 
 class TextColumn extends Column {
-  constructor(heading, binding, editable, length) {
-    super(heading, binding, editable);
-    this.length = length ? length : 50;
+  constructor(heading, binding, editable, required, length) {
+    super(heading, binding, editable, required, length);
   }
 
   createControl() {
     var ctl = document.createElement("input");
     ctl.type = "text";
+    ctl.maxLength = this.length;
     return ctl;
   }
 }
 
 class NumberColumn extends Column {
-  constructor(heading, binding, editable, max, min) {
-    super(heading, binding, editable);
-    this.max = max ? max : 255;
+  constructor(heading, binding, editable, required, max, min) {
+    max = max ? max : 255
+    super(heading, binding, editable, required, Math.max(max.toString().length, 5));
+    this.max = max;
     this.min = min ? min : 0;
   }
 
   createControl() {
     var ctl = document.createElement("input");
     ctl.type = "number";
-    if (this.min) ctl.min = this.min;
-    if (this.max) ctl.max = this.max;
+    ctl.min = this.min;
+    ctl.max = this.max;
     return ctl;
   }
 }
 
 class BoolColumn extends Column {
-  constructor(heading, binding, editable) {
-    super(heading, binding, editable);
+  constructor(heading, binding, editable, required) {
+    super(heading, binding, editable, required, heading.length);
   }
 
   createControl() {
@@ -227,8 +242,8 @@ class BoolColumn extends Column {
 }
 
 class DateColumn extends Column {
-  constructor(heading, binding, editable) {
-    super(heading, binding, editable);
+  constructor(heading, binding, editable, required) {
+    super(heading, binding, editable, required, 12);
   }
 
   createControl() {
@@ -239,8 +254,8 @@ class DateColumn extends Column {
 }
 
 class SelectColumn extends Column {
-  constructor(heading, binding, dropDown, editable) {
-    super(heading, binding, editable);
+  constructor(heading, binding, dropDown, editable, required) {
+    super(heading, binding, editable, required, dropDown.length);
     this.dropDown  = dropDown;
   }
 
@@ -253,7 +268,11 @@ class SelectColumn extends Column {
   getControlValue(select) {
     return select.options[select.selectedIndex].value;
   }
- 
+
+  getLength() {
+      return Math.max(this.dropDown.length, this.heading.length);
+  }
+
   setValue(ctl, value) {
    var i;
    for (i = 0; i < ctl.options.length; i++) {
@@ -300,6 +319,7 @@ class ButtonColumn {
   constructor(headLinkage, btnLinkage) {
     this.headLinkage = headLinkage;
     this.btnLinkage  = btnLinkage;
+    this.length = Math.max(headLinkage.length, btnLinkage.length)*8;
     }
 
   setTableName(tableName) {
@@ -309,7 +329,7 @@ class ButtonColumn {
   getHeading() {
     var td = document.createElement("div");
     td.className = "table-heading-btn";
-
+    
     var col = this;
     if (this.headLinkage) {
       this.headLinkage.forEach(function(linkage) {
@@ -324,8 +344,18 @@ class ButtonColumn {
     return td;
   }
 
+  getLength() {
+    return this.length;
+  }
+  
+  setWidth(width) {
+    this.width = width;
+  }
+
   getControl(cell, entity, editMode) {
     cell.className = "table-btn";
+    cell.style.width = this.width;
+    cell.style.maxWidth = this.width;
 
     var ctl = document.createElement("div");
 
@@ -387,6 +417,7 @@ async function modal(elementName, title, contentUrl) {
       area.height = "100%";
       area.width = "100%";
       area.readOnly = true;
+      area.disabled = true;
 
       body.appendChild(area);
       content.appendChild(body);

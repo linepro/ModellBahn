@@ -55,8 +55,8 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author $Author:$
  * @version $Id:$
  */
-@Entity(name = "DecoderAdress")
-@Table(name = "DecoderAdress", indexes = { @Index(columnList = DBNames.DECODER_ID + "," + DBNames.INDEX, unique = true) },
+@Entity(name = DBNames.DECODER_ADRESS)
+@Table(name =  DBNames.DECODER_ADRESS, indexes = { @Index(columnList = DBNames.DECODER_ID + "," + DBNames.INDEX, unique = true) },
         uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.INDEX }) })
 @JsonRootName(value = ApiNames.ADRESS)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER, ApiNames.INDEX, ApiNames.ADRESS_TYP, ApiNames.ADRESS, ApiNames.DELETED, ApiNames.LINKS })
@@ -95,7 +95,7 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
     @Override
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
-    @JoinColumn(name = DBNames.DECODER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_address_fk1"))
+    @JoinColumn(name = DBNames.DECODER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name =  DBNames.DECODER_ADRESS + "_fk1"))
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)

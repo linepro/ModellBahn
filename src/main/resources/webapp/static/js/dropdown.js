@@ -14,7 +14,7 @@ class DropDown {
     this.valueColumns = valueColumns;
     this.displayColumns = displayColumns;
     this.wrapped = wrapped;
-
+    this.length  = 10;
     this.options = new Array();
   }
 
@@ -66,6 +66,7 @@ class DropDown {
         value = "{" + value.trim() + "}";
       }
 
+      select.length = Math.max(select.length, display.length);
       select.options.push(new Option(display,value));
     });
   }

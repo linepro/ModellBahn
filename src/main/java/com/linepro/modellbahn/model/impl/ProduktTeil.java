@@ -46,8 +46,8 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author  $Author:$
  * @version $Id:$
  */
-@Entity(name = "ProduktTeil")
-@Table(name = "ProduktTeil", indexes = { @Index(columnList = DBNames.PRODUKT_ID + "," + DBNames.TEIL_ID, unique = true),
+@Entity(name = DBNames.PRODUKT_TEIL)
+@Table(name = DBNames.PRODUKT_TEIL, indexes = { @Index(columnList = DBNames.PRODUKT_ID + "," + DBNames.TEIL_ID, unique = true),
         @Index(columnList = DBNames.PRODUKT_ID),
         @Index(columnList = DBNames.TEIL_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.PRODUKT_ID, DBNames.TEIL_ID }) })
@@ -95,7 +95,7 @@ public class ProduktTeil extends AbstractItem<ProduktTeilKey> implements IProduk
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
-    @JoinColumn(name = DBNames.PRODUKT_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "produkt_teil_fk1"))
+    @JoinColumn(name = DBNames.PRODUKT_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT_TEIL + "_fk1"))
     @JsonGetter(ApiNames.PRODUKT)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using=ProduktSerializer.class)
@@ -114,7 +114,7 @@ public class ProduktTeil extends AbstractItem<ProduktTeilKey> implements IProduk
     @Override
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
-    @JoinColumn(name = DBNames.TEIL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "produkt_teil_fk2"))
+    @JoinColumn(name = DBNames.TEIL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT_TEIL + "_fk2"))
     @JsonGetter(ApiNames.TEIL)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using=ProduktTeilSerializer.class)

@@ -358,7 +358,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
 
     protected IDecoderAdress findDecoderAdress(IDecoder decoder, Integer index, boolean eager) throws Exception {
         try {
-            return decoder.getAdressen().get(index);
+            return decoder.getAdressen().toArray(new IDecoderAdress[0])[index];
         } catch (IndexOutOfBoundsException | NullPointerException e) {
         }
         

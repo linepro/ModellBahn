@@ -19,40 +19,40 @@ var protokoll = new DropDown(apiRoot() + "protokoll", [ "name" ], [ "name" ]);
 var konfiguration = new DropDown(apiRoot() + "enums/konfiguration", [ "name" ], [ "name" ]);
 var adressTyp = new DropDown(apiRoot() + "enums/adressTyp", [ "name" ], [ "name" ]);
 var adressen = new ItemGrid(2, undefined, "adressen", [
-    new NumberColumn("Index", "index", Editable.ADD),
-    new SelectColumn("AdressTyp", "adressTyp", adressTyp, Editable.UPDATE),
-    new NumberColumn("Span", "span", Editable.UPDATE, 16, 1),
-    new NumberColumn("Werkseinstellung", "werkseinstellung", Editable.UPDATE, 65535, 1),
+    new NumberColumn("Index", "index", Editable.ADD, true, 3, 0),
+    new SelectColumn("Typ", "adressTyp", adressTyp, Editable.UPDATE, true),
+    new NumberColumn("Span", "span", Editable.UPDATE, true, 16, 1),
+    new NumberColumn("Werkseinstellung", "werkseinstellung", Editable.UPDATE, true, 65535, 1),
     new ButtonColumn([new HeaderLinkage("add", "adressen.addRow()")],
             [new FunctionLinkage("update", "adressen.updateRow(this.value)"), 
              new FunctionLinkage("delete", "adressen.deleteRow(this.value)")])],
     false, EditMode.ADD, undefined);
 var cvs = new ItemGrid(10, undefined, "cvs", [
-    new NumberColumn("CV", "cv", Editable.ADD, 127, 1),
-    new TextColumn("Bezeichnung", "description", Editable.UPDATE),
-    new NumberColumn("Werkseinstellung", "werkseinstellung", Editable.UPDATE),
+    new NumberColumn("CV", "cv", Editable.ADD, true, 127, 1),
+    new TextColumn("Bezeichnung", "description", Editable.UPDATE, false, 50),
+    new NumberColumn("Werkseinstellung", "werkseinstellung", Editable.UPDATE, false, 65535, 1),
     new ButtonColumn([new HeaderLinkage("add", "cvs.addRow()")],
             [new FunctionLinkage("update", "cvs.updateRow(this.value)"), 
              new FunctionLinkage("delete", "cvs.deleteRow(this.value)")])],
     false, EditMode.ADD, undefined);
 var funktionen = new ItemGrid(10, undefined, "funktionen", [
-    new NumberColumn("Bank", "bank", Editable.ADD, 1, 0),
-    new TextColumn("Funktion", "funktion", Editable.ADD),
-    new TextColumn("Bezeichnung", "description", Editable.UPDATE),
-    new BoolColumn("Programmable", "programmable", Editable.UPDATE),
+    new NumberColumn("Reihe", "bank", Editable.ADD, true, 1, 0),
+    new TextColumn("Funktion", "funktion", Editable.ADD, true, 3),
+    new TextColumn("Bezeichnung", "description", Editable.UPDATE, true, 50),
+    new BoolColumn("Programmable", "programmable", Editable.UPDATE, true),
     new ButtonColumn([new HeaderLinkage("add", "funktionen.addRow()")],
             [new FunctionLinkage("update", "funktionen.updateRow(this.value)"), 
              new FunctionLinkage("delete", "funktionen.deleteRow(this.value)")])],
     false, EditMode.ADD, undefined);
 var decoderTyp = new ItemGrid(1, fetchUrl, "decoderTyp", [
-    new SelectColumn("Hersteller", "hersteller", hersteller, Editable.ADD),
-    new TextColumn("Bestell Nr", "bestellNr", Editable.ADD),
-    new TextColumn("Bezeichnung", "description", Editable.UPDATE),
-    new SelectColumn("Protokoll", "protokoll", protokoll, Editable.UPDATE),
-    new NumberColumn("Fahrstufe", "fahrstufe", Editable.UPDATE, 127, 1),
-    new BoolColumn("Sound", "sound", Editable.UPDATE),
-    new NumberColumn("I Max", "iMax", Editable.UPDATE, 1000, 1),
-    new SelectColumn("Konfiguration", "konfiguration", konfiguration, Editable.UPDATE),
+    new SelectColumn("Hersteller", "hersteller", hersteller, Editable.ADD, true),
+    new TextColumn("Bestell Nr", "bestellNr", Editable.ADD, true, 10),
+    new TextColumn("Bezeichnung", "description", Editable.UPDATE, false, 50),
+    new SelectColumn("Protokoll", "protokoll", protokoll, Editable.UPDATE, true),
+    new NumberColumn("Fahrstufe", "fahrstufe", Editable.UPDATE, false, 127, 1),
+    new BoolColumn("Sound", "sound", Editable.UPDATE, true),
+    new NumberColumn("I Max", "iMax", Editable.UPDATE, false, 1000, 1),
+    new SelectColumn("Konfiguration", "konfiguration", konfiguration, Editable.UPDATE, true),
     new ButtonColumn([],
             [new FunctionLinkage("update", "decoderTyp.updateRow(this.value)")])],
     false, EditMode.UPDATE, [
@@ -88,11 +88,14 @@ async function init() {
             <div id="data">
                 <div id="decoderTyp">
                 </div>
-                <div id="adressen">
-                </div>
-                <div id="cvs">
-                </div>
-                <div id="funktionen">
+                <div id="tabbedArea">
+                    <p> These next three tables need to be in tabs @see <a href="https://www.w3schools.com/howto/howto_js_tabs.asp" target="_blank">https://www.w3schools.com/howto/howto_js_tabs.asp</a>:</p>
+	                <div id="adressen">
+	                </div>
+	                <div id="cvs">
+	                </div>
+	                <div id="funktionen">
+	                </div>
                 </div>
             </div>
         </article>

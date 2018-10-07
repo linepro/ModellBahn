@@ -1,512 +1,533 @@
 html {
-    -ms-text-size-adjust: 1rem;
-    -webkit-text-size-adjust: 1rem;
-    background-color: LightYellow;
-    box-sizing: border-box;
-	border-radius: .25em;
-    overflow-x: hidden
+  -ms-text-size-adjust: 1rem;
+  -webkit-text-size-adjust: 1rem;
+  background-color: LightYellow;
+  box-sizing: border-box;
+  border-radius: .25em;
+  overflow-x: hidden
 }
 
 aside, details, figcaption, figure, main, menu, section, summary {
-    display: block
+  display: block
 }
 
-audio: not([controls]) {
-    display: none;
-    height: 0
+audio: not ([controls] ) {
+  display: none;
+  height: 0
 }
 
 audio, canvas, progress, video {
-    display: inline-block
+  display: inline-block
 }
 
 progress {
-    vertical-align: baseline
+  vertical-align: baseline
 }
 
 header {
-    background-color: LightYellow;
-	margin-bottom: 0.3rem;
-    opacity: 1;
-    padding: 0.5rem;
-    position: sticky;
-    top: 0;
-    width: 100%;
+  background-color: LightYellow;
+  margin-bottom: 0.3rem;
+  opacity: 1;
+  overflow: overlay;
+  padding: 0.5rem;
+  position: sticky;
+  top: 0;
+  width: 100%;
 }
 
 footer {
-    background-color: LightYellow;
-    bottom: 0;
-    color: grey;
-    margin-top: 0.3rem;
-    padding: 0.5rem;
-    position: sticky;
-    width: 100%;
+  background-color: LightYellow;
+  bottom: 0;
+  color: grey;
+  margin-top: 0.3rem;
+  opacity: 1; 
+  overflow : overlay;
+  padding: 0.5rem;
+  position: sticky;
+  width: 100%;
+  overflow: overlay;
 }
 
 body {
-    margin: 0;
-    padding: 0.5rem
+  margin: 0;
+  padding: 0.5rem
 }
 
 html, body {
-    background-color: LightYellow;
-    font-family: Verdana, sans-serif;
-    font-size: 12px;
-    line-height: 0.15rem
-    padding: 0.5rem;
+  background-color: LightYellow;
+  font-family: Verdana, sans-serif;
+  font-size: 12px;
+  line-height: 0.15rem;
+  padding: 0.5rem;
 }
 
 a {
-    background-color: transparent;
-    -webkit-text-decoration-skip: objects
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects
 }
 
-a: active, a: hover {
-    outline-width: 0
+a:active, a:hover {
+  outline-width: 0
 }
 
 abbr[title] {
-    border-bottom: none;
-    text-decoration: underline;
-    text-decoration: underline dotted
+  border-bottom: none;
+  text-decoration: underline;
+  text-decoration: underline dotted
 }
 
 input, select, textarea {
-	border: none;
-    font: inherit;
-    background-color: inherit;
-    color: inherit;
-    height: 2.25rem;
-    margin: 0.3rem
+  border: none;
+  font: inherit;
+  background-color: inherit;
+  color: inherit;
+  height: 2.25rem;
+  margin: 0.3rem;
+  overflow: none;
+  width: 100%;
 }
 
-input: disabled, select: disabled, textarea: disabled {
-	border: none;
-    font: inherit;
-    background-color: inherit;
-    color: inherit;
-    height: 2.25rem;
-    margin: 0.3rem
+input[type="checkbox"] {
+  width: unset;
 }
 
-input: focus, select: focus, textarea: focus {
-    border: 3rem dotted gray;
-    font: inherit;
-    background-color: inherit;
-    color: inherit;
-    height: 2.25rem;
-    margin: 0.3rem
+input:active, select:active, textarea:active {
+  border: 0.1rem dotted gray;
 }
 
-input: readOnly, select: readOnly, textarea: readOnly {
-	border: none;
-    font: inherit;
-    background-color: inherit;
-    color: inherit;
-    height: 2.25rem;
-    margin: 0.3rem
+input:disabled, select:disabled, textarea:disabled {
+  border: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  border: 0.1rem dotted gray;
+}
+
+input:readOnly, select:readOnly, textarea:readOnly {
+  border: none;
 }
 
 select option {
-    background-color: LightYellow;
-    color: inherit;
+  background-color: LightYellow;
+  color: inherit;
 }
 
 button {
-    background-color: LightSkyBlue;
-    border: 0.1rem solid transparent LightSkyBlue;
-    border-radius: 0.25em;
-    color: white;
-    font-size: 1rem;
-    padding: 0.3rem 0.3rem;
+  background-color: LightSkyBlue;
+  border: 0.1rem solid transparent LightSkyBlue;
+  border-radius: 0.25em;
+  color: white;
+  font-size: 1rem;
+  padding: 0.3rem 0.3rem;
 }
 
 code, kbd, pre, samp {
-    font-family: monospace, monospace;
-    font-size: 1rem
+  font-family: monospace, monospace;
+  font-size: 1rem
 }
 
 dfn {
-    font-style: italic
+  font-style: italic
 }
 
 h1 {
-    font-size: 3rem
+  font-size: 3rem
 }
 
 h2 {
-    font-size: 2.5rem
+  font-size: 2.5rem
 }
+
 h3 {
-    font-size: 2rem
+  font-size: 2rem
 }
 
 h4 {
-    font-size: 1.75rem
+  font-size: 1.75rem
 }
 
 h5 {
-    font-size: 1.5rem
+  font-size: 1.5rem
 }
 
 h6 {
-    font-size: 1.25rem
+  font-size: 1.25rem
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: "Segoe UI", Arial, sans-serif;
-    font-weight: 400;
-    margin: 0.8rem 0
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-weight: 400;
+  margin: 0.8rem 0
 }
 
 fieldset {
-    border: 0.1rem solid RoyalBlue;
-    margin: 0 0.2rem;
-    padding: .3rem .625rem .75rem
+  border: 0.1rem solid RoyalBlue;
+  margin: 0 0.2rem;
+  padding: .3rem .625rem .75rem
 }
 
 figure {
-    margin: 0.1rem 4rem
+  margin: 0.1rem 4rem
 }
 
 hr {
-	border: none;
-    display: block;
-    border-top: 0.1rem solid RoyalBlue;
-    box-sizing: content-box;
-    height: 0;
-    margin: 0.5rem 0;
-    overflow: visible;
-    text-align: center;
-    width: 100%
+  border: none;
+  display: block;
+  border-top: 0.1rem solid RoyalBlue;
+  box-sizing: content-box;
+  height: 0;
+  margin: 0.5rem 0;
+  overflow: visible;
+  text-align: center;
+  width: 100%
 }
 
 img {
-    border-style: none;
-    height: 1.5rem;
-    text-align: center;
-    width: 1.5rem
+  border-style: none;
+  height: 1.5rem;
+  text-align: center;
+  width: 1.5rem
 }
 
 legend {
-    color: inherit;
-    display: table;
-    max-width: 100%;
-    padding: 0;
-    white-space: normal;
+  color: inherit;
+  display: table;
+  max-width: 100%;
+  padding: 0;
+  white-space: normal;
 }
 
 mark {
-    background: RoyalBlue;
-    color: Black
+  background: RoyalBlue;
+  color: Black
 }
 
 nav {
-    display: block;
-    color: inherit;
-    padding: 0.5rem;
+  display: block;
+  color: inherit;
+  padding: 0.5rem;
 }
 
 optgroup {
-    font-weight: bold
+  font-weight: bold
 }
 
 small {
-    font-size: 0.8rem
+  font-size: 0.8rem
 }
 
 sub {
-    bottom: -0.2rem
+  bottom: -0.2rem
 }
 
 sup {
-    top: -0.1rem
+  top: -0.1rem
 }
 
 sub, sup {
-    font-size: 0.75rem;
-    line-height: 0;
-    position: relative;
-    vertical-align: baseline
+  font-size: 0.75rem;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline
 }
 
-svg: not(: root) {
-    overflow: hidden
+svg: not (: root ) {
+  overflow: hidden
 }
 
 table {
-    border-collapse: collapse;
-    border-bottom: 0.1rem solid LightSkyBlue;
-    vertical-align: middle;
-    padding: 0.5rem;
-    width: 100%;
+  border-collapse: collapse;
+  border-bottom: 0.1rem solid LightSkyBlue;
+  vertical-align: middle;
+  padding: 0.5rem;
+  width: 100%;
 }
 
 thead {
-    background-color: LightSkyBlue;
-    color: white;
-    font-weight: bold;
-    height: 2rem;
-    padding-bottom: 0.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    padding-top: 0.5rem;
-    text-align: left;
+  background-color: LightSkyBlue;
+  color: white;
+  font-weight: bold;
+  height: 2rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.5rem;
+  text-align: left;
 }
 
 tfoot {
-    background-color: LightSkyBlue;
-    font-weight: bold;
-    color: white;
-    height: 2rem;
-    padding-bottom: 0.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    padding-top: 0.5rem;
-    text-align: center;
+  background-color: LightSkyBlue;
+  font-weight: bold;
+  color: white;
+  height: 2rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.5rem;
+  text-align: center;
 }
 
 tbody {
-    padding-bottom: 0.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.5rem;
 }
 
-td: center {
-    text-align: center;
+tr:hover {
+  background-color: Khaki;
 }
-
-tr: hover {
-    background-color: Khaki;
-}
-
-tr: nth-child(even) {
-    background-color: LemonChiffon;
-} 
 
 [hidden], template {
-    display: none
+  display: none
 }
 
 textarea {
-    overflow: auto
+  overflow: auto
 }
 
 div.table {
-    display: table;
-    border-collapse: collapse;
-    border-bottom: 0.1rem solid LightSkyBlue;
-    vertical-align: middle;
-    padding: 0.5rem;
-    width: 100%;
-}
- 
-div.table > div.thead {
-    display: table-header-group;
-    background-color: LightSkyBlue;
-    color: white;
-    font-weight: bold;
-    padding-bottom: 0.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    padding-top: 0.5rem;
-    text-align: left;
-    width: 100%;
-}
- 
-div.table > div.tbody {
-    display: table-row-group;
-    padding-bottom: 0.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    padding-top: 0.5rem;
-    width: 100%;
-}
- 
-div.table > div.tfoot {
-    display: table-row-group;
-    background-color: LightSkyBlue;
-    color: white;
-    font-weight: bold;
-    padding-bottom: 0.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    padding-top: 0.5rem;
-    width: 100%;
-}
- 
-div.table > div.thead > div.table-row,
-div.table > div.tbody > div.table-row,
-div.table > div.tfoot > div.table-row {
-    display: table-row;
-}
- 
-div.table > div.thead > div.table-row > div.table-heading {
-    display: table-cell;
-    font-weight: bold;
-    height: 3rem;
+  display: block;
+  border-collapse: collapse;
+  border-bottom: 0.1rem solid LightSkyBlue;
+  overflow: hidden;
+  padding-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.5rem;
+  text-align: left;
+  vertical-align: middle;
+  width: 100%;
 }
 
-div.table > div.thead > div.table-row > div.table-heading-btn {
-    display: table-cell;
-    text-align: center;
-    height: 3rem;
-    vertical-align: baseline;
+div.table > div.thead {
+  background-color: LightSkyBlue;
+  color: white;
+  font-weight: bold;
+  height: 3rem;
+}
+
+div.table > div.tbody {
+  overflow-y: auto;
+}
+
+div.table > div.tfoot {
+  background-color: LightSkyBlue;
+  color: white;
+  font-weight: bold;
+  height: 2.5rem;
+}
+
+div.table > div.thead > div.table-head {
+  display: flex;
+  font-weight: bold;
+}
+
+div.table > div.tbody > div.table-row {
+  display: flex;
+}
+
+div.table > div.tbody > div.table-row:nth-child(even) {
+  background-color: PeachPuff;
+}
+
+div.table > div.tfoot > div.table-foot {
+  display: flex;
+  font-weight: bold;
+}
+
+div.table > div.thead > div.table-head > div.table-heading {
+  display: inline-block;
+  margin-top: 1.5rem;
+}
+
+div.table > div.thead > div.table-head > div.table-heading-btn {
+  display: inline-block;
+  text-align: right;
 }
 
 div.table > div.tbody > div.table-row > div.table-cell {
-    display: table-cell;
-    height: 2rem;
+  display: inline-block;
 }
 
 div.table > div.tbody > div.table-row > div.table-btn {
-    display: table-cell;
-    text-align: center;
-    height: 2rem;
-    vertical-align: baseline;
+  display: inline-block;
+  margin-top: 0.3rem;
+  text-align: right;
+  vertical-align: baseline;
 }
 
-div.table > div.tfoot > div.table-row > div.table-prev {
-    display: table-cell;
-    font-weight: bold;
-    text-align: left;
-    height: 2rem;
+div.table > div.tfoot > div.table-foot > div.table-footer {
+  display: inline-block;
+  text-align: center;
 }
 
-div.table > div.tfoot > div.table-row > div.table-foot {
-    display: table-cell;
-    font-weight: bold;
-    text-align: center;
-    height: 2rem;
+div.table > div.tfoot > div.table-foot > div.table-prev {
+  display: inline-block;
+  text-align: left;
 }
 
-div.table > div.tfoot > div.table-row > div.table-next {
-    display: table-cell;
-    font-weight: bold;
-    text-align: right;
-    height: 2rem;
+div.table > div.tfoot > div.table-foot > div.table-next {
+  display: inline-block;
+  text-align: right;
 }
 
 button.nav-button, a.nav-button {
-    background-color: LightSkyBlue;
-    border: 0.1rem solid LightSkyBlue;
-    border-radius: 0.3rem;
-    color: white;
-    font-size: 1rem;
-    height: 2.1rem;
-    padding: 0.3rem 0.3rem;
-    vertical-align: baseline
+  background-color: LightSkyBlue;
+  border: 0.1rem solid LightSkyBlue;
+  border-radius: 0.3rem;
+  color: white;
+  font-size: 1rem;
+  height: 2.1rem;
+  margin-left: 0.1rem;
+  margin-right: 0.1rem;
+  margin-top: 0.1rem;
+  padding: 0.3rem 0.3rem;
+  vertical-align: baseline
 }
 
 img.nav-button {
-    background-color: inherit;
-    padding: 0.1rem 0.1rem 0.1rem 0.1rem;
-    vertical-align: center
+  background-color: inherit;
+  padding: 0.1rem 0.1rem 0.1rem 0.1rem;
+  vertical-align: center
 }
 
 ul.nav {
-    border: none;
-	list-style-type: none;
-	line-height: 2.5rem;
-    margin: 0;
-    overflow: hidden;
-    padding: 0.5rem;
-    width: 100%
+  border: none;
+  list-style-type: none;
+  line-height: 2.5rem;
+  margin: 0;
+  overflow: hidden;
+  padding: 0.5rem;
+  width: 100%
 }
 
 li.nav {
-   display: block;
-   float: left;
+  display: block;
+  float: left;
 }
 
 ul.footer {
-    border: none;
-    display: inline;
-    list-style-type: none;
-    line-height: 2.5rem;
-    margin-left: 0;
-    overflow: hidden;
-    padding: 0.5rem;
-    width: 100%
+  border: none;
+  display: inline;
+  list-style-type: none;
+  line-height: 2.5rem;
+  margin-left: 0;
+  overflow: hidden;
+  padding: 0.5rem;
+  width: 100%
 }
 
 ul.footer li {
-   display: inline;
-   float: left;
+  display: inline;
+  float: left;
 }
 
 ul.footer li:last-of-type {
-    float: right;
+  float: right;
 }
 
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    padding-top: 10rem;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+  height: 100%;
+  left: 0;
+  overflow: auto;
+  padding-top: 10rem;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  width: 100%;
 }
 
 .modal-content {
-    position: relative;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 0;
-    border: 0.1rem solid #888;
-    width: 60rem;
-    box-shadow: 0 0.3rem 0.6rem 0 rgba(0,0,0,0.2),0 0.5ewm 1.8rem 0 rgba(0,0,0,0.19);
-    -webkit-animation-name: animatetop;
-    -webkit-animation-duration: 0.4s;
-    animation-name: animatetop;
-    animation-duration: 0.4s
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+  background-color: LightSkyBlue;
+  border: 0.2rem LightSkyBlue;
+  border-radius: 3rem;
+  margin: auto;
+  padding: 0;
+  position: relative;
+  width: 60rem;
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
 }
 
 /* Add Animation */
-@-webkit-keyframes animatetop {
-    from {top:-300px; opacity:0} 
-    to {top:0; opacity:1}
+@
+-webkit-keyframes animatetop {
+  from {top: -300px;
+  opacity: 0
 }
 
-@keyframes animatetop {
-    from {top:-300px; opacity:0}
-    to {top:0; opacity:1}
+to {
+  top: 0;
+  opacity: 1
 }
 
+}
+@
+keyframes animatetop {
+  from {top: -300px;
+  opacity: 0
+}
+
+to {
+  top: 0;
+  opacity: 1
+}
+
+}
 .modal-header {
-    padding: 0.1rem 1rem;
-    background-color: LightSkyBlue;
-    color: white;
-    height: 8rem;
-    width: 100%
+  background-color: LightSkyBlue;
+  color: white;
+  height: 5rem;
+  width: 100%
 }
 
 .modal-body {
-	padding: 0.1rem 1rem;
-    background-color: white;
-    color: black;
-    height: 30rem;
-    width: 100%
+  background-color: LightSkyBlue;
+  color: white;
+  height: 25rem;
+  width: 100%
 }
 
 .modal-body textarea {
-    background-color: white;
-    color: black;
-    height: 100%;
-    width: 100%
+  background-color: LightSkyBlue;
+  border: none;
+  box-sizing: border-box;
+  color: white;
+  height: 100%;
+  line-height: 1.2rem;
+  overflow: auto;
+  width: 100%;
+}
+
+.modal-body textarea:focus {
+  border: none;
 }
 
 .modal-footer {
-    padding: 0.1rem 1rem;
-    background-color: LightSkyBlue;
-    color: white;
-    height: 5rem;
-    width: 100%
+  background-color: LightSkyBlue;
+  color: white;
+  height: 2rem;
+  width: 100%
+}
+
+#adressen_tbody {
+  max-height: 6rem;
+}
+
+#cvs_tbody {
+  max-height: 20rem;
+}
+
+#funktionen_tbody {
+  max-height: 30rem;
+}
+
+#unterKategorien_tbody {
+  max-height: 30rem;
 }

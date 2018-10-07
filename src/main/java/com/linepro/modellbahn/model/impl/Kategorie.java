@@ -1,8 +1,8 @@
 package com.linepro.modellbahn.model.impl;
 
 import java.net.URI;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -35,8 +35,8 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author $Author:$
  * @version $Id:$
  */
-@Entity(name = "Kategorie")
-@Table(name = "Kategorie", indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
+@Entity(name = DBNames.KATEGORIE)
+@Table(name = DBNames.KATEGORIE, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.KATEGORIE)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.UNTER_KATEGORIEN,
@@ -46,7 +46,7 @@ public class Kategorie extends AbstractNamedItem<NameKey> implements IKategorie 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2964561580499221297L;
 
-    private Set<IUnterKategorie> unterKategorien = new HashSet<IUnterKategorie>();
+    private Set<IUnterKategorie> unterKategorien = new TreeSet<IUnterKategorie>();
 
     /**
      * Instantiates a new kategorie.

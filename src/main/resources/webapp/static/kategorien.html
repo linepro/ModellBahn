@@ -15,8 +15,8 @@
 <script type="text/javascript">
 var fetchUrl = fetchUrl("kategorie");
 var columns = [
-    new TextColumn("Name", "name", Editable.ADD),
-    new TextColumn("Description", "description", Editable.UPDATE),
+    new TextColumn("Namen", "name", Editable.ADD, true, 30),
+    new TextColumn("Bezeichnung", "description", Editable.UPDATE, false, 50),
     new ButtonColumn([new HeaderLinkage("add", "kategorie.newRow()")],
     		[new FunctionLinkage("update", "kategorie.editRow(this.value)"), 
     		 new FunctionLinkage("delete", "kategorie.deleteRow(this.value)")])

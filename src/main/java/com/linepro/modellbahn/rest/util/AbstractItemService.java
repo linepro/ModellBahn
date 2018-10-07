@@ -537,7 +537,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
     }
 
     protected IUnterKategorie findUnterKategorie(String kategorie, String unterKategorie, boolean eager) throws Exception { 
-        return findUnterKategorie(findKategorie(kategorie, false), unterKategorie, eager); 
+        return findUnterKategorie(findKategorie(kategorie, eager), unterKategorie, eager); 
     }
 
     protected IUnterKategorie findUnterKategorie(IKategorie kategorie, String unterKategorie, boolean eager) throws Exception { 

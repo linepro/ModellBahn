@@ -27,8 +27,8 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author  $Author:$
  * @version $Id:$
  */
-@Entity(name = "Wahrung")
-@Table(name = "Wahrung", indexes = { @Index(columnList = DBNames.NAME, unique = true) }, 
+@Entity(name = DBNames.WAHRUNG)
+@Table(name = DBNames.WAHRUNG, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, 
        uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.WAHRUNG)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.NAME,ApiNames.DESCRIPTION,ApiNames.DECIMALS, ApiNames.DELETED, ApiNames.LINKS})

@@ -96,7 +96,7 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
 	}
 
 	@Override
-    @Column(name=DBNames.DESCRIPTION, nullable=true, length=100)
+    @Column(name=DBNames.BEZEICHNUNG, nullable=true, length=100)
     @JsonGetter(ApiNames.DESCRIPTION)
     @JsonView(Views.DropDown.class)
 	public String getBezeichnung() {

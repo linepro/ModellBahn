@@ -2,7 +2,6 @@ package com.linepro.modellbahn.model.impl;
 
 import java.math.BigDecimal;
 import java.net.URI;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -66,8 +65,8 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author $Author:$
  * @version $Id:$
  */
-@Entity(name = "DecoderTyp")
-@Table(name = "DecoderTyp", indexes = { @Index(columnList = DBNames.HERSTELLER_ID),
+@Entity(name = DBNames.DECODER_TYP)
+@Table(name = DBNames.DECODER_TYP, indexes = { @Index(columnList = DBNames.HERSTELLER_ID),
         @Index(columnList = DBNames.PROTOKOLL_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.HERSTELLER_ID, DBNames.NAME }) })
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME))
@@ -103,13 +102,13 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     private Konfiguration konfiguration;
 
     /** The cv. */
-    private Set<IDecoderTypAdress> adressen = new HashSet<IDecoderTypAdress>();
+    private Set<IDecoderTypAdress> adressen = new TreeSet<IDecoderTypAdress>();
 
     /** The cv. */
-    private Set<IDecoderTypCV> CVs = new HashSet<IDecoderTypCV>();
+    private Set<IDecoderTypCV> CVs = new TreeSet<IDecoderTypCV>();
 
     /** The funktion. */
-    private Set<IDecoderTypFunktion> funktionen = new HashSet<IDecoderTypFunktion>();
+    private Set<IDecoderTypFunktion> funktionen = new TreeSet<IDecoderTypFunktion>();
 
     /**
      * Instantiates a new decoder typ.
@@ -131,7 +130,7 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     @Override
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class)
-    @JoinColumn(name = DBNames.HERSTELLER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_typ_fk2"))
+    @JoinColumn(name = DBNames.HERSTELLER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_TYP + "_fk2"))
     @JsonGetter(ApiNames.HERSTELLER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -177,7 +176,7 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Protokoll.class)
-    @JoinColumn(name = DBNames.PROTOKOLL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_typ_fk3"))
+    @JoinColumn(name = DBNames.PROTOKOLL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_TYP + "_fk3"))
     @JsonGetter(ApiNames.PROTOKOLL)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)

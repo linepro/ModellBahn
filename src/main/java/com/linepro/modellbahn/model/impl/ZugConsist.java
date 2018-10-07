@@ -48,8 +48,8 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author $Author:$
  * @version $Id:$
  */
-@Entity(name = "ZugConsist")
-@Table(name = "ZugConsist", indexes = { @Index(columnList = DBNames.ZUG_ID),
+@Entity(name = DBNames.ZUG_CONSIST)
+@Table(name = DBNames.ZUG_CONSIST, indexes = { @Index(columnList = DBNames.ZUG_ID),
         @Index(columnList = DBNames.ARTIKEL_ID, unique = true) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.ZUG_ID, DBNames.POSITION }) })
 @JsonRootName(value = ApiNames.CONSIST)
@@ -103,7 +103,7 @@ public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsi
     @Override
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Zug.class)
-    @JoinColumn(name = DBNames.ZUG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "consist_fk1"))
+    @JoinColumn(name = DBNames.ZUG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ZUG_CONSIST + "_fk1"))
     @JsonGetter(ApiNames.ZUG)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -136,7 +136,7 @@ public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsi
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Artikel.class)
-    @JoinColumn(name = DBNames.ARTIKEL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "consist_fk2"))
+    @JoinColumn(name = DBNames.ARTIKEL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ZUG_CONSIST + "_fk2"))
     @JsonGetter(ApiNames.ARTIKEL)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -208,8 +208,8 @@ public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsi
     public String toString() {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
-                .append("Zug", getZug())
-                .append("Position", getPosition())
+                .append(ApiNames.ZUG, getZug())
+                .append(ApiNames.POSITION, getPosition())
                 .append(ApiNames.ARTIKEL, getArtikel())
                 .toString();
     }

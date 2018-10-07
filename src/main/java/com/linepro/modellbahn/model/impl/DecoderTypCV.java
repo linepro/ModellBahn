@@ -46,8 +46,8 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author  $Author:$
  * @version $Id:$
  */
-@Entity(name = "DecoderTypCV")
-@Table(name = "DecoderTypCV", indexes = { @Index(columnList = DBNames.DECODER_TYP_ID +"," + DBNames.CV, unique = true),
+@Entity(name = DBNames.DECODER_TYP_CV)
+@Table(name = DBNames.DECODER_TYP_CV, indexes = { @Index(columnList = DBNames.DECODER_TYP_ID +"," + DBNames.CV, unique = true),
         @Index(columnList = DBNames.DECODER_TYP_ID), @Index(columnList = DBNames.CV) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.DECODER_TYP_ID, DBNames.CV }) })
 @JsonRootName(value = ApiNames.CV)
@@ -115,7 +115,7 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
     @Override
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
-    @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_typ_cv_fk1"))
+    @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_TYP_CV + "_fk1"))
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using=DecoderTypSerializer.class)
@@ -144,7 +144,7 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
     }
 
     @Override
-    @Column(name = DBNames.DESCRIPTION, nullable = true, length = 100)
+    @Column(name = DBNames.BEZEICHNUNG, nullable = true, length = 100)
     @JsonGetter(ApiNames.DESCRIPTION)
     @JsonView(Views.DropDown.class)
     public String getBezeichnung() {

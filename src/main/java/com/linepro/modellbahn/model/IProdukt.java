@@ -3,7 +3,7 @@ package com.linepro.modellbahn.model;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import com.linepro.modellbahn.model.keys.ProduktKey;
 
@@ -365,7 +365,7 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      *
      * @return the teilen
      */
-    List<IProduktTeil> getTeilen();
+    Set<IProduktTeil> getTeilen();
 
     /**
      * Sets the teilen.
@@ -373,7 +373,7 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      * @param teilen
      *            the new teilen
      */
-    void setTeilen(List<IProduktTeil> teilen);
+    void setTeilen(Set<IProduktTeil> teilen);
 
     void addTeil(IProduktTeil funktion);
 

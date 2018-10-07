@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.model;
 
-import java.util.List;
+import java.util.Set;
 
 import com.linepro.modellbahn.model.keys.NameKey;
 
@@ -30,14 +30,14 @@ public interface IZug extends INamedItem<NameKey> {
      *
      * @return the consist
      */
-    List<IZugConsist> getConsist();
+    Set<IZugConsist> getConsist();
 
     /**
      * Sets the consist.
      *
      * @param consist the new consist
      */
-    void setConsist(List<IZugConsist> consist);
+    void setConsist(Set<IZugConsist> consist);
 
     void addConsist(IZugConsist consist);
 

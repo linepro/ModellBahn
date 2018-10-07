@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.model;
 
+import java.io.Serializable;
 import java.net.URI;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ import com.linepro.modellbahn.persistence.IKey;
  * 
  * NB. All properties are objects because they may need to be null for template matching.
  */
-public interface IItem<K extends IKey> {
+public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializable {
 
     /**
      * Gets the primary key of this item

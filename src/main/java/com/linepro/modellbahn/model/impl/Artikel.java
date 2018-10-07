@@ -60,8 +60,8 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author  $Author:$
  * @version $Id:$
  */
-@Entity(name = "Artikel")
-@Table(name = "Artikel", indexes = { @Index(columnList = DBNames.PRODUKT_ID),
+@Entity(name = DBNames.ARTIKEL)
+@Table(name = DBNames.ARTIKEL, indexes = { @Index(columnList = DBNames.PRODUKT_ID),
         @Index(columnList = DBNames.WAHRUNG_ID),
         @Index(columnList = DBNames.STEUERUNG_ID),
         @Index(columnList = DBNames.MOTOR_TYP_ID),
@@ -168,7 +168,7 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
-    @JoinColumn(name = DBNames.PRODUKT_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "artikel_fk1"))
+    @JoinColumn(name = DBNames.PRODUKT_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk1"))
     @JsonGetter(ApiNames.PRODUKT)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using=ProduktSerializer.class)
@@ -201,7 +201,7 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Wahrung.class)
-    @JoinColumn(name = DBNames.WAHRUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "artikel_fk2"))
+    @JoinColumn(name = DBNames.WAHRUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk2"))
     @JsonGetter(ApiNames.WAHRUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -247,7 +247,7 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class)
-    @JoinColumn(name = DBNames.STEUERUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "artikel_fk3"))
+    @JoinColumn(name = DBNames.STEUERUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk3"))
     @JsonGetter(ApiNames.STEUERUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -265,7 +265,7 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = MotorTyp.class)
-    @JoinColumn(name = DBNames.MOTOR_TYP_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "artikel_fk4"))
+    @JoinColumn(name = DBNames.MOTOR_TYP_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk4"))
     @JsonGetter(ApiNames.MOTOR_TYP)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -283,7 +283,7 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Licht.class)
-    @JoinColumn(name = DBNames.LICHT_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "artikel_fk5"))
+    @JoinColumn(name = DBNames.LICHT_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk5"))
     @JsonGetter(ApiNames.LICHT)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -301,7 +301,7 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kupplung.class)
-    @JoinColumn(name = DBNames.KUPPLUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "artikel_fk6"))
+    @JoinColumn(name = DBNames.KUPPLUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk6"))
     @JsonGetter(ApiNames.KUPPLUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -319,7 +319,7 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
-    @JoinColumn(name = DBNames.DECODER_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "artikel_fk7"))
+    @JoinColumn(name = DBNames.DECODER_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk7"))
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)

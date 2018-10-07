@@ -47,8 +47,8 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author  $Author:$
  * @version $Id:$
  */
-@Entity(name = "DecoderFunktion")
-@Table(name = "DecoderFunktion", indexes = { @Index(columnList = DBNames.DECODER_ID + "," + DBNames.FUNKTION_ID, unique = true) },
+@Entity(name = DBNames.DECODER_FUNKTION)
+@Table(name = DBNames.DECODER_FUNKTION, indexes = { @Index(columnList = DBNames.DECODER_ID + "," + DBNames.FUNKTION_ID, unique = true) },
        uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.FUNKTION_ID })})
 @JsonRootName(value = ApiNames.FUNKTION)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER, ApiNames.FUNKTION,  ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS})
@@ -98,7 +98,7 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
 	@Override
     @BusinessKey
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=Decoder.class)
-    @JoinColumn(name=DBNames.DECODER_ID, nullable = false, referencedColumnName=DBNames.ID, foreignKey = @ForeignKey(name = "decoder_fn_fk1"))
+    @JoinColumn(name=DBNames.DECODER_ID, nullable = false, referencedColumnName=DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_FUNKTION + "_fk1"))
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -145,7 +145,7 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
     @Override
     @BusinessKey
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=DecoderTypFunktion.class)
-    @JoinColumn(name = DBNames.FUNKTION_ID, nullable = false, referencedColumnName=DBNames.ID, foreignKey = @ForeignKey(name = "decoder_fn_fk2"))
+    @JoinColumn(name = DBNames.FUNKTION_ID, nullable = false, referencedColumnName=DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_FUNKTION + "_fk2"))
     public IDecoderTypFunktion getFunktion() {
         if (funktion != null) {
             setFunktionStr(funktion.getName());
@@ -167,7 +167,7 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
     }
 
     @Override
-	@Column(name=DBNames.DESCRIPTION, nullable=true, length=100)
+	@Column(name=DBNames.BEZEICHNUNG, nullable=true, length=100)
     @JsonGetter(ApiNames.DESCRIPTION)
     @JsonView(Views.DropDown.class)
 	public String getBezeichnung() {

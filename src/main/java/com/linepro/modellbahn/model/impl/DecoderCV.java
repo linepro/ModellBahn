@@ -48,8 +48,8 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author $Author:$
  * @version $Id:$
  */
-@Entity(name = "DecoderCV")
-@Table(name = "DecoderCV", indexes = {
+@Entity(name = DBNames.DECODER_CV)
+@Table(name = DBNames.DECODER_CV, indexes = {
         @Index(columnList = DBNames.DECODER_ID + "," + DBNames.CV_ID, unique = true) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.CV_ID }) })
 @JsonRootName(value = ApiNames.CV)
@@ -91,7 +91,7 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     @Override
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
-    @JoinColumn(name = DBNames.DECODER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_cv_fk1"))
+    @JoinColumn(name = DBNames.DECODER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name =  DBNames.DECODER_CV + "_fk1"))
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -110,7 +110,7 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     @Override
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTypCV.class)
-    @JoinColumn(name = DBNames.CV_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_cv_fk2"))
+    @JoinColumn(name = DBNames.CV_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_CV + "_fk2"))
     public IDecoderTypCV getCv() {
         if (cv != null) {
             setCvValue(cv.getCv());
@@ -143,7 +143,7 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     }
 
     @Override
-    @Column(name = "wert", nullable = true)
+    @Column(name = DBNames.WERT, nullable = true)
     @JsonGetter(ApiNames.WERT)
     @JsonView(Views.DropDown.class)
     public Integer getWert() {

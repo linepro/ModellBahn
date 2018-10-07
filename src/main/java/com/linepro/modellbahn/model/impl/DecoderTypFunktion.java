@@ -45,8 +45,8 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author $Author:$
  * @version $Id:$
  */
-@Entity(name = "DecoderTypFunktion")
-@Table(name = "DecoderTypFunktion", indexes = { @Index(columnList = DBNames.DECODER_TYP_ID + "," + DBNames.REIHE + "," + DBNames.NAME, unique = true),
+@Entity(name = DBNames.DECODER_TYP_FUNKTION)
+@Table(name = DBNames.DECODER_TYP_FUNKTION, indexes = { @Index(columnList = DBNames.DECODER_TYP_ID + "," + DBNames.REIHE + "," + DBNames.NAME, unique = true),
         @Index(columnList = DBNames.DECODER_TYP_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.DECODER_TYP_ID, DBNames.REIHE, DBNames.NAME }) })
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, unique = false, length = 4))
@@ -92,7 +92,7 @@ public class DecoderTypFunktion extends AbstractNamedItem<DecoderTypFunktionKey>
     @Override
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
-    @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "decoder_typ_fn_fk1"))
+    @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_TYP_FUNKTION + "_fk1"))
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using=DecoderTypSerializer.class)

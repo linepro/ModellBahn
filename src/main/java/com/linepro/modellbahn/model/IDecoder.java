@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.model;
 
-import java.util.List;
+import java.util.Set;
 
 import com.linepro.modellbahn.model.keys.NameKey;
 
@@ -58,14 +58,14 @@ public interface IDecoder extends INamedItem<NameKey> {
      *
      * @return the adressen
      */
-    List<IDecoderAdress> getAdressen();
+    Set<IDecoderAdress> getAdressen();
 
     /**
      * Sets the adressen.
      *
      * @param adressen the new adressen
      */
-    void setAdressen(List<IDecoderAdress> adressen);
+    void setAdressen(Set<IDecoderAdress> adressen);
 
     void addAdress(IDecoderAdress adress);
 
@@ -76,14 +76,14 @@ public interface IDecoder extends INamedItem<NameKey> {
      *
      * @return the cv
      */
-    List<IDecoderCV> getCVs();
+    Set<IDecoderCV> getCVs();
 
     /**
      * Sets the cv.
      *
      * @param cv the new cv
      */
-    void setCVs(List<IDecoderCV> cv);
+    void setCVs(Set<IDecoderCV> cv);
 
     void addCV(IDecoderCV cv);
 
@@ -94,14 +94,14 @@ public interface IDecoder extends INamedItem<NameKey> {
      *
      * @return the funktionen
      */
-    List<IDecoderFunktion> getFunktionen();
+    Set<IDecoderFunktion> getFunktionen();
 
     /**
      * Sets the funktionen.
      *
      * @param funktionen the new funktionen
      */
-    void setFunktionen(List<IDecoderFunktion> funktionen);
+    void setFunktionen(Set<IDecoderFunktion> funktionen);
 
     void addFunktion(IDecoderFunktion cv);
 

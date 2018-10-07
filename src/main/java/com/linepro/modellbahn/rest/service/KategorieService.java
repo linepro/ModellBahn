@@ -203,13 +203,17 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     public Response delete(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) throws Exception {
         try {
-            UnterKategorie unterKategorie = (UnterKategorie) findUnterKategorie(kategorieStr, unterKategorieStr);
+            Kategorie kategorie = (Kategorie) findKategorie(kategorieStr, true);
+
+            if (kategorie == null) {
+                return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
+            }
+
+            UnterKategorie unterKategorie = (UnterKategorie) findUnterKategorie(kategorie, unterKategorieStr, true);
 
             if (unterKategorie == null) {
                 return getResponse(badRequest(null, "UnterKategorie " + kategorieStr + "/" + unterKategorieStr + " does not exist"));
             }
-
-            Kategorie kategorie = (Kategorie) unterKategorie.getKategorie();
 
             kategorie.removeUnterKategorie(unterKategorie);
 

@@ -54,8 +54,8 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author  $Author:$
  * @version $Id:$
  */
-@Entity(name = "Vorbild")
-@Table(name = "Vorbild", indexes = { @Index(columnList = DBNames.GATTUNG_ID, unique = true),
+@Entity(name = DBNames.VORBILD)
+@Table(name = DBNames.VORBILD, indexes = { @Index(columnList = DBNames.GATTUNG_ID, unique = true),
         @Index(columnList = DBNames.UNTER_KATEGORIE_ID),
         @Index(columnList = DBNames.ANTRIEB_ID),
         @Index(columnList = DBNames.ACHSFOLG_ID),
@@ -344,7 +344,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gattung.class)
-    @JoinColumn(name = DBNames.GATTUNG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "vorbild_fk1"))
+    @JoinColumn(name = DBNames.GATTUNG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk1"))
     @JsonGetter(ApiNames.GATTUNG)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -362,7 +362,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = UnterKategorie.class)
-    @JoinColumn(name = DBNames.UNTER_KATEGORIE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "vorbild_fk2"))
+    @JoinColumn(name = DBNames.UNTER_KATEGORIE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk2"))
     @JsonGetter(ApiNames.UNTER_KATEGORIE)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using=UnterKategorieSerializer.class)
@@ -437,7 +437,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Antrieb.class)
-    @JoinColumn(name = DBNames.ANTRIEB_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "vorbild_fk3"))
+    @JoinColumn(name = DBNames.ANTRIEB_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk3"))
     @JsonGetter(ApiNames.ANTRIEB)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -455,7 +455,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class)
-    @JoinColumn(name = DBNames.ACHSFOLG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "vorbild_fk4"))
+    @JoinColumn(name = DBNames.ACHSFOLG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk4"))
     @JsonGetter(ApiNames.ACHSFOLG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -712,7 +712,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class)
-    @JoinColumn(name = DBNames.STEUERUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = "vorbild_fk5"))
+    @JoinColumn(name = DBNames.STEUERUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk5"))
     @JsonGetter(ApiNames.STEUERUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
