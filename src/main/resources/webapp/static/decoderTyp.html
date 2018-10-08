@@ -119,11 +119,11 @@ async function init() {
                 	
                 	tablinks = document.getElementByClassName("tablinks");
                 	for (i > 0; i < tablinks.length; i++){
-                		tablinks[i].className = tablinks[i].className.replace('active', '');
+                		tablinks[i].className = tablinks[i].className.replace(' active', '');
                 	}
                 	
                 	document.getElementById(typName).style.display = 'block';
-                	typ.typName.className = 'active';
+                	typ.currentTarget.className += ' active';
                 }
                 </script>
             </div>
