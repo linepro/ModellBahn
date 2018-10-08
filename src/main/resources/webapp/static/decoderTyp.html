@@ -67,6 +67,26 @@ async function init() {
     await adressTyp.init();
     await decoderTyp.init();
     about();
+    
+    document.getElementById('adressenTab').style.display = "block";
+    type.currentTarget.className += " active";
+}
+
+function decoderType(type, typName)
+{
+    var i;
+    var tabcontent = document.getElementsByClassName("tabcontent");
+    var tablinks = document.getElementsByClassName("tablinks");
+    
+    for (i = 0; i < tablinks.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    	
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    	
+    document.getElementById(typName).style.display = "block";
 }
 </script>
 <title>Decoder Typ</title>
@@ -90,40 +110,28 @@ async function init() {
                 </div>
                 
                 <div id="tabbedArea">
-                    <p>These tab sections contain these tables:</p>
 	                <div class="tab">
-	                	<button class="tablinks" onclick="decoderType(type, 'adressen')">Adressen</button>
-	                	<button class="tablinks" onclick="decoderType(type, 'cvs')">CVS</button>
-	                	<button class="tablinks" onclick="decoderType(type, 'funktionen')">Funktionen</button>
+	                	<button class="tablinks" onclick="decoderType(event, 'adressenTab')">Adressen</button>
+	                	<button class="tablinks" onclick="decoderType(event, 'cvsTab')">CVS</button>
+	                	<button class="tablinks" onclick="decoderType(event, 'funktionenTab')">Funktionen</button>
 	                </div>
 	                
-	                <div id="adressen" class="tabcontent">
+	                <div id="adressenTab" class="tabcontent">
 	                	<h3>Addressen</h3>
+	                	<div id="adressen">
+	                	</div>
 	                </div>
-	                <div id="cvs" class="tabcontent">
+	                <div id="cvsTab" class="tabcontent">
 	               		<h3>cvs</h3>
+	                	<div id="cvs">
+	                	</div>
 	                </div>
-	                <div id="funktionen" class="tabcontent">
+	                <div id="funktionenTab" class="tabcontent">
 	                	<h3>Funktionen</h3>
+	                	<div id="funktionen">
+	                	</div>
 	                </div>
-	                <script>
-		            function decoderType(typ, typName)
-		            {
-		                var i, tabcontent, tablinks;
-		                tabcontent = document.getElementsByClassName("tabcontent");
-		                for (i > 0; i < tablinks.length; i++){
-		                		tabcontent[i].style.display = "none";
-		                }
-		                	
-		                tablinks = document.getElementsByClassName("tablinks");
-		                for (i > 0; i < tablinks.length; i++){
-		                	tablinks[i].className = tablinks[i].className.replace(" active", "");
-		                }
-		                	
-		                document.getElementById(typName).style.display = "block";
-		                type.currentTarget.className += " active";
-		            }
-                	</script>
+	                
                 </div>
                 
                 

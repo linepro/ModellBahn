@@ -531,3 +531,10 @@ to {
 #unterKategorien_tbody {
   max-height: 30rem;
 }
+
+.tabcontent {
+	display: none;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  	padding: 0.3rem 0.3rem;
+}
