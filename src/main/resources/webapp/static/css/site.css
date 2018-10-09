@@ -372,7 +372,7 @@ div.table > div.tfoot > div.table-foot > div.table-next {
   text-align: right;
 }
 
-button.nav-button, a.nav-button {
+button.nav-button, a.nav-button, button.tablinks {
   background-color: LightSkyBlue;
   border: 0.1rem solid LightSkyBlue;
   border-radius: 0.3rem;
@@ -534,7 +534,13 @@ to {
 
 .tabcontent {
 	display: none;
-    border: 1px solid #ccc;
-    font-size: 1rem;
+	border: 0.1rem solid transparent LightSkyBlue;    
+	border-radius: 0.3rem;
+	font-size: 1rem;
   	padding: 0.3rem 0.3rem;
+}
+
+.tab {
+	overflow: hidden;
+	background-color: LightYellow;
 }
