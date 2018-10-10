@@ -13,7 +13,7 @@
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var fetchUrl = fetchUrl("decoderTyp");
+var fetchUrl = fetchUrl("decoderenType");
 var hersteller = new DropDown(apiRoot() + "hersteller", [ "name" ], [ "name" ]);
 var protokoll = new DropDown(apiRoot() + "protokoll", [ "name" ], [ "name" ]);
 var konfiguration = new DropDown(apiRoot() + "enums/konfiguration", [ "name" ], [ "name" ]);
@@ -24,7 +24,7 @@ var adressen = new ItemGrid(2, undefined, "adressen", [
     new NumberColumn("Span", "span", Editable.UPDATE, true, 16, 1),
     new NumberColumn("Werkseinstellung", "werkseinstellung", Editable.UPDATE, true, 65535, 1),
     new ButtonColumn([new HeaderLinkage("add", "adressen.addRow()")],
-            [new FunctionLinkage("update", "adressen.updateRow(this.value)"), 
+            [new FunctionLinkage("update", "adressen.updateRow(this.value)"),
              new FunctionLinkage("delete", "adressen.deleteRow(this.value)")])],
     false, EditMode.ADD, undefined);
 var cvs = new ItemGrid(10, undefined, "cvs", [
@@ -41,10 +41,10 @@ var funktionen = new ItemGrid(10, undefined, "funktionen", [
     new TextColumn("Bezeichnung", "description", Editable.UPDATE, true, 50),
     new BoolColumn("Programmable", "programmable", Editable.UPDATE, true),
     new ButtonColumn([new HeaderLinkage("add", "funktionen.addRow()")],
-            [new FunctionLinkage("update", "funktionen.updateRow(this.value)"), 
+            [new FunctionLinkage("update", "funktionen.updateRow(this.value)"),
              new FunctionLinkage("delete", "funktionen.deleteRow(this.value)")])],
     false, EditMode.ADD, undefined);
-var decoderTyp = new ItemGrid(1, fetchUrl, "decoderTyp", [
+var decoderenType = new ItemGrid(1, fetchUrl, "decoderenType", [
     new SelectColumn("Hersteller", "hersteller", hersteller, Editable.ADD, true),
     new TextColumn("Bestell Nr", "bestellNr", Editable.ADD, true, 10),
     new TextColumn("Bezeichnung", "description", Editable.UPDATE, false, 50),
@@ -54,7 +54,7 @@ var decoderTyp = new ItemGrid(1, fetchUrl, "decoderTyp", [
     new NumberColumn("I Max", "iMax", Editable.UPDATE, false, 1000, 1),
     new SelectColumn("Konfiguration", "konfiguration", konfiguration, Editable.UPDATE, true),
     new ButtonColumn([],
-            [new FunctionLinkage("update", "decoderTyp.updateRow(this.value)")])],
+            [new FunctionLinkage("update", "decoderenType.updateRow(this.value)")])],
     false, EditMode.UPDATE, [
     	adressen,
         cvs,
@@ -65,7 +65,7 @@ async function init() {
     await protokoll.init();
     await konfiguration.init();
     await adressTyp.init();
-    await decoderTyp.init();
+    await decoderenType.init();
     about();
     
     var type = document.getElementById('adressenTab').style.display = "block";
@@ -94,25 +94,26 @@ function decoderType(type, typName)
 <title>Decoder Typ</title>
 </head>
 <body onload="javascript:init()">
-    <header>
-        <nav>
-            <ul class="nav">
-                <li><a class="nav-button" href='../index.html'>Home</a></li>
+	<header>
+		<nav>
+			<ul class="nav">
+				<li><a class="nav-button" href='../index.html'>Home</a></li>
                 <li><a class="nav-button" href="#" onclick="history.go(-1)">Back</a></li>
-            </ul>
-        </nav>
-        <hr class="highlight" />
-    </header>
-
-    <section>
-        <article>
-            <h3 id="heading">Decoder Typ</h3>
-            <div id="data">
-                <div id="decoderTyp">
-                </div>
-                
-                <div id="tabbedArea">
-	                <div class="tab">
+			</ul>
+		</nav>
+		<hr class="highlight" />
+	</header>
+	
+	<section>
+		<article>
+			<h3 id="heading">Decoder Filtered Type</h3>
+			
+			<div id="data">
+				<div id="decoderentype">
+				</div>
+				
+				<div id="tabbedarea">
+					<div class="tab">
 	                	<button class="tablinks" onclick="decoderType(event, 'adressenTab')">Adressen</button>
 	                	<button class="tablinks" onclick="decoderType(event, 'cvsTab')">CVS</button>
 	                	<button class="tablinks" onclick="decoderType(event, 'funktionenTab')">Funktionen</button>
@@ -132,23 +133,16 @@ function decoderType(type, typName)
 	                	<h3>Funktionen</h3>
 	                	<div id="funktionen">
 	                	</div>
-	                </div>   
-                </div>
-                               
-            </div>
-        </article>
-    </section>
-
-    <footer>
-        <div id="footer">
-            <div>
-                <hr class="highlight" />
-                <ul class="footer">
-                    <li>Copyright &copy; 2018 ModellBahn Website</li>
-                    <li><a id="license" class="nav-button" href="#">About</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
+	                </div>
+				</div>
+				
+			</div>
+		</article>
+	</section>
+	
+	<footer>
+		<div>
+		</div>
+	</footer>
 </body>
 </html>
