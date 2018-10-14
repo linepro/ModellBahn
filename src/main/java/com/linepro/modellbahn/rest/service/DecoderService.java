@@ -56,7 +56,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
             @JsonProperty(value = ApiNames.DECODER_TYP, required = false) DecoderTyp decoderTyp,
             @JsonProperty(value = ApiNames.PROTOKOLL, required = false) Protokoll protokoll,
             @JsonProperty(value = ApiNames.DECODER_ID, required = false) String decoderId,
-            @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.FAHRSTUFE, required = false) Integer fahrstufe,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
         Decoder entity = new Decoder(id, decoderTyp, protokoll, decoderId, bezeichnung, fahrstufe, deleted);
@@ -105,7 +105,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
             @JsonProperty(value = ApiNames.DECODER_ID, required = false) String decoderId,
             @JsonProperty(value = ApiNames.REIHE, required = false) Integer reihe,
             @JsonProperty(value = ApiNames.FUNKTION, required = false) String funktion,
-            @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
         IDecoder decoder = findDecoder(decoderId, false);
 
@@ -326,7 +326,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response updateFunktion(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion, @QueryParam(ApiNames.DESCRIPTION) String descirption) {
+    public Response updateFunktion(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion, @QueryParam(ApiNames.BEZEICHNUNG) String descirption) {
         try {
             logPut(decoderId + "/" + reihe + "/" + funktion + ": " + descirption);
 

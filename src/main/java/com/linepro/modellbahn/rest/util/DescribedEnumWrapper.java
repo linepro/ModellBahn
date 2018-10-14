@@ -11,12 +11,12 @@ public class DescribedEnumWrapper {
         this.dEnum = dEnum;
     }
 
-    @JsonGetter(ApiNames.NAME)
+    @JsonGetter(ApiNames.NAMEN)
     public String getName() {
         return dEnum.getName();
     }
 
-    @JsonGetter(ApiNames.DESCRIPTION)
+    @JsonGetter(ApiNames.BEZEICHNUNG)
     public String getDescription() {
         return dEnum.getDescription();
     }

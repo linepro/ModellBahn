@@ -36,7 +36,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Table(name = DBNames.LAND, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.LAND)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.WAHRUNG, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED,
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.WAHRUNG, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED,
         ApiNames.LINKS })
 public class Land extends AbstractNamedItem<NameKey> implements ILand {
 
@@ -82,7 +82,7 @@ public class Land extends AbstractNamedItem<NameKey> implements ILand {
     @JsonGetter(ApiNames.WAHRUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=WahrungResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=WahrungResolver.class)
     public IWahrung getWahrung() {
         return wahrung;
     }

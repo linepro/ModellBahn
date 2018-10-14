@@ -39,7 +39,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Table(name = DBNames.KATEGORIE, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.KATEGORIE)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.UNTER_KATEGORIEN,
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.UNTER_KATEGORIEN,
         ApiNames.LINKS })
 public class Kategorie extends AbstractNamedItem<NameKey> implements IKategorie {
 

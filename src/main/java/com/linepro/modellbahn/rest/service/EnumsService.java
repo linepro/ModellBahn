@@ -36,7 +36,7 @@ public class EnumsService extends AbstractService {
     }
 
     @GET
-    @Path(ApiPaths.ENUMS_CONNECTOR_PATH)
+    @Path(ApiPaths.ENUMS_STECKER_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     public Response getConnector() {

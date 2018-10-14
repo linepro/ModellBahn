@@ -50,7 +50,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
                 @UniqueConstraint(columnNames = { DBNames.KATEGORIE_ID, DBNames.NAME }) })
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, unique = false, length = 50))
 @JsonRootName(value = ApiNames.UNTER_KATEGORIE)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.KATEGORIE, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ApiNames.ID, ApiNames.KATEGORIE, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS})
 public class UnterKategorie extends AbstractNamedItem<UnterKategorieKey> implements IUnterKategorie {
 
     /** The Constant serialVersionUID. */
@@ -95,7 +95,7 @@ public class UnterKategorie extends AbstractNamedItem<UnterKategorieKey> impleme
     @JsonGetter(ApiNames.KATEGORIE)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = KategorieResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = KategorieResolver.class)
     public IKategorie getKategorie() {
         return kategorie;
     }

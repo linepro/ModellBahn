@@ -31,7 +31,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Table(name = DBNames.WAHRUNG, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, 
        uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.WAHRUNG)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.NAME,ApiNames.DESCRIPTION,ApiNames.DECIMALS, ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ApiNames.ID, ApiNames.NAMEN,ApiNames.BEZEICHNUNG,ApiNames.DECIMALS, ApiNames.DELETED, ApiNames.LINKS})
 public class Wahrung extends AbstractNamedItem<NameKey> implements IWahrung {
 	
     /** The Constant serialVersionUID. */

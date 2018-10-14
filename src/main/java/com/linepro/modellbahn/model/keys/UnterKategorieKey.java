@@ -36,7 +36,7 @@ public class UnterKategorieKey extends BaseKey {
     public String toString() {
         return new ToStringBuilder(this)
                 .append(ApiNames.KATEGORIE, getKategorie())
-                .append(ApiNames.NAME, getUnterKategorie())
+                .append(ApiNames.NAMEN, getUnterKategorie())
                 .toString();
     }
 }

@@ -372,7 +372,7 @@ div.table > div.tfoot > div.table-foot > div.table-next {
   text-align: right;
 }
 
-button.nav-button, a.nav-button, button.tablinks {
+button.nav-button, a.nav-button, button.tabLinks {
   background-color: LightSkyBlue;
   border: 0.1rem solid LightSkyBlue;
   border-radius: 0.3rem;
@@ -458,28 +458,30 @@ ul.footer li:last-of-type {
 /* Add Animation */
 @
 -webkit-keyframes animatetop {
-  from {top: -300px;
-  opacity: 0
-}
+  from {
+    top: -300px;
+    opacity: 0
+  }
 
-to {
-  top: 0;
-  opacity: 1
-}
-
+  to {
+    top: 0;
+    opacity: 1
+  }
 }
 @
+
 keyframes animatetop {
-  from {top: -300px;
-  opacity: 0
+  from {
+    top: -300px;
+    opacity: 0
+  }
+
+  to {
+    top: 0;
+    opacity: 1
+  }
 }
 
-to {
-  top: 0;
-  opacity: 1
-}
-
-}
 .modal-header {
   background-color: LightSkyBlue;
   color: white;
@@ -532,15 +534,29 @@ to {
   max-height: 30rem;
 }
 
-.tabcontent {
-	display: none;
-	border: 0.1rem solid transparent LightSkyBlue;    
-	border-radius: 0.3rem;
-	font-size: 1rem;
-  	padding: 0.3rem 0.3rem;
+.tabContent {
+  display: none;
+  border: 0.1rem solid transparent LightSkyBlue;
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  padding: 0.3rem 0.3rem;
+}
+
+button.tabLinks:active {
+  background-color: LightSkyBlue;
+  border: 0.1rem solid LightSkyBlue;
+  border-radius: 0.3rem;
+  color: Grey;
+  font-size: 1rem;
+  height: 2.1rem;
+  margin-left: 0.1rem;
+  margin-right: 0.1rem;
+  margin-top: 0.1rem;
+  padding: 0.3rem 0.3rem;
+  vertical-align: baseline
 }
 
 .tab {
-	overflow: hidden;
-	background-color: LightYellow;
+  overflow: hidden;
+  background-color: LightYellow;
 }

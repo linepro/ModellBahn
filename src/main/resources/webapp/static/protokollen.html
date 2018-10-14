@@ -11,9 +11,10 @@
 <link rel="stylesheet" href="css/site.css"/>
 <script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var protokoll = new EditableGrid("protokoll", "protokoll");
+var protokoll = new NamedItemGrid("protokoll", "protokoll");
 
 async function init() {
     await protokoll.init();

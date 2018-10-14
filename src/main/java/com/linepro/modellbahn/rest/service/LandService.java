@@ -48,7 +48,7 @@ public class LandService extends AbstractItemService<NameKey, Land> {
     public Land create(@JsonProperty(value=ApiNames.ID, required=false) Long id, 
                     @JsonProperty(value=ApiPaths.NAME_PARAM_NAME, required=false) String name, 
                     @JsonProperty(value=ApiNames.WAHRUNG, required=false) String wahrungStr, 
-                    @JsonProperty(value=ApiNames.DESCRIPTION, required=false) String bezeichnung, 
+                    @JsonProperty(value=ApiNames.BEZEICHNUNG, required=false) String bezeichnung, 
                     @JsonProperty(value=ApiNames.DELETED, required=false) Boolean deleted) throws Exception {
         IWahrung wahrung = findWahrung(wahrungStr, false);
  

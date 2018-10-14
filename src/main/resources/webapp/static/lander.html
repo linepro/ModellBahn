@@ -11,12 +11,14 @@
 <link rel="stylesheet" href="css/site.css"/>
 <script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
 
-var land = new EditableGrid("land", "land");
+var land = new ListEditGrid(10, "land", "land", [NAMEN, BEZEICHNUNG, WAHRUNG]);
 
 async function init() {
+	await WAHRUNG_DROP.init();
     await land.init();
     about();
 }

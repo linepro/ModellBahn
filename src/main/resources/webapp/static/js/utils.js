@@ -161,7 +161,7 @@ class Column {
     if (value) {
       this.setValue(ctl, value);
     }
-    
+
     if (value || entity) {
       ctl.disabled = shouldDisable(this.editable, editMode);
     } else if (editMode == EditMode.ADD && this.editable != Editable.NEVER) {
@@ -171,7 +171,7 @@ class Column {
     }
 
     ctl.required = this.required;
-    
+
     return ctl;
   }
 
@@ -204,12 +204,63 @@ class TextColumn extends Column {
   }
 }
 
+class ImgColumn extends Column {
+  constructor(heading, binding, editable, required) {
+    super(heading, binding, editable, required);
+  }
+
+  createControl() {
+    var ctl = document.createElement("input");
+    ctl.type = "file";
+    ctl.accept = "image/*";
+    return ctl;
+  }
+}
+
+class PhoneColumn extends Column {
+  constructor(heading, binding, editable, required) {
+    super(heading, binding, editable, required);
+  }
+
+  createControl() {
+    var ctl = document.createElement("input");
+    ctl.type = "tel";
+    return ctl;
+  }
+}
+
+class PDFColumn extends Column {
+  constructor(heading, binding, editable, required) {
+    super(heading, binding, editable, required);
+  }
+
+  createControl() {
+    var ctl = document.createElement("input");
+    ctl.type = "file";
+    ctl.accept = "application/pdf";
+    return ctl;
+  }
+}
+
+class URLColumn extends Column {
+  constructor(heading, binding, editable, required) {
+	    super(heading, binding, editable, required);
+  }
+
+  createControl() {
+    var ctl = document.createElement("input");
+    ctl.type = "url";
+    return ctl;
+  }
+}
+
 class NumberColumn extends Column {
-  constructor(heading, binding, editable, required, max, min) {
+  constructor(heading, binding, editable, required, max, min, step) {
     max = max ? max : 255
     super(heading, binding, editable, required, Math.max(max.toString().length, 5));
     this.max = max;
     this.min = min ? min : 0;
+    this.step = step ? step : 1;
   }
 
   createControl() {
@@ -217,6 +268,7 @@ class NumberColumn extends Column {
     ctl.type = "number";
     ctl.min = this.min;
     ctl.max = this.max;
+    ctl.step = this.step;
     return ctl;
   }
 }
@@ -264,7 +316,7 @@ class SelectColumn extends Column {
     this.dropDown.addOptions(ctl, 1);
     return ctl;
   }
-  
+
   getControlValue(select) {
     return select.options[select.selectedIndex].value;
   }
@@ -274,8 +326,7 @@ class SelectColumn extends Column {
   }
 
   setValue(ctl, value) {
-   var i;
-   for (i = 0; i < ctl.options.length; i++) {
+   for (var i = 0; i < ctl.options.length; i++) {
      if (ctl.options[i].value == value) {
       ctl.selectedIndex = i;
       return;
@@ -442,4 +493,41 @@ async function modal(elementName, title, contentUrl) {
 
 function about() {
     modal("license", "About ModellBahn", siteRoot() + "LICENSE");
+}
+
+function setActiveTab(event, tabName) {
+    var tabContents = document.getElementsByClassName("tabContent");
+    var tabLinks = document.getElementsByClassName("tabLinks");
+   
+    for (var i = 0 ; i < tabContents.length; i++) {
+      tabContents[i].style.display = 
+    	(tabContents[i].id === tabName) ? "block" : "none";
+    }
+
+    var linkName = tabName.replace("Tab", "Link");
+    for (var i = 0 ; i < tabLinks.length; i++) {
+      tabLinks[i].className =
+    	(tabLinks[i].id === linkName) ? "tabLinks active" : "tabLinks";
+    }
+}
+
+function addRow(elementName) {
+	return new HeaderLinkage("add", elementName + ".addRow()");
+}
+
+function deleteRow(elementName) {
+	return new FunctionLinkage("delete", elementName + ".deleteRow(this.value)");
+}
+
+function editRow(elementName) {
+	return new FunctionLinkage("update", elementName + ".editRow(this.value)");
+}
+
+function updateRow(elementName) {
+	return new FunctionLinkage("update", elementName + ".updateRow(this.value)");
+}
+
+function gridButtonColumn(elementName) {
+  return new ButtonColumn([addRow(elementName)],
+   [updateRow(elementName), deleteRow(elementName)]);
 }

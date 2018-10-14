@@ -99,7 +99,7 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=DecoderResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=DecoderResolver.class)
     public IDecoder getDecoder() {
         return decoder;
     }

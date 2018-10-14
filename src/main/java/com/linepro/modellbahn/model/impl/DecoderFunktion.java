@@ -51,7 +51,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Table(name = DBNames.DECODER_FUNKTION, indexes = { @Index(columnList = DBNames.DECODER_ID + "," + DBNames.FUNKTION_ID, unique = true) },
        uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.FUNKTION_ID })})
 @JsonRootName(value = ApiNames.FUNKTION)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER, ApiNames.FUNKTION,  ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER, ApiNames.FUNKTION,  ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS})
 public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements IDecoderFunktion {
 
     /** The Constant serialVersionUID. */
@@ -168,14 +168,14 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
 
     @Override
 	@Column(name=DBNames.BEZEICHNUNG, nullable=true, length=100)
-    @JsonGetter(ApiNames.DESCRIPTION)
+    @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
 	public String getBezeichnung() {
 		return bezeichnung;
 	}
 
     @Override
-    @JsonSetter(ApiNames.DESCRIPTION)
+    @JsonSetter(ApiNames.BEZEICHNUNG)
 	public void setBezeichnung(String bezeichnung) {
 		this.bezeichnung = bezeichnung;
 	}
@@ -238,7 +238,7 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
                 .appendSuper(super.toString())
                 .append(ApiNames.DECODER, getDecoder())
 				.append(ApiNames.FUNKTION, getFunktion())
-				.append(ApiNames.DESCRIPTION, getBezeichnung())
+				.append(ApiNames.BEZEICHNUNG, getBezeichnung())
 				.toString();
 	}
 }

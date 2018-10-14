@@ -38,8 +38,8 @@ public class ZugTypService extends AbstractItemService<NameKey, ZugTyp> {
 
     @JsonCreator
     public ZugTyp create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiNames.NAME, required = false) String name,
-            @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
+            @JsonProperty(value = ApiNames.NAMEN, required = false) String name,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
         ZugTyp entity = new ZugTyp(id, name, bezeichnung, deleted);
 

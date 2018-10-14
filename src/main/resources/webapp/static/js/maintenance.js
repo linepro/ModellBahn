@@ -161,8 +161,7 @@ class ItemGrid {
       navRow.id = tableName + "Foot";
       footer.append(navRow);
       
-      var i;
-      for (i = 0; i < columns.length; i++) {
+      for (var i = 0; i < columns.length; i++) {
         var tf = document.createElement("div");
         if (i == 0) {
           tf.className = "table-prev";
@@ -280,18 +279,18 @@ class ItemGrid {
 
         removeChildren(cell);
 
-		var ctl;
-		if (entity || cell.id.endsWith("_buttons")) {
+    var ctl;
+    if (entity || cell.id.endsWith("_buttons")) {
           ctl = column.getControl(cell, entity, editMode);
-		} else {
-		  cell.style.width = column.width;
+    } else {
+      cell.style.width = column.width;
           cell.style.maxWidth = column.width;
 
-		  ctl = document.createElement("input");
+      ctl = document.createElement("input");
           ctl.type = "text";
           ctl.disabled = true;
           ctl.required = false;
-		}
+    }
 
         cell.appendChild(ctl);
       });
@@ -425,10 +424,10 @@ class ItemGrid {
     if (deleteUrl) {
         var response = await fetch(deleteUrl, { method: "DELETE", headers: { "Content-type": "application/json" } } )
                                   .then(response => { if (!response.ok) { throw new Error(response.statusText); } } )
-        	                      .catch(error => reportError(error));
+                                .catch(error => reportError(error));
         grid.loadData();
     } else {
-    	grid.removeRow(rowId);
+      grid.removeRow(rowId);
     }
   }
 
@@ -447,7 +446,7 @@ class ItemGrid {
 
   removeRow(rowId) {
     //TODO: remove grid row for non paged if exists
-	var grid = this;  
+  var grid = this;  
 
     var key = document.getElementById(grid.getKeyId(rowId));
     key.value = "";
@@ -489,22 +488,17 @@ class ItemGrid {
   }
 }
 
-class EditableGrid extends ItemGrid {
-  constructor(dataType, elementName) {
-    super(10, fetchUrl(dataType), elementName, [
-        new TextColumn("Namen", "name", Editable.ADD, true, 30),
-        new TextColumn("Description", "description", Editable.UPDATE, false, 100),
-        new ButtonColumn(
-          [new HeaderLinkage("add", elementName + ".addRow()")],
-          [new FunctionLinkage("update", elementName + ".updateRow(this.value)"), 
-           new FunctionLinkage("delete", elementName + ".deleteRow(this.value)")]
-          )], true, EditMode.UPDATE, undefined);
+class ListEditGrid extends ItemGrid {
+  constructor(pageSize, dataType, elementName, columns) {
+    super(pageSize, fetchUrl(dataType), elementName, 
+      columns.concat([gridButtonColumn(elementName)]),
+      true, EditMode.UPDATE, undefined);
     this.dataType = dataType;
   }
-  
+    
   async init() {
     super.init();
-    
+      
     var h1 = document.getElementById("heading");
 
     if (h1) {
@@ -512,3 +506,10 @@ class EditableGrid extends ItemGrid {
     }
   }
 }
+
+class NamedItemGrid extends ListEditGrid {
+  constructor(dataType, elementName) {
+    super(10, dataType, elementName, [NAMEN, BEZEICHNUNG]);
+  }
+}
+
