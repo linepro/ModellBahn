@@ -9,7 +9,7 @@ public interface ApiPaths {
     /** Parameter names */
     public static final String ID_PARAM_NAME = ApiNames.ID;
 
-    public static final String NAME_PARAM_NAME = ApiNames.NAME;
+    public static final String NAME_PARAM_NAME = ApiNames.NAMEN;
 
     public static final String ARTIKEL_ID_PARAM_NAME = ApiNames.ARTIKEL_ID;
 
@@ -164,7 +164,7 @@ public interface ApiPaths {
 
     /** Enum functions */
     public static final String ENUMS_ADRESS_TYP_PATH = ApiNames.ADRESS_TYP; 
-    public static final String ENUMS_CONNECTOR_PATH = ApiNames.CONNECTOR; 
+    public static final String ENUMS_STECKER_PATH = ApiNames.STECKER; 
     public static final String ENUMS_KONFIGURATION_PATH = ApiNames.KONFIGURATION; 
     public static final String ENUMS_STATUS_PATH = ApiNames.STATUS; 
 

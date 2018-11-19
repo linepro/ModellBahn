@@ -95,7 +95,7 @@ public class Selector {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append(ApiNames.NAME, getName())
+                .append(ApiNames.NAMEN, getName())
                 .append("getter", getGetter().getName())
                 .append("setter", getSetter().getName())
                 .append("collection", isCollection())

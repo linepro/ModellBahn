@@ -29,7 +29,7 @@ public class DecoderFunktionSerializer extends StdSerializer<DecoderFunktion> {
         gen.writeStartObject();
         gen.writeObjectField("bank", value.getFunktion().getReihe());
         gen.writeObjectField(ApiNames.FUNKTION, value.getFunktion().getName());
-        gen.writeObjectField(ApiNames.DESCRIPTION, value.getBezeichnung());
+        gen.writeObjectField(ApiNames.BEZEICHNUNG, value.getBezeichnung());
         utils.writeLinks(ApiNames.LINKS, value.getLinks(), gen, serializers);
         gen.writeEndObject();
     }

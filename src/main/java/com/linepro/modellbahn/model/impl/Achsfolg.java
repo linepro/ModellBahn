@@ -28,7 +28,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 @Table(name = DBNames.ACHSFOLG, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.ACHSFOLG)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 public class Achsfolg extends AbstractNamedItem<NameKey> implements IAchsfolg {
 
     /** The Constant serialVersionUID. */

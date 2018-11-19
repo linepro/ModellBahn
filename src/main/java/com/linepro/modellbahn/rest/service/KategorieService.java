@@ -48,8 +48,8 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
 
     @JsonCreator
     public Kategorie create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiNames.NAME, required = false) String name,
-            @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
+            @JsonProperty(value = ApiNames.NAMEN, required = false) String name,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
         Kategorie entity = new Kategorie(id, name, bezeichnung, deleted);
 
@@ -61,8 +61,8 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @JsonCreator
     public UnterKategorie create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
             @JsonProperty(value = ApiNames.KATEGORIE, required = false) String kategorieStr,
-            @JsonProperty(value = ApiNames.NAME, required = false) String name,
-            @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
+            @JsonProperty(value = ApiNames.NAMEN, required = false) String name,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
         Kategorie kategorie = findKategorie(kategorieStr, false);
 

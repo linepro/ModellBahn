@@ -27,7 +27,7 @@ public class ArtikelSerializer extends StdSerializer<Artikel> {
     @Override
     public void serialize(Artikel value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
         gen.writeStartObject();
-        gen.writeObjectField(ApiNames.NAME, value.getName());
+        gen.writeObjectField(ApiNames.NAMEN, value.getName());
         gen.writeObjectField(ApiNames.HERSTELLER, value.getProdukt().getHersteller().getName());
         gen.writeObjectField(ApiNames.BESTELL_NR, value.getProdukt().getName());
         gen.writeEndObject();

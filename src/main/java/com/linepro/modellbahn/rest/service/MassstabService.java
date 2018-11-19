@@ -38,8 +38,8 @@ public class MassstabService extends AbstractItemService<NameKey, Massstab> {
 
     @JsonCreator
     public Massstab create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiNames.NAME, required = false) String name,
-            @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
+            @JsonProperty(value = ApiNames.NAMEN, required = false) String name,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
         Massstab entity = new Massstab(id, name, bezeichnung, deleted);
         

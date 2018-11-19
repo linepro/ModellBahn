@@ -23,7 +23,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 @Table(name = DBNames.STEUERUNG, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.STEUERUNG)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAME, ApiNames.DESCRIPTION, ApiNames.DELETED, ApiNames.LINKS })
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 public class Steuerung extends AbstractNamedItem<NameKey> implements ISteuerung {
 
     /** The Constant serialVersionUID. */

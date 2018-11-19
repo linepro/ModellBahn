@@ -107,7 +107,7 @@ public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsi
     @JsonGetter(ApiNames.ZUG)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=ZugResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=ZugResolver.class)
     public IZug getZug() {
         return zug;
     }
@@ -140,7 +140,7 @@ public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsi
     @JsonGetter(ApiNames.ARTIKEL)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=ArtikelResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=ArtikelResolver.class)
     public IArtikel getArtikel() {
         return artikel;
     }

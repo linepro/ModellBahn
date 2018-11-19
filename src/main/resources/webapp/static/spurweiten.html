@@ -11,9 +11,10 @@
 <link rel="stylesheet" href="css/site.css"/>
 <script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var spurweite = new EditableGrid("spurweite", "spurweite");
+var spurweite = new NamedItemGrid("spurweite", "spurweite");
 
 async function init() {
     await spurweite.init();

@@ -238,7 +238,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @JsonGetter(ApiNames.HERSTELLER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = HerstellerResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = HerstellerResolver.class)
     public IHersteller getHersteller() {
         return hersteller;
     }
@@ -286,7 +286,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @JsonGetter(ApiNames.MASSSTAB)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = MassstabResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = MassstabResolver.class)
     public IMassstab getMassstab() {
         return massstab;
     }
@@ -304,7 +304,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @JsonGetter(ApiNames.SPURWEITE)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = SpurweiteResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = SpurweiteResolver.class)
     public ISpurweite getSpurweite() {
         return spurweite;
     }
@@ -322,7 +322,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @JsonGetter(ApiNames.EPOCH)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = EpochResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = EpochResolver.class)
     public IEpoch getEpoch() {
         return epoch;
     }
@@ -340,7 +340,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @JsonGetter(ApiNames.BAHNVERWALTUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = BahnverwaltungResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = BahnverwaltungResolver.class)
     public IBahnverwaltung getBahnverwaltung() {
         return bahnverwaltung;
     }
@@ -358,7 +358,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @JsonGetter(ApiNames.GATTUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = GattungResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = GattungResolver.class)
     public IGattung getGattung() {
         return gattung;
     }
@@ -406,7 +406,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @JsonGetter(ApiNames.VORBILD)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = VorbildResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = VorbildResolver.class)
     @JsonSerialize(as = Vorbild.class)
     public IVorbild getVorbild() {
         return vorbild;
@@ -425,7 +425,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @JsonGetter(ApiNames.ACHSFOLG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = AchsfolgResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = AchsfolgResolver.class)
     @JsonSerialize(as = Achsfolg.class)
     public IAchsfolg getAchsfolg() {
         return achsfolge;
@@ -458,7 +458,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @JsonGetter(ApiNames.SONDERMODELL)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = SonderModellResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = SonderModellResolver.class)
     @JsonSerialize(as = SonderModell.class)
     public ISonderModell getSondermodell() {
         return sondermodell;
@@ -477,7 +477,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @JsonGetter(ApiNames.AUFBAU)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = AufbauResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = AufbauResolver.class)
     @JsonSerialize(as = Aufbau.class)
     public IAufbau getAufbau() {
         return aufbau;
@@ -496,7 +496,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @JsonGetter(ApiNames.LICHT)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = LichtResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = LichtResolver.class)
     @JsonSerialize(as = Licht.class)
     public ILicht getLicht() {
         return licht;
@@ -515,7 +515,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @JsonGetter(ApiNames.KUPPLUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = KupplungResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = KupplungResolver.class)
     @JsonSerialize(as = Kupplung.class)
     public IKupplung getKupplung() {
         return kupplung;
@@ -534,7 +534,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @JsonGetter(ApiNames.STEUERUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = SteuerungResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = SteuerungResolver.class)
     @JsonSerialize(as = Steuerung.class)
     public ISteuerung getSteuerung() {
         return steuerung;
@@ -570,7 +570,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @JsonGetter(ApiNames.MOTOR_TYP)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver = MotorTypResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = MotorTypResolver.class)
     public IMotorTyp getMotorTyp() {
         return motorTyp;
     }

@@ -51,7 +51,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.DECODER_TYP_ID), @Index(columnList = DBNames.CV) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.DECODER_TYP_ID, DBNames.CV }) })
 @JsonRootName(value = ApiNames.CV)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.CV,  ApiNames.DESCRIPTION,  ApiNames.MINIMAL,  ApiNames.MAXIMAL,  ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED, ApiNames.LINKS}) 
+@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.CV,  ApiNames.BEZEICHNUNG,  ApiNames.MINIMAL,  ApiNames.MAXIMAL,  ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED, ApiNames.LINKS}) 
 public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDecoderTypCV {
 
     /** The Constant serialVersionUID. */
@@ -145,14 +145,14 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
 
     @Override
     @Column(name = DBNames.BEZEICHNUNG, nullable = true, length = 100)
-    @JsonGetter(ApiNames.DESCRIPTION)
+    @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
     public String getBezeichnung() {
         return bezeichnung;
     }
 
     @Override
-    @JsonSetter(ApiNames.DESCRIPTION)
+    @JsonSetter(ApiNames.BEZEICHNUNG)
     public void setBezeichnung(String bezeichnung) {
         this.bezeichnung = bezeichnung;
     }
@@ -257,7 +257,7 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
                 .appendSuper(super.toString())
                 .append(ApiNames.DECODER_TYP, getDecoderTyp())
                 .append(ApiNames.CV, getCv())
-                .append(ApiNames.DESCRIPTION, getBezeichnung())
+                .append(ApiNames.BEZEICHNUNG, getBezeichnung())
                 .append(ApiNames.MINIMAL, getMinimal())
                 .append(ApiNames.MAXIMAL, getMaximal())
                 .append(ApiNames.WERKSEINSTELLUNG, getWerkseinstellung())

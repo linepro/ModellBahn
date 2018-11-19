@@ -36,7 +36,7 @@ public class ProduktKey extends BaseKey {
     public String toString() {
         return new ToStringBuilder(this)
                 .append(ApiNames.HERSTELLER, getHersteller())
-                .append(ApiNames.NAME, getBestellNr())
+                .append(ApiNames.NAMEN, getBestellNr())
                 .toString();
     }
 }

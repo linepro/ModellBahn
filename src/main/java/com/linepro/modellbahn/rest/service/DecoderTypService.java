@@ -75,9 +75,9 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     public DecoderTyp create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
             @JsonProperty(value = ApiNames.HERSTELLER, required = false) String herstellerStr,
             @JsonProperty(value = ApiNames.PROTOKOLL, required = false) String protokollStr,
-            @JsonProperty(value = ApiNames.NAME, required = false) String name,
-            @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung, 
-            @JsonProperty(value = ApiNames.SOUND, required = false) Boolean sound,
+            @JsonProperty(value = ApiNames.NAMEN, required = false) String name,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung, 
+            @JsonProperty(value = ApiNames.GERAUSCH, required = false) Boolean sound,
             @JsonProperty(value = ApiNames.KONFIGURATION, required = false) String konfigurationStr,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
         IHersteller hersteller = findHersteller(herstellerStr);
@@ -115,8 +115,8 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     public DecoderTypCV createCV(@JsonProperty(value = ApiNames.ID, required = false) Long id,
             @JsonProperty(value = ApiNames.HERSTELLER, required = false) String herstellerStr,
             @JsonProperty(value = ApiNames.BESTELL_NR, required = false) String bestellNr,
-            @JsonProperty(value = ApiNames.NAME, required = false) String name,
-            @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
+            @JsonProperty(value = ApiNames.NAMEN, required = false) String name,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.CV, required = false) Integer cv,
             @JsonProperty(value = ApiNames.MINIMAL, required = false) Integer max,
             @JsonProperty(value = ApiNames.MAXIMAL, required = false) Integer min,
@@ -135,8 +135,8 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
             @JsonProperty(value = ApiNames.HERSTELLER, required = false) String herstellerStr,
             @JsonProperty(value = ApiNames.BESTELL_NR, required = false) String bestellNr,
             @JsonProperty(value = ApiNames.REIHE, required = false) Integer reihe,
-            @JsonProperty(value = ApiNames.NAME, required = false) String funktion,
-            @JsonProperty(value = ApiNames.DESCRIPTION, required = false) String bezeichnung,
+            @JsonProperty(value = ApiNames.NAMEN, required = false) String funktion,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.PROGRAMMABLE, required = false) Boolean programmable,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
         IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, false);

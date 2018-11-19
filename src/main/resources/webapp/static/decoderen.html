@@ -10,27 +10,21 @@
 <link rel="stylesheet" href="css/site.css"/>
 <script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
 var fetchUrl = fetchUrl("decoderenType");
-var hersteller = new DropDown(apiRoot() + "hersteller", [ "name" ], [ "name" ]);
-var protokoll = new DropDown(apiRoot() + "protokoll", [ "name" ], [ "name" ]);
 var columns = [
-	new SelectColumn("Hersteller", "hersteller", hersteller, Editable.ADD, true),
-	new TextColumn("Bestell Nr", "", Editable.ADD, true, 10),
-	new SelectColumn("Protokoll", "protokoll", protokoll, Editable.UPDATE, true),
-	new BoolColumn("Sound", "sound", Editable.UPDATE, true),
-	new ButtonColumn([new HeaderLinkage("add", "decoderenType.newRow()")],
-    		[new FunctionLinkage("update", "decoderenType.editRow(this.value)"),
-    		 //new FunctionLinkage("filter", "decoderenType.filterRow(this.value)"),
-    		 new FunctionLinkage("delete", "decoderenType.deleteRow(this.value)")])
-];
-var decoderenType = new ItemGrid(10, fetchUrl, "decoderenType", columns, true, EditMode.UPDATE, undefined, "decoderenType.html");
+	ID,
+	DECODER_TYP,
+	gridButtonColumn("decoderen")
+    ];
+var decoderen = new ItemGrid(10, fetchUrl, "decoderen", columns, true, EditMode.UPDATE, undefined, "decoder.html");
 
 async function init() {
-    await await hersteller.init();
-    await protokoll.init();
-    await decoderenType.init();
+    await HERSTELLER_DROP.init();
+    await PROTOKOLL_DROP.init();
+    await decoderen.init();
     about();
 }
 </script>
@@ -57,10 +51,7 @@ async function init() {
         <article>
             <h1 id="heading">Decoder</h1>
             <div id="data">
-                <div id="decoder">
-                TODO Needs to be a parent child edit form similar to decoder decoderTyp but with filtering (in fact filtering in general and printing is required
-                </div>
-                <div id="decoderenType">
+                <div id="decoderen">
                 </div>
             </div>
         </article>

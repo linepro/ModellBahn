@@ -71,7 +71,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
                 @UniqueConstraint(columnNames = { DBNames.HERSTELLER_ID, DBNames.NAME }) })
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME))
 @JsonRootName(value = ApiNames.DECODER_TYP)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.DESCRIPTION, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.SOUND, ApiNames.I_MAX, ApiNames.KONFIGURATION, ApiNames.DELETED, ApiNames.ADRESSEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS})
+@JsonPropertyOrder({ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.GERAUSCH, ApiNames.I_MAX, ApiNames.KONFIGURATION, ApiNames.DELETED, ApiNames.ADRESSEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS})
 public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDecoderTyp {
 
     /** The Constant serialVersionUID. */
@@ -134,7 +134,7 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     @JsonGetter(ApiNames.HERSTELLER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=HerstellerResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=HerstellerResolver.class)
     public IHersteller getHersteller() {
         return hersteller;
     }
@@ -180,7 +180,7 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     @JsonGetter(ApiNames.PROTOKOLL)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=ProtokollResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=ProtokollResolver.class)
     public IProtokoll getProtokoll() {
         return protokoll;
     }
@@ -209,14 +209,14 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
 
     @Override
     @Column(name = DBNames.SOUND, nullable = false)
-    @JsonGetter(ApiNames.SOUND)
+    @JsonGetter(ApiNames.GERAUSCH)
     @JsonView(Views.DropDown.class)
     public Boolean getSound() {
         return sound;
     }
 
     @Override
-    @JsonSetter(ApiNames.SOUND)
+    @JsonSetter(ApiNames.GERAUSCH)
     public void setSound(Boolean sound) {
         this.sound = sound;
     }
@@ -396,7 +396,7 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
                 .append(ApiNames.PROTOKOLL, getProtokoll())
                 .append(ApiNames.I_MAX, getiMax())
                 .append(ApiNames.FAHRSTUFE, getFahrstufe())
-                .append(ApiNames.SOUND, getSound())
+                .append(ApiNames.GERAUSCH, getSound())
                 .append(ApiNames.KONFIGURATION, getKonfiguration())
                 .append(ApiNames.ADRESSEN, getAdressen())
                 .append(ApiNames.CVS, getCVs())

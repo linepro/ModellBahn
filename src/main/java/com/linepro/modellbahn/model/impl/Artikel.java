@@ -205,7 +205,7 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     @JsonGetter(ApiNames.WAHRUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=WahrungResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=WahrungResolver.class)
     public IWahrung getWahrung() {
         return wahrung;
     }
@@ -251,7 +251,7 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     @JsonGetter(ApiNames.STEUERUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=SteuerungResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=SteuerungResolver.class)
     public ISteuerung getSteuerung() {
         return steuerung;
     }
@@ -269,7 +269,7 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     @JsonGetter(ApiNames.MOTOR_TYP)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=MotorTypResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=MotorTypResolver.class)
     public IMotorTyp getMotorTyp() {
         return motorTyp;
     }
@@ -287,7 +287,7 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     @JsonGetter(ApiNames.LICHT)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=LichtResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=LichtResolver.class)
     public ILicht getLicht() {
         return licht;
     }
@@ -305,7 +305,7 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     @JsonGetter(ApiNames.KUPPLUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=KupplungResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=KupplungResolver.class)
     public IKupplung getKupplung() {
         return kupplung;
     }

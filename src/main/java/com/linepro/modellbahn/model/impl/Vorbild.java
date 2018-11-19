@@ -348,7 +348,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @JsonGetter(ApiNames.GATTUNG)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=GattungResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=GattungResolver.class)
     public IGattung getGattung() {
         return gattung;
     }
@@ -441,7 +441,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @JsonGetter(ApiNames.ANTRIEB)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=AntriebResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=AntriebResolver.class)
     public IAntrieb getAntrieb() {
         return antrieb;
     }
@@ -459,7 +459,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @JsonGetter(ApiNames.ACHSFOLG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=AchsfolgResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=AchsfolgResolver.class)
     public IAchsfolg getAchsfolg() {
         return achsfolg;
     }
@@ -716,7 +716,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @JsonGetter(ApiNames.STEUERUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAME, resolver=SteuerungResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=SteuerungResolver.class)
     public ISteuerung getSteuerung() {
         return steuerung;
     }

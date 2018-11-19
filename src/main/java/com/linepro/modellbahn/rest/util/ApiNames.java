@@ -18,12 +18,11 @@ public interface ApiNames {
     public static final String AUFBAU = "aufbau";
     public static final String AUSSERDIENST = "ausserdienst";
     public static final String BAHNVERWALTUNG = "bahnverwaltung";
-    public static final String BANK = "bank";
     public static final String BAUZEIT = "bauzeit";
     public static final String BELADUNG = "beladung";
     public static final String BESTELL_NR = "bestellNr";
     public static final String BETREIBSNUMMER = "betreibsnummer";
-    public static final String CONNECTOR = "connector";
+    public static final String BEZEICHNUNG = "bezeichnung";
     public static final String CONSIST = "consist";
     public static final String CV = "cv";
     public static final String CVS = "cvs";
@@ -32,7 +31,6 @@ public interface ApiNames {
     public static final String DECODER_ID = "decoderId";
     public static final String DECODER_TYP = "decoderTyp";
     public static final String DELETED = "deleted";
-    public static final String DESCRIPTION = "description";
     public static final String DIENSTGEWICHT = "dienstgewicht";
     public static final String DMLAUFRADHINTEN = "dmLaufradHinten";
     public static final String DMLAUFRADVORN = "dmLaufradVorn";
@@ -46,6 +44,7 @@ public interface ApiNames {
     public static final String FUNKTION = "funktion";
     public static final String FUNKTIONEN = "funktionen";
     public static final String GATTUNG = "gattung";
+    public static final String GERAUSCH = "gerausch";
     public static final String GESCHWINDIGKEIT = "geschwindigkeit";
     public static final String HERSTELLER = "hersteller";
     public static final String ID = "id";
@@ -71,7 +70,7 @@ public interface ApiNames {
     public static final String MITTELWAGEN = "mittelwagen";
     public static final String MOTORBAUART = "motorbauart";
     public static final String MOTOR_TYP = "motorTyp";
-    public static final String NAME = "name";
+    public static final String NAMEN = "name";
     public static final String POSITION = "position";
     public static final String PREIS = "preis";
     public static final String PRODUKT = "produkt";
@@ -88,10 +87,10 @@ public interface ApiNames {
     public static final String SITZPLATZETZKL1 = "sitzplatzeTZKL1";
     public static final String SITZPLATZETZKL2 = "sitzplatzeTzKL2";
     public static final String SONDERMODELL = "sondermodell";
-    public static final String SOUND = "sound";
     public static final String SPAN = "span";
     public static final String SPURWEITE = "spurweite";
     public static final String STATUS = "status";
+    public static final String STECKER = "stecker";
     public static final String STEUERUNG = "steuerung";
     public static final String STUCK = "stuck";
     public static final String TEIL = "teil";

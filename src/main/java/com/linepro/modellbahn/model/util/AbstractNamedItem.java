@@ -33,13 +33,13 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version  $Id$
  */
 @MappedSuperclass
-@JsonPropertyOrder({ApiNames.ID,ApiNames.NAME,ApiNames.DESCRIPTION,ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ApiNames.ID,ApiNames.NAMEN,ApiNames.BEZEICHNUNG,ApiNames.DELETED, ApiNames.LINKS})
 public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> implements INamedItem<K>, Serializable {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -278823660682127691L;
 
-    protected static final String[] BUSINESS_KEY = new String[] { ApiNames.NAME };
+    protected static final String[] BUSINESS_KEY = new String[] { ApiNames.NAMEN };
 
     /** The name. */
     @NotEmpty
@@ -83,28 +83,28 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
     @Override
 	@BusinessKey
     @Column(name=DBNames.NAME, unique=true, length=50, nullable = true)
-    @JsonGetter(ApiNames.NAME)
+    @JsonGetter(ApiNames.NAMEN)
     @JsonView(Views.DropDown.class)
 	public String getName() {
 		return name;
 	}
 
 	@Override
-    @JsonSetter(ApiNames.NAME)
+    @JsonSetter(ApiNames.NAMEN)
     public void setName(String name) {
 		this.name = name;
 	}
 
 	@Override
     @Column(name=DBNames.BEZEICHNUNG, nullable=true, length=100)
-    @JsonGetter(ApiNames.DESCRIPTION)
+    @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
 	public String getBezeichnung() {
 		return bezeichnung;
 	}
 
 	@Override
-    @JsonSetter(ApiNames.DESCRIPTION)
+    @JsonSetter(ApiNames.BEZEICHNUNG)
     public void setBezeichnung(String bezeichnung) {
 		this.bezeichnung = bezeichnung;
 	}
@@ -169,8 +169,8 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
 	public String toString() {
 		return new ToStringBuilder(this)
 				.appendSuper(super.toString())
-				.append(ApiNames.NAME, getName())
-				.append(ApiNames.DESCRIPTION, getBezeichnung())
+				.append(ApiNames.NAMEN, getName())
+				.append(ApiNames.BEZEICHNUNG, getBezeichnung())
 				.toString();
 	}
 }

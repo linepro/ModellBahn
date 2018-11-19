@@ -11,16 +11,16 @@
 <link rel="stylesheet" href="css/site.css"/>
 <script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
 var fetchUrl = fetchUrl("decoderTyp");
-var hersteller = new DropDown(apiRoot() + "hersteller", [ "name" ], [ "name" ]);
-var protokoll = new DropDown(apiRoot() + "protokoll", [ "name" ], [ "name" ]);
 var columns = [
-    new SelectColumn("Hersteller", "hersteller", hersteller, Editable.ADD, true),
-    new TextColumn("Bestell Nr", "bestellNr", Editable.ADD, true, 10),
-    new SelectColumn("Protokoll", "protokoll", protokoll, Editable.UPDATE, true),
-    new BoolColumn("Sound", "sound", Editable.UPDATE, true),
+    HERSTELLER,
+    BESTELL_NR,
+    PROTOKOLL,
+    GERAUSCH,
+    STECKER,
     new ButtonColumn([new HeaderLinkage("add", "decoderTyp.newRow()")],
     		[new FunctionLinkage("update", "decoderTyp.editRow(this.value)"), 
     		 new FunctionLinkage("delete", "decoderTyp.deleteRow(this.value)")])
@@ -28,8 +28,9 @@ var columns = [
 var decoderTyp = new ItemGrid(10, fetchUrl, "decoderTyp", columns, true, EditMode.UPDATE, undefined, "decoderTyp.html");
 	
 async function init() {
-	await await hersteller.init();
-	await protokoll.init();
+	await HERSTELLER_DROP.init();
+	await PROTOKOLL_DROP.init();
+    await STECKER_DROP.init();
 	await decoderTyp.init();
     about();
 }
