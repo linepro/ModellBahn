@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
@@ -40,10 +39,30 @@ public class FileUploadService {
 		
 		return Response.status(2000).entity(Output).build();
 	}
-
+	/** Save the image file to new location
+	 * 
+	 */
 	private void writeToFile(InputStream fileName, FormDataContentDisposition fileDetail, InputStream uploadedImageData,
 			String uploadedImageLocation) {
-		// TODO Auto-generated method stub
+
+		try {
+			OutputStream out = new FileOutputStream(new File(uploadedImageLocation));
+			int read = 0;
+			
+			byte[] bytes = new byte[1024];
+			out = new FileOutputStream(new File(uploadedImageLocation));
+			
+			while ((read = fileName.read(bytes)) != -1)
+			{
+				out.write(bytes, 0, read);
+			}
+				
+			out.flush();
+			out.close();
+		}
 		
+		catch (IOException e){
+			e.printStackTrace();
+		}
 	}
 }
