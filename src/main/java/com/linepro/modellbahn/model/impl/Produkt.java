@@ -605,7 +605,6 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     }
 
     @Override
-    @JsonSetter(ApiNames.ANLEITUNGEN)
     public void setAnleitungen(File anleitungen) {
         this.anleitungen = anleitungen;
     }
@@ -619,7 +618,6 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     }
 
     @Override
-    @JsonSetter(ApiNames.EXPLOSIONSZEICHNUNG)
     public void setExplosionszeichnung(File explosionszeichnung) {
         this.explosionszeichnung = explosionszeichnung;
     }
@@ -634,7 +632,6 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     }
 
     @Override
-    @JsonSetter(ApiNames.ABBILDUNG)
     public void setAbbildung(File abbildung) {
         this.abbildung = abbildung;
     }

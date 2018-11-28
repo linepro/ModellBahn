@@ -70,7 +70,7 @@ public class Wahrung extends AbstractNamedItem<NameKey> implements IWahrung {
 	@Override
     @Column(name=DBNames.DECIMALS, nullable = true)
 	@JsonGetter(ApiNames.DECIMALS)
-    @JsonView(Views.Public.class)
+    @JsonView(Views.DropDown.class)
 	public Integer getDecimals() {
 		return decimals;
 	}

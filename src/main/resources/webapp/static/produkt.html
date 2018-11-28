@@ -6,16 +6,64 @@
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <script type="text/javascript" src="js/lib/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="js/lib/popper.min-1.14.3.js"></script>
-<link rel="stylesheet" href="css/bootstrap.min-4.1.3.css" />
+<link rel="stylesheet" href="css/bootstrap.min-4.1.3.css"/>
 <script type="text/javascript" src="js/lib/bootstrap.min-4.1.3.js"></script>
-<link rel="stylesheet" href="css/site.css" />
+<link rel="stylesheet" href="css/site.css"/>
 <script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
+var fetchUrl = fetchUrl("produkt");
+var produkt = new ItemGrid(1, fetchUrl, "produkt", [
+    HERSTELLER_DROP,
+   	UNTER_KATEGORIE_DROP,
+   	MASSSTAB_DROP,
+   	SPURWEITE_DROP,
+   	EPOCH_DROP,
+   	BAHNVERWALTUNG_DROP,
+   	GATTUNG_DROP,
+   	ACHSFOLG_DROP,
+   	VORBILD_DROP,
+   	SONDERMODELL_DROP,
+   	AUFBAU_DROP,
+   	LICHT_DROP,
+   	KUPPLUNG_DROP,
+   	STEUERUNG_DROP,
+   	DECODER_TYP_DROP,
+   	MOTOR_TYP_DROP,
+   	BESTELL_NR,
+    BEZEICHNUNG,
+    BAUZEIT,
+    ANMERKUNG,
+    BETREIBSNUMMER,
+   	LANGE,
+   	ANLEITUNGEN,
+   	EXPLOSIONSZEICHNUNG,
+   	ABBILDUNG,
+    new ButtonColumn([],
+             [new FunctionLinkage("update", "produkt.updateRow(this.value)")])],
+   false, EditMode.UPDATE, undefined);
+
 async function init() {
-    about();
+    await HERSTELLER_DROP.init();
+    await UNTER_KATEGORIE_DROP.init();
+    await MASSSTAB_DROP.init();
+    await SPURWEITE_DROP.init();
+    await EPOCH_DROP.init();
+    await BAHNVERWALTUNG_DROP.init();
+    await GATTUNG_DROP.init();
+    await ACHSFOLG_DROP.init();
+    await VORBILD_DROP.init();
+    await SONDERMODELL_DROP.init();
+    await AUFBAU_DROP.init();
+    await LICHT_DROP.init();
+    await KUPPLUNG_DROP.init();
+    await STEUERUNG_DROP.init();
+    await DECODER_TYP_DROP.init();
+    await MOTOR_TYP_DROP.init();
+    await produkt.init();
+    about()
 }
 </script>
 <title>Produkt</title>
@@ -30,28 +78,26 @@ async function init() {
         </nav>
         <hr class="highlight" />
     </header>
-    
-	<section>
-		<article>
-			<h3 id="heading">Produkt</h3>
-			<div id="data">
-				<div id="produkt">TODO Child form similar to DecoderTypen /
-					DecoderTyp</div>
-			</div>
-		</article>
-	</section>
 
-	<footer>
-		<div id="footer">
-			<div>
-				<hr class="highlight" />
-				<ul class="footer">
-					<li>Copyright &copy; 2018 ModellBahn Website</li>
-					<li style="float: right"><a id="license" class="nav-button" href='LICENSE'
-						target="_blank">License</a></li>
-				</ul>
-			</div>
-		</div>
-	</footer>
+    <section>
+        <article>
+            <h3 id="heading">Produkt</h3>
+            <div id="data">
+                <div id="produkt"></div>
+            </div>
+        </article>
+    </section>
+
+    <footer>
+        <div id="footer">
+            <div>
+                <hr class="highlight" />
+                <ul class="footer">
+                    <li>Copyright &copy; 2018 ModellBahn Website</li>
+                    <li><a id="license" class="nav-button" href="#">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

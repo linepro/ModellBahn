@@ -204,15 +204,18 @@ class TextColumn extends Column {
   }
 }
 
-class ImgColumn extends Column {
-  constructor(heading, binding, editable, required) {
+class IMGColumn extends Column {
+  constructor(heading, binding, onChange, editable, required) {
     super(heading, binding, editable, required);
+    this.onChange = onChange;
   }
 
   createControl() {
     var ctl = document.createElement("input");
     ctl.type = "file";
     ctl.accept = "image/*";
+    ctl.multiple = false;
+    if (this.onChange) ctl.change = this.onChange;
     return ctl;
   }
 }
@@ -230,14 +233,17 @@ class PhoneColumn extends Column {
 }
 
 class PDFColumn extends Column {
-  constructor(heading, binding, editable, required) {
+  constructor(heading, binding, onChange, editable, required) {
     super(heading, binding, editable, required);
+    this.onChange = onChange;
   }
 
   createControl() {
     var ctl = document.createElement("input");
     ctl.type = "file";
     ctl.accept = "application/pdf";
+    ctl.multiple = false;
+    if (this.onChange) ctl.change = this.onChange;
     return ctl;
   }
 }
@@ -428,7 +434,11 @@ class ButtonColumn {
 
 async function checkResponse(response) {
 	if (response.ok) {
-		return response.json();
+		if (response.status != 204) {
+			return response.json();
+		} else {
+			return { entities: [], links: [] };
+		}
 	}
 
 	throw new Error(response.statusText);
@@ -530,4 +540,18 @@ function updateRow(elementName) {
 function gridButtonColumn(elementName) {
   return new ButtonColumn([addRow(elementName)],
    [updateRow(elementName), deleteRow(elementName)]);
+}
+
+async function uploadFile(url, inputCtl) {
+  var formData = new FormData();
+
+  var file = inputCtl.files[0];
+  
+  formData.append("FileName", file.name); 
+  formData.append("FileType", file.type);
+  formData.append("FileData", file);
+ 
+  await fetch(url, { method: "PUT", body: formData } )
+    .then(response => checkResponse(response))
+    .catch(error => reportError(error));
 }

@@ -264,7 +264,7 @@ class ItemGrid {
 
       var key = document.getElementById(grid.getKeyId(rowId));
 
-      if (row < entities.length) {
+      if (entities.length > 0 && row < entities.length) {
         entity = entities[row];
         var lnk = getLink(entity.links, "self");
         key.value = lnk.href;

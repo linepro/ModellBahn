@@ -80,7 +80,7 @@ public class Land extends AbstractNamedItem<NameKey> implements ILand {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Wahrung.class)
     @JsonGetter(ApiNames.WAHRUNG)
-    @JsonView(Views.Public.class)
+    @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=WahrungResolver.class)
     public IWahrung getWahrung() {
