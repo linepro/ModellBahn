@@ -14,7 +14,6 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-  const fetchUrl = fetchUrl("decoder");
   const adressen = new ItemGrid(2, undefined, "adressen", [
     INDEX,
     ADRESS_TYP,
@@ -35,7 +34,7 @@
     PROGRAMMABLE,
     gridButtonColumn("funktionen")
   ], false, EditMode.UPDATE, undefined);
-  const decoder = new ItemGrid(1, fetchUrl, "decoder", [
+  const decoder = new ItemGrid(1, fetchUrl("decoder"), "decoder", [
     HERSTELLER,
     BESTELL_NR,
     BEZEICHNUNG,

@@ -59,7 +59,7 @@ function addButton(cell, lnk, action) {
 }
 
 function getLink(links, rel) {
-  return links.find(function(lnk) { return lnk.rel === rel; });
+  return links.find((lnk) => { return lnk.rel === rel; });
 }
 
 function getFieldId(rowId, binding) {
@@ -360,7 +360,7 @@ class HeaderLinkage {
   }
   
   getButton() {
-    return getButton(undefined, this.alt, this.method);
+    return getButton(this.value, this.alt, this.method);
   }
 }
 

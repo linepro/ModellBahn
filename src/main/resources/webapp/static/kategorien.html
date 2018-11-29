@@ -14,7 +14,6 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-  const fetchUrl = fetchUrl("kategorie");
   const columns = [
   new TextColumn("Namen", "name", Editable.ADD, true, 30),
   new TextColumn("Bezeichnung", "description", Editable.UPDATE, false, 50),
@@ -22,7 +21,7 @@
     [new FunctionLinkage("update", "kategorie.editRow(this.value)"),
       new FunctionLinkage("delete", "kategorie.deleteRow(this.value)")])
 ];
-const kategorie = new ItemGrid(10, fetchUrl, "kategorie", columns, true, EditMode.UPDATE, undefined, "unterkategorien.html");
+const kategorie = new ItemGrid(10, fetchUrl("kategorie"), "kategorie", columns, true, EditMode.UPDATE, undefined, "unterkategorien.html");
 
 async function init() {
     await kategorie.init();

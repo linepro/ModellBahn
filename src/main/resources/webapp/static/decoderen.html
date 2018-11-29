@@ -13,13 +13,12 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-  const fetchUrl = fetchUrl("decoderenType");
   const columns = [
     ID,
     DECODER_TYP,
     gridButtonColumn("decoderen")
   ];
-  const decoderen = new ItemGrid(10, fetchUrl, "decoderen", columns, true, EditMode.UPDATE, undefined, "decoder.html");
+  const decoderen = new ItemGrid(10, fetchUrl("decoderenType"), "decoderen", columns, true, EditMode.UPDATE, undefined, "decoder.html");
 
   async function init() {
     await HERSTELLER_DROP.init();
