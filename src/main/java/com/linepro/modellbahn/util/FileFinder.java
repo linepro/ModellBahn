@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class FileFinder implements IFileFinder {
 
-    protected Set<String> contentPaths = Collections.synchronizedSet(new HashSet<String>());
+    protected Set<String> contentPaths = Collections.synchronizedSet(new HashSet<>());
 
     protected final Logger logger;
     
@@ -52,7 +52,7 @@ public class FileFinder implements IFileFinder {
 
     @Override
     public Set<String> getAbsolutePaths() {
-        Set<String> absolutePaths = new HashSet<String>(getPaths().size());
+        Set<String> absolutePaths = new HashSet<>(getPaths().size());
         
         for (String contentPath : getPaths()) {
             absolutePaths.add(Paths.get(contentPath).normalize().toAbsolutePath().toString());

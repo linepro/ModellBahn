@@ -44,7 +44,7 @@ public class HerstellerService extends AbstractItemService<NameKey, Hersteller> 
             @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.TELEFON, required = false) String telefon,
             @JsonProperty(value = ApiNames.URL, required = false) URL url,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
+            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) {
         Hersteller entity = new Hersteller(id, name, bezeichnung, url, telefon, deleted);
 
         debug("created: " + entity);

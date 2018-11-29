@@ -6,7 +6,6 @@ import java.util.List;
 import javax.ws.rs.core.Link;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.linepro.modellbahn.model.IItem;
@@ -38,7 +37,7 @@ public class ListWithLinksSerializer extends StdSerializer<ListWithLinks> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void serialize(ListWithLinks value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+    public void serialize(ListWithLinks value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
         gen.writeStartArray();
         for (IItem entity : (List<IItem>) value.getEntities()) {

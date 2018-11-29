@@ -95,7 +95,6 @@ public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implemen
      * @param index the index
      * @param adressTyp the adressTyp
      * @param span the span
-     * @param maximal the maximal
      * @param werkseinstellung the werkseinstellung
      * @param deleted the deleted
      */

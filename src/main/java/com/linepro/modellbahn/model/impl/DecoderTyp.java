@@ -102,13 +102,13 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     private Konfiguration konfiguration;
 
     /** The cv. */
-    private Set<IDecoderTypAdress> adressen = new TreeSet<IDecoderTypAdress>();
+    private Set<IDecoderTypAdress> adressen = new TreeSet<>();
 
     /** The cv. */
-    private Set<IDecoderTypCV> CVs = new TreeSet<IDecoderTypCV>();
+    private Set<IDecoderTypCV> CVs = new TreeSet<>();
 
     /** The funktion. */
-    private Set<IDecoderTypFunktion> funktionen = new TreeSet<IDecoderTypFunktion>();
+    private Set<IDecoderTypFunktion> funktionen = new TreeSet<>();
 
     /**
      * Instantiates a new decoder typ.
@@ -282,7 +282,7 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     @JsonView(Views.Public.class)
     @JsonSerialize(contentUsing = DecoderTypCVSerializer.class)
     public Set<IDecoderTypCV> getSortedCVs() {
-        return new TreeSet<IDecoderTypCV>(getCVs());
+        return new TreeSet<>(getCVs());
     }
 
     @Override
@@ -315,7 +315,7 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     @JsonView(Views.Public.class)
     @JsonSerialize(contentUsing = DecoderTypFunktionSerializer.class)
     public Set<IDecoderTypFunktion> getSortedFunktionen() {
-        return new TreeSet<IDecoderTypFunktion>(getFunktionen());
+        return new TreeSet<>(getFunktionen());
     }
 
     @Override

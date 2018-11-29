@@ -14,16 +14,16 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var hersteller = new NamedItemGrid("hersteller", "hersteller");
+  const hersteller = new NamedItemGrid("hersteller", "hersteller");
 
-async function init() {
+  async function init() {
     await hersteller.init();
     about();
 }
 </script>
 <title>Hersterllern</title>
 </head>
-<body onload="javascript:init()">
+<body onload="init()">
     <header>
         <hr class="highlight" />
         <nav>

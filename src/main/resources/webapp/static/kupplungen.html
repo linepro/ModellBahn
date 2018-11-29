@@ -14,16 +14,16 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var kupplung = new NamedItemGrid("kupplung", "kupplung");
+  const kupplung = new NamedItemGrid("kupplung", "kupplung");
 
-async function init() {
+  async function init() {
     await kupplung.init();
     about();
 }
 </script>
 <title>Kupplungen</title>
 </head>
-<body onload="javascript:init()">
+<body onload="init()">
     <header>
         <nav>
             <ul class="nav">

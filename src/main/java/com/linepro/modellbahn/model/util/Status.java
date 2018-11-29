@@ -20,7 +20,7 @@ public enum Status implements IDescribedEnum {
 
     protected final String description;
     
-    private Status(String description) {
+    Status(String description) {
         this.description = description;
     }
 

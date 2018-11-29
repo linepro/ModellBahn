@@ -14,16 +14,16 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var epoch = new NamedItemGrid("epoch", "epoch");
+  const epoch = new NamedItemGrid("epoch", "epoch");
 
-async function init() {
+  async function init() {
     await epoch.init();
     about();
 }
 </script>
 <title>Epochen</title>
 </head>
-<body onload="javascript:init()">
+<body onload="init()">
     <header>
         <nav>
             <ul class="nav">

@@ -14,36 +14,36 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var fetchUrl = fetchUrl("produkt");
-var produkt = new ItemGrid(1, fetchUrl, "produkt", [
+  const fetchUrl = fetchUrl("produkt");
+  const produkt = new ItemGrid(1, fetchUrl, "produkt", [
     HERSTELLER_DROP,
-   	UNTER_KATEGORIE_DROP,
-   	MASSSTAB_DROP,
-   	SPURWEITE_DROP,
-   	EPOCH_DROP,
-   	BAHNVERWALTUNG_DROP,
-   	GATTUNG_DROP,
-   	ACHSFOLG_DROP,
-   	VORBILD_DROP,
-   	SONDERMODELL_DROP,
-   	AUFBAU_DROP,
-   	LICHT_DROP,
-   	KUPPLUNG_DROP,
-   	STEUERUNG_DROP,
-   	DECODER_TYP_DROP,
-   	MOTOR_TYP_DROP,
-   	BESTELL_NR,
+    UNTER_KATEGORIE_DROP,
+    MASSSTAB_DROP,
+    SPURWEITE_DROP,
+    EPOCH_DROP,
+    BAHNVERWALTUNG_DROP,
+    GATTUNG_DROP,
+    ACHSFOLG_DROP,
+    VORBILD_DROP,
+    SONDERMODELL_DROP,
+    AUFBAU_DROP,
+    LICHT_DROP,
+    KUPPLUNG_DROP,
+    STEUERUNG_DROP,
+    DECODER_TYP_DROP,
+    MOTOR_TYP_DROP,
+    BESTELL_NR,
     BEZEICHNUNG,
     BAUZEIT,
     ANMERKUNG,
     BETREIBSNUMMER,
-   	LANGE,
-   	ANLEITUNGEN,
-   	EXPLOSIONSZEICHNUNG,
-   	ABBILDUNG,
+    LANGE,
+    ANLEITUNGEN,
+    EXPLOSIONSZEICHNUNG,
+    ABBILDUNG,
     new ButtonColumn([],
-             [new FunctionLinkage("update", "produkt.updateRow(this.value)")])],
-   false, EditMode.UPDATE, undefined);
+      [new FunctionLinkage("update", "produkt.updateRow(this.value)")])],
+  false, EditMode.UPDATE, undefined);
 
 async function init() {
     await HERSTELLER_DROP.init();
@@ -68,7 +68,7 @@ async function init() {
 </script>
 <title>Produkt</title>
 </head>
-<body onload="javascript:init()">
+<body onload="init()">
     <header>
         <nav>
             <ul class="nav">

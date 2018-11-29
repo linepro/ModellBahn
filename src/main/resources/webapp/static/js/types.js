@@ -1,5 +1,5 @@
 // module "types.js"
-"use strict"
+"use strict";
 
 const ACHSFOLG_DROP = new DropDown(apiRoot() + "achsfolg", [ "name" ], [ "name" ]);
 const ADRESS_TYP_DROP = new DropDown(apiRoot() + "enums/adressTyp", [ "name" ], [ "name" ]);

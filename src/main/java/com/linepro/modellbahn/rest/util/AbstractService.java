@@ -19,8 +19,6 @@ import com.linepro.modellbahn.model.IDescribedEnum;
  * Basic CRUD rest service 
  * @author $Author$
  * @version $Id$
- * 
- * @param <E> the element type
  */
 public abstract class AbstractService {
 
@@ -32,9 +30,6 @@ public abstract class AbstractService {
 
     /**
      * Instantiates a new abstract service.
-     *
-     * @param entityClass the entity class
-     * @param persister the persister
      */
     public AbstractService() {
         this.logger = LoggerFactory.getILoggerFactory().getLogger(getClass().getName());

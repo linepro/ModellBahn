@@ -14,16 +14,16 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var fetchUrl = fetchUrl("produkt");
-var columns = [
-	HERSTELLER_DROP,
-    BESTELL_NR,
-    new ButtonColumn([new HeaderLinkage("add", "produkt.newRow()")],
-    		[new FunctionLinkage("update", "produkt.editRow(this.value)"), 
-    		 new FunctionLinkage("delete", "produkt.deleteRow(this.value)")])
-    ];
-var produkt = new ItemGrid(10, fetchUrl, "produkt", columns, true, EditMode.UPDATE, undefined, "produkt.html");
-	
+  const fetchUrl = fetchUrl("produkt");
+  const columns = [
+  HERSTELLER_DROP,
+  BESTELL_NR,
+  new ButtonColumn([new HeaderLinkage("add", "produkt.newRow()")],
+    [new FunctionLinkage("update", "produkt.editRow(this.value)"),
+      new FunctionLinkage("delete", "produkt.deleteRow(this.value)")])
+];
+const produkt = new ItemGrid(10, fetchUrl, "produkt", columns, true, EditMode.UPDATE, undefined, "produkt.html");
+
 async function init() {
 	await HERSTELLER_DROP.init();
 	await produkt.init();
@@ -32,7 +32,7 @@ async function init() {
 </script>
 <title>Produkten</title>
 </head>
-<body onLoad="javascript:init()">
+<body onLoad="init()">
     <header>
         <nav>
             <ul class="nav">

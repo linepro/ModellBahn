@@ -13,16 +13,16 @@
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var wahrung = new NamedItemGrid("wahrung", "wahrung");
+  const wahrung = new NamedItemGrid("wahrung", "wahrung");
 
-async function init() {
+  async function init() {
     await wahrung.init();
     about();
 }
 </script>
 <title>Wahrungen</title>
 </head>
-<body onload="javascript:init()">
+<body onload="init()">
     <header>
         <nav>
             <ul class="nav">

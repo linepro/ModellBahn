@@ -40,7 +40,7 @@ xmlns="http://xmlns.jcp.org/xml/ns/persistence"
         <class>com.linepro.modellbahn.model.impl.Produkt</class>
         <class>com.linepro.modellbahn.model.impl.ProduktTeil</class>
         <class>com.linepro.modellbahn.model.impl.Protokoll</class>
-        <class>com.linepro.modellbahn.model.impl.Sondermodel</class>
+        <class>com.linepro.modellbahn.model.impl.SonderModell</class>
         <class>com.linepro.modellbahn.model.impl.Spurweite</class>
         <class>com.linepro.modellbahn.model.impl.Steuerung</class>
         <class>com.linepro.modellbahn.model.impl.UnterKategorie</class>

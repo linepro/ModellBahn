@@ -123,7 +123,6 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      * Instantiates a new abstract service.
      *
      * @param entityClass the entity class
-     * @param persister the persister
      */
     public AbstractItemService(final Class<E> entityClass) {
         this.entityClass = entityClass;
@@ -144,7 +143,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
     /**
      * Gets the.
      *
-     * @param id the id
+     * @param key the key
      * @return the response
      */
     public Response get(K key) {
@@ -277,7 +276,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
                 return getResponse(noContent());
             }
 
-            List<Link> navigation = new ArrayList<Link>();
+            List<Link> navigation = new ArrayList<>();
 
             if (pageNumber != null) {
                 if (pageNumber > 0) {
@@ -371,8 +370,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      * @throws Exception the exception
      */
     protected E create() throws Exception {
-        E template = getEntityClass().newInstance();
-        return template;
+        return getEntityClass().newInstance();
     }
 
     /**

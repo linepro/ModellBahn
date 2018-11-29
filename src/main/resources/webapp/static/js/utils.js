@@ -1,28 +1,24 @@
 // module "utils.js"
 "use strict";
 
-var Editable = {
+const Editable = {
   NEVER: 0,
   UPDATE: 1,
-  ADD: 2,
-}
+  ADD: 2
+};
 
-var EditMode = {
+const EditMode = {
   VIEW: 0,
   UPDATE: 1,
-  ADD: 2,
-}
+  ADD: 2
+};
 
 function shouldDisable(editable, editMode) {
   if (editable === Editable.NEVER || editMode === EditMode.VIEW) {
     return true;
   }
 
-  if (editable <= editMode) {
-    return false;
-  }
-
-  return true;
+  return (editable > editMode);
 }
 
 function apiRoot() {
@@ -34,8 +30,8 @@ function siteRoot() {
 }
 
 function fetchUrl(dataType) {
-  var fetchUrl = apiRoot() + dataType;
-  var searchParams  = new URLSearchParams(location.search);
+  let fetchUrl = apiRoot() + dataType;
+  let searchParams  = new URLSearchParams(location.search);
 
   if (searchParams.has("self")) {
     fetchUrl = searchParams.get("self");
@@ -54,12 +50,24 @@ function reportError( error ) {
   alert( "error: " + error.toString() );
 }
 
+function addButton(cell, lnk, action) {
+  removeChildren(cell);
+
+  if (lnk) {
+    cell.appendChild(getButton(lnk.href, lnk.rel, action));
+  }
+}
+
 function getLink(links, rel) {
-  return links.find(function(lnk) { return lnk.rel == rel; });
+  return links.find(function(lnk) { return lnk.rel === rel; });
+}
+
+function getFieldId(rowId, binding) {
+  return rowId + "_" + binding;
 }
 
 function getImg(action) {
-  var img = document.createElement("img");
+  let img = document.createElement("img");
 
   img.alt = action;
   img.src = "img/" + action + ".png";
@@ -68,13 +76,13 @@ function getImg(action) {
 }
 
 function getButton(value, alt, action) {
-  var btn = document.createElement("button");
+  let btn = document.createElement("button");
 
   btn.setAttribute("value", value);
   btn.setAttribute("onclick", action);
   btn.className = "nav-button";
 
-  var img = getImg(alt);
+  let img = getImg(alt);
   img.className = "nav-button";
   
   btn.appendChild(img);
@@ -87,7 +95,7 @@ function addText(cell, text) {
 }
 
 function getButtonLink(href, alt, action) {
-    var a = document.createElement("a");
+    let a = document.createElement("a");
 
     a.setAttribute("href", href);
     a.className = "nav-button";
@@ -106,7 +114,7 @@ function addButtonLink(element, href, action) {
 
 function addLink(element, href) {
   if (href) {
-    var a = document.createElement("a");
+    let a = document.createElement("a");
 
     a.setAttribute("href", href);
     a.appendChild(element);
@@ -131,7 +139,7 @@ class Column {
   }
  
   getHeading() {
-    var td = document.createElement("div");
+    let td = document.createElement("div");
     td.className = "table-heading";
     addText(td, this.heading);
     return td;
@@ -148,13 +156,17 @@ class Column {
   setWidth(width) {
      this.width = width;
   }
-  
+
+  createControl() {
+    return document.createElement("input");
+  }
+
   getControl(cell, entity, editMode) {
-    var ctl = this.createControl();
+    let ctl = this.createControl();
     cell.style.width = this.width;
     cell.style.maxWidth = this.width;
 
-    var value;
+    let value;
 
     if (entity) value = this.entityValue(entity);
 
@@ -164,10 +176,8 @@ class Column {
 
     if (value || entity) {
       ctl.disabled = shouldDisable(this.editable, editMode);
-    } else if (editMode == EditMode.ADD && this.editable != Editable.NEVER) {
-      ctl.disabled = false;
     } else {
-      ctl.disabled = true;
+      ctl.disabled = !(editMode === EditMode.ADD && this.editable !== Editable.NEVER);
     }
 
     ctl.required = this.required;
@@ -176,7 +186,7 @@ class Column {
   }
 
   getValue(cell) {
-    var ctl = cell.firstChild;
+    let ctl = cell.firstChild;
     if (ctl) {
       return this.getControlValue(ctl);
     }
@@ -197,7 +207,7 @@ class TextColumn extends Column {
   }
 
   createControl() {
-    var ctl = document.createElement("input");
+    let ctl = super.createControl();
     ctl.type = "text";
     ctl.maxLength = this.length;
     return ctl;
@@ -211,7 +221,7 @@ class IMGColumn extends Column {
   }
 
   createControl() {
-    var ctl = document.createElement("input");
+    let ctl = super.createControl();
     ctl.type = "file";
     ctl.accept = "image/*";
     ctl.multiple = false;
@@ -226,7 +236,7 @@ class PhoneColumn extends Column {
   }
 
   createControl() {
-    var ctl = document.createElement("input");
+    let ctl = super.createControl();
     ctl.type = "tel";
     return ctl;
   }
@@ -239,7 +249,7 @@ class PDFColumn extends Column {
   }
 
   createControl() {
-    var ctl = document.createElement("input");
+    let ctl = super.createControl();
     ctl.type = "file";
     ctl.accept = "application/pdf";
     ctl.multiple = false;
@@ -254,7 +264,7 @@ class URLColumn extends Column {
   }
 
   createControl() {
-    var ctl = document.createElement("input");
+    let ctl = super.createControl();
     ctl.type = "url";
     return ctl;
   }
@@ -262,7 +272,7 @@ class URLColumn extends Column {
 
 class NumberColumn extends Column {
   constructor(heading, binding, editable, required, max, min, step) {
-    max = max ? max : 255
+    max = max ? max : 255;
     super(heading, binding, editable, required, Math.max(max.toString().length, 5));
     this.max = max;
     this.min = min ? min : 0;
@@ -270,7 +280,7 @@ class NumberColumn extends Column {
   }
 
   createControl() {
-    var ctl = document.createElement("input");
+    let ctl = super.createControl();
     ctl.type = "number";
     ctl.min = this.min;
     ctl.max = this.max;
@@ -285,7 +295,7 @@ class BoolColumn extends Column {
   }
 
   createControl() {
-    var ctl = document.createElement("input");
+    let ctl = super.createControl();
     ctl.type = "checkbox";
     return ctl;
   }
@@ -305,7 +315,7 @@ class DateColumn extends Column {
   }
 
   createControl() {
-    var ctl = document.createElement("input");
+    let ctl = super.createControl();
     ctl.type = "date";
     return ctl;
   }
@@ -318,7 +328,7 @@ class SelectColumn extends Column {
   }
 
   createControl() {
-    var ctl = document.createElement("select");
+    let ctl = document.createElement("select");
     this.dropDown.addOptions(ctl, 1);
     return ctl;
   }
@@ -332,8 +342,8 @@ class SelectColumn extends Column {
   }
 
   setValue(ctl, value) {
-   for (var i = 0; i < ctl.options.length; i++) {
-     if (ctl.options[i].value == value) {
+   for (let i = 0; i < ctl.options.length; i++) {
+     if (ctl.options[i].value === value) {
       ctl.selectedIndex = i;
       return;
      }
@@ -350,7 +360,7 @@ class HeaderLinkage {
   }
   
   getButton() {
-    return getButton(this.value, this.alt, this.method);
+    return getButton(undefined, this.alt, this.method);
   }
 }
 
@@ -360,7 +370,7 @@ class FunctionLinkage extends HeaderLinkage {
   }
 
   extractLink(entity, cell) {
-    var lnk = getLink(entity.links, this.alt);
+    let lnk = getLink(entity.links, this.alt);
     
     if (lnk) {
       this.value = cell.id.replace("_buttons", "");
@@ -384,13 +394,13 @@ class ButtonColumn {
   }
 
   getHeading() {
-    var td = document.createElement("div");
+    let td = document.createElement("div");
     td.className = "table-heading-btn";
     
-    var col = this;
+    let col = this;
     if (this.headLinkage) {
-      this.headLinkage.forEach(function(linkage) {
-    	var btn = linkage.getButton();
+      this.headLinkage.forEach(linkage => {
+    	let btn = linkage.getButton();
     	btn.id = col.tableName + "_" + btn.id;
         td.appendChild(btn);
       });
@@ -414,12 +424,12 @@ class ButtonColumn {
     cell.style.width = this.width;
     cell.style.maxWidth = this.width;
 
-    var ctl = document.createElement("div");
+    let ctl = document.createElement("div");
 
     if (editMode && this.btnLinkage) {
-      this.btnLinkage.forEach(function(linkage) {
+      this.btnLinkage.forEach(linkage => {
         if (entity && linkage.extractLink(entity, cell)) {
-          var btn = linkage.getButton();
+          let btn = linkage.getButton();
           btn.id = cell.id + "_" + btn.id;
           ctl.appendChild(btn);
         }
@@ -434,7 +444,7 @@ class ButtonColumn {
 
 async function checkResponse(response) {
 	if (response.ok) {
-		if (response.status != 204) {
+		if (response.status !== 204) {
 			return response.json();
 		} else {
 			return { entities: [], links: [] };
@@ -446,33 +456,33 @@ async function checkResponse(response) {
 
 async function modal(elementName, title, contentUrl) {
     
-  var anchor = document.getElementById(elementName);
-  var modal = document.getElementById("modal");
+  let anchor = document.getElementById(elementName);
+  let modal = document.getElementById("modal");
   
   if (anchor && !modal) {
       modal = document.createElement("div");
       modal.id="modal";
       modal.className="modal";
 
-      var content = document.createElement("div");
+      let content = document.createElement("div");
       content.className="modal-content";
 
-      var head = document.createElement("div");
+      let head = document.createElement("div");
       head.className="modal-header";
 
-      var heading = document.createElement("h2");
+      let heading = document.createElement("h2");
       addText(heading, title);
       head.appendChild(heading);
       content.appendChild(head);
 
-      var body = document.createElement("div");
+      let body = document.createElement("div");
       body.className="modal-body";
       
-      var text = await fetch(contentUrl)
+      let text = await fetch(contentUrl)
             .then(response => response.text())
             .catch(error => reportError(error));
 
-      var area = document.createElement('textarea');
+      let area = document.createElement('textarea');
       area.value = text;
       area.color = 'black';
       area.height = "100%";
@@ -483,7 +493,7 @@ async function modal(elementName, title, contentUrl) {
       body.appendChild(area);
       content.appendChild(body);
 
-      var foot = document.createElement("div");
+      let foot = document.createElement("div");
       foot.className="modal-footer";
 
       content.appendChild(foot);
@@ -494,7 +504,7 @@ async function modal(elementName, title, contentUrl) {
       anchor.onclick = function() { modal.style.display = "block"; };
 
       window.onclick = function(event) {
-          if (event.target == modal) {
+          if (event.target === modal) {
               modal.style.display = "none";
           }
       }
@@ -506,19 +516,17 @@ function about() {
 }
 
 function setActiveTab(event, tabName) {
-    var tabContents = document.getElementsByClassName("tabContent");
-    var tabLinks = document.getElementsByClassName("tabLinks");
+  let tabContents = document.getElementsByClassName("tabContent");
+  let tabLinks = document.getElementsByClassName("tabLinks");
    
-    for (var i = 0 ; i < tabContents.length; i++) {
-      tabContents[i].style.display = 
-    	(tabContents[i].id === tabName) ? "block" : "none";
-    }
+    tabContents.forEach(tab => {
+      tab.style.display = (tab.id === tabName) ? "block" : "none";
+    });
 
-    var linkName = tabName.replace("Tab", "Link");
-    for (var i = 0 ; i < tabLinks.length; i++) {
-      tabLinks[i].className =
-    	(tabLinks[i].id === linkName) ? "tabLinks active" : "tabLinks";
-    }
+  let linkName = tabName.replace("Tab", "Link");
+    tabLinks.forEach(link => {
+      link.className = (link.id === linkName) ? "tabLinks active" : "tabLinks";
+    });
 }
 
 function addRow(elementName) {
@@ -543,9 +551,9 @@ function gridButtonColumn(elementName) {
 }
 
 async function uploadFile(url, inputCtl) {
-  var formData = new FormData();
+  let formData = new FormData();
 
-  var file = inputCtl.files[0];
+  let file = inputCtl.files[0];
   
   formData.append("FileName", file.name); 
   formData.append("FileType", file.type);

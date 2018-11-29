@@ -1,5 +1,5 @@
 // module "dropdown.js"
-"use strict"
+"use strict";
 
 class Option {
   constructor(display,value) {
@@ -15,7 +15,7 @@ class DropDown {
     this.displayColumns = displayColumns;
     this.wrapped = wrapped;
     this.length  = 10;
-    this.options = new Array();
+    this.options = [];
   }
 
   addOptions(select, dropSize, initial) {
@@ -25,14 +25,14 @@ class DropDown {
 
     select.size = dropSize;
 
-    var i = 0;
-    this.options.forEach(function(option) {
-      var opt = document.createElement("option");
+    let i = 0;
+    this.options.forEach(option => {
+      let opt = document.createElement("option");
       opt.value = option.value;
       opt.text  = option.display;
       select.add(opt);
       
-      if (initial && initial == option.display) {
+      if (initial && initial === option.display) {
         select.selectedIndex = i;
       }
       
@@ -41,17 +41,17 @@ class DropDown {
   }
 
   loadOptions(jsonData) {
-    var select = this;
-    var entities = jsonData.entities ? jsonData.entities : jsonData; 
-    entities.forEach(function(entity) {
-      var display = "";
-      var value = "";
+    let select = this;
+    let entities = jsonData.entities ? jsonData.entities : jsonData; 
+    entities.forEach(entity => {
+      let display = "";
+      let value = "";
 
-      select.displayColumns.forEach(function(name) {
+      select.displayColumns.forEach(name => {
         display = display + " " + entity[name];
       });
 
-      select.valueColumns.forEach(function(name) {
+      select.valueColumns.forEach(name => {
         if (select.wrapped) {
           value = (value ? "" : value + ", ") + name + ": " + entity[name];
         } else {
@@ -72,7 +72,7 @@ class DropDown {
   }
 
   async init() {
-    var select = this;
+    let select = this;
     await fetch(select.apiQuery, { method: "get", headers: { "Content-type": "application/json" } })
       .then(response => checkResponse(response))
       .then(jsonData => select.loadOptions(jsonData))

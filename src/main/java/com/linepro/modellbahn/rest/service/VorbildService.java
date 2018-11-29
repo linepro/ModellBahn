@@ -90,7 +90,7 @@ public class VorbildService extends AbstractItemService<NameKey, Vorbild> {
             @JsonProperty(value=ApiNames.SITZPLATZETZKL2, required=false) Long sitzPlatzeTzKL2,
             @JsonProperty(value=ApiNames.DREHGESTELLBAUART, required=false) String drehgestellbauart,
             @JsonProperty(value=ApiNames.ANMERKUNG, required=false) String anmerkung,
-            @JsonProperty(value=ApiNames.DELETED, required=false) Boolean deleted) throws Exception {
+            @JsonProperty(value=ApiNames.DELETED, required=false) Boolean deleted) {
         Vorbild entity = new Vorbild(sitzPlatzeTzKL2, null, null, anmerkung, null, klasse, anmerkung, null, null, null, null, null, sitzPlatzeTzKL2, null, null, null, null, null, klasse, null, null, null, null, null, null, null, null, klasse, anmerkung, null, null, null, klasse, sitzPlatzeTzKL2, sitzPlatzeTzKL2, sitzPlatzeTzKL2, sitzPlatzeTzKL2, anmerkung, deleted, sitzPlatzeTzKL2, sitzPlatzeTzKL2, sitzPlatzeTzKL2, sitzPlatzeTzKL2, anmerkung, deleted, anmerkung);
 
         debug("created: " + entity);

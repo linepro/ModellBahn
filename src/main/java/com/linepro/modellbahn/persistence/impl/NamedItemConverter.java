@@ -13,8 +13,6 @@ import com.linepro.modellbahn.persistence.IPersister;
  * Converts from name to NamedItem.
  * @author  $Author:$
  * @version $Id:$
- *
- * @param <I> the generic type
  */
 public class NamedItemConverter implements Converter {
     
@@ -38,9 +36,7 @@ public class NamedItemConverter implements Converter {
                 Class<? extends IItem<?>> entityClass = getPersister().getEntityClass();
 
                 if (entityClass.isAssignableFrom(type)) {
-                    IItem<?> entity = entityClass.newInstance();
-
-                    entity = getPersister().findByKey(new NameKey(value.toString()), false);
+                    IItem<?> entity = getPersister().findByKey(new NameKey(value.toString()), false);
 
                     if (entity != null) {
                         return (T) entity;

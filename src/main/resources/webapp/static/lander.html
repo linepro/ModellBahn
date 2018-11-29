@@ -15,9 +15,9 @@
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
 
-var land = new ListEditGrid(10, "land", "land", [NAMEN, BEZEICHNUNG, WAHRUNG]);
+  const land = new ListEditGrid(10, "land", "land", [NAMEN, BEZEICHNUNG, WAHRUNG]);
 
-async function init() {
+  async function init() {
 	await WAHRUNG_DROP.init();
     await land.init();
     about();
@@ -25,7 +25,7 @@ async function init() {
 </script>
 <title>L&auml;nder</title>
 </head>
-<body onload="javascript:init()">
+<body onload="init()">
     <header>
         <nav>
             <ul class="nav">

@@ -14,16 +14,16 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var bahnverwaltung = new NamedItemGrid("bahnverwaltung", "bahnverwaltung");
+  const bahnverwaltung = new NamedItemGrid("bahnverwaltung", "bahnverwaltung");
 
-async function init() {
+  async function init() {
 	await bahnverwaltung.init();
     about();
 }
 </script>
 <title>Bahnverwaltungen</title>
 </head>
-<body onload="javascript:init()">
+<body onload="init()">
     <header>
         <hr class="highlight" />
         <nav>

@@ -50,7 +50,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     public Kategorie create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
             @JsonProperty(value = ApiNames.NAMEN, required = false) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
+            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) {
         Kategorie entity = new Kategorie(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
@@ -66,9 +66,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
         Kategorie kategorie = findKategorie(kategorieStr, false);
 
-        UnterKategorie entity = new UnterKategorie(id, kategorie, name, bezeichnung, deleted);
-
-        return entity;
+        return new UnterKategorie(id, kategorie, name, bezeichnung, deleted);
     }
 
     @GET
@@ -140,8 +138,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response add(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, UnterKategorie unterKategorie)
-            throws Exception {
+    public Response add(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, UnterKategorie unterKategorie) {
         try {
             logPost(kategorieStr + "/" + unterKategorie);
 
@@ -167,8 +164,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @Path(ApiPaths.UNTER_KATEGORIE_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
-            @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr, UnterKategorie newUnterKategorie)
-            throws Exception {
+            @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr, UnterKategorie newUnterKategorie) {
         try {
             logPut(kategorieStr + "/" + unterKategorieStr + ": " + newUnterKategorie);
 
@@ -201,9 +197,9 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @Path(ApiPaths.UNTER_KATEGORIE_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
-            @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) throws Exception {
+            @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) {
         try {
-            Kategorie kategorie = (Kategorie) findKategorie(kategorieStr, true);
+            Kategorie kategorie = findKategorie(kategorieStr, true);
 
             if (kategorie == null) {
                 return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));

@@ -97,7 +97,7 @@ public interface IPersister<E extends IItem<?>> {
     /**
      * Deletes the specified entity by primary key.
      *
-     * @param entity the entity
+     * @param id the entity id
      * @throws Exception if there is a DB error
      */
     void delete(Long id) throws Exception;
@@ -107,7 +107,7 @@ public interface IPersister<E extends IItem<?>> {
     /**
      * Deletes the specified entity by business key.
      *
-     * @param entity the entity
+     * @param key the entity key
      * @throws Exception if there is a DB error
      */
     void delete(IKey key) throws Exception;
@@ -142,7 +142,7 @@ public interface IPersister<E extends IItem<?>> {
      * @param collection the collection
      * @throws Exception the exception
      */
-    void populateLazyCollection(Collection<?> collection) throws Exception;
+    void populateLazyCollection(Collection<?> collection);
 
     /**
      * Gets the entity class.
@@ -156,7 +156,7 @@ public interface IPersister<E extends IItem<?>> {
      * Populates any lazy collections for the item
      * @throws Exception if there is a DB error
      */
-    void populateLazyCollections() throws Exception;
+    void populateLazyCollections();
 
     String getNextId();
 }

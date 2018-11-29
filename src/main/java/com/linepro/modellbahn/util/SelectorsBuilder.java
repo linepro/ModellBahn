@@ -72,7 +72,7 @@ public class SelectorsBuilder {
         }
     }
 
-    protected static Map<SelectorsKey, Map<String, Selector>> cache = Collections.synchronizedMap(new HashMap<SelectorsKey, Map<String, Selector>>());
+    protected static Map<SelectorsKey, Map<String, Selector>> cache = Collections.synchronizedMap(new HashMap<>());
 
     /** The logger. */
     protected final Logger logger;
@@ -111,7 +111,7 @@ public class SelectorsBuilder {
 
     protected Map<String, Selector> buildSelectors(Class<?> entityClass,
             List<Class<? extends Annotation>> annotations) {
-        Map<String, Selector> selectors = new HashMap<String, Selector>();
+        Map<String, Selector> selectors = new HashMap<>();
 
         try {
             for (Method getter : entityClass.getMethods()) {
@@ -150,7 +150,7 @@ public class SelectorsBuilder {
      * @return the jpa name
      */
     protected String getJpaName(String getterName) {
-        StringBuffer sb = new StringBuffer(getterName);
+        StringBuilder sb = new StringBuilder(getterName);
         sb.delete(0, 3);
         sb.replace(0, 1, StringUtils.lowerCase(sb.substring(0, 1)));
         return sb.toString();
@@ -164,7 +164,7 @@ public class SelectorsBuilder {
      * @return the setter or null if none exists
      */
     protected Method getSetter(Method getter) {
-        StringBuffer sb = new StringBuffer(getter.getName());
+        StringBuilder sb = new StringBuilder(getter.getName());
 
         sb.replace(0, 1, "s");
 

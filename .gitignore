@@ -3,6 +3,7 @@
 .settings/
 .settings/*.prefs
 .svn/
+.idea/
 bin/
 eclipse/
 target/
@@ -15,6 +16,7 @@ test-output/
 *.class
 
 *.ear
+*.iml
 *.jar
 *.war
 

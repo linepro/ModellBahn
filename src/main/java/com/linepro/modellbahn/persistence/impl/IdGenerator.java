@@ -20,7 +20,7 @@ public class IdGenerator implements IIdGenerator {
 
     @Override
     public String getNextId(String entityName) {
-        Long id = 1L;
+        long id = 1L;
         
         ISessionManager session = getSession();
 
@@ -34,7 +34,7 @@ public class IdGenerator implements IIdGenerator {
                 .toString();
 
         @SuppressWarnings("unchecked")
-        List<String> names = session.getEntityManager().createQuery(queryString.toString()).getResultList();
+        List<String> names = session.getEntityManager().createQuery(queryString).getResultList();
 
         if (!names.isEmpty()) {
             id = Long.parseLong(names.get(0)) + 1;

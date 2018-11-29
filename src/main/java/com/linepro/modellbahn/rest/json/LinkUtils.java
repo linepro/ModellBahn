@@ -6,12 +6,11 @@ import java.util.Set;
 import javax.ws.rs.core.Link;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 public class LinkUtils {
 
-    public void writeLinks(String fieldName, Set<Link> links, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+    public void writeLinks(String fieldName, Set<Link> links, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeArrayFieldStart(fieldName);
         for (Link link : links) {
             writeLink(link, gen, serializers);
@@ -19,7 +18,7 @@ public class LinkUtils {
         gen.writeEndArray();
     }
 
-    public void writeLink(Link link, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+    public void writeLink(Link link, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
         gen.writeStringField("href", link.getUri().toString());
         gen.writeStringField("rel", link.getRel());
