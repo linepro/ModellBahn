@@ -14,13 +14,14 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-  const columns = [
-  HERSTELLER_DROP,
+const columns = [
+  HERSTELLER,
   BESTELL_NR,
-  new ButtonColumn([new HeaderLinkage("add", "produkt.newRow()")],
+  new ButtonColumn(
+    [new HeaderLinkage("add", "produkt.newRow()")],
     [new FunctionLinkage("update", "produkt.editRow(this.value)"),
-      new FunctionLinkage("delete", "produkt.deleteRow(this.value)")])
-];
+     new FunctionLinkage("delete", "produkt.deleteRow(this.value)")]) ];
+
 const produkt = new ItemGrid(10, fetchUrl("produkt"), "produkt", columns, true, EditMode.UPDATE, undefined, "produkt.html");
 
 async function init() {
