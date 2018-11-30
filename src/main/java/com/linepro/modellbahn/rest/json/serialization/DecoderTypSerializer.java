@@ -3,7 +3,6 @@ package com.linepro.modellbahn.rest.json.serialization;
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.linepro.modellbahn.model.impl.DecoderTyp;
@@ -32,7 +31,7 @@ public class DecoderTypSerializer extends StdSerializer<DecoderTyp> {
     }
 
     @Override
-    public void serialize(DecoderTyp value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+    public void serialize(DecoderTyp value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
         gen.writeStringField(ApiNames.HERSTELLER, value.getHersteller().getName());
         gen.writeStringField(ApiNames.BESTELL_NR, value.getName());

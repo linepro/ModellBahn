@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.ws.rs.core.Link;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.linepro.modellbahn.rest.json.LinkUtils;
@@ -32,7 +31,7 @@ public class LinkSerializer extends StdSerializer<Link> {
     }
 
     @Override
-    public void serialize(Link value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+    public void serialize(Link value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         utils.writeLink(value, gen, serializers);
     }
 }

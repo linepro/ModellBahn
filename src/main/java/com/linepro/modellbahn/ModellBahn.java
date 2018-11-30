@@ -62,7 +62,7 @@ public class ModellBahn implements IModellBahn {
     @Override
     public void run() {
         try {
-            logger.info(String.format("Application starting: " + baseUri.toString()));
+            logger.info(String.format("Application starting: %s", baseUri.toString()));
 
             populator.populate();
 
@@ -82,12 +82,7 @@ public class ModellBahn implements IModellBahn {
 
             //configuration.configureJsp(server);
 
-            Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    server.shutdownNow();
-                }
-            }));
+            Runtime.getRuntime().addShutdownHook(new Thread(server::shutdownNow));
             
             server.start();
 

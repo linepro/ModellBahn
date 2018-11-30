@@ -29,10 +29,10 @@ public class SelectorTest {
 
     protected String getter() {
         return "";
-    };
+    }
 
     protected void setter(String value) {
-    };
+    }
 
     @BeforeMethod
     public void setUp() throws Exception {
@@ -43,22 +43,22 @@ public class SelectorTest {
     }
 
     @Test
-    public void testGetName() throws Exception {
+    public void testGetName() {
         assertEquals(selector.getName(), NAME);
     }
 
     @Test
-    public void testGetGetter() throws Exception {
+    public void testGetGetter() {
         assertEquals(selector.getGetter(), getter);
     }
 
     @Test
-    public void testGetSetter() throws Exception {
+    public void testGetSetter() {
         assertEquals(selector.getSetter(), setter);
     }
 
     @Test
-    public void testEquals() throws Exception {
+    public void testEquals() {
         assertFalse(selector.equals(null));
         assertFalse(selector.equals(new Object()));
         assertTrue(selector.equals(selector));
@@ -67,12 +67,12 @@ public class SelectorTest {
     }
 
     @Test
-    public void testHashCode() throws Exception {
+    public void testHashCode() {
         assertEquals(selector.hashCode(), HASH_CODE);
     }
 
     @Test
-    public void testToString() throws Exception {
+    public void testToString() {
         assertEquals(selector.toString(), TO_STRING);
     }
 

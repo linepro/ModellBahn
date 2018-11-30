@@ -17,12 +17,13 @@ import org.testng.annotations.Test;
 public class SelectorsBuilderTest {
 
     public class Base {
-        public void setId(Integer id) {};
+        public void setId(Integer id) {}
+
         public Integer getId() { return 1; }
 
         @Basic
         public String getName() { return "fred"; }
-        public void setName(String name) {};
+        public void setName(String name) {}
     }
     
     public class Annotated extends Base {
@@ -44,7 +45,7 @@ public class SelectorsBuilderTest {
     protected Selector nameSelector;
     
     @BeforeMethod
-    public void setUp() throws Exception {
+    public void setUp() {
         builder = new SelectorsBuilder(); 
     }
 

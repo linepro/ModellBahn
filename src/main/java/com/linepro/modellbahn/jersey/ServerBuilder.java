@@ -27,12 +27,10 @@ public class ServerBuilder {
 
         boolean secure = false;
 
-        HttpServer server = GrizzlyHttpServerFactory.createHttpServer(baseUri,
+        return GrizzlyHttpServerFactory.createHttpServer(baseUri,
                 configuration,
                 secure,
                 sslEngineConfigurator,
                 false);
-        
-        return server;
     }
 }

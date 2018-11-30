@@ -233,8 +233,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response addAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, DecoderTypAdress decoderTypAdress)
-            throws Exception {
+    public Response addAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, DecoderTypAdress decoderTypAdress) {
         try {
             logPost(herstellerStr + "/" + bestellNr + "/" + decoderTypAdress);
 
@@ -260,8 +259,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Path(ApiPaths.DECODER_TYP_ADRESS_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
-            @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index, DecoderTypAdress newDecoderTypAdress)
-            throws Exception {
+            @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index, DecoderTypAdress newDecoderTypAdress) {
         try {
             logPut(herstellerStr + "/" + bestellNr + "/" + index + ": " + newDecoderTypAdress);
 
@@ -294,7 +292,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Path(ApiPaths.DECODER_TYP_ADRESS_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
-            @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index) throws Exception {
+            @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index) {
         try {
             DecoderTypAdress decoderTypAdress = (DecoderTypAdress) findDecoderTypAdress(herstellerStr, bestellNr, index, true);
 
@@ -345,8 +343,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response addCV(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, DecoderTypCV decoderTypCV)
-            throws Exception {
+    public Response addCV(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, DecoderTypCV decoderTypCV) {
         try {
             logPost(herstellerStr + "/" + bestellNr + "/" + decoderTypCV);
 
@@ -372,8 +369,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Path(ApiPaths.DECODER_TYP_CV_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateCV(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
-            @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv, DecoderTypCV newDecoderTypCV)
-            throws Exception {
+            @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv, DecoderTypCV newDecoderTypCV) {
         try {
             logPut(herstellerStr + "/" + bestellNr + "/" + cv + ": " + newDecoderTypCV);
 
@@ -413,7 +409,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Path(ApiPaths.DECODER_TYP_CV_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteCV(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
-            @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv) throws Exception {
+            @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv) {
         try {
             DecoderTypCV decoderTypCV = (DecoderTypCV) findDecoderTypCV(herstellerStr, bestellNr, cv, true);
 
@@ -464,8 +460,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response addFunktion(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, DecoderTypFunktion decoderTypFunktion)
-            throws Exception {
+    public Response addFunktion(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, DecoderTypFunktion decoderTypFunktion) {
         try {
             logPost(herstellerStr + "/" + bestellNr + "/" + decoderTypFunktion);
 
@@ -494,8 +489,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Path(ApiPaths.DECODER_TYP_FUNKTION_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateFunktion(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
-            @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion, DecoderTypFunktion newDecoderTypFunktion)
-            throws Exception {
+            @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion, DecoderTypFunktion newDecoderTypFunktion) {
         try {
             logPost(herstellerStr + "/" + bestellNr + "/" + reihe + "/" + funktion + ": " + newDecoderTypFunktion);
 
@@ -528,7 +522,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Path(ApiPaths.DECODER_TYP_FUNKTION_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteFunktion(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
-            @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion) throws Exception {
+            @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion) {
         try {
             DecoderTypFunktion decoderTypFunktion = (DecoderTypFunktion) findDecoderTypFunktion(herstellerStr, bestellNr, reihe, funktion, true);
 

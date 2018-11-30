@@ -14,16 +14,16 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var motorTyp = new NamedItemGrid("motorTyp", "motorTyp");
+  const motorTyp = new NamedItemGrid("motorTyp", "motorTyp");
 
-async function init() {
+  async function init() {
     await motorTyp.init();
     about();
 }
 </script>
 <title>MotorTypen</title>
 </head>
-<body onload="javascript:init()">
+<body onload="init()">
 	<header>
         <nav>
             <ul class="nav">

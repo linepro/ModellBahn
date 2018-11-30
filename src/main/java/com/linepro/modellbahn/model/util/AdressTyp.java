@@ -24,7 +24,7 @@ public enum AdressTyp implements IDescribedEnum {
 
     protected final String description;
     
-    private AdressTyp(String description) {
+    AdressTyp(String description) {
         this.description = description;
     }
 

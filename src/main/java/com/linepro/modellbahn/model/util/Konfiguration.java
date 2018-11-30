@@ -20,7 +20,7 @@ public enum Konfiguration implements IDescribedEnum {
 
     protected final String description;
     
-    private Konfiguration(String description) {
+    Konfiguration(String description) {
         this.description = description;
     }
 

@@ -58,7 +58,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
             @JsonProperty(value = ApiNames.DECODER_ID, required = false) String decoderId,
             @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.FAHRSTUFE, required = false) Integer fahrstufe,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
+            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) {
         Decoder entity = new Decoder(id, decoderTyp, protokoll, decoderId, bezeichnung, fahrstufe, deleted);
 
         debug("created: " + entity);
@@ -356,7 +356,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
         return getPersister().findByKey(decoderId, true);
     }
 
-    protected IDecoderAdress findDecoderAdress(IDecoder decoder, Integer index, boolean eager) throws Exception {
+    protected IDecoderAdress findDecoderAdress(IDecoder decoder, Integer index, boolean eager) {
         try {
             return decoder.getAdressen().toArray(new IDecoderAdress[0])[index];
         } catch (IndexOutOfBoundsException | NullPointerException e) {
@@ -365,7 +365,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
         return null;
     }
 
-    protected IDecoderCV findDecoderCV(IDecoder decoder, Integer cv, boolean eager) throws Exception {
+    protected IDecoderCV findDecoderCV(IDecoder decoder, Integer cv, boolean eager) {
         try {
             for (IDecoderCV decoderCV : decoder.getCVs()) {
                 if (cv.equals(decoderCV.getCvValue())) {
@@ -378,7 +378,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
         return null;
     }
 
-    protected IDecoderFunktion findDecoderFunktion(IDecoder decoder, Integer reihe, String funktion, boolean eager) throws Exception {
+    protected IDecoderFunktion findDecoderFunktion(IDecoder decoder, Integer reihe, String funktion, boolean eager) {
         try {
             for (IDecoderFunktion decoderFunktion : decoder.getFunktionen()) {
                 if (reihe.equals(decoderFunktion.getReihe()) &&

@@ -12,8 +12,6 @@ public interface ISessionManagerFactory {
 
     /**
      * Creates a ModellBahn instance.
-     *
-     * @param baseUri the base uri for the application
      * @return the application.
      */
     SessionManager create();

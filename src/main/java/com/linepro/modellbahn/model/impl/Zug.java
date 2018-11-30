@@ -56,7 +56,7 @@ public class Zug extends AbstractNamedItem<NameKey> implements IZug {
     private IZugTyp zugTyp;
 
 	/** The consist. */
-	private Set<IZugConsist> consist = new TreeSet<IZugConsist>();
+	private Set<IZugConsist> consist = new TreeSet<>();
 
 	/**
 	 * Instantiates a new zug.

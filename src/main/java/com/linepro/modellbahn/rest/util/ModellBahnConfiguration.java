@@ -53,7 +53,7 @@ public class ModellBahnConfiguration extends ResourceConfig {
     }
     
     public void register() {
-        packages(new String[] { PACKAGES } );
+        packages(PACKAGES);
         
         property(JsonGenerator.PRETTY_PRINTING, true);
 

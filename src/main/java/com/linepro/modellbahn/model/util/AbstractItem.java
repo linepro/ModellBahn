@@ -62,7 +62,7 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
 	private Boolean deleted;
 	
 	/** Set of HATEOAS links for Json serialization */
-    protected final Set<Link> links = new HashSet<Link>();
+    protected final Set<Link> links = new HashSet<>();
 
 	/**
 	 * Instantiates a new abstract item.

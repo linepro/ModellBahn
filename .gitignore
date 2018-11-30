@@ -3,6 +3,7 @@
 .settings/
 .settings/*.prefs
 .svn/
+.idea/
 bin/
 eclipse/
 target/
@@ -10,11 +11,13 @@ test-output/
 .checkstyle
 .classpath
 .project
+.DS_Store
 
 # java artefacts
 *.class
 
 *.ear
+*.iml
 *.jar
 *.war
 

@@ -41,7 +41,7 @@ public class WahrungService extends AbstractItemService<NameKey, Wahrung> {
             @JsonProperty(value = ApiNames.NAMEN, required = false) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.DECIMALS, required = false) Integer decimals,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
+            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) {
         Wahrung entity = new Wahrung(id, name, bezeichnung, decimals, deleted);
         
         debug("created: " + entity);

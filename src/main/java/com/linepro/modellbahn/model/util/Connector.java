@@ -26,7 +26,7 @@ public enum Connector implements IDescribedEnum {
 
     protected final String description;
     
-    private Connector(String description) {
+    Connector(String description) {
         this.description = description;
     }
 
