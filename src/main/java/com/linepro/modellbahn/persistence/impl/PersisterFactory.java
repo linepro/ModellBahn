@@ -31,7 +31,7 @@ public class PersisterFactory implements IPersisterFactory {
     /**
      * Instantiates a new persister factory.
      *
-     * @param sessionManager the session manager
+     * @param sessionManagerFactory the session manager
      * @param logManager the log manager
      */
     @Inject
@@ -46,7 +46,7 @@ public class PersisterFactory implements IPersisterFactory {
         IPersister<E> persister = (IPersister<E>) persisters.get(entityClass);
         
         if (persister == null) {
-            persister = new ItemPersister<E>(sessionManagerFactory, logManager, entityClass);
+            persister = new ItemPersister<>(sessionManagerFactory, logManager, entityClass);
             
             registerConverter(persister, entityClass);
 

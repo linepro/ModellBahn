@@ -1,6 +1,6 @@
 html {
-  -ms-text-size-adjust: 1rem;
-  -webkit-text-size-adjust: 1rem;
+  -ms-text-size-adjust: auto;
+  -webkit-text-size-adjust: auto;
   background-color: LightYellow;
   box-sizing: border-box;
   border-radius: .25em;
@@ -11,7 +11,7 @@ aside, details, figcaption, figure, main, menu, section, summary {
   display: block
 }
 
-audio: not ([controls] ) {
+audio:not([controls]) {
   display: none;
   height: 0
 }
@@ -28,7 +28,7 @@ header {
   background-color: LightYellow;
   margin-bottom: 0.3rem;
   opacity: 1;
-  overflow: overlay;
+  overflow: hidden;
   padding: 0.5rem;
   position: sticky;
   top: 0;
@@ -41,11 +41,10 @@ footer {
   color: grey;
   margin-top: 0.3rem;
   opacity: 1; 
-  overflow : overlay;
+  overflow : hidden;
   padding: 0.5rem;
   position: sticky;
   width: 100%;
-  overflow: overlay;
 }
 
 body {
@@ -63,7 +62,6 @@ html, body {
 
 a {
   background-color: transparent;
-  -webkit-text-decoration-skip: objects
 }
 
 a:active, a:hover {
@@ -72,7 +70,6 @@ a:active, a:hover {
 
 abbr[title] {
   border-bottom: none;
-  text-decoration: underline;
   text-decoration: underline dotted
 }
 
@@ -83,7 +80,7 @@ input, select, textarea {
   color: inherit;
   height: 2.25rem;
   margin: 0.3rem;
-  overflow: none;
+  overflow: hidden;
   width: 100%;
 }
 
@@ -103,7 +100,7 @@ input:focus, select:focus, textarea:focus {
   border: 0.1rem dotted gray;
 }
 
-input:readOnly, select:readOnly, textarea:readOnly {
+input:read-only, select:read-only, textarea:read-only {
   border: none;
 }
 
@@ -114,7 +111,7 @@ select option {
 
 button {
   background-color: LightSkyBlue;
-  border: 0.1rem solid transparent LightSkyBlue;
+  border: 0.1rem solid LightSkyBlue;
   border-radius: 0.25em;
   color: white;
   font-size: 1rem;
@@ -231,7 +228,7 @@ sub, sup {
   vertical-align: baseline
 }
 
-svg: not (: root ) {
+svg:not(:root) {
   overflow: hidden
 }
 
@@ -248,10 +245,7 @@ thead {
   color: white;
   font-weight: bold;
   height: 2rem;
-  padding-bottom: 0.5rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  padding-top: 0.5rem;
+  padding: 0.5rem;
   text-align: left;
 }
 
@@ -260,18 +254,12 @@ tfoot {
   font-weight: bold;
   color: white;
   height: 2rem;
-  padding-bottom: 0.5rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  padding-top: 0.5rem;
+  padding: 0.5rem;
   text-align: center;
 }
 
 tbody {
-  padding-bottom: 0.5rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  padding-top: 0.5rem;
+  padding: 0.5rem;
 }
 
 tr:hover {
@@ -291,10 +279,7 @@ div.table {
   border-collapse: collapse;
   border-bottom: 0.1rem solid LightSkyBlue;
   overflow: hidden;
-  padding-bottom: 0.5rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  padding-top: 0.5rem;
+  padding: 0.5rem;
   text-align: left;
   vertical-align: middle;
   width: 100%;
@@ -456,8 +441,7 @@ ul.footer li:last-of-type {
 }
 
 /* Add Animation */
-@
--webkit-keyframes animatetop {
+@-webkit-keyframes animatetop {
   from {
     top: -300px;
     opacity: 0
@@ -468,9 +452,8 @@ ul.footer li:last-of-type {
     opacity: 1
   }
 }
-@
 
-keyframes animatetop {
+@keyframes animatetop {
   from {
     top: -300px;
     opacity: 0
@@ -536,7 +519,7 @@ keyframes animatetop {
 
 .tabContent {
   display: none;
-  border: 0.1rem solid transparent LightSkyBlue;
+  border: 0.1rem solid LightSkyBlue;
   border-radius: 0.3rem;
   font-size: 1rem;
   padding: 0.3rem 0.3rem;

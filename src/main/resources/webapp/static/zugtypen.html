@@ -14,16 +14,16 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var zugTyp = new NamedItemGrid("zugTyp", "zugTyp");
+  const zugTyp = new NamedItemGrid("zugTyp", "zugTyp");
 
-async function init() {
+  async function init() {
 	await zugTyp.init();
     about();
 }
 </script>
 <title>Zug Typen</title>
 </head>
-<body onload="javascript:init()">
+<body onload="init()">
     <header>
         <nav>
             <ul class="nav">

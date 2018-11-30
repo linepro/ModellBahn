@@ -57,7 +57,7 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
 
     /**
      * Convienience method for lookups
-     * @param name
+     * @param name the item name
      */
     public AbstractNamedItem(String name) {
         super(null, null);
@@ -114,7 +114,7 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
     @JsonIgnore
     public String getLinkId() {
         return getName().codePoints()
-                .mapToObj(ch -> encodeChar(ch))
+                .mapToObj(this::encodeChar)
                 .collect(Collectors.joining(""));
     }
 

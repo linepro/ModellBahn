@@ -17,9 +17,10 @@ public class FileUploadService {
 	 * FileUploadService. Upload service for images
 	 * 
 	 * @author $Author:$ID
-	 * @param uploadedInputStream
-	 * @param fileDetail
-	 * @return
+	 * @param fileName the file name
+	 * @param fileDetail the file detail
+	 * @param uploadedImageData the file date
+	 * @return response
 	*/
 	
 	@PUT
@@ -30,9 +31,8 @@ public class FileUploadService {
 		@FormDataParam("ImageData") InputStream uploadedImageData) {
 		
 		String uploadedImageLocation = "d://uploaded" + fileDetail.getFileName();
-		/** Save the image file
-		 * 
-		 */
+
+		/* Save the image file */
 		writeToFile(fileName, fileDetail, uploadedImageData, uploadedImageLocation);
 		
 		String Output = "Image file uploaded to: " + uploadedImageLocation;
@@ -46,14 +46,12 @@ public class FileUploadService {
 			String uploadedImageLocation) {
 
 		try {
-			OutputStream out = new FileOutputStream(new File(uploadedImageLocation));
-			int read = 0;
-			
+			int read;
 			byte[] bytes = new byte[1024];
-			out = new FileOutputStream(new File(uploadedImageLocation));
-			
-			while ((read = fileName.read(bytes)) != -1)
-			{
+
+			OutputStream out = new FileOutputStream(new File(uploadedImageLocation));
+
+			while ((read = fileName.read(bytes)) != -1) {
 				out.write(bytes, 0, read);
 			}
 				
@@ -61,7 +59,7 @@ public class FileUploadService {
 			out.close();
 		}
 		
-		catch (IOException e){
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

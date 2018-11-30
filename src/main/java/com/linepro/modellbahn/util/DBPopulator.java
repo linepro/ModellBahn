@@ -674,8 +674,8 @@ public class DBPopulator {
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 2, AdressTyp.DIGITAL, 1, 1, false));
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 03, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung", 1, 63, 03, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 3, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung", 1, 63, 3, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Beschleunigungszeit", 1, 63, 16, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, 12, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, 63, false));
@@ -689,10 +689,10 @@ public class DBPopulator {
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 59, "Fahrgeräusch", 1, 63, 32, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 60, "Fahrgeräusch", 1, 63, 55, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Geräuschlautstärke", 1, 63, 63, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 64, "Bremssoundschwelle", 1, 63, 07, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 73, "Speicheroptionen", 0, 7, 03, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 64, "Bremssoundschwelle", 1, 63, 7, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 73, "Speicheroptionen", 0, 7, 3, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 74, "Märklin Addresse 2", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 75, "Märklin Addresse 2", 1, 80, 04, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 75, "Märklin Addresse 2", 1, 80, 4, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 78, "Anfahrspannung Analog AC", 1, 63, 25, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 79, "Höchstgeschwindigkeit Analog AC", 1, 63, 63, false));
 
@@ -721,8 +721,8 @@ public class DBPopulator {
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 03, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung", 1, 63, 03, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 3, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung", 1, 63, 3, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Beschleunigungszeit", 1, 63, 16, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, 12, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, 63, false));
@@ -731,8 +731,8 @@ public class DBPopulator {
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 54, "Lastregelung Param. K", 1, 63, 32, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 55, "Lastregelung Param. L", 1, 63, 24, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 56, "Regelungseinfluss", 1, 63, 63, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 73, "Speicheroptionen", 0, 7, 03, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 75, "Märklin Addresse 2", 1, 80, 04, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 73, "Speicheroptionen", 0, 7, 3, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 75, "Märklin Addresse 2", 1, 80, 4, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 78, "Anfahrspannung Analog AC", 1, 63, 25, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 79, "Höchstgeschwindigkeit Analog AC", 1, 63, 63, false));
 
@@ -1204,7 +1204,7 @@ public class DBPopulator {
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
 
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung", 1, 63, 03, false));
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung", 1, 63, 3, false));
         decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
 
         return update(persister, decoderTyp);

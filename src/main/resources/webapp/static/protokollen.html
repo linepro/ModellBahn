@@ -14,16 +14,16 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var protokoll = new NamedItemGrid("protokoll", "protokoll");
+  const protokoll = new NamedItemGrid("protokoll", "protokoll");
 
-async function init() {
+  async function init() {
     await protokoll.init();
     about();
 }
 </script>
 <title>Protokollen</title>
 </head>
-<body onload="javascript:init()">
+<body onload="init()">
     <header>
         <nav>
             <ul class="nav">

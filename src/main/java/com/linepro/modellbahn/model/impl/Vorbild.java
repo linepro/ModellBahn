@@ -284,7 +284,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
      * @param sitzPlatzeTzKL2 the sitz platze tz KL 2
      * @param drehgestellbauart the drehgestellbauart
      * @param deleted the deleted
-     * @param anmerkung 
+     * @param anmerkung remarks
      */
     public Vorbild(Long id, IGattung gattung, IUnterKategorie unterKategorie, String hersteller, Date bauzeit,
             Integer anzahl, String betreibsNummer, IAntrieb antrieb, IAchsfolg achsfolg, BigDecimal anfahrzugkraft,

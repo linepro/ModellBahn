@@ -3,7 +3,6 @@ package com.linepro.modellbahn.rest.json.serialization;
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.linepro.modellbahn.model.impl.DecoderTypCV;
@@ -25,7 +24,7 @@ public class DecoderTypCVSerializer extends StdSerializer<DecoderTypCV> {
     }
 
     @Override
-    public void serialize(DecoderTypCV value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+    public void serialize(DecoderTypCV value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
         gen.writeObjectField(ApiNames.CV, value.getCv());
         gen.writeObjectField(ApiNames.BEZEICHNUNG, value.getBezeichnung());

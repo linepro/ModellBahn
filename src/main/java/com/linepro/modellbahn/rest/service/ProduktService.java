@@ -260,7 +260,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
         try {
             logPut(herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr);
 
-            ProduktTeil produktTeil = (ProduktTeil) findProduktTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, true);
+            ProduktTeil produktTeil = findProduktTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, true);
 
             if (produktTeil == null) {
                 return getResponse(badRequest(null, "ProduktTeil " + herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr + " does not exist"));
@@ -287,7 +287,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
         try {
             logDelete(herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr);
 
-            ProduktTeil produktTeil = (ProduktTeil) findProduktTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, true);
+            ProduktTeil produktTeil = findProduktTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, true);
 
             if (produktTeil == null) {
                 return getResponse(badRequest(null, "ProduktTeil " + herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr + " does not exist"));

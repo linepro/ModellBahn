@@ -75,7 +75,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
     /**
      * Instantiates a new item persister.
      *
-     * @param entityManager the entity manager
+     * @param sessionManagerFactory the entity manager
      * @param logManager the log manager
      * @param entityClass the entity class
      */
@@ -91,10 +91,10 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         collections = new SelectorsBuilder().build(entityClass, OneToMany.class);
         selectors = new SelectorsBuilder().build(entityClass, Column.class, JoinColumn.class, OneToMany.class);
 
-        Entity entityAnnotation = ((Entity) entityClass.getAnnotation(Entity.class));
+        Entity entityAnnotation = entityClass.getAnnotation(Entity.class);
         entityName = entityAnnotation != null ? entityAnnotation.name() : entityClass.getSimpleName();
 
-        StringBuffer queryString = new StringBuffer("SELECT e FROM ")
+        StringBuilder queryString = new StringBuilder("SELECT e FROM ")
                 .append(entityName)
                 .append(" e WHERE ");
 
@@ -389,8 +389,6 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         ISessionManager session = getSession();
 
         try {
-            Long result = 0L;
-
             CriteriaBuilder builder = session.getEntityManager().getCriteriaBuilder();
             CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
             Root<E> root = countQuery.from(getEntityClass());
@@ -402,7 +400,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
                 countQuery.where(predicates.toArray(new Predicate[] {}));
             }
 
-            result = session.getEntityManager().createQuery(countQuery).getSingleResult();
+            Long result = session.getEntityManager().createQuery(countQuery).getSingleResult();
 
             debug("countAll found: " + result);
 
@@ -442,8 +440,6 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         ISessionManager session = getSession();
 
         try {
-            List<E> result = new ArrayList<>();
-
             CriteriaBuilder builder = session.getEntityManager().getCriteriaBuilder();
             CriteriaQuery<E> criteria = builder.createQuery(getEntityClass());
             Root<E> root = criteria.from(getEntityClass());
@@ -466,7 +462,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
                 query.setMaxResults(maxResult);
             }
 
-            result.addAll(query.getResultList());
+            List<E> result = query.getResultList();
 
             debug("findAll found: " + result);
 
@@ -493,7 +489,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
      */
     protected List<Predicate> getConditions(CriteriaBuilder builder, Root<E> root,
             E template, Map<String,Selector> selectors) throws Exception {
-        List<Predicate> predicates = new ArrayList<Predicate>();
+        List<Predicate> predicates = new ArrayList<>();
 
         if (template != null) {
             for (Selector selector : selectors.values()) {
@@ -512,7 +508,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
     }
 
     @Override
-    public void populateLazyCollection(Collection<?> collection) throws Exception {
+    public void populateLazyCollection(Collection<?> collection) {
         ISessionManager session = getSession();
         
         collection.size();
@@ -521,7 +517,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
     }
 
     @Override
-    public void populateLazyCollections() throws Exception {
+    public void populateLazyCollections() {
         
     }
 
@@ -588,15 +584,14 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
      * @throws Exception if we are naughty
      */
     protected E create() throws Exception {
-        E template = (E) getEntityClass().newInstance();
-        return template;
+        return getEntityClass().newInstance();
     }
 
     /**
      * You can't easily override FetchType.LAZY so touch each collection to fill it in as required
      * only goes one level deep.
      * @param entity the entity to inflate
-     * @param inflate true if inflation is required
+     * @param eager true if inflation is required
      * @return the same entity you passed in with it's lazy collections populated
      * @throws Exception if there is a DB error
      */

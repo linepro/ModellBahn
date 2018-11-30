@@ -1,6 +1,5 @@
 package com.linepro.modellbahn.jersey;
 
-import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Priority;
@@ -34,7 +33,7 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
     }
 
     @Override
-    public void filter(final ContainerRequestContext context) throws IOException {
+    public void filter(final ContainerRequestContext context) {
         final long id = eventId.incrementAndGet();
 
         context.setProperty(EVENT_ID, id);
@@ -47,7 +46,7 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
     }
 
     @Override
-    public void filter(final ContainerRequestContext requestContext, final ContainerResponseContext responseContext) throws IOException {
+    public void filter(final ContainerRequestContext requestContext, final ContainerResponseContext responseContext) {
         if (!logger.isDebugEnabled()) {
             return;
         }

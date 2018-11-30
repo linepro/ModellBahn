@@ -14,30 +14,31 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var fetchUrl = fetchUrl("decoderTyp");
-var columns = [
-    HERSTELLER,
-    BESTELL_NR,
-    PROTOKOLL,
-    GERAUSCH,
-    STECKER,
-    new ButtonColumn([new HeaderLinkage("add", "decoderTyp.newRow()")],
-    		[new FunctionLinkage("update", "decoderTyp.editRow(this.value)"), 
-    		 new FunctionLinkage("delete", "decoderTyp.deleteRow(this.value)")])
-    ];
-var decoderTyp = new ItemGrid(10, fetchUrl, "decoderTyp", columns, true, EditMode.UPDATE, undefined, "decoderTyp.html");
-	
+const columns = [
+  HERSTELLER,
+  BESTELL_NR,
+  PROTOKOLL,
+  GERAUSCH,
+  STECKER,
+  new ButtonColumn(
+    [ new HeaderLinkage("add", "decoderTyp.newRow()") ], 
+    [ new FunctionLinkage("update", "decoderTyp.editRow(this.value)"),
+      new FunctionLinkage("delete", "decoderTyp.deleteRow(this.value)") ]) ];
+
+const decoderTyp = new ItemGrid(10, fetchUrl("decoderTyp"), "decoderTyp",
+    columns, true, EditMode.UPDATE, undefined, "decoderTyp.html");
+
 async function init() {
-	await HERSTELLER_DROP.init();
-	await PROTOKOLL_DROP.init();
-    await STECKER_DROP.init();
-	await decoderTyp.init();
-    about();
+  await HERSTELLER_DROP.init();
+  await PROTOKOLL_DROP.init();
+  await STECKER_DROP.init();
+  await decoderTyp.init();
+  about();
 }
 </script>
 <title>Decoder Typen</title>
 </head>
-<body onload="javascript:init()">
+<body onload="init()">
     <header>
         <nav>
             <ul class="nav">

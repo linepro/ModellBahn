@@ -46,7 +46,7 @@ public class Kategorie extends AbstractNamedItem<NameKey> implements IKategorie 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2964561580499221297L;
 
-    private Set<IUnterKategorie> unterKategorien = new TreeSet<IUnterKategorie>();
+    private Set<IUnterKategorie> unterKategorien = new TreeSet<>();
 
     /**
      * Instantiates a new kategorie.

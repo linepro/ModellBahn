@@ -14,21 +14,19 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var fetchUrl = fetchUrl("kategorie");
-var unterKategorien = new ItemGrid(10, undefined, "unterKategorien", [
+  const unterKategorien = new ItemGrid(10, undefined, "unterKategorien", [
     new TextColumn("Namen", "name", Editable.ADD, true, 30),
     new TextColumn("Bezeichnung", "description", Editable.UPDATE, false, 50),
     new ButtonColumn([new HeaderLinkage("add", "unterKategorien.addRow()")],
-            [new FunctionLinkage("update", "unterKategorien.updateRow(this.value)"), 
-             new FunctionLinkage("delete", "unterKategorien.deleteRow(this.value)")])],
-    false, EditMode.ADD, undefined);
-var kategorie = new ItemGrid(1, fetchUrl, "kategorie", [
+      [new FunctionLinkage("update", "unterKategorien.updateRow(this.value)"),
+       new FunctionLinkage("delete", "unterKategorien.deleteRow(this.value)")])],
+  false, EditMode.ADD, undefined);
+const kategorie = new ItemGrid(1, fetchUrl("kategorie"), "kategorie", [
     new TextColumn("Namen", "name", Editable.ADD, true, 30),
     new TextColumn("Bezeichnung", "description", Editable.UPDATE, false, 50),
     new ButtonColumn([],
-            [new FunctionLinkage("update", "kategorie.updateRow(this.value)")])],
-    false, EditMode.UPDATE, [
-        unterKategorien]); 
+                    [new FunctionLinkage("update", "kategorie.updateRow(this.value)")])],
+  false, EditMode.UPDATE, [unterKategorien]);
 
 async function init() {
     await kategorie.init();
@@ -38,7 +36,7 @@ async function init() {
 </script>
 <title>Unter Kategorien</title>
 </head>
-<body onload="javascript:init()">
+<body onload="init()">
     <header>
         <nav>
             <ul class="nav">

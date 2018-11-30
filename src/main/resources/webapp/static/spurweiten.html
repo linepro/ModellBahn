@@ -14,16 +14,16 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-var spurweite = new NamedItemGrid("spurweite", "spurweite");
+  const spurweite = new NamedItemGrid("spurweite", "spurweite");
 
-async function init() {
+  async function init() {
     await spurweite.init();
     about();
 }
 </script>
 <title>Spurweiten</title>
 </head>
-<body onload="javascript:init()">
+<body onload="init()">
     <header>
         <nav>
             <ul class="nav">
