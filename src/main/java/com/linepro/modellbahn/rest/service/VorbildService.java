@@ -91,7 +91,10 @@ public class VorbildService extends AbstractItemService<NameKey, Vorbild> {
             @JsonProperty(value=ApiNames.DREHGESTELLBAUART, required=false) String drehgestellbauart,
             @JsonProperty(value=ApiNames.ANMERKUNG, required=false) String anmerkung,
             @JsonProperty(value=ApiNames.DELETED, required=false) Boolean deleted) {
-        Vorbild entity = new Vorbild(sitzPlatzeTzKL2, null, null, anmerkung, null, klasse, anmerkung, null, null, null, null, null, sitzPlatzeTzKL2, null, null, null, null, null, klasse, null, null, null, null, null, null, null, null, klasse, anmerkung, null, null, null, klasse, sitzPlatzeTzKL2, sitzPlatzeTzKL2, sitzPlatzeTzKL2, sitzPlatzeTzKL2, anmerkung, deleted, sitzPlatzeTzKL2, sitzPlatzeTzKL2, sitzPlatzeTzKL2, sitzPlatzeTzKL2, anmerkung, deleted, anmerkung);
+        Vorbild entity = new Vorbild(id, gattung, unterKategorie, hersteller, bauzeit, anzahl, betreibsNummer, antrieb, achsfolg, anfahrzugkraft, leistung, dienstgewicht,
+                geschwindigkeit, lange, ausserdienst, dmTreibrad, dmLaufradVorn, dmLaufradHinten, zylinder, dmZylinder, kolbenhub, kesselueberdruck, rostflaeche, ueberhitzerflaeche,
+                wasservorrat, verdampfung, steuerung, fahrmotoren, anmerkung, leistungsuebertragung, reichweite, kapazitaet, klasse, sitzPlatzeKL1, sitzPlatzeKL2, sitzPlatzeKL3,
+                sitzPlatzeKL4, aufbauten, triebzugAnzeigen, triebkoepfe, mittelwagen, sitzPlatzeTZKL1, sitzPlatzeTzKL2, drehgestellbauart, deleted, anmerkung);
 
         debug("created: " + entity);
 

@@ -31,7 +31,7 @@ function siteRoot() {
 
 function fetchUrl(dataType) {
   let fetchUrl = apiRoot() + dataType;
-  let searchParams  = new URLSearchParams(location.search);
+  let searchParams = new URLSearchParams(location.search);
 
   if (searchParams.has("self")) {
     fetchUrl = searchParams.get("self");
@@ -46,8 +46,8 @@ function removeChildren(node) {
   }
 }
 
-function reportError( error ) {
-  alert( "error: " + error.toString() );
+function reportError(error) {
+  alert("error: " + error.toString());
 }
 
 function addButton(cell, lnk, action) {
@@ -59,7 +59,9 @@ function addButton(cell, lnk, action) {
 }
 
 function getLink(links, rel) {
-  return links.find((lnk) => { return lnk.rel === rel; });
+  return links.find((lnk) => {
+    return lnk.rel === rel;
+  });
 }
 
 function getFieldId(rowId, binding) {
@@ -84,7 +86,7 @@ function getButton(value, alt, action) {
 
   let img = getImg(alt);
   img.className = "nav-button";
-  
+
   btn.appendChild(img);
 
   return btn;
@@ -95,49 +97,28 @@ function addText(cell, text) {
 }
 
 function getButtonLink(href, alt, action) {
-    let a = document.createElement("a");
+  let a = document.createElement("a");
 
-    a.setAttribute("href", href);
-    a.className = "nav-button";
-    a.appendChild(getImg(action));
+  a.setAttribute("href", href);
+  a.className = "nav-button";
+  a.appendChild(getImg(action));
 
-    return a;
-}
-
-function addButtonLink(element, href, action) {
-  if (href) {
-    element.appendChild(getButtonLink(href, action, action));
-  }
-
-  return element;
-}
-
-function addLink(element, href) {
-  if (href) {
-    let a = document.createElement("a");
-
-    a.setAttribute("href", href);
-    a.appendChild(element);
-
-    return a;
-  }
-
-  return element;
+  return a;
 }
 
 class Column {
   constructor(heading, binding, editable, required, length) {
-    this.heading  = heading;
-    this.binding  = binding;
+    this.heading = heading;
+    this.binding = binding;
     this.editable = editable ? editable : Editable.NEVER;
     this.required = required ? required : false;
-    this.length   = Math.max(length ? length : heading.length, heading.length);
+    this.length = Math.max(length ? length : heading.length, heading.length);
   }
 
   setTableName(tableName) {
     this.tableName = tableName;
   }
- 
+
   getHeading() {
     let td = document.createElement("div");
     td.className = "table-heading";
@@ -154,7 +135,7 @@ class Column {
   }
 
   setWidth(width) {
-     this.width = width;
+    this.width = width;
   }
 
   createControl() {
@@ -195,7 +176,7 @@ class Column {
   getControlValue(ctl) {
     return ctl.value;
   }
-  
+
   setValue(ctl, value) {
     ctl.value = value;
   }
@@ -260,7 +241,7 @@ class PDFColumn extends Column {
 
 class URLColumn extends Column {
   constructor(heading, binding, editable, required) {
-	    super(heading, binding, editable, required);
+    super(heading, binding, editable, required);
   }
 
   createControl() {
@@ -324,7 +305,7 @@ class DateColumn extends Column {
 class SelectColumn extends Column {
   constructor(heading, binding, dropDown, editable, required) {
     super(heading, binding, editable, required, dropDown.length);
-    this.dropDown  = dropDown;
+    this.dropDown = dropDown;
   }
 
   createControl() {
@@ -338,29 +319,29 @@ class SelectColumn extends Column {
   }
 
   getLength() {
-      return Math.max(this.dropDown.length, this.heading.length);
+    return Math.max(this.dropDown.length, this.heading.length);
   }
 
   setValue(ctl, value) {
-   for (let i = 0; i < ctl.options.length; i++) {
-     if (ctl.options[i].value === value) {
-      ctl.selectedIndex = i;
-      return;
-     }
-   }
+    for (let i = 0; i < ctl.options.length; i++) {
+      if (ctl.options[i].value === value) {
+        ctl.selectedIndex = i;
+        return;
+      }
+    }
   }
 }
 
 class HeaderLinkage {
   constructor(alt, method) {
-    this.alt    = alt;
+    this.alt = alt;
     this.method = method;
 
-    this.img    = getImg(alt);
+    this.img = getImg(alt);
   }
-  
+
   getButton() {
-    return getButton(this.value, this.alt, this.method);
+    return getButton(undefined, this.alt, this.method);
   }
 }
 
@@ -371,10 +352,10 @@ class FunctionLinkage extends HeaderLinkage {
 
   extractLink(entity, cell) {
     let lnk = getLink(entity.links, this.alt);
-    
+
     if (lnk) {
       this.value = cell.id.replace("_buttons", "");
-      
+
       return true;
     }
 
@@ -385,23 +366,23 @@ class FunctionLinkage extends HeaderLinkage {
 class ButtonColumn {
   constructor(headLinkage, btnLinkage) {
     this.headLinkage = headLinkage;
-    this.btnLinkage  = btnLinkage;
-    this.length = Math.max(headLinkage.length, btnLinkage.length)*8;
-    }
+    this.btnLinkage = btnLinkage;
+    this.length = Math.max(headLinkage.length, btnLinkage.length) * 8;
+  }
 
   setTableName(tableName) {
-	this.tableName = tableName;
+    this.tableName = tableName;
   }
 
   getHeading() {
     let td = document.createElement("div");
     td.className = "table-heading-btn";
-    
+
     let col = this;
     if (this.headLinkage) {
       this.headLinkage.forEach(linkage => {
-    	let btn = linkage.getButton();
-    	btn.id = col.tableName + "_" + btn.id;
+        let btn = linkage.getButton();
+        btn.id = col.tableName + "_" + btn.id;
         td.appendChild(btn);
       });
     } else {
@@ -414,7 +395,7 @@ class ButtonColumn {
   getLength() {
     return this.length;
   }
-  
+
   setWidth(width) {
     this.width = width;
   }
@@ -443,123 +424,124 @@ class ButtonColumn {
 }
 
 async function checkResponse(response) {
-	if (response.ok) {
-		if (response.status !== 204) {
-			return response.json();
-		} else {
-			return { entities: [], links: [] };
-		}
-	}
+  if (response.ok) {
+    if (response.status !== 204) {
+      return response.json();
+    } else {
+      return {entities: [], links: []};
+    }
+  }
 
-	throw new Error(response.statusText);
+  throw new Error(response.statusText);
 }
 
 async function modal(elementName, title, contentUrl) {
-    
   let anchor = document.getElementById(elementName);
   let modal = document.getElementById("modal");
-  
+
   if (anchor && !modal) {
-      modal = document.createElement("div");
-      modal.id="modal";
-      modal.className="modal";
+    modal = document.createElement("div");
+    modal.id = "modal";
+    modal.className = "modal";
 
-      let content = document.createElement("div");
-      content.className="modal-content";
+    let content = document.createElement("div");
+    content.className = "modal-content";
 
-      let head = document.createElement("div");
-      head.className="modal-header";
+    let head = document.createElement("div");
+    head.className = "modal-header";
 
-      let heading = document.createElement("h2");
-      addText(heading, title);
-      head.appendChild(heading);
-      content.appendChild(head);
+    let heading = document.createElement("h2");
+    addText(heading, title);
+    head.appendChild(heading);
+    content.appendChild(head);
 
-      let body = document.createElement("div");
-      body.className="modal-body";
-      
-      let text = await fetch(contentUrl)
-            .then(response => response.text())
-            .catch(error => reportError(error));
+    let body = document.createElement("div");
+    body.className = "modal-body";
 
-      let area = document.createElement('textarea');
-      area.value = text;
-      area.color = 'black';
-      area.height = "100%";
-      area.width = "100%";
-      area.readOnly = true;
-      area.disabled = true;
+    let text = await fetch(contentUrl)
+      .then(response => response.text())
+      .catch(error => reportError(error));
 
-      body.appendChild(area);
-      content.appendChild(body);
+    let area = document.createElement('textarea');
+    area.value = text;
+    area.color = 'black';
+    area.height = "100%";
+    area.width = "100%";
+    area.readOnly = true;
+    area.disabled = true;
 
-      let foot = document.createElement("div");
-      foot.className="modal-footer";
+    body.appendChild(area);
+    content.appendChild(body);
 
-      content.appendChild(foot);
-      modal.appendChild(content);
+    let foot = document.createElement("div");
+    foot.className = "modal-footer";
 
-      anchor.appendChild(modal);
-      anchor.href = "#";
-      anchor.onclick = function() { modal.style.display = "block"; };
+    content.appendChild(foot);
+    modal.appendChild(content);
 
-      window.onclick = function(event) {
-          if (event.target === modal) {
-              modal.style.display = "none";
-          }
+    anchor.appendChild(modal);
+    anchor.href = "#";
+    anchor.onclick = function () {
+      modal.style.display = "block";
+    };
+
+    window.onclick = function (event) {
+      if (event.target === modal) {
+        modal.style.display = "none";
       }
-   }
+    }
+  }
 }
 
 function about() {
-    modal("license", "About ModellBahn", siteRoot() + "LICENSE");
+  modal("license", "About ModellBahn", siteRoot() + "LICENSE");
 }
 
 function setActiveTab(event, tabName) {
   let tabContents = document.getElementsByClassName("tabContent");
   let tabLinks = document.getElementsByClassName("tabLinks");
-   
-    tabContents.forEach(tab => {
-      tab.style.display = (tab.id === tabName) ? "block" : "none";
-    });
+
+  tabContents.forEach(tab => {
+    tab.style.display = (tab.id === tabName) ? "block" : "none";
+  });
 
   let linkName = tabName.replace("Tab", "Link");
-    tabLinks.forEach(link => {
-      link.className = (link.id === linkName) ? "tabLinks active" : "tabLinks";
-    });
+  tabLinks.forEach(link => {
+    link.className = (link.id === linkName) ? "tabLinks active" : "tabLinks";
+  });
 }
 
 function addRow(elementName) {
-	return new HeaderLinkage("add", elementName + ".addRow()");
+  return new HeaderLinkage("add", elementName + ".addRow()");
 }
 
 function deleteRow(elementName) {
-	return new FunctionLinkage("delete", elementName + ".deleteRow(this.value)");
+  return new FunctionLinkage("delete", elementName + ".deleteRow(this.value)");
 }
 
 function editRow(elementName) {
-	return new FunctionLinkage("update", elementName + ".editRow(this.value)");
+  return new FunctionLinkage("update", elementName + ".editRow(this.value)");
 }
 
 function updateRow(elementName) {
-	return new FunctionLinkage("update", elementName + ".updateRow(this.value)");
+  return new FunctionLinkage("update", elementName + ".updateRow(this.value)");
 }
 
 function gridButtonColumn(elementName) {
   return new ButtonColumn([addRow(elementName)],
-   [updateRow(elementName), deleteRow(elementName)]);
+    [updateRow(elementName), deleteRow(elementName)]);
 }
 
 async function uploadFile(url, inputCtl) {
   let formData = new FormData();
 
   let file = inputCtl.files[0];
-  
-  formData.append("FileName", file.name); 
+
+  formData.append("FileName", file.name);
   formData.append("FileType", file.type);
   formData.append("FileData", file);
- 
-  await fetch(url, { method: "PUT", body: formData } )
+
+  await fetch(url, {method: "PUT", body: formData})
     .then(response => checkResponse(response))
     .catch(error => reportError(error));
 }

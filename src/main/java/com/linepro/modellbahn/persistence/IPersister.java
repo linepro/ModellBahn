@@ -140,7 +140,6 @@ public interface IPersister<E extends IItem<?>> {
      * Populate lazy collection.
      *
      * @param collection the collection
-     * @throws Exception the exception
      */
     void populateLazyCollection(Collection<?> collection);
 
@@ -154,7 +153,6 @@ public interface IPersister<E extends IItem<?>> {
 
     /**
      * Populates any lazy collections for the item
-     * @throws Exception if there is a DB error
      */
     void populateLazyCollections();
 

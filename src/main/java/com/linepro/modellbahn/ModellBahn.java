@@ -62,7 +62,7 @@ public class ModellBahn implements IModellBahn {
     @Override
     public void run() {
         try {
-            logger.info(String.format("Application starting: {}", baseUri.toString()));
+            logger.info(String.format("Application starting: %s", baseUri.toString()));
 
             populator.populate();
 

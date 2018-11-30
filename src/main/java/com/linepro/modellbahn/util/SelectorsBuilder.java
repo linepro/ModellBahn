@@ -173,6 +173,7 @@ public class SelectorsBuilder {
         try {
             return getter.getDeclaringClass().getMethod(setterName, getter.getReturnType());
         } catch (NoSuchMethodException e) {
+            logger.log(Level.SEVERE, "SelectorsBuilder", e);
         }
 
         return null;
