@@ -1,9 +1,11 @@
 package com.linepro.modellbahn.model.impl;
 
 import java.math.BigDecimal;
+import java.nio.file.Path;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
@@ -31,19 +33,21 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.IAntrieb;
+import com.linepro.modellbahn.model.IBahnverwaltung;
 import com.linepro.modellbahn.model.IGattung;
-import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.IVorbild;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.persistence.util.PathConverter;
 import com.linepro.modellbahn.rest.json.Formats;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.resolver.AchsfolgResolver;
 import com.linepro.modellbahn.rest.json.resolver.AntriebResolver;
+import com.linepro.modellbahn.rest.json.resolver.BahnverwaltungResolver;
 import com.linepro.modellbahn.rest.json.resolver.GattungResolver;
-import com.linepro.modellbahn.rest.json.resolver.SteuerungResolver;
+import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
 import com.linepro.modellbahn.rest.json.serialization.UnterKategorieSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
@@ -58,11 +62,10 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Table(name = DBNames.VORBILD, indexes = { @Index(columnList = DBNames.GATTUNG_ID, unique = true),
         @Index(columnList = DBNames.UNTER_KATEGORIE_ID),
         @Index(columnList = DBNames.ANTRIEB_ID),
-        @Index(columnList = DBNames.ACHSFOLG_ID),
-        @Index(columnList = DBNames.STEUERUNG_ID) }, uniqueConstraints = {
+        @Index(columnList = DBNames.ACHSFOLG_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.GATTUNG_ID }) })
 @JsonRootName(value = ApiNames.VORBILD)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.GATTUNG, ApiNames.UNTER_KATEGORIE, ApiNames.HERSTELLER, ApiNames.BAUZEIT, ApiNames.ANZAHL, ApiNames.BETREIBSNUMMER, ApiNames.ANTRIEB, ApiNames.ACHSFOLG, ApiNames.ANFAHRZUGKRAFT, ApiNames.LEISTUNG, ApiNames.DIENSTGEWICHT, ApiNames.GESCHWINDIGKEIT, ApiNames.LANGE, ApiNames.AUSSERDIENST, ApiNames.DMTREIBRAD, ApiNames.DMLAUFRADVORN, ApiNames.DMLAUFRADHINTEN, ApiNames.ZYLINDER, ApiNames.DMZYLINDER, ApiNames.KOLBENHUB, ApiNames.KESSELUEBERDRUCK, ApiNames.ROSTFLAECHE, ApiNames.UEBERHITZERFLAECHE, ApiNames.WASSERVORRAT, ApiNames.VERDAMPFUNG, ApiNames.STEUERUNG, ApiNames.FAHRMOTOREN, ApiNames.MOTORBAUART, ApiNames.LEISTUNGSUEBERTRAGUNG, ApiNames.REICHWEITE, ApiNames.KAPAZITAT, ApiNames.KLASSE, ApiNames.SITZPLATZEKL1, ApiNames.SITZPLATZEKL2, ApiNames.SITZPLATZEKL3, ApiNames.SITZPLATZEKL4, ApiNames.AUFBAU, ApiNames.TRIEBZUGANZEIGEN, ApiNames.TRIEBKOEPFE, ApiNames.MITTELWAGEN, ApiNames.SITZPLATZETZKL1, ApiNames.SITZPLATZETZKL2, ApiNames.DREHGESTELLBAUART, ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ApiNames.ID, ApiNames.GATTUNG, ApiNames.UNTER_KATEGORIE, ApiNames.BAHNVERWALTUNG, ApiNames.HERSTELLER, ApiNames.BAUZEIT, ApiNames.ANZAHL, ApiNames.BETREIBSNUMMER, ApiNames.ANTRIEB, ApiNames.ACHSFOLG, ApiNames.ANFAHRZUGKRAFT, ApiNames.LEISTUNG, ApiNames.DIENSTGEWICHT, ApiNames.GESCHWINDIGKEIT, ApiNames.LANGE, ApiNames.AUSSERDIENST, ApiNames.DMTREIBRAD, ApiNames.DMLAUFRADVORN, ApiNames.DMLAUFRADHINTEN, ApiNames.ZYLINDER, ApiNames.DMZYLINDER, ApiNames.KOLBENHUB, ApiNames.KESSELUEBERDRUCK, ApiNames.ROSTFLAECHE, ApiNames.UEBERHITZERFLAECHE, ApiNames.WASSERVORRAT, ApiNames.VERDAMPFUNG, ApiNames.STEUERUNG, ApiNames.FAHRMOTOREN, ApiNames.MOTORBAUART, ApiNames.LEISTUNGSUEBERTRAGUNG, ApiNames.REICHWEITE, ApiNames.KAPAZITAT, ApiNames.KLASSE, ApiNames.SITZPLATZEKL1, ApiNames.SITZPLATZEKL2, ApiNames.SITZPLATZEKL3, ApiNames.SITZPLATZEKL4, ApiNames.AUFBAU, ApiNames.TRIEBZUGANZEIGEN, ApiNames.TRIEBKOEPFE, ApiNames.MITTELWAGEN, ApiNames.SITZPLATZETZKL1, ApiNames.SITZPLATZETZKL2, ApiNames.DREHGESTELLBAUART, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS})
 public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
 
     /** The Constant serialVersionUID. */
@@ -75,6 +78,9 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @NotNull
     private IUnterKategorie unterKategorie;
 
+    /** The bahnverwaltung */
+    private IBahnverwaltung bahnverwaltung;
+    
     /** The hersteller. */
     private String hersteller;
 
@@ -108,7 +114,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
 
     /** The geschwindigkeit. */
     @Positive
-    private Long geschwindigkeit;
+    private Integer geschwindigkeit;
 
     /** The lange. */
     @Positive
@@ -161,9 +167,6 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Positive
     private BigDecimal verdampfung;
 
-    /** The steuerung. */
-    private ISteuerung steuerung;
-
     /** The fahrmotoren. */
     @Positive
     private Integer fahrmotoren;
@@ -189,19 +192,19 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
 
     /** The sitzplatze KL 1. */
     @Positive
-    private Long sitzplatzeKL1;
+    private Integer sitzplatzeKL1;
 
     /** The sitzplatze KL 2. */
     @Positive
-    private Long sitzplatzeKL2;
+    private Integer sitzplatzeKL2;
 
     /** The sitzplatze KL 3. */
     @Positive
-    private Long sitzplatzeKL3;
+    private Integer sitzplatzeKL3;
 
     /** The sitzplatze KL 4. */
     @Positive
-    private Long sitzplatzeKL4;
+    private Integer sitzplatzeKL4;
 
     /** The aufbauten. */
     private String aufbau;
@@ -211,23 +214,25 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
 
     /** The triebkoepfe. */
     @Positive
-    private Long triebkoepfe;
+    private Integer triebkoepfe;
 
     /** The mittelwagen. */
     @Positive
-    private Long mittelwagen;
+    private Integer mittelwagen;
 
     /** The sitzplatze TZKL 1. */
     @Positive
-    private Long sitzplatzeTZKL1;
+    private Integer sitzplatzeTZKL1;
 
     /** The sitzplatze tz KL 2. */
     @Positive
-    private Long sitzplatzeTzKL2;
+    private Integer sitzplatzeTzKL2;
 
     /** The drehgestell bauart. */
-    @Positive
     private String drehgestellBauart;
+
+    /** The abbildung. */
+    private Path abbildung;
 
     /**
      * Instantiates a new vorbild.
@@ -242,6 +247,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
      * @param id the id
      * @param gattung the gattung
      * @param unterKategorie the unter kategorie
+     * @param bahnverwaltung the bahnverwaltung
      * @param hersteller the hersteller
      * @param bauzeit the bauzeit
      * @param anzahl the anzahl
@@ -265,7 +271,6 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
      * @param ueberhitzerflaeche the ueberhitzerflaeche
      * @param wasservorrat the wasservorrat
      * @param verdampfung the verdampfung
-     * @param steuerung the steuerung
      * @param fahrmotoren the fahrmotoren
      * @param motorbauart the motorbauart
      * @param leistungsuebertragung the leistungsuebertragung
@@ -286,19 +291,20 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
      * @param deleted the deleted
      * @param anmerkung remarks
      */
-    public Vorbild(Long id, IGattung gattung, IUnterKategorie unterKategorie, String hersteller, Date bauzeit,
+    public Vorbild(Long id, IGattung gattung, IUnterKategorie unterKategorie, IBahnverwaltung bahnverwaltung, String hersteller, Date bauzeit,
             Integer anzahl, String betreibsNummer, IAntrieb antrieb, IAchsfolg achsfolg, BigDecimal anfahrzugkraft,
-            BigDecimal leistung, BigDecimal dienstgewicht, Long geschwindigkeit, BigDecimal lange, Date ausserdienst,
+            BigDecimal leistung, BigDecimal dienstgewicht, Integer geschwindigkeit, BigDecimal lange, Date ausserdienst,
             BigDecimal dmTreibrad, BigDecimal dmLaufradVorn, BigDecimal dmLaufradHinten, Integer zylinder, BigDecimal dmZylinder,
             BigDecimal kolbenhub, BigDecimal kesselueberdruck, BigDecimal rostflaeche, BigDecimal ueberhitzerflaeche, BigDecimal wasservorrat,
-            BigDecimal verdampfung, ISteuerung steuerung, Integer fahrmotoren, String motorbauart, BigDecimal leistungsuebertragung, BigDecimal reichweite, BigDecimal kapazitaet, Integer klasse, Long sitzPlatzeKL1,
-            Long sitzPlatzeKL2, Long sitzPlatzeKL3, Long sitzPlatzeKL4, String aufbauten, Boolean triebzugAnzeigen,
-            Long triebkoepfe, Long mittelwagen, Long sitzPlatzeTZKL1, Long sitzPlatzeTzKL2,
-            String drehgestellbauart, Boolean deleted, String anmerkung) {
+            BigDecimal verdampfung, Integer fahrmotoren, String motorbauart, BigDecimal leistungsuebertragung, BigDecimal reichweite, BigDecimal kapazitaet, Integer klasse, Integer sitzPlatzeKL1,
+            Integer sitzPlatzeKL2, Integer sitzPlatzeKL3, Integer sitzPlatzeKL4, String aufbauten, Boolean triebzugAnzeigen,
+            Integer triebkoepfe, Integer mittelwagen, Integer sitzPlatzeTZKL1, Integer sitzPlatzeTzKL2,
+            String drehgestellbauart, String anmerkung, Boolean deleted) {
         super(id, gattung.getName(), anmerkung, deleted);
 
         setGattung(gattung);
         setUnterKategorie(unterKategorie);
+        setBahnverwaltung(bahnverwaltung);
         setHersteller(hersteller);
         setBauzeit(bauzeit);
         setAnzahl(anzahl);
@@ -322,7 +328,6 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
         setUeberhitzerflaeche(ueberhitzerflaeche);
         setWasservorrat(wasservorrat);
         setVerdampfung(verdampfung);
-        setSteuerung(steuerung);
         setFahrmotoren(fahrmotoren);
         setMotorbauart(motorbauart);
         setLeistungsuebertragung(leistungsuebertragung);
@@ -340,6 +345,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
         setSitzPlatzeTZKL1(sitzPlatzeTZKL1);
         setSitzPlatzeTzKL2(sitzPlatzeTzKL2);
         setDrehgestellBauart(drehgestellbauart);
+        setAbbildung(abbildung);
     }
 
     @Override
@@ -375,6 +381,24 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @JsonDeserialize(as=UnterKategorie.class)
     public void setUnterKategorie(IUnterKategorie unterKategorie) {
         this.unterKategorie = unterKategorie;
+    }
+
+    @Override
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Bahnverwaltung.class)
+    @JoinColumn(name = DBNames.BAHNVERWALTUNG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk3"))
+    @JsonGetter(ApiNames.BAHNVERWALTUNG)
+    @JsonView(Views.DropDown.class)
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=BahnverwaltungResolver.class)
+    public IBahnverwaltung getBahnverwaltung() {
+        return bahnverwaltung;
+    }
+
+    @Override
+    @JsonSetter(ApiNames.BAHNVERWALTUNG)
+    @JsonDeserialize(as=Bahnverwaltung.class)
+    public void setBahnverwaltung(IBahnverwaltung bahnverwaltung) {
+        this.bahnverwaltung = bahnverwaltung;
     }
 
     @Override
@@ -437,7 +461,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Antrieb.class)
-    @JoinColumn(name = DBNames.ANTRIEB_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk3"))
+    @JoinColumn(name = DBNames.ANTRIEB_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk4"))
     @JsonGetter(ApiNames.ANTRIEB)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -455,7 +479,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class)
-    @JoinColumn(name = DBNames.ACHSFOLG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk4"))
+    @JoinColumn(name = DBNames.ACHSFOLG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk5"))
     @JsonGetter(ApiNames.ACHSFOLG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -517,13 +541,13 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Column(name = DBNames.GESCHWINDIGKEIT, nullable = true)
     @JsonGetter(ApiNames.GESCHWINDIGKEIT)
     @JsonView(Views.Public.class)
-    public Long getGeschwindigkeit() {
+    public Integer getGeschwindigkeit() {
         return geschwindigkeit;
     }
 
     @Override
     @JsonSetter(ApiNames.GESCHWINDIGKEIT)
-    public void setGeschwindigkeit(Long geschwindigkeit) {
+    public void setGeschwindigkeit(Integer geschwindigkeit) {
         this.geschwindigkeit = geschwindigkeit;
     }
 
@@ -711,24 +735,6 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class)
-    @JoinColumn(name = DBNames.STEUERUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk5"))
-    @JsonGetter(ApiNames.STEUERUNG)
-    @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=SteuerungResolver.class)
-    public ISteuerung getSteuerung() {
-        return steuerung;
-    }
-
-    @Override
-    @JsonSetter(ApiNames.STEUERUNG)
-    @JsonDeserialize(as=Steuerung.class)
-    public void setSteuerung(ISteuerung steuerung) {
-        this.steuerung = steuerung;
-    }
-
-    @Override
     @Column(name = DBNames.FAHRMOTOREN, nullable = true)
     @JsonGetter(ApiNames.FAHRMOTOREN)
     @JsonView(Views.Public.class)
@@ -816,13 +822,13 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Column(name = DBNames.SITZPLATZEKL1, nullable = true)
     @JsonGetter(ApiNames.SITZPLATZEKL1)
     @JsonView(Views.Public.class)
-    public Long getSitzPlatzeKL1() {
+    public Integer getSitzPlatzeKL1() {
         return sitzplatzeKL1;
     }
 
     @Override
     @JsonSetter(ApiNames.SITZPLATZEKL1)
-    public void setSitzPlatzeKL1(Long sitzPlatzeKL1) {
+    public void setSitzPlatzeKL1(Integer sitzPlatzeKL1) {
         this.sitzplatzeKL1 = sitzPlatzeKL1;
     }
 
@@ -830,13 +836,13 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Column(name = DBNames.SITZPLATZEKL2, nullable = true)
     @JsonGetter(ApiNames.SITZPLATZEKL2)
     @JsonView(Views.Public.class)
-    public Long getSitzPlatzeKL2() {
+    public Integer getSitzPlatzeKL2() {
         return sitzplatzeKL2;
     }
 
     @Override
     @JsonSetter(ApiNames.SITZPLATZEKL2)
-    public void setSitzPlatzeKL2(Long sitzPlatzeKL2) {
+    public void setSitzPlatzeKL2(Integer sitzPlatzeKL2) {
         sitzplatzeKL2 = sitzPlatzeKL2;
     }
 
@@ -844,13 +850,13 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Column(name = DBNames.SITZPLATZEKL3, nullable = true)
     @JsonGetter(ApiNames.SITZPLATZEKL3)
     @JsonView(Views.Public.class)
-    public Long getSitzPlatzeKL3() {
+    public Integer getSitzPlatzeKL3() {
         return sitzplatzeKL3;
     }
 
     @Override
     @JsonSetter(ApiNames.SITZPLATZEKL3)
-    public void setSitzPlatzeKL3(Long sitzPlatzeKL3) {
+    public void setSitzPlatzeKL3(Integer sitzPlatzeKL3) {
         sitzplatzeKL3 = sitzPlatzeKL3;
     }
 
@@ -858,13 +864,13 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Column(name = DBNames.SITZPLATZEKL4, nullable = true)
     @JsonGetter(ApiNames.SITZPLATZEKL4)
     @JsonView(Views.Public.class)
-    public Long getSitzPlatzeKL4() {
+    public Integer getSitzPlatzeKL4() {
         return sitzplatzeKL4;
     }
 
     @Override
     @JsonSetter(ApiNames.SITZPLATZEKL4)
-    public void setSitzPlatzeKL4(Long sitzPlatzeKL4) {
+    public void setSitzPlatzeKL4(Integer sitzPlatzeKL4) {
         this.sitzplatzeKL4 = sitzPlatzeKL4;
     }
 
@@ -900,13 +906,13 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Column(name = DBNames.TRIEBKOEPFE, nullable = true)
     @JsonGetter(ApiNames.TRIEBKOEPFE)
     @JsonView(Views.Public.class)
-    public Long getTriebkoepfe() {
+    public Integer getTriebkoepfe() {
         return triebkoepfe;
     }
 
     @Override
     @JsonSetter(ApiNames.TRIEBKOEPFE)
-    public void setTriebkoepfe(Long triebkoepfe) {
+    public void setTriebkoepfe(Integer triebkoepfe) {
         this.triebkoepfe = triebkoepfe;
     }
 
@@ -914,13 +920,13 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Column(name = DBNames.MITTELWAGEN, nullable = true)
     @JsonGetter(ApiNames.MITTELWAGEN)
     @JsonView(Views.Public.class)
-    public Long getMittelwagen() {
+    public Integer getMittelwagen() {
         return mittelwagen;
     }
 
     @Override
     @JsonSetter(ApiNames.MITTELWAGEN)
-    public void setMittelwagen(Long mittelwagen) {
+    public void setMittelwagen(Integer mittelwagen) {
         this.mittelwagen = mittelwagen;
     }
 
@@ -928,13 +934,13 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Column(name = DBNames.SITZPLATZETZKL1, nullable = true)
     @JsonGetter(ApiNames.SITZPLATZETZKL1)
     @JsonView(Views.Public.class)
-    public Long getSitzPlatzeTZKL1() {
+    public Integer getSitzPlatzeTZKL1() {
         return sitzplatzeTZKL1;
     }
 
     @Override
     @JsonSetter(ApiNames.SITZPLATZETZKL1)
-    public void setSitzPlatzeTZKL1(Long sitzPlatzeTZKL1) {
+    public void setSitzPlatzeTZKL1(Integer sitzPlatzeTZKL1) {
         this.sitzplatzeTZKL1 = sitzPlatzeTZKL1;
     }
 
@@ -942,13 +948,13 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Column(name = DBNames.SITZPLATZETZKL2, nullable = true)
     @JsonGetter(ApiNames.SITZPLATZETZKL2)
     @JsonView(Views.Public.class)
-    public Long getSitzPlatzeTzKL2() {
+    public Integer getSitzPlatzeTzKL2() {
         return sitzplatzeTzKL2;
     }
 
     @Override
     @JsonSetter(ApiNames.SITZPLATZETZKL2)
-    public void setSitzPlatzeTzKL2(Long sitzPlatzeTzKL2) {
+    public void setSitzPlatzeTzKL2(Integer sitzPlatzeTzKL2) {
         this.sitzplatzeTzKL2 = sitzPlatzeTzKL2;
     }
 
@@ -967,11 +973,27 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
+    @Column(name = DBNames.ABBILDUNG, nullable = true)
+    @Convert(converter = PathConverter.class)
+    @JsonGetter(ApiNames.ABBILDUNG)
+    @JsonSerialize(using = PathSerializer.class)
+    @JsonView(Views.DropDown.class)
+    public Path getAbbildung() {
+        return abbildung;
+    }
+
+    @Override
+    public void setAbbildung(Path abbildung) {
+        this.abbildung = abbildung;
+    }
+
+    @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
                 .append(ApiNames.GATTUNG, getGattung())
                 .append(ApiNames.UNTER_KATEGORIE, getUnterKategorie())
+                .append(ApiNames.BAHNVERWALTUNG, getBahnverwaltung())
                 .append(ApiNames.HERSTELLER, getHersteller())
                 .append(ApiNames.BAUZEIT, getBauzeit())
                 .append(ApiNames.ANZAHL, getAnzahl())
@@ -995,7 +1017,6 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
                 .append(ApiNames.UEBERHITZERFLAECHE, getUeberhitzerflaeche())
                 .append(ApiNames.WASSERVORRAT, getWasservorrat())
                 .append(ApiNames.VERDAMPFUNG, getVerdampfung())
-                .append(ApiNames.STEUERUNG, getSteuerung())
                 .append(ApiNames.FAHRMOTOREN, getFahrmotoren())
                 .append(ApiNames.MOTORBAUART, getMotorbauart())
                 .append(ApiNames.LEISTUNGSUEBERTRAGUNG, getLeistungsuebertragung())
@@ -1013,6 +1034,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
                 .append(ApiNames.SITZPLATZETZKL1, getSitzPlatzeTZKL1())
                 .append(ApiNames.SITZPLATZETZKL2, getSitzPlatzeTzKL2())
                 .append(ApiNames.DREHGESTELLBAUART, getDrehgestellBauart())
+                .append(ApiNames.ABBILDUNG, getAbbildung())
                 .toString();
     }
 }

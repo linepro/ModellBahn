@@ -573,7 +573,8 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         return entityName;
     }
 
-    protected Map<String, Selector> getSelectors() {
+    @Override
+    public Map<String, Selector> getSelectors() {
         return selectors;
     }
 
@@ -583,7 +584,8 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
      * @return the e
      * @throws Exception if we are naughty
      */
-    protected E create() throws Exception {
+    @Override
+    public E create() throws Exception {
         return getEntityClass().newInstance();
     }
 

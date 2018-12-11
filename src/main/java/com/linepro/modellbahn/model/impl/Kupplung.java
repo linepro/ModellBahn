@@ -1,16 +1,26 @@
 package com.linepro.modellbahn.model.impl;
 
+import java.nio.file.Path;
+
+import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IKupplung;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.persistence.util.PathConverter;
+import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
@@ -23,11 +33,14 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 @Table(name = DBNames.KUPPLUNG, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
 @JsonRootName(value = ApiNames.KUPPLUNG)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
 public class Kupplung extends AbstractNamedItem<NameKey> implements IKupplung {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3158490202101950479L;
+
+    /** The abbildung. */
+    private Path abbildung;
 
     /**
      * Instantiates a new kupplung.
@@ -54,5 +67,20 @@ public class Kupplung extends AbstractNamedItem<NameKey> implements IKupplung {
      */
     public Kupplung(Long id, String name, String bezeichnung, Boolean deleted) {
         super(id, name, bezeichnung, deleted);
+    }
+
+    @Override
+    @Column(name = DBNames.ABBILDUNG, nullable = true)
+    @Convert(converter = PathConverter.class)
+    @JsonGetter(ApiNames.ABBILDUNG)
+    @JsonView(Views.DropDown.class)
+    @JsonSerialize(using = PathSerializer.class)
+    public Path getAbbildung() {
+        return abbildung;
+    }
+
+    @Override
+    public void setAbbildung(Path abbildung) {
+        this.abbildung = abbildung;
     }
 }

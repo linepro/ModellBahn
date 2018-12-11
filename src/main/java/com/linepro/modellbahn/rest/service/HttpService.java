@@ -48,7 +48,7 @@ public class HttpService extends AbstractService {
 
         logGet(path);
 
-        File file = StaticContentFinder.get().findFile(path);
+        File file = StaticContentFinder.getFinder().findFile(path);
 
         if (file != null) {
             return Response.ok(file).build();

@@ -4,9 +4,8 @@ import javax.persistence.Query;
 
 import com.linepro.modellbahn.persistence.IKey;
 
-public class BaseKey implements IKey {
+public abstract class BaseKey implements IKey {
 
     @Override
-    public void addCriteria(Query query) throws Exception {
-    }
+    public abstract void addCriteria(Query query) throws Exception;
 }

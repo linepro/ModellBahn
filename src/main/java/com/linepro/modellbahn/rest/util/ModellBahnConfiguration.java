@@ -14,6 +14,7 @@ import javax.ws.rs.ApplicationPath;
 import org.apache.jasper.servlet.JspServlet;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.servlet.WebappContext;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 import org.glassfish.jersey.server.mvc.jsp.JspMvcFeature;
@@ -112,6 +113,9 @@ public class ModellBahnConfiguration extends ResourceConfig {
 
         //register(MvcFeature.class);
         register(JspMvcFeature.class);
+
+        // Multipart
+        register(MultiPartFeature.class);
 
         // Logging.
         //register(new LoggingFeature(getLogger(), Level.FINEST, LoggingFeature.Verbosity.PAYLOAD_ANY, 8192));

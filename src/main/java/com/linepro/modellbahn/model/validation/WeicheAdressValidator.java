@@ -14,6 +14,6 @@ public class WeicheAdressValidator implements ConstraintValidator<DELTAAdress, I
             return true;
         }
 
-        return 1 <= value.getAdress() && value.getAdress() <= 256;
+        return 1 <= value.getAdress() && value.getAdress() <= 512;
     }
 }

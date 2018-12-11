@@ -9,7 +9,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 public class NameKey extends BaseKey {
 
     private final String name;
-
+    
     public NameKey(final String name) {
         this.name = name;
     }

@@ -1,7 +1,30 @@
 package com.linepro.modellbahn.rest.service;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.linepro.modellbahn.model.IArtikel;
+import com.linepro.modellbahn.model.IDecoder;
+import com.linepro.modellbahn.model.IKupplung;
+import com.linepro.modellbahn.model.ILicht;
+import com.linepro.modellbahn.model.IMotorTyp;
+import com.linepro.modellbahn.model.IProdukt;
+import com.linepro.modellbahn.model.ISteuerung;
+import com.linepro.modellbahn.model.IWahrung;
+import com.linepro.modellbahn.model.impl.Artikel;
+import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.model.util.Status;
+import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.util.AbstractItemService;
+import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;
+import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.rest.util.ApiPaths;
+import com.linepro.modellbahn.rest.util.FileUploadHandler;
+import com.linepro.modellbahn.rest.util.IFileUploadHandler;
+import com.linepro.modellbahn.util.StaticContentFinder;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.glassfish.jersey.message.internal.MediaTypes;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -15,24 +38,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.linepro.modellbahn.model.IDecoder;
-import com.linepro.modellbahn.model.IKupplung;
-import com.linepro.modellbahn.model.ILicht;
-import com.linepro.modellbahn.model.IMotorTyp;
-import com.linepro.modellbahn.model.IProdukt;
-import com.linepro.modellbahn.model.ISteuerung;
-import com.linepro.modellbahn.model.IWahrung;
-import com.linepro.modellbahn.model.impl.Artikel;
-import com.linepro.modellbahn.model.keys.NameKey;
-import com.linepro.modellbahn.model.util.Status;
-import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.rest.util.AbstractItemService;
-import com.linepro.modellbahn.rest.util.ApiNames;
-import com.linepro.modellbahn.rest.util.ApiPaths;
+import java.io.InputStream;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * ArtikelService. CRUD service for Artikel
@@ -64,6 +72,7 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
             @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.ANMERKUNG, required = false) String anmerkung,
             @JsonProperty(value = ApiNames.BELADUNG, required = false) String beladung,
+            @JsonProperty(value=ApiNames.ABBILDUNG, required=false) String abbildungStr,
             @JsonProperty(value = ApiNames.STATUS, required = false) String statusStr,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
         IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
@@ -123,5 +132,62 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     @JsonView(Views.Public.class)
     public Response delete(@PathParam(ApiPaths.ID_PARAM_NAME) Long name) {
         return super.delete(name);
+    }
+
+    @PUT
+    @Path(ApiPaths.ABBILDUNG_PART)
+    @Consumes({ MediaType.MULTIPART_FORM_DATA })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response updateAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name,
+                                    @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
+                                    @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
+        IFileUploadHandler handler = new FileUploadHandler();
+
+        try {
+            if (!handler.isAcceptable(fileDetail, fileData, AcceptableMediaTypes.IMAGES)) {
+                return getResponse(badRequest(null, "Invalid file '" + fileDetail.getFileName() + "'"));
+            }
+
+            IArtikel artikel = findArtikel(name, false);
+
+            if (artikel != null) {
+                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { name }, fileDetail, fileData);
+
+                artikel.setAbbildung(file);
+
+                getPersister().update((Artikel) artikel);
+
+                return getResponse(ok(artikel));
+            }
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+
+        return getResponse(notFound());
+    }
+
+    @DELETE
+    @Path(ApiPaths.ABBILDUNG_PART)
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response deleteAbbildung(@PathParam(ApiPaths.ID_PARAM_NAME) String name) {
+        try {
+            IArtikel artikel = findArtikel(name, false);
+
+            if (artikel != null && artikel.getAbbildung() != null) {
+                StaticContentFinder.getStore().removeFile(artikel.getAbbildung());
+
+                artikel.setAbbildung(null);
+
+                getPersister().update((Artikel) artikel);
+
+                return getResponse(ok(artikel));
+            }
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+
+        return getResponse(notFound());
     }
 }

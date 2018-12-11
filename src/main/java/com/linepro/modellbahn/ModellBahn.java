@@ -51,12 +51,14 @@ public class ModellBahn implements IModellBahn {
      */
     @Inject
     public ModellBahn(ILoggerFactory loggerFactory, DBPopulator populator, @Assisted URI baseUri,
-            @Assisted Collection<String> staticRoots) {
+            @Assisted Collection<String> staticRoots, @Assisted String storeRoot) {
         this.logger = loggerFactory.getLogger(getClass().getName());
         this.populator = populator;
         this.baseUri = baseUri;
-        
-        StaticContentFinder.get().addPaths(staticRoots);
+
+        StaticContentFinder.getFinder().addPaths(staticRoots);
+        StaticContentFinder.getStore().setBaseUri(baseUri);
+        StaticContentFinder.getStore().setStoreRoot(storeRoot);
     }
 
     @Override
@@ -87,11 +89,11 @@ public class ModellBahn implements IModellBahn {
             server.start();
 
             logger.info("Application started with WADL available at {}/{}\n" +
-                    "Static content served on {}{} from {}\n" +
+                    "Static content served on {}{} from {}; Filestore from {}\n" +
                     "API served on {}{}\n" +
                     "Press CTRL^C (SIGINT) to terminate.",
                     baseUri, ApiPaths.APPLICATION_WADL,
-                    baseUri, ApiPaths.WEB_ROOT, StaticContentFinder.get().getAbsolutePaths(),
+                    baseUri, ApiPaths.WEB_ROOT, StaticContentFinder.getFinder().getAbsolutePaths(), StaticContentFinder.getStore().getStoreRoot(),
                     baseUri, ApiPaths.API_ROOT);
 
             Thread.currentThread().join();
