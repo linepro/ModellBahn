@@ -21,9 +21,8 @@ const columns = [
   GERAUSCH,
   STECKER,
   new ButtonColumn(
-    [ new HeaderLinkage("add", "decoderTyp.newRow()") ], 
-    [ new FunctionLinkage("update", "decoderTyp.editRow(this.value)"),
-      new FunctionLinkage("delete", "decoderTyp.deleteRow(this.value)") ]) ];
+    [ newRow ], 
+    [ editRow, deleteRow ]) ];
 
 const decoderTyp = new ItemGrid(10, fetchUrl("decoderTyp"), "decoderTyp",
     columns, true, EditMode.UPDATE, undefined, "decoderTyp.html");

@@ -44,8 +44,7 @@ const decoderTyp = new ItemGrid(1, fetchUrl("decoderTyp"), "decoderTyp", [
     I_MAX,
     KONFIGURATION,
     STECKER,
-    new ButtonColumn([],
-      [new FunctionLinkage("update", "decoderTyp.updateRow(this.value)")])],
+    new ButtonColumn([], [updateRow])],
   false, EditMode.UPDATE, [
     adressen,
     cvs,

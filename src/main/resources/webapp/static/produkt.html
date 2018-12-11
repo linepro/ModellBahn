@@ -40,8 +40,7 @@
     ANLEITUNGEN,
     EXPLOSIONSZEICHNUNG,
     ABBILDUNG,
-    new ButtonColumn([],
-      [new FunctionLinkage("update", "produkt.updateRow(this.value)")])],
+    new ButtonColumn([], [updateRow])],
   false, EditMode.UPDATE, undefined);
 
 async function init() {
