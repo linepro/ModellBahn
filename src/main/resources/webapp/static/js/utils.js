@@ -13,23 +13,23 @@ const EditMode = {
   ADD: 2
 };
 
-function shouldDisable(editable, editMode) {
+const shouldDisable = (editable, editMode) => {
   if (editable === Editable.NEVER || editMode === EditMode.VIEW) {
     return true;
   }
 
   return (editable > editMode);
-}
+};
 
-function apiRoot() {
+const apiRoot = () => {
   return location.protocol + "//" + location.host + "/ModellBahn/api/";
-}
+};
 
-function siteRoot() {
+const siteRoot = () => {
   return location.protocol + "//" + location.host + "/ModellBahn/static/";
-}
+};
 
-function fetchUrl(dataType) {
+const fetchUrl = (dataType) => {
   let fetchUrl = apiRoot() + dataType;
   let searchParams = new URLSearchParams(location.search);
 
@@ -38,46 +38,71 @@ function fetchUrl(dataType) {
   }
 
   return fetchUrl;
-}
+};
 
-function removeChildren(node) {
+const removeChildren = (node) => {
   while (node.firstChild) {
     node.removeChild(node.firstChild);
   }
-}
+};
 
-function reportError(error) {
+const reportError = (error) => {
   alert("error: " + error.toString());
-}
+};
 
-function addButton(cell, lnk, action) {
+const addButton = (cell, lnk, action) => {
   removeChildren(cell);
 
   if (lnk) {
     cell.appendChild(getButton(lnk.href, lnk.rel, action));
   }
-}
+};
 
-function getLink(links, rel) {
+const getLink = (links, rel) => {
   return links.find((lnk) => {
     return lnk.rel === rel;
   });
-}
+};
 
-function getFieldId(rowId, binding) {
+const getFieldId = (rowId, binding) => {
   return rowId + "_" + binding;
-}
+};
 
-function getImg(action) {
+const getKeyId = (rowId) => {
+  return getFieldId(rowId, "key");
+};
+
+const getKeyValue = (rowId) => {
+  let keyField = document.getElementById(getKeyId(rowId));
+  return keyField.value;
+};
+
+const getRowId = (tableName, i) => {
+  return tableName + "_" + i;
+};
+
+const getCellId = (rowId, column) => {
+  if (column.binding) {
+    return getFieldId(rowId, column.binding);
+  } else {
+    return getFieldId(rowId, "buttons");
+  }
+};
+
+const getCellRowId = (cell) => {
+ return cell.id.substring(0, cell.id.lastIndexOf("_"));
+};
+
+const getImg = (action) => {
   let img = document.createElement("img");
 
   img.alt = action;
   img.src = "img/" + action + ".png";
 
   return img;
-}
+};
 
-function getButton(value, alt, action) {
+const getButton = (value, alt, action) => {
   let btn = document.createElement("button");
 
   btn.setAttribute("value", value);
@@ -90,13 +115,13 @@ function getButton(value, alt, action) {
   btn.appendChild(img);
 
   return btn;
-}
+};
 
-function addText(cell, text) {
+const addText = (cell, text) => {
   cell.appendChild(document.createTextNode(text));
-}
+};
 
-function getButtonLink(href, alt, action) {
+const getButtonLink = (href, alt, action) => {
   let a = document.createElement("a");
 
   a.setAttribute("href", href);
@@ -104,7 +129,7 @@ function getButtonLink(href, alt, action) {
   a.appendChild(getImg(action));
 
   return a;
-}
+};
 
 class Column {
   constructor(heading, binding, editable, required, length) {
@@ -332,37 +357,6 @@ class SelectColumn extends Column {
   }
 }
 
-class HeaderLinkage {
-  constructor(alt, method) {
-    this.alt = alt;
-    this.method = method;
-
-    this.img = getImg(alt);
-  }
-
-  getButton() {
-    return getButton(undefined, this.alt, this.method);
-  }
-}
-
-class FunctionLinkage extends HeaderLinkage {
-  constructor(alt, method) {
-    super(alt, method);
-  }
-
-  extractLink(entity, cell) {
-    let lnk = getLink(entity.links, this.alt);
-
-    if (lnk) {
-      this.value = cell.id.replace("_buttons", "");
-
-      return true;
-    }
-
-    return false;
-  }
-}
-
 class ButtonColumn {
   constructor(headLinkage, btnLinkage) {
     this.headLinkage = headLinkage;
@@ -377,12 +371,12 @@ class ButtonColumn {
   getHeading() {
     let td = document.createElement("div");
     td.className = "table-heading-btn";
+    
+    let tableName = this.tableName;
 
-    let col = this;
     if (this.headLinkage) {
       this.headLinkage.forEach(linkage => {
-        let btn = linkage.getButton();
-        btn.id = col.tableName + "_" + btn.id;
+        let btn = linkage(tableName);
         td.appendChild(btn);
       });
     } else {
@@ -405,13 +399,15 @@ class ButtonColumn {
     cell.style.width = this.width;
     cell.style.maxWidth = this.width;
 
+    let rowId = getCellRowId(cell);
+    let tableName = this.tableName;
+    
     let ctl = document.createElement("div");
 
     if (editMode && this.btnLinkage) {
       this.btnLinkage.forEach(linkage => {
-        if (entity && linkage.extractLink(entity, cell)) {
-          let btn = linkage.getButton();
-          btn.id = cell.id + "_" + btn.id;
+        if (entity) {
+          let btn = linkage(tableName, rowId);
           ctl.appendChild(btn);
         }
       });
@@ -493,11 +489,11 @@ async function modal(elementName, title, contentUrl) {
   }
 }
 
-function about() {
+const about = () => {
   modal("license", "About ModellBahn", siteRoot() + "LICENSE");
-}
+};
 
-function setActiveTab(event, tabName) {
+const setActiveTab = (event, tabName) => {
   let tabContents = document.getElementsByClassName("tabContent");
   let tabLinks = document.getElementsByClassName("tabLinks");
 
@@ -509,28 +505,120 @@ function setActiveTab(event, tabName) {
   tabLinks.forEach(link => {
     link.className = (link.id === linkName) ? "tabLinks active" : "tabLinks";
   });
-}
+};
 
-function addRow(elementName) {
-  return new HeaderLinkage("add", elementName + ".addRow()");
-}
+const addRow = (tableName) => {
+  return getButton(undefined, "add", tableName + ".addRow()");
+};
 
-function deleteRow(elementName) {
-  return new FunctionLinkage("delete", elementName + ".deleteRow(this.value)");
-}
+const deleteRow = (tableName, row) => {
+  return getButton(row, "delete", tableName + ".deleteRow(" + row + ".id)");
+};
 
-function editRow(elementName) {
-  return new FunctionLinkage("update", elementName + ".editRow(this.value)");
-}
+const editRow = (tableName, row) => {
+  return getButton(row, "update", tableName + ".editRow(" +  row + ".id)");
+};
 
-function updateRow(elementName) {
-  return new FunctionLinkage("update", elementName + ".updateRow(this.value)");
-}
+const newRow = (tableName) => {
+  return getButton(undefined, "update", tableName + ".newRow()");
+};
 
-function gridButtonColumn(elementName) {
-  return new ButtonColumn([addRow(elementName)],
-    [updateRow(elementName), deleteRow(elementName)]);
-}
+const updateRow = (tableName, row) => {
+  return getButton(row, "update", tableName + ".updateRow(" +  row + ".id)");
+};
+
+const gridButtonColumn = (elementName) => {
+  return new ButtonColumn([addRow],
+    [updateRow, deleteRow]);
+};
+
+const addHeader = (tableName, table, columns) => {
+  let header = document.createElement("div");
+  header.id = tableName + "_thead";
+  header.className = "thead";
+  table.append(header);
+
+  let headRow = document.createElement("div");
+  headRow.className = "table-head";
+  headRow.id = tableName + "Head";
+  header.append(headRow);
+
+  columns.forEach(column => {
+    let th = column.getHeading();
+    th.style.width = column.width;
+    th.style.maxWidth = column.width;
+
+    headRow.append(th);
+  });
+};
+
+const addBody = (tableName, table, pageSize, columns, rowCount) => {
+  let body = document.createElement("div");
+  body.id = tableName + "_tbody";
+  body.className = "tbody";
+  table.append(body);
+
+  let row;
+  let maxRow = Math.max(rowCount, pageSize);
+  for (row = 0; row < maxRow; row++) {
+    let tr = document.createElement("div");
+    let rowId = getRowId(tableName, row);
+    tr.className = "table-row";
+    tr.id = rowId;
+    body.append(tr);
+
+    let key = document.createElement("input");
+    key.type = "hidden";
+    key.id = getKeyId(rowId);
+    tr.append(key);
+
+    columns.forEach(column => {
+      let td = document.createElement("div");
+      td.id = getCellId(rowId, column);
+      td.className = "table-cell";
+      td.style.width = column.width;
+      td.style.maxWidth = column.width;
+
+      addText(td, "");
+
+      tr.append(td);
+    });
+  }
+};
+
+const addFooter = (tableName, table, columns, paged) => {
+  if (paged) {
+    let footer = document.createElement("div");
+    footer.id = tableName + "_tfoot";
+    footer.className = "tfoot";
+    table.append(footer);
+
+    let navRow = document.createElement("div");
+    navRow.className = "table-foot";
+    navRow.id = tableName + "Foot";
+    footer.append(navRow);
+
+    for (let i = 0; i < columns.length; i++) {
+      let tf = document.createElement("div");
+      if (i === 0) {
+        tf.className = "table-prev";
+        tf.id = tableName + "Prev";
+      } else if (i === (columns.length - 1)) {
+        tf.className = "table-next";
+        tf.id = tableName + "Next";
+      } else {
+        tf.className = "table-footer";
+      }
+
+      tf.style.width = columns[i].width;
+      tf.style.maxWidth = columns[i].width;
+
+      addText(tf, "");
+
+      navRow.append(tf);
+    }
+  }
+};
 
 async function uploadFile(url, inputCtl) {
   let formData = new FormData();
@@ -538,7 +626,6 @@ async function uploadFile(url, inputCtl) {
   let file = inputCtl.files[0];
 
   formData.append("FileName", file.name);
-  formData.append("FileType", file.type);
   formData.append("FileData", file);
 
   await fetch(url, {method: "PUT", body: formData})

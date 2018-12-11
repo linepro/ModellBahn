@@ -17,9 +17,7 @@
   const columns = [
   new TextColumn("Namen", "name", Editable.ADD, true, 30),
   new TextColumn("Bezeichnung", "description", Editable.UPDATE, false, 50),
-  new ButtonColumn([new HeaderLinkage("add", "kategorie.newRow()")],
-    [new FunctionLinkage("update", "kategorie.editRow(this.value)"),
-      new FunctionLinkage("delete", "kategorie.deleteRow(this.value)")])
+  new ButtonColumn([newRow], [editRow, deleteRow])
 ];
 const kategorie = new ItemGrid(10, fetchUrl("kategorie"), "kategorie", columns, true, EditMode.UPDATE, undefined, "unterkategorien.html");
 
