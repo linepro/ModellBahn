@@ -60,7 +60,7 @@ public class SelectorsBuilderTest {
         String capitalized = StringUtils.capitalize(name);
         Method getter = clazz.getMethod("get" + capitalized);
         Method setter = clazz.getMethod("set" + capitalized, type);
-        return new Selector(name, getter, setter, false);
+        return new Selector(name, getter.getReturnType(), getter, setter, false);
     }
 
     @Test

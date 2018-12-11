@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.model;
 import java.math.BigDecimal;
+import java.nio.file.Path;
 import java.util.Date;
 
 import com.linepro.modellbahn.model.keys.NameKey;
@@ -24,6 +25,21 @@ public interface IVorbild extends INamedItem<NameKey> {
      * @param gattung the new gattung
      */
     void setGattung(IGattung gattung);
+
+    /**
+     * Gets the bahnverwaltung.
+     *
+     * @return the bahnverwaltung
+     */
+    IBahnverwaltung getBahnverwaltung();
+
+    /**
+     * Sets the bahnverwaltung.
+     *
+     * @param bahnverwaltung
+     *            the new bahnverwaltung
+     */
+    void setBahnverwaltung(IBahnverwaltung bahnverwaltung);
 
     /**
      * Gets the unter kategorie.
@@ -119,9 +135,9 @@ public interface IVorbild extends INamedItem<NameKey> {
     /**
      * Sets the achsfolg.
      *
-     * @param achsfolge the new achsfolg
+     * @param achsfolg the new achsfolg
      */
-    void setAchsfolg(IAchsfolg achsfolge);
+    void setAchsfolg(IAchsfolg achsfolg);
 
     /**
      * Gets the anfahrzugkraft.
@@ -170,14 +186,14 @@ public interface IVorbild extends INamedItem<NameKey> {
      *
      * @return the geschwindigkeit
      */
-    Long getGeschwindigkeit();
+    Integer getGeschwindigkeit();
 
     /**
      * Sets the geschwindigkeit.
      *
      * @param geschwindigkeit the new geschwindigkeit
      */
-    void setGeschwindigkeit(Long geschwindigkeit);
+    void setGeschwindigkeit(Integer geschwindigkeit);
 
     /**
      * Gets the lange.
@@ -362,20 +378,6 @@ public interface IVorbild extends INamedItem<NameKey> {
     void setVerdampfung(BigDecimal verdampfung);
 
     /**
-     * Gets the steuerung.
-     *
-     * @return the steuerung
-     */
-    ISteuerung getSteuerung();
-
-    /**
-     * Sets the steuerung.
-     *
-     * @param steuerung the new steuerung
-     */
-    void setSteuerung(ISteuerung steuerung);
-
-    /**
      * Gets the fahrmotoren.
      *
      * @return the fahrmotoren
@@ -464,56 +466,56 @@ public interface IVorbild extends INamedItem<NameKey> {
      *
      * @return the sitz platze KL 1
      */
-    Long getSitzPlatzeKL1();
+    Integer getSitzPlatzeKL1();
 
     /**
      * Sets the sitz platze KL 1.
      *
      * @param sitzPlatzeKL1 the new sitz platze KL 1
      */
-    void setSitzPlatzeKL1(Long sitzPlatzeKL1);
+    void setSitzPlatzeKL1(Integer sitzPlatzeKL1);
 
     /**
      * Gets the sitz platze KL 2.
      *
      * @return the sitz platze KL 2
      */
-    Long getSitzPlatzeKL2();
+    Integer getSitzPlatzeKL2();
 
     /**
      * Sets the sitz platze KL 2.
      *
      * @param sitzPlatzeKL2 the new sitz platze KL 2
      */
-    void setSitzPlatzeKL2(Long sitzPlatzeKL2);
+    void setSitzPlatzeKL2(Integer sitzPlatzeKL2);
 
     /**
      * Gets the sitz platze KL 3.
      *
      * @return the sitz platze KL 3
      */
-    Long getSitzPlatzeKL3();
+    Integer getSitzPlatzeKL3();
 
     /**
      * Sets the sitz platze KL 3.
      *
      * @param sitzPlatzeKL3 the new sitz platze KL 3
      */
-    void setSitzPlatzeKL3(Long sitzPlatzeKL3);
+    void setSitzPlatzeKL3(Integer sitzPlatzeKL3);
 
     /**
      * Gets the sitz platze KL 4.
      *
      * @return the sitz platze KL 4
      */
-    Long getSitzPlatzeKL4();
+    Integer getSitzPlatzeKL4();
 
     /**
      * Sets the sitz platze KL 4.
      *
      * @param sitzPlatzeKL4 the new sitz platze KL 4
      */
-    void setSitzPlatzeKL4(Long sitzPlatzeKL4);
+    void setSitzPlatzeKL4(Integer sitzPlatzeKL4);
 
     /**
      * Gets the aufbauten.
@@ -548,56 +550,56 @@ public interface IVorbild extends INamedItem<NameKey> {
      *
      * @return the triebkoepfe
      */
-    Long getTriebkoepfe();
+    Integer getTriebkoepfe();
 
     /**
      * Sets the triebkoepfe.
      *
      * @param triebkoepfe the new triebkoepfe
      */
-    void setTriebkoepfe(Long triebkoepfe);
+    void setTriebkoepfe(Integer triebkoepfe);
 
     /**
      * Gets the mittelwagen.
      *
      * @return the mittelwagen
      */
-    Long getMittelwagen();
+    Integer getMittelwagen();
 
     /**
      * Sets the mittelwagen.
      *
      * @param mittelwagen the new mittelwagen
      */
-    void setMittelwagen(Long mittelwagen);
+    void setMittelwagen(Integer mittelwagen);
 
     /**
      * Gets the sitz platze TZKL 1.
      *
      * @return the sitz platze TZKL 1
      */
-    Long getSitzPlatzeTZKL1();
+    Integer getSitzPlatzeTZKL1();
 
     /**
      * Sets the sitz platze TZKL 1.
      *
      * @param sitzPlatzeTZKL1 the new sitz platze TZKL 1
      */
-    void setSitzPlatzeTZKL1(Long sitzPlatzeTZKL1);
+    void setSitzPlatzeTZKL1(Integer sitzPlatzeTZKL1);
 
     /**
      * Gets the sitz platze tz KL 2.
      *
      * @return the sitz platze tz KL 2
      */
-    Long getSitzPlatzeTzKL2();
+    Integer getSitzPlatzeTzKL2();
 
     /**
      * Sets the sitz platze tz KL 2.
      *
      * @param sitzPlatzeTzKL2 the new sitz platze tz KL 2
      */
-    void setSitzPlatzeTzKL2(Long sitzPlatzeTzKL2);
+    void setSitzPlatzeTzKL2(Integer sitzPlatzeTzKL2);
 
     /**
      * Gets the drehgestell bauart.
@@ -612,4 +614,19 @@ public interface IVorbild extends INamedItem<NameKey> {
      * @param drehgestellbauart the new drehgestell bauart
      */
     void setDrehgestellBauart(String drehgestellbauart);
+
+    /**
+     * Gets the abbildung.
+     *
+     * @return the abbildung
+     */
+    Path getAbbildung();
+
+    /**
+     * Sets the abbildung.
+     *
+     * @param abbildung
+     *            the new abbildung
+     */
+    void setAbbildung(Path abbildung);
 }

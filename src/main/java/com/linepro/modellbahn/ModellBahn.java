@@ -55,8 +55,10 @@ public class ModellBahn implements IModellBahn {
         this.logger = loggerFactory.getLogger(getClass().getName());
         this.populator = populator;
         this.baseUri = baseUri;
-        
-        StaticContentFinder.get().addPaths(staticRoots);
+
+        StaticContentFinder.getFinder().addPaths(staticRoots);
+        StaticContentFinder.getStore().setBaseUri(baseUri);
+        StaticContentFinder.getStore().setStoreRoot(staticRoots.iterator().next());
     }
 
     @Override
@@ -91,7 +93,7 @@ public class ModellBahn implements IModellBahn {
                     "API served on {}{}\n" +
                     "Press CTRL^C (SIGINT) to terminate.",
                     baseUri, ApiPaths.APPLICATION_WADL,
-                    baseUri, ApiPaths.WEB_ROOT, StaticContentFinder.get().getAbsolutePaths(),
+                    baseUri, ApiPaths.WEB_ROOT, StaticContentFinder.getFinder().getAbsolutePaths(),
                     baseUri, ApiPaths.API_ROOT);
 
             Thread.currentThread().join();

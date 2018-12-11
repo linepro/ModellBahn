@@ -39,7 +39,7 @@ public class SelectorTest {
         getter = getClass().getDeclaredMethod(GETTER);
         setter = getClass().getDeclaredMethod(SETTER, String.class);
         
-        selector = new Selector(NAME, getter, setter, false);
+        selector = new Selector(NAME, String.class, getter, setter, false);
     }
 
     @Test
@@ -62,8 +62,8 @@ public class SelectorTest {
         assertFalse(selector.equals(null));
         assertFalse(selector.equals(new Object()));
         assertTrue(selector.equals(selector));
-        assertTrue(selector.equals(new Selector(NAME, setter, getter, false)));
-        assertFalse(selector.equals(new Selector(NAME+"!", setter, getter, true)));
+        assertTrue(selector.equals(new Selector(NAME, String.class, setter, getter, false)));
+        assertFalse(selector.equals(new Selector(NAME+"!", String.class, setter, getter, true)));
     }
 
     @Test

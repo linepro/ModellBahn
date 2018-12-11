@@ -22,7 +22,6 @@ import com.linepro.modellbahn.model.IDecoderAdress;
 import com.linepro.modellbahn.model.IDecoderCV;
 import com.linepro.modellbahn.model.IDecoderFunktion;
 import com.linepro.modellbahn.model.IDecoderTyp;
-import com.linepro.modellbahn.model.IDecoderTypAdress;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.impl.Decoder;
@@ -33,6 +32,7 @@ import com.linepro.modellbahn.model.impl.DecoderTyp;
 import com.linepro.modellbahn.model.impl.Protokoll;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AdressTyp;
+import com.linepro.modellbahn.model.util.DecoderCreator;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -131,23 +131,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
                 return getResponse(badRequest(null, "DecoderTyp " + herstellerStr + "/" + bestellNr + " does not exist"));
             }
 
-            Decoder decoder = new Decoder(null, decoderTyp, decoderTyp.getProtokoll(), getPersister().getNextId(), decoderTyp.getBezeichnung(), decoderTyp.getFahrstufe(), false);
-            
-            decoder = getPersister().add(decoder);
-
-            for (IDecoderTypAdress adress : decoderTyp.getAdressen()) {
-                decoder.addAdress(new DecoderAdress(null, decoder, adress.getIndex(), adress.getAdressTyp(), adress.getWerkseinstellung(), false));
-            }
-
-            for (IDecoderTypCV cv : decoderTyp.getCVs()) {
-                decoder.addCV(new DecoderCV(null, decoder, cv, cv.getWerkseinstellung(), false));
-            }
-
-            for (IDecoderTypFunktion funktion : decoderTyp.getFunktionen()) {
-                decoder.addFunktion(new DecoderFunktion(null, decoder, funktion, funktion.getBezeichnung(), false));
-            }
-
-            decoder = getPersister().save(decoder);
+           IDecoder decoder = new DecoderCreator(getPersister()).create(decoderTyp);
 
             return getResponse(created(), decoder, true, true);
         } catch (Exception e) {

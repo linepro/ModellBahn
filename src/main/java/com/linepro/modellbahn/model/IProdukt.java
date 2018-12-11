@@ -1,7 +1,7 @@
 package com.linepro.modellbahn.model;
 
-import java.io.File;
 import java.math.BigDecimal;
+import java.nio.file.Path;
 import java.util.Date;
 import java.util.Set;
 
@@ -61,19 +61,19 @@ public interface IProdukt extends INamedItem<ProduktKey> {
     void setBahnverwaltung(IBahnverwaltung bahnverwaltung);
 
     /**
-     * Gets the achsfolge.
+     * Gets the achsfolg.
      *
-     * @return the achsfolge
+     * @return the achsfolg
      */
     IAchsfolg getAchsfolg();
 
     /**
-     * Sets the achsfolge.
+     * Sets the achsfolg.
      *
-     * @param achsfolge
-     *            the new achsfolge
+     * @param achsfolg
+     *            the new achsfolg
      */
-    void setAchsfolg(IAchsfolg achsfolge);
+    void setAchsfolg(IAchsfolg achsfolg);
 
     /**
      * Gets the massstab.
@@ -305,7 +305,7 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      *
      * @return the anleitungen
      */
-    File getAnleitungen();
+    Path getAnleitungen();
 
     /**
      * Sets the anleitungen.
@@ -313,14 +313,14 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      * @param anleitungen
      *            the new anleitungen
      */
-    void setAnleitungen(File anleitungen);
+    void setAnleitungen(Path anleitungen);
 
     /**
      * Gets the explosionszeichnung.
      *
      * @return the explosionszeichnung
      */
-    File getExplosionszeichnung();
+    Path getExplosionszeichnung();
 
     /**
      * Sets the explosionszeichnung.
@@ -328,7 +328,7 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      * @param explosionszeichnung
      *            the new explosionszeichnung
      */
-    void setExplosionszeichnung(File explosionszeichnung);
+    void setExplosionszeichnung(Path explosionszeichnung);
 
     /**
      * Gets the lange.
@@ -350,7 +350,7 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      *
      * @return the abbildung
      */
-    File getAbbildung();
+    Path getAbbildung();
 
     /**
      * Sets the abbildung.
@@ -358,7 +358,7 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      * @param abbildung
      *            the new abbildung
      */
-    void setAbbildung(File abbildung);
+    void setAbbildung(Path abbildung);
 
     /**
      * Gets the teilen.

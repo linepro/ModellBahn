@@ -64,6 +64,7 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
             @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
             @JsonProperty(value = ApiNames.ANMERKUNG, required = false) String anmerkung,
             @JsonProperty(value = ApiNames.BELADUNG, required = false) String beladung,
+            @JsonProperty(value=ApiNames.ABBILDUNG, required=false) String abbildungStr,
             @JsonProperty(value = ApiNames.STATUS, required = false) String statusStr,
             @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
         IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);

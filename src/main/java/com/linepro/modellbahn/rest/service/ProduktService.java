@@ -1,6 +1,5 @@
 package com.linepro.modellbahn.rest.service;
 
-import java.io.File;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -89,9 +88,6 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
             @JsonProperty(value=ApiNames.DECODER_TYP, required=false) DecoderTyp decoderTyp,
             @JsonProperty(value=ApiNames.MOTOR_TYP, required=false) String motorTypStr,
             @JsonProperty(value=ApiNames.LANGE, required=false) BigDecimal lange,
-            @JsonProperty(value=ApiNames.ANLEITUNGEN, required=false) String anleitungenStr,
-            @JsonProperty(value=ApiNames.EXPLOSIONSZEICHNUNG, required=false) String explosionszeichnungStr,
-            @JsonProperty(value=ApiNames.ABBILDUNG, required=false) String abbildungStr,
             @JsonProperty(value=ApiNames.DELETED, required=false) Boolean deleted) throws Exception {
         // Just see if Jackson can work out the embedded objects...
         IHersteller hersteller = findHersteller(herstellerStr, false);
@@ -109,10 +105,6 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
         ISteuerung steuerung = findSteuerung(steuerungStr, false);
         IMotorTyp motorTyp = findMotorTyp(motorTypStr, false);
 
-        File anleitungen = null;
-        File abbildung = null;
-        File explosionszeichnung = null;
-        
         Produkt entity = new Produkt(id,
                 hersteller,
                 bestellNr,
@@ -136,9 +128,6 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
                 decoderTyp,
                 motorTyp,
                 lange,
-                anleitungen,
-                explosionszeichnung,
-                abbildung,
                 deleted);
 
         debug("created: " + entity);

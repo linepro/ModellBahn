@@ -1,7 +1,7 @@
 package com.linepro.modellbahn.model.impl;
 
-import java.io.File;
 import java.math.BigDecimal;
+import java.nio.file.Path;
 import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
@@ -60,7 +60,8 @@ import com.linepro.modellbahn.model.IVorbild;
 import com.linepro.modellbahn.model.keys.ProduktKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.persistence.util.FileConverter;
+import com.linepro.modellbahn.persistence.util.BusinessKey;
+import com.linepro.modellbahn.persistence.util.PathConverter;
 import com.linepro.modellbahn.rest.json.Formats;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.resolver.AchsfolgResolver;
@@ -78,6 +79,7 @@ import com.linepro.modellbahn.rest.json.resolver.SpurweiteResolver;
 import com.linepro.modellbahn.rest.json.resolver.SteuerungResolver;
 import com.linepro.modellbahn.rest.json.resolver.VorbildResolver;
 import com.linepro.modellbahn.rest.json.serialization.DecoderTypSerializer;
+import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
 import com.linepro.modellbahn.rest.json.serialization.ProduktTeilSerializer;
 import com.linepro.modellbahn.rest.json.serialization.UnterKategorieSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -91,7 +93,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  */
 @Entity(name = DBNames.PRODUKT)
 @Table(name = DBNames.PRODUKT, indexes = {
-        @Index(columnList = DBNames.HERSTELLER_ID ),
+        @Index(columnList = DBNames.HERSTELLER_ID),
         @Index(columnList = DBNames.EPOCH_ID),
         @Index(columnList = DBNames.GATTUNG_ID),
         @Index(columnList = DBNames.BAHNVERWALTUNG_ID),
@@ -144,8 +146,8 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     /** The epoch. */
     private IEpoch epoch;
 
-    /** The achsfolge. */
-    private IAchsfolg achsfolge;
+    /** The achsfolg. */
+    private IAchsfolg achsfolg;
 
     /** The Sondermodel. */
     private ISonderModell sondermodell;
@@ -181,17 +183,17 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     private Date bauzeit;
 
     /** The anleitungen. */
-    private File anleitungen;
+    private Path anleitungen;
 
     /** The explosionszeichnung. */
-    private File explosionszeichnung;
+    private Path explosionszeichnung;
 
     /** The lange. */
     //@Positive
     private BigDecimal lange;
 
     /** The abbildung. */
-    private File abbildung;
+    private Path abbildung;
 
     /** The teilen. */
     private Set<IProduktTeil> teilen = new TreeSet<>();
@@ -202,10 +204,9 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     public Produkt(Long id, IHersteller hersteller, String bestellNr, String bezeichnung, IUnterKategorie unterKategorie,
             IMassstab massstab, ISpurweite spurweite, IEpoch epoch, IBahnverwaltung bahnverwaltung, IGattung gattung,
-            String betreibsnummer, Date bauzeit, IVorbild vorbild, IAchsfolg achsfolge, String anmerkung,
+            String betreibsnummer, Date bauzeit, IVorbild vorbild, IAchsfolg achsfolg, String anmerkung,
             ISonderModell sondermodel, IAufbau aufbau, ILicht licht, IKupplung kupplung, ISteuerung steuerung,
-            IDecoderTyp decoderTyp, IMotorTyp motorTyp, BigDecimal lange, File anleitungen, File explosionszeichnung,
-            File abbildung, Boolean deleted) {
+            IDecoderTyp decoderTyp, IMotorTyp motorTyp, BigDecimal lange, Boolean deleted) {
         super(id, bestellNr, bezeichnung, deleted);
         setHersteller(hersteller);
         setUnterKategorie(unterKategorie);
@@ -217,7 +218,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
         setBetreibsnummer(betreibsnummer);
         setBauzeit(bauzeit);
         setVorbild(vorbild);
-        setAchsfolg(achsfolge);
+        setAchsfolg(achsfolg);
         setAnmerkung(anmerkung);
         setSondermodell(sondermodel);
         setAufbau(aufbau);
@@ -227,14 +228,12 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
         setDecoderTyp(decoderTyp);
         setMotorTyp(motorTyp);
         setLange(lange);
-        setAnleitungen(anleitungen);
-        setExplosionszeichnung(explosionszeichnung);
-        setAbbildung(abbildung);
     }
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class)
     @JoinColumn(name = DBNames.HERSTELLER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk16"))
+    @BusinessKey
     @JsonGetter(ApiNames.HERSTELLER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -251,6 +250,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     }
 
     @Override
+    @BusinessKey
     @JsonGetter(ApiNames.BESTELL_NR)
     @JsonView(Views.DropDown.class)
     public String getName() {
@@ -428,14 +428,14 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = AchsfolgResolver.class)
     @JsonSerialize(as = Achsfolg.class)
     public IAchsfolg getAchsfolg() {
-        return achsfolge;
+        return achsfolg;
     }
 
     @Override
     @JsonSetter(ApiNames.ACHSFOLG)
     @JsonDeserialize(as = Achsfolg.class)
-    public void setAchsfolg(IAchsfolg achsfolge) {
-        this.achsfolge = achsfolge;
+    public void setAchsfolg(IAchsfolg achsfolg) {
+        this.achsfolg = achsfolg;
     }
 
     @Override
@@ -598,41 +598,46 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     @Override
     @Column(name = DBNames.ANLEITUNGEN, nullable = true, length = 512)
+    @Convert(converter = PathConverter.class)
     @JsonGetter(ApiNames.ANLEITUNGEN)
+    @JsonSerialize(using = PathSerializer.class)
     @JsonView(Views.Public.class)
-    public File getAnleitungen() {
+    public Path getAnleitungen() {
         return anleitungen;
     }
 
     @Override
-    public void setAnleitungen(File anleitungen) {
+    public void setAnleitungen(Path anleitungen) {
         this.anleitungen = anleitungen;
     }
 
     @Override
     @Column(name = DBNames.EXPLOSIONSZEICHNUNG, nullable = true, length = 512)
+    @Convert(converter = PathConverter.class)
     @JsonGetter(ApiNames.EXPLOSIONSZEICHNUNG)
+    @JsonSerialize(using = PathSerializer.class)
     @JsonView(Views.Public.class)
-    public File getExplosionszeichnung() {
+    public Path getExplosionszeichnung() {
         return explosionszeichnung;
     }
 
     @Override
-    public void setExplosionszeichnung(File explosionszeichnung) {
+    public void setExplosionszeichnung(Path explosionszeichnung) {
         this.explosionszeichnung = explosionszeichnung;
     }
 
     @Override
     @Column(name = DBNames.ABBILDUNG, nullable = true)
-    @Convert(converter = FileConverter.class)
+    @Convert(converter = PathConverter.class)
     @JsonGetter(ApiNames.ABBILDUNG)
+    @JsonSerialize(using = PathSerializer.class)
     @JsonView(Views.DropDown.class)
-    public File getAbbildung() {
+    public Path getAbbildung() {
         return abbildung;
     }
 
     @Override
-    public void setAbbildung(File abbildung) {
+    public void setAbbildung(Path abbildung) {
         this.abbildung = abbildung;
     }
 

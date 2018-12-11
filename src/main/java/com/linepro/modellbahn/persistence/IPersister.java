@@ -2,8 +2,10 @@ package com.linepro.modellbahn.persistence;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import com.linepro.modellbahn.model.IItem;
+import com.linepro.modellbahn.util.Selector;
 
 /**
  * IPersister.
@@ -157,4 +159,8 @@ public interface IPersister<E extends IItem<?>> {
     void populateLazyCollections();
 
     String getNextId();
+
+    Map<String, Selector> getSelectors();
+
+    E create() throws Exception;
 }

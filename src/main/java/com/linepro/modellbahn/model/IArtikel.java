@@ -1,6 +1,7 @@
 package com.linepro.modellbahn.model;
 
 import java.math.BigDecimal;
+import java.nio.file.Path;
 import java.util.Date;
 
 import com.linepro.modellbahn.model.keys.NameKey;
@@ -180,6 +181,21 @@ public interface IArtikel extends INamedItem<NameKey> {
      * @param beladung the new beladung
      */
     void setBeladung(String beladung);
+
+    /**
+     * Gets the abbildung.
+     *
+     * @return the abbildung
+     */
+    Path getAbbildung();
+
+    /**
+     * Sets the abbildung.
+     *
+     * @param abbildung
+     *            the new abbildung
+     */
+    void setAbbildung(Path abbildung);
 
     /**
      * Gets the status.

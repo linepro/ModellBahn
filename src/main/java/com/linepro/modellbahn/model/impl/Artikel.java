@@ -1,9 +1,11 @@
 package com.linepro.modellbahn.model.impl;
 
 import java.math.BigDecimal;
+import java.nio.file.Path;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -42,6 +44,7 @@ import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.model.util.Status;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.persistence.util.PathConverter;
 import com.linepro.modellbahn.rest.json.Formats;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.resolver.DecoderResolver;
@@ -50,6 +53,7 @@ import com.linepro.modellbahn.rest.json.resolver.LichtResolver;
 import com.linepro.modellbahn.rest.json.resolver.MotorTypResolver;
 import com.linepro.modellbahn.rest.json.resolver.SteuerungResolver;
 import com.linepro.modellbahn.rest.json.resolver.WahrungResolver;
+import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
 import com.linepro.modellbahn.rest.json.serialization.ProduktSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
@@ -69,7 +73,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.KUPPLUNG_ID),
         @Index(columnList = DBNames.DECODER_ID) })
 @JsonRootName(value = ApiNames.ARTIKEL)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.PRODUKT, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.STUCK, ApiNames.STEUERUNG, ApiNames.MOTOR_TYP, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.DECODER, ApiNames.ANMERKUNG, ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ApiNames.ID, ApiNames.PRODUKT, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.STUCK, ApiNames.STEUERUNG, ApiNames.MOTOR_TYP, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.DECODER, ApiNames.ANMERKUNG, ApiNames.BELADUNG, ApiNames.ABBILDUNG, ApiNames.STATUS, ApiNames.DELETED, ApiNames.LINKS})
 public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
 
     /** The Constant serialVersionUID. */
@@ -112,6 +116,9 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
 
     /** The beladung. */
     private String beladung;
+
+    /** The abbildung. */
+    private Path abbildung;
 
     /** The status. */
     @NotNull
@@ -364,6 +371,21 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     }
 
     @Override
+    @Column(name = DBNames.ABBILDUNG, nullable = true)
+    @Convert(converter = PathConverter.class)
+    @JsonGetter(ApiNames.ABBILDUNG)
+    @JsonView(Views.DropDown.class)
+    @JsonSerialize(using = PathSerializer.class)
+    public Path getAbbildung() {
+        return abbildung;
+    }
+
+    @Override
+    public void setAbbildung(Path abbildung) {
+        this.abbildung = abbildung;
+    }
+
+    @Override
     @Column(name = DBNames.STATUS, nullable = false)
     @Enumerated(EnumType.STRING)
     @JsonGetter(ApiNames.STATUS)
@@ -394,6 +416,7 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
                 .append(ApiNames.DECODER, getDecoder())
                 .append(ApiNames.ANMERKUNG, getAnmerkung())
                 .append(ApiNames.BELADUNG, getBeladung())
+                .append(ApiNames.ABBILDUNG, getAbbildung())
                 .append(ApiNames.STATUS, getStatus())
                 .toString();
     }

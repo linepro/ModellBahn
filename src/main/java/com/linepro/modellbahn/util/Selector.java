@@ -26,6 +26,8 @@ public class Selector {
 
     protected final boolean collection;
 
+    protected final Class<?> type;
+
     /**
      * Instantiates a new selector.
      *
@@ -33,8 +35,9 @@ public class Selector {
      * @param getter the getter
      * @param setter the setter
      */
-    public Selector(String name, Method getter, Method setter, boolean collection) {
+    public Selector(String name, Class<?> type, Method getter, Method setter, boolean collection) {
         this.name = name;
+        this.type = type;
         this.getter = getter;
         this.setter = setter;
         this.collection = collection;
@@ -47,6 +50,15 @@ public class Selector {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Gets the type.
+     *
+     * @return the type
+     */
+    public Class<?> getType() {
+        return type;
     }
 
     /**

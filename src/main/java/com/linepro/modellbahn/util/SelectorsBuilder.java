@@ -129,7 +129,7 @@ public class SelectorsBuilder {
                             name = getJpaName(getter.getName());
                         }
 
-                        Selector selector = new Selector(name, getter, setter,
+                        Selector selector = new Selector(name, getter.getReturnType(), getter, setter,
                                 Collection.class.isAssignableFrom(getter.getReturnType()));
 
                         selectors.put(selector.getName(), selector);
