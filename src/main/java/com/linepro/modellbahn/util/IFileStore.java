@@ -6,6 +6,8 @@ import java.nio.file.Path;
 public interface IFileStore {
     void setBaseUri(URI baseUri);
 
+    String getStoreRoot();
+
     void setStoreRoot(String fileStoreRoot);
 
     Path getItemPath(String entityType, String[] entityIds);
@@ -14,7 +16,7 @@ public interface IFileStore {
 
     Path getFilePath(String entityType, String[] entityIds, String fieldName, String fileType);
 
-    void removeFile(String entityType, String[] entityIds, String fieldName, String fileType);
+    void removeFile(Path filePath);
 
     URI urlForPath(Path file);
 }

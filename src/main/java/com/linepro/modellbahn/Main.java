@@ -3,6 +3,7 @@ package com.linepro.modellbahn;
 import java.net.InetAddress;
 import java.net.URI;
 import java.util.Arrays;
+import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
@@ -25,6 +26,8 @@ import com.linepro.modellbahn.guice.ModellBahnModule;
 public class Main {
     
     protected static final String STATIC_PATH = "./webapp";
+
+    protected static final String STORE_PATH = STATIC_PATH;
 
     protected static final String WEB_APP_ROOT = "ModellBahn";
 
@@ -49,6 +52,7 @@ public class Main {
         options.addOption(Option.builder("y").longOpt("keypwd").argName("password").hasArg().desc("keystore password").build());
         options.addOption(Option.builder("w").longOpt("webroot").argName("webroot").hasArg().desc("root url for application will be served as ${webroot}/api and ${webroot}/web - default " + WEB_APP_ROOT).build());
         options.addOption(Option.builder("c").longOpt("content").argName("staticPath").hasArg().desc("comma separated list of folders for web content - default " + STATIC_PATH).build());
+        options.addOption(Option.builder("s").longOpt("store").argName("store").hasArg().desc("file store location - default " + STORE_PATH).build());
 
         try {
             CommandLine commandLine = new DefaultParser().parse(options, args);
@@ -58,6 +62,10 @@ public class Main {
             String keypwd = commandLine.getOptionValue("y");
             String webRoot = commandLine.getOptionValue("w", WEB_APP_ROOT);
             String staticPaths = commandLine.getOptionValue("c", STATIC_PATH);
+
+            final List<String> staticRoots = Arrays.asList(staticPaths.split(","));
+
+            String storePath = commandLine.getOptionValue("s", staticRoots.get(0));
 
             // TODO: proper SSL validation
             String protocol = (keystore == null || keypwd == null) ? HTTP : HTTPS;
@@ -78,7 +86,7 @@ public class Main {
 
             // TODO: SSL configuration
             injector.getInstance(IModellBahnFactory.class)
-                    .create(baseUri, Arrays.asList(staticPaths.split(",")))
+                    .create(baseUri, staticRoots, storePath)
                     .run();
         } catch (ParseException e) {
             System.err.println( e.getMessage() );

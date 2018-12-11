@@ -1,8 +1,28 @@
 package com.linepro.modellbahn.rest.service;
 
-import java.io.InputStream;
-import java.math.BigDecimal;
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.linepro.modellbahn.model.IAchsfolg;
+import com.linepro.modellbahn.model.IAntrieb;
+import com.linepro.modellbahn.model.IArtikel;
+import com.linepro.modellbahn.model.IBahnverwaltung;
+import com.linepro.modellbahn.model.IGattung;
+import com.linepro.modellbahn.model.IUnterKategorie;
+import com.linepro.modellbahn.model.IVorbild;
+import com.linepro.modellbahn.model.impl.Artikel;
+import com.linepro.modellbahn.model.impl.Vorbild;
+import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.util.AbstractItemService;
+import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;
+import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.rest.util.ApiPaths;
+import com.linepro.modellbahn.rest.util.FileUploadHandler;
+import com.linepro.modellbahn.rest.util.IFileUploadHandler;
+import com.linepro.modellbahn.util.StaticContentFinder;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -16,24 +36,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataParam;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.linepro.modellbahn.model.IAchsfolg;
-import com.linepro.modellbahn.model.IAntrieb;
-import com.linepro.modellbahn.model.IBahnverwaltung;
-import com.linepro.modellbahn.model.IGattung;
-import com.linepro.modellbahn.model.IUnterKategorie;
-import com.linepro.modellbahn.model.impl.Vorbild;
-import com.linepro.modellbahn.model.keys.NameKey;
-import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.rest.util.AbstractItemService;
-import com.linepro.modellbahn.rest.util.ApiNames;
-import com.linepro.modellbahn.rest.util.ApiPaths;
+import java.io.InputStream;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * VorbildService. CRUD service for Vorbild
@@ -147,21 +152,59 @@ public class VorbildService extends AbstractItemService<NameKey, Vorbild> {
     }
 
     @PUT
-    @Path(ApiPaths.VORBILD_ABBILDUNG)
+    @Path(ApiPaths.ABBILDUNG_PART)
     @Consumes({ MediaType.MULTIPART_FORM_DATA })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    public Response updateAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, @FormDataParam("FileName") InputStream fileName,
-                                    @FormDataParam("FileType") FormDataContentDisposition fileDetail,
-                                    @FormDataParam("ImageData") InputStream fileData) {
-        return null;
+    public Response updateAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name,
+                                    @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
+                                    @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
+        IFileUploadHandler handler = new FileUploadHandler();
+
+        try {
+            if (!handler.isAcceptable(fileDetail, fileData, AcceptableMediaTypes.IMAGES)) {
+                return getResponse(badRequest(null, "Invalid file '" + fileDetail.getFileName() + "'"));
+            }
+
+            IArtikel vorbild = findArtikel(name, false);
+
+            if (vorbild != null) {
+                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { name }, fileDetail, fileData);
+
+                vorbild.setAbbildung(file);
+
+                getPersister().update((Vorbild) vorbild);
+
+                return getResponse(ok(vorbild));
+            }
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+
+        return getResponse(notFound());
     }
 
     @DELETE
-    @Path(ApiPaths.VORBILD_ABBILDUNG)
+    @Path(ApiPaths.ABBILDUNG_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     public Response deleteAbbildung(@PathParam(ApiPaths.ID_PARAM_NAME) String name) {
-        return super.delete(name);
+        try {
+            IVorbild vorbild = findVorbild(name, false);
+
+            if (vorbild != null && vorbild.getAbbildung() != null) {
+                StaticContentFinder.getStore().removeFile(vorbild.getAbbildung());
+
+                vorbild.setAbbildung(null);
+
+                getPersister().update((Vorbild) vorbild);
+
+                return getResponse(ok(vorbild));
+            }
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+
+        return getResponse(notFound());
     }
 }

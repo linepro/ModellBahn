@@ -3,44 +3,33 @@
  */
 package com.linepro.modellbahn.rest.util;
 
-import static com.linepro.modellbahn.rest.util.AcceptableMediaTypes.BMP_TYPE;
-import static com.linepro.modellbahn.rest.util.AcceptableMediaTypes.GIF_TYPE;
-import static com.linepro.modellbahn.rest.util.AcceptableMediaTypes.JPG_TYPE;
-import static com.linepro.modellbahn.rest.util.AcceptableMediaTypes.PDF_TYPE;
-import static com.linepro.modellbahn.rest.util.AcceptableMediaTypes.PNG_TYPE;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.linepro.modellbahn.model.IArtikel;
+import com.linepro.modellbahn.model.impl.Artikel;
+import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.util.IFileStore;
+import com.linepro.modellbahn.util.StaticContentFinder;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.AbstractMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.inject.Inject;
-import javax.ws.rs.core.MediaType;
-
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.slf4j.ILoggerFactory;
-import org.slf4j.Logger;
-
-import com.linepro.modellbahn.util.IFileStore;
+import java.util.List;
 
 /**
- * The Class FileUploadHandler.
+ * The Class FileUpload
  */
 public class FileUploadHandler implements IFileUploadHandler {
-
-    public Map<MediaType, String> MEDIA_TYPES = Stream.of(
-            new AbstractMap.SimpleEntry<>(BMP_TYPE, ".bmp"),
-            new AbstractMap.SimpleEntry<>(GIF_TYPE, ".gif"),
-            new AbstractMap.SimpleEntry<>(JPG_TYPE, ".jpg"),
-            new AbstractMap.SimpleEntry<>(PNG_TYPE, ".png"),
-            new AbstractMap.SimpleEntry<>(PDF_TYPE, ".pdf"),
-            new AbstractMap.SimpleEntry<>(MediaType.TEXT_PLAIN_TYPE, ".txt"))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     /** The file store. */
     private final IFileStore fileStore;
@@ -49,34 +38,42 @@ public class FileUploadHandler implements IFileUploadHandler {
     private final Logger logger;
 
     /**
-     * Instantiates a new file upload handler.
-     * @param fileStore the file store
-     * @param logManger the log manger
+     * Instantiates a new file upload 
      */
     @Inject
-    public FileUploadHandler(IFileStore fileStore, ILoggerFactory logManger) {
-        this.fileStore = fileStore;
-        this.logger = logManger.getLogger(getClass().getName());
+    public FileUploadHandler() {
+        this.fileStore = StaticContentFinder.getStore();
+        this.logger = LoggerFactory.getILoggerFactory().getLogger(getClass().getName());
     }
-   
-	/**
+
+    @Override
+    public boolean isAcceptable(FormDataContentDisposition fileDetail, InputStream fileData, List<String> extensions) throws Exception {
+        if (fileDetail != null && fileData != null) {
+            for (String extension : extensions) {
+                if (fileDetail.getFileName().endsWith(extension)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * Upload.
      * @param entityType the entity type
      * @param entityIds the entity ids
-     * @param fieldName the field name
      * @param fileDetail the file detail
      * @param fileData the file data
-     * @param fileType the file type
      * @return the path
      */
     @Override
-	public Path upload(String entityType, String[] entityIds, String fieldName,
-	        FormDataContentDisposition fileDetail, InputStream fileData, MediaType mediaType) throws Exception {
+	public Path upload(String entityType, String[] entityIds, FormDataContentDisposition fileDetail, InputStream fileData) throws Exception {
         Files.createDirectory(fileStore.getItemPath(entityType, entityIds));
-        
-		String fileType = getExtension(mediaType);
+
+        String fileName = fileDetail.getFileName();
+        String extension = getExtension(fileDetail.getType());
 		
-        Path filePath = fileStore.getFilePath(entityType, entityIds, fieldName, fileType);
+        Path filePath = fileStore.getFilePath(entityType, entityIds, fileName, extension);
 
         writeToFile(filePath, fileDetail, fileData);
 		
@@ -85,8 +82,8 @@ public class FileUploadHandler implements IFileUploadHandler {
         return filePath;
 	}
 
-    protected String getExtension(MediaType mediaType) throws Exception {
-        String extension = MEDIA_TYPES.get(mediaType);
+    protected String getExtension(String mediaType) throws Exception {
+        String extension = AcceptableMediaTypes.EXTENTSIONS.get(mediaType);
         
         if (extension == null) {
             throw new IllegalArgumentException("Unsupported mediaType " + mediaType);

@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.core.UriBuilder;
 
+import afu.org.checkerframework.checker.oigj.qual.O;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,11 @@ public class FileStore implements IFileStore {
     @Override
     public void setBaseUri(URI baseUri) {
         this.baseUri = baseUri;
+    }
+
+    @Override
+    public String getStoreRoot() {
+        return fileStoreRoot.toString();
     }
 
     @Override
@@ -76,9 +82,7 @@ public class FileStore implements IFileStore {
     }
 
     @Override
-    public void removeFile(String entityType, String[] entityIds, String fieldName, String fileType) {
-        Path filePath = getFilePath(entityType, entityIds, fieldName, fileType).toAbsolutePath();
-
+    public void removeFile(Path filePath) {
         try {
             FileUtils.forceDelete(filePath.toFile());
         } catch(Exception e) {

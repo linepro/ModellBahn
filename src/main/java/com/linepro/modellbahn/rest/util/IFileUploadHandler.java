@@ -1,15 +1,15 @@
 package com.linepro.modellbahn.rest.util;
 
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.message.internal.MediaTypes;
+
 import java.io.InputStream;
 import java.nio.file.Path;
-
-import javax.ws.rs.core.MediaType;
-
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import java.util.List;
 
 public interface IFileUploadHandler {
 
-    Path upload(String entityType, String[] entityIds, String fieldName, FormDataContentDisposition fileDetail,
-            InputStream fileData, MediaType mediaType) throws Exception;
+    boolean isAcceptable(FormDataContentDisposition fileDetail, InputStream fileData, List<String> extensions) throws Exception;
 
+    Path upload(String entityType, String[] entityIds, FormDataContentDisposition fileDetail, InputStream fileData) throws Exception;
 }

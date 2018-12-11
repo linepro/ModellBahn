@@ -82,7 +82,7 @@ public class FileStoreTest {
         Files.createDirectories(itemPath);
         Files.createFile(filePath);
 
-        fileStore.removeFile(ENTITY_TYPE, IDS, FILE_NAME, FILE_TYPE);
+        fileStore.removeFile(filePath);
 
         assertFalse(Files.exists(filePath));
     }

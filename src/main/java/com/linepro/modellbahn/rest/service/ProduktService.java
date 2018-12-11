@@ -1,21 +1,5 @@
 package com.linepro.modellbahn.rest.service;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -44,8 +28,30 @@ import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
+import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+import com.linepro.modellbahn.rest.util.FileUploadHandler;
+import com.linepro.modellbahn.rest.util.IFileUploadHandler;
+import com.linepro.modellbahn.util.StaticContentFinder;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.io.InputStream;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * ProduktService.
@@ -294,6 +300,177 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
         } catch (Exception e) {
             return getResponse(serverError(e));
         }
+    }
+
+    @PUT
+    @Path(ApiPaths.PRODUKT_ABBILDUNG)
+    @Consumes({ MediaType.MULTIPART_FORM_DATA })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response updateAbbildung(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
+                                    @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
+                                    @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
+        IFileUploadHandler handler = new FileUploadHandler();
+
+        try {
+            if (!handler.isAcceptable(fileDetail, fileData, AcceptableMediaTypes.IMAGES)) {
+                return getResponse(badRequest(null, "Invalid file '" + fileDetail.getFileName() + "'"));
+            }
+
+            IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
+
+            if (produkt != null) {
+                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { herstellerStr, bestellNr }, fileDetail, fileData);
+
+                produkt.setAbbildung(file);
+
+                getPersister().update((Produkt) produkt);
+
+                return getResponse(ok(produkt));
+            }
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+
+        return getResponse(notFound());
+    }
+
+    @DELETE
+    @Path(ApiPaths.PRODUKT_ABBILDUNG)
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response deleteAbbildung(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
+        try {
+            IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
+
+            if (produkt != null && produkt.getAbbildung() != null) {
+                StaticContentFinder.getStore().removeFile(produkt.getAbbildung());
+
+                produkt.setAbbildung(null);
+
+                getPersister().update((Produkt) produkt);
+
+                return getResponse(ok(produkt));
+            }
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+
+        return getResponse(notFound());
+    }
+
+    @PUT
+    @Path(ApiPaths.PRODUKT_ANLEITUNGEN)
+    @Consumes({ MediaType.MULTIPART_FORM_DATA })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response updateAnleitungen(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
+                                      @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
+                                    @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
+        IFileUploadHandler handler = new FileUploadHandler();
+
+        try {
+            if (!handler.isAcceptable(fileDetail, fileData, AcceptableMediaTypes.DOCUMENTS)) {
+                return getResponse(badRequest(null, "Invalid file '" + fileDetail.getFileName() + "'"));
+            }
+
+            IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
+
+            if (produkt != null) {
+                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { herstellerStr, bestellNr }, fileDetail, fileData);
+
+                produkt.setAnleitungen(file);
+
+                getPersister().update((Produkt) produkt);
+
+                return getResponse(ok(produkt));
+            }
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+
+        return getResponse(notFound());
+    }
+
+    @DELETE
+    @Path(ApiPaths.PRODUKT_ANLEITUNGEN)
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response deleteAnleitungen(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
+        try {
+            IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
+
+            if (produkt != null && produkt.getAbbildung() != null) {
+                StaticContentFinder.getStore().removeFile(produkt.getAnleitungen());
+
+                produkt.setAnleitungen(null);
+
+                getPersister().update((Produkt) produkt);
+
+                return getResponse(ok(produkt));
+            }
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+
+        return getResponse(notFound());
+    }
+
+    @PUT
+    @Path(ApiPaths.PRODUKT_EXPLOSIONSZEICHNUNG)
+    @Consumes({ MediaType.MULTIPART_FORM_DATA })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response updateExplosionszeichnung(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
+                                              @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
+                                    @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
+        IFileUploadHandler handler = new FileUploadHandler();
+
+        try {
+            if (!handler.isAcceptable(fileDetail, fileData, AcceptableMediaTypes.DOCUMENTS)) {
+                return getResponse(badRequest(null, "Invalid file '" + fileDetail.getFileName() + "'"));
+            }
+
+            IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
+
+            if (produkt != null) {
+                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { herstellerStr, bestellNr }, fileDetail, fileData);
+
+                produkt.setExplosionszeichnung(file);
+
+                getPersister().update((Produkt) produkt);
+
+                return getResponse(ok(produkt));
+            }
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+
+        return getResponse(notFound());
+    }
+
+    @DELETE
+    @Path(ApiPaths.PRODUKT_EXPLOSIONSZEICHNUNG)
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    public Response deleteExplosionszeichnung(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
+        try {
+            IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
+
+            if (produkt != null && produkt.getAbbildung() != null) {
+                StaticContentFinder.getStore().removeFile(produkt.getExplosionszeichnung());
+
+                produkt.setExplosionszeichnung(null);
+
+                getPersister().update((Produkt) produkt);
+
+                return getResponse(ok(produkt));
+            }
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+
+        return getResponse(notFound());
     }
 
     private ProduktTeil findProduktTeil(String herstellerStr, String bestellNr, String teilHerstellerStr, String teilBestellNr, boolean eager) throws Exception {

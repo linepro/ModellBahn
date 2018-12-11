@@ -19,5 +19,5 @@ public interface IModellBahnFactory {
      * @param baseUri the base uri for the application
      * @return the application.
      */
-    ModellBahn create(URI baseUri, Collection<String> staticRoots);
+    ModellBahn create(URI baseUri, Collection<String> staticRoots, String storeRoot);
 }
