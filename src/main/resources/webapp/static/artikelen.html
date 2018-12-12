@@ -14,9 +14,40 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
+const columns = [
+  HERSTELLER,
+  BESTELL_NR,
+  KAUFDATUM,
+  WAHRUNG,
+  PREIS,
+  STUCK,
+  STEUERUNG,
+  MOTOR_TYP,
+  LICHT,
+  KUPPLUNG,
+  DECODER,
+  ANMERKUNG,
+  BELADUNG,
+  ABBILDUNG,
+  STATUS,
+  new ButtonColumn(
+    [newRow],
+    [editRow, deleteRow]) ];
+
+const artikel = new ItemGrid(10, fetchUrl("artikel"), "artikel", columns, true, EditMode.UPDATE, undefined, "artikel.html");
 
 async function init() {
-    about();
+  await PRODUKT_DROP.init();
+  await WAHRUNG_DROP.init();
+  await STEUERUNG_DROP.init();
+  await SPURWEITE_DROP.init();
+  await MOTOR_TYP_DROP.init();
+  await LICHT_DROP.init();
+  await KUPPLUNG_DROP.init();
+  await DECODER_DROP.init();
+  await STATUS_DROP.init();
+  await artikel.init();
+  about();
 }
 </script>
 <title>Artikelen</title>
@@ -42,7 +73,6 @@ async function init() {
 			<h1 id="heading">Artikel</h1>
 			<div id="data">
 				<div id="artikel">
-				TODO Grid ediable form with image upload and display
 				</div>
 			</div>
 		</article>

@@ -14,9 +14,29 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-async function init() {
+  const columns = [
+    GATTUNG,
+    KATEGORIE,
+    UNTER_KATEGORIE,
+    BAHNVERWALTUNG,
+    HERSTELLER,
+    BAUZEIT,
+    AUSSERDIENST,
+    ANZAHL,
+    ABBILDUNG,
+    new ButtonColumn(
+      [newRow],
+      [editRow, deleteRow]) ];
+
+  const vorbild = new ItemGrid(10, fetchUrl("vorbild"), "vorbild", columns, true, EditMode.UPDATE, undefined, "vorbild.html");
+
+  async function init() {
+    await GATTUNG_DROP.init();
+    await UNTER_KATEGORIE_DROP.init();
+    await BAHNVERWALTUNG_DROP.init();
+    await vorbild.init();
     about();
-}
+  }
 </script>
 <title>Vorbilder</title>
 </head>
@@ -28,7 +48,7 @@ async function init() {
                 <li><a class="nav-button" href="#" onclick="history.go(-1)">Back</a></li>
                 <li><a class="nav-button" href="produkten.html">Produkt</a></li>
                 <li><a class="nav-button" href="vorbilder.html">Vorbild</a></li>
-                <li><a class="nav-button" href="artikelen.html">Artikel</a></li>      
+                <li><a class="nav-button" href="vorbilden.html">Artikel</a></li>      
                 <li><a class="nav-button" href="decoderen.html">Decoder</a></li>      
                 <li><a class="nav-button" href="zugen.html">Zug</a></li>
             </ul>

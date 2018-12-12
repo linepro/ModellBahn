@@ -14,48 +14,46 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-const columns = [
-  HERSTELLER,
-  BESTELL_NR,
-  KATEGORIE,
-  UNTER_KATEGORIE,
-  MASSSTAB,
-  SPURWEITE,
-  EPOCH,
-  BAHNVERWALTUNG,
-  GATTUNG,
-  BEZEICHNUNG,
-  new ButtonColumn(
-    [newRow],
-    [editRow, deleteRow]) ];
-
-const produkt = new ItemGrid(10, fetchUrl("produkt"), "produkt", columns, true, EditMode.UPDATE, undefined, "produkt.html");
+const artikel = new ItemGrid(1, fetchUrl("artikel"), "artikel", [
+  PRODUKT,
+  KAUFDATUM,
+  WAHRUNG,
+  PREIS,
+  STUCK,
+  STEUERUNG,
+  MOTOR_TYP,
+  LICHT,
+  KUPPLUNG,
+  DECODER,
+  ANMERKUNG,
+  BELADUNG,
+    ABBILDUNG,
+  STATUS,
+  new ButtonColumn([], [updateRow])],
+  false, EditMode.UPDATE, undefined);
 
 async function init() {
-	await HERSTELLER_DROP.init();
-    await UNTER_KATEGORIE_DROP.init();
-    await MASSSTAB_DROP.init();
-    await SPURWEITE_DROP.init();
-    await EPOCH_DROP.init();
-    await BAHNVERWALTUNG_DROP.init();
-    await GATTUNG_DROP.init();
-	await produkt.init();
-    about();
+  await PRODUKT_DROP.init();
+  await WAHRUNG_DROP.init();
+  await STEUERUNG_DROP.init();
+  await SPURWEITE_DROP.init();
+  await MOTOR_TYP_DROP.init();
+  await LICHT_DROP.init();
+  await KUPPLUNG_DROP.init();
+  await DECODER_DROP.init();
+  await STATUS_DROP.init();
+  await artikel.init();
+  about();
 }
 </script>
-<title>Produkten</title>
+<title>Artikelen</title>
 </head>
-<body onLoad="init()">
+<body onload="init()">
     <header>
         <nav>
             <ul class="nav">
                 <li><a class="nav-button" href='../index.html'>Home</a></li>
                 <li><a class="nav-button" href="#" onclick="history.go(-1)">Back</a></li>
-                <li><a class="nav-button" href="produkten.html">Produkt</a></li>
-                <li><a class="nav-button" href="vorbilder.html">Vorbild</a></li>
-                <li><a class="nav-button" href="artikelen.html">Artikel</a></li>      
-                <li><a class="nav-button" href="decoderen.html">Decoder</a></li>      
-                <li><a class="nav-button" href="zugen.html">Zug</a></li>
             </ul>
         </nav>
         <hr class="highlight" />
@@ -63,9 +61,9 @@ async function init() {
     	
 	<section>
 		<article>
-			<h3 id="heading">Produkt</h3>
+			<h1 id="heading">Artikel</h1>
 			<div id="data">
-				<div id="produkt">
+				<div id="artikel">
 				</div>
 			</div>
 		</article>

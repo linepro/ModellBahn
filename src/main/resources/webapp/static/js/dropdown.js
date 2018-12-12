@@ -9,11 +9,10 @@ class Option {
 }
 
 class DropDown {
-  constructor(apiQuery, valueColumns, displayColumns, compound) {
+  constructor(apiQuery, valueColumn, displayColumn) {
     this.apiQuery = apiQuery;
-    this.valueColumns = valueColumns;
-    this.displayColumns = displayColumns;
-    this.compound = compound;
+    this.valueColumn = valueColumn;
+    this.displayColumn = displayColumn;
     this.length = 10;
     this.options = [];
   }
@@ -46,23 +45,8 @@ class DropDown {
     let entities = jsonData.entities ? jsonData.entities : jsonData;
 
     entities.forEach(entity => {
-      let display = "";
-      let value = select.compound ? [] : "";
-
-      select.displayColumns.forEach(name => {
-        display = display + " " + entity[name];
-      });
-
-      select.valueColumns.forEach(name => {
-        if (select.compound) {
-          value[name] = entity[name];
-        } else {
-          value = entity[name];
-        }
-      });
-
-      display = display.trim();
-      value = value.trim();
+      let display = entity[this.displayColumn];
+      let value = entity[this.valueColumn];
 
       select.length = Math.max(select.length, display.length);
       select.options.push(new Option(display, value));
