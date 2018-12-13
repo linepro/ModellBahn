@@ -1,12 +1,13 @@
 package com.linepro.modellbahn.rest.util;
 
-import javax.ws.rs.core.MediaType;
 import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.ws.rs.core.MediaType;
 
 public interface AcceptableMediaTypes {
 
@@ -24,7 +25,7 @@ public interface AcceptableMediaTypes {
 
     List<String> DOCUMENTS = Arrays.asList( PDF_TYPE.getType(), MediaType.TEXT_PLAIN_TYPE.getType() );
 
-    Map<MediaType, String> EXTENTSIONS = Stream.of(
+    Map<MediaType, String> TYPES_TO_EXTENTSIONS = Stream.of(
             new AbstractMap.SimpleEntry<>(BMP_TYPE, ".bmp"),
             new AbstractMap.SimpleEntry<>(GIF_TYPE, ".gif"),
             new AbstractMap.SimpleEntry<>(JPG_TYPE, ".jpg"),
@@ -33,4 +34,13 @@ public interface AcceptableMediaTypes {
             new AbstractMap.SimpleEntry<>(MediaType.TEXT_PLAIN_TYPE, ".txt"))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
+
+    Map<String, MediaType> EXTENTSIONS_TO_TYPES = Stream.of(
+            new AbstractMap.SimpleEntry<>(".bmp", BMP_TYPE),
+            new AbstractMap.SimpleEntry<>(".gif", GIF_TYPE),
+            new AbstractMap.SimpleEntry<>(".jpg", JPG_TYPE),
+            new AbstractMap.SimpleEntry<>(".png", PNG_TYPE),
+            new AbstractMap.SimpleEntry<>(".pdf", PDF_TYPE),
+            new AbstractMap.SimpleEntry<>(".txt", MediaType.TEXT_PLAIN_TYPE))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 }

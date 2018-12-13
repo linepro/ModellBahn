@@ -3,28 +3,21 @@
  */
 package com.linepro.modellbahn.rest.util;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.linepro.modellbahn.model.IArtikel;
-import com.linepro.modellbahn.model.impl.Artikel;
-import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.util.IFileStore;
-import com.linepro.modellbahn.util.StaticContentFinder;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.inject.Inject;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+
+import javax.inject.Inject;
+
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.linepro.modellbahn.util.IFileStore;
+import com.linepro.modellbahn.util.StaticContentFinder;
 
 /**
  * The Class FileUpload
@@ -71,7 +64,18 @@ public class FileUploadHandler implements IFileUploadHandler {
         Files.createDirectory(fileStore.getItemPath(entityType, entityIds));
 
         String fileName = fileDetail.getFileName();
-        String extension = getExtension(fileDetail.getType());
+        String extension = null;
+        
+        int extensionStart = fileName.lastIndexOf(".");
+
+        if (extensionStart >= 0) {
+            fileName = fileName.substring(0,  extensionStart);
+            extension = fileName.substring(extensionStart);
+        }
+
+        if (extension == null || AcceptableMediaTypes.EXTENTSIONS_TO_TYPES.get(extension) == null) {
+            throw new IllegalArgumentException("Unsupported mediaType " + fileName);
+        }
 		
         Path filePath = fileStore.getFilePath(entityType, entityIds, fileName, extension);
 
@@ -81,16 +85,6 @@ public class FileUploadHandler implements IFileUploadHandler {
         
         return filePath;
 	}
-
-    protected String getExtension(String mediaType) throws Exception {
-        String extension = AcceptableMediaTypes.EXTENTSIONS.get(mediaType);
-        
-        if (extension == null) {
-            throw new IllegalArgumentException("Unsupported mediaType " + mediaType);
-        }
-
-        return extension;
-    }
 
 	/**
      * Write to file.
