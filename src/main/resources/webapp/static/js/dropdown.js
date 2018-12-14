@@ -2,55 +2,51 @@
 "use strict";
 
 class Option {
-  constructor(display, value) {
+  constructor(display, value, image) {
+    this.values = values;
+    this.image = image;
     this.display = display;
-    this.value = value;
+  }
+
+  getDisplay() {
+    return this.display;
+  }
+
+  getValues() {
+    return this.values;
+  }
+
+  getImage() {
+    return this.image;
   }
 }
 
 class DropDown {
-  constructor(apiQuery, valueColumn, displayColumn) {
+  constructor(apiQuery, valueColumns, displayColumns, imageColumn) {
     this.apiQuery = apiQuery;
-    this.valueColumn = valueColumn;
-    this.displayColumn = displayColumn;
+    this.valueColumns = valueColumns;
+    this.displayColumns = displayColumns;
+    this.imageColumn = imageColumn;
     this.length = 10;
     this.options = [];
   }
 
-  addOptions(select, dropSize, initial) {
-    while (select.length) {
-      select.remove(0);
-    }
+  loadOptions(jsonData) {
+    let entities = jsonData.entities ? jsonData.entities : jsonData;
+    let dropDown = this;
 
-    select.size = dropSize;
+    entities.forEach(entity => {
+      let display = dropDown.displayColumns(entity);
+      let values = dropDown.valueColumns(entity);
 
-    let i = 0;
-    this.options.forEach(option => {
-      let opt = document.createElement("option");
-      opt.value = option.value;
-      opt.text = option.display;
-
-      select.add(opt);
-
-      if (initial && initial === option.display) {
-        select.selectedIndex = i;
-      }
-
-      i++;
+      let option =
+      dropDown.length = Math.max(display.length, dropDown.length);
+      dropDown.options.push(new Option(display, values, dropDown.imageColumn(entity)));
     });
   }
 
-  loadOptions(jsonData) {
-    let select = this;
-    let entities = jsonData.entities ? jsonData.entities : jsonData;
-
-    entities.forEach(entity => {
-      let display = entity[this.displayColumn];
-      let value = entity[this.valueColumn];
-
-      select.length = Math.max(select.length, display.length);
-      select.options.push(new Option(display, value));
-    });
+  getOptions() {
+    return options;
   }
 
   async init() {

@@ -328,14 +328,33 @@ class DateColumn extends Column {
 }
 
 class SelectColumn extends Column {
-  constructor(heading, binding, dropDown, editable, required) {
+  constructor(heading, binding, dropSize, dropDown, editable, required) {
     super(heading, binding, editable, required, dropDown.length);
+    this.dropSize = dropSize;
     this.dropDown = dropDown;
+  }
+
+  addOptions(select, dropDown, initial) {
+    let i = 0;
+    dropDown.options.forEach(option => {
+      let opt = document.createElement("option");
+      opt.text = option.display.join();
+      opt.value = option.values;
+
+      select.add(opt);
+
+      if (initial && initial === option.display) {
+        select.selectedIndex = i;
+      }
+
+      i++;
+    });
   }
 
   createControl() {
     let ctl = document.createElement("select");
-    this.dropDown.addOptions(ctl, 1);
+    ctl.size = this.dropSize;
+    addOptions(ctl, this.dropDown, 1);
     return ctl;
   }
 
@@ -349,7 +368,59 @@ class SelectColumn extends Column {
 
   setValue(ctl, value) {
     for (let i = 0; i < ctl.options.length; i++) {
-      if (ctl.options[i].value === value) {
+      if (ctl.options[i].value == value) {
+        ctl.selectedIndex = i;
+        return;
+      }
+    }
+  }
+}
+
+class CompoundSelectColumn extends Column {
+  constructor(heading, bindings, dropSize, dropDown, editable, required) {
+    super(heading, bindings, editable, required, dropDown.length);
+    this.dropSize = dropSize;
+    this.dropDown = dropDown;
+  }
+
+  addOptions(select, dropDown, initial) {
+    let i = 0;
+    dropDown.options.forEach(option => {
+      let opt = document.createElement("option");
+      opt.text = option.display.join();
+      opt.value = option.values;
+
+      select.add(opt);
+
+      if (initial && initial === option.display) {
+        select.selectedIndex = i;
+      }
+
+      i++;
+    });
+  }
+
+  createControl() {
+    let i = 0;
+    for (i = 0; i < bindings.length ; i++) {
+      let ctl = document.createElement("select");
+      ctl.size = this.dropSize;
+      addOptions(ctl, this.dropDown, 1);
+      return ctl;
+    })
+  }
+
+  getControlValue(select) {
+    return select.options[select.selectedIndex].value;
+  }
+
+  getLength() {
+    return Math.max(this.dropDown.length, this.heading.length);
+  }
+
+  setValue(ctl, value) {
+    for (let i = 0; i < ctl.options.length; i++) {
+      if (ctl.options[i].value == value) {
         ctl.selectedIndex = i;
         return;
       }
