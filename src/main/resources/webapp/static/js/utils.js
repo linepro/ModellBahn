@@ -207,94 +207,6 @@ class Column {
   }
 }
 
-class TextColumn extends Column {
-  constructor(heading, binding, editable, required, length) {
-    super(heading, binding, editable, required, length);
-  }
-
-  createControl() {
-    let ctl = super.createControl();
-    ctl.type = "text";
-    ctl.maxLength = this.length;
-    return ctl;
-  }
-}
-
-class IMGColumn extends Column {
-  constructor(heading, binding, onChange, editable, required) {
-    super(heading, binding, editable, required);
-    this.onChange = onChange;
-  }
-
-  createControl() {
-    let ctl = super.createControl();
-    ctl.type = "file";
-    ctl.accept = "image/*";
-    ctl.multiple = false;
-    if (this.onChange) ctl.change = this.onChange;
-    return ctl;
-  }
-}
-
-class PhoneColumn extends Column {
-  constructor(heading, binding, editable, required) {
-    super(heading, binding, editable, required);
-  }
-
-  createControl() {
-    let ctl = super.createControl();
-    ctl.type = "tel";
-    return ctl;
-  }
-}
-
-class PDFColumn extends Column {
-  constructor(heading, binding, onChange, editable, required) {
-    super(heading, binding, editable, required);
-    this.onChange = onChange;
-  }
-
-  createControl() {
-    let ctl = super.createControl();
-    ctl.type = "file";
-    ctl.accept = "application/pdf";
-    ctl.multiple = false;
-    if (this.onChange) ctl.change = this.onChange;
-    return ctl;
-  }
-}
-
-class URLColumn extends Column {
-  constructor(heading, binding, editable, required) {
-    super(heading, binding, editable, required);
-  }
-
-  createControl() {
-    let ctl = super.createControl();
-    ctl.type = "url";
-    return ctl;
-  }
-}
-
-class NumberColumn extends Column {
-  constructor(heading, binding, editable, required, max, min, step) {
-    max = max ? max : 255;
-    super(heading, binding, editable, required, Math.max(max.toString().length, 5));
-    this.max = max;
-    this.min = min ? min : 0;
-    this.step = step ? step : 1;
-  }
-
-  createControl() {
-    let ctl = super.createControl();
-    ctl.type = "number";
-    ctl.min = this.min;
-    ctl.max = this.max;
-    ctl.step = this.step;
-    return ctl;
-  }
-}
-
 class BoolColumn extends Column {
   constructor(heading, binding, editable, required) {
     super(heading, binding, editable, required, heading.length);
@@ -327,11 +239,155 @@ class DateColumn extends Column {
   }
 }
 
+class NumberColumn extends Column {
+  constructor(heading, binding, editable, required, max, min, step) {
+    max = max ? max : 255;
+    super(heading, binding, editable, required, Math.max(max.toString().length, 5));
+    this.max = max;
+    this.min = min ? min : 0;
+    this.step = step ? step : 1;
+  }
+
+  createControl() {
+    let ctl = super.createControl();
+    ctl.type = "number";
+    ctl.min = this.min;
+    ctl.max = this.max;
+    ctl.step = this.step;
+    return ctl;
+  }
+}
+
+class PhoneColumn extends Column {
+  constructor(heading, binding, editable, required) {
+    super(heading, binding, editable, required);
+  }
+
+  createControl() {
+    let ctl = super.createControl();
+    ctl.type = "tel";
+    return ctl;
+  }
+}
+
+class TextColumn extends Column {
+  constructor(heading, binding, editable, required, length) {
+    super(heading, binding, editable, required, length);
+  }
+
+  createControl() {
+    let ctl = super.createControl();
+    ctl.type = "text";
+    ctl.maxLength = this.length;
+    return ctl;
+  }
+}
+
+class URLColumn extends Column {
+  constructor(heading, binding, editable, required) {
+    super(heading, binding, editable, required);
+  }
+
+  createControl() {
+    let ctl = super.createControl();
+    ctl.type = "url";
+    return ctl;
+  }
+}
+
+class IMGColumn extends Column {
+  constructor(heading, binding, onChange, editable, required) {
+    super(heading, binding, editable, required);
+    this.onChange = onChange;
+  }
+
+  createControl() {
+    let ctl = super.createControl();
+    ctl.type = "file";
+    ctl.accept = "image/*";
+    ctl.multiple = false;
+    if (this.onChange) ctl.change = this.onChange;
+    return ctl;
+  }
+
+  getControlValue(ctl) {
+    return ctl.checked;
+  }
+}
+
+class PDFColumn extends Column {
+  constructor(heading, binding, onChange, editable, required) {
+    super(heading, binding, editable, required);
+    this.onChange = onChange;
+  }
+
+  getControl(cell, entity, editMode) {
+    let ctl = this.createControl();
+    cell.style.width = this.width;
+    cell.style.maxWidth = this.width;
+
+    let value;
+
+    if (entity) value = this.entityValue(entity);
+
+    if (value) {
+      this.setValue(ctl, value);
+    }
+
+    if (value || entity) {
+      ctl.disabled = shouldDisable(this.editable, editMode);
+    } else {
+      ctl.disabled = !(editMode === EditMode.ADD && this.editable !== Editable.NEVER);
+    }
+
+    ctl.required = this.required;
+
+    return ctl;
+  }
+
+  createControl() {
+    let ctl = super.createControl();
+    ctl.type = "file";
+    ctl.accept = "application/pdf";
+    ctl.multiple = false;
+    if (this.onChange) ctl.change = this.onChange;
+    return ctl;
+  }
+
+  getControlValue(ctl) {
+    return ctl.checked;
+  }
+}
+
 class SelectColumn extends Column {
   constructor(heading, binding, dropSize, dropDown, editable, required) {
     super(heading, binding, editable, required, dropDown.length);
     this.dropSize = dropSize;
     this.dropDown = dropDown;
+  }
+
+  getControl(cell, entity, editMode) {
+    let ctl = this.createControl();
+    cell.style.width = this.width;
+    cell.style.maxWidth = this.width;
+
+    let value;
+
+    if (entity) value = this.entityValue(entity);
+
+    if (value) {
+      this.setValue(ctl, value);
+    }
+
+    if (value || entity) {
+      ctl.disabled = shouldDisable(this.editable, editMode);
+    } else {
+      ctl.disabled = !(editMode === EditMode.ADD && this.editable !== Editable.NEVER);
+    }
+
+    ctl.required = this.required;
+
+    return ctl;
   }
 
   addOptions(select, dropDown, initial) {
@@ -356,58 +412,6 @@ class SelectColumn extends Column {
     ctl.size = this.dropSize;
     addOptions(ctl, this.dropDown, 1);
     return ctl;
-  }
-
-  getControlValue(select) {
-    return select.options[select.selectedIndex].value;
-  }
-
-  getLength() {
-    return Math.max(this.dropDown.length, this.heading.length);
-  }
-
-  setValue(ctl, value) {
-    for (let i = 0; i < ctl.options.length; i++) {
-      if (ctl.options[i].value == value) {
-        ctl.selectedIndex = i;
-        return;
-      }
-    }
-  }
-}
-
-class CompoundSelectColumn extends Column {
-  constructor(heading, bindings, dropSize, dropDown, editable, required) {
-    super(heading, bindings, editable, required, dropDown.length);
-    this.dropSize = dropSize;
-    this.dropDown = dropDown;
-  }
-
-  addOptions(select, dropDown, initial) {
-    let i = 0;
-    dropDown.options.forEach(option => {
-      let opt = document.createElement("option");
-      opt.text = option.display.join();
-      opt.value = option.values;
-
-      select.add(opt);
-
-      if (initial && initial === option.display) {
-        select.selectedIndex = i;
-      }
-
-      i++;
-    });
-  }
-
-  createControl() {
-    let i = 0;
-    for (i = 0; i < bindings.length ; i++) {
-      let ctl = document.createElement("select");
-      ctl.size = this.dropSize;
-      addOptions(ctl, this.dropDown, 1);
-      return ctl;
-    })
   }
 
   getControlValue(select) {
