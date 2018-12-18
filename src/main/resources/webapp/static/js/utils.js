@@ -137,7 +137,7 @@ class Column {
     this.binding = binding;
     this.editable = editable ? editable : Editable.NEVER;
     this.required = required ? required : false;
-    this.length = Math.max(length ? length : heading.length, heading.length);
+    this.length = Math.max(length ? length : heading.length, heading.length+1);
   }
 
   setTableName(tableName) {
@@ -242,7 +242,7 @@ class DateColumn extends Column {
 class NumberColumn extends Column {
   constructor(heading, binding, editable, required, max, min, step) {
     max = max ? max : 255;
-    super(heading, binding, editable, required, Math.max(max.toString().length, 5));
+    super(heading, binding, editable, required, Math.max(max.toString().length, heading.length));
     this.max = max;
     this.min = min ? min : 0;
     this.step = step ? step : 1;
@@ -572,14 +572,14 @@ const setActiveTab = (event, tabName) => {
   let tabContents = document.getElementsByClassName("tabContent");
   let tabLinks = document.getElementsByClassName("tabLinks");
 
-  tabContents.forEach(tab => {
-    tab.style.display = (tab.id === tabName) ? "block" : "none";
-  });
+  for (let i = 0; i < tabContents.length; i++) {
+    tabContents[i].style.display = (tabContents[i].id === tabName) ? "block" : "none";
+  };
 
   let linkName = tabName.replace("Tab", "Link");
-  tabLinks.forEach(link => {
-    link.className = (link.id === linkName) ? "tabLinks active" : "tabLinks";
-  });
+  for (let i = 0; i < tabLinks.length; i++) {
+	  tabLinks[i].className = (tabLinks[i].id === linkName) ? "tabLinks active" : "tabLinks";
+  };
 };
 
 const addRow = (tableName) => {
