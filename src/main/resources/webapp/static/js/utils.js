@@ -360,10 +360,10 @@ class PDFColumn extends Column {
 }
 
 class SelectColumn extends Column {
-  constructor(heading, binding, dropSize, dropDown, editable, required) {
+  constructor(heading, binding, dropDown, editable, required) {
     super(heading, binding, editable, required, dropDown.length);
-    this.dropSize = dropSize;
     this.dropDown = dropDown;
+    this.dropSize = 1;
   }
 
   getControl(cell, entity, editMode) {
@@ -394,7 +394,7 @@ class SelectColumn extends Column {
     let i = 0;
     dropDown.options.forEach(option => {
       let opt = document.createElement("option");
-      opt.text = option.display.join();
+      opt.text = option.display;
       opt.value = option.values;
 
       select.add(opt);
@@ -410,7 +410,7 @@ class SelectColumn extends Column {
   createControl() {
     let ctl = document.createElement("select");
     ctl.size = this.dropSize;
-    addOptions(ctl, this.dropDown, 1);
+    this.addOptions(ctl, this.dropDown, 1);
     return ctl;
   }
 

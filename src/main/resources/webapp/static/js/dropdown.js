@@ -2,7 +2,7 @@
 "use strict";
 
 class Option {
-  constructor(display, value, image) {
+  constructor(display, values, image) {
     this.display = display;
     this.values = values;
     this.image = image;
@@ -33,16 +33,19 @@ class DropDown {
   loadOptions(jsonData) {
     let entities = jsonData.entities ? jsonData.entities : jsonData;
     let dropDown = this;
-
-    let options = entities.reduce((options, entity) => {
-      let display = entity[dropDown.columns(0, 0)];
+    
+    let menu = entities.reduce((choices, entity) => {
+      let displayExtractor = dropDown.columns[0][0];
+      let display = displayExtractor(entity);
+      let valueExtractor = dropDown.columns[0][1];
+      let value = valueExtractor(entity);
       dropDown.length = Math.max(display.length, dropDown.length);
-      (options[key] = options[key] || []).push(entity[dropDown.columns(0, 1)]);
-      return options;
+      (choices[display] = choices[display] || []).push(value);
+      return choices;
       }, {});
 
-    options.forEach((option) => {
-      dropDown.options.push(new Option(display, values, dropDown.imageColumn(entity)));
+    Object.keys(menu).forEach((display) => {
+      dropDown.options.push(new Option(display, menu[display]));
     });
   }
 
