@@ -1,21 +1,9 @@
 package com.linepro.modellbahn.persistence.impl;
 
-import com.google.inject.assistedinject.Assisted;
-import com.linepro.modellbahn.guice.ISessionManagerFactory;
-import com.linepro.modellbahn.model.IItem;
-import com.linepro.modellbahn.model.keys.IdKey;
-import com.linepro.modellbahn.model.keys.ItemKey;
-import com.linepro.modellbahn.model.keys.NameKey;
-import com.linepro.modellbahn.persistence.IIdGenerator;
-import com.linepro.modellbahn.persistence.IKey;
-import com.linepro.modellbahn.persistence.IPersister;
-import com.linepro.modellbahn.persistence.ISessionManager;
-import com.linepro.modellbahn.persistence.util.BusinessKey;
-import com.linepro.modellbahn.util.Selector;
-import com.linepro.modellbahn.util.SelectorsBuilder;
-import org.hibernate.collection.spi.PersistentCollection;
-import org.slf4j.ILoggerFactory;
-import org.slf4j.Logger;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.persistence.Column;
@@ -31,10 +19,24 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+
+import org.hibernate.collection.spi.PersistentCollection;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+
+import com.google.inject.assistedinject.Assisted;
+import com.linepro.modellbahn.guice.ISessionManagerFactory;
+import com.linepro.modellbahn.model.IItem;
+import com.linepro.modellbahn.model.keys.IdKey;
+import com.linepro.modellbahn.model.keys.ItemKey;
+import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.persistence.IIdGenerator;
+import com.linepro.modellbahn.persistence.IKey;
+import com.linepro.modellbahn.persistence.IPersister;
+import com.linepro.modellbahn.persistence.ISessionManager;
+import com.linepro.modellbahn.persistence.util.BusinessKey;
+import com.linepro.modellbahn.util.Selector;
+import com.linepro.modellbahn.util.SelectorsBuilder;
 
 /**
  * ItemPersister.

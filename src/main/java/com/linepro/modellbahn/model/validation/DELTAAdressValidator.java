@@ -1,12 +1,13 @@
 package com.linepro.modellbahn.model.validation;
 
-import com.linepro.modellbahn.model.IAdress;
-import com.linepro.modellbahn.model.util.AdressTyp;
+import java.util.Arrays;
+import java.util.Collection;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.Arrays;
-import java.util.Collection;
+
+import com.linepro.modellbahn.model.IAdress;
+import com.linepro.modellbahn.model.util.AdressTyp;
 
 public class DELTAAdressValidator implements ConstraintValidator<DELTAAdress, IAdress> {
 

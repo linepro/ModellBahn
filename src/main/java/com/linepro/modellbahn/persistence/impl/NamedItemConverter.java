@@ -1,11 +1,12 @@
 package com.linepro.modellbahn.persistence.impl;
 
-import com.linepro.modellbahn.model.IItem;
-import com.linepro.modellbahn.model.keys.NameKey;
-import com.linepro.modellbahn.persistence.IPersister;
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.beanutils.Converter;
 import org.apache.commons.lang3.StringUtils;
+
+import com.linepro.modellbahn.model.IItem;
+import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.persistence.IPersister;
 
 /**
  * NamedItemConverter.

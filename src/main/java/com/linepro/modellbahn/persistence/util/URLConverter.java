@@ -1,8 +1,9 @@
 package com.linepro.modellbahn.persistence.util;
 
-import javax.persistence.AttributeConverter;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import javax.persistence.AttributeConverter;
 
 public class URLConverter implements AttributeConverter<URL, String> {
 

@@ -1,9 +1,10 @@
 package com.linepro.modellbahn;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.linepro.modellbahn.guice.IModellBahnFactory;
-import com.linepro.modellbahn.guice.ModellBahnModule;
+import java.net.InetAddress;
+import java.net.URI;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -11,10 +12,10 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-import java.net.InetAddress;
-import java.net.URI;
-import java.util.Arrays;
-import java.util.List;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.linepro.modellbahn.guice.IModellBahnFactory;
+import com.linepro.modellbahn.guice.ModellBahnModule;
 
 /**
  * Main.

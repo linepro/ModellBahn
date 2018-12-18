@@ -1,15 +1,17 @@
 package com.linepro.modellbahn.persistence.impl;
 
-import com.linepro.modellbahn.persistence.ISessionManager;
-import org.slf4j.ILoggerFactory;
-import org.slf4j.Logger;
+import java.sql.SQLException;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.FlushModeType;
-import java.sql.SQLException;
+
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+
+import com.linepro.modellbahn.persistence.ISessionManager;
 
 public class SessionManager implements ISessionManager {
 

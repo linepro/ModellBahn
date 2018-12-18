@@ -1,19 +1,22 @@
 package com.linepro.modellbahn;
 
+import java.net.URI;
+import java.util.Collection;
+
+import javax.inject.Inject;
+
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+
 import com.google.inject.assistedinject.Assisted;
 import com.linepro.modellbahn.jersey.ServerBuilder;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.rest.util.ModellBahnConfiguration;
 import com.linepro.modellbahn.util.DBPopulator;
 import com.linepro.modellbahn.util.StaticContentFinder;
-import io.swagger.jaxrs.config.BeanConfig;
-import org.glassfish.grizzly.http.server.HttpServer;
-import org.slf4j.ILoggerFactory;
-import org.slf4j.Logger;
 
-import javax.inject.Inject;
-import java.net.URI;
-import java.util.Collection;
+import io.swagger.jaxrs.config.BeanConfig;
 
 /**
  * ModellBahn. The ModellBahn application
@@ -75,7 +78,7 @@ public class ModellBahn implements IModellBahn {
             swaggerConfig.setResourcePackage(configuration.getPackages());
             swaggerConfig.setScan(true);
 
-            configuration.register();
+            configuration.register(baseUri);
 
             HttpServer server = new ServerBuilder().getServer(baseUri, configuration);
 
@@ -85,13 +88,17 @@ public class ModellBahn implements IModellBahn {
             
             server.start();
 
-            logger.info("Application started with WADL available at {}/{}\n" +
-                    "Static content served on {}{} from {}; Filestore from {}\n" +
+            logger.info("Application started with Static content served on {}{}\n" +
+                    "Static content from {}; Filestore from {}\n" +
                     "API served on {}{}\n" +
+                    "WADL available at {}/{}\n" +                    
+                    "Swagger served on {}{}\n" +
                     "Press CTRL^C (SIGINT) to terminate.",
+                    baseUri, ApiPaths.WEB_ROOT, 
+                    StaticContentFinder.getFinder().getAbsolutePaths(), StaticContentFinder.getStore().getStoreRoot(),
+                    baseUri, ApiPaths.API_ROOT,
                     baseUri, ApiPaths.APPLICATION_WADL,
-                    baseUri, ApiPaths.WEB_ROOT, StaticContentFinder.getFinder().getAbsolutePaths(), StaticContentFinder.getStore().getStoreRoot(),
-                    baseUri, ApiPaths.API_ROOT);
+                    baseUri, ApiPaths.SWAGGER_ROOT);
 
             Thread.currentThread().join();
 

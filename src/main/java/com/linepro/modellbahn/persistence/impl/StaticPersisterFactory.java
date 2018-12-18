@@ -1,8 +1,8 @@
 package com.linepro.modellbahn.persistence.impl;
 
-import com.linepro.modellbahn.persistence.IPersisterFactory;
-
 import javax.inject.Inject;
+
+import com.linepro.modellbahn.persistence.IPersisterFactory;
 
 /**
  * StaticPersisterFactory is a bridge between Guice (used by persistence) and HK2 (used by Jersey). 

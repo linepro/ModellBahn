@@ -1,12 +1,13 @@
 package com.linepro.modellbahn.util;
 
+import java.io.File;
+
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.INamedItem;
 import com.linepro.modellbahn.model.IProdukt;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
-import java.io.File;
 
 /**
  * TODO: by proxy??

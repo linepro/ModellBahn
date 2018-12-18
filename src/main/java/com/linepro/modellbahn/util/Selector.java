@@ -1,10 +1,11 @@
 package com.linepro.modellbahn.util;
 
-import com.linepro.modellbahn.rest.util.ApiNames;
+import java.lang.reflect.Method;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import java.lang.reflect.Method;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
  * Selector.

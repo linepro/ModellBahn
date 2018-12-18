@@ -1,12 +1,13 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import java.io.IOException;
+
+import javax.ws.rs.core.Link;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.linepro.modellbahn.rest.json.LinkUtils;
-
-import javax.ws.rs.core.Link;
-import java.io.IOException;
 
 /**
  * LinkSerializer.

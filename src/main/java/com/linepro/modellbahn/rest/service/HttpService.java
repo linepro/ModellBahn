@@ -1,17 +1,19 @@
 package com.linepro.modellbahn.rest.service;
 
-import com.linepro.modellbahn.rest.util.AbstractService;
-import com.linepro.modellbahn.rest.util.ApiPaths;
-import com.linepro.modellbahn.util.StaticContentFinder;
-import org.apache.commons.lang3.StringUtils;
+import java.io.File;
+import java.net.URI;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-import java.io.File;
-import java.net.URI;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.linepro.modellbahn.rest.util.AbstractService;
+import com.linepro.modellbahn.rest.util.ApiPaths;
+import com.linepro.modellbahn.util.StaticContentFinder;
 
 @Path(ApiPaths.WEB_ROOT)
 public class HttpService extends AbstractService {

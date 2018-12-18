@@ -24,7 +24,7 @@ public interface ApiPaths {
     String DECODER_ID_PARAM_NAME = ApiNames.DECODER_ID;
 
     String FUNKTION_PARAM_NAME = ApiNames.FUNKTION;
-    
+
     String HERSTELLER_PARAM_NAME = ApiNames.HERSTELLER;
 
     String INDEX_PARAM_NAME = ApiNames.INDEX;
@@ -57,17 +57,17 @@ public interface ApiPaths {
     
     /** Service paths */
     String ACHSFOLG = API_ROOT + ApiNames.ACHSFOLG;
-    
+
     String ANTRIEB = API_ROOT + ApiNames.ANTRIEB;
 
     String ARTIKEL = API_ROOT + ApiNames.ARTIKEL;
 
     String AUFBAU = API_ROOT + ApiNames.AUFBAU;
-    
+
     String BAHNVERWALTUNG = API_ROOT + ApiNames.BAHNVERWALTUNG;
 
     String DECODER = API_ROOT + ApiNames.DECODER;
-    
+
     String DECODER_TYP = API_ROOT + ApiNames.DECODER_TYP;
     
     String EPOCH = API_ROOT + ApiNames.EPOCH;
@@ -212,6 +212,9 @@ public interface ApiPaths {
     String ZUG_CONSIST_ROOT = ZUG_PART + SEPARATOR + ApiNames.CONSIST;
     String ZUG_CONSIST_PATH = ZUG_CONSIST_ROOT + POSITION_PART;
     String ZUG_CONSIST_LINK = "%s" + SEPARATOR  + ApiNames.CONSIST + SEPARATOR + "%d";
+
+    String SWAGGER_ROOT = API_ROOT + "swagger" + SEPARATOR;
+    String SWAGGER_RESOURCE = SWAGGER_ROOT + "swagger.{type:json|yaml}";
 
     /* Multipart field names */
     String MULTIPART_FILE_DETAIL = "FileDetail";

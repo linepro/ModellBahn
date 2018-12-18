@@ -1,8 +1,8 @@
 package com.linepro.modellbahn.model;
 
-import com.linepro.modellbahn.model.keys.NameKey;
-
 import java.nio.file.Path;
+
+import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * IKupplung.

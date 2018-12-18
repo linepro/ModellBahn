@@ -1,8 +1,9 @@
 package com.linepro.modellbahn.persistence.util;
 
-import javax.persistence.AttributeConverter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import javax.persistence.AttributeConverter;
 
 class FileConverter implements AttributeConverter<Path, String> {
 

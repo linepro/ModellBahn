@@ -1,12 +1,13 @@
 package com.linepro.modellbahn.persistence.impl;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
 import com.linepro.modellbahn.guice.ISessionManagerFactory;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.IIdGenerator;
 import com.linepro.modellbahn.persistence.ISessionManager;
-
-import javax.inject.Inject;
-import java.util.List;
 
 public class IdGenerator implements IIdGenerator {
 

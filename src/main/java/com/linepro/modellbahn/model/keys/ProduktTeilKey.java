@@ -1,11 +1,11 @@
 package com.linepro.modellbahn.model.keys;
 
+import javax.persistence.Query;
+
 import com.linepro.modellbahn.model.IProdukt;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
-
-import javax.persistence.Query;
 
 public class ProduktTeilKey extends BaseKey {
 

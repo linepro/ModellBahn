@@ -1,16 +1,18 @@
 package com.linepro.modellbahn.persistence.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.inject.Inject;
+
+import org.apache.commons.beanutils.ConvertUtils;
+import org.slf4j.ILoggerFactory;
+
 import com.linepro.modellbahn.guice.ISessionManagerFactory;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.INamedItem;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.IPersisterFactory;
-import org.apache.commons.beanutils.ConvertUtils;
-import org.slf4j.ILoggerFactory;
-
-import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A factory for creating Persister objects.

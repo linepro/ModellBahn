@@ -1,10 +1,10 @@
 package com.linepro.modellbahn.model;
 
-import com.linepro.modellbahn.model.keys.NameKey;
-
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.util.Date;
+
+import com.linepro.modellbahn.model.keys.NameKey;
 
 /**
  * IVorbild.
