@@ -11,21 +11,21 @@ import org.testng.annotations.Test;
 
 public class SelectorTest {
 
-    protected static final String NAME = "name";
+    private static final String NAME = "name";
     
-    protected static final String SETTER = "setter";
+    private static final String SETTER = "setter";
     
-    protected static final String GETTER = "getter";
+    private static final String GETTER = "getter";
     
-    protected static final int HASH_CODE = 3374336;
+    private static final int HASH_CODE = 3374336;
     
-    protected static final String TO_STRING = "Selector[name=" + NAME + ",getter=" + GETTER + ",setter=" + SETTER + ",collection=false]";
+    private static final String TO_STRING = "Selector[name=" + NAME + ",getter=" + GETTER + ",setter=" + SETTER + ",collection=false]";
 
-    protected Selector selector;
+    private Selector selector;
     
-    protected Method getter;
+    private Method getter;
     
-    protected Method setter;
+    private Method setter;
 
     protected String getter() {
         return "";

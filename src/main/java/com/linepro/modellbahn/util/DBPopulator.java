@@ -165,7 +165,7 @@ public class DBPopulator {
         dump(ZugConsist.class);
     }
 
-    protected void populateAchsfolg() {
+    private void populateAchsfolg() {
         save(new Achsfolg(null, "(1'C)D 3'2'T35", "(1'C)D 3'2'T35", false));
         save(new Achsfolg(null, "1'C 1' h2t", "1'C 1' h2t", false));
         save(new Achsfolg(null, "1'C h2 3T16", "1'C h2 3T16", false));
@@ -196,7 +196,7 @@ public class DBPopulator {
         save(new Achsfolg(null, "D'D h4vt", "D'D h4vt", false));
     }
 
-    protected void populateAntrieb() {
+    private void populateAntrieb() {
         save(new Antrieb(null, "Akku", "Akku", false));
         save(new Antrieb(null, "Dampf", "Dampf", false));
         save(new Antrieb(null, "Diesel", "Diesel", false));
@@ -204,7 +204,7 @@ public class DBPopulator {
         save(new Antrieb(null, "Druckluft", "Druckluft", false));
     }
 
-    protected void populateArtikel() {
+    private void populateArtikel() {
         IProdukt produkt = findProdukt("Märklin", "3000");
         IWahrung wahrung = findWahrung("HKD");
         ISteuerung steuerung = findSteuerung("FRU");
@@ -224,7 +224,7 @@ public class DBPopulator {
                 null, Status.GEKAUFT, false));
     }
 
-    protected void populateAufbau() {
+    private void populateAufbau() {
         save(new Aufbau(null, "LK", "Fahrgestell der Lok aus Metall", false));
         save(new Aufbau(null, "LMK", "Fahrgestell und vorwiegender Aufbau der Loks aus Metall", false));
         save(new Aufbau(null, "LM", "Fahrgestell und Aufbau der Lokomotive aus Metall", false));
@@ -234,7 +234,7 @@ public class DBPopulator {
         save(new Aufbau(null, "LKM", "Überwiegender Teil des Lokaufbaues aus Metall", false));
     }
 
-    protected void populateBahnverwaltung() {
+    private void populateBahnverwaltung() {
         save(new Bahnverwaltung(null, "AAE", "AAE", false));
         save(new Bahnverwaltung(null, "ADtranz", "ABB Daimler-Benz Transportation (ADtranz)", false));
         save(new Bahnverwaltung(null, "AL", "Anhaltische Leopoldsbahn (AL)", false));
@@ -391,7 +391,7 @@ public class DBPopulator {
         save(new Bahnverwaltung(null, "ÖHB", "Österreichischen Bundesbahnen (ÖBB)", false));
     }
 
-    protected void populateDecoder() {
+    private void populateDecoder() {
         IPersister<Decoder> persister = persisterFactory.createPersister(Decoder.class);
 
         DecoderCreator creator = new DecoderCreator(persister);
@@ -408,7 +408,7 @@ public class DBPopulator {
     /**
      * Populate decoder typ.
      */
-    protected void populateDecoderTyp() {
+    private void populateDecoderTyp() {
         IProtokoll delta = findProtokoll("DELTA");
         IProtokoll fx = findProtokoll("fx");
         IProtokoll mm = findProtokoll("MM");
@@ -482,7 +482,7 @@ public class DBPopulator {
         addUhlenbrock67900(mm, uhlenbrock);
     }
 
-    protected DecoderTyp add60760(IProtokoll fx, IHersteller marklin) {
+    private DecoderTyp add60760(IProtokoll fx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, fx, "60760", "Hochleistungsdecoder", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -497,7 +497,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add46715(IProtokoll fx, IHersteller marklin) {
+    private DecoderTyp add46715(IProtokoll fx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, fx, "46715", "46715", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -512,7 +512,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp addWeicheDecoder(IProtokoll weiche, IHersteller marklin, String bestellNr, String bezeichnung) {
+    private DecoderTyp addWeicheDecoder(IProtokoll weiche, IHersteller marklin, String bestellNr, String bezeichnung) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, weiche, bestellNr, bezeichnung, false, Konfiguration.SWITCH, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.WEICHE, 1, 1, false));
@@ -522,7 +522,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp addDrehscheibendekoder(IProtokoll weiche, IHersteller marklin) {
+    private DecoderTyp addDrehscheibendekoder(IProtokoll weiche, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, weiche, "7687", "Drehscheibendekoder", false, Konfiguration.LINK, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.WEICHE, 1, 16, false));
@@ -542,7 +542,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp addUhlenbrock67900(IProtokoll mm, IHersteller uhlenbrock) {
+    private DecoderTyp addUhlenbrock67900(IProtokoll mm, IHersteller uhlenbrock) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, uhlenbrock, mm, "67900", "67900", false, Konfiguration.SWITCH, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.MM, 1, 8, false));
@@ -597,7 +597,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp addSwitchPilotServo(IProtokoll weiche, IHersteller esu) {
+    private DecoderTyp addSwitchPilotServo(IProtokoll weiche, IHersteller esu) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, esu, weiche, "51802", "SwitchPilot Servo", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.WEICHE, 1, 4, false));
@@ -629,7 +629,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp addSwitchPilot(IProtokoll weiche, IHersteller esu, String bestellNr, String bezeichnung) {
+    private DecoderTyp addSwitchPilot(IProtokoll weiche, IHersteller esu, String bestellNr, String bezeichnung) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, esu, weiche, bestellNr, bezeichnung, false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.WEICHE, 1, 8, false));
@@ -666,7 +666,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp addLokPilotFX(IProtokoll mm, IHersteller esu, String bestellNr, String bezeichnung) {
+    private DecoderTyp addLokPilotFX(IProtokoll mm, IHersteller esu, String bestellNr, String bezeichnung) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, esu, mm, bestellNr, bezeichnung, false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -684,7 +684,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp addLokSoundM4(IProtokoll mfx, IHersteller esu, String bestellNr, String bezeichnung) {
+    private DecoderTyp addLokSoundM4(IProtokoll mfx, IHersteller esu, String bestellNr, String bezeichnung) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, esu, mfx, bestellNr, bezeichnung, true, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -732,7 +732,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp addLokPilotM4(IProtokoll mfx, IHersteller esu, String bestellNr, String bezeichnung) {
+    private DecoderTyp addLokPilotM4(IProtokoll mfx, IHersteller esu, String bestellNr, String bezeichnung) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, esu, mfx, bestellNr, bezeichnung, false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -757,7 +757,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp addMarklinSoundDecoder(IProtokoll mfx, IHersteller marklin, String bestellNr, String bezeichnung) {
+    private DecoderTyp addMarklinSoundDecoder(IProtokoll mfx, IHersteller marklin, String bestellNr, String bezeichnung) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, bestellNr, bezeichnung, false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -783,7 +783,7 @@ public class DBPopulator {
 
         return update(decoderTyp);
     }
-    protected DecoderTyp add115798(IProtokoll fx, IHersteller marklin) {
+    private DecoderTyp add115798(IProtokoll fx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, fx, "115798", "115798", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -797,7 +797,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add150436(IProtokoll fx, IHersteller marklin) {
+    private DecoderTyp add150436(IProtokoll fx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, fx, "150436", "150436", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -813,7 +813,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add219574(IProtokoll fx, IHersteller marklin) {
+    private DecoderTyp add219574(IProtokoll fx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, fx, "219574", "219574", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -838,7 +838,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add602756(IProtokoll fx, IHersteller marklin) {
+    private DecoderTyp add602756(IProtokoll fx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, fx, "602756", "602756", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -855,7 +855,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add608862(IProtokoll fx, IHersteller marklin) {
+    private DecoderTyp add608862(IProtokoll fx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, fx, "608862", "608862", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -873,7 +873,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add611105(IProtokoll fx, IHersteller marklin) {
+    private DecoderTyp add611105(IProtokoll fx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, fx, "611105", "611105", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -891,7 +891,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add611754(IProtokoll fx, IHersteller marklin) {
+    private DecoderTyp add611754(IProtokoll fx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, fx, "611754", "611754", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -908,7 +908,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add115166(IProtokoll mfx, IHersteller marklin) {
+    private DecoderTyp add115166(IProtokoll mfx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "115166", "115166", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -933,7 +933,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add115673(IProtokoll mfx, IHersteller marklin) {
+    private DecoderTyp add115673(IProtokoll mfx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "115673", "115673", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -960,7 +960,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add116836(IProtokoll mfx, IHersteller marklin) {
+    private DecoderTyp add116836(IProtokoll mfx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "116836", "116836", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -986,7 +986,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add123572(IProtokoll mfx, IHersteller marklin) {
+    private DecoderTyp add123572(IProtokoll mfx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "123572", "123572", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -1007,7 +1007,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add140131(IProtokoll mfx, IHersteller marklin) {
+    private DecoderTyp add140131(IProtokoll mfx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "140131", "140131", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -1030,7 +1030,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add148924(IProtokoll mfx, IHersteller marklin) {
+    private DecoderTyp add148924(IProtokoll mfx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "148924", "148924", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -1057,7 +1057,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add156787(IProtokoll mfx, IHersteller marklin) {
+    private DecoderTyp add156787(IProtokoll mfx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "156787", "156787", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -1078,7 +1078,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add162946(IProtokoll mfx, IHersteller marklin) {
+    private DecoderTyp add162946(IProtokoll mfx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "162946", "162946", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -1108,7 +1108,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add169274(IProtokoll mfx, IHersteller marklin) {
+    private DecoderTyp add169274(IProtokoll mfx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "169274", "169274", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -1134,7 +1134,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add253201(IProtokoll mfx, IHersteller marklin) {
+    private DecoderTyp add253201(IProtokoll mfx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "253201", "253201", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -1166,7 +1166,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add269706(IProtokoll mfx, IHersteller marklin) {
+    private DecoderTyp add269706(IProtokoll mfx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "269706", "269706", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -1199,7 +1199,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add39970(IProtokoll mfx, IHersteller marklin) {
+    private DecoderTyp add39970(IProtokoll mfx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "39970", "39970", true, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -1214,7 +1214,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add60902(IProtokoll mfx, IHersteller marklin) {
+    private DecoderTyp add60902(IProtokoll mfx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "60902", "Hochleistungselektronik", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -1226,7 +1226,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add611077(IProtokoll mfx, IHersteller marklin) {
+    private DecoderTyp add611077(IProtokoll mfx, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "611077", "611077", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -1243,7 +1243,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add209394(IProtokoll protokoll, IHersteller marklin) {
+    private DecoderTyp add209394(IProtokoll protokoll, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, protokoll, "209394", "209394", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -1256,7 +1256,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add42973(IProtokoll protokoll, IHersteller marklin) {
+    private DecoderTyp add42973(IProtokoll protokoll, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, protokoll, "42973", "42973", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -1275,7 +1275,7 @@ public class DBPopulator {
     }
 
 
-    protected DecoderTyp add49960(IProtokoll protokoll, IHersteller marklin) {
+    private DecoderTyp add49960(IProtokoll protokoll, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, protokoll, "49960", "49960", true, Konfiguration.SWITCH, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -1291,7 +1291,7 @@ public class DBPopulator {
     }
 
 
-    protected DecoderTyp add606896(IProtokoll protokoll, IHersteller marklin) {
+    private DecoderTyp add606896(IProtokoll protokoll, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, protokoll, "606896", "606896", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -1306,7 +1306,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp add608825(IProtokoll protokoll, IHersteller marklin) {
+    private DecoderTyp add608825(IProtokoll protokoll, IHersteller marklin) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, protokoll, "608825", "608825", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
@@ -1322,7 +1322,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected DecoderTyp addDSD2010(IProtokoll weiche, IHersteller digitalbahn) {
+    private DecoderTyp addDSD2010(IProtokoll weiche, IHersteller digitalbahn) {
         DecoderTyp decoderTyp = save(new DecoderTyp(null, digitalbahn, weiche, "DSD2010", "Drehscheibendekoder", false, Konfiguration.CV, false));
 
         decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.WEICHE, 1, 16, false));
@@ -1351,7 +1351,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    protected void populateEpoch() {
+    private void populateEpoch() {
         save(new Epoch(null, "I", "1835 - 1920", false));
         save(new Epoch(null, "II", "1920 - 1950", false));
         save(new Epoch(null, "III", "1949 - 1970", false));
@@ -1375,7 +1375,7 @@ public class DBPopulator {
         save(new Epoch(null, "Vc", "2000 - 2006", false));
     }
 
-    protected void populateGattung() {
+    private void populateGattung() {
         save(new Gattung(null, "AB3yge", "AB3yge", false));
         save(new Gattung(null, "ADümh 101", "ADümh 101", false));
         save(new Gattung(null, "ARDümz 106", "ARDümz 106", false));
@@ -1478,7 +1478,7 @@ public class DBPopulator {
         save(new Gattung(null, "üm 313", "üm 313", false));
     }
 
-    protected void populateHersteller() {
+    private void populateHersteller() {
         save(new Hersteller(null, "Avago Technologies", null, null, null, false));
         save(new Hersteller(null, "4MFOR", null, null, null, false));
         save(new Hersteller(null, "Artitec", null, null, null, false));
@@ -1547,7 +1547,7 @@ public class DBPopulator {
         save(new Hersteller(null, "Zemo", null, null, null, false));
     }
 
-    protected void populateKategorie() {
+    private void populateKategorie() {
         Kategorie kategorie = save(new Kategorie(null, "Ausgestaltung", "Ausgestaltung", false));
 
         kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Ausgestaltung", "Ausgestaltung", false));
@@ -1784,7 +1784,7 @@ public class DBPopulator {
         save(zubehor);
     }
 
-    protected void populateKupplung() {
+    private void populateKupplung() {
         save(new Kupplung(null, "Relex", "Relex Kupplung", false));
         save(new Kupplung(null, "KK", "Märklin-Kurzkupplungen mit Drehpunkt", false));
         save(new Kupplung(null, "NEM", "Märklin-Kurzkupplungen in Norm-Aufnahme mit Drehpunkt", false));
@@ -1793,7 +1793,7 @@ public class DBPopulator {
         save(new Kupplung(null, "Telex", "Telex Kupplung", false));
     }
 
-    protected void populateLand() {
+    private void populateLand() {
         IWahrung aud = findWahrung("AUD");
         IWahrung eur = findWahrung("EUR");
         IWahrung gbp = findWahrung("GBP");
@@ -1809,7 +1809,7 @@ public class DBPopulator {
         save(new Land(null, "US", "Vereinigte Staaten", usd, false));
     }
 
-    protected void populateLicht() {
+    private void populateLicht() {
         save(new Licht(null, "L1V", "Einfach-Spitzensignal vorne", false));
         save(new Licht(null, "L1W", "Einfach-Spitzensignal mit der Fahrtrichtung wechselnd.", false));
         save(new Licht(null, "L2V", "Zweilicht-Spitzensignal vorne", false));
@@ -1827,7 +1827,7 @@ public class DBPopulator {
         save(new Licht(null, "L3L2W", "Dreilicht-Spitzensignal und zwei weißes Schlusslicht mit der Fahrtrichtung wechselnd", false));
     }
 
-    protected void populateMassstab() {
+    private void populateMassstab() {
         save(new Massstab(null, "0", "1:45 32 mm", false));
         save(new Massstab(null, "0e", "1:45 16.5 mm", false));
         save(new Massstab(null, "0i", "1:45 12 mm", false));
@@ -1895,7 +1895,7 @@ public class DBPopulator {
         save(new Massstab(null, "Zm", "1:220 4.5 mm", false));
     }
 
-    protected void populateMotorTyp() {
+    private void populateMotorTyp() {
         save(new MotorTyp(null, "C-Sinus", "C-Sinus", false));
         save(new MotorTyp(null, "DCM", "DCM", false));
         save(new MotorTyp(null, "Glockenanker", "Glockenanker", false));
@@ -1912,7 +1912,7 @@ public class DBPopulator {
         save(new MotorTyp(null, "SFCM", "SFCM", false));
     }
 
-    protected void populateProdukt() {
+    private void populateProdukt() {
         IHersteller hersteller = findHersteller("Märklin");
         ISteuerung steuerung = findSteuerung("FRU");
         IMotorTyp motorTyp = findMotorTyp("SFCM");
@@ -1943,7 +1943,7 @@ public class DBPopulator {
                 decoderTyp, motorTyp, lange, false));
     }
 
-    protected void populateProtokoll() {
+    private void populateProtokoll() {
         save(new Protokoll(null, "DELTA", "Märklin DELTA", false));
         save(new Protokoll(null, "fx", "Märklin fx", false));
         save(new Protokoll(null, "mfx", "Märklin mfx", false));
@@ -1952,7 +1952,7 @@ public class DBPopulator {
         save(new Protokoll(null, "Weiche", "Märklin Motorola Weiche", false));
     }
 
-    protected void populateSonderModell() {
+    private void populateSonderModell() {
         save(new SonderModell(null, "Märklin Magazin", "Märklin Magazin", false));
         save(new SonderModell(null, "Märklin Insider", "Märklin Insider", false));
         save(new SonderModell(null, "MHI Exclusiv", "Märklin Handler Initiative", false));
@@ -1964,7 +1964,7 @@ public class DBPopulator {
         save(new SonderModell(null, ApiNames.SONDERMODELL, ApiNames.SONDERMODELL, false));
     }
 
-    protected void populateSpurweite() {
+    private void populateSpurweite() {
         save(new Spurweite(null, "0", "32mm", false));
         save(new Spurweite(null, "TT", "12mm", false));
         save(new Spurweite(null, "H0", "16, 5mm", false));
@@ -1979,13 +1979,13 @@ public class DBPopulator {
         save(new Spurweite(null, "X", "260mm", false));
     }
 
-    protected void populateSteuerung() {
+    private void populateSteuerung() {
         save(new Steuerung(null, "digital", "digital", false));
         save(new Steuerung(null, "FRU", "Fahrrichtungsumschalter", false));
         save(new Steuerung(null, "USE", "Umschaltelektronik", false));
     }
 
-    protected void populateVorbild() {
+    private void populateVorbild() {
         IGattung gattung = findGattung("BR 89.0");
         IUnterKategorie unterKategorie = findUnterKategorie("Lokomotiv" ,"Dampf");
         IAntrieb antrieb = findAntreib("Dampf");
@@ -2042,7 +2042,7 @@ public class DBPopulator {
                 sitzPlatzeTZKL1, sitzPlatzeTzKL2, drehgestellbauart, anmerkung, false));
     }
 
-    protected void populateWahrung() {
+    private void populateWahrung() {
         save(new Wahrung(null, "AUD", "Australian Dollar", 2, false));
         save(new Wahrung(null, "DEM", "Deutschemark", 2, false));
         save(new Wahrung(null, "EUR", "Euro", 2, false));
@@ -2051,7 +2051,7 @@ public class DBPopulator {
         save(new Wahrung(null, "USD", "US Dollar", 2, false));
     }
 
-    protected void populateZug() {
+    private void populateZug() {
         IZugTyp zugTyp = findZugTyp("TEE Zug");
 
         Zug zug = save(new Zug(null, "TEE \"Bavaria\"", "TEE \"Bavaria\"", zugTyp, false));
@@ -2059,7 +2059,7 @@ public class DBPopulator {
         zug.addConsist(new ZugConsist(null, zug, 1, null, false));
     }
 
-    protected void populateZugTyp() {
+    private void populateZugTyp() {
         save(new ZugTyp(null, "Gütterzug", "Gütterzug", false));
         save(new ZugTyp(null, "Nahvekerszug", "Nahvekerszug", false));
         save(new ZugTyp(null, "Bahndienstzug", "Bahndienstzug", false));
@@ -2069,7 +2069,7 @@ public class DBPopulator {
         save(new ZugTyp(null, "Militär Zug", "Militär Zug", false));
     }
 
-    <E extends IItem<?>> E findByKey(IKey key, Class<E> entityClass) {
+    private <E extends IItem<?>> E findByKey(IKey key, Class<E> entityClass) {
         try {
             IPersister<E> persister = persisterFactory.createPersister(entityClass);
 
@@ -2081,23 +2081,23 @@ public class DBPopulator {
         return null;
     }
 
-    <E extends IItem<?>> E findName(String name, Class<E> entityClass) {
+    private <E extends IItem<?>> E findName(String name, Class<E> entityClass) {
         return findByKey(new NameKey(name), entityClass);
     }
 
-    protected IAchsfolg findAchsfolg(String name) {
+    private IAchsfolg findAchsfolg(String name) {
         return findName(name, Achsfolg.class);
     }
 
-    protected IAntrieb findAntreib(String name) {
+    private IAntrieb findAntreib(String name) {
         return findName(name, Antrieb.class);
     }
 
-    protected IAufbau findAufbau(String name) {
+    private IAufbau findAufbau(String name) {
         return findName(name, Aufbau.class);
     }
 
-    protected IBahnverwaltung findBahnverwaltung(String name) {
+    private IBahnverwaltung findBahnverwaltung(String name) {
         return findName(name, Bahnverwaltung.class);
     }
 
@@ -2105,48 +2105,48 @@ public class DBPopulator {
         return findName(name, Decoder.class);
     }
 
-    protected IDecoderTyp findDecoderTyp(String hersteller, String bestellNr) {
+    private IDecoderTyp findDecoderTyp(String hersteller, String bestellNr) {
         return findByKey(new DecoderTypKey(findHersteller(hersteller), bestellNr), DecoderTyp.class);
     }
 
-    protected IEpoch findEpoch(String name) {
+    private IEpoch findEpoch(String name) {
         return findName(name, Epoch.class);
     }
 
-    protected IGattung findGattung(String name) {
+    private IGattung findGattung(String name) {
         return findName(name, Gattung.class);
     }
 
-    protected IHersteller findHersteller(String name) {
+    private IHersteller findHersteller(String name) {
         return findName(name, Hersteller.class);
     }
 
-    protected IKategorie findKategorie(String name) {
+    private IKategorie findKategorie(String name) {
         return findName(name, Kategorie.class);
     }
 
 
-    protected IKupplung findKupplung(String name) {
+    private IKupplung findKupplung(String name) {
         return findName(name, Kupplung.class);
     }
 
-    protected ILicht findLicht(String name) {
+    private ILicht findLicht(String name) {
         return findName(name, Licht.class);
     }
 
-    protected IMassstab findMassstab(String name) {
+    private IMassstab findMassstab(String name) {
         return findName(name, Massstab.class);
     }
 
-    protected IMotorTyp findMotorTyp(String name) {
+    private IMotorTyp findMotorTyp(String name) {
         return findName(name, MotorTyp.class);
     }
 
-    protected IProdukt findProdukt(String hersteller, String bestellNr) {
+    private IProdukt findProdukt(String hersteller, String bestellNr) {
         return findByKey(new ProduktKey(findHersteller(hersteller), bestellNr), Produkt.class);
     }
 
-    protected IProtokoll findProtokoll(String name) {
+    private IProtokoll findProtokoll(String name) {
         return findName(name, Protokoll.class);
     }
 
@@ -2154,31 +2154,31 @@ public class DBPopulator {
         return findName(name, SonderModell.class);
     }
 
-    protected ISpurweite findSpurweite(String name) {
+    private ISpurweite findSpurweite(String name) {
         return findName(name, Spurweite.class);
-    };
+    }
 
-    protected ISteuerung findSteuerung(String name) {
+    private ISteuerung findSteuerung(String name) {
         return findName(name, Steuerung.class);
     }
 
-    protected IUnterKategorie findUnterKategorie(String kategorie, String unterKategorie) {
+    private IUnterKategorie findUnterKategorie(String kategorie, String unterKategorie) {
         return findByKey(new UnterKategorieKey(findKategorie(kategorie), unterKategorie), UnterKategorie.class);
     }
 
-    protected IVorbild findVorbild(String name) {
+    private IVorbild findVorbild(String name) {
         return findName(name, Vorbild.class);
     }
 
-    protected IWahrung findWahrung(String name) {
+    private IWahrung findWahrung(String name) {
         return findName(name, Wahrung.class);
     }
 
-    protected IZugTyp findZugTyp(String name) {
+    private IZugTyp findZugTyp(String name) {
         return findByKey(new NameKey(name), ZugTyp.class);
     }
     
-    <E extends IItem<?>> E save(E item) {
+    private <E extends IItem<?>> E save(E item) {
         try {
             @SuppressWarnings("unchecked")
             IPersister<E> persister = (IPersister<E>) persisterFactory.createPersister(item.getClass());
@@ -2191,7 +2191,7 @@ public class DBPopulator {
         return null;
     }
 
-    <E extends IItem<?>> E update(E item) {
+    private <E extends IItem<?>> E update(E item) {
         try {
             @SuppressWarnings("unchecked")
             IPersister<E> persister = (IPersister<E>) persisterFactory.createPersister(item.getClass());
@@ -2204,7 +2204,7 @@ public class DBPopulator {
         return null;
     }
 
-    <E extends IItem<?>> void dump(Class<E> entityClass) {
+    private <E extends IItem<?>> void dump(Class<E> entityClass) {
         try {
             IPersister<E> persister = persisterFactory.createPersister(entityClass);
         

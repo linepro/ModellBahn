@@ -16,9 +16,9 @@ import com.linepro.modellbahn.rest.json.serialization.LinkSerializer;
 
 public class ListWithLinks<E extends IItem<?>> {
 
-    protected final List<E> entities;
+    private final List<E> entities;
     
-    protected final List<Link> links;
+    private final List<Link> links;
 
     public ListWithLinks(List<E> entities, List<Link> links) {
         this.entities = entities;

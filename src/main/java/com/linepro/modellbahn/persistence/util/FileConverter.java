@@ -5,7 +5,7 @@ import java.nio.file.Paths;
 
 import javax.persistence.AttributeConverter;
 
-public class FileConverter implements AttributeConverter<Path, String> {
+class FileConverter implements AttributeConverter<Path, String> {
 
     @Override
     public String convertToDatabaseColumn(Path attribute) {

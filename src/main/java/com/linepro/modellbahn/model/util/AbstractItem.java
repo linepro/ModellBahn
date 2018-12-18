@@ -62,7 +62,7 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
 	private Boolean deleted;
 	
 	/** Set of HATEOAS links for Json serialization */
-    protected final Set<Link> links = new HashSet<>();
+    private final Set<Link> links = new HashSet<>();
 
 	/**
 	 * Instantiates a new abstract item.
@@ -76,14 +76,14 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
 	 * @param id the id
 	 * @param deleted the deleted
 	 */
-	public AbstractItem(Long id, Boolean deleted) {
+    protected AbstractItem(Long id, Boolean deleted) {
 		setId(id);
 		setDeleted(deleted);
 	}
 
 	@Override
     @Id
-	@Column(name=DBNames.ID, nullable = true)
+	@Column(name=DBNames.ID)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@JsonGetter(ApiNames.ID)
 	@JsonView(Views.Internal.class)
@@ -98,7 +98,7 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
 	}
 
 	@Override
-    @Column(name=DBNames.DELETED, length=5, nullable = true)
+    @Column(name=DBNames.DELETED, length=5)
     @JsonView(Views.Public.class)
     @JsonGetter(ApiNames.DELETED)
 	public Boolean getDeleted() {
@@ -134,7 +134,7 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
         return getId().toString();
     }
 
-    protected Link makeLink(URI uri, String path, String rel, String method) {
+    private Link makeLink(URI uri, String path, String rel, String method) {
         return Link.fromUri(UriBuilder.fromUri(uri).path(path).build()).rel(rel).type(method).build();
     }
     
@@ -170,21 +170,21 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
         
     }
 
-    protected void addParent(URI root) {
+    private void addParent(URI root) {
         if (getParentId() != null) {
             getLinks().add(makeLink(root, getParentId(), ApiNames.PARENT, GET));
         }
     }
 
-    protected void addDelete(URI root) {
+    private void addDelete(URI root) {
         getLinks().add(makeLink(root, getLinkId(), ApiNames.DELETE, DELETE));
     }
 
-    protected void addSelf(URI root) {
+    private void addSelf(URI root) {
         getLinks().add(makeLink(root, getLinkId(), ApiNames.SELF, GET));
     }
 
-    protected void addUpdate(URI root) {
+    private void addUpdate(URI root) {
         getLinks().add(makeLink(root, getLinkId(), ApiNames.UPDATE, PUT));
     }
 
@@ -221,7 +221,7 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this)
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
 		        .append(ApiNames.ID, getId())
 				.append(ApiNames.DELETED, getDeleted())
 				.toString();

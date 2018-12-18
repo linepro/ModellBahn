@@ -17,7 +17,7 @@
   const unterKategorien = new ItemGrid(10, undefined, "unterKategorien", [
     new TextColumn("Namen", "name", Editable.ADD, true, 30),
     new TextColumn("Bezeichnung", "description", Editable.UPDATE, false, 50),
-    new ButtonColumn([addRow], [updateRow(this.value, deleteRow])],
+    new ButtonColumn([addRow], [updateRow("this.value", deleteRow)])],
   false, EditMode.ADD, undefined);
 const kategorie = new ItemGrid(1, fetchUrl("kategorie"), "kategorie", [
     new TextColumn("Namen", "name", Editable.ADD, true, 30),

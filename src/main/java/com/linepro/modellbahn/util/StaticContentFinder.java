@@ -7,9 +7,9 @@ package com.linepro.modellbahn.util;
 public class StaticContentFinder {
 
     /** The Constant fileFinder. */
-    protected static final IFileFinder fileFinder = new FileFinder();
+    private static final IFileFinder fileFinder = new FileFinder();
 
-    protected static final IFileStore fileStore = new FileStore();
+    private static final IFileStore fileStore = new FileStore();
 
     /**
      * Gets the file finder.

@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 @Singleton
 public class FileStore implements IFileStore {
 
-    public static final String STORE_FOLDER = "store";
+    private static final String STORE_FOLDER = "store";
 
     private final Logger logger;
 

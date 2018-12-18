@@ -9,20 +9,20 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 
 public class DecoderAdressKey extends BaseKey {
 
-    protected final IDecoder decoder;
+    private final IDecoder decoder;
     
-    protected final Integer reihe;
+    private final Integer reihe;
 
     public DecoderAdressKey(final IDecoder decoder, final Integer reihe) {
         this.decoder = decoder;
         this.reihe = reihe;
     }
 
-    public IDecoder getDecoder() {
+    private IDecoder getDecoder() {
         return decoder;
     }
 
-    public Integer getReihe() {
+    private Integer getReihe() {
         return reihe;
     }
 
@@ -34,7 +34,7 @@ public class DecoderAdressKey extends BaseKey {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append(ApiNames.DECODER, getDecoder())
                 .append(ApiNames.REIHE, getReihe())
                 .toString();

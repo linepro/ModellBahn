@@ -37,10 +37,10 @@ public class MotorTypService extends AbstractItemService<NameKey, MotorTyp> {
     }
 
     @JsonCreator
-    public MotorTyp create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiNames.NAMEN, required = false) String name,
-            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) {
+    public MotorTyp create(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.NAMEN) String name,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         MotorTyp entity = new MotorTyp(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);

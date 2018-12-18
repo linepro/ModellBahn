@@ -40,9 +40,9 @@ import io.swagger.jaxrs.listing.SwaggerSerializers;
 @ApplicationPath("/")
 public class ModellBahnConfiguration extends ResourceConfig {
     
-    public static final String JERSEY_SERVLET_CONTEXT_PATH = "";
+    private static final String JERSEY_SERVLET_CONTEXT_PATH = "";
     
-    public static final String JSP_CLASSPATH_ATTRIBUTE = "org.apache.catalina.jsp_classpath";
+    private static final String JSP_CLASSPATH_ATTRIBUTE = "org.apache.catalina.jsp_classpath";
 
     private static final String PACKAGES = "com.linepro.modellbahn.rest";
 

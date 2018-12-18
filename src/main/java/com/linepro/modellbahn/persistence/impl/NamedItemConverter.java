@@ -14,10 +14,10 @@ import com.linepro.modellbahn.persistence.IPersister;
  * @author  $Author:$
  * @version $Id:$
  */
-public class NamedItemConverter implements Converter {
+class NamedItemConverter implements Converter {
     
     /** The persister. */
-    protected final IPersister<?> persister;
+    private final IPersister<?> persister;
     
     /**
      * Instantiates a new named item converter.

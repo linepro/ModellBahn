@@ -57,25 +57,25 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     }
 
     @JsonCreator
-    public Artikel create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiNames.HERSTELLER, required = false) String herstellerStr,
-            @JsonProperty(value = ApiNames.BESTELL_NR, required = false) String bestellNr,
-            @JsonProperty(value = ApiNames.KAUFDATUM, required = false) Date kaufdatum,
-            @JsonProperty(value = ApiNames.WAHRUNG, required = false) String wahrungStr,
-            @JsonProperty(value = ApiNames.PREIS, required = false) BigDecimal preis,
-            @JsonProperty(value = ApiNames.STUCK, required = false) Integer stuck,
-            @JsonProperty(value = ApiNames.STEUERUNG, required = false) String steuerungStr,
-            @JsonProperty(value = ApiNames.MOTOR_TYP, required = false) String motorTypStr,
-            @JsonProperty(value = ApiNames.LICHT, required = false) String lichtStr,
-            @JsonProperty(value = ApiNames.KUPPLUNG, required = false) String kupplungStr,
-            @JsonProperty(value = ApiNames.DECODER, required = false) String decoderId,
-            @JsonProperty(value = ApiNames.NAMEN, required = false) String artikelNr,
-            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
-            @JsonProperty(value = ApiNames.ANMERKUNG, required = false) String anmerkung,
-            @JsonProperty(value = ApiNames.BELADUNG, required = false) String beladung,
-            @JsonProperty(value=ApiNames.ABBILDUNG, required=false) String abbildungStr,
-            @JsonProperty(value = ApiNames.STATUS, required = false) String statusStr,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
+    public Artikel create(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.HERSTELLER) String herstellerStr,
+            @JsonProperty(value = ApiNames.BESTELL_NR) String bestellNr,
+            @JsonProperty(value = ApiNames.KAUFDATUM) Date kaufdatum,
+            @JsonProperty(value = ApiNames.WAHRUNG) String wahrungStr,
+            @JsonProperty(value = ApiNames.PREIS) BigDecimal preis,
+            @JsonProperty(value = ApiNames.STUCK) Integer stuck,
+            @JsonProperty(value = ApiNames.STEUERUNG) String steuerungStr,
+            @JsonProperty(value = ApiNames.MOTOR_TYP) String motorTypStr,
+            @JsonProperty(value = ApiNames.LICHT) String lichtStr,
+            @JsonProperty(value = ApiNames.KUPPLUNG) String kupplungStr,
+            @JsonProperty(value = ApiNames.DECODER) String decoderId,
+            @JsonProperty(value = ApiNames.NAMEN) String artikelNr,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
+            @JsonProperty(value = ApiNames.ANMERKUNG) String anmerkung,
+            @JsonProperty(value = ApiNames.BELADUNG) String beladung,
+            @JsonProperty(value=ApiNames.ABBILDUNG) String abbildungStr,
+            @JsonProperty(value = ApiNames.STATUS) String statusStr,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
         IWahrung wahrung = findWahrung(wahrungStr, false);
         ISteuerung steuerung = findSteuerung(steuerungStr, false);

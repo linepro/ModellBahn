@@ -3,9 +3,9 @@ package com.linepro.modellbahn.rest.util;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.linepro.modellbahn.model.IDescribedEnum;
 
-public class DescribedEnumWrapper {
+class DescribedEnumWrapper {
 
-    protected final IDescribedEnum dEnum;
+    private final IDescribedEnum dEnum;
     
     public DescribedEnumWrapper(IDescribedEnum dEnum) {
         this.dEnum = dEnum;

@@ -40,6 +40,7 @@ import com.linepro.modellbahn.rest.json.resolver.DecoderResolver;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * DecoderCV. Holds the CV values for a Decoder (when Konfiguration.CV is in
@@ -143,7 +144,7 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     }
 
     @Override
-    @Column(name = DBNames.WERT, nullable = true)
+    @Column(name = DBNames.WERT)
     @JsonGetter(ApiNames.WERT)
     @JsonView(Views.DropDown.class)
     public Integer getWert() {
@@ -210,7 +211,7 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
                 .append(ApiNames.DECODER, getDecoder())
                 .append(ApiNames.CV, getCv())

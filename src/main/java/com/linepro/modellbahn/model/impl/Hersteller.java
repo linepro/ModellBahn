@@ -87,7 +87,7 @@ public class Hersteller extends AbstractNamedItem<NameKey> implements IHerstelle
      * @return the url
      */
     @Override
-    @Column(name = DBNames.URL, nullable = true)
+    @Column(name = DBNames.URL)
     @Convert(converter = URLConverter.class)
     @JsonGetter(ApiNames.URL)
     @JsonView(Views.Public.class)
@@ -113,7 +113,7 @@ public class Hersteller extends AbstractNamedItem<NameKey> implements IHerstelle
      * @return the telefon
      */
     @Override
-    @Column(name = DBNames.TELEFON, nullable = true, length = 20)
+    @Column(name = DBNames.TELEFON, length = 20)
     @JsonGetter(ApiNames.TELEFON)
     @JsonView(Views.Public.class)
     public String getTelefon() {
@@ -134,7 +134,7 @@ public class Hersteller extends AbstractNamedItem<NameKey> implements IHerstelle
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
                 .append(ApiNames.URL, getUrl())
                 .append(ApiNames.TELEFON, getTelefon())

@@ -70,7 +70,7 @@ public class Licht extends AbstractNamedItem<NameKey> implements ILicht {
     }
 
     @Override
-    @Column(name = DBNames.ABBILDUNG, nullable = true)
+    @Column(name = DBNames.ABBILDUNG)
     @Convert(converter = PathConverter.class)
     @JsonGetter(ApiNames.ABBILDUNG)
     @JsonView(Views.DropDown.class)

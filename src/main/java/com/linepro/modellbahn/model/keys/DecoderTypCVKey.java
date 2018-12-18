@@ -9,20 +9,20 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 
 public class DecoderTypCVKey extends BaseKey {
 
-    protected final IDecoderTyp decoderTyp;
+    private final IDecoderTyp decoderTyp;
 
-    protected final Integer cv;
+    private final Integer cv;
 
     public DecoderTypCVKey(final IDecoderTyp decoderTyp, final Integer cv) {
         this.decoderTyp = decoderTyp;
         this.cv = cv;
     }
 
-    public IDecoderTyp getDecoderTyp() {
+    private IDecoderTyp getDecoderTyp() {
         return decoderTyp;
     }
 
-    public Integer getCv() {
+    private Integer getCv() {
         return cv;
     }
 
@@ -34,7 +34,7 @@ public class DecoderTypCVKey extends BaseKey {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append(ApiNames.DECODER_TYP, getDecoderTyp())
                 .append(ApiNames.CV, getCv())
                 .toString();

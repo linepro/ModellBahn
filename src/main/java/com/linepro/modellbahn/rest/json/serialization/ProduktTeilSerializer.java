@@ -20,7 +20,7 @@ public class ProduktTeilSerializer extends StdSerializer<ProduktTeil> {
 
     private static final long serialVersionUID = -3541810693407134622L;
 
-    protected LinkUtils utils = new LinkUtils();
+    private final LinkUtils utils = new LinkUtils();
 
     public ProduktTeilSerializer() {
         this(ProduktTeil.class);

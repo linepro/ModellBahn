@@ -20,11 +20,11 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Priority(Integer.MAX_VALUE)
 public class LoggingFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
-    protected static final AtomicInteger eventId = new AtomicInteger(1);
+    private static final AtomicInteger eventId = new AtomicInteger(1);
     
-    protected static final Logger logger = LoggerFactory.getLogger(LoggingFilter.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(LoggingFilter.class.getName());
 
-    protected static final String EVENT_ID = "com.linepro.modellbahn.jersey.LoggingFiler.eventId";
+    private static final String EVENT_ID = "com.linepro.modellbahn.jersey.LoggingFiler.eventId";
     
     /**
      * Create a logging filter.

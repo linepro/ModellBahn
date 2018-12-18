@@ -9,15 +9,15 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
 @JsonAutoDetect(fieldVisibility = Visibility.PUBLIC_ONLY)
-public class ErrorMessage {
+class ErrorMessage {
 
-    protected String errorCode;
+    private String errorCode;
 
-    protected String userMessage;
+    private String userMessage;
 
-    protected String developerMessage;
+    private String developerMessage;
 
-    protected Link moreInfo;
+    private Link moreInfo;
 
     public ErrorMessage() {
     }
@@ -69,7 +69,7 @@ public class ErrorMessage {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("errorCode", errorCode).append("userMessage", userMessage)
                 .append("developerMessage", developerMessage).append("moreInfo", moreInfo)
                 .toString();

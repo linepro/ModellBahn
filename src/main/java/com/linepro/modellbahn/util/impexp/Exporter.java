@@ -38,7 +38,7 @@ import com.linepro.modellbahn.util.Selector;
 public class Exporter<E extends IItem<?>> {
 
     /** The Constant DATE_FORMAT. */
-    protected static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
     /** The logger. */
     private final Logger logger;
@@ -62,7 +62,7 @@ public class Exporter<E extends IItem<?>> {
         
         headers = persister.getSelectors().values().stream()
                 .filter(s -> !s.isCollection() && s.getSetter() != null)
-                .map(s -> s.getName())
+                .map(Selector::getName)
                 .collect(Collectors.toList());
     }
     
@@ -98,7 +98,7 @@ public class Exporter<E extends IItem<?>> {
      * @param value the value
      * @return the string
      */
-    protected String convert(Object value) {
+    private String convert(Object value) {
         if (value == null) {
             return null;
         } else if (value instanceof IProdukt) {

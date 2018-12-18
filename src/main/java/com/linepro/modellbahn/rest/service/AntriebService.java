@@ -37,10 +37,10 @@ public class AntriebService extends AbstractItemService<NameKey, Antrieb> {
     }
 
     @JsonCreator
-    public Antrieb create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiNames.NAMEN, required = false) String name,
-            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) {
+    public Antrieb create(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.NAMEN) String name,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         Antrieb entity = new Antrieb(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);

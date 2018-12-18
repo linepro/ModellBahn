@@ -9,20 +9,20 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 
 public class ZugConsistKey extends BaseKey {
 
-    protected final IZug zug;
+    private final IZug zug;
 
-    protected final Integer position;
+    private final Integer position;
 
     public ZugConsistKey(final IZug zug, final Integer position) {
         this.zug = zug;
         this.position = position;
     }
 
-    public IZug getZug() {
+    private IZug getZug() {
         return zug;
     }
 
-    public Integer getPosition() {
+    private Integer getPosition() {
         return position;
     }
 
@@ -34,7 +34,7 @@ public class ZugConsistKey extends BaseKey {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append(ApiNames.ZUG, getZug())
                 .append(ApiNames.POSITION, getPosition())
                 .toString();

@@ -27,9 +27,9 @@ public class SelectorsBuilder {
 
     class SelectorsKey {
 
-        private Class<?> entityClass;
+        private final Class<?> entityClass;
 
-        private List<Class<? extends Annotation>> annotations;
+        private final List<Class<? extends Annotation>> annotations;
 
         SelectorsKey(Class<?> entityClass, List<Class<? extends Annotation>> annotations) {
             this.entityClass = entityClass;
@@ -63,19 +63,19 @@ public class SelectorsBuilder {
                     .isEquals();
         }
 
-        protected List<Class<? extends Annotation>> getAnnotations() {
+        List<Class<? extends Annotation>> getAnnotations() {
             return annotations;
         }
 
-        protected Class<?> getEntityClass() {
+        Class<?> getEntityClass() {
             return entityClass;
         }
     }
 
-    protected static Map<SelectorsKey, Map<String, Selector>> cache = Collections.synchronizedMap(new HashMap<>());
+    private static final Map<SelectorsKey, Map<String, Selector>> cache = Collections.synchronizedMap(new HashMap<>());
 
     /** The logger. */
-    protected final Logger logger;
+    private final Logger logger;
 
     /**
      * Instantiates a new selectors builder.
@@ -109,8 +109,8 @@ public class SelectorsBuilder {
         return selectors;
     }
 
-    protected Map<String, Selector> buildSelectors(Class<?> entityClass,
-            List<Class<? extends Annotation>> annotations) {
+    private Map<String, Selector> buildSelectors(Class<?> entityClass,
+                                                 List<Class<? extends Annotation>> annotations) {
         Map<String, Selector> selectors = new HashMap<>();
 
         try {
@@ -149,7 +149,7 @@ public class SelectorsBuilder {
      * @param getterName the getter name
      * @return the jpa name
      */
-    protected String getJpaName(String getterName) {
+    private String getJpaName(String getterName) {
         StringBuilder sb = new StringBuilder(getterName);
         sb.delete(0, 3);
         sb.replace(0, 1, StringUtils.lowerCase(sb.substring(0, 1)));
@@ -163,7 +163,7 @@ public class SelectorsBuilder {
      *            the getter
      * @return the setter or null if none exists
      */
-    protected Method getSetter(Method getter) {
+    private Method getSetter(Method getter) {
         StringBuilder sb = new StringBuilder(getter.getName());
 
         sb.replace(0, 1, "s");

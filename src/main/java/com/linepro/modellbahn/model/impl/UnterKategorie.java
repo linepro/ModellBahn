@@ -48,7 +48,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Table(name = DBNames.UNTER_KATEGORIE, indexes = { @Index(columnList = DBNames.KATEGORIE_ID +"," + DBNames.NAME, unique = true),
         @Index(columnList = DBNames.KATEGORIE_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.KATEGORIE_ID, DBNames.NAME }) })
-@AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, unique = false, length = 50))
+@AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, length = 50))
 @JsonRootName(value = ApiNames.UNTER_KATEGORIE)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.KATEGORIE, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS})
 public class UnterKategorie extends AbstractNamedItem<UnterKategorieKey> implements IUnterKategorie {
@@ -148,7 +148,7 @@ public class UnterKategorie extends AbstractNamedItem<UnterKategorieKey> impleme
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
                 .append(ApiNames.KATEGORIE, getKategorie())
                 .toString();

@@ -37,10 +37,10 @@ public class EpochService extends AbstractItemService<NameKey, Epoch> {
     }
 
     @JsonCreator
-    public Epoch create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiNames.NAMEN, required = false) String name,
-            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) {
+    public Epoch create(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.NAMEN) String name,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         Epoch entity = new Epoch(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);

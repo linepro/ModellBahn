@@ -19,26 +19,26 @@ import com.linepro.modellbahn.util.StaticContentFinder;
 @Path(ApiPaths.WEB_ROOT)
 public class HttpService extends AbstractService {
 
-    protected static final String WEB_ROOT = StringUtils.strip(ApiPaths.WEB_ROOT, "/");
+    private static final String WEB_ROOT = StringUtils.strip(ApiPaths.WEB_ROOT, "/");
 
     public HttpService() {
     }
 
     @GET
     @Path(ApiPaths.WEB_PART)
-    @Produces({MediaType.WILDCARD})
+    @Produces()
     public Response getFile() {
         return handleRequest();
     }
 
     @POST
     @Path(ApiPaths.WEB_PART)
-    @Produces({MediaType.WILDCARD})
+    @Produces()
     public Response postFile() {
         return handleRequest();
     }
 
-    public Response handleRequest() {
+    private Response handleRequest() {
         URI requested = uriInfo.getBaseUri().relativize(uriInfo.getRequestUri());
 
         // We really really don't want leading or trailing slashes

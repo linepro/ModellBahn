@@ -20,13 +20,13 @@ public class DecoderSerializer extends StdSerializer<Decoder> {
 
     private static final long serialVersionUID = -4711405906405775674L;
 
-    protected LinkUtils utils = new LinkUtils();
+    private final LinkUtils utils = new LinkUtils();
 
     public DecoderSerializer() {
         this(Decoder.class);
     }
 
-    public DecoderSerializer(Class<Decoder> t) {
+    private DecoderSerializer(Class<Decoder> t) {
         super(t);
     }
 

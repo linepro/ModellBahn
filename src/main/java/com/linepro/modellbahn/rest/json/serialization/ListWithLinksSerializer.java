@@ -25,13 +25,13 @@ public class ListWithLinksSerializer extends StdSerializer<ListWithLinks> {
 
     private static final long serialVersionUID = 5659169256684166251L;
 
-    protected LinkUtils utils = new LinkUtils();
+    private final LinkUtils utils = new LinkUtils();
     
     public ListWithLinksSerializer() {
         this(ListWithLinks.class);
     }
 
-    public ListWithLinksSerializer(Class<ListWithLinks> t) {
+    private ListWithLinksSerializer(Class<ListWithLinks> t) {
         super(t);
     }
 

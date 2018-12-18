@@ -138,7 +138,7 @@ public class Zug extends AbstractNamedItem<NameKey> implements IZug {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this)
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
 		        .appendSuper(super.toString())
 				.append(ApiNames.ZUG_TYP, getZugTyp())
 				.append(ApiNames.CONSIST, getConsist())

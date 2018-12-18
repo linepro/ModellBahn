@@ -59,7 +59,7 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
      * Convienience method for lookups
      * @param name the item name
      */
-    public AbstractNamedItem(String name) {
+    protected AbstractNamedItem(String name) {
         super(null, null);
 
         setName(name);
@@ -73,7 +73,7 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
 	 * @param bezeichnung the bezeichnung
 	 * @param deleted the deleted
 	 */
-	public AbstractNamedItem(Long id, String name, String bezeichnung, Boolean deleted) {
+    protected AbstractNamedItem(Long id, String name, String bezeichnung, Boolean deleted) {
 		super(id, deleted);
 		
 		setName(name);
@@ -82,7 +82,7 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
 
     @Override
 	@BusinessKey
-    @Column(name=DBNames.NAME, unique=true, length=50, nullable = true)
+    @Column(name=DBNames.NAME, unique=true, length=50)
     @JsonGetter(ApiNames.NAMEN)
     @JsonView(Views.DropDown.class)
 	public String getName() {
@@ -96,7 +96,7 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
 	}
 
 	@Override
-    @Column(name=DBNames.BEZEICHNUNG, nullable=true, length=100)
+    @Column(name=DBNames.BEZEICHNUNG, length=100)
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
 	public String getBezeichnung() {
@@ -118,13 +118,13 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
                 .collect(Collectors.joining(""));
     }
 
-    protected String encodeChar(int ch) {
+    private String encodeChar(int ch) {
         return isAsciiAlphaNum(ch) ? 
                    Character.toString((char) ch) : 
                    String.format("%%%02x", ch);
     }
 
-    protected boolean isAsciiAlphaNum(int ch) {
+    private boolean isAsciiAlphaNum(int ch) {
         return (48 <= ch && ch <= 57) || 
                (65 <= ch && ch <= 90) || 
                (97 <= ch && ch <= 122);
@@ -167,7 +167,7 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
 
     @Override
 	public String toString() {
-		return new ToStringBuilder(this)
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
 				.appendSuper(super.toString())
 				.append(ApiNames.NAMEN, getName())
 				.append(ApiNames.BEZEICHNUNG, getBezeichnung())

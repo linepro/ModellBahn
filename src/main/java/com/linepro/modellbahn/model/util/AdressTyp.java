@@ -22,7 +22,7 @@ public enum AdressTyp implements IDescribedEnum {
     
     WEICHE("A Märklin Motorola accessory address 1 - 256.");
 
-    protected final String description;
+    private final String description;
     
     AdressTyp(String description) {
         this.description = description;

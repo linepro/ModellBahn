@@ -20,7 +20,7 @@ public class LinkSerializer extends StdSerializer<Link> {
 
     private static final long serialVersionUID = 5659169256684166251L;
 
-    protected LinkUtils utils = new LinkUtils();
+    private final LinkUtils utils = new LinkUtils();
     
     public LinkSerializer() {
         this(Link.class);

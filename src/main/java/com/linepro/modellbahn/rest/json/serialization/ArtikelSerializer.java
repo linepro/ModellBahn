@@ -19,7 +19,7 @@ public class ArtikelSerializer extends StdSerializer<Artikel> {
         this(Artikel.class);
     }
 
-    public ArtikelSerializer(Class<Artikel> t) {
+    private ArtikelSerializer(Class<Artikel> t) {
         super(t);
     }
 

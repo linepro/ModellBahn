@@ -22,6 +22,7 @@ import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.validator.constraints.Range;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
@@ -209,7 +210,7 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
                 .append(ApiNames.DECODER, getDecoder())
                 .append(ApiNames.INDEX, getIndex())

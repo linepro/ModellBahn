@@ -25,19 +25,19 @@ import com.linepro.modellbahn.guice.ModellBahnModule;
  */
 public class Main {
     
-    protected static final String STATIC_PATH = "./webapp";
+    private static final String STATIC_PATH = "./webapp";
 
-    protected static final String STORE_PATH = STATIC_PATH;
+    private static final String STORE_PATH = STATIC_PATH;
 
-    protected static final String WEB_APP_ROOT = "ModellBahn";
+    private static final String WEB_APP_ROOT = "ModellBahn";
 
     /** The Constant PROTOCOL. */
-    protected static final String HTTP = "http";
+    private static final String HTTP = "http";
 
-    protected static final String HTTPS = "https";
+    private static final String HTTPS = "https";
 
     /** The Constant PORT. */
-    protected static final String PORT = "8086";
+    private static final String PORT = "8086";
 
     /**
      * The main method.

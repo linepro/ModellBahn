@@ -16,25 +16,25 @@ import org.testng.annotations.Test;
 
 public class FileStoreTest {
 
-    public static final String MODELL_BAHN = "https://localhost/ModellBahn:8086";
+    private static final String MODELL_BAHN = "https://localhost/ModellBahn:8086";
 
-    public static final URI BASE_URI = URI.create(MODELL_BAHN);
+    private static final URI BASE_URI = URI.create(MODELL_BAHN);
 
-    public static final String ENTITY_TYPE = "entityType";
+    private static final String ENTITY_TYPE = "entityType";
 
-    public static final String[] IDS = { "A", "B" };
+    private static final String[] IDS = { "A", "B" };
 
-    public static final String FILE_NAME = "file";
+    private static final String FILE_NAME = "file";
 
-    public static final String FILE_TYPE = "jpg";
+    private static final String FILE_TYPE = "jpg";
 
-    public static final String TEST_FOLDER = "store/entityType/A/B";
+    private static final String TEST_FOLDER = "store/entityType/A/B";
 
-    public static final String TEST_FILE = TEST_FOLDER + "/file.jpg";
+    private static final String TEST_FILE = TEST_FOLDER + "/file.jpg";
 
-    protected FileStore fileStore;
+    private FileStore fileStore;
 
-    protected Path root;
+    private Path root;
 
     @BeforeMethod
     public void setUp() throws Exception {

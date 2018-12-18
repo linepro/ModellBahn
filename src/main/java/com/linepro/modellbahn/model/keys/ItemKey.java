@@ -12,20 +12,20 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 
 public class ItemKey extends BaseKey {
 
-    protected final IItem<?> item;
+    private final IItem<?> item;
 
-    protected final Collection<Selector> businessKeys;
+    private final Collection<Selector> businessKeys;
     
     public ItemKey(final IItem<?> item, final Collection<Selector> businessKeys) {
         this.item = item;
         this.businessKeys = businessKeys;
     }
 
-    public IItem<?> getItem() {
+    private IItem<?> getItem() {
         return item;
     }
 
-    public Collection<Selector> getBusinessKeys() {
+    private Collection<Selector> getBusinessKeys() {
         return businessKeys;
     }
 

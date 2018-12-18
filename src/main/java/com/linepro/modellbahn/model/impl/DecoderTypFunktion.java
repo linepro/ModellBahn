@@ -49,7 +49,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Table(name = DBNames.DECODER_TYP_FUNKTION, indexes = { @Index(columnList = DBNames.DECODER_TYP_ID + "," + DBNames.REIHE + "," + DBNames.NAME, unique = true),
         @Index(columnList = DBNames.DECODER_TYP_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.DECODER_TYP_ID, DBNames.REIHE, DBNames.NAME }) })
-@AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, unique = false, length = 4))
+@AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, length = 4))
 @JsonRootName(ApiNames.FUNKTION)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.REIHE,  ApiNames.PROGRAMMABLE, ApiNames.DELETED, ApiNames.LINKS})
 public class DecoderTypFunktion extends AbstractNamedItem<DecoderTypFunktionKey> implements IDecoderTypFunktion {
@@ -193,7 +193,7 @@ public class DecoderTypFunktion extends AbstractNamedItem<DecoderTypFunktionKey>
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
                 .append(ApiNames.DECODER_TYP, getDecoderTyp())
                 .append(ApiNames.REIHE, getReihe())

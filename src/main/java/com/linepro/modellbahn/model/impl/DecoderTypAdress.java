@@ -141,7 +141,7 @@ public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implemen
     }
 
     @Override
-    @Column(name = DBNames.ADRESS_TYP, nullable = true, length = 100)
+    @Column(name = DBNames.ADRESS_TYP, length = 100)
     @JsonGetter(ApiNames.ADRESS_TYP)
     @JsonView(Views.DropDown.class)
     public AdressTyp getAdressTyp() {
@@ -155,7 +155,7 @@ public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implemen
     }
 
     @Override
-    @Column(name = DBNames.SPAN, nullable = true)
+    @Column(name = DBNames.SPAN)
     @JsonGetter(ApiNames.SPAN)
     @JsonView(Views.Public.class)
     public Integer getSpan() {
@@ -169,7 +169,7 @@ public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implemen
     }
 
     @Override
-    @Column(name = DBNames.WERKSEINSTELLUNG, nullable = true)
+    @Column(name = DBNames.WERKSEINSTELLUNG)
     @JsonGetter(ApiNames.WERKSEINSTELLUNG)
     @JsonView(Views.Public.class)
     public Integer getWerkseinstellung() {
@@ -243,7 +243,7 @@ public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implemen
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
                 .append(ApiNames.DECODER_TYP, getDecoderTyp())
                 .append(ApiNames.ADRESS_TYP, getAdressTyp())

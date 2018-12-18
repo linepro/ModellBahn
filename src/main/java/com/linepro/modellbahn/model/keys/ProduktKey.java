@@ -9,20 +9,20 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 
 public class ProduktKey extends BaseKey {
 
-    protected final IHersteller hersteller;
+    private final IHersteller hersteller;
     
-    protected final String bestellNr;
+    private final String bestellNr;
 
     public ProduktKey(final IHersteller hersteller, final String bestellNr) {
         this.hersteller = hersteller;
         this.bestellNr = bestellNr;
     }
 
-    public IHersteller getHersteller() {
+    private IHersteller getHersteller() {
         return hersteller;
     }
 
-    public String getBestellNr() {
+    private String getBestellNr() {
         return bestellNr;
     }
     
@@ -34,7 +34,7 @@ public class ProduktKey extends BaseKey {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append(ApiNames.HERSTELLER, getHersteller())
                 .append(ApiNames.NAMEN, getBestellNr())
                 .toString();

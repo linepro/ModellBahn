@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 
 public class FileFinder implements IFileFinder {
 
-    protected Set<String> contentPaths = Collections.synchronizedSet(new HashSet<>());
+    private final Set<String> contentPaths = Collections.synchronizedSet(new HashSet<>());
 
-    protected final Logger logger;
+    private final Logger logger;
     
     public FileFinder() {
         logger = LoggerFactory.getILoggerFactory().getLogger(getClass().getName());
@@ -63,7 +63,7 @@ public class FileFinder implements IFileFinder {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("contentPaths", getAbsolutePaths())
                 .toString();
     }

@@ -9,11 +9,11 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 
 public class DecoderTypFunktionKey extends BaseKey {
 
-    protected final IDecoderTyp decoderTyp;
+    private final IDecoderTyp decoderTyp;
 
-    protected final Integer reihe;
+    private final Integer reihe;
 
-    protected final String funktion;
+    private final String funktion;
     
     public DecoderTypFunktionKey(final IDecoderTyp decoderTyp, final Integer reihe, final String funktion) {
         this.decoderTyp = decoderTyp;
@@ -21,15 +21,15 @@ public class DecoderTypFunktionKey extends BaseKey {
         this.funktion = funktion;
     }
 
-    public IDecoderTyp getDecoderTyp() {
+    private IDecoderTyp getDecoderTyp() {
         return decoderTyp;
     }
 
-    public Integer getReihe() {
+    private Integer getReihe() {
         return reihe;
     }
 
-    public String getFunktion() {
+    private String getFunktion() {
         return funktion;
     }
 
@@ -42,7 +42,7 @@ public class DecoderTypFunktionKey extends BaseKey {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append(ApiNames.DECODER_TYP, getDecoderTyp())
                 .append(ApiNames.REIHE, getReihe())
                 .toString();

@@ -318,7 +318,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Epoch.class)
-    @JoinColumn(name = DBNames.EPOCH_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk1"))
+    @JoinColumn(name = DBNames.EPOCH_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk1"))
     @JsonGetter(ApiNames.EPOCH)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -336,7 +336,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Bahnverwaltung.class)
-    @JoinColumn(name = DBNames.BAHNVERWALTUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk3"))
+    @JoinColumn(name = DBNames.BAHNVERWALTUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk3"))
     @JsonGetter(ApiNames.BAHNVERWALTUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -354,7 +354,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gattung.class)
-    @JoinColumn(name = DBNames.GATTUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk2"))
+    @JoinColumn(name = DBNames.GATTUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk2"))
     @JsonGetter(ApiNames.GATTUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -371,7 +371,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     }
 
     @Override
-    @Column(name = DBNames.BETREIBSNUMMER, nullable = true, length = 100)
+    @Column(name = DBNames.BETREIBSNUMMER, length = 100)
     @JsonGetter(ApiNames.BETREIBSNUMMER)
     @JsonView(Views.Public.class)
     public String getBetreibsnummer() {
@@ -385,7 +385,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     }
 
     @Override
-    @Column(name = DBNames.BAUZEIT, nullable = true)
+    @Column(name = DBNames.BAUZEIT)
     @Temporal(TemporalType.DATE)
     @JsonGetter(ApiNames.BAUZEIT)
     @JsonView(Views.Public.class)
@@ -402,7 +402,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Vorbild.class)
-    @JoinColumn(name = DBNames.VORBILD_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk12"))
+    @JoinColumn(name = DBNames.VORBILD_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk12"))
     @JsonGetter(ApiNames.VORBILD)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -421,7 +421,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class)
-    @JoinColumn(name = DBNames.ACHSFOLG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk4"))
+    @JoinColumn(name = DBNames.ACHSFOLG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk4"))
     @JsonGetter(ApiNames.ACHSFOLG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -439,7 +439,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     }
 
     @Override
-    @Column(name = DBNames.ANMERKUNG, nullable = true, length = 100)
+    @Column(name = DBNames.ANMERKUNG, length = 100)
     @JsonGetter(ApiNames.ANMERKUNG)
     @JsonView(Views.DropDown.class)
     public String getAnmerkung() {
@@ -454,7 +454,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = SonderModell.class)
-    @JoinColumn(name = DBNames.SONDERMODELL_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk8"))
+    @JoinColumn(name = DBNames.SONDERMODELL_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk8"))
     @JsonGetter(ApiNames.SONDERMODELL)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -473,7 +473,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Aufbau.class)
-    @JoinColumn(name = DBNames.AUFBAU_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk9"))
+    @JoinColumn(name = DBNames.AUFBAU_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk9"))
     @JsonGetter(ApiNames.AUFBAU)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -492,7 +492,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Licht.class)
-    @JoinColumn(name = DBNames.LICHT_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk10"))
+    @JoinColumn(name = DBNames.LICHT_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk10"))
     @JsonGetter(ApiNames.LICHT)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -511,7 +511,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kupplung.class)
-    @JoinColumn(name = DBNames.KUPPLUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk11"))
+    @JoinColumn(name = DBNames.KUPPLUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk11"))
     @JsonGetter(ApiNames.KUPPLUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -530,7 +530,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class)
-    @JoinColumn(name = DBNames.STEUERUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk13"))
+    @JoinColumn(name = DBNames.STEUERUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk13"))
     @JsonGetter(ApiNames.STEUERUNG)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -549,7 +549,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
-    @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk14"))
+    @JoinColumn(name = DBNames.DECODER_TYP_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk14"))
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using = DecoderTypSerializer.class)
@@ -566,7 +566,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = MotorTyp.class)
-    @JoinColumn(name = DBNames.MOTOR_TYP_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk15"))
+    @JoinColumn(name = DBNames.MOTOR_TYP_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk15"))
     @JsonGetter(ApiNames.MOTOR_TYP)
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
@@ -583,7 +583,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     }
 
     @Override
-    @Column(name = DBNames.LANGE, nullable = true, precision = 6, scale = 2)
+    @Column(name = DBNames.LANGE, precision = 6, scale = 2)
     @JsonGetter(ApiNames.LANGE)
     @JsonView(Views.Public.class)
     public BigDecimal getLange() {
@@ -597,7 +597,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     }
 
     @Override
-    @Column(name = DBNames.ANLEITUNGEN, nullable = true, length = 512)
+    @Column(name = DBNames.ANLEITUNGEN, length = 512)
     @Convert(converter = PathConverter.class)
     @JsonGetter(ApiNames.ANLEITUNGEN)
     @JsonSerialize(using = PathSerializer.class)
@@ -612,7 +612,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     }
 
     @Override
-    @Column(name = DBNames.EXPLOSIONSZEICHNUNG, nullable = true, length = 512)
+    @Column(name = DBNames.EXPLOSIONSZEICHNUNG, length = 512)
     @Convert(converter = PathConverter.class)
     @JsonGetter(ApiNames.EXPLOSIONSZEICHNUNG)
     @JsonSerialize(using = PathSerializer.class)
@@ -627,7 +627,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     }
 
     @Override
-    @Column(name = DBNames.ABBILDUNG, nullable = true)
+    @Column(name = DBNames.ABBILDUNG)
     @Convert(converter = PathConverter.class)
     @JsonGetter(ApiNames.ABBILDUNG)
     @JsonSerialize(using = PathSerializer.class)
@@ -708,7 +708,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
                 .append(ApiNames.HERSTELLER, getHersteller())
                 .append(ApiNames.BESTELL_NR, getName())

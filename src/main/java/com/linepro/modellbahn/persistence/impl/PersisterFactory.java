@@ -20,13 +20,13 @@ import com.linepro.modellbahn.persistence.IPersisterFactory;
 public class PersisterFactory implements IPersisterFactory {
 
     /** The entity manager. */
-    protected final ISessionManagerFactory sessionManagerFactory;
+    private final ISessionManagerFactory sessionManagerFactory;
 
     /** The log manager. */
-    protected final ILoggerFactory logManager;
+    private final ILoggerFactory logManager;
 
     /** The persisters. */
-    protected final Map<Class<? extends IItem<?>>,IPersister<? extends IItem<?>>> persisters = new HashMap<>();
+    private final Map<Class<? extends IItem<?>>,IPersister<? extends IItem<?>>> persisters = new HashMap<>();
     
     /**
      * Instantiates a new persister factory.
@@ -56,7 +56,7 @@ public class PersisterFactory implements IPersisterFactory {
         return persister;
     }
     
-    void registerConverter(IPersister<?> persister, Class<?> entityClass) {
+    private void registerConverter(IPersister<?> persister, Class<?> entityClass) {
         if (INamedItem.class.isAssignableFrom(entityClass)) {
             ConvertUtils.register(new NamedItemConverter(persister), entityClass);
         }

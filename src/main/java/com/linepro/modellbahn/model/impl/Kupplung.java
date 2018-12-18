@@ -70,7 +70,7 @@ public class Kupplung extends AbstractNamedItem<NameKey> implements IKupplung {
     }
 
     @Override
-    @Column(name = DBNames.ABBILDUNG, nullable = true)
+    @Column(name = DBNames.ABBILDUNG)
     @Convert(converter = PathConverter.class)
     @JsonGetter(ApiNames.ABBILDUNG)
     @JsonView(Views.DropDown.class)

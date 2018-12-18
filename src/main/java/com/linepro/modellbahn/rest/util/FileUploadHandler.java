@@ -93,7 +93,7 @@ public class FileUploadHandler implements IFileUploadHandler {
      * @param fileData the file data
      * @throws Exception the exception
      */
-    protected void writeToFile(Path fileName, FormDataContentDisposition fileDetail, InputStream fileData) throws Exception {
+    private void writeToFile(Path fileName, FormDataContentDisposition fileDetail, InputStream fileData) throws Exception {
 		int read;
 		byte[] buffer = new byte[1024];
 

@@ -96,7 +96,7 @@ public class Land extends AbstractNamedItem<NameKey> implements ILand {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
                 .append(ApiNames.WAHRUNG, getWahrung())
                 .toString();

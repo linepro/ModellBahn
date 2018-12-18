@@ -7,11 +7,11 @@ import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 
-public class AbstractItemResolver<E extends INamedItem<?>> implements ObjectIdResolver {
+class AbstractItemResolver<E extends INamedItem<?>> implements ObjectIdResolver {
 
-    protected final IPersister<?> persister;
+    private final IPersister<?> persister;
     
-    public AbstractItemResolver(Class<E> entityClass) {
+    AbstractItemResolver(Class<E> entityClass) {
         persister = StaticPersisterFactory.get().createPersister(entityClass);
     }
     

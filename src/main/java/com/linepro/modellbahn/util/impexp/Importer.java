@@ -24,7 +24,7 @@ public class Importer<E extends IItem<?>> {
     private final Logger logger;
 
     /** The persister. */
-    protected final IPersister<E> persister;
+    private final IPersister<E> persister;
 
     @Inject
     public Importer(final ILoggerFactory logManager, @Assisted final Class<E> entityClass) {

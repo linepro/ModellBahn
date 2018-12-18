@@ -68,7 +68,7 @@ public class Wahrung extends AbstractNamedItem<NameKey> implements IWahrung {
 	}
 
 	@Override
-    @Column(name=DBNames.DECIMALS, nullable = true)
+    @Column(name=DBNames.DECIMALS)
 	@JsonGetter(ApiNames.DECIMALS)
     @JsonView(Views.DropDown.class)
 	public Integer getDecimals() {
@@ -83,7 +83,7 @@ public class Wahrung extends AbstractNamedItem<NameKey> implements IWahrung {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this)
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
 		        .appendSuper(super.toString())
 		        .append(ApiNames.DECIMALS, getDecimals())
 		        .toString();

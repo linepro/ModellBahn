@@ -9,20 +9,20 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 
 public class DecoderFunktionKey extends BaseKey {
 
-    protected final IDecoder decoder;
+    private final IDecoder decoder;
     
-    protected final String funktion;
+    private final String funktion;
 
     public DecoderFunktionKey(final IDecoder decoder, final String funktion) {
         this.decoder = decoder;
         this.funktion = funktion;
     }
 
-    public IDecoder getDecoder() {
+    private IDecoder getDecoder() {
         return decoder;
     }
 
-    public String getFunktion() {
+    private String getFunktion() {
         return funktion;
     }
 
@@ -34,7 +34,7 @@ public class DecoderFunktionKey extends BaseKey {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append(ApiNames.DECODER, getDecoder().getName())
                 .append(ApiNames.FUNKTION, getFunktion())
                 .toString();

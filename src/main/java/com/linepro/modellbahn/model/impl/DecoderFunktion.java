@@ -40,6 +40,7 @@ import com.linepro.modellbahn.rest.json.resolver.DecoderResolver;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * DecoderFunktion.
@@ -167,7 +168,7 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
     }
 
     @Override
-	@Column(name=DBNames.BEZEICHNUNG, nullable=true, length=100)
+	@Column(name=DBNames.BEZEICHNUNG, length=100)
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
 	public String getBezeichnung() {
@@ -234,7 +235,7 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this)
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
                 .append(ApiNames.DECODER, getDecoder())
 				.append(ApiNames.FUNKTION, getFunktion())

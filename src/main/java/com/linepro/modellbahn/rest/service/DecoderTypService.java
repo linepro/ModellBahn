@@ -51,15 +51,15 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
 @Path(ApiPaths.DECODER_TYP)
 public class DecoderTypService extends AbstractItemService<DecoderTypKey, DecoderTyp> {
 
-    protected final IPersister<Protokoll> protokollPersister;
+    private final IPersister<Protokoll> protokollPersister;
 
-    protected final IPersister<Hersteller> herstellerPersister;
+    private final IPersister<Hersteller> herstellerPersister;
 
-    protected final IPersister<DecoderTypAdress> adressPersister;
+    private final IPersister<DecoderTypAdress> adressPersister;
 
-    protected final IPersister<DecoderTypCV> cvPersister;
+    private final IPersister<DecoderTypCV> cvPersister;
 
-    protected final IPersister<DecoderTypFunktion> funktionPersister;
+    private final IPersister<DecoderTypFunktion> funktionPersister;
 
     public DecoderTypService() {
         super(DecoderTyp.class);
@@ -72,14 +72,14 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     }
 
     @JsonCreator
-    public DecoderTyp create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiNames.HERSTELLER, required = false) String herstellerStr,
-            @JsonProperty(value = ApiNames.PROTOKOLL, required = false) String protokollStr,
-            @JsonProperty(value = ApiNames.NAMEN, required = false) String name,
-            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung, 
-            @JsonProperty(value = ApiNames.GERAUSCH, required = false) Boolean sound,
-            @JsonProperty(value = ApiNames.KONFIGURATION, required = false) String konfigurationStr,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
+    public DecoderTyp create(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.HERSTELLER) String herstellerStr,
+            @JsonProperty(value = ApiNames.PROTOKOLL) String protokollStr,
+            @JsonProperty(value = ApiNames.NAMEN) String name,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
+            @JsonProperty(value = ApiNames.GERAUSCH) Boolean sound,
+            @JsonProperty(value = ApiNames.KONFIGURATION) String konfigurationStr,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         IHersteller hersteller = findHersteller(herstellerStr);
         IProtokoll protokoll = findProtokoll(protokollStr);
         Konfiguration konfiguration = Konfiguration.valueOf(konfigurationStr);
@@ -93,14 +93,14 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     }
 
     @JsonCreator
-    public DecoderTypAdress createAdress(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiNames.HERSTELLER, required = false) String herstellerStr,
-            @JsonProperty(value = ApiNames.BESTELL_NR, required = false) String bestellNr,
-            @JsonProperty(value = ApiNames.INDEX, required = false) Integer index,
-            @JsonProperty(value = ApiNames.ADRESS_TYP, required = false) String adressTypStr,
-            @JsonProperty(value = ApiNames.SPAN, required = false) Integer span,
-            @JsonProperty(value = ApiNames.WERKSEINSTELLUNG, required = false) Integer werkeinstellung,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
+    public DecoderTypAdress createAdress(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.HERSTELLER) String herstellerStr,
+            @JsonProperty(value = ApiNames.BESTELL_NR) String bestellNr,
+            @JsonProperty(value = ApiNames.INDEX) Integer index,
+            @JsonProperty(value = ApiNames.ADRESS_TYP) String adressTypStr,
+            @JsonProperty(value = ApiNames.SPAN) Integer span,
+            @JsonProperty(value = ApiNames.WERKSEINSTELLUNG) Integer werkeinstellung,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, false);
         AdressTyp adressTyp = AdressTyp.valueOf(adressTypStr);
         
@@ -112,15 +112,15 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     }
 
     @JsonCreator
-    public DecoderTypCV createCV(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiNames.HERSTELLER, required = false) String herstellerStr,
-            @JsonProperty(value = ApiNames.BESTELL_NR, required = false) String bestellNr,
-            @JsonProperty(value = ApiNames.NAMEN, required = false) String name,
-            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
-            @JsonProperty(value = ApiNames.CV, required = false) Integer cv,
-            @JsonProperty(value = ApiNames.MINIMAL, required = false) Integer max,
-            @JsonProperty(value = ApiNames.MAXIMAL, required = false) Integer min,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
+    public DecoderTypCV createCV(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.HERSTELLER) String herstellerStr,
+            @JsonProperty(value = ApiNames.BESTELL_NR) String bestellNr,
+            @JsonProperty(value = ApiNames.NAMEN) String name,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
+            @JsonProperty(value = ApiNames.CV) Integer cv,
+            @JsonProperty(value = ApiNames.MINIMAL) Integer max,
+            @JsonProperty(value = ApiNames.MAXIMAL) Integer min,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, false);
 
         DecoderTypCV entity = new DecoderTypCV(id, decoderTyp, cv, bezeichnung, cv, min, max, deleted);
@@ -131,14 +131,14 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     }
 
     @JsonCreator
-    public DecoderTypFunktion createFunktion(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiNames.HERSTELLER, required = false) String herstellerStr,
-            @JsonProperty(value = ApiNames.BESTELL_NR, required = false) String bestellNr,
-            @JsonProperty(value = ApiNames.REIHE, required = false) Integer reihe,
-            @JsonProperty(value = ApiNames.NAMEN, required = false) String funktion,
-            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
-            @JsonProperty(value = ApiNames.PROGRAMMABLE, required = false) Boolean programmable,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
+    public DecoderTypFunktion createFunktion(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.HERSTELLER) String herstellerStr,
+            @JsonProperty(value = ApiNames.BESTELL_NR) String bestellNr,
+            @JsonProperty(value = ApiNames.REIHE) Integer reihe,
+            @JsonProperty(value = ApiNames.NAMEN) String funktion,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
+            @JsonProperty(value = ApiNames.PROGRAMMABLE) Boolean programmable,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, false);
 
         DecoderTypFunktion entity = new DecoderTypFunktion(id, decoderTyp, reihe, funktion, bezeichnung, programmable,
@@ -548,15 +548,15 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
         return getPersister().findByKey(new DecoderTypKey(findHersteller(herstellerStr), bestellNr), eager);
     }
 
-    protected IDecoderTypAdress findDecoderTypAdress(String herstellerStr, String bestellNr, Integer index, boolean eager) throws Exception {
+    private IDecoderTypAdress findDecoderTypAdress(String herstellerStr, String bestellNr, Integer index, boolean eager) throws Exception {
         return findDecoderTypAdress(findDecoderTyp(herstellerStr, bestellNr, eager), index, eager) ;
     }
 
-    protected IDecoderTypAdress findDecoderTypAdress(IDecoderTyp decoderTyp, Integer index, boolean eager) throws Exception {
+    private IDecoderTypAdress findDecoderTypAdress(IDecoderTyp decoderTyp, Integer index, boolean eager) throws Exception {
         return getAdressPersister().findByKey(new DecoderTypAdressKey(decoderTyp, index), eager);
     }
 
-    protected IDecoderTypCV findDecoderTypCV(String herstellerStr, String bestellNr, Integer cv, boolean eager) throws Exception {
+    private IDecoderTypCV findDecoderTypCV(String herstellerStr, String bestellNr, Integer cv, boolean eager) throws Exception {
         return findDecoderTypCV(findDecoderTyp(herstellerStr, bestellNr, eager), cv, eager) ;
     }
 
@@ -564,7 +564,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
         return getCVPersister().findByKey(new DecoderTypCVKey(decoderTyp, cv), eager);
     }
 
-    protected IDecoderTypFunktion findDecoderTypFunktion(String herstellerStr, String bestellNr, Integer reihe, String funktion, boolean eager) throws Exception {
+    private IDecoderTypFunktion findDecoderTypFunktion(String herstellerStr, String bestellNr, Integer reihe, String funktion, boolean eager) throws Exception {
         return findDecoderTypFunktion(findDecoderTyp(herstellerStr, bestellNr, eager), reihe, funktion, eager) ;
     }
 
@@ -572,31 +572,31 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
         return getFunktionPersister().findByKey(new DecoderTypFunktionKey(decoderTyp, reihe, funktion), eager);
     }
 
-    protected IProtokoll findProtokoll(String protokollStr) throws Exception  {
+    private IProtokoll findProtokoll(String protokollStr) throws Exception  {
         return getProtokollPersister().findByKey(new NameKey(protokollStr), false);
     }
 
-    protected IHersteller findHersteller(String herstellerStr) throws Exception  {
+    private IHersteller findHersteller(String herstellerStr) throws Exception  {
         return getHerstellerPersister().findByKey(new NameKey(herstellerStr), false);
     }
 
-    protected IPersister<Protokoll> getProtokollPersister() {
+    private IPersister<Protokoll> getProtokollPersister() {
         return protokollPersister;
     }
 
-    protected IPersister<Hersteller> getHerstellerPersister() {
+    private IPersister<Hersteller> getHerstellerPersister() {
         return herstellerPersister;
     }
 
-    public IPersister<DecoderTypAdress> getAdressPersister() {
+    private IPersister<DecoderTypAdress> getAdressPersister() {
         return adressPersister;
     }
 
-    public IPersister<DecoderTypCV> getCVPersister() {
+    private IPersister<DecoderTypCV> getCVPersister() {
         return cvPersister;
     }
 
-    public IPersister<DecoderTypFunktion> getFunktionPersister() {
+    private IPersister<DecoderTypFunktion> getFunktionPersister() {
         return funktionPersister;
     }
 

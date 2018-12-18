@@ -31,13 +31,13 @@ public class ModellBahn implements IModellBahn {
     public static final String JSP_CLASSPATH_ATTRIBUTE = "org.apache.catalina.jsp_classpath";
 
     /** The logger. */
-    protected final Logger logger;
+    private final Logger logger;
 
     /** The populator. */
-    protected final DBPopulator populator;
+    private final DBPopulator populator;
 
     /** The base uri. */
-    protected final URI baseUri;
+    private final URI baseUri;
 
     /**
      * Instantiates a new modell bahn.

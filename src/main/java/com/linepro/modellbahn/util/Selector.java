@@ -16,17 +16,17 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 public class Selector {
 
     /** The name. */
-    protected final String name;
+    private final String name;
 
     /** The getter. */
-    protected final Method getter;
+    private final Method getter;
 
     /** The setter. */
-    protected final Method setter;
+    private final Method setter;
 
-    protected final boolean collection;
+    private final boolean collection;
 
-    protected final Class<?> type;
+    private final Class<?> type;
 
     /**
      * Instantiates a new selector.
@@ -106,7 +106,7 @@ public class Selector {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append(ApiNames.NAMEN, getName())
                 .append("getter", getGetter().getName())
                 .append("setter", getSetter().getName())

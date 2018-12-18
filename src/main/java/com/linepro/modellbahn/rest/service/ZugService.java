@@ -42,7 +42,7 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
 @Path(ApiPaths.ZUG)
 public class ZugService extends AbstractItemService<NameKey, Zug> {
 
-    private IPersister<ZugConsist> consistPersister;
+    private final IPersister<ZugConsist> consistPersister;
 
     public ZugService() {
         super(Zug.class);
@@ -51,11 +51,11 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     }
 
     @JsonCreator
-    public Zug create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiNames.ZUG_TYP, required = false) String zugTypStr,
-            @JsonProperty(value = ApiNames.NAMEN, required = false) String name,
-            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
+    public Zug create(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.ZUG_TYP) String zugTypStr,
+            @JsonProperty(value = ApiNames.NAMEN) String name,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         IZugTyp zugTyp = findZugTyp(zugTypStr, false);
 
         Zug entity = new Zug(id, name, bezeichnung, zugTyp, deleted);
@@ -66,11 +66,11 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     }
 
     @JsonCreator
-    public ZugConsist createZugConsist(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiNames.ZUG, required = false) String zugStr,
-            @JsonProperty(value = ApiNames.POSITION, required = false) Integer position,
-            @JsonProperty(value = ApiNames.ARTIKEL, required = false) String artikelStr,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
+    public ZugConsist createZugConsist(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.ZUG) String zugStr,
+            @JsonProperty(value = ApiNames.POSITION) Integer position,
+            @JsonProperty(value = ApiNames.ARTIKEL) String artikelStr,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         IZug zug = findZug(zugStr, true);
         IArtikel artikel = findArtikel(artikelStr, false);
         
@@ -212,15 +212,15 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
         }
     }
 
-    protected IZugConsist findZugConsist(String zugStr, Integer position, boolean eager) throws Exception {
+    private IZugConsist findZugConsist(String zugStr, Integer position, boolean eager) throws Exception {
         return findZugConsist(findZug(zugStr, eager), position, eager) ;
     }
 
-    protected IZugConsist findZugConsist(IZug zug, Integer position, boolean eager) throws Exception {
+    private IZugConsist findZugConsist(IZug zug, Integer position, boolean eager) throws Exception {
         return getConsistPersister().findByKey(new ZugConsistKey(zug, position), eager);
     }
 
-    protected IPersister<ZugConsist> getConsistPersister() {
+    private IPersister<ZugConsist> getConsistPersister() {
         return consistPersister;
     }
 }

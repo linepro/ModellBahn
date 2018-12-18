@@ -24,7 +24,7 @@ public enum Connector implements IDescribedEnum {
 
     PluX22("PluX22.");
 
-    protected final String description;
+    private final String description;
     
     Connector(String description) {
         this.description = description;

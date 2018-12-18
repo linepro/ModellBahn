@@ -424,7 +424,7 @@ class SelectColumn extends Column {
 
   setValue(ctl, value) {
     for (let i = 0; i < ctl.options.length; i++) {
-      if (ctl.options[i].value == value) {
+      if (ctl.options[i].value === value) {
         ctl.selectedIndex = i;
         return;
       }
@@ -574,12 +574,11 @@ const setActiveTab = (event, tabName) => {
 
   for (let i = 0; i < tabContents.length; i++) {
     tabContents[i].style.display = (tabContents[i].id === tabName) ? "block" : "none";
-  };
-
+  }
   let linkName = tabName.replace("Tab", "Link");
   for (let i = 0; i < tabLinks.length; i++) {
 	  tabLinks[i].className = (tabLinks[i].id === linkName) ? "tabLinks active" : "tabLinks";
-  };
+  }
 };
 
 const addRow = (tableName) => {

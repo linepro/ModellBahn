@@ -9,20 +9,20 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 
 public class UnterKategorieKey extends BaseKey {
 
-    protected final IKategorie kategorie;
+    private final IKategorie kategorie;
     
-    protected final String unterKategorie;
+    private final String unterKategorie;
 
     public UnterKategorieKey(final IKategorie kategorie, final String unterKategorie) {
         this.kategorie = kategorie;
         this.unterKategorie = unterKategorie;
     }
 
-    public IKategorie getKategorie() {
+    private IKategorie getKategorie() {
         return kategorie;
     }
 
-    public String getUnterKategorie() {
+    private String getUnterKategorie() {
         return unterKategorie;
     }
     
@@ -34,7 +34,7 @@ public class UnterKategorieKey extends BaseKey {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append(ApiNames.KATEGORIE, getKategorie())
                 .append(ApiNames.NAMEN, getUnterKategorie())
                 .toString();

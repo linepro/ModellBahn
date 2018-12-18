@@ -37,11 +37,11 @@ public class WahrungService extends AbstractItemService<NameKey, Wahrung> {
     }
 
     @JsonCreator
-    public Wahrung create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiNames.NAMEN, required = false) String name,
-            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
-            @JsonProperty(value = ApiNames.DECIMALS, required = false) Integer decimals,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) {
+    public Wahrung create(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.NAMEN) String name,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
+            @JsonProperty(value = ApiNames.DECIMALS) Integer decimals,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         Wahrung entity = new Wahrung(id, name, bezeichnung, decimals, deleted);
         
         debug("created: " + entity);

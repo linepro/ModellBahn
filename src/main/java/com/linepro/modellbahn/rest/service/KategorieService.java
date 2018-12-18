@@ -47,10 +47,10 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     }
 
     @JsonCreator
-    public Kategorie create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiNames.NAMEN, required = false) String name,
-            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) {
+    public Kategorie create(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.NAMEN) String name,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         Kategorie entity = new Kategorie(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
@@ -59,11 +59,11 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     }
 
     @JsonCreator
-    public UnterKategorie create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiNames.KATEGORIE, required = false) String kategorieStr,
-            @JsonProperty(value = ApiNames.NAMEN, required = false) String name,
-            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
+    public UnterKategorie create(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.KATEGORIE) String kategorieStr,
+            @JsonProperty(value = ApiNames.NAMEN) String name,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         Kategorie kategorie = findKategorie(kategorieStr, false);
 
         return new UnterKategorie(id, kategorie, name, bezeichnung, deleted);
@@ -227,7 +227,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
         return getPersister().findByKey(kategorieStr, eager);
     }
 
-    protected IUnterKategorie findUnterKategorie(String kategorieStr, String unterKategorieStr) throws Exception {
+    private IUnterKategorie findUnterKategorie(String kategorieStr, String unterKategorieStr) throws Exception {
         return getUnterKategoriePersister().findByKey(new UnterKategorieKey(findKategorie(kategorieStr, false), unterKategorieStr), true);
     }
     
@@ -235,7 +235,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
         return getUnterKategoriePersister().findByKey(new UnterKategorieKey(kategorie, unterKategorieStr), true);
     }
 
-    protected IPersister<UnterKategorie> getUnterKategoriePersister() {
+    private IPersister<UnterKategorie> getUnterKategoriePersister() {
         return unterKategoriePersister;
     }
 }

@@ -197,7 +197,7 @@ public class ProduktTeil extends AbstractItem<ProduktTeilKey> implements IProduk
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
                 .append(ApiNames.PRODUKT, getProdukt())
                 .append(ApiNames.TEIL, getTeil())

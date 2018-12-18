@@ -52,13 +52,13 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     }
 
     @JsonCreator
-    public Decoder create(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiNames.DECODER_TYP, required = false) DecoderTyp decoderTyp,
-            @JsonProperty(value = ApiNames.PROTOKOLL, required = false) Protokoll protokoll,
-            @JsonProperty(value = ApiNames.DECODER_ID, required = false) String decoderId,
-            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
-            @JsonProperty(value = ApiNames.FAHRSTUFE, required = false) Integer fahrstufe,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) {
+    public Decoder create(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.DECODER_TYP) DecoderTyp decoderTyp,
+            @JsonProperty(value = ApiNames.PROTOKOLL) Protokoll protokoll,
+            @JsonProperty(value = ApiNames.DECODER_ID) String decoderId,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
+            @JsonProperty(value = ApiNames.FAHRSTUFE) Integer fahrstufe,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         Decoder entity = new Decoder(id, decoderTyp, protokoll, decoderId, bezeichnung, fahrstufe, deleted);
 
         debug("created: " + entity);
@@ -67,12 +67,12 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     }
 
     @JsonCreator
-    public DecoderAdress createAdress(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiNames.DECODER_ID, required = false) String decoderId,
-            @JsonProperty(value = ApiNames.REIHE, required = false) Integer reihe,
-            @JsonProperty(value = ApiNames.ADRESS_TYP, required = false) String adressTypStr,
-            @JsonProperty(value = ApiNames.ADRESS, required = false) Integer adress,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
+    public DecoderAdress createAdress(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.DECODER_ID) String decoderId,
+            @JsonProperty(value = ApiNames.REIHE) Integer reihe,
+            @JsonProperty(value = ApiNames.ADRESS_TYP) String adressTypStr,
+            @JsonProperty(value = ApiNames.ADRESS) Integer adress,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         IDecoder decoder = findDecoder(decoderId, false);
         AdressTyp adressTyp = AdressTyp.valueOf(adressTypStr);
 
@@ -84,11 +84,11 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     }
 
     @JsonCreator
-    public DecoderCV createCV(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiNames.DECODER_ID, required = false) String decoderId,
-            @JsonProperty(value = ApiNames.CV, required = false) Integer cvValue,
-            @JsonProperty(value = ApiNames.WERT, required = false) Integer wert,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
+    public DecoderCV createCV(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.DECODER_ID) String decoderId,
+            @JsonProperty(value = ApiNames.CV) Integer cvValue,
+            @JsonProperty(value = ApiNames.WERT) Integer wert,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         IDecoder decoder = findDecoder(decoderId, false);
 
         IDecoderTypCV decoderTypCV = findDecoderTypCV(decoder.getDecoderTyp(), cvValue, true);
@@ -101,12 +101,12 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     }
 
     @JsonCreator
-    public DecoderFunktion createFunktion(@JsonProperty(value = ApiNames.ID, required = false) Long id,
-            @JsonProperty(value = ApiNames.DECODER_ID, required = false) String decoderId,
-            @JsonProperty(value = ApiNames.REIHE, required = false) Integer reihe,
-            @JsonProperty(value = ApiNames.FUNKTION, required = false) String funktion,
-            @JsonProperty(value = ApiNames.BEZEICHNUNG, required = false) String bezeichnung,
-            @JsonProperty(value = ApiNames.DELETED, required = false) Boolean deleted) throws Exception {
+    public DecoderFunktion createFunktion(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.DECODER_ID) String decoderId,
+            @JsonProperty(value = ApiNames.REIHE) Integer reihe,
+            @JsonProperty(value = ApiNames.FUNKTION) String funktion,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         IDecoder decoder = findDecoder(decoderId, false);
 
         IDecoderTypFunktion decoderTypFunktion = findDecoderTypFunktion(decoder.getDecoderTyp(), reihe, funktion, true);
@@ -340,16 +340,17 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
         return getPersister().findByKey(decoderId, true);
     }
 
-    protected IDecoderAdress findDecoderAdress(IDecoder decoder, Integer index, boolean eager) {
+    private IDecoderAdress findDecoderAdress(IDecoder decoder, Integer index, boolean eager) {
         try {
             return decoder.getAdressen().toArray(new IDecoderAdress[0])[index];
         } catch (IndexOutOfBoundsException | NullPointerException e) {
+            error("Error fetching DecoderAddressen for decoder " + decoder, e);
         }
         
         return null;
     }
 
-    protected IDecoderCV findDecoderCV(IDecoder decoder, Integer cv, boolean eager) {
+    private IDecoderCV findDecoderCV(IDecoder decoder, Integer cv, boolean eager) {
         try {
             for (IDecoderCV decoderCV : decoder.getCVs()) {
                 if (cv.equals(decoderCV.getCvValue())) {
@@ -357,12 +358,13 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
                 }
             }
         } catch (IndexOutOfBoundsException | NullPointerException e) {
+            error("Error fetching DecoderCV for decoder " + decoder, e);
         }
         
         return null;
     }
 
-    protected IDecoderFunktion findDecoderFunktion(IDecoder decoder, Integer reihe, String funktion, boolean eager) {
+    private IDecoderFunktion findDecoderFunktion(IDecoder decoder, Integer reihe, String funktion, boolean eager) {
         try {
             for (IDecoderFunktion decoderFunktion : decoder.getFunktionen()) {
                 if (reihe.equals(decoderFunktion.getReihe()) &&
@@ -371,6 +373,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
                 }
             }
         } catch (IndexOutOfBoundsException | NullPointerException e) {
+            error("Error fetching DecoderFunktion for decoder " + decoder, e);
         }
         
         return null;

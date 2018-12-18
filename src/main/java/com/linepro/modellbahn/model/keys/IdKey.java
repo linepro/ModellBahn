@@ -14,7 +14,7 @@ public class IdKey extends BaseKey {
         this.id = id;
     }
 
-    public Long getId() {
+    private Long getId() {
         return id;
     }
 
@@ -25,7 +25,7 @@ public class IdKey extends BaseKey {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append(ApiNames.ID, getId())
                 .toString();
     }

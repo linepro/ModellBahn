@@ -96,26 +96,26 @@ import com.linepro.modellbahn.util.SelectorsBuilder;
  */
 public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> extends AbstractService {
 
-    public static final List<String> PAGE_FIELDS = Arrays.asList(ApiNames.PAGE_NUMBER, ApiNames.PAGE_SIZE);
+    private static final List<String> PAGE_FIELDS = Arrays.asList(ApiNames.PAGE_NUMBER, ApiNames.PAGE_SIZE);
 
-    public static final Integer FIRST_PAGE = 0;
+    private static final Integer FIRST_PAGE = 0;
 
-    public static final Integer DEFAULT_PAGE_SIZE = 30;
+    private static final Integer DEFAULT_PAGE_SIZE = 30;
 
     /** The persister. */
-    protected final IPersister<E> persister;
+    private final IPersister<E> persister;
 
     /** The entity class. */
-    protected final Class<E> entityClass;
+    private final Class<E> entityClass;
 
     /** The selectors. */
-    protected final Map<String, Selector> selectors;
+    private final Map<String, Selector> selectors;
 
-    protected Link apiLink;
+    private Link apiLink;
 
-    protected Link homeLink;
+    private Link homeLink;
 
-    protected Link wadlLink;
+    private Link wadlLink;
 
     private URI serviceURI;
 
@@ -124,7 +124,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      *
      * @param entityClass the entity class
      */
-    public AbstractItemService(final Class<E> entityClass) {
+    protected AbstractItemService(final Class<E> entityClass) {
         this.entityClass = entityClass;
         this.persister = StaticPersisterFactory.get().createPersister(entityClass);
         this.selectors = new SelectorsBuilder().build(entityClass, JsonGetter.class);
@@ -294,7 +294,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         }
     }
 
-    protected Link getPageLink(UriInfo info, Integer pageNumber, Integer pageSize, String rel) {
+    private Link getPageLink(UriInfo info, Integer pageNumber, Integer pageSize, String rel) {
         UriBuilder uri = info.getAbsolutePathBuilder();
         // copy any non paging query parameters
         info.getQueryParameters().forEach((k, v) -> { if (!PAGE_FIELDS.contains(k)) { v.forEach(x -> uri.queryParam(k, x)); } });
@@ -313,7 +313,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      * @return the template
      * @throws Exception if reflection fails
      */
-    protected E getTemplate(MultivaluedMap<String, String> queryParameters) throws Exception {
+    private E getTemplate(MultivaluedMap<String, String> queryParameters) throws Exception {
         E template = create();
 
         if (!queryParameters.isEmpty()) {
@@ -346,11 +346,11 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      *
      * @return the entity class
      */
-    protected Class<E> getEntityClass() {
+    private Class<E> getEntityClass() {
         return entityClass;
     }
 
-    protected String getEntityClassName() {
+    private String getEntityClassName() {
         return entityClass.getSimpleName();
     }
 
@@ -369,7 +369,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      * @return the e
      * @throws Exception the exception
      */
-    protected E create() throws Exception {
+    private E create() throws Exception {
         return getEntityClass().newInstance();
     }
 
@@ -391,7 +391,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return getResponse(builder.entity(entity));
     }
 
-    protected Response getResponse(ResponseBuilder builder, List<IItem<?>> entities, boolean update, boolean delete, List<Link> navigation) {
+    private Response getResponse(ResponseBuilder builder, List<IItem<?>> entities, boolean update, boolean delete, List<Link> navigation) {
         for (IItem<?> entity : entities) {
             entity.addLinks(getServiceURI(), update, delete);
         }
@@ -409,7 +409,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return builder.links(getHomeLink(), getApiLink(), getWADLLink()).build();
     }
 
-    protected URI getServiceURI() {
+    private URI getServiceURI() {
         if (serviceURI == null) {
             serviceURI = getUriInfo().getBaseUriBuilder().path(getClass()).build();
         }
@@ -417,7 +417,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return serviceURI;
     }
 
-    protected Link getApiLink() {
+    private Link getApiLink() {
         if (apiLink == null) {
             apiLink = Link.fromUri(UriBuilder.fromUri(getUriInfo().getBaseUri() + ApiPaths.API_ROOT).build()).rel(ApiNames.API).type(GET).build();
         }
@@ -425,7 +425,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return apiLink;
     }
 
-    protected Link getHomeLink() {
+    private Link getHomeLink() {
         if (homeLink == null) {
             homeLink = Link.fromUri(UriBuilder.fromUri(getUriInfo().getBaseUri()).build()).rel(ApiNames.HOME).type(GET).build();
         }
@@ -433,7 +433,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return homeLink;
     }
 
-    protected Link getWADLLink() {
+    private Link getWADLLink() {
         if (wadlLink == null) {
             wadlLink = Link.fromUri(UriBuilder.fromUri(getUriInfo().getBaseUri()).path(ApiPaths.APPLICATION_WADL).build()).rel(ApiNames.WADL).type(GET).build();
         }
@@ -470,7 +470,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return findDecoderTyp(findHersteller(herstellerStr, eager), bestellNr, eager); 
     }
 
-    protected IDecoderTyp findDecoderTyp(IHersteller hersteller, String bestellNr, boolean eager) throws Exception { 
+    private IDecoderTyp findDecoderTyp(IHersteller hersteller, String bestellNr, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(DecoderTyp.class).findByKey(new DecoderTypKey(hersteller, bestellNr), eager); 
     }
 
@@ -518,7 +518,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return findProdukt(findHersteller(herstellerStr, false), bestellNr, eager); 
     }
     
-    protected IProdukt findProdukt(IHersteller hersteller, String bestellNr, boolean eager) throws Exception {
+    private IProdukt findProdukt(IHersteller hersteller, String bestellNr, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Produkt.class).findByKey(new ProduktKey(hersteller, bestellNr), eager); 
     }
 

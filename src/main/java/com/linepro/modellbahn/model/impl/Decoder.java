@@ -45,6 +45,7 @@ import com.linepro.modellbahn.rest.json.serialization.DecoderFunktionSerializer;
 import com.linepro.modellbahn.rest.json.serialization.DecoderTypSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * Decoder.
@@ -115,7 +116,7 @@ public class Decoder extends AbstractNamedItem<NameKey> implements IDecoder {
 
     @Override
     @BusinessKey
-    @Column(name=DBNames.NAME, unique=true, length=50, nullable = true)
+    @Column(name=DBNames.NAME, unique=true, length=50)
     @JsonGetter(ApiNames.DECODER_ID)
     @JsonView(Views.DropDown.class)
     public String getName() {
@@ -164,7 +165,7 @@ public class Decoder extends AbstractNamedItem<NameKey> implements IDecoder {
     }
 
     @Override
-    @Column(name = DBNames.FAHRSTUFE, nullable = true)
+    @Column(name = DBNames.FAHRSTUFE)
     @JsonGetter(ApiNames.FAHRSTUFE)
     @JsonView(Views.Public.class)
     public Integer getFahrstufe() {
@@ -267,7 +268,7 @@ public class Decoder extends AbstractNamedItem<NameKey> implements IDecoder {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
                 .append(ApiNames.DECODER_TYP, getDecoderTyp())
                 .append(ApiNames.PROTOKOLL, getProtokoll())

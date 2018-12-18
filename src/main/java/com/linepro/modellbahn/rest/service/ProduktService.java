@@ -64,7 +64,7 @@ import com.linepro.modellbahn.util.StaticContentFinder;
 @Path(ApiPaths.PRODUKT)
 public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
 
-    protected final IPersister<ProduktTeil> teilPersister;
+    private final IPersister<ProduktTeil> teilPersister;
     
     public ProduktService() {
         super(Produkt.class);
@@ -73,30 +73,30 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     }
 
     @JsonCreator
-    public Produkt create(@JsonProperty(value=ApiNames.ID, required=false) Long id,
-            @JsonProperty(value=ApiNames.HERSTELLER, required=false) String herstellerStr,
-            @JsonProperty(value=ApiNames.BESTELL_NR, required=false) String bestellNr,
-            @JsonProperty(value=ApiNames.BEZEICHNUNG, required=false) String bezeichnung,
-            @JsonProperty(value=ApiNames.UNTER_KATEGORIE, required=false) UnterKategorie unterKategorie,
-            @JsonProperty(value=ApiNames.MASSSTAB, required=false) String massstabStr,
-            @JsonProperty(value=ApiNames.SPURWEITE, required=false) String spurweiteStr,
-            @JsonProperty(value=ApiNames.BETREIBSNUMMER, required=false) String betreibsNummer,
-            @JsonProperty(value=ApiNames.EPOCH, required=false) String epochStr,
-            @JsonProperty(value=ApiNames.BAHNVERWALTUNG, required=false) String bahnverwaltungStr,
-            @JsonProperty(value=ApiNames.GATTUNG, required=false) String gattungStr,
-            @JsonProperty(value=ApiNames.BAUZEIT, required=false) Date bauzeit,
-            @JsonProperty(value=ApiNames.ACHSFOLG, required=false) String achsfolgStr,
-            @JsonProperty(value=ApiNames.VORBILD, required=false) String vorbildStr,
-            @JsonProperty(value=ApiNames.ANMERKUNG, required=false) String anmerkung,
-            @JsonProperty(value=ApiNames.SONDERMODELL, required=false) String sondermodellStr,
-            @JsonProperty(value=ApiNames.AUFBAU, required=false) String aufbauStr,
-            @JsonProperty(value=ApiNames.LICHT, required=false) String lichtStr,
-            @JsonProperty(value=ApiNames.KUPPLUNG, required=false) String kupplungStr,
-            @JsonProperty(value=ApiNames.STEUERUNG, required=false) String steuerungStr,
-            @JsonProperty(value=ApiNames.DECODER_TYP, required=false) DecoderTyp decoderTyp,
-            @JsonProperty(value=ApiNames.MOTOR_TYP, required=false) String motorTypStr,
-            @JsonProperty(value=ApiNames.LANGE, required=false) BigDecimal lange,
-            @JsonProperty(value=ApiNames.DELETED, required=false) Boolean deleted) throws Exception {
+    public Produkt create(@JsonProperty(value=ApiNames.ID) Long id,
+            @JsonProperty(value=ApiNames.HERSTELLER) String herstellerStr,
+            @JsonProperty(value=ApiNames.BESTELL_NR) String bestellNr,
+            @JsonProperty(value=ApiNames.BEZEICHNUNG) String bezeichnung,
+            @JsonProperty(value=ApiNames.UNTER_KATEGORIE) UnterKategorie unterKategorie,
+            @JsonProperty(value=ApiNames.MASSSTAB) String massstabStr,
+            @JsonProperty(value=ApiNames.SPURWEITE) String spurweiteStr,
+            @JsonProperty(value=ApiNames.BETREIBSNUMMER) String betreibsNummer,
+            @JsonProperty(value=ApiNames.EPOCH) String epochStr,
+            @JsonProperty(value=ApiNames.BAHNVERWALTUNG) String bahnverwaltungStr,
+            @JsonProperty(value=ApiNames.GATTUNG) String gattungStr,
+            @JsonProperty(value=ApiNames.BAUZEIT) Date bauzeit,
+            @JsonProperty(value=ApiNames.ACHSFOLG) String achsfolgStr,
+            @JsonProperty(value=ApiNames.VORBILD) String vorbildStr,
+            @JsonProperty(value=ApiNames.ANMERKUNG) String anmerkung,
+            @JsonProperty(value=ApiNames.SONDERMODELL) String sondermodellStr,
+            @JsonProperty(value=ApiNames.AUFBAU) String aufbauStr,
+            @JsonProperty(value=ApiNames.LICHT) String lichtStr,
+            @JsonProperty(value=ApiNames.KUPPLUNG) String kupplungStr,
+            @JsonProperty(value=ApiNames.STEUERUNG) String steuerungStr,
+            @JsonProperty(value=ApiNames.DECODER_TYP) DecoderTyp decoderTyp,
+            @JsonProperty(value=ApiNames.MOTOR_TYP) String motorTypStr,
+            @JsonProperty(value=ApiNames.LANGE) BigDecimal lange,
+            @JsonProperty(value=ApiNames.DELETED) Boolean deleted) throws Exception {
         // Just see if Jackson can work out the embedded objects...
         IHersteller hersteller = findHersteller(herstellerStr, false);
         IMassstab massstab = findMassstab(massstabStr, false);
@@ -144,11 +144,11 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     }
 
     @JsonCreator
-    ProduktTeil createProduktTeil(@JsonProperty(value=ApiNames.ID, required=false) Long id, 
-            @JsonProperty(value=ApiNames.PRODUKT, required=false) Produkt produkt, 
-            @JsonProperty(value=ApiNames.TEIL, required=false) Produkt teil, 
-            @JsonProperty(value=ApiNames.ANZAHL, required=false) Integer anzahl,
-            @JsonProperty(value=ApiNames.DELETED, required=false) Boolean deleted) {
+    ProduktTeil createProduktTeil(@JsonProperty(value=ApiNames.ID) Long id,
+            @JsonProperty(value=ApiNames.PRODUKT) Produkt produkt,
+            @JsonProperty(value=ApiNames.TEIL) Produkt teil,
+            @JsonProperty(value=ApiNames.ANZAHL) Integer anzahl,
+            @JsonProperty(value=ApiNames.DELETED) Boolean deleted) {
         ProduktTeil entity = new ProduktTeil(id, produkt, teil, anzahl, deleted);
 
         debug("created: " + entity);
@@ -322,7 +322,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
 
             if (produkt != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { herstellerStr, bestellNr }, fileDetail, fileData);
+                java.nio.file.Path file = handler.upload(ApiNames.PRODUKT, new String[] { herstellerStr, bestellNr }, fileDetail, fileData);
 
                 produkt.setAbbildung(file);
 
@@ -379,7 +379,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
 
             if (produkt != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { herstellerStr, bestellNr }, fileDetail, fileData);
+                java.nio.file.Path file = handler.upload(ApiNames.PRODUKT, new String[] { herstellerStr, bestellNr }, fileDetail, fileData);
 
                 produkt.setAnleitungen(file);
 
@@ -436,7 +436,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
 
             if (produkt != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { herstellerStr, bestellNr }, fileDetail, fileData);
+                java.nio.file.Path file = handler.upload(ApiNames.PRODUKT, new String[] { herstellerStr, bestellNr }, fileDetail, fileData);
 
                 produkt.setExplosionszeichnung(file);
 
@@ -479,7 +479,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
         return getTeilPersister().findByKey(new ProduktTeilKey(findProdukt(herstellerStr, bestellNr, false), findProdukt(teilHerstellerStr, teilBestellNr, false)), eager);
     }
 
-    protected IPersister<ProduktTeil> getTeilPersister() {
+    private IPersister<ProduktTeil> getTeilPersister() {
         return teilPersister;
     }
 }

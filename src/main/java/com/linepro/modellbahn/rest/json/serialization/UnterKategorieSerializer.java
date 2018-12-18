@@ -20,7 +20,7 @@ public class UnterKategorieSerializer extends StdSerializer<UnterKategorie> {
 
     private static final long serialVersionUID = -4711405906405775674L;
 
-    protected LinkUtils utils = new LinkUtils();
+    private final LinkUtils utils = new LinkUtils();
 
     public UnterKategorieSerializer() {
         this(UnterKategorie.class);

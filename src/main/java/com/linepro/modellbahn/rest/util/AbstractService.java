@@ -22,7 +22,7 @@ import com.linepro.modellbahn.model.IDescribedEnum;
  */
 public abstract class AbstractService {
 
-    protected final Logger logger;
+    private final Logger logger;
 
     /** The uri info injected by Jersey. */
     @Context
@@ -31,11 +31,11 @@ public abstract class AbstractService {
     /**
      * Instantiates a new abstract service.
      */
-    public AbstractService() {
+    protected AbstractService() {
         this.logger = LoggerFactory.getILoggerFactory().getLogger(getClass().getName());
    }
 
-    protected UriInfo getUriInfo() {
+    UriInfo getUriInfo() {
         return uriInfo;
     }
 
@@ -65,7 +65,7 @@ public abstract class AbstractService {
         getLogger().error(message, e);
     }
 
-    protected void info(final String message) {
+    private void info(final String message) {
         getLogger().info(message);
     }
     

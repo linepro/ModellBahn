@@ -144,7 +144,7 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
     }
 
     @Override
-    @Column(name = DBNames.BEZEICHNUNG, nullable = true, length = 100)
+    @Column(name = DBNames.BEZEICHNUNG, length = 100)
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
     public String getBezeichnung() {
@@ -158,7 +158,7 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
     }
 
     @Override
-    @Column(name = DBNames.MINIMAL, nullable = true)
+    @Column(name = DBNames.MINIMAL)
     @JsonGetter(ApiNames.MINIMAL)
     @JsonView(Views.Public.class)
     public Integer getMinimal() {
@@ -172,7 +172,7 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
     }
 
     @Override
-    @Column(name = DBNames.MAXIMAL, nullable = true)
+    @Column(name = DBNames.MAXIMAL)
     @JsonGetter(ApiNames.MAXIMAL)
     @JsonView(Views.Public.class)
     public Integer getMaximal() {
@@ -186,7 +186,7 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
     }
 
     @Override
-    @Column(name = DBNames.WERKSEINSTELLUNG, nullable = true)
+    @Column(name = DBNames.WERKSEINSTELLUNG)
     @JsonGetter(ApiNames.WERKSEINSTELLUNG)
     @JsonView(Views.Public.class)
     public Integer getWerkseinstellung() {
@@ -253,7 +253,7 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
                 .append(ApiNames.DECODER_TYP, getDecoderTyp())
                 .append(ApiNames.CV, getCv())

@@ -45,11 +45,11 @@ public class LandService extends AbstractItemService<NameKey, Land> {
     }
 
     @JsonCreator
-    public Land create(@JsonProperty(value=ApiNames.ID, required=false) Long id, 
-                    @JsonProperty(value=ApiPaths.NAME_PARAM_NAME, required=false) String name, 
-                    @JsonProperty(value=ApiNames.WAHRUNG, required=false) String wahrungStr, 
-                    @JsonProperty(value=ApiNames.BEZEICHNUNG, required=false) String bezeichnung, 
-                    @JsonProperty(value=ApiNames.DELETED, required=false) Boolean deleted) throws Exception {
+    public Land create(@JsonProperty(value=ApiNames.ID) Long id,
+                    @JsonProperty(value=ApiPaths.NAME_PARAM_NAME) String name,
+                    @JsonProperty(value=ApiNames.WAHRUNG) String wahrungStr,
+                    @JsonProperty(value=ApiNames.BEZEICHNUNG) String bezeichnung,
+                    @JsonProperty(value=ApiNames.DELETED) Boolean deleted) throws Exception {
         IWahrung wahrung = findWahrung(wahrungStr, false);
  
         Land entity = new Land(id, name, bezeichnung, wahrung, deleted);
@@ -103,7 +103,7 @@ public class LandService extends AbstractItemService<NameKey, Land> {
         return getWahrungPersister().findByKey(new NameKey(wahrungStr), true);
     }
     
-    protected IPersister<Wahrung> getWahrungPersister() {
+    private IPersister<Wahrung> getWahrungPersister() {
         return wahrungPersister;
     }
 }

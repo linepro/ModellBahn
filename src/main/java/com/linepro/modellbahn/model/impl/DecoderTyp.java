@@ -58,6 +58,7 @@ import com.linepro.modellbahn.rest.json.serialization.DecoderTypFunktionSerializ
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * DecoderTyp. Represents a Decoder type (manufacturer : part numer)
@@ -161,7 +162,7 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     }
 
     @Override
-    @Column(name = DBNames.I_MAX, nullable = true, precision = 6, scale = 2)
+    @Column(name = DBNames.I_MAX, precision = 6, scale = 2)
     @JsonGetter(ApiNames.I_MAX)
     @JsonView(Views.Public.class)
     public BigDecimal getiMax() {
@@ -193,7 +194,7 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     }
 
     @Override
-    @Column(name = DBNames.FAHRSTUFE, nullable = true)
+    @Column(name = DBNames.FAHRSTUFE)
     @JsonGetter(ApiNames.FAHRSTUFE)
     @JsonView(Views.Public.class)
     public Integer getFahrstufe() {
@@ -390,7 +391,7 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
                 .append(ApiNames.HERSTELLER, getHersteller())
                 .append(ApiNames.PROTOKOLL, getProtokoll())

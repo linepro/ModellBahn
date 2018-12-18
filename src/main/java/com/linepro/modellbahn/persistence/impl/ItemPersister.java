@@ -70,7 +70,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
     private final IIdGenerator idGenerator;
 
-    private String businessKeyQuery;
+    private final String businessKeyQuery;
     
     /**
      * Instantiates a new item persister.
@@ -168,7 +168,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
      * @throws Exception the exception
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    protected E internalUpdate(IKey key, E entity, boolean addOrUpdate) throws Exception {
+    private E internalUpdate(IKey key, E entity, boolean addOrUpdate) throws Exception {
         ISessionManager session = getSession();
 
         try {
@@ -239,7 +239,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         delete(getItemKey(entity));
     }
 
-    protected ItemKey getItemKey(E entity) {
+    private ItemKey getItemKey(E entity) {
         return new ItemKey(entity, businessKeys.values());
     }
 
@@ -359,7 +359,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         }
     }
 
-    protected E internalFindByKey(ISessionManager session, IKey key, boolean eager) throws Exception {
+    private E internalFindByKey(ISessionManager session, IKey key, boolean eager) throws Exception {
         Query query = session.getEntityManager().createQuery(businessKeyQuery);
 
         key.addCriteria(query);
@@ -436,7 +436,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         return findAll(template, selectors, startPosition, maxSize);
     }
 
-    protected List<E> findAll(E template, Map<String,Selector> selectors, Integer startPosition, Integer maxResult) throws Exception {
+    private List<E> findAll(E template, Map<String, Selector> selectors, Integer startPosition, Integer maxResult) throws Exception {
         ISessionManager session = getSession();
 
         try {
@@ -487,8 +487,8 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
      * @return the conditions
      * @throws Exception the exception
      */
-    protected List<Predicate> getConditions(CriteriaBuilder builder, Root<E> root,
-            E template, Map<String,Selector> selectors) throws Exception {
+    private List<Predicate> getConditions(CriteriaBuilder builder, Root<E> root,
+                                          E template, Map<String, Selector> selectors) throws Exception {
         List<Predicate> predicates = new ArrayList<>();
 
         if (template != null) {
@@ -526,7 +526,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
      *
      * @return the logger
      */
-    protected Logger getLogger() {
+    private Logger getLogger() {
         return logger;
     }
 
@@ -536,7 +536,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
      *
      * @param message the message
      */
-    protected void debug(String message) {
+    private void debug(String message) {
         getLogger().debug(message);
     }
 
@@ -547,7 +547,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
      * @param e the e
      * @throws Exception the exception
      */
-    protected void error(String message, Exception e) throws Exception {
+    private void error(String message, Exception e) throws Exception {
         getLogger().error(message, e);
 
         throw e;
@@ -597,7 +597,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
      * @return the same entity you passed in with it's lazy collections populated
      * @throws Exception if there is a DB error
      */
-    protected E inflate(E entity, boolean eager) throws Exception {
+    private E inflate(E entity, boolean eager) throws Exception {
         if (eager && entity != null) {
             for (Selector selector : collections.values()) {
                 Collection<?> collection = (Collection<?>) selector.getGetter().invoke(entity);
@@ -611,7 +611,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         return entity;
     }
 
-    protected ISessionManager getSession() {
+    private ISessionManager getSession() {
         SessionManager sessionManager = sessionManagerFactory.create();
         sessionManager.begin();
         return sessionManager;

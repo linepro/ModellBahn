@@ -9,20 +9,20 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 
 public class ProduktTeilKey extends BaseKey {
 
-    protected final IProdukt produkt;
+    private final IProdukt produkt;
 
-    protected final IProdukt teil;
+    private final IProdukt teil;
 
     public ProduktTeilKey(final IProdukt produkt, final IProdukt teil) {
         this.produkt = produkt;
         this.teil = teil;
     }
 
-    public IProdukt getProdukt() {
+    private IProdukt getProdukt() {
         return produkt;
     }
 
-    public IProdukt getTeil() {
+    private IProdukt getTeil() {
         return teil;
     }
 
@@ -34,7 +34,7 @@ public class ProduktTeilKey extends BaseKey {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append(ApiNames.PRODUKT, getProdukt())
                 .append(ApiNames.TEIL, getTeil())
                 .toString();

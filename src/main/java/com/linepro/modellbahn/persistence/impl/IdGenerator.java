@@ -11,7 +11,7 @@ import com.linepro.modellbahn.persistence.ISessionManager;
 
 public class IdGenerator implements IIdGenerator {
 
-    protected final ISessionManagerFactory sessionManagerFactory;
+    private final ISessionManagerFactory sessionManagerFactory;
     
     @Inject
     public IdGenerator(final ISessionManagerFactory sessionManagerFactory) {
@@ -45,7 +45,7 @@ public class IdGenerator implements IIdGenerator {
         return String.format("%05d", id);
     }
 
-    protected ISessionManager getSession() {
+    private ISessionManager getSession() {
         SessionManager sessionManager = sessionManagerFactory.create();
         sessionManager.begin();
         return sessionManager;

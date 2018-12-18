@@ -18,7 +18,7 @@ public enum Konfiguration implements IDescribedEnum {
 
     CV("The Decoder can be configured by CV values.");
 
-    protected final String description;
+    private final String description;
     
     Konfiguration(String description) {
         this.description = description;

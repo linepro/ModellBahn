@@ -15,7 +15,7 @@ import javax.validation.Payload;
 @Retention(RUNTIME)
 @Target({TYPE, ANNOTATION_TYPE})
 @Constraint(validatedBy = {DCCLongAdressValidator.class})
-public @interface DCCLongAdress {
+@interface DCCLongAdress {
 
     String message() default "{org.hibernate.validator.referenceguide.chapter06.classlevel." +
             "ValidPassengerCount.message}";

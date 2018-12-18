@@ -2,7 +2,7 @@ package com.linepro.modellbahn.persistence.util;
 
 import javax.persistence.AttributeConverter;
 
-public class BooleanConverter implements AttributeConverter<Boolean, String> {
+class BooleanConverter implements AttributeConverter<Boolean, String> {
 
     @Override
     public String convertToDatabaseColumn(Boolean attribute) {

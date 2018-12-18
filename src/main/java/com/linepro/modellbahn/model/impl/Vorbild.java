@@ -402,7 +402,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.HERSTELLER, nullable = true, length = 100)
+    @Column(name = DBNames.HERSTELLER, length = 100)
     @JsonGetter(ApiNames.HERSTELLER)
     @JsonView(Views.DropDown.class)
     public String getHersteller() {
@@ -416,7 +416,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.BAUZEIT, nullable = true)
+    @Column(name = DBNames.BAUZEIT)
     @Temporal(TemporalType.DATE)
     @JsonGetter(ApiNames.BAUZEIT)
     @JsonView(Views.DropDown.class)
@@ -432,7 +432,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.ANZAHL, nullable = true)
+    @Column(name = DBNames.ANZAHL)
     @JsonGetter(ApiNames.ANZAHL)
     @JsonView(Views.Public.class)
     public Integer getAnzahl() {
@@ -446,7 +446,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.BETREIBSNUMMER, nullable = true, length = 100)
+    @Column(name = DBNames.BETREIBSNUMMER, length = 100)
     @JsonGetter(ApiNames.BETREIBSNUMMER)
     @JsonView(Views.DropDown.class)
     public String getBetreibsNummer() {
@@ -496,7 +496,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.ANFAHRZUGKRAFT, nullable = true)
+    @Column(name = DBNames.ANFAHRZUGKRAFT)
     @JsonGetter(ApiNames.ANFAHRZUGKRAFT)
     @JsonView(Views.Public.class)
     public BigDecimal getAnfahrzugkraft() {
@@ -510,7 +510,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.LEISTUNG, nullable = true)
+    @Column(name = DBNames.LEISTUNG)
     @JsonGetter(ApiNames.LEISTUNG)
     @JsonView(Views.Public.class)
     public BigDecimal getLeistung() {
@@ -524,7 +524,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.DIENSTGEWICHT, nullable = true)
+    @Column(name = DBNames.DIENSTGEWICHT)
     @JsonGetter(ApiNames.DIENSTGEWICHT)
     @JsonView(Views.Public.class)
     public BigDecimal getDienstgewicht() {
@@ -538,7 +538,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.GESCHWINDIGKEIT, nullable = true)
+    @Column(name = DBNames.GESCHWINDIGKEIT)
     @JsonGetter(ApiNames.GESCHWINDIGKEIT)
     @JsonView(Views.Public.class)
     public Integer getGeschwindigkeit() {
@@ -552,7 +552,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.LANGE, nullable = true)
+    @Column(name = DBNames.LANGE)
     @JsonGetter(ApiNames.LANGE)
     @JsonView(Views.Public.class)
     public BigDecimal getLange() {
@@ -566,7 +566,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.AUSSERDIENST, nullable = true)
+    @Column(name = DBNames.AUSSERDIENST)
     @Temporal(TemporalType.DATE)
     @JsonGetter(ApiNames.AUSSERDIENST)
     @JsonView(Views.DropDown.class)
@@ -582,7 +582,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.DMTREIBRAD, nullable = true)
+    @Column(name = DBNames.DMTREIBRAD)
     @JsonGetter(ApiNames.DMTREIBRAD)
     @JsonView(Views.Public.class)
     public BigDecimal getDmTreibrad() {
@@ -596,7 +596,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.DMLAUFRADVORN, nullable = true)
+    @Column(name = DBNames.DMLAUFRADVORN)
     @JsonGetter(ApiNames.DMLAUFRADVORN)
     @JsonView(Views.Public.class)
     public BigDecimal getDmLaufradVorn() {
@@ -610,7 +610,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.DMLAUFRADHINTEN, nullable = true)
+    @Column(name = DBNames.DMLAUFRADHINTEN)
     @JsonGetter(ApiNames.DMLAUFRADHINTEN)
     @JsonView(Views.Public.class)
     public BigDecimal getDmLaufradHinten() {
@@ -624,7 +624,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.ZYLINDER, nullable = true)
+    @Column(name = DBNames.ZYLINDER)
     @JsonGetter(ApiNames.ZYLINDER)
     @JsonView(Views.Public.class)
     public Integer getZylinder() {
@@ -638,7 +638,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.DMZYLINDER, nullable = true)
+    @Column(name = DBNames.DMZYLINDER)
     @JsonGetter(ApiNames.DMZYLINDER)
     @JsonView(Views.Public.class)
     public BigDecimal getDmZylinder() {
@@ -652,7 +652,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.KOLBENHUB, nullable = true)
+    @Column(name = DBNames.KOLBENHUB)
     @JsonGetter(ApiNames.KOLBENHUB)
     @JsonView(Views.Public.class)
     public BigDecimal getKolbenhub() {
@@ -666,7 +666,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.KESSELUEBERDRUCK, nullable = true)
+    @Column(name = DBNames.KESSELUEBERDRUCK)
     @JsonGetter(ApiNames.KESSELUEBERDRUCK)
     @JsonView(Views.Public.class)
     public BigDecimal getKesselueberdruck() {
@@ -680,7 +680,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.ROSTFLAECHE, nullable = true)
+    @Column(name = DBNames.ROSTFLAECHE)
     @JsonGetter(ApiNames.ROSTFLAECHE)
     @JsonView(Views.Public.class)
     public BigDecimal getRostflaeche() {
@@ -694,7 +694,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.UEBERHITZERFLAECHE, nullable = true)
+    @Column(name = DBNames.UEBERHITZERFLAECHE)
     @JsonGetter(ApiNames.UEBERHITZERFLAECHE)
     @JsonView(Views.Public.class)
     public BigDecimal getUeberhitzerflaeche() {
@@ -708,7 +708,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.WASSERVORRAT, nullable = true)
+    @Column(name = DBNames.WASSERVORRAT)
     @JsonGetter(ApiNames.WASSERVORRAT)
     @JsonView(Views.Public.class)
     public BigDecimal getWasservorrat() {
@@ -721,7 +721,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
         this.wasservorrat = wasservorrat;
     }
 
-    @Column(name = DBNames.VERDAMPFUNG, nullable = true)
+    @Column(name = DBNames.VERDAMPFUNG)
     @JsonGetter(ApiNames.VERDAMPFUNG)
     @JsonView(Views.Public.class)
     public BigDecimal getVerdampfung() {
@@ -735,7 +735,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.FAHRMOTOREN, nullable = true)
+    @Column(name = DBNames.FAHRMOTOREN)
     @JsonGetter(ApiNames.FAHRMOTOREN)
     @JsonView(Views.Public.class)
     public Integer getFahrmotoren() {
@@ -749,7 +749,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.MOTORBAUART, nullable = true, length = 100)
+    @Column(name = DBNames.MOTORBAUART, length = 100)
     @JsonGetter(ApiNames.MOTORBAUART)
     @JsonView(Views.Public.class)
     public String getMotorbauart() {
@@ -763,7 +763,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.LEISTUNGSUEBERTRAGUNG, nullable = true)
+    @Column(name = DBNames.LEISTUNGSUEBERTRAGUNG)
     @JsonGetter(ApiNames.LEISTUNGSUEBERTRAGUNG)
     @JsonView(Views.Public.class)
     public BigDecimal getLeistungsuebertragung() {
@@ -777,7 +777,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.REICHWEITE, nullable = true)
+    @Column(name = DBNames.REICHWEITE)
     @JsonGetter(ApiNames.REICHWEITE)
     @JsonView(Views.Public.class)
     public BigDecimal getReichweite() {
@@ -791,7 +791,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.KAPAZITAT, nullable = true)
+    @Column(name = DBNames.KAPAZITAT)
     @JsonGetter(ApiNames.KAPAZITAT)
     @JsonView(Views.Public.class)
     public BigDecimal getKapazitat() {
@@ -805,7 +805,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.KLASSE, nullable = true)
+    @Column(name = DBNames.KLASSE)
     @JsonGetter(ApiNames.KLASSE)
     @JsonView(Views.Public.class)
     public Integer getKlasse() {
@@ -819,7 +819,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.SITZPLATZEKL1, nullable = true)
+    @Column(name = DBNames.SITZPLATZEKL1)
     @JsonGetter(ApiNames.SITZPLATZEKL1)
     @JsonView(Views.Public.class)
     public Integer getSitzPlatzeKL1() {
@@ -833,7 +833,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.SITZPLATZEKL2, nullable = true)
+    @Column(name = DBNames.SITZPLATZEKL2)
     @JsonGetter(ApiNames.SITZPLATZEKL2)
     @JsonView(Views.Public.class)
     public Integer getSitzPlatzeKL2() {
@@ -847,7 +847,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.SITZPLATZEKL3, nullable = true)
+    @Column(name = DBNames.SITZPLATZEKL3)
     @JsonGetter(ApiNames.SITZPLATZEKL3)
     @JsonView(Views.Public.class)
     public Integer getSitzPlatzeKL3() {
@@ -861,7 +861,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.SITZPLATZEKL4, nullable = true)
+    @Column(name = DBNames.SITZPLATZEKL4)
     @JsonGetter(ApiNames.SITZPLATZEKL4)
     @JsonView(Views.Public.class)
     public Integer getSitzPlatzeKL4() {
@@ -875,7 +875,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.AUFBAU, nullable = true, length = 100)
+    @Column(name = DBNames.AUFBAU, length = 100)
     @JsonGetter(ApiNames.AUFBAU)
     @JsonView(Views.Public.class)
     public String getAufbau() {
@@ -889,7 +889,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.TRIEBZUGANZEIGEN, nullable = true)
+    @Column(name = DBNames.TRIEBZUGANZEIGEN)
     @JsonGetter(ApiNames.TRIEBZUGANZEIGEN)
     @JsonView(Views.Public.class)
     public Boolean getTriebzugAnzeigen() {
@@ -903,7 +903,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.TRIEBKOEPFE, nullable = true)
+    @Column(name = DBNames.TRIEBKOEPFE)
     @JsonGetter(ApiNames.TRIEBKOEPFE)
     @JsonView(Views.Public.class)
     public Integer getTriebkoepfe() {
@@ -917,7 +917,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.MITTELWAGEN, nullable = true)
+    @Column(name = DBNames.MITTELWAGEN)
     @JsonGetter(ApiNames.MITTELWAGEN)
     @JsonView(Views.Public.class)
     public Integer getMittelwagen() {
@@ -931,7 +931,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.SITZPLATZETZKL1, nullable = true)
+    @Column(name = DBNames.SITZPLATZETZKL1)
     @JsonGetter(ApiNames.SITZPLATZETZKL1)
     @JsonView(Views.Public.class)
     public Integer getSitzPlatzeTZKL1() {
@@ -945,7 +945,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.SITZPLATZETZKL2, nullable = true)
+    @Column(name = DBNames.SITZPLATZETZKL2)
     @JsonGetter(ApiNames.SITZPLATZETZKL2)
     @JsonView(Views.Public.class)
     public Integer getSitzPlatzeTzKL2() {
@@ -959,7 +959,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.DREHGESTELLBAUART, nullable = true, length = 100)
+    @Column(name = DBNames.DREHGESTELLBAUART, length = 100)
     @JsonGetter(ApiNames.DREHGESTELLBAUART)
     @JsonView(Views.Public.class)
     public String getDrehgestellBauart() {
@@ -973,7 +973,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.ABBILDUNG, nullable = true)
+    @Column(name = DBNames.ABBILDUNG)
     @Convert(converter = PathConverter.class)
     @JsonGetter(ApiNames.ABBILDUNG)
     @JsonSerialize(using = PathSerializer.class)
@@ -989,7 +989,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .appendSuper(super.toString())
                 .append(ApiNames.GATTUNG, getGattung())
                 .append(ApiNames.UNTER_KATEGORIE, getUnterKategorie())

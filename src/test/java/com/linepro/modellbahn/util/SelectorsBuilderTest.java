@@ -16,18 +16,18 @@ import org.testng.annotations.Test;
 
 public class SelectorsBuilderTest {
 
-    public class Base {
+    class Base {
         public void setId(Integer id) {}
 
-        public Integer getId() { return 1; }
+        Integer getId() { return 1; }
 
         @Basic
-        public String getName() { return "fred"; }
+        String getName() { return "fred"; }
         public void setName(String name) {}
     }
     
     public class Annotated extends Base {
-        @Column(name="name", nullable = true)
+        @Column(name="name")
         public String getName() { return super.getName(); }
     }
     
@@ -36,26 +36,26 @@ public class SelectorsBuilderTest {
         public Integer getId() { return super.getId(); }
     }
     
-    protected Object testObject;
+    private Object testObject;
 
-    protected SelectorsBuilder builder;
+    private SelectorsBuilder builder;
 
-    protected Selector idSelector;
+    private Selector idSelector;
 
-    protected Selector nameSelector;
+    private Selector nameSelector;
     
     @BeforeMethod
     public void setUp() {
         builder = new SelectorsBuilder(); 
     }
 
-    protected Object setObject(Object testObject) throws Exception {
+    private Object setObject(Object testObject) throws Exception {
         idSelector = getSelector(testObject, "id", Integer.class);
         nameSelector = getSelector(testObject, "name", String.class);
         return testObject;
     }
     
-    protected Selector getSelector(Object testObject, String name, Class<?> type) throws Exception {
+    private Selector getSelector(Object testObject, String name, Class<?> type) throws Exception {
         Class<?> clazz = testObject.getClass();
         String capitalized = StringUtils.capitalize(name);
         Method getter = clazz.getMethod("get" + capitalized);

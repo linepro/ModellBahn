@@ -18,7 +18,7 @@ public enum Status implements IDescribedEnum {
 	
    VERKAUFT("Sold.");
 
-    protected final String description;
+    private final String description;
     
     Status(String description) {
         this.description = description;

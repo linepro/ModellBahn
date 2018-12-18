@@ -50,7 +50,7 @@ class DropDown {
   }
 
   getOptions() {
-    return options;
+    return this.options;
   }
 
   async init() {

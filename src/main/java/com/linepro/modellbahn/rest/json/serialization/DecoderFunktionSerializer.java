@@ -13,7 +13,7 @@ public class DecoderFunktionSerializer extends StdSerializer<DecoderFunktion> {
 
     private static final long serialVersionUID = -4964757602475225964L;
 
-    protected LinkUtils utils = new LinkUtils();
+    private final LinkUtils utils = new LinkUtils();
 
     public DecoderFunktionSerializer() {
         this(DecoderFunktion.class);
