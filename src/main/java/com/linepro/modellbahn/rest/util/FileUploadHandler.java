@@ -3,21 +3,19 @@
  */
 package com.linepro.modellbahn.rest.util;
 
+import com.linepro.modellbahn.util.IFileStore;
+import com.linepro.modellbahn.util.StaticContentFinder;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.inject.Inject;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-
-import javax.inject.Inject;
-
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.linepro.modellbahn.util.IFileStore;
-import com.linepro.modellbahn.util.StaticContentFinder;
 
 /**
  * The Class FileUpload

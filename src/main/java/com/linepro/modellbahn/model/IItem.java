@@ -1,12 +1,11 @@
 package com.linepro.modellbahn.model;
 
+import com.linepro.modellbahn.persistence.IKey;
+
+import javax.ws.rs.core.Link;
 import java.io.Serializable;
 import java.net.URI;
 import java.util.Set;
-
-import javax.ws.rs.core.Link;
-
-import com.linepro.modellbahn.persistence.IKey;
 
 /**
  * IItem

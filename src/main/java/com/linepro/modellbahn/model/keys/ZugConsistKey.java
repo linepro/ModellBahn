@@ -1,11 +1,11 @@
 package com.linepro.modellbahn.model.keys;
 
-import javax.persistence.Query;
-
 import com.linepro.modellbahn.model.IZug;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
+
+import javax.persistence.Query;
 
 public class ZugConsistKey extends BaseKey {
 
@@ -34,7 +34,7 @@ public class ZugConsistKey extends BaseKey {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(this)
                 .append(ApiNames.ZUG, getZug())
                 .append(ApiNames.POSITION, getPosition())
                 .toString();

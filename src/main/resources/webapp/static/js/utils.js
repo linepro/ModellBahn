@@ -575,6 +575,7 @@ const setActiveTab = (event, tabName) => {
   for (let i = 0; i < tabContents.length; i++) {
     tabContents[i].style.display = (tabContents[i].id === tabName) ? "block" : "none";
   }
+
   let linkName = tabName.replace("Tab", "Link");
   for (let i = 0; i < tabLinks.length; i++) {
 	  tabLinks[i].className = (tabLinks[i].id === linkName) ? "tabLinks active" : "tabLinks";

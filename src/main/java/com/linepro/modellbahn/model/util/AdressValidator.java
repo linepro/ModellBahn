@@ -1,11 +1,10 @@
 package com.linepro.modellbahn.model.util;
 
-import java.lang.annotation.Annotation;
+import com.linepro.modellbahn.model.IItem;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-
-import com.linepro.modellbahn.model.IItem;
+import java.lang.annotation.Annotation;
 
 class AdressValidator<A extends Annotation, T extends IItem<?>> implements ConstraintValidator<A, T> {
 

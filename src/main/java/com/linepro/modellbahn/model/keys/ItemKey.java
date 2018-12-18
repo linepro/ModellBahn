@@ -1,14 +1,12 @@
 package com.linepro.modellbahn.model.keys;
 
-import java.util.Collection;
-
-import javax.persistence.Query;
-
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.util.Selector;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import javax.persistence.Query;
+import java.util.Collection;
 
 public class ItemKey extends BaseKey {
 

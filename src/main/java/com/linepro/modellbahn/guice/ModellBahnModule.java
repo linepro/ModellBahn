@@ -1,11 +1,5 @@
 package com.linepro.modellbahn.guice;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
-import org.slf4j.ILoggerFactory;
-import org.slf4j.LoggerFactory;
-
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
@@ -16,6 +10,11 @@ import com.linepro.modellbahn.persistence.ISessionManager;
 import com.linepro.modellbahn.persistence.impl.PersisterFactory;
 import com.linepro.modellbahn.persistence.impl.SessionManager;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.LoggerFactory;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  * ModellBahnModule.

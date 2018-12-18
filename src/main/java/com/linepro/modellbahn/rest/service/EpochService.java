@@ -1,5 +1,15 @@
 package com.linepro.modellbahn.rest.service;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.linepro.modellbahn.model.impl.Epoch;
+import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.util.AbstractItemService;
+import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.rest.util.ApiPaths;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -12,16 +22,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.linepro.modellbahn.model.impl.Epoch;
-import com.linepro.modellbahn.model.keys.NameKey;
-import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.rest.util.AbstractItemService;
-import com.linepro.modellbahn.rest.util.ApiNames;
-import com.linepro.modellbahn.rest.util.ApiPaths;
 
 /**
  * EpochService. CRUD service for Epoch

@@ -1,7 +1,9 @@
 package com.linepro.modellbahn.util;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
+import org.apache.commons.io.FileUtils;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.net.URI;
 import java.nio.file.Files;
@@ -9,10 +11,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 
-import org.apache.commons.io.FileUtils;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 
 public class FileStoreTest {
 

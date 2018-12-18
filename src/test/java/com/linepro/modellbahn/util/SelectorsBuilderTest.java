@@ -1,18 +1,17 @@
 package com.linepro.modellbahn.util;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
-
-import java.lang.reflect.Method;
-import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
+import java.lang.reflect.Method;
+import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class SelectorsBuilderTest {
 

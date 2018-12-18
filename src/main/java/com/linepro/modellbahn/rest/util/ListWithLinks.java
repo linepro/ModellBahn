@@ -1,18 +1,15 @@
 package com.linepro.modellbahn.rest.util;
 
-import java.util.List;
-
-import javax.ws.rs.core.Link;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.LinkSerializer;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import javax.ws.rs.core.Link;
+import java.util.List;
 
 public class ListWithLinks<E extends IItem<?>> {
 
@@ -42,7 +39,7 @@ public class ListWithLinks<E extends IItem<?>> {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(this)
                 .append("entities", entities)
                 .append("links", links)
                 .toString();

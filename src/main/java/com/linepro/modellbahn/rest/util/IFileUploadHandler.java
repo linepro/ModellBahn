@@ -1,10 +1,10 @@
 package com.linepro.modellbahn.rest.util;
 
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.List;
-
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
 public interface IFileUploadHandler {
 

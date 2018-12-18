@@ -1,8 +1,8 @@
 package com.linepro.modellbahn.model;
 
-import java.net.URL;
-
 import com.linepro.modellbahn.model.keys.NameKey;
+
+import java.net.URL;
 
 /**
  * IHersteller.

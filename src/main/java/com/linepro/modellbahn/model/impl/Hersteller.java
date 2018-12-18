@@ -1,14 +1,5 @@
 package com.linepro.modellbahn.model.impl;
 
-import java.net.URL;
-
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -22,6 +13,14 @@ import com.linepro.modellbahn.persistence.util.URLConverter;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
+
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import java.net.URL;
 
 /**
  * Hersteller. The manufacturer for a product
@@ -134,7 +133,7 @@ public class Hersteller extends AbstractNamedItem<NameKey> implements IHerstelle
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(this)
                 .appendSuper(super.toString())
                 .append(ApiNames.URL, getUrl())
                 .append(ApiNames.TELEFON, getTelefon())

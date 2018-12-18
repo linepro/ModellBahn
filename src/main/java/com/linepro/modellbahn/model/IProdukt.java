@@ -1,11 +1,11 @@
 package com.linepro.modellbahn.model;
 
+import com.linepro.modellbahn.model.keys.ProduktKey;
+
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.util.Date;
 import java.util.Set;
-
-import com.linepro.modellbahn.model.keys.ProduktKey;
 
 /**
  * IProdukt.

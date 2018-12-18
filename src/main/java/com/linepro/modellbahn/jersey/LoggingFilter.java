@@ -1,6 +1,8 @@
 package com.linepro.modellbahn.jersey;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import com.linepro.modellbahn.util.ToStringBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Priority;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -8,12 +10,7 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.container.PreMatching;
-
-import org.apache.commons.lang3.builder.ToStringStyle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.linepro.modellbahn.util.ToStringBuilder;
+import java.util.concurrent.atomic.AtomicInteger;
 
 //@ConstrainedTo(RuntimeType.SERVER)
 @PreMatching
@@ -57,7 +54,7 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
    }
 
     private String format(Object id, ContainerRequestContext context) {
-        return new ToStringBuilder(context, ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(context)
                 .append("Request")
                 .append("eventId", id)
                 .append("uri", context.getUriInfo().getAbsolutePath().toString())
@@ -67,7 +64,7 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
     }
 
     private String format(Object id, ContainerResponseContext context) {
-        return new ToStringBuilder(context, ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(context)
                 .append("Response")
                 .append("eventId", id)
                 .append("entity", context.getEntity())

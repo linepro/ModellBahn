@@ -1,24 +1,5 @@
 package com.linepro.modellbahn.rest.util;
 
-import static javax.ws.rs.HttpMethod.GET;
-
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
-import javax.ws.rs.core.Link;
-import javax.ws.rs.core.Link.Builder;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.UriInfo;
-
-import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.lang3.math.NumberUtils;
-
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.IAntrieb;
@@ -85,6 +66,23 @@ import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.util.Selector;
 import com.linepro.modellbahn.util.SelectorsBuilder;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+
+import javax.ws.rs.core.Link;
+import javax.ws.rs.core.Link.Builder;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import static javax.ws.rs.HttpMethod.GET;
 
 /**
  * AbstractService.

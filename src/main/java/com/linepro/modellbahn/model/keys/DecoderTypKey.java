@@ -1,11 +1,11 @@
 package com.linepro.modellbahn.model.keys;
 
-import javax.persistence.Query;
-
 import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
+
+import javax.persistence.Query;
 
 public class DecoderTypKey extends BaseKey {
 
@@ -34,7 +34,7 @@ public class DecoderTypKey extends BaseKey {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(this)
                 .append(ApiNames.HERSTELLER, getHersteller())
                 .append(ApiNames.NAMEN, getBestellNr())
                 .toString();

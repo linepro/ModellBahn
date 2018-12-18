@@ -1,22 +1,19 @@
 package com.linepro.modellbahn;
 
-import java.net.URI;
-import java.util.Collection;
-
-import javax.inject.Inject;
-
-import org.glassfish.grizzly.http.server.HttpServer;
-import org.slf4j.ILoggerFactory;
-import org.slf4j.Logger;
-
 import com.google.inject.assistedinject.Assisted;
 import com.linepro.modellbahn.jersey.ServerBuilder;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.rest.util.ModellBahnConfiguration;
 import com.linepro.modellbahn.util.DBPopulator;
 import com.linepro.modellbahn.util.StaticContentFinder;
-
 import io.swagger.jaxrs.config.BeanConfig;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+
+import javax.inject.Inject;
+import java.net.URI;
+import java.util.Collection;
 
 /**
  * ModellBahn. The ModellBahn application

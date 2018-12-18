@@ -1,11 +1,11 @@
 package com.linepro.modellbahn.model.keys;
 
-import javax.persistence.Query;
-
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
+
+import javax.persistence.Query;
 
 public class DecoderTypFunktionKey extends BaseKey {
 
@@ -42,7 +42,7 @@ public class DecoderTypFunktionKey extends BaseKey {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(this)
                 .append(ApiNames.DECODER_TYP, getDecoderTyp())
                 .append(ApiNames.REIHE, getReihe())
                 .toString();

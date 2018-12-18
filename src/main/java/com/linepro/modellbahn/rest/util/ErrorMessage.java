@@ -1,12 +1,12 @@
 package com.linepro.modellbahn.rest.util;
 
-import javax.ws.rs.core.Link;
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.linepro.modellbahn.util.ToStringBuilder;
+
+import javax.ws.rs.core.Link;
 
 @JsonAutoDetect(fieldVisibility = Visibility.PUBLIC_ONLY)
 class ErrorMessage {
@@ -69,7 +69,7 @@ class ErrorMessage {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(this)
                 .append("errorCode", errorCode).append("userMessage", userMessage)
                 .append("developerMessage", developerMessage).append("moreInfo", moreInfo)
                 .toString();

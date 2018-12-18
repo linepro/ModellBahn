@@ -1,9 +1,9 @@
 package com.linepro.modellbahn.guice;
 
+import com.linepro.modellbahn.ModellBahn;
+
 import java.net.URI;
 import java.util.Collection;
-
-import com.linepro.modellbahn.ModellBahn;
 
 /**
  * IModellBahnFactory

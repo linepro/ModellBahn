@@ -1,8 +1,8 @@
 package com.linepro.modellbahn.model.keys;
 
-import javax.persistence.Query;
-
 import com.linepro.modellbahn.persistence.IKey;
+
+import javax.persistence.Query;
 
 public abstract class BaseKey implements IKey {
 

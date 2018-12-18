@@ -1,16 +1,11 @@
 package com.linepro.modellbahn.rest.util;
 
-import java.util.EnumSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.inject.Inject;
-import javax.json.stream.JsonGenerator;
-import javax.servlet.DispatcherType;
-import javax.servlet.FilterRegistration;
-import javax.servlet.ServletRegistration;
-import javax.ws.rs.ApplicationPath;
-
+import com.linepro.modellbahn.ModellBahn;
+import com.linepro.modellbahn.jersey.LoggingFilter;
+import com.linepro.modellbahn.jersey.SecurityRequestFilter;
+import io.swagger.annotations.Api;
+import io.swagger.jaxrs.listing.ApiListingResource;
+import io.swagger.jaxrs.listing.SwaggerSerializers;
 import org.apache.jasper.servlet.JspServlet;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.servlet.WebappContext;
@@ -22,13 +17,15 @@ import org.glassfish.jersey.servlet.ServletContainer;
 import org.glassfish.jersey.servlet.ServletProperties;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
-import com.linepro.modellbahn.ModellBahn;
-import com.linepro.modellbahn.jersey.LoggingFilter;
-import com.linepro.modellbahn.jersey.SecurityRequestFilter;
-
-import io.swagger.annotations.Api;
-import io.swagger.jaxrs.listing.ApiListingResource;
-import io.swagger.jaxrs.listing.SwaggerSerializers;
+import javax.inject.Inject;
+import javax.json.stream.JsonGenerator;
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
+import javax.servlet.ServletRegistration;
+import javax.ws.rs.ApplicationPath;
+import java.util.EnumSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * ModellBahnConfiguration.

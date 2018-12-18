@@ -1,22 +1,20 @@
 package com.linepro.modellbahn.util.impexp;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-import javax.inject.Inject;
-
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
-import org.slf4j.ILoggerFactory;
-import org.slf4j.Logger;
-
 import com.google.inject.assistedinject.Assisted;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.util.Selector;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+
+import javax.inject.Inject;
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class Importer<E extends IItem<?>> {
 

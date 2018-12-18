@@ -5,9 +5,9 @@
  */
 package com.linepro.modellbahn.model;
 
-import java.util.Set;
-
 import com.linepro.modellbahn.model.keys.NameKey;
+
+import java.util.Set;
 
 /**
  * IKategorie.

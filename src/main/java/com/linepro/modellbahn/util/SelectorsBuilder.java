@@ -1,5 +1,11 @@
 package com.linepro.modellbahn.util;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.mapping.Collection;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -9,13 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.mapping.Collection;
-
-import com.fasterxml.jackson.annotation.JsonGetter;
 
 /**
  * SelectorsBuilder. Generates a map of selectors by reflection

@@ -1,10 +1,10 @@
 package com.linepro.modellbahn.model;
 
-import java.math.BigDecimal;
-import java.util.Set;
-
 import com.linepro.modellbahn.model.keys.DecoderTypKey;
 import com.linepro.modellbahn.model.util.Konfiguration;
+
+import java.math.BigDecimal;
+import java.util.Set;
 
 /**
  * IDecoderTyp.

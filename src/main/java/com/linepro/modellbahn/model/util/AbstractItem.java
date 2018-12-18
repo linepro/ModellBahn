@@ -1,29 +1,5 @@
 package com.linepro.modellbahn.model.util;
 
-import static javax.ws.rs.HttpMethod.DELETE;
-import static javax.ws.rs.HttpMethod.GET;
-import static javax.ws.rs.HttpMethod.PUT;
-
-import java.net.URI;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
-import javax.ws.rs.core.Link;
-import javax.ws.rs.core.UriBuilder;
-
-import org.apache.commons.lang3.builder.CompareToBuilder;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonGetter;
@@ -38,6 +14,28 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.LinkSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import javax.persistence.Cacheable;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.core.Link;
+import javax.ws.rs.core.UriBuilder;
+import java.net.URI;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+import static javax.ws.rs.HttpMethod.DELETE;
+import static javax.ws.rs.HttpMethod.GET;
+import static javax.ws.rs.HttpMethod.PUT;
 
 /**
  * AbstractItem.
@@ -76,7 +74,7 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
 	 * @param id the id
 	 * @param deleted the deleted
 	 */
-    protected AbstractItem(Long id, Boolean deleted) {
+    public AbstractItem(Long id, Boolean deleted) {
 		setId(id);
 		setDeleted(deleted);
 	}
@@ -221,7 +219,7 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+		return new ToStringBuilder(this)
 		        .append(ApiNames.ID, getId())
 				.append(ApiNames.DELETED, getDeleted())
 				.toString();

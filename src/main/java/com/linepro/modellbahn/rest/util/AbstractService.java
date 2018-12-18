@@ -1,18 +1,16 @@
 package com.linepro.modellbahn.rest.util;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.linepro.modellbahn.model.IDescribedEnum;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.linepro.modellbahn.model.IDescribedEnum;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * AbstractService.
