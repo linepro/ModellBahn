@@ -92,13 +92,14 @@ public class ModellBahn implements IModellBahn {
                     "Static content from {}; Filestore from {}\n" +
                     "API served on {}{}\n" +
                     "WADL available at {}/{}\n" +                    
-                    "Swagger served on {}{}\n" +
+                    "Swagger served on {}{}swagger/swagger.json to {}{}swagger/index.html\n" +
                     "Press CTRL^C (SIGINT) to terminate.",
                     baseUri, ApiPaths.WEB_ROOT, 
                     StaticContentFinder.getFinder().getAbsolutePaths(), StaticContentFinder.getStore().getStoreRoot(),
                     baseUri, ApiPaths.API_ROOT,
                     baseUri, ApiPaths.APPLICATION_WADL,
-                    baseUri, ApiPaths.SWAGGER_ROOT);
+                    baseUri, ApiPaths.SWAGGER_ROOT,
+                    baseUri, ApiPaths.WEB_ROOT);
 
             Thread.currentThread().join();
 
