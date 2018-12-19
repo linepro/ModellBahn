@@ -37,6 +37,7 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+import io.swagger.annotations.Api;
 
 /**
  * DecoderService. CRUD service for Decoder
@@ -44,6 +45,7 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @author $Author:$
  * @version $Id:$
  */
+@Api(value = ApiPaths.DECODER, description = "Decoder maintenance")
 @Path(ApiPaths.DECODER)
 public class DecoderService extends AbstractItemService<NameKey, Decoder> {
 

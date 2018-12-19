@@ -22,6 +22,7 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+import io.swagger.annotations.Api;
 
 /**
  * SonderModellService. CRUD service for SonderModell
@@ -29,6 +30,7 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @author $Author:$
  * @version $Id:$
  */
+@Api(value = ApiPaths.SONDERMODELL, description = "SonderModell maintenance")
 @Path(ApiPaths.SONDERMODELL)
 public class SonderModellService extends AbstractItemService<NameKey, SonderModell> {
 

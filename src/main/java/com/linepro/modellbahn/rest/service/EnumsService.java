@@ -14,6 +14,7 @@ import com.linepro.modellbahn.model.util.Status;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractService;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+import io.swagger.annotations.Api;
 
 /**
  * DecoderTypService. CRUD service for DecoderTyp, DecoderTypCV and DecoderTypFunktion
@@ -21,6 +22,7 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @author $Author:$
  * @version $Id:$
  */
+@Api(value = ApiPaths.ENUMS, description = "Enums ref data")
 @Path(ApiPaths.ENUMS)
 public class EnumsService extends AbstractService {
 

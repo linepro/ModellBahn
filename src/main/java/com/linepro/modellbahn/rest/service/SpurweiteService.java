@@ -22,6 +22,7 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+import io.swagger.annotations.Api;
 
 /**
  * SpurweiteService. CRUD service for Spurweite
@@ -29,6 +30,7 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @author $Author:$
  * @version $Id:$
  */
+@Api(value = ApiPaths.SPURWEITE, description = "Spurweite maintenance")
 @Path(ApiPaths.SPURWEITE)
 public class SpurweiteService extends AbstractItemService<NameKey, Spurweite> {
 

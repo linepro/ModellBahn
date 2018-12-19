@@ -17,6 +17,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -49,6 +51,7 @@ import com.linepro.modellbahn.util.StaticContentFinder;
  * @author $Author:$
  * @version $Id:$
  */
+@Api(value = ApiPaths.ARTIKEL, description = "Artikel maintenance")
 @Path(ApiPaths.ARTIKEL)
 public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
 
@@ -99,6 +102,7 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     @Path(ApiPaths.ID_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Finds an Artikel by id", response = Artikel.class)
     public Response get(@PathParam(ApiPaths.ID_PARAM_NAME) Long name) {
         return super.get(name);
     }
@@ -106,6 +110,7 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
+    @ApiOperation(value = "Finds Artikeln by example", response = Artikel.class, responseContainer = "List")
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -114,6 +119,7 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Adds an Artikel", response = Artikel.class)
     public Response add(Artikel entity) {
         return super.add(entity);
     }
@@ -123,6 +129,7 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Updates an Artikel by id", response = Artikel.class)
     public Response update(@PathParam(ApiPaths.ID_PARAM_NAME) Long name, Artikel entity) {
         return super.update(name, entity);
     }
@@ -131,6 +138,7 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     @Path(ApiPaths.ID_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Deletes an Artikel by name")
     public Response delete(@PathParam(ApiPaths.ID_PARAM_NAME) Long name) {
         return super.delete(name);
     }
@@ -140,6 +148,7 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     @Consumes({ MediaType.MULTIPART_FORM_DATA })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Adds or updates the image for a named Artikel", response = Artikel.class)
     public Response updateAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
@@ -172,6 +181,7 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     @Path(ApiPaths.ABBILDUNG_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Deletes the image for a named Artikel", response = Artikel.class)
     public Response deleteAbbildung(@PathParam(ApiPaths.ID_PARAM_NAME) String name) {
         try {
             IArtikel artikel = findArtikel(name, false);

@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import io.swagger.annotations.Api;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -39,6 +40,7 @@ import com.linepro.modellbahn.util.StaticContentFinder;
  * @author  $Author:$
  * @version $Id:$
  */
+@Api(value = ApiPaths.LICHT, description = "Licht maintenance")
 @Path(ApiPaths.LICHT)
 public class LichtService extends AbstractItemService<NameKey, Licht> {
 

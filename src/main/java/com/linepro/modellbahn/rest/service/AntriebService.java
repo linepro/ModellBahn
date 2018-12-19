@@ -22,6 +22,13 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.ResponseHeader;
 
 /**
  * AntriebService. CRUD service for Antrieb
@@ -29,6 +36,7 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @author $Author:$
  * @version $Id:$
  */
+@Api(value = ApiPaths.ANTRIEB, description = "Antrieb (drive type) maintenance")
 @Path(ApiPaths.ANTRIEB)
 public class AntriebService extends AbstractItemService<NameKey, Antrieb> {
 
@@ -52,6 +60,7 @@ public class AntriebService extends AbstractItemService<NameKey, Antrieb> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Finds an Antrieb by name", response = Antrieb.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -59,6 +68,17 @@ public class AntriebService extends AbstractItemService<NameKey, Antrieb> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
+    @ApiOperation(value = "Finds Antrieben by example", response = Antrieb.class, responseContainer = "List")
+    @ApiImplicitParams({
+            @ApiImplicitParam( name = ApiNames.ID, value = "Antrieb's id", required = false, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam( name = ApiNames.NAMEN, value = "Antrieb's name", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Antrieb's description", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Antrieb is deleted", required = false, dataType = "Boolean", paramType = "query")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "No Content"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -67,6 +87,7 @@ public class AntriebService extends AbstractItemService<NameKey, Antrieb> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Adds an Antrieb", response = Antrieb.class)
     public Response add(Antrieb entity) {
         return super.add(entity);
     }
@@ -76,6 +97,7 @@ public class AntriebService extends AbstractItemService<NameKey, Antrieb> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Updates an Antrieb by name", response = Antrieb.class)
     public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Antrieb entity) {
         return super.update(name, entity);
     }
@@ -84,6 +106,7 @@ public class AntriebService extends AbstractItemService<NameKey, Antrieb> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Deletes an Antrieb by name")
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }

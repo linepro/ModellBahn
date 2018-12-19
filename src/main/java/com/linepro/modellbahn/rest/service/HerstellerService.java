@@ -24,6 +24,7 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+import io.swagger.annotations.Api;
 
 /**
  * HerstellerService. CRUD service for Hersteller
@@ -31,6 +32,7 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @author $Author:$
  * @version $Id:$
  */
+@Api(value = ApiPaths.HERSTELLER, description = "Hersteller maintenance")
 @Path(ApiPaths.HERSTELLER)
 public class HerstellerService extends AbstractItemService<NameKey, Hersteller> {
 

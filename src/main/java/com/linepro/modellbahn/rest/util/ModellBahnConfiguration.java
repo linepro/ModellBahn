@@ -28,7 +28,6 @@ import com.linepro.modellbahn.jersey.LoggingFilter;
 import com.linepro.modellbahn.jersey.SecurityRequestFilter;
 import com.linepro.modellbahn.rest.service.SwaggerListingResource;
 
-import io.swagger.annotations.Api;
 import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.jaxrs.config.SwaggerConfigLocator;
 import io.swagger.jaxrs.config.SwaggerContextService;
@@ -40,7 +39,6 @@ import io.swagger.jaxrs.listing.SwaggerSerializers;
  * @author  $Author:$
  * @version $Id:$
  */
-@Api()
 @ApplicationPath("/")
 public class ModellBahnConfiguration extends ResourceConfig {
 
@@ -146,7 +144,7 @@ public class ModellBahnConfiguration extends ResourceConfig {
 
         SwaggerConfigLocator.getInstance().putConfig(SwaggerContextService.CONFIG_ID_DEFAULT, swaggerConfig);
 
-        register(SwaggerListingResource.class);
+        //register(SwaggerListingResource.class);
         register(SwaggerSerializers.class);
     }
 

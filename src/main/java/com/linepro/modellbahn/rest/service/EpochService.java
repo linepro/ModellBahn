@@ -22,6 +22,7 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+import io.swagger.annotations.Api;
 
 /**
  * EpochService. CRUD service for Epoch
@@ -29,6 +30,7 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @author $Author:$
  * @version $Id:$
  */
+@Api(value = ApiPaths.EPOCH, description = "Epoch maintenance")
 @Path(ApiPaths.EPOCH)
 public class EpochService extends AbstractItemService<NameKey, Epoch> {
 

@@ -22,6 +22,7 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+import io.swagger.annotations.Api;
 
 /**
  * ZugTypService. CRUD service for ZugTyp
@@ -29,6 +30,7 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @author $Author:$
  * @version $Id:$
  */
+@Api(value = ApiPaths.ZUG_TYP, description = "ZugTyp maintenance")
 @Path(ApiPaths.ZUG_TYP)
 public class ZugTypService extends AbstractItemService<NameKey, ZugTyp> {
 

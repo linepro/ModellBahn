@@ -22,6 +22,7 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+import io.swagger.annotations.Api;
 
 /**
  * GattungService. CRUD service for Gattung
@@ -29,6 +30,7 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @author $Author:$
  * @version $Id:$
  */
+@Api(value = ApiPaths.GATTUNG, description = "Gattung maintenance")
 @Path(ApiPaths.GATTUNG)
 public class GattungService extends AbstractItemService<NameKey, Gattung> {
 

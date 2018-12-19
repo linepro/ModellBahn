@@ -22,6 +22,7 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+import io.swagger.annotations.Api;
 
 /**
  * ProtokollService. CRUD service for Protokoll
@@ -29,6 +30,7 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @author $Author:$
  * @version $Id:$
  */
+@Api(value = ApiPaths.PROTOKOLL, description = "Protokoll maintenance")
 @Path(ApiPaths.PROTOKOLL)
 public class ProtokollService extends AbstractItemService<NameKey, Protokoll> {
 

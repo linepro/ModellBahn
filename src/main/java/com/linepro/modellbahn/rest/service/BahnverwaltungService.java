@@ -22,6 +22,7 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+import io.swagger.annotations.Api;
 
 /**
  * BahnverwaltungService. CRUD service for Bahnverwaltung
@@ -29,6 +30,7 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @author $Author:$
  * @version $Id:$
  */
+@Api(value = ApiPaths.BAHNVERWALTUNG, description = "Bahnverwaltung maintenance")
 @Path(ApiPaths.BAHNVERWALTUNG)
 public class BahnverwaltungService extends AbstractItemService<NameKey, Bahnverwaltung> {
 

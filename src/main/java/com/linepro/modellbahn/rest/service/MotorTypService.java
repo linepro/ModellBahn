@@ -22,6 +22,7 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+import io.swagger.annotations.Api;
 
 /**
  * MotorTypService. CRUD service for MotorTyp
@@ -29,6 +30,7 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @author $Author:$
  * @version $Id:$
  */
+@Api(value = ApiPaths.MOTOR_TYP, description = "MotorTyp maintenance")
 @Path(ApiPaths.MOTOR_TYP)
 public class MotorTypService extends AbstractItemService<NameKey, MotorTyp> {
 

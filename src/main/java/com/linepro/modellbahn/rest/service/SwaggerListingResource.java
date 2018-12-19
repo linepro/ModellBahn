@@ -18,17 +18,18 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.jaxrs.listing.ApiListingResource;
 
 @Path(ApiPaths.SWAGGER_RESOURCE)
-public class SwaggerListingResource extends ApiListingResource {
+public class SwaggerListingResource {
+    //@Context
+    ServletConfig config = null;
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, "application/yaml"})
     @ApiOperation(value = "The swagger definition in either JSON or YAML", hidden = true)
     public Response getListing(
             @Context Application app,
-            @Context ServletConfig sc,
             @Context HttpHeaders headers,
             @Context UriInfo uriInfo,
             @PathParam("type") String type) {
-        return super.getListing(app, sc, headers, uriInfo, type);
+        return new ApiListingResource().getListing(app, config, headers, uriInfo, type);
     }        
 }

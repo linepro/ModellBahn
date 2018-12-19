@@ -26,6 +26,7 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+import io.swagger.annotations.Api;
 
 /**
  * LandService.
@@ -33,6 +34,7 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @author  $Author:$
  * @version $Id:$
  */
+@Api(value = ApiPaths.LAND, description = "Land maintenance")
 @Path(ApiPaths.LAND)
 public class LandService extends AbstractItemService<NameKey, Land> {
 

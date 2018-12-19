@@ -28,6 +28,7 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+import io.swagger.annotations.Api;
 
 /**
  * KategorieService. CRUD service for Kategorie and UnterKategorie
@@ -35,6 +36,7 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
  * @author $Author:$
  * @version $Id:$
  */
+@Api(value = ApiPaths.KATEGORIE, description = "Kategorie maintenance")
 @Path(ApiPaths.KATEGORIE)
 public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
 

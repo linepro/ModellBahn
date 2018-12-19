@@ -20,6 +20,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.UriBuilder;
 
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -116,6 +117,7 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
     @JsonGetter(ApiNames.LINKS)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(contentUsing=LinkSerializer.class)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.ILink;", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     public Set<Link> getLinks() {
         return links;
     }

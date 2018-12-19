@@ -23,12 +23,16 @@ import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * AchsfolgService. CRUD service for Achsfolg
  * 
  * @author $Author:$
  * @version $Id:$
  */
+@Api(value = ApiPaths.ACHSFOLG, description = "Achsfolg (axle configuration) maintenance")
 @Path(ApiPaths.ACHSFOLG)
 public class AchsfolgService extends AbstractItemService<NameKey, Achsfolg> {
 
@@ -52,6 +56,7 @@ public class AchsfolgService extends AbstractItemService<NameKey, Achsfolg> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Finds an Achsfolg by name", response = Achsfolg.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -59,6 +64,7 @@ public class AchsfolgService extends AbstractItemService<NameKey, Achsfolg> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
+    @ApiOperation(value = "Finds Achsfolgen by example", response = Achsfolg.class, responseContainer = "List")
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -67,6 +73,7 @@ public class AchsfolgService extends AbstractItemService<NameKey, Achsfolg> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Adds an Achsfolg", response = Achsfolg.class)
     public Response add(Achsfolg entity) {
         return super.add(entity);
     }
@@ -76,6 +83,7 @@ public class AchsfolgService extends AbstractItemService<NameKey, Achsfolg> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Updates an Achsfolg by name", response = Achsfolg.class)
     public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Achsfolg entity) {
         return super.update(name, entity);
     }
@@ -84,6 +92,7 @@ public class AchsfolgService extends AbstractItemService<NameKey, Achsfolg> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Deletes an Achsfolg by name")
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }
