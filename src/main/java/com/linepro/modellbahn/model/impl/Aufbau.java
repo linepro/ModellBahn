@@ -21,8 +21,10 @@ import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.PathConverter;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Aufbau. Represents a construction method.
@@ -75,7 +77,8 @@ public class Aufbau extends AbstractNamedItem<NameKey> implements IAufbau {
     @Convert(converter = PathConverter.class)
     @JsonGetter(ApiNames.ABBILDUNG)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(using=FileSerializer.class)
+    @JsonSerialize(using = PathSerializer.class)
+    @ApiModelProperty(dataType = "[Ljava.lang.String;", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     public Path getAbbildung() {
         return abbildung;
     }

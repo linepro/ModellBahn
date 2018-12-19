@@ -3,7 +3,7 @@ package com.linepro.modellbahn.rest.util;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.linepro.modellbahn.model.IDescribedEnum;
 
-class DescribedEnumWrapper {
+public class DescribedEnumWrapper {
 
     private final IDescribedEnum dEnum;
     

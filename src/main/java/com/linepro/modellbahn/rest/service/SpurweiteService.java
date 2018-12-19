@@ -17,12 +17,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.impl.Spurweite;
+import com.linepro.modellbahn.model.impl.Spurweite;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * SpurweiteService. CRUD service for Spurweite
@@ -54,6 +57,7 @@ public class SpurweiteService extends AbstractItemService<NameKey, Spurweite> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Finds a Spurweite by name", response = Spurweite.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -61,6 +65,7 @@ public class SpurweiteService extends AbstractItemService<NameKey, Spurweite> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
+    @ApiOperation(value = "Finds Spurweiteen by example", response = Spurweite.class, responseContainer = "List")
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -69,6 +74,7 @@ public class SpurweiteService extends AbstractItemService<NameKey, Spurweite> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Updates a Spurweite by name", response = Spurweite.class)
     public Response add(Spurweite entity) {
         return super.add(entity);
     }
@@ -78,6 +84,7 @@ public class SpurweiteService extends AbstractItemService<NameKey, Spurweite> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Updates a Spurweite by name", response = Spurweite.class)
     public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Spurweite entity) {
         return super.update(name, entity);
     }
@@ -86,6 +93,7 @@ public class SpurweiteService extends AbstractItemService<NameKey, Spurweite> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Deletes a Spurweite by name")
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }

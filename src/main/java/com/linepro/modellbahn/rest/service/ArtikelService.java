@@ -17,8 +17,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -44,6 +42,9 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.rest.util.FileUploadHandler;
 import com.linepro.modellbahn.rest.util.IFileUploadHandler;
 import com.linepro.modellbahn.util.StaticContentFinder;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * ArtikelService. CRUD service for Artikel
@@ -138,7 +139,7 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     @Path(ApiPaths.ID_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Deletes an Artikel by name")
+    @ApiOperation(value = "Deletes an Artikel by id")
     public Response delete(@PathParam(ApiPaths.ID_PARAM_NAME) Long name) {
         return super.delete(name);
     }

@@ -23,6 +23,7 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Kupplung. The coupling configuration for a product
@@ -76,6 +77,7 @@ public class Kupplung extends AbstractNamedItem<NameKey> implements IKupplung {
     @JsonGetter(ApiNames.ABBILDUNG)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using = PathSerializer.class)
+    @ApiModelProperty(dataType = "[Ljava.lang.String;", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     public Path getAbbildung() {
         return abbildung;
     }

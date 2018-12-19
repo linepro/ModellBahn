@@ -22,6 +22,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -600,8 +601,9 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Column(name = DBNames.ANLEITUNGEN, length = 512)
     @Convert(converter = PathConverter.class)
     @JsonGetter(ApiNames.ANLEITUNGEN)
-    @JsonSerialize(using = PathSerializer.class)
     @JsonView(Views.Public.class)
+    @JsonSerialize(using = PathSerializer.class)
+    @ApiModelProperty(dataType = "[Ljava.lang.String;", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     public Path getAnleitungen() {
         return anleitungen;
     }
@@ -615,8 +617,9 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Column(name = DBNames.EXPLOSIONSZEICHNUNG, length = 512)
     @Convert(converter = PathConverter.class)
     @JsonGetter(ApiNames.EXPLOSIONSZEICHNUNG)
-    @JsonSerialize(using = PathSerializer.class)
     @JsonView(Views.Public.class)
+    @JsonSerialize(using = PathSerializer.class)
+    @ApiModelProperty(dataType = "[Ljava.lang.String;", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     public Path getExplosionszeichnung() {
         return explosionszeichnung;
     }
@@ -630,8 +633,9 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Column(name = DBNames.ABBILDUNG)
     @Convert(converter = PathConverter.class)
     @JsonGetter(ApiNames.ABBILDUNG)
+    @JsonView(Views.Public.class)
     @JsonSerialize(using = PathSerializer.class)
-    @JsonView(Views.DropDown.class)
+    @ApiModelProperty(dataType = "[Ljava.lang.String;", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     public Path getAbbildung() {
         return abbildung;
     }

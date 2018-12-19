@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IKategorie;
 import com.linepro.modellbahn.model.IUnterKategorie;
+import com.linepro.modellbahn.model.impl.Achsfolg;
 import com.linepro.modellbahn.model.impl.Kategorie;
 import com.linepro.modellbahn.model.impl.UnterKategorie;
 import com.linepro.modellbahn.model.keys.NameKey;
@@ -28,7 +29,9 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * KategorieService. CRUD service for Kategorie and UnterKategorie
@@ -75,6 +78,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Finds an Kategorie by name", response = Kategorie.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -82,14 +86,16 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
+    @ApiOperation(value = "Finds Kategorieen by example", response = Kategorie.class, responseContainer = "List")
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
-    
+
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Adds an Kategorie", response = Kategorie.class)
     public Response add(Kategorie entity) {
         return super.add(entity);
     }
@@ -99,6 +105,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Updates an Kategorie by name", response = Kategorie.class)
     public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Kategorie entity) {
         return super.update(name, entity);
     }
@@ -107,6 +114,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Deletes an Kategorie by name")
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }
@@ -114,6 +122,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @GET
     @Path(ApiPaths.UNTER_KATEGORIE_PATH)
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Finds an UnterKategorie by kategorie and name", response = UnterKategorie.class)
     public Response get(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) {
         try {
@@ -140,6 +149,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Adds an UnterKategorie to a kategorie", response = UnterKategorie.class)
     public Response add(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, UnterKategorie unterKategorie) {
         try {
             logPost(kategorieStr + "/" + unterKategorie);
@@ -165,6 +175,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @PUT
     @Path(ApiPaths.UNTER_KATEGORIE_PATH)
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Updates an UnterKategorie by kategorie and name", response = UnterKategorie.class)
     public Response update(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr, UnterKategorie newUnterKategorie) {
         try {
@@ -198,6 +209,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @DELETE
     @Path(ApiPaths.UNTER_KATEGORIE_PATH)
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Deletes an UnterKategorie by kategorie and name")
     public Response delete(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) {
         try {

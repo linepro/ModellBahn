@@ -21,6 +21,7 @@ import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IZug;
 import com.linepro.modellbahn.model.IZugConsist;
 import com.linepro.modellbahn.model.IZugTyp;
+import com.linepro.modellbahn.model.impl.Zug;
 import com.linepro.modellbahn.model.impl.Artikel;
 import com.linepro.modellbahn.model.impl.Zug;
 import com.linepro.modellbahn.model.impl.ZugConsist;
@@ -32,7 +33,9 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * ZugService. CRUD service for Zug
@@ -87,6 +90,7 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Finds a Zug by name", response = Zug.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -94,6 +98,7 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
+    @ApiOperation(value = "Finds Zugen by example", response = Zug.class, responseContainer = "List")
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -102,6 +107,7 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Adds a Zug", response = Zug.class)
     public Response add(Zug entity) {
         return super.add(entity);
     }
@@ -111,6 +117,7 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Updates a Zug by name", response = Zug.class)
     public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Zug entity) {
         return super.update(name, entity);
     }
@@ -119,6 +126,7 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Deletes a Zug by name")
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }
@@ -128,6 +136,7 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Adds a vehicle to a named Zug", response = ZugConsist.class)
     public Response addConsist(@PathParam(ApiPaths.NAME_PARAM_NAME) String zugStr, @QueryParam(ApiPaths.ARTIKEL) String artikelId) {
         try {
             logPost(zugStr + "/" + artikelId);
@@ -161,6 +170,7 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Updates a vehicle in a named Zug", response = ZugConsist.class)
     public Response updateConsist(@PathParam(ApiPaths.ZUG_PARAM_NAME) String zugStr, @PathParam(ApiPaths.POSITION_PARAM_NAME) Integer position, @QueryParam(ApiPaths.ARTIKEL) String artikelId) {
         try {
             logPost(zugStr + "/" + position + "?" + artikelId);
@@ -191,6 +201,7 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @Path(ApiPaths.ZUG_CONSIST_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Removes a vehicle from a named Zug")
     public Response deleteConsist(@PathParam(ApiPaths.ZUG_PARAM_NAME) String zugStr, @PathParam(ApiPaths.POSITION_PARAM_NAME) Integer position) {
         try {
             ZugConsist zugConsist = (ZugConsist) findZugConsist(zugStr, position, true);

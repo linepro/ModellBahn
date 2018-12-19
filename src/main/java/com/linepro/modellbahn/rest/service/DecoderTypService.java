@@ -22,6 +22,7 @@ import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.model.IProtokoll;
+import com.linepro.modellbahn.model.impl.Achsfolg;
 import com.linepro.modellbahn.model.impl.DecoderTyp;
 import com.linepro.modellbahn.model.impl.DecoderTypAdress;
 import com.linepro.modellbahn.model.impl.DecoderTypCV;
@@ -41,7 +42,9 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * DecoderTypService. CRUD service for DecoderTyp, DecoderTypCV and DecoderTypFunktion
@@ -155,6 +158,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Path(ApiPaths.DECODER_TYP_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Finds an Achsfolg by name", response = DecoderTyp.class)
     public Response get(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
             @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
         try {
@@ -167,6 +171,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
+    @ApiOperation(value = "Finds DecoderTypen by example", response = DecoderTyp.class, responseContainer = "List")
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -175,6 +180,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Finds an DecoderTyp by name", response = DecoderTyp.class)
     public Response add(DecoderTyp entity) {
         return super.add(entity);
     }
@@ -184,6 +190,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Finds an DecoderTyp by name", response = DecoderTyp.class)
     public Response update(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
             @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, DecoderTyp entity) {
         try {
@@ -197,6 +204,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Path(ApiPaths.DECODER_TYP_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Finds an DecoderTyp by name", response = DecoderTyp.class)
     public Response delete(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
             @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
         try {
@@ -209,6 +217,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @GET
     @Path(ApiPaths.DECODER_TYP_ADRESS_PATH)
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Finds an DecoderTypAdress by name", response = DecoderTypAdress.class)
     public Response getAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index) {
         try {
@@ -235,6 +244,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Finds an DecoderTypAdress by name", response = DecoderTypAdress.class)
     public Response addAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, DecoderTypAdress decoderTypAdress) {
         try {
             logPost(herstellerStr + "/" + bestellNr + "/" + decoderTypAdress);
@@ -260,6 +270,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @PUT
     @Path(ApiPaths.DECODER_TYP_ADRESS_PATH)
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Finds an DecoderTypAdress by name", response = DecoderTypAdress.class)
     public Response updateAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index, DecoderTypAdress newDecoderTypAdress) {
         try {
@@ -293,6 +304,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @DELETE
     @Path(ApiPaths.DECODER_TYP_ADRESS_PATH)
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Finds an DecoderTypAdress by name", response = DecoderTypAdress.class)
     public Response deleteAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index) {
         try {
@@ -319,6 +331,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @GET
     @Path(ApiPaths.DECODER_TYP_CV_PATH)
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Finds an DecoderTypCV by name", response = DecoderTypCV.class)
     public Response getCV(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv) {
         try {
@@ -345,6 +358,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Finds an DecoderTypCV by name", response = DecoderTypCV.class)
     public Response addCV(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, DecoderTypCV decoderTypCV) {
         try {
             logPost(herstellerStr + "/" + bestellNr + "/" + decoderTypCV);
@@ -370,6 +384,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @PUT
     @Path(ApiPaths.DECODER_TYP_CV_PATH)
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Finds an DecoderTypCV by name", response = DecoderTypCV.class)
     public Response updateCV(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv, DecoderTypCV newDecoderTypCV) {
         try {
@@ -410,6 +425,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @DELETE
     @Path(ApiPaths.DECODER_TYP_CV_PATH)
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Finds an DecoderTypCV by name", response = DecoderTypCV.class)
     public Response deleteCV(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv) {
         try {
@@ -436,6 +452,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @GET
     @Path(ApiPaths.DECODER_TYP_FUNKTION_PATH)
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Finds an DecoderTypFunktion by name", response = DecoderTypFunktion.class)
     public Response getFunktion(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion) {
         try {
@@ -462,6 +479,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Finds an DecoderTypFunktion by name", response = DecoderTypFunktion.class)
     public Response addFunktion(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, DecoderTypFunktion decoderTypFunktion) {
         try {
             logPost(herstellerStr + "/" + bestellNr + "/" + decoderTypFunktion);
@@ -490,6 +508,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @PUT
     @Path(ApiPaths.DECODER_TYP_FUNKTION_PATH)
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Finds an DecoderTypFunktion by name", response = DecoderTypFunktion.class)
     public Response updateFunktion(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion, DecoderTypFunktion newDecoderTypFunktion) {
         try {
@@ -523,6 +542,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @DELETE
     @Path(ApiPaths.DECODER_TYP_FUNKTION_PATH)
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Finds an DecoderTypFunktion by name", response = DecoderTypFunktion.class)
     public Response deleteFunktion(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion) {
         try {

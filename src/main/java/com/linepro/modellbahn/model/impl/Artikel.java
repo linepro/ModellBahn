@@ -57,6 +57,7 @@ import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
 import com.linepro.modellbahn.rest.json.serialization.ProduktSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Artikel.
@@ -376,6 +377,7 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     @JsonGetter(ApiNames.ABBILDUNG)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using = PathSerializer.class)
+    @ApiModelProperty(dataType = "[Ljava.lang.String;", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     public Path getAbbildung() {
         return abbildung;
     }

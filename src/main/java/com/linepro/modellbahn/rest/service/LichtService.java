@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import io.swagger.annotations.Api;
+import com.linepro.modellbahn.model.impl.Licht;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -33,6 +33,9 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.rest.util.FileUploadHandler;
 import com.linepro.modellbahn.rest.util.IFileUploadHandler;
 import com.linepro.modellbahn.util.StaticContentFinder;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * LichtService.
@@ -64,6 +67,7 @@ public class LichtService extends AbstractItemService<NameKey, Licht> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Finds a Licht by name", response = Licht.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -71,6 +75,7 @@ public class LichtService extends AbstractItemService<NameKey, Licht> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
+    @ApiOperation(value = "Finds Lichten by example", response = Licht.class, responseContainer = "List")
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -79,6 +84,7 @@ public class LichtService extends AbstractItemService<NameKey, Licht> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Adds a Licht", response = Licht.class)
     public Response add(Licht entity) {
         return super.add(entity);
     }
@@ -88,6 +94,7 @@ public class LichtService extends AbstractItemService<NameKey, Licht> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Updates a Licht by name", response = Licht.class)
     public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Licht entity) {
         return super.update(name, entity);
     }
@@ -96,6 +103,7 @@ public class LichtService extends AbstractItemService<NameKey, Licht> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Deletes a Licht by name")
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }
@@ -105,6 +113,7 @@ public class LichtService extends AbstractItemService<NameKey, Licht> {
     @Consumes({ MediaType.MULTIPART_FORM_DATA })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Adds or updates the picture for a named Licht", response = Licht.class)
     public Response updateAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
@@ -137,6 +146,7 @@ public class LichtService extends AbstractItemService<NameKey, Licht> {
     @Path(ApiPaths.ABBILDUNG_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Deletes the picture for a named Licht", response = Licht.class)
     public Response deleteAbbildung(@PathParam(ApiPaths.ID_PARAM_NAME) String name) {
         try {
             ILicht licht = findLicht(name, false);

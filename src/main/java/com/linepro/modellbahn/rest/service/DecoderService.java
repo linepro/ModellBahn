@@ -24,6 +24,7 @@ import com.linepro.modellbahn.model.IDecoderFunktion;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
+import com.linepro.modellbahn.model.impl.Achsfolg;
 import com.linepro.modellbahn.model.impl.Decoder;
 import com.linepro.modellbahn.model.impl.DecoderAdress;
 import com.linepro.modellbahn.model.impl.DecoderCV;
@@ -37,7 +38,9 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * DecoderService. CRUD service for Decoder
@@ -125,6 +128,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Adds a Decoder by hersteller and bestell nr", response = Decoder.class)
     public Response addDecoder(@PathParam(ApiNames.HERSTELLER) String herstellerStr, @PathParam(ApiNames.BESTELL_NR) String bestellNr) {
         try {
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, true);
@@ -145,6 +149,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Finds a Decoder by name", response = Decoder.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId) {
         return super.get(decoderId);
     }
@@ -152,6 +157,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
+    @ApiOperation(value = "Finds Decoderen by example", response = Decoder.class, responseContainer = "List")
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -161,6 +167,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Finds a Decoder by name", response = Decoder.class)
     public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, Decoder entity) {
         return super.update(decoderId, entity);
     }
@@ -169,6 +176,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Deletes a Decoder by name", response = Decoder.class)
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId) {
         return super.delete(decoderId);
     }
@@ -177,6 +185,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Path(ApiPaths.DECODER_ADRESS_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Finds a DecoderAdress by name and position", response = DecoderAdress.class)
     public Response getAdress(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index) {
         try {
             Decoder decoder = (Decoder) findDecoder(decoderId, true);
@@ -202,6 +211,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Updates a DecoderAdress by name and position", response = DecoderAdress.class)
     public Response updateAdress(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index, @QueryParam(ApiNames.ADRESS) Integer adress) {
         try {
             logPut(decoderId + "/" + index + ": " + adress);
@@ -232,6 +242,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Path(ApiPaths.DECODER_CV_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Finds a DecoderCV by name and cv", response = DecoderCV.class)
     public Response getCv(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv) {
         try {
             Decoder decoder = (Decoder) findDecoder(decoderId, true);
@@ -257,6 +268,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Updates a DecoderCV by name and cv", response = DecoderCV.class)
     public Response updateCv(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv, @QueryParam(ApiNames.WERT) Integer wert) {
         try {
             logPut(decoderId + "/" + cv + ": " + wert);
@@ -287,6 +299,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Path(ApiPaths.DECODER_FUNKTION_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Finds a DecoderFunktion by name and fn", response = DecoderFunktion.class)
     public Response getFunktion(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion) {
         try {
             Decoder decoder = (Decoder) findDecoder(decoderId, true);
@@ -312,6 +325,7 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Updates a DecoderFunktion by name and fn", response = DecoderFunktion.class)
     public Response updateFunktion(@PathParam(ApiPaths.NAME_PARAM_NAME) String decoderId, @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion, @QueryParam(ApiNames.BEZEICHNUNG) String descirption) {
         try {
             logPut(decoderId + "/" + reihe + "/" + funktion + ": " + descirption);

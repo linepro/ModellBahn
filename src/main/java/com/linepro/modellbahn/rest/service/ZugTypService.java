@@ -22,7 +22,9 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * ZugTypService. CRUD service for ZugTyp
@@ -54,6 +56,7 @@ public class ZugTypService extends AbstractItemService<NameKey, ZugTyp> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Finds a ZugTyp by name", response = ZugTyp.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -61,6 +64,7 @@ public class ZugTypService extends AbstractItemService<NameKey, ZugTyp> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
+    @ApiOperation(value = "Finds ZugTypen by example", response = ZugTyp.class, responseContainer = "List")
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -69,6 +73,7 @@ public class ZugTypService extends AbstractItemService<NameKey, ZugTyp> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Updates a ZugTyp by name", response = ZugTyp.class)
     public Response add(ZugTyp entity) {
         return super.add(entity);
     }
@@ -78,6 +83,7 @@ public class ZugTypService extends AbstractItemService<NameKey, ZugTyp> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Updates a ZugTyp by name", response = ZugTyp.class)
     public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, ZugTyp entity) {
         return super.update(name, entity);
     }
@@ -86,6 +92,7 @@ public class ZugTypService extends AbstractItemService<NameKey, ZugTyp> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
+    @ApiOperation(value = "Deletes a ZugTyp by name")
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }

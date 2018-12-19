@@ -51,6 +51,7 @@ import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
 import com.linepro.modellbahn.rest.json.serialization.UnterKategorieSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Vorbild.
@@ -976,8 +977,9 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Column(name = DBNames.ABBILDUNG)
     @Convert(converter = PathConverter.class)
     @JsonGetter(ApiNames.ABBILDUNG)
+    @JsonView(Views.Public.class)
     @JsonSerialize(using = PathSerializer.class)
-    @JsonView(Views.DropDown.class)
+    @ApiModelProperty(dataType = "[Ljava.lang.String;", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     public Path getAbbildung() {
         return abbildung;
     }
