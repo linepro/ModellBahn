@@ -213,8 +213,10 @@ public interface ApiPaths {
     String ZUG_CONSIST_PATH = ZUG_CONSIST_ROOT + POSITION_PART;
     String ZUG_CONSIST_LINK = "%s" + SEPARATOR  + ApiNames.CONSIST + SEPARATOR + "%d";
 
-    String SWAGGER_ROOT = API_ROOT + "swagger" + SEPARATOR;
-    String SWAGGER_RESOURCE = SWAGGER_ROOT + "swagger.{type:json|yaml}";
+    String SWAGGER = "swagger";
+    String TYPE = "type";
+    String SWAGGER_ROOT = API_ROOT + SWAGGER;
+    String SWAGGER_RESOURCE = SEPARATOR + SWAGGER + ".{" + TYPE + ":json|yaml}";
 
     /* Multipart field names */
     String MULTIPART_FILE_DETAIL = "FileDetail";

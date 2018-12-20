@@ -12,24 +12,26 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.jaxrs.listing.ApiListingResource;
 
-@Path(ApiPaths.SWAGGER_RESOURCE)
+@Path(ApiPaths.SWAGGER_ROOT)
 public class SwaggerListingResource {
     //@Context
     ServletConfig config = null;
 
     @GET
+    @Path(ApiPaths.SWAGGER_RESOURCE)
     @Produces({MediaType.APPLICATION_JSON, "application/yaml"})
     @ApiOperation(value = "The swagger definition in either JSON or YAML", hidden = true)
     public Response getListing(
             @Context Application app,
             @Context HttpHeaders headers,
             @Context UriInfo uriInfo,
-            @PathParam("type") String type) {
+            @PathParam(ApiPaths.TYPE) String type) {
         return new ApiListingResource().getListing(app, config, headers, uriInfo, type);
     }        
 }
