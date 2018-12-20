@@ -350,17 +350,11 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gattung.class)
     @JoinColumn(name = DBNames.GATTUNG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk1"))
-
-
-
-
     public IGattung getGattung() {
         return gattung;
     }
 
     @Override
-
-
     public void setGattung(IGattung gattung) {
         this.gattung = gattung;
     }
@@ -368,16 +362,11 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = UnterKategorie.class)
     @JoinColumn(name = DBNames.UNTER_KATEGORIE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk2"))
-
-
-
     public IUnterKategorie getUnterKategorie() {
         return unterKategorie;
     }
 
     @Override
-
-
     public void setUnterKategorie(IUnterKategorie unterKategorie) {
         this.unterKategorie = unterKategorie;
     }
@@ -385,31 +374,22 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Bahnverwaltung.class)
     @JoinColumn(name = DBNames.BAHNVERWALTUNG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk3"))
-
-
-
-
     public IBahnverwaltung getBahnverwaltung() {
         return bahnverwaltung;
     }
 
     @Override
-
-
     public void setBahnverwaltung(IBahnverwaltung bahnverwaltung) {
         this.bahnverwaltung = bahnverwaltung;
     }
 
     @Override
     @Column(name = DBNames.HERSTELLER, length = 100)
-
-
     public String getHersteller() {
         return hersteller;
     }
 
     @Override
-
     public void setHersteller(String hersteller) {
         this.hersteller = hersteller;
     }
@@ -417,43 +397,33 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Override
     @Column(name = DBNames.BAUZEIT)
     @Temporal(TemporalType.DATE)
-
-
-
     public Date getBauzeit() {
         return bauzeit;
     }
 
     @Override
-
     public void setBauzeit(Date bauzeit) {
         this.bauzeit = bauzeit;
     }
 
     @Override
     @Column(name = DBNames.ANZAHL)
-
-
     public Integer getAnzahl() {
         return anzahl;
     }
 
     @Override
-
     public void setAnzahl(Integer anzahl) {
         this.anzahl = anzahl;
     }
 
     @Override
     @Column(name = DBNames.BETREIBSNUMMER, length = 100)
-
-
     public String getBetreibsNummer() {
         return betreibsNummer;
     }
 
     @Override
-
     public void setBetreibsNummer(String betreibsNummer) {
         this.betreibsNummer = betreibsNummer;
     }
@@ -461,17 +431,11 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Antrieb.class)
     @JoinColumn(name = DBNames.ANTRIEB_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk4"))
-
-
-
-
     public IAntrieb getAntrieb() {
         return antrieb;
     }
 
     @Override
-
-
     public void setAntrieb(IAntrieb antrieb) {
         this.antrieb = antrieb;
     }
@@ -479,87 +443,66 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class)
     @JoinColumn(name = DBNames.ACHSFOLG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk5"))
-
-
-
-
     public IAchsfolg getAchsfolg() {
         return achsfolg;
     }
 
     @Override
-
-
     public void setAchsfolg(IAchsfolg achsfolg) {
         this.achsfolg = achsfolg;
     }
 
     @Override
     @Column(name = DBNames.ANFAHRZUGKRAFT)
-
-
     public BigDecimal getAnfahrzugkraft() {
         return anfahrzugkraft;
     }
 
     @Override
-
     public void setAnfahrzugkraft(BigDecimal anfahrzugkraft) {
         this.anfahrzugkraft = anfahrzugkraft;
     }
 
     @Override
     @Column(name = DBNames.LEISTUNG)
-
-
     public BigDecimal getLeistung() {
         return leistung;
     }
 
     @Override
-
     public void setLeistung(BigDecimal leistung) {
         this.leistung = leistung;
     }
 
     @Override
     @Column(name = DBNames.DIENSTGEWICHT)
-
-
     public BigDecimal getDienstgewicht() {
         return dienstgewicht;
     }
 
     @Override
-
     public void setDienstgewicht(BigDecimal dienstgewicht) {
         this.dienstgewicht = dienstgewicht;
     }
 
     @Override
     @Column(name = DBNames.GESCHWINDIGKEIT)
-
-
     public Integer getGeschwindigkeit() {
         return geschwindigkeit;
     }
 
     @Override
-
     public void setGeschwindigkeit(Integer geschwindigkeit) {
         this.geschwindigkeit = geschwindigkeit;
     }
 
     @Override
     @Column(name = DBNames.LANGE)
-
-
     public BigDecimal getLange() {
         return lange;
     }
 
     @Override
-
     public void setLange(BigDecimal lange) {
         this.lange = lange;
     }
@@ -567,406 +510,318 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Override
     @Column(name = DBNames.AUSSERDIENST)
     @Temporal(TemporalType.DATE)
-
-
-
     public Date getAusserdienst() {
         return ausserdienst;
     }
 
     @Override
-
     public void setAusserdienst(Date ausserdienst) {
         this.ausserdienst = ausserdienst;
     }
 
     @Override
     @Column(name = DBNames.DMTREIBRAD)
-
-
     public BigDecimal getDmTreibrad() {
         return dmTreibrad;
     }
 
     @Override
-
     public void setDmTreibrad(BigDecimal dmTreibrad) {
         this.dmTreibrad = dmTreibrad;
     }
 
     @Override
     @Column(name = DBNames.DMLAUFRADVORN)
-
-
     public BigDecimal getDmLaufradVorn() {
         return dmLaufradVorn;
     }
 
     @Override
-
     public void setDmLaufradVorn(BigDecimal dmLaufradVorn) {
         this.dmLaufradVorn = dmLaufradVorn;
     }
 
     @Override
     @Column(name = DBNames.DMLAUFRADHINTEN)
-
-
     public BigDecimal getDmLaufradHinten() {
         return dmLaufradHinten;
     }
 
     @Override
-
     public void setDmLaufradHinten(BigDecimal dmLaufradHinten) {
         this.dmLaufradHinten = dmLaufradHinten;
     }
 
     @Override
     @Column(name = DBNames.ZYLINDER)
-
-
     public Integer getZylinder() {
         return zylinder;
     }
 
     @Override
-
     public void setZylinder(Integer zylinder) {
         this.zylinder = zylinder;
     }
 
     @Override
     @Column(name = DBNames.DMZYLINDER)
-
-
     public BigDecimal getDmZylinder() {
         return dmZylinder;
     }
 
     @Override
-
     public void setDmZylinder(BigDecimal dmZylinder) {
         this.dmZylinder = dmZylinder;
     }
 
     @Override
     @Column(name = DBNames.KOLBENHUB)
-
-
     public BigDecimal getKolbenhub() {
         return kolbenhub;
     }
 
     @Override
-
     public void setKolbenhub(BigDecimal kolbenhub) {
         this.kolbenhub = kolbenhub;
     }
 
     @Override
     @Column(name = DBNames.KESSELUEBERDRUCK)
-
-
     public BigDecimal getKesselueberdruck() {
         return kesselueberdruck;
     }
 
     @Override
-
     public void setKesselueberdruck(BigDecimal kesselueberdruck) {
         this.kesselueberdruck = kesselueberdruck;
     }
 
     @Override
     @Column(name = DBNames.ROSTFLAECHE)
-
-
     public BigDecimal getRostflaeche() {
         return rostflaeche;
     }
 
     @Override
-
     public void setRostflaeche(BigDecimal rostflaeche) {
         this.rostflaeche = rostflaeche;
     }
 
     @Override
     @Column(name = DBNames.UEBERHITZERFLAECHE)
-
-
     public BigDecimal getUeberhitzerflaeche() {
         return ueberhitzerflaeche;
     }
 
     @Override
-
     public void setUeberhitzerflaeche(BigDecimal ueberhitzerflaeche) {
         this.ueberhitzerflaeche = ueberhitzerflaeche;
     }
 
     @Override
     @Column(name = DBNames.WASSERVORRAT)
-
-
     public BigDecimal getWasservorrat() {
         return wasservorrat;
     }
 
     @Override
-
     public void setWasservorrat(BigDecimal wasservorrat) {
         this.wasservorrat = wasservorrat;
     }
 
     @Column(name = DBNames.VERDAMPFUNG)
-
-
     public BigDecimal getVerdampfung() {
         return verdampfung;
     }
 
     @Override
-
     public void setVerdampfung(BigDecimal verdampfung) {
         this.verdampfung = verdampfung;
     }
 
     @Override
     @Column(name = DBNames.FAHRMOTOREN)
-
-
     public Integer getFahrmotoren() {
         return fahrmotoren;
     }
 
     @Override
-
     public void setFahrmotoren(Integer fahrmotoren) {
         this.fahrmotoren = fahrmotoren;
     }
 
     @Override
     @Column(name = DBNames.MOTORBAUART, length = 100)
-
-
     public String getMotorbauart() {
         return motorbauart;
     }
 
     @Override
-
     public void setMotorbauart(String motorbauart) {
         this.motorbauart = motorbauart;
     }
 
     @Override
     @Column(name = DBNames.LEISTUNGSUEBERTRAGUNG)
-
-
     public BigDecimal getLeistungsuebertragung() {
         return leistungsuebertragung;
     }
 
     @Override
-
     public void setLeistungsuebertragung(BigDecimal leistungsuebertragung) {
         this.leistungsuebertragung = leistungsuebertragung;
     }
 
     @Override
     @Column(name = DBNames.REICHWEITE)
-
-
     public BigDecimal getReichweite() {
         return reichweite;
     }
 
     @Override
-
     public void setReichweite(BigDecimal reichweite) {
         this.reichweite = reichweite;
     }
 
     @Override
     @Column(name = DBNames.KAPAZITAT)
-
-
     public BigDecimal getKapazitat() {
         return kapazitat;
     }
 
     @Override
-
     public void setKapazitat(BigDecimal kapazitat) {
         this.kapazitat = kapazitat;
     }
 
     @Override
     @Column(name = DBNames.KLASSE)
-
-
     public Integer getKlasse() {
         return klasse;
     }
 
     @Override
-
     public void setKlasse(Integer klasse) {
         this.klasse = klasse;
     }
 
     @Override
     @Column(name = DBNames.SITZPLATZEKL1)
-
-
     public Integer getSitzPlatzeKL1() {
         return sitzplatzeKL1;
     }
 
     @Override
-
     public void setSitzPlatzeKL1(Integer sitzPlatzeKL1) {
         this.sitzplatzeKL1 = sitzPlatzeKL1;
     }
 
     @Override
     @Column(name = DBNames.SITZPLATZEKL2)
-
-
     public Integer getSitzPlatzeKL2() {
         return sitzplatzeKL2;
     }
 
     @Override
-
     public void setSitzPlatzeKL2(Integer sitzPlatzeKL2) {
-        sitzplatzeKL2 = sitzPlatzeKL2;
+        this.sitzplatzeKL2 = sitzPlatzeKL2;
     }
 
     @Override
     @Column(name = DBNames.SITZPLATZEKL3)
-
-
     public Integer getSitzPlatzeKL3() {
         return sitzplatzeKL3;
     }
 
     @Override
-
     public void setSitzPlatzeKL3(Integer sitzPlatzeKL3) {
-        sitzplatzeKL3 = sitzPlatzeKL3;
+        this.sitzplatzeKL3 = sitzPlatzeKL3;
     }
 
     @Override
     @Column(name = DBNames.SITZPLATZEKL4)
-
-
     public Integer getSitzPlatzeKL4() {
         return sitzplatzeKL4;
     }
 
     @Override
-
     public void setSitzPlatzeKL4(Integer sitzPlatzeKL4) {
         this.sitzplatzeKL4 = sitzPlatzeKL4;
     }
 
     @Override
     @Column(name = DBNames.AUFBAU, length = 100)
-
-
     public String getAufbau() {
         return aufbau;
     }
 
     @Override
-
     public void setAufbau(String aufbau) {
         this.aufbau = aufbau;
     }
 
     @Override
     @Column(name = DBNames.TRIEBZUGANZEIGEN)
-
-
     public Boolean getTriebzugAnzeigen() {
         return triebzugAnzeigen;
     }
 
     @Override
-
     public void setTriebzugAnzeigen(Boolean triebzugAnzeigen) {
         this.triebzugAnzeigen = triebzugAnzeigen;
     }
 
     @Override
     @Column(name = DBNames.TRIEBKOEPFE)
-
-
     public Integer getTriebkoepfe() {
         return triebkoepfe;
     }
 
     @Override
-
     public void setTriebkoepfe(Integer triebkoepfe) {
         this.triebkoepfe = triebkoepfe;
     }
 
     @Override
     @Column(name = DBNames.MITTELWAGEN)
-
-
     public Integer getMittelwagen() {
         return mittelwagen;
     }
 
     @Override
-
     public void setMittelwagen(Integer mittelwagen) {
         this.mittelwagen = mittelwagen;
     }
 
     @Override
     @Column(name = DBNames.SITZPLATZETZKL1)
-
-
     public Integer getSitzPlatzeTZKL1() {
         return sitzplatzeTZKL1;
     }
 
     @Override
-
     public void setSitzPlatzeTZKL1(Integer sitzPlatzeTZKL1) {
         this.sitzplatzeTZKL1 = sitzPlatzeTZKL1;
     }
 
     @Override
     @Column(name = DBNames.SITZPLATZETZKL2)
-
-
     public Integer getSitzPlatzeTzKL2() {
         return sitzplatzeTzKL2;
     }
 
     @Override
-
     public void setSitzPlatzeTzKL2(Integer sitzPlatzeTzKL2) {
         this.sitzplatzeTzKL2 = sitzPlatzeTzKL2;
     }
 
     @Override
     @Column(name = DBNames.DREHGESTELLBAUART, length = 100)
-
-
     public String getDrehgestellBauart() {
         return drehgestellBauart;
     }
 
     @Override
-
     public void setDrehgestellBauart(String drehgestellbauart) {
         this.drehgestellBauart = drehgestellbauart;
     }
@@ -974,10 +829,6 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Override
     @Column(name = DBNames.ABBILDUNG)
     @Convert(converter = PathConverter.class)
-
-
-
-    @ApiModelProperty(dataType = "[Ljava.lang.String;", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     public Path getAbbildung() {
         return abbildung;
     }
