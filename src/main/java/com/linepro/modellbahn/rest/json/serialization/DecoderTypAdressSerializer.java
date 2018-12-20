@@ -29,7 +29,7 @@ public class DecoderTypAdressSerializer extends StdSerializer<DecoderTypAdress> 
         gen.writeObjectField(ApiNames.INDEX, value.getIndex());
         gen.writeObjectField(ApiNames.ADRESS_TYP, value.getAdressTyp());
         gen.writeObjectField(ApiNames.SPAN, value.getSpan());
-        gen.writeObjectField(ApiNames.WERKSEINSTELLUNG, value.getWerkseinstellung());
+        gen.writeObjectField(ApiNames.WERKSEINSTELLUNG, value.getAdress());
         utils.writeLinks(ApiNames.LINKS, value.getLinks(), gen, serializers);
         gen.writeEndObject();
     }

@@ -36,7 +36,7 @@ import io.swagger.annotations.ResponseHeader;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.ANTRIEB, description = "Antrieb (drive type) maintenance")
+@Api(value = ApiNames.ANTRIEB, description = "Antrieb (drive type) maintenance")
 @Path(ApiPaths.ANTRIEB)
 public class AntriebService extends AbstractItemService<NameKey, Antrieb> {
 
@@ -74,10 +74,6 @@ public class AntriebService extends AbstractItemService<NameKey, Antrieb> {
             @ApiImplicitParam( name = ApiNames.NAMEN, value = "Antrieb's name", required = false, dataType = "String", paramType = "query"),
             @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Antrieb's description", required = false, dataType = "String", paramType = "query"),
             @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Antrieb is deleted", required = false, dataType = "Boolean", paramType = "query")
-    })
-    @ApiResponses({
-            @ApiResponse(code = 204, message = "No Content"),
-            @ApiResponse(code = 500, message = "Internal Server Error")
     })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);

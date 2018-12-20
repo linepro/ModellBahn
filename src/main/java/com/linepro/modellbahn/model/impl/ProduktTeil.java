@@ -51,8 +51,6 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.PRODUKT_ID),
         @Index(columnList = DBNames.TEIL_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.PRODUKT_ID, DBNames.TEIL_ID }) })
-@JsonRootName(value = ApiNames.TEIL)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.PRODUKT,ApiNames.TEIL, ApiNames.ANZAHL, ApiNames.DELETED, ApiNames.LINKS})
 public class ProduktTeil extends AbstractItem<ProduktTeilKey> implements IProduktTeil {
 
     /** The Constant serialVersionUID. */
@@ -96,17 +94,12 @@ public class ProduktTeil extends AbstractItem<ProduktTeilKey> implements IProduk
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
     @JoinColumn(name = DBNames.PRODUKT_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT_TEIL + "_fk1"))
-    @JsonGetter(ApiNames.PRODUKT)
-    @JsonView(Views.DropDown.class)
-    @JsonSerialize(using=ProduktSerializer.class)
     public IProdukt getProdukt() {
         return produkt;
     }
 
     @Override
     @BusinessKey
-    @JsonSetter(ApiNames.PRODUKT)
-    @JsonDeserialize(as=Produkt.class)
     public void setProdukt(IProdukt produkt) {
         this.produkt = produkt;
     }
@@ -115,44 +108,34 @@ public class ProduktTeil extends AbstractItem<ProduktTeilKey> implements IProduk
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
     @JoinColumn(name = DBNames.TEIL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT_TEIL + "_fk2"))
-    @JsonGetter(ApiNames.TEIL)
-    @JsonView(Views.DropDown.class)
-    @JsonSerialize(using=ProduktTeilSerializer.class)
     public IProdukt getTeil() {
         return teil;
     }
 
     @Override
-    @JsonSetter(ApiNames.TEIL)
-    @JsonDeserialize(as=ProduktTeil.class)
     public void setTeil(IProdukt teil) {
         this.teil = teil;
     }
 
     @Override
     @Column(name = DBNames.ANZAHL, nullable = false)
-    @JsonGetter(ApiNames.ANZAHL)
-    @JsonView(Views.DropDown.class)
     public Integer getAnzahl() {
         return anzahl;
     }
 
     @Override
-    @JsonSetter(ApiNames.ANZAHL)
     public void setAnzahl(Integer anzahl) {
         this.anzahl = anzahl;
     }
     
     @Override
     @Transient
-    @JsonIgnore
     public String getParentId() {
         return getProdukt().getLinkId();
     }
 
     @Override
     @Transient
-    @JsonIgnore
     public String getLinkId() {
         return String.format(ApiPaths.PRODUKT_TEIL_LINK, getParentId(), getTeil().getLinkId());
     }

@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.SONDERMODELL, description = "SonderModell maintenance")
+@Api(value = ApiNames.SONDERMODELL, description = "SonderModell maintenance")
 @Path(ApiPaths.SONDERMODELL)
 public class SonderModellService extends AbstractItemService<NameKey, SonderModell> {
 

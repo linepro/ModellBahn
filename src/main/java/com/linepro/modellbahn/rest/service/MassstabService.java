@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.MASSSTAB, description = "Massstab maintenance")
+@Api(value = ApiNames.MASSSTAB, description = "Massstab maintenance")
 @Path(ApiPaths.MASSSTAB)
 public class MassstabService extends AbstractItemService<NameKey, Massstab> {
 

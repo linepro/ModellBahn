@@ -65,8 +65,6 @@ import io.swagger.annotations.ApiModelProperty;
         @Index(columnList = DBNames.ANTRIEB_ID),
         @Index(columnList = DBNames.ACHSFOLG_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.GATTUNG_ID }) })
-@JsonRootName(value = ApiNames.VORBILD)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.GATTUNG, ApiNames.UNTER_KATEGORIE, ApiNames.BAHNVERWALTUNG, ApiNames.HERSTELLER, ApiNames.BAUZEIT, ApiNames.ANZAHL, ApiNames.BETREIBSNUMMER, ApiNames.ANTRIEB, ApiNames.ACHSFOLG, ApiNames.ANFAHRZUGKRAFT, ApiNames.LEISTUNG, ApiNames.DIENSTGEWICHT, ApiNames.GESCHWINDIGKEIT, ApiNames.LANGE, ApiNames.AUSSERDIENST, ApiNames.DMTREIBRAD, ApiNames.DMLAUFRADVORN, ApiNames.DMLAUFRADHINTEN, ApiNames.ZYLINDER, ApiNames.DMZYLINDER, ApiNames.KOLBENHUB, ApiNames.KESSELUEBERDRUCK, ApiNames.ROSTFLAECHE, ApiNames.UEBERHITZERFLAECHE, ApiNames.WASSERVORRAT, ApiNames.VERDAMPFUNG, ApiNames.STEUERUNG, ApiNames.FAHRMOTOREN, ApiNames.MOTORBAUART, ApiNames.LEISTUNGSUEBERTRAGUNG, ApiNames.REICHWEITE, ApiNames.KAPAZITAT, ApiNames.KLASSE, ApiNames.SITZPLATZEKL1, ApiNames.SITZPLATZEKL2, ApiNames.SITZPLATZEKL3, ApiNames.SITZPLATZEKL4, ApiNames.AUFBAU, ApiNames.TRIEBZUGANZEIGEN, ApiNames.TRIEBKOEPFE, ApiNames.MITTELWAGEN, ApiNames.SITZPLATZETZKL1, ApiNames.SITZPLATZETZKL2, ApiNames.DREHGESTELLBAUART, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS})
 public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
 
     /** The Constant serialVersionUID. */
@@ -352,17 +350,17 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gattung.class)
     @JoinColumn(name = DBNames.GATTUNG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk1"))
-    @JsonGetter(ApiNames.GATTUNG)
-    @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=GattungResolver.class)
+
+
+
+
     public IGattung getGattung() {
         return gattung;
     }
 
     @Override
-    @JsonSetter(ApiNames.GATTUNG)
-    @JsonDeserialize(as=Gattung.class)
+
+
     public void setGattung(IGattung gattung) {
         this.gattung = gattung;
     }
@@ -370,16 +368,16 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = UnterKategorie.class)
     @JoinColumn(name = DBNames.UNTER_KATEGORIE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk2"))
-    @JsonGetter(ApiNames.UNTER_KATEGORIE)
-    @JsonView(Views.DropDown.class)
-    @JsonSerialize(using=UnterKategorieSerializer.class)
+
+
+
     public IUnterKategorie getUnterKategorie() {
         return unterKategorie;
     }
 
     @Override
-    @JsonSetter(ApiNames.UNTER_KATEGORIE)
-    @JsonDeserialize(as=UnterKategorie.class)
+
+
     public void setUnterKategorie(IUnterKategorie unterKategorie) {
         this.unterKategorie = unterKategorie;
     }
@@ -387,31 +385,31 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Bahnverwaltung.class)
     @JoinColumn(name = DBNames.BAHNVERWALTUNG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk3"))
-    @JsonGetter(ApiNames.BAHNVERWALTUNG)
-    @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=BahnverwaltungResolver.class)
+
+
+
+
     public IBahnverwaltung getBahnverwaltung() {
         return bahnverwaltung;
     }
 
     @Override
-    @JsonSetter(ApiNames.BAHNVERWALTUNG)
-    @JsonDeserialize(as=Bahnverwaltung.class)
+
+
     public void setBahnverwaltung(IBahnverwaltung bahnverwaltung) {
         this.bahnverwaltung = bahnverwaltung;
     }
 
     @Override
     @Column(name = DBNames.HERSTELLER, length = 100)
-    @JsonGetter(ApiNames.HERSTELLER)
-    @JsonView(Views.DropDown.class)
+
+
     public String getHersteller() {
         return hersteller;
     }
 
     @Override
-    @JsonSetter(ApiNames.HERSTELLER)
+
     public void setHersteller(String hersteller) {
         this.hersteller = hersteller;
     }
@@ -419,43 +417,43 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Override
     @Column(name = DBNames.BAUZEIT)
     @Temporal(TemporalType.DATE)
-    @JsonGetter(ApiNames.BAUZEIT)
-    @JsonView(Views.DropDown.class)
-    @JsonFormat(shape=Shape.STRING, pattern=Formats.ISO8601_DATE)
+
+
+
     public Date getBauzeit() {
         return bauzeit;
     }
 
     @Override
-    @JsonSetter(ApiNames.BAUZEIT)
+
     public void setBauzeit(Date bauzeit) {
         this.bauzeit = bauzeit;
     }
 
     @Override
     @Column(name = DBNames.ANZAHL)
-    @JsonGetter(ApiNames.ANZAHL)
-    @JsonView(Views.Public.class)
+
+
     public Integer getAnzahl() {
         return anzahl;
     }
 
     @Override
-    @JsonSetter(ApiNames.ANZAHL)
+
     public void setAnzahl(Integer anzahl) {
         this.anzahl = anzahl;
     }
 
     @Override
     @Column(name = DBNames.BETREIBSNUMMER, length = 100)
-    @JsonGetter(ApiNames.BETREIBSNUMMER)
-    @JsonView(Views.DropDown.class)
+
+
     public String getBetreibsNummer() {
         return betreibsNummer;
     }
 
     @Override
-    @JsonSetter(ApiNames.BETREIBSNUMMER)
+
     public void setBetreibsNummer(String betreibsNummer) {
         this.betreibsNummer = betreibsNummer;
     }
@@ -463,17 +461,17 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Antrieb.class)
     @JoinColumn(name = DBNames.ANTRIEB_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk4"))
-    @JsonGetter(ApiNames.ANTRIEB)
-    @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=AntriebResolver.class)
+
+
+
+
     public IAntrieb getAntrieb() {
         return antrieb;
     }
 
     @Override
-    @JsonSetter(ApiNames.ANTRIEB)
-    @JsonDeserialize(as=Antrieb.class)
+
+
     public void setAntrieb(IAntrieb antrieb) {
         this.antrieb = antrieb;
     }
@@ -481,87 +479,87 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class)
     @JoinColumn(name = DBNames.ACHSFOLG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk5"))
-    @JsonGetter(ApiNames.ACHSFOLG)
-    @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=AchsfolgResolver.class)
+
+
+
+
     public IAchsfolg getAchsfolg() {
         return achsfolg;
     }
 
     @Override
-    @JsonSetter(ApiNames.ACHSFOLG)
-    @JsonDeserialize(as=Achsfolg.class)
+
+
     public void setAchsfolg(IAchsfolg achsfolg) {
         this.achsfolg = achsfolg;
     }
 
     @Override
     @Column(name = DBNames.ANFAHRZUGKRAFT)
-    @JsonGetter(ApiNames.ANFAHRZUGKRAFT)
-    @JsonView(Views.Public.class)
+
+
     public BigDecimal getAnfahrzugkraft() {
         return anfahrzugkraft;
     }
 
     @Override
-    @JsonSetter(ApiNames.ANFAHRZUGKRAFT)
+
     public void setAnfahrzugkraft(BigDecimal anfahrzugkraft) {
         this.anfahrzugkraft = anfahrzugkraft;
     }
 
     @Override
     @Column(name = DBNames.LEISTUNG)
-    @JsonGetter(ApiNames.LEISTUNG)
-    @JsonView(Views.Public.class)
+
+
     public BigDecimal getLeistung() {
         return leistung;
     }
 
     @Override
-    @JsonSetter(ApiNames.LEISTUNG)
+
     public void setLeistung(BigDecimal leistung) {
         this.leistung = leistung;
     }
 
     @Override
     @Column(name = DBNames.DIENSTGEWICHT)
-    @JsonGetter(ApiNames.DIENSTGEWICHT)
-    @JsonView(Views.Public.class)
+
+
     public BigDecimal getDienstgewicht() {
         return dienstgewicht;
     }
 
     @Override
-    @JsonSetter(ApiNames.DIENSTGEWICHT)
+
     public void setDienstgewicht(BigDecimal dienstgewicht) {
         this.dienstgewicht = dienstgewicht;
     }
 
     @Override
     @Column(name = DBNames.GESCHWINDIGKEIT)
-    @JsonGetter(ApiNames.GESCHWINDIGKEIT)
-    @JsonView(Views.Public.class)
+
+
     public Integer getGeschwindigkeit() {
         return geschwindigkeit;
     }
 
     @Override
-    @JsonSetter(ApiNames.GESCHWINDIGKEIT)
+
     public void setGeschwindigkeit(Integer geschwindigkeit) {
         this.geschwindigkeit = geschwindigkeit;
     }
 
     @Override
     @Column(name = DBNames.LANGE)
-    @JsonGetter(ApiNames.LANGE)
-    @JsonView(Views.Public.class)
+
+
     public BigDecimal getLange() {
         return lange;
     }
 
     @Override
-    @JsonSetter(ApiNames.LANGE)
+
     public void setLange(BigDecimal lange) {
         this.lange = lange;
     }
@@ -569,406 +567,406 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Override
     @Column(name = DBNames.AUSSERDIENST)
     @Temporal(TemporalType.DATE)
-    @JsonGetter(ApiNames.AUSSERDIENST)
-    @JsonView(Views.DropDown.class)
-    @JsonFormat(shape=Shape.STRING, pattern=Formats.ISO8601_DATE)
+
+
+
     public Date getAusserdienst() {
         return ausserdienst;
     }
 
     @Override
-    @JsonSetter(ApiNames.AUSSERDIENST)
+
     public void setAusserdienst(Date ausserdienst) {
         this.ausserdienst = ausserdienst;
     }
 
     @Override
     @Column(name = DBNames.DMTREIBRAD)
-    @JsonGetter(ApiNames.DMTREIBRAD)
-    @JsonView(Views.Public.class)
+
+
     public BigDecimal getDmTreibrad() {
         return dmTreibrad;
     }
 
     @Override
-    @JsonSetter(ApiNames.DMTREIBRAD)
+
     public void setDmTreibrad(BigDecimal dmTreibrad) {
         this.dmTreibrad = dmTreibrad;
     }
 
     @Override
     @Column(name = DBNames.DMLAUFRADVORN)
-    @JsonGetter(ApiNames.DMLAUFRADVORN)
-    @JsonView(Views.Public.class)
+
+
     public BigDecimal getDmLaufradVorn() {
         return dmLaufradVorn;
     }
 
     @Override
-    @JsonSetter(ApiNames.DMLAUFRADVORN)
+
     public void setDmLaufradVorn(BigDecimal dmLaufradVorn) {
         this.dmLaufradVorn = dmLaufradVorn;
     }
 
     @Override
     @Column(name = DBNames.DMLAUFRADHINTEN)
-    @JsonGetter(ApiNames.DMLAUFRADHINTEN)
-    @JsonView(Views.Public.class)
+
+
     public BigDecimal getDmLaufradHinten() {
         return dmLaufradHinten;
     }
 
     @Override
-    @JsonSetter(ApiNames.DMLAUFRADHINTEN)
+
     public void setDmLaufradHinten(BigDecimal dmLaufradHinten) {
         this.dmLaufradHinten = dmLaufradHinten;
     }
 
     @Override
     @Column(name = DBNames.ZYLINDER)
-    @JsonGetter(ApiNames.ZYLINDER)
-    @JsonView(Views.Public.class)
+
+
     public Integer getZylinder() {
         return zylinder;
     }
 
     @Override
-    @JsonSetter(ApiNames.ZYLINDER)
+
     public void setZylinder(Integer zylinder) {
         this.zylinder = zylinder;
     }
 
     @Override
     @Column(name = DBNames.DMZYLINDER)
-    @JsonGetter(ApiNames.DMZYLINDER)
-    @JsonView(Views.Public.class)
+
+
     public BigDecimal getDmZylinder() {
         return dmZylinder;
     }
 
     @Override
-    @JsonSetter(ApiNames.DMZYLINDER)
+
     public void setDmZylinder(BigDecimal dmZylinder) {
         this.dmZylinder = dmZylinder;
     }
 
     @Override
     @Column(name = DBNames.KOLBENHUB)
-    @JsonGetter(ApiNames.KOLBENHUB)
-    @JsonView(Views.Public.class)
+
+
     public BigDecimal getKolbenhub() {
         return kolbenhub;
     }
 
     @Override
-    @JsonSetter(ApiNames.KOLBENHUB)
+
     public void setKolbenhub(BigDecimal kolbenhub) {
         this.kolbenhub = kolbenhub;
     }
 
     @Override
     @Column(name = DBNames.KESSELUEBERDRUCK)
-    @JsonGetter(ApiNames.KESSELUEBERDRUCK)
-    @JsonView(Views.Public.class)
+
+
     public BigDecimal getKesselueberdruck() {
         return kesselueberdruck;
     }
 
     @Override
-    @JsonSetter(ApiNames.KESSELUEBERDRUCK)
+
     public void setKesselueberdruck(BigDecimal kesselueberdruck) {
         this.kesselueberdruck = kesselueberdruck;
     }
 
     @Override
     @Column(name = DBNames.ROSTFLAECHE)
-    @JsonGetter(ApiNames.ROSTFLAECHE)
-    @JsonView(Views.Public.class)
+
+
     public BigDecimal getRostflaeche() {
         return rostflaeche;
     }
 
     @Override
-    @JsonSetter(ApiNames.ROSTFLAECHE)
+
     public void setRostflaeche(BigDecimal rostflaeche) {
         this.rostflaeche = rostflaeche;
     }
 
     @Override
     @Column(name = DBNames.UEBERHITZERFLAECHE)
-    @JsonGetter(ApiNames.UEBERHITZERFLAECHE)
-    @JsonView(Views.Public.class)
+
+
     public BigDecimal getUeberhitzerflaeche() {
         return ueberhitzerflaeche;
     }
 
     @Override
-    @JsonSetter(ApiNames.UEBERHITZERFLAECHE)
+
     public void setUeberhitzerflaeche(BigDecimal ueberhitzerflaeche) {
         this.ueberhitzerflaeche = ueberhitzerflaeche;
     }
 
     @Override
     @Column(name = DBNames.WASSERVORRAT)
-    @JsonGetter(ApiNames.WASSERVORRAT)
-    @JsonView(Views.Public.class)
+
+
     public BigDecimal getWasservorrat() {
         return wasservorrat;
     }
 
     @Override
-    @JsonSetter(ApiNames.WASSERVORRAT)
+
     public void setWasservorrat(BigDecimal wasservorrat) {
         this.wasservorrat = wasservorrat;
     }
 
     @Column(name = DBNames.VERDAMPFUNG)
-    @JsonGetter(ApiNames.VERDAMPFUNG)
-    @JsonView(Views.Public.class)
+
+
     public BigDecimal getVerdampfung() {
         return verdampfung;
     }
 
     @Override
-    @JsonSetter(ApiNames.VERDAMPFUNG)
+
     public void setVerdampfung(BigDecimal verdampfung) {
         this.verdampfung = verdampfung;
     }
 
     @Override
     @Column(name = DBNames.FAHRMOTOREN)
-    @JsonGetter(ApiNames.FAHRMOTOREN)
-    @JsonView(Views.Public.class)
+
+
     public Integer getFahrmotoren() {
         return fahrmotoren;
     }
 
     @Override
-    @JsonSetter(ApiNames.FAHRMOTOREN)
+
     public void setFahrmotoren(Integer fahrmotoren) {
         this.fahrmotoren = fahrmotoren;
     }
 
     @Override
     @Column(name = DBNames.MOTORBAUART, length = 100)
-    @JsonGetter(ApiNames.MOTORBAUART)
-    @JsonView(Views.Public.class)
+
+
     public String getMotorbauart() {
         return motorbauart;
     }
 
     @Override
-    @JsonSetter(ApiNames.MOTORBAUART)
+
     public void setMotorbauart(String motorbauart) {
         this.motorbauart = motorbauart;
     }
 
     @Override
     @Column(name = DBNames.LEISTUNGSUEBERTRAGUNG)
-    @JsonGetter(ApiNames.LEISTUNGSUEBERTRAGUNG)
-    @JsonView(Views.Public.class)
+
+
     public BigDecimal getLeistungsuebertragung() {
         return leistungsuebertragung;
     }
 
     @Override
-    @JsonSetter(ApiNames.LEISTUNGSUEBERTRAGUNG)
+
     public void setLeistungsuebertragung(BigDecimal leistungsuebertragung) {
         this.leistungsuebertragung = leistungsuebertragung;
     }
 
     @Override
     @Column(name = DBNames.REICHWEITE)
-    @JsonGetter(ApiNames.REICHWEITE)
-    @JsonView(Views.Public.class)
+
+
     public BigDecimal getReichweite() {
         return reichweite;
     }
 
     @Override
-    @JsonSetter(ApiNames.REICHWEITE)
+
     public void setReichweite(BigDecimal reichweite) {
         this.reichweite = reichweite;
     }
 
     @Override
     @Column(name = DBNames.KAPAZITAT)
-    @JsonGetter(ApiNames.KAPAZITAT)
-    @JsonView(Views.Public.class)
+
+
     public BigDecimal getKapazitat() {
         return kapazitat;
     }
 
     @Override
-    @JsonSetter(ApiNames.KAPAZITAT)
+
     public void setKapazitat(BigDecimal kapazitat) {
         this.kapazitat = kapazitat;
     }
 
     @Override
     @Column(name = DBNames.KLASSE)
-    @JsonGetter(ApiNames.KLASSE)
-    @JsonView(Views.Public.class)
+
+
     public Integer getKlasse() {
         return klasse;
     }
 
     @Override
-    @JsonSetter(ApiNames.KLASSE)
+
     public void setKlasse(Integer klasse) {
         this.klasse = klasse;
     }
 
     @Override
     @Column(name = DBNames.SITZPLATZEKL1)
-    @JsonGetter(ApiNames.SITZPLATZEKL1)
-    @JsonView(Views.Public.class)
+
+
     public Integer getSitzPlatzeKL1() {
         return sitzplatzeKL1;
     }
 
     @Override
-    @JsonSetter(ApiNames.SITZPLATZEKL1)
+
     public void setSitzPlatzeKL1(Integer sitzPlatzeKL1) {
         this.sitzplatzeKL1 = sitzPlatzeKL1;
     }
 
     @Override
     @Column(name = DBNames.SITZPLATZEKL2)
-    @JsonGetter(ApiNames.SITZPLATZEKL2)
-    @JsonView(Views.Public.class)
+
+
     public Integer getSitzPlatzeKL2() {
         return sitzplatzeKL2;
     }
 
     @Override
-    @JsonSetter(ApiNames.SITZPLATZEKL2)
+
     public void setSitzPlatzeKL2(Integer sitzPlatzeKL2) {
         sitzplatzeKL2 = sitzPlatzeKL2;
     }
 
     @Override
     @Column(name = DBNames.SITZPLATZEKL3)
-    @JsonGetter(ApiNames.SITZPLATZEKL3)
-    @JsonView(Views.Public.class)
+
+
     public Integer getSitzPlatzeKL3() {
         return sitzplatzeKL3;
     }
 
     @Override
-    @JsonSetter(ApiNames.SITZPLATZEKL3)
+
     public void setSitzPlatzeKL3(Integer sitzPlatzeKL3) {
         sitzplatzeKL3 = sitzPlatzeKL3;
     }
 
     @Override
     @Column(name = DBNames.SITZPLATZEKL4)
-    @JsonGetter(ApiNames.SITZPLATZEKL4)
-    @JsonView(Views.Public.class)
+
+
     public Integer getSitzPlatzeKL4() {
         return sitzplatzeKL4;
     }
 
     @Override
-    @JsonSetter(ApiNames.SITZPLATZEKL4)
+
     public void setSitzPlatzeKL4(Integer sitzPlatzeKL4) {
         this.sitzplatzeKL4 = sitzPlatzeKL4;
     }
 
     @Override
     @Column(name = DBNames.AUFBAU, length = 100)
-    @JsonGetter(ApiNames.AUFBAU)
-    @JsonView(Views.Public.class)
+
+
     public String getAufbau() {
         return aufbau;
     }
 
     @Override
-    @JsonSetter(ApiNames.AUFBAU)
+
     public void setAufbau(String aufbau) {
         this.aufbau = aufbau;
     }
 
     @Override
     @Column(name = DBNames.TRIEBZUGANZEIGEN)
-    @JsonGetter(ApiNames.TRIEBZUGANZEIGEN)
-    @JsonView(Views.Public.class)
+
+
     public Boolean getTriebzugAnzeigen() {
         return triebzugAnzeigen;
     }
 
     @Override
-    @JsonSetter(ApiNames.TRIEBZUGANZEIGEN)
+
     public void setTriebzugAnzeigen(Boolean triebzugAnzeigen) {
         this.triebzugAnzeigen = triebzugAnzeigen;
     }
 
     @Override
     @Column(name = DBNames.TRIEBKOEPFE)
-    @JsonGetter(ApiNames.TRIEBKOEPFE)
-    @JsonView(Views.Public.class)
+
+
     public Integer getTriebkoepfe() {
         return triebkoepfe;
     }
 
     @Override
-    @JsonSetter(ApiNames.TRIEBKOEPFE)
+
     public void setTriebkoepfe(Integer triebkoepfe) {
         this.triebkoepfe = triebkoepfe;
     }
 
     @Override
     @Column(name = DBNames.MITTELWAGEN)
-    @JsonGetter(ApiNames.MITTELWAGEN)
-    @JsonView(Views.Public.class)
+
+
     public Integer getMittelwagen() {
         return mittelwagen;
     }
 
     @Override
-    @JsonSetter(ApiNames.MITTELWAGEN)
+
     public void setMittelwagen(Integer mittelwagen) {
         this.mittelwagen = mittelwagen;
     }
 
     @Override
     @Column(name = DBNames.SITZPLATZETZKL1)
-    @JsonGetter(ApiNames.SITZPLATZETZKL1)
-    @JsonView(Views.Public.class)
+
+
     public Integer getSitzPlatzeTZKL1() {
         return sitzplatzeTZKL1;
     }
 
     @Override
-    @JsonSetter(ApiNames.SITZPLATZETZKL1)
+
     public void setSitzPlatzeTZKL1(Integer sitzPlatzeTZKL1) {
         this.sitzplatzeTZKL1 = sitzPlatzeTZKL1;
     }
 
     @Override
     @Column(name = DBNames.SITZPLATZETZKL2)
-    @JsonGetter(ApiNames.SITZPLATZETZKL2)
-    @JsonView(Views.Public.class)
+
+
     public Integer getSitzPlatzeTzKL2() {
         return sitzplatzeTzKL2;
     }
 
     @Override
-    @JsonSetter(ApiNames.SITZPLATZETZKL2)
+
     public void setSitzPlatzeTzKL2(Integer sitzPlatzeTzKL2) {
         this.sitzplatzeTzKL2 = sitzPlatzeTzKL2;
     }
 
     @Override
     @Column(name = DBNames.DREHGESTELLBAUART, length = 100)
-    @JsonGetter(ApiNames.DREHGESTELLBAUART)
-    @JsonView(Views.Public.class)
+
+
     public String getDrehgestellBauart() {
         return drehgestellBauart;
     }
 
     @Override
-    @JsonSetter(ApiNames.DREHGESTELLBAUART)
+
     public void setDrehgestellBauart(String drehgestellbauart) {
         this.drehgestellBauart = drehgestellbauart;
     }
@@ -976,9 +974,9 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     @Override
     @Column(name = DBNames.ABBILDUNG)
     @Convert(converter = PathConverter.class)
-    @JsonGetter(ApiNames.ABBILDUNG)
-    @JsonView(Views.Public.class)
-    @JsonSerialize(using = PathSerializer.class)
+
+
+
     @ApiModelProperty(dataType = "[Ljava.lang.String;", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     public Path getAbbildung() {
         return abbildung;

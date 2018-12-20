@@ -72,7 +72,7 @@ public interface ApiPaths {
     
     String EPOCH = API_ROOT + ApiNames.EPOCH;
 
-    String ENUMS = API_ROOT + "enums" + SEPARATOR;
+    String ENUMS = API_ROOT + ApiNames.ENUMS + SEPARATOR;
 
     String GATTUNG = API_ROOT + ApiNames.GATTUNG;
 

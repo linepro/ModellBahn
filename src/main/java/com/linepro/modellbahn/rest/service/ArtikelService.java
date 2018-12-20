@@ -52,7 +52,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.ARTIKEL, description = "Artikel maintenance")
+@Api(value = ApiNames.ARTIKEL, description = "Artikel maintenance")
 @Path(ApiPaths.ARTIKEL)
 public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
 

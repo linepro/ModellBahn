@@ -5,13 +5,10 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.ISpurweite;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
  * Spurweite. Represents a NEM 010 Spurweite (track guage)
@@ -22,8 +19,6 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 @Entity(name = DBNames.SPURWEITE)
 @Table(name = DBNames.SPURWEITE, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
-@JsonRootName(value = ApiNames.SPURWEITE)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 public class Spurweite extends AbstractNamedItem<NameKey> implements ISpurweite {
 
     /** The Constant serialVersionUID. */

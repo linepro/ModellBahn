@@ -38,9 +38,6 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Entity(name = DBNames.KATEGORIE)
 @Table(name = DBNames.KATEGORIE, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
-@JsonRootName(value = ApiNames.KATEGORIE)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.UNTER_KATEGORIEN,
-        ApiNames.LINKS })
 public class Kategorie extends AbstractNamedItem<NameKey> implements IKategorie {
 
     /** The Constant serialVersionUID. */
@@ -77,16 +74,11 @@ public class Kategorie extends AbstractNamedItem<NameKey> implements IKategorie 
 
     @Override
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.KATEGORIE, targetEntity = UnterKategorie.class, orphanRemoval = true)
-    @JsonGetter(ApiNames.UNTER_KATEGORIEN)
-    @JsonView(Views.Public.class)
-    @JsonSerialize(contentUsing = UnterKategorieSerializer.class)
     public Set<IUnterKategorie> getUnterKategorien() {
         return unterKategorien;
     }
 
     @Override
-    @JsonSetter(ApiNames.UNTER_KATEGORIEN)
-    @JsonDeserialize(contentAs = UnterKategorie.class)
     public void setUnterKategorien(Set<IUnterKategorie> unterKategorien) {
         this.unterKategorien = unterKategorien;
     }

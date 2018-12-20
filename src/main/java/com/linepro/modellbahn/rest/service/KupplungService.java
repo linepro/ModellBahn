@@ -43,7 +43,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.KUPPLUNG, description = "Kupplung maintenance")
+@Api(value = ApiNames.KUPPLUNG, description = "Kupplung maintenance")
 @Path(ApiPaths.KUPPLUNG)
 public class KupplungService extends AbstractItemService<NameKey, Kupplung> {
 

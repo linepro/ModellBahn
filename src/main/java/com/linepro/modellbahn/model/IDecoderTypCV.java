@@ -1,12 +1,26 @@
 package com.linepro.modellbahn.model;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.linepro.modellbahn.model.impl.DecoderTyp;
 import com.linepro.modellbahn.model.keys.DecoderTypCVKey;
+import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.DecoderTypSerializer;
+import com.linepro.modellbahn.rest.json.serialization.IDecoderTypRef;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
  * IDecoderTypCV.
  * @author   $Author$
  * @version  $Id$
  */
+@JsonRootName(value = ApiNames.CV)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.CV,  ApiNames.BEZEICHNUNG,  ApiNames.MINIMAL,  ApiNames.MAXIMAL,  ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED, ApiNames.LINKS})
 public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
 
     /**
@@ -14,6 +28,9 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
      *
      * @return the decoder typ
      */
+    @JsonGetter(ApiNames.DECODER_TYP)
+    @JsonView(Views.DropDown.class)
+    @JsonSerialize(as= IDecoderTypRef.class, using= DecoderTypSerializer.class)
     IDecoderTyp getDecoderTyp();
 
     /**
@@ -21,6 +38,8 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
      *
      * @param decoderTyp the new decoder typ
      */
+    @JsonSetter(ApiNames.DECODER_TYP)
+    @JsonDeserialize(as= DecoderTyp.class)
     void setDecoderTyp(IDecoderTyp decoderTyp);
 
     /**
@@ -28,6 +47,8 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
      *
      * @return the cv
      */
+    @JsonGetter(ApiNames.CV)
+    @JsonView(Views.DropDown.class)
     Integer getCv();
 
     /**
@@ -35,6 +56,7 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
      *
      * @param cv the new cv
      */
+    @JsonSetter(ApiNames.CV)
     void setCv(Integer cv);
 
     /**
@@ -42,6 +64,8 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
      *
      * @return the bezeichnung
      */
+    @JsonGetter(ApiNames.BEZEICHNUNG)
+    @JsonView(Views.DropDown.class)
     String getBezeichnung();
 
     /**
@@ -49,6 +73,7 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
      *
      * @param bezeichnung the new bezeichnung
      */
+    @JsonSetter(ApiNames.BEZEICHNUNG)
     void setBezeichnung(String bezeichnung);
 
     /**
@@ -56,6 +81,8 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
      *
      * @return the minimal
      */
+    @JsonGetter(ApiNames.MINIMAL)
+    @JsonView(Views.Public.class)
     Integer getMinimal();
 
     /**
@@ -63,6 +90,7 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
      *
      * @param minimal the new minimal
      */
+    @JsonSetter(ApiNames.MINIMAL)
     void setMinimal(Integer minimal);
 
     /**
@@ -70,6 +98,8 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
      *
      * @return the maximal
      */
+    @JsonGetter(ApiNames.MAXIMAL)
+    @JsonView(Views.Public.class)
     Integer getMaximal();
 
     /**
@@ -77,6 +107,7 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
      *
      * @param maximal the new maximal
      */
+    @JsonSetter(ApiNames.MAXIMAL)
     void setMaximal(Integer maximal);
 
     /**
@@ -84,6 +115,8 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
      *
      * @return the werkseinstellung
      */
+    @JsonGetter(ApiNames.WERKSEINSTELLUNG)
+    @JsonView(Views.Public.class)
     Integer getWerkseinstellung();
 
     /**
@@ -91,6 +124,7 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
      *
      * @param werkseinstellung the new werkseinstellung
      */
+    @JsonSetter(ApiNames.WERKSEINSTELLUNG)
     void setWerkseinstellung(Integer werkseinstellung);
 
 }

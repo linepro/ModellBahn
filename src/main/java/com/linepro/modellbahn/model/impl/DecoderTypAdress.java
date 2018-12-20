@@ -18,14 +18,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Range;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypAdress;
 import com.linepro.modellbahn.model.IItem;
@@ -36,8 +29,6 @@ import com.linepro.modellbahn.model.validation.Adress;
 import com.linepro.modellbahn.model.validation.CVValue;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
-import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.rest.json.serialization.DecoderTypSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.util.ToStringBuilder;
@@ -52,8 +43,6 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Table(name = DBNames.DECODER_TYP_ADRESS, indexes = { @Index(columnList = DBNames.DECODER_TYP_ID +"," + DBNames.INDEX, unique = true),
         @Index(columnList = DBNames.DECODER_TYP_ID), @Index(columnList = DBNames.INDEX) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.DECODER_TYP_ID, DBNames.INDEX }) })
-@JsonRootName(value = ApiNames.ADRESS)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.INDEX,  ApiNames.ADRESS_TYP,  ApiNames.SPAN,  ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED, ApiNames.LINKS})
 @Adress
 public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implements IDecoderTypAdress {
 
@@ -106,23 +95,18 @@ public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implemen
         setIndex(index);
         setAdressTyp(adressTyp);
         setSpan(span);
-        setWerkseinstellung(werkseinstellung);
+        setAdress(werkseinstellung);
     }
 
     @Override
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
     @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_TYP_ADRESS + "_fk1"))
-    @JsonGetter(ApiNames.DECODER_TYP)
-    @JsonView(Views.DropDown.class)
-    @JsonSerialize(using=DecoderTypSerializer.class)
     public IDecoderTyp getDecoderTyp() {
         return decoderTyp;
     }
 
     @Override
-    @JsonSetter(ApiNames.DECODER_TYP)
-    @JsonDeserialize(as=DecoderTyp.class)
     public void setDecoderTyp(IDecoderTyp decoderTyp) {
         this.decoderTyp = decoderTyp;
     }
@@ -135,70 +119,51 @@ public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implemen
     }
 
     @Override
-    @JsonSetter(ApiNames.INDEX)
     public void setIndex(Integer index) {
         this.index = index;
     }
 
     @Override
     @Column(name = DBNames.ADRESS_TYP, length = 100)
-    @JsonGetter(ApiNames.ADRESS_TYP)
-    @JsonView(Views.DropDown.class)
     public AdressTyp getAdressTyp() {
         return adressTyp;
     }
 
     @Override
-    @JsonSetter(ApiNames.ADRESS_TYP)
     public void setAdressTyp(AdressTyp adressTyp) {
         this.adressTyp = adressTyp;
     }
 
     @Override
     @Column(name = DBNames.SPAN)
-    @JsonGetter(ApiNames.SPAN)
-    @JsonView(Views.Public.class)
     public Integer getSpan() {
         return span;
     }
 
     @Override
-    @JsonSetter(ApiNames.SPAN)
     public void setSpan(Integer span) {
         this.span = span;
     }
 
     @Override
     @Column(name = DBNames.WERKSEINSTELLUNG)
-    @JsonGetter(ApiNames.WERKSEINSTELLUNG)
-    @JsonView(Views.Public.class)
-    public Integer getWerkseinstellung() {
+    public Integer getAdress() {
         return werkseinstellung;
     }
 
     @Override
-    @JsonSetter(ApiNames.WERKSEINSTELLUNG)
-    public void setWerkseinstellung(Integer werkseinstellung) {
+    public void setAdress(Integer werkseinstellung) {
         this.werkseinstellung = werkseinstellung;
     }
 
     @Override
     @Transient
-    @JsonIgnore
-    public Integer getAdress() {
-        return getWerkseinstellung();
-    }
-    
-    @Override
-    @Transient
-    @JsonIgnore
     public String getParentId() {
         return getDecoderTyp().getLinkId();
     }
 
     @Override
     @Transient
-    @JsonIgnore
     public String getLinkId() {
         return String.format(ApiPaths.DECODER_TYP_ADRESS_LINK, getParentId(), getIndex());
     }

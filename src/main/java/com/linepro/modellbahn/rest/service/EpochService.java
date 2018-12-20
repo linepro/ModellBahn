@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.EPOCH, description = "Epoch maintenance")
+@Api(value = ApiNames.EPOCH, description = "Epoch maintenance")
 @Path(ApiPaths.EPOCH)
 public class EpochService extends AbstractItemService<NameKey, Epoch> {
 

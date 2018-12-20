@@ -35,9 +35,6 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Entity(name = DBNames.LAND)
 @Table(name = DBNames.LAND, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
-@JsonRootName(value = ApiNames.LAND)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.WAHRUNG, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED,
-        ApiNames.LINKS })
 public class Land extends AbstractNamedItem<NameKey> implements ILand {
 
     /** The Constant serialVersionUID. */
@@ -79,17 +76,11 @@ public class Land extends AbstractNamedItem<NameKey> implements ILand {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Wahrung.class)
-    @JsonGetter(ApiNames.WAHRUNG)
-    @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=WahrungResolver.class)
     public IWahrung getWahrung() {
         return wahrung;
     }
 
     @Override
-    @JsonSetter(ApiNames.WAHRUNG)
-    @JsonDeserialize(as=Wahrung.class)
     public void setWahrung(IWahrung wahrung) {
         this.wahrung = wahrung;
     }

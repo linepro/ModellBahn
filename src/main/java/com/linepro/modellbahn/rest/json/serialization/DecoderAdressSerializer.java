@@ -28,6 +28,7 @@ public class DecoderAdressSerializer extends StdSerializer<DecoderAdress> {
         gen.writeStartObject();
         gen.writeObjectField(ApiNames.ADRESS_TYP, value.getAdressTyp());
         gen.writeObjectField(ApiNames.ADRESS, value.getAdress());
+        utils.writeLinks(ApiNames.LINKS, value.getLinks(), gen, serializers);
         gen.writeEndObject();
     }
 }

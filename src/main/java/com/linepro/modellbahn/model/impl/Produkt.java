@@ -111,13 +111,6 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.DECODER_TYP_ID),
         @Index(columnList = DBNames.MOTOR_TYP_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.HERSTELLER_ID, DBNames.NAME }) })
-@JsonRootName(value = ApiNames.PRODUKT)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.UNTER_KATEGORIE, ApiNames.MASSSTAB,
-        ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER,
-        ApiNames.BAUZEIT, ApiNames.VORBILD, ApiNames.ACHSFOLG, ApiNames.ANMERKUNG, ApiNames.SONDERMODELL,
-        ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG, ApiNames.DECODER_TYP,
-        ApiNames.MOTOR_TYP, ApiNames.LANGE, ApiNames.ANLEITUNGEN, ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.ABBILDUNG,
-        ApiNames.TEILEN, ApiNames.DELETED, ApiNames.LINKS })
 public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     /** The Constant serialVersionUID. */
@@ -235,31 +228,22 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class)
     @JoinColumn(name = DBNames.HERSTELLER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk16"))
     @BusinessKey
-    @JsonGetter(ApiNames.HERSTELLER)
-    @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = HerstellerResolver.class)
     public IHersteller getHersteller() {
         return hersteller;
     }
 
     @Override
-    @JsonSetter(ApiNames.HERSTELLER)
-    @JsonDeserialize(as = Hersteller.class)
     public void setHersteller(IHersteller hersteller) {
         this.hersteller = hersteller;
     }
 
     @Override
     @BusinessKey
-    @JsonGetter(ApiNames.BESTELL_NR)
-    @JsonView(Views.DropDown.class)
     public String getName() {
         return super.getName();
     }
 
     @Override
-    @JsonSetter(ApiNames.BESTELL_NR)
     public void setName(String bestellNr) {
         super.setName(bestellNr);
     }
@@ -267,16 +251,11 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = UnterKategorie.class)
     @JoinColumn(name = DBNames.UNTER_KATEGORIE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk7"))
-    @JsonGetter(ApiNames.UNTER_KATEGORIE)
-    @JsonView(Views.DropDown.class)
-    @JsonSerialize(using = UnterKategorieSerializer.class)
     public IUnterKategorie getUnterKategorie() {
         return unterKategorie;
     }
 
     @Override
-    @JsonSetter(ApiNames.UNTER_KATEGORIE)
-    @JsonDeserialize(as = UnterKategorie.class)
     public void setUnterKategorie(IUnterKategorie unterKategorie) {
         this.unterKategorie = unterKategorie;
     }
@@ -284,17 +263,11 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Massstab.class)
     @JoinColumn(name = DBNames.MASSSTAB_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk5"))
-    @JsonGetter(ApiNames.MASSSTAB)
-    @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = MassstabResolver.class)
     public IMassstab getMassstab() {
         return massstab;
     }
 
     @Override
-    @JsonSetter(ApiNames.MASSSTAB)
-    @JsonDeserialize(as = Massstab.class)
     public void setMassstab(IMassstab massstab) {
         this.massstab = massstab;
     }
@@ -302,17 +275,11 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Spurweite.class)
     @JoinColumn(name = DBNames.SPURWEITE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk6"))
-    @JsonGetter(ApiNames.SPURWEITE)
-    @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = SpurweiteResolver.class)
     public ISpurweite getSpurweite() {
         return spurweite;
     }
 
     @Override
-    @JsonSetter(ApiNames.SPURWEITE)
-    @JsonDeserialize(as = Spurweite.class)
     public void setSpurweite(ISpurweite spurweite) {
         this.spurweite = spurweite;
     }
@@ -320,17 +287,11 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Epoch.class)
     @JoinColumn(name = DBNames.EPOCH_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk1"))
-    @JsonGetter(ApiNames.EPOCH)
-    @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = EpochResolver.class)
     public IEpoch getEpoch() {
         return epoch;
     }
 
     @Override
-    @JsonSetter(ApiNames.EPOCH)
-    @JsonDeserialize(as = Epoch.class)
     public void setEpoch(IEpoch epoch) {
         this.epoch = epoch;
     }
@@ -338,17 +299,11 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Bahnverwaltung.class)
     @JoinColumn(name = DBNames.BAHNVERWALTUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk3"))
-    @JsonGetter(ApiNames.BAHNVERWALTUNG)
-    @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = BahnverwaltungResolver.class)
     public IBahnverwaltung getBahnverwaltung() {
         return bahnverwaltung;
     }
 
     @Override
-    @JsonSetter(ApiNames.BAHNVERWALTUNG)
-    @JsonDeserialize(as = Bahnverwaltung.class)
     public void setBahnverwaltung(IBahnverwaltung bahnverwaltung) {
         this.bahnverwaltung = bahnverwaltung;
     }
@@ -356,31 +311,22 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gattung.class)
     @JoinColumn(name = DBNames.GATTUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk2"))
-    @JsonGetter(ApiNames.GATTUNG)
-    @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = GattungResolver.class)
     public IGattung getGattung() {
         return gattung;
     }
 
     @Override
-    @JsonSetter(ApiNames.GATTUNG)
-    @JsonDeserialize(as = Gattung.class)
     public void setGattung(IGattung gattung) {
         this.gattung = gattung;
     }
 
     @Override
     @Column(name = DBNames.BETREIBSNUMMER, length = 100)
-    @JsonGetter(ApiNames.BETREIBSNUMMER)
-    @JsonView(Views.Public.class)
     public String getBetreibsnummer() {
         return betreibsnummer;
     }
 
     @Override
-    @JsonSetter(ApiNames.BETREIBSNUMMER)
     public void setBetreibsnummer(String betreibsnummer) {
         this.betreibsnummer = betreibsnummer;
     }
@@ -388,15 +334,11 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Override
     @Column(name = DBNames.BAUZEIT)
     @Temporal(TemporalType.DATE)
-    @JsonGetter(ApiNames.BAUZEIT)
-    @JsonView(Views.Public.class)
-    @JsonFormat(shape = Shape.STRING, pattern = Formats.ISO8601_DATE)
     public Date getBauzeit() {
         return bauzeit;
     }
 
     @Override
-    @JsonSetter(ApiNames.BAUZEIT)
     public void setBauzeit(Date bauzeit) {
         this.bauzeit = bauzeit;
     }
@@ -404,18 +346,11 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Vorbild.class)
     @JoinColumn(name = DBNames.VORBILD_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk12"))
-    @JsonGetter(ApiNames.VORBILD)
-    @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = VorbildResolver.class)
-    @JsonSerialize(as = Vorbild.class)
     public IVorbild getVorbild() {
         return vorbild;
     }
 
     @Override
-    @JsonSetter(ApiNames.VORBILD)
-    @JsonDeserialize(as = Vorbild.class)
     public void setVorbild(IVorbild vorbild) {
         this.vorbild = vorbild;
     }
@@ -423,51 +358,23 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class)
     @JoinColumn(name = DBNames.ACHSFOLG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk4"))
-    @JsonGetter(ApiNames.ACHSFOLG)
-    @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = AchsfolgResolver.class)
-    @JsonSerialize(as = Achsfolg.class)
     public IAchsfolg getAchsfolg() {
         return achsfolg;
     }
 
     @Override
-    @JsonSetter(ApiNames.ACHSFOLG)
-    @JsonDeserialize(as = Achsfolg.class)
     public void setAchsfolg(IAchsfolg achsfolg) {
         this.achsfolg = achsfolg;
     }
 
     @Override
-    @Column(name = DBNames.ANMERKUNG, length = 100)
-    @JsonGetter(ApiNames.ANMERKUNG)
-    @JsonView(Views.DropDown.class)
-    public String getAnmerkung() {
-        return anmerkung;
-    }
-
-    @Override
-    @JsonSetter(ApiNames.ANMERKUNG)
-    public void setAnmerkung(String anmerkung) {
-        this.anmerkung = anmerkung;
-    }
-
-    @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = SonderModell.class)
     @JoinColumn(name = DBNames.SONDERMODELL_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk8"))
-    @JsonGetter(ApiNames.SONDERMODELL)
-    @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = SonderModellResolver.class)
-    @JsonSerialize(as = SonderModell.class)
     public ISonderModell getSondermodell() {
         return sondermodell;
     }
 
     @Override
-    @JsonSetter(ApiNames.SONDERMODELL)
-    @JsonDeserialize(as = SonderModell.class)
     public void setSondermodell(ISonderModell sondermodell) {
         this.sondermodell = sondermodell;
     }
@@ -475,18 +382,11 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Aufbau.class)
     @JoinColumn(name = DBNames.AUFBAU_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk9"))
-    @JsonGetter(ApiNames.AUFBAU)
-    @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = AufbauResolver.class)
-    @JsonSerialize(as = Aufbau.class)
     public IAufbau getAufbau() {
         return aufbau;
     }
 
     @Override
-    @JsonSetter(ApiNames.AUFBAU)
-    @JsonDeserialize(as = Aufbau.class)
     public void setAufbau(IAufbau aufbau) {
         this.aufbau = aufbau;
     }
@@ -494,18 +394,11 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Licht.class)
     @JoinColumn(name = DBNames.LICHT_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk10"))
-    @JsonGetter(ApiNames.LICHT)
-    @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = LichtResolver.class)
-    @JsonSerialize(as = Licht.class)
     public ILicht getLicht() {
         return licht;
     }
 
     @Override
-    @JsonSetter(ApiNames.LICHT)
-    @JsonDeserialize(as = Licht.class)
     public void setLicht(ILicht licht) {
         this.licht = licht;
     }
@@ -513,18 +406,11 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kupplung.class)
     @JoinColumn(name = DBNames.KUPPLUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk11"))
-    @JsonGetter(ApiNames.KUPPLUNG)
-    @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = KupplungResolver.class)
-    @JsonSerialize(as = Kupplung.class)
     public IKupplung getKupplung() {
         return kupplung;
     }
 
     @Override
-    @JsonSetter(ApiNames.KUPPLUNG)
-    @JsonDeserialize(as = Kupplung.class)
     public void setKupplung(IKupplung kupplung) {
         this.kupplung = kupplung;
     }
@@ -532,18 +418,11 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class)
     @JoinColumn(name = DBNames.STEUERUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk13"))
-    @JsonGetter(ApiNames.STEUERUNG)
-    @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = SteuerungResolver.class)
-    @JsonSerialize(as = Steuerung.class)
     public ISteuerung getSteuerung() {
         return steuerung;
     }
 
     @Override
-    @JsonSetter(ApiNames.STEUERUNG)
-    @JsonDeserialize(as = Steuerung.class)
     public void setSteuerung(ISteuerung steuerung) {
         this.steuerung = steuerung;
     }
@@ -551,16 +430,11 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
     @JoinColumn(name = DBNames.DECODER_TYP_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk14"))
-    @JsonGetter(ApiNames.DECODER_TYP)
-    @JsonView(Views.DropDown.class)
-    @JsonSerialize(using = DecoderTypSerializer.class)
     public IDecoderTyp getDecoderTyp() {
         return decoderTyp;
     }
 
     @Override
-    @JsonSetter(ApiNames.DECODER_TYP)
-    @JsonDeserialize(as = DecoderTyp.class)
     public void setDecoderTyp(IDecoderTyp decoderTyp) {
         this.decoderTyp = decoderTyp;
     }
@@ -568,42 +442,40 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = MotorTyp.class)
     @JoinColumn(name = DBNames.MOTOR_TYP_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk15"))
-    @JsonGetter(ApiNames.MOTOR_TYP)
-    @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = MotorTypResolver.class)
     public IMotorTyp getMotorTyp() {
         return motorTyp;
     }
 
     @Override
-    @JsonSetter(ApiNames.MOTOR_TYP)
-    @JsonDeserialize(as = MotorTyp.class)
     public void setMotorTyp(IMotorTyp motorTyp) {
         this.motorTyp = motorTyp;
     }
 
     @Override
     @Column(name = DBNames.LANGE, precision = 6, scale = 2)
-    @JsonGetter(ApiNames.LANGE)
-    @JsonView(Views.Public.class)
     public BigDecimal getLange() {
         return lange;
     }
 
     @Override
-    @JsonSetter(ApiNames.LANGE)
     public void setLange(BigDecimal lange) {
         this.lange = lange;
     }
 
     @Override
+    @Column(name = DBNames.ANMERKUNG, length = 100)
+    public String getAnmerkung() {
+        return anmerkung;
+    }
+
+    @Override
+    public void setAnmerkung(String anmerkung) {
+        this.anmerkung = anmerkung;
+    }
+
+    @Override
     @Column(name = DBNames.ANLEITUNGEN, length = 512)
     @Convert(converter = PathConverter.class)
-    @JsonGetter(ApiNames.ANLEITUNGEN)
-    @JsonView(Views.Public.class)
-    @JsonSerialize(using = PathSerializer.class)
-    @ApiModelProperty(dataType = "[Ljava.lang.String;", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     public Path getAnleitungen() {
         return anleitungen;
     }
@@ -616,10 +488,6 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Override
     @Column(name = DBNames.EXPLOSIONSZEICHNUNG, length = 512)
     @Convert(converter = PathConverter.class)
-    @JsonGetter(ApiNames.EXPLOSIONSZEICHNUNG)
-    @JsonView(Views.Public.class)
-    @JsonSerialize(using = PathSerializer.class)
-    @ApiModelProperty(dataType = "[Ljava.lang.String;", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     public Path getExplosionszeichnung() {
         return explosionszeichnung;
     }
@@ -632,10 +500,6 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Override
     @Column(name = DBNames.ABBILDUNG)
     @Convert(converter = PathConverter.class)
-    @JsonGetter(ApiNames.ABBILDUNG)
-    @JsonView(Views.Public.class)
-    @JsonSerialize(using = PathSerializer.class)
-    @ApiModelProperty(dataType = "[Ljava.lang.String;", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     public Path getAbbildung() {
         return abbildung;
     }
@@ -647,16 +511,11 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     @Override
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.PRODUKT, targetEntity = ProduktTeil.class, orphanRemoval = true)
-    @JsonGetter(ApiNames.TEILEN)
-    @JsonView(Views.Public.class)
-    @JsonSerialize(contentUsing = ProduktTeilSerializer.class)
     public Set<IProduktTeil> getTeilen() {
         return teilen;
     }
 
     @Override
-    @JsonSetter(ApiNames.TEILEN)
-    @JsonDeserialize(contentAs = ProduktTeil.class)
     public void setTeilen(Set<IProduktTeil> teilen) {
         this.teilen = teilen;
     }

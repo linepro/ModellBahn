@@ -20,18 +20,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IKupplung;
@@ -45,19 +33,8 @@ import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.model.util.Status;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.PathConverter;
-import com.linepro.modellbahn.rest.json.Formats;
-import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.rest.json.resolver.DecoderResolver;
-import com.linepro.modellbahn.rest.json.resolver.KupplungResolver;
-import com.linepro.modellbahn.rest.json.resolver.LichtResolver;
-import com.linepro.modellbahn.rest.json.resolver.MotorTypResolver;
-import com.linepro.modellbahn.rest.json.resolver.SteuerungResolver;
-import com.linepro.modellbahn.rest.json.resolver.WahrungResolver;
-import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
-import com.linepro.modellbahn.rest.json.serialization.ProduktSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Artikel.
@@ -73,8 +50,6 @@ import io.swagger.annotations.ApiModelProperty;
         @Index(columnList = DBNames.LICHT_ID),
         @Index(columnList = DBNames.KUPPLUNG_ID),
         @Index(columnList = DBNames.DECODER_ID) })
-@JsonRootName(value = ApiNames.ARTIKEL)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.PRODUKT, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.STUCK, ApiNames.STEUERUNG, ApiNames.MOTOR_TYP, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.DECODER, ApiNames.ANMERKUNG, ApiNames.BELADUNG, ApiNames.ABBILDUNG, ApiNames.STATUS, ApiNames.DELETED, ApiNames.LINKS})
 public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
 
     /** The Constant serialVersionUID. */
@@ -177,16 +152,11 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
     @JoinColumn(name = DBNames.PRODUKT_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk1"))
-    @JsonGetter(ApiNames.PRODUKT)
-    @JsonView(Views.DropDown.class)
-    @JsonSerialize(using=ProduktSerializer.class)
     public IProdukt getProdukt() {
         return produkt;
     }
 
     @Override
-    @JsonSetter(ApiNames.PRODUKT)
-    @JsonDeserialize(as=Produkt.class)
     public void setProdukt(IProdukt produkt) {
         this.produkt = produkt;
     }
@@ -194,15 +164,11 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     @Override
     @Column(name = DBNames.KAUFDATUM)
     @Temporal(TemporalType.DATE)
-    @JsonGetter(ApiNames.KAUFDATUM)
-    @JsonView(Views.Public.class)
-    @JsonFormat(shape=Shape.STRING, pattern=Formats.ISO8601_DATE)
     public Date getKaufdatum() {
         return Kaufdatum;
     }
 
     @Override
-    @JsonSetter(ApiNames.KAUFDATUM)
     public void setKaufdatum(Date kaufdatum) {
         Kaufdatum = kaufdatum;
     }
@@ -210,45 +176,33 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Wahrung.class)
     @JoinColumn(name = DBNames.WAHRUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk2"))
-    @JsonGetter(ApiNames.WAHRUNG)
-    @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=WahrungResolver.class)
     public IWahrung getWahrung() {
         return wahrung;
     }
 
     @Override
-    @JsonSetter(ApiNames.WAHRUNG)
-    @JsonDeserialize(as=Wahrung.class)
     public void setWahrung(IWahrung wahrung) {
         this.wahrung = wahrung;
     }
 
     @Override
     @Column(name = DBNames.PREIS, precision = 6, scale = 2)
-    @JsonGetter(ApiNames.PREIS)
-    @JsonView(Views.Public.class)
     public BigDecimal getPreis() {
         return preis;
     }
 
     @Override
-    @JsonSetter(ApiNames.PREIS)
     public void setPreis(BigDecimal preis) {
         this.preis = preis;
     }
 
     @Override
     @Column(name = DBNames.STUCK, nullable = false)
-    @JsonGetter(ApiNames.STUCK)
-    @JsonView(Views.Public.class)
     public Integer getStuck() {
         return stuck;
     }
 
     @Override
-    @JsonSetter(ApiNames.STUCK)
     public void setStuck(Integer stuck) {
         this.stuck = stuck;
     }
@@ -256,17 +210,11 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class)
     @JoinColumn(name = DBNames.STEUERUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk3"))
-    @JsonGetter(ApiNames.STEUERUNG)
-    @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=SteuerungResolver.class)
     public ISteuerung getSteuerung() {
         return steuerung;
     }
 
     @Override
-    @JsonSetter(ApiNames.STEUERUNG)
-    @JsonDeserialize(as=Steuerung.class)
     public void setSteuerung(ISteuerung steuerung) {
         this.steuerung = steuerung;
     }
@@ -274,17 +222,11 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = MotorTyp.class)
     @JoinColumn(name = DBNames.MOTOR_TYP_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk4"))
-    @JsonGetter(ApiNames.MOTOR_TYP)
-    @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=MotorTypResolver.class)
     public IMotorTyp getMotorTyp() {
         return motorTyp;
     }
 
     @Override
-    @JsonSetter(ApiNames.MOTOR_TYP)
-    @JsonDeserialize(as=MotorTyp.class)
     public void setMotorTyp(IMotorTyp motorTyp) {
         this.motorTyp = motorTyp;
     }
@@ -292,17 +234,11 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Licht.class)
     @JoinColumn(name = DBNames.LICHT_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk5"))
-    @JsonGetter(ApiNames.LICHT)
-    @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=LichtResolver.class)
     public ILicht getLicht() {
         return licht;
     }
 
     @Override
-    @JsonSetter(ApiNames.LICHT)
-    @JsonDeserialize(as=Licht.class)
     public void setLicht(ILicht licht) {
         this.licht = licht;
     }
@@ -310,17 +246,11 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kupplung.class)
     @JoinColumn(name = DBNames.KUPPLUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk6"))
-    @JsonGetter(ApiNames.KUPPLUNG)
-    @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=KupplungResolver.class)
     public IKupplung getKupplung() {
         return kupplung;
     }
 
     @Override
-    @JsonSetter(ApiNames.KUPPLUNG)
-    @JsonDeserialize(as=Kupplung.class)
     public void setKupplung(IKupplung kupplung) {
         this.kupplung = kupplung;
     }
@@ -328,45 +258,33 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
     @JoinColumn(name = DBNames.DECODER_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk7"))
-    @JsonGetter(ApiNames.DECODER)
-    @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.ID, resolver=DecoderResolver.class)
     public IDecoder getDecoder() {
         return decoder;
     }
 
     @Override
-    @JsonSetter(ApiNames.DECODER)
-    @JsonDeserialize(as=Decoder.class)
     public void setDecoder(IDecoder decoder) {
         this.decoder = decoder;
     }
 
     @Override
     @Column(name = DBNames.ANMERKUNG, length = 100)
-    @JsonGetter(ApiNames.ANMERKUNG)
-    @JsonView(Views.DropDown.class)
     public String getAnmerkung() {
         return anmerkung;
     }
 
     @Override
-    @JsonSetter(ApiNames.ANMERKUNG)
     public void setAnmerkung(String anmerkung) {
         this.anmerkung = anmerkung;
     }
 
     @Override
     @Column(name = DBNames.BELADUNG, length = 100)
-    @JsonGetter(ApiNames.BELADUNG)
-    @JsonView(Views.Public.class)
     public String getBeladung() {
         return beladung;
     }
 
     @Override
-    @JsonSetter(ApiNames.BELADUNG)
     public void setBeladung(String beladung) {
         this.beladung = beladung;
     }
@@ -374,10 +292,6 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     @Override
     @Column(name = DBNames.ABBILDUNG)
     @Convert(converter = PathConverter.class)
-    @JsonGetter(ApiNames.ABBILDUNG)
-    @JsonView(Views.DropDown.class)
-    @JsonSerialize(using = PathSerializer.class)
-    @ApiModelProperty(dataType = "[Ljava.lang.String;", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     public Path getAbbildung() {
         return abbildung;
     }
@@ -390,14 +304,11 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     @Override
     @Column(name = DBNames.STATUS, nullable = false)
     @Enumerated(EnumType.STRING)
-    @JsonGetter(ApiNames.STATUS)
-    @JsonView(Views.DropDown.class)
     public Status getStatus() {
         return status;
     }
 
     @Override
-    @JsonSetter(ApiNames.STATUS)
     public void setStatus(Status status) {
         this.status = status;
     }

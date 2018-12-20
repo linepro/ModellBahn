@@ -58,8 +58,6 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Entity(name = DBNames.DECODER_ADRESS)
 @Table(name =  DBNames.DECODER_ADRESS, indexes = { @Index(columnList = DBNames.DECODER_ID + "," + DBNames.INDEX, unique = true) },
         uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.INDEX }) })
-@JsonRootName(value = ApiNames.ADRESS)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER, ApiNames.INDEX, ApiNames.ADRESS_TYP, ApiNames.ADRESS, ApiNames.DELETED, ApiNames.LINKS })
 @Adress
 public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDecoderAdress {
 
@@ -96,31 +94,22 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
     @JoinColumn(name = DBNames.DECODER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name =  DBNames.DECODER_ADRESS + "_fk1"))
-    @JsonGetter(ApiNames.DECODER)
-    @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=DecoderResolver.class)
     public IDecoder getDecoder() {
         return decoder;
     }
 
     @Override
-    @JsonSetter(ApiNames.DECODER)
-    @JsonDeserialize(as=Decoder.class)
     public void setDecoder(IDecoder decoder) {
         this.decoder = decoder;
     }
 
     @Override
     @Column(name = DBNames.INDEX, nullable = false)
-    @JsonGetter(ApiNames.INDEX)
-    @JsonView(Views.DropDown.class)
     public Integer getIndex() {
         return index;
     }
 
     @Override
-    @JsonSetter(ApiNames.INDEX)
     public void setIndex(Integer index) {
         this.index = index;
     }
@@ -129,42 +118,34 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
     @BusinessKey
     @Enumerated(EnumType.STRING)
     @Column(name = DBNames.ADRESS_TYP, nullable = false, length = 10)
-    @JsonGetter(ApiNames.ADRESS_TYP)
-    @JsonView(Views.DropDown.class)
     public AdressTyp getAdressTyp() {
         return adressTyp;
     }
 
     @Override
-    @JsonSetter(ApiNames.ADRESS_TYP)
     public void setAdressTyp(AdressTyp adressTyp) {
         this.adressTyp = adressTyp;
     }
 
     @Override
     @Column(name = DBNames.ADRESS, nullable = false)
-    @JsonGetter(ApiNames.ADRESS)
-    @JsonView(Views.DropDown.class)
     public Integer getAdress() {
         return adress;
     }
 
     @Override
-    @JsonSetter(ApiNames.ADRESS)
     public void setAdress(Integer adress) {
         this.adress = adress;
     }
 
     @Override
     @Transient
-    @JsonIgnore
     public String getParentId() {
         return decoder.getLinkId();
      }
 
      @Override
      @Transient
-     @JsonIgnore
      public String getLinkId() {
          return String.format(ApiPaths.DECODER_ADRESS_LINK, getParentId(), getIndex());
      }

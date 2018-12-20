@@ -1,13 +1,27 @@
 package com.linepro.modellbahn.model;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.linepro.modellbahn.model.impl.DecoderTyp;
 import com.linepro.modellbahn.model.keys.DecoderTypAdressKey;
 import com.linepro.modellbahn.model.util.AdressTyp;
+import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.DecoderTypSerializer;
+import com.linepro.modellbahn.rest.json.serialization.IDecoderTypRef;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
  * IDecoderTypAdress.
  * @author   $Author$
  * @version  $Id$
  */
+@JsonRootName(value = ApiNames.ADRESS)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.INDEX,  ApiNames.ADRESS_TYP,  ApiNames.SPAN,  ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED, ApiNames.LINKS})
 public interface IDecoderTypAdress extends IItem<DecoderTypAdressKey>, IAdress {
 
     /**
@@ -15,6 +29,9 @@ public interface IDecoderTypAdress extends IItem<DecoderTypAdressKey>, IAdress {
      *
      * @return the decoder typ
      */
+    @JsonGetter(ApiNames.DECODER_TYP)
+    @JsonView(Views.DropDown.class)
+    @JsonSerialize(as= IDecoderTypRef.class, using= DecoderTypSerializer.class)
     IDecoderTyp getDecoderTyp();
 
     /**
@@ -22,6 +39,8 @@ public interface IDecoderTypAdress extends IItem<DecoderTypAdressKey>, IAdress {
      *
      * @param decoderTyp the new decoder typ
      */
+    @JsonSetter(ApiNames.DECODER_TYP)
+    @JsonDeserialize(as= DecoderTyp.class)
     void setDecoderTyp(IDecoderTyp decoderTyp);
 
     /**
@@ -29,6 +48,8 @@ public interface IDecoderTypAdress extends IItem<DecoderTypAdressKey>, IAdress {
      *
      * @return the index
      */
+    @JsonSetter(ApiNames.INDEX)
+    @JsonView(Views.DropDown.class)
     Integer getIndex();
 
     /**
@@ -36,20 +57,15 @@ public interface IDecoderTypAdress extends IItem<DecoderTypAdressKey>, IAdress {
      *
      * @param index the new index
      */
+    @JsonSetter(ApiNames.INDEX)
     void setIndex(Integer index);
-
-    /**
-     * Gets the adressTyp.
-     *
-     * @return the adressTyp
-     */
-    AdressTyp getAdressTyp();
 
     /**
      * Sets the adressTyp.
      *
      * @param adressTyp the new adressTyp
      */
+    @JsonSetter(ApiNames.ADRESS_TYP)
     void setAdressTyp(AdressTyp adressTyp);
 
     /**
@@ -57,6 +73,8 @@ public interface IDecoderTypAdress extends IItem<DecoderTypAdressKey>, IAdress {
      *
      * @return the span
      */
+    @JsonGetter(ApiNames.SPAN)
+    @JsonView(Views.Public.class)
     Integer getSpan();
 
     /**
@@ -64,6 +82,7 @@ public interface IDecoderTypAdress extends IItem<DecoderTypAdressKey>, IAdress {
      *
      * @param span the new span
      */
+    @JsonSetter(ApiNames.SPAN)
     void setSpan(Integer span);
 
     /**
@@ -71,13 +90,15 @@ public interface IDecoderTypAdress extends IItem<DecoderTypAdressKey>, IAdress {
      *
      * @return the werkseinstellung
      */
-    Integer getWerkseinstellung();
+    @JsonGetter(ApiNames.WERKSEINSTELLUNG)
+    @JsonView(Views.Public.class)
+    Integer getAdress();
 
     /**
      * Sets the werkseinstellung.
      *
      * @param werkseinstellung the new werkseinstellung
      */
-    void setWerkseinstellung(Integer werkseinstellung);
-
+    @JsonSetter(ApiNames.WERKSEINSTELLUNG)
+    void setAdress(Integer werkseinstellung);
 }

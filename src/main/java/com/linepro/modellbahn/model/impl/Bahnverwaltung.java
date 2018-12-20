@@ -22,8 +22,6 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 @Entity(name = DBNames.BAHNVERWALTUNG)
 @Table(name = DBNames.BAHNVERWALTUNG, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
-@JsonRootName(value = ApiNames.BAHNVERWALTUNG)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 public class Bahnverwaltung extends AbstractNamedItem<NameKey> implements IBahnverwaltung {
 
     /** The Constant serialVersionUID. */

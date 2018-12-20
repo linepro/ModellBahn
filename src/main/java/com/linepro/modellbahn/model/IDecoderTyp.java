@@ -2,15 +2,49 @@ package com.linepro.modellbahn.model;
 
 import java.math.BigDecimal;
 import java.util.Set;
+import java.util.TreeSet;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.linepro.modellbahn.model.impl.DecoderTypCV;
+import com.linepro.modellbahn.model.impl.DecoderTypFunktion;
+import com.linepro.modellbahn.model.impl.Hersteller;
+import com.linepro.modellbahn.model.impl.Protokoll;
 import com.linepro.modellbahn.model.keys.DecoderTypKey;
 import com.linepro.modellbahn.model.util.Konfiguration;
+import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.resolver.HerstellerResolver;
+import com.linepro.modellbahn.rest.json.resolver.ProtokollResolver;
+import com.linepro.modellbahn.rest.json.serialization.DecoderTypAdressSerializer;
+import com.linepro.modellbahn.rest.json.serialization.DecoderTypCVSerializer;
+import com.linepro.modellbahn.rest.json.serialization.DecoderTypFunktionSerializer;
+import com.linepro.modellbahn.rest.json.serialization.IDecoderTypAdressRef;
+import com.linepro.modellbahn.rest.json.serialization.IDecoderTypCVRef;
+import com.linepro.modellbahn.rest.json.serialization.IDecoderTypFunktionRef;
+import com.linepro.modellbahn.rest.util.ApiNames;
+
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 /**
  * IDecoderTyp.
  * @author   $Author$
  * @version  $Id$
  */
+@JsonRootName(value = ApiNames.DECODER_TYP)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.GERAUSCH, ApiNames.I_MAX, ApiNames.KONFIGURATION, ApiNames.DELETED, ApiNames.ADRESSEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS})
 public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
 
     /**
@@ -18,6 +52,10 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
      *
      * @return the hersteller
      */
+    @JsonGetter(ApiNames.HERSTELLER)
+    @JsonView(Views.DropDown.class)
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= HerstellerResolver.class)
     IHersteller getHersteller();
 
     /**
@@ -25,13 +63,25 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
      *
      * @param hersteller the new hersteller
      */
+    @JsonSetter(ApiNames.HERSTELLER)
+    @JsonDeserialize(as= Hersteller.class)
     void setHersteller(IHersteller hersteller);
+
+    @JsonGetter(ApiNames.BESTELL_NR)
+    @JsonView(Views.DropDown.class)
+    String getName();
+
+    @Override
+    @JsonSetter(ApiNames.BESTELL_NR)
+    void setName(String name);
 
     /**
      * Gets the i max.
      *
      * @return the i max
      */
+    @JsonGetter(ApiNames.I_MAX)
+    @JsonView(Views.Public.class)
     BigDecimal getiMax();
 
     /**
@@ -39,6 +89,7 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
      *
      * @param iMax the new i max
      */
+    @JsonSetter(ApiNames.I_MAX)
     void setiMax(BigDecimal iMax);
 
     /**
@@ -46,6 +97,10 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
      *
      * @return the protokoll
      */
+    @JsonGetter(ApiNames.PROTOKOLL)
+    @JsonView(Views.DropDown.class)
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= ProtokollResolver.class)
     IProtokoll getProtokoll();
 
     /**
@@ -53,6 +108,8 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
      *
      * @param protokoll the new protokoll
      */
+    @JsonSetter(ApiNames.PROTOKOLL)
+    @JsonDeserialize(as= Protokoll.class)
     void setProtokoll(IProtokoll protokoll);
 
     /**
@@ -60,6 +117,8 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
      *
      * @return the fahrstufe
      */
+    @JsonGetter(ApiNames.FAHRSTUFE)
+    @JsonView(Views.Public.class)
     Integer getFahrstufe();
 
     /**
@@ -67,6 +126,7 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
      *
      * @param fahrstufe the new fahrstufe
      */
+    @JsonSetter(ApiNames.FAHRSTUFE)
     void setFahrstufe(Integer fahrstufe);
 
     /**
@@ -74,6 +134,8 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
      *
      * @return the sound
      */
+    @JsonGetter(ApiNames.GERAUSCH)
+    @JsonView(Views.DropDown.class)
     Boolean getSound();
 
     /**
@@ -81,55 +143,16 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
      *
      * @param sound the new sound
      */
+    @JsonSetter(ApiNames.GERAUSCH)
     void setSound(Boolean sound);
-
-    /**
-     * Gets the adressen.
-     *
-     * @return the adressen
-     */
-    Set<IDecoderTypAdress> getAdressen();
-
-    /**
-     * Sets the adressen.
-     *
-     * @param adressen the new adressen
-     */
-    void setAdressen(Set<IDecoderTypAdress> adressen);
-
-    /**
-     * Gets the cv.
-     *
-     * @return the cv
-     */
-    Set<IDecoderTypCV> getCVs();
-
-    /**
-     * Sets the cv.
-     *
-     * @param cv the new cv
-     */
-    void setCVs(Set<IDecoderTypCV> cv);
-
-    /**
-     * Gets the funktion.
-     *
-     * @return the funktion
-     */
-    Set<IDecoderTypFunktion> getFunktionen();
-
-    /**
-     * Sets the funktion.
-     *
-     * @param funktion the new funktion
-     */
-    void setFunktionen(Set<IDecoderTypFunktion> funktion);
 
     /**
      * Gets the konfiguration.
      *
      * @return the konfiguration
      */
+    @JsonGetter(ApiNames.KONFIGURATION)
+    @JsonView(Views.DropDown.class)
     Konfiguration getKonfiguration();
 
     /**
@@ -137,7 +160,56 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
      *
      * @param konfiguration the new konfiguration
      */
+    @JsonSetter(ApiNames.KONFIGURATION)
     void setKonfiguration(Konfiguration konfiguration);
+
+    /**
+     * Gets the adressen.
+     *
+     * @return the adressen
+     */
+    @JsonIgnore
+    Set<IDecoderTypAdress> getAdressen();
+
+    /**
+     * Sets the adressen.
+     *
+     * @param adressen the new adressen
+     */
+    @JsonIgnore
+    void setAdressen(Set<IDecoderTypAdress> adressen);
+
+    /**
+     * Gets the cv.
+     *
+     * @return the cv
+     */
+    @JsonIgnore
+    Set<IDecoderTypCV> getCVs();
+
+    /**
+     * Sets the cv.
+     *
+     * @param cv the new cv
+     */
+    @JsonIgnore
+    void setCVs(Set<IDecoderTypCV> cv);
+
+    /**
+     * Gets the funktion.
+     *
+     * @return the funktion
+     */
+    @JsonIgnore
+    Set<IDecoderTypFunktion> getFunktionen();
+
+    /**
+     * Sets the funktion.
+     *
+     * @param funktion the new funktion
+     */
+    @JsonIgnore
+    void setFunktionen(Set<IDecoderTypFunktion> funktion);
 
     void addAdress(IDecoderTypAdress adress);
 
@@ -150,4 +222,19 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
     void addFunktion(IDecoderTypFunktion funktion);
 
     void removeFunktion(IDecoderTypFunktion funktion);
+
+    @JsonGetter(ApiNames.ADRESSEN)
+    @JsonView(Views.Public.class)
+    @JsonSerialize(contentAs= IDecoderTypAdressRef.class, contentUsing = DecoderTypAdressSerializer.class)
+    Set<IDecoderTypAdress> getSortedAdressen();
+
+    @JsonGetter(ApiNames.CVS)
+    @JsonView(Views.Public.class)
+    @JsonSerialize(contentAs= IDecoderTypCVRef.class, contentUsing = DecoderTypCVSerializer.class)
+    Set<IDecoderTypCV> getSortedCVs();
+
+    @JsonGetter(ApiNames.FUNKTIONEN)
+    @JsonView(Views.Public.class)
+    @JsonSerialize(contentAs= IDecoderTypFunktionRef.class, contentUsing = DecoderTypFunktionSerializer.class)
+    Set<IDecoderTypFunktion> getSortedFunktionen();
 }

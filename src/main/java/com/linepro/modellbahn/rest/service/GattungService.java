@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.GATTUNG, description = "Gattung maintenance")
+@Api(value = ApiNames.GATTUNG, description = "Gattung maintenance")
 @Path(ApiPaths.GATTUNG)
 public class GattungService extends AbstractItemService<NameKey, Gattung> {
 

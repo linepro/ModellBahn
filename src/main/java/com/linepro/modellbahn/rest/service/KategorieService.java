@@ -39,7 +39,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.KATEGORIE, description = "Kategorie maintenance")
+@Api(value = ApiNames.KATEGORIE, description = "Kategorie maintenance")
 @Path(ApiPaths.KATEGORIE)
 public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
 
@@ -69,7 +69,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
-        Kategorie kategorie = findKategorie(kategorieStr, false);
+        IKategorie kategorie = findKategorie(kategorieStr, false);
 
         return new UnterKategorie(id, kategorie, name, bezeichnung, deleted);
     }
@@ -126,13 +126,13 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     public Response get(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) {
         try {
-            Kategorie kategorie = findKategorie(kategorieStr, true);
+            IKategorie kategorie = findKategorie(kategorieStr, true);
 
             if (kategorie == null) {
                 return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
             }
 
-            IUnterKategorie unterKategorie = findUnterKategorie(kategorieStr, unterKategorieStr);
+            IUnterKategorie unterKategorie = findUnterKategorie(kategorieStr, unterKategorieStr, false);
 
             if (unterKategorie != null) {
                 return getResponse(ok(), unterKategorie, true, true);
@@ -154,7 +154,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
         try {
             logPost(kategorieStr + "/" + unterKategorie);
 
-            Kategorie kategorie = findKategorie(kategorieStr, true);
+            Kategorie kategorie = (Kategorie) findKategorie(kategorieStr, true);
 
             if (kategorie == null) {
                 return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
@@ -181,13 +181,13 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
         try {
             logPut(kategorieStr + "/" + unterKategorieStr + ": " + newUnterKategorie);
 
-            Kategorie kategorie = findKategorie(kategorieStr, false);
+            IKategorie kategorie = findKategorie(kategorieStr, false);
 
             if (kategorie == null) {
                 return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
             }
 
-            IUnterKategorie unterKategorie = findUnterKategorie(kategorieStr, unterKategorieStr);
+            UnterKategorie unterKategorie = (UnterKategorie) findUnterKategorie(kategorieStr, unterKategorieStr, false);
 
             if (unterKategorie == null) {
                 return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
@@ -213,7 +213,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     public Response delete(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) {
         try {
-            Kategorie kategorie = findKategorie(kategorieStr, true);
+            Kategorie kategorie = (Kategorie) findKategorie(kategorieStr, true);
 
             if (kategorie == null) {
                 return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
@@ -235,18 +235,6 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
         } catch (Exception e) {
             return getResponse(serverError(e));
         }
-    }
-
-    protected Kategorie findKategorie(String kategorieStr, boolean eager) throws Exception {
-        return getPersister().findByKey(kategorieStr, eager);
-    }
-
-    private IUnterKategorie findUnterKategorie(String kategorieStr, String unterKategorieStr) throws Exception {
-        return getUnterKategoriePersister().findByKey(new UnterKategorieKey(findKategorie(kategorieStr, false), unterKategorieStr), true);
-    }
-    
-    protected IUnterKategorie findUnterKategorie(IKategorie kategorie, String unterKategorieStr) throws Exception {
-        return getUnterKategoriePersister().findByKey(new UnterKategorieKey(kategorie, unterKategorieStr), true);
     }
 
     private IPersister<UnterKategorie> getUnterKategoriePersister() {

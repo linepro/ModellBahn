@@ -43,7 +43,7 @@ import io.swagger.annotations.ApiOperation;
  * @author  $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.LICHT, description = "Licht maintenance")
+@Api(value = ApiNames.LICHT, description = "Licht maintenance")
 @Path(ApiPaths.LICHT)
 public class LichtService extends AbstractItemService<NameKey, Licht> {
 

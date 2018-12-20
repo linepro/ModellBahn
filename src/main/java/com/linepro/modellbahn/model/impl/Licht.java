@@ -34,8 +34,6 @@ import io.swagger.annotations.ApiModelProperty;
 @Entity(name = DBNames.LICHT)
 @Table(name = DBNames.LICHT, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
-@JsonRootName(value = ApiNames.LICHT)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
 public class Licht extends AbstractNamedItem<NameKey> implements ILicht {
 
     /** The Constant serialVersionUID. */
@@ -74,10 +72,6 @@ public class Licht extends AbstractNamedItem<NameKey> implements ILicht {
     @Override
     @Column(name = DBNames.ABBILDUNG)
     @Convert(converter = PathConverter.class)
-    @JsonGetter(ApiNames.ABBILDUNG)
-    @JsonView(Views.DropDown.class)
-    @JsonSerialize(using = PathSerializer.class)
-    @ApiModelProperty(dataType = "[Ljava.lang.String;", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     public Path getAbbildung() {
         return abbildung;
     }

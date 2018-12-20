@@ -5,13 +5,20 @@
  */
 package com.linepro.modellbahn.model;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.persistence.IKey;
+import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
  * INamedItem.
  * @author   $Author$
  * @version  $Id$
  */
+@JsonPropertyOrder({ApiNames.ID,ApiNames.NAMEN,ApiNames.BEZEICHNUNG,ApiNames.DELETED, ApiNames.LINKS})
 public interface INamedItem<K extends IKey> extends IItem<K> {
 
     /**
@@ -19,6 +26,8 @@ public interface INamedItem<K extends IKey> extends IItem<K> {
      *
      * @return the name
      */
+    @JsonGetter(ApiNames.NAMEN)
+    @JsonView(Views.DropDown.class)
     String getName();
 
     /**
@@ -26,6 +35,7 @@ public interface INamedItem<K extends IKey> extends IItem<K> {
      *
      * @param name the new name
      */
+    @JsonSetter(ApiNames.NAMEN)
     void setName(String name);
 
     /**
@@ -33,6 +43,8 @@ public interface INamedItem<K extends IKey> extends IItem<K> {
      *
      * @return the bezeichnung
      */
+    @JsonGetter(ApiNames.BEZEICHNUNG)
+    @JsonView(Views.DropDown.class)
     String getBezeichnung();
 
     /**
@@ -40,5 +52,6 @@ public interface INamedItem<K extends IKey> extends IItem<K> {
      *
      * @param bezeichnung the new bezeichnung
      */
+    @JsonSetter(ApiNames.BEZEICHNUNG)
     void setBezeichnung(String bezeichnung);
 }

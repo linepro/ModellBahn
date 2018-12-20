@@ -28,6 +28,7 @@ public class DecoderCVSerializer extends StdSerializer<DecoderCV> {
         gen.writeStartObject();
         gen.writeObjectField(ApiNames.CV, value.getCv().getCv());
         gen.writeObjectField(ApiNames.WERT, value.getWert());
+        utils.writeLinks(ApiNames.LINKS, value.getLinks(), gen, serializers);
         gen.writeEndObject();
     }
 }

@@ -50,8 +50,6 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Entity(name = DBNames.DECODER_FUNKTION)
 @Table(name = DBNames.DECODER_FUNKTION, indexes = { @Index(columnList = DBNames.DECODER_ID + "," + DBNames.FUNKTION_ID, unique = true) },
        uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.FUNKTION_ID })})
-@JsonRootName(value = ApiNames.FUNKTION)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER, ApiNames.FUNKTION,  ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS})
 public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements IDecoderFunktion {
 
     /** The Constant serialVersionUID. */
@@ -99,45 +97,33 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
     @BusinessKey
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=Decoder.class)
     @JoinColumn(name=DBNames.DECODER_ID, nullable = false, referencedColumnName=DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_FUNKTION + "_fk1"))
-    @JsonGetter(ApiNames.DECODER)
-    @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.ID, resolver=DecoderResolver.class)
     public IDecoder getDecoder() {
         return decoder;
     }
 
     @Override
-    @JsonSetter(ApiNames.DECODER)
-    @JsonDeserialize(as=Decoder.class)
     public void setDecoder(IDecoder decoder) {
         this.decoder = decoder;
     }
 
     @Transient
     @Override
-    @JsonGetter(ApiNames.REIHE)
-    @JsonView(Views.DropDown.class)
     public Integer getReihe() {
         return reihe;
     }
 
     @Override
-    @JsonSetter(ApiNames.REIHE)
     public void setReihe(Integer reihe) {
         this.reihe = reihe;
     }
 
     @Transient
     @Override
-    @JsonGetter(ApiNames.FUNKTION)
-    @JsonView(Views.DropDown.class)
     public String getFunktionStr() {
         return funktionStr;
     }
 
     @Override
-    @JsonSetter(ApiNames.FUNKTION)
     public void setFunktionStr(String funktion) {
         this.funktionStr = funktion;
     }
@@ -156,7 +142,6 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
     }
 
     @Override
-    @JsonIgnore
     public void setFunktion(IDecoderTypFunktion funktion) {
         this.funktion = funktion;
 
@@ -168,28 +153,23 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
 
     @Override
 	@Column(name=DBNames.BEZEICHNUNG, length=100)
-    @JsonGetter(ApiNames.BEZEICHNUNG)
-    @JsonView(Views.DropDown.class)
 	public String getBezeichnung() {
 		return bezeichnung;
 	}
 
     @Override
-    @JsonSetter(ApiNames.BEZEICHNUNG)
 	public void setBezeichnung(String bezeichnung) {
 		this.bezeichnung = bezeichnung;
 	}
 
     @Override
     @Transient
-    @JsonIgnore
     public String getLinkId() {
         return String.format(ApiPaths.DECODER_FUNKTION_LINK, getParentId(), getFunktion().getReihe(), getFunktion().getName());
     }
 
     @Override
     @Transient
-    @JsonIgnore
     public String getParentId() {
         return getDecoder().getLinkId();
     }

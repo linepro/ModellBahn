@@ -1,12 +1,26 @@
 package com.linepro.modellbahn.model;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.linepro.modellbahn.model.impl.DecoderTyp;
 import com.linepro.modellbahn.model.keys.DecoderTypFunktionKey;
+import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.DecoderTypSerializer;
+import com.linepro.modellbahn.rest.json.serialization.IDecoderTypRef;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
  * IDecoderTypFunktion.
  * @author   $Author$
  * @version  $Id$
  */
+@JsonRootName(ApiNames.FUNKTION)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.REIHE,  ApiNames.PROGRAMMABLE, ApiNames.DELETED, ApiNames.LINKS})
 public interface IDecoderTypFunktion extends INamedItem<DecoderTypFunktionKey> {
 
     /**
@@ -14,6 +28,9 @@ public interface IDecoderTypFunktion extends INamedItem<DecoderTypFunktionKey> {
      *
      * @return the decoder typ
      */
+    @JsonGetter(ApiNames.DECODER_TYP)
+    @JsonView(Views.DropDown.class)
+    @JsonSerialize(as= IDecoderTypRef.class, using= DecoderTypSerializer.class)
     IDecoderTyp getDecoderTyp();
 
     /**
@@ -21,6 +38,8 @@ public interface IDecoderTypFunktion extends INamedItem<DecoderTypFunktionKey> {
      *
      * @param decoderTyp the new decoder typ
      */
+    @JsonSetter(ApiNames.DECODER_TYP)
+    @JsonDeserialize(as= DecoderTyp.class)
     void setDecoderTyp(IDecoderTyp decoderTyp);
 
     /**
@@ -28,6 +47,8 @@ public interface IDecoderTypFunktion extends INamedItem<DecoderTypFunktionKey> {
      *
      * @return the reihe
      */
+    @JsonGetter(ApiNames.REIHE)
+    @JsonView(Views.DropDown.class)
     Integer getReihe();
 
     /**
@@ -35,6 +56,7 @@ public interface IDecoderTypFunktion extends INamedItem<DecoderTypFunktionKey> {
      *
      * @param reihe the new reihe
      */
+    @JsonSetter(ApiNames.REIHE)
     void setReihe(Integer reihe);
 
     /**
@@ -42,6 +64,8 @@ public interface IDecoderTypFunktion extends INamedItem<DecoderTypFunktionKey> {
      *
      * @return the programmable
      */
+    @JsonGetter(ApiNames.PROGRAMMABLE)
+    @JsonView(Views.Public.class)
     Boolean getProgrammable();
     
     /**
@@ -49,5 +73,6 @@ public interface IDecoderTypFunktion extends INamedItem<DecoderTypFunktionKey> {
      *
      * @param programmable the new programmable
      */
+    @JsonSetter(ApiNames.PROGRAMMABLE)
     void setProgrammable(Boolean programmable);
 }

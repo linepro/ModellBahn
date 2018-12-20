@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.SPURWEITE, description = "Spurweite maintenance")
+@Api(value = ApiNames.SPURWEITE, description = "Spurweite maintenance")
 @Path(ApiPaths.SPURWEITE)
 public class SpurweiteService extends AbstractItemService<NameKey, Spurweite> {
 

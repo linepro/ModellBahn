@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.ACHSFOLG, description = "Achsfolg (axle configuration) maintenance")
+@Api(value = ApiNames.ACHSFOLG, description = "Achsfolg (axle configuration) maintenance")
 @Path(ApiPaths.ACHSFOLG)
 public class AchsfolgService extends AbstractItemService<NameKey, Achsfolg> {
 

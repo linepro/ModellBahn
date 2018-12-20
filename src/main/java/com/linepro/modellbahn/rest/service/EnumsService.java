@@ -14,6 +14,7 @@ import com.linepro.modellbahn.model.util.Konfiguration;
 import com.linepro.modellbahn.model.util.Status;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractService;
+import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 
 import com.linepro.modellbahn.rest.util.DescribedEnumWrapper;
@@ -26,7 +27,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.ENUMS, description = "Enums ref data")
+@Api(value = ApiNames.ENUMS, description = "Enums ref data")
 @Path(ApiPaths.ENUMS)
 public class EnumsService extends AbstractService {
 

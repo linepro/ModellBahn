@@ -22,8 +22,6 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 @Entity(name = DBNames.MOTOR_TYP)
 @Table(name = DBNames.MOTOR_TYP, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
-@JsonRootName(value = ApiNames.MOTOR_TYP)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 public class MotorTyp extends AbstractNamedItem<NameKey> implements IMotorTyp {
 
     /** The Constant serialVersionUID. */

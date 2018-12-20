@@ -49,8 +49,6 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.KATEGORIE_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.KATEGORIE_ID, DBNames.NAME }) })
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, length = 50))
-@JsonRootName(value = ApiNames.UNTER_KATEGORIE)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.KATEGORIE, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS})
 public class UnterKategorie extends AbstractNamedItem<UnterKategorieKey> implements IUnterKategorie {
 
     /** The Constant serialVersionUID. */
@@ -92,34 +90,27 @@ public class UnterKategorie extends AbstractNamedItem<UnterKategorieKey> impleme
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kategorie.class)
     @JoinColumn(name = DBNames.KATEGORIE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.UNTER_KATEGORIE + "_fk1"))
-    @JsonGetter(ApiNames.KATEGORIE)
-    @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = KategorieResolver.class)
     public IKategorie getKategorie() {
         return kategorie;
     }
 
     @Override
-    @JsonSetter(ApiNames.KATEGORIE)
-    @JsonDeserialize(as=Kategorie.class)
     public void setKategorie(IKategorie kategorie) {
         this.kategorie = kategorie;
     }
     
     @Override
     @Transient
-    @JsonIgnore
     public String getParentId() {
         return getKategorie().getLinkId();
     }
 
     @Override
     @Transient
-    @JsonIgnore
     public String getLinkId() {
         return String.format(ApiPaths.UNTER_KATEGORIE_LINK, getParentId(), super.getLinkId());
     }
+
     @Override
     public int hashCode() {
         return new HashCodeBuilder()

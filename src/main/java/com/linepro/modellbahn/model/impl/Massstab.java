@@ -22,8 +22,6 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 @Entity(name = DBNames.MASSSTAB)
 @Table(name = DBNames.MASSSTAB, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
-@JsonRootName(value = ApiNames.MASSSTAB)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 public class Massstab extends AbstractNamedItem<NameKey> implements IMassstab {
 
     /** The Constant serialVersionUID. */

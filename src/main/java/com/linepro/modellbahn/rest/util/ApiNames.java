@@ -47,6 +47,7 @@ public interface ApiNames {
     String GERAUSCH = "gerausch";
     String GESCHWINDIGKEIT = "geschwindigkeit";
     String HERSTELLER = "hersteller";
+    String HREF= "HRef";
     String ID = "id";
     String I_MAX = "iMax";
     String INDEX = "index";
@@ -66,6 +67,7 @@ public interface ApiNames {
     String LINKS = "links";
     String MASSSTAB = "massstab";
     String MAXIMAL = "maximal";
+    String METHOD = "method";
     String MINIMAL = "minimal";
     String MITTELWAGEN = "mittelwagen";
     String MOTORBAUART = "motorbauart";
@@ -79,6 +81,7 @@ public interface ApiNames {
     String PROTOKOLL = "protokoll";
     String REIHE = "reihe";
     String REICHWEITE = "reichweite";
+    String REL = "rel";
     String ROSTFLAECHE = "rostflaeche";
     String SITZPLATZEKL1 = "sitzplatzeKL1";
     String SITZPLATZEKL2 = "sitzplatzeKL2";
@@ -129,4 +132,5 @@ public interface ApiNames {
 
     String PREVIOUS = "previous";
     String NEXT = "next";
+    String ENUMS = "enums";
 }

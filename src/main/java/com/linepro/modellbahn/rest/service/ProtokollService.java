@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.PROTOKOLL, description = "Protokoll maintenance")
+@Api(value = ApiNames.PROTOKOLL, description = "Protokoll maintenance")
 @Path(ApiPaths.PROTOKOLL)
 public class ProtokollService extends AbstractItemService<NameKey, Protokoll> {
 

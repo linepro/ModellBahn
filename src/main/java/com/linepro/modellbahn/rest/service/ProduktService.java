@@ -66,7 +66,7 @@ import io.swagger.annotations.ApiOperation;
  * @author  $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.PRODUKT, description = "Produkt maintenance")
+@Api(value = ApiNames.PRODUKT, description = "Produkt maintenance")
 @Path(ApiPaths.PRODUKT)
 public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
 
@@ -493,10 +493,6 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
         }
 
         return getResponse(notFound());
-    }
-
-    private ProduktTeil findProduktTeil(String herstellerStr, String bestellNr, String teilHerstellerStr, String teilBestellNr, boolean eager) throws Exception {
-        return getTeilPersister().findByKey(new ProduktTeilKey(findProdukt(herstellerStr, bestellNr, false), findProdukt(teilHerstellerStr, teilBestellNr, false)), eager);
     }
 
     private IPersister<ProduktTeil> getTeilPersister() {

@@ -1,12 +1,28 @@
 package com.linepro.modellbahn.model;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.linepro.modellbahn.model.impl.Decoder;
 import com.linepro.modellbahn.model.keys.DecoderFunktionKey;
+import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.resolver.DecoderResolver;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
  * IDecoderFunktion.
  * @author   $Author$
  * @version  $Id$
  */
+@JsonRootName(value = ApiNames.FUNKTION)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER, ApiNames.FUNKTION,  ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS})
 public interface IDecoderFunktion extends IItem<DecoderFunktionKey> {
 
     /**
@@ -14,6 +30,10 @@ public interface IDecoderFunktion extends IItem<DecoderFunktionKey> {
      *
      * @return the decoder
      */
+    @JsonGetter(ApiNames.DECODER)
+    @JsonView(Views.DropDown.class)
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.ID, resolver= DecoderResolver.class)
     IDecoder getDecoder();
 
     /**
@@ -21,10 +41,22 @@ public interface IDecoderFunktion extends IItem<DecoderFunktionKey> {
      *
      * @param decoder the new decoder
      */
+    @JsonSetter(ApiNames.DECODER)
+    @JsonDeserialize(as= Decoder.class)
     void setDecoder(IDecoder decoder);
 
+    @JsonGetter(ApiNames.REIHE)
+    @JsonView(Views.DropDown.class)
+    Integer getReihe();
+
+    @JsonSetter(ApiNames.REIHE)
+    void setReihe(Integer reihe);
+
+    @JsonGetter(ApiNames.FUNKTION)
+    @JsonView(Views.DropDown.class)
     String getFunktionStr();
 
+    @JsonSetter(ApiNames.FUNKTION)
     void setFunktionStr(String funktion);
 
     /**
@@ -32,6 +64,7 @@ public interface IDecoderFunktion extends IItem<DecoderFunktionKey> {
      *
      * @return the funktion
      */
+    @JsonIgnore
     IDecoderTypFunktion getFunktion();
 
     /**
@@ -39,24 +72,24 @@ public interface IDecoderFunktion extends IItem<DecoderFunktionKey> {
      *
      * @param funktion the new funktion
      */
+    @JsonIgnore
     void setFunktion(IDecoderTypFunktion funktion);
 
     /**
-     * Gets the wert.
+     * Gets the bezeichnung.
      *
-     * @return the wert
+     * @return the bezeichnung
      */
+    @JsonGetter(ApiNames.BEZEICHNUNG)
+    @JsonView(Views.DropDown.class)
     String getBezeichnung();
 
     /**
-     * Sets the wert.
+     * Sets the bezeichnung.
      *
-     * @param wert the new wert
+     * @param bezeichnung the new bezeichnung
      */
-    void setBezeichnung(String wert);
-
-    Integer getReihe();
-
-    void setReihe(Integer reihe);
+    @JsonSetter(ApiNames.BEZEICHNUNG)
+    void setBezeichnung(String bezeichnung);
 
 }

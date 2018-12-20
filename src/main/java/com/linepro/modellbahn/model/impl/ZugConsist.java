@@ -52,8 +52,6 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Table(name = DBNames.ZUG_CONSIST, indexes = { @Index(columnList = DBNames.ZUG_ID),
         @Index(columnList = DBNames.ARTIKEL_ID, unique = true) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.ZUG_ID, DBNames.POSITION }) })
-@JsonRootName(value = ApiNames.CONSIST)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.ZUG, ApiNames.POSITION, ApiNames.ARTIKEL, ApiNames.DELETED, ApiNames.LINKS })
 public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsist {
 
     /** The Constant serialVersionUID. */
@@ -104,17 +102,11 @@ public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsi
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Zug.class)
     @JoinColumn(name = DBNames.ZUG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ZUG_CONSIST + "_fk1"))
-    @JsonGetter(ApiNames.ZUG)
-    @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=ZugResolver.class)
     public IZug getZug() {
         return zug;
     }
 
     @Override
-    @JsonSetter(ApiNames.ZUG)
-    @JsonDeserialize(as=Zug.class)
     public void setZug(IZug zug) {
         this.zug = zug;
     }
@@ -122,14 +114,11 @@ public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsi
     @Override
     @BusinessKey
     @Column(name = DBNames.POSITION, nullable = false)
-    @JsonGetter(ApiNames.POSITION)
-    @JsonView(Views.DropDown.class)
     public Integer getPosition() {
         return position;
     }
 
     @Override
-    @JsonSetter(ApiNames.POSITION)
     public void setPosition(Integer position) {
         this.position = position;
     }
@@ -137,31 +126,23 @@ public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsi
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Artikel.class)
     @JoinColumn(name = DBNames.ARTIKEL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ZUG_CONSIST + "_fk2"))
-    @JsonGetter(ApiNames.ARTIKEL)
-    @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=ArtikelResolver.class)
     public IArtikel getArtikel() {
         return artikel;
     }
 
     @Override
-    @JsonSetter(ApiNames.ARTIKEL)
-    @JsonDeserialize(contentAs = Artikel.class)
     public void setArtikel(IArtikel artikel) {
         this.artikel = artikel;
     }
 
     @Override
     @Transient
-    @JsonIgnore
     public String getParentId() {
         return getZug().getLinkId();
     }
 
     @Override
     @Transient
-    @JsonIgnore
     public String getLinkId() {
         return String.format(ApiPaths.ZUG_CONSIST_LINK, getParentId(), getPosition());
     }

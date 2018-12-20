@@ -6,7 +6,19 @@ import java.util.Set;
 
 import javax.ws.rs.core.Link;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.persistence.IKey;
+import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.ILink;
+import com.linepro.modellbahn.rest.json.serialization.LinkSerializer;
+import com.linepro.modellbahn.rest.util.ApiNames;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * IItem
@@ -17,6 +29,7 @@ import com.linepro.modellbahn.persistence.IKey;
  * 
  * NB. All properties are objects because they may need to be null for template matching.
  */
+@JsonAutoDetect(fieldVisibility = Visibility.PUBLIC_ONLY)
 public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializable {
 
     /**
@@ -24,6 +37,8 @@ public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializabl
      *
      * @return the primary key (unique by class but can be repeated in other classes).
      */
+    @JsonGetter(ApiNames.ID)
+    @JsonView(Views.Internal.class)
     Long getId();
 
     /**
@@ -31,6 +46,7 @@ public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializabl
      *
      * @param id the primary key (unique by class but can be repeated in other classes).
      */
+    @JsonSetter(ApiNames.ID)
     void setId(Long id);
 
     /**
@@ -38,6 +54,8 @@ public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializabl
      *
      * @return true if this item is soft deleted otherwise false.
      */
+    @JsonView(Views.Public.class)
+    @JsonGetter(ApiNames.DELETED)
     Boolean getDeleted();
 
     /**
@@ -45,6 +63,7 @@ public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializabl
      *
      * @param deleted - true if this item is soft deleted otherwise false.
      */
+    @JsonSetter(ApiNames.DELETED)
     void setDeleted(Boolean deleted);
 
     /**
@@ -61,9 +80,15 @@ public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializabl
      * 
      * @return the HATEOAS links
      */
+    @JsonGetter(ApiNames.LINKS)
+    @JsonView(Views.DropDown.class)
+    @JsonSerialize(contentAs= ILink.class, contentUsing= LinkSerializer.class)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.ILink;", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     Set<Link> getLinks();
 
+    @JsonIgnore
     String getParentId();
 
+    @JsonIgnore
     String getLinkId();
 }

@@ -44,8 +44,6 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Entity(name = DBNames.ZUG)
 @Table(name = DBNames.ZUG, indexes = { @Index(columnList = DBNames.NAME, unique = true), @Index(columnList = DBNames.ZUG_TYP_ID) }, 
        uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.NAME }) })
-@JsonRootName(value = ApiNames.ZUG)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.ZUG_TYP, ApiNames.NAMEN,ApiNames.BEZEICHNUNG,ApiNames.DELETED, ApiNames.CONSIST, ApiNames.LINKS})
 public class Zug extends AbstractNamedItem<NameKey> implements IZug {
 
     /** The Constant serialVersionUID. */
@@ -87,30 +85,22 @@ public class Zug extends AbstractNamedItem<NameKey> implements IZug {
 	@Override
 	@ManyToOne(fetch=FetchType.LAZY, targetEntity=ZugTyp.class)
 	@JoinColumn(name = DBNames.ZUG_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ZUG + "_fk1"))
-	@JsonGetter(ApiNames.ZUG_TYP)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=ZugTypResolver.class)
 	public IZugTyp getZugTyp() {
 		return zugTyp;
 	}
 
     @Override
-    @JsonSetter(ApiNames.ZUG_TYP)
-    @JsonDeserialize(as=ZugTyp.class)
 	public void setZugTyp(IZugTyp zugTyp) {
 		this.zugTyp = zugTyp;
 	}
 
     @Override
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.ZUG, targetEntity=ZugConsist.class, orphanRemoval = true)
-    @JsonGetter(ApiNames.CONSIST)
-    @JsonView(Views.Public.class)
 	public Set<IZugConsist> getConsist() {
 		return consist;
 	}
 
     @Override
-    @JsonSetter(ApiNames.CONSIST)
 	public void setConsist(Set<IZugConsist> consist) {
 		this.consist = consist;
 	}

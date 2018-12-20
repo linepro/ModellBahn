@@ -5,13 +5,10 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.IAntrieb;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
  * Antrieb. Represents a drive method.
@@ -22,8 +19,6 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 @Entity(name = DBNames.ANTRIEB)
 @Table(name = DBNames.ANTRIEB, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
-@JsonRootName(value = ApiNames.ANTRIEB)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 public class Antrieb extends AbstractNamedItem<NameKey> implements IAntrieb {
 
     /** The Constant serialVersionUID. */

@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.MOTOR_TYP, description = "MotorTyp maintenance")
+@Api(value = ApiNames.MOTOR_TYP, description = "MotorTyp maintenance")
 @Path(ApiPaths.MOTOR_TYP)
 public class MotorTypService extends AbstractItemService<NameKey, MotorTyp> {
 

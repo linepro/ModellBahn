@@ -70,8 +70,6 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.PROTOKOLL_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.HERSTELLER_ID, DBNames.NAME }) })
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME))
-@JsonRootName(value = ApiNames.DECODER_TYP)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.GERAUSCH, ApiNames.I_MAX, ApiNames.KONFIGURATION, ApiNames.DELETED, ApiNames.ADRESSEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS})
 public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDecoderTyp {
 
     /** The Constant serialVersionUID. */
@@ -131,45 +129,33 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class)
     @JoinColumn(name = DBNames.HERSTELLER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_TYP + "_fk2"))
-    @JsonGetter(ApiNames.HERSTELLER)
-    @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=HerstellerResolver.class)
     public IHersteller getHersteller() {
         return hersteller;
     }
 
     @Override
-    @JsonSetter(ApiNames.HERSTELLER)
-    @JsonDeserialize(as=Hersteller.class)
     public void setHersteller(IHersteller hersteller) {
         this.hersteller = hersteller;
     }
 
     @Override
     @BusinessKey
-    @JsonGetter(ApiNames.BESTELL_NR)
-    @JsonView(Views.DropDown.class)
     public String getName() {
         return super.getName();
     }
 
     @Override
-    @JsonSetter(ApiNames.BESTELL_NR)
     public void setName(String name) {
         super.setName(name);
     }
 
     @Override
     @Column(name = DBNames.I_MAX, precision = 6, scale = 2)
-    @JsonGetter(ApiNames.I_MAX)
-    @JsonView(Views.Public.class)
     public BigDecimal getiMax() {
         return iMax;
     }
 
     @Override
-    @JsonSetter(ApiNames.I_MAX)
     public void setiMax(BigDecimal iMax) {
         this.iMax = iMax;
     }
@@ -177,46 +163,33 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Protokoll.class)
     @JoinColumn(name = DBNames.PROTOKOLL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_TYP + "_fk3"))
-    @JsonGetter(ApiNames.PROTOKOLL)
-    @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=ProtokollResolver.class)
     public IProtokoll getProtokoll() {
         return protokoll;
     }
 
     @Override
-    @JsonSetter(ApiNames.PROTOKOLL)
-    @JsonDeserialize(as=Protokoll.class)
     public void setProtokoll(IProtokoll protokoll) {
         this.protokoll = protokoll;
     }
 
     @Override
     @Column(name = DBNames.FAHRSTUFE)
-    @JsonGetter(ApiNames.FAHRSTUFE)
-    @JsonView(Views.Public.class)
     public Integer getFahrstufe() {
         return fahrstufe;
     }
 
     @Override
-    @JsonView(Views.Public.class)
-    @JsonSetter(ApiNames.FAHRSTUFE)
     public void setFahrstufe(Integer fahrstufe) {
         this.fahrstufe = fahrstufe;
     }
 
     @Override
     @Column(name = DBNames.SOUND, nullable = false)
-    @JsonGetter(ApiNames.GERAUSCH)
-    @JsonView(Views.DropDown.class)
     public Boolean getSound() {
         return sound;
     }
 
     @Override
-    @JsonSetter(ApiNames.GERAUSCH)
     public void setSound(Boolean sound) {
         this.sound = sound;
     }
@@ -224,36 +197,27 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     @Override
     @Enumerated(EnumType.STRING)
     @Column(name = DBNames.KONFIGURATION, nullable = false, length = 15)
-    @JsonGetter(ApiNames.KONFIGURATION)
-    @JsonView(Views.DropDown.class)
     public Konfiguration getKonfiguration() {
         return konfiguration;
     }
 
     @Override
-    @JsonSetter(ApiNames.KONFIGURATION)
     public void setKonfiguration(Konfiguration konfiguration) {
         this.konfiguration = konfiguration;
     }
 
     @Override
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.DECODER_TYP, targetEntity = DecoderTypAdress.class, orphanRemoval = true)
-    @JsonIgnore
     public Set<IDecoderTypAdress> getAdressen() {
         return adressen;
     }
 
     @Transient
-    @JsonGetter(ApiNames.ADRESSEN)
-    @JsonView(Views.Public.class)
-    @JsonSerialize(contentUsing = DecoderTypAdressSerializer.class)
     public Set<IDecoderTypAdress> getSortedAdressen() {
         return new TreeSet<>(getAdressen());
     }
 
     @Override
-    @JsonSetter(ApiNames.ADRESSEN)
-    @JsonDeserialize(contentAs = DecoderTypAdress.class)
     public void setAdressen(Set<IDecoderTypAdress> adressen) {
         this.adressen = adressen;
     }
@@ -272,22 +236,16 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
 
     @Override
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.DECODER_TYP, targetEntity = DecoderTypCV.class, orphanRemoval = true)
-    @JsonIgnore
     public Set<IDecoderTypCV> getCVs() {
         return CVs;
     }
 
     @Transient
-    @JsonGetter(ApiNames.CVS)
-    @JsonView(Views.Public.class)
-    @JsonSerialize(contentUsing = DecoderTypCVSerializer.class)
     public Set<IDecoderTypCV> getSortedCVs() {
         return new TreeSet<>(getCVs());
     }
 
     @Override
-    @JsonSetter(ApiNames.CVS)
-    @JsonDeserialize(contentAs = DecoderTypCV.class)
     public void setCVs(Set<IDecoderTypCV> CVs) {
         this.CVs = CVs;
     }
@@ -305,22 +263,16 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
 
     @Override
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.DECODER_TYP, targetEntity = DecoderTypFunktion.class, orphanRemoval = true)
-    @JsonIgnore
     public Set<IDecoderTypFunktion> getFunktionen() {
         return funktionen;
     }
 
     @Transient
-    @JsonGetter(ApiNames.FUNKTIONEN)
-    @JsonView(Views.Public.class)
-    @JsonSerialize(contentUsing = DecoderTypFunktionSerializer.class)
     public Set<IDecoderTypFunktion> getSortedFunktionen() {
         return new TreeSet<>(getFunktionen());
     }
 
     @Override
-    @JsonSetter(ApiNames.FUNKTIONEN)
-    @JsonDeserialize(contentAs = DecoderTypFunktion.class)
     public void setFunktionen(Set<IDecoderTypFunktion> funktionen) {
         this.funktionen = funktionen;
     }
@@ -338,7 +290,6 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
 
     @Override
     @Transient
-    @JsonIgnore
     public String getLinkId() {
         return String.format(ApiPaths.DECODER_TYP_LINK, getHersteller().getLinkId(), super.getLinkId());
     }

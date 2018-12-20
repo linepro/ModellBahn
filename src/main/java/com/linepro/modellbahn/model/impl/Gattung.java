@@ -22,8 +22,6 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 @Entity(name = DBNames.GATTUNG)
 @Table(name = DBNames.GATTUNG, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
-@JsonRootName(value = ApiNames.GATTUNG)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 public class Gattung extends AbstractNamedItem<NameKey> implements IGattung {
 
     /** The Constant serialVersionUID. */

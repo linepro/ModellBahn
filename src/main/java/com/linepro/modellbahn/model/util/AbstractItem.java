@@ -26,7 +26,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -48,7 +47,6 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  */
 @MappedSuperclass
 @Cacheable
-@JsonAutoDetect(fieldVisibility = Visibility.PUBLIC_ONLY)
 public abstract class AbstractItem<K extends IKey> implements IItem<K> {
 
     /** The Constant serialVersionUID. */
@@ -86,52 +84,40 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
     @Id
 	@Column(name=DBNames.ID)
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@JsonGetter(ApiNames.ID)
-	@JsonView(Views.Internal.class)
 	public Long getId() {
 		return id;
 	}
 
 	@Override
-    @JsonSetter(ApiNames.ID)
     public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Override
     @Column(name=DBNames.DELETED, length=5)
-    @JsonView(Views.Public.class)
-    @JsonGetter(ApiNames.DELETED)
 	public Boolean getDeleted() {
 		return deleted;
 	}
 
 	@Override
-    @JsonSetter(ApiNames.DELETED)
     public void setDeleted(Boolean deleted) {
 		this.deleted = deleted;
 	}
 
     @Override
     @Transient
-    @JsonGetter(ApiNames.LINKS)
-    @JsonView(Views.DropDown.class)
-    @JsonSerialize(contentUsing=LinkSerializer.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.ILink;", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     public Set<Link> getLinks() {
         return links;
     }
 
     @Override
     @Transient
-    @JsonIgnore
     public String getParentId() {
         return null;
     }
 
     @Override
     @Transient
-    @JsonIgnore
     public String getLinkId() {
         return getId().toString();
     }

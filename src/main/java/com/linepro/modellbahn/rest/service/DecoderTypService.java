@@ -52,7 +52,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.DECODER_TYP, description = "DecoderTyp maintenance")
+@Api(value = ApiNames.DECODER_TYP, description = "DecoderTyp maintenance")
 @Path(ApiPaths.DECODER_TYP)
 public class DecoderTypService extends AbstractItemService<DecoderTypKey, DecoderTyp> {
 
@@ -85,8 +85,8 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
             @JsonProperty(value = ApiNames.GERAUSCH) Boolean sound,
             @JsonProperty(value = ApiNames.KONFIGURATION) String konfigurationStr,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
-        IHersteller hersteller = findHersteller(herstellerStr);
-        IProtokoll protokoll = findProtokoll(protokollStr);
+        IHersteller hersteller = findHersteller(herstellerStr, false);
+        IProtokoll protokoll = findProtokoll(protokollStr, false);
         Konfiguration konfiguration = Konfiguration.valueOf(konfigurationStr);
 
         DecoderTyp entity = new DecoderTyp(id, hersteller, protokoll, name, bezeichnung, sound, konfiguration,
@@ -162,7 +162,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     public Response get(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
             @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
         try {
-            return super.get(new DecoderTypKey(findHersteller(herstellerStr), bestellNr));
+            return super.get(new DecoderTypKey(findHersteller(herstellerStr, false), bestellNr));
         } catch (Exception e) {
             return getResponse(serverError(e));
         }
@@ -194,7 +194,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     public Response update(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
             @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, DecoderTyp entity) {
         try {
-            return super.update(new DecoderTypKey(findHersteller(herstellerStr), bestellNr), entity);
+            return super.update(new DecoderTypKey(findHersteller(herstellerStr, false), bestellNr), entity);
         } catch (Exception e) {
             return getResponse(serverError(e));
         }
@@ -208,7 +208,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     public Response delete(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
             @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
         try {
-            return super.delete(new DecoderTypKey(findHersteller(herstellerStr), bestellNr));
+            return super.delete(new DecoderTypKey(findHersteller(herstellerStr, false), bestellNr));
         } catch (Exception e) {
             return getResponse(serverError(e));
         }
@@ -564,42 +564,6 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
         } catch (Exception e) {
             return getResponse(serverError(e));
         }
-    }
-
-    protected IDecoderTyp findDecoderTyp(String herstellerStr, String bestellNr, boolean eager) throws Exception {
-        return getPersister().findByKey(new DecoderTypKey(findHersteller(herstellerStr), bestellNr), eager);
-    }
-
-    private IDecoderTypAdress findDecoderTypAdress(String herstellerStr, String bestellNr, Integer index, boolean eager) throws Exception {
-        return findDecoderTypAdress(findDecoderTyp(herstellerStr, bestellNr, eager), index, eager) ;
-    }
-
-    private IDecoderTypAdress findDecoderTypAdress(IDecoderTyp decoderTyp, Integer index, boolean eager) throws Exception {
-        return getAdressPersister().findByKey(new DecoderTypAdressKey(decoderTyp, index), eager);
-    }
-
-    private IDecoderTypCV findDecoderTypCV(String herstellerStr, String bestellNr, Integer cv, boolean eager) throws Exception {
-        return findDecoderTypCV(findDecoderTyp(herstellerStr, bestellNr, eager), cv, eager) ;
-    }
-
-    protected IDecoderTypCV findDecoderTypCV(IDecoderTyp decoderTyp, Integer cv, boolean eager) throws Exception {
-        return getCVPersister().findByKey(new DecoderTypCVKey(decoderTyp, cv), eager);
-    }
-
-    private IDecoderTypFunktion findDecoderTypFunktion(String herstellerStr, String bestellNr, Integer reihe, String funktion, boolean eager) throws Exception {
-        return findDecoderTypFunktion(findDecoderTyp(herstellerStr, bestellNr, eager), reihe, funktion, eager) ;
-    }
-
-    protected IDecoderTypFunktion findDecoderTypFunktion(IDecoderTyp decoderTyp, Integer reihe, String funktion, boolean eager) throws Exception {
-        return getFunktionPersister().findByKey(new DecoderTypFunktionKey(decoderTyp, reihe, funktion), eager);
-    }
-
-    private IProtokoll findProtokoll(String protokollStr) throws Exception  {
-        return getProtokollPersister().findByKey(new NameKey(protokollStr), false);
-    }
-
-    private IHersteller findHersteller(String herstellerStr) throws Exception  {
-        return getHerstellerPersister().findByKey(new NameKey(herstellerStr), false);
     }
 
     private IPersister<Protokoll> getProtokollPersister() {

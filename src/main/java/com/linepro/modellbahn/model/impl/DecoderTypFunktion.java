@@ -50,8 +50,6 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.DECODER_TYP_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.DECODER_TYP_ID, DBNames.REIHE, DBNames.NAME }) })
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, length = 4))
-@JsonRootName(ApiNames.FUNKTION)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.REIHE,  ApiNames.PROGRAMMABLE, ApiNames.DELETED, ApiNames.LINKS})
 public class DecoderTypFunktion extends AbstractNamedItem<DecoderTypFunktionKey> implements IDecoderTypFunktion {
 
     /** The Constant serialVersionUID. */
@@ -93,16 +91,11 @@ public class DecoderTypFunktion extends AbstractNamedItem<DecoderTypFunktionKey>
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
     @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_TYP_FUNKTION + "_fk1"))
-    @JsonGetter(ApiNames.DECODER_TYP)
-    @JsonView(Views.DropDown.class)
-    @JsonSerialize(using=DecoderTypSerializer.class)
     public IDecoderTyp getDecoderTyp() {
         return decoderTyp;
     }
 
     @Override
-    @JsonSetter(ApiNames.DECODER_TYP)
-    @JsonDeserialize(as=DecoderTyp.class)
     public void setDecoderTyp(IDecoderTyp decoderTyp) {
         this.decoderTyp = decoderTyp;
     }
@@ -110,42 +103,34 @@ public class DecoderTypFunktion extends AbstractNamedItem<DecoderTypFunktionKey>
     @Override
     @BusinessKey
     @Column(name = DBNames.REIHE, nullable = false)
-    @JsonGetter(ApiNames.REIHE)
-    @JsonView(Views.DropDown.class)
     public Integer getReihe() {
         return reihe;
     }
 
     @Override
-    @JsonSetter(ApiNames.REIHE)
     public void setReihe(Integer reihe) {
         this.reihe = reihe;
     }
 
     @Override
     @Column(name = DBNames.PROGRAMMABLE, nullable = false)
-    @JsonGetter(ApiNames.PROGRAMMABLE)
-    @JsonView(Views.Public.class)
     public Boolean getProgrammable() {
         return programmable;
     }
 
     @Override
-    @JsonSetter(ApiNames.PROGRAMMABLE)
     public void setProgrammable(Boolean programmable) {
         this.programmable = programmable;
     }
 
     @Override
     @Transient
-    @JsonIgnore
     public String getParentId() {
         return getDecoderTyp().getLinkId();
     }
 
     @Override
     @Transient
-    @JsonIgnore
     public String getLinkId() {
         return String.format(ApiPaths.DECODER_TYP_FUNKTION_LINK, getParentId(), getReihe(), super.getLinkId());
     }

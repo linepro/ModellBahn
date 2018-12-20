@@ -52,8 +52,6 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Table(name = DBNames.DECODER_CV, indexes = {
         @Index(columnList = DBNames.DECODER_ID + "," + DBNames.CV_ID, unique = true) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.CV_ID }) })
-@JsonRootName(value = ApiNames.CV)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER, ApiNames.CV, ApiNames.WERT, ApiNames.DELETED, ApiNames.LINKS })
 public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV {
 
     /** The Constant serialVersionUID. */
@@ -92,17 +90,11 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
     @JoinColumn(name = DBNames.DECODER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name =  DBNames.DECODER_CV + "_fk1"))
-    @JsonGetter(ApiNames.DECODER)
-    @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver=DecoderResolver.class)
     public IDecoder getDecoder() {
         return decoder;
     }
 
     @Override
-    @JsonSetter(ApiNames.DECODER)
-    @JsonDeserialize(as=Decoder.class)
     public void setDecoder(IDecoder decoder) {
         this.decoder = decoder;
     }
@@ -120,7 +112,6 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     }
 
     @Override
-    @JsonIgnore
     public void setCv(IDecoderTypCV cv) {
         this.cv = cv;
 
@@ -130,42 +121,34 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     }
 
     @Override
-    @JsonGetter(ApiNames.CV)
-    @JsonView(Views.DropDown.class)
     public Integer getCvValue() {
         return cvValue;
     }
 
     @Override
-    @JsonSetter(ApiNames.CV)
     public void setCvValue(Integer cv) {
         this.cvValue = cv;
     }
 
     @Override
     @Column(name = DBNames.WERT)
-    @JsonGetter(ApiNames.WERT)
-    @JsonView(Views.DropDown.class)
     public Integer getWert() {
         return wert;
     }
 
     @Override
-    @JsonSetter(ApiNames.WERT)
     public void setWert(Integer wert) {
         this.wert = wert;
     }
 
     @Override
     @Transient
-    @JsonIgnore
     public String getParentId() {
         return decoder.getLinkId();
     }
 
     @Override
     @Transient
-    @JsonIgnore
     public String getLinkId() {
         return String.format(ApiPaths.DECODER_CV_LINK, getParentId(), getCv().getCv());
     }

@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.ZUG_TYP, description = "ZugTyp maintenance")
+@Api(value = ApiNames.ZUG_TYP, description = "ZugTyp maintenance")
 @Path(ApiPaths.ZUG_TYP)
 public class ZugTypService extends AbstractItemService<NameKey, ZugTyp> {
 

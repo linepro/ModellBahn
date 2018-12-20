@@ -9,17 +9,11 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.URLConverter;
-import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
@@ -32,8 +26,6 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Entity(name = DBNames.HERSTELLER)
 @Table(name = DBNames.HERSTELLER, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
-@JsonRootName(value = ApiNames.HERSTELLER)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.TELEFON, ApiNames.URL, ApiNames.DELETED, ApiNames.LINKS})
 public class Hersteller extends AbstractNamedItem<NameKey> implements IHersteller {
 
     /** The Constant serialVersionUID. */
@@ -89,8 +81,6 @@ public class Hersteller extends AbstractNamedItem<NameKey> implements IHerstelle
     @Override
     @Column(name = DBNames.URL)
     @Convert(converter = URLConverter.class)
-    @JsonGetter(ApiNames.URL)
-    @JsonView(Views.Public.class)
     public URL getUrl() {
         return url;
     }
@@ -102,7 +92,6 @@ public class Hersteller extends AbstractNamedItem<NameKey> implements IHerstelle
      *            the new url
      */
     @Override
-    @JsonSetter(ApiNames.URL)
     public void setUrl(URL uRL) {
         url = uRL;
     }
@@ -114,8 +103,6 @@ public class Hersteller extends AbstractNamedItem<NameKey> implements IHerstelle
      */
     @Override
     @Column(name = DBNames.TELEFON, length = 20)
-    @JsonGetter(ApiNames.TELEFON)
-    @JsonView(Views.Public.class)
     public String getTelefon() {
         return Telefon;
     }
@@ -127,7 +114,6 @@ public class Hersteller extends AbstractNamedItem<NameKey> implements IHerstelle
      *            the new telefon
      */
     @Override
-    @JsonSetter(ApiNames.TELEFON)
     public void setTelefon(String telefon) {
         Telefon = telefon;
     }

@@ -16,6 +16,18 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import com.linepro.modellbahn.model.IDecoderTypAdress;
+import com.linepro.modellbahn.model.IProtokoll;
+import com.linepro.modellbahn.model.IZugConsist;
+import com.linepro.modellbahn.model.impl.DecoderTypAdress;
+import com.linepro.modellbahn.model.impl.ProduktTeil;
+import com.linepro.modellbahn.model.impl.Protokoll;
+import com.linepro.modellbahn.model.impl.ZugConsist;
+import com.linepro.modellbahn.model.keys.DecoderTypAdressKey;
+import com.linepro.modellbahn.model.keys.ProduktTeilKey;
+import com.linepro.modellbahn.model.keys.ZugConsistKey;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -146,6 +158,10 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      * @param key the key
      * @return the response
      */
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "Not found"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
     public Response get(K key) {
         try {
             logGet(getEntityClassName() + ": " + key);
@@ -168,6 +184,9 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      * @param entity the entity
      * @return the response
      */
+    @ApiResponses({
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
     public Response add(E entity) {
         try {
             logPost(getEntityClassName() + ": " + entity);
@@ -197,6 +216,10 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      * @param entity the entity
      * @return the response
      */
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "Not found"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
     public Response update(K id, E entity) {
         try {
             logPut(id + ": " + entity);
@@ -229,6 +252,9 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      * @param id the id
      * @return the response
      */
+    @ApiResponses({
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
     public Response delete(K id) {
         try {
             logDelete(getEntityClassName() + ": " + id);
@@ -247,6 +273,10 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      * @param info the info
      * @return the response
      */
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "No Content"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
     public Response search(UriInfo info) {
         try {
             E template = getTemplate(info.getQueryParameters());
@@ -462,7 +492,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return StaticPersisterFactory.get().createPersister(Bahnverwaltung.class).findByKey(name, eager); 
     }
 
-    protected IDecoder findDecoder(String decoderId, boolean eager) throws Exception { 
+    protected IDecoder findDecoder(String decoderId, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Decoder.class).findByKey(decoderId, eager); 
     }
 
@@ -474,15 +504,30 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return StaticPersisterFactory.get().createPersister(DecoderTyp.class).findByKey(new DecoderTypKey(hersteller, bestellNr), eager); 
     }
 
-    protected IDecoderTypCV findDecoderTypCV(IDecoderTyp decoderTyp, Integer cv, boolean eager) throws Exception { 
+    protected IDecoderTypAdress findDecoderTypAdress(String herstellerStr, String bestellNr, Integer index, boolean eager) throws Exception {
+        return findDecoderTypAdress(findDecoderTyp(herstellerStr, bestellNr, eager), index, eager) ;
+    }
+
+    protected IDecoderTypAdress findDecoderTypAdress(IDecoderTyp decoderTyp, Integer index, boolean eager) throws Exception {
+        return StaticPersisterFactory.get().createPersister(DecoderTypAdress.class).findByKey(new DecoderTypAdressKey(decoderTyp, index), eager);
+    }
+
+    protected IDecoderTypCV findDecoderTypCV(String herstellerStr, String bestellNr, Integer cv, boolean eager) throws Exception {
+        return findDecoderTypCV(findDecoderTyp(herstellerStr, bestellNr, eager), cv, eager) ;
+    }
+
+    protected IDecoderTypCV findDecoderTypCV(IDecoderTyp decoderTyp, Integer cv, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(DecoderTypCV.class).findByKey(new DecoderTypCVKey(decoderTyp, cv), eager); 
     }
 
-    protected IDecoderTypFunktion findDecoderTypFunktion(IDecoderTyp decoderTyp, Integer reihe, String funktion, boolean eager) throws Exception { 
-        return StaticPersisterFactory.get().createPersister(DecoderTypFunktion.class).findByKey(new DecoderTypFunktionKey(decoderTyp, reihe, funktion), eager); 
+    protected IDecoderTypFunktion findDecoderTypFunktion(String herstellerStr, String bestellNr, Integer reihe, String funktion, boolean eager) throws Exception {
+        return findDecoderTypFunktion(findDecoderTyp(herstellerStr, bestellNr, eager), reihe, funktion, eager) ;
     }
 
-    protected IEpoch findEpoch(String name, boolean eager) throws Exception { 
+    protected IDecoderTypFunktion findDecoderTypFunktion(IDecoderTyp decoderTyp, Integer reihe, String funktion, boolean eager) throws Exception {
+        return StaticPersisterFactory.get().createPersister(DecoderTypFunktion.class).findByKey(new DecoderTypFunktionKey(decoderTyp, reihe, funktion), eager); 
+    }
+    protected IEpoch findEpoch(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Epoch.class).findByKey(name, eager); 
     }
 
@@ -494,7 +539,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return StaticPersisterFactory.get().createPersister(Hersteller.class).findByKey(name, eager); 
     }
 
-    protected IKategorie findKategorie(String name, boolean eager) throws Exception { 
+    protected IKategorie findKategorie(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Kategorie.class).findByKey(name, eager); 
     }
 
@@ -518,11 +563,19 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return findProdukt(findHersteller(herstellerStr, false), bestellNr, eager); 
     }
     
-    private IProdukt findProdukt(IHersteller hersteller, String bestellNr, boolean eager) throws Exception {
+    protected IProdukt findProdukt(IHersteller hersteller, String bestellNr, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Produkt.class).findByKey(new ProduktKey(hersteller, bestellNr), eager); 
     }
 
-    protected ISonderModell findSonderModell(String name, boolean eager) throws Exception { 
+    protected ProduktTeil findProduktTeil(String herstellerStr, String bestellNr, String teilHerstellerStr, String teilBestellNr, boolean eager) throws Exception {
+        return StaticPersisterFactory.get().createPersister(ProduktTeil.class).findByKey(new ProduktTeilKey(findProdukt(herstellerStr, bestellNr, false), findProdukt(teilHerstellerStr, teilBestellNr, false)), eager);
+    }
+
+    protected IProtokoll findProtokoll(String protokollStr, boolean eager) throws Exception  {
+        return StaticPersisterFactory.get().createPersister(Protokoll.class).findByKey(new NameKey(protokollStr), eager);
+    }
+
+    protected ISonderModell findSonderModell(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(SonderModell.class).findByKey(name, eager); 
     }
 
@@ -534,7 +587,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return StaticPersisterFactory.get().createPersister(Steuerung.class).findByKey(name, eager); 
     }
 
-    protected IUnterKategorie findUnterKategorie(String kategorie, String unterKategorie, boolean eager) throws Exception { 
+    protected IUnterKategorie findUnterKategorie(String kategorie, String unterKategorie, boolean eager) throws Exception {
         return findUnterKategorie(findKategorie(kategorie, eager), unterKategorie, eager); 
     }
 
@@ -552,6 +605,14 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
 
     protected IZug findZug(String name, boolean eager) throws Exception { 
         return StaticPersisterFactory.get().createPersister(Zug.class).findByKey(name, eager); 
+    }
+
+    protected IZugConsist findZugConsist(String zugStr, Integer position, boolean eager) throws Exception {
+        return findZugConsist(findZug(zugStr, eager), position, eager) ;
+    }
+
+    protected IZugConsist findZugConsist(IZug zug, Integer position, boolean eager) throws Exception {
+        return StaticPersisterFactory.get().createPersister(ZugConsist.class).findByKey(new ZugConsistKey(zug, position), eager);
     }
 
     protected IZugTyp findZugTyp(String name, boolean eager) throws Exception { 

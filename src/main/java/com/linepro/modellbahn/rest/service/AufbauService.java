@@ -43,7 +43,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.AUFBAU, description = "Aufbau maintenance")
+@Api(value = ApiNames.AUFBAU, description = "Aufbau maintenance")
 @Path(ApiPaths.AUFBAU)
 public class AufbauService extends AbstractItemService<NameKey, Aufbau> {
 

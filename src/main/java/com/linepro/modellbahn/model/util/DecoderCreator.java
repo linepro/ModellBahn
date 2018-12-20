@@ -26,7 +26,7 @@ public class DecoderCreator implements IDecoderCreator {
         decoder = persister.add(decoder);
 
         for (IDecoderTypAdress adress : decoderTyp.getAdressen()) {
-            decoder.addAdress(new DecoderAdress(null, decoder, adress.getIndex(), adress.getAdressTyp(), adress.getWerkseinstellung(), false));
+            decoder.addAdress(new DecoderAdress(null, decoder, adress.getIndex(), adress.getAdressTyp(), adress.getAdress(), false));
         }
 
         for (IDecoderTypCV cv : decoderTyp.getCVs()) {

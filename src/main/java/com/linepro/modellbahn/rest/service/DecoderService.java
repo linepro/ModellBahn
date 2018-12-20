@@ -48,7 +48,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.DECODER, description = "Decoder maintenance")
+@Api(value = ApiNames.DECODER, description = "Decoder maintenance")
 @Path(ApiPaths.DECODER)
 public class DecoderService extends AbstractItemService<NameKey, Decoder> {
 
@@ -350,10 +350,6 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
         } catch (Exception e) {
             return getResponse(serverError(e));
         }
-    }
-
-    protected IDecoder findDecoder(String decoderId, boolean eager) throws Exception {
-        return getPersister().findByKey(decoderId, true);
     }
 
     private IDecoderAdress findDecoderAdress(IDecoder decoder, Integer index, boolean eager) {

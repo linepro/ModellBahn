@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.WAHRUNG, description = "Wahrung maintenance")
+@Api(value = ApiNames.WAHRUNG, description = "Wahrung maintenance")
 @Path(ApiPaths.WAHRUNG)
 public class WahrungService extends AbstractItemService<NameKey, Wahrung> {
 

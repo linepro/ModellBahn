@@ -37,7 +37,7 @@ import io.swagger.annotations.ApiOperation;
  * @author  $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.LAND, description = "Land maintenance")
+@Api(value = ApiNames.LAND, description = "Land maintenance")
 @Path(ApiPaths.LAND)
 public class LandService extends AbstractItemService<NameKey, Land> {
 
@@ -107,13 +107,5 @@ public class LandService extends AbstractItemService<NameKey, Land> {
     @ApiOperation(value = "Deletes a Land by name")
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
-    }
-    
-    protected IWahrung findWahrung(String wahrungStr) throws Exception {
-        return getWahrungPersister().findByKey(new NameKey(wahrungStr), true);
-    }
-    
-    private IPersister<Wahrung> getWahrungPersister() {
-        return wahrungPersister;
     }
 }

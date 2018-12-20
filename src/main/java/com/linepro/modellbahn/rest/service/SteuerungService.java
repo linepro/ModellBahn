@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.STEUERUNG, description = "Steuerung maintenance")
+@Api(value = ApiNames.STEUERUNG, description = "Steuerung maintenance")
 @Path(ApiPaths.STEUERUNG)
 public class SteuerungService extends AbstractItemService<NameKey, Steuerung> {
 

@@ -51,7 +51,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.VORBILD, description = "Vorbild maintenance")
+@Api(value = ApiNames.VORBILD, description = "Vorbild maintenance")
 @Path(ApiPaths.VORBILD)
 public class VorbildService extends AbstractItemService<NameKey, Vorbild> {
 

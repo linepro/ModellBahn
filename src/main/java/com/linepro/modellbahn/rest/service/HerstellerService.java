@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.HERSTELLER, description = "Hersteller maintenance")
+@Api(value = ApiNames.HERSTELLER, description = "Hersteller maintenance")
 @Path(ApiPaths.HERSTELLER)
 public class HerstellerService extends AbstractItemService<NameKey, Hersteller> {
 

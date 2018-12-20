@@ -26,7 +26,7 @@ public class DecoderFunktionSerializer extends StdSerializer<DecoderFunktion> {
     @Override
     public void serialize(DecoderFunktion value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
-        gen.writeObjectField("bank", value.getFunktion().getReihe());
+        gen.writeObjectField(ApiNames.REIHE, value.getFunktion().getReihe());
         gen.writeObjectField(ApiNames.FUNKTION, value.getFunktion().getName());
         gen.writeObjectField(ApiNames.BEZEICHNUNG, value.getBezeichnung());
         utils.writeLinks(ApiNames.LINKS, value.getLinks(), gen, serializers);

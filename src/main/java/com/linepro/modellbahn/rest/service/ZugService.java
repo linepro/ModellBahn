@@ -43,7 +43,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.ZUG, description = "Zug maintenance")
+@Api(value = ApiNames.ZUG, description = "Zug maintenance")
 @Path(ApiPaths.ZUG)
 public class ZugService extends AbstractItemService<NameKey, Zug> {
 
@@ -223,14 +223,6 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
         } catch (Exception e) {
             return getResponse(serverError(e));
         }
-    }
-
-    private IZugConsist findZugConsist(String zugStr, Integer position, boolean eager) throws Exception {
-        return findZugConsist(findZug(zugStr, eager), position, eager) ;
-    }
-
-    private IZugConsist findZugConsist(IZug zug, Integer position, boolean eager) throws Exception {
-        return getConsistPersister().findByKey(new ZugConsistKey(zug, position), eager);
     }
 
     private IPersister<ZugConsist> getConsistPersister() {

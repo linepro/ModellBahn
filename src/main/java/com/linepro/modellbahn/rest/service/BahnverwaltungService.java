@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiPaths.BAHNVERWALTUNG, description = "Bahnverwaltung (railway company) maintenance")
+@Api(value = ApiNames.BAHNVERWALTUNG, description = "Bahnverwaltung (railway company) maintenance")
 @Path(ApiPaths.BAHNVERWALTUNG)
 public class BahnverwaltungService extends AbstractItemService<NameKey, Bahnverwaltung> {
 

@@ -30,8 +30,6 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Entity(name = DBNames.WAHRUNG)
 @Table(name = DBNames.WAHRUNG, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, 
        uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.NAME }) })
-@JsonRootName(value = ApiNames.WAHRUNG)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.NAMEN,ApiNames.BEZEICHNUNG,ApiNames.DECIMALS, ApiNames.DELETED, ApiNames.LINKS})
 public class Wahrung extends AbstractNamedItem<NameKey> implements IWahrung {
 	
     /** The Constant serialVersionUID. */
@@ -69,14 +67,11 @@ public class Wahrung extends AbstractNamedItem<NameKey> implements IWahrung {
 
 	@Override
     @Column(name=DBNames.DECIMALS)
-	@JsonGetter(ApiNames.DECIMALS)
-    @JsonView(Views.DropDown.class)
 	public Integer getDecimals() {
 		return decimals;
 	}
 
 	@Override
-    @JsonSetter(ApiNames.DECIMALS)
     public void setDecimals(Integer decimals) {
 		this.decimals = decimals;
 	}

@@ -4,630 +4,380 @@ import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.linepro.modellbahn.model.impl.Achsfolg;
+import com.linepro.modellbahn.model.impl.Antrieb;
+import com.linepro.modellbahn.model.impl.Bahnverwaltung;
+import com.linepro.modellbahn.model.impl.Gattung;
+import com.linepro.modellbahn.model.impl.UnterKategorie;
 import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.persistence.util.PathConverter;
+import com.linepro.modellbahn.rest.json.Formats;
+import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.resolver.AchsfolgResolver;
+import com.linepro.modellbahn.rest.json.resolver.AntriebResolver;
+import com.linepro.modellbahn.rest.json.resolver.BahnverwaltungResolver;
+import com.linepro.modellbahn.rest.json.resolver.GattungResolver;
+import com.linepro.modellbahn.rest.json.serialization.IUnterKategorieRef;
+import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
+import com.linepro.modellbahn.rest.json.serialization.UnterKategorieSerializer;
+import com.linepro.modellbahn.rest.util.ApiNames;
+import io.swagger.annotations.ApiModelProperty;
+
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * IVorbild.
  * @author   $Author$
  * @version  $Id$
  */
+@JsonRootName(value = ApiNames.VORBILD)
+@JsonPropertyOrder({ApiNames.ID, ApiNames.GATTUNG, ApiNames.UNTER_KATEGORIE, ApiNames.BAHNVERWALTUNG, ApiNames.HERSTELLER, ApiNames.BAUZEIT, ApiNames.ANZAHL, ApiNames.BETREIBSNUMMER, ApiNames.ANTRIEB, ApiNames.ACHSFOLG, ApiNames.ANFAHRZUGKRAFT, ApiNames.LEISTUNG, ApiNames.DIENSTGEWICHT, ApiNames.GESCHWINDIGKEIT, ApiNames.LANGE, ApiNames.AUSSERDIENST, ApiNames.DMTREIBRAD, ApiNames.DMLAUFRADVORN, ApiNames.DMLAUFRADHINTEN, ApiNames.ZYLINDER, ApiNames.DMZYLINDER, ApiNames.KOLBENHUB, ApiNames.KESSELUEBERDRUCK, ApiNames.ROSTFLAECHE, ApiNames.UEBERHITZERFLAECHE, ApiNames.WASSERVORRAT, ApiNames.VERDAMPFUNG, ApiNames.STEUERUNG, ApiNames.FAHRMOTOREN, ApiNames.MOTORBAUART, ApiNames.LEISTUNGSUEBERTRAGUNG, ApiNames.REICHWEITE, ApiNames.KAPAZITAT, ApiNames.KLASSE, ApiNames.SITZPLATZEKL1, ApiNames.SITZPLATZEKL2, ApiNames.SITZPLATZEKL3, ApiNames.SITZPLATZEKL4, ApiNames.AUFBAU, ApiNames.TRIEBZUGANZEIGEN, ApiNames.TRIEBKOEPFE, ApiNames.MITTELWAGEN, ApiNames.SITZPLATZETZKL1, ApiNames.SITZPLATZETZKL2, ApiNames.DREHGESTELLBAUART, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS})
 public interface IVorbild extends INamedItem<NameKey> {
     
-    /**
-     * Gets the gattung.
-     *
-     * @return the gattung
-     */
+    @JsonGetter(ApiNames.GATTUNG)
+    @JsonView(Views.DropDown.class)
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= GattungResolver.class)
     IGattung getGattung();
-
-    /**
-     * Sets the gattung.
-     *
-     * @param gattung the new gattung
-     */
+    
+    @JsonSetter(ApiNames.GATTUNG)
+    @JsonDeserialize(as= Gattung.class)
     void setGattung(IGattung gattung);
-
-    /**
-     * Gets the bahnverwaltung.
-     *
-     * @return the bahnverwaltung
-     */
-    IBahnverwaltung getBahnverwaltung();
-
-    /**
-     * Sets the bahnverwaltung.
-     *
-     * @param bahnverwaltung
-     *            the new bahnverwaltung
-     */
-    void setBahnverwaltung(IBahnverwaltung bahnverwaltung);
-
-    /**
-     * Gets the unter kategorie.
-     *
-     * @return the unter kategorie
-     */
+    
+    @JsonGetter(ApiNames.UNTER_KATEGORIE)
+    @JsonView(Views.DropDown.class)
+    @JsonSerialize(as= IUnterKategorieRef.class, using= UnterKategorieSerializer.class)
     IUnterKategorie getUnterKategorie();
-
-    /**
-     * Sets the unter kategorie.
-     *
-     * @param unterKategorie the new unter kategorie
-     */
+    
+    @JsonSetter(ApiNames.UNTER_KATEGORIE)
+    @JsonDeserialize(as=UnterKategorie.class)
     void setUnterKategorie(IUnterKategorie unterKategorie);
 
-    /**
-     * Gets the hersteller.
-     *
-     * @return the hersteller
-     */
-    String getHersteller();
+    @JsonGetter(ApiNames.BAHNVERWALTUNG)
+    @JsonView(Views.DropDown.class)
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= BahnverwaltungResolver.class)
+    IBahnverwaltung getBahnverwaltung();
 
-    /**
-     * Sets the hersteller.
-     *
-     * @param hersteller the new hersteller
-     */
+    @JsonSetter(ApiNames.BAHNVERWALTUNG)
+    @JsonDeserialize(as=Bahnverwaltung.class)
+    void setBahnverwaltung(IBahnverwaltung bahnverwaltung);
+    
+    @JsonGetter(ApiNames.HERSTELLER)
+    @JsonView(Views.DropDown.class)
+    String getHersteller();
+    
+    @JsonSetter(ApiNames.HERSTELLER)
     void setHersteller(String hersteller);
 
-    /**
-     * Gets the bauzeit.
-     *
-     * @return the bauzeit
-     */
+    @JsonGetter(ApiNames.BAUZEIT)
+    @JsonView(Views.DropDown.class)
+    @JsonFormat(shape=Shape.STRING, pattern= Formats.ISO8601_DATE)
     Date getBauzeit();
-
-    /**
-     * Sets the bauzeit.
-     *
-     * @param bauzeit the new bauzeit
-     */
+    
+    @JsonSetter(ApiNames.BAUZEIT)
     void setBauzeit(Date bauzeit);
-
-    /**
-     * Gets the anzahl.
-     *
-     * @return the anzahl
-     */
+    
+    @JsonGetter(ApiNames.ANZAHL)
+    @JsonView(Views.Public.class)
     Integer getAnzahl();
-
-    /**
-     * Sets the anzahl.
-     *
-     * @param anzahl the new anzahl
-     */
+    
+    @JsonSetter(ApiNames.ANZAHL)
     void setAnzahl(Integer anzahl);
-
-    /**
-     * Gets the betreibs nummer.
-     *
-     * @return the betreibs nummer
-     */
+    
+    @JsonGetter(ApiNames.BETREIBSNUMMER)
+    @JsonView(Views.DropDown.class)
     String getBetreibsNummer();
-
-    /**
-     * Sets the betreibs nummer.
-     *
-     * @param betreibsNummer the new betreibs nummer
-     */
+    
+    @JsonSetter(ApiNames.BETREIBSNUMMER)
     void setBetreibsNummer(String betreibsNummer);
-
-    /**
-     * Gets the antrieb.
-     *
-     * @return the antrieb
-     */
+    
+    @JsonGetter(ApiNames.ANTRIEB)
+    @JsonView(Views.Public.class)
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= AntriebResolver.class)
     IAntrieb getAntrieb();
-
-    /**
-     * Sets the antrieb.
-     *
-     * @param antrieb the new antrieb
-     */
+    
+    @JsonSetter(ApiNames.ANTRIEB)
+    @JsonDeserialize(as=Antrieb.class)
     void setAntrieb(IAntrieb antrieb);
-
-    /**
-     * Gets the achsfolg.
-     *
-     * @return the achsfolg
-     */
+    
+    @JsonGetter(ApiNames.ACHSFOLG)
+    @JsonView(Views.Public.class)
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= AchsfolgResolver.class)
     IAchsfolg getAchsfolg();
-
-    /**
-     * Sets the achsfolg.
-     *
-     * @param achsfolg the new achsfolg
-     */
+    
+    @JsonSetter(ApiNames.ACHSFOLG)
+    @JsonDeserialize(as=Achsfolg.class)
     void setAchsfolg(IAchsfolg achsfolg);
-
-    /**
-     * Gets the anfahrzugkraft.
-     *
-     * @return the anfahrzugkraft
-     */
+    
+    @JsonGetter(ApiNames.ANFAHRZUGKRAFT)
+    @JsonView(Views.Public.class)
     BigDecimal getAnfahrzugkraft();
-
-    /**
-     * Sets the anfahrzugkraft.
-     *
-     * @param anfahrzugkraft the new anfahrzugkraft
-     */
+    
+    @JsonSetter(ApiNames.ANFAHRZUGKRAFT)
     void setAnfahrzugkraft(BigDecimal anfahrzugkraft);
-
-    /**
-     * Gets the leistung.
-     *
-     * @return the leistung
-     */
+    
+    @JsonGetter(ApiNames.LEISTUNG)
+    @JsonView(Views.Public.class)
     BigDecimal getLeistung();
-
-    /**
-     * Sets the leistung.
-     *
-     * @param leistung the new leistung
-     */
+    
+    @JsonSetter(ApiNames.LEISTUNG)
     void setLeistung(BigDecimal leistung);
 
-    /**
-     * Gets the dienstgewicht.
-     *
-     * @return the dienstgewicht
-     */
+    @JsonGetter(ApiNames.DIENSTGEWICHT)
+    @JsonView(Views.Public.class)
     BigDecimal getDienstgewicht();
 
-    /**
-     * Sets the dienstgewicht.
-     *
-     * @param dienstgewicht the new dienstgewicht
-     */
+    @JsonSetter(ApiNames.DIENSTGEWICHT)
     void setDienstgewicht(BigDecimal dienstgewicht);
 
-    /**
-     * Gets the geschwindigkeit.
-     *
-     * @return the geschwindigkeit
-     */
+    @JsonGetter(ApiNames.GESCHWINDIGKEIT)
+    @JsonView(Views.Public.class)
     Integer getGeschwindigkeit();
 
-    /**
-     * Sets the geschwindigkeit.
-     *
-     * @param geschwindigkeit the new geschwindigkeit
-     */
+    @JsonSetter(ApiNames.GESCHWINDIGKEIT)
     void setGeschwindigkeit(Integer geschwindigkeit);
 
-    /**
-     * Gets the lange.
-     *
-     * @return the lange
-     */
+    @JsonGetter(ApiNames.LANGE)
+    @JsonView(Views.Public.class)
     BigDecimal getLange();
 
-    /**
-     * Sets the lange.
-     *
-     * @param luep the new lange
-     */
-    void setLange(BigDecimal luep);
+    @JsonSetter(ApiNames.LANGE)
+    void setLange(BigDecimal lange);
 
-    /**
-     * Gets the ausserdienst.
-     *
-     * @return the ausserdienst
-     */
+    @JsonGetter(ApiNames.AUSSERDIENST)
+    @JsonView(Views.DropDown.class)
+    @JsonFormat(shape=Shape.STRING, pattern=Formats.ISO8601_DATE)
     Date getAusserdienst();
 
-    /**
-     * Sets the ausserdienst.
-     *
-     * @param ausserdienst the new ausserdienst
-     */
+    @JsonSetter(ApiNames.AUSSERDIENST)
     void setAusserdienst(Date ausserdienst);
 
-    /**
-     * Gets the dm treibrad.
-     *
-     * @return the dm treibrad
-     */
+    @JsonGetter(ApiNames.DMTREIBRAD)
+    @JsonView(Views.Public.class)
     BigDecimal getDmTreibrad();
 
-    /**
-     * Sets the dm treibrad.
-     *
-     * @param dmTreibrad the new dm treibrad
-     */
+    @JsonSetter(ApiNames.DMTREIBRAD)
     void setDmTreibrad(BigDecimal dmTreibrad);
 
-    /**
-     * Gets the dm laufrad vorn.
-     *
-     * @return the dm laufrad vorn
-     */
+    @JsonGetter(ApiNames.DMLAUFRADVORN)
+    @JsonView(Views.Public.class)
     BigDecimal getDmLaufradVorn();
 
-    /**
-     * Sets the dm laufrad vorn.
-     *
-     * @param dmLaufradVorn the new dm laufrad vorn
-     */
+    @JsonSetter(ApiNames.DMLAUFRADVORN)
     void setDmLaufradVorn(BigDecimal dmLaufradVorn);
 
-    /**
-     * Gets the dm laufrad hinten.
-     *
-     * @return the dm laufrad hinten
-     */
+    @JsonGetter(ApiNames.DMLAUFRADHINTEN)
+    @JsonView(Views.Public.class)
     BigDecimal getDmLaufradHinten();
 
-    /**
-     * Sets the dm laufrad hinten.
-     *
-     * @param dmLaufradHinten the new dm laufrad hinten
-     */
+    @JsonSetter(ApiNames.DMLAUFRADHINTEN)
     void setDmLaufradHinten(BigDecimal dmLaufradHinten);
 
-    /**
-     * Gets the zylinder.
-     *
-     * @return the zylinder
-     */
+    @JsonGetter(ApiNames.ZYLINDER)
+    @JsonView(Views.Public.class)
     Integer getZylinder();
 
-    /**
-     * Sets the zylinder.
-     *
-     * @param zylinder the new zylinder
-     */
+    @JsonSetter(ApiNames.ZYLINDER)
     void setZylinder(Integer zylinder);
 
-    /**
-     * Gets the dm zylinder.
-     *
-     * @return the dm zylinder
-     */
+    @JsonGetter(ApiNames.DMZYLINDER)
+    @JsonView(Views.Public.class)
     BigDecimal getDmZylinder();
 
-    /**
-     * Sets the dm zylinder.
-     *
-     * @param dmZylinder the new dm zylinder
-     */
+    @JsonSetter(ApiNames.DMZYLINDER)
     void setDmZylinder(BigDecimal dmZylinder);
 
-    /**
-     * Gets the kolbenhub.
-     *
-     * @return the kolbenhub
-     */
+    @JsonGetter(ApiNames.KOLBENHUB)
+    @JsonView(Views.Public.class)
     BigDecimal getKolbenhub();
 
-    /**
-     * Sets the kolbenhub.
-     *
-     * @param kolbenhub the new kolbenhub
-     */
+    @JsonSetter(ApiNames.KOLBENHUB)
     void setKolbenhub(BigDecimal kolbenhub);
 
-    /**
-     * Gets the kesselueberdruck.
-     *
-     * @return the kesselueberdruck
-     */
+    @JsonGetter(ApiNames.KESSELUEBERDRUCK)
+    @JsonView(Views.Public.class)
     BigDecimal getKesselueberdruck();
 
-    /**
-     * Sets the kesselueberdruck.
-     *
-     * @param kesselueberdruck the new kesselueberdruck
-     */
+    @JsonSetter(ApiNames.KESSELUEBERDRUCK)
     void setKesselueberdruck(BigDecimal kesselueberdruck);
 
-    /**
-     * Gets the rostflaeche.
-     *
-     * @return the rostflaeche
-     */
+    @JsonGetter(ApiNames.ROSTFLAECHE)
+    @JsonView(Views.Public.class)
     BigDecimal getRostflaeche();
 
-    /**
-     * Sets the rostflaeche.
-     *
-     * @param rostflaeche the new rostflaeche
-     */
+    @JsonSetter(ApiNames.ROSTFLAECHE)
     void setRostflaeche(BigDecimal rostflaeche);
 
-    /**
-     * Gets the ueberhitzerflaeche.
-     *
-     * @return the ueberhitzerflaeche
-     */
+    @JsonGetter(ApiNames.UEBERHITZERFLAECHE)
+    @JsonView(Views.Public.class)
     BigDecimal getUeberhitzerflaeche();
 
-    /**
-     * Sets the ueberhitzerflaeche.
-     *
-     * @param ueberhitzerflaeche the new ueberhitzerflaeche
-     */
+    @JsonSetter(ApiNames.UEBERHITZERFLAECHE)
     void setUeberhitzerflaeche(BigDecimal ueberhitzerflaeche);
 
-    /**
-     * Gets the wasservorrat.
-     *
-     * @return the wasservorrat
-     */
+    @JsonGetter(ApiNames.WASSERVORRAT)
+    @JsonView(Views.Public.class)
     BigDecimal getWasservorrat();
 
-    /**
-     * Sets the wasservorrat.
-     *
-     * @param wasservorrat the new wasservorrat
-     */
+    @JsonSetter(ApiNames.WASSERVORRAT)
     void setWasservorrat(BigDecimal wasservorrat);
 
-    /**
-     * Gets the verdampfung.
-     *
-     * @return the verdampfung
-     */
+    @JsonGetter(ApiNames.VERDAMPFUNG)
+    @JsonView(Views.Public.class)
     BigDecimal getVerdampfung();
 
-    /**
-     * Sets the verdampfung.
-     *
-     * @param verdampfung the new verdampfung
-     */
+    @JsonSetter(ApiNames.VERDAMPFUNG)
     void setVerdampfung(BigDecimal verdampfung);
 
-    /**
-     * Gets the fahrmotoren.
-     *
-     * @return the fahrmotoren
-     */
+    @JsonGetter(ApiNames.FAHRMOTOREN)
+    @JsonView(Views.Public.class)
     Integer getFahrmotoren();
 
-    /**
-     * Sets the fahrmotoren.
-     *
-     * @param fahrmotoren the new fahrmotoren
-     */
+    @JsonSetter(ApiNames.FAHRMOTOREN)
     void setFahrmotoren(Integer fahrmotoren);
 
-    /**
-     * Gets the motorbauart.
-     *
-     * @return the motorbauart
-     */
+    @JsonGetter(ApiNames.MOTORBAUART)
+    @JsonView(Views.Public.class)
     String getMotorbauart();
 
-    /**
-     * Sets the motorbauart.
-     *
-     * @param motorbauart the new motorbauart
-     */
+    @JsonSetter(ApiNames.MOTORBAUART)
     void setMotorbauart(String motorbauart);
 
-    /**
-     * Gets the leistungsuebertragung.
-     *
-     * @return the leistungsuebertragung
-     */
+    @JsonGetter(ApiNames.LEISTUNGSUEBERTRAGUNG)
+    @JsonView(Views.Public.class)
     BigDecimal getLeistungsuebertragung();
 
-    /**
-     * Sets the leistungsuebertragung.
-     *
-     * @param leistungsuebertragung the new leistungsuebertragung
-     */
+    @JsonSetter(ApiNames.LEISTUNGSUEBERTRAGUNG)
     void setLeistungsuebertragung(BigDecimal leistungsuebertragung);
 
-    /**
-     * Gets the reichweite.
-     *
-     * @return the reichweite
-     */
+    @JsonGetter(ApiNames.REICHWEITE)
+    @JsonView(Views.Public.class)
     BigDecimal getReichweite();
 
-    /**
-     * Sets the reichweite.
-     *
-     * @param reichweite the new reichweite
-     */
+    @JsonSetter(ApiNames.REICHWEITE)
     void setReichweite(BigDecimal reichweite);
 
-    /**
-     * Gets the kapazitaet.
-     *
-     * @return the kapazitaet
-     */
+    @JsonGetter(ApiNames.KAPAZITAT)
+    @JsonView(Views.Public.class)
     BigDecimal getKapazitat();
 
-    /**
-     * Sets the kapazitaet.
-     *
-     * @param kapazitaet the new kapazitaet
-     */
-    void setKapazitat(BigDecimal kapazitaet);
+    @JsonSetter(ApiNames.KAPAZITAT)
+    void setKapazitat(BigDecimal kapazitat);
 
-    /**
-     * Gets the klasse.
-     *
-     * @return the klasse
-     */
+    @JsonGetter(ApiNames.KLASSE)
+    @JsonView(Views.Public.class)
     Integer getKlasse();
 
-    /**
-     * Sets the klasse.
-     *
-     * @param klasse the new klasse
-     */
+    @JsonSetter(ApiNames.KLASSE)
     void setKlasse(Integer klasse);
 
-    /**
-     * Gets the sitz platze KL 1.
-     *
-     * @return the sitz platze KL 1
-     */
+    @JsonGetter(ApiNames.SITZPLATZEKL1)
+    @JsonView(Views.Public.class)
     Integer getSitzPlatzeKL1();
 
-    /**
-     * Sets the sitz platze KL 1.
-     *
-     * @param sitzPlatzeKL1 the new sitz platze KL 1
-     */
+    @JsonSetter(ApiNames.SITZPLATZEKL1)
     void setSitzPlatzeKL1(Integer sitzPlatzeKL1);
 
-    /**
-     * Gets the sitz platze KL 2.
-     *
-     * @return the sitz platze KL 2
-     */
+    @JsonGetter(ApiNames.SITZPLATZEKL2)
+    @JsonView(Views.Public.class)
     Integer getSitzPlatzeKL2();
 
-    /**
-     * Sets the sitz platze KL 2.
-     *
-     * @param sitzPlatzeKL2 the new sitz platze KL 2
-     */
+    @JsonSetter(ApiNames.SITZPLATZEKL2)
     void setSitzPlatzeKL2(Integer sitzPlatzeKL2);
 
-    /**
-     * Gets the sitz platze KL 3.
-     *
-     * @return the sitz platze KL 3
-     */
+    @JsonGetter(ApiNames.SITZPLATZEKL3)
+    @JsonView(Views.Public.class)
     Integer getSitzPlatzeKL3();
 
-    /**
-     * Sets the sitz platze KL 3.
-     *
-     * @param sitzPlatzeKL3 the new sitz platze KL 3
-     */
+    @JsonSetter(ApiNames.SITZPLATZEKL3)
     void setSitzPlatzeKL3(Integer sitzPlatzeKL3);
 
-    /**
-     * Gets the sitz platze KL 4.
-     *
-     * @return the sitz platze KL 4
-     */
+    @JsonGetter(ApiNames.SITZPLATZEKL4)
+    @JsonView(Views.Public.class)
     Integer getSitzPlatzeKL4();
 
-    /**
-     * Sets the sitz platze KL 4.
-     *
-     * @param sitzPlatzeKL4 the new sitz platze KL 4
-     */
+    @JsonSetter(ApiNames.SITZPLATZEKL4)
     void setSitzPlatzeKL4(Integer sitzPlatzeKL4);
 
-    /**
-     * Gets the aufbauten.
-     *
-     * @return the aufbauten
-     */
+    @JsonGetter(ApiNames.AUFBAU)
+    @JsonView(Views.Public.class)
     String getAufbau();
 
-    /**
-     * Sets the aufbauten.
-     *
-     * @param aufbauten the new aufbauten
-     */
-    void setAufbau(String aufbauten);
+    @JsonSetter(ApiNames.AUFBAU)
+    void setAufbau(String aufbau);
 
-    /**
-     * Gets the triebzug anzeigen.
-     *
-     * @return the triebzug anzeigen
-     */
+    @JsonGetter(ApiNames.TRIEBZUGANZEIGEN)
+    @JsonView(Views.Public.class)
     Boolean getTriebzugAnzeigen();
 
-    /**
-     * Sets the triebzug anzeigen.
-     *
-     * @param triebzugAnzeigen the new triebzug anzeigen
-     */
+    @JsonSetter(ApiNames.TRIEBZUGANZEIGEN)
     void setTriebzugAnzeigen(Boolean triebzugAnzeigen);
 
-    /**
-     * Gets the triebkoepfe.
-     *
-     * @return the triebkoepfe
-     */
+    @JsonGetter(ApiNames.TRIEBKOEPFE)
+    @JsonView(Views.Public.class)
     Integer getTriebkoepfe();
 
-    /**
-     * Sets the triebkoepfe.
-     *
-     * @param triebkoepfe the new triebkoepfe
-     */
+    @JsonSetter(ApiNames.TRIEBKOEPFE)
     void setTriebkoepfe(Integer triebkoepfe);
 
-    /**
-     * Gets the mittelwagen.
-     *
-     * @return the mittelwagen
-     */
+    @JsonGetter(ApiNames.MITTELWAGEN)
+    @JsonView(Views.Public.class)
     Integer getMittelwagen();
 
-    /**
-     * Sets the mittelwagen.
-     *
-     * @param mittelwagen the new mittelwagen
-     */
+    @JsonSetter(ApiNames.MITTELWAGEN)
     void setMittelwagen(Integer mittelwagen);
 
-    /**
-     * Gets the sitz platze TZKL 1.
-     *
-     * @return the sitz platze TZKL 1
-     */
+    @JsonGetter(ApiNames.SITZPLATZETZKL1)
+    @JsonView(Views.Public.class)
     Integer getSitzPlatzeTZKL1();
 
-    /**
-     * Sets the sitz platze TZKL 1.
-     *
-     * @param sitzPlatzeTZKL1 the new sitz platze TZKL 1
-     */
+    @JsonSetter(ApiNames.SITZPLATZETZKL1)
     void setSitzPlatzeTZKL1(Integer sitzPlatzeTZKL1);
 
-    /**
-     * Gets the sitz platze tz KL 2.
-     *
-     * @return the sitz platze tz KL 2
-     */
+    @JsonGetter(ApiNames.SITZPLATZETZKL2)
+    @JsonView(Views.Public.class)
     Integer getSitzPlatzeTzKL2();
 
-    /**
-     * Sets the sitz platze tz KL 2.
-     *
-     * @param sitzPlatzeTzKL2 the new sitz platze tz KL 2
-     */
+    @JsonSetter(ApiNames.SITZPLATZETZKL2)
     void setSitzPlatzeTzKL2(Integer sitzPlatzeTzKL2);
 
-    /**
-     * Gets the drehgestell bauart.
-     *
-     * @return the drehgestell bauart
-     */
+    @JsonGetter(ApiNames.DREHGESTELLBAUART)
+    @JsonView(Views.Public.class)
     String getDrehgestellBauart();
 
-    /**
-     * Sets the drehgestell bauart.
-     *
-     * @param drehgestellbauart the new drehgestell bauart
-     */
+    @JsonSetter(ApiNames.DREHGESTELLBAUART)
     void setDrehgestellBauart(String drehgestellbauart);
 
-    /**
-     * Gets the abbildung.
-     *
-     * @return the abbildung
-     */
+    @JsonGetter(ApiNames.ABBILDUNG)
+    @JsonView(Views.Public.class)
+    @JsonSerialize(as=String.class, using = PathSerializer.class)
+    @ApiModelProperty(name= ApiNames.ABBILDUNG, dataType = "String", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     Path getAbbildung();
 
-    /**
-     * Sets the abbildung.
-     *
-     * @param abbildung
-     *            the new abbildung
-     */
+    @JsonIgnore
     void setAbbildung(Path abbildung);
 }

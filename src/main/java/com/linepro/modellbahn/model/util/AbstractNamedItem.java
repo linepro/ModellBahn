@@ -33,7 +33,6 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version  $Id$
  */
 @MappedSuperclass
-@JsonPropertyOrder({ApiNames.ID,ApiNames.NAMEN,ApiNames.BEZEICHNUNG,ApiNames.DELETED, ApiNames.LINKS})
 public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> implements INamedItem<K>, Serializable {
 
     /** The Constant serialVersionUID. */
@@ -83,35 +82,28 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
     @Override
 	@BusinessKey
     @Column(name=DBNames.NAME, unique=true, length=50)
-    @JsonGetter(ApiNames.NAMEN)
-    @JsonView(Views.DropDown.class)
 	public String getName() {
 		return name;
 	}
 
 	@Override
-    @JsonSetter(ApiNames.NAMEN)
     public void setName(String name) {
 		this.name = name;
 	}
 
 	@Override
     @Column(name=DBNames.BEZEICHNUNG, length=100)
-    @JsonGetter(ApiNames.BEZEICHNUNG)
-    @JsonView(Views.DropDown.class)
 	public String getBezeichnung() {
 		return bezeichnung;
 	}
 
 	@Override
-    @JsonSetter(ApiNames.BEZEICHNUNG)
     public void setBezeichnung(String bezeichnung) {
 		this.bezeichnung = bezeichnung;
 	}
 
     @Override
     @Transient
-    @JsonIgnore
     public String getLinkId() {
         return getName().codePoints()
                 .mapToObj(this::encodeChar)

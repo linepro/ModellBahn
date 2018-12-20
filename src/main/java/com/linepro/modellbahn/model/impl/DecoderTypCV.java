@@ -50,8 +50,6 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Table(name = DBNames.DECODER_TYP_CV, indexes = { @Index(columnList = DBNames.DECODER_TYP_ID +"," + DBNames.CV, unique = true),
         @Index(columnList = DBNames.DECODER_TYP_ID), @Index(columnList = DBNames.CV) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.DECODER_TYP_ID, DBNames.CV }) })
-@JsonRootName(value = ApiNames.CV)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.CV,  ApiNames.BEZEICHNUNG,  ApiNames.MINIMAL,  ApiNames.MAXIMAL,  ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED, ApiNames.LINKS}) 
 public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDecoderTypCV {
 
     /** The Constant serialVersionUID. */
@@ -116,16 +114,11 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
     @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_TYP_CV + "_fk1"))
-    @JsonGetter(ApiNames.DECODER_TYP)
-    @JsonView(Views.DropDown.class)
-    @JsonSerialize(using=DecoderTypSerializer.class)
     public IDecoderTyp getDecoderTyp() {
         return decoderTyp;
     }
 
     @Override
-    @JsonSetter(ApiNames.DECODER_TYP)
-    @JsonDeserialize(as=DecoderTyp.class)
     public void setDecoderTyp(IDecoderTyp decoderTyp) {
         this.decoderTyp = decoderTyp;
     }
@@ -138,77 +131,62 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
     }
 
     @Override
-    @JsonSetter(ApiNames.CV)
     public void setCv(Integer cv) {
         this.cv = cv;
     }
 
     @Override
     @Column(name = DBNames.BEZEICHNUNG, length = 100)
-    @JsonGetter(ApiNames.BEZEICHNUNG)
-    @JsonView(Views.DropDown.class)
     public String getBezeichnung() {
         return bezeichnung;
     }
 
     @Override
-    @JsonSetter(ApiNames.BEZEICHNUNG)
     public void setBezeichnung(String bezeichnung) {
         this.bezeichnung = bezeichnung;
     }
 
     @Override
     @Column(name = DBNames.MINIMAL)
-    @JsonGetter(ApiNames.MINIMAL)
-    @JsonView(Views.Public.class)
     public Integer getMinimal() {
         return minimal;
     }
 
     @Override
-    @JsonSetter(ApiNames.MINIMAL)
     public void setMinimal(Integer minimal) {
         this.minimal = minimal;
     }
 
     @Override
     @Column(name = DBNames.MAXIMAL)
-    @JsonGetter(ApiNames.MAXIMAL)
-    @JsonView(Views.Public.class)
     public Integer getMaximal() {
         return maximal;
     }
 
     @Override
-    @JsonSetter(ApiNames.MAXIMAL)
     public void setMaximal(Integer maximal) {
         this.maximal = maximal;
     }
 
     @Override
     @Column(name = DBNames.WERKSEINSTELLUNG)
-    @JsonGetter(ApiNames.WERKSEINSTELLUNG)
-    @JsonView(Views.Public.class)
     public Integer getWerkseinstellung() {
         return werkseinstellung;
     }
 
     @Override
-    @JsonSetter(ApiNames.WERKSEINSTELLUNG)
     public void setWerkseinstellung(Integer werkseinstellung) {
         this.werkseinstellung = werkseinstellung;
     }
 
     @Override
     @Transient
-    @JsonIgnore
     public String getParentId() {
         return getDecoderTyp().getLinkId();
     }
 
     @Override
     @Transient
-    @JsonIgnore
     public String getLinkId() {
         return String.format(ApiPaths.DECODER_TYP_CV_LINK, getParentId(), getCv());
     }

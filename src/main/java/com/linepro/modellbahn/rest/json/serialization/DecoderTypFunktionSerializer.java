@@ -26,10 +26,10 @@ public class DecoderTypFunktionSerializer extends StdSerializer<DecoderTypFunkti
     @Override
     public void serialize(DecoderTypFunktion value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
-        gen.writeObjectField("bank", value.getReihe());
+        gen.writeObjectField(ApiNames.REIHE, value.getReihe());
         gen.writeObjectField(ApiNames.FUNKTION, value.getName());
         gen.writeObjectField(ApiNames.BEZEICHNUNG, value.getBezeichnung());
-        gen.writeObjectField("programmable", value.getProgrammable());
+        gen.writeObjectField(ApiNames.PROGRAMMABLE, value.getProgrammable());
         utils.writeLinks(ApiNames.LINKS, value.getLinks(), gen, serializers);
         gen.writeEndObject();
     }

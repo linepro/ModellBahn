@@ -22,8 +22,6 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 @Entity(name = DBNames.PROTOKOLL)
 @Table(name = DBNames.PROTOKOLL, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
-@JsonRootName(value = ApiNames.PROTOKOLL)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 public class Protokoll extends AbstractNamedItem<NameKey> implements IProtokoll {
 
     /** The Constant serialVersionUID. */
