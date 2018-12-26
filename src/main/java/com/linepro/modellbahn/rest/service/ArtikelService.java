@@ -44,7 +44,11 @@ import com.linepro.modellbahn.rest.util.IFileUploadHandler;
 import com.linepro.modellbahn.util.StaticContentFinder;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * ArtikelService. CRUD service for Artikel
@@ -112,6 +116,26 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Artikeln by example", response = Artikel.class, responseContainer = "List")
+    @ApiImplicitParams({
+        @ApiImplicitParam( name = ApiNames.ID, value = "Artikel's id", required = false, dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.HERSTELLER, value = "Artikel's manufacturer", required = false, dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BESTELL_NR, value = "Artikel's order number", required = false, dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.KAUFDATUM, value = "Artikel's purchase date", required = false, dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.WAHRUNG, value = "Artikel's currency", required = false, dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PREIS, value = "Artikel's price", required = false, dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.STUCK, value = "Artikel count", required = false, dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.STEUERUNG, value = "Artikel's control method", required = false, dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.MOTOR_TYP, value = "Artikel's motor type", required = false, dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.LICHT, value = "Artikel's light configuration", required = false, dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.KUPPLUNG, value = "Artikel's coupling configuration", required = false, dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DECODER, value = "Artikel's decoderId", required = false, dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Artikel's name", required = false, dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Artikel's description", required = false, dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.ANMERKUNG, value = "Artikel's remarks", required = false, dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BELADUNG, value = "Artikel's load", required = false, dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.STATUS, value = "Artikel's status", required = false, dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Artikel is deleted", required = false, dataType = "Boolean", paramType = "query")
+        })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -120,7 +144,7 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Adds an Artikel", response = Artikel.class)
+    @ApiOperation(code = 201, value = "Adds an Artikel", response = Artikel.class)
     public Response add(Artikel entity) {
         return super.add(entity);
     }
@@ -130,7 +154,7 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Updates an Artikel by id", response = Artikel.class)
+    @ApiOperation(code = 202, value = "Updates an Artikel by id", response = Artikel.class)
     public Response update(@PathParam(ApiPaths.ID_PARAM_NAME) Long name, Artikel entity) {
         return super.update(name, entity);
     }
@@ -139,7 +163,7 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     @Path(ApiPaths.ID_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Deletes an Artikel by id")
+    @ApiOperation(code = 204, value = "Deletes an Artikel by id")
     public Response delete(@PathParam(ApiPaths.ID_PARAM_NAME) Long name) {
         return super.delete(name);
     }
@@ -150,6 +174,11 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Adds or updates the image for a named Artikel", response = Artikel.class)
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 404, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response updateAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
@@ -183,6 +212,9 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Deletes the image for a named Artikel", response = Artikel.class)
+    @ApiResponses({
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response deleteAbbildung(@PathParam(ApiPaths.ID_PARAM_NAME) String name) {
         try {
             IArtikel artikel = findArtikel(name, false);

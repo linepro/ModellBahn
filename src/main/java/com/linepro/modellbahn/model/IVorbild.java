@@ -23,8 +23,6 @@ import com.linepro.modellbahn.model.impl.Bahnverwaltung;
 import com.linepro.modellbahn.model.impl.Gattung;
 import com.linepro.modellbahn.model.impl.UnterKategorie;
 import com.linepro.modellbahn.model.keys.NameKey;
-import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.persistence.util.PathConverter;
 import com.linepro.modellbahn.rest.json.Formats;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.resolver.AchsfolgResolver;
@@ -35,16 +33,8 @@ import com.linepro.modellbahn.rest.json.serialization.IUnterKategorieRef;
 import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
 import com.linepro.modellbahn.rest.json.serialization.UnterKategorieSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
-import io.swagger.annotations.ApiModelProperty;
 
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * IVorbild.

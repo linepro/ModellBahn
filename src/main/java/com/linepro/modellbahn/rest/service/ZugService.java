@@ -19,14 +19,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IZug;
-import com.linepro.modellbahn.model.IZugConsist;
 import com.linepro.modellbahn.model.IZugTyp;
-import com.linepro.modellbahn.model.impl.Zug;
 import com.linepro.modellbahn.model.impl.Artikel;
 import com.linepro.modellbahn.model.impl.Zug;
 import com.linepro.modellbahn.model.impl.ZugConsist;
 import com.linepro.modellbahn.model.keys.NameKey;
-import com.linepro.modellbahn.model.keys.ZugConsistKey;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.json.Views;
@@ -35,6 +32,8 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -99,6 +98,13 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Zugen by example", response = Zug.class, responseContainer = "List")
+    @ApiImplicitParams({
+        @ApiImplicitParam( name = ApiNames.ID, value = "Zug's id", required = false, dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.ZUG_TYP, value = "Zug's typ", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Zug's name", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Zug's description", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Zug is deleted", required = false, dataType = "Boolean", paramType = "query")
+    })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -107,7 +113,7 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Adds a Zug", response = Zug.class)
+    @ApiOperation(code = 201, value = "Adds a Zug", response = Zug.class)
     public Response add(Zug entity) {
         return super.add(entity);
     }
@@ -117,7 +123,7 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Updates a Zug by name", response = Zug.class)
+    @ApiOperation(code = 202, value = "Updates a Zug by name", response = Zug.class)
     public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Zug entity) {
         return super.update(name, entity);
     }
@@ -126,7 +132,7 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Deletes a Zug by name")
+    @ApiOperation(code = 204, value = "Deletes a Zug by name")
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }
@@ -136,7 +142,7 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Adds a vehicle to a named Zug", response = ZugConsist.class)
+    @ApiOperation(code = 201, value = "Adds a vehicle to a named Zug", response = ZugConsist.class)
     public Response addConsist(@PathParam(ApiPaths.NAME_PARAM_NAME) String zugStr, @QueryParam(ApiPaths.ARTIKEL) String artikelId) {
         try {
             logPost(zugStr + "/" + artikelId);
@@ -170,7 +176,7 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Updates a vehicle in a named Zug", response = ZugConsist.class)
+    @ApiOperation(code = 202, value = "Updates a vehicle in a named Zug", response = ZugConsist.class)
     public Response updateConsist(@PathParam(ApiPaths.ZUG_PARAM_NAME) String zugStr, @PathParam(ApiPaths.POSITION_PARAM_NAME) Integer position, @QueryParam(ApiPaths.ARTIKEL) String artikelId) {
         try {
             logPost(zugStr + "/" + position + "?" + artikelId);
@@ -201,7 +207,7 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @Path(ApiPaths.ZUG_CONSIST_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Removes a vehicle from a named Zug")
+    @ApiOperation(code = 204, value = "Removes a vehicle from a named Zug")
     public Response deleteConsist(@PathParam(ApiPaths.ZUG_PARAM_NAME) String zugStr, @PathParam(ApiPaths.POSITION_PARAM_NAME) Integer position) {
         try {
             ZugConsist zugConsist = (ZugConsist) findZugConsist(zugStr, position, true);

@@ -18,6 +18,7 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.ILink;
 import com.linepro.modellbahn.rest.json.serialization.LinkSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
+
 import io.swagger.annotations.ApiModelProperty;
 
 /**
@@ -39,6 +40,7 @@ public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializabl
      */
     @JsonGetter(ApiNames.ID)
     @JsonView(Views.Internal.class)
+    @ApiModelProperty(accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     Long getId();
 
     /**

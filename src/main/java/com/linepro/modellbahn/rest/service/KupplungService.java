@@ -15,7 +15,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import com.linepro.modellbahn.model.impl.Kupplung;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -35,6 +34,8 @@ import com.linepro.modellbahn.rest.util.IFileUploadHandler;
 import com.linepro.modellbahn.util.StaticContentFinder;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -76,6 +77,12 @@ public class KupplungService extends AbstractItemService<NameKey, Kupplung> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Kupplungen by example", response = Kupplung.class, responseContainer = "List")
+    @ApiImplicitParams({
+        @ApiImplicitParam( name = ApiNames.ID, value = "Kupplung's id", required = false, dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Kupplung's name", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Kupplung's description", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Kupplung is deleted", required = false, dataType = "Boolean", paramType = "query")
+})
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -84,7 +91,7 @@ public class KupplungService extends AbstractItemService<NameKey, Kupplung> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Adds a Kupplung", response = Kupplung.class)
+    @ApiOperation(code = 201, value = "Adds a Kupplung", response = Kupplung.class)
     public Response add(Kupplung entity) {
         return super.add(entity);
     }
@@ -94,7 +101,7 @@ public class KupplungService extends AbstractItemService<NameKey, Kupplung> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Updates a Kupplung by name", response = Kupplung.class)
+    @ApiOperation(code = 202, value = "Updates a Kupplung by name", response = Kupplung.class)
     public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Kupplung entity) {
         return super.update(name, entity);
     }
@@ -103,7 +110,7 @@ public class KupplungService extends AbstractItemService<NameKey, Kupplung> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Deletes a Kupplung by name")
+    @ApiOperation(code = 204, value = "Deletes a Kupplung by name")
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }
@@ -113,7 +120,7 @@ public class KupplungService extends AbstractItemService<NameKey, Kupplung> {
     @Consumes({ MediaType.MULTIPART_FORM_DATA })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Adds or updates the picture for a named Kupplung", response = Kupplung.class)
+    @ApiOperation(code = 201, value = "Adds or updates the picture for a named Kupplung", response = Kupplung.class)
     public Response updateAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
@@ -146,7 +153,7 @@ public class KupplungService extends AbstractItemService<NameKey, Kupplung> {
     @Path(ApiPaths.ABBILDUNG_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Deletes the picture from a named Kupplung", response = Kupplung.class)
+    @ApiOperation(code = 204, value = "Deletes the picture from a named Kupplung", response = Kupplung.class)
     public Response deleteAbbildung(@PathParam(ApiPaths.ID_PARAM_NAME) String name) {
         try {
             IKupplung kupplung = findKupplung(name, false);

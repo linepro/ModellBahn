@@ -17,15 +17,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import com.linepro.modellbahn.model.IAchsfolg;
-import com.linepro.modellbahn.model.impl.Vorbild;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.linepro.modellbahn.model.IVorbild;
+import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.IAntrieb;
 import com.linepro.modellbahn.model.IBahnverwaltung;
 import com.linepro.modellbahn.model.IGattung;
@@ -43,6 +41,8 @@ import com.linepro.modellbahn.rest.util.IFileUploadHandler;
 import com.linepro.modellbahn.util.StaticContentFinder;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -130,6 +130,54 @@ public class VorbildService extends AbstractItemService<NameKey, Vorbild> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Vorbilden by example", response = Vorbild.class, responseContainer = "List")
+    @ApiImplicitParams({
+        @ApiImplicitParam( name = ApiNames.ID, value = "Vorbild's id", required = false, dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.GATTUNG, value = "", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name =  ApiNames.UNTER_KATEGORIE, value = "", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name =  ApiNames.BAHNVERWALTUNG, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.HERSTELLER, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.BAUZEIT, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.ANZAHL, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.BETREIBSNUMMER, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.ANTRIEB, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.ACHSFOLG, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.ANFAHRZUGKRAFT, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.LEISTUNG, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.DIENSTGEWICHT, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.GESCHWINDIGKEIT, value = "", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name =  ApiNames.LANGE, value = "", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name =  ApiNames.AUSSERDIENST, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.DMTREIBRAD, value = "", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name =  ApiNames.DMLAUFRADVORN, value = "", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name =  ApiNames.DMLAUFRADHINTEN, value = "", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name =  ApiNames.ZYLINDER, value = "", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name =  ApiNames.DMZYLINDER, value = "", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name =  ApiNames.KOLBENHUB, value = "", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name =  ApiNames.KESSELUEBERDRUCK, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.ROSTFLAECHE, value = "", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name =  ApiNames.UEBERHITZERFLAECHE, value = "", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name =  ApiNames.WASSERVORRAT, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.VERDAMPFUNG, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.STEUERUNG, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.FAHRMOTOREN, value = "", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name =  ApiNames.MOTORBAUART, value = "", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name =  ApiNames.LEISTUNGSUEBERTRAGUNG, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.REICHWEITE, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.KAPAZITAT, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.KLASSE, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.SITZPLATZEKL1, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.SITZPLATZEKL2, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.SITZPLATZEKL3, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.SITZPLATZEKL4, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.AUFBAU, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.TRIEBZUGANZEIGEN, value = "", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name =  ApiNames.TRIEBKOEPFE, value = "", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name =  ApiNames.MITTELWAGEN, value = "", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name =  ApiNames.SITZPLATZETZKL1, value = "", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name =  ApiNames.SITZPLATZETZKL2, value = "", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name =  ApiNames.DREHGESTELLBAUART, value = "", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Vorbild is deleted", required = false, dataType = "Boolean", paramType = "query")
+        })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -138,7 +186,7 @@ public class VorbildService extends AbstractItemService<NameKey, Vorbild> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Updates a Vorbild by name", response = Vorbild.class)
+    @ApiOperation(code = 201, value = "Adds a Vorbild", response = Vorbild.class)
     public Response add(Vorbild entity) {
         return super.add(entity);
     }
@@ -148,7 +196,7 @@ public class VorbildService extends AbstractItemService<NameKey, Vorbild> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Updates a Vorbild by name", response = Vorbild.class)
+    @ApiOperation(code = 202, value = "Updates a Vorbild by name", response = Vorbild.class)
     public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Vorbild entity) {
         return super.update(name, entity);
     }
@@ -157,7 +205,7 @@ public class VorbildService extends AbstractItemService<NameKey, Vorbild> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Updates a Vorbild by name", response = Vorbild.class)
+    @ApiOperation(code = 204, value = "Deletes a Vorbild by name", response = Vorbild.class)
     public Response delete(@PathParam(ApiPaths.ID_PARAM_NAME) String name) {
         return super.delete(name);
     }
@@ -167,7 +215,7 @@ public class VorbildService extends AbstractItemService<NameKey, Vorbild> {
     @Consumes({ MediaType.MULTIPART_FORM_DATA })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Adds or updates thr picture for a named Vorbild", response = Vorbild.class)
+    @ApiOperation(code = 201, value = "Adds or updates thr picture for a named Vorbild", response = Vorbild.class)
     public Response updateAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {

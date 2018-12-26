@@ -13,7 +13,6 @@ import com.linepro.modellbahn.model.keys.ProduktTeilKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.IProduktRef;
 import com.linepro.modellbahn.rest.json.serialization.ProduktSerializer;
-import com.linepro.modellbahn.rest.json.serialization.ProduktTeilSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**

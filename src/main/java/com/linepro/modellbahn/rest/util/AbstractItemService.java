@@ -16,18 +16,6 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
-import com.linepro.modellbahn.model.IDecoderTypAdress;
-import com.linepro.modellbahn.model.IProtokoll;
-import com.linepro.modellbahn.model.IZugConsist;
-import com.linepro.modellbahn.model.impl.DecoderTypAdress;
-import com.linepro.modellbahn.model.impl.ProduktTeil;
-import com.linepro.modellbahn.model.impl.Protokoll;
-import com.linepro.modellbahn.model.impl.ZugConsist;
-import com.linepro.modellbahn.model.keys.DecoderTypAdressKey;
-import com.linepro.modellbahn.model.keys.ProduktTeilKey;
-import com.linepro.modellbahn.model.keys.ZugConsistKey;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -39,6 +27,7 @@ import com.linepro.modellbahn.model.IAufbau;
 import com.linepro.modellbahn.model.IBahnverwaltung;
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderTyp;
+import com.linepro.modellbahn.model.IDecoderTypAdress;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.IEpoch;
@@ -51,6 +40,7 @@ import com.linepro.modellbahn.model.ILicht;
 import com.linepro.modellbahn.model.IMassstab;
 import com.linepro.modellbahn.model.IMotorTyp;
 import com.linepro.modellbahn.model.IProdukt;
+import com.linepro.modellbahn.model.IProtokoll;
 import com.linepro.modellbahn.model.ISonderModell;
 import com.linepro.modellbahn.model.ISpurweite;
 import com.linepro.modellbahn.model.ISteuerung;
@@ -58,6 +48,7 @@ import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.IVorbild;
 import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.IZug;
+import com.linepro.modellbahn.model.IZugConsist;
 import com.linepro.modellbahn.model.IZugTyp;
 import com.linepro.modellbahn.model.impl.Achsfolg;
 import com.linepro.modellbahn.model.impl.Antrieb;
@@ -66,6 +57,7 @@ import com.linepro.modellbahn.model.impl.Aufbau;
 import com.linepro.modellbahn.model.impl.Bahnverwaltung;
 import com.linepro.modellbahn.model.impl.Decoder;
 import com.linepro.modellbahn.model.impl.DecoderTyp;
+import com.linepro.modellbahn.model.impl.DecoderTypAdress;
 import com.linepro.modellbahn.model.impl.DecoderTypCV;
 import com.linepro.modellbahn.model.impl.DecoderTypFunktion;
 import com.linepro.modellbahn.model.impl.Epoch;
@@ -77,6 +69,8 @@ import com.linepro.modellbahn.model.impl.Licht;
 import com.linepro.modellbahn.model.impl.Massstab;
 import com.linepro.modellbahn.model.impl.MotorTyp;
 import com.linepro.modellbahn.model.impl.Produkt;
+import com.linepro.modellbahn.model.impl.ProduktTeil;
+import com.linepro.modellbahn.model.impl.Protokoll;
 import com.linepro.modellbahn.model.impl.SonderModell;
 import com.linepro.modellbahn.model.impl.Spurweite;
 import com.linepro.modellbahn.model.impl.Steuerung;
@@ -84,19 +78,26 @@ import com.linepro.modellbahn.model.impl.UnterKategorie;
 import com.linepro.modellbahn.model.impl.Vorbild;
 import com.linepro.modellbahn.model.impl.Wahrung;
 import com.linepro.modellbahn.model.impl.Zug;
+import com.linepro.modellbahn.model.impl.ZugConsist;
 import com.linepro.modellbahn.model.impl.ZugTyp;
+import com.linepro.modellbahn.model.keys.DecoderTypAdressKey;
 import com.linepro.modellbahn.model.keys.DecoderTypCVKey;
 import com.linepro.modellbahn.model.keys.DecoderTypFunktionKey;
 import com.linepro.modellbahn.model.keys.DecoderTypKey;
 import com.linepro.modellbahn.model.keys.IdKey;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.keys.ProduktKey;
+import com.linepro.modellbahn.model.keys.ProduktTeilKey;
 import com.linepro.modellbahn.model.keys.UnterKategorieKey;
+import com.linepro.modellbahn.model.keys.ZugConsistKey;
 import com.linepro.modellbahn.persistence.IKey;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.util.Selector;
 import com.linepro.modellbahn.util.SelectorsBuilder;
+
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * AbstractService.
@@ -143,11 +144,19 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
    }
 
     @SuppressWarnings("unchecked")
+    @ApiResponses({
+        @ApiResponse(code = 404, message = "Not found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response get(Long id) {
         return get((K) new IdKey(id));
     }
 
     @SuppressWarnings("unchecked")
+    @ApiResponses({
+        @ApiResponse(code = 404, message = "Not found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response get(String name) {
         return get((K) new NameKey(name));
     }
@@ -158,11 +167,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      * @param key the key
      * @return the response
      */
-    @ApiResponses({
-            @ApiResponse(code = 404, message = "Not found"),
-            @ApiResponse(code = 500, message = "Internal Server Error")
-    })
-    public Response get(K key) {
+    protected Response get(K key) {
         try {
             logGet(getEntityClassName() + ": " + key);
 
@@ -185,26 +190,34 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      * @return the response
      */
     @ApiResponses({
-            @ApiResponse(code = 500, message = "Internal Server Error")
-    })
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response add(E entity) {
         try {
             logPost(getEntityClassName() + ": " + entity);
 
             E result = getPersister().add(entity);
 
-            return getResponse(ok(), result, true, true);
+            return getResponse(created(), result, true, true);
         } catch (Exception e) {
             return getResponse(serverError(e));
         }
     }
 
     @SuppressWarnings("unchecked")
+    @ApiResponses({
+        @ApiResponse(code = 404, message = "Not found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response update(Long id, E entity) {
         return update((K) new IdKey(id), entity);
     }
 
     @SuppressWarnings("unchecked")
+    @ApiResponses({
+        @ApiResponse(code = 404, message = "Not found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response update(String name, E entity) {
         return update((K) new NameKey(name), entity);
     }
@@ -216,11 +229,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      * @param entity the entity
      * @return the response
      */
-    @ApiResponses({
-            @ApiResponse(code = 404, message = "Not found"),
-            @ApiResponse(code = 500, message = "Internal Server Error")
-    })
-    public Response update(K id, E entity) {
+    protected Response update(K id, E entity) {
         try {
             logPut(id + ": " + entity);
 
@@ -237,11 +246,17 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
     }
 
     @SuppressWarnings("unchecked")
+    @ApiResponses({
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response delete(Long id) {
         return delete((K) new IdKey(id));
     }
 
     @SuppressWarnings("unchecked")
+    @ApiResponses({
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response delete(String name) {
         return delete((K) new NameKey(name));
     }
@@ -252,10 +267,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      * @param id the id
      * @return the response
      */
-    @ApiResponses({
-            @ApiResponse(code = 500, message = "Internal Server Error")
-    })
-    public Response delete(K id) {
+    protected Response delete(K id) {
         try {
             logDelete(getEntityClassName() + ": " + id);
 

@@ -26,6 +26,8 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -69,6 +71,14 @@ public class HerstellerService extends AbstractItemService<NameKey, Hersteller> 
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Herstelleren by example", response = Hersteller.class, responseContainer = "List")
+    @ApiImplicitParams({
+        @ApiImplicitParam( name = ApiNames.ID, value = "Hersteller's id", required = false, dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Hersteller's name", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Hersteller's description", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.TELEFON, value = "Hersteller's telefon", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.URL, value = "Hersteller's url", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Hersteller is deleted", required = false, dataType = "Boolean", paramType = "query")
+})
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -77,7 +87,7 @@ public class HerstellerService extends AbstractItemService<NameKey, Hersteller> 
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Adds a Hersteller", response = Hersteller.class)
+    @ApiOperation(code = 201, value = "Adds a Hersteller", response = Hersteller.class)
     public Response add(Hersteller entity) {
         return super.add(entity);
     }
@@ -87,7 +97,7 @@ public class HerstellerService extends AbstractItemService<NameKey, Hersteller> 
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Updates a Hersteller by name", response = Hersteller.class)
+    @ApiOperation(code = 202, value = "Updates a Hersteller by name", response = Hersteller.class)
     public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Hersteller entity) {
         return super.update(name, entity);
     }
@@ -96,7 +106,7 @@ public class HerstellerService extends AbstractItemService<NameKey, Hersteller> 
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Deletes a Hersteller by name")
+    @ApiOperation(code = 204, value = "Deletes a Hersteller by name")
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }

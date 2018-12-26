@@ -23,7 +23,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  * @version  $Id$
  */
 @JsonRootName(value = ApiNames.ZUG)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.ZUG_TYP, ApiNames.NAMEN,ApiNames.BEZEICHNUNG,ApiNames.DELETED, ApiNames.CONSIST, ApiNames.LINKS})
+@JsonPropertyOrder({ApiNames.ID, ApiNames.ZUG_TYP, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.CONSIST, ApiNames.LINKS})
 public interface IZug extends INamedItem<NameKey> {
 
     /**

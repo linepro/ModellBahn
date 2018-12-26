@@ -26,7 +26,6 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 import com.linepro.modellbahn.ModellBahn;
 import com.linepro.modellbahn.jersey.LoggingFilter;
 import com.linepro.modellbahn.jersey.SecurityRequestFilter;
-import com.linepro.modellbahn.rest.service.SwaggerListingResource;
 
 import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.jaxrs.config.SwaggerConfigLocator;

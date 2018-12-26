@@ -24,6 +24,8 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -65,6 +67,12 @@ public class AchsfolgService extends AbstractItemService<NameKey, Achsfolg> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Achsfolgen by example", response = Achsfolg.class, responseContainer = "List")
+    @ApiImplicitParams({
+        @ApiImplicitParam( name = ApiNames.ID, value = "Achsfolg's id", required = false, dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Achsfolg's name", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Achsfolg's description", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Achsfolg is deleted", required = false, dataType = "Boolean", paramType = "query")
+        })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -73,7 +81,7 @@ public class AchsfolgService extends AbstractItemService<NameKey, Achsfolg> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Adds an Achsfolg", response = Achsfolg.class)
+    @ApiOperation(code = 201, value = "Adds an Achsfolg", response = Achsfolg.class)
     public Response add(Achsfolg entity) {
         return super.add(entity);
     }
@@ -83,7 +91,7 @@ public class AchsfolgService extends AbstractItemService<NameKey, Achsfolg> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Updates an Achsfolg by name", response = Achsfolg.class)
+    @ApiOperation(code = 202, value = "Updates an Achsfolg by name", response = Achsfolg.class)
     public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Achsfolg entity) {
         return super.update(name, entity);
     }
@@ -92,7 +100,7 @@ public class AchsfolgService extends AbstractItemService<NameKey, Achsfolg> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Deletes an Achsfolg by name")
+    @ApiOperation(code = 204, value = "Deletes an Achsfolg by name")
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }

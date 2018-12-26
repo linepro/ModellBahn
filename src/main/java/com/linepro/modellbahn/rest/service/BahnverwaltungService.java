@@ -24,6 +24,8 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -65,6 +67,12 @@ public class BahnverwaltungService extends AbstractItemService<NameKey, Bahnverw
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Bahnverwaltungen by example", response = Bahnverwaltung.class, responseContainer = "List")
+    @ApiImplicitParams({
+        @ApiImplicitParam( name = ApiNames.ID, value = "Bahnverwaltung's id", required = false, dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Bahnverwaltung's name", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Bahnverwaltung's description", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Bahnverwaltung is deleted", required = false, dataType = "Boolean", paramType = "query")
+})
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -73,7 +81,7 @@ public class BahnverwaltungService extends AbstractItemService<NameKey, Bahnverw
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Adds a Bahnverwaltung", response = Bahnverwaltung.class)
+    @ApiOperation(code = 201, value = "Adds a Bahnverwaltung", response = Bahnverwaltung.class)
     public Response add(Bahnverwaltung entity) {
         return super.add(entity);
     }
@@ -83,7 +91,7 @@ public class BahnverwaltungService extends AbstractItemService<NameKey, Bahnverw
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Updates a Bahnverwaltung by name", response = Bahnverwaltung.class)
+    @ApiOperation(code = 202, value = "Updates a Bahnverwaltung by name", response = Bahnverwaltung.class)
     public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Bahnverwaltung entity) {
         return super.update(name, entity);
     }
@@ -92,7 +100,7 @@ public class BahnverwaltungService extends AbstractItemService<NameKey, Bahnverw
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Deletes a Bahnverwaltung by name")
+    @ApiOperation(code = 204, value = "Deletes a Bahnverwaltung by name")
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }

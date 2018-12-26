@@ -17,15 +17,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import com.linepro.modellbahn.model.IAchsfolg;
-import com.linepro.modellbahn.model.impl.Produkt;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.linepro.modellbahn.model.IProdukt;
+import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.IAufbau;
 import com.linepro.modellbahn.model.IBahnverwaltung;
 import com.linepro.modellbahn.model.IEpoch;
@@ -45,7 +43,6 @@ import com.linepro.modellbahn.model.impl.Produkt;
 import com.linepro.modellbahn.model.impl.ProduktTeil;
 import com.linepro.modellbahn.model.impl.UnterKategorie;
 import com.linepro.modellbahn.model.keys.ProduktKey;
-import com.linepro.modellbahn.model.keys.ProduktTeilKey;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.json.Views;
@@ -58,6 +55,8 @@ import com.linepro.modellbahn.rest.util.IFileUploadHandler;
 import com.linepro.modellbahn.util.StaticContentFinder;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -179,6 +178,12 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Produkten by example", response = Produkt.class, responseContainer = "List")
+    @ApiImplicitParams({
+        @ApiImplicitParam( name = ApiNames.ID, value = "Antrieb's id", required = false, dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Antrieb's name", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Antrieb's description", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Antrieb is deleted", required = false, dataType = "Boolean", paramType = "query")
+})
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -187,7 +192,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Adds a Produkt", response = Produkt.class)
+    @ApiOperation(code = 201, value = "Adds a Produkt", response = Produkt.class)
     public Response add(Produkt entity) {
         try {
             return super.add(entity);
@@ -201,7 +206,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Updates a Produkt by hersteller and bestell nr", response = Produkt.class)
+    @ApiOperation(code = 202, value = "Updates a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response update(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, Produkt entity) {
         try {
             return super.update(new ProduktKey(findHersteller(herstellerStr, false), bestellNr), entity);
@@ -214,7 +219,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     @Path(ApiPaths.PRODUKT_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Deletes a Produkt by hersteller and bestell nr")
+    @ApiOperation(code = 204, value = "Deletes a Produkt by hersteller and bestell nr")
     public Response delete(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
         try {
             return super.delete(new ProduktKey(findHersteller(herstellerStr, false), bestellNr));
@@ -228,7 +233,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Adds a sub produkt  a Produkt by hersteller and bestell nr", response = Produkt.class)
+    @ApiOperation(code = 201, value = "Adds a sub produkt  a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response addTeil(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathParam(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr, @PathParam(ApiPaths.TEIL_BESTELL_NR_PARAM_NAME) String teilBestellNr) {
         try {
             logPost(herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr);
@@ -265,7 +270,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Updates a sub produkt a Produkt by hersteller and bestell nr", response = Produkt.class)
+    @ApiOperation(code = 202, value = "Updates a sub produkt a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response updateTeil(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathParam(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr, @PathParam(ApiPaths.TEIL_BESTELL_NR_PARAM_NAME) String teilBestellNr) {
         try {
             logPut(herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr);
@@ -293,7 +298,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     @Path(ApiPaths.PRODUKT_TEIL_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Deletes a sub produkt for a Produkt by hersteller and bestell nr", response = Produkt.class)
+    @ApiOperation(code = 204, value = "Deletes a sub produkt for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response deleteTeil(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathParam(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr, @PathParam(ApiPaths.TEIL_BESTELL_NR_PARAM_NAME) String teilBestellNr) {
         try {
             logDelete(herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr);
@@ -323,7 +328,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     @Consumes({ MediaType.MULTIPART_FORM_DATA })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Adds or updates the picture for a Produkt by hersteller and bestell nr", response = Produkt.class)
+    @ApiOperation(code = 201, value = "Adds or updates the picture for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response updateAbbildung(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
@@ -356,7 +361,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     @Path(ApiPaths.PRODUKT_ABBILDUNG)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Deletes the picture for a Produkt by hersteller and bestell nr", response = Produkt.class)
+    @ApiOperation(code = 204, value = "Deletes the picture for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response deleteAbbildung(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
         try {
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
@@ -382,7 +387,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     @Consumes({ MediaType.MULTIPART_FORM_DATA })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Adds or updates the instructions for a Produkt by hersteller and bestell nr", response = Produkt.class)
+    @ApiOperation(code = 201, value = "Adds or updates the instructions for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response updateAnleitungen(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
                                       @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
@@ -415,7 +420,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     @Path(ApiPaths.PRODUKT_ANLEITUNGEN)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Deletes the instructions for a Produkt by hersteller and bestell nr", response = Produkt.class)
+    @ApiOperation(code = 204, value = "Deletes the instructions for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response deleteAnleitungen(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
         try {
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
@@ -441,7 +446,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     @Consumes({ MediaType.MULTIPART_FORM_DATA })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Adds or updates the drawing for a Produkt by hersteller and bestell nr", response = Produkt.class)
+    @ApiOperation(code = 201, value = "Adds or updates the drawing for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response updateExplosionszeichnung(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
                                               @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
@@ -474,7 +479,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     @Path(ApiPaths.PRODUKT_EXPLOSIONSZEICHNUNG)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Deletes the drawing for a Produkt by hersteller and bestell nr", response = Produkt.class)
+    @ApiOperation(code = 204, value = "Deletes the drawing for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response deleteExplosionszeichnung(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
         try {
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);

@@ -22,13 +22,11 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import io.swagger.annotations.ResponseHeader;
 
 /**
  * AntriebService. CRUD service for Antrieb
@@ -83,7 +81,7 @@ public class AntriebService extends AbstractItemService<NameKey, Antrieb> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Adds an Antrieb", response = Antrieb.class)
+    @ApiOperation(code = 201, value = "Adds an Antrieb", response = Antrieb.class)
     public Response add(Antrieb entity) {
         return super.add(entity);
     }
@@ -93,7 +91,7 @@ public class AntriebService extends AbstractItemService<NameKey, Antrieb> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Updates an Antrieb by name", response = Antrieb.class)
+    @ApiOperation(code = 202, value = "Updates an Antrieb by name", response = Antrieb.class)
     public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Antrieb entity) {
         return super.update(name, entity);
     }
@@ -102,7 +100,7 @@ public class AntriebService extends AbstractItemService<NameKey, Antrieb> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Deletes an Antrieb by name")
+    @ApiOperation(code = 204, value = "Deletes an Antrieb by name")
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }

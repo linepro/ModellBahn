@@ -33,6 +33,7 @@ public class UnterKategorieSerializer extends StdSerializer<UnterKategorie> {
     @Override
     public void serialize(UnterKategorie value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
+        gen.writeStringField(ApiNames.KATEGORIE, value.getKategorie().getName());
         gen.writeStringField(ApiNames.NAMEN, value.getName());
         gen.writeStringField(ApiNames.BEZEICHNUNG, value.getBezeichnung());
         utils.writeLinks(ApiNames.LINKS, value.getLinks(), gen, serializers);

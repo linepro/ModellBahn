@@ -17,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import com.linepro.modellbahn.model.impl.Decoder;
 import com.linepro.modellbahn.model.impl.Kupplung;
 import com.linepro.modellbahn.model.impl.Licht;
@@ -59,6 +58,7 @@ public interface IArtikel extends INamedItem<NameKey> {
     @JsonGetter(ApiNames.PRODUKT)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as = IProduktRef.class, using= ProduktSerializer.class)
+    @ApiModelProperty(name = ApiNames.PRODUKT, dataType = "com.linepro.modellbahn.rest.json.serialization.IProduktRef")
     IProdukt getProdukt();
 
     /**

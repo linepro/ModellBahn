@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.ws.rs.core.Link;
 
-import com.linepro.modellbahn.rest.json.serialization.ILink;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
@@ -12,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.ILink;
 import com.linepro.modellbahn.rest.json.serialization.LinkSerializer;
 
 public class ListWithLinks<E extends IItem<?>> {

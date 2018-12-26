@@ -18,11 +18,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IKategorie;
 import com.linepro.modellbahn.model.IUnterKategorie;
-import com.linepro.modellbahn.model.impl.Achsfolg;
 import com.linepro.modellbahn.model.impl.Kategorie;
 import com.linepro.modellbahn.model.impl.UnterKategorie;
 import com.linepro.modellbahn.model.keys.NameKey;
-import com.linepro.modellbahn.model.keys.UnterKategorieKey;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.json.Views;
@@ -31,7 +29,11 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * KategorieService. CRUD service for Kategorie and UnterKategorie
@@ -87,6 +89,12 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Kategorieen by example", response = Kategorie.class, responseContainer = "List")
+    @ApiImplicitParams({
+        @ApiImplicitParam( name = ApiNames.ID, value = "Kategorie's id", required = false, dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Kategorie's name", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Kategorie's description", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Kategorie is deleted", required = false, dataType = "Boolean", paramType = "query")
+})
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -95,7 +103,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Adds an Kategorie", response = Kategorie.class)
+    @ApiOperation(code = 201, value = "Adds an Kategorie", response = Kategorie.class)
     public Response add(Kategorie entity) {
         return super.add(entity);
     }
@@ -105,7 +113,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Updates an Kategorie by name", response = Kategorie.class)
+    @ApiOperation(code = 202, value = "Updates an Kategorie by name", response = Kategorie.class)
     public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Kategorie entity) {
         return super.update(name, entity);
     }
@@ -114,7 +122,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Deletes an Kategorie by name")
+    @ApiOperation(code = 204, value = "Deletes an Kategorie by name")
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }
@@ -149,7 +157,12 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Adds an UnterKategorie to a kategorie", response = UnterKategorie.class)
+    @ApiOperation(code = 202, value = "Adds an UnterKategorie to a kategorie", response = UnterKategorie.class)
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 402, message = "Not Found`"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response add(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, UnterKategorie unterKategorie) {
         try {
             logPost(kategorieStr + "/" + unterKategorie);
@@ -175,7 +188,12 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @PUT
     @Path(ApiPaths.UNTER_KATEGORIE_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Updates an UnterKategorie by kategorie and name", response = UnterKategorie.class)
+    @ApiOperation(code = 202, value = "Updates an UnterKategorie by kategorie and name", response = UnterKategorie.class)
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 402, message = "Not Found`"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response update(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr, UnterKategorie newUnterKategorie) {
         try {
@@ -209,7 +227,12 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @DELETE
     @Path(ApiPaths.UNTER_KATEGORIE_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Deletes an UnterKategorie by kategorie and name")
+    @ApiOperation(code = 204, value = "Deletes an UnterKategorie by kategorie and name")
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 402, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response delete(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) {
         try {

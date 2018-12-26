@@ -2,7 +2,6 @@ package com.linepro.modellbahn.model;
 
 import java.math.BigDecimal;
 import java.util.Set;
-import java.util.TreeSet;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -15,13 +14,10 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.model.impl.DecoderTypCV;
-import com.linepro.modellbahn.model.impl.DecoderTypFunktion;
 import com.linepro.modellbahn.model.impl.Hersteller;
 import com.linepro.modellbahn.model.impl.Protokoll;
 import com.linepro.modellbahn.model.keys.DecoderTypKey;
 import com.linepro.modellbahn.model.util.Konfiguration;
-import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.resolver.HerstellerResolver;
 import com.linepro.modellbahn.rest.json.resolver.ProtokollResolver;
@@ -32,11 +28,6 @@ import com.linepro.modellbahn.rest.json.serialization.IDecoderTypAdressRef;
 import com.linepro.modellbahn.rest.json.serialization.IDecoderTypCVRef;
 import com.linepro.modellbahn.rest.json.serialization.IDecoderTypFunktionRef;
 import com.linepro.modellbahn.rest.util.ApiNames;
-
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 /**
  * IDecoderTyp.

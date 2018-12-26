@@ -14,7 +14,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  * @version  $Id$
  */
 @JsonRootName(value = ApiNames.WAHRUNG)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.NAMEN,ApiNames.BEZEICHNUNG,ApiNames.DECIMALS, ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DECIMALS, ApiNames.DELETED, ApiNames.LINKS})
 public interface IWahrung extends INamedItem<NameKey> {
 
     /**

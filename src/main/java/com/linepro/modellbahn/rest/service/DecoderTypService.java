@@ -22,18 +22,11 @@ import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.model.IProtokoll;
-import com.linepro.modellbahn.model.impl.Achsfolg;
 import com.linepro.modellbahn.model.impl.DecoderTyp;
 import com.linepro.modellbahn.model.impl.DecoderTypAdress;
 import com.linepro.modellbahn.model.impl.DecoderTypCV;
 import com.linepro.modellbahn.model.impl.DecoderTypFunktion;
-import com.linepro.modellbahn.model.impl.Hersteller;
-import com.linepro.modellbahn.model.impl.Protokoll;
-import com.linepro.modellbahn.model.keys.DecoderTypAdressKey;
-import com.linepro.modellbahn.model.keys.DecoderTypCVKey;
-import com.linepro.modellbahn.model.keys.DecoderTypFunktionKey;
 import com.linepro.modellbahn.model.keys.DecoderTypKey;
-import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AdressTyp;
 import com.linepro.modellbahn.model.util.Konfiguration;
 import com.linepro.modellbahn.persistence.IPersister;
@@ -45,6 +38,8 @@ import com.linepro.modellbahn.rest.util.ApiPaths;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * DecoderTypService. CRUD service for DecoderTyp, DecoderTypCV and DecoderTypFunktion
@@ -56,10 +51,6 @@ import io.swagger.annotations.ApiOperation;
 @Path(ApiPaths.DECODER_TYP)
 public class DecoderTypService extends AbstractItemService<DecoderTypKey, DecoderTyp> {
 
-    private final IPersister<Protokoll> protokollPersister;
-
-    private final IPersister<Hersteller> herstellerPersister;
-
     private final IPersister<DecoderTypAdress> adressPersister;
 
     private final IPersister<DecoderTypCV> cvPersister;
@@ -69,8 +60,6 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     public DecoderTypService() {
         super(DecoderTyp.class);
         
-        protokollPersister = StaticPersisterFactory.get().createPersister(Protokoll.class);
-        herstellerPersister = StaticPersisterFactory.get().createPersister(Hersteller.class);
         adressPersister = StaticPersisterFactory.get().createPersister(DecoderTypAdress.class);
         cvPersister = StaticPersisterFactory.get().createPersister(DecoderTypCV.class);
         funktionPersister = StaticPersisterFactory.get().createPersister(DecoderTypFunktion.class);
@@ -158,7 +147,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Path(ApiPaths.DECODER_TYP_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds an Achsfolg by name", response = DecoderTyp.class)
+    @ApiOperation(value = "Finds a DecoderTyp by hersteller and bestell nr", response = DecoderTyp.class)
     public Response get(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
             @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
         try {
@@ -180,7 +169,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds an DecoderTyp by name", response = DecoderTyp.class)
+    @ApiOperation(code = 201, value = "Adds a DecoderTyp", response = DecoderTyp.class)
     public Response add(DecoderTyp entity) {
         return super.add(entity);
     }
@@ -190,7 +179,12 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds an DecoderTyp by name", response = DecoderTyp.class)
+    @ApiOperation(code=202, value = "Updates a DecoderTyp by hersteller and bestell nr", response = DecoderTyp.class)
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 402, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response update(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
             @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, DecoderTyp entity) {
         try {
@@ -204,7 +198,12 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Path(ApiPaths.DECODER_TYP_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds an DecoderTyp by name", response = DecoderTyp.class)
+    @ApiOperation(value = "Finds a DecoderTyp by hersteller and bestell nr", response = DecoderTyp.class)
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 402, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response delete(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
             @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
         try {
@@ -217,7 +216,12 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @GET
     @Path(ApiPaths.DECODER_TYP_ADRESS_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Finds an DecoderTypAdress by name", response = DecoderTypAdress.class)
+    @ApiOperation(value = "Finds a DecoderTypAdress by hersteller and bestell nr", response = DecoderTypAdress.class)
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 402, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response getAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index) {
         try {
@@ -244,7 +248,12 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds an DecoderTypAdress by name", response = DecoderTypAdress.class)
+    @ApiOperation(code = 201, value = "Adds a Adress to a DecoderTyp", response = DecoderTypAdress.class)
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 402, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response addAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, DecoderTypAdress decoderTypAdress) {
         try {
             logPost(herstellerStr + "/" + bestellNr + "/" + decoderTypAdress);
@@ -270,7 +279,12 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @PUT
     @Path(ApiPaths.DECODER_TYP_ADRESS_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Finds an DecoderTypAdress by name", response = DecoderTypAdress.class)
+    @ApiOperation(value = "Finds a DecoderTypAdress by hersteller and bestell nr", response = DecoderTypAdress.class)
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 402, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response updateAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index, DecoderTypAdress newDecoderTypAdress) {
         try {
@@ -290,7 +304,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
                 newDecoderTypAdress.setDecoderTyp(decoderTyp);
             } else if (!newDecoderTypAdress.getDecoderTyp().equals(decoderTyp)) {
                 // Attempt to change decoderTyp not allowed
-                return getResponse(badRequest(null, "You cannot change the decoderTyp for an decoderTypAdress, create a new one"));
+                return getResponse(badRequest(null, "You cannot change the decoderTyp for a decoderTypAdress, create a new one"));
             }
 
             decoderTypAdress = getAdressPersister().update(newDecoderTypAdress);
@@ -304,7 +318,12 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @DELETE
     @Path(ApiPaths.DECODER_TYP_ADRESS_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Finds an DecoderTypAdress by name", response = DecoderTypAdress.class)
+    @ApiOperation(value = "Finds a DecoderTypAdress by hersteller and bestell nr", response = DecoderTypAdress.class)
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 402, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response deleteAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index) {
         try {
@@ -331,7 +350,12 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @GET
     @Path(ApiPaths.DECODER_TYP_CV_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Finds an DecoderTypCV by name", response = DecoderTypCV.class)
+    @ApiOperation(value = "Finds a DecoderTypCV by hersteller and bestell nr", response = DecoderTypCV.class)
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 402, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response getCV(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv) {
         try {
@@ -358,7 +382,12 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds an DecoderTypCV by name", response = DecoderTypCV.class)
+    @ApiOperation(value = "Finds a DecoderTypCV by hersteller and bestell nr", response = DecoderTypCV.class)
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 402, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response addCV(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, DecoderTypCV decoderTypCV) {
         try {
             logPost(herstellerStr + "/" + bestellNr + "/" + decoderTypCV);
@@ -384,7 +413,12 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @PUT
     @Path(ApiPaths.DECODER_TYP_CV_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Finds an DecoderTypCV by name", response = DecoderTypCV.class)
+    @ApiOperation(value = "Finds a DecoderTypCV by hersteller and bestell nr", response = DecoderTypCV.class)
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 402, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response updateCV(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv, DecoderTypCV newDecoderTypCV) {
         try {
@@ -404,7 +438,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
                 newDecoderTypCV.setDecoderTyp(decoderTyp);
             } else if (!newDecoderTypCV.getDecoderTyp().equals(decoderTyp)) {
                 // Attempt to change decoderTyp not allowed
-                return getResponse(badRequest(null, "You cannot change the decoderTyp for an decoderTypCV, create a new one"));
+                return getResponse(badRequest(null, "You cannot change the decoderTyp for a decoderTypCV, create a new one"));
             }
 
             // Validate  0 < CV < 256 
@@ -425,7 +459,12 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @DELETE
     @Path(ApiPaths.DECODER_TYP_CV_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Finds an DecoderTypCV by name", response = DecoderTypCV.class)
+    @ApiOperation(value = "Finds a DecoderTypCV by hersteller and bestell nr", response = DecoderTypCV.class)
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 402, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response deleteCV(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv) {
         try {
@@ -452,7 +491,12 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @GET
     @Path(ApiPaths.DECODER_TYP_FUNKTION_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Finds an DecoderTypFunktion by name", response = DecoderTypFunktion.class)
+    @ApiOperation(value = "Finds a DecoderTypFunktion by hersteller and bestell nr", response = DecoderTypFunktion.class)
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 402, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response getFunktion(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion) {
         try {
@@ -479,7 +523,12 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds an DecoderTypFunktion by name", response = DecoderTypFunktion.class)
+    @ApiOperation(value = "Finds a DecoderTypFunktion by hersteller and bestell nr", response = DecoderTypFunktion.class)
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 402, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response addFunktion(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, DecoderTypFunktion decoderTypFunktion) {
         try {
             logPost(herstellerStr + "/" + bestellNr + "/" + decoderTypFunktion);
@@ -508,7 +557,12 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @PUT
     @Path(ApiPaths.DECODER_TYP_FUNKTION_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Finds an DecoderTypFunktion by name", response = DecoderTypFunktion.class)
+    @ApiOperation(value = "Finds a DecoderTypFunktion by hersteller and bestell nr", response = DecoderTypFunktion.class)
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 402, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response updateFunktion(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion, DecoderTypFunktion newDecoderTypFunktion) {
         try {
@@ -528,7 +582,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
                 newDecoderTypFunktion.setDecoderTyp(decoderTyp);
             } else if (!newDecoderTypFunktion.getDecoderTyp().equals(decoderTyp)) {
                 // Attempt to change decoderTyp not allowed
-                return getResponse(badRequest(null, "You cannot change the decoderTyp for an decoderTypFunktion, create a new one"));
+                return getResponse(badRequest(null, "You cannot change the decoderTyp for a decoderTypFunktion, create a new one"));
             }
 
             decoderTypFunktion = getFunktionPersister().update(newDecoderTypFunktion);
@@ -542,7 +596,12 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
     @DELETE
     @Path(ApiPaths.DECODER_TYP_FUNKTION_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Finds an DecoderTypFunktion by name", response = DecoderTypFunktion.class)
+    @ApiOperation(code = 204, value = "Deletes a DecoderTypFunktion by hersteller and bestell nr", response = DecoderTypFunktion.class)
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 402, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
     public Response deleteFunktion(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion) {
         try {
@@ -564,14 +623,6 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
         } catch (Exception e) {
             return getResponse(serverError(e));
         }
-    }
-
-    private IPersister<Protokoll> getProtokollPersister() {
-        return protokollPersister;
-    }
-
-    private IPersister<Hersteller> getHerstellerPersister() {
-        return herstellerPersister;
     }
 
     private IPersister<DecoderTypAdress> getAdressPersister() {

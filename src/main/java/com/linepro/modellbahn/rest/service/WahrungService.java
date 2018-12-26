@@ -17,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.impl.Wahrung;
-import com.linepro.modellbahn.model.impl.Wahrung;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
@@ -25,6 +24,8 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -33,7 +34,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.WAHRUNG, description = "Wahrung maintenance")
+@Api(value = ApiNames.WAHRUNG, description = "Wahrung (currency) maintenance")
 @Path(ApiPaths.WAHRUNG)
 public class WahrungService extends AbstractItemService<NameKey, Wahrung> {
 
@@ -67,6 +68,13 @@ public class WahrungService extends AbstractItemService<NameKey, Wahrung> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Wahrungen by example", response = Wahrung.class, responseContainer = "List")
+    @ApiImplicitParams({
+        @ApiImplicitParam( name = ApiNames.ID, value = "Wahrung's id", required = false, dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Wahrung's name", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Wahrung's description", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DECIMALS, value = "Wahrung's decimals", required = false, dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Wahrung is deleted", required = false, dataType = "Boolean", paramType = "query")
+    })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -75,7 +83,7 @@ public class WahrungService extends AbstractItemService<NameKey, Wahrung> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Updates a Wahrung by name", response = Wahrung.class)
+    @ApiOperation(code = 201, value = "Adds a Wahrung", response = Wahrung.class)
     public Response add(Wahrung entity) {
         return super.add(entity);
     }
@@ -85,7 +93,7 @@ public class WahrungService extends AbstractItemService<NameKey, Wahrung> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Updates a Wahrung by name", response = Wahrung.class)
+    @ApiOperation(code = 202, value = "Updates a Wahrung by name", response = Wahrung.class)
     public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Wahrung entity) {
         return super.update(name, entity);
     }
@@ -94,7 +102,7 @@ public class WahrungService extends AbstractItemService<NameKey, Wahrung> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Deletes a Wahrung by name")
+    @ApiOperation(code = 204, value = "Deletes a Wahrung by name")
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }

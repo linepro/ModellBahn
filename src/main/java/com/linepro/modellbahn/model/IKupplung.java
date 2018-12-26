@@ -12,6 +12,7 @@ import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
+
 import io.swagger.annotations.ApiModelProperty;
 
 /**

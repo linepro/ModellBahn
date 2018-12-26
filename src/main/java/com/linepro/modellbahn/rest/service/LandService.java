@@ -18,17 +18,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.impl.Land;
-import com.linepro.modellbahn.model.impl.Land;
-import com.linepro.modellbahn.model.impl.Wahrung;
 import com.linepro.modellbahn.model.keys.NameKey;
-import com.linepro.modellbahn.persistence.IPersister;
-import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -41,12 +39,8 @@ import io.swagger.annotations.ApiOperation;
 @Path(ApiPaths.LAND)
 public class LandService extends AbstractItemService<NameKey, Land> {
 
-    private final IPersister<Wahrung> wahrungPersister;
-
     public LandService() {
         super(Land.class);
-
-        wahrungPersister = StaticPersisterFactory.get().createPersister(Wahrung.class) ;
     }
 
     @JsonCreator
@@ -77,6 +71,13 @@ public class LandService extends AbstractItemService<NameKey, Land> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Landen by example", response = Land.class, responseContainer = "List")
+    @ApiImplicitParams({
+        @ApiImplicitParam( name = ApiNames.ID, value = "Land's id", required = false, dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.WAHRUNG, value = "Land's wahrung", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Land's name", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Land's description", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Land is deleted", required = false, dataType = "Boolean", paramType = "query")
+})
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -85,7 +86,7 @@ public class LandService extends AbstractItemService<NameKey, Land> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Adds a Land", response = Land.class)
+    @ApiOperation(code = 201, value = "Adds a Land", response = Land.class)
     public Response add(Land entity) {
         return super.add(entity);
     }
@@ -95,7 +96,7 @@ public class LandService extends AbstractItemService<NameKey, Land> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Updates a Land by name", response = Land.class)
+    @ApiOperation(code = 202, value = "Updates a Land by name", response = Land.class)
     public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Land entity) {
         return super.update(name, entity);
     }
@@ -104,7 +105,7 @@ public class LandService extends AbstractItemService<NameKey, Land> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Deletes a Land by name")
+    @ApiOperation(code = 204, value = "Deletes a Land by name")
     public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }

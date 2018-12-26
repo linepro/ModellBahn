@@ -7,7 +7,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.linepro.modellbahn.model.impl.Achsfolg;
 import com.linepro.modellbahn.model.util.AdressTyp;
 import com.linepro.modellbahn.model.util.Connector;
 import com.linepro.modellbahn.model.util.Konfiguration;
@@ -16,8 +15,8 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
-
 import com.linepro.modellbahn.rest.util.DescribedEnumWrapper;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
