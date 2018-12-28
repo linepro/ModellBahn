@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  * IEpoch.
  * @author   $Author$
@@ -11,6 +13,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  */
 @JsonRootName(value = ApiNames.EPOCH)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
+@ApiModel(value = ApiNames.EPOCH, description = "Era - NEM 800.")
 public interface IEpoch extends INamedItem<NameKey> {
 
 }

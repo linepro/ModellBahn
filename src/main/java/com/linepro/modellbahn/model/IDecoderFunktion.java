@@ -16,6 +16,8 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.resolver.DecoderResolver;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  * IDecoderFunktion.
  * @author   $Author$
@@ -23,6 +25,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  */
 @JsonRootName(value = ApiNames.FUNKTION)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER, ApiNames.FUNKTION,  ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS})
+@ApiModel(value = ApiNames.FUNKTION, description = "Decoder function mapping.")
 public interface IDecoderFunktion extends IItem<DecoderFunktionKey> {
 
     /**

@@ -1,26 +1,13 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
-import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
-import io.swagger.annotations.ApiModelProperty;
-
-public interface IProduktRef {
+public interface IProduktRef extends ILinkRef {
 
     @JsonGetter(ApiNames.HERSTELLER)
     String getHersteller();
 
     @JsonGetter(ApiNames.BESTELL_NR)
     String getBestellNr();
-
-    @JsonGetter(ApiNames.LINKS)
-    @JsonView(Views.DropDown.class)
-    @JsonSerialize(contentAs= ILink.class, contentUsing= LinkSerializer.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.ILink;", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
-    Set<ILink> getLinks();
 }

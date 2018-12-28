@@ -17,6 +17,8 @@ import com.linepro.modellbahn.rest.json.resolver.ArtikelResolver;
 import com.linepro.modellbahn.rest.json.resolver.ZugResolver;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  * IZugConsist.
  * @author   $Author$
@@ -24,6 +26,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  */
 @JsonRootName(value = ApiNames.CONSIST)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.ZUG, ApiNames.POSITION, ApiNames.ARTIKEL, ApiNames.DELETED, ApiNames.LINKS })
+@ApiModel(value = ApiNames.CONSIST, description = "Rolling stock by poisition in a train.")
 public interface IZugConsist extends IItem<ZugConsistKey> {
 
     /**

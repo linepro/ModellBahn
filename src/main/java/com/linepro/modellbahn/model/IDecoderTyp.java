@@ -24,10 +24,11 @@ import com.linepro.modellbahn.rest.json.resolver.ProtokollResolver;
 import com.linepro.modellbahn.rest.json.serialization.DecoderTypAdressSerializer;
 import com.linepro.modellbahn.rest.json.serialization.DecoderTypCVSerializer;
 import com.linepro.modellbahn.rest.json.serialization.DecoderTypFunktionSerializer;
-import com.linepro.modellbahn.rest.json.serialization.IDecoderTypAdressRef;
-import com.linepro.modellbahn.rest.json.serialization.IDecoderTypCVRef;
-import com.linepro.modellbahn.rest.json.serialization.IDecoderTypFunktionRef;
 import com.linepro.modellbahn.rest.util.ApiNames;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * IDecoderTyp.
@@ -36,6 +37,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  */
 @JsonRootName(value = ApiNames.DECODER_TYP)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.GERAUSCH, ApiNames.I_MAX, ApiNames.KONFIGURATION, ApiNames.DELETED, ApiNames.ADRESSEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS})
+@ApiModel(value = ApiNames.DECODER_TYP, description = "Decoder type - template for Decoder.")
 public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
 
     /**
@@ -216,16 +218,19 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
 
     @JsonGetter(ApiNames.ADRESSEN)
     @JsonView(Views.Public.class)
-    @JsonSerialize(contentAs= IDecoderTypAdressRef.class, contentUsing = DecoderTypAdressSerializer.class)
+    @JsonSerialize(contentUsing = DecoderTypAdressSerializer.class)
+    @ApiModelProperty(name = ApiNames.ADRESSEN, dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.IDecoderTypAdressRef;", accessMode = AccessMode.READ_ONLY)
     Set<IDecoderTypAdress> getSortedAdressen();
 
     @JsonGetter(ApiNames.CVS)
     @JsonView(Views.Public.class)
-    @JsonSerialize(contentAs= IDecoderTypCVRef.class, contentUsing = DecoderTypCVSerializer.class)
+    @JsonSerialize(contentUsing = DecoderTypCVSerializer.class)
+    @ApiModelProperty(name = ApiNames.CVS, dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.IDecoderTypCVRef;", accessMode = AccessMode.READ_ONLY)
     Set<IDecoderTypCV> getSortedCVs();
 
     @JsonGetter(ApiNames.FUNKTIONEN)
     @JsonView(Views.Public.class)
-    @JsonSerialize(contentAs= IDecoderTypFunktionRef.class, contentUsing = DecoderTypFunktionSerializer.class)
+    @JsonSerialize(contentUsing = DecoderTypFunktionSerializer.class)
+    @ApiModelProperty(name = ApiNames.FUNKTIONEN, dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.IDecoderTypFunktionRef;", accessMode = AccessMode.READ_ONLY)
     Set<IDecoderTypFunktion> getSortedFunktionen();
 }

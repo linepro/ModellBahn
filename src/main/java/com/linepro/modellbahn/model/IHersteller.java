@@ -11,6 +11,8 @@ import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  * IHersteller.
  * @author   $Author$
@@ -18,6 +20,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  */
 @JsonRootName(value = ApiNames.HERSTELLER)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.TELEFON, ApiNames.URL, ApiNames.DELETED, ApiNames.LINKS})
+@ApiModel(value = ApiNames.HERSTELLER, description = "Manufacturer.")
 public interface IHersteller extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.URL)

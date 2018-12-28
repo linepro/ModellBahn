@@ -179,11 +179,32 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Produkten by example", response = Produkt.class, responseContainer = "List")
     @ApiImplicitParams({
-        @ApiImplicitParam( name = ApiNames.ID, value = "Antrieb's id", required = false, dataType = "Long", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Antrieb's name", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Antrieb's description", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Antrieb is deleted", required = false, dataType = "Boolean", paramType = "query")
-})
+        @ApiImplicitParam( name = ApiNames.ID, value = "Produkt's id", required = false, dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.HERSTELLER, value = "Produkt's manufacturer", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name = ApiNames.BESTELL_NR, value = "Produkt's order number", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Produkt's description", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.KATEGORIE, value = "Produkt's category", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name = ApiNames.UNTER_KATEGORIE, value = "Produkt's sub category", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name = ApiNames.MASSSTAB, value = "Produkt's scale", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.SPURWEITE, value = "Produkt's track gauge", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name = ApiNames.EPOCH, value = "Produkt's era", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name = ApiNames.BAHNVERWALTUNG, value = "Produkt's railway company", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name = ApiNames.GATTUNG, value = "Produkt's rolling stock class", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name = ApiNames.BETREIBSNUMMER, value = "Produkt's service number", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BAUZEIT, value = "Produkt's construction date", required = false, dataType = "Date", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.VORBILD, value = "Produkt's prototype", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name = ApiNames.ACHSFOLG, value = "Produkt's axle configuration", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name = ApiNames.ANMERKUNG, value = "Produkt's remarks", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name = ApiNames.SONDERMODELL, value = "Produkt's XXX", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.AUFBAU, value = "Produkt's construction", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name = ApiNames.LICHT, value = "Produkt's light configuration", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name = ApiNames.KUPPLUNG, value = "Produkt's coupling configuration", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name = ApiNames.STEUERUNG, value = "Produkt's control method", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name = ApiNames.DECODER_TYP, value = "Produkt's decoder type", required = false, dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.MOTOR_TYP, value = "Produkt's motor type", required = false, dataType = "String", paramType = "query"), 
+        @ApiImplicitParam( name = ApiNames.LANGE, value = "Produkt's length", required = false, dataType = "Number", paramType = "query"), 
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Produkt is deleted", required = false, dataType = "Boolean", paramType = "query")
+        })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }

@@ -11,8 +11,10 @@ import com.linepro.modellbahn.model.impl.DecoderTyp;
 import com.linepro.modellbahn.model.keys.DecoderTypFunktionKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.DecoderTypSerializer;
-import com.linepro.modellbahn.rest.json.serialization.IDecoderTypRef;
 import com.linepro.modellbahn.rest.util.ApiNames;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * IDecoderTypFunktion.
@@ -21,6 +23,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  */
 @JsonRootName(ApiNames.FUNKTION)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.REIHE,  ApiNames.PROGRAMMABLE, ApiNames.DELETED, ApiNames.LINKS})
+@ApiModel(value = ApiNames.FUNKTION, description = "Decoder type function mapping - template for Decoder.")
 public interface IDecoderTypFunktion extends INamedItem<DecoderTypFunktionKey> {
 
     /**
@@ -30,7 +33,8 @@ public interface IDecoderTypFunktion extends INamedItem<DecoderTypFunktionKey> {
      */
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(as= IDecoderTypRef.class, using= DecoderTypSerializer.class)
+    @JsonSerialize(using= DecoderTypSerializer.class)
+    @ApiModelProperty(name = ApiNames.DECODER_TYP, dataType = "com.linepro.modellbahn.rest.json.serialization.IDecoderTypRef")
     IDecoderTyp getDecoderTyp();
 
     /**

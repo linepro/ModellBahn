@@ -15,11 +15,11 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.persistence.IKey;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.rest.json.serialization.ILink;
 import com.linepro.modellbahn.rest.json.serialization.LinkSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * IItem
@@ -40,7 +40,7 @@ public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializabl
      */
     @JsonGetter(ApiNames.ID)
     @JsonView(Views.Internal.class)
-    @ApiModelProperty(accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @ApiModelProperty(accessMode = AccessMode.READ_ONLY)
     Long getId();
 
     /**
@@ -84,8 +84,8 @@ public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializabl
      */
     @JsonGetter(ApiNames.LINKS)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(contentAs= ILink.class, contentUsing= LinkSerializer.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.ILink;", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @JsonSerialize(contentUsing= LinkSerializer.class)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.ILink;", accessMode = AccessMode.READ_ONLY)
     Set<Link> getLinks();
 
     @JsonIgnore

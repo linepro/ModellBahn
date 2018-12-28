@@ -14,6 +14,8 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.resolver.WahrungResolver;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  * ILand.
  * @author   $Author$
@@ -22,6 +24,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 @JsonRootName(value = ApiNames.LAND)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.WAHRUNG, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED,
         ApiNames.LINKS })
+@ApiModel(value = ApiNames.LAND, description = "Country.")
 public interface ILand extends INamedItem<NameKey> {
 
     /**

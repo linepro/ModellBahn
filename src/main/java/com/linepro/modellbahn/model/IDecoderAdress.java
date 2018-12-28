@@ -16,6 +16,8 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.resolver.DecoderResolver;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  * IDecoderAdress.
  * @author   $Author$
@@ -23,6 +25,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  */
 @JsonRootName(value = ApiNames.ADRESS)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER, ApiNames.INDEX, ApiNames.ADRESS_TYP, ApiNames.ADRESS, ApiNames.DELETED, ApiNames.LINKS })
+@ApiModel(value = ApiNames.ADRESS, description = "Decoder address setting.")
 public interface IDecoderAdress extends IItem<DecoderAdressKey>, IAdress {
 
     /**

@@ -1,6 +1,7 @@
 package com.linepro.modellbahn.model.impl;
 
 import java.math.BigDecimal;
+import java.net.URI;
 import java.nio.file.Path;
 import java.util.Date;
 import java.util.Set;
@@ -19,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
@@ -51,6 +53,7 @@ import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.persistence.util.PathConverter;
 import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
@@ -216,7 +219,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     }
 
     @Override
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = UnterKategorie.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = UnterKategorie.class)
     @JoinColumn(name = DBNames.UNTER_KATEGORIE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk7"))
     public IUnterKategorie getUnterKategorie() {
         return unterKategorie;
@@ -496,6 +499,17 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     @Override
     public void removeTeil(IProduktTeil funktion) {
         getTeilen().remove(funktion);
+    }
+
+    @Override
+    @Transient
+    public String getLinkId() {
+        return String.format(ApiPaths.PRODUKT_LINK, getHersteller().getLinkId(), super.getLinkId());
+    }
+
+    @Override
+    protected void addChildLinks(URI root, boolean update, boolean delete) {
+        addLinks(root, getTeilen(), update, delete);
     }
 
     @Override

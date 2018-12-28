@@ -29,12 +29,13 @@ import com.linepro.modellbahn.rest.json.resolver.AchsfolgResolver;
 import com.linepro.modellbahn.rest.json.resolver.AntriebResolver;
 import com.linepro.modellbahn.rest.json.resolver.BahnverwaltungResolver;
 import com.linepro.modellbahn.rest.json.resolver.GattungResolver;
-import com.linepro.modellbahn.rest.json.serialization.IUnterKategorieRef;
 import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
 import com.linepro.modellbahn.rest.json.serialization.UnterKategorieSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * IVorbild.
@@ -43,6 +44,7 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @JsonRootName(value = ApiNames.VORBILD)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.GATTUNG, ApiNames.UNTER_KATEGORIE, ApiNames.BAHNVERWALTUNG, ApiNames.HERSTELLER, ApiNames.BAUZEIT, ApiNames.ANZAHL, ApiNames.BETREIBSNUMMER, ApiNames.ANTRIEB, ApiNames.ACHSFOLG, ApiNames.ANFAHRZUGKRAFT, ApiNames.LEISTUNG, ApiNames.DIENSTGEWICHT, ApiNames.GESCHWINDIGKEIT, ApiNames.LANGE, ApiNames.AUSSERDIENST, ApiNames.DMTREIBRAD, ApiNames.DMLAUFRADVORN, ApiNames.DMLAUFRADHINTEN, ApiNames.ZYLINDER, ApiNames.DMZYLINDER, ApiNames.KOLBENHUB, ApiNames.KESSELUEBERDRUCK, ApiNames.ROSTFLAECHE, ApiNames.UEBERHITZERFLAECHE, ApiNames.WASSERVORRAT, ApiNames.VERDAMPFUNG, ApiNames.STEUERUNG, ApiNames.FAHRMOTOREN, ApiNames.MOTORBAUART, ApiNames.LEISTUNGSUEBERTRAGUNG, ApiNames.REICHWEITE, ApiNames.KAPAZITAT, ApiNames.KLASSE, ApiNames.SITZPLATZEKL1, ApiNames.SITZPLATZEKL2, ApiNames.SITZPLATZEKL3, ApiNames.SITZPLATZEKL4, ApiNames.AUFBAU, ApiNames.TRIEBZUGANZEIGEN, ApiNames.TRIEBKOEPFE, ApiNames.MITTELWAGEN, ApiNames.SITZPLATZETZKL1, ApiNames.SITZPLATZETZKL2, ApiNames.DREHGESTELLBAUART, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS})
+@ApiModel(value = ApiNames.VORBILD, description = "Prototype.")
 public interface IVorbild extends INamedItem<NameKey> {
     
     @JsonGetter(ApiNames.GATTUNG)
@@ -57,7 +59,8 @@ public interface IVorbild extends INamedItem<NameKey> {
     
     @JsonGetter(ApiNames.UNTER_KATEGORIE)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(as= IUnterKategorieRef.class, using= UnterKategorieSerializer.class)
+    @JsonSerialize(using = UnterKategorieSerializer.class)
+    @ApiModelProperty(name = ApiNames.UNTER_KATEGORIE, dataType = "com.linepro.modellbahn.rest.json.serialization.IUnterKategorieRef")
     IUnterKategorie getUnterKategorie();
     
     @JsonSetter(ApiNames.UNTER_KATEGORIE)
@@ -364,8 +367,8 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.ABBILDUNG)
     @JsonView(Views.Public.class)
-    @JsonSerialize(as=String.class, using = PathSerializer.class)
-    @ApiModelProperty(name= ApiNames.ABBILDUNG, dataType = "String", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @JsonSerialize(using = PathSerializer.class)
+    @ApiModelProperty(name= ApiNames.ABBILDUNG, dataType = "String", accessMode = AccessMode.READ_ONLY)
     Path getAbbildung();
 
     @JsonIgnore

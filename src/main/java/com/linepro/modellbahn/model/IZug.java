@@ -17,6 +17,8 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.resolver.ZugTypResolver;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  * IZug.
  * @author   $Author$
@@ -24,6 +26,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  */
 @JsonRootName(value = ApiNames.ZUG)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.ZUG_TYP, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.CONSIST, ApiNames.LINKS})
+@ApiModel(value = ApiNames.ZUG, description = "Train.")
 public interface IZug extends INamedItem<NameKey> {
 
     /**

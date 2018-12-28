@@ -17,9 +17,12 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.impl.UnterKategorie;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.rest.json.serialization.IUnterKategorieRef;
 import com.linepro.modellbahn.rest.json.serialization.UnterKategorieSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * IKategorie.
@@ -29,6 +32,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 @JsonRootName(value = ApiNames.KATEGORIE)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.UNTER_KATEGORIEN,
         ApiNames.LINKS })
+@ApiModel(value = ApiNames.KATEGORIE, description = "Category.")
 public interface IKategorie extends INamedItem<NameKey> {
     
     /**
@@ -38,7 +42,8 @@ public interface IKategorie extends INamedItem<NameKey> {
      */
     @JsonGetter(ApiNames.UNTER_KATEGORIEN)
     @JsonView(Views.Public.class)
-    @JsonSerialize(contentAs = IUnterKategorieRef.class, contentUsing = UnterKategorieSerializer.class)
+    @JsonSerialize(contentUsing = UnterKategorieSerializer.class)
+    @ApiModelProperty(name = ApiNames.UNTER_KATEGORIEN, dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.IUnterKategorieRef;", accessMode = AccessMode.READ_ONLY)
     Set<IUnterKategorie> getUnterKategorien();
 
     /**

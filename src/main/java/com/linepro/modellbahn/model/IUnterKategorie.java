@@ -14,6 +14,8 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.resolver.KategorieResolver;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  * IUnterKategorie.
  * @author   $Author$
@@ -21,6 +23,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  */
 @JsonRootName(value = ApiNames.UNTER_KATEGORIE)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.KATEGORIE, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS})
+@ApiModel(value = ApiNames.UNTER_KATEGORIE, description = "Sub category.")
 public interface IUnterKategorie extends INamedItem<UnterKategorieKey> {
 
     /**

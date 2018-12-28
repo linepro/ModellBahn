@@ -11,8 +11,10 @@ import com.linepro.modellbahn.model.impl.DecoderTyp;
 import com.linepro.modellbahn.model.keys.DecoderTypCVKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.DecoderTypSerializer;
-import com.linepro.modellbahn.rest.json.serialization.IDecoderTypRef;
 import com.linepro.modellbahn.rest.util.ApiNames;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * IDecoderTypCV.
@@ -21,6 +23,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  */
 @JsonRootName(value = ApiNames.CV)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.CV,  ApiNames.BEZEICHNUNG,  ApiNames.MINIMAL,  ApiNames.MAXIMAL,  ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED, ApiNames.LINKS})
+@ApiModel(value = ApiNames.CV, description = "Decoder type CV - template for Decoder.")
 public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
 
     /**
@@ -30,7 +33,8 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
      */
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(as= IDecoderTypRef.class, using= DecoderTypSerializer.class)
+    @JsonSerialize(using= DecoderTypSerializer.class)
+    @ApiModelProperty(name = ApiNames.DECODER_TYP, dataType = "com.linepro.modellbahn.rest.json.serialization.IDecoderTypRef")
     IDecoderTyp getDecoderTyp();
 
     /**

@@ -16,6 +16,8 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.resolver.DecoderResolver;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  * IDecoderCV.
  * @author   $Author$
@@ -23,6 +25,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  */
 @JsonRootName(value = ApiNames.CV)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER, ApiNames.CV, ApiNames.WERT, ApiNames.DELETED, ApiNames.LINKS })
+@ApiModel(value = ApiNames.CV, description = "Decoder CV setting.")
 public interface IDecoderCV extends IItem<DecoderCVKey> {
 
     /**

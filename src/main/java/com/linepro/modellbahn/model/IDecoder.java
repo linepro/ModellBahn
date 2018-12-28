@@ -24,11 +24,11 @@ import com.linepro.modellbahn.rest.json.serialization.DecoderAdressSerializer;
 import com.linepro.modellbahn.rest.json.serialization.DecoderCVSerializer;
 import com.linepro.modellbahn.rest.json.serialization.DecoderFunktionSerializer;
 import com.linepro.modellbahn.rest.json.serialization.DecoderTypSerializer;
-import com.linepro.modellbahn.rest.json.serialization.IDecoderAdressRef;
-import com.linepro.modellbahn.rest.json.serialization.IDecoderCVRef;
-import com.linepro.modellbahn.rest.json.serialization.IDecoderFunktionRef;
-import com.linepro.modellbahn.rest.json.serialization.IDecoderTypRef;
 import com.linepro.modellbahn.rest.util.ApiNames;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * IDecoder.
@@ -37,6 +37,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  */
 @JsonRootName(value = ApiNames.DECODER)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.ADRESSEN, ApiNames.DELETED, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS })
+@ApiModel(value = ApiNames.DECODER, description = "Decoder - installed or spare.")
 public interface IDecoder extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.DECODER_ID)
@@ -53,7 +54,8 @@ public interface IDecoder extends INamedItem<NameKey> {
      */
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(as= IDecoderTypRef.class, using= DecoderTypSerializer.class)
+    @JsonSerialize(using= DecoderTypSerializer.class)
+    @ApiModelProperty(name = ApiNames.DECODER_TYP, dataType = "com.linepro.modellbahn.rest.json.serialization.IDecoderTypRef")
     IDecoderTyp getDecoderTyp();
 
     /**
@@ -109,7 +111,8 @@ public interface IDecoder extends INamedItem<NameKey> {
      */
     @JsonGetter(ApiNames.ADRESSEN)
     @JsonView(Views.Public.class)
-    @JsonSerialize(contentAs= IDecoderAdressRef.class, contentUsing= DecoderAdressSerializer.class)
+    @JsonSerialize(contentUsing= DecoderAdressSerializer.class)
+    @ApiModelProperty(name = ApiNames.ADRESSEN, dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.IDecoderAdressRef;", accessMode = AccessMode.READ_ONLY)
     Set<IDecoderAdress> getAdressen();
 
     /**
@@ -132,7 +135,8 @@ public interface IDecoder extends INamedItem<NameKey> {
      */
     @JsonGetter(ApiNames.CVS)
     @JsonView(Views.Public.class)
-    @JsonSerialize(contentAs= IDecoderCVRef.class, contentUsing= DecoderCVSerializer.class)
+    @JsonSerialize(contentUsing= DecoderCVSerializer.class)
+    @ApiModelProperty(name = ApiNames.CVS, dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.IDecoderCVRef;", accessMode = AccessMode.READ_ONLY)
     Set<IDecoderCV> getCVs();
 
     /**
@@ -155,7 +159,8 @@ public interface IDecoder extends INamedItem<NameKey> {
      */
     @JsonGetter(ApiNames.FUNKTIONEN)
     @JsonView(Views.Public.class)
-    @JsonSerialize(contentAs= IDecoderFunktionRef.class, contentUsing= DecoderFunktionSerializer.class)
+    @JsonSerialize(contentUsing= DecoderFunktionSerializer.class)
+    @ApiModelProperty(name = ApiNames.FUNKTIONEN, dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.IDecoderFunktionRef;", accessMode = AccessMode.READ_ONLY)
     Set<IDecoderFunktion> getFunktionen();
 
     /**

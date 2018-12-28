@@ -52,15 +52,14 @@ import com.linepro.modellbahn.rest.json.resolver.SpurweiteResolver;
 import com.linepro.modellbahn.rest.json.resolver.SteuerungResolver;
 import com.linepro.modellbahn.rest.json.resolver.VorbildResolver;
 import com.linepro.modellbahn.rest.json.serialization.DecoderTypSerializer;
-import com.linepro.modellbahn.rest.json.serialization.IDecoderTypRef;
-import com.linepro.modellbahn.rest.json.serialization.IProduktTeilRef;
-import com.linepro.modellbahn.rest.json.serialization.IUnterKategorieRef;
 import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
 import com.linepro.modellbahn.rest.json.serialization.ProduktTeilSerializer;
 import com.linepro.modellbahn.rest.json.serialization.UnterKategorieSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * IProdukt.
@@ -75,6 +74,7 @@ import io.swagger.annotations.ApiModelProperty;
         ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG, ApiNames.DECODER_TYP,
         ApiNames.MOTOR_TYP, ApiNames.LANGE, ApiNames.ANLEITUNGEN, ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.ABBILDUNG,
         ApiNames.TEILEN, ApiNames.DELETED, ApiNames.LINKS })
+@ApiModel(value = ApiNames.PRODUKT, description = "Product - template for article.")
 public interface IProdukt extends INamedItem<ProduktKey> {
 
     /**
@@ -112,7 +112,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.UNTER_KATEGORIE)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(as= IUnterKategorieRef.class, using = UnterKategorieSerializer.class)
+    @JsonSerialize(using = UnterKategorieSerializer.class)
+    @ApiModelProperty(name = ApiNames.UNTER_KATEGORIE, dataType = "com.linepro.modellbahn.rest.json.serialization.IUnterKategorieRef")
     IUnterKategorie getUnterKategorie();
 
     /**
@@ -420,7 +421,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(as= IDecoderTypRef.class, using = DecoderTypSerializer.class)
+    @JsonSerialize(using = DecoderTypSerializer.class)
+    @ApiModelProperty(name = ApiNames.DECODER_TYP, dataType = "com.linepro.modellbahn.rest.json.serialization.IDecoderTypRef")
     IDecoderTyp getDecoderTyp();
 
     /**
@@ -497,8 +499,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.ANLEITUNGEN)
     @JsonView(Views.Public.class)
-    @JsonSerialize(as=String.class, using = PathSerializer.class)
-    @ApiModelProperty(name=ApiNames.ANLEITUNGEN, dataType = "String", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @JsonSerialize(using = PathSerializer.class)
+    @ApiModelProperty(name=ApiNames.ANLEITUNGEN, dataType = "String", accessMode = AccessMode.READ_ONLY)
     Path getAnleitungen();
 
     /**
@@ -517,8 +519,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.EXPLOSIONSZEICHNUNG)
     @JsonView(Views.Public.class)
-    @JsonSerialize(as=String.class, using = PathSerializer.class)
-    @ApiModelProperty(name=ApiNames.EXPLOSIONSZEICHNUNG, dataType = "String", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @JsonSerialize(using = PathSerializer.class)
+    @ApiModelProperty(name=ApiNames.EXPLOSIONSZEICHNUNG, dataType = "String", accessMode = AccessMode.READ_ONLY)
     Path getExplosionszeichnung();
 
     /**
@@ -537,8 +539,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.ABBILDUNG)
     @JsonView(Views.Public.class)
-    @JsonSerialize(as=String.class, using = PathSerializer.class)
-    @ApiModelProperty(name=ApiNames.ABBILDUNG, dataType = "String", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @JsonSerialize(using = PathSerializer.class)
+    @ApiModelProperty(name=ApiNames.ABBILDUNG, dataType = "String", accessMode = AccessMode.READ_ONLY)
     Path getAbbildung();
 
     /**
@@ -557,7 +559,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.TEILEN)
     @JsonView(Views.Public.class)
-    @JsonSerialize(contentAs= IProduktTeilRef.class, contentUsing = ProduktTeilSerializer.class)
+    @JsonSerialize(contentUsing = ProduktTeilSerializer.class)
+    @ApiModelProperty(name = ApiNames.TEILEN, dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.IProduktTeilRef;", accessMode = AccessMode.READ_ONLY)
     Set<IProduktTeil> getTeilen();
 
     /**

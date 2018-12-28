@@ -34,12 +34,13 @@ import com.linepro.modellbahn.rest.json.resolver.LichtResolver;
 import com.linepro.modellbahn.rest.json.resolver.MotorTypResolver;
 import com.linepro.modellbahn.rest.json.resolver.SteuerungResolver;
 import com.linepro.modellbahn.rest.json.resolver.WahrungResolver;
-import com.linepro.modellbahn.rest.json.serialization.IProduktRef;
 import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
 import com.linepro.modellbahn.rest.json.serialization.ProduktSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * IArtikel.
@@ -48,6 +49,7 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @JsonRootName(value = ApiNames.ARTIKEL)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.PRODUKT, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.STUCK, ApiNames.STEUERUNG, ApiNames.MOTOR_TYP, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.DECODER, ApiNames.ANMERKUNG, ApiNames.BELADUNG, ApiNames.ABBILDUNG, ApiNames.STATUS, ApiNames.DELETED, ApiNames.LINKS})
+@ApiModel(value = ApiNames.ARTIKEL, description = "An article - may differ from product because of modificiations")
 public interface IArtikel extends INamedItem<NameKey> {
 
     /**
@@ -57,7 +59,7 @@ public interface IArtikel extends INamedItem<NameKey> {
      */
     @JsonGetter(ApiNames.PRODUKT)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(as = IProduktRef.class, using= ProduktSerializer.class)
+    @JsonSerialize(using= ProduktSerializer.class)
     @ApiModelProperty(name = ApiNames.PRODUKT, dataType = "com.linepro.modellbahn.rest.json.serialization.IProduktRef")
     IProdukt getProdukt();
 
@@ -283,8 +285,8 @@ public interface IArtikel extends INamedItem<NameKey> {
      */
     @JsonGetter(ApiNames.ABBILDUNG)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(as= String.class, using = PathSerializer.class)
-    @ApiModelProperty(name = ApiNames.ABBILDUNG, dataType = "String", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @JsonSerialize(using = PathSerializer.class)
+    @ApiModelProperty(name = ApiNames.ABBILDUNG, dataType = "String", accessMode = AccessMode.READ_ONLY)
     Path getAbbildung();
 
     /**

@@ -13,7 +13,9 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * ILicht.
@@ -22,6 +24,7 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @JsonRootName(value = ApiNames.LICHT)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
+@ApiModel(value = ApiNames.LICHT, description = "Light configuration - Märklin coding.")
 public interface ILicht extends INamedItem<NameKey> {
 
     /**
@@ -31,8 +34,8 @@ public interface ILicht extends INamedItem<NameKey> {
      */
     @JsonGetter(ApiNames.ABBILDUNG)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(as=String.class, using = PathSerializer.class)
-    @ApiModelProperty(name = ApiNames.ABBILDUNG, dataType = "String", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @JsonSerialize(using = PathSerializer.class)
+    @ApiModelProperty(name = ApiNames.ABBILDUNG, dataType = "String", accessMode = AccessMode.READ_ONLY)
     Path getAbbildung();
 
     /**

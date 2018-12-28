@@ -1,7 +1,9 @@
 package com.linepro.modellbahn.model.util;
 
+import static java.nio.charset.StandardCharsets.ISO_8859_1;
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.Serializable;
-import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -99,21 +101,7 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
     @Override
     @Transient
     public String getLinkId() {
-        return getName().codePoints()
-                .mapToObj(this::encodeChar)
-                .collect(Collectors.joining(""));
-    }
-
-    private String encodeChar(int ch) {
-        return isAsciiAlphaNum(ch) ? 
-                   Character.toString((char) ch) : 
-                   String.format("%%%02x", ch);
-    }
-
-    private boolean isAsciiAlphaNum(int ch) {
-        return (48 <= ch && ch <= 57) || 
-               (65 <= ch && ch <= 90) || 
-               (97 <= ch && ch <= 122);
+        return getName();
     }
 
     @Override

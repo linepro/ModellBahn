@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  * ISpurweite.
  * @author   $Author$
@@ -11,6 +13,6 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  */
 @JsonRootName(value = ApiNames.SPURWEITE)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
+@ApiModel(value = ApiNames.SPURWEITE, description = "Track gauge - NEM 010.")
 public interface ISpurweite extends INamedItem<NameKey> {
-
 }
