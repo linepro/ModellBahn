@@ -1,9 +1,9 @@
 package com.linepro.modellbahn.model.util;
 
-import static java.nio.charset.StandardCharsets.ISO_8859_1;
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -35,6 +35,8 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
     private static final long serialVersionUID = -278823660682127691L;
 
     protected static final String[] BUSINESS_KEY = new String[] { ApiNames.NAMEN };
+    
+    protected static final List<Character> URL_SPECIAL_CHARS = Arrays.asList(':', '/', '@', '[', ']', '?', '&', '=', '+');
 
     /** The name. */
     @NotEmpty
@@ -101,7 +103,19 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
     @Override
     @Transient
     public String getLinkId() {
-        return getName();
+        return getName().codePoints()
+                .mapToObj(this::encodeChar)
+                .collect(Collectors.joining(""));
+    }
+
+    private String encodeChar(int ch) {
+        return isUrlSpecialChar(ch) ? 
+                   Character.toString((char) ch) : 
+                   String.format("%%%02x", ch);
+    }
+
+    private boolean isUrlSpecialChar(int ch) {
+        return URL_SPECIAL_CHARS.contains((char) ch); 
     }
 
     @Override
