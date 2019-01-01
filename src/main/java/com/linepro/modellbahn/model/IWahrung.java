@@ -9,6 +9,7 @@ import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * IWahrung.
@@ -27,6 +28,7 @@ public interface IWahrung extends INamedItem<NameKey> {
      */
     @JsonGetter(ApiNames.DECIMALS)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "", required = true)
     Integer getDecimals();
 
     /**

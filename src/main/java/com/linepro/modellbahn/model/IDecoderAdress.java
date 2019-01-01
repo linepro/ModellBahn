@@ -17,6 +17,7 @@ import com.linepro.modellbahn.rest.json.resolver.DecoderResolver;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * IDecoderAdress.
@@ -37,6 +38,7 @@ public interface IDecoderAdress extends IItem<DecoderAdressKey>, IAdress {
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= DecoderResolver.class)
+    @ApiModelProperty(dataType = "String", value = "", required = true)
     IDecoder getDecoder();
 
     /**
@@ -50,6 +52,7 @@ public interface IDecoderAdress extends IItem<DecoderAdressKey>, IAdress {
 
     @JsonGetter(ApiNames.INDEX)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "", required = true)
     Integer getIndex();
 
     @JsonSetter(ApiNames.INDEX)

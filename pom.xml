@@ -120,7 +120,9 @@
         <hibernate-core.version>5.3.1.Final</hibernate-core.version>
         <hibernate-validator.version>6.0.2.Final</hibernate-validator.version>
         <hibernate-validator-annotation-processor.version>6.0.2.Final</hibernate-validator-annotation-processor.version>
+        <jackson-module-parameter-names.version>2.9.6</jackson-module-parameter-names.version>
         <jackson-datatype-jdk8.version>2.9.6</jackson-datatype-jdk8.version>
+        <jackson-datatype-jsr310.version>2.9.6</jackson-datatype-jsr310.version>
         <javax.el.version>2.2.6</javax.el.version>
         <javax.el-api.version>3.0.0</javax.el-api.version>
         <javax.servlet.jsp.version>2.3.4</javax.servlet.jsp.version>
@@ -278,13 +280,6 @@
         </dependency>
 
         <!-- Jersey -->
-        <!-- 
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jdk8</artifactId>
-            <version>${jackson-datatype-jdk8.version}</version>
-        </dependency>
-        -->
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-common</artifactId>
@@ -397,7 +392,24 @@
             <artifactId>grizzly-http-servlet</artifactId>
             <version>${grizzly-http-servlet.version}</version>
         </dependency>
-        
+        <!--
+        <dependency>
+		    <groupId>com.fasterxml.jackson.module</groupId>
+		    <artifactId>jackson-module-parameter-names</artifactId>
+            <version>${jackson-module-parameter-names.version}</version>
+		</dependency>
+		-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jdk8</artifactId>
+            <version>${jackson-datatype-jdk8.version}</version>
+        </dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.datatype</groupId>
+		    <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson-datatype-jsr310.version}</version>
+		</dependency>       
+
         <!-- Hibernate -->
         <dependency>
             <groupId>org.hibernate</groupId>

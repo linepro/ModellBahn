@@ -29,7 +29,7 @@ import org.hibernate.validator.constraints.Range;
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
 public @interface CVValue {
-    String message() default "{org.hibernate.validator.constraints.Range.message}";
+    String message() default "{com.linepro.modellbahn.validator.constraints.cvvalue.range}";
 
     Class<?>[] groups() default { };
 

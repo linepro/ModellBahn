@@ -2,7 +2,7 @@ package com.linepro.modellbahn.model.impl;
 
 import java.math.BigDecimal;
 import java.nio.file.Path;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -15,9 +15,8 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
 
 import com.linepro.modellbahn.model.IArtikel;
@@ -56,11 +55,12 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     private static final long serialVersionUID = 8652624782179487496L;
 
     /** The produkt. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.produkt.notnull}")
     private IProdukt produkt;
 
     /** The Kaufdatum. */
-    private Date Kaufdatum;
+    @Past(message = "{com.linepro.modellbahn.validator.constraints.kaufdatum.past}")
+    private LocalDate Kaufdatum;
 
     /** The wahrung. */
     private IWahrung wahrung;
@@ -69,7 +69,8 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     private BigDecimal preis;
 
     /** The stuck. */
-    @Positive
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.stuck.null}")
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.stuck.positive}")
     private Integer stuck;
 
     /** The steuerung. */
@@ -97,7 +98,7 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     private Path abbildung;
 
     /** The status. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.status.notnull}")
     private Status status;
 
     /**
@@ -128,7 +129,7 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
      * @param status the status
      * @param deleted the deleted
      */
-    public Artikel(Long id, IProdukt produkt, Date kaufdatum, IWahrung wahrung, BigDecimal preis, Integer stuck,
+    public Artikel(Long id, IProdukt produkt, LocalDate kaufdatum, IWahrung wahrung, BigDecimal preis, Integer stuck,
             ISteuerung steuerung, IMotorTyp motorTyp, ILicht licht, IKupplung kupplung, IDecoder decoder,
             String artikelNr, String bezeichnung, String anmerkung,
             String beladung, Status status, Boolean deleted) {
@@ -163,13 +164,12 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
 
     @Override
     @Column(name = DBNames.KAUFDATUM)
-    @Temporal(TemporalType.DATE)
-    public Date getKaufdatum() {
+    public LocalDate getKaufdatum() {
         return Kaufdatum;
     }
 
     @Override
-    public void setKaufdatum(Date kaufdatum) {
+    public void setKaufdatum(LocalDate kaufdatum) {
         Kaufdatum = kaufdatum;
     }
 

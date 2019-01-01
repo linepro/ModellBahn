@@ -1,18 +1,18 @@
 package com.linepro.modellbahn.util;
 
-import org.apache.commons.io.FileUtils;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Date;
+import java.time.LocalDate;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
+import org.apache.commons.io.FileUtils;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 public class FileStoreTest {
 
@@ -38,7 +38,7 @@ public class FileStoreTest {
 
     @BeforeMethod
     public void setUp() throws Exception {
-        root = Paths.get( System.getProperty("java.io.tmpdir"), "FileStoreTest", Long.toString(new Date().getTime()));
+        root = Paths.get( System.getProperty("java.io.tmpdir"), "FileStoreTest", LocalDate.now().format(null));
 
         fileStore = new FileStore();
         fileStore.setBaseUri(URI.create(MODELL_BAHN));
@@ -89,6 +89,6 @@ public class FileStoreTest {
 
     @Test
     public void testUrlForPath() throws Exception {
-        assertEquals(fileStore.urlForPath(fileStore.getFilePath(ENTITY_TYPE, IDS, FILE_NAME, FILE_TYPE)), new URI(MODELL_BAHN + "/" + TEST_FILE));
+        assertEquals(fileStore.urlForPath(fileStore.getFilePath(ENTITY_TYPE, IDS, FILE_NAME, FILE_TYPE)), new URI(MODELL_BAHN + "/" + TEST_FILE).toString());
     }
 }

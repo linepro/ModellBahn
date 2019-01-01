@@ -23,6 +23,9 @@ import org.glassfish.jersey.servlet.ServletContainer;
 import org.glassfish.jersey.servlet.ServletProperties;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.linepro.modellbahn.ModellBahn;
 import com.linepro.modellbahn.jersey.LoggingFilter;
 import com.linepro.modellbahn.jersey.SecurityRequestFilter;
@@ -119,6 +122,11 @@ public class ModellBahnConfiguration extends ResourceConfig {
         register(MultiPartFeature.class);
 
         configureSwagger(baseUri);
+        
+        new ObjectMapper()
+                //.registerModule(new ParameterNamesModule())
+                .registerModule(new Jdk8Module())
+                .registerModule(new JavaTimeModule());
 
         // Logging.
         //register(new LoggingFeature(getLogger(), Level.FINEST, LoggingFeature.Verbosity.PAYLOAD_ANY, 8192));

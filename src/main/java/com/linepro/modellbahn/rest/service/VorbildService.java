@@ -2,7 +2,7 @@ package com.linepro.modellbahn.rest.service;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -65,7 +65,7 @@ public class VorbildService extends AbstractItemService<NameKey, Vorbild> {
             @JsonProperty(value=ApiNames.UNTER_KATEGORIE, required=true) IUnterKategorie unterKategorie,
             @JsonProperty(value=ApiNames.BAHNVERWALTUNG) IBahnverwaltung bahnverwaltung,
             @JsonProperty(value=ApiNames.HERSTELLER) String hersteller,
-            @JsonProperty(value=ApiNames.BAUZEIT) Date bauzeit,
+            @JsonProperty(value=ApiNames.BAUZEIT) LocalDate bauzeit,
             @JsonProperty(value=ApiNames.ANZAHL) Integer anzahl,
             @JsonProperty(value=ApiNames.BETREIBSNUMMER) String betreibsNummer,
             @JsonProperty(value=ApiNames.ANTRIEB) IAntrieb antrieb,
@@ -75,7 +75,7 @@ public class VorbildService extends AbstractItemService<NameKey, Vorbild> {
             @JsonProperty(value=ApiNames.DIENSTGEWICHT) BigDecimal dienstgewicht,
             @JsonProperty(value=ApiNames.GESCHWINDIGKEIT) Integer geschwindigkeit,
             @JsonProperty(value=ApiNames.LANGE) BigDecimal lange,
-            @JsonProperty(value=ApiNames.AUSSERDIENST) Date ausserdienst,
+            @JsonProperty(value=ApiNames.AUSSERDIENST) LocalDate ausserdienst,
             @JsonProperty(value=ApiNames.DMTREIBRAD) BigDecimal dmTreibrad,
             @JsonProperty(value=ApiNames.DMLAUFRADVORN) BigDecimal dmLaufradVorn,
             @JsonProperty(value=ApiNames.DMLAUFRADHINTEN) BigDecimal dmLaufradHinten,

@@ -44,11 +44,11 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
     private static final long serialVersionUID = -3254516717556070251L;
 
     /** The decoder. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoder.notnull}")
     private IDecoder decoder;
     
     /** The funktion. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.funktion.notnull}")
     private IDecoderTypFunktion funktion;
 
 	/** The wert. */

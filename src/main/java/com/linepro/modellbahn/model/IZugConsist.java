@@ -9,15 +9,18 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.impl.Artikel;
 import com.linepro.modellbahn.model.impl.Zug;
 import com.linepro.modellbahn.model.keys.ZugConsistKey;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.rest.json.resolver.ArtikelResolver;
 import com.linepro.modellbahn.rest.json.resolver.ZugResolver;
+import com.linepro.modellbahn.rest.json.serialization.ArtikelSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * IZugConsist.
@@ -38,6 +41,7 @@ public interface IZugConsist extends IItem<ZugConsistKey> {
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= ZugResolver.class)
+    @ApiModelProperty(dataType = "String", value = "", accessMode = AccessMode.READ_ONLY, required = true)
     IZug getZug();
 
     /**
@@ -56,6 +60,7 @@ public interface IZugConsist extends IItem<ZugConsistKey> {
      */
     @JsonGetter(ApiNames.POSITION)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "", accessMode = AccessMode.READ_ONLY, required = true)
     Integer getPosition();
 
     /**
@@ -72,9 +77,9 @@ public interface IZugConsist extends IItem<ZugConsistKey> {
      * @return the artikel
      */
     @JsonGetter(ApiNames.ARTIKEL)
+    @JsonSerialize(contentUsing = ArtikelSerializer.class)
     @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= ArtikelResolver.class)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.rest.json.serialization.IArtikelRef", value = "", accessMode = AccessMode.READ_ONLY, required = true)
     IArtikel getArtikel();
 
     /**

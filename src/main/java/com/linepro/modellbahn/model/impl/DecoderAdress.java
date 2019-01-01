@@ -53,15 +53,16 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
     private static final long serialVersionUID = -1845658968133212205L;
 
     /** The decoder. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoder.notnull}")
     private IDecoder decoder;
 
     /** The adress. */
-    @Range(min=0,max=5)
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.index.notnull}")
+    @Range(min=0,max=5, message = "{index.range}")
     private Integer index;
 
     /** The typ. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.adressTyp.notnull}")
     private AdressTyp adressTyp;
 
     /** The adress. */

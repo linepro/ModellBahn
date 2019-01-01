@@ -2,7 +2,7 @@ package com.linepro.modellbahn.model;
 
 import java.math.BigDecimal;
 import java.nio.file.Path;
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -34,6 +34,8 @@ import com.linepro.modellbahn.rest.json.resolver.LichtResolver;
 import com.linepro.modellbahn.rest.json.resolver.MotorTypResolver;
 import com.linepro.modellbahn.rest.json.resolver.SteuerungResolver;
 import com.linepro.modellbahn.rest.json.resolver.WahrungResolver;
+import com.linepro.modellbahn.rest.json.serialization.LocalDateDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.LocalDateSerializer;
 import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
 import com.linepro.modellbahn.rest.json.serialization.ProduktSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -60,7 +62,7 @@ public interface IArtikel extends INamedItem<NameKey> {
     @JsonGetter(ApiNames.PRODUKT)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using= ProduktSerializer.class)
-    @ApiModelProperty(name = ApiNames.PRODUKT, dataType = "com.linepro.modellbahn.rest.json.serialization.IProduktRef")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.rest.json.serialization.IProduktRef", value = "Product details", required = true)
     IProdukt getProdukt();
 
     /**
@@ -78,9 +80,11 @@ public interface IArtikel extends INamedItem<NameKey> {
      * @return the kaufdatum
      */
     @JsonGetter(ApiNames.KAUFDATUM)
+    @JsonSerialize(using = LocalDateSerializer.class)
     @JsonView(Views.Public.class)
     @JsonFormat(shape=Shape.STRING, pattern= Formats.ISO8601_DATE)
-    Date getKaufdatum();
+    @ApiModelProperty(dataType = "java.time.LocalDate", value = "Purchase date")
+    LocalDate getKaufdatum();
 
     /**
      * Sets the kaufdatum.
@@ -88,7 +92,8 @@ public interface IArtikel extends INamedItem<NameKey> {
      * @param kaufdatum the new kaufdatum
      */
     @JsonSetter(ApiNames.KAUFDATUM)
-    void setKaufdatum(Date kaufdatum);
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    void setKaufdatum(LocalDate kaufdatum);
 
     /**
      * Gets the wahrung.
@@ -99,6 +104,7 @@ public interface IArtikel extends INamedItem<NameKey> {
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= WahrungResolver.class)
+    @ApiModelProperty(dataType = "String", value = "Purchase currency")
     IWahrung getWahrung();
 
     /**
@@ -117,6 +123,7 @@ public interface IArtikel extends INamedItem<NameKey> {
      */
     @JsonGetter(ApiNames.PREIS)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "Purchase price")
     BigDecimal getPreis();
 
     /**
@@ -134,6 +141,7 @@ public interface IArtikel extends INamedItem<NameKey> {
      */
     @JsonGetter(ApiNames.STUCK)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "Purchase Quantity", required = true)
     Integer getStuck();
 
     /**
@@ -153,6 +161,7 @@ public interface IArtikel extends INamedItem<NameKey> {
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= SteuerungResolver.class)
+    @ApiModelProperty(dataType = "String", value = "Control method")
     ISteuerung getSteuerung();
 
     /**
@@ -173,6 +182,7 @@ public interface IArtikel extends INamedItem<NameKey> {
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= MotorTypResolver.class)
+    @ApiModelProperty(dataType = "String", value = "Motor type")
     IMotorTyp getMotorTyp();
 
     /**
@@ -193,6 +203,7 @@ public interface IArtikel extends INamedItem<NameKey> {
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= LichtResolver.class)
+    @ApiModelProperty(dataType = "String", value = "Light Configuration")
     ILicht getLicht();
 
     /**
@@ -213,6 +224,7 @@ public interface IArtikel extends INamedItem<NameKey> {
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= KupplungResolver.class)
+    @ApiModelProperty(dataType = "String", value = "Coupling configuration")
     IKupplung getKupplung();
 
     /**
@@ -232,7 +244,8 @@ public interface IArtikel extends INamedItem<NameKey> {
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.ID, resolver= DecoderResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= DecoderResolver.class)
+    @ApiModelProperty(dataType = "String", value = "Decoder")
     IDecoder getDecoder();
 
     /**
@@ -251,6 +264,7 @@ public interface IArtikel extends INamedItem<NameKey> {
      */
     @JsonGetter(ApiNames.ANMERKUNG)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "Remarks")
     String getAnmerkung();
 
     /**
@@ -268,6 +282,7 @@ public interface IArtikel extends INamedItem<NameKey> {
      */
     @JsonGetter(ApiNames.BELADUNG)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "Load")
     String getBeladung();
 
     /**
@@ -286,7 +301,7 @@ public interface IArtikel extends INamedItem<NameKey> {
     @JsonGetter(ApiNames.ABBILDUNG)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using = PathSerializer.class)
-    @ApiModelProperty(name = ApiNames.ABBILDUNG, dataType = "String", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "String", value = "Image URL", accessMode = AccessMode.READ_ONLY)
     Path getAbbildung();
 
     /**
@@ -305,6 +320,7 @@ public interface IArtikel extends INamedItem<NameKey> {
      */
     @JsonGetter(ApiNames.STATUS)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "Status", required = true)
     Status getStatus();
 
     /**

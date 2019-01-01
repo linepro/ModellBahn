@@ -35,7 +35,7 @@ public interface IDecoderTypAdress extends IItem<DecoderTypAdressKey>, IAdress {
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using= DecoderTypSerializer.class)
-    @ApiModelProperty(name = ApiNames.DECODER_TYP, dataType = "com.linepro.modellbahn.rest.json.serialization.IDecoderTypRef")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.rest.json.serialization.IDecoderTypRef", value = "", required = true)
     IDecoderTyp getDecoderTyp();
 
     /**
@@ -52,8 +52,9 @@ public interface IDecoderTypAdress extends IItem<DecoderTypAdressKey>, IAdress {
      *
      * @return the index
      */
-    @JsonSetter(ApiNames.INDEX)
+    @JsonGetter(ApiNames.INDEX)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "", required = true)
     Integer getIndex();
 
     /**
@@ -79,6 +80,7 @@ public interface IDecoderTypAdress extends IItem<DecoderTypAdressKey>, IAdress {
      */
     @JsonGetter(ApiNames.SPAN)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "", required = true)
     Integer getSpan();
 
     /**
@@ -96,6 +98,7 @@ public interface IDecoderTypAdress extends IItem<DecoderTypAdressKey>, IAdress {
      */
     @JsonGetter(ApiNames.WERKSEINSTELLUNG)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     Integer getAdress();
 
     /**

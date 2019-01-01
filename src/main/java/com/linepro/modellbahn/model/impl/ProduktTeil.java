@@ -46,15 +46,15 @@ public class ProduktTeil extends AbstractItem<ProduktTeilKey> implements IProduk
     private static final long serialVersionUID = 7684916028825247336L;
     
     /** The produkt. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.produkt.notnull}")
     private IProdukt produkt;
 
     /** The component produkt */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.teil.notnull}")
     private IProdukt teil;
     
     /** The count of this component. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.anzahl.positive}")
     private Integer anzahl;
 
     /**

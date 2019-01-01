@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
 
@@ -30,7 +31,8 @@ public class Wahrung extends AbstractNamedItem<NameKey> implements IWahrung {
     private static final long serialVersionUID = 9168067747478159138L;
 
     /** The decimals. */
-    @Range(min=0,max=2)
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decimals.notnull}")
+    @Range(min=0,max=2, message = "{com.linepro.modellbahn.validator.constraints.decimals.range}")
     private Integer decimals;
 	
 	/**

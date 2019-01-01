@@ -30,6 +30,7 @@ public class ListWithLinks<E extends IItem<?>> {
 
     @JsonGetter
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "", required = true)
     public List<E> getEntities() {
         return entities;
     }
@@ -37,7 +38,7 @@ public class ListWithLinks<E extends IItem<?>> {
     @JsonGetter(ApiNames.LINKS)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(contentUsing=LinkSerializer.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.ILink;", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.ILink;", value = "", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     public List<Link> getLinks() {
         return links;
     }

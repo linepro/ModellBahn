@@ -17,6 +17,7 @@ import com.linepro.modellbahn.rest.json.resolver.DecoderResolver;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * IDecoderCV.
@@ -37,6 +38,7 @@ public interface IDecoderCV extends IItem<DecoderCVKey> {
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= DecoderResolver.class)
+    @ApiModelProperty(dataType = "String", value = "", required = true)
     IDecoder getDecoder();
 
     /**
@@ -66,6 +68,7 @@ public interface IDecoderCV extends IItem<DecoderCVKey> {
 
     @JsonGetter(ApiNames.CV)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "", required = true)
     Integer getCvValue();
 
     @JsonSetter(ApiNames.CV)
@@ -78,6 +81,7 @@ public interface IDecoderCV extends IItem<DecoderCVKey> {
      */
     @JsonGetter(ApiNames.WERT)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "", required = true)
     Integer getWert();
 
     /**

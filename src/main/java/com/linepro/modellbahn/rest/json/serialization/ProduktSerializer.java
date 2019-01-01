@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.linepro.modellbahn.model.impl.Produkt;
 import com.linepro.modellbahn.rest.json.LinkUtils;
 import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.util.StaticContentFinder;
 
 /**
  * LinkSerializer.
@@ -35,6 +36,9 @@ public class ProduktSerializer extends StdSerializer<Produkt> {
         gen.writeStartObject();
         gen.writeStringField(ApiNames.HERSTELLER, value.getHersteller().getName());
         gen.writeStringField(ApiNames.BESTELL_NR, value.getName());
+        gen.writeStringField(ApiNames.BEZEICHNUNG, value.getBezeichnung());
+        gen.writeObjectField(ApiNames.LANGE, value.getLange());
+        gen.writeObjectField(ApiNames.ABBILDUNG, StaticContentFinder.getStore().urlForPath(value.getAbbildung()));
         utils.writeLinks(ApiNames.LINKS, value.getLinks(), gen, serializers);
         gen.writeEndObject();
     }

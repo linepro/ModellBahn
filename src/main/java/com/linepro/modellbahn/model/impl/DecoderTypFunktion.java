@@ -46,15 +46,16 @@ public class DecoderTypFunktion extends AbstractNamedItem<DecoderTypFunktionKey>
     private static final long serialVersionUID = -9194895557054214626L;
 
     /** The decoder typ. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoderTyp.notnull}")
     private IDecoderTyp decoderTyp;
 
     /** The reihe. */
-    @Range(min=0,max=1)
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.reihe.notnull}")
+    @Range(min=0,max=1,message = "{com.linepro.modellbahn.validator.constraints.reihe.range}")
     private Integer reihe;
 
     /** The programmable. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.programmable.notnull}")
     private Boolean programmable;
 
     public DecoderTypFunktion() {

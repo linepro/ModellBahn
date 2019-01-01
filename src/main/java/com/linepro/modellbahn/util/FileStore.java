@@ -90,7 +90,11 @@ public class FileStore implements IFileStore {
     }
 
     @Override
-    public URI urlForPath(Path file) {
+    public String urlForPath(Path file) {
+        if (file == null) {
+            return null;
+        }
+
         List<String> parts = new ArrayList<>();
 
         StringBuilder template = new StringBuilder(baseUri.toString());
@@ -103,6 +107,6 @@ public class FileStore implements IFileStore {
             template.append("}");
         }
 
-        return UriBuilder.fromUri(template.toString()).build(parts.toArray());
+        return UriBuilder.fromUri(template.toString()).build(parts.toArray()).toString();
     }
 }

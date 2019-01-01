@@ -13,6 +13,8 @@ import com.linepro.modellbahn.persistence.IKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * INamedItem.
  * @author   $Author$
@@ -28,6 +30,7 @@ public interface INamedItem<K extends IKey> extends IItem<K> {
      */
     @JsonGetter(ApiNames.NAMEN)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "", required = true)
     String getName();
 
     /**
@@ -45,6 +48,7 @@ public interface INamedItem<K extends IKey> extends IItem<K> {
      */
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "")
     String getBezeichnung();
 
     /**

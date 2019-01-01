@@ -49,6 +49,7 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= HerstellerResolver.class)
+    @ApiModelProperty(dataType = "String", value = "", required = true)
     IHersteller getHersteller();
 
     /**
@@ -62,6 +63,7 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
 
     @JsonGetter(ApiNames.BESTELL_NR)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "", required = true)
     String getName();
 
     @Override
@@ -75,6 +77,7 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
      */
     @JsonGetter(ApiNames.I_MAX)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     BigDecimal getiMax();
 
     /**
@@ -94,6 +97,7 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= ProtokollResolver.class)
+    @ApiModelProperty(dataType = "String", value = "")
     IProtokoll getProtokoll();
 
     /**
@@ -112,6 +116,7 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
      */
     @JsonGetter(ApiNames.FAHRSTUFE)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "", required = true)
     Integer getFahrstufe();
 
     /**
@@ -129,6 +134,7 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
      */
     @JsonGetter(ApiNames.GERAUSCH)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "", required = true)
     Boolean getSound();
 
     /**
@@ -146,6 +152,7 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
      */
     @JsonGetter(ApiNames.KONFIGURATION)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "", required = true)
     Konfiguration getKonfiguration();
 
     /**
@@ -219,18 +226,18 @@ public interface IDecoderTyp extends INamedItem<DecoderTypKey> {
     @JsonGetter(ApiNames.ADRESSEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentUsing = DecoderTypAdressSerializer.class)
-    @ApiModelProperty(name = ApiNames.ADRESSEN, dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.IDecoderTypAdressRef;", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.IDecoderTypAdressRef;", value = "", accessMode = AccessMode.READ_ONLY, required = true)
     Set<IDecoderTypAdress> getSortedAdressen();
 
     @JsonGetter(ApiNames.CVS)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentUsing = DecoderTypCVSerializer.class)
-    @ApiModelProperty(name = ApiNames.CVS, dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.IDecoderTypCVRef;", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.IDecoderTypCVRef;", value = "", accessMode = AccessMode.READ_ONLY)
     Set<IDecoderTypCV> getSortedCVs();
 
     @JsonGetter(ApiNames.FUNKTIONEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentUsing = DecoderTypFunktionSerializer.class)
-    @ApiModelProperty(name = ApiNames.FUNKTIONEN, dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.IDecoderTypFunktionRef;", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.IDecoderTypFunktionRef;", value = "", accessMode = AccessMode.READ_ONLY, required = true)
     Set<IDecoderTypFunktion> getSortedFunktionen();
 }

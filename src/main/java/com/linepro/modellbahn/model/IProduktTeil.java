@@ -36,7 +36,7 @@ public interface IProduktTeil extends IItem<ProduktTeilKey> {
     @JsonGetter(ApiNames.PRODUKT)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using= ProduktSerializer.class)
-    @ApiModelProperty(name=ApiNames.PRODUKT, dataType = "IProduktRef", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.json.serialization.IProduktRef", value = "", accessMode = AccessMode.READ_ONLY, required = true)
     IProdukt getProdukt();
 
     /**
@@ -51,7 +51,7 @@ public interface IProduktTeil extends IItem<ProduktTeilKey> {
     @JsonGetter(ApiNames.TEIL)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using= ProduktSerializer.class)
-    @ApiModelProperty(name=ApiNames.TEIL, dataType = "IProduktRef", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.json.serialization.IProduktRef", value = "", accessMode = AccessMode.READ_ONLY, required = true)
     IProdukt getTeil();
 
     @JsonSetter(ApiNames.TEIL)
@@ -65,6 +65,7 @@ public interface IProduktTeil extends IItem<ProduktTeilKey> {
      */
     @JsonGetter(ApiNames.ANZAHL)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "", required = true)
     Integer getAnzahl();
 
     /**

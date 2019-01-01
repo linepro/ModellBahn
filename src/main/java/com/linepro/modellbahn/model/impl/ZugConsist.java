@@ -45,15 +45,16 @@ public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsi
     private static final long serialVersionUID = 3941436184732408563L;
 
     /** The zug. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.zug.notnull}")
     private IZug zug;
 
     /** The position. */
-    @Positive
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.position.notnull}")
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.position.positive}")
     private Integer position;
 
     /** The artikel. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.artikel.notnull}")
     private IArtikel artikel;
 
     /**

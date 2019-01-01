@@ -9,7 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -109,8 +109,8 @@ public class Exporter<E extends IItem<?>> {
             return ((IUnterKategorie) value).getName();
         } else if (value instanceof INamedItem) {
             return ((INamedItem<?>) value).getName();
-        } else if (value instanceof Date) {
-            return DATE_FORMAT.format((Date) value);
+        } else if (value instanceof LocalDate) {
+            return DATE_FORMAT.format((LocalDate) value);
         } else if (value instanceof BigDecimal) {
             return ((BigDecimal) value).toPlainString();
         }

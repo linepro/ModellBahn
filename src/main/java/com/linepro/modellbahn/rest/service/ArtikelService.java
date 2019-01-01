@@ -2,7 +2,7 @@ package com.linepro.modellbahn.rest.service;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -68,7 +68,7 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     public Artikel create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.HERSTELLER) String herstellerStr,
             @JsonProperty(value = ApiNames.BESTELL_NR) String bestellNr,
-            @JsonProperty(value = ApiNames.KAUFDATUM) Date kaufdatum,
+            @JsonProperty(value = ApiNames.KAUFDATUM) LocalDate kaufdatum,
             @JsonProperty(value = ApiNames.WAHRUNG) String wahrungStr,
             @JsonProperty(value = ApiNames.PREIS) BigDecimal preis,
             @JsonProperty(value = ApiNames.STUCK) Integer stuck,

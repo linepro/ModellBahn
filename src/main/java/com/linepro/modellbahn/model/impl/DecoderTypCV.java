@@ -46,11 +46,12 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
     private static final long serialVersionUID = -5202372019371973750L;
 
     /** The decoder typ. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoderTyp.notnull}")
     private IDecoderTyp decoderTyp;
 
     /** The cv. */
-    @Range(min=1,max=255)
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.cv.notnull}")
+    @Range(min=1,max=255,message = "{cv.range}")
     private Integer cv;
 
     /** The bezeichnung. */

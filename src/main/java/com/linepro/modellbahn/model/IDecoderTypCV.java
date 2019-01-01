@@ -34,7 +34,7 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using= DecoderTypSerializer.class)
-    @ApiModelProperty(name = ApiNames.DECODER_TYP, dataType = "com.linepro.modellbahn.rest.json.serialization.IDecoderTypRef")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.rest.json.serialization.IDecoderTypRef", value = "", required = true)
     IDecoderTyp getDecoderTyp();
 
     /**
@@ -53,6 +53,7 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
      */
     @JsonGetter(ApiNames.CV)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "", required = true)
     Integer getCv();
 
     /**
@@ -70,6 +71,7 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
      */
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "", required = true)
     String getBezeichnung();
 
     /**
@@ -87,6 +89,7 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
      */
     @JsonGetter(ApiNames.MINIMAL)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     Integer getMinimal();
 
     /**
@@ -104,6 +107,7 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
      */
     @JsonGetter(ApiNames.MAXIMAL)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     Integer getMaximal();
 
     /**
@@ -121,6 +125,7 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey> {
      */
     @JsonGetter(ApiNames.WERKSEINSTELLUNG)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     Integer getWerkseinstellung();
 
     /**

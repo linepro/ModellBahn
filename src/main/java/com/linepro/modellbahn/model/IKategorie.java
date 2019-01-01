@@ -43,7 +43,7 @@ public interface IKategorie extends INamedItem<NameKey> {
     @JsonGetter(ApiNames.UNTER_KATEGORIEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentUsing = UnterKategorieSerializer.class)
-    @ApiModelProperty(name = ApiNames.UNTER_KATEGORIEN, dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.IUnterKategorieRef;", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.IUnterKategorieRef;", value = "", accessMode = AccessMode.READ_ONLY, required = true)
     Set<IUnterKategorie> getUnterKategorien();
 
     /**

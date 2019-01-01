@@ -15,6 +15,7 @@ import com.linepro.modellbahn.rest.json.resolver.WahrungResolver;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * ILand.
@@ -36,6 +37,7 @@ public interface ILand extends INamedItem<NameKey> {
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= WahrungResolver.class)
+    @ApiModelProperty(dataType = "String", value = "")
     IWahrung getWahrung();
 
     /**

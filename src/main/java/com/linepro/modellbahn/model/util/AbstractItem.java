@@ -44,11 +44,11 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
     private static final long serialVersionUID = 938276986391979417L;
 
     /** The primary key id. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.id.notnull}")
     private Long id;
 
 	/** The soft deleted state. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.deleted.notnull}")
 	private Boolean deleted;
 	
 	/** Set of HATEOAS links for Json serialization */

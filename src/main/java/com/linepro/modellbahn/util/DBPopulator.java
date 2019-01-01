@@ -1,7 +1,9 @@
 package com.linepro.modellbahn.util;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.time.LocalDate;
 
 import javax.inject.Inject;
 
@@ -10,6 +12,7 @@ import org.slf4j.Logger;
 
 import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.IAntrieb;
+import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IAufbau;
 import com.linepro.modellbahn.model.IBahnverwaltung;
 import com.linepro.modellbahn.model.IDecoder;
@@ -31,6 +34,7 @@ import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.IVorbild;
 import com.linepro.modellbahn.model.IWahrung;
+import com.linepro.modellbahn.model.IZug;
 import com.linepro.modellbahn.model.IZugTyp;
 import com.linepro.modellbahn.model.impl.Achsfolg;
 import com.linepro.modellbahn.model.impl.Antrieb;
@@ -74,7 +78,6 @@ import com.linepro.modellbahn.model.util.Status;
 import com.linepro.modellbahn.persistence.IKey;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.IPersisterFactory;
-import com.linepro.modellbahn.rest.util.ApiNames;
 
 public class DBPopulator {
 
@@ -165,230 +168,255 @@ public class DBPopulator {
         dump(ZugConsist.class);
     }
 
+    private Achsfolg addAchsfolg(String namen, String bezeichnung) {
+        return save(new Achsfolg(null, namen, bezeichnung, false));
+    }
+
     private void populateAchsfolg() {
-        save(new Achsfolg(null, "(1'C)D 3'2'T35", "(1'C)D 3'2'T35", false));
-        save(new Achsfolg(null, "1'C 1' h2t", "1'C 1' h2t", false));
-        save(new Achsfolg(null, "1'C h2 3T16", "1'C h2 3T16", false));
-        save(new Achsfolg(null, "1'D 1' h2t", "1'D 1' h2t", false));
-        save(new Achsfolg(null, "1'E 1' h3 2'3'T28", "1'E 1' h3 2'3'T28", false));
-        save(new Achsfolg(null, "1'E h2 2'2T26 KAB5", "1'E h2 2'2T26 KAB5", false));
-        save(new Achsfolg(null, "1'E1' h2t", "1'E1' h2t", false));
-        save(new Achsfolg(null, "2'C 1' h3 2'2'T26", "2'C 1' h3 2'2'T26", false));
-        save(new Achsfolg(null, "2'C1' 2'2'T26", "2'C1' 2'2'T26", false));
-        save(new Achsfolg(null, "2'C1' h3 2'2'T40", "2'C1' h3 2'2'T40", false));
-        save(new Achsfolg(null, "A1 dm", "A1 dm", false));
-        save(new Achsfolg(null, "AA dm", "AA dm", false));
-        save(new Achsfolg(null, "B drn", "B drn", false));
-        save(new Achsfolg(null, "B h2t", "B h2t", false));
-        save(new Achsfolg(null, "B'2' dh 2'2' 2'2' 2'B' dh", "B'2' dh 2'2' 2'2' 2'B' dh", false));
-        save(new Achsfolg(null, "B'B' de", "B'B' de", false));
-        save(new Achsfolg(null, "B'B' dh", "B'B' dh", false));
-        save(new Achsfolg(null, "B'B'", "B'B'", false));
-        save(new Achsfolg(null, "Bo'2' e", "Bo'2' e", false));
-        save(new Achsfolg(null, "Bo'Bo'+2'2'+Bo'Bo'", "Bo'Bo'+2'2'+Bo'Bo'", false));
-        save(new Achsfolg(null, "Bo'Bo'+Bo'Bo'+Bo'Bo'+Bo'Bo'", "Bo'Bo'+Bo'Bo'+Bo'Bo'+Bo'Bo'", false));
-        save(new Achsfolg(null, "C dh", "C dh", false));
-        save(new Achsfolg(null, "C h2t", "C h2t", false));
-        save(new Achsfolg(null, "C'C' dh", "C'C' dh", false));
-        save(new Achsfolg(null, "Co'Co' w6gf", "Co'Co' w6gf", false));
-        save(new Achsfolg(null, "Co'Co'", "Co'Co'", false));
-        save(new Achsfolg(null, "D h2t", "D h2t", false));
-        save(new Achsfolg(null, "D'D h4vt", "D'D h4vt", false));
+        addAchsfolg("1CD32T35", "(1'C)D 3'2'T35");
+        addAchsfolg("1C1H2T", "1'C 1' h2t");
+        addAchsfolg("1CH23T16", "1'C h2 3T16");
+        addAchsfolg("1D1H2T", "1'D 1' h2t");
+        addAchsfolg("1E1H323T28", "1'E 1' h3 2'3'T28");
+        addAchsfolg("1EH222T26KAB5", "1'E h2 2'2T26 KAB5");
+        addAchsfolg("1E1H2T", "1'E1' h2t");
+        addAchsfolg("2C1H322T26", "2'C 1' h3 2'2'T26");
+        addAchsfolg("2C122T26", "2'C1' 2'2'T26");
+        addAchsfolg("2C1H322T40", "2'C1' h3 2'2'T40");
+        addAchsfolg("A1DM", "A1 dm");
+        addAchsfolg("AADM", "AA dm");
+        addAchsfolg("BDRN", "B drn");
+        addAchsfolg("BH2T", "B h2t");
+        addAchsfolg("B2DH22222BDH", "B'2' dh 2'2' 2'2' 2'B' dh");
+        addAchsfolg("BBDE", "B'B' de");
+        addAchsfolg("BBDH", "B'B' dh");
+        addAchsfolg("BB", "B'B'");
+        addAchsfolg("BO2E", "Bo'2' e");
+        addAchsfolg("BOBO22BOBO", "Bo'Bo'+2'2'+Bo'Bo'");
+        addAchsfolg("BOBOBOBOBOBOBOBO", "Bo'Bo'+Bo'Bo'+Bo'Bo'+Bo'Bo'");
+        addAchsfolg("CDH", "C dh");
+        addAchsfolg("CH2T", "C h2t");
+        addAchsfolg("CCDH", "C'C' dh");
+        addAchsfolg("COCOW6GF", "Co'Co' w6gf");
+        addAchsfolg("COCO", "Co'Co'");
+        addAchsfolg("DH2T", "D h2t");
+        addAchsfolg("DDH4VT", "D'D h4vt");
+    }
+
+    private Antrieb addAntrieb(String namen, String bezeichnung) {
+        return save(new Antrieb(null, namen, bezeichnung, false));
     }
 
     private void populateAntrieb() {
-        save(new Antrieb(null, "Akku", "Akku", false));
-        save(new Antrieb(null, "Dampf", "Dampf", false));
-        save(new Antrieb(null, "Diesel", "Diesel", false));
-        save(new Antrieb(null, "Elektro", "Elektro", false));
-        save(new Antrieb(null, "Druckluft", "Druckluft", false));
+        addAntrieb("AKKU", "Akku");
+        addAntrieb("DAMPF", "Dampf");
+        addAntrieb("DIESEL", "Diesel");
+        addAntrieb("ELEKTRO", "Elektro");
+        addAntrieb("DRUCKLUFT", "Druckluft");
+    }
+
+    private Artikel addArtikel(IProdukt produkt, LocalDate kaufdatum, IWahrung wahrung, BigDecimal preis, Integer stuck,
+            ISteuerung steuerung, IMotorTyp motorTyp, ILicht licht, IKupplung kupplung, IDecoder decoder,
+            String artikelNr, String bezeichnung, String anmerkung,
+            String beladung, Status status) {
+        return save(new Artikel(null, produkt,  kaufdatum,  wahrung,  preis,  stuck,
+                 steuerung,  motorTyp,  licht,  kupplung,  decoder,
+                 artikelNr,  bezeichnung,  anmerkung,
+                 beladung,  status, false));
     }
 
     private void populateArtikel() {
-        IProdukt produkt = findProdukt("Märklin", "3000");
+        IProdukt produkt = findProdukt("MARKLIN", "3000");
         IWahrung wahrung = findWahrung("HKD");
         ISteuerung steuerung = findSteuerung("FRU");
         IMotorTyp motorTyp = findMotorTyp("SFCM");
         ILicht licht = findLicht("L1V");
-        IKupplung kupplung = findKupplung("Relex");
+        IKupplung kupplung = findKupplung("RELEX");
         IDecoder decoder = null;
-        Date kaufdatum = null;
+        LocalDate kaufdatum = null;
         BigDecimal preis = null;
         String artikelNr = null;
         String bezeichnung = null;
         String anmerkung = null;
         
-        save(new Artikel(null, produkt, kaufdatum, wahrung, preis, 1,
+        addArtikel(produkt, kaufdatum, wahrung, preis, 1,
                 steuerung, motorTyp, licht, kupplung, decoder,
                 artikelNr, bezeichnung, anmerkung,
-                null, Status.GEKAUFT, false));
+                null, Status.GEKAUFT);
+    }
+
+    private Aufbau addAufbau(String namen, String bezeichnung) {
+        return save(new Aufbau(null, namen, bezeichnung, false));
     }
 
     private void populateAufbau() {
-        save(new Aufbau(null, "LK", "Fahrgestell der Lok aus Metall", false));
-        save(new Aufbau(null, "LMK", "Fahrgestell und vorwiegender Aufbau der Loks aus Metall", false));
-        save(new Aufbau(null, "LM", "Fahrgestell und Aufbau der Lokomotive aus Metall", false));
-        save(new Aufbau(null, "WK", "Fahrgestell des Wagens aus Metall", false));
-        save(new Aufbau(null, "WMK", "Überwiegender Teil des Wagenaufbaus aus Metall", false));
-        save(new Aufbau(null, "WM", "Fahrgestell und Aufbau des Wagens aus Metall", false));
-        save(new Aufbau(null, "LKM", "Überwiegender Teil des Lokaufbaues aus Metall", false));
+        addAufbau("LK", "Fahrgestell der Lok aus Metall");
+        addAufbau("LMK", "Fahrgestell und vorwiegender Aufbau der Loks aus Metall");
+        addAufbau("LM", "Fahrgestell und Aufbau der Lokomotive aus Metall");
+        addAufbau("WK", "Fahrgestell des Wagens aus Metall");
+        addAufbau("WMK", "Überwiegender Teil des Wagenaufbaus aus Metall");
+        addAufbau("WM", "Fahrgestell und Aufbau des Wagens aus Metall");
+        addAufbau("LKM", "Überwiegender Teil des Lokaufbaues aus Metall");
+    }
+
+    private Bahnverwaltung addBahnverwaltung(String namen, String bezeichnung) {
+        return save(new Bahnverwaltung(null, namen, bezeichnung, false));
     }
 
     private void populateBahnverwaltung() {
-        save(new Bahnverwaltung(null, "AAE", "AAE", false));
-        save(new Bahnverwaltung(null, "ADtranz", "ABB Daimler-Benz Transportation (ADtranz)", false));
-        save(new Bahnverwaltung(null, "AL", "Anhaltische Leopoldsbahn (AL)", false));
-        save(new Bahnverwaltung(null, "ALNO", "ALNO Küchen", false));
-        save(new Bahnverwaltung(null, "AMTRAK", "American and Track (AMTRAK)", false));
-        save(new Bahnverwaltung(null, "AR", "Alaska Railroad (ARR)", false));
-        save(new Bahnverwaltung(null, "AT+SF", "Atchison, Topeka and Santa Fe Railway (AT+SF)", false));
-        save(new Bahnverwaltung(null, "AVE", "Alta Velocidad Española (AVE)", false));
-        save(new Bahnverwaltung(null, "AVG", "Albtal-Verkehrs-Gesellschaft mbH (AVG)", false));
-        save(new Bahnverwaltung(null, "Alaska", "Alaska Railroad (ARR)", false));
-        save(new Bahnverwaltung(null, "Alusuisse", "Schweizerische Aluminium AG (Alusuisse)", false));
-        save(new Bahnverwaltung(null, "B+A", "Boston and Albany Railway (B+A)", false));
-        save(new Bahnverwaltung(null, "B+O", "Baltomore and Ohio Railway (B+0)", false));
-        save(new Bahnverwaltung(null, "BBÖ", "Österreichischen Bundesbahnen (ÖBB)", false));
-        save(new Bahnverwaltung(null, "BHE", "Bebra-Hanauer Eisenbahn (BHE)", false));
-        save(new Bahnverwaltung(null, "BLS", "Bern–Lötschberg–Simplon railway (BLS)", false));
-        save(new Bahnverwaltung(null, "BN", "Burlington Northern Railroad (BN)", false));
-        save(new Bahnverwaltung(null, "BVG", "Berliner Verkehrsbetriebe (BVG)", false));
-        save(new Bahnverwaltung(null, "BuH", "Ruhrkohle AG Bahn und Hafen GmbH (RAG/BuH)", false));
-        save(new Bahnverwaltung(null, "C+G", "Columbus and Greenville Railway (C+G)", false));
-        save(new Bahnverwaltung(null, "CB+Q", "Chicago, Burlington and Quincy Railroad (CBQ)", false));
-        save(new Bahnverwaltung(null, "CFL", "Société Nationale des Chemins de Fer Luxembourgeois (CFL)", false));
-        save(new Bahnverwaltung(null, "CFV3V", "Chemin de Fer à Vapeur des 3 Vallées (CFV3V)", false));
-        save(new Bahnverwaltung(null, "CIWL", "Compagnie Internationale des Wagons-Lits (CIWL)", false));
-        save(new Bahnverwaltung(null, "CN", "Canadian National Railway (CN)", false));
-        save(new Bahnverwaltung(null, "CONNEX", "CONNEX GmbH", false));
-        save(new Bahnverwaltung(null, "DAB", "Dortmunder Actien-Brauerei (DAB)", false));
-        save(new Bahnverwaltung(null, "DB AG", "Deutschen Bahn AG (DB AG)", false));
-        save(new Bahnverwaltung(null, "DB AutoZug", "Deutschen Bahn AG AutoZug (DB AutoZug)", false));
-        save(new Bahnverwaltung(null, "DB Cargo", "Deutschen Bahn AG Cargo (DB Cargo)", false));
-        save(new Bahnverwaltung(null, "DB Museum", "Deutschen Bundesbahn Museum (DB Museum)", false));
-        save(new Bahnverwaltung(null, "DB", "Deutschen Bundesbahn (DB)", false));
-        save(new Bahnverwaltung(null, "DB (DR)", "Deutschen Reichsbahn (DB/DR)", false));
-        save(new Bahnverwaltung(null, "DBP", "Deutschen Bahnpost (DBP)", false));
-        save(new Bahnverwaltung(null, "DL", "Dixie Line (DL)", false));
-        save(new Bahnverwaltung(null, "DR (DDR)", "Deutschen Reichsbahn (DDR)", false));
-        save(new Bahnverwaltung(null, "DR", "Deutschen Reichsbahn (DR)", false));
-        save(new Bahnverwaltung(null, "DRB", "Deutschen Reichsbahn (DRB)", false));
-        save(new Bahnverwaltung(null, "DRG GV Bay", "Deutschen Reichsbahn Gesellschaft (DRG)", false));
-        save(new Bahnverwaltung(null, "DRG", "Deutschen Reichsbahn Gesellschaft (DRG)", false));
-        save(new Bahnverwaltung(null, "DRGW", "Denver and Rio Grande Western Railroad (DRGW)", false));
-        save(new Bahnverwaltung(null, "DSB", "Danske Statsbaner (DSB)", false));
-        save(new Bahnverwaltung(null, "DSG", "Deutsche Schlafwagen und Speisewagengesellschaft (DSG)", false));
-        save(new Bahnverwaltung(null, "EBOE", "Elmshorn-Barmstedt-Oldesloer Eisenbahn (EBOE)", false));
-        save(new Bahnverwaltung(null, "ESG", "Eisenbahn-Service GmbH (ESG)", false));
-        save(new Bahnverwaltung(null, "EST", " Société Nationale des Chemins de Fer Français (SNCF)", false));
-        save(new Bahnverwaltung(null, "EVB", "Eisenbahnen und Verkehrsbetriebe Elbe-Weser GmbH (EVB)", false));
-        save(new Bahnverwaltung(null, "EMD", "GM Electro Motive Division (EMD)", false));
-        save(new Bahnverwaltung(null, "EuH", "„Eisenbahn + Häfen“", false));
-        save(new Bahnverwaltung(null, "FS Cargo", "Ferrovie dello Stato Italiane Cargo (FS Cargo)", false));
-        save(new Bahnverwaltung(null, "FS", "Ferrovie dello Stato Italiane (FS)", false));
-        save(new Bahnverwaltung(null, "GATX", "GATX Corporation (GATX)", false));
-        save(new Bahnverwaltung(null, "GBAG", "GB Netz der Deutschen Bahn AG (GBAG)", false));
-        save(new Bahnverwaltung(null, "G.Bad.St.E", "Großherzoglich Badische Staatseisenbahn (G.Bad.St.E)", false));
-        save(new Bahnverwaltung(null, "GKM", "Grosskraftwerk Mannheim AG (GKM)", false));
-        save(new Bahnverwaltung(null, "G.O.St.B", "Großherzoglich Oldenburgische Staatseisenbahn (G.O.St.B)", false));
-        save(new Bahnverwaltung(null, "GSW", "Great Southwest Railroad (GSW)", false));
-        save(new Bahnverwaltung(null, "GVB", "Gruppenverwaltung Bayern (GVB)", false));
-        save(new Bahnverwaltung(null, "GhMFFE", "Großherzoglich Mecklenburgische Friedrich-Franz-Eisenbahn (MFFE)", false));
-        save(new Bahnverwaltung(null, "HBS", "Herzoglich Braunschweigische Staatseisenbahn (HBS)", false));
-        save(new Bahnverwaltung(null, "HEG", "Hersfelder Eisenbahn Gesellschaft mbH (HEG)", false));
-        save(new Bahnverwaltung(null, "HNSt.B", "Herzoglich Nassauische Staatsbahn (HNSt.B)", false));
-        save(new Bahnverwaltung(null, "Hansa", "Hansabahn Dortmund", false));
-        save(new Bahnverwaltung(null, "Henkel", "Fa Henkel KGaA, Düsseldorf", false));
-        save(new Bahnverwaltung(null, "ICG", "Illonois Central Railway (ICG)", false));
-        save(new Bahnverwaltung(null, "IGE", "Internationalen Gesellschaft für Eisenbahnverkehr (IGE)", false));
-        save(new Bahnverwaltung(null, "Ilmebahn", "Ilmebahn GmbH", false));
-        save(new Bahnverwaltung(null, "K.Bay.St.E", "Königlich Bayerischen Staatseisenbahnen (K.Bay.St.E)", false));
-        save(new Bahnverwaltung(null, "K.H.St.B", "Königlich Hannöversche Staatseisenbahnen (K.H.St.B)", false));
-        save(new Bahnverwaltung(null, "K.P.E.V", "Königlich Preußische Eisenbahn-Verwaltung (K.P.E.V)", false));
-        save(new Bahnverwaltung(null, "K.P.St.E", "Königlich Preußische Staatseisenbahnen (K.P.St.E)", false));
-        save(new Bahnverwaltung(null, "KB", "Deutschen Bundesbahn (DB)", false));
-        save(new Bahnverwaltung(null, "KEG", "Karsdorfer Eisenbahngesellschaft GmbH (KEG)", false));
-        save(new Bahnverwaltung(null, "KH", "Kraftwerk Herne", false));
-        save(new Bahnverwaltung(null, "KLVM", "KLVM", false));
-        save(new Bahnverwaltung(null, "K.Pu.G.H.St.E", "Königlich Preußische und Großherzoglich Hessischen Staatseisenbahnen (K.Pu.G.H.St.E", false));
-        save(new Bahnverwaltung(null, "K.Sächs.St.E", "Königlich Sächsische Staatseisenbahnen (K.Sächs.St.E)", false));
-        save(new Bahnverwaltung(null, "K.W.St.E", "Königlich Württembergischen Staatseisenbahnen (K.W.St.E)", false));
-        save(new Bahnverwaltung(null, "LAG", "Lokalbahn Aktien-Gesellschaft (LAG)", false));
-        save(new Bahnverwaltung(null, "LMS", "London, Midland and Scottish Railway (LMS)", false));
-        save(new Bahnverwaltung(null, "LNER", "London Northeast Railway (LNER)", false));
-        save(new Bahnverwaltung(null, "LSE", "Luzern–Stans–Engelberg-Bahn (LSE)", false));
-        save(new Bahnverwaltung(null, "MAV", "Magyar Államvasutak(MAV)", false));
-        save(new Bahnverwaltung(null, "MFFE", "Großherzoglich Mecklenburgische Friedrich-Franz-Eisenbahn (MFFE)", false));
-        save(new Bahnverwaltung(null, "MILW", "Chicago, Milwaukee, St Paul and Pacific Railroad (MILW)", false));
-        save(new Bahnverwaltung(null, "MKO", "Museumseisenbahn Küstenbahn Ostfriesland (MKO)", false));
-        save(new Bahnverwaltung(null, "MWB", "Mittelweserbahn GmbH (MWB)", false));
-        save(new Bahnverwaltung(null, "Makies AG", "Firma „Makies“ AG", false));
-        save(new Bahnverwaltung(null, "NB", "NordseeBahn (NB)", false));
-        save(new Bahnverwaltung(null, "NEG", "Norddeutsche Eisenbahngesellschaft Niebüll GmbH (NEG)", false));
-        save(new Bahnverwaltung(null, "NH", "New York, New Haven and Hartford Railroad (NH)", false));
-        save(new Bahnverwaltung(null, "NL", "P and O Nedlloyd (NL)", false));
-        save(new Bahnverwaltung(null, "NOHAB", "Nydqvist und Holm AB (NOHAB)", false));
-        save(new Bahnverwaltung(null, "NS Cargo", "Nederlandse Spoorweggen Cargo (NS Cargo)", false));
-        save(new Bahnverwaltung(null, "NS", "Nederlandse Spoorweggen (NS)", false));
-        save(new Bahnverwaltung(null, "NSB", "Norske Statsbaner (NSB)", false));
-        save(new Bahnverwaltung(null, "NYC", "New York Central Railroad (NYC)", false));
-        save(new Bahnverwaltung(null, "Nördlingen", "das Bayerische Eisenbahnmuseum (Nördlingen)", false));
-        save(new Bahnverwaltung(null, "ÖBB", "Österreichischen Bundesbahnen (ÖBB)", false));
-        save(new Bahnverwaltung(null, "ONR", "Ontario Northland Railway (ONR)", false));
-        save(new Bahnverwaltung(null, "On Rail", "On Rail Gesellschaft für Eisenbahnausrüstung und Zubehör mbH (On Rail)", false));
-        save(new Bahnverwaltung(null, "Opel", "Opel AG", false));
-        save(new Bahnverwaltung(null, "Orbe Chav", "Transport Vallée de Joux, Yverdon-les-bains et Sainte Croix (Travys)", false));
-        save(new Bahnverwaltung(null, "P+LE", "Pittsburgh and Lake Erie Railroad (P+LE)", false));
-        save(new Bahnverwaltung(null, "P.St.E", "Preußische Staatseisenbahnen (P.St.E)", false));
-        save(new Bahnverwaltung(null, "PEG", "Prignitzer Eisenbahn-Gesellschaft (PEG)", false));
-        save(new Bahnverwaltung(null, "PRR", "Pennsylvania Railroad (PRR)", false));
-        save(new Bahnverwaltung(null, "Persil", "Fa Henkel KGaA, Düsseldorf", false));
-        save(new Bahnverwaltung(null, "Pfalz.B", "Pfälzische Eisenbahnen (Pfalz.B)", false));
-        save(new Bahnverwaltung(null, "Privatbahn", "Privatbahn", false));
-        save(new Bahnverwaltung(null, "R", "Rutland Railroad (R)", false));
-        save(new Bahnverwaltung(null, "RAG", "Ruhrkohle AG (RAG)", false));
-        save(new Bahnverwaltung(null, "RCT", "Royal Corps of Transport (RCT)", false));
-        save(new Bahnverwaltung(null, "REL", "Reichseisenbahn Elsaß-Lothringen (REL)", false));
-        save(new Bahnverwaltung(null, "RENFE", "Red Nacional de Ferrocarriles Españoles (RENFE)", false));
-        save(new Bahnverwaltung(null, "Railbouw L", "Railbouw Leerdam Maatschappij", false));
-        save(new Bahnverwaltung(null, "SBB Cargo", "Schweizerischen Bundesbahnen Cargo (SBB Cargo)", false));
-        save(new Bahnverwaltung(null, "SBB/CFF/FFS", "Schweizerischen Bundesbahnen (SBB)", false));
-        save(new Bahnverwaltung(null, "SCF", "Southern Central Freight Railroad (SCF)", false));
-        save(new Bahnverwaltung(null, "SECO", "SECO Rail (SECO)", false));
-        save(new Bahnverwaltung(null, "SJ", "Statens Järnvägar (SJ)", false));
-        save(new Bahnverwaltung(null, "SKW", "Werkseisenbahn SKW Trostberg", false));
-        save(new Bahnverwaltung(null, "SNCB/NMBS", "Société Nationale des Chemins de Fer Belges (SNCB)", false));
-        save(new Bahnverwaltung(null, "SNCF", "Société Nationale des Chemins de Fer Français (SNCF)", false));
-        save(new Bahnverwaltung(null, "SOB", "SüdOstBayernBahn (SOB)", false));
-        save(new Bahnverwaltung(null, "SOO", "Soo Line Railroad (SOO)", false));
-        save(new Bahnverwaltung(null, "SP", "Southern Pacific Railroad (SP)", false));
-        save(new Bahnverwaltung(null, "SZD", "Sovetskie železnye dorogi (SžD)", false));
-        save(new Bahnverwaltung(null, "Seeh.Kiel", "Seehaven Kiel", false));
-        save(new Bahnverwaltung(null, "Siemens", "Siemens AG", false));
-        save(new Bahnverwaltung(null, "SoM", "State of Maine (SoM)", false));
-        save(new Bahnverwaltung(null, "Stora", "Trafikaktiebolaget Grängesberg–Oxelösunds Järnvägar (Stora)", false));
-        save(new Bahnverwaltung(null, "SüddZucker", "Südzucker AG", false));
-        save(new Bahnverwaltung(null, "T+N", "Texas and Northern Railway (T+N)", false));
-        save(new Bahnverwaltung(null, "T+P", "Texas and Pacific Railway Company (T+P)", false));
-        save(new Bahnverwaltung(null, "TAG", "Tegernsee-Bahn", false));
-        save(new Bahnverwaltung(null, "TAGAB", "Tågåkeriet i Bergslagen AB (TÅGAB)", false));
-        save(new Bahnverwaltung(null, "TGOJ", "Trafikaktiebolaget Grängesberg–Oxelösunds Järnvägar (TGOJ)", false));
-        save(new Bahnverwaltung(null, "TKAB", "Tågkompaniet AB (TKAB)", false));
-        save(new Bahnverwaltung(null, "TMR", "Texas Mexican Railway (TM)", false));
-        save(new Bahnverwaltung(null, "TSO", "Travaux du Sud-Ouest (TSO)", false));
-        save(new Bahnverwaltung(null, "TW", "Texas Western Railroad (TW)", false));
-        save(new Bahnverwaltung(null, "Tegernsee", "„Tegernsee-Bahn“", false));
-        save(new Bahnverwaltung(null, "UEF", "Ulmer Eisenbahnfreunde (UEF)", false));
-        save(new Bahnverwaltung(null, "UP", "Union Pacific Railroad (UP)", false));
-        save(new Bahnverwaltung(null, "USTC", "United States Transport Corps (USTC)", false));
-        save(new Bahnverwaltung(null, "VTG", "VTG AG (VTG)", false));
-        save(new Bahnverwaltung(null, "VW", "Volkswagen AG (VW)", false));
-        save(new Bahnverwaltung(null, "WEG", "Württembergische Eisenbahngesellschaft (WEG)", false));
-        save(new Bahnverwaltung(null, "WLE", "Westfälische Landes-Eisenbahn GmbH (WLE)", false));
-        save(new Bahnverwaltung(null, "WP", "Western Pacific Railroad (WP)", false));
-        save(new Bahnverwaltung(null, "Wiebe", "Wiebe Gleisbau GmbH (Wiebe)", false));
-        save(new Bahnverwaltung(null, "ÖBB", "Österreichischen Bundesbahnen (ÖBB)", false));
-        save(new Bahnverwaltung(null, "ÖHB", "Österreichischen Bundesbahnen (ÖBB)", false));
+        addBahnverwaltung("AAE", "AAE");
+        addBahnverwaltung("ADTRANZ", "ABB Daimler-Benz Transportation (ADtranz)");
+        addBahnverwaltung("AL", "Anhaltische Leopoldsbahn (AL)");
+        addBahnverwaltung("ALNO", "ALNO Küchen");
+        addBahnverwaltung("AMTRAK", "American and Track (AMTRAK)");
+        addBahnverwaltung("AR", "Alaska Railroad (ARR)");
+        addBahnverwaltung("ATSF", "Atchison, Topeka and Santa Fe Railway (AT+SF)");
+        addBahnverwaltung("AVE", "Alta Velocidad Española (AVE)");
+        addBahnverwaltung("AVG", "Albtal-Verkehrs-Gesellschaft mbH (AVG)");
+        addBahnverwaltung("ALASKA", "Alaska Railroad (ARR)");
+        addBahnverwaltung("ALUSUISSE", "Schweizerische Aluminium AG (Alusuisse)");
+        addBahnverwaltung("BA", "Boston and Albany Railway (B+A)");
+        addBahnverwaltung("BO", "Baltomore and Ohio Railway (B+0)");
+        addBahnverwaltung("BBO", "Österreichischen Bundesbahnen (ÖBB)");
+        addBahnverwaltung("BHE", "Bebra-Hanauer Eisenbahn (BHE)");
+        addBahnverwaltung("BLS", "Bern–Lötschberg–Simplon railway (BLS)");
+        addBahnverwaltung("BN", "Burlington Northern Railroad (BN)");
+        addBahnverwaltung("BVG", "Berliner Verkehrsbetriebe (BVG)");
+        addBahnverwaltung("BuH", "Ruhrkohle AG Bahn und Hafen GmbH (RAG/BuH)");
+        addBahnverwaltung("CG", "Columbus and Greenville Railway (C+G)");
+        addBahnverwaltung("CBQ", "Chicago, Burlington and Quincy Railroad (CBQ)");
+        addBahnverwaltung("CFL", "Société Nationale des Chemins de Fer Luxembourgeois (CFL)");
+        addBahnverwaltung("CFV3V", "Chemin de Fer à Vapeur des 3 Vallées (CFV3V)");
+        addBahnverwaltung("CIWL", "Compagnie Internationale des Wagons-Lits (CIWL)");
+        addBahnverwaltung("CN", "Canadian National Railway (CN)");
+        addBahnverwaltung("CONNEX", "CONNEX GmbH");
+        addBahnverwaltung("DAB", "Dortmunder Actien-Brauerei (DAB)");
+        addBahnverwaltung("DBAG", "Deutschen Bahn AG (DB AG)");
+        addBahnverwaltung("DBAUTOZUG", "Deutschen Bahn AG AutoZug (DB AutoZug)");
+        addBahnverwaltung("DBCARGO", "Deutschen Bahn AG Cargo (DB Cargo)");
+        addBahnverwaltung("DBMUSEUM", "Deutschen Bundesbahn Museum (DB Museum)");
+        addBahnverwaltung("DB", "Deutschen Bundesbahn (DB)");
+        addBahnverwaltung("DBDR", "Deutschen Reichsbahn (DB/DR)");
+        addBahnverwaltung("DBP", "Deutschen Bahnpost (DBP)");
+        addBahnverwaltung("DL", "Dixie Line (DL)");
+        addBahnverwaltung("DRDDR", "Deutschen Reichsbahn (DDR)");
+        addBahnverwaltung("DR", "Deutschen Reichsbahn (DR)");
+        addBahnverwaltung("DRB", "Deutschen Reichsbahn (DRB)");
+        addBahnverwaltung("DRGGVBAY", "Deutschen Reichsbahn Gesellschaft (DRG)");
+        addBahnverwaltung("DRG", "Deutschen Reichsbahn Gesellschaft (DRG)");
+        addBahnverwaltung("DRGW", "Denver and Rio Grande Western Railroad (DRGW)");
+        addBahnverwaltung("DSB", "Danske Statsbaner (DSB)");
+        addBahnverwaltung("DSG", "Deutsche Schlafwagen und Speisewagengesellschaft (DSG)");
+        addBahnverwaltung("EBOE", "Elmshorn-Barmstedt-Oldesloer Eisenbahn (EBOE)");
+        addBahnverwaltung("ESG", "Eisenbahn-Service GmbH (ESG)");
+        addBahnverwaltung("EST", " Société Nationale des Chemins de Fer Français (SNCF)");
+        addBahnverwaltung("EVB", "Eisenbahnen und Verkehrsbetriebe Elbe-Weser GmbH (EVB)");
+        addBahnverwaltung("EMD", "GM Electro Motive Division (EMD)");
+        addBahnverwaltung("EUH", "„Eisenbahn + Häfen“");
+        addBahnverwaltung("FSCARGO", "Ferrovie dello Stato Italiane Cargo (FS Cargo)");
+        addBahnverwaltung("FS", "Ferrovie dello Stato Italiane (FS)");
+        addBahnverwaltung("GATX", "GATX Corporation (GATX)");
+        addBahnverwaltung("GBAG", "GB Netz der Deutschen Bahn AG (GBAG)");
+        addBahnverwaltung("GBADSTE", "Großherzoglich Badische Staatseisenbahn (G.Bad.St.E)");
+        addBahnverwaltung("GKM", "Grosskraftwerk Mannheim AG (GKM)");
+        addBahnverwaltung("GOSTB", "Großherzoglich Oldenburgische Staatseisenbahn (G.O.St.B)");
+        addBahnverwaltung("GSW", "Great Southwest Railroad (GSW)");
+        addBahnverwaltung("GVB", "Gruppenverwaltung Bayern (GVB)");
+        addBahnverwaltung("GHMFFE", "Großherzoglich Mecklenburgische Friedrich-Franz-Eisenbahn (MFFE)");
+        addBahnverwaltung("HBS", "Herzoglich Braunschweigische Staatseisenbahn (HBS)");
+        addBahnverwaltung("HEG", "Hersfelder Eisenbahn Gesellschaft mbH (HEG)");
+        addBahnverwaltung("HNSTB", "Herzoglich Nassauische Staatsbahn (HNSt.B)");
+        addBahnverwaltung("HANSA", "Hansabahn Dortmund");
+        addBahnverwaltung("HENKEL", "Fa Henkel KGaA, Düsseldorf");
+        addBahnverwaltung("ICG", "Illonois Central Railway (ICG)");
+        addBahnverwaltung("IGE", "Internationalen Gesellschaft für Eisenbahnverkehr (IGE)");
+        addBahnverwaltung("ILMEBAHN", "Ilmebahn GmbH");
+        addBahnverwaltung("KBAYSTE", "Königlich Bayerischen Staatseisenbahnen (K.Bay.St.E)");
+        addBahnverwaltung("KHSTB", "Königlich Hannöversche Staatseisenbahnen (K.H.St.B)");
+        addBahnverwaltung("KPEV", "Königlich Preußische Eisenbahn-Verwaltung (K.P.E.V)");
+        addBahnverwaltung("KPStE", "Königlich Preußische Staatseisenbahnen (K.P.St.E)");
+        addBahnverwaltung("KB", "Deutschen Bundesbahn (DB)");
+        addBahnverwaltung("KEG", "Karsdorfer Eisenbahngesellschaft GmbH (KEG)");
+        addBahnverwaltung("KH", "Kraftwerk Herne");
+        addBahnverwaltung("KLVM", "KLVM");
+        addBahnverwaltung("KPUGHSTE", "Königlich Preußische und Großherzoglich Hessischen Staatseisenbahnen (K.Pu.G.H.St.E");
+        addBahnverwaltung("KSACHSSTE", "Königlich Sächsische Staatseisenbahnen (K.Sächs.St.E)");
+        addBahnverwaltung("KWSTE", "Königlich Württembergischen Staatseisenbahnen (K.W.St.E)");
+        addBahnverwaltung("LAG", "Lokalbahn Aktien-Gesellschaft (LAG)");
+        addBahnverwaltung("LMS", "London, Midland and Scottish Railway (LMS)");
+        addBahnverwaltung("LNER", "London Northeast Railway (LNER)");
+        addBahnverwaltung("LSE", "Luzern–Stans–Engelberg-Bahn (LSE)");
+        addBahnverwaltung("MAV", "Magyar Államvasutak(MAV)");
+        addBahnverwaltung("MFFE", "Großherzoglich Mecklenburgische Friedrich-Franz-Eisenbahn (MFFE)");
+        addBahnverwaltung("MILW", "Chicago, Milwaukee, St Paul and Pacific Railroad (MILW)");
+        addBahnverwaltung("MKO", "Museumseisenbahn Küstenbahn Ostfriesland (MKO)");
+        addBahnverwaltung("MWB", "Mittelweserbahn GmbH (MWB)");
+        addBahnverwaltung("MAKIESAG", "Firma „Makies“ AG");
+        addBahnverwaltung("NB", "NordseeBahn (NB)");
+        addBahnverwaltung("NEG", "Norddeutsche Eisenbahngesellschaft Niebüll GmbH (NEG)");
+        addBahnverwaltung("NH", "New York, New Haven and Hartford Railroad (NH)");
+        addBahnverwaltung("NL", "P and O Nedlloyd (NL)");
+        addBahnverwaltung("NOHAB", "Nydqvist und Holm AB (NOHAB)");
+        addBahnverwaltung("NSCARGO", "Nederlandse Spoorweggen Cargo (NS Cargo)");
+        addBahnverwaltung("NS", "Nederlandse Spoorweggen (NS)");
+        addBahnverwaltung("NSB", "Norske Statsbaner (NSB)");
+        addBahnverwaltung("NYC", "New York Central Railroad (NYC)");
+        addBahnverwaltung("NORDLINGEN", "das Bayerische Eisenbahnmuseum (Nördlingen)");
+        addBahnverwaltung("OBB", "Österreichischen Bundesbahnen (ÖBB)");
+        addBahnverwaltung("OHB", "Österreichischen Bundesbahnen (ÖBB)");
+        addBahnverwaltung("ONR", "Ontario Northland Railway (ONR)");
+        addBahnverwaltung("ONRAIL", "On Rail Gesellschaft für Eisenbahnausrüstung und Zubehör mbH (On Rail)");
+        addBahnverwaltung("OPEL", "Opel AG");
+        addBahnverwaltung("ORBECHAV", "Transport Vallée de Joux, Yverdon-les-bains et Sainte Croix (Travys)");
+        addBahnverwaltung("PLE", "Pittsburgh and Lake Erie Railroad (P+LE)");
+        addBahnverwaltung("PSTE", "Preußische Staatseisenbahnen (P.St.E)");
+        addBahnverwaltung("PEG", "Prignitzer Eisenbahn-Gesellschaft (PEG)");
+        addBahnverwaltung("PRR", "Pennsylvania Railroad (PRR)");
+        addBahnverwaltung("PERSIL", "Fa Henkel KGaA, Düsseldorf");
+        addBahnverwaltung("PFALZB", "Pfälzische Eisenbahnen (Pfalz.B)");
+        addBahnverwaltung("PRIVAT", "Privatbahn");
+        addBahnverwaltung("R", "Rutland Railroad (R)");
+        addBahnverwaltung("RAG", "Ruhrkohle AG (RAG)");
+        addBahnverwaltung("RCT", "Royal Corps of Transport (RCT)");
+        addBahnverwaltung("REL", "Reichseisenbahn Elsaß-Lothringen (REL)");
+        addBahnverwaltung("RENFE", "Red Nacional de Ferrocarriles Españoles (RENFE)");
+        addBahnverwaltung("RAILBOUW", "Railbouw Leerdam Maatschappij");
+        addBahnverwaltung("SBBCARGO", "Schweizerischen Bundesbahnen Cargo (SBB Cargo)");
+        addBahnverwaltung("SBB", "Schweizerischen Bundesbahnen (SBB/CFF/FFS)");
+        addBahnverwaltung("SCF", "Southern Central Freight Railroad (SCF)");
+        addBahnverwaltung("SECO", "SECO Rail (SECO)");
+        addBahnverwaltung("SJ", "Statens Järnvägar (SJ)");
+        addBahnverwaltung("SKW", "Werkseisenbahn SKW Trostberg");
+        addBahnverwaltung("SNCB", "Société Nationale des Chemins de Fer Belges (SNCB/NMBS)");
+        addBahnverwaltung("SNCF", "Société Nationale des Chemins de Fer Français (SNCF)");
+        addBahnverwaltung("SOB", "SüdOstBayernBahn (SOB)");
+        addBahnverwaltung("SOO", "Soo Line Railroad (SOO)");
+        addBahnverwaltung("SP", "Southern Pacific Railroad (SP)");
+        addBahnverwaltung("SZD", "Sovetskie železnye dorogi (SžD)");
+        addBahnverwaltung("SEEHKIEL", "Seehaven Kiel");
+        addBahnverwaltung("SIEMENS", "Siemens AG");
+        addBahnverwaltung("SOM", "State of Maine (SoM)");
+        addBahnverwaltung("STORA", "Trafikaktiebolaget Grängesberg–Oxelösunds Järnvägar (Stora)");
+        addBahnverwaltung("SUDDZUCKER", "Südzucker AG");
+        addBahnverwaltung("TN", "Texas and Northern Railway (T+N)");
+        addBahnverwaltung("TP", "Texas and Pacific Railway Company (T+P)");
+        addBahnverwaltung("TAG", "Tegernsee-Bahn");
+        addBahnverwaltung("TAGAB", "Tågåkeriet i Bergslagen AB (TÅGAB)");
+        addBahnverwaltung("TGOJ", "Trafikaktiebolaget Grängesberg–Oxelösunds Järnvägar (TGOJ)");
+        addBahnverwaltung("TKAB", "Tågkompaniet AB (TKAB)");
+        addBahnverwaltung("TMR", "Texas Mexican Railway (TM)");
+        addBahnverwaltung("TSO", "Travaux du Sud-Ouest (TSO)");
+        addBahnverwaltung("TW", "Texas Western Railroad (TW)");
+        addBahnverwaltung("TEGERNSEE", "„Tegernsee-Bahn“");
+        addBahnverwaltung("UEF", "Ulmer Eisenbahnfreunde (UEF)");
+        addBahnverwaltung("UP", "Union Pacific Railroad (UP)");
+        addBahnverwaltung("USTC", "United States Transport Corps (USTC)");
+        addBahnverwaltung("VTG", "VTG AG (VTG)");
+        addBahnverwaltung("VW", "Volkswagen AG (VW)");
+        addBahnverwaltung("WEG", "Württembergische Eisenbahngesellschaft (WEG)");
+        addBahnverwaltung("WLE", "Westfälische Landes-Eisenbahn GmbH (WLE)");
+        addBahnverwaltung("WP", "Western Pacific Railroad (WP)");
+        addBahnverwaltung("WIEBE", "Wiebe Gleisbau GmbH (Wiebe)");
     }
 
     private void populateDecoder() {
@@ -410,15 +438,15 @@ public class DBPopulator {
      */
     private void populateDecoderTyp() {
         IProtokoll delta = findProtokoll("DELTA");
-        IProtokoll fx = findProtokoll("fx");
+        IProtokoll fx = findProtokoll("FX");
         IProtokoll mm = findProtokoll("MM");
-        IProtokoll mfx = findProtokoll("mfx");
-        IProtokoll weiche = findProtokoll("Weiche");
+        IProtokoll mfx = findProtokoll("MFX");
+        IProtokoll weiche = findProtokoll("WEICHE");
 
-        IHersteller digitalbahn = findHersteller("Digital-Bahn");
+        IHersteller digitalbahn = findHersteller("DIGITALBAHN");
         IHersteller esu = findHersteller("ESU");
-        IHersteller marklin = findHersteller("Märklin");
-        IHersteller uhlenbrock = findHersteller("Uhlenbrock");
+        IHersteller marklin = findHersteller("MARKLIN");
+        IHersteller uhlenbrock = findHersteller("UHLENBROCK");
 
         addDSD2010(weiche, digitalbahn);
 
@@ -482,1315 +510,1364 @@ public class DBPopulator {
         addUhlenbrock67900(mm, uhlenbrock);
     }
 
+    private DecoderTyp addDecoderTyp(IHersteller hersteller, IProtokoll protokoll, String bestellNr, String bezeichnung, Boolean sound, Konfiguration konfiguration) {
+        return save(new DecoderTyp(null, hersteller, protokoll, bestellNr, bezeichnung, sound, konfiguration, false));
+    }
+    
+    private void addAdress(IDecoderTyp decoderTyp, Integer index, AdressTyp adressTyp, Integer span, Integer werkseinstellung) {
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, index, adressTyp, span, werkseinstellung, false));
+    }
+    
+    private void addCV(IDecoderTyp decoderTyp, Integer cv, String bezeichnung, Integer minimal, Integer maximal, Integer werkseinstellung) {
+        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, cv, bezeichnung, minimal, maximal, werkseinstellung, false));
+    }
+
+    private void addFunktion(IDecoderTyp decoderTyp, Integer reihe, String funktion, String bezeichnung, Boolean programmable) {
+        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, reihe, funktion, bezeichnung, programmable, false));
+    }
+    
     private DecoderTyp add60760(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, fx, "60760", "Hochleistungsdecoder", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "60760", "Hochleistungsdecoder", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung/Bremsverzögerung", 1, 63, 16, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, null);
+        addCV(decoderTyp, 3, "Anfahrverzögerung/Bremsverzögerung", 1, 63, 16);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "", false, false));
+        addFunktion(decoderTyp, 0, "F0", "", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add46715(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, fx, "46715", "46715", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "46715", "46715", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, null);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Kranhaus drehen", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Kranausleger Heben heben", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Haken heben", false, false));
+        addFunktion(decoderTyp, 0, "F1", "Kranhaus drehen", false);
+        addFunktion(decoderTyp, 0, "F2", "Kranausleger Heben heben", false);
+        addFunktion(decoderTyp, 0, "F3", "Haken heben", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp addWeicheDecoder(IProtokoll weiche, IHersteller marklin, String bestellNr, String bezeichnung) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, weiche, bestellNr, bezeichnung, false, Konfiguration.SWITCH, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, weiche, bestellNr, bezeichnung, false, Konfiguration.SWITCH);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.WEICHE, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.WEICHE, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 255, null, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 255, null);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp addDrehscheibendekoder(IProtokoll weiche, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, weiche, "7687", "Drehscheibendekoder", false, Konfiguration.LINK, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, weiche, "7687", "Drehscheibendekoder", false, Konfiguration.LINK);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.WEICHE, 1, 16, false));
+        addAdress(decoderTyp, 1, AdressTyp.WEICHE, 1, 16);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 14, 15, 14, false));
+        addCV(decoderTyp, 1, "Adresse", 14, 15, 14);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "End", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Input", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Clear", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "180", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "Step >", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Step <", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Spoke 1", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Spoke 2", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Spoke 3", false, false));
+        addFunktion(decoderTyp, 0, "F0", "End", false);
+        addFunktion(decoderTyp, 0, "F1", "Input", false);
+        addFunktion(decoderTyp, 0, "F2", "Clear", false);
+        addFunktion(decoderTyp, 0, "F3", "180", false);
+        addFunktion(decoderTyp, 0, "F4", "Step >", false);
+        addFunktion(decoderTyp, 0, "F5", "Step <", false);
+        addFunktion(decoderTyp, 0, "F6", "Spoke 1", false);
+        addFunktion(decoderTyp, 0, "F7", "Spoke 2", false);
+        addFunktion(decoderTyp, 0, "F8", "Spoke 3", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp addUhlenbrock67900(IProtokoll mm, IHersteller uhlenbrock) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, uhlenbrock, mm, "67900", "67900", false, Konfiguration.SWITCH, false));
+        DecoderTyp decoderTyp = addDecoderTyp(uhlenbrock, mm, "67900", "67900", false, Konfiguration.SWITCH);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.MM, 1, 8, false));
+        addAdress(decoderTyp, 1, AdressTyp.MM, 1, 8);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 127, 3, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Minimale Geschwindigkeit", 1, 63, 5, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, 2, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, 2, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Maximale Geschwindigkeit", 1, 63, 20, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 6, "Maximale Motorspannung", 1, 255, 64, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 7, "Softwareversion", null, null, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Herstellerkennung", null, null, 85, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 17, "Lange Lokadresse MSB", 192, 231, 199, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 18, "Lange Lokadresse LSB", 0, 255, 208, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 20, "Konfiguration beider Motoren nach DCC-Norm", 0, 33, 0, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 49, "Decoder-Konfiguration", 0, 195, 0, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 65, "Motorola Programmierung Reihe", 0, 255, 0, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 67, "Maximale Geschwindigkeit für Taste 1", 0, 255, 40, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 68, "Maximale Geschwindigkeit für Taste 2", 0, 255, 40, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 69, "Maximale Geschwindigkeit für Taste 3", 0, 255, 50, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 70, "Maximale Geschwindigkeit für Taste 4", 0, 255, 50, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 71, "Anfahrverzögerung für Taste 1", 0, 255, 5, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 72, "Anfahrverzögerung für Taste 2", 0, 255, 5, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 73, "Anfahrverzögerung für Taste 3", 0, 255, 5, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 74, "Anfahrverzögerung für Taste 4", 0, 255, 5, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 75, "Bremsverzögerung für Taste 1", 0, 255, 1, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 76, "Bremsverzögerung für Taste 2", 0, 255, 1, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 77, "Bremsverzögerung für Taste 3", 0, 255, 1, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 78, "Bremsverzögerung für Taste 4", 0, 255, 1, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 79, "Maximale Motorspannung im Analogbetrieb", 0, 255, 180, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 98, "Zeitbegrenztes Einschalten der Ausgänge A1 + A2", 0, 3, 3, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 99, "Maximale Einschaltzeit in Sekunden", 0, 255, 45, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 127, 3);
+        addCV(decoderTyp, 2, "Minimale Geschwindigkeit", 1, 63, 5);
+        addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, 2);
+        addCV(decoderTyp, 4, "Bremsverzögerung", 1, 63, 2);
+        addCV(decoderTyp, 5, "Maximale Geschwindigkeit", 1, 63, 20);
+        addCV(decoderTyp, 6, "Maximale Motorspannung", 1, 255, 64);
+        addCV(decoderTyp, 7, "Softwareversion", null, null, null);
+        addCV(decoderTyp, 8, "Herstellerkennung", null, null, 85);
+        addCV(decoderTyp, 17, "Lange Lokadresse MSB", 192, 231, 199);
+        addCV(decoderTyp, 18, "Lange Lokadresse LSB", 0, 255, 208);
+        addCV(decoderTyp, 20, "Konfiguration beider Motoren nach DCC-Norm", 0, 33, 0);
+        addCV(decoderTyp, 49, "Decoder-Konfiguration", 0, 195, 0);
+        addCV(decoderTyp, 65, "Motorola Programmierung Reihe", 0, 255, 0);
+        addCV(decoderTyp, 67, "Maximale Geschwindigkeit für Taste 1", 0, 255, 40);
+        addCV(decoderTyp, 68, "Maximale Geschwindigkeit für Taste 2", 0, 255, 40);
+        addCV(decoderTyp, 69, "Maximale Geschwindigkeit für Taste 3", 0, 255, 50);
+        addCV(decoderTyp, 70, "Maximale Geschwindigkeit für Taste 4", 0, 255, 50);
+        addCV(decoderTyp, 71, "Anfahrverzögerung für Taste 1", 0, 255, 5);
+        addCV(decoderTyp, 72, "Anfahrverzögerung für Taste 2", 0, 255, 5);
+        addCV(decoderTyp, 73, "Anfahrverzögerung für Taste 3", 0, 255, 5);
+        addCV(decoderTyp, 74, "Anfahrverzögerung für Taste 4", 0, 255, 5);
+        addCV(decoderTyp, 75, "Bremsverzögerung für Taste 1", 0, 255, 1);
+        addCV(decoderTyp, 76, "Bremsverzögerung für Taste 2", 0, 255, 1);
+        addCV(decoderTyp, 77, "Bremsverzögerung für Taste 3", 0, 255, 1);
+        addCV(decoderTyp, 78, "Bremsverzögerung für Taste 4", 0, 255, 1);
+        addCV(decoderTyp, 79, "Maximale Motorspannung im Analogbetrieb", 0, 255, 180);
+        addCV(decoderTyp, 98, "Zeitbegrenztes Einschalten der Ausgänge A1 + A2", 0, 3, 3);
+        addCV(decoderTyp, 99, "Maximale Einschaltzeit in Sekunden", 0, 255, 45);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Kranhaken/Laufkatze", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "F1", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "F2", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "F3", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "F4", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Kranhaken/Laufkatze", false);
+        addFunktion(decoderTyp, 0, "F1", "F1", false);
+        addFunktion(decoderTyp, 0, "F2", "F2", false);
+        addFunktion(decoderTyp, 0, "F3", "F3", false);
+        addFunktion(decoderTyp, 0, "F4", "F4", false);
 
         return update(decoderTyp);
     }
     
     private DecoderTyp addMarklinDELTADecoder(IProtokoll mm, IHersteller marklin, String bestellNr, String bezeichnung) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mm, bestellNr, bezeichnung, false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mm, bestellNr, bezeichnung, false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DELTA, 1, 80, false));
+        addAdress(decoderTyp, 1, AdressTyp.DELTA, 1, 80);
         
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 11, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, 11);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp addSwitchPilotServo(IProtokoll weiche, IHersteller esu) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, esu, weiche, "51802", "SwitchPilot Servo", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(esu, weiche, "51802", "SwitchPilot Servo", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.WEICHE, 1, 4, false));
+        addAdress(decoderTyp, 1, AdressTyp.WEICHE, 1, 4);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Decoderadresse 1, LSB", 1, 63, 1, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 7, "Versionsnummer", null, null, 153, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Herstellerkennung", null, null, 151, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 9, "Decoderadresse 1, MSB", 0, 7, 0, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 28, "RailCom Konfiguration", 0, 6, 0, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 29, "Konfigurationsregister", 128, 136, 128, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 37, "Servo 1, Drehgeschwindigkeit", 1, 63, 15, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 38, "Servo 1, Stellung „A“", 1, 63, 24, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 39, "Servo 1, Stellung „B“", 1, 63, 40, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 40, "Servo 2, Drehgeschwindigkeit", 1, 63, 15, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 41, "Servo 2, Stellung „A“", 1, 63, 24, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 42, "Servo 2, Stellung „B“", 1, 63, 40, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 43, "Servo 3, Drehgeschwindigkeit", 1, 63, 15, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 44, "Servo 3, Stellung „A“", 1, 63, 24, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 45, "Servo 3, Stellung „B“", 1, 63, 40, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 46, "Servo 4, Drehgeschwindigkeit", 1, 63, 15, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 47, "Servo 4, Stellung „A“", 1, 63, 24, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 48, "Servo 4, Stellung „B“", 1, 63, 40, false));
+        addCV(decoderTyp, 1, "Decoderadresse 1, LSB", 1, 63, 1);
+        addCV(decoderTyp, 7, "Versionsnummer", null, null, 153);
+        addCV(decoderTyp, 8, "Herstellerkennung", null, null, 151);
+        addCV(decoderTyp, 9, "Decoderadresse 1, MSB", 0, 7, 0);
+        addCV(decoderTyp, 28, "RailCom Konfiguration", 0, 6, 0);
+        addCV(decoderTyp, 29, "Konfigurationsregister", 128, 136, 128);
+        addCV(decoderTyp, 37, "Servo 1, Drehgeschwindigkeit", 1, 63, 15);
+        addCV(decoderTyp, 38, "Servo 1, Stellung „A“", 1, 63, 24);
+        addCV(decoderTyp, 39, "Servo 1, Stellung „B“", 1, 63, 40);
+        addCV(decoderTyp, 40, "Servo 2, Drehgeschwindigkeit", 1, 63, 15);
+        addCV(decoderTyp, 41, "Servo 2, Stellung „A“", 1, 63, 24);
+        addCV(decoderTyp, 42, "Servo 2, Stellung „B“", 1, 63, 40);
+        addCV(decoderTyp, 43, "Servo 3, Drehgeschwindigkeit", 1, 63, 15);
+        addCV(decoderTyp, 44, "Servo 3, Stellung „A“", 1, 63, 24);
+        addCV(decoderTyp, 45, "Servo 3, Stellung „B“", 1, 63, 40);
+        addCV(decoderTyp, 46, "Servo 4, Drehgeschwindigkeit", 1, 63, 15);
+        addCV(decoderTyp, 47, "Servo 4, Stellung „A“", 1, 63, 24);
+        addCV(decoderTyp, 48, "Servo 4, Stellung „B“", 1, 63, 40);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "S1", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "S2", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "S3", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "S4", "", false, false));
+        addFunktion(decoderTyp, 0, "S1", "", false);
+        addFunktion(decoderTyp, 0, "S2", "", false);
+        addFunktion(decoderTyp, 0, "S3", "", false);
+        addFunktion(decoderTyp, 0, "S4", "", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp addSwitchPilot(IProtokoll weiche, IHersteller esu, String bestellNr, String bezeichnung) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, esu, weiche, bestellNr, bezeichnung, false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(esu, weiche, bestellNr, bezeichnung, false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.WEICHE, 1, 8, false));
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 2, AdressTyp.WEICHE, 1, 2, false));
+        addAdress(decoderTyp, 1, AdressTyp.WEICHE, 1, 8);
+        addAdress(decoderTyp, 2, AdressTyp.WEICHE, 1, 2);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Decoderadresse 1, LSB", 1, 63, 1, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Konfiguration Ausgang 1", 0, 64, 8, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Konfiguration Ausgang 2", 0, 64, 8, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Konfiguration Ausgang 3", 0, 64, 8, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 6, "Konfiguration Ausgang 4", 0, 64, 8, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 7, "Versionsnummer", null, null, 115, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Herstellerkennung", null, null, 151, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 9, "Decoderadresse 1, MSB", 0, 7, 0, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 28, "RailCom Konfiguration", 0, 6, 0, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 29, "Konfigurationsregister", 128, 136, 128, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 33, "Funktionsausgangsstatus", 0, 255, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 34, "„Zoom“-Konfiguration", 0, 15, 0, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 35, "Decoderadresse 2, LSB", 1, 63, 1, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 36, "Decoderadresse 2, MSB", 0, 8, 8, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 37, "Servo 1, Drehgeschwindigkeit", 1, 63, 15, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 38, "Servo 1, Stellung „A“", 1, 63, 24, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 39, "Servo 1, Stellung „B“", 1, 63, 40, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 40, "Servo 2, Drehgeschwindigkeit", 1, 63, 15, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 41, "Servo 2, Stellung „A“", 1, 63, 24, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 42, "Servo 2, Stellung „B“", 1, 63, 40, false));
+        addCV(decoderTyp, 1, "Decoderadresse 1, LSB", 1, 63, 1);
+        addCV(decoderTyp, 3, "Konfiguration Ausgang 1", 0, 64, 8);
+        addCV(decoderTyp, 4, "Konfiguration Ausgang 2", 0, 64, 8);
+        addCV(decoderTyp, 5, "Konfiguration Ausgang 3", 0, 64, 8);
+        addCV(decoderTyp, 6, "Konfiguration Ausgang 4", 0, 64, 8);
+        addCV(decoderTyp, 7, "Versionsnummer", null, null, 115);
+        addCV(decoderTyp, 8, "Herstellerkennung", null, null, 151);
+        addCV(decoderTyp, 9, "Decoderadresse 1, MSB", 0, 7, 0);
+        addCV(decoderTyp, 28, "RailCom Konfiguration", 0, 6, 0);
+        addCV(decoderTyp, 29, "Konfigurationsregister", 128, 136, 128);
+        addCV(decoderTyp, 33, "Funktionsausgangsstatus", 0, 255, null);
+        addCV(decoderTyp, 34, "„Zoom“-Konfiguration", 0, 15, 0);
+        addCV(decoderTyp, 35, "Decoderadresse 2, LSB", 1, 63, 1);
+        addCV(decoderTyp, 36, "Decoderadresse 2, MSB", 0, 8, 8);
+        addCV(decoderTyp, 37, "Servo 1, Drehgeschwindigkeit", 1, 63, 15);
+        addCV(decoderTyp, 38, "Servo 1, Stellung „A“", 1, 63, 24);
+        addCV(decoderTyp, 39, "Servo 1, Stellung „B“", 1, 63, 40);
+        addCV(decoderTyp, 40, "Servo 2, Drehgeschwindigkeit", 1, 63, 15);
+        addCV(decoderTyp, 41, "Servo 2, Stellung „A“", 1, 63, 24);
+        addCV(decoderTyp, 42, "Servo 2, Stellung „B“", 1, 63, 40);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K1", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K2", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K3", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K4", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "S1", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "S2", "", false, false));
+        addFunktion(decoderTyp, 0, "K1", "", false);
+        addFunktion(decoderTyp, 0, "K2", "", false);
+        addFunktion(decoderTyp, 0, "K3", "", false);
+        addFunktion(decoderTyp, 0, "K4", "", false);
+        addFunktion(decoderTyp, 0, "S1", "", false);
+        addFunktion(decoderTyp, 0, "S2", "", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp addLokPilotFX(IProtokoll mm, IHersteller esu, String bestellNr, String bezeichnung) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, esu, mm, bestellNr, bezeichnung, false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(esu, mm, bestellNr, bezeichnung, false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 2, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
+        addAdress(decoderTyp, 2, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, null);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "", false, false));
+        addFunktion(decoderTyp, 0, "F0", "", false);
+        addFunktion(decoderTyp, 0, "F1", "", false);
+        addFunktion(decoderTyp, 0, "F2", "", false);
+        addFunktion(decoderTyp, 0, "F3", "", false);
+        addFunktion(decoderTyp, 0, "F4", "", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp addLokSoundM4(IProtokoll mfx, IHersteller esu, String bestellNr, String bezeichnung) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, esu, mfx, bestellNr, bezeichnung, true, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(esu, mfx, bestellNr, bezeichnung, true, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 2, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
+        addAdress(decoderTyp, 2, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 3, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung", 1, 63, 3, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Beschleunigungszeit", 1, 63, 16, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, 12, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, 63, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 53, "Regelungsreferenz", 1, 63, 56, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 54, "Lastregelung Param. K", 1, 63, 32, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 55, "Lastregelung Param. L", 1, 63, 24, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 56, "Regelungseinfluss", 1, 63, 63, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 57, "Geräuschmodus 1", 1, 63, 10, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 58, "Geräuschmodus 2", 1, 63, 58, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 59, "Fahrgeräusch", 1, 63, 32, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 60, "Fahrgeräusch", 1, 63, 55, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Geräuschlautstärke", 1, 63, 63, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 64, "Bremssoundschwelle", 1, 63, 7, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 73, "Speicheroptionen", 0, 7, 3, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 74, "Märklin Addresse 2", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 75, "Märklin Addresse 2", 1, 80, 4, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 78, "Anfahrspannung Analog AC", 1, 63, 25, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 79, "Höchstgeschwindigkeit Analog AC", 1, 63, 63, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, 3);
+        addCV(decoderTyp, 2, "Anfahrverzögerung", 1, 63, 3);
+        addCV(decoderTyp, 3, "Beschleunigungszeit", 1, 63, 16);
+        addCV(decoderTyp, 4, "Bremsverzögerung", 1, 63, 12);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, 63);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
+        addCV(decoderTyp, 53, "Regelungsreferenz", 1, 63, 56);
+        addCV(decoderTyp, 54, "Lastregelung Param. K", 1, 63, 32);
+        addCV(decoderTyp, 55, "Lastregelung Param. L", 1, 63, 24);
+        addCV(decoderTyp, 56, "Regelungseinfluss", 1, 63, 63);
+        addCV(decoderTyp, 57, "Geräuschmodus 1", 1, 63, 10);
+        addCV(decoderTyp, 58, "Geräuschmodus 2", 1, 63, 58);
+        addCV(decoderTyp, 59, "Fahrgeräusch", 1, 63, 32);
+        addCV(decoderTyp, 60, "Fahrgeräusch", 1, 63, 55);
+        addCV(decoderTyp, 63, "Geräuschlautstärke", 1, 63, 63);
+        addCV(decoderTyp, 64, "Bremssoundschwelle", 1, 63, 7);
+        addCV(decoderTyp, 73, "Speicheroptionen", 0, 7, 3);
+        addCV(decoderTyp, 74, "Märklin Addresse 2", 1, 63, null);
+        addCV(decoderTyp, 75, "Märklin Addresse 2", 1, 80, 4);
+        addCV(decoderTyp, 78, "Anfahrspannung Analog AC", 1, 63, 25);
+        addCV(decoderTyp, 79, "Höchstgeschwindigkeit Analog AC", 1, 63, 63);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F9", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F10", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F11", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F12", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F13", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F14", "", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F15", "", false, false));
+        addFunktion(decoderTyp, 0, "F0", "", false);
+        addFunktion(decoderTyp, 0, "F1", "", false);
+        addFunktion(decoderTyp, 0, "F2", "", false);
+        addFunktion(decoderTyp, 0, "F3", "", false);
+        addFunktion(decoderTyp, 0, "F4", "", false);
+        addFunktion(decoderTyp, 0, "F5", "", false);
+        addFunktion(decoderTyp, 0, "F6", "", false);
+        addFunktion(decoderTyp, 0, "F7", "", false);
+        addFunktion(decoderTyp, 0, "F8", "", false);
+        addFunktion(decoderTyp, 0, "F9", "", false);
+        addFunktion(decoderTyp, 0, "F10", "", false);
+        addFunktion(decoderTyp, 0, "F11", "", false);
+        addFunktion(decoderTyp, 0, "F12", "", false);
+        addFunktion(decoderTyp, 0, "F13", "", false);
+        addFunktion(decoderTyp, 0, "F14", "", false);
+        addFunktion(decoderTyp, 0, "F15", "", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp addLokPilotM4(IProtokoll mfx, IHersteller esu, String bestellNr, String bezeichnung) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, esu, mfx, bestellNr, bezeichnung, false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(esu, mfx, bestellNr, bezeichnung, false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 3, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung", 1, 63, 3, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Beschleunigungszeit", 1, 63, 16, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, 12, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, 63, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 53, "Regelungsreferenz", 1, 63, 45, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 54, "Lastregelung Param. K", 1, 63, 32, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 55, "Lastregelung Param. L", 1, 63, 24, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 56, "Regelungseinfluss", 1, 63, 63, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 73, "Speicheroptionen", 0, 7, 3, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 75, "Märklin Addresse 2", 1, 80, 4, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 78, "Anfahrspannung Analog AC", 1, 63, 25, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 79, "Höchstgeschwindigkeit Analog AC", 1, 63, 63, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, 3);
+        addCV(decoderTyp, 2, "Anfahrverzögerung", 1, 63, 3);
+        addCV(decoderTyp, 3, "Beschleunigungszeit", 1, 63, 16);
+        addCV(decoderTyp, 4, "Bremsverzögerung", 1, 63, 12);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, 63);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
+        addCV(decoderTyp, 53, "Regelungsreferenz", 1, 63, 45);
+        addCV(decoderTyp, 54, "Lastregelung Param. K", 1, 63, 32);
+        addCV(decoderTyp, 55, "Lastregelung Param. L", 1, 63, 24);
+        addCV(decoderTyp, 56, "Regelungseinfluss", 1, 63, 63);
+        addCV(decoderTyp, 73, "Speicheroptionen", 0, 7, 3);
+        addCV(decoderTyp, 75, "Märklin Addresse 2", 1, 80, 4);
+        addCV(decoderTyp, 78, "Anfahrspannung Analog AC", 1, 63, 25);
+        addCV(decoderTyp, 79, "Höchstgeschwindigkeit Analog AC", 1, 63, 63);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "", false, false));
+        addFunktion(decoderTyp, 0, "F0", "", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp addMarklinSoundDecoder(IProtokoll mfx, IHersteller marklin, String bestellNr, String bezeichnung) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, bestellNr, bezeichnung, false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, bestellNr, bezeichnung, false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 10, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, null, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, 10);
+        addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, null);
+        addCV(decoderTyp, 4, "Bremsverzögerung", 1, 63, null);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
+        addCV(decoderTyp, 63, "Lautstärke", 1, 63, null);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Spitzensignal", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Rauchgenerator", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Lokpfeife", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Fahrgeräusch", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Luftpumpe", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Triebwerksbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Bremsenquietschen aus", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Rangierpfeife", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F9", "Dampf ablassen", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Spitzensignal", false);
+        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F1", "Rauchgenerator", false);
+        addFunktion(decoderTyp, 0, "F2", "Lokpfeife", false);
+        addFunktion(decoderTyp, 0, "F3", "Fahrgeräusch", false);
+        addFunktion(decoderTyp, 0, "F4", "ABV", false);
+        addFunktion(decoderTyp, 0, "F5", "Luftpumpe", false);
+        addFunktion(decoderTyp, 0, "F6", "Triebwerksbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F7", "Bremsenquietschen aus", false);
+        addFunktion(decoderTyp, 0, "F8", "Rangierpfeife", false);
+        addFunktion(decoderTyp, 0, "F9", "Dampf ablassen", false);
 
         return update(decoderTyp);
     }
     private DecoderTyp add115798(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, fx, "115798", "115798", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "115798", "115798", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 255, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung/Bremsverzögerung", 1, 31, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 255, null);
+        addCV(decoderTyp, 2, "Anfahrverzögerung/Bremsverzögerung", 1, 31, null);
+        addCV(decoderTyp, 3, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add150436(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, fx, "150436", "150436", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "150436", "150436", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 255, 38, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 255, 38);
+        addCV(decoderTyp, 3, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F4", "ABV", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add219574(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, fx, "219574", "219574", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "219574", "219574", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 45, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, 45);
+        addCV(decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, null);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Rauchgenerator", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F11", "Schüttelrost", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Lokpfeife", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Dampftriebwerk", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Luftpumpe", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Feuerschein - Feuerbüchse", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Bremsenquietschen", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Rangierpfiff", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F9", "Dampf ablassen", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F10", "Kohleschaufeln", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F1", "Rauchgenerator", false);
+        addFunktion(decoderTyp, 0, "F11", "Schüttelrost", false);
+        addFunktion(decoderTyp, 0, "F2", "Lokpfeife", false);
+        addFunktion(decoderTyp, 0, "F3", "Dampftriebwerk", false);
+        addFunktion(decoderTyp, 0, "F4", "ABV", false);
+        addFunktion(decoderTyp, 0, "F5", "Luftpumpe", false);
+        addFunktion(decoderTyp, 0, "F6", "Feuerschein - Feuerbüchse", false);
+        addFunktion(decoderTyp, 0, "F7", "Bremsenquietschen", false);
+        addFunktion(decoderTyp, 0, "F8", "Rangierpfiff", false);
+        addFunktion(decoderTyp, 0, "F9", "Dampf ablassen", false);
+        addFunktion(decoderTyp, 0, "F10", "Kohleschaufeln", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add602756(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, fx, "602756", "602756", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "602756", "602756", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Lautstärke", 1, 63, null, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, null);
+        addCV(decoderTyp, 2, "Lautstärke", 1, 63, null);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Schleuderrad Geräusch", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Schleuderrad", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Pfeife", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "Signalstreckenlampen", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F1", "Schleuderrad Geräusch", false);
+        addFunktion(decoderTyp, 0, "F2", "Schleuderrad", false);
+        addFunktion(decoderTyp, 0, "F3", "Pfeife", false);
+        addFunktion(decoderTyp, 0, "F4", "Signalstreckenlampen", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add608862(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, fx, "608862", "608862", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "608862", "608862", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 10, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, 10);
+        addCV(decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, null);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Maschinenraumbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Stromabnehmer vorn", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Stromabnehmer hinten", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F1", "Maschinenraumbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F2", "Stromabnehmer vorn", false);
+        addFunktion(decoderTyp, 0, "F3", "Stromabnehmer hinten", false);
+        addFunktion(decoderTyp, 0, "F4", "ABV", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add611105(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, fx, "611105", "611105", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "611105", "611105", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 71, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Bedienung festgelegt", 0, 1, 0, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Baggerschaufel Zeitbegrenzung", 0, 1, 0, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, 71);
+        addCV(decoderTyp, 2, "Bedienung festgelegt", 0, 1, 0);
+        addCV(decoderTyp, 3, "Baggerschaufel Zeitbegrenzung", 0, 1, 0);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Kohleschaufe schließen", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Laufgestell Motoren", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Führerhaus Beleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Kohleschaufe Heben", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "Führerhaus Drehen", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Kohleschaufe schließen", false);
+        addFunktion(decoderTyp, 0, "F1", "Laufgestell Motoren", false);
+        addFunktion(decoderTyp, 0, "F2", "Führerhaus Beleuchtung", false);
+        addFunktion(decoderTyp, 0, "F3", "Kohleschaufe Heben", false);
+        addFunktion(decoderTyp, 0, "F4", "Führerhaus Drehen", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add611754(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, fx, "611754", "611754", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "611754", "611754", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, null);
+        addCV(decoderTyp, 2, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Telex-Kupplung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F2", "Telex-Kupplung", false);
+        addFunktion(decoderTyp, 0, "F4", "ABV", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add115166(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "115166", "115166", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "115166", "115166", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, null, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, null);
+        addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, null);
+        addCV(decoderTyp, 4, "Bremsverzögerung", 1, 63, null);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
+        addCV(decoderTyp, 63, "Lautstärke", 1, 63, null);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung / Innenbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Schlusslicht ausschalten", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Dieselmotor und Bremse", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Signalhorn", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Bremsenquietschen", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Türe Zu", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Glocke", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Abfahrtspfiff", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung / Innenbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F1", "Schlusslicht ausschalten", false);
+        addFunktion(decoderTyp, 0, "F2", "Dieselmotor und Bremse", false);
+        addFunktion(decoderTyp, 0, "F3", "Signalhorn", false);
+        addFunktion(decoderTyp, 0, "F4", "ABV", false);
+        addFunktion(decoderTyp, 0, "F5", "Bremsenquietschen", false);
+        addFunktion(decoderTyp, 0, "F6", "Türe Zu", false);
+        addFunktion(decoderTyp, 0, "F7", "Glocke", false);
+        addFunktion(decoderTyp, 0, "F8", "Abfahrtspfiff", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add115673(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "115673", "115673", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "115673", "115673", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 64, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, 63, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, 63, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, 63, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, 63, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, 64);
+        addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, 63);
+        addCV(decoderTyp, 4, "Bremsverzögerung", 1, 63, 63);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, 63);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, null);
+        addCV(decoderTyp, 63, "Lautstärke", 1, 63, 63);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Rauchgenerator", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Betriebsgeräusch", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Pfeife", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Luftpumpe", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Kohleschaufeln", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Glocke", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Dampf ablassen", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F9", "Bremsenquietschen", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F10", "Schüttelrost", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F1", "Rauchgenerator", false);
+        addFunktion(decoderTyp, 0, "F2", "Betriebsgeräusch", false);
+        addFunktion(decoderTyp, 0, "F3", "Pfeife", false);
+        addFunktion(decoderTyp, 0, "F4", "ABV", false);
+        addFunktion(decoderTyp, 0, "F5", "Luftpumpe", false);
+        addFunktion(decoderTyp, 0, "F6", "Kohleschaufeln", false);
+        addFunktion(decoderTyp, 0, "F7", "Glocke", false);
+        addFunktion(decoderTyp, 0, "F8", "Dampf ablassen", false);
+        addFunktion(decoderTyp, 0, "F9", "Bremsenquietschen", false);
+        addFunktion(decoderTyp, 0, "F10", "Schüttelrost", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add116836(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "116836", "116836", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "116836", "116836", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 70, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, null, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, 70);
+        addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, null);
+        addCV(decoderTyp, 4, "Bremsverzögerung", 1, 63, null);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
+        addCV(decoderTyp, 63, "Lautstärke", 1, 63, null);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Betriebsgeräusch", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Signalhorn", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Bremsenquietschen", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Metallsäge", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Hämmern", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Winkelschleifer", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F9", "Elektroschweißen", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F10", "Schleifbock", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F2", "Betriebsgeräusch", false);
+        addFunktion(decoderTyp, 0, "F3", "Signalhorn", false);
+        addFunktion(decoderTyp, 0, "F4", "ABV", false);
+        addFunktion(decoderTyp, 0, "F5", "Bremsenquietschen", false);
+        addFunktion(decoderTyp, 0, "F6", "Metallsäge", false);
+        addFunktion(decoderTyp, 0, "F7", "Hämmern", false);
+        addFunktion(decoderTyp, 0, "F8", "Winkelschleifer", false);
+        addFunktion(decoderTyp, 0, "F9", "Elektroschweißen", false);
+        addFunktion(decoderTyp, 0, "F10", "Schleifbock", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add123572(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "123572", "123572", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "123572", "123572", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 0, 80, 42, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 0, 63, 63, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 0, 63, 63, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 0, 63, 63, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 0, 63, 63, false));
+        addCV(decoderTyp, 1, "Adresse", 0, 80, 42);
+        addCV(decoderTyp, 3, "Anfahrverzögerung", 0, 63, 63);
+        addCV(decoderTyp, 4, "Bremsverzögerung", 0, 63, 63);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 0, 63, 63);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, null);
+        addCV(decoderTyp, 63, "Lautstärke", 0, 63, 63);
 
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung / Innenbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Bahnhofsansage", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Signalhorn", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung / Innenbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F2", "Bahnhofsansage", false);
+        addFunktion(decoderTyp, 0, "F3", "Signalhorn", false);
+        addFunktion(decoderTyp, 0, "F4", "ABV", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add140131(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "140131", "140131", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "140131", "140131", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, null, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, null);
+        addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, null);
+        addCV(decoderTyp, 4, "Bremsverzögerung", 1, 63, null);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
+        addCV(decoderTyp, 63, "Lautstärke", 1, 63, null);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung / Schlusslicht", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Schlusslicht ausschalten", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Betriebsgeräusch", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Signalhorn", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Druckluft ablassen", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Bremsenquietschen", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung / Schlusslicht", false);
+        addFunktion(decoderTyp, 0, "F1", "Schlusslicht ausschalten", false);
+        addFunktion(decoderTyp, 0, "F2", "Betriebsgeräusch", false);
+        addFunktion(decoderTyp, 0, "F3", "Signalhorn", false);
+        addFunktion(decoderTyp, 0, "F4", "ABV", false);
+        addFunktion(decoderTyp, 0, "F5", "Druckluft ablassen", false);
+        addFunktion(decoderTyp, 0, "F6", "Bremsenquietschen", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add148924(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "148924", "148924", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "148924", "148924", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, null, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, null);
+        addCV(decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, null);
+        addCV(decoderTyp, 4, "Bremsverzögerung", 1, 63, null);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
+        addCV(decoderTyp, 63, "Lautstärke", 1, 63, null);
 
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Schlusslicht ausschalten", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Betriebsgeräusch", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Horn", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Druckluft ablassen", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Bremsenquietschen", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Führerstandsbeleuchtung vorn", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Führerstandsbeleuchtung hinten", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F1", "Schlusslicht ausschalten", false);
+        addFunktion(decoderTyp, 0, "F2", "Betriebsgeräusch", false);
+        addFunktion(decoderTyp, 0, "F3", "Horn", false);
+        addFunktion(decoderTyp, 0, "F4", "ABV", false);
+        addFunktion(decoderTyp, 0, "F5", "Druckluft ablassen", false);
+        addFunktion(decoderTyp, 0, "F6", "Bremsenquietschen", false);
+        addFunktion(decoderTyp, 0, "F7", "Führerstandsbeleuchtung vorn", false);
+        addFunktion(decoderTyp, 0, "F8", "Führerstandsbeleuchtung hinten", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add156787(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "156787", "156787", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "156787", "156787", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 49, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, 49);
+        addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, null);
+        addCV(decoderTyp, 4, "Bremsverzögerung", 1, 63, null);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Innenbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Begrüßungs-Ansage", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Pfeife", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Innenbeleuchtung dimmen", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F1", "Innenbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F2", "Begrüßungs-Ansage", false);
+        addFunktion(decoderTyp, 0, "F3", "Pfeife", false);
+        addFunktion(decoderTyp, 0, "F4", "ABV", false);
+        addFunktion(decoderTyp, 0, "F5", "Innenbeleuchtung dimmen", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add162946(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "162946", "162946", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "162946", "162946", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 11, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, null, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, 11);
+        addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, null);
+        addCV(decoderTyp, 4, "Bremsverzögerung", 1, 63, null);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
+        addCV(decoderTyp, 63, "Lautstärke", 1, 63, null);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Innenbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Betriebsgeräusch ", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Horn", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Bremsenquietschen", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Bahnhofsansage", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Türe zu", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Schaffnerpfiff", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F9", "Hilfsdiesel", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F10", "Lüfter", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F11", "Kompressor", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F12", "Überdruckventil", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F13", "Druckluft ablassen", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F1", "Innenbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F2", "Betriebsgeräusch ", false);
+        addFunktion(decoderTyp, 0, "F3", "Horn", false);
+        addFunktion(decoderTyp, 0, "F4", "ABV", false);
+        addFunktion(decoderTyp, 0, "F5", "Bremsenquietschen", false);
+        addFunktion(decoderTyp, 0, "F6", "Bahnhofsansage", false);
+        addFunktion(decoderTyp, 0, "F7", "Türe zu", false);
+        addFunktion(decoderTyp, 0, "F8", "Schaffnerpfiff", false);
+        addFunktion(decoderTyp, 0, "F9", "Hilfsdiesel", false);
+        addFunktion(decoderTyp, 0, "F10", "Lüfter", false);
+        addFunktion(decoderTyp, 0, "F11", "Kompressor", false);
+        addFunktion(decoderTyp, 0, "F12", "Überdruckventil", false);
+        addFunktion(decoderTyp, 0, "F13", "Druckluft ablassen", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add169274(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "169274", "169274", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "169274", "169274", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 0, 80, 43, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 0, 63, 63, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 0, 63, 63, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 0, 63, 63, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 0, 63, 63, false));
+        addCV(decoderTyp, 1, "Adresse", 0, 80, 43);
+        addCV(decoderTyp, 3, "Anfahrverzögerung", 0, 63, 63);
+        addCV(decoderTyp, 4, "Bremsverzögerung", 0, 63, 63);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 0, 63, 63);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, null);
+        addCV(decoderTyp, 63, "Lautstärke", 0, 63, 63);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Tischlampen", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Betriebsgeräusch", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Horn", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Bremsenquietschen", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Schaffnerpfiff", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Türen", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Bahnhofsansage", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F9", "Rangierpfiff", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F1", "Tischlampen", false);
+        addFunktion(decoderTyp, 0, "F2", "Betriebsgeräusch", false);
+        addFunktion(decoderTyp, 0, "F3", "Horn", false);
+        addFunktion(decoderTyp, 0, "F4", "ABV", false);
+        addFunktion(decoderTyp, 0, "F5", "Bremsenquietschen", false);
+        addFunktion(decoderTyp, 0, "F6", "Schaffnerpfiff", false);
+        addFunktion(decoderTyp, 0, "F7", "Türen", false);
+        addFunktion(decoderTyp, 0, "F8", "Bahnhofsansage", false);
+        addFunktion(decoderTyp, 0, "F9", "Rangierpfiff", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add253201(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "253201", "253201", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "253201", "253201", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, null, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, null);
+        addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, null);
+        addCV(decoderTyp, 4, "Bremsverzögerung", 1, 63, null);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
+        addCV(decoderTyp, 63, "Lautstärke", 1, 63, null);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Innenbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Start / Stopp", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Pause", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "ein Lied vor", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ein Lied zurück", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Lauter", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Leiser", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Lichtorgel an / aus", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Barbeleuchtung an / aus", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F9", "Strom führende Kupplung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F10", "Stroboskop", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F11", "Umgebungsgeräusch 1", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F12", "Umgebungsgeräusch 2", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F13", "Betriebsgeräusch 1", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F14", "Betriebsgeräusch 2", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F15", "Betriebsgeräusch 3", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Innenbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F1", "Start / Stopp", false);
+        addFunktion(decoderTyp, 0, "F2", "Pause", false);
+        addFunktion(decoderTyp, 0, "F3", "ein Lied vor", false);
+        addFunktion(decoderTyp, 0, "F4", "ein Lied zurück", false);
+        addFunktion(decoderTyp, 0, "F5", "Lauter", false);
+        addFunktion(decoderTyp, 0, "F6", "Leiser", false);
+        addFunktion(decoderTyp, 0, "F7", "Lichtorgel an / aus", false);
+        addFunktion(decoderTyp, 0, "F8", "Barbeleuchtung an / aus", false);
+        addFunktion(decoderTyp, 0, "F9", "Strom führende Kupplung", false);
+        addFunktion(decoderTyp, 0, "F10", "Stroboskop", false);
+        addFunktion(decoderTyp, 0, "F11", "Umgebungsgeräusch 1", false);
+        addFunktion(decoderTyp, 0, "F12", "Umgebungsgeräusch 2", false);
+        addFunktion(decoderTyp, 0, "F13", "Betriebsgeräusch 1", false);
+        addFunktion(decoderTyp, 0, "F14", "Betriebsgeräusch 2", false);
+        addFunktion(decoderTyp, 0, "F15", "Betriebsgeräusch 3", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add269706(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "269706", "269706", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "269706", "269706", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 50, "Protokolle", 1, 15, 15, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, null, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, null);
+        addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, null);
+        addCV(decoderTyp, 4, "Bremsverzögerung", 1, 63, null);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
+        addCV(decoderTyp, 50, "Protokolle", 1, 15, 15);
+        addCV(decoderTyp, 63, "Lautstärke", 1, 63, null);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Spitzensignal", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Innenbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Fahrgeräusch", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Signalton", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "Direktsteuerung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F5", "Bremsenquietschen aus", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F6", "Spitzensignal Lokseite 2", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F7", "Schaffnerpfiff", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F8", "Spitzensignal Lokseite 1", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F9", "Türenschließen", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F10", "Schienenstoß", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F11", "Bahnhofsansage", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F12", "Dialog", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F13", "Dialog", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F14", "Dialog", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F15", "Dialog ", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Spitzensignal", false);
+        addFunktion(decoderTyp, 0, "F1", "Innenbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F2", "Fahrgeräusch", false);
+        addFunktion(decoderTyp, 0, "F3", "Signalton", false);
+        addFunktion(decoderTyp, 0, "F4", "Direktsteuerung", false);
+        addFunktion(decoderTyp, 0, "F5", "Bremsenquietschen aus", false);
+        addFunktion(decoderTyp, 0, "F6", "Spitzensignal Lokseite 2", false);
+        addFunktion(decoderTyp, 0, "F7", "Schaffnerpfiff", false);
+        addFunktion(decoderTyp, 0, "F8", "Spitzensignal Lokseite 1", false);
+        addFunktion(decoderTyp, 0, "F9", "Türenschließen", false);
+        addFunktion(decoderTyp, 0, "F10", "Schienenstoß", false);
+        addFunktion(decoderTyp, 0, "F11", "Bahnhofsansage", false);
+        addFunktion(decoderTyp, 0, "F12", "Dialog", false);
+        addFunktion(decoderTyp, 0, "F13", "Dialog", false);
+        addFunktion(decoderTyp, 0, "F14", "Dialog", false);
+        addFunktion(decoderTyp, 0, "F15", "Dialog ", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add39970(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "39970", "39970", true, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "39970", "39970", true, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, null);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Arbeitsbühne heben", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Arbeitsbühne schwenken", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Stromabnehmer", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "Initialisierung", false, false));
+        addFunktion(decoderTyp, 0, "F1", "Arbeitsbühne heben", false);
+        addFunktion(decoderTyp, 0, "F2", "Arbeitsbühne schwenken", false);
+        addFunktion(decoderTyp, 0, "F3", "Stromabnehmer", false);
+        addFunktion(decoderTyp, 0, "F4", "Initialisierung", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add60902(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "60902", "Hochleistungselektronik", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "60902", "Hochleistungselektronik", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Anfahrverzögerung", 1, 63, 3, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, null);
+        addCV(decoderTyp, 2, "Anfahrverzögerung", 1, 63, 3);
+        addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, null);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add611077(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, mfx, "611077", "611077", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "611077", "611077", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, null);
+        addCV(decoderTyp, 3, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null);
+        addCV(decoderTyp, 4, "Anfahrverzögerung/Bremsverzögerung", 1, 63, null);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F4", "ABV", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add209394(IProtokoll protokoll, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, protokoll, "209394", "209394", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "209394", "209394", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", null, null, 54, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
+        addCV(decoderTyp, 1, "Adresse", null, null, 54);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add42973(IProtokoll protokoll, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, protokoll, "42973", "42973", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "42973", "42973", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, 63, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, null);
+        addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, null);
+        addCV(decoderTyp, 4, "Bremsverzögerung", 1, 63, null);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
+        addCV(decoderTyp, 63, "Lautstärke", 1, 63, 63);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Pantograf", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Geräusch einer Schaffner", false, false));
+        addFunktion(decoderTyp, 0, "F2", "Pantograf", false);
+        addFunktion(decoderTyp, 0, "F3", "Geräusch einer Schaffner", false);
 
         return update(decoderTyp);
     }
 
 
     private DecoderTyp add49960(IProtokoll protokoll, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, protokoll, "49960", "49960", true, Konfiguration.SWITCH, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "49960", "49960", true, Konfiguration.SWITCH);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, null);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F1", "Meßbereich", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F2", "Meßbereich", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F3", "Maßeinheit", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "Anzeigen", false, false));
+        addFunktion(decoderTyp, 0, "F1", "Meßbereich", false);
+        addFunktion(decoderTyp, 0, "F2", "Meßbereich", false);
+        addFunktion(decoderTyp, 0, "F3", "Maßeinheit", false);
+        addFunktion(decoderTyp, 0, "F4", "Anzeigen", false);
 
         return update(decoderTyp);
     }
 
 
     private DecoderTyp add606896(IProtokoll protokoll, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, protokoll, "606896", "606896", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "606896", "606896", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, null);
+        addCV(decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, null);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F0", "Strinbeleuchtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "F4", "ABV", false, false));
+        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 0, "F4", "ABV", false);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp add608825(IProtokoll protokoll, IHersteller marklin) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, marklin, protokoll, "608825", "608825", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "608825", "608825", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.DIGITAL, 1, 1, false));
+        addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "Adresse", 1, 80, 39, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Anfahrverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 4, "Bremsverzögerung", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 63, "Lautstärke", 1, 63, null, false));
+        addCV(decoderTyp, 1, "Adresse", 1, 80, 39);
+        addCV(decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, null);
+        addCV(decoderTyp, 4, "Bremsverzögerung", 1, 63, null);
+        addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
+        addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
+        addCV(decoderTyp, 63, "Lautstärke", 1, 63, null);
 
         return update(decoderTyp);
     }
 
     private DecoderTyp addDSD2010(IProtokoll weiche, IHersteller digitalbahn) {
-        DecoderTyp decoderTyp = save(new DecoderTyp(null, digitalbahn, weiche, "DSD2010", "Drehscheibendekoder", false, Konfiguration.CV, false));
+        DecoderTyp decoderTyp = addDecoderTyp(digitalbahn, weiche, "DSD2010", "Drehscheibendekoder", false, Konfiguration.CV);
 
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, 1, AdressTyp.WEICHE, 1, 16, false));
+        addAdress(decoderTyp, 1, AdressTyp.WEICHE, 1, 16);
 
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 1, "48 / 24 Positions", 0, 1, 1, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 2, "DCC / Motorola", 0, 1, 1, false));
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, 3, "Position specification", 0, 1, 0, false));
+        addCV(decoderTyp, 1, "48 / 24 Positions", 0, 1, 1);
+        addCV(decoderTyp, 2, "DCC / Motorola", 0, 1, 1);
+        addCV(decoderTyp, 3, "Position specification", 0, 1, 0);
 
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K0", "Licht", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K1", "Step", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K2", "Turn", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K3", "Richtung", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K4", "Position", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K5", "Position", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K6", "Position", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K7", "Position", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K8", "Position", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K9", "Position", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K10", "Position", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K11", "Position", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K12", "Position", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K13", "Position", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K14", "Position", false, false));
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, 0, "K15", "Position", false, false));
+        addFunktion(decoderTyp, 0, "K0", "Licht", false);
+        addFunktion(decoderTyp, 0, "K1", "Step", false);
+        addFunktion(decoderTyp, 0, "K2", "Turn", false);
+        addFunktion(decoderTyp, 0, "K3", "Richtung", false);
+        addFunktion(decoderTyp, 0, "K4", "Position", false);
+        addFunktion(decoderTyp, 0, "K5", "Position", false);
+        addFunktion(decoderTyp, 0, "K6", "Position", false);
+        addFunktion(decoderTyp, 0, "K7", "Position", false);
+        addFunktion(decoderTyp, 0, "K8", "Position", false);
+        addFunktion(decoderTyp, 0, "K9", "Position", false);
+        addFunktion(decoderTyp, 0, "K10", "Position", false);
+        addFunktion(decoderTyp, 0, "K11", "Position", false);
+        addFunktion(decoderTyp, 0, "K12", "Position", false);
+        addFunktion(decoderTyp, 0, "K13", "Position", false);
+        addFunktion(decoderTyp, 0, "K14", "Position", false);
+        addFunktion(decoderTyp, 0, "K15", "Position", false);
 
         return update(decoderTyp);
     }
 
+    private Epoch addEpoch(String namen, String bezeichnung) {
+        return save(new Epoch(null, namen, bezeichnung, false));
+    }
+
     private void populateEpoch() {
-        save(new Epoch(null, "I", "1835 - 1920", false));
-        save(new Epoch(null, "II", "1920 - 1950", false));
-        save(new Epoch(null, "III", "1949 - 1970", false));
-        save(new Epoch(null, "IV", "1965 - 1990", false));
-        save(new Epoch(null, "V", "1990 - 2006", false));
-        save(new Epoch(null, "VI", "2006 -", false));
-        save(new Epoch(null, "Ia", "1835 - 1875", false));
-        save(new Epoch(null, "Ib", "1875 - 1895", false));
-        save(new Epoch(null, "Ic", "1895 - 1910", false));
-        save(new Epoch(null, "Id", "1910 - 1920", false));
-        save(new Epoch(null, "IIa", "1920 - 1925", false));
-        save(new Epoch(null, "IIb", "1925 - 1937", false));
-        save(new Epoch(null, "IIc", "1937 - 1950", false));
-        save(new Epoch(null, "IIIa", "1949 - 1956", false));
-        save(new Epoch(null, "IIIb", "1956 - 1970", false));
-        save(new Epoch(null, "IVa", "1965 - 1970", false));
-        save(new Epoch(null, "IVb", "1970 – 1980", false));
-        save(new Epoch(null, "IVc", "1980 – 1990", false));
-        save(new Epoch(null, "Va", "1990 - 1994", false));
-        save(new Epoch(null, "Vb", "1994 - 2000", false));
-        save(new Epoch(null, "Vc", "2000 - 2006", false));
+        addEpoch("I", "1835 - 1920");
+        addEpoch("II", "1920 - 1950");
+        addEpoch("III", "1949 - 1970");
+        addEpoch("IV", "1965 - 1990");
+        addEpoch("V", "1990 - 2006");
+        addEpoch("VI", "2006 -");
+        addEpoch("Ia", "1835 - 1875");
+        addEpoch("Ib", "1875 - 1895");
+        addEpoch("Ic", "1895 - 1910");
+        addEpoch("Id", "1910 - 1920");
+        addEpoch("IIa", "1920 - 1925");
+        addEpoch("IIb", "1925 - 1937");
+        addEpoch("IIc", "1937 - 1950");
+        addEpoch("IIIa", "1949 - 1956");
+        addEpoch("IIIb", "1956 - 1970");
+        addEpoch("IVa", "1965 - 1970");
+        addEpoch("IVb", "1970 – 1980");
+        addEpoch("IVc", "1980 – 1990");
+        addEpoch("Va", "1990 - 1994");
+        addEpoch("Vb", "1994 - 2000");
+        addEpoch("Vc", "2000 - 2006");
+    }
+
+    private Gattung addGattung(String namen, String bezeichnung) {
+        return save(new Gattung(null, namen, bezeichnung, false));
     }
 
     private void populateGattung() {
-        save(new Gattung(null, "AB3yge", "AB3yge", false));
-        save(new Gattung(null, "ADümh 101", "ADümh 101", false));
-        save(new Gattung(null, "ARDümz 106", "ARDümz 106", false));
-        save(new Gattung(null, "Apümh 121", "Apümh 121", false));
-        save(new Gattung(null, "Avmz 206", "Avmz 206", false));
-        save(new Gattung(null, "Avümh 111", "Avümh 111", false));
-        save(new Gattung(null, "Aüm 203", "Aüm 203", false));
-        save(new Gattung(null, "B3yge", "B3yge", false));
-        save(new Gattung(null, "B4yge", "B4yge", false));
-        save(new Gattung(null, "BA 115", "BA 115", false));
-        save(new Gattung(null, "BD3yge", "BD3yge", false));
-        save(new Gattung(null, "BR 03", "BR 03", false));
-        save(new Gattung(null, "BR 03.10", "BR 03.10", false));
-        save(new Gattung(null, "BR 103", "BR 103", false));
-        save(new Gattung(null, "BR 111", "BR 111", false));
-        save(new Gattung(null, "BR 151", "BR 151", false));
-        save(new Gattung(null, "BR 211", "BR 211", false));
-        save(new Gattung(null, "BR 216", "BR 216", false));
-        save(new Gattung(null, "BR 220", "BR 220", false));
-        save(new Gattung(null, "BR 230", "BR 230", false));
-        save(new Gattung(null, "BR 24", "BR 24", false));
-        save(new Gattung(null, "BR 260", "BR 260", false));
-        save(new Gattung(null, "BR 321", "BR 321", false));
-        save(new Gattung(null, "BR 45", "BR 45", false));
-        save(new Gattung(null, "BR 50", "BR 50", false));
-        save(new Gattung(null, "BR 53", "BR 53", false));
-        save(new Gattung(null, "BR 601", "BR 601", false));
-        save(new Gattung(null, "BR 64", "BR 64", false));
-        save(new Gattung(null, "BR 701", "BR 701", false));
-        save(new Gattung(null, "BR 81", "BR 81", false));
-        save(new Gattung(null, "BR 85", "BR 85", false));
-        save(new Gattung(null, "BR 86", "BR 86", false));
-        save(new Gattung(null, "BR 89.0", "BR 89.0", false));
-        save(new Gattung(null, "BR 96", "BR 96", false));
-        save(new Gattung(null, "BR 98.3", "BR 98.3", false));
-        save(new Gattung(null, "BT 10", "BT 10", false));
-        save(new Gattung(null, "BTmm 51", "BTmm 51", false));
-        save(new Gattung(null, "Bi 18t", "Bi 18t", false));
-        save(new Gattung(null, "Bi", "Bi", false));
-        save(new Gattung(null, "DByg 546", "DByg 546", false));
-        save(new Gattung(null, "DHG 700C", "DHG 700C", false));
-        save(new Gattung(null, "ELD4", "ELD4", false));
-        save(new Gattung(null, "ET 403", "ET 403", false));
-        save(new Gattung(null, "ET 91", "ET 91", false));
-        save(new Gattung(null, "El-u 061", "El-u 061", false));
-        save(new Gattung(null, "F7", "F7", false));
-        save(new Gattung(null, "G 10", "G 10", false));
-        save(new Gattung(null, "Gl", "Gl", false));
-        save(new Gattung(null, "Gmhs 53", "Gmhs 53", false));
-        save(new Gattung(null, "Gr 20", "Gr 20", false));
-        save(new Gattung(null, "Gs 210", "Gs 210", false));
-        save(new Gattung(null, "H 10", "H 10", false));
-        save(new Gattung(null, "H10", "H10", false));
-        save(new Gattung(null, "ICR-A10", "ICR-A10", false));
-        save(new Gattung(null, "ICR-B10", "ICR-B10", false));
-        save(new Gattung(null, "Ibdlps 383", "Ibdlps 383", false));
-        save(new Gattung(null, "Ichqrs 377", "Ichqrs 377", false));
-        save(new Gattung(null, "Kbs 443", "Kbs 443", false));
-        save(new Gattung(null, "Kklm 505", "Kklm 505", false));
-        save(new Gattung(null, "Laae 540", "Laae 540", false));
-        save(new Gattung(null, "Mannschaftswagen 376", "Mannschaftswagen 376", false));
-        save(new Gattung(null, "NS 6400", "NS 6400", false));
-        save(new Gattung(null, "OOtz 50", "OOtz 50", false));
-        save(new Gattung(null, "Om „Breslau“", "Om „Breslau“", false));
-        save(new Gattung(null, "Om 12", "Om 12", false));
-        save(new Gattung(null, "Otmm 70", "Otmm 70", false));
-        save(new Gattung(null, "Pw 90 HzL", "Pw 90 HzL", false));
-        save(new Gattung(null, "Pwg Pr 14", "Pwg Pr 14", false));
-        save(new Gattung(null, "Pwg Pr 14", "Pwg Pr 14", false));
-        save(new Gattung(null, "Pwgs 41", "Pwgs 41", false));
-        save(new Gattung(null, "Pwi 28", "Pwi 28", false));
-        save(new Gattung(null, "Pwi Wü 13", "Pwi Wü 13", false));
-        save(new Gattung(null, "R 02", "R 02", false));
-        save(new Gattung(null, "Rlmmps 651", "Rlmmps 651", false));
-        save(new Gattung(null, "Rlmms 58", "Rlmms 58", false));
-        save(new Gattung(null, "Rlmms", "Rlmms", false));
-        save(new Gattung(null, "Rlmmso 56", "Rlmmso 56", false));
-        save(new Gattung(null, "Rs 684", "Rs 684", false));
-        save(new Gattung(null, "SSH 71", "SSH 71", false));
-        save(new Gattung(null, "SSym „Köln“", "SSym „Köln“", false));
-        save(new Gattung(null, "Samms 709", "Samms 709", false));
-        save(new Gattung(null, "Schotterwagen 166", "Schotterwagen 166", false));
-        save(new Gattung(null, "Sm 24", "Sm 24", false));
-        save(new Gattung(null, "Tehs 50", "Tehs 50", false));
-        save(new Gattung(null, "Tko 02", "Tko 02", false));
-        save(new Gattung(null, "Ucs", "Ucs", false));
-        save(new Gattung(null, "V 200", "V 200", false));
-        save(new Gattung(null, "V 80", "V 80", false));
-        save(new Gattung(null, "VS 98", "VS 98", false));
-        save(new Gattung(null, "VT 75", "VT 75", false));
-        save(new Gattung(null, "VT 95", "VT 95", false));
-        save(new Gattung(null, "VT 98", "VT 98", false));
-        save(new Gattung(null, "Viehtransport", "Viehtransport", false));
-        save(new Gattung(null, "WGmh 824", "WGmh 824", false));
-        save(new Gattung(null, "WRmz 135", "WRmz 135", false));
-        save(new Gattung(null, "WRümh 131", "WRümh 131", false));
-        save(new Gattung(null, "X05 „Erfurt“", "X05 „Erfurt“", false));
-        save(new Gattung(null, "Zces", "Zces", false));
-        save(new Gattung(null, "üm 312", "üm 312", false));
-        save(new Gattung(null, "üm 313", "üm 313", false));
+        addGattung("AB3YGE", "AB3yge");
+        addGattung("ADUMH101", "ADümh 101");
+        addGattung("ARDUMZ106", "ARDümz 106");
+        addGattung("APUMH121", "Apümh 121");
+        addGattung("AVMZ206", "Avmz 206");
+        addGattung("AVUMH111", "Avümh 111");
+        addGattung("AUM203", "Aüm 203");
+        addGattung("B3YGE", "B3yge");
+        addGattung("B4YGE", "B4yge");
+        addGattung("BA115", "BA 115");
+        addGattung("BD3YGE", "BD3yge");
+        addGattung("BR03", "BR 03");
+        addGattung("BR03.10", "BR 03.10");
+        addGattung("BR103", "BR 103");
+        addGattung("BR111", "BR 111");
+        addGattung("BR151", "BR 151");
+        addGattung("BR211", "BR 211");
+        addGattung("BR216", "BR 216");
+        addGattung("BR220", "BR 220");
+        addGattung("BR230", "BR 230");
+        addGattung("BR24", "BR 24");
+        addGattung("BR260", "BR 260");
+        addGattung("BR321", "BR 321");
+        addGattung("BR45", "BR 45");
+        addGattung("BR50", "BR 50");
+        addGattung("BR53", "BR 53");
+        addGattung("BR601", "BR 601");
+        addGattung("BR64", "BR 64");
+        addGattung("BR701", "BR 701");
+        addGattung("BR81", "BR 81");
+        addGattung("BR85", "BR 85");
+        addGattung("BR86", "BR 86");
+        addGattung("BR89.0", "BR 89.0");
+        addGattung("BR96", "BR 96");
+        addGattung("BR98.3", "BR 98.3");
+        addGattung("BT10", "BT 10");
+        addGattung("BTMM51", "BTmm 51");
+        addGattung("BI18T", "Bi 18t");
+        addGattung("BI", "Bi");
+        addGattung("DByg546", "DByg 546");
+        addGattung("DHG700C", "DHG 700C");
+        addGattung("ELD4", "ELD4");
+        addGattung("ET403", "ET 403");
+        addGattung("ET91", "ET 91");
+        addGattung("Elu061", "El-u 061");
+        addGattung("F7", "F7");
+        addGattung("G10", "G 10");
+        addGattung("GL", "Gl");
+        addGattung("GMHS53", "Gmhs 53");
+        addGattung("GR20", "Gr 20");
+        addGattung("GS210", "Gs 210");
+        addGattung("H10", "H 10");
+        addGattung("ICRA10", "ICR-A10");
+        addGattung("ICRB10", "ICR-B10");
+        addGattung("IBDLPS383", "Ibdlps 383");
+        addGattung("ICHQRS377", "Ichqrs 377");
+        addGattung("KBS443", "Kbs 443");
+        addGattung("KKLM505", "Kklm 505");
+        addGattung("LAAE540", "Laae 540");
+        addGattung("MANNSCHAFT376", "Mannschaftswagen 376");
+        addGattung("NS6400", "NS 6400");
+        addGattung("OOTZ50", "OOtz 50");
+        addGattung("OM", "Om „Breslau“");
+        addGattung("OM12", "Om 12");
+        addGattung("OTMM70", "Otmm 70");
+        addGattung("PW90HZL", "Pw 90 HzL");
+        addGattung("PWGPR14", "Pwg Pr 14");
+        addGattung("PWGS41", "Pwgs 41");
+        addGattung("PWI28", "Pwi 28");
+        addGattung("PWIWU13", "Pwi Wü 13");
+        addGattung("R02", "R 02");
+        addGattung("RLMMPS651", "Rlmmps 651");
+        addGattung("RLMMS58", "Rlmms 58");
+        addGattung("RLMMS", "Rlmms");
+        addGattung("RLMMSO56", "Rlmmso 56");
+        addGattung("RS684", "Rs 684");
+        addGattung("SSH71", "SSH 71");
+        addGattung("SSYM", "SSym „Köln“");
+        addGattung("SAMMS709", "Samms 709");
+        addGattung("SCHOTTERWAGEN166", "Schotterwagen 166");
+        addGattung("SM24", "Sm 24");
+        addGattung("TEHS50", "Tehs 50");
+        addGattung("TKO02", "Tko 02");
+        addGattung("UCS", "Ucs");
+        addGattung("V200", "V 200");
+        addGattung("V80", "V 80");
+        addGattung("VS98", "VS 98");
+        addGattung("VT75", "VT 75");
+        addGattung("VT95", "VT 95");
+        addGattung("VT98", "VT 98");
+        addGattung("VIEH", "Viehtransport");
+        addGattung("WGMH824", "WGmh 824");
+        addGattung("WRMZ135", "WRmz 135");
+        addGattung("WRUMH131", "WRümh 131");
+        addGattung("X05", "X05 „Erfurt“");
+        addGattung("ZCES", "Zces");
+        addGattung("UM312", "üm 312");
+        addGattung("UM313", "üm 313");
+    }
+
+    private URL getURL(String url) {
+        try {
+            if (url != null ) return new URL(url);
+        } catch (MalformedURLException e) {
+            logger.error("Invalid url: " + url, e);
+        }
+        return null;
+    }
+
+    private Hersteller addHersteller( String name, String bezeichnung, String url, String telefon) {
+        return save(new Hersteller(null, name, bezeichnung, getURL(url), telefon, false));
     }
 
     private void populateHersteller() {
-        save(new Hersteller(null, "Avago Technologies", null, null, null, false));
-        save(new Hersteller(null, "4MFOR", null, null, null, false));
-        save(new Hersteller(null, "Artitec", null, null, null, false));
-        save(new Hersteller(null, "Auhagen", null, null, null, false));
-        save(new Hersteller(null, "B&K", null, null, null, false));
-        save(new Hersteller(null, "Brawa", null, null, null, false));
-        save(new Hersteller(null, "Busch", null, null, null, false));
-        save(new Hersteller(null, "DCC Supplies", null, null, null, false));
-        save(new Hersteller(null, "Deluxe Materials", null, null, null, false));
-        save(new Hersteller(null, "Digital-Bahn", null, null, null, false));
-        save(new Hersteller(null, "DigiTrain", null, null, null, false));
-        save(new Hersteller(null, "Diotec", null, null, null, false));
-        save(new Hersteller(null, "Erbert", null, null, null, false));
-        save(new Hersteller(null, "ESU", null, null, null, false));
-        save(new Hersteller(null, "Evergreen", null, null, null, false));
-        save(new Hersteller(null, "Fairchild", null, null, null, false));
-        save(new Hersteller(null, "Faller", null, null, null, false));
-        save(new Hersteller(null, "Fleischmann", null, null, null, false));
-        save(new Hersteller(null, "Gassner", null, null, null, false));
-        save(new Hersteller(null, "GaugeMaster", null, null, null, false));
-        save(new Hersteller(null, "Heico", null, null, null, false));
-        save(new Hersteller(null, "Herkat", null, null, null, false));
-        save(new Hersteller(null, "Herpa", null, null, null, false));
-        save(new Hersteller(null, "Humbrol", null, null, null, false));
-        save(new Hersteller(null, "Jordan", null, null, null, false));
-        save(new Hersteller(null, "Kibri", null, null, null, false));
-        save(new Hersteller(null, "Kingbright", null, null, null, false));
-        save(new Hersteller(null, "KKPMO", null, null, null, false));
-        save(new Hersteller(null, "Knipex", null, null, null, false));
-        save(new Hersteller(null, "Kühn", null, null, null, false));
-        save(new Hersteller(null, "LDT", null, null, null, false));
-        save(new Hersteller(null, "Liliput", null, null, null, false));
-        save(new Hersteller(null, "Lima", null, null, null, false));
-        save(new Hersteller(null, "Littfinski", null, null, null, false));
-        save(new Hersteller(null, "LUX-Modellbau", null, null, null, false));
-        save(new Hersteller(null, "Maquett", null, null, null, false));
-        save(new Hersteller(null, "Märklin", null, null, null, false));
-        save(new Hersteller(null, "Mehano", null, null, null, false));
-        save(new Hersteller(null, "Merten", null, null, null, false));
-        save(new Hersteller(null, "Noch", null, null, null, false));
-        save(new Hersteller(null, "Omron", null, null, null, false));
-        save(new Hersteller(null, "Preiser", null, null, null, false));
-        save(new Hersteller(null, "Proses", null, null, null, false));
-        save(new Hersteller(null, "Ratio", null, null, null, false));
-        save(new Hersteller(null, "Red Line", null, null, null, false));
-        save(new Hersteller(null, "Revell", null, null, null, false));
-        save(new Hersteller(null, "Ricko", null, null, null, false));
-        save(new Hersteller(null, "Rivarossi", null, null, null, false));
-        save(new Hersteller(null, "Roco", null, null, null, false));
-        save(new Hersteller(null, "RTS", null, null, null, false));
-        save(new Hersteller(null, "Schuco", null, null, null, false));
-        save(new Hersteller(null, "Seuthe", null, null, null, false));
-        save(new Hersteller(null, "Taiwan Semiconductor", null, null, null, false));
-        save(new Hersteller(null, "Tamiya", null, null, null, false));
-        save(new Hersteller(null, "Tams", null, null, null, false));
-        save(new Hersteller(null, "Tower Pro", null, null, null, false));
-        save(new Hersteller(null, "Trix", null, null, null, false));
-        save(new Hersteller(null, "TruOpto", null, null, null, false));
-        save(new Hersteller(null, "Uhlenbrock", null, null, null, false));
-        save(new Hersteller(null, "Unbekant", null, null, null, false));
-        save(new Hersteller(null, "Viessmann", null, null, null, false));
-        save(new Hersteller(null, "Walthers", null, null, null, false));
-        save(new Hersteller(null, "Weinert", null, null, null, false));
-        save(new Hersteller(null, "Wiking", null, null, null, false));
-        save(new Hersteller(null, "Woodland Scenics", null, null, null, false));
-        save(new Hersteller(null, "Zemo", null, null, null, false));
+        addHersteller("AVAGO", "Avago Technologies", "https://www.broadcom.com/", null);
+        addHersteller("4MFOR", "4MFOR", "https://www.maerklin.de/", "+49 (0) 71 61 608-0");
+        addHersteller("ARTITEC", "Artitec", "http://www.artitec.nl", null);
+        addHersteller("AUHAGEN", "Auhagen", "https://auhagen.de/", null);
+        addHersteller("BK", "Bochmann und Kochendörfer", null, null);
+        addHersteller("BRAWA", "Brawa", "https://www.brawa.de/", null);
+        addHersteller("BUSCH", "Busch Model", "https://www.busch-model.info/", null);
+        addHersteller("DCC", "DCC Supplies", "https://www.dccsupplies.com/", null);
+        addHersteller("DELUXE", "Deluxe Materials", "https://deluxematerials.co.uk/", null);
+        addHersteller("DIGITALBAHN", "Digital-Bahn", "https://www.digital-bahn.de/", null);
+        addHersteller("DIGITRAINS", "DIGITRAINS Ltd", "https://www.digitrains.co.uk/", null);
+        addHersteller("DIOTEC", "Diotec Semiconductor AG", "https://diotec.com/en/home.html", null);
+        addHersteller("ERBERT", "Erbert Signale", "http://www.erbert-signale.de/", null);
+        addHersteller("ESU", "Electronic Solutions Ulm", "http://www.esu.eu/", null);
+        addHersteller("EVERGREEN", "Evergreen Scale Models", "https://evergreenscalemodels.com/", null);
+        addHersteller("FAIRCHILD", "Fairchild Semiconductors", null, null);
+        addHersteller("FALLER", "Faller", "https://www.faller.de/", null);
+        addHersteller("FLEISCHMANN", "Fleischmann", "https://www.fleischmann.de/", null);
+        addHersteller("GASSNER", "Gaßner Beschriftungen", "https://www.gassner-beschriftungen.de/", null);
+        addHersteller("GAUGEMASTER", "Gauge Master", "http://www.gaugemaster.com/index.html", null);
+        addHersteller("HEICO", "Heico Modell", "http://www.heico-modell.de/", null);
+        addHersteller("HERKAT", "Herkat", "http://www.herkat.de/", null);
+        addHersteller("HERPA", "Herpa", "https://www.herpa.de/", null);
+        addHersteller("HUMBROL", "Humbrol", "https://www.humbrol.com/uk-en/", null);
+        addHersteller("JORDAN", "Jordan Modellbau", "http://www.jordan-modellbau.de/", null);
+        addHersteller("KIBRI", "Kibri", "https://viessmann-modell.com/", null);
+        addHersteller("KINGBRIGHT", "Kingbright", "https://kingbright-europe.de/", null);
+        addHersteller("KKPMO", "KK Produkcja", "http://www.kkpmo.com/", null);
+        addHersteller("KNIPEX", "KNIPEX", "https://www.knipex.com/nc/en/home/", null);
+        addHersteller("KUHN", "Kühn Digital", "http://www.kuehn-digital.de/", null);
+        addHersteller("LILIPUT", "Liliput", "http://liliput.de/", null);
+        addHersteller("LIMA", "Lima", "https://www.hornby.com/", null);
+        addHersteller("LDT", "Littfinski Daten Technik", "https://www.ldt-infocenter.com/", null);
+        addHersteller("LUX", "LUX-Modellbau", "https://www.lux-modellbau.de/", null);
+        addHersteller("MAQUETT", "Maquett", "https://www.maquett.nl/", null);
+        addHersteller("MARKLIN", "Märklin", "https://www.maerklin.de/", "+49 (0) 71 61 608-0");
+        addHersteller("MEHANO", "Mehano", "http://www.mehano.si/", null);
+        addHersteller("MERTEN", "Merten", "https://www.preiser.de/", null);
+        addHersteller("NOCH", "Noch", "https://www.noch.de/", null);
+        addHersteller("OMRON", "Omron", "https://www.omron.com/", null);
+        addHersteller("POLA", "POLA", "https://www.faller.de/", null);
+        addHersteller("PREISER", "Preiser", "https://www.preiser.de/", null);
+        addHersteller("PROSES", "Proses", "https://proses.com/prestashop/", null);
+        addHersteller("RATIO", "Ratio", "https://peco-uk.com/pages/ratio", null);
+        addHersteller("REDLINE", "Red Line", "http://www.redline.com/", null);
+        addHersteller("REVELL", "Revell", "https://www.revell.de/", null);
+        addHersteller("RIVAROSSI", "Rivarossi", "https://www.hornby.com/uk-en/shop/brands/rivarossi-h0-1-87.html", null);
+        addHersteller("ROCO", "Roco", "https://www.roco.cc/en/home/index.html", null);
+        addHersteller("SCHUCO", "Schuco", "https://www.schuco.de/", null);
+        addHersteller("SEUTHE", "Seuthe Dampf", "http://seuthe-dampf.de/", null);
+        addHersteller("TAIWAN", "Taiwan Semiconductor", null, null);
+        addHersteller("TAMIYA", "Tamiya", "https://tamiya.com", null);
+        addHersteller("TAMS", "Tams Elektronik", "https://tams-online.de/de_DE", null);
+        addHersteller("TOWERPRO", "Tower Pro", "http://www.towerpro.com.tw/", null);
+        addHersteller("TRIX", "Trix", "https://www.trix.de/", "+49 (0) 71 61 608-0");
+        addHersteller("TRUOPTO", "TruOpto", "https://www.rapidonline.com/brands/truopto", null);
+        addHersteller("UHLENBROCK", "Uhlenbrock", "https://www.uhlenbrock.de/", null);
+        addHersteller("UNBEKANT", "", null, null);
+        addHersteller("VIESSMANN", "Viessmann Modell", "https://viessmann-modell.com/", null);
+        addHersteller("WALTHERS", "Walthers", "https://www.faller.de/", null);
+        addHersteller("WEINERT", "Weinert Modellbau", "https://weinert-modellbau.de/", null);
+        addHersteller("WIKING", "Wiking", "https://wiking.de/", null);
+        addHersteller("WOODLAND", "Woodland Scenics", "https://woodlandscenics.woodlandscenics.com/", null);
+        addHersteller("ZIMO", "Zimo", "http://www.zimo.at", null);
+    }
+
+    private Kategorie addKategorie(String name, String bezeichnung) {
+        return save(new Kategorie(null, name, bezeichnung, false));
+    }
+
+    private void addUnterKategorie(IKategorie kategorie, String name, String bezeichnung) {
+        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, name, bezeichnung, false));
     }
 
     private void populateKategorie() {
-        Kategorie kategorie = save(new Kategorie(null, "Ausgestaltung", "Ausgestaltung", false));
+        Kategorie kategorie = addKategorie("AUSGESTALTUNG", "Ausgestaltung");
 
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Ausgestaltung", "Ausgestaltung", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Blühmen", "Blühmen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Bäume", "Bäume", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Büsche", "Büsche", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Figuren", "Figuren", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Hecken", "Hecken", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Ladegut", "Ladegut", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Pflanzen", "Pflanzen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Zeichen", "Zeichen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Zäune", "Zäune", false));
-
-        update(kategorie);
-
-        kategorie = save(new Kategorie(null, "Beleuchtung", "Beleuchtung", false));
-
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Beleuchtung", "Beleuchtung", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Gluehlampe", "Gluehlampe", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Innenbeleuchtung", "Innenbeleuchtung", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Leuchteinsatz", "Leuchteinsatz", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Stromführendekupplungen", "Stromführendekupplungen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Stromzuführung", "Stromzuführung", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Zugschlussbeleuchtung", "Zugschlussbeleuchtung", false));
+        addUnterKategorie(kategorie, "AUSGESTALTUNG", "Ausgestaltung");
+        addUnterKategorie(kategorie, "BLUHMEN", "Blühmen");
+        addUnterKategorie(kategorie, "BAUME", "Bäume");
+        addUnterKategorie(kategorie, "BUSCHE", "Büsche");
+        addUnterKategorie(kategorie, "FIGUREN", "Figuren");
+        addUnterKategorie(kategorie, "HECKEN", "Hecken");
+        addUnterKategorie(kategorie, "LADEGUT", "Ladegut");
+        addUnterKategorie(kategorie, "PFLANZEN", "Pflanzen");
+        addUnterKategorie(kategorie, "ZEICHEN", "Zeichen");
+        addUnterKategorie(kategorie, "ZAUNE", "Zäune");
 
         update(kategorie);
 
-        kategorie = save(new Kategorie(null, "Decoder", "Decoder", false));
+        kategorie = addKategorie("BELEUCHTUNG", "Beleuchtung");
 
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Decoder", "Decoder", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Lautsprecher", "Lautsprecher", false));
-
-        update(kategorie);
-
-        kategorie = save(new Kategorie(null, "Ersatzteil", "Ersatzteil", false));
-
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Anker", "Anker", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Beschwerung", "Beschwerung", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Drehgestellrahmen", "Drehgestellrahmen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Drehgestell", "Drehgestell", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Entstördrossel", "Entstördrossel", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Ersatzteil", "Ersatzteil", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Feder", "Feder", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Feldmagnet", "Feldmagnet", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Fenster", "Fenster", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Grundplatte", "Grundplatte", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Haftreifen", "Haftreifen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Halteplatte", "Halteplatte", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Inneneinrichtung", "Inneneinrichtung", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Isolierung", "Isolierung", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kabel", "Kabel", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kabelklemmen", "Kabelklemmen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Klappe", "Klappe", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kohlbursten", "Kohlbursten", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kuppelstange", "Kuppelstange", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kupplung", "Kupplung", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kupplungsdeichsel", "Kupplungsdeichsel", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kupplungshaken", "Kupplungshaken", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kupplungskinematik", "Kupplungskinematik", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kupplungsschacht", "Kupplungsschacht", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kurzkupplung", "Kurzkupplung", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Leitschaufel", "Leitschaufel", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Lokumbausätze", "Lokumbausätze", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Massefeder", "Massefeder", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Messingblech", "Messingblech", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Motorschild", "Motorschild", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Mutter", "Mutter", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Pantograph", "Pantograph", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Prallplatte", "Prallplatte", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Puffer", "Puffer", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Rad", "Rad", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Relais", "Relais", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Relexkupplung", "Relexkupplung", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Schaltsfeder", "Schaltsfeder", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Schleifer", "Schleifer", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Schraube", "Schraube", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Schraubenkupplung", "Schraubenkupplung", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Senkschraube", "Senkschraube", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Stange", "Stange", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Telex", "Telex", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Traeger", "Traeger", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Wagenboden", "Wagenboden", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Weichenfeder", "Weichenfeder", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Zugfeder", "Zugfeder", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Zylinderschraube", "Zylinderschraube", false));
+        addUnterKategorie(kategorie, "BELEUCHTUNG", "Beleuchtung");
+        addUnterKategorie(kategorie, "GLUEHLAMPE", "Gluehlampe");
+        addUnterKategorie(kategorie, "INNENBELEUCHTUNG", "Innenbeleuchtung");
+        addUnterKategorie(kategorie, "LEUCHTEINSATZ", "Leuchteinsatz");
+        addUnterKategorie(kategorie, "STROMFUHRENDEKUPPLUNGEN", "Stromführendekupplungen");
+        addUnterKategorie(kategorie, "STROMZUFUHRUNG", "Stromzuführung");
+        addUnterKategorie(kategorie, "ZUGSCHLUSSBELEUCHTUNG", "Zugschlussbeleuchtung");
 
         update(kategorie);
 
-        kategorie = save(new Kategorie(null, "Fahrzeug", "Fahrzeug", false));
+        kategorie = addKategorie("DECODER", "Decoder");
 
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Fahrzeug", "Fahrzeug", false));
-
-        update(kategorie);
-
-        kategorie = save(new Kategorie(null, "Gebaüde", "Gebaüde", false));
-
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Bekohlung", "Bekohlung", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Bockkrän", "Bockkrän", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Drehscheibe", "Drehscheibe", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Gebaüde", "Gebaüde", false));
+        addUnterKategorie(kategorie, "DECODER", "Decoder");
+        addUnterKategorie(kategorie, "LAUTSPRECHER", "Lautsprecher");
 
         update(kategorie);
 
-        kategorie = save(new Kategorie(null, "Gleismateriel", "Gleismateriel", false));
+        kategorie = addKategorie("ERSATZTEIL", "Ersatzteil");
 
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Gleismateriel", "Gleismateriel", false));
-
-        update(kategorie);
-
-        kategorie = save(new Kategorie(null, "Landschaftsbau", "Landschaftsbau", false));
-
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Landschaftsbau", "Landschaftsbau", false));
-
-        update(kategorie);
-
-        kategorie = save(new Kategorie(null, "Lokomotiv", "Lokomotiv", false));
-
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Lokomotiv", "Lokomotiv", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Akku", "Akku", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Dampf", "Dampf", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Diesel", "Diesel", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Elektro", "Elektro", false));
-
-        update(kategorie);
-
-        kategorie = save(new Kategorie(null, "Oberleitung", "Oberleitung", false));
-
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Oberleitung", "Oberleitung", false));
-
-        update(kategorie);
-
-        kategorie = save(new Kategorie(null, "Set", "Set", false));
-
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Set", "Set", false));
-
-        update(kategorie);
-
-        kategorie = save(new Kategorie(null, "Signaltechnik", "Signaltechnik", false));
-
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Signalbirne", "Signalbirne", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Signaltechnik", "Signaltechnik", false));
-
-        update(kategorie);
-
-        kategorie = save(new Kategorie(null, "Sonstiges", "Sonstiges", false));
-
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Sonstiges", "Sonstiges", false));
-
-        update(kategorie);
-
-        kategorie = save(new Kategorie(null, "Steuerungstechnik", "Steuerungstechnik", false));
-
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Steuerungstechnik", "Steuerungstechnik", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Stromversorgung", "Stromversorgung", false));
-
-        update(kategorie);
-
-        kategorie = save(new Kategorie(null, "Treibwagen", "Treibwagen", false));
-
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Beiwagen", "Beiwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Mittelwagen", "Mittelwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Steurwagen", "Steurwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Treibwagen", "Treibwagen", false));
+        addUnterKategorie(kategorie, "ANKER", "Anker");
+        addUnterKategorie(kategorie, "BESCHWERUNG", "Beschwerung");
+        addUnterKategorie(kategorie, "DREHGESTELLRAHMEN", "Drehgestellrahmen");
+        addUnterKategorie(kategorie, "DREHGESTELL", "Drehgestell");
+        addUnterKategorie(kategorie, "ENTSTORDROSSEL", "Entstördrossel");
+        addUnterKategorie(kategorie, "ERSATZTEIL", "Ersatzteil");
+        addUnterKategorie(kategorie, "FEDER", "Feder");
+        addUnterKategorie(kategorie, "FELDMAGNET", "Feldmagnet");
+        addUnterKategorie(kategorie, "FENSTER", "Fenster");
+        addUnterKategorie(kategorie, "GRUNDPLATTE", "Grundplatte");
+        addUnterKategorie(kategorie, "HAFTREIFEN", "Haftreifen");
+        addUnterKategorie(kategorie, "HALTEPLATTE", "Halteplatte");
+        addUnterKategorie(kategorie, "INNENEINRICHTUNG", "Inneneinrichtung");
+        addUnterKategorie(kategorie, "ISOLIERUNG", "Isolierung");
+        addUnterKategorie(kategorie, "KABEL", "Kabel");
+        addUnterKategorie(kategorie, "KABELKLEMMEN", "Kabelklemmen");
+        addUnterKategorie(kategorie, "KLAPPE", "Klappe");
+        addUnterKategorie(kategorie, "KOHLBURSTEN", "Kohlbursten");
+        addUnterKategorie(kategorie, "KUPPELSTANGE", "Kuppelstange");
+        addUnterKategorie(kategorie, "KUPPLUNG", "Kupplung");
+        addUnterKategorie(kategorie, "KUPPLUNGSDEICHSEL", "Kupplungsdeichsel");
+        addUnterKategorie(kategorie, "KUPPLUNGSHAKEN", "Kupplungshaken");
+        addUnterKategorie(kategorie, "KUPPLUNGSKINEMATIK", "Kupplungskinematik");
+        addUnterKategorie(kategorie, "KUPPLUNGSSCHACHT", "Kupplungsschacht");
+        addUnterKategorie(kategorie, "KURZKUPPLUNG", "Kurzkupplung");
+        addUnterKategorie(kategorie, "LEITSCHAUFEL", "Leitschaufel");
+        addUnterKategorie(kategorie, "LOKUMBAUSATZE", "Lokumbausätze");
+        addUnterKategorie(kategorie, "MASSEFEDER", "Massefeder");
+        addUnterKategorie(kategorie, "MESSINGBLECH", "Messingblech");
+        addUnterKategorie(kategorie, "MOTORSCHILD", "Motorschild");
+        addUnterKategorie(kategorie, "MUTTER", "Mutter");
+        addUnterKategorie(kategorie, "PANTOGRAPH", "Pantograph");
+        addUnterKategorie(kategorie, "PRALLPLATTE", "Prallplatte");
+        addUnterKategorie(kategorie, "PUFFER", "Puffer");
+        addUnterKategorie(kategorie, "RAD", "Rad");
+        addUnterKategorie(kategorie, "RELAIS", "Relais");
+        addUnterKategorie(kategorie, "RELEXKUPPLUNG", "Relexkupplung");
+        addUnterKategorie(kategorie, "SCHALTSFEDER", "Schaltsfeder");
+        addUnterKategorie(kategorie, "SCHLEIFER", "Schleifer");
+        addUnterKategorie(kategorie, "SCHRAUBE", "Schraube");
+        addUnterKategorie(kategorie, "SCHRAUBENKUPPLUNG", "Schraubenkupplung");
+        addUnterKategorie(kategorie, "SENKSCHRAUBE", "Senkschraube");
+        addUnterKategorie(kategorie, "STANGE", "Stange");
+        addUnterKategorie(kategorie, "TELEX", "Telex");
+        addUnterKategorie(kategorie, "TRAEGER", "Traeger");
+        addUnterKategorie(kategorie, "WAGENBODEN", "Wagenboden");
+        addUnterKategorie(kategorie, "WEICHENFEDER", "Weichenfeder");
+        addUnterKategorie(kategorie, "ZUGFEDER", "Zugfeder");
+        addUnterKategorie(kategorie, "ZYLINDERSCHRAUBE", "Zylinderschraube");
 
         update(kategorie);
 
-        kategorie = save(new Kategorie(null, "Wagen", "Wagen", false));
+        kategorie = addKategorie("FAHRZEUG", "Fahrzeug");
 
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Abteilwagen", "Abteilwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Aussichtswagen", "Aussichtswagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Autotransportwagen", "Autotransportwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Bahndienstwagen", "Bahndienstwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Bananenwagen", "Bananenwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Barwagen", "Barwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Behältertragwagen", "Behältertragwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Bierwagen", "Bierwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Carbid-Flaschenwagen", "Carbid-Flaschenwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Containertragwagen", "Containertragwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Doppelstockwagen", "Doppelstockwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Drehschemelwagen", "Drehschemelwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Fahrradtransportwagen", "Fahrradtransportwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Flachwagen", "Flachwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Gaswagen", "Gaswagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Gedeckter Güterwagen", "Gedeckter Güterwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Gepäckwagen", "Gepäckwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Gesellschaftswagen", "Gesellschaftswagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Großraumwagen", "Großraumwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Güterwagen", "Güterwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Güterzugbegleitwagen", "Güterzugbegleitwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Hochbordwagen", "Hochbordwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kesselwagen", "Kesselwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kränwagen", "Kränwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Kühlwagen", "Kühlwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Mannschaftswagen", "Mannschaftswagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Messewagen", "Messewagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Nahverkehrswagen", "Nahverkehrswagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Niederbordwagen", "Niederbordwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Rolldachwagen", "Rolldachwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Schiebewandwagen", "Schiebewandwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Schneepflug", "Schneepflug", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Schotterwagen", "Schotterwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Schwerlastwagen", "Schwerlastwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Schüttgut-Kippwagen", "Schüttgut-Kippwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Seitenentladewagen", "Seitenentladewagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Silowagen", "Silowagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Sonderfahrzeug", "Sonderfahrzeug", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Speisewagen", "Speisewagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Taschenwagen", "Taschenwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Tiefladewagen", "Tiefladewagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Torpedopfannenwagen", "Torpedopfannenwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Umbauwagen", "Umbauwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Verschlagwagen", "Verschlagwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Viehwagen", "Viehwagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Wagen", "Wagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Weihnachtswagen", "Weihnachtswagen", false));
-        kategorie.addUnterKategorie(new UnterKategorie(null, kategorie, "Weinwagen", "Weinwagen", false));
+        addUnterKategorie(kategorie, "FAHRZEUG", "Fahrzeug");
 
         update(kategorie);
 
-        Kategorie werkzeug = save(new Kategorie(null, "Werkzeug", "Werkzeug", false));
+        kategorie = addKategorie("GEBAUDE", "Gebaüde");
 
-        werkzeug.addUnterKategorie(new UnterKategorie(null, werkzeug, "Bücher", "Bücher", false));
-        werkzeug.addUnterKategorie(new UnterKategorie(null, werkzeug, "Farbe", "Farbe", false));
-        werkzeug.addUnterKategorie(new UnterKategorie(null, werkzeug, "Kleb", "Kleb", false));
-        werkzeug.addUnterKategorie(new UnterKategorie(null, werkzeug, "Werkzeug", "Werkzeug", false));
+        addUnterKategorie(kategorie, "BEKOHLUNG", "Bekohlung");
+        addUnterKategorie(kategorie, "BOCKKRAN", "Bockkrän");
+        addUnterKategorie(kategorie, "DREHSCHEIBE", "Drehscheibe");
+        addUnterKategorie(kategorie, "GEBAUDE", "Gebaüde");
+
+        update(kategorie);
+
+        kategorie = addKategorie("GLEISMATERIEL", "Gleismateriel");
+
+        addUnterKategorie(kategorie, "GLEISMATERIEL", "Gleismateriel");
+
+        update(kategorie);
+
+        kategorie = addKategorie("LANDSCHAFTSBAU", "Landschaftsbau");
+
+        addUnterKategorie(kategorie, "LANDSCHAFTSBAU", "Landschaftsbau");
+
+        update(kategorie);
+
+        kategorie = addKategorie("LOKOMOTIV", "Lokomotiv");
+
+        addUnterKategorie(kategorie, "LOKOMOTIV", "Lokomotiv");
+        addUnterKategorie(kategorie, "AKKU", "Akku");
+        addUnterKategorie(kategorie, "DAMPF", "Dampf");
+        addUnterKategorie(kategorie, "DIESEL", "Diesel");
+        addUnterKategorie(kategorie, "ELEKTRO", "Elektro");
+
+        update(kategorie);
+
+        kategorie = addKategorie("OBERLEITUNG", "Oberleitung");
+
+        addUnterKategorie(kategorie, "OBERLEITUNG", "Oberleitung");
+
+        update(kategorie);
+
+        kategorie = addKategorie("SET", "Set");
+
+        addUnterKategorie(kategorie, "SET", "Set");
+
+        update(kategorie);
+
+        kategorie = addKategorie("SIGNALTECHNIK", "Signaltechnik");
+
+        addUnterKategorie(kategorie, "SIGNALBIRNE", "Signalbirne");
+        addUnterKategorie(kategorie, "SIGNALTECHNIK", "Signaltechnik");
+
+        update(kategorie);
+
+        kategorie = addKategorie("SONSTIGES", "Sonstiges");
+
+        addUnterKategorie(kategorie, "SONSTIGES", "Sonstiges");
+
+        update(kategorie);
+
+        kategorie = addKategorie("STEUERUNGSTECHNIK", "Steuerungstechnik");
+
+        addUnterKategorie(kategorie, "STEUERUNGSTECHNIK", "Steuerungstechnik");
+        addUnterKategorie(kategorie, "STROMVERSORGUNG", "Stromversorgung");
+
+        update(kategorie);
+
+        kategorie = addKategorie("TREIBWAGEN", "Treibwagen");
+
+        addUnterKategorie(kategorie, "BEIWAGEN", "Beiwagen");
+        addUnterKategorie(kategorie, "MITTELWAGEN", "Mittelwagen");
+        addUnterKategorie(kategorie, "STEURWAGEN", "Steurwagen");
+        addUnterKategorie(kategorie, "TREIBWAGEN", "Treibwagen");
+
+        update(kategorie);
+
+        kategorie = addKategorie("WAGEN", "Wagen");
+
+        addUnterKategorie(kategorie, "ABTEIL", "Abteilwagen");
+        addUnterKategorie(kategorie, "AUSSICHTS", "Aussichtswagen");
+        addUnterKategorie(kategorie, "AUTOTRANSPORT", "Autotransportwagen");
+        addUnterKategorie(kategorie, "BAHNDIENST", "Bahndienstwagen");
+        addUnterKategorie(kategorie, "BANANEN", "Bananenwagen");
+        addUnterKategorie(kategorie, "BAR", "Barwagen");
+        addUnterKategorie(kategorie, "BEHALTERTRAG", "Behältertragwagen");
+        addUnterKategorie(kategorie, "BIER", "Bierwagen");
+        addUnterKategorie(kategorie, "CARBIDFLASCHEN", "Carbid-Flaschenwagen");
+        addUnterKategorie(kategorie, "CONTAINERTRAG", "Containertragwagen");
+        addUnterKategorie(kategorie, "DOPPELSTOCK", "Doppelstockwagen");
+        addUnterKategorie(kategorie, "DREHSCHEMEL", "Drehschemelwagen");
+        addUnterKategorie(kategorie, "FAHRRADTRANSPORT", "Fahrradtransportwagen");
+        addUnterKategorie(kategorie, "FLACH", "Flachwagen");
+        addUnterKategorie(kategorie, "GAS", "Gaswagen");
+        addUnterKategorie(kategorie, "GEDECKTER Güter", "Gedeckter Güterwagen");
+        addUnterKategorie(kategorie, "GEPACK", "Gepäckwagen");
+        addUnterKategorie(kategorie, "GESELLSCHAFTS", "Gesellschaftswagen");
+        addUnterKategorie(kategorie, "GROSSRAUM", "Großraumwagen");
+        addUnterKategorie(kategorie, "GUTER", "Güterwagen");
+        addUnterKategorie(kategorie, "GUTERZUGBEGLEIT", "Güterzugbegleitwagen");
+        addUnterKategorie(kategorie, "HOCHBORD", "Hochbordwagen");
+        addUnterKategorie(kategorie, "KESSEL", "Kesselwagen");
+        addUnterKategorie(kategorie, "KRAN", "Kränwagen");
+        addUnterKategorie(kategorie, "KUHL", "Kühlwagen");
+        addUnterKategorie(kategorie, "MANNSCHAFTS", "Mannschaftswagen");
+        addUnterKategorie(kategorie, "MESSE", "Messewagen");
+        addUnterKategorie(kategorie, "NAHVERKEHRS", "Nahverkehrswagen");
+        addUnterKategorie(kategorie, "NIEDERBORD", "Niederbordwagen");
+        addUnterKategorie(kategorie, "ROLLDACH", "Rolldachwagen");
+        addUnterKategorie(kategorie, "SCHIEBEWAND", "Schiebewandwagen");
+        addUnterKategorie(kategorie, "SCHNEEPFLUG", "Schneepflug");
+        addUnterKategorie(kategorie, "SCHOTTER", "Schotterwagen");
+        addUnterKategorie(kategorie, "SCHWERLAST", "Schwerlastwagen");
+        addUnterKategorie(kategorie, "SCHUTTGUTKIPP", "Schüttgut-Kippwagen");
+        addUnterKategorie(kategorie, "SEITENENTLADE", "Seitenentladewagen");
+        addUnterKategorie(kategorie, "SILO", "Silowagen");
+        addUnterKategorie(kategorie, "SONDERFAHRZEUG", "Sonderfahrzeug");
+        addUnterKategorie(kategorie, "SPEISE", "Speisewagen");
+        addUnterKategorie(kategorie, "TASCHEN", "Taschenwagen");
+        addUnterKategorie(kategorie, "TIEFLADE", "Tiefladewagen");
+        addUnterKategorie(kategorie, "TORPEDOPFANNEN", "Torpedopfannenwagen");
+        addUnterKategorie(kategorie, "UMBAU", "Umbauwagen");
+        addUnterKategorie(kategorie, "VERSCHLAG", "Verschlagwagen");
+        addUnterKategorie(kategorie, "VIEH", "Viehwagen");
+        addUnterKategorie(kategorie, "WAGEN", "Wagen");
+        addUnterKategorie(kategorie, "WEIHNACHTS", "Weihnachtswagen");
+        addUnterKategorie(kategorie, "WEIN", "Weinwagen");
+
+        update(kategorie);
+
+        Kategorie werkzeug = addKategorie("WERKZEUG", "Werkzeug");
+
+        addUnterKategorie(werkzeug, "BUCHER", "Bücher");
+        addUnterKategorie(werkzeug, "FARBE", "Farbe");
+        addUnterKategorie(werkzeug, "KLEB", "Kleb");
+        addUnterKategorie(werkzeug, "WERKZEUG", "Werkzeug");
 
         save(werkzeug);
 
-        Kategorie zubehor = save(new Kategorie(null, "Zubehör", "Zubehör", false));
+        Kategorie zubehor = addKategorie("ZUBEHOR", "Zubehör");
 
-        zubehor.addUnterKategorie(new UnterKategorie(null, zubehor, "Beschriftigung", "Beschriftigung", false));
-        zubehor.addUnterKategorie(new UnterKategorie(null, zubehor, "Zubehör", "Zubehör", false));
+        addUnterKategorie(zubehor, "BESCHRIFTIGUNG", "Beschriftigung");
+        addUnterKategorie(zubehor, "ZUBEHOR", "Zubehör");
 
         save(zubehor);
     }
 
+    private Kupplung addKupplung(String name, String bezeichnung) {
+        return save(new Kupplung(null, name, bezeichnung, false));
+    }
+
     private void populateKupplung() {
-        save(new Kupplung(null, "Relex", "Relex Kupplung", false));
-        save(new Kupplung(null, "KK", "Märklin-Kurzkupplungen mit Drehpunkt", false));
-        save(new Kupplung(null, "NEM", "Märklin-Kurzkupplungen in Norm-Aufnahme mit Drehpunkt", false));
-        save(new Kupplung(null, "NEM KK", "Märklin-Kurzkupplungen in Norm-Aufnahme mit Kulissenführung", false));
-        save(new Kupplung(null, "SF KK", "Märklin-Kurzkupplungen in Norm-Aufnahme mit Stromfürhrender Kulissenführung", false));
-        save(new Kupplung(null, "Telex", "Telex Kupplung", false));
+        addKupplung("RELEX", "Relex Kupplung");
+        addKupplung("KK", "Märklin-Kurzkupplungen mit Drehpunkt");
+        addKupplung("NEM", "Märklin-Kurzkupplungen in Norm-Aufnahme mit Drehpunkt");
+        addKupplung("NEMKK", "Märklin-Kurzkupplungen in Norm-Aufnahme mit Kulissenführung");
+        addKupplung("SFKK", "Märklin-Kurzkupplungen in Norm-Aufnahme mit Stromfürhrender Kulissenführung");
+        addKupplung("TELEX", "Telex Kupplung");
+    }
+
+    private Land addLand(String name, String bezeichnung, IWahrung wahrung) {
+        return save(new Land(null, name, bezeichnung, wahrung, false));
     }
 
     private void populateLand() {
@@ -1799,200 +1876,267 @@ public class DBPopulator {
         IWahrung gbp = findWahrung("GBP");
         IWahrung usd = findWahrung("USD");
         
-        save(new Land(null, "AU", "Australien", aud, false));
-        save(new Land(null, "BE", "Belgien", eur, false));
-        save(new Land(null, "DE", "Deutschland", eur, false));
-        save(new Land(null, "FR", "Frankreich", eur, false));
-        save(new Land(null, "IT", "Italien", eur, false));
-        save(new Land(null, "NL", "Niederland", eur, false));
-        save(new Land(null, "UK", "Vereinigtes Königreich", gbp, false));
-        save(new Land(null, "US", "Vereinigte Staaten", usd, false));
+        addLand("AU", "Australien", aud);
+        addLand("BE", "Belgien", eur);
+        addLand("DE", "Deutschland", eur);
+        addLand("FR", "Frankreich", eur);
+        addLand("IT", "Italien", eur);
+        addLand("NL", "Niederland", eur);
+        addLand("UK", "Vereinigtes Königreich", gbp);
+        addLand("US", "Vereinigte Staaten", usd);
     }
 
+    private Licht addLicht(String namen, String bezeichnung) {
+        return save(new Licht(null, namen, bezeichnung, false));
+    }
+   
     private void populateLicht() {
-        save(new Licht(null, "L1V", "Einfach-Spitzensignal vorne", false));
-        save(new Licht(null, "L1W", "Einfach-Spitzensignal mit der Fahrtrichtung wechselnd.", false));
-        save(new Licht(null, "L2V", "Zweilicht-Spitzensignal vorne", false));
-        save(new Licht(null, "L2L2", "Zweilicht-Spitzensignal vorne und hinten", false));
-        save(new Licht(null, "L2W", "Zweilicht-Spitzensignal mit der Fahrtrichtung wechselnd", false));
-        save(new Licht(null, "L3V", "Dreilicht-Spitzensignal vorne", false));
-        save(new Licht(null, "L3W", "Dreilicht-Spitzensignal mit der Fahrtrichtung wechselnd", false));
-        save(new Licht(null, "L4W", "Vierlicht-Spitzensignal mit der Fahrtrichtung wechselnd", false));
-        save(new Licht(null, "R1H", "Ein rotes Schlusslicht", false));
-        save(new Licht(null, "R2H", "Zwei rote Schlusslichter", false));
-        save(new Licht(null, "L2R2W", "Zweilicht-Spitzensignal und zwei rote Schlusslichter mit der Fahrtrichtung wechselnd", false));
-        save(new Licht(null, "L3R1W", "Dreilicht-Spitzensignal und ein rotes Schlusslicht mit der Fahrtrichtung wechselnd", false));
-        save(new Licht(null, "L3R2W", "Dreilicht-Spitzensignal und zwei rote Schlusslichter mit der Fahrtrichtung wechselnd", false));
-        save(new Licht(null, "L3L1W", "Dreilicht-Spitzensignal und ein weißes Schlusslicht mit der Fahrtrichtung wechselnd", false));
-        save(new Licht(null, "L3L2W", "Dreilicht-Spitzensignal und zwei weißes Schlusslicht mit der Fahrtrichtung wechselnd", false));
+       addLicht("L1V", "Einfach-Spitzensignal vorne");
+       addLicht("L1W", "Einfach-Spitzensignal mit der Fahrtrichtung wechselnd.");
+       addLicht("L2V", "Zweilicht-Spitzensignal vorne");
+       addLicht("L2L2", "Zweilicht-Spitzensignal vorne und hinten");
+       addLicht("L2W", "Zweilicht-Spitzensignal mit der Fahrtrichtung wechselnd");
+       addLicht("L3V", "Dreilicht-Spitzensignal vorne");
+       addLicht("L3W", "Dreilicht-Spitzensignal mit der Fahrtrichtung wechselnd");
+       addLicht("L4W", "Vierlicht-Spitzensignal mit der Fahrtrichtung wechselnd");
+       addLicht("R1H", "Ein rotes Schlusslicht");
+       addLicht("R2H", "Zwei rote Schlusslichter");
+       addLicht("L2R2W", "Zweilicht-Spitzensignal und zwei rote Schlusslichter mit der Fahrtrichtung wechselnd");
+       addLicht("L3R1W", "Dreilicht-Spitzensignal und ein rotes Schlusslicht mit der Fahrtrichtung wechselnd");
+       addLicht("L3R2W", "Dreilicht-Spitzensignal und zwei rote Schlusslichter mit der Fahrtrichtung wechselnd");
+       addLicht("L3L1W", "Dreilicht-Spitzensignal und ein weißes Schlusslicht mit der Fahrtrichtung wechselnd");
+       addLicht("L3L2W", "Dreilicht-Spitzensignal und zwei weißes Schlusslicht mit der Fahrtrichtung wechselnd");
+    }
+
+    private Massstab addMassstab(String name, String bezeichnung) {
+        return save(new Massstab(null, name, bezeichnung, false));
     }
 
     private void populateMassstab() {
-        save(new Massstab(null, "0", "1:45 32 mm", false));
-        save(new Massstab(null, "0e", "1:45 16.5 mm", false));
-        save(new Massstab(null, "0i", "1:45 12 mm", false));
-        save(new Massstab(null, "0m", "1:45 22.5 mm", false));
-        save(new Massstab(null, "0p", "1:45 9 mm", false));
-        save(new Massstab(null, "1\"", "1:12 121 mm", false));
-        save(new Massstab(null, "1", "1:32 45 mm", false));
-        save(new Massstab(null, "1e", "1:32 22.5 mm", false));
-        save(new Massstab(null, "1i", "1:32 16.5 mm", false));
-        save(new Massstab(null, "1m", "1:32 32 mm", false));
-        save(new Massstab(null, "1n3", "1:32 28.6 mm", false));
-        save(new Massstab(null, "1p", "1:32 12 mm", false));
-        save(new Massstab(null, "F", "1:20.32 70.64 mm", false));
-        save(new Massstab(null, "Fn3", "1:20.32 45 mm", false));
-        save(new Massstab(null, "H0", "1:87 16.5 mm", false));
-        save(new Massstab(null, "H0e", "1:87 9 mm", false));
-        save(new Massstab(null, "H0i", "1:87 6.5 mm (H0f)", false));
-        save(new Massstab(null, "H0m", "1:87 12 mm", false));
-        save(new Massstab(null, "H0p", "1:87 4.5 mm", false));
-        save(new Massstab(null, "HOn2", "1:87.1 7 mm", false));
-        save(new Massstab(null, "II", "1:22.5 63.5 mm", false));
-        save(new Massstab(null, "IIe", "1:22.5 32 mm", false));
-        save(new Massstab(null, "Iii (NEM)", "1:22.5 22.5 mm", false));
-        save(new Massstab(null, "III", "1:16 89 mm", false));
-        save(new Massstab(null, "IIIe", "1:16 45 mm", false));
-        save(new Massstab(null, "IIIi (NMRA)", "1:16 32 mm (3/4\")", false));
-        save(new Massstab(null, "IIIm", "1:16 63.5 mm", false));
-        save(new Massstab(null, "IIIp", "1:16 22.5 mm", false));
-        save(new Massstab(null, "IIm", "1:22.5 45 mm", false));
-        save(new Massstab(null, "IIp", "1:22.5 16.5 mm", false));
-        save(new Massstab(null, "N", "1:160 9 mm", false));
-        save(new Massstab(null, "Ne", "1:160 4.5 mm (Nn2)", false));
-        save(new Massstab(null, "Nm", "1:160 6.5 mm (Nn3)", false));
-        save(new Massstab(null, "O", "1:48 31.75 mm", false));
-        save(new Massstab(null, "On2", "1:48 12.7 mm", false));
-        save(new Massstab(null, "On3", "1:48 19.4 mm ", false));
-        save(new Massstab(null, "On30", "1:48 16.5 mm", false));
-        save(new Massstab(null, "OO", "1:76.2 19.05 mm", false));
-        save(new Massstab(null, "S", "1:64 22.5 mm", false));
-        save(new Massstab(null, "Se", "1:64 12 mm", false));
-        save(new Massstab(null, "Si", "1:64 9 mm", false));
-        save(new Massstab(null, "Sm", "1:64 16.5 mm", false));
-        save(new Massstab(null, "Sn3", "1:64 14.3 mm", false));
-        save(new Massstab(null, "Sp", "1:64 6.5 mm", false));
-        save(new Massstab(null, "TT", "1:120 12 mm", false));
-        save(new Massstab(null, "TTe", "1:120 6.5 mm", false));
-        save(new Massstab(null, "TTi", "1:120 4.5 mm", false));
-        save(new Massstab(null, "TTm", "1:120 9 mm", false));
-        save(new Massstab(null, "V", "1:11 127 mm", false));
-        save(new Massstab(null, "Ve", "1:11 63.5 mm", false));
-        save(new Massstab(null, "Vi", "1:11 45 mm", false));
-        save(new Massstab(null, "VII", "1:8 184 mm", false));
-        save(new Massstab(null, "VIIe", "1:8 89 mm", false));
-        save(new Massstab(null, "VIIi", "1:8 63.5 mm", false));
-        save(new Massstab(null, "VIIm", "1:8 127 mm", false));
-        save(new Massstab(null, "VIIp", "1:8 45 mm", false));
-        save(new Massstab(null, "Vm", "1:11 89 mm", false));
-        save(new Massstab(null, "Vp", "1:11 32 mm", false));
-        save(new Massstab(null, "X", "1:5.5 260 mm", false));
-        save(new Massstab(null, "Xe", "1:5.5 127 mm", false));
-        save(new Massstab(null, "Xi", "1:5.5 89 mm", false));
-        save(new Massstab(null, "Xm", "1:5.5 184 mm", false));
-        save(new Massstab(null, "Xp", "1:5.5 63.5 mm", false));
-        save(new Massstab(null, "Z", "1:220 6.5 mm", false));
-        save(new Massstab(null, "Zm", "1:220 4.5 mm", false));
+        addMassstab("0", "1:45 32 mm");
+        addMassstab("0e", "1:45 16.5 mm");
+        addMassstab("0i", "1:45 12 mm");
+        addMassstab("0m", "1:45 22.5 mm");
+        addMassstab("0p", "1:45 9 mm");
+        addMassstab("1\"", "1:12 121 mm");
+        addMassstab("1", "1:32 45 mm");
+        addMassstab("1e", "1:32 22.5 mm");
+        addMassstab("1i", "1:32 16.5 mm");
+        addMassstab("1m", "1:32 32 mm");
+        addMassstab("1n3", "1:32 28.6 mm");
+        addMassstab("1p", "1:32 12 mm");
+        addMassstab("F", "1:20.32 70.64 mm");
+        addMassstab("Fn3", "1:20.32 45 mm");
+        addMassstab("H0", "1:87 16.5 mm");
+        addMassstab("H0e", "1:87 9 mm");
+        addMassstab("H0i", "1:87 6.5 mm (H0f)");
+        addMassstab("H0m", "1:87 12 mm");
+        addMassstab("H0p", "1:87 4.5 mm");
+        addMassstab("HOn2", "1:87.1 7 mm");
+        addMassstab("II", "1:22.5 63.5 mm");
+        addMassstab("IIe", "1:22.5 32 mm");
+        addMassstab("Iii (NEM)", "1:22.5 22.5 mm");
+        addMassstab("III", "1:16 89 mm");
+        addMassstab("IIIe", "1:16 45 mm");
+        addMassstab("IIIi (NMRA)", "1:16 32 mm (3/4\")");
+        addMassstab("IIIm", "1:16 63.5 mm");
+        addMassstab("IIIp", "1:16 22.5 mm");
+        addMassstab("IIm", "1:22.5 45 mm");
+        addMassstab("IIp", "1:22.5 16.5 mm");
+        addMassstab("N", "1:160 9 mm");
+        addMassstab("Ne", "1:160 4.5 mm (Nn2)");
+        addMassstab("Nm", "1:160 6.5 mm (Nn3)");
+        addMassstab("O", "1:48 31.75 mm");
+        addMassstab("On2", "1:48 12.7 mm");
+        addMassstab("On3", "1:48 19.4 mm ");
+        addMassstab("On30", "1:48 16.5 mm");
+        addMassstab("OO", "1:76.2 19.05 mm");
+        addMassstab("S", "1:64 22.5 mm");
+        addMassstab("Se", "1:64 12 mm");
+        addMassstab("Si", "1:64 9 mm");
+        addMassstab("Sm", "1:64 16.5 mm");
+        addMassstab("Sn3", "1:64 14.3 mm");
+        addMassstab("Sp", "1:64 6.5 mm");
+        addMassstab("TT", "1:120 12 mm");
+        addMassstab("TTe", "1:120 6.5 mm");
+        addMassstab("TTi", "1:120 4.5 mm");
+        addMassstab("TTm", "1:120 9 mm");
+        addMassstab("V", "1:11 127 mm");
+        addMassstab("Ve", "1:11 63.5 mm");
+        addMassstab("Vi", "1:11 45 mm");
+        addMassstab("VII", "1:8 184 mm");
+        addMassstab("VIIe", "1:8 89 mm");
+        addMassstab("VIIi", "1:8 63.5 mm");
+        addMassstab("VIIm", "1:8 127 mm");
+        addMassstab("VIIp", "1:8 45 mm");
+        addMassstab("Vm", "1:11 89 mm");
+        addMassstab("Vp", "1:11 32 mm");
+        addMassstab("X", "1:5.5 260 mm");
+        addMassstab("Xe", "1:5.5 127 mm");
+        addMassstab("Xi", "1:5.5 89 mm");
+        addMassstab("Xm", "1:5.5 184 mm");
+        addMassstab("Xp", "1:5.5 63.5 mm");
+        addMassstab("Z", "1:220 6.5 mm");
+        addMassstab("Zm", "1:220 4.5 mm");
+    }
+
+    private MotorTyp addMotorTyp(String name, String bezeichnung) {
+        return save(new MotorTyp(null, name, bezeichnung, false));
     }
 
     private void populateMotorTyp() {
-        save(new MotorTyp(null, "C-Sinus", "C-Sinus", false));
-        save(new MotorTyp(null, "DCM", "DCM", false));
-        save(new MotorTyp(null, "Glockenanker", "Glockenanker", false));
-        save(new MotorTyp(null, "HLM", "HLM", false));
-        save(new MotorTyp(null, "HLM MS1-7", "HLM MS1-7", false));
-        save(new MotorTyp(null, "HLM MS1-8", "HLM MS1-8", false));
-        save(new MotorTyp(null, "HLM MS2-7", "HLM MS2-7", false));
-        save(new MotorTyp(null, "HLM MS2-8", "HLM MS2-8", false));
-        save(new MotorTyp(null, "HLM S", "HLM S", false));
-        save(new MotorTyp(null, "LFCM MS1-7", "LFCM MS1-7", false));
-        save(new MotorTyp(null, "LFCM MS1-8", "LFCM MS1-8", false));
-        save(new MotorTyp(null, "LFCM MS2-7", "LFCM MS2-7", false));
-        save(new MotorTyp(null, "LFCM MS2-8", "LFCM MS2-8", false));
-        save(new MotorTyp(null, "SFCM", "SFCM", false));
+        addMotorTyp("CSINUS", "C-Sinus");
+        addMotorTyp("KSINUS", "C-Sinus Kompakt");
+        addMotorTyp("DCM", "Trommelkollektor");
+        addMotorTyp("DREHSTROM", "Drehstrom");
+        addMotorTyp("GLOCKENANKER", "Glockenanker");
+        addMotorTyp("HLM", "5-Stern (DCM)");
+        addMotorTyp("HLMMS1-7", "5-Stern (MS1-7z)");
+        addMotorTyp("HLMMS1-8", "5-Stern (MS1-8z)");
+        addMotorTyp("HLMMS2-7", "5-Stern (MS2-7z)");
+        addMotorTyp("HLMMS2-8", "5-Stern (MS2-8z)");
+        addMotorTyp("HLMS", "5-Stern (SFCM)");
+        addMotorTyp("LFCMMS1-7", "Scheibenkollektor (MS1-7z)");
+        addMotorTyp("LFCMMS1-8", "Scheibenkollektor (MS1-8z)");
+        addMotorTyp("LFCMMS2-7", "Scheibenkollektor (MS2-7z)");
+        addMotorTyp("LFCMMS2-8", "Scheibenkollektor (MS2-8z)");
+        addMotorTyp("SDSINUS", "SoftDriveSinus");
+        addMotorTyp("SFCM", "Scheibenkollektor (klein)");
+    }
+
+    private Produkt addProdukt(IHersteller hersteller, String bestellNr, String bezeichnung, IUnterKategorie unterKategorie,
+            IMassstab massstab, ISpurweite spurweite, IEpoch epoch, IBahnverwaltung bahnverwaltung, IGattung gattung,
+            String betreibsnummer, LocalDate bauzeit, IVorbild vorbild, IAchsfolg achsfolg, String anmerkung,
+            ISonderModell sondermodel, IAufbau aufbau, ILicht licht, IKupplung kupplung, ISteuerung steuerung,
+            IDecoderTyp decoderTyp, IMotorTyp motorTyp, BigDecimal lange) {
+        return save(new Produkt(null,  hersteller,  bestellNr,  bezeichnung,  unterKategorie,
+                 massstab,  spurweite,  epoch,  bahnverwaltung,  gattung,
+                 betreibsnummer,  bauzeit,  vorbild,  achsfolg,  anmerkung,
+                 sondermodel,  aufbau,  licht,  kupplung,  steuerung,
+                 decoderTyp,  motorTyp,  lange, false));
+    }
+
+    private void addTeil(IProdukt produkt, IProdukt teil, Integer anzahl) {
+        produkt.addTeil(new ProduktTeil(null, produkt, teil, anzahl, false));
     }
 
     private void populateProdukt() {
-        IHersteller hersteller = findHersteller("Märklin");
+        IHersteller hersteller = findHersteller("MARKLIN");
         ISteuerung steuerung = findSteuerung("FRU");
         IMotorTyp motorTyp = findMotorTyp("SFCM");
         ILicht licht = findLicht("L1V");
-        IKupplung kupplung = findKupplung("Relex");
-        IUnterKategorie unterKategorie = findUnterKategorie("Lokomotiv" ,"Dampf");
+        IKupplung kupplung = findKupplung("RELEX");
+        IUnterKategorie unterKategorie = findUnterKategorie("LOKOMOTIV" ,"DAMPF");
         IMassstab massstab = findMassstab("H0");
         ISpurweite spurweite = findSpurweite("H0");
-        IEpoch epoch = findEpoch("IV");
+        IEpoch epoch = findEpoch("III");
         IBahnverwaltung bahnverwaltung = findBahnverwaltung("DB");
-        IGattung gattung = findGattung("BR 89.0");
-        IVorbild vorbild = findVorbild("BR 89.0");
-        IAchsfolg achsfolg = findAchsfolg("C h2t");
+        IGattung gattung = findGattung("BR89.0");
+        IVorbild vorbild = findVorbild("BR89.0");
+        IAchsfolg achsfolg = findAchsfolg("CH2T");
         ISonderModell sondermodel = null;
-        IAufbau aufbau = findAufbau("Lok Kunststoff");
+        IAufbau aufbau = findAufbau("LK");
         IDecoderTyp decoderTyp = null;
 
         String bezeichnung = null;
-        String betreibsnummer = null;
-        Date bauzeit = null;
+        String betreibsnummer = "89 028";
+        LocalDate bauzeit = LocalDate.of(1907,1,1);
         String anmerkung = null;
-        BigDecimal lange = null;
+        BigDecimal lange = BigDecimal.valueOf(11.0);
 
-        save(new Produkt(null, hersteller, "3000", bezeichnung, unterKategorie,
+        addProdukt(hersteller, "3000", bezeichnung, unterKategorie,
                 massstab, spurweite, epoch, bahnverwaltung, gattung,
                 betreibsnummer, bauzeit, vorbild, achsfolg, anmerkung,
                 sondermodel, aufbau, licht, kupplung, steuerung,
-                decoderTyp, motorTyp, lange, false));
+                decoderTyp, motorTyp, lange);
+    }
+
+    private Protokoll addProtokoll(String name, String bezeichnung) {
+        return save(new Protokoll(null, name, bezeichnung, false));
     }
 
     private void populateProtokoll() {
-        save(new Protokoll(null, "DELTA", "Märklin DELTA", false));
-        save(new Protokoll(null, "fx", "Märklin fx", false));
-        save(new Protokoll(null, "mfx", "Märklin mfx", false));
-        save(new Protokoll(null, "DCC", "DCC", false));
-        save(new Protokoll(null, "MM", "Märklin Motorola", false));
-        save(new Protokoll(null, "Weiche", "Märklin Motorola Weiche", false));
+        addProtokoll("DELTA", "Märklin DELTA");
+        addProtokoll("FX", "Märklin fx");
+        addProtokoll("MFX", "Märklin mfx");
+        addProtokoll("DCC", "DCC");
+        addProtokoll("MM", "Märklin Motorola");
+        addProtokoll("WEICHE", "Märklin Motorola Weiche");
+    }
+
+    private SonderModell addSonderModell(String name, String bezeichnung) {
+        return save(new SonderModell(null, name, bezeichnung, false));
     }
 
     private void populateSonderModell() {
-        save(new SonderModell(null, "Märklin Magazin", "Märklin Magazin", false));
-        save(new SonderModell(null, "Märklin Insider", "Märklin Insider", false));
-        save(new SonderModell(null, "MHI Exclusiv", "Märklin Handler Initiative", false));
-        save(new SonderModell(null, "MM Jahreswagen", "Märklin Magazin Jahreswagen", false));
-        save(new SonderModell(null, "KC Jahreswagen", "Märklin Kids Club Jahreswagen", false));
-        save(new SonderModell(null, "Einmalige Serien", "Einmalige Serien", false));
-        save(new SonderModell(null, "Museumswagen", "Museumswagen", false));
-        save(new SonderModell(null, "Weihnachtswagen", "Weihnachtswagen", false));
-        save(new SonderModell(null, ApiNames.SONDERMODELL, ApiNames.SONDERMODELL, false));
+        addSonderModell("MM", "Märklin Magazin");
+        addSonderModell("INSIDER", "Märklin Insider");
+        addSonderModell("MHI", "Märklin Handler Initiative");
+        addSonderModell("JAHRES", "Märklin Magazin Jahreswagen");
+        addSonderModell("KC", "Märklin Kids Club Jahreswagen");
+        addSonderModell("EINMALIGE", "Einmalige Serien");
+        addSonderModell("MUSEUM", "Museumswagen");
+        addSonderModell("WEIHNACHT", "Weihnachtswagen");
+        addSonderModell("SONDER", "SonderModell");
+    }
+
+    private Spurweite addSpurweite(String name, String bezeichnung) {
+        return save(new Spurweite(null, name, bezeichnung, false));
     }
 
     private void populateSpurweite() {
-        save(new Spurweite(null, "0", "32mm", false));
-        save(new Spurweite(null, "TT", "12mm", false));
-        save(new Spurweite(null, "H0", "16, 5mm", false));
-        save(new Spurweite(null, "N", "9mm", false));
-        save(new Spurweite(null, "Z", "6, 5mm", false));
-        save(new Spurweite(null, "I", "45mm", false));
-        save(new Spurweite(null, "S", "22, 5mm", false));
-        save(new Spurweite(null, "II", "64mm", false));
-        save(new Spurweite(null, "III", "89mm", false));
-        save(new Spurweite(null, "V", "127mm", false));
-        save(new Spurweite(null, "VII", "184mm", false));
-        save(new Spurweite(null, "X", "260mm", false));
+        addSpurweite("0", "32mm");
+        addSpurweite("TT", "12mm");
+        addSpurweite("H0", "16, 5mm");
+        addSpurweite("N", "9mm");
+        addSpurweite("Z", "6, 5mm");
+        addSpurweite("I", "45mm");
+        addSpurweite("S", "22, 5mm");
+        addSpurweite("II", "64mm");
+        addSpurweite("III", "89mm");
+        addSpurweite("V", "127mm");
+        addSpurweite("VII", "184mm");
+        addSpurweite("X", "260mm");
+    }
+
+    private Steuerung addSteuerung(String name, String bezeichnung) {
+        return save(new Steuerung(null, name, bezeichnung, false));
     }
 
     private void populateSteuerung() {
-        save(new Steuerung(null, "digital", "digital", false));
-        save(new Steuerung(null, "FRU", "Fahrrichtungsumschalter", false));
-        save(new Steuerung(null, "USE", "Umschaltelektronik", false));
+        addSteuerung("DIGITAL", "digital");
+        addSteuerung("FRU", "Fahrrichtungsumschalter");
+        addSteuerung("USE", "Umschaltelektronik");
+    }
+
+    private Vorbild addVorbild(IGattung gattung, IUnterKategorie unterKategorie, IBahnverwaltung bahnverwaltung, String hersteller, LocalDate bauzeit,
+            Integer anzahl, String betreibsNummer, IAntrieb antrieb, IAchsfolg achsfolg, BigDecimal anfahrzugkraft,
+            BigDecimal leistung, BigDecimal dienstgewicht, Integer geschwindigkeit, BigDecimal lange, LocalDate ausserdienst,
+            BigDecimal dmTreibrad, BigDecimal dmLaufradVorn, BigDecimal dmLaufradHinten, Integer zylinder, BigDecimal dmZylinder,
+            BigDecimal kolbenhub, BigDecimal kesselueberdruck, BigDecimal rostflaeche, BigDecimal ueberhitzerflaeche, BigDecimal wasservorrat,
+            BigDecimal verdampfung, Integer fahrmotoren, String motorbauart, BigDecimal leistungsuebertragung, BigDecimal reichweite, BigDecimal kapazitaet, Integer klasse, Integer sitzPlatzeKL1,
+            Integer sitzPlatzeKL2, Integer sitzPlatzeKL3, Integer sitzPlatzeKL4, String aufbauten, Boolean triebzugAnzeigen,
+            Integer triebkoepfe, Integer mittelwagen, Integer sitzPlatzeTZKL1, Integer sitzPlatzeTzKL2,
+            String drehgestellbauart, String anmerkung) {
+        return save(new Vorbild(null, gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit,
+                 anzahl,  betreibsNummer,  antrieb,  achsfolg,  anfahrzugkraft,
+                 leistung,  dienstgewicht,  geschwindigkeit,  lange,  ausserdienst,
+                 dmTreibrad,  dmLaufradVorn,  dmLaufradHinten,  zylinder,  dmZylinder,
+                 kolbenhub,  kesselueberdruck,  rostflaeche,  ueberhitzerflaeche,  wasservorrat,
+                 verdampfung,  fahrmotoren,  motorbauart,  leistungsuebertragung,  reichweite,  kapazitaet,  klasse,  sitzPlatzeKL1,
+                 sitzPlatzeKL2,  sitzPlatzeKL3,  sitzPlatzeKL4,  aufbauten,  triebzugAnzeigen,
+                 triebkoepfe,  mittelwagen,  sitzPlatzeTZKL1,  sitzPlatzeTzKL2,
+                 drehgestellbauart,  anmerkung, false));
     }
 
     private void populateVorbild() {
-        IGattung gattung = findGattung("BR 89.0");
-        IUnterKategorie unterKategorie = findUnterKategorie("Lokomotiv" ,"Dampf");
-        IAntrieb antrieb = findAntreib("Dampf");
+        IGattung gattung = findGattung("BR89.0");
+        IUnterKategorie unterKategorie = findUnterKategorie("LOKOMOTIV" ,"DAMPF");
+        IAntrieb antrieb = findAntreib("DAMPF");
         IBahnverwaltung bahnverwaltung = findBahnverwaltung("DB");
-        IAchsfolg achsfolg = findAchsfolg("C h2t");
+        IAchsfolg achsfolg = findAchsfolg("CH2T");
         String hersteller = "Henschel";
-        Date bauzeit = new Date(1934, 1, 1);
+        LocalDate bauzeit = LocalDate.of(1934, 1, 1);
         Integer anzahl = 10;
         String  betreibsNummer = "89 006"; 
         BigDecimal anfahrzugkraft = null;
@@ -2000,7 +2144,7 @@ public class DBPopulator {
         BigDecimal dienstgewicht = new BigDecimal("46.6");
         Integer geschwindigkeit = 45;
         BigDecimal lange = new BigDecimal("9.6");
-        Date ausserdienst = new Date(1962, 1, 1);
+        LocalDate ausserdienst = LocalDate.of(1962, 1, 1);
         BigDecimal dmTreibrad = new BigDecimal("1.1");
         BigDecimal dmLaufradVorn = null;
         BigDecimal dmLaufradHinten = null;
@@ -2031,7 +2175,7 @@ public class DBPopulator {
         String drehgestellbauart = null;
         String anmerkung = null;
 
-        save(new Vorbild(null, gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit,
+        addVorbild(gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit,
                 anzahl, betreibsNummer, antrieb, achsfolg, anfahrzugkraft,
                 leistung, dienstgewicht, geschwindigkeit, lange, ausserdienst,
                 dmTreibrad, dmLaufradVorn,  dmLaufradHinten,  zylinder,  dmZylinder,
@@ -2039,34 +2183,50 @@ public class DBPopulator {
                 verdampfung, fahrmotoren, motorbauart, leistungsuebertragung,
                 reichweite, kapazitaet, klasse, sitzPlatzeKL1, sitzPlatzeKL2, sitzPlatzeKL3, 
                 sitzPlatzeKL4, aufbauten, triebzugAnzeigen, triebkoepfe, mittelwagen, 
-                sitzPlatzeTZKL1, sitzPlatzeTzKL2, drehgestellbauart, anmerkung, false));
+                sitzPlatzeTZKL1, sitzPlatzeTzKL2, drehgestellbauart, anmerkung);
+    }
+
+    private Wahrung addWahrung(String name, String bezeichnung, Integer decimals) {
+        return save(new Wahrung(null, name, bezeichnung, decimals, false));
     }
 
     private void populateWahrung() {
-        save(new Wahrung(null, "AUD", "Australian Dollar", 2, false));
-        save(new Wahrung(null, "DEM", "Deutschemark", 2, false));
-        save(new Wahrung(null, "EUR", "Euro", 2, false));
-        save(new Wahrung(null, "GBP", "Pound Serling", 2, false));
-        save(new Wahrung(null, "HKD", "Hong Kong Dollar", 2, false));
-        save(new Wahrung(null, "USD", "US Dollar", 2, false));
+        addWahrung("AUD", "Australian Dollar", 2);
+        addWahrung("DEM", "Deutschemark", 2);
+        addWahrung("EUR", "Euro", 2);
+        addWahrung("GBP", "Pound Serling", 2);
+        addWahrung("HKD", "Hong Kong Dollar", 2);
+        addWahrung("USD", "US Dollar", 2);
+    }
+
+    private Zug addZug(String name, String bezeichnung, IZugTyp zugTyp) {
+        return save(new Zug(null, name, bezeichnung, zugTyp, false));
+    }
+
+    private void addConsist(IZug zug, Integer position, IArtikel artikel) {
+        zug.addConsist(new ZugConsist(null, zug, position, artikel, false));
     }
 
     private void populateZug() {
-        IZugTyp zugTyp = findZugTyp("TEE Zug");
+        IZugTyp zugTyp = findZugTyp("TEE");
 
-        Zug zug = save(new Zug(null, "TEE \"Bavaria\"", "TEE \"Bavaria\"", zugTyp, false));
+        Zug zug = addZug("BAVARIA", "TEE „Bavaria“", zugTyp);
 
-        zug.addConsist(new ZugConsist(null, zug, 1, null, false));
+        addConsist(zug, 1, null);
+    }
+
+    private ZugTyp addZugTyp(String name, String bezeichnung) {
+        return save(new ZugTyp(null, name, bezeichnung, false));
     }
 
     private void populateZugTyp() {
-        save(new ZugTyp(null, "Gütterzug", "Gütterzug", false));
-        save(new ZugTyp(null, "Nahvekerszug", "Nahvekerszug", false));
-        save(new ZugTyp(null, "Bahndienstzug", "Bahndienstzug", false));
-        save(new ZugTyp(null, "Interregiozug", "Interregiozug", false));
-        save(new ZugTyp(null, "Intercityzug", "Intercityzug", false));
-        save(new ZugTyp(null, "TEE Zug", "TEE Zug", false));
-        save(new ZugTyp(null, "Militär Zug", "Militär Zug", false));
+        addZugTyp("GUTTERZUG", "Gütterzug");
+        addZugTyp("NAHVEKERS", "Nahvekerszug");
+        addZugTyp("BAHNDIENST", "Bahndienstzug");
+        addZugTyp("IR", "Interregiozug");
+        addZugTyp("IC", "Intercityzug");
+        addZugTyp("TEE", "TEE Zug");
+        addZugTyp("MILITAR", "Militär Zug");
     }
 
     private <E extends IItem<?>> E findByKey(IKey key, Class<E> entityClass) {

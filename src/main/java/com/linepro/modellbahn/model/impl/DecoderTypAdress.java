@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -49,19 +48,21 @@ public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implemen
     private static final long serialVersionUID = -5202372019371973750L;
 
     /** The decoder typ. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoderTyp.notnull}")
     private IDecoderTyp decoderTyp;
 
     /** The index. */
-    @Range(min=1,max=10)
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.index.notnull}")
+    @Range(min=1,max=10, message = "{index.range}")
     private Integer index;
 
     /** The adressTyp. */
-    @NotEmpty
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoderTyp.notnull}")
     private AdressTyp adressTyp;
 
     /** The span. */
-    @Range(min=1,max=32)
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.span.notnull}")
+    @Range(min=1,max=32,message = "{span.range}")
     private Integer span;
 
     /** The werkseinstellung. */

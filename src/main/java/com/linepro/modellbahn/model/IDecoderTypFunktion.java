@@ -34,7 +34,7 @@ public interface IDecoderTypFunktion extends INamedItem<DecoderTypFunktionKey> {
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using= DecoderTypSerializer.class)
-    @ApiModelProperty(name = ApiNames.DECODER_TYP, dataType = "com.linepro.modellbahn.rest.json.serialization.IDecoderTypRef")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.rest.json.serialization.IDecoderTypRef", value = "", required = true)
     IDecoderTyp getDecoderTyp();
 
     /**
@@ -53,6 +53,7 @@ public interface IDecoderTypFunktion extends INamedItem<DecoderTypFunktionKey> {
      */
     @JsonGetter(ApiNames.REIHE)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "", required = true)
     Integer getReihe();
 
     /**
@@ -70,6 +71,7 @@ public interface IDecoderTypFunktion extends INamedItem<DecoderTypFunktionKey> {
      */
     @JsonGetter(ApiNames.PROGRAMMABLE)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "", required = true)
     Boolean getProgrammable();
     
     /**

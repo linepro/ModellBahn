@@ -14,6 +14,6 @@ import io.swagger.annotations.ApiModel;
  */
 @JsonRootName(value = ApiNames.ANTRIEB)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
-@ApiModel(value = ApiNames.ARTIKEL, description = "An article")
+@ApiModel(value = ApiNames.ANTRIEB, description = "Drive method")
 public interface IAntrieb extends INamedItem<NameKey> {
 }

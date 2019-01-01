@@ -17,6 +17,7 @@ import com.linepro.modellbahn.rest.json.resolver.DecoderResolver;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * IDecoderFunktion.
@@ -36,7 +37,8 @@ public interface IDecoderFunktion extends IItem<DecoderFunktionKey> {
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.ID, resolver= DecoderResolver.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= DecoderResolver.class)
+    @ApiModelProperty(dataType = "String", value = "", required = true)
     IDecoder getDecoder();
 
     /**
@@ -50,6 +52,7 @@ public interface IDecoderFunktion extends IItem<DecoderFunktionKey> {
 
     @JsonGetter(ApiNames.REIHE)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "", required = true)
     Integer getReihe();
 
     @JsonSetter(ApiNames.REIHE)
@@ -57,6 +60,7 @@ public interface IDecoderFunktion extends IItem<DecoderFunktionKey> {
 
     @JsonGetter(ApiNames.FUNKTION)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "", required = true)
     String getFunktionStr();
 
     @JsonSetter(ApiNames.FUNKTION)
@@ -85,6 +89,7 @@ public interface IDecoderFunktion extends IItem<DecoderFunktionKey> {
      */
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "", required = true)
     String getBezeichnung();
 
     /**

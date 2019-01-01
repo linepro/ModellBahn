@@ -43,7 +43,7 @@ public class UnterKategorie extends AbstractNamedItem<UnterKategorieKey> impleme
     private static final long serialVersionUID = 5346529720680464691L;
 
     /** The kategorie. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.kategorie.notnull}")
     private IKategorie kategorie;
 
     /**

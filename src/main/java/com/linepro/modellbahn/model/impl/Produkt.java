@@ -3,7 +3,7 @@ package com.linepro.modellbahn.model.impl;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.nio.file.Path;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -18,11 +18,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Positive;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -87,15 +87,15 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     private static final long serialVersionUID = 8098838727023710484L;
 
     /** The hersteller. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.hersteller.notnull}")
     private IHersteller hersteller;
 
     /** The unter kategorie. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.unterKategorie.notnull}")
     private IUnterKategorie unterKategorie;
 
     /** The massstab. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.massstab.notnull}")
     private IMassstab massstab;
 
     /** The spurweite. */
@@ -144,7 +144,8 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     private String betreibsnummer;
 
     /** The bauzeit. */
-    private Date bauzeit;
+    @Past(message = "{com.linepro.modellbahn.validator.constraints.bauzeit.past}")
+    private LocalDate bauzeit;
 
     /** The anleitungen. */
     private Path anleitungen;
@@ -153,7 +154,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     private Path explosionszeichnung;
 
     /** The lange. */
-    //@Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.lange.positive}")
     private BigDecimal lange;
 
     /** The abbildung. */
@@ -168,7 +169,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     public Produkt(Long id, IHersteller hersteller, String bestellNr, String bezeichnung, IUnterKategorie unterKategorie,
             IMassstab massstab, ISpurweite spurweite, IEpoch epoch, IBahnverwaltung bahnverwaltung, IGattung gattung,
-            String betreibsnummer, Date bauzeit, IVorbild vorbild, IAchsfolg achsfolg, String anmerkung,
+            String betreibsnummer, LocalDate bauzeit, IVorbild vorbild, IAchsfolg achsfolg, String anmerkung,
             ISonderModell sondermodel, IAufbau aufbau, ILicht licht, IKupplung kupplung, ISteuerung steuerung,
             IDecoderTyp decoderTyp, IMotorTyp motorTyp, BigDecimal lange, Boolean deleted) {
         super(id, bestellNr, bezeichnung, deleted);
@@ -303,13 +304,12 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
 
     @Override
     @Column(name = DBNames.BAUZEIT)
-    @Temporal(TemporalType.DATE)
-    public Date getBauzeit() {
+    public LocalDate getBauzeit() {
         return bauzeit;
     }
 
     @Override
-    public void setBauzeit(Date bauzeit) {
+    public void setBauzeit(LocalDate bauzeit) {
         this.bauzeit = bauzeit;
     }
 

@@ -35,7 +35,7 @@ public interface IKupplung extends INamedItem<NameKey> {
     @JsonGetter(ApiNames.ABBILDUNG)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using = PathSerializer.class)
-    @ApiModelProperty(name=ApiNames.ABBILDUNG, dataType = "String", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "String", value = "Image URL", accessMode = AccessMode.READ_ONLY)
     Path getAbbildung();
 
     /**

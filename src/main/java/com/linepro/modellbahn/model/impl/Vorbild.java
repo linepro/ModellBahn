@@ -2,7 +2,7 @@ package com.linepro.modellbahn.model.impl;
 
 import java.math.BigDecimal;
 import java.nio.file.Path;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -13,10 +13,9 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
 
 import com.linepro.modellbahn.model.IAchsfolg;
@@ -53,7 +52,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     private IGattung gattung;
 
     /** The unter kategorie. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.unterKategorie.notnull}")
     private IUnterKategorie unterKategorie;
 
     /** The bahnverwaltung */
@@ -63,10 +62,11 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     private String hersteller;
 
     /** The bauzeit. */
-    private Date bauzeit;
+    @Past(message = "{com.linepro.modellbahn.validator.constraints.kaufdatum.past}")
+    private LocalDate bauzeit;
 
     /** The anzahl. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.anzahl.positive}")
     private Integer anzahl;
 
     /** The betreibs nummer. */
@@ -79,109 +79,110 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     private IAchsfolg achsfolg;
 
     /** The anfahrzugkraft. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.anfahrzugkraft.positive}")
     private BigDecimal anfahrzugkraft;
 
     /** The leistung. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.leistung.positive}")
     private BigDecimal leistung;
 
     /** The dienstgewicht. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.dienstgewicht.positive}")
     private BigDecimal dienstgewicht;
 
     /** The geschwindigkeit. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.geschwindigkeit.positive}")
     private Integer geschwindigkeit;
 
     /** The lange. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.lange.positive}")
     private BigDecimal lange;
 
     /** The ausserdienst. */
-    private Date ausserdienst;
+    @Past(message = "{com.linepro.modellbahn.validator.constraints.ausserdienst.past}")
+    private LocalDate ausserdienst;
 
     /** The dm treibrad. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.dmTreibrad.positive}")
     private BigDecimal dmTreibrad;
 
     /** The dm laufrad vorn. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.dmLaufradVorn.positive}")
     private BigDecimal dmLaufradVorn;
 
     /** The dm laufrad hinten. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.dmLaufradHinten.positive}")
     private BigDecimal dmLaufradHinten;
 
     /** The zylinder. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.zylinder.positive}")
     private Integer zylinder;
 
     /** The dm zylinder. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.dmZylinder.positive}")
     private BigDecimal dmZylinder;
 
     /** The kolbenhub. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.kolbenhub.positive}")
     private BigDecimal kolbenhub;
 
     /** The kesselueberdruck. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.kesselueberdruck.positive}")
     private BigDecimal kesselueberdruck;
 
     /** The rostflaeche. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.rostflaeche.positive}")
     private BigDecimal rostflaeche;
 
     /** The ueberhitzerflaeche. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.ueberhitzerflaeche.positive}")
     private BigDecimal ueberhitzerflaeche;
 
     /** The wasservorrat. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.wasservorrat.positive}")
     private BigDecimal wasservorrat;
 
     /** The verdampfung. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.verdampfung.positive}")
     private BigDecimal verdampfung;
 
     /** The fahrmotoren. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.fahrmotoren.positive}")
     private Integer fahrmotoren;
 
     /** The motorbauart. */
     private String motorbauart;
 
     /** The leistungsuebertragung. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.leistungsuebertragung.positive}")
     private BigDecimal leistungsuebertragung;
 
     /** The reichweite. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.reichweite.positive}")
     private BigDecimal reichweite;
 
     /** The kapazitaet. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.kapazitat.positive}")
     private BigDecimal kapazitat;
 
     /** The klasse. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.klasse.positive}")
     private Integer klasse;
 
     /** The sitzplatze KL 1. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.sitzplatzeKL1.positive}")
     private Integer sitzplatzeKL1;
 
     /** The sitzplatze KL 2. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.sitzplatzeKL2.positive}")
     private Integer sitzplatzeKL2;
 
     /** The sitzplatze KL 3. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.sitzplatzeKL3.positive}")
     private Integer sitzplatzeKL3;
 
     /** The sitzplatze KL 4. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.sitzplatzeKL4.positive}")
     private Integer sitzplatzeKL4;
 
     /** The aufbauten. */
@@ -191,19 +192,19 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     private Boolean triebzugAnzeigen;
 
     /** The triebkoepfe. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.triebkoepfe.positive}")
     private Integer triebkoepfe;
 
     /** The mittelwagen. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.mittelwagen.positive}")
     private Integer mittelwagen;
 
     /** The sitzplatze TZKL 1. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.sitzplatzeTZKL1.positive}")
     private Integer sitzplatzeTZKL1;
 
     /** The sitzplatze tz KL 2. */
-    @Positive
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.sitzplatzeTzKL2.positive}")
     private Integer sitzplatzeTzKL2;
 
     /** The drehgestell bauart. */
@@ -269,9 +270,9 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
      * @param deleted the deleted
      * @param anmerkung remarks
      */
-    public Vorbild(Long id, IGattung gattung, IUnterKategorie unterKategorie, IBahnverwaltung bahnverwaltung, String hersteller, Date bauzeit,
+    public Vorbild(Long id, IGattung gattung, IUnterKategorie unterKategorie, IBahnverwaltung bahnverwaltung, String hersteller, LocalDate bauzeit,
             Integer anzahl, String betreibsNummer, IAntrieb antrieb, IAchsfolg achsfolg, BigDecimal anfahrzugkraft,
-            BigDecimal leistung, BigDecimal dienstgewicht, Integer geschwindigkeit, BigDecimal lange, Date ausserdienst,
+            BigDecimal leistung, BigDecimal dienstgewicht, Integer geschwindigkeit, BigDecimal lange, LocalDate ausserdienst,
             BigDecimal dmTreibrad, BigDecimal dmLaufradVorn, BigDecimal dmLaufradHinten, Integer zylinder, BigDecimal dmZylinder,
             BigDecimal kolbenhub, BigDecimal kesselueberdruck, BigDecimal rostflaeche, BigDecimal ueberhitzerflaeche, BigDecimal wasservorrat,
             BigDecimal verdampfung, Integer fahrmotoren, String motorbauart, BigDecimal leistungsuebertragung, BigDecimal reichweite, BigDecimal kapazitaet, Integer klasse, Integer sitzPlatzeKL1,
@@ -374,14 +375,12 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.BAUZEIT)
-    @Temporal(TemporalType.DATE)
-    public Date getBauzeit() {
+    public LocalDate getBauzeit() {
         return bauzeit;
     }
 
     @Override
-    public void setBauzeit(Date bauzeit) {
+    public void setBauzeit(LocalDate bauzeit) {
         this.bauzeit = bauzeit;
     }
 
@@ -488,13 +487,12 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
 
     @Override
     @Column(name = DBNames.AUSSERDIENST)
-    @Temporal(TemporalType.DATE)
-    public Date getAusserdienst() {
+    public LocalDate getAusserdienst() {
         return ausserdienst;
     }
 
     @Override
-    public void setAusserdienst(Date ausserdienst) {
+    public void setAusserdienst(LocalDate ausserdienst) {
         this.ausserdienst = ausserdienst;
     }
 

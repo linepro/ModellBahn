@@ -6,8 +6,10 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.linepro.modellbahn.model.impl.Artikel;
+import com.linepro.modellbahn.model.impl.Produkt;
 import com.linepro.modellbahn.rest.json.LinkUtils;
 import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.util.StaticContentFinder;
 
 public class ArtikelSerializer extends StdSerializer<Artikel> {
 
@@ -27,8 +29,10 @@ public class ArtikelSerializer extends StdSerializer<Artikel> {
     public void serialize(Artikel value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
         gen.writeObjectField(ApiNames.NAMEN, value.getName());
-        gen.writeObjectField(ApiNames.HERSTELLER, value.getProdukt().getHersteller().getName());
-        gen.writeObjectField(ApiNames.BESTELL_NR, value.getProdukt().getName());
+        gen.writeObjectField(ApiNames.BEZEICHNUNG, value.getBezeichnung());
+        gen.writeFieldName(ApiNames.PRODUKT);
+        new ProduktSerializer().serialize((Produkt) value.getProdukt(), gen, serializers);
+        gen.writeObjectField(ApiNames.ABBILDUNG, StaticContentFinder.getStore().urlForPath(value.getAbbildung()));
         utils.writeLinks(ApiNames.LINKS, value.getLinks(), gen, serializers);
         gen.writeEndObject();
     }

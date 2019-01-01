@@ -59,7 +59,7 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     private static final long serialVersionUID = 8503812316290492490L;
 
     /** The hersteller. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.hersteller.notnull}")
     private IHersteller hersteller;
 
     /** The i max. */
@@ -67,7 +67,7 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     private BigDecimal iMax;
 
     /** The protokoll. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.protokoll.notnull}")
     private IProtokoll protokoll;
 
     /** The fahrstufe. */
@@ -75,11 +75,11 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     private Integer fahrstufe;
 
     /** The sound. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.sound.notnull}")
     private Boolean sound;
 
     /** The konfiguration. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.konfiguration.notnull}")
     private Konfiguration konfiguration;
 
     /** The cv. */

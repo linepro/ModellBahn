@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @JsonAutoDetect(fieldVisibility = Visibility.PUBLIC_ONLY)
 class ErrorMessage {
 
@@ -28,6 +30,7 @@ class ErrorMessage {
     }
 
     @JsonGetter("errorCode")
+    @ApiModelProperty(value = "")
     public String getErrorCode() {
         return errorCode;
     }
@@ -38,6 +41,7 @@ class ErrorMessage {
     }
 
     @JsonGetter("userMessage")
+    @ApiModelProperty(value = "")
     public String getUserMessage() {
         return userMessage;
     }
@@ -48,6 +52,7 @@ class ErrorMessage {
     }
 
     @JsonGetter("developerMessage")
+    @ApiModelProperty(value = "")
     public String getDeveloperMessage() {
         return developerMessage;
     }

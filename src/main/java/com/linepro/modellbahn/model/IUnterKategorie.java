@@ -15,6 +15,7 @@ import com.linepro.modellbahn.rest.json.resolver.KategorieResolver;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * IUnterKategorie.
@@ -35,6 +36,7 @@ public interface IUnterKategorie extends INamedItem<UnterKategorieKey> {
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = KategorieResolver.class)
+    @ApiModelProperty(dataType = "String", value = "", required = true)
     IKategorie getKategorie();
 
     /**

@@ -2,7 +2,7 @@ package com.linepro.modellbahn.model;
 
 import java.math.BigDecimal;
 import java.nio.file.Path;
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -29,6 +29,8 @@ import com.linepro.modellbahn.rest.json.resolver.AchsfolgResolver;
 import com.linepro.modellbahn.rest.json.resolver.AntriebResolver;
 import com.linepro.modellbahn.rest.json.resolver.BahnverwaltungResolver;
 import com.linepro.modellbahn.rest.json.resolver.GattungResolver;
+import com.linepro.modellbahn.rest.json.serialization.LocalDateDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.LocalDateSerializer;
 import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
 import com.linepro.modellbahn.rest.json.serialization.UnterKategorieSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -51,6 +53,7 @@ public interface IVorbild extends INamedItem<NameKey> {
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= GattungResolver.class)
+    @ApiModelProperty(dataType = "String", value = "", required = true)
     IGattung getGattung();
     
     @JsonSetter(ApiNames.GATTUNG)
@@ -60,7 +63,7 @@ public interface IVorbild extends INamedItem<NameKey> {
     @JsonGetter(ApiNames.UNTER_KATEGORIE)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(using = UnterKategorieSerializer.class)
-    @ApiModelProperty(name = ApiNames.UNTER_KATEGORIE, dataType = "com.linepro.modellbahn.rest.json.serialization.IUnterKategorieRef")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.rest.json.serialization.IUnterKategorieRef", value = "", required = true)
     IUnterKategorie getUnterKategorie();
     
     @JsonSetter(ApiNames.UNTER_KATEGORIE)
@@ -71,6 +74,7 @@ public interface IVorbild extends INamedItem<NameKey> {
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= BahnverwaltungResolver.class)
+    @ApiModelProperty(dataType = "String", value = "", required = true)
     IBahnverwaltung getBahnverwaltung();
 
     @JsonSetter(ApiNames.BAHNVERWALTUNG)
@@ -79,21 +83,26 @@ public interface IVorbild extends INamedItem<NameKey> {
     
     @JsonGetter(ApiNames.HERSTELLER)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "")
     String getHersteller();
     
     @JsonSetter(ApiNames.HERSTELLER)
     void setHersteller(String hersteller);
 
     @JsonGetter(ApiNames.BAUZEIT)
+    @JsonSerialize(using = LocalDateSerializer.class)
     @JsonView(Views.DropDown.class)
     @JsonFormat(shape=Shape.STRING, pattern= Formats.ISO8601_DATE)
-    Date getBauzeit();
+    @ApiModelProperty(dataType = "java.time.LocalDate", value = "")
+    LocalDate getBauzeit();
     
     @JsonSetter(ApiNames.BAUZEIT)
-    void setBauzeit(Date bauzeit);
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    void setBauzeit(LocalDate bauzeit);
     
     @JsonGetter(ApiNames.ANZAHL)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     Integer getAnzahl();
     
     @JsonSetter(ApiNames.ANZAHL)
@@ -101,6 +110,7 @@ public interface IVorbild extends INamedItem<NameKey> {
     
     @JsonGetter(ApiNames.BETREIBSNUMMER)
     @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "")
     String getBetreibsNummer();
     
     @JsonSetter(ApiNames.BETREIBSNUMMER)
@@ -110,6 +120,7 @@ public interface IVorbild extends INamedItem<NameKey> {
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= AntriebResolver.class)
+    @ApiModelProperty(dataType = "String", value = "", required = true)
     IAntrieb getAntrieb();
     
     @JsonSetter(ApiNames.ANTRIEB)
@@ -120,6 +131,7 @@ public interface IVorbild extends INamedItem<NameKey> {
     @JsonView(Views.Public.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= AchsfolgResolver.class)
+    @ApiModelProperty(dataType = "String", value = "", required = true)
     IAchsfolg getAchsfolg();
     
     @JsonSetter(ApiNames.ACHSFOLG)
@@ -128,6 +140,7 @@ public interface IVorbild extends INamedItem<NameKey> {
     
     @JsonGetter(ApiNames.ANFAHRZUGKRAFT)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     BigDecimal getAnfahrzugkraft();
     
     @JsonSetter(ApiNames.ANFAHRZUGKRAFT)
@@ -135,6 +148,7 @@ public interface IVorbild extends INamedItem<NameKey> {
     
     @JsonGetter(ApiNames.LEISTUNG)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     BigDecimal getLeistung();
     
     @JsonSetter(ApiNames.LEISTUNG)
@@ -142,6 +156,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.DIENSTGEWICHT)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     BigDecimal getDienstgewicht();
 
     @JsonSetter(ApiNames.DIENSTGEWICHT)
@@ -149,6 +164,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.GESCHWINDIGKEIT)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     Integer getGeschwindigkeit();
 
     @JsonSetter(ApiNames.GESCHWINDIGKEIT)
@@ -156,21 +172,26 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.LANGE)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     BigDecimal getLange();
 
     @JsonSetter(ApiNames.LANGE)
     void setLange(BigDecimal lange);
 
     @JsonGetter(ApiNames.AUSSERDIENST)
+    @JsonSerialize(using = LocalDateSerializer.class)
     @JsonView(Views.DropDown.class)
     @JsonFormat(shape=Shape.STRING, pattern=Formats.ISO8601_DATE)
-    Date getAusserdienst();
+    @ApiModelProperty(dataType = "java.time.LocalDate", value = "")
+    LocalDate getAusserdienst();
 
     @JsonSetter(ApiNames.AUSSERDIENST)
-    void setAusserdienst(Date ausserdienst);
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    void setAusserdienst(LocalDate ausserdienst);
 
     @JsonGetter(ApiNames.DMTREIBRAD)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     BigDecimal getDmTreibrad();
 
     @JsonSetter(ApiNames.DMTREIBRAD)
@@ -178,6 +199,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.DMLAUFRADVORN)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     BigDecimal getDmLaufradVorn();
 
     @JsonSetter(ApiNames.DMLAUFRADVORN)
@@ -185,6 +207,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.DMLAUFRADHINTEN)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     BigDecimal getDmLaufradHinten();
 
     @JsonSetter(ApiNames.DMLAUFRADHINTEN)
@@ -192,6 +215,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.ZYLINDER)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     Integer getZylinder();
 
     @JsonSetter(ApiNames.ZYLINDER)
@@ -199,6 +223,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.DMZYLINDER)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     BigDecimal getDmZylinder();
 
     @JsonSetter(ApiNames.DMZYLINDER)
@@ -206,6 +231,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.KOLBENHUB)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     BigDecimal getKolbenhub();
 
     @JsonSetter(ApiNames.KOLBENHUB)
@@ -213,6 +239,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.KESSELUEBERDRUCK)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     BigDecimal getKesselueberdruck();
 
     @JsonSetter(ApiNames.KESSELUEBERDRUCK)
@@ -220,6 +247,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.ROSTFLAECHE)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     BigDecimal getRostflaeche();
 
     @JsonSetter(ApiNames.ROSTFLAECHE)
@@ -227,6 +255,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.UEBERHITZERFLAECHE)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     BigDecimal getUeberhitzerflaeche();
 
     @JsonSetter(ApiNames.UEBERHITZERFLAECHE)
@@ -234,6 +263,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.WASSERVORRAT)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     BigDecimal getWasservorrat();
 
     @JsonSetter(ApiNames.WASSERVORRAT)
@@ -241,6 +271,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.VERDAMPFUNG)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     BigDecimal getVerdampfung();
 
     @JsonSetter(ApiNames.VERDAMPFUNG)
@@ -248,6 +279,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.FAHRMOTOREN)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     Integer getFahrmotoren();
 
     @JsonSetter(ApiNames.FAHRMOTOREN)
@@ -255,6 +287,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.MOTORBAUART)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     String getMotorbauart();
 
     @JsonSetter(ApiNames.MOTORBAUART)
@@ -262,6 +295,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.LEISTUNGSUEBERTRAGUNG)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     BigDecimal getLeistungsuebertragung();
 
     @JsonSetter(ApiNames.LEISTUNGSUEBERTRAGUNG)
@@ -269,6 +303,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.REICHWEITE)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     BigDecimal getReichweite();
 
     @JsonSetter(ApiNames.REICHWEITE)
@@ -276,6 +311,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.KAPAZITAT)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     BigDecimal getKapazitat();
 
     @JsonSetter(ApiNames.KAPAZITAT)
@@ -283,6 +319,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.KLASSE)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     Integer getKlasse();
 
     @JsonSetter(ApiNames.KLASSE)
@@ -290,6 +327,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.SITZPLATZEKL1)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     Integer getSitzPlatzeKL1();
 
     @JsonSetter(ApiNames.SITZPLATZEKL1)
@@ -297,6 +335,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.SITZPLATZEKL2)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     Integer getSitzPlatzeKL2();
 
     @JsonSetter(ApiNames.SITZPLATZEKL2)
@@ -304,6 +343,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.SITZPLATZEKL3)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     Integer getSitzPlatzeKL3();
 
     @JsonSetter(ApiNames.SITZPLATZEKL3)
@@ -311,6 +351,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.SITZPLATZEKL4)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     Integer getSitzPlatzeKL4();
 
     @JsonSetter(ApiNames.SITZPLATZEKL4)
@@ -318,6 +359,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.AUFBAU)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     String getAufbau();
 
     @JsonSetter(ApiNames.AUFBAU)
@@ -325,6 +367,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.TRIEBZUGANZEIGEN)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     Boolean getTriebzugAnzeigen();
 
     @JsonSetter(ApiNames.TRIEBZUGANZEIGEN)
@@ -332,6 +375,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.TRIEBKOEPFE)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     Integer getTriebkoepfe();
 
     @JsonSetter(ApiNames.TRIEBKOEPFE)
@@ -339,6 +383,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.MITTELWAGEN)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     Integer getMittelwagen();
 
     @JsonSetter(ApiNames.MITTELWAGEN)
@@ -346,6 +391,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.SITZPLATZETZKL1)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     Integer getSitzPlatzeTZKL1();
 
     @JsonSetter(ApiNames.SITZPLATZETZKL1)
@@ -353,6 +399,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.SITZPLATZETZKL2)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     Integer getSitzPlatzeTzKL2();
 
     @JsonSetter(ApiNames.SITZPLATZETZKL2)
@@ -360,6 +407,7 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.DREHGESTELLBAUART)
     @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "")
     String getDrehgestellBauart();
 
     @JsonSetter(ApiNames.DREHGESTELLBAUART)
@@ -368,7 +416,7 @@ public interface IVorbild extends INamedItem<NameKey> {
     @JsonGetter(ApiNames.ABBILDUNG)
     @JsonView(Views.Public.class)
     @JsonSerialize(using = PathSerializer.class)
-    @ApiModelProperty(name= ApiNames.ABBILDUNG, dataType = "String", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "String", value = "Image URL", accessMode = AccessMode.READ_ONLY)
     Path getAbbildung();
 
     @JsonIgnore

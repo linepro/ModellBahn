@@ -39,7 +39,7 @@ public class Zug extends AbstractNamedItem<NameKey> implements IZug {
     private static final long serialVersionUID = 7391674754023907975L;
 
     /** The zugTyp. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.zugTyp.notnull}")
     private IZugTyp zugTyp;
 
 	/** The consist. */

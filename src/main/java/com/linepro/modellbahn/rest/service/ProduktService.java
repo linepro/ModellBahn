@@ -2,7 +2,7 @@ package com.linepro.modellbahn.rest.service;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -89,7 +89,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
             @JsonProperty(value=ApiNames.EPOCH) String epochStr,
             @JsonProperty(value=ApiNames.BAHNVERWALTUNG) String bahnverwaltungStr,
             @JsonProperty(value=ApiNames.GATTUNG) String gattungStr,
-            @JsonProperty(value=ApiNames.BAUZEIT) Date bauzeit,
+            @JsonProperty(value=ApiNames.BAUZEIT) LocalDate bauzeit,
             @JsonProperty(value=ApiNames.ACHSFOLG) String achsfolgStr,
             @JsonProperty(value=ApiNames.VORBILD) String vorbildStr,
             @JsonProperty(value=ApiNames.ANMERKUNG) String anmerkung,
@@ -191,7 +191,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
         @ApiImplicitParam( name = ApiNames.BAHNVERWALTUNG, value = "Produkt's railway company", required = false, dataType = "String", paramType = "query"), 
         @ApiImplicitParam( name = ApiNames.GATTUNG, value = "Produkt's rolling stock class", required = false, dataType = "String", paramType = "query"), 
         @ApiImplicitParam( name = ApiNames.BETREIBSNUMMER, value = "Produkt's service number", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BAUZEIT, value = "Produkt's construction date", required = false, dataType = "Date", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BAUZEIT, value = "Produkt's construction date", required = false, dataType = "java.time.LocalDate", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.VORBILD, value = "Produkt's prototype", required = false, dataType = "String", paramType = "query"), 
         @ApiImplicitParam( name = ApiNames.ACHSFOLG, value = "Produkt's axle configuration", required = false, dataType = "String", paramType = "query"), 
         @ApiImplicitParam( name = ApiNames.ANMERKUNG, value = "Produkt's remarks", required = false, dataType = "String", paramType = "query"), 

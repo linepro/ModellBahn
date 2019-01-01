@@ -40,7 +40,7 @@ public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializabl
      */
     @JsonGetter(ApiNames.ID)
     @JsonView(Views.Internal.class)
-    @ApiModelProperty(accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(accessMode = AccessMode.READ_ONLY, required = true)
     Long getId();
 
     /**
@@ -56,8 +56,9 @@ public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializabl
      *
      * @return true if this item is soft deleted otherwise false.
      */
-    @JsonView(Views.Public.class)
     @JsonGetter(ApiNames.DELETED)
+    @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "", required = true)
     Boolean getDeleted();
 
     /**
@@ -85,7 +86,7 @@ public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializabl
     @JsonGetter(ApiNames.LINKS)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(contentUsing= LinkSerializer.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.ILink;", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.ILink;", value = "", accessMode = AccessMode.READ_ONLY)
     Set<Link> getLinks();
 
     @JsonIgnore

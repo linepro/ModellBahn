@@ -45,11 +45,11 @@ public class Decoder extends AbstractNamedItem<NameKey> implements IDecoder {
     private static final long serialVersionUID = 44440227704021482L;
 
     /** The typ. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoderTyp.notnull}")
     private IDecoderTyp decoderTyp;
 
     /** The protokoll. */
-    @NotNull
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.protokoll.notnull}")
     private IProtokoll protokoll;
 
     /** The fahrstufe. */
