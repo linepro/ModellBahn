@@ -144,7 +144,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     private String betreibsnummer;
 
     /** The bauzeit. */
-    @Past(message = "{com.linepro.modellbahn.validator.constraints.bauzeit.past}")
+    //@Past(message = "{com.linepro.modellbahn.validator.constraints.bauzeit.past}")
     private LocalDate bauzeit;
 
     /** The anleitungen. */

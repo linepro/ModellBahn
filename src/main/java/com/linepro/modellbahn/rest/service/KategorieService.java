@@ -8,7 +8,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -21,6 +23,7 @@ import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.impl.Kategorie;
 import com.linepro.modellbahn.model.impl.UnterKategorie;
 import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.json.Views;
@@ -34,6 +37,11 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * KategorieService. CRUD service for Kategorie and UnterKategorie
@@ -50,7 +58,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     public KategorieService() {
         super(Kategorie.class);
 
-        unterKategoriePersister = StaticPersisterFactory.get().createPersister(UnterKategorie.class) ;
+        unterKategoriePersister = StaticPersisterFactory.get().createPersister(UnterKategorie.class);
     }
 
     @JsonCreator
@@ -90,11 +98,13 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Kategorieen by example", response = Kategorie.class, responseContainer = "List")
     @ApiImplicitParams({
-        @ApiImplicitParam( name = ApiNames.ID, value = "Kategorie's id", required = false, dataType = "Long", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Kategorie's name", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Kategorie's description", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Kategorie is deleted", required = false, dataType = "Boolean", paramType = "query")
-})
+        @ApiImplicitParam( name = ApiNames.ID, value = "Kategorie's id", dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Kategorie's name", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Kategorie's description", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "if true include deleted Kategorie ", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "page number for paged queries", dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", dataType = "Integer", paramType = "query"),
+    })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
@@ -255,6 +265,54 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
             getPersister().update(kategorie);
 
             return getResponse(noContent());
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
+    }
+
+    @GET
+    @Path(ApiPaths.UNTER_KATEGORIEN_PATH)
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.DropDown.class)
+    @ApiOperation(value = "Finds UnterKategorieen by kategorie", response = UnterKategorie.class, responseContainer = "List")
+    @ApiImplicitParams({
+            @ApiImplicitParam( name = ApiNames.KATEGORIE, value = "List of Kategorie names", dataType = "[Ljava.lang.String;", paramType = "query"),
+            @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "page number for paged queries", dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", dataType = "Integer", paramType = "query"),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "No Content"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
+    public Response search(@Context UriInfo info, @QueryParam(ApiNames.KATEGORIE) final List<String> kategorien, @QueryParam(ApiNames.PAGE_NUMBER) Integer pageNumber, @QueryParam(ApiNames.PAGE_SIZE) Integer pageSize) {
+        try {
+            Integer maxPage = null;
+            Map<String,List<String>> references = new HashMap<>(1);
+
+            if (kategorien != null && !kategorien.isEmpty()) {
+                references.put(DBNames.KATEGORIE, kategorien);
+            }
+
+            final UnterKategorie template = new UnterKategorie();
+
+            if (pageNumber != null || pageSize != null) {
+                pageNumber = pageNumber != null ? pageNumber : FIRST_PAGE;
+                pageSize = pageSize != null ? pageSize : DEFAULT_PAGE_SIZE;
+
+                Long rowCount = getUnterKategoriePersister().countAll(template, references);
+
+                maxPage = new Double(Math.floor(rowCount.doubleValue() / pageSize.doubleValue())).intValue();
+            }
+
+          List<UnterKategorie> entities = getUnterKategoriePersister().findAll(template, references, pageNumber, pageSize);
+
+            if (entities.isEmpty()) {
+                return getResponse(noContent());
+            }
+
+            List<Link> navigation = getNavLinks(info, pageNumber, pageSize, maxPage);
+
+            return getResponse(ok(), new ArrayList<>(entities), true, true, navigation);
         } catch (Exception e) {
             return getResponse(serverError(e));
         }

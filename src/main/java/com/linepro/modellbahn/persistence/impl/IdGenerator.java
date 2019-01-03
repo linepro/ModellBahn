@@ -24,14 +24,13 @@ public class IdGenerator implements IIdGenerator {
         
         ISessionManager session = getSession();
 
-        String queryString = new StringBuffer("SELECT e.")
-                .append(DBNames.NAME)
-                .append(" FROM ")
-                .append(entityName)
-                .append(" e ORDER BY e.")
-                .append(DBNames.NAME)
-                .append(" DESC")
-                .toString();
+        String queryString = "SELECT e."
+            + DBNames.NAME
+            + " FROM "
+            + entityName
+            + " e ORDER BY e."
+            + DBNames.NAME
+            + " DESC";
 
         @SuppressWarnings("unchecked")
         List<String> names = session.getEntityManager().createQuery(queryString).getResultList();

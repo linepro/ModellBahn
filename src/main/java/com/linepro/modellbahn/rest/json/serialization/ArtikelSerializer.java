@@ -15,7 +15,7 @@ public class ArtikelSerializer extends StdSerializer<Artikel> {
 
     private static final long serialVersionUID = 5732879150462954795L;
 
-    protected LinkUtils utils = new LinkUtils();
+    protected static final LinkUtils utils = new LinkUtils();
 
     public ArtikelSerializer() {
         this(Artikel.class);

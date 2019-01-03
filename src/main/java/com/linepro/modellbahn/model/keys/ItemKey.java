@@ -46,6 +46,7 @@ public class ItemKey extends BaseKey {
             try {
                 value = businessKey.getGetter().invoke(getItem());
             } catch (Exception e) {
+                // acceptable - shouldn't happen.
             }
             builder.append(businessKey.getName(), value);
         }

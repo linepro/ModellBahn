@@ -68,11 +68,13 @@ public class ProtokollService extends AbstractItemService<NameKey, Protokoll> {
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Protokollen by example", response = Protokoll.class, responseContainer = "List")
     @ApiImplicitParams({
-        @ApiImplicitParam( name = ApiNames.ID, value = "Protokoll's id", required = false, dataType = "Long", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Protokoll's name", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Protokoll's description", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Protokoll is deleted", required = false, dataType = "Boolean", paramType = "query")
-})
+        @ApiImplicitParam( name = ApiNames.ID, value = "Protokoll's id", dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Protokoll's name", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Protokoll's description", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "if true include deleted Protokoll ", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "page number for paged queries", dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", dataType = "Integer", paramType = "query"),
+    })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }

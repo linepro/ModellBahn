@@ -68,11 +68,13 @@ public class SonderModellService extends AbstractItemService<NameKey, SonderMode
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds SonderModellen by example", response = SonderModell.class, responseContainer = "List")
     @ApiImplicitParams({
-        @ApiImplicitParam( name = ApiNames.ID, value = "SonderModell's id", required = false, dataType = "Long", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.NAMEN, value = "SonderModell's name", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "SonderModell's description", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if SonderModell is deleted", required = false, dataType = "Boolean", paramType = "query")
-})
+        @ApiImplicitParam( name = ApiNames.ID, value = "SonderModell's id", dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "SonderModell's name", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "SonderModell's description", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "if true include deleted SonderModell ", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "page number for paged queries", dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", dataType = "Integer", paramType = "query"),
+    })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }

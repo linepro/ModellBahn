@@ -117,25 +117,27 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Artikeln by example", response = Artikel.class, responseContainer = "List")
     @ApiImplicitParams({
-        @ApiImplicitParam( name = ApiNames.ID, value = "Artikel's id", required = false, dataType = "Long", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.HERSTELLER, value = "Artikel's manufacturer", required = false, dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BESTELL_NR, value = "Artikel's order number", required = false, dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.KAUFDATUM, value = "Artikel's purchase date", required = false, dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.WAHRUNG, value = "Artikel's currency", required = false, dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.PREIS, value = "Artikel's price", required = false, dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.STUCK, value = "Artikel count", required = false, dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.STEUERUNG, value = "Artikel's control method", required = false, dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.MOTOR_TYP, value = "Artikel's motor type", required = false, dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.LICHT, value = "Artikel's light configuration", required = false, dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.KUPPLUNG, value = "Artikel's coupling configuration", required = false, dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DECODER, value = "Artikel's decoderId", required = false, dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Artikel's name", required = false, dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Artikel's description", required = false, dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.ANMERKUNG, value = "Artikel's remarks", required = false, dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BELADUNG, value = "Artikel's load", required = false, dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.STATUS, value = "Artikel's status", required = false, dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Artikel is deleted", required = false, dataType = "Boolean", paramType = "query")
-        })
+        @ApiImplicitParam( name = ApiNames.ID, value = "Artikel's id", dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.HERSTELLER, value = "Artikel's manufacturer", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BESTELL_NR, value = "Artikel's order number", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.KAUFDATUM, value = "Artikel's purchase date", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.WAHRUNG, value = "Artikel's currency", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PREIS, value = "Artikel's price", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.STUCK, value = "Artikel count", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.STEUERUNG, value = "Artikel's control method", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.MOTOR_TYP, value = "Artikel's motor type", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.LICHT, value = "Artikel's light configuration", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.KUPPLUNG, value = "Artikel's coupling configuration", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DECODER, value = "Artikel's decoderId", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Artikel's name", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Artikel's description", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.ANMERKUNG, value = "Artikel's remarks", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BELADUNG, value = "Artikel's load", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.STATUS, value = "Artikel's status", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "if true include deleted Artikel ", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "page number for paged queries", dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", dataType = "Integer", paramType = "query"),
+    })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }

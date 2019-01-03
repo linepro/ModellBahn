@@ -40,6 +40,7 @@ public class SessionManager implements ISessionManager {
             try {
                 logger.error("begin(" + getTransaction() + "): nested transaction", e);
             } catch (Exception e1) {
+                // Beyond recovery but not fatal.
             }
         }
     }

@@ -72,13 +72,15 @@ public class HerstellerService extends AbstractItemService<NameKey, Hersteller> 
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Herstelleren by example", response = Hersteller.class, responseContainer = "List")
     @ApiImplicitParams({
-        @ApiImplicitParam( name = ApiNames.ID, value = "Hersteller's id", required = false, dataType = "Long", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Hersteller's name", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Hersteller's description", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.TELEFON, value = "Hersteller's telefon", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.URL, value = "Hersteller's url", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Hersteller is deleted", required = false, dataType = "Boolean", paramType = "query")
-})
+        @ApiImplicitParam( name = ApiNames.ID, value = "Hersteller's id", dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Hersteller's name", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Hersteller's description", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.TELEFON, value = "Hersteller's telefon", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.URL, value = "Hersteller's url", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "if true include deleted Hersteller ", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "page number for paged queries", dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", dataType = "Integer", paramType = "query"),
+    })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }

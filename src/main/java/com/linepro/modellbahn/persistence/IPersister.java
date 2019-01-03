@@ -53,6 +53,10 @@ public interface IPersister<E extends IItem<?>> {
 
      Long countAll() throws Exception;
 
+     Long countAll(E template) throws Exception;
+
+     Long countAll(E template, Map<String,List<String>> references) throws Exception;
+
     /**
      * Finds all the entities.
      *
@@ -61,7 +65,7 @@ public interface IPersister<E extends IItem<?>> {
      */
     List<E> findAll() throws Exception;
 
-    List<E> findAll(Integer startPosition, Integer maxSize) throws Exception;
+    List<E> findAll(E template) throws Exception;
 
     /**
      * Finds all entities that have fields with the same values as the template suppled (query by example).
@@ -70,11 +74,9 @@ public interface IPersister<E extends IItem<?>> {
      * @return the list of matching entities
      * @throws Exception there is a DB error
      */
-    Long countAll(E template) throws Exception;
-    
-    List<E> findAll(E template) throws Exception;
-
     List<E> findAll(E template, Integer startPosition, Integer maxSize) throws Exception;
+
+    List<E> findAll(E template, Map<String,List<String>> references, Integer startPosition, Integer maxSize) throws Exception;
 
     /**
      * Updates the specified entity to match the supplied entity.

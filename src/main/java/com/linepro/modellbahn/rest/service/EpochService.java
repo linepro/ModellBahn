@@ -68,11 +68,13 @@ public class EpochService extends AbstractItemService<NameKey, Epoch> {
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Epochen by example", response = Epoch.class, responseContainer = "List")
     @ApiImplicitParams({
-        @ApiImplicitParam( name = ApiNames.ID, value = "Epoch's id", required = false, dataType = "Long", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Epoch's name", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Epoch's description", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Epoch is deleted", required = false, dataType = "Boolean", paramType = "query")
-})
+        @ApiImplicitParam( name = ApiNames.ID, value = "Epoch's id", dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Epoch's name", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Epoch's description", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "if true include deleted Epoch ", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "page number for paged queries", dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", dataType = "Integer", paramType = "query"),
+    })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }

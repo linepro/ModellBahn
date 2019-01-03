@@ -110,7 +110,7 @@ public class Exporter<E extends IItem<?>> {
         } else if (value instanceof INamedItem) {
             return ((INamedItem<?>) value).getName();
         } else if (value instanceof LocalDate) {
-            return DATE_FORMAT.format((LocalDate) value);
+            return DATE_FORMAT.format(value);
         } else if (value instanceof BigDecimal) {
             return ((BigDecimal) value).toPlainString();
         }

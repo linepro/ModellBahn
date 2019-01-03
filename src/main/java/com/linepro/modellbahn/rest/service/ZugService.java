@@ -99,12 +99,14 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Zugen by example", response = Zug.class, responseContainer = "List")
     @ApiImplicitParams({
-        @ApiImplicitParam( name = ApiNames.ID, value = "Zug's id", required = false, dataType = "Long", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.ZUG_TYP, value = "Zug's typ", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Zug's name", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Zug's description", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Zug is deleted", required = false, dataType = "Boolean", paramType = "query")
-    })
+        @ApiImplicitParam( name = ApiNames.ID, value = "Zug's id", dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.ZUG_TYP, value = "Zug's typ", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Zug's name", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Zug's description", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "if true include deleted Zug ", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "page number for paged queries", dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", dataType = "Integer", paramType = "query"),
+        })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }

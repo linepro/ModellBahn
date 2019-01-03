@@ -78,10 +78,12 @@ public class KupplungService extends AbstractItemService<NameKey, Kupplung> {
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Kupplungen by example", response = Kupplung.class, responseContainer = "List")
     @ApiImplicitParams({
-        @ApiImplicitParam( name = ApiNames.ID, value = "Kupplung's id", required = false, dataType = "Long", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Kupplung's name", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Kupplung's description", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Kupplung is deleted", required = false, dataType = "Boolean", paramType = "query")
+        @ApiImplicitParam( name = ApiNames.ID, value = "Kupplung's id", dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Kupplung's name", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Kupplung's description", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "if true include deleted Kupplung ", dataType = "Boolean", paramType = "query"),
+            @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "page number for paged queries", dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", dataType = "Integer", paramType = "query"),
 })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);

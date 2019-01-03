@@ -59,7 +59,7 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     private IProdukt produkt;
 
     /** The Kaufdatum. */
-    @Past(message = "{com.linepro.modellbahn.validator.constraints.kaufdatum.past}")
+    //@Past(message = "{com.linepro.modellbahn.validator.constraints.kaufdatum.past}")
     private LocalDate Kaufdatum;
 
     /** The wahrung. */

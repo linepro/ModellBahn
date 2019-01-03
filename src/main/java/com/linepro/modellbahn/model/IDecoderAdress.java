@@ -29,48 +29,28 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = ApiNames.ADRESS, description = "Decoder address setting.")
 public interface IDecoderAdress extends IItem<DecoderAdressKey>, IAdress {
 
-    /**
-     * Gets the decoder.
-     *
-     * @return the decoder
-     */
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= DecoderResolver.class)
-    @ApiModelProperty(dataType = "String", value = "", required = true)
+    @ApiModelProperty(dataType = "String", value = "The Decoder", required = true)
     IDecoder getDecoder();
 
-    /**
-     * Sets the decoder.
-     *
-     * @param decoder the new decoder
-     */
     @JsonSetter(ApiNames.DECODER)
     @JsonDeserialize(as= Decoder.class)
     void setDecoder(IDecoder decoder);
 
     @JsonGetter(ApiNames.INDEX)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "", required = true)
+    @ApiModelProperty(value = "The 0 based address index (always 0 for single address decoders)", required = true)
     Integer getIndex();
 
     @JsonSetter(ApiNames.INDEX)
     void setIndex(Integer index);
     
-    /**
-     * Sets the typ.
-     *
-     * @param typ the new typ
-     */
     @JsonSetter(ApiNames.ADRESS_TYP)
     void setAdressTyp(AdressTyp typ);
 
-    /**
-     * Sets the adress.
-     *
-     * @param poles the new adress
-     */
     @JsonSetter(ApiNames.ADRESS)
-    void setAdress(Integer poles);
+    void setAdress(Integer adress);
 }

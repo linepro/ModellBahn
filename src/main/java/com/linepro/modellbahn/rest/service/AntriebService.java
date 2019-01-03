@@ -68,10 +68,12 @@ public class AntriebService extends AbstractItemService<NameKey, Antrieb> {
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Antrieben by example", response = Antrieb.class, responseContainer = "List")
     @ApiImplicitParams({
-            @ApiImplicitParam( name = ApiNames.ID, value = "Antrieb's id", required = false, dataType = "Long", paramType = "query"),
-            @ApiImplicitParam( name = ApiNames.NAMEN, value = "Antrieb's name", required = false, dataType = "String", paramType = "query"),
-            @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Antrieb's description", required = false, dataType = "String", paramType = "query"),
-            @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Antrieb is deleted", required = false, dataType = "Boolean", paramType = "query")
+            @ApiImplicitParam( name = ApiNames.ID, value = "Antrieb's id", dataType = "Long", paramType = "query"),
+            @ApiImplicitParam( name = ApiNames.NAMEN, value = "Antrieb's name", dataType = "String", paramType = "query"),
+            @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Antrieb's description", dataType = "String", paramType = "query"),
+            @ApiImplicitParam( name = ApiNames.DELETED, value = "if true include deleted Antrieb ", dataType = "Boolean", paramType = "query"),
+            @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "page number for paged queries", dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", dataType = "Integer", paramType = "query"),
     })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);

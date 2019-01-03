@@ -13,7 +13,7 @@ public class DecoderCVSerializer extends StdSerializer<DecoderCV> {
 
     private static final long serialVersionUID = 3171815401312192228L;
 
-    protected LinkUtils utils = new LinkUtils();
+    protected static final LinkUtils utils = new LinkUtils();
 
     public DecoderCVSerializer() {
         this(DecoderCV.class);

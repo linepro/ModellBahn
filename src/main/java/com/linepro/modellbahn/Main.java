@@ -72,15 +72,14 @@ public class Main {
 
             Injector injector = Guice.createInjector(new ModellBahnModule());
 
-            StringBuilder url = new StringBuilder(protocol)
-                    .append("://")
-                    .append(InetAddress.getLocalHost().getCanonicalHostName())
-                    .append(":")
-                    .append(port)
-                    .append("/")
-                    .append(webRoot);
-
-            URI baseUri = URI.create(url.toString());
+            String url = protocol
+                + "://"
+                + InetAddress.getLocalHost().getCanonicalHostName()
+                + ":"
+                + port
+                + "/"
+                + webRoot;
+            URI baseUri = URI.create(url);
 
             System.out.println("Starting " + baseUri.toString());
 

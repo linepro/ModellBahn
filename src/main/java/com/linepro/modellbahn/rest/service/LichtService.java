@@ -78,10 +78,12 @@ public class LichtService extends AbstractItemService<NameKey, Licht> {
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Lichten by example", response = Licht.class, responseContainer = "List")
     @ApiImplicitParams({
-        @ApiImplicitParam( name = ApiNames.ID, value = "Licht's id", required = false, dataType = "Long", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Licht's name", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Licht's description", required = false, dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "true if Licht is deleted", required = false, dataType = "Boolean", paramType = "query")
+        @ApiImplicitParam( name = ApiNames.ID, value = "Licht's id", dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Licht's name", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Licht's description", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "if true include deleted Licht ", dataType = "Boolean", paramType = "query"),
+            @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "page number for paged queries", dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", dataType = "Integer", paramType = "query"),
 })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);

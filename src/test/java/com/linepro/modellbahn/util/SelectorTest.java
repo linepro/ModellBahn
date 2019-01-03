@@ -6,8 +6,7 @@ import org.testng.annotations.Test;
 import java.lang.reflect.Method;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.assertNotEquals;
 
 public class SelectorTest {
 
@@ -59,11 +58,11 @@ public class SelectorTest {
 
     @Test
     public void testEquals() {
-        assertFalse(selector.equals(null));
-        assertFalse(selector.equals(new Object()));
-        assertTrue(selector.equals(selector));
-        assertTrue(selector.equals(new Selector(NAME, String.class, setter, getter, false)));
-        assertFalse(selector.equals(new Selector(NAME+"!", String.class, setter, getter, true)));
+        assertNotEquals(selector, null);
+        assertNotEquals(new Object(), selector);
+        assertEquals(selector, selector);
+        assertEquals(new Selector(NAME, String.class, setter, getter, false), selector);
+        assertNotEquals(new Selector(NAME + "!", String.class, setter, getter, true), selector);
     }
 
     @Test

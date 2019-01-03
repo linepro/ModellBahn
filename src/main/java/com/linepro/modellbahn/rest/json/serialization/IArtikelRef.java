@@ -8,18 +8,18 @@ import io.swagger.annotations.ApiModelProperty;
 public interface IArtikelRef extends ILinkRef {
 
     @JsonGetter(ApiNames.NAMEN)
-    @ApiModelProperty(value = "", required = true)
+    @ApiModelProperty(value = "The Article's name", required = true)
     String getName();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
-    @ApiModelProperty(value = "")
+    @ApiModelProperty(value = "The Article's description")
     String getBezeichnung();
     
     @JsonGetter(ApiNames.PRODUKT)
-    @ApiModelProperty(value = "", required = true)
+    @ApiModelProperty(value = "The Article's product", required = true)
     IProduktRef getProdukt();
     
     @JsonGetter(ApiNames.ABBILDUNG)
-    @ApiModelProperty(value = "")
+    @ApiModelProperty(value = "The Article's picture")
     String getAbbildung();
 }

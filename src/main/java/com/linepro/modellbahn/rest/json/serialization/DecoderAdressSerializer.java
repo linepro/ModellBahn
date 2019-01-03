@@ -13,7 +13,7 @@ public class DecoderAdressSerializer extends StdSerializer<DecoderAdress> {
 
     private static final long serialVersionUID = 5732879150462954795L;
 
-    protected LinkUtils utils = new LinkUtils();
+    protected static final LinkUtils utils = new LinkUtils();
 
     public DecoderAdressSerializer() {
         this(DecoderAdress.class);

@@ -109,11 +109,11 @@ import io.swagger.annotations.ApiResponses;
  */
 public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> extends AbstractService {
 
-    private static final List<String> PAGE_FIELDS = Arrays.asList(ApiNames.PAGE_NUMBER, ApiNames.PAGE_SIZE);
+    protected static final List<String> PAGE_FIELDS = Arrays.asList(ApiNames.PAGE_NUMBER, ApiNames.PAGE_SIZE);
 
-    private static final Integer FIRST_PAGE = 0;
+    protected static final Integer FIRST_PAGE = 0;
 
-    private static final Integer DEFAULT_PAGE_SIZE = 30;
+    protected static final Integer DEFAULT_PAGE_SIZE = 30;
 
     /** The persister. */
     private final IPersister<E> persister;
@@ -318,17 +318,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
                 return getResponse(noContent());
             }
 
-            List<Link> navigation = new ArrayList<>();
-
-            if (pageNumber != null) {
-                if (pageNumber > 0) {
-                    navigation.add(getPageLink(info, pageNumber-1, pageSize, ApiNames.PREVIOUS));
-                }
-
-                if (pageNumber < maxPage) {
-                    navigation.add(getPageLink(info, pageNumber+1, pageSize, ApiNames.NEXT));
-                }
-            }
+            List<Link> navigation = getNavLinks(info, pageNumber, pageSize, maxPage);
 
             return getResponse(ok(), entities, true, true, navigation);
         } catch (Exception e) {
@@ -336,7 +326,23 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         }
     }
 
-    private Link getPageLink(UriInfo info, Integer pageNumber, Integer pageSize, String rel) {
+    protected List<Link> getNavLinks(UriInfo info, Integer pageNumber, Integer pageSize, Integer maxPage) {
+      List<Link> navigation = new ArrayList<>();
+
+      if (pageNumber != null) {
+        if (pageNumber > 0) {
+          navigation.add(getPageLink(info, pageNumber-1, pageSize, ApiNames.PREVIOUS));
+        }
+
+        if (pageNumber < maxPage) {
+          navigation.add(getPageLink(info, pageNumber+1, pageSize, ApiNames.NEXT));
+        }
+      }
+
+      return navigation;
+    }
+
+    protected Link getPageLink(UriInfo info, Integer pageNumber, Integer pageSize, String rel) {
         UriBuilder uri = info.getAbsolutePathBuilder();
         // copy any non paging query parameters
         info.getQueryParameters().forEach((k, v) -> { if (!PAGE_FIELDS.contains(k)) { v.forEach(x -> uri.queryParam(k, x)); } });
@@ -433,7 +439,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return getResponse(builder.entity(entity));
     }
 
-    private Response getResponse(ResponseBuilder builder, List<IItem<?>> entities, boolean update, boolean delete, List<Link> navigation) {
+    protected Response getResponse(ResponseBuilder builder, List<IItem<?>> entities, boolean update, boolean delete, List<Link> navigation) {
         for (IItem<?> entity : entities) {
             entity.addLinks(getServiceURI(), update, delete);
         }
@@ -451,7 +457,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return builder.links(getHomeLink(), getApiLink(), getWADLLink()).build();
     }
 
-    private URI getServiceURI() {
+    protected URI getServiceURI() {
         if (serviceURI == null) {
             serviceURI = getUriInfo().getBaseUriBuilder().path(getClass()).build();
         }
@@ -459,7 +465,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return serviceURI;
     }
 
-    private Link getApiLink() {
+    protected Link getApiLink() {
         if (apiLink == null) {
             apiLink = Link.fromUri(UriBuilder.fromUri(getUriInfo().getBaseUri() + ApiPaths.API_ROOT).build()).rel(ApiNames.API).type(GET).build();
         }
