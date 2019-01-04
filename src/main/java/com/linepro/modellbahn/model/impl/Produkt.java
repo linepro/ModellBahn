@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -143,7 +144,7 @@ public class Produkt extends AbstractNamedItem<ProduktKey> implements IProdukt {
     private String betreibsnummer;
 
     /** The bauzeit. */
-    //@Past(message = "{com.linepro.modellbahn.validator.constraints.bauzeit.past}")
+    @Past(message = "{com.linepro.modellbahn.validator.constraints.bauzeit.past}")
     private LocalDate bauzeit;
 
     /** The anleitungen. */

@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
 
 import com.linepro.modellbahn.model.IAchsfolg;
@@ -61,7 +62,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     private String hersteller;
 
     /** The bauzeit. */
-    //@Past(message = "{com.linepro.modellbahn.validator.constraints.kaufdatum.past}")
+    @Past(message = "{com.linepro.modellbahn.validator.constraints.kaufdatum.past}")
     private LocalDate bauzeit;
 
     /** The anzahl. */
@@ -98,7 +99,7 @@ public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
     private BigDecimal lange;
 
     /** The ausserdienst. */
-    //@Past(message = "{com.linepro.modellbahn.validator.constraints.ausserdienst.past}")
+    @Past(message = "{com.linepro.modellbahn.validator.constraints.ausserdienst.past}")
     private LocalDate ausserdienst;
 
     /** The dm treibrad. */

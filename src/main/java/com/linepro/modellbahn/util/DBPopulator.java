@@ -216,13 +216,13 @@ public class DBPopulator {
     }
 
     private Artikel addArtikel(IProdukt produkt, LocalDate kaufdatum, IWahrung wahrung, BigDecimal preis, Integer stuck,
-            ISteuerung steuerung, IMotorTyp motorTyp, ILicht licht, IKupplung kupplung, IDecoder decoder,
-            String artikelNr, String bezeichnung, String anmerkung,
-            String beladung, Status status) {
+            ISteuerung steuerung, IMotorTyp motorTyp, ILicht licht, IKupplung kupplung, IDecoder decoder, String bezeichnung,
+            String anmerkung, String beladung, Status status) {
+
         return save(new Artikel(null, produkt,  kaufdatum,  wahrung,  preis,  stuck,
-                 steuerung,  motorTyp,  licht,  kupplung,  decoder,
-                 artikelNr,  bezeichnung,  anmerkung,
-                 beladung,  status, false));
+            steuerung,  motorTyp,  licht,  kupplung,  decoder,
+            persisterFactory.createPersister(Artikel.class).getNextId(),  bezeichnung,  anmerkung,
+            beladung,  status, false));
     }
 
     private void populateArtikel() {
@@ -232,17 +232,10 @@ public class DBPopulator {
         IMotorTyp motorTyp = findMotorTyp("SFCM");
         ILicht licht = findLicht("L1V");
         IKupplung kupplung = findKupplung("RELEX");
-        IDecoder decoder = null;
-        LocalDate kaufdatum = null;
-        BigDecimal preis = null;
-        String artikelNr = null;
-        String bezeichnung = null;
-        String anmerkung = null;
-        
-        addArtikel(produkt, kaufdatum, wahrung, preis, 1,
-                steuerung, motorTyp, licht, kupplung, decoder,
-                artikelNr, bezeichnung, anmerkung,
-                null, Status.GEKAUFT);
+
+        addArtikel(produkt, LocalDate.of(1967,1,1), wahrung, BigDecimal.valueOf(100.0), 1,
+                steuerung, motorTyp, licht, kupplung, null,
+                "", null, null, Status.GEKAUFT);
     }
 
     private Aufbau addAufbau(String namen, String bezeichnung) {
@@ -2035,21 +2028,13 @@ public class DBPopulator {
         IGattung gattung = findGattung("BR89.0");
         IVorbild vorbild = findVorbild("BR89.0");
         IAchsfolg achsfolg = findAchsfolg("CH2T");
-        ISonderModell sondermodel = null;
         IAufbau aufbau = findAufbau("LK");
-        IDecoderTyp decoderTyp = null;
 
-        String bezeichnung = null;
-        String betreibsnummer = "89 028";
-        LocalDate bauzeit = LocalDate.of(1907,1,1);
-        String anmerkung = null;
-        BigDecimal lange = BigDecimal.valueOf(11.0);
-
-        addProdukt(hersteller, "3000", bezeichnung, unterKategorie,
-                massstab, spurweite, epoch, bahnverwaltung, gattung,
-                betreibsnummer, bauzeit, vorbild, achsfolg, anmerkung,
-                sondermodel, aufbau, licht, kupplung, steuerung,
-                decoderTyp, motorTyp, lange);
+        addProdukt(hersteller, "3000", "BR 89.0", unterKategorie, massstab,
+            spurweite, epoch, bahnverwaltung, gattung, "89 028",
+            LocalDate.of(1907,1,1), vorbild, achsfolg, null,
+            null, aufbau, licht, kupplung, steuerung,
+            null, motorTyp, BigDecimal.valueOf(11.0));
     }
 
     private Protokoll addProtokoll(String name, String bezeichnung) {

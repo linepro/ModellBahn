@@ -21,7 +21,7 @@
   const decoderen = new ItemGrid(10, fetchUrl("decoderenType"), "decoderen", columns, true, EditMode.UPDATE, undefined, "decoder.html");
 
   async function init() {
-    await HERSTELLER_DROP.init();
+    await DECODER_TYP_DROP.init();
     await PROTOKOLL_DROP.init();
     await decoderen.init();
     about();

@@ -2,14 +2,17 @@
 "use strict";
 
 class Option {
-  constructor(display, values, image) {
+  constructor(display, value) {
     this.display = display;
-    this.values = values;
-    this.image = image;
+    this.values = value;
   }
 
   getDisplay() {
     return this.display;
+  }
+
+  addValue(value) {
+    this.values.push(value);
   }
 
   getValues() {
@@ -19,13 +22,17 @@ class Option {
   getImage() {
     return this.image;
   }
+
+  setImage(image) {
+    this.image = image;
+  }
 }
 
 class DropDown {
-  constructor(apiQuery, columns, imageColumn) {
+  constructor(apiQuery, keyExtractor, optionExtractor) {
     this.apiQuery = apiQuery;
-    this.columns = columns;
-    this.imageColumn = imageColumn;
+    this.keyExtractor = keyExtractor;
+    this.optionExtractor = optionExtractor;
     this.length = 10;
     this.options = [];
   }
@@ -33,19 +40,21 @@ class DropDown {
   loadOptions(jsonData) {
     let entities = jsonData.entities ? jsonData.entities : jsonData;
     let dropDown = this;
-    
-    let menu = entities.reduce((choices, entity) => {
-      let displayExtractor = dropDown.columns[0][0];
-      let display = displayExtractor(entity);
-      let valueExtractor = dropDown.columns[0][1];
-      let value = valueExtractor(entity);
-      dropDown.length = Math.max(display.length, dropDown.length);
-      (choices[display] = choices[display] || []).push(value);
-      return choices;
-      }, {});
 
-    Object.keys(menu).forEach((display) => {
-      dropDown.options.push(new Option(display, menu[display]));
+    entities.forEach(entity => {
+      let display = dropDown.keyExtractor(entity);
+      let option = dropDown.optionExtractor(entity);
+      dropDown.length = Math.max(display.length, dropDown.length);
+
+      let current = dropDown.options.find(o => o.getDisplay() === display);
+
+      if (!current) {
+        dropDown.options.push(option);
+      } else {
+        option.getValues().forEach(o => {
+          current.addValue(0)
+        });
+      }
     });
   }
 

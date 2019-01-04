@@ -24,142 +24,151 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
- * AbstractNamedItem.
- * Base class for items with a name (business key) and a description.
- * @author   $Author$
- * @version  $Id$
+ * AbstractNamedItem. Base class for items with a name (business key) and a description.
+ *
+ * @author $Author$
+ * @version $Id$
  */
 @MappedSuperclass
-public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> implements INamedItem<K>, Serializable {
+public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> implements
+    INamedItem<K>, Serializable {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -278823660682127691L;
+  /**
+   * The Constant serialVersionUID.
+   */
+  private static final long serialVersionUID = -278823660682127691L;
 
-    protected static final String[] BUSINESS_KEY = new String[] { ApiNames.NAMEN };
-    
-    protected static final List<Character> URL_SPECIAL_CHARS = Arrays.asList(':', '/', '@', '[', ']', '?', '&', '=', '+');
+  protected static final String[] BUSINESS_KEY = new String[]{ApiNames.NAMEN};
 
-    /** The name. */
-    @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.message.notempty}")
-    private String name;
+  protected static final List<Character> URL_SPECIAL_CHARS = Arrays
+      .asList(':', '/', '@', '[', ']', '?', '&', '=', '+');
 
-	/** The bezeichnung. */
-    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notnull}")
-	private String bezeichnung;
+  /**
+   * The name.
+   */
+  @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.name.notempty}")
+  private String name;
 
-	/**
-	 * Instantiates a new abstract named item.
-	 */
-	public AbstractNamedItem() {
-	}
+  /**
+   * The bezeichnung.
+   */
+  @NotNull(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notnull}")
+  private String bezeichnung;
 
-    /**
-     * Convienience method for lookups
-     * @param name the item name
-     */
-    public AbstractNamedItem(String name) {
-        super(null, null);
+  /**
+   * Instantiates a new abstract named item.
+   */
+  public AbstractNamedItem() {
+  }
 
-        setName(name);
+  /**
+   * Convienience method for lookups
+   *
+   * @param name the item name
+   */
+  public AbstractNamedItem(String name) {
+    super(null, null);
+
+    setName(name);
+  }
+
+  /**
+   * Instantiates a new abstract named item.
+   *
+   * @param id the id
+   * @param name the name
+   * @param bezeichnung the bezeichnung
+   * @param deleted the deleted
+   */
+  public AbstractNamedItem(Long id, String name, String bezeichnung, Boolean deleted) {
+    super(id, deleted);
+
+    setName(name);
+    setBezeichnung(bezeichnung);
+  }
+
+  @Override
+  @BusinessKey
+  @Column(name = DBNames.NAME, unique = true, length = 50)
+  public String getName() {
+    return name;
+  }
+
+  @Override
+  public void setName(String name) {
+    this.name = (name != null ? name.toUpperCase() : name);
+  }
+
+  @Override
+  @Column(name = DBNames.BEZEICHNUNG, length = 100)
+  public String getBezeichnung() {
+    return bezeichnung;
+  }
+
+  @Override
+  public void setBezeichnung(String bezeichnung) {
+    this.bezeichnung = bezeichnung;
+  }
+
+  @Override
+  @Transient
+  public String getLinkId() {
+    return getName().codePoints()
+        .mapToObj(this::encodeChar)
+        .collect(Collectors.joining(""));
+  }
+
+  private String encodeChar(int ch) {
+    return isUrlSpecialChar(ch) ?
+        Character.toString((char) ch) :
+        String.format("%%%02x", ch);
+  }
+
+  private boolean isUrlSpecialChar(int ch) {
+    return URL_SPECIAL_CHARS.contains((char) ch);
+  }
+
+  @Override
+  public int compareTo(IItem<?> other) {
+    if (other instanceof AbstractNamedItem) {
+      return new CompareToBuilder()
+          .append(getName(), ((AbstractNamedItem<?>) other).getName())
+          .toComparison();
     }
 
-	/**
-	 * Instantiates a new abstract named item.
-	 *
-	 * @param id the id
-	 * @param name the name
-	 * @param bezeichnung the bezeichnung
-	 * @param deleted the deleted
-	 */
-    public AbstractNamedItem(Long id, String name, String bezeichnung, Boolean deleted) {
-		super(id, deleted);
-		
-		setName(name);
-		setBezeichnung(bezeichnung);
-	}
+    return super.compareTo(other);
+  }
 
-    @Override
-	@BusinessKey
-    @Column(name=DBNames.NAME, unique=true, length=50)
-	public String getName() {
-		return name;
-	}
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder()
+        .append(getName())
+        .hashCode();
+  }
 
-	@Override
-    public void setName(String name) {
-		this.name = name.toUpperCase();
-	}
-
-	@Override
-    @Column(name=DBNames.BEZEICHNUNG, length=100)
-	public String getBezeichnung() {
-		return bezeichnung;
-	}
-
-	@Override
-    public void setBezeichnung(String bezeichnung) {
-		this.bezeichnung = bezeichnung;
-	}
-
-    @Override
-    @Transient
-    public String getLinkId() {
-        return getName().codePoints()
-                .mapToObj(this::encodeChar)
-                .collect(Collectors.joining(""));
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
     }
 
-    private String encodeChar(int ch) {
-        return isUrlSpecialChar(ch) ? 
-                   Character.toString((char) ch) : 
-                   String.format("%%%02x", ch);
+    if (!(obj instanceof AbstractNamedItem)) {
+      return false;
     }
 
-    private boolean isUrlSpecialChar(int ch) {
-        return URL_SPECIAL_CHARS.contains((char) ch); 
-    }
+    AbstractNamedItem<?> other = (AbstractNamedItem<?>) obj;
 
-    @Override
-    public int compareTo(IItem<?> other) {
-        if (other instanceof AbstractNamedItem) {
-            return new CompareToBuilder()
-                    .append(getName(), ((AbstractNamedItem<?>) other).getName())
-                    .toComparison();
-        }
-        
-        return super.compareTo(other);
-    }
+    return new EqualsBuilder()
+        .append(getName(), other.getName())
+        .isEquals();
+  }
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .append(getName())
-                .hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (!(obj instanceof AbstractNamedItem)) {
-            return false;
-        }
-
-        AbstractNamedItem<?> other = (AbstractNamedItem<?>) obj;
-
-        return new EqualsBuilder()
-                .append(getName(), other.getName())
-                .isEquals();
-    }
-
-    @Override
-	public String toString() {
-		return new ToStringBuilder(this)
-				.appendSuper(super.toString())
-				.append(ApiNames.NAMEN, getName())
-				.append(ApiNames.BEZEICHNUNG, getBezeichnung())
-				.toString();
-	}
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this)
+        .appendSuper(super.toString())
+        .append(ApiNames.NAMEN, getName())
+        .append(ApiNames.BEZEICHNUNG, getBezeichnung())
+        .toString();
+  }
 }

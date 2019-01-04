@@ -47,7 +47,8 @@ const removeChildren = (node) => {
 };
 
 const reportError = (error) => {
-  alert("error: " + error.toString());
+  console.log(error);
+  //alert("error: " + error.toString());
 };
 
 const addButton = (cell, lnk, action) => {
