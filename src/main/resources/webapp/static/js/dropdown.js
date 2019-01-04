@@ -2,29 +2,31 @@
 "use strict";
 
 class Option {
-  constructor(display, value) {
+  constructor(display, value, image) {
     this.display = display;
-    this.values = value;
+    this.value = value;
+    this.image = image;
+    this.options = [];
   }
 
   getDisplay() {
     return this.display;
   }
 
-  addValue(value) {
-    this.values.push(value);
-  }
-
-  getValues() {
-    return this.values;
+  getValue(value) {
+    return this.value;
   }
 
   getImage() {
     return this.image;
   }
 
-  setImage(image) {
-    this.image = image;
+  addOption(value) {
+    this.options.push(value);
+  }
+
+  getOptions() {
+    return this.options;
   }
 }
 
@@ -42,17 +44,18 @@ class DropDown {
     let dropDown = this;
 
     entities.forEach(entity => {
-      let display = dropDown.keyExtractor(entity);
+      let value = dropDown.keyExtractor(entity);
       let option = dropDown.optionExtractor(entity);
-      dropDown.length = Math.max(display.length, dropDown.length);
 
-      let current = dropDown.options.find(o => o.getDisplay() === display);
+      dropDown.length = Math.max(option.getDisplay().length, dropDown.length);
+
+      let current = dropDown.options.find(o => o.getValue() === value);
 
       if (!current) {
         dropDown.options.push(option);
       } else {
-        option.getValues().forEach(o => {
-          current.addValue(0)
+        option.getOptions().forEach(o => {
+          current.addOption(o)
         });
       }
     });

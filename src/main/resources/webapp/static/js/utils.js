@@ -396,7 +396,7 @@ class SelectColumn extends Column {
     dropDown.options.forEach(option => {
       let opt = document.createElement("option");
       opt.text = option.display;
-      opt.value = option.values;
+      opt.value = option.value;
 
       select.add(opt);
 
