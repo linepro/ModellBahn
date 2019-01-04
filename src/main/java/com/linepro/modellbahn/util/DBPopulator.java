@@ -2016,6 +2016,7 @@ public class DBPopulator {
                  decoderTyp,  motorTyp,  lange, false));
     }
 
+    @SuppressWarnings("unused")
     private void addTeil(IProdukt produkt, IProdukt teil, Integer anzahl) {
         produkt.addTeil(new ProduktTeil(null, produkt, teil, anzahl, false));
     }
@@ -2110,23 +2111,23 @@ public class DBPopulator {
     }
 
     private Vorbild addVorbild(IGattung gattung, IUnterKategorie unterKategorie, IBahnverwaltung bahnverwaltung, String hersteller, LocalDate bauzeit,
-            Integer anzahl, String betreibsNummer, IAntrieb antrieb, IAchsfolg achsfolg, BigDecimal anfahrzugkraft,
+            Integer anzahl, String betreibsNummer, IAntrieb antrieb, IAchsfolg achsfolg, String bezeichnung, BigDecimal anfahrzugkraft,
             BigDecimal leistung, BigDecimal dienstgewicht, Integer geschwindigkeit, BigDecimal lange, LocalDate ausserdienst,
             BigDecimal dmTreibrad, BigDecimal dmLaufradVorn, BigDecimal dmLaufradHinten, Integer zylinder, BigDecimal dmZylinder,
             BigDecimal kolbenhub, BigDecimal kesselueberdruck, BigDecimal rostflaeche, BigDecimal ueberhitzerflaeche, BigDecimal wasservorrat,
             BigDecimal verdampfung, Integer fahrmotoren, String motorbauart, BigDecimal leistungsuebertragung, BigDecimal reichweite, BigDecimal kapazitaet, Integer klasse, Integer sitzPlatzeKL1,
             Integer sitzPlatzeKL2, Integer sitzPlatzeKL3, Integer sitzPlatzeKL4, String aufbauten, Boolean triebzugAnzeigen,
             Integer triebkoepfe, Integer mittelwagen, Integer sitzPlatzeTZKL1, Integer sitzPlatzeTzKL2,
-            String drehgestellbauart, String anmerkung) {
+            String drehgestellbauart) {
         return save(new Vorbild(null, gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit,
-                 anzahl,  betreibsNummer,  antrieb,  achsfolg,  anfahrzugkraft,
+                 anzahl,  betreibsNummer,  antrieb,  achsfolg,  bezeichnung,  anfahrzugkraft,
                  leistung,  dienstgewicht,  geschwindigkeit,  lange,  ausserdienst,
                  dmTreibrad,  dmLaufradVorn,  dmLaufradHinten,  zylinder,  dmZylinder,
                  kolbenhub,  kesselueberdruck,  rostflaeche,  ueberhitzerflaeche,  wasservorrat,
                  verdampfung,  fahrmotoren,  motorbauart,  leistungsuebertragung,  reichweite,  kapazitaet,  klasse,  sitzPlatzeKL1,
                  sitzPlatzeKL2,  sitzPlatzeKL3,  sitzPlatzeKL4,  aufbauten,  triebzugAnzeigen,
                  triebkoepfe,  mittelwagen,  sitzPlatzeTZKL1,  sitzPlatzeTzKL2,
-                 drehgestellbauart,  anmerkung, false));
+                 drehgestellbauart, false));
     }
 
     private void populateVorbild() {
@@ -2173,17 +2174,16 @@ public class DBPopulator {
         Integer sitzPlatzeTZKL1 = null;
         Integer sitzPlatzeTzKL2 = null;
         String drehgestellbauart = null;
-        String anmerkung = null;
-
+ 
         addVorbild(gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit,
-                anzahl, betreibsNummer, antrieb, achsfolg, anfahrzugkraft,
+                anzahl, betreibsNummer, antrieb, achsfolg, "BR 89.0", anfahrzugkraft,
                 leistung, dienstgewicht, geschwindigkeit, lange, ausserdienst,
                 dmTreibrad, dmLaufradVorn,  dmLaufradHinten,  zylinder,  dmZylinder,
                 kolbenhub, kesselueberdruck, rostflaeche, ueberhitzerflaeche, wasservorrat,
                 verdampfung, fahrmotoren, motorbauart, leistungsuebertragung,
                 reichweite, kapazitaet, klasse, sitzPlatzeKL1, sitzPlatzeKL2, sitzPlatzeKL3, 
                 sitzPlatzeKL4, aufbauten, triebzugAnzeigen, triebkoepfe, mittelwagen, 
-                sitzPlatzeTZKL1, sitzPlatzeTzKL2, drehgestellbauart, anmerkung);
+                sitzPlatzeTZKL1, sitzPlatzeTzKL2, drehgestellbauart);
     }
 
     private Wahrung addWahrung(String name, String bezeichnung, Integer decimals) {

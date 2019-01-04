@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -39,11 +40,11 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
     protected static final List<Character> URL_SPECIAL_CHARS = Arrays.asList(':', '/', '@', '[', ']', '?', '&', '=', '+');
 
     /** The name. */
-    @NotEmpty
+    @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.message.notempty}")
     private String name;
 
 	/** The bezeichnung. */
-    @NotEmpty
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notnull}")
 	private String bezeichnung;
 
 	/**
@@ -86,7 +87,7 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
 
 	@Override
     public void setName(String name) {
-		this.name = name;
+		this.name = name.toUpperCase();
 	}
 
 	@Override

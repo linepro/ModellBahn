@@ -52,7 +52,7 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
     private IDecoderTypFunktion funktion;
 
 	/** The wert. */
-    @NotEmpty
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.wert.notnull}")
 	private String bezeichnung;
 
     private String funktionStr;

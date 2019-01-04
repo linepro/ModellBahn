@@ -23,7 +23,6 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.linepro.modellbahn.persistence.DBNames;
 import org.hibernate.collection.spi.PersistentCollection;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
@@ -34,6 +33,7 @@ import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.keys.IdKey;
 import com.linepro.modellbahn.model.keys.ItemKey;
 import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.IIdGenerator;
 import com.linepro.modellbahn.persistence.IKey;
 import com.linepro.modellbahn.persistence.IPersister;
@@ -497,7 +497,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
      * @throws Exception the exception
      */
     private List<Predicate> getConditions(CriteriaBuilder builder, Root<E> root, E template, Map<String, Selector> selectors,
-                                          Map<String,List<String>> references, CriteriaQuery criteria) throws Exception {
+                                          Map<String,List<String>> references, CriteriaQuery<?> criteria) throws Exception {
         List<Predicate> predicates = new ArrayList<>();
 
         if (template != null) {

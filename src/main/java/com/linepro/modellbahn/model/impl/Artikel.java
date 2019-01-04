@@ -59,8 +59,8 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     private IProdukt produkt;
 
     /** The Kaufdatum. */
-    //@Past(message = "{com.linepro.modellbahn.validator.constraints.kaufdatum.past}")
-    private LocalDate Kaufdatum;
+    @Past(message = "{com.linepro.modellbahn.validator.constraints.kaufdatum.past}")
+    private LocalDate kaufdatum;
 
     /** The wahrung. */
     private IWahrung wahrung;
@@ -165,12 +165,12 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
     @Override
     @Column(name = DBNames.KAUFDATUM)
     public LocalDate getKaufdatum() {
-        return Kaufdatum;
+        return kaufdatum;
     }
 
     @Override
     public void setKaufdatum(LocalDate kaufdatum) {
-        Kaufdatum = kaufdatum;
+        this.kaufdatum = kaufdatum;
     }
 
     @Override
