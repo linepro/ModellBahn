@@ -1,4 +1,4 @@
-package com.linepro.modellbahn.rest.json.serialization;
+package com.linepro.modellbahn.model.refs;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.linepro.modellbahn.rest.util.ApiNames;

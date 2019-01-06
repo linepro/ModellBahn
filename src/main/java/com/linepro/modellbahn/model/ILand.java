@@ -1,17 +1,16 @@
 package com.linepro.modellbahn.model;
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.impl.Wahrung;
 import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.model.refs.INamedItemRef;
+import com.linepro.modellbahn.model.refs.IWahrungRef;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.rest.json.resolver.WahrungResolver;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
@@ -26,7 +25,7 @@ import io.swagger.annotations.ApiModelProperty;
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.WAHRUNG, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED,
         ApiNames.LINKS })
 @ApiModel(value = ApiNames.LAND, description = "Country.")
-public interface ILand extends INamedItem<NameKey> {
+public interface ILand extends INamedItem<NameKey>, INamedItemRef {
 
     /**
      * Gets the wahrung.
@@ -35,9 +34,8 @@ public interface ILand extends INamedItem<NameKey> {
      */
     @JsonGetter(ApiNames.WAHRUNG)
     @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= WahrungResolver.class)
-    @ApiModelProperty(dataType = "String", value = "")
+    @JsonSerialize(as= IWahrungRef.class)
+    @ApiModelProperty(value = "", required = true)
     IWahrung getWahrung();
 
     /**

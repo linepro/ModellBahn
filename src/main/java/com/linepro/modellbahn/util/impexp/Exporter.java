@@ -23,9 +23,9 @@ import org.slf4j.Logger;
 import com.google.inject.assistedinject.Assisted;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IItem;
-import com.linepro.modellbahn.model.INamedItem;
 import com.linepro.modellbahn.model.IProdukt;
 import com.linepro.modellbahn.model.IUnterKategorie;
+import com.linepro.modellbahn.model.refs.INamedItemRef;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.util.Selector;
@@ -102,13 +102,13 @@ public class Exporter<E extends IItem<?>> {
         if (value == null) {
             return null;
         } else if (value instanceof IProdukt) {
-            return ((IProdukt) value).getName();
+            return ((IProdukt) value).getBestellNr();
         } else if (value instanceof IDecoderTyp) {
-            return ((IDecoderTyp) value).getName();
+            return ((IDecoderTyp) value).getBestellNr();
         } else if (value instanceof IUnterKategorie) {
             return ((IUnterKategorie) value).getName();
-        } else if (value instanceof INamedItem) {
-            return ((INamedItem<?>) value).getName();
+        } else if (value instanceof INamedItemRef) {
+            return ((INamedItemRef) value).getName();
         } else if (value instanceof LocalDate) {
             return DATE_FORMAT.format(value);
         } else if (value instanceof BigDecimal) {

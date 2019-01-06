@@ -8,14 +8,11 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.impl.Achsfolg;
@@ -35,28 +32,15 @@ import com.linepro.modellbahn.model.impl.Steuerung;
 import com.linepro.modellbahn.model.impl.UnterKategorie;
 import com.linepro.modellbahn.model.impl.Vorbild;
 import com.linepro.modellbahn.model.keys.ProduktKey;
+import com.linepro.modellbahn.model.refs.IDecoderTypRef;
+import com.linepro.modellbahn.model.refs.INamedItemRef;
+import com.linepro.modellbahn.model.refs.IProduktRef;
+import com.linepro.modellbahn.model.refs.IProduktTeilRef;
 import com.linepro.modellbahn.rest.json.Formats;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.rest.json.resolver.AchsfolgResolver;
-import com.linepro.modellbahn.rest.json.resolver.AufbauResolver;
-import com.linepro.modellbahn.rest.json.resolver.BahnverwaltungResolver;
-import com.linepro.modellbahn.rest.json.resolver.EpochResolver;
-import com.linepro.modellbahn.rest.json.resolver.GattungResolver;
-import com.linepro.modellbahn.rest.json.resolver.HerstellerResolver;
-import com.linepro.modellbahn.rest.json.resolver.KupplungResolver;
-import com.linepro.modellbahn.rest.json.resolver.LichtResolver;
-import com.linepro.modellbahn.rest.json.resolver.MassstabResolver;
-import com.linepro.modellbahn.rest.json.resolver.MotorTypResolver;
-import com.linepro.modellbahn.rest.json.resolver.SonderModellResolver;
-import com.linepro.modellbahn.rest.json.resolver.SpurweiteResolver;
-import com.linepro.modellbahn.rest.json.resolver.SteuerungResolver;
-import com.linepro.modellbahn.rest.json.resolver.VorbildResolver;
-import com.linepro.modellbahn.rest.json.serialization.DecoderTypSerializer;
 import com.linepro.modellbahn.rest.json.serialization.LocalDateDeserializer;
 import com.linepro.modellbahn.rest.json.serialization.LocalDateSerializer;
 import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
-import com.linepro.modellbahn.rest.json.serialization.ProduktTeilSerializer;
-import com.linepro.modellbahn.rest.json.serialization.UnterKategorieSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
@@ -77,19 +61,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
         ApiNames.MOTOR_TYP, ApiNames.LANGE, ApiNames.ANLEITUNGEN, ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.ABBILDUNG,
         ApiNames.TEILEN, ApiNames.DELETED, ApiNames.LINKS })
 @ApiModel(value = ApiNames.PRODUKT, description = "Product - template for article.")
-public interface IProdukt extends INamedItem<ProduktKey> {
-
-    /**
-     * Gets the hersteller.
-     *
-     * @return the hersteller
-     */
-    @JsonGetter(ApiNames.HERSTELLER)
-    @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = HerstellerResolver.class)
-    @ApiModelProperty(dataType = "String", value = "", required = true)
-    IHersteller getHersteller();
+public interface IProdukt extends INamedItem<ProduktKey>, IProduktRef {
 
     /**
      * Sets the hersteller.
@@ -101,11 +73,6 @@ public interface IProdukt extends INamedItem<ProduktKey> {
     @JsonDeserialize(as = Hersteller.class)
     void setHersteller(IHersteller hersteller);
 
-    @JsonGetter(ApiNames.BESTELL_NR)
-    @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "", required = true)
-    String getName();
-
     @JsonSetter(ApiNames.BESTELL_NR)
     void setName(String bestellNr);
 
@@ -116,8 +83,7 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.UNTER_KATEGORIE)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(using = UnterKategorieSerializer.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.rest.json.serialization.IUnterKategorieRef", value = "", required = true)
+    @JsonSerialize(as = IUnterKategorie.class)
     IUnterKategorie getUnterKategorie();
 
     /**
@@ -137,9 +103,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.MASSSTAB)
     @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = MassstabResolver.class)
-    @ApiModelProperty(dataType = "String", value = "", required = true)
+    @JsonSerialize(as= INamedItemRef.class)
+    @ApiModelProperty(value = "")
     IMassstab getMassstab();
 
     /**
@@ -159,9 +124,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.SPURWEITE)
     @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = SpurweiteResolver.class)
-    @ApiModelProperty(dataType = "String", value = "")
+    @JsonSerialize(as= INamedItemRef.class)
+    @ApiModelProperty(value = "")
     ISpurweite getSpurweite();
 
     /**
@@ -180,9 +144,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.EPOCH)
     @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = EpochResolver.class)
-    @ApiModelProperty(dataType = "String", value = "")
+    @JsonSerialize(as= INamedItemRef.class)
+    @ApiModelProperty(value = "")
     IEpoch getEpoch();
 
     /**
@@ -202,9 +165,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.BAHNVERWALTUNG)
     @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = BahnverwaltungResolver.class)
-    @ApiModelProperty(dataType = "String", value = "")
+    @JsonSerialize(as= INamedItemRef.class)
+    @ApiModelProperty(value = "")
     IBahnverwaltung getBahnverwaltung();
 
     /**
@@ -224,9 +186,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.GATTUNG)
     @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = GattungResolver.class)
-    @ApiModelProperty(dataType = "String", value = "")
+    @JsonSerialize(as= INamedItemRef.class)
+    @ApiModelProperty(value = "")
     IGattung getGattung();
 
     /**
@@ -287,9 +248,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.VORBILD)
     @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = VorbildResolver.class)
-    @ApiModelProperty(dataType = "String", value = "")
+    @JsonSerialize(as= INamedItemRef.class)
+    @ApiModelProperty(value = "")
     IVorbild getVorbild();
 
     /**
@@ -309,9 +269,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.ACHSFOLG)
     @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = AchsfolgResolver.class)
-    @ApiModelProperty(dataType = "String", value = "")
+    @JsonSerialize(as= INamedItemRef.class)
+    @ApiModelProperty(value = "")
     IAchsfolg getAchsfolg();
 
     /**
@@ -331,9 +290,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.SONDERMODELL)
     @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = SonderModellResolver.class)
-    @ApiModelProperty(dataType = "String", value = "")
+    @JsonSerialize(as= INamedItemRef.class)
+    @ApiModelProperty(value = "")
     ISonderModell getSondermodell();
 
     /**
@@ -353,9 +311,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.AUFBAU)
     @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = AufbauResolver.class)
-    @ApiModelProperty(dataType = "String", value = "")
+    @JsonSerialize(as= INamedItemRef.class)
+    @ApiModelProperty(value = "")
     IAufbau getAufbau();
 
     /**
@@ -375,9 +332,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.LICHT)
     @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = LichtResolver.class)
-    @ApiModelProperty(dataType = "String", value = "")
+    @JsonSerialize(as= INamedItemRef.class)
+    @ApiModelProperty(value = "")
     ILicht getLicht();
 
     /**
@@ -397,9 +353,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.KUPPLUNG)
     @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = KupplungResolver.class)
-    @ApiModelProperty(dataType = "String", value = "")
+    @JsonSerialize(as= INamedItemRef.class)
+    @ApiModelProperty(value = "")
     IKupplung getKupplung();
 
     /**
@@ -419,9 +374,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.STEUERUNG)
     @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = SteuerungResolver.class)
-    @ApiModelProperty(dataType = "String", value = "")
+    @JsonSerialize(as= INamedItemRef.class)
+    @ApiModelProperty(value = "")
     ISteuerung getSteuerung();
 
     /**
@@ -441,8 +395,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(using = DecoderTypSerializer.class) 
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.rest.json.serialization.IDecoderTypRef", value = "")
+    @JsonSerialize(as = IDecoderTypRef.class) 
+    @ApiModelProperty(value = "The decoder type")
     IDecoderTyp getDecoderTyp();
 
     /**
@@ -462,9 +416,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.MOTOR_TYP)
     @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver = MotorTypResolver.class)
-    @ApiModelProperty(dataType = "String", value = "")
+    @JsonSerialize(as= INamedItemRef.class)
+    @ApiModelProperty(value = "The motor type")
     IMotorTyp getMotorTyp();
 
     /**
@@ -476,16 +429,6 @@ public interface IProdukt extends INamedItem<ProduktKey> {
     @JsonSetter(ApiNames.MOTOR_TYP)
     @JsonDeserialize(as = MotorTyp.class)
     void setMotorTyp(IMotorTyp motorTyp);
-
-    /**
-     * Gets the lange.
-     *
-     * @return the lange
-     */
-    @JsonGetter(ApiNames.LANGE)
-    @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "")
-    BigDecimal getLange();
 
     /**
      * Sets the lange.
@@ -556,17 +499,6 @@ public interface IProdukt extends INamedItem<ProduktKey> {
     void setExplosionszeichnung(Path explosionszeichnung);
 
     /**
-     * Gets the abbildung.
-     *
-     * @return the abbildung
-     */
-    @JsonGetter(ApiNames.ABBILDUNG)
-    @JsonView(Views.Public.class)
-    @JsonSerialize(using = PathSerializer.class)
-    @ApiModelProperty(dataType = "String", value = "Image URL", accessMode = AccessMode.READ_ONLY)
-    Path getAbbildung();
-
-    /**
      * Sets the abbildung.
      *
      * @param abbildung
@@ -582,8 +514,8 @@ public interface IProdukt extends INamedItem<ProduktKey> {
      */
     @JsonGetter(ApiNames.TEILEN)
     @JsonView(Views.Public.class)
-    @JsonSerialize(contentUsing = ProduktTeilSerializer.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.IProduktTeilRef;", value = "Product components", accessMode = AccessMode.READ_ONLY)
+    @JsonSerialize(contentAs = IProduktTeilRef.class)
+    @ApiModelProperty(value = "Product components", accessMode = AccessMode.READ_ONLY)
     Set<IProduktTeil> getTeilen();
 
     /**

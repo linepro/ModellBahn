@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidatorContext;
 import com.linepro.modellbahn.model.IAdress;
 import com.linepro.modellbahn.model.util.AdressTyp;
 
-public class DigitalAdressValidator implements ConstraintValidator<DELTAAdress, IAdress> {
+public class DigitalAdressValidator implements ConstraintValidator<DigitalAdress, IAdress> {
 
     @Override
     public boolean isValid(IAdress value, ConstraintValidatorContext context) {

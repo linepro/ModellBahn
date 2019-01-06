@@ -5,7 +5,6 @@ import java.net.URI;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -34,7 +34,7 @@ import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.IProtokoll;
 import com.linepro.modellbahn.model.keys.DecoderTypKey;
-import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.model.util.Konfiguration;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
@@ -51,9 +51,8 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Entity(name = DBNames.DECODER_TYP)
 @Table(name = DBNames.DECODER_TYP, indexes = { @Index(columnList = DBNames.HERSTELLER_ID),
         @Index(columnList = DBNames.PROTOKOLL_ID) }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { DBNames.HERSTELLER_ID, DBNames.NAME }) })
-@AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME))
-public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDecoderTyp {
+                @UniqueConstraint(columnNames = { DBNames.HERSTELLER_ID, DBNames.BESTELL_NR }) })
+public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderTyp {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8503812316290492490L;
@@ -61,6 +60,12 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     /** The hersteller. */
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.hersteller.notnull}")
     private IHersteller hersteller;
+
+    @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.bestellNr.notempty}")
+    private String bestellNr;
+
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notnull}")
+    private String bezeichnung;
 
     /** The i max. */
     //@IMax
@@ -100,9 +105,11 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
 
     public DecoderTyp(Long id, IHersteller hersteller, IProtokoll protokoll, String name, String bezeichnung,
             Boolean sound, Konfiguration konfiguration, Boolean deleted) {
-        super(id, name, bezeichnung, deleted);
+        super(id, deleted);
 
         setHersteller(hersteller);
+        setBestellNr(bestellNr);
+        setBezeichnung(bezeichnung);
         setProtokoll(protokoll);
         setSound(sound);
         setKonfiguration(konfiguration);
@@ -123,13 +130,23 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
 
     @Override
     @BusinessKey
-    public String getName() {
-        return super.getName();
+    public String getBestellNr() {
+        return bestellNr;
     }
 
     @Override
-    public void setName(String name) {
-        super.setName(name);
+    public void setBestellNr(String bestellNr) {
+        this.bestellNr = bestellNr;
+    }
+
+    @Column(name = DBNames.BEZEICHNUNG, length = 100)
+    public String getBezeichnung() {
+      return bezeichnung;
+    }
+
+    @Override
+    public void setBezeichnung(String bezeichnung) {
+      this.bezeichnung = bezeichnung;
     }
 
     @Override
@@ -289,7 +306,7 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
         if (other instanceof DecoderTyp) {
             return new CompareToBuilder()
                     .append(getHersteller(), ((DecoderTyp) other).getHersteller())
-                    .append(getName(), ((DecoderTyp) other).getName())
+                    .append(getBestellNr(), ((DecoderTyp) other).getBestellNr())
                     .toComparison();
         }
         
@@ -300,7 +317,7 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
     public int hashCode() {
         return new HashCodeBuilder()
                 .append(getHersteller())
-                .append(getName())
+                .append(getBestellNr())
                 .hashCode();
     }
 
@@ -318,7 +335,7 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
         
         return new EqualsBuilder()
                 .append(getHersteller(), other.getHersteller())
-                .append(getName(), other.getName())
+                .append(getBestellNr(), other.getBestellNr())
                 .isEquals();
     }
 
@@ -327,6 +344,8 @@ public class DecoderTyp extends AbstractNamedItem<DecoderTypKey> implements IDec
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
                 .append(ApiNames.HERSTELLER, getHersteller())
+                .append(ApiNames.BESTELL_NR, getBestellNr())
+                .append(ApiNames.BEZEICHNUNG, getBezeichnung())
                 .append(ApiNames.PROTOKOLL, getProtokoll())
                 .append(ApiNames.I_MAX, getiMax())
                 .append(ApiNames.FAHRSTUFE, getFahrstufe())

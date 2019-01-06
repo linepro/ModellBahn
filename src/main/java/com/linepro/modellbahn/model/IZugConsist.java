@@ -1,21 +1,19 @@
 package com.linepro.modellbahn.model;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.impl.Artikel;
 import com.linepro.modellbahn.model.impl.Zug;
 import com.linepro.modellbahn.model.keys.ZugConsistKey;
+import com.linepro.modellbahn.model.refs.IArtikelRef;
+import com.linepro.modellbahn.model.refs.INamedItemRef;
+import com.linepro.modellbahn.model.refs.IZugConsistRef;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.rest.json.resolver.ZugResolver;
-import com.linepro.modellbahn.rest.json.serialization.ArtikelSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
@@ -30,7 +28,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
 @JsonRootName(value = ApiNames.CONSIST)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.ZUG, ApiNames.POSITION, ApiNames.ARTIKEL, ApiNames.DELETED, ApiNames.LINKS })
 @ApiModel(value = ApiNames.CONSIST, description = "Rolling stock by poisition in a train.")
-public interface IZugConsist extends IItem<ZugConsistKey> {
+public interface IZugConsist extends IItem<ZugConsistKey>, IZugConsistRef {
 
     /**
      * Gets the zug.
@@ -39,9 +37,8 @@ public interface IZugConsist extends IItem<ZugConsistKey> {
      */
     @JsonGetter(ApiNames.ZUG)
     @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= ZugResolver.class)
-    @ApiModelProperty(dataType = "String", value = "", accessMode = AccessMode.READ_ONLY, required = true)
+    @JsonSerialize(as= INamedItemRef.class)
+    @ApiModelProperty(value = "", accessMode = AccessMode.READ_ONLY, required = true)
     IZug getZug();
 
     /**
@@ -77,9 +74,9 @@ public interface IZugConsist extends IItem<ZugConsistKey> {
      * @return the artikel
      */
     @JsonGetter(ApiNames.ARTIKEL)
-    @JsonSerialize(contentUsing = ArtikelSerializer.class)
+    @JsonSerialize(contentAs = IArtikelRef.class)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.rest.json.serialization.IArtikelRef", value = "", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(value = "", accessMode = AccessMode.READ_ONLY, required = true)
     IArtikel getArtikel();
 
     /**

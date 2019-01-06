@@ -2,9 +2,6 @@ package com.linepro.modellbahn.model;
 
 import java.io.Serializable;
 import java.net.URI;
-import java.util.Set;
-
-import javax.ws.rs.core.Link;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
@@ -12,10 +9,9 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.linepro.modellbahn.model.refs.ILinkRef;
 import com.linepro.modellbahn.persistence.IKey;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.rest.json.serialization.LinkSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -31,7 +27,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
  * NB. All properties are objects because they may need to be null for template matching.
  */
 @JsonAutoDetect(fieldVisibility = Visibility.PUBLIC_ONLY)
-public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializable {
+public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializable, ILinkRef {
 
     /**
      * Gets the primary key of this item
@@ -77,17 +73,6 @@ public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializabl
      * @param delete add a delete link
      */
     IItem<?> addLinks(URI root, boolean update, boolean delete);
-
-    /**
-     * Gets the HATEOAS links to this item for Json serialization.
-     * 
-     * @return the HATEOAS links
-     */
-    @JsonGetter(ApiNames.LINKS)
-    @JsonView(Views.DropDown.class)
-    @JsonSerialize(contentUsing= LinkSerializer.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.ILink;", value = "", accessMode = AccessMode.READ_ONLY)
-    Set<Link> getLinks();
 
     @JsonIgnore
     String getParentId();

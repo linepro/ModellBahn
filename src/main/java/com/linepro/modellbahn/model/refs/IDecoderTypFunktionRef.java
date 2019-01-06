@@ -1,4 +1,4 @@
-package com.linepro.modellbahn.rest.json.serialization;
+package com.linepro.modellbahn.model.refs;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -13,7 +13,7 @@ public interface IDecoderTypFunktionRef extends ILinkRef {
 
     @JsonGetter(ApiNames.FUNKTION)
     @ApiModelProperty(value = "", required = true)
-    String getFunktion();
+    String getName();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @ApiModelProperty(value = "", required = true)

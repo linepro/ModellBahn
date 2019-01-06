@@ -108,8 +108,8 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Finds an Artikel by id", response = Artikel.class)
-    public Response get(@PathParam(ApiPaths.ID_PARAM_NAME) Long name) {
-        return super.get(name);
+    public Response get(@PathParam(ApiPaths.ID_PARAM_NAME) Long id) {
+        return super.get(id);
     }
 
     @GET

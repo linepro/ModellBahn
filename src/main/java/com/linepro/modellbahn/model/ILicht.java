@@ -2,20 +2,15 @@ package com.linepro.modellbahn.model;
 
 import java.nio.file.Path;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.keys.NameKey;
-import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
+import com.linepro.modellbahn.model.refs.INamedItemRef;
+import com.linepro.modellbahn.model.refs.IPictureRef;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * ILicht.
@@ -25,19 +20,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
 @JsonRootName(value = ApiNames.LICHT)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
 @ApiModel(value = ApiNames.LICHT, description = "Light configuration - Märklin coding.")
-public interface ILicht extends INamedItem<NameKey> {
-
-    /**
-     * Gets the abbildung.
-     *
-     * @return the abbildung
-     */
-    @JsonGetter(ApiNames.ABBILDUNG)
-    @JsonView(Views.DropDown.class)
-    @JsonSerialize(using = PathSerializer.class)
-    @ApiModelProperty(dataType = "String", value = "Image URL", accessMode = AccessMode.READ_ONLY)
-    Path getAbbildung();
-
+public interface ILicht extends INamedItem<NameKey>, INamedItemRef, IPictureRef {
     /**
      * Sets the abbildung.
      *

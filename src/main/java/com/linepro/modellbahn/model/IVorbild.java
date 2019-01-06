@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -23,16 +22,14 @@ import com.linepro.modellbahn.model.impl.Bahnverwaltung;
 import com.linepro.modellbahn.model.impl.Gattung;
 import com.linepro.modellbahn.model.impl.UnterKategorie;
 import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.model.refs.INamedItemRef;
+import com.linepro.modellbahn.model.refs.IPictureRef;
 import com.linepro.modellbahn.rest.json.Formats;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.rest.json.resolver.AchsfolgResolver;
 import com.linepro.modellbahn.rest.json.resolver.AntriebResolver;
-import com.linepro.modellbahn.rest.json.resolver.BahnverwaltungResolver;
-import com.linepro.modellbahn.rest.json.resolver.GattungResolver;
 import com.linepro.modellbahn.rest.json.serialization.LocalDateDeserializer;
 import com.linepro.modellbahn.rest.json.serialization.LocalDateSerializer;
 import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
-import com.linepro.modellbahn.rest.json.serialization.UnterKategorieSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
@@ -47,13 +44,12 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
 @JsonRootName(value = ApiNames.VORBILD)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.GATTUNG, ApiNames.UNTER_KATEGORIE, ApiNames.BAHNVERWALTUNG, ApiNames.HERSTELLER, ApiNames.BAUZEIT, ApiNames.ANZAHL, ApiNames.BETREIBSNUMMER, ApiNames.ANTRIEB, ApiNames.ACHSFOLG, ApiNames.ANFAHRZUGKRAFT, ApiNames.LEISTUNG, ApiNames.DIENSTGEWICHT, ApiNames.GESCHWINDIGKEIT, ApiNames.LANGE, ApiNames.AUSSERDIENST, ApiNames.DMTREIBRAD, ApiNames.DMLAUFRADVORN, ApiNames.DMLAUFRADHINTEN, ApiNames.ZYLINDER, ApiNames.DMZYLINDER, ApiNames.KOLBENHUB, ApiNames.KESSELUEBERDRUCK, ApiNames.ROSTFLAECHE, ApiNames.UEBERHITZERFLAECHE, ApiNames.WASSERVORRAT, ApiNames.VERDAMPFUNG, ApiNames.STEUERUNG, ApiNames.FAHRMOTOREN, ApiNames.MOTORBAUART, ApiNames.LEISTUNGSUEBERTRAGUNG, ApiNames.REICHWEITE, ApiNames.KAPAZITAT, ApiNames.KLASSE, ApiNames.SITZPLATZEKL1, ApiNames.SITZPLATZEKL2, ApiNames.SITZPLATZEKL3, ApiNames.SITZPLATZEKL4, ApiNames.AUFBAU, ApiNames.TRIEBZUGANZEIGEN, ApiNames.TRIEBKOEPFE, ApiNames.MITTELWAGEN, ApiNames.SITZPLATZETZKL1, ApiNames.SITZPLATZETZKL2, ApiNames.DREHGESTELLBAUART, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS})
 @ApiModel(value = ApiNames.VORBILD, description = "Prototype.")
-public interface IVorbild extends INamedItem<NameKey> {
+public interface IVorbild extends INamedItem<NameKey>, INamedItemRef, IPictureRef {
     
     @JsonGetter(ApiNames.GATTUNG)
     @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= GattungResolver.class)
-    @ApiModelProperty(dataType = "String", value = "", required = true)
+    @JsonSerialize(as= INamedItemRef.class)
+    @ApiModelProperty(value = "", required = true)
     IGattung getGattung();
     
     @JsonSetter(ApiNames.GATTUNG)
@@ -62,8 +58,8 @@ public interface IVorbild extends INamedItem<NameKey> {
     
     @JsonGetter(ApiNames.UNTER_KATEGORIE)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(using = UnterKategorieSerializer.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.rest.json.serialization.IUnterKategorieRef", value = "", required = true)
+    @JsonSerialize(as = IUnterKategorie.class)
+    @ApiModelProperty(value = "", required = true)
     IUnterKategorie getUnterKategorie();
     
     @JsonSetter(ApiNames.UNTER_KATEGORIE)
@@ -72,9 +68,8 @@ public interface IVorbild extends INamedItem<NameKey> {
 
     @JsonGetter(ApiNames.BAHNVERWALTUNG)
     @JsonView(Views.DropDown.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= BahnverwaltungResolver.class)
-    @ApiModelProperty(dataType = "String", value = "", required = true)
+    @JsonSerialize(as= INamedItemRef.class)
+    @ApiModelProperty(value = "", required = true)
     IBahnverwaltung getBahnverwaltung();
 
     @JsonSetter(ApiNames.BAHNVERWALTUNG)
@@ -118,7 +113,7 @@ public interface IVorbild extends INamedItem<NameKey> {
     
     @JsonGetter(ApiNames.ANTRIEB)
     @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
+    @JsonSerialize(as= INamedItemRef.class)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= AntriebResolver.class)
     @ApiModelProperty(dataType = "String", value = "", required = true)
     IAntrieb getAntrieb();
@@ -129,9 +124,8 @@ public interface IVorbild extends INamedItem<NameKey> {
     
     @JsonGetter(ApiNames.ACHSFOLG)
     @JsonView(Views.Public.class)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = ApiNames.NAMEN, resolver= AchsfolgResolver.class)
-    @ApiModelProperty(dataType = "String", value = "", required = true)
+    @JsonSerialize(as= INamedItemRef.class)
+    @ApiModelProperty(value = "", required = true)
     IAchsfolg getAchsfolg();
     
     @JsonSetter(ApiNames.ACHSFOLG)

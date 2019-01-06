@@ -1,7 +1,7 @@
 package com.linepro.modellbahn.rest.util;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.linepro.modellbahn.model.IDescribedEnum;
+import com.linepro.modellbahn.model.refs.IDescribedEnum;
 
 import io.swagger.annotations.ApiModelProperty;
 

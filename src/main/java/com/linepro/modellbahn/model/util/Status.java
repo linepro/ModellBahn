@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.model.util;
 
-import com.linepro.modellbahn.model.IDescribedEnum;
+import com.linepro.modellbahn.model.refs.IDescribedEnum;
 
 /**
  * Status.

@@ -15,6 +15,7 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
@@ -27,10 +28,11 @@ import com.linepro.modellbahn.model.IMotorTyp;
 import com.linepro.modellbahn.model.IProdukt;
 import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.IWahrung;
-import com.linepro.modellbahn.model.keys.NameKey;
-import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.model.keys.IdKey;
+import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.model.util.Status;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.persistence.util.PathConverter;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
@@ -49,10 +51,14 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.LICHT_ID),
         @Index(columnList = DBNames.KUPPLUNG_ID),
         @Index(columnList = DBNames.DECODER_ID) })
-public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
+public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8652624782179487496L;
+
+    /** The abbildung. */
+    @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.artikelId.notempty}")
+    private String artikelId;
 
     /** The produkt. */
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.produkt.notnull}")
@@ -64,14 +70,6 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
 
     /** The wahrung. */
     private IWahrung wahrung;
-
-    /** The preis. */
-    private BigDecimal preis;
-
-    /** The stuck. */
-    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.stuck.null}")
-    @Positive(message = "{com.linepro.modellbahn.validator.constraints.stuck.positive}")
-    private Integer stuck;
 
     /** The steuerung. */
     private ISteuerung steuerung;
@@ -87,6 +85,20 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
 
     /** The decoder. */
     private IDecoder decoder;
+
+    /**
+     * The bezeichnung.
+     */
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notnull}")
+    private String bezeichnung;
+
+    /** The preis. */
+    private BigDecimal preis;
+
+    /** The stuck. */
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.stuck.null}")
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.stuck.positive}")
+    private Integer stuck;
 
     /** The anmerkung. */
     private String anmerkung;
@@ -148,6 +160,17 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
         setAnmerkung(anmerkung);
         setBeladung(beladung);
         setStatus(status);
+    }
+
+    @BusinessKey
+    @Column(name = DBNames.ARTIKEL_ID, unique = true, length = 50)
+    public String getArtikelId() {
+      return artikelId;
+    }
+
+    @Override
+    public void setArtikelId(String artikelId) {
+      this.artikelId = (artikelId != null ? artikelId.toUpperCase() : artikelId);
     }
 
     @Override
@@ -267,6 +290,16 @@ public class Artikel extends AbstractNamedItem<NameKey> implements IArtikel {
         this.decoder = decoder;
     }
 
+    @Column(name = DBNames.BEZEICHNUNG, length = 100)
+    public String getBezeichnung() {
+      return bezeichnung;
+    }
+
+    @Override
+    public void setBezeichnung(String bezeichnung) {
+      this.bezeichnung = bezeichnung;
+    }
+    
     @Override
     @Column(name = DBNames.ANMERKUNG, length = 100)
     public String getAnmerkung() {

@@ -10,8 +10,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.impl.Produkt;
 import com.linepro.modellbahn.model.impl.ProduktTeil;
 import com.linepro.modellbahn.model.keys.ProduktTeilKey;
+import com.linepro.modellbahn.model.refs.IProduktRef;
+import com.linepro.modellbahn.model.refs.IProduktTeilRef;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.rest.json.serialization.ProduktSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
@@ -26,7 +27,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
 @JsonRootName(value = ApiNames.TEIL)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.PRODUKT,ApiNames.TEIL, ApiNames.ANZAHL, ApiNames.DELETED, ApiNames.LINKS})
 @ApiModel(value = ApiNames.TEIL, description = "Part of product (spares for rolling stock - contents for set &c).")
-public interface IProduktTeil extends IItem<ProduktTeilKey> {
+public interface IProduktTeil extends IItem<ProduktTeilKey>, IProduktTeilRef {
 
     /**
      * Gets the produkt.
@@ -35,8 +36,8 @@ public interface IProduktTeil extends IItem<ProduktTeilKey> {
      */
     @JsonGetter(ApiNames.PRODUKT)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(using= ProduktSerializer.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.json.serialization.IProduktRef", value = "", accessMode = AccessMode.READ_ONLY, required = true)
+    @JsonSerialize(as= IProduktRef.class)
+    @ApiModelProperty(value = "", accessMode = AccessMode.READ_ONLY, required = true)
     IProdukt getProdukt();
 
     /**
@@ -50,8 +51,8 @@ public interface IProduktTeil extends IItem<ProduktTeilKey> {
 
     @JsonGetter(ApiNames.TEIL)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(using= ProduktSerializer.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.json.serialization.IProduktRef", value = "", accessMode = AccessMode.READ_ONLY, required = true)
+    @JsonSerialize(as= IProduktRef.class)
+    @ApiModelProperty(value = "", accessMode = AccessMode.READ_ONLY, required = true)
     IProdukt getTeil();
 
     @JsonSetter(ApiNames.TEIL)

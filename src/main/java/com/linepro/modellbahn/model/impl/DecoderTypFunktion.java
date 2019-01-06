@@ -22,7 +22,7 @@ import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.keys.DecoderTypFunktionKey;
-import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -40,7 +40,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.DECODER_TYP_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.DECODER_TYP_ID, DBNames.REIHE, DBNames.NAME }) })
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, length = 4))
-public class DecoderTypFunktion extends AbstractNamedItem<DecoderTypFunktionKey> implements IDecoderTypFunktion {
+public class DecoderTypFunktion extends AbstractItem<DecoderTypFunktionKey> implements IDecoderTypFunktion {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -9194895557054214626L;

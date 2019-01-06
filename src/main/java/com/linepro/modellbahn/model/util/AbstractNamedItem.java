@@ -87,7 +87,6 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
     setBezeichnung(bezeichnung);
   }
 
-  @Override
   @BusinessKey
   @Column(name = DBNames.NAME, unique = true, length = 50)
   public String getName() {
@@ -99,7 +98,6 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
     this.name = (name != null ? name.toUpperCase() : name);
   }
 
-  @Override
   @Column(name = DBNames.BEZEICHNUNG, length = 100)
   public String getBezeichnung() {
     return bezeichnung;

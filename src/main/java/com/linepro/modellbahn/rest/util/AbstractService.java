@@ -12,7 +12,7 @@ import javax.ws.rs.core.UriInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.linepro.modellbahn.model.IDescribedEnum;
+import com.linepro.modellbahn.model.refs.IDescribedEnum;
 
 /**
  * AbstractService.

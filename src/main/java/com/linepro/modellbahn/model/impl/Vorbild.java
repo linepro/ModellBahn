@@ -24,8 +24,7 @@ import com.linepro.modellbahn.model.IBahnverwaltung;
 import com.linepro.modellbahn.model.IGattung;
 import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.IVorbild;
-import com.linepro.modellbahn.model.keys.NameKey;
-import com.linepro.modellbahn.model.util.AbstractNamedItem;
+import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.PathConverter;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -43,7 +42,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.ANTRIEB_ID),
         @Index(columnList = DBNames.ACHSFOLG_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.GATTUNG_ID }) })
-public class Vorbild extends AbstractNamedItem<NameKey> implements IVorbild {
+public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -4852882107081643608L;

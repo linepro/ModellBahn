@@ -4,10 +4,9 @@ import java.io.File;
 
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import com.linepro.modellbahn.model.IDecoderTyp;
-import com.linepro.modellbahn.model.IItem;
-import com.linepro.modellbahn.model.INamedItem;
-import com.linepro.modellbahn.model.IProdukt;
+import com.linepro.modellbahn.model.refs.IDecoderTypRef;
+import com.linepro.modellbahn.model.refs.INamedItemRef;
+import com.linepro.modellbahn.model.refs.IProduktRef;
 
 /**
  * TODO: by proxy??
@@ -322,22 +321,17 @@ public class ToStringBuilder extends org.apache.commons.lang3.builder.ToStringBu
         return this;
     }
 
-    public ToStringBuilder append(String fieldName, IItem<?> value) {
-        super.append(fieldName, value != null ? value.getId() : null);
-        return this;
-    }
-
-    public ToStringBuilder append(String fieldName, IDecoderTyp value) {
+    public ToStringBuilder append(String fieldName, IDecoderTypRef value) {
         super.append(fieldName, value != null ?  new Object[] { value.getHersteller(), value.getName() } : null);
         return this;
     }
 
-    public ToStringBuilder append(String fieldName, INamedItem<?> value) {
+    public ToStringBuilder append(String fieldName, INamedItemRef value) {
         super.append(fieldName, value != null ? value.getName() : null);
         return this;
     }
 
-    public ToStringBuilder append(String fieldName, IProdukt value) {
+    public ToStringBuilder append(String fieldName, IProduktRef value) {
         super.append(fieldName, value != null ? new Object[] { value.getHersteller(), value.getName() } : null);
         return this;
     }

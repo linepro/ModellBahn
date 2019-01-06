@@ -304,7 +304,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
                 maxPage = new Double(Math.floor(rowCount.doubleValue() / pageSize.doubleValue())).intValue();
             }
 
-          List<UnterKategorie> entities = getUnterKategoriePersister().findAll(template, references, pageNumber, pageSize);
+            List<IUnterKategorie> entities = new ArrayList<>(getUnterKategoriePersister().findAll(template, references, pageNumber, pageSize));
 
             if (entities.isEmpty()) {
                 return getResponse(noContent());

@@ -8,6 +8,7 @@ package com.linepro.modellbahn.model;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -16,8 +17,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.impl.UnterKategorie;
 import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.model.refs.INamedItemRef;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.rest.json.serialization.UnterKategorieSerializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
@@ -33,7 +34,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.UNTER_KATEGORIEN,
         ApiNames.LINKS })
 @ApiModel(value = ApiNames.KATEGORIE, description = "Category.")
-public interface IKategorie extends INamedItem<NameKey> {
+public interface IKategorie extends INamedItem<NameKey>, INamedItemRef {
     
     /**
      * Gets the unter kategorien.
@@ -41,9 +42,10 @@ public interface IKategorie extends INamedItem<NameKey> {
      * @return the unter kategorien
      */
     @JsonGetter(ApiNames.UNTER_KATEGORIEN)
-    @JsonView(Views.Public.class)
-    @JsonSerialize(contentUsing = UnterKategorieSerializer.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.rest.json.serialization.IUnterKategorieRef;", value = "", accessMode = AccessMode.READ_ONLY, required = true)
+    @JsonView(Views.DropDown.class)
+    @JsonSerialize(contentAs = INamedItemRef.class)
+    @JsonManagedReference
+    @ApiModelProperty(value = "", accessMode = AccessMode.READ_ONLY, required = true)
     Set<IUnterKategorie> getUnterKategorien();
 
     /**

@@ -74,7 +74,6 @@ public class UnterKategorie extends AbstractNamedItem<UnterKategorieKey> impleme
         setKategorie(kategorie);
     }
 
-    @Override
     @BusinessKey
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Kategorie.class)
     @JoinColumn(name = DBNames.KATEGORIE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.UNTER_KATEGORIE + "_fk1"))

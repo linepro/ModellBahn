@@ -1,4 +1,4 @@
-package com.linepro.modellbahn.model;
+package com.linepro.modellbahn.model.refs;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonView;
