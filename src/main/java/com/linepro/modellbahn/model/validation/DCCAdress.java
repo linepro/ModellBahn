@@ -17,8 +17,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = {DCCAdressValidator.class})
 public @interface DCCAdress {
 
-    String message() default "{org.hibernate.validator.referenceguide.chapter06.classlevel." +
-            "ValidPassengerCount.message}";
+    String message() default "{com.linepro.modellbahn.validator.constraints.dccadress.invalid}";
 
     Class<?>[] groups() default { };
 

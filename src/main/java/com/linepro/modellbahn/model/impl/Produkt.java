@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
@@ -80,7 +81,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.STEUERUNG_ID),
         @Index(columnList = DBNames.DECODER_TYP_ID),
         @Index(columnList = DBNames.MOTOR_TYP_ID) }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { DBNames.HERSTELLER_ID, DBNames.NAME }) })
+                @UniqueConstraint(columnNames = { DBNames.HERSTELLER_ID, DBNames.BESTELL_NR }) })
 public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
 
     /** The Constant serialVersionUID. */
@@ -89,6 +90,12 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
     /** The hersteller. */
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.hersteller.notnull}")
     private IHersteller hersteller;
+
+    @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.bestellNr.notempty}")
+    private String bestellNr;
+
+    @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notempty}")
+    private String bezeichnung;
 
     /** The unter kategorie. */
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.unterKategorie.notnull}")
@@ -172,8 +179,10 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
             String betreibsnummer, LocalDate bauzeit, IVorbild vorbild, IAchsfolg achsfolg, String anmerkung,
             ISonderModell sondermodel, IAufbau aufbau, ILicht licht, IKupplung kupplung, ISteuerung steuerung,
             IDecoderTyp decoderTyp, IMotorTyp motorTyp, BigDecimal lange, Boolean deleted) {
-        super(id, bestellNr, bezeichnung, deleted);
+        super(id, deleted);
         setHersteller(hersteller);
+        setBestellNr(bestellNr);
+        setBezeichnung(bezeichnung);
         setUnterKategorie(unterKategorie);
         setMassstab(massstab);
         setSpurweite(spurweite);
@@ -210,13 +219,23 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
 
     @Override
     @BusinessKey
-    public String getName() {
-        return super.getName();
+    public String getBestellNr() {
+        return bestellNr;
     }
 
     @Override
-    public void setName(String bestellNr) {
-        super.setName(bestellNr);
+    public void setBestellNr(String bestellNr) {
+        this.bestellNr = bestellNr;
+    }
+
+    @Column(name = DBNames.BEZEICHNUNG, length = 100)
+    public String getBezeichnung() {
+      return bezeichnung;
+    }
+
+    @Override
+    public void setBezeichnung(String bezeichnung) {
+      this.bezeichnung = bezeichnung;
     }
 
     @Override
@@ -504,7 +523,7 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
     @Override
     @Transient
     public String getLinkId() {
-        return String.format(ApiPaths.PRODUKT_LINK, getHersteller().getLinkId(), super.getLinkId());
+        return String.format(ApiPaths.PRODUKT_LINK, getHersteller().getLinkId(), getBestellNr());
     }
 
     @Override
@@ -517,7 +536,7 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
         if (other instanceof Produkt) {
             return new CompareToBuilder()
                     .append(getHersteller(), ((Produkt) other).getHersteller())
-                    .append(getName(), ((Produkt) other).getName())
+                    .append(getBestellNr(), ((Produkt) other).getBestellNr())
                     .toComparison();
         }
         
@@ -528,7 +547,7 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
     public int hashCode() {
         return new HashCodeBuilder()
                 .append(getHersteller())
-                .append(getName())
+                .append(getBestellNr())
                 .hashCode();
     }
 
@@ -546,7 +565,7 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
 
         return new EqualsBuilder()
                 .append(getHersteller(), other.getHersteller())
-                .append(getName(), other.getName())
+                .append(getBestellNr(), other.getBestellNr())
                 .isEquals();
     }
 
@@ -555,7 +574,7 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
                 .append(ApiNames.HERSTELLER, getHersteller())
-                .append(ApiNames.BESTELL_NR, getName())
+                .append(ApiNames.BESTELL_NR, getBestellNr())
                 .append(ApiNames.UNTER_KATEGORIE, getUnterKategorie())
                 .append(ApiNames.MASSSTAB, getMassstab())
                 .append(ApiNames.SPURWEITE, getSpurweite())

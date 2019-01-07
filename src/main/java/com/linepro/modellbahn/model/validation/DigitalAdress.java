@@ -17,8 +17,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = {DigitalAdressValidator.class})
 public @interface DigitalAdress {
 
-    String message() default "{org.hibernate.validator.referenceguide.chapter06.classlevel." +
-            "ValidPassengerCount.message}";
+    String message() default "{com.linepro.modellbahn.validator.constraints.digitaladress.invalid}";
 
     Class<?>[] groups() default { };
 

@@ -80,6 +80,8 @@ import com.linepro.modellbahn.model.impl.Wahrung;
 import com.linepro.modellbahn.model.impl.Zug;
 import com.linepro.modellbahn.model.impl.ZugConsist;
 import com.linepro.modellbahn.model.impl.ZugTyp;
+import com.linepro.modellbahn.model.keys.ArtikelKey;
+import com.linepro.modellbahn.model.keys.DecoderKey;
 import com.linepro.modellbahn.model.keys.DecoderTypAdressKey;
 import com.linepro.modellbahn.model.keys.DecoderTypCVKey;
 import com.linepro.modellbahn.model.keys.DecoderTypFunktionKey;
@@ -89,6 +91,7 @@ import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.keys.ProduktKey;
 import com.linepro.modellbahn.model.keys.ProduktTeilKey;
 import com.linepro.modellbahn.model.keys.UnterKategorieKey;
+import com.linepro.modellbahn.model.keys.VorbildKey;
 import com.linepro.modellbahn.model.keys.ZugConsistKey;
 import com.linepro.modellbahn.persistence.IKey;
 import com.linepro.modellbahn.persistence.IPersister;
@@ -499,7 +502,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
     }
 
     protected IArtikel findArtikel(String name, boolean eager) throws Exception { 
-        return StaticPersisterFactory.get().createPersister(Artikel.class).findByKey(name, eager); 
+        return StaticPersisterFactory.get().createPersister(Artikel.class).findByKey(new ArtikelKey(name), eager); 
     }
 
     protected IAufbau findAufbau(String name, boolean eager) throws Exception { 
@@ -511,7 +514,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
     }
 
     protected IDecoder findDecoder(String decoderId, boolean eager) throws Exception {
-        return StaticPersisterFactory.get().createPersister(Decoder.class).findByKey(decoderId, eager); 
+        return StaticPersisterFactory.get().createPersister(Decoder.class).findByKey(new DecoderKey(decoderId), eager); 
     }
 
     protected IDecoderTyp findDecoderTyp(String herstellerStr, String bestellNr, boolean eager) throws Exception { 
@@ -614,7 +617,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
     }
 
     protected IVorbild findVorbild(String name, boolean eager) throws Exception { 
-        return StaticPersisterFactory.get().createPersister(Vorbild.class).findByKey(name, eager); 
+        return StaticPersisterFactory.get().createPersister(Vorbild.class).findByKey(new VorbildKey(findGattung(name, false)), eager); 
     }
 
     protected IWahrung findWahrung(String name, boolean eager) throws Exception { 

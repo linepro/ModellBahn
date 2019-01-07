@@ -1,6 +1,5 @@
 package com.linepro.modellbahn.model.impl;
 
-import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -36,10 +36,9 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name = DBNames.DECODER_TYP_FUNKTION)
-@Table(name = DBNames.DECODER_TYP_FUNKTION, indexes = { @Index(columnList = DBNames.DECODER_TYP_ID + "," + DBNames.REIHE + "," + DBNames.NAME, unique = true),
+@Table(name = DBNames.DECODER_TYP_FUNKTION, indexes = { @Index(columnList = DBNames.DECODER_TYP_ID + "," + DBNames.REIHE + "," + DBNames.FUNKTION, unique = true),
         @Index(columnList = DBNames.DECODER_TYP_ID) }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { DBNames.DECODER_TYP_ID, DBNames.REIHE, DBNames.NAME }) })
-@AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, length = 4))
+                @UniqueConstraint(columnNames = { DBNames.DECODER_TYP_ID, DBNames.REIHE, DBNames.FUNKTION }) })
 public class DecoderTypFunktion extends AbstractItem<DecoderTypFunktionKey> implements IDecoderTypFunktion {
 
     /** The Constant serialVersionUID. */
@@ -51,9 +50,15 @@ public class DecoderTypFunktion extends AbstractItem<DecoderTypFunktionKey> impl
 
     /** The reihe. */
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.reihe.notnull}")
-    @Range(min=0,max=1,message = "{com.linepro.modellbahn.validator.constraints.reihe.range}")
+    @Range(min=0, max=1, message = "{com.linepro.modellbahn.validator.constraints.reihe.range}")
     private Integer reihe;
 
+    @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.funktion.notempty}")
+    private String funktion;
+
+    @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notempty}")
+    private String bezeichnung;
+    
     /** The programmable. */
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.programmable.notnull}")
     private Boolean programmable;
@@ -63,18 +68,17 @@ public class DecoderTypFunktion extends AbstractItem<DecoderTypFunktionKey> impl
     }
 
     public DecoderTypFunktion(IDecoderTyp decoderTyp, Integer reihe, String funktionNr) {
-        super(funktionNr);
-
-        setDecoderTyp(decoderTyp);
-        setReihe(reihe);
+        this(null, decoderTyp, reihe, funktionNr, "", false, false);
     }
 
     public DecoderTypFunktion(Long id, IDecoderTyp decoderTyp, Integer reihe, String funktionNr, String bezeichnung,
             Boolean programmable, Boolean deleted) {
-        super(id, funktionNr, bezeichnung, deleted);
+        super(id, deleted);
 
         setDecoderTyp(decoderTyp);
         setReihe(reihe);
+        setFunktion(funktionNr);
+        setBezeichnung(bezeichnung);
         setProgrammable(programmable);
     }
 
@@ -101,6 +105,26 @@ public class DecoderTypFunktion extends AbstractItem<DecoderTypFunktionKey> impl
     @Override
     public void setReihe(Integer reihe) {
         this.reihe = reihe;
+    }
+
+    @Column(name = DBNames.FUNKTION, length = 4)
+    public String getFunktion() {
+      return funktion;
+    }
+
+    @Override
+    public void setFunktion(String funktion) {
+      this.funktion = funktion;
+    }
+
+    @Column(name = DBNames.BEZEICHNUNG, length = 100)
+    public String getBezeichnung() {
+      return bezeichnung;
+    }
+
+    @Override
+    public void setBezeichnung(String bezeichnung) {
+      this.bezeichnung = bezeichnung;
     }
 
     @Override
@@ -132,7 +156,7 @@ public class DecoderTypFunktion extends AbstractItem<DecoderTypFunktionKey> impl
             return new CompareToBuilder()
                     .append(getDecoderTyp(), ((DecoderTypFunktion) other).getDecoderTyp())
                     .append(getReihe(), ((DecoderTypFunktion) other).getReihe())
-                    .append(Integer.valueOf(getName().substring(1)), Integer.valueOf(((DecoderTypFunktion) other).getName().substring(1)))
+                    .append(Integer.valueOf(getFunktion().substring(1)), Integer.valueOf(((DecoderTypFunktion) other).getFunktion().substring(1)))
                     .toComparison();
         }
         
@@ -144,7 +168,7 @@ public class DecoderTypFunktion extends AbstractItem<DecoderTypFunktionKey> impl
         return new HashCodeBuilder()
                 .append(getDecoderTyp())
                 .append(getReihe())
-                .append(getName())
+                .append(getFunktion())
                 .hashCode();
     }
 
@@ -163,7 +187,7 @@ public class DecoderTypFunktion extends AbstractItem<DecoderTypFunktionKey> impl
         return new EqualsBuilder()
                 .append(getDecoderTyp(), other.getDecoderTyp())
                 .append(getReihe(), other.getReihe())
-                .append(getName(), other.getName())
+                .append(getFunktion(), other.getFunktion())
                 .isEquals();
     }
 

@@ -1,7 +1,14 @@
 package com.linepro.modellbahn.model.refs;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.linepro.modellbahn.model.IArtikel;
+import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.ApiNames;
+
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * LinkSerializer.
@@ -10,11 +17,16 @@ import com.linepro.modellbahn.rest.util.ApiNames;
  * @author   $Author$
  * @version  $Id$
  */
-public interface IZugConsistRef extends ILinkRef {
+public interface IZugConsistRef extends IRef {
 
     @JsonGetter(ApiNames.POSITION)
+    @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "", accessMode = AccessMode.READ_ONLY, required = true)
     Integer getPosition();
-    
+
     @JsonGetter(ApiNames.ARTIKEL)
-    IArtikelRef getArtikel();
+    @JsonSerialize(contentAs = IArtikelRef.class)
+    @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "", accessMode = AccessMode.READ_ONLY, required = true)
+    IArtikel getArtikel();
 }

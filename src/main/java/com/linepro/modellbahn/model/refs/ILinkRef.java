@@ -14,7 +14,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiModelProperty.AccessMode;
 
-public interface ILinkRef {
+public interface ILinkRef extends IRef {
     @JsonGetter(ApiNames.LINKS)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(contentUsing= LinkSerializer.class)

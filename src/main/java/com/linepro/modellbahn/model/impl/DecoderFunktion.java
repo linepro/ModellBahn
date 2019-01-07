@@ -54,10 +54,6 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.wert.notnull}")
 	private String bezeichnung;
 
-    private String funktionStr;
-
-    private Integer reihe;
-
 	/**
 	 * Instantiates a new decoder funktion.
 	 */
@@ -93,49 +89,17 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
         this.decoder = decoder;
     }
 
-    @Transient
-    @Override
-    public Integer getReihe() {
-        return reihe;
-    }
-
-    @Override
-    public void setReihe(Integer reihe) {
-        this.reihe = reihe;
-    }
-
-    @Transient
-    @Override
-    public String getFunktionStr() {
-        return funktionStr;
-    }
-
-    @Override
-    public void setFunktionStr(String funktion) {
-        this.funktionStr = funktion;
-    }
-
     @Override
     @BusinessKey
     @ManyToOne(fetch=FetchType.LAZY, targetEntity=DecoderTypFunktion.class)
     @JoinColumn(name = DBNames.FUNKTION_ID, nullable = false, referencedColumnName=DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_FUNKTION + "_fk2"))
     public IDecoderTypFunktion getFunktion() {
-        if (funktion != null) {
-            setFunktionStr(funktion.getName());
-            setReihe(funktion.getReihe());
-        }
-
         return funktion;
     }
 
     @Override
     public void setFunktion(IDecoderTypFunktion funktion) {
         this.funktion = funktion;
-
-        if (funktion != null) {
-            setFunktionStr(funktion.getName());
-            setReihe(funktion.getReihe());
-        }
     }
 
     @Override
@@ -152,7 +116,7 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
     @Override
     @Transient
     public String getLinkId() {
-        return String.format(ApiPaths.DECODER_FUNKTION_LINK, getParentId(), getFunktion().getReihe(), getFunktion().getName());
+        return String.format(ApiPaths.DECODER_FUNKTION_LINK, getParentId(), getFunktion().getReihe(), getFunktion().getFunktion());
     }
 
     @Override

@@ -17,8 +17,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = {WeicheAdressValidator.class})
 public @interface WeicheAdress {
 
-    String message() default "{org.hibernate.validator.referenceguide.chapter06.classlevel." +
-            "ValidPassengerCount.message}";
+    String message() default "{com.linepro.modellbahn.validator.constraints.weiche.invalid}";
 
     Class<?>[] groups() default { };
 

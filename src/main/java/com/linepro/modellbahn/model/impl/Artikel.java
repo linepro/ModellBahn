@@ -15,9 +15,11 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 
 import com.linepro.modellbahn.model.IArtikel;
@@ -28,7 +30,7 @@ import com.linepro.modellbahn.model.IMotorTyp;
 import com.linepro.modellbahn.model.IProdukt;
 import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.IWahrung;
-import com.linepro.modellbahn.model.keys.IdKey;
+import com.linepro.modellbahn.model.keys.ArtikelKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.model.util.Status;
 import com.linepro.modellbahn.persistence.DBNames;
@@ -57,6 +59,7 @@ public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
     private static final long serialVersionUID = 8652624782179487496L;
 
     /** The abbildung. */
+    @Pattern(regexp = "^[A-Z0-9]+$", message = "{com.linepro.modellbahn.validator.constraints.decoderId.invalid}")
     @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.artikelId.notempty}")
     private String artikelId;
 
@@ -86,17 +89,16 @@ public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
     /** The decoder. */
     private IDecoder decoder;
 
-    /**
-     * The bezeichnung.
-     */
+    /** The bezeichnung. */
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notnull}")
     private String bezeichnung;
 
     /** The preis. */
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.preis.positive}")
     private BigDecimal preis;
 
     /** The stuck. */
-    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.stuck.null}")
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.stuck.notnull}")
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.stuck.positive}")
     private Integer stuck;
 
@@ -134,7 +136,7 @@ public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
      * @param licht the licht
      * @param kupplung the kupplung
      * @param decoder the decoder
-     * @param artikelNr the artikel nr
+     * @param artikelId the artikel nr
      * @param bezeichnung the bezeichnung
      * @param anmerkung the anmerkung
      * @param beladung the beladung
@@ -143,10 +145,12 @@ public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
      */
     public Artikel(Long id, IProdukt produkt, LocalDate kaufdatum, IWahrung wahrung, BigDecimal preis, Integer stuck,
             ISteuerung steuerung, IMotorTyp motorTyp, ILicht licht, IKupplung kupplung, IDecoder decoder,
-            String artikelNr, String bezeichnung, String anmerkung,
+            String artikelId, String bezeichnung, String anmerkung,
             String beladung, Status status, Boolean deleted) {
-        super(id, artikelNr, bezeichnung, deleted);
+        super(id, deleted);
 
+        setArtikelId(artikelId);
+        setBezeichnung(bezeichnung);
         setProdukt(produkt);
         setKaufdatum(kaufdatum);
         setWahrung(wahrung);
@@ -344,6 +348,12 @@ public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
     @Override
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    @Override
+    @Transient
+    public String getLinkId() {
+        return getArtikelId();
     }
 
     @Override

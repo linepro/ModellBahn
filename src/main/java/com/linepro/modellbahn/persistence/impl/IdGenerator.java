@@ -5,7 +5,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.linepro.modellbahn.guice.ISessionManagerFactory;
-import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.IIdGenerator;
 import com.linepro.modellbahn.persistence.ISessionManager;
 
@@ -19,17 +18,17 @@ public class IdGenerator implements IIdGenerator {
     }
 
     @Override
-    public String getNextId(String entityName) {
+    public String getNextId(String entityName, String keyName) {
         long id = 1L;
         
         ISessionManager session = getSession();
 
         String queryString = "SELECT e."
-            + DBNames.NAME
+            + keyName
             + " FROM "
             + entityName
             + " e ORDER BY e."
-            + DBNames.NAME
+            + keyName
             + " DESC";
 
         @SuppressWarnings("unchecked")

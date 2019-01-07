@@ -71,6 +71,7 @@ import com.linepro.modellbahn.model.keys.DecoderTypKey;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.keys.ProduktKey;
 import com.linepro.modellbahn.model.keys.UnterKategorieKey;
+import com.linepro.modellbahn.model.keys.VorbildKey;
 import com.linepro.modellbahn.model.util.AdressTyp;
 import com.linepro.modellbahn.model.util.DecoderCreator;
 import com.linepro.modellbahn.model.util.Konfiguration;
@@ -529,7 +530,7 @@ public class DBPopulator {
         addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
 
-        addFunktion(decoderTyp, 0, "F0", "", false);
+        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
 
         return update(decoderTyp);
     }
@@ -575,6 +576,13 @@ public class DBPopulator {
         addFunktion(decoderTyp, 0, "F6", "Spoke 1", false);
         addFunktion(decoderTyp, 0, "F7", "Spoke 2", false);
         addFunktion(decoderTyp, 0, "F8", "Spoke 3", false);
+        addFunktion(decoderTyp, 0, "F9", "Spoke 3", false);
+        addFunktion(decoderTyp, 0, "F10", "Spoke 4", false);
+        addFunktion(decoderTyp, 0, "F11", "Spoke 5", false);
+        addFunktion(decoderTyp, 0, "F12", "Spoke 6", false);
+        addFunktion(decoderTyp, 0, "F13", "Spoke 7", false);
+        addFunktion(decoderTyp, 0, "F14", "Spoke 8", false);
+        addFunktion(decoderTyp, 0, "F15", "Spoke 9", false);
 
         return update(decoderTyp);
     }
@@ -658,10 +666,10 @@ public class DBPopulator {
         addCV(decoderTyp, 47, "Servo 4, Stellung „A“", 1, 63, 24);
         addCV(decoderTyp, 48, "Servo 4, Stellung „B“", 1, 63, 40);
 
-        addFunktion(decoderTyp, 0, "S1", "", false);
-        addFunktion(decoderTyp, 0, "S2", "", false);
-        addFunktion(decoderTyp, 0, "S3", "", false);
-        addFunktion(decoderTyp, 0, "S4", "", false);
+        addFunktion(decoderTyp, 0, "S1", "Servo 1", false);
+        addFunktion(decoderTyp, 0, "S2", "Servo 2", false);
+        addFunktion(decoderTyp, 0, "S3", "Servo 3", false);
+        addFunktion(decoderTyp, 0, "S4", "Servo 4", false);
 
         return update(decoderTyp);
     }
@@ -693,12 +701,12 @@ public class DBPopulator {
         addCV(decoderTyp, 41, "Servo 2, Stellung „A“", 1, 63, 24);
         addCV(decoderTyp, 42, "Servo 2, Stellung „B“", 1, 63, 40);
 
-        addFunktion(decoderTyp, 0, "K1", "", false);
-        addFunktion(decoderTyp, 0, "K2", "", false);
-        addFunktion(decoderTyp, 0, "K3", "", false);
-        addFunktion(decoderTyp, 0, "K4", "", false);
-        addFunktion(decoderTyp, 0, "S1", "", false);
-        addFunktion(decoderTyp, 0, "S2", "", false);
+        addFunktion(decoderTyp, 0, "K1", "Funktion 1", false);
+        addFunktion(decoderTyp, 0, "K2", "Funktion 2", false);
+        addFunktion(decoderTyp, 0, "K3", "Funktion 3", false);
+        addFunktion(decoderTyp, 0, "K4", "Funktion 4", false);
+        addFunktion(decoderTyp, 0, "S1", "Servo 1", false);
+        addFunktion(decoderTyp, 0, "S2", "Servo 2", false);
 
         return update(decoderTyp);
     }
@@ -712,11 +720,11 @@ public class DBPopulator {
         addCV(decoderTyp, 1, "Adresse", 1, 80, null);
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
 
-        addFunktion(decoderTyp, 0, "F0", "", false);
-        addFunktion(decoderTyp, 0, "F1", "", false);
-        addFunktion(decoderTyp, 0, "F2", "", false);
-        addFunktion(decoderTyp, 0, "F3", "", false);
-        addFunktion(decoderTyp, 0, "F4", "", false);
+        addFunktion(decoderTyp, 0, "F0", "Funktion 0", false);
+        addFunktion(decoderTyp, 0, "F1", "Funktion 1", false);
+        addFunktion(decoderTyp, 0, "F2", "Funktion 2", false);
+        addFunktion(decoderTyp, 0, "F3", "Funktion 3", false);
+        addFunktion(decoderTyp, 0, "F4", "Funktion 4", false);
 
         return update(decoderTyp);
     }
@@ -749,22 +757,22 @@ public class DBPopulator {
         addCV(decoderTyp, 78, "Anfahrspannung Analog AC", 1, 63, 25);
         addCV(decoderTyp, 79, "Höchstgeschwindigkeit Analog AC", 1, 63, 63);
 
-        addFunktion(decoderTyp, 0, "F0", "", false);
-        addFunktion(decoderTyp, 0, "F1", "", false);
-        addFunktion(decoderTyp, 0, "F2", "", false);
-        addFunktion(decoderTyp, 0, "F3", "", false);
-        addFunktion(decoderTyp, 0, "F4", "", false);
-        addFunktion(decoderTyp, 0, "F5", "", false);
-        addFunktion(decoderTyp, 0, "F6", "", false);
-        addFunktion(decoderTyp, 0, "F7", "", false);
-        addFunktion(decoderTyp, 0, "F8", "", false);
-        addFunktion(decoderTyp, 0, "F9", "", false);
-        addFunktion(decoderTyp, 0, "F10", "", false);
-        addFunktion(decoderTyp, 0, "F11", "", false);
-        addFunktion(decoderTyp, 0, "F12", "", false);
-        addFunktion(decoderTyp, 0, "F13", "", false);
-        addFunktion(decoderTyp, 0, "F14", "", false);
-        addFunktion(decoderTyp, 0, "F15", "", false);
+        addFunktion(decoderTyp, 0, "F0", "Funktion 0", false);
+        addFunktion(decoderTyp, 0, "F1", "Funktion 1", false);
+        addFunktion(decoderTyp, 0, "F2", "Funktion 2", false);
+        addFunktion(decoderTyp, 0, "F3", "Funktion 3", false);
+        addFunktion(decoderTyp, 0, "F4", "Funktion 4", false);
+        addFunktion(decoderTyp, 0, "F5", "Funktion 5", false);
+        addFunktion(decoderTyp, 0, "F6", "Funktion 6", false);
+        addFunktion(decoderTyp, 0, "F7", "Funktion 7", false);
+        addFunktion(decoderTyp, 0, "F8", "Funktion 8", false);
+        addFunktion(decoderTyp, 0, "F9", "Funktion 9", false);
+        addFunktion(decoderTyp, 0, "F10", "Funktion 10", false);
+        addFunktion(decoderTyp, 0, "F11", "Funktion 11", false);
+        addFunktion(decoderTyp, 0, "F12", "Funktion 12", false);
+        addFunktion(decoderTyp, 0, "F13", "Funktion 13", false);
+        addFunktion(decoderTyp, 0, "F14", "Funktion 14", false);
+        addFunktion(decoderTyp, 0, "F15", "Funktion 15", false);
 
         return update(decoderTyp);
     }
@@ -789,7 +797,7 @@ public class DBPopulator {
         addCV(decoderTyp, 78, "Anfahrspannung Analog AC", 1, 63, 25);
         addCV(decoderTyp, 79, "Höchstgeschwindigkeit Analog AC", 1, 63, 63);
 
-        addFunktion(decoderTyp, 0, "F0", "", false);
+        addFunktion(decoderTyp, 0, "F0", "Funktion 0", false);
 
         return update(decoderTyp);
     }
@@ -1372,18 +1380,18 @@ public class DBPopulator {
         addFunktion(decoderTyp, 0, "K1", "Step", false);
         addFunktion(decoderTyp, 0, "K2", "Turn", false);
         addFunktion(decoderTyp, 0, "K3", "Richtung", false);
-        addFunktion(decoderTyp, 0, "K4", "Position", false);
-        addFunktion(decoderTyp, 0, "K5", "Position", false);
-        addFunktion(decoderTyp, 0, "K6", "Position", false);
-        addFunktion(decoderTyp, 0, "K7", "Position", false);
-        addFunktion(decoderTyp, 0, "K8", "Position", false);
-        addFunktion(decoderTyp, 0, "K9", "Position", false);
-        addFunktion(decoderTyp, 0, "K10", "Position", false);
-        addFunktion(decoderTyp, 0, "K11", "Position", false);
-        addFunktion(decoderTyp, 0, "K12", "Position", false);
-        addFunktion(decoderTyp, 0, "K13", "Position", false);
-        addFunktion(decoderTyp, 0, "K14", "Position", false);
-        addFunktion(decoderTyp, 0, "K15", "Position", false);
+        addFunktion(decoderTyp, 0, "K4", "Spoke 1", false);
+        addFunktion(decoderTyp, 0, "K5", "Spoke 2", false);
+        addFunktion(decoderTyp, 0, "K6", "Spoke 3", false);
+        addFunktion(decoderTyp, 0, "K7", "Spoke 3", false);
+        addFunktion(decoderTyp, 0, "K8", "Spoke 4", false);
+        addFunktion(decoderTyp, 0, "K9", "Spoke 5", false);
+        addFunktion(decoderTyp, 0, "K10", "Spoke 6", false);
+        addFunktion(decoderTyp, 0, "K11", "Spoke 7", false);
+        addFunktion(decoderTyp, 0, "K12", "Spoke 8", false);
+        addFunktion(decoderTyp, 0, "K13", "Spoke 9", false);
+        addFunktion(decoderTyp, 0, "K14", "Spoke 10", false);
+        addFunktion(decoderTyp, 0, "K15", "Spoke 11", false);
 
         return update(decoderTyp);
     }
@@ -1393,27 +1401,27 @@ public class DBPopulator {
     }
 
     private void populateEpoch() {
-        addEpoch("I", "1835 - 1920");
-        addEpoch("II", "1920 - 1950");
-        addEpoch("III", "1949 - 1970");
-        addEpoch("IV", "1965 - 1990");
-        addEpoch("V", "1990 - 2006");
-        addEpoch("VI", "2006 -");
-        addEpoch("Ia", "1835 - 1875");
-        addEpoch("Ib", "1875 - 1895");
-        addEpoch("Ic", "1895 - 1910");
-        addEpoch("Id", "1910 - 1920");
-        addEpoch("IIa", "1920 - 1925");
-        addEpoch("IIb", "1925 - 1937");
-        addEpoch("IIc", "1937 - 1950");
-        addEpoch("IIIa", "1949 - 1956");
-        addEpoch("IIIb", "1956 - 1970");
-        addEpoch("IVa", "1965 - 1970");
-        addEpoch("IVb", "1970 – 1980");
-        addEpoch("IVc", "1980 – 1990");
-        addEpoch("Va", "1990 - 1994");
-        addEpoch("Vb", "1994 - 2000");
-        addEpoch("Vc", "2000 - 2006");
+        addEpoch("I", "I : 1835 - 1920");
+        addEpoch("II", "II : 1920 - 1950");
+        addEpoch("III", "III : 1949 - 1970");
+        addEpoch("IV", "IV : 1965 - 1990");
+        addEpoch("V", "V : 1990 - 2006");
+        addEpoch("VI", "VI : 2006 -");
+        addEpoch("IA", "Ia : 1835 - 1875");
+        addEpoch("IB", "Ib : 1875 - 1895");
+        addEpoch("IC", "Ic : 1895 - 1910");
+        addEpoch("ID", "Id : 1910 - 1920");
+        addEpoch("IIA", "IIa : 1920 - 1925");
+        addEpoch("IIB", "IIb : 1925 - 1937");
+        addEpoch("IIC", "IIc : 1937 - 1950");
+        addEpoch("IIIA", "IIIa : 1949 - 1956");
+        addEpoch("IIIB", "IIIb : 1956 - 1970");
+        addEpoch("IVA", "IVa : 1965 - 1970");
+        addEpoch("IVB", "IVb : 1970 – 1980");
+        addEpoch("IVC", "IVc : 1980 – 1990");
+        addEpoch("VA", "Va : 1990 - 1994");
+        addEpoch("VB", "Vb : 1994 - 2000");
+        addEpoch("VC", "Vc : 2000 - 2006");
     }
 
     private Gattung addGattung(String namen, String bezeichnung) {
@@ -1421,17 +1429,17 @@ public class DBPopulator {
     }
 
     private void populateGattung() {
-        addGattung("AB3YGE", "AB3yge");
+        addGattung("AB3YGE", "AB3YGE : AB3yg");
         addGattung("ADUMH101", "ADümh 101");
         addGattung("ARDUMZ106", "ARDümz 106");
         addGattung("APUMH121", "Apümh 121");
         addGattung("AVMZ206", "Avmz 206");
         addGattung("AVUMH111", "Avümh 111");
         addGattung("AUM203", "Aüm 203");
-        addGattung("B3YGE", "B3yge");
-        addGattung("B4YGE", "B4yge");
+        addGattung("B3YGE", "B3yg");
+        addGattung("B4YGE", "B4yg");
         addGattung("BA115", "BA 115");
-        addGattung("BD3YGE", "BD3yge");
+        addGattung("BD3YGE", "BD3yg");
         addGattung("BR03", "BR 03");
         addGattung("BR03.10", "BR 03.10");
         addGattung("BR103", "BR 103");
@@ -1460,12 +1468,12 @@ public class DBPopulator {
         addGattung("BTMM51", "BTmm 51");
         addGattung("BI18T", "Bi 18t");
         addGattung("BI", "Bi");
-        addGattung("DByg546", "DByg 546");
+        addGattung("DBYG546", "DByg 546");
         addGattung("DHG700C", "DHG 700C");
         addGattung("ELD4", "ELD4");
         addGattung("ET403", "ET 403");
         addGattung("ET91", "ET 91");
-        addGattung("Elu061", "El-u 061");
+        addGattung("ELU061", "El-u 061");
         addGattung("F7", "F7");
         addGattung("G10", "G 10");
         addGattung("GL", "Gl");
@@ -1793,7 +1801,7 @@ public class DBPopulator {
         addUnterKategorie(kategorie, "FAHRRADTRANSPORT", "Fahrradtransportwagen");
         addUnterKategorie(kategorie, "FLACH", "Flachwagen");
         addUnterKategorie(kategorie, "GAS", "Gaswagen");
-        addUnterKategorie(kategorie, "GEDECKTER Güter", "Gedeckter Güterwagen");
+        addUnterKategorie(kategorie, "GEDECKTERGUTER", "Gedeckter Güterwagen");
         addUnterKategorie(kategorie, "GEPACK", "Gepäckwagen");
         addUnterKategorie(kategorie, "GESELLSCHAFTS", "Gesellschaftswagen");
         addUnterKategorie(kategorie, "GROSSRAUM", "Großraumwagen");
@@ -1906,71 +1914,71 @@ public class DBPopulator {
     }
 
     private void populateMassstab() {
-        addMassstab("0", "1:45 32 mm");
-        addMassstab("0e", "1:45 16.5 mm");
-        addMassstab("0i", "1:45 12 mm");
-        addMassstab("0m", "1:45 22.5 mm");
-        addMassstab("0p", "1:45 9 mm");
-        addMassstab("1\"", "1:12 121 mm");
-        addMassstab("1", "1:32 45 mm");
-        addMassstab("1e", "1:32 22.5 mm");
-        addMassstab("1i", "1:32 16.5 mm");
-        addMassstab("1m", "1:32 32 mm");
-        addMassstab("1n3", "1:32 28.6 mm");
-        addMassstab("1p", "1:32 12 mm");
-        addMassstab("F", "1:20.32 70.64 mm");
-        addMassstab("Fn3", "1:20.32 45 mm");
-        addMassstab("H0", "1:87 16.5 mm");
-        addMassstab("H0e", "1:87 9 mm");
-        addMassstab("H0i", "1:87 6.5 mm (H0f)");
-        addMassstab("H0m", "1:87 12 mm");
-        addMassstab("H0p", "1:87 4.5 mm");
-        addMassstab("HOn2", "1:87.1 7 mm");
-        addMassstab("II", "1:22.5 63.5 mm");
-        addMassstab("IIe", "1:22.5 32 mm");
-        addMassstab("Iii (NEM)", "1:22.5 22.5 mm");
-        addMassstab("III", "1:16 89 mm");
-        addMassstab("IIIe", "1:16 45 mm");
-        addMassstab("IIIi (NMRA)", "1:16 32 mm (3/4\")");
-        addMassstab("IIIm", "1:16 63.5 mm");
-        addMassstab("IIIp", "1:16 22.5 mm");
-        addMassstab("IIm", "1:22.5 45 mm");
-        addMassstab("IIp", "1:22.5 16.5 mm");
-        addMassstab("N", "1:160 9 mm");
-        addMassstab("Ne", "1:160 4.5 mm (Nn2)");
-        addMassstab("Nm", "1:160 6.5 mm (Nn3)");
-        addMassstab("O", "1:48 31.75 mm");
-        addMassstab("On2", "1:48 12.7 mm");
-        addMassstab("On3", "1:48 19.4 mm ");
-        addMassstab("On30", "1:48 16.5 mm");
-        addMassstab("OO", "1:76.2 19.05 mm");
-        addMassstab("S", "1:64 22.5 mm");
-        addMassstab("Se", "1:64 12 mm");
-        addMassstab("Si", "1:64 9 mm");
-        addMassstab("Sm", "1:64 16.5 mm");
-        addMassstab("Sn3", "1:64 14.3 mm");
-        addMassstab("Sp", "1:64 6.5 mm");
-        addMassstab("TT", "1:120 12 mm");
-        addMassstab("TTe", "1:120 6.5 mm");
-        addMassstab("TTi", "1:120 4.5 mm");
-        addMassstab("TTm", "1:120 9 mm");
-        addMassstab("V", "1:11 127 mm");
-        addMassstab("Ve", "1:11 63.5 mm");
-        addMassstab("Vi", "1:11 45 mm");
-        addMassstab("VII", "1:8 184 mm");
-        addMassstab("VIIe", "1:8 89 mm");
-        addMassstab("VIIi", "1:8 63.5 mm");
-        addMassstab("VIIm", "1:8 127 mm");
-        addMassstab("VIIp", "1:8 45 mm");
-        addMassstab("Vm", "1:11 89 mm");
-        addMassstab("Vp", "1:11 32 mm");
-        addMassstab("X", "1:5.5 260 mm");
-        addMassstab("Xe", "1:5.5 127 mm");
-        addMassstab("Xi", "1:5.5 89 mm");
-        addMassstab("Xm", "1:5.5 184 mm");
-        addMassstab("Xp", "1:5.5 63.5 mm");
-        addMassstab("Z", "1:220 6.5 mm");
-        addMassstab("Zm", "1:220 4.5 mm");
+        addMassstab("0", "0 : 1:45 32mm");
+        addMassstab("0E", "0e : 1:45 16,5mm");
+        addMassstab("0I", "0i : 1:45 12mm");
+        addMassstab("0M", "0m : 1:45 22,5mm");
+        addMassstab("0P", "0p : 1:45 9mm");
+        addMassstab("1IN", "1\" : 1:12 121mm");
+        addMassstab("1", "1 : 1:32 45mm");
+        addMassstab("1E", "1e : 1:32 22,5mm");
+        addMassstab("1I", "1i : 1:32 16,5mm");
+        addMassstab("1M", "1m : 1:32 32mm");
+        addMassstab("1N3", "13 : 1:32 28,6mm");
+        addMassstab("1P", "1p : 1:32 12mm");
+        addMassstab("F", "F : 1:20.32 70.64mm");
+        addMassstab("FN3", "Fn3 : 1:20.32 45mm");
+        addMassstab("H0", "H0 : 1:87 16,5mm");
+        addMassstab("H0E", "H0e : 1:87 9mm");
+        addMassstab("H0I", "H0i : 1:87 6,5mm (H0f)");
+        addMassstab("H0M", "H0m : 1:87 12mm");
+        addMassstab("H0P", "H0p : 1:87 4,5mm");
+        addMassstab("HON2", "HOn2 : 1:87.1 7mm");
+        addMassstab("II", "II : 1:22.5 63,5mm");
+        addMassstab("IIE", "IIe : 1:22.5 32mm");
+        addMassstab("III-NEM", "Iii (NEM) : 1:22.5 22,5mm");
+        addMassstab("III", "III : 1:16 89mm");
+        addMassstab("IIIE", "IIIe : 1:16 45mm");
+        addMassstab("IIII-NMRA", "IIIi (NMRA) : 1:16 32mm (3/4\")");
+        addMassstab("IIIM", "IIIm : 1:16 63,5mm");
+        addMassstab("IIIP", "IIIp : 1:16 22,5mm");
+        addMassstab("IIM", "IIm : 1:22.5 45mm");
+        addMassstab("IIP", "IIp : 1:22.5 16,5mm");
+        addMassstab("N", "N : 1:160 9mm");
+        addMassstab("NE", "Ne : 1:160 4,5mm (Nn2)");
+        addMassstab("NM", "Nm : 1:160 6,5mm (Nn3)");
+        addMassstab("O", "O : 1:48 31.75mm");
+        addMassstab("ON2", "On2 : 1:48 12,7mm");
+        addMassstab("ON3", "On3 : 1:48 19,4mm ");
+        addMassstab("ON30", "On30 : 1:48 16,5mm");
+        addMassstab("OO", "OO : 1:76.2 19,05mm");
+        addMassstab("S", "S : 1:64 22,5mm");
+        addMassstab("SE", "Se : 1:64 12mm");
+        addMassstab("SI", "Si : 1:64 9mm");
+        addMassstab("SM", "Sm : 1:64 16,5mm");
+        addMassstab("SN3", "Sn3 : 1:64 14,3mm");
+        addMassstab("Sp", "Sp : 1:64 6,5mm");
+        addMassstab("TT", "TT : 1:120 12mm");
+        addMassstab("TTE", "TTe : 1:120 6,5mm");
+        addMassstab("TTI", "TTi : 1:120 4,5mm");
+        addMassstab("TTM", "TTm : 1:120 9mm");
+        addMassstab("V", "V : 1:11 127mm");
+        addMassstab("VE", "Ve : 1:11 63,5mm");
+        addMassstab("VI", "Vi : 1:11 45mm");
+        addMassstab("VII", "VII : 1:8 184mm");
+        addMassstab("VIIE", "VIIe : 1:8 89mm");
+        addMassstab("VIII", "VIIi : 1:8 63,5mm");
+        addMassstab("VIIM", "VIIm : 1:8 127mm");
+        addMassstab("VIIP", "VIIp : 1:8 45mm");
+        addMassstab("VM", "Vm : 1:11 89mm");
+        addMassstab("VP", "Vp : 1:11 32mm");
+        addMassstab("X", "X : 1:5.5 260mm");
+        addMassstab("XE", "Xe : 1:5.5 127mm");
+        addMassstab("XI", "Xi : 1:5.5 89mm");
+        addMassstab("XM", "Xm : 1:5.5 184mm");
+        addMassstab("XP", "Xp : 1:5.5 63,5mm");
+        addMassstab("Z", "Z : 1:220 6,5mm");
+        addMassstab("ZM", "Zm : 1:220 4,5mm");
     }
 
     private MotorTyp addMotorTyp(String name, String bezeichnung) {
@@ -2071,18 +2079,18 @@ public class DBPopulator {
     }
 
     private void populateSpurweite() {
-        addSpurweite("0", "32mm");
-        addSpurweite("TT", "12mm");
-        addSpurweite("H0", "16, 5mm");
-        addSpurweite("N", "9mm");
-        addSpurweite("Z", "6, 5mm");
-        addSpurweite("I", "45mm");
-        addSpurweite("S", "22, 5mm");
-        addSpurweite("II", "64mm");
-        addSpurweite("III", "89mm");
-        addSpurweite("V", "127mm");
-        addSpurweite("VII", "184mm");
-        addSpurweite("X", "260mm");
+        addSpurweite("0", "0 : 32mm");
+        addSpurweite("TT", "TT : 12mm");
+        addSpurweite("H0", "H0 : 16,5mm");
+        addSpurweite("N", "N : 9mm");
+        addSpurweite("Z", "Z : 6,5mm");
+        addSpurweite("I", "I : 45mm");
+        addSpurweite("S", "S : 22,5mm");
+        addSpurweite("II", "II : 64mm");
+        addSpurweite("III", "III : 89mm");
+        addSpurweite("V", "V : 127mm");
+        addSpurweite("VII", "VII : 184mm");
+        addSpurweite("X", "X : 260mm");
     }
 
     private Steuerung addSteuerung(String name, String bezeichnung) {
@@ -2102,7 +2110,7 @@ public class DBPopulator {
             BigDecimal kolbenhub, BigDecimal kesselueberdruck, BigDecimal rostflaeche, BigDecimal ueberhitzerflaeche, BigDecimal wasservorrat,
             BigDecimal verdampfung, Integer fahrmotoren, String motorbauart, BigDecimal leistungsuebertragung, BigDecimal reichweite, BigDecimal kapazitaet, Integer klasse, Integer sitzPlatzeKL1,
             Integer sitzPlatzeKL2, Integer sitzPlatzeKL3, Integer sitzPlatzeKL4, String aufbauten, Boolean triebzugAnzeigen,
-            Integer triebkoepfe, Integer mittelwagen, Integer sitzPlatzeTZKL1, Integer sitzPlatzeTzKL2,
+            Integer triebkoepfe, Integer mittelwagen, Integer sitzplatzeTzKL1, Integer sitzplatzeTzKL2,
             String drehgestellbauart) {
         return save(new Vorbild(null, gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit,
                  anzahl,  betreibsNummer,  antrieb,  achsfolg,  bezeichnung,  anfahrzugkraft,
@@ -2111,7 +2119,7 @@ public class DBPopulator {
                  kolbenhub,  kesselueberdruck,  rostflaeche,  ueberhitzerflaeche,  wasservorrat,
                  verdampfung,  fahrmotoren,  motorbauart,  leistungsuebertragung,  reichweite,  kapazitaet,  klasse,  sitzPlatzeKL1,
                  sitzPlatzeKL2,  sitzPlatzeKL3,  sitzPlatzeKL4,  aufbauten,  triebzugAnzeigen,
-                 triebkoepfe,  mittelwagen,  sitzPlatzeTZKL1,  sitzPlatzeTzKL2,
+                 triebkoepfe,  mittelwagen,  sitzplatzeTzKL1,  sitzplatzeTzKL2,
                  drehgestellbauart, false));
     }
 
@@ -2156,8 +2164,8 @@ public class DBPopulator {
         Boolean triebzugAnzeigen = null;
         Integer triebkoepfe = null;
         Integer mittelwagen = null;
-        Integer sitzPlatzeTZKL1 = null;
-        Integer sitzPlatzeTzKL2 = null;
+        Integer sitzplatzeTzKL1 = null;
+        Integer sitzplatzeTzKL2 = null;
         String drehgestellbauart = null;
  
         addVorbild(gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit,
@@ -2168,7 +2176,7 @@ public class DBPopulator {
                 verdampfung, fahrmotoren, motorbauart, leistungsuebertragung,
                 reichweite, kapazitaet, klasse, sitzPlatzeKL1, sitzPlatzeKL2, sitzPlatzeKL3, 
                 sitzPlatzeKL4, aufbauten, triebzugAnzeigen, triebkoepfe, mittelwagen, 
-                sitzPlatzeTZKL1, sitzPlatzeTzKL2, drehgestellbauart);
+                sitzplatzeTzKL1, sitzplatzeTzKL2, drehgestellbauart);
     }
 
     private Wahrung addWahrung(String name, String bezeichnung, Integer decimals) {
@@ -2312,7 +2320,7 @@ public class DBPopulator {
     }
 
     private IVorbild findVorbild(String name) {
-        return findName(name, Vorbild.class);
+        return findByKey(new VorbildKey(findGattung(name)), Vorbild.class);
     }
 
     private IWahrung findWahrung(String name) {

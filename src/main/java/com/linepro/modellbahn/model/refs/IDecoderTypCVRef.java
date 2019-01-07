@@ -8,14 +8,14 @@ import io.swagger.annotations.ApiModelProperty;
 public interface IDecoderTypCVRef extends ILinkRef {
 
     @JsonGetter(ApiNames.CV)
-    @ApiModelProperty(value = "", required = true)
+    @ApiModelProperty(value = "The CV number", required = true)
     Integer getCv();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
-    @ApiModelProperty(value = "", required = true)
+    @ApiModelProperty(value = "The CV usage", required = true)
     String getBezeichnung();
 
     @JsonGetter(ApiNames.WERKSEINSTELLUNG)
-    @ApiModelProperty(value = "", required = true)
+    @ApiModelProperty(value = "The default value", required = true)
     Integer getWerkseinstellung();
 }

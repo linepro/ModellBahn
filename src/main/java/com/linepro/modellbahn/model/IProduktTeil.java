@@ -29,52 +29,20 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
 @ApiModel(value = ApiNames.TEIL, description = "Part of product (spares for rolling stock - contents for set &c).")
 public interface IProduktTeil extends IItem<ProduktTeilKey>, IProduktTeilRef {
 
-    /**
-     * Gets the produkt.
-     *
-     * @return the produkt
-     */
     @JsonGetter(ApiNames.PRODUKT)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IProduktRef.class)
     @ApiModelProperty(value = "", accessMode = AccessMode.READ_ONLY, required = true)
     IProdukt getProdukt();
 
-    /**
-     * Sets the produkt.
-     *
-     * @param produkt the new produkt
-     */
     @JsonSetter(ApiNames.PRODUKT)
     @JsonDeserialize(as= Produkt.class)
     void setProdukt(IProdukt produkt);
-
-    @JsonGetter(ApiNames.TEIL)
-    @JsonView(Views.DropDown.class)
-    @JsonSerialize(as= IProduktRef.class)
-    @ApiModelProperty(value = "", accessMode = AccessMode.READ_ONLY, required = true)
-    IProdukt getTeil();
 
     @JsonSetter(ApiNames.TEIL)
     @JsonDeserialize(as= ProduktTeil.class)
     void setTeil(IProdukt teil);
 
-    /**
-     * Gets the anzahl.
-     *
-     * @return the anzahl
-     */
-    @JsonGetter(ApiNames.ANZAHL)
-    @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "", required = true)
-    Integer getAnzahl();
-
-    /**
-     * Sets the anzahl.
-     *
-     * @param anzahl the new anzahl
-     */
     @JsonSetter(ApiNames.ANZAHL)
     void setAnzahl(Integer anzahl);
-
 }

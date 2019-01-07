@@ -35,7 +35,7 @@ public class DecoderFunktionKey extends BaseKey {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append(ApiNames.DECODER, getDecoder().getName())
+                .append(ApiNames.DECODER, getDecoder().getDecoderId())
                 .append(ApiNames.FUNKTION, getFunktion())
                 .toString();
     }

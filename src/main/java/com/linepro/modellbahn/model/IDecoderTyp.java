@@ -37,11 +37,6 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
 @ApiModel(value = ApiNames.DECODER_TYP, description = "Decoder type - template for Decoder.")
 public interface IDecoderTyp extends IItem<DecoderTypKey>, IDecoderTypRef {
 
-    /**
-     * Sets the hersteller.
-     *
-     * @param hersteller the new hersteller
-     */
     @JsonSetter(ApiNames.HERSTELLER)
     @JsonDeserialize(as= Hersteller.class)
     @ApiModelProperty(value = "")
@@ -54,11 +49,6 @@ public interface IDecoderTyp extends IItem<DecoderTypKey>, IDecoderTypRef {
     @JsonSetter(ApiNames.BEZEICHNUNG)
     void setBezeichnung(String bezeichnung);
 
-    /**
-     * Gets the i max.
-     *
-     * @return the i max
-     */
     @JsonGetter(ApiNames.I_MAX)
     @JsonView(Views.Public.class)
     @ApiModelProperty(value = "")

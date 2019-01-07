@@ -12,7 +12,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiModelProperty.AccessMode;
 
-public interface IPictureRef {
+public interface IPictureRef extends IRef {
 
     /**
      * Gets the abbildung.

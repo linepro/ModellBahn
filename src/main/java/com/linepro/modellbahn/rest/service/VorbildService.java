@@ -30,7 +30,7 @@ import com.linepro.modellbahn.model.IGattung;
 import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.IVorbild;
 import com.linepro.modellbahn.model.impl.Vorbild;
-import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.model.keys.VorbildKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;
@@ -53,7 +53,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api(value = ApiNames.VORBILD, description = "Vorbild maintenance")
 @Path(ApiPaths.VORBILD)
-public class VorbildService extends AbstractItemService<NameKey, Vorbild> {
+public class VorbildService extends AbstractItemService<VorbildKey, Vorbild> {
 
     public VorbildService() {
         super(Vorbild.class);
@@ -101,8 +101,8 @@ public class VorbildService extends AbstractItemService<NameKey, Vorbild> {
             @JsonProperty(value=ApiNames.TRIEBZUGANZEIGEN) Boolean triebzugAnzeigen,
             @JsonProperty(value=ApiNames.TRIEBKOEPFE) Integer triebkoepfe,
             @JsonProperty(value=ApiNames.MITTELWAGEN) Integer mittelwagen,
-            @JsonProperty(value=ApiNames.SITZPLATZETZKL1) Integer sitzPlatzeTZKL1,
-            @JsonProperty(value=ApiNames.SITZPLATZETZKL2) Integer sitzPlatzeTzKL2,
+            @JsonProperty(value=ApiNames.SitzplatzeTzKL1) Integer sitzplatzeTzKL1,
+            @JsonProperty(value=ApiNames.SitzplatzeTzKL2) Integer sitzplatzeTzKL2,
             @JsonProperty(value=ApiNames.DREHGESTELLBAUART) String drehgestellbauart,
             @JsonProperty(value=ApiNames.ANMERKUNG) String anmerkung,
             @JsonProperty(value=ApiNames.ABBILDUNG) String abbildungStr,
@@ -110,7 +110,7 @@ public class VorbildService extends AbstractItemService<NameKey, Vorbild> {
         Vorbild entity = new Vorbild(id, gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit, anzahl, betreibsNummer, antrieb, achsfolg, anmerkung, anfahrzugkraft, leistung, dienstgewicht,
                 geschwindigkeit, lange, ausserdienst, dmTreibrad, dmLaufradVorn, dmLaufradHinten, zylinder, dmZylinder, kolbenhub, kesselueberdruck, rostflaeche, ueberhitzerflaeche,
                 wasservorrat, verdampfung, fahrmotoren, anmerkung, leistungsuebertragung, reichweite, kapazitaet, klasse, sitzPlatzeKL1, sitzPlatzeKL2, sitzPlatzeKL3,
-                sitzPlatzeKL4, aufbauten, triebzugAnzeigen, triebkoepfe, mittelwagen, sitzPlatzeTZKL1, sitzPlatzeTzKL2, drehgestellbauart, deleted);
+                sitzPlatzeKL4, aufbauten, triebzugAnzeigen, triebkoepfe, mittelwagen, sitzplatzeTzKL1, sitzplatzeTzKL2, drehgestellbauart, deleted);
 
         debug("created: " + entity);
 
@@ -123,7 +123,11 @@ public class VorbildService extends AbstractItemService<NameKey, Vorbild> {
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Finds a Vorbild by name", response = Vorbild.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
-        return super.get(name);
+        try {
+            return super.get(new VorbildKey(findGattung(name, false)));
+        } catch (Exception e) {
+            return getResponse(serverError(e));
+        }
     }
 
     @GET
@@ -173,8 +177,8 @@ public class VorbildService extends AbstractItemService<NameKey, Vorbild> {
         @ApiImplicitParam( name =  ApiNames.TRIEBZUGANZEIGEN, value = "", dataType = "String", paramType = "query"),
         @ApiImplicitParam( name =  ApiNames.TRIEBKOEPFE, value = "", dataType = "String", paramType = "query"),
         @ApiImplicitParam( name =  ApiNames.MITTELWAGEN, value = "", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name =  ApiNames.SITZPLATZETZKL1, value = "", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name =  ApiNames.SITZPLATZETZKL2, value = "", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name =  ApiNames.SitzplatzeTzKL1, value = "", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name =  ApiNames.SitzplatzeTzKL2, value = "", dataType = "String", paramType = "query"),
         @ApiImplicitParam( name =  ApiNames.DREHGESTELLBAUART, value = "", dataType = "String", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.DELETED, value = "if true include deleted Vorbild ", dataType = "Boolean", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "page number for paged queries", dataType = "Integer", paramType = "query"),

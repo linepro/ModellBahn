@@ -75,6 +75,8 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
     private final IIdGenerator idGenerator;
 
     private final String businessKeyQuery;
+
+    private String idKey;
     
     /**
      * Instantiates a new item persister.
@@ -105,7 +107,9 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         int i = 0;
 
         for (Selector businessKey : businessKeys.values()) {
-            if (i != 0) {
+            if (i == 0) {
+                idKey = businessKey.getName();
+            } else {
                 queryString.append(" AND ");
             }
             queryString.append("e.");
@@ -637,6 +641,6 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
     @Override
     public String getNextId() {
-        return idGenerator.getNextId(getEntityName());
+        return idGenerator.getNextId(getEntityName(), idKey);
     }
 }

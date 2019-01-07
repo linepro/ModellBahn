@@ -9,14 +9,8 @@ import io.swagger.annotations.ApiModelProperty;
 
 public interface IWahrungRef extends INamedItemRef {
 
-    /**
-     * Gets the decimals.
-     *
-     * @return the decimals
-     */
     @JsonGetter(ApiNames.DECIMALS)
     @JsonView(Views.DropDown.class)
     @ApiModelProperty(value = "", required = true)
     Integer getDecimals();
-
 }

@@ -32,7 +32,7 @@ import com.linepro.modellbahn.model.IProdukt;
 import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.impl.Artikel;
-import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.model.keys.ArtikelKey;
 import com.linepro.modellbahn.model.util.Status;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
@@ -58,7 +58,7 @@ import io.swagger.annotations.ApiResponses;
  */
 @Api(value = ApiNames.ARTIKEL, description = "Artikel maintenance")
 @Path(ApiPaths.ARTIKEL)
-public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
+public class ArtikelService extends AbstractItemService<ArtikelKey, Artikel> {
 
     public ArtikelService() {
         super(Artikel.class);
@@ -104,12 +104,12 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     }
 
     @GET
-    @Path(ApiPaths.ID_PART)
+    @Path(ApiPaths.ARTIKEL_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Finds an Artikel by id", response = Artikel.class)
-    public Response get(@PathParam(ApiPaths.ID_PARAM_NAME) Long id) {
-        return super.get(id);
+    public Response get(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String id) {
+        return super.get(new ArtikelKey(id));
     }
 
     @GET
@@ -152,26 +152,26 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     }
 
     @PUT
-    @Path(ApiPaths.ID_PART)
+    @Path(ApiPaths.ARTIKEL_PART)
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates an Artikel by id", response = Artikel.class)
-    public Response update(@PathParam(ApiPaths.ID_PARAM_NAME) Long name, Artikel entity) {
-        return super.update(name, entity);
+    public Response update(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, Artikel entity) {
+        return super.update(new ArtikelKey(artikelId), entity);
     }
 
     @DELETE
-    @Path(ApiPaths.ID_PART)
+    @Path(ApiPaths.ARTIKEL_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 204, value = "Deletes an Artikel by id")
-    public Response delete(@PathParam(ApiPaths.ID_PARAM_NAME) Long name) {
-        return super.delete(name);
+    public Response delete(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId) {
+        return super.delete(new ArtikelKey(artikelId));
     }
 
     @PUT
-    @Path(ApiPaths.ABBILDUNG_PART)
+    @Path(ApiPaths.ARTIKEL_ABBILDUNG)
     @Consumes({ MediaType.MULTIPART_FORM_DATA })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
@@ -181,7 +181,7 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
         @ApiResponse(code = 404, message = "Not Found"),
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
-    public Response updateAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name,
+    public Response updateAbbildung(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
         IFileUploadHandler handler = new FileUploadHandler();
@@ -191,10 +191,10 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
                 return getResponse(badRequest(null, "Invalid file '" + fileDetail.getFileName() + "'"));
             }
 
-            IArtikel artikel = findArtikel(name, false);
+            IArtikel artikel = findArtikel(artikelId, false);
 
             if (artikel != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { name }, fileDetail, fileData);
+                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { artikelId }, fileDetail, fileData);
 
                 artikel.setAbbildung(file);
 
@@ -217,9 +217,9 @@ public class ArtikelService extends AbstractItemService<NameKey, Artikel> {
     @ApiResponses({
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
-    public Response deleteAbbildung(@PathParam(ApiPaths.ID_PARAM_NAME) String name) {
+    public Response deleteAbbildung(@PathParam(ApiPaths.ID_PARAM_NAME) String artikelId) {
         try {
-            IArtikel artikel = findArtikel(name, false);
+            IArtikel artikel = findArtikel(artikelId, false);
 
             if (artikel != null && artikel.getAbbildung() != null) {
                 StaticContentFinder.getStore().removeFile(artikel.getAbbildung());

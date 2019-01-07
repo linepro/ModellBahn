@@ -12,7 +12,9 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -24,8 +26,10 @@ import com.linepro.modellbahn.model.IBahnverwaltung;
 import com.linepro.modellbahn.model.IGattung;
 import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.IVorbild;
+import com.linepro.modellbahn.model.keys.VorbildKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.persistence.util.PathConverter;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
@@ -48,7 +52,11 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
     private static final long serialVersionUID = -4852882107081643608L;
 
     /** The gattung. */
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.gattung.notnull}")
     private IGattung gattung;
+    
+    /** The bezeichnung. */
+    private String bezeichnung;
 
     /** The unter kategorie. */
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.unterKategorie.notnull}")
@@ -199,8 +207,8 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
     private Integer mittelwagen;
 
     /** The sitzplatze TZKL 1. */
-    @Positive(message = "{com.linepro.modellbahn.validator.constraints.sitzplatzeTZKL1.positive}")
-    private Integer sitzplatzeTZKL1;
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.sitzplatzeTzKL1.positive}")
+    private Integer sitzplatzeTzKL1;
 
     /** The sitzplatze tz KL 2. */
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.sitzplatzeTzKL2.positive}")
@@ -263,8 +271,8 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
      * @param triebzugAnzeigen the triebzug anzeigen
      * @param triebkoepfe the triebkoepfe
      * @param mittelwagen the mittelwagen
-     * @param sitzPlatzeTZKL1 the sitz platze TZKL 1
-     * @param sitzPlatzeTzKL2 the sitz platze tz KL 2
+     * @param sitzplatzeTzKL1 the sitz platze TZKL 1
+     * @param sitzplatzeTzKL2 the sitz platze tz KL 2
      * @param drehgestellbauart the drehgestellbauart
      * @param deleted the deleted
      * @param anmerkung remarks
@@ -276,11 +284,12 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
             BigDecimal kolbenhub, BigDecimal kesselueberdruck, BigDecimal rostflaeche, BigDecimal ueberhitzerflaeche, BigDecimal wasservorrat,
             BigDecimal verdampfung, Integer fahrmotoren, String motorbauart, BigDecimal leistungsuebertragung, BigDecimal reichweite, BigDecimal kapazitaet, Integer klasse, Integer sitzPlatzeKL1,
             Integer sitzPlatzeKL2, Integer sitzPlatzeKL3, Integer sitzPlatzeKL4, String aufbauten, Boolean triebzugAnzeigen,
-            Integer triebkoepfe, Integer mittelwagen, Integer sitzPlatzeTZKL1, Integer sitzPlatzeTzKL2,
+            Integer triebkoepfe, Integer mittelwagen, Integer sitzplatzeTzKL1, Integer sitzplatzeTzKL2,
             String drehgestellbauart, Boolean deleted) {
-        super(id, gattung.getName(), bezeichnung, deleted);
+        super(id, deleted);
 
         setGattung(gattung);
+        setBezeichnung(bezeichnung);
         setUnterKategorie(unterKategorie);
         setBahnverwaltung(bahnverwaltung);
         setHersteller(hersteller);
@@ -320,14 +329,15 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
         setTriebzugAnzeigen(triebzugAnzeigen);
         setTriebkoepfe(triebkoepfe);
         setMittelwagen(mittelwagen);
-        setSitzPlatzeTZKL1(sitzPlatzeTZKL1);
-        setSitzPlatzeTzKL2(sitzPlatzeTzKL2);
+        setSitzplatzeTzKL1(sitzplatzeTzKL1);
+        setSitzplatzeTzKL2(sitzplatzeTzKL2);
         setDrehgestellBauart(drehgestellbauart);
         setAbbildung(abbildung);
     }
 
     @Override
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gattung.class)
+    @BusinessKey
+    @OneToOne(fetch = FetchType.EAGER, targetEntity = Gattung.class)
     @JoinColumn(name = DBNames.GATTUNG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk1"))
     public IGattung getGattung() {
         return gattung;
@@ -336,6 +346,16 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
     @Override
     public void setGattung(IGattung gattung) {
         this.gattung = gattung;
+    }
+
+    @Column(name = DBNames.BEZEICHNUNG, length = 100)
+    public String getBezeichnung() {
+      return bezeichnung;
+    }
+
+    @Override
+    public void setBezeichnung(String bezeichnung) {
+      this.bezeichnung = bezeichnung;
     }
 
     @Override
@@ -770,25 +790,25 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.SITZPLATZETZKL1)
-    public Integer getSitzPlatzeTZKL1() {
-        return sitzplatzeTZKL1;
+    @Column(name = DBNames.SitzplatzeTzKL1)
+    public Integer getSitzplatzeTzKL1() {
+        return sitzplatzeTzKL1;
     }
 
     @Override
-    public void setSitzPlatzeTZKL1(Integer sitzPlatzeTZKL1) {
-        this.sitzplatzeTZKL1 = sitzPlatzeTZKL1;
+    public void setSitzplatzeTzKL1(Integer sitzplatzeTzKL1) {
+        this.sitzplatzeTzKL1 = sitzplatzeTzKL1;
     }
 
     @Override
-    @Column(name = DBNames.SITZPLATZETZKL2)
-    public Integer getSitzPlatzeTzKL2() {
+    @Column(name = DBNames.SitzplatzeTzKL2)
+    public Integer getSitzplatzeTzKL2() {
         return sitzplatzeTzKL2;
     }
 
     @Override
-    public void setSitzPlatzeTzKL2(Integer sitzPlatzeTzKL2) {
-        this.sitzplatzeTzKL2 = sitzPlatzeTzKL2;
+    public void setSitzplatzeTzKL2(Integer sitzplatzeTzKL2) {
+        this.sitzplatzeTzKL2 = sitzplatzeTzKL2;
     }
 
     @Override
@@ -812,6 +832,12 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
     @Override
     public void setAbbildung(Path abbildung) {
         this.abbildung = abbildung;
+    }
+
+    @Override
+    @Transient
+    public String getLinkId() {
+        return getGattung().getLinkId();
     }
 
     @Override
@@ -858,8 +884,8 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
                 .append(ApiNames.TRIEBZUGANZEIGEN, getTriebzugAnzeigen())
                 .append(ApiNames.TRIEBKOEPFE, getTriebkoepfe())
                 .append(ApiNames.MITTELWAGEN, getMittelwagen())
-                .append(ApiNames.SITZPLATZETZKL1, getSitzPlatzeTZKL1())
-                .append(ApiNames.SITZPLATZETZKL2, getSitzPlatzeTzKL2())
+                .append(ApiNames.SitzplatzeTzKL1, getSitzplatzeTzKL1())
+                .append(ApiNames.SitzplatzeTzKL2, getSitzplatzeTzKL2())
                 .append(ApiNames.DREHGESTELLBAUART, getDrehgestellBauart())
                 .append(ApiNames.ABBILDUNG, getAbbildung())
                 .toString();

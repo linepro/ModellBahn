@@ -14,16 +14,17 @@ public interface IDecoderRef extends ILinkRef {
 
     @JsonGetter(ApiNames.DECODER_ID)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "This Decoder's id", accessMode = AccessMode.READ_ONLY, required = true)
-    String getName();
-    /**
-     * Gets the decoder typ.
-     *
-     * @return the decoder typ
-     */
+    @ApiModelProperty(value = "The Decoder's id", accessMode = AccessMode.READ_ONLY, required = true)
+    String getDecoderId();
+
+    @JsonGetter(ApiNames.BEZEICHNUNG)
+    @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "The Decoder's description")
+    String getBezeichnung();
+
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IDecoderTypRef.class)
-    @ApiModelProperty(value = "This Decoder's type", required = true)
+    @ApiModelProperty(value = "The Decoder's type", required = true)
     IDecoderTyp getDecoderTyp();
 }

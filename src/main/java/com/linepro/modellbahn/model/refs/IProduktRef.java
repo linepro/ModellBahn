@@ -11,7 +11,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public interface IProduktRef extends ILinkRef, IPictureRef {
+public interface IProduktRef extends IPictureRef, IRef {
 
     @JsonGetter(ApiNames.HERSTELLER)
     @JsonView(Views.DropDown.class)
@@ -22,7 +22,7 @@ public interface IProduktRef extends ILinkRef, IPictureRef {
     @JsonGetter(ApiNames.BESTELL_NR)
     @JsonView(Views.DropDown.class)
     @ApiModelProperty(value = "The order number", required = true)
-    String getName();
+    String getBestellNr();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)

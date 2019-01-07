@@ -64,7 +64,7 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
     @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.bestellNr.notempty}")
     private String bestellNr;
 
-    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notnull}")
+    @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notempty}")
     private String bezeichnung;
 
     /** The i max. */
@@ -103,7 +103,7 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
         super();
     }
 
-    public DecoderTyp(Long id, IHersteller hersteller, IProtokoll protokoll, String name, String bezeichnung,
+    public DecoderTyp(Long id, IHersteller hersteller, IProtokoll protokoll, String bestellNr, String bezeichnung,
             Boolean sound, Konfiguration konfiguration, Boolean deleted) {
         super(id, deleted);
 
@@ -291,7 +291,7 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
     @Override
     @Transient
     public String getLinkId() {
-        return String.format(ApiPaths.DECODER_TYP_LINK, getHersteller().getLinkId(), super.getLinkId());
+        return String.format(ApiPaths.DECODER_TYP_LINK, getHersteller().getLinkId(), getBestellNr());
     }
 
     @Override

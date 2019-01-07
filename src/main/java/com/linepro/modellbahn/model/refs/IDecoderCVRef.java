@@ -7,15 +7,15 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public interface IDecoderCVRef extends ILinkRef {
+public interface IDecoderCVRef extends IRef {
 
     @JsonGetter(ApiNames.CV)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "", required = true)
+    @ApiModelProperty(value = "The CV number", required = true)
     Integer getCvValue();
 
     @JsonGetter(ApiNames.WERT)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "", required = true)
+    @ApiModelProperty(value = "The value", required = true)
     Integer getWert();
 }

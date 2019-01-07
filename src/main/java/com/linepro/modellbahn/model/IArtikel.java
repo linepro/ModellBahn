@@ -21,6 +21,7 @@ import com.linepro.modellbahn.model.impl.MotorTyp;
 import com.linepro.modellbahn.model.impl.Produkt;
 import com.linepro.modellbahn.model.impl.Steuerung;
 import com.linepro.modellbahn.model.impl.Wahrung;
+import com.linepro.modellbahn.model.keys.ArtikelKey;
 import com.linepro.modellbahn.model.refs.IArtikelRef;
 import com.linepro.modellbahn.model.refs.IDecoderRef;
 import com.linepro.modellbahn.model.refs.INamedItemRef;
@@ -45,12 +46,11 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = ApiNames.ARTIKEL, description = "An article - may differ from product because of modificiations")
 public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
 
-    /**
-     * Gets the produkt.
-     *
-     * @return the produkt
-     */
-    IProdukt getProdukt();
+    @JsonSetter(ApiNames.ARTIKEL_ID)
+    void setArtikelId(String artikelId);
+    
+    @JsonSetter(ApiNames.BEZEICHNUNG)
+    void setBezeichnung(String bezeichnung);
 
     /**
      * Sets the produkt.
@@ -300,5 +300,4 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      */
     @JsonSetter(ApiNames.STATUS)
     void setStatus(Status status);
-
 }

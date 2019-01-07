@@ -6,9 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.model.impl.Decoder;
 import com.linepro.modellbahn.model.keys.DecoderFunktionKey;
 import com.linepro.modellbahn.model.refs.IDecoderFunktionRef;
 import com.linepro.modellbahn.model.refs.IDecoderRef;
@@ -28,54 +26,18 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = ApiNames.FUNKTION, description = "Decoder function mapping.")
 public interface IDecoderFunktion extends IItem<DecoderFunktionKey>, IDecoderFunktionRef {
 
-    /**
-     * Gets the decoder.
-     *
-     * @return the decoder
-     */
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IDecoderRef.class)
     @ApiModelProperty(value = "", required = true)
     IDecoder getDecoder();
 
-    /**
-     * Sets the decoder.
-     *
-     * @param decoder the new decoder
-     */
-    @JsonSetter(ApiNames.DECODER)
-    @JsonDeserialize(as= Decoder.class)
+    @JsonIgnore
     void setDecoder(IDecoder decoder);
 
-    @JsonSetter(ApiNames.REIHE)
-    void setReihe(Integer reihe);
-
-    @JsonSetter(ApiNames.FUNKTION)
-    void setFunktionStr(String funktion);
-
-    /**
-     * Gets the funktion.
-     *
-     * @return the funktion
-     */
-    @JsonIgnore
-    IDecoderTypFunktion getFunktion();
-
-    /**
-     * Sets the funktion.
-     *
-     * @param funktion the new funktion
-     */
     @JsonIgnore
     void setFunktion(IDecoderTypFunktion funktion);
 
-    /**
-     * Sets the bezeichnung.
-     *
-     * @param bezeichnung the new bezeichnung
-     */
     @JsonSetter(ApiNames.BEZEICHNUNG)
     void setBezeichnung(String bezeichnung);
-
 }

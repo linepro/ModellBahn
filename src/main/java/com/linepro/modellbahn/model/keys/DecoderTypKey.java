@@ -29,14 +29,14 @@ public class DecoderTypKey extends BaseKey {
     @Override
     public void addCriteria(Query query) {
         query.setParameter(DBNames.HERSTELLER, getHersteller());
-        query.setParameter(DBNames.NAME, getBestellNr());
+        query.setParameter(DBNames.BESTELL_NR, getBestellNr());
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append(ApiNames.HERSTELLER, getHersteller())
-                .append(ApiNames.NAMEN, getBestellNr())
+                .append(ApiNames.BESTELL_NR, getBestellNr())
                 .toString();
     }
 }

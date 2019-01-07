@@ -11,11 +11,6 @@ import io.swagger.annotations.ApiModelProperty;
 
 public interface IDecoderTypRef extends ILinkRef {
 
-    /**
-     * Gets the hersteller.
-     *
-     * @return the hersteller
-     */
     @JsonGetter(ApiNames.HERSTELLER)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= INamedItemRef.class)

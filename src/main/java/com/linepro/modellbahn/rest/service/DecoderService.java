@@ -30,7 +30,7 @@ import com.linepro.modellbahn.model.impl.DecoderCV;
 import com.linepro.modellbahn.model.impl.DecoderFunktion;
 import com.linepro.modellbahn.model.impl.DecoderTyp;
 import com.linepro.modellbahn.model.impl.Protokoll;
-import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.model.keys.DecoderKey;
 import com.linepro.modellbahn.model.util.AdressTyp;
 import com.linepro.modellbahn.model.util.DecoderCreator;
 import com.linepro.modellbahn.rest.json.Views;
@@ -53,7 +53,7 @@ import io.swagger.annotations.ApiResponses;
  */
 @Api(value = ApiNames.DECODER, description = "Decoder maintenance")
 @Path(ApiPaths.DECODER)
-public class DecoderService extends AbstractItemService<NameKey, Decoder> {
+public class DecoderService extends AbstractItemService<DecoderKey, Decoder> {
 
     public DecoderService() {
         super(Decoder.class);
@@ -153,12 +153,12 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     }
 
     @GET
-    @Path(ApiPaths.NAME_PART)
+    @Path(ApiPaths.DECODER_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Finds a Decoder by decoderId", response = Decoder.class)
     public Response get(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId) {
-        return super.get(decoderId);
+        return super.get(new DecoderKey(decoderId));
     }
 
     @GET
@@ -178,22 +178,22 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     }
 
     @PUT
-    @Path(ApiPaths.NAME_PART)
+    @Path(ApiPaths.DECODER_PART)
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a Decoder by decoderId", response = Decoder.class)
     public Response update(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId, Decoder entity) {
-        return super.update(decoderId, entity);
+        return super.update(new DecoderKey(decoderId), entity);
     }
 
     @DELETE
-    @Path(ApiPaths.NAME_PART)
+    @Path(ApiPaths.DECODER_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 204, value = "Deletes a Decoder by decoderId", response = Decoder.class)
     public Response delete(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId) {
-        return super.delete(decoderId);
+        return super.delete(new DecoderKey(decoderId));
     }
 
     @GET
@@ -423,8 +423,8 @@ public class DecoderService extends AbstractItemService<NameKey, Decoder> {
     private IDecoderFunktion findDecoderFunktion(IDecoder decoder, Integer reihe, String funktion, boolean eager) {
         try {
             for (IDecoderFunktion decoderFunktion : decoder.getFunktionen()) {
-                if (reihe.equals(decoderFunktion.getReihe()) &&
-                    funktion.equals(decoderFunktion.getFunktionStr())) {
+                if (reihe.equals(decoderFunktion.getFunktion().getReihe()) &&
+                    funktion.equals(decoderFunktion.getFunktion().getFunktion())) {
                     return decoderFunktion;
                 }
             }

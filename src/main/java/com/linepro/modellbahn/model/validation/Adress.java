@@ -29,7 +29,7 @@ import org.hibernate.validator.constraints.ConstraintComposition;
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
 public @interface Adress {
-    String message() default "{com.linepro.modellbahn.validator.constraints.Adress.message}";
+    String message() default "{com.linepro.modellbahn.validator.constraints.adress.invalid}";
 
     Class<?>[] groups() default { };
 

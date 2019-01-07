@@ -30,7 +30,7 @@ public class ListWithLinks<E extends IItem<?>> {
 
     @JsonGetter
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "", required = true)
+    @ApiModelProperty(value = "The entities", required = true)
     public List<E> getEntities() {
         return entities;
     }

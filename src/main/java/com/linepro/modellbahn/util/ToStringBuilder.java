@@ -4,14 +4,18 @@ import java.io.File;
 
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import com.linepro.modellbahn.model.refs.IDecoderTypRef;
+import com.linepro.modellbahn.model.IArtikel;
+import com.linepro.modellbahn.model.IDecoder;
+import com.linepro.modellbahn.model.IDecoderTyp;
+import com.linepro.modellbahn.model.IProdukt;
+import com.linepro.modellbahn.model.IProduktTeil;
+import com.linepro.modellbahn.model.IUnterKategorie;
+import com.linepro.modellbahn.model.IZugConsist;
 import com.linepro.modellbahn.model.refs.INamedItemRef;
-import com.linepro.modellbahn.model.refs.IProduktRef;
 
 /**
  * TODO: by proxy??
  * @author jgoff
- *
  */
 public class ToStringBuilder extends org.apache.commons.lang3.builder.ToStringBuilder {
 
@@ -321,18 +325,43 @@ public class ToStringBuilder extends org.apache.commons.lang3.builder.ToStringBu
         return this;
     }
 
-    public ToStringBuilder append(String fieldName, IDecoderTypRef value) {
-        super.append(fieldName, value != null ?  new Object[] { value.getHersteller(), value.getName() } : null);
+    public ToStringBuilder append(String fieldName, IArtikel value) {
+        super.append(fieldName, value != null ? new Object[] {value.getArtikelId(), value.getBezeichnung()} : null);
+        return this;
+    }
+
+    public ToStringBuilder append(String fieldName, IDecoder value) {
+        super.append(fieldName, value != null ? new Object[] {value.getDecoderId(), value.getBezeichnung()} : null);
         return this;
     }
 
     public ToStringBuilder append(String fieldName, INamedItemRef value) {
-        super.append(fieldName, value != null ? value.getName() : null);
+        super.append(fieldName, value != null ? new Object[] {value.getName(), value.getBezeichnung()} : null);
         return this;
     }
 
-    public ToStringBuilder append(String fieldName, IProduktRef value) {
-        super.append(fieldName, value != null ? new Object[] { value.getHersteller(), value.getName() } : null);
+    public ToStringBuilder append(String fieldName, IDecoderTyp value) {
+        super.append(fieldName, value != null ? new Object[] {value.getHersteller(), value.getBestellNr()} : null);
+        return this;
+    }
+
+    public ToStringBuilder append(String fieldName, IProdukt value) {
+        super.append(fieldName, value != null ? new Object[] {value.getHersteller(), value.getBestellNr()} : null);
+        return this;
+    }
+
+    public ToStringBuilder append(String fieldName, IProduktTeil value) {
+        super.append(fieldName, value != null ? new Object[] { value.getTeil(), value.getAnzahl()} : null);
+        return this;
+    }
+
+    public ToStringBuilder append(String fieldName, IUnterKategorie value) {
+        super.append(fieldName, value != null ? new Object[] {value.getName(), value.getBezeichnung()} : null);
+        return this;
+    }
+
+    public ToStringBuilder append(String fieldName, IZugConsist value) {
+        super.append(fieldName, value != null ? new Object[] {value.getPosition(), value.getArtikel()} : null);
         return this;
     }
 

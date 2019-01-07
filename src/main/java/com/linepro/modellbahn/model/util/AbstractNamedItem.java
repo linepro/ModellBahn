@@ -1,15 +1,13 @@
 package com.linepro.modellbahn.model.util;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -38,14 +36,10 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
    */
   private static final long serialVersionUID = -278823660682127691L;
 
-  protected static final String[] BUSINESS_KEY = new String[]{ApiNames.NAMEN};
-
-  protected static final List<Character> URL_SPECIAL_CHARS = Arrays
-      .asList(':', '/', '@', '[', ']', '?', '&', '=', '+');
-
   /**
    * The name.
    */
+  @Pattern(regexp = "^[A-Z0-9\\-\\.]+$", message = "{com.linepro.modellbahn.validator.constraints.name.invalid}")
   @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.name.notempty}")
   private String name;
 
@@ -111,19 +105,7 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
   @Override
   @Transient
   public String getLinkId() {
-    return getName().codePoints()
-        .mapToObj(this::encodeChar)
-        .collect(Collectors.joining(""));
-  }
-
-  private String encodeChar(int ch) {
-    return isUrlSpecialChar(ch) ?
-        Character.toString((char) ch) :
-        String.format("%%%02x", ch);
-  }
-
-  private boolean isUrlSpecialChar(int ch) {
-    return URL_SPECIAL_CHARS.contains((char) ch);
+    return getName();
   }
 
   @Override

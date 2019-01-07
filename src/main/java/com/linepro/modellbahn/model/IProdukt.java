@@ -36,6 +36,7 @@ import com.linepro.modellbahn.model.refs.IDecoderTypRef;
 import com.linepro.modellbahn.model.refs.INamedItemRef;
 import com.linepro.modellbahn.model.refs.IProduktRef;
 import com.linepro.modellbahn.model.refs.IProduktTeilRef;
+import com.linepro.modellbahn.model.refs.IVorbildRef;
 import com.linepro.modellbahn.rest.json.Formats;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.LocalDateDeserializer;
@@ -61,169 +62,84 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
         ApiNames.MOTOR_TYP, ApiNames.LANGE, ApiNames.ANLEITUNGEN, ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.ABBILDUNG,
         ApiNames.TEILEN, ApiNames.DELETED, ApiNames.LINKS })
 @ApiModel(value = ApiNames.PRODUKT, description = "Product - template for article.")
-public interface IProdukt extends INamedItem<ProduktKey>, IProduktRef {
+public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
 
-    /**
-     * Sets the hersteller.
-     *
-     * @param hersteller
-     *            the new hersteller
-     */
     @JsonSetter(ApiNames.HERSTELLER)
     @JsonDeserialize(as = Hersteller.class)
     void setHersteller(IHersteller hersteller);
 
     @JsonSetter(ApiNames.BESTELL_NR)
-    void setName(String bestellNr);
+    void setBestellNr(String bestellNr);
 
-    /**
-     * Gets the unter kategorie.
-     *
-     * @return the unter kategorie
-     */
+    void setBezeichnung(String bezeichnung);
+
     @JsonGetter(ApiNames.UNTER_KATEGORIE)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as = IUnterKategorie.class)
     IUnterKategorie getUnterKategorie();
 
-    /**
-     * Sets the unter kategorie.
-     *
-     * @param unterKategorie
-     *            the new unter kategorie
-     */
     @JsonSetter(ApiNames.UNTER_KATEGORIE)
     @JsonDeserialize(as = UnterKategorie.class)
     void setUnterKategorie(IUnterKategorie unterKategorie);
 
-    /**
-     * Gets the massstab.
-     *
-     * @return the massstab
-     */
     @JsonGetter(ApiNames.MASSSTAB)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= INamedItemRef.class)
     @ApiModelProperty(value = "")
     IMassstab getMassstab();
 
-    /**
-     * Sets the massstab.
-     *
-     * @param massstab
-     *            the new massstab
-     */
     @JsonSetter(ApiNames.MASSSTAB)
     @JsonDeserialize(as = Massstab.class)
     void setMassstab(IMassstab massstab);
 
-    /**
-     * Gets the spurweite.
-     *
-     * @return the spurweite
-     */
     @JsonGetter(ApiNames.SPURWEITE)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= INamedItemRef.class)
     @ApiModelProperty(value = "")
     ISpurweite getSpurweite();
 
-    /**
-     * Sets the spurweite.
-     *
-     * @param spurweite
-     *            the new spurweite
-     */
     @JsonSetter(ApiNames.SPURWEITE)
     @JsonDeserialize(as = Spurweite.class)
     void setSpurweite(ISpurweite spurweite);
-    /**
-     * Gets the epoch.
-     *
-     * @return the epoch
-     */
+
     @JsonGetter(ApiNames.EPOCH)
     @JsonView(Views.Public.class)
     @JsonSerialize(as= INamedItemRef.class)
     @ApiModelProperty(value = "")
     IEpoch getEpoch();
 
-    /**
-     * Sets the epoch.
-     *
-     * @param epoch
-     *            the new epoch
-     */
     @JsonSetter(ApiNames.EPOCH)
     @JsonDeserialize(as = Epoch.class)
     void setEpoch(IEpoch epoch);
 
-    /**
-     * Gets the bahnverwaltung.
-     *
-     * @return the bahnverwaltung
-     */
     @JsonGetter(ApiNames.BAHNVERWALTUNG)
     @JsonView(Views.Public.class)
     @JsonSerialize(as= INamedItemRef.class)
     @ApiModelProperty(value = "")
     IBahnverwaltung getBahnverwaltung();
 
-    /**
-     * Sets the bahnverwaltung.
-     *
-     * @param bahnverwaltung
-     *            the new bahnverwaltung
-     */
     @JsonSetter(ApiNames.BAHNVERWALTUNG)
     @JsonDeserialize(as = Bahnverwaltung.class)
     void setBahnverwaltung(IBahnverwaltung bahnverwaltung);
 
-    /**
-     * Gets the gattung.
-     *
-     * @return the gattung
-     */
     @JsonGetter(ApiNames.GATTUNG)
     @JsonView(Views.Public.class)
     @JsonSerialize(as= INamedItemRef.class)
     @ApiModelProperty(value = "")
     IGattung getGattung();
 
-    /**
-     * Sets the gattung.
-     *
-     * @param gattung
-     *            the new gattung
-     */
     @JsonSetter(ApiNames.GATTUNG)
     @JsonDeserialize(as = Gattung.class)
     void setGattung(IGattung gattung);
 
-    /**
-     * Gets the betreibsnummer.
-     *
-     * @return the betreibsnummer
-     */
     @JsonGetter(ApiNames.BETREIBSNUMMER)
     @JsonView(Views.Public.class)
     @ApiModelProperty(value = "")
     String getBetreibsnummer();
 
-    /**
-     * Sets the betreibsnummer.
-     *
-     * @param betreibsnummer
-     *            the new betreibsnummer
-     */
     @JsonSetter(ApiNames.BETREIBSNUMMER)
     void setBetreibsnummer(String betreibsnummer);
 
-    /**
-     * Gets the bauzeit.
-     *
-     * @return the bauzeit
-     */
     @JsonGetter(ApiNames.BAUZEIT)
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonView(Views.Public.class)
@@ -231,24 +147,13 @@ public interface IProdukt extends INamedItem<ProduktKey>, IProduktRef {
     @ApiModelProperty(dataType = "java.time.LocalDate", value = "")
     LocalDate getBauzeit();
 
-    /**
-     * Sets the bauzeit.
-     *
-     * @param bauzeit
-     *            the new bauzeit
-     */
     @JsonSetter(ApiNames.BAUZEIT)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     void setBauzeit(LocalDate bauzeit);
 
-    /**
-     * Gets the vorbild.
-     *
-     * @return the vorbild
-     */
     @JsonGetter(ApiNames.VORBILD)
     @JsonView(Views.Public.class)
-    @JsonSerialize(as= INamedItemRef.class)
+    @JsonSerialize(as= IVorbildRef.class)
     @ApiModelProperty(value = "")
     IVorbild getVorbild();
 

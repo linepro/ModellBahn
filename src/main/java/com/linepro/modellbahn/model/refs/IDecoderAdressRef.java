@@ -8,7 +8,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public interface IDecoderAdressRef extends IAdress, ILinkRef {
+public interface IDecoderAdressRef extends IAdress, IRef {
 
     @JsonGetter(ApiNames.INDEX)
     @JsonView(Views.DropDown.class)

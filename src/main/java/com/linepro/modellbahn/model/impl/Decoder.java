@@ -14,8 +14,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderAdress;
@@ -23,6 +26,7 @@ import com.linepro.modellbahn.model.IDecoderCV;
 import com.linepro.modellbahn.model.IDecoderFunktion;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IProtokoll;
+import com.linepro.modellbahn.model.keys.DecoderKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
@@ -36,12 +40,19 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name = DBNames.DECODER)
-@Table(name = DBNames.DECODER, indexes = { @Index(columnList = DBNames.NAME, unique = true), @Index(columnList = DBNames.DECODER_TYP_ID),
-        @Index(columnList = DBNames.PROTOKOLL_ID) }, uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.NAME }) })
+@Table(name = DBNames.DECODER, indexes = { @Index(columnList = DBNames.DECODER_ID, unique = true), @Index(columnList = DBNames.DECODER_TYP_ID),
+        @Index(columnList = DBNames.PROTOKOLL_ID) }, uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.DECODER_ID }) })
 public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 44440227704021482L;
+
+    @Pattern(regexp = "^[A-Z0-9]+$", message = "{com.linepro.modellbahn.validator.constraints.decoderId.invalid}")
+    @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.decoderId.notempty}")
+    private String decoderId;
+
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notnull}")
+    private String bezeichnung;
 
     /** The typ. */
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoderTyp.notnull}")
@@ -72,7 +83,7 @@ public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
     }
 
     public Decoder(String decoderId) {
-        super(decoderId);
+        this(null, null, null, decoderId, null, null, false);
     }
 
     /**
@@ -87,8 +98,10 @@ public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
      * @param deleted the deleted
      */
     public Decoder(Long id, IDecoderTyp typ, IProtokoll protokoll, String decoderId, String bezeichnung, Integer fahrstufe, Boolean deleted) {
-        super(id, decoderId, bezeichnung, deleted);
+        super(id, deleted);
 
+        setDecoderId(decoderId);
+        setBezeichnung(bezeichnung);
         setDecoderTyp(typ);
         setProtokoll(protokoll);
         setFahrstufe(fahrstufe);
@@ -96,16 +109,26 @@ public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
 
     @Override
     @BusinessKey
-    @Column(name=DBNames.NAME, unique=true, length=50)
-    public String getName() {
-        return super.getName();
+    @Column(name=DBNames.DECODER_ID, unique=true, length=50)
+    public String getDecoderId() {
+        return decoderId;
     }
 
     @Override
-    public void setName(String name) {
-        super.setName(name);
+    public void setDecoderId(String decoderId) {
+        this.decoderId = decoderId;
     }
 
+    @Column(name = DBNames.BEZEICHNUNG, length = 100)
+    public String getBezeichnung() {
+      return bezeichnung;
+    }
+
+    @Override
+    public void setBezeichnung(String bezeichnung) {
+      this.bezeichnung = bezeichnung;
+    }
+    
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
     @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER + "_fk1"))
@@ -205,6 +228,12 @@ public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
     @Override
     public void removeFunktion(IDecoderFunktion funktion) {
         getFunktionen().remove(funktion);
+    }
+
+    @Override
+    @Transient
+    public String getLinkId() {
+        return getDecoderId();
     }
 
     @Override
