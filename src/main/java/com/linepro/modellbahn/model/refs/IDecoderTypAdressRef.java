@@ -6,7 +6,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public interface IDecoderTypAdressRef extends IAdress, ILinkRef {
+public interface IDecoderTypAdressRef extends IAdress, IRef {
 
     @JsonGetter(ApiNames.INDEX)
     @ApiModelProperty(value = "The 0 based address index (always 0 for single address decoders)", required = true)

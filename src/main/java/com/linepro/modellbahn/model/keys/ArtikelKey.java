@@ -20,7 +20,7 @@ public class ArtikelKey extends BaseKey {
     
     @Override
     public void addCriteria(Query query) {
-        query.setParameter(DBNames.ARTIKEL_ID, getArtikelId());
+        query.setParameter(ApiNames.ARTIKEL_ID, getArtikelId());
     }
 
     @Override

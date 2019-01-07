@@ -5,7 +5,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public interface IDecoderTypCVRef extends ILinkRef {
+public interface IDecoderTypCVRef extends IRef {
 
     @JsonGetter(ApiNames.CV)
     @ApiModelProperty(value = "The CV number", required = true)

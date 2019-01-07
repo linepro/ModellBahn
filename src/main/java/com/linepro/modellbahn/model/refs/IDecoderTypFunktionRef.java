@@ -7,7 +7,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public interface IDecoderTypFunktionRef extends ILinkRef {
+public interface IDecoderTypFunktionRef extends IRef {
 
     @JsonGetter(ApiNames.REIHE)
     @JsonView(Views.DropDown.class)

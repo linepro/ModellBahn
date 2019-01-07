@@ -2,7 +2,6 @@ package com.linepro.modellbahn.model.keys;
 
 import javax.persistence.Query;
 
-import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
@@ -20,7 +19,7 @@ public class DecoderKey extends BaseKey {
     
     @Override
     public void addCriteria(Query query) {
-        query.setParameter(DBNames.DECODER_ID, getDecoderId());
+        query.setParameter(ApiNames.DECODER_ID, getDecoderId());
     }
 
     @Override
