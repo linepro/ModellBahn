@@ -15,11 +15,11 @@ public interface IProduktTeilRef extends IRef {
     @JsonGetter(ApiNames.TEIL)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IProduktRef.class)
-    @ApiModelProperty(value = "", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IProduktRef", value = "The sub product details (spare parts / set contents)", accessMode = AccessMode.READ_ONLY, required = true)
     IProdukt getTeil();
 
     @JsonGetter(ApiNames.ANZAHL)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "", required = true)
+    @ApiModelProperty(value = "The number included", example = "1", required = true)
     Integer getAnzahl();
 }

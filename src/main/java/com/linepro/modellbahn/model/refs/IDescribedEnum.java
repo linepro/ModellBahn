@@ -7,15 +7,15 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public interface IDescribedEnum {
+public interface IDescribedEnum extends INamedItemRef {
 
     @JsonGetter(ApiNames.NAMEN)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "", required = true)
+    @ApiModelProperty(value = "The Enum name", required = true)
     String getName();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "", required = true)
-    String getDescription();
+    @ApiModelProperty(value = "The Enum display name", required = true)
+    String getBezeichnung();
 }

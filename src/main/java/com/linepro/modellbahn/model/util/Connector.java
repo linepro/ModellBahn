@@ -36,7 +36,7 @@ public enum Connector implements IDescribedEnum {
     }
 
     @Override
-    public String getDescription() {
+    public String getBezeichnung() {
         return description;
     }
 }

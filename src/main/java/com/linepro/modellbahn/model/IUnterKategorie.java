@@ -8,7 +8,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.impl.Kategorie;
 import com.linepro.modellbahn.model.keys.UnterKategorieKey;
-import com.linepro.modellbahn.model.refs.INamedItemRef;
+import com.linepro.modellbahn.model.refs.IKategorieRef;
+import com.linepro.modellbahn.model.refs.IUnterKategorieRef;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
@@ -23,12 +24,12 @@ import io.swagger.annotations.ApiModelProperty;
 @JsonRootName(value = ApiNames.UNTER_KATEGORIE)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.KATEGORIE, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS})
 @ApiModel(value = ApiNames.UNTER_KATEGORIE, description = "Sub category.")
-public interface IUnterKategorie extends INamedItem<UnterKategorieKey>, INamedItemRef {
+public interface IUnterKategorie extends INamedItem<UnterKategorieKey>, IUnterKategorieRef {
 
     @JsonGetter(ApiNames.KATEGORIE)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(as= INamedItemRef.class)
-    @ApiModelProperty(value = "", required = true)
+    @JsonSerialize(as= IKategorieRef.class)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IKategorieRef", value = "The head category", required = true)
     IKategorie getKategorie();
 
     /**

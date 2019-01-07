@@ -53,10 +53,10 @@ public class LichtService extends AbstractItemService<NameKey, Licht> {
     }
 
     @JsonCreator
-    public Licht create(@JsonProperty(value=ApiNames.ID) Long id,
-                    @JsonProperty(value=ApiPaths.NAME_PARAM_NAME) String name,
-                    @JsonProperty(value=ApiNames.BEZEICHNUNG) String bezeichnung,
-                    @JsonProperty(value=ApiNames.DELETED) Boolean deleted) {
+    public Licht create(@JsonProperty(value = ApiNames.ID) Long id,
+                    @JsonProperty(value = ApiPaths.NAME_PARAM_NAME) String name,
+                    @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
+                    @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         Licht entity = new Licht(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);

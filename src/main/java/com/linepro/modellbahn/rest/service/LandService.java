@@ -44,11 +44,11 @@ public class LandService extends AbstractItemService<NameKey, Land> {
     }
 
     @JsonCreator
-    public Land create(@JsonProperty(value=ApiNames.ID) Long id,
-                    @JsonProperty(value=ApiPaths.NAME_PARAM_NAME) String name,
-                    @JsonProperty(value=ApiNames.WAHRUNG) String wahrungStr,
-                    @JsonProperty(value=ApiNames.BEZEICHNUNG) String bezeichnung,
-                    @JsonProperty(value=ApiNames.DELETED) Boolean deleted) throws Exception {
+    public Land create(@JsonProperty(value = ApiNames.ID) Long id,
+                    @JsonProperty(value = ApiPaths.NAME_PARAM_NAME) String name,
+                    @JsonProperty(value = ApiNames.WAHRUNG) String wahrungStr,
+                    @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
+                    @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         IWahrung wahrung = findWahrung(wahrungStr, false);
  
         Land entity = new Land(id, name, bezeichnung, wahrung, deleted);

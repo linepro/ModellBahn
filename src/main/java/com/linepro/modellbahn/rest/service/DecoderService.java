@@ -51,7 +51,7 @@ import io.swagger.annotations.ApiResponses;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.DECODER, description = "Decoder maintenance")
+@Api(value = ApiNames.DECODER)
 @Path(ApiPaths.DECODER)
 public class DecoderService extends AbstractItemService<DecoderKey, Decoder> {
 

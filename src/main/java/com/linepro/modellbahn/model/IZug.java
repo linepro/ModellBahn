@@ -12,8 +12,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.impl.ZugTyp;
 import com.linepro.modellbahn.model.keys.NameKey;
-import com.linepro.modellbahn.model.refs.INamedItemRef;
 import com.linepro.modellbahn.model.refs.IZugConsistRef;
+import com.linepro.modellbahn.model.refs.IZugRef;
+import com.linepro.modellbahn.model.refs.IZugTypRef;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
@@ -23,47 +24,44 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * IZug.
- * @author   $Author$
- * @version  $Id$
+ * @author $Author$
+ * @version $Id$
  */
 @JsonRootName(value = ApiNames.ZUG)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.ZUG_TYP, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.CONSIST, ApiNames.LINKS})
-@ApiModel(value = ApiNames.ZUG, description = "Train.")
-public interface IZug extends INamedItem<NameKey>, INamedItemRef {
+@JsonPropertyOrder({ApiNames.ID, ApiNames.ZUG_TYP, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED,
+        ApiNames.CONSIST, ApiNames.LINKS})
+@ApiModel(value = ApiNames.ZUG, description = "A running train configuration.")
+public interface IZug extends INamedItem<NameKey>, IZugRef {
 
     /**
      * Gets the typ.
-     *
      * @return the typ
      */
     @JsonGetter(ApiNames.ZUG_TYP)
-    @JsonSerialize(as = INamedItemRef.class)
-    @ApiModelProperty(value = "", required = true)
+    @JsonSerialize(as = IZugTypRef.class)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IZugTypRef", value = "The Train type", required = true)
     IZugTyp getZugTyp();
 
     /**
      * Sets the typ.
-     *
      * @param typ the new typ
      */
     @JsonSetter(ApiNames.ZUG_TYP)
-    @JsonDeserialize(as= ZugTyp.class)
+    @JsonDeserialize(as = ZugTyp.class)
     void setZugTyp(IZugTyp typ);
 
     /**
      * Gets the consist.
-     *
      * @return the consist
      */
     @JsonGetter(ApiNames.CONSIST)
     @JsonSerialize(contentAs = IZugConsistRef.class)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IZugConsistRef;", value = "The train composition", accessMode = AccessMode.READ_ONLY)
     Set<IZugConsist> getConsist();
 
     /**
      * Sets the consist.
-     *
      * @param consist the new consist
      */
     @JsonIgnore

@@ -11,6 +11,6 @@ public interface IWahrungRef extends INamedItemRef {
 
     @JsonGetter(ApiNames.DECIMALS)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "", required = true)
+    @ApiModelProperty(value = "The number of decimal places", example = "2", required = true)
     Integer getDecimals();
 }

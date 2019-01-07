@@ -78,30 +78,30 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     }
 
     @JsonCreator
-    public Produkt create(@JsonProperty(value=ApiNames.ID) Long id,
-            @JsonProperty(value=ApiNames.HERSTELLER) String herstellerStr,
-            @JsonProperty(value=ApiNames.BESTELL_NR) String bestellNr,
-            @JsonProperty(value=ApiNames.BEZEICHNUNG) String bezeichnung,
-            @JsonProperty(value=ApiNames.UNTER_KATEGORIE) UnterKategorie unterKategorie,
-            @JsonProperty(value=ApiNames.MASSSTAB) String massstabStr,
-            @JsonProperty(value=ApiNames.SPURWEITE) String spurweiteStr,
-            @JsonProperty(value=ApiNames.BETREIBSNUMMER) String betreibsNummer,
-            @JsonProperty(value=ApiNames.EPOCH) String epochStr,
-            @JsonProperty(value=ApiNames.BAHNVERWALTUNG) String bahnverwaltungStr,
-            @JsonProperty(value=ApiNames.GATTUNG) String gattungStr,
-            @JsonProperty(value=ApiNames.BAUZEIT) LocalDate bauzeit,
-            @JsonProperty(value=ApiNames.ACHSFOLG) String achsfolgStr,
-            @JsonProperty(value=ApiNames.VORBILD) String vorbildStr,
-            @JsonProperty(value=ApiNames.ANMERKUNG) String anmerkung,
-            @JsonProperty(value=ApiNames.SONDERMODELL) String sondermodellStr,
-            @JsonProperty(value=ApiNames.AUFBAU) String aufbauStr,
-            @JsonProperty(value=ApiNames.LICHT) String lichtStr,
-            @JsonProperty(value=ApiNames.KUPPLUNG) String kupplungStr,
-            @JsonProperty(value=ApiNames.STEUERUNG) String steuerungStr,
-            @JsonProperty(value=ApiNames.DECODER_TYP) DecoderTyp decoderTyp,
-            @JsonProperty(value=ApiNames.MOTOR_TYP) String motorTypStr,
-            @JsonProperty(value=ApiNames.LANGE) BigDecimal lange,
-            @JsonProperty(value=ApiNames.DELETED) Boolean deleted) throws Exception {
+    public Produkt create(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.HERSTELLER) String herstellerStr,
+            @JsonProperty(value = ApiNames.BESTELL_NR) String bestellNr,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
+            @JsonProperty(value = ApiNames.UNTER_KATEGORIE) UnterKategorie unterKategorie,
+            @JsonProperty(value = ApiNames.MASSSTAB) String massstabStr,
+            @JsonProperty(value = ApiNames.SPURWEITE) String spurweiteStr,
+            @JsonProperty(value = ApiNames.BETREIBSNUMMER) String betreibsNummer,
+            @JsonProperty(value = ApiNames.EPOCH) String epochStr,
+            @JsonProperty(value = ApiNames.BAHNVERWALTUNG) String bahnverwaltungStr,
+            @JsonProperty(value = ApiNames.GATTUNG) String gattungStr,
+            @JsonProperty(value = ApiNames.BAUZEIT) LocalDate bauzeit,
+            @JsonProperty(value = ApiNames.ACHSFOLG) String achsfolgStr,
+            @JsonProperty(value = ApiNames.VORBILD) String vorbildStr,
+            @JsonProperty(value = ApiNames.ANMERKUNG) String anmerkung,
+            @JsonProperty(value = ApiNames.SONDERMODELL) String sondermodellStr,
+            @JsonProperty(value = ApiNames.AUFBAU) String aufbauStr,
+            @JsonProperty(value = ApiNames.LICHT) String lichtStr,
+            @JsonProperty(value = ApiNames.KUPPLUNG) String kupplungStr,
+            @JsonProperty(value = ApiNames.STEUERUNG) String steuerungStr,
+            @JsonProperty(value = ApiNames.DECODER_TYP) DecoderTyp decoderTyp,
+            @JsonProperty(value = ApiNames.MOTOR_TYP) String motorTypStr,
+            @JsonProperty(value = ApiNames.LANGE) BigDecimal lange,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         // Just see if Jackson can work out the embedded objects...
         IHersteller hersteller = findHersteller(herstellerStr, false);
         IMassstab massstab = findMassstab(massstabStr, false);
@@ -149,11 +149,11 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     }
 
     @JsonCreator
-    ProduktTeil createProduktTeil(@JsonProperty(value=ApiNames.ID) Long id,
-            @JsonProperty(value=ApiNames.PRODUKT) Produkt produkt,
-            @JsonProperty(value=ApiNames.TEIL) Produkt teil,
-            @JsonProperty(value=ApiNames.ANZAHL) Integer anzahl,
-            @JsonProperty(value=ApiNames.DELETED) Boolean deleted) {
+    ProduktTeil createProduktTeil(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.PRODUKT) Produkt produkt,
+            @JsonProperty(value = ApiNames.TEIL) Produkt teil,
+            @JsonProperty(value = ApiNames.ANZAHL) Integer anzahl,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         ProduktTeil entity = new ProduktTeil(id, produkt, teil, anzahl, deleted);
 
         debug("created: " + entity);

@@ -30,7 +30,7 @@ class ErrorMessage {
     }
 
     @JsonGetter("errorCode")
-    @ApiModelProperty(value = "The error code")
+    @ApiModelProperty(value = "The error code", example = "")
     public String getErrorCode() {
         return errorCode;
     }
@@ -41,7 +41,7 @@ class ErrorMessage {
     }
 
     @JsonGetter("userMessage")
-    @ApiModelProperty(value = "The error message for user consumption")
+    @ApiModelProperty(value = "The error message for user consumption", example = "")
     public String getUserMessage() {
         return userMessage;
     }
@@ -52,7 +52,7 @@ class ErrorMessage {
     }
 
     @JsonGetter("developerMessage")
-    @ApiModelProperty(value = "The detailed error message for developer debugging")
+    @ApiModelProperty(value = "The detailed error message for developer debugging", example = "")
     public String getDeveloperMessage() {
         return developerMessage;
     }

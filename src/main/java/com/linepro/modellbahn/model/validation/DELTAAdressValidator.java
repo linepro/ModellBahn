@@ -6,7 +6,7 @@ import java.util.Collection;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.linepro.modellbahn.model.IAdress;
+import com.linepro.modellbahn.model.refs.IAdress;
 import com.linepro.modellbahn.model.util.AdressTyp;
 
 public class DELTAAdressValidator implements ConstraintValidator<DELTAAdress, IAdress> {

@@ -75,6 +75,7 @@ import com.linepro.modellbahn.model.keys.VorbildKey;
 import com.linepro.modellbahn.model.util.AdressTyp;
 import com.linepro.modellbahn.model.util.DecoderCreator;
 import com.linepro.modellbahn.model.util.Konfiguration;
+import com.linepro.modellbahn.model.util.LeistungsUbertragung;
 import com.linepro.modellbahn.model.util.Status;
 import com.linepro.modellbahn.persistence.IKey;
 import com.linepro.modellbahn.persistence.IPersister;
@@ -2108,19 +2109,16 @@ public class DBPopulator {
             BigDecimal leistung, BigDecimal dienstgewicht, Integer geschwindigkeit, BigDecimal lange, LocalDate ausserdienst,
             BigDecimal dmTreibrad, BigDecimal dmLaufradVorn, BigDecimal dmLaufradHinten, Integer zylinder, BigDecimal dmZylinder,
             BigDecimal kolbenhub, BigDecimal kesselueberdruck, BigDecimal rostflaeche, BigDecimal ueberhitzerflaeche, BigDecimal wasservorrat,
-            BigDecimal verdampfung, Integer fahrmotoren, String motorbauart, BigDecimal leistungsuebertragung, BigDecimal reichweite, BigDecimal kapazitaet, Integer klasse, Integer sitzPlatzeKL1,
-            Integer sitzPlatzeKL2, Integer sitzPlatzeKL3, Integer sitzPlatzeKL4, String aufbauten, Boolean triebzugAnzeigen,
-            Integer triebkoepfe, Integer mittelwagen, Integer sitzplatzeTzKL1, Integer sitzplatzeTzKL2,
-            String drehgestellbauart) {
+            BigDecimal verdampfung, Integer fahrmotoren, String motorbauart, LeistungsUbertragung leistungsUbertragung, BigDecimal reichweite, BigDecimal kapazitaet, Integer klasse, Integer sitzPlatzeKL1,
+            Integer sitzPlatzeKL2, Integer sitzPlatzeKL3, Integer sitzPlatzeKL4, String aufbauten, Integer triebkoepfe, 
+            Integer mittelwagen, String drehgestellbauart) {
         return save(new Vorbild(null, gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit,
                  anzahl,  betreibsNummer,  antrieb,  achsfolg,  bezeichnung,  anfahrzugkraft,
                  leistung,  dienstgewicht,  geschwindigkeit,  lange,  ausserdienst,
                  dmTreibrad,  dmLaufradVorn,  dmLaufradHinten,  zylinder,  dmZylinder,
                  kolbenhub,  kesselueberdruck,  rostflaeche,  ueberhitzerflaeche,  wasservorrat,
-                 verdampfung,  fahrmotoren,  motorbauart,  leistungsuebertragung,  reichweite,  kapazitaet,  klasse,  sitzPlatzeKL1,
-                 sitzPlatzeKL2,  sitzPlatzeKL3,  sitzPlatzeKL4,  aufbauten,  triebzugAnzeigen,
-                 triebkoepfe,  mittelwagen,  sitzplatzeTzKL1,  sitzplatzeTzKL2,
-                 drehgestellbauart, false));
+                 verdampfung,  fahrmotoren,  motorbauart,  leistungsUbertragung,  reichweite,  kapazitaet,  klasse,  sitzPlatzeKL1,
+                 sitzPlatzeKL2,  sitzPlatzeKL3,  sitzPlatzeKL4,  aufbauten, triebkoepfe,  mittelwagen, drehgestellbauart, false));
     }
 
     private void populateVorbild() {
@@ -2152,7 +2150,7 @@ public class DBPopulator {
         BigDecimal verdampfung = new BigDecimal("69.86");
         Integer fahrmotoren = null;
         String motorbauart = null;
-        BigDecimal leistungsuebertragung = null;
+        LeistungsUbertragung leistungsUbertragung = null;
         BigDecimal reichweite = null;
         BigDecimal kapazitaet = null;
         Integer klasse = null;
@@ -2161,11 +2159,8 @@ public class DBPopulator {
         Integer sitzPlatzeKL3 = null;
         Integer sitzPlatzeKL4 = null;
         String aufbauten = null;
-        Boolean triebzugAnzeigen = null;
         Integer triebkoepfe = null;
         Integer mittelwagen = null;
-        Integer sitzplatzeTzKL1 = null;
-        Integer sitzplatzeTzKL2 = null;
         String drehgestellbauart = null;
  
         addVorbild(gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit,
@@ -2173,10 +2168,9 @@ public class DBPopulator {
                 leistung, dienstgewicht, geschwindigkeit, lange, ausserdienst,
                 dmTreibrad, dmLaufradVorn,  dmLaufradHinten,  zylinder,  dmZylinder,
                 kolbenhub, kesselueberdruck, rostflaeche, ueberhitzerflaeche, wasservorrat,
-                verdampfung, fahrmotoren, motorbauart, leistungsuebertragung,
+                verdampfung, fahrmotoren, motorbauart, leistungsUbertragung,
                 reichweite, kapazitaet, klasse, sitzPlatzeKL1, sitzPlatzeKL2, sitzPlatzeKL3, 
-                sitzPlatzeKL4, aufbauten, triebzugAnzeigen, triebkoepfe, mittelwagen, 
-                sitzplatzeTzKL1, sitzplatzeTzKL2, drehgestellbauart);
+                sitzPlatzeKL4, aufbauten, triebkoepfe, mittelwagen, drehgestellbauart);
     }
 
     private Wahrung addWahrung(String name, String bezeichnung, Integer decimals) {

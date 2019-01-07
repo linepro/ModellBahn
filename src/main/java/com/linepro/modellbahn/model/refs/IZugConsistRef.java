@@ -1,12 +1,14 @@
 package com.linepro.modellbahn.model.refs;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiModelProperty.AccessMode;
 
@@ -17,16 +19,18 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
  * @author   $Author$
  * @version  $Id$
  */
+@JsonPropertyOrder({ ApiNames.POSITION, ApiNames.ARTIKEL })
+@ApiModel(value = ApiNames.CONSIST, description = "Rolling stock by poisition in a train.")
 public interface IZugConsistRef extends IRef {
 
     @JsonGetter(ApiNames.POSITION)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(value = "The contiguous 1 based position in the train (1 = head)", example = "1", accessMode = AccessMode.READ_ONLY, required = true)
     Integer getPosition();
 
     @JsonGetter(ApiNames.ARTIKEL)
     @JsonSerialize(contentAs = IArtikelRef.class)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IProduktRef", value = "The rolling stock item", accessMode = AccessMode.READ_ONLY, required = true)
     IArtikel getArtikel();
 }

@@ -32,7 +32,7 @@ public interface IProduktTeil extends IItem<ProduktTeilKey>, IProduktTeilRef {
     @JsonGetter(ApiNames.PRODUKT)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IProduktRef.class)
-    @ApiModelProperty(value = "", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IProduktRef", value = "The head product", accessMode = AccessMode.READ_ONLY, required = true)
     IProdukt getProdukt();
 
     @JsonSetter(ApiNames.PRODUKT)

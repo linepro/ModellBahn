@@ -23,7 +23,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @version  $Id$
  */
 @JsonRootName(ApiNames.FUNKTION)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.REIHE,  ApiNames.PROGRAMMABLE, ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.REIHE,  ApiNames.FUNKTION,  ApiNames.BEZEICHNUNG,  ApiNames.PROGRAMMABLE, ApiNames.DELETED, ApiNames.LINKS})
 @ApiModel(value = ApiNames.FUNKTION, description = "Decoder type function mapping - template for Decoder.")
 public interface IDecoderTypFunktion extends IItem<DecoderTypFunktionKey>, IDecoderTypFunktionRef {
 
@@ -31,7 +31,7 @@ public interface IDecoderTypFunktion extends IItem<DecoderTypFunktionKey>, IDeco
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IDecoderTypRef.class)
-    @ApiModelProperty(value = "", required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IDecoderTypRef", value = "The decoder type", required = true)
     IDecoderTyp getDecoderTyp();
 
     @JsonSetter(ApiNames.DECODER_TYP)

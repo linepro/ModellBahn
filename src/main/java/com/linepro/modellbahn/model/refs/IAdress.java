@@ -1,4 +1,4 @@
-package com.linepro.modellbahn.model;
+package com.linepro.modellbahn.model.refs;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -19,6 +19,6 @@ public interface IAdress {
 
     @JsonGetter(ApiNames.ADRESS)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Digital address", required = true)
+    @ApiModelProperty(value = "Digital address", example = "80", required = true)
     Integer getAdress();
 }

@@ -10,8 +10,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.impl.Artikel;
 import com.linepro.modellbahn.model.impl.Zug;
 import com.linepro.modellbahn.model.keys.ZugConsistKey;
-import com.linepro.modellbahn.model.refs.INamedItemRef;
 import com.linepro.modellbahn.model.refs.IZugConsistRef;
+import com.linepro.modellbahn.model.refs.IZugRef;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
@@ -31,8 +31,8 @@ public interface IZugConsist extends IItem<ZugConsistKey>, IZugConsistRef {
 
     @JsonGetter(ApiNames.ZUG)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(as= INamedItemRef.class)
-    @ApiModelProperty(value = "", accessMode = AccessMode.READ_ONLY, required = true)
+    @JsonSerialize(as= IZugRef.class)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IZugRef", value = "The train", accessMode = AccessMode.READ_ONLY, required = true)
     IZug getZug();
 
     @JsonSetter(ApiNames.ZUG)

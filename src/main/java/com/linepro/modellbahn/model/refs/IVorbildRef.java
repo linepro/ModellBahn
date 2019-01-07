@@ -12,12 +12,12 @@ import io.swagger.annotations.ApiModelProperty;
 public interface IVorbildRef extends IPictureRef, IRef {
     @JsonGetter(ApiNames.GATTUNG)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(as= INamedItemRef.class)
-    @ApiModelProperty(value = "", required = true)
+    @JsonSerialize(as= IGattungRef.class)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IGattungRef", value = "The rolling stock class", example = "BR 89.0", required = true)
     IGattung getGattung();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Artikel description")
+    @ApiModelProperty(value = "The description", example = "Dampftenderlok BR 89.0")
     String getBezeichnung();
 }

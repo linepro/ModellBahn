@@ -6,8 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.keys.NameKey;
-import com.linepro.modellbahn.model.refs.INamedItemRef;
-import com.linepro.modellbahn.model.refs.IPictureRef;
+import com.linepro.modellbahn.model.refs.ILichtRef;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
@@ -20,7 +19,7 @@ import io.swagger.annotations.ApiModel;
 @JsonRootName(value = ApiNames.LICHT)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
 @ApiModel(value = ApiNames.LICHT, description = "Light configuration - Märklin coding.")
-public interface ILicht extends INamedItem<NameKey>, INamedItemRef, IPictureRef {
+public interface ILicht extends INamedItem<NameKey>, ILichtRef {
     /**
      * Sets the abbildung.
      *

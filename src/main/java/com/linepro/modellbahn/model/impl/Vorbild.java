@@ -28,6 +28,7 @@ import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.IVorbild;
 import com.linepro.modellbahn.model.keys.VorbildKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
+import com.linepro.modellbahn.model.util.LeistungsUbertragung;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.persistence.util.PathConverter;
@@ -161,8 +162,7 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
     private String motorbauart;
 
     /** The leistungsuebertragung. */
-    @Positive(message = "{com.linepro.modellbahn.validator.constraints.leistungsuebertragung.positive}")
-    private BigDecimal leistungsuebertragung;
+    private LeistungsUbertragung leistungsUbertragung;
 
     /** The reichweite. */
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.reichweite.positive}")
@@ -194,9 +194,6 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
 
     /** The aufbauten. */
     private String aufbau;
-
-    /** The triebzug anzeigen. */
-    private Boolean triebzugAnzeigen;
 
     /** The triebkoepfe. */
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.triebkoepfe.positive}")
@@ -268,7 +265,6 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
      * @param sitzPlatzeKL3 the sitz platze KL 3
      * @param sitzPlatzeKL4 the sitz platze KL 4
      * @param aufbauten the aufbauten
-     * @param triebzugAnzeigen the triebzug anzeigen
      * @param triebkoepfe the triebkoepfe
      * @param mittelwagen the mittelwagen
      * @param sitzplatzeTzKL1 the sitz platze TZKL 1
@@ -282,10 +278,8 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
             BigDecimal leistung, BigDecimal dienstgewicht, Integer geschwindigkeit, BigDecimal lange, LocalDate ausserdienst,
             BigDecimal dmTreibrad, BigDecimal dmLaufradVorn, BigDecimal dmLaufradHinten, Integer zylinder, BigDecimal dmZylinder,
             BigDecimal kolbenhub, BigDecimal kesselueberdruck, BigDecimal rostflaeche, BigDecimal ueberhitzerflaeche, BigDecimal wasservorrat,
-            BigDecimal verdampfung, Integer fahrmotoren, String motorbauart, BigDecimal leistungsuebertragung, BigDecimal reichweite, BigDecimal kapazitaet, Integer klasse, Integer sitzPlatzeKL1,
-            Integer sitzPlatzeKL2, Integer sitzPlatzeKL3, Integer sitzPlatzeKL4, String aufbauten, Boolean triebzugAnzeigen,
-            Integer triebkoepfe, Integer mittelwagen, Integer sitzplatzeTzKL1, Integer sitzplatzeTzKL2,
-            String drehgestellbauart, Boolean deleted) {
+            BigDecimal verdampfung, Integer fahrmotoren, String motorbauart, LeistungsUbertragung leistungsuebertragung, BigDecimal reichweite, BigDecimal kapazitaet, Integer klasse, Integer sitzPlatzeKL1,
+            Integer sitzPlatzeKL2, Integer sitzPlatzeKL3, Integer sitzPlatzeKL4, String aufbauten, Integer triebkoepfe, Integer mittelwagen, String drehgestellbauart, Boolean deleted) {
         super(id, deleted);
 
         setGattung(gattung);
@@ -326,11 +320,8 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
         setSitzPlatzeKL3(sitzPlatzeKL3);
         setSitzPlatzeKL4(sitzPlatzeKL4);
         setAufbau(aufbauten);
-        setTriebzugAnzeigen(triebzugAnzeigen);
         setTriebkoepfe(triebkoepfe);
         setMittelwagen(mittelwagen);
-        setSitzplatzeTzKL1(sitzplatzeTzKL1);
-        setSitzplatzeTzKL2(sitzplatzeTzKL2);
         setDrehgestellBauart(drehgestellbauart);
         setAbbildung(abbildung);
     }
@@ -659,13 +650,13 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
 
     @Override
     @Column(name = DBNames.LEISTUNGSUEBERTRAGUNG)
-    public BigDecimal getLeistungsuebertragung() {
-        return leistungsuebertragung;
+    public LeistungsUbertragung getLeistungsuebertragung() {
+        return leistungsUbertragung;
     }
 
     @Override
-    public void setLeistungsuebertragung(BigDecimal leistungsuebertragung) {
-        this.leistungsuebertragung = leistungsuebertragung;
+    public void setLeistungsuebertragung(LeistungsUbertragung leistungsuebertragung) {
+        this.leistungsUbertragung = leistungsuebertragung;
     }
 
     @Override
@@ -757,17 +748,6 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.TRIEBZUGANZEIGEN)
-    public Boolean getTriebzugAnzeigen() {
-        return triebzugAnzeigen;
-    }
-
-    @Override
-    public void setTriebzugAnzeigen(Boolean triebzugAnzeigen) {
-        this.triebzugAnzeigen = triebzugAnzeigen;
-    }
-
-    @Override
     @Column(name = DBNames.TRIEBKOEPFE)
     public Integer getTriebkoepfe() {
         return triebkoepfe;
@@ -787,28 +767,6 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
     @Override
     public void setMittelwagen(Integer mittelwagen) {
         this.mittelwagen = mittelwagen;
-    }
-
-    @Override
-    @Column(name = DBNames.SitzplatzeTzKL1)
-    public Integer getSitzplatzeTzKL1() {
-        return sitzplatzeTzKL1;
-    }
-
-    @Override
-    public void setSitzplatzeTzKL1(Integer sitzplatzeTzKL1) {
-        this.sitzplatzeTzKL1 = sitzplatzeTzKL1;
-    }
-
-    @Override
-    @Column(name = DBNames.SitzplatzeTzKL2)
-    public Integer getSitzplatzeTzKL2() {
-        return sitzplatzeTzKL2;
-    }
-
-    @Override
-    public void setSitzplatzeTzKL2(Integer sitzplatzeTzKL2) {
-        this.sitzplatzeTzKL2 = sitzplatzeTzKL2;
     }
 
     @Override
@@ -881,11 +839,8 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
                 .append(ApiNames.SITZPLATZEKL3, getSitzPlatzeKL3())
                 .append(ApiNames.SITZPLATZEKL4, getSitzPlatzeKL4())
                 .append(ApiNames.AUFBAU, getAufbau())
-                .append(ApiNames.TRIEBZUGANZEIGEN, getTriebzugAnzeigen())
                 .append(ApiNames.TRIEBKOEPFE, getTriebkoepfe())
                 .append(ApiNames.MITTELWAGEN, getMittelwagen())
-                .append(ApiNames.SitzplatzeTzKL1, getSitzplatzeTzKL1())
-                .append(ApiNames.SitzplatzeTzKL2, getSitzplatzeTzKL2())
                 .append(ApiNames.DREHGESTELLBAUART, getDrehgestellBauart())
                 .append(ApiNames.ABBILDUNG, getAbbildung())
                 .toString();

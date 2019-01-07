@@ -15,22 +15,22 @@ public interface IProduktRef extends IPictureRef, IRef {
 
     @JsonGetter(ApiNames.HERSTELLER)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(as= INamedItemRef.class)
-    @ApiModelProperty(value = "The manufacturer", required = true)
+    @JsonSerialize(as= IHerstellerRef.class)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IHerstellerRef", value = "The manufacturer", required = true)
     IHersteller getHersteller();
 
     @JsonGetter(ApiNames.BESTELL_NR)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The order number", required = true)
+    @ApiModelProperty(value = "The order number", example = "3000", required = true)
     String getBestellNr();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The description")
+    @ApiModelProperty(value = "The description", example = "Dampftenderlok BR 89.0")
     String getBezeichnung();
     
     @JsonGetter(ApiNames.LANGE)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The length over puffers in cm.")
+    @ApiModelProperty(value = "The length over puffers in cm.", example = "11.00")
     BigDecimal getLange();
 }

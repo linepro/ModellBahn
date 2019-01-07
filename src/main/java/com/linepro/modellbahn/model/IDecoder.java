@@ -19,7 +19,7 @@ import com.linepro.modellbahn.model.refs.IDecoderAdressRef;
 import com.linepro.modellbahn.model.refs.IDecoderCVRef;
 import com.linepro.modellbahn.model.refs.IDecoderFunktionRef;
 import com.linepro.modellbahn.model.refs.IDecoderRef;
-import com.linepro.modellbahn.model.refs.INamedItemRef;
+import com.linepro.modellbahn.model.refs.IProtokollRef;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
  * @version  $Id$
  */
 @JsonRootName(value = ApiNames.DECODER)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.ADRESSEN, ApiNames.DELETED, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS })
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER_ID, ApiNames.DECODER_TYP, ApiNames.BEZEICHNUNG, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.ADRESSEN, ApiNames.DELETED, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS })
 @ApiModel(value = ApiNames.DECODER, description = "Decoder - installed or spare.")
 public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
 
@@ -48,8 +48,8 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
 
     @JsonGetter(ApiNames.PROTOKOLL)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(as= INamedItemRef.class)
-    @ApiModelProperty(value = "This Decoder's protocol", required = true)
+    @JsonSerialize(as= IProtokollRef.class)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IProtokollRef", value = "This Decoder's protocol", required = true)
     IProtokoll getProtokoll();
 
     @JsonSetter(ApiNames.PROTOKOLL)
@@ -58,7 +58,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
 
     @JsonGetter(ApiNames.FAHRSTUFE)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "This Decoder's speed steps", required = true)
+    @ApiModelProperty(value = "This Decoder's speed steps", example="27", required = true)
     Integer getFahrstufe();
 
     @JsonSetter(ApiNames.FAHRSTUFE)
@@ -67,7 +67,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
     @JsonGetter(ApiNames.ADRESSEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentAs= IDecoderAdressRef.class)
-    @ApiModelProperty(value = "This Decoder's addresses", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderAdressRef;", value = "This Decoder's addresses", accessMode = AccessMode.READ_ONLY, required = true)
     Set<IDecoderAdress> getAdressen();
 
     @JsonSetter(ApiNames.ADRESSEN)
@@ -86,7 +86,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
     @JsonGetter(ApiNames.CVS)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentAs= IDecoderCVRef.class)
-    @ApiModelProperty(value = "This Decoder's cv values", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderCVRef;", value = "This Decoder's cv values", accessMode = AccessMode.READ_ONLY)
     Set<IDecoderCV> getCVs();
 
     @JsonSetter(ApiNames.CVS)
@@ -105,7 +105,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
     @JsonGetter(ApiNames.FUNKTIONEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentAs= IDecoderFunktionRef.class)
-    @ApiModelProperty(value = "This Decoder's functions", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderFunktionRef;", value = "This Decoder's functions", accessMode = AccessMode.READ_ONLY, required = true)
     Set<IDecoderFunktion> getFunktionen();
 
     /**

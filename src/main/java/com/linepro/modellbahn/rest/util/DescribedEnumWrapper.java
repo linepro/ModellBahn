@@ -22,6 +22,6 @@ public class DescribedEnumWrapper {
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @ApiModelProperty(value = "The enum's description", required = true)
     public String getDescription() {
-        return dEnum.getDescription();
+        return dEnum.getBezeichnung();
     }
 }

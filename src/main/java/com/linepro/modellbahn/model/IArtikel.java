@@ -24,7 +24,10 @@ import com.linepro.modellbahn.model.impl.Wahrung;
 import com.linepro.modellbahn.model.keys.ArtikelKey;
 import com.linepro.modellbahn.model.refs.IArtikelRef;
 import com.linepro.modellbahn.model.refs.IDecoderRef;
-import com.linepro.modellbahn.model.refs.INamedItemRef;
+import com.linepro.modellbahn.model.refs.IKupplungRef;
+import com.linepro.modellbahn.model.refs.ILichtRef;
+import com.linepro.modellbahn.model.refs.IMotorTypRef;
+import com.linepro.modellbahn.model.refs.ISteuerungRef;
 import com.linepro.modellbahn.model.refs.IWahrungRef;
 import com.linepro.modellbahn.model.util.Status;
 import com.linepro.modellbahn.rest.json.Formats;
@@ -70,7 +73,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonView(Views.Public.class)
     @JsonFormat(shape=Shape.STRING, pattern= Formats.ISO8601_DATE)
-    @ApiModelProperty(dataType = "java.time.LocalDate", value = "Purchase date")
+    @ApiModelProperty(dataType = "java.time.LocalDate", value = "Purchase date", example = "")
     LocalDate getKaufdatum();
 
     /**
@@ -90,7 +93,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
     @JsonGetter(ApiNames.WAHRUNG)
     @JsonView(Views.Public.class)
     @JsonSerialize(as= IWahrungRef.class)
-    @ApiModelProperty(value = "Purchase currency")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IWahrungRef", value = "Purchase currency")
     IWahrung getWahrung();
 
     /**
@@ -109,7 +112,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      */
     @JsonGetter(ApiNames.PREIS)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "Purchase price")
+    @ApiModelProperty(value = "Purchase price", example = "")
     BigDecimal getPreis();
 
     /**
@@ -127,7 +130,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      */
     @JsonGetter(ApiNames.STUCK)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "Purchase Quantity", required = true)
+    @ApiModelProperty(value = "Purchase Quantity", required = true, example = "")
     Integer getStuck();
 
     /**
@@ -145,8 +148,8 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      */
     @JsonGetter(ApiNames.STEUERUNG)
     @JsonView(Views.Public.class)
-    @JsonSerialize(as= INamedItemRef.class)
-    @ApiModelProperty(value = "Control method")
+    @JsonSerialize(as= ISteuerungRef.class)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.ISteuerungRef", value = "Control method")
     ISteuerung getSteuerung();
 
     /**
@@ -165,8 +168,8 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      */
     @JsonGetter(ApiNames.MOTOR_TYP)
     @JsonView(Views.Public.class)
-    @JsonSerialize(as= INamedItemRef.class)
-    @ApiModelProperty(value = "Motor type")
+    @JsonSerialize(as= IMotorTypRef.class)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IMotorTypRef", value = "Motor type")
     IMotorTyp getMotorTyp();
 
     /**
@@ -185,8 +188,8 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      */
     @JsonGetter(ApiNames.LICHT)
     @JsonView(Views.Public.class)
-    @JsonSerialize(as= INamedItemRef.class)
-    @ApiModelProperty(value = "Light Configuration")
+    @JsonSerialize(as= ILichtRef.class)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.ILichtRef", value = "Light Configuration")
     ILicht getLicht();
 
     /**
@@ -205,8 +208,8 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      */
     @JsonGetter(ApiNames.KUPPLUNG)
     @JsonView(Views.Public.class)
-    @JsonSerialize(as= INamedItemRef.class)
-    @ApiModelProperty(value = "Coupling configuration")
+    @JsonSerialize(as= IKupplungRef.class)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IKupplungRef", value = "Coupling configuration")
     IKupplung getKupplung();
 
     /**
@@ -226,7 +229,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IDecoderRef.class)
-    @ApiModelProperty(value = "Decoder")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IDecoderRef", value = "Decoder")
     IDecoder getDecoder();
 
     /**
@@ -245,7 +248,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      */
     @JsonGetter(ApiNames.ANMERKUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Remarks")
+    @ApiModelProperty(value = "Remarks", example = "")
     String getAnmerkung();
 
     /**
@@ -263,7 +266,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      */
     @JsonGetter(ApiNames.BELADUNG)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "Load")
+    @ApiModelProperty(value = "Load", example = "")
     String getBeladung();
 
     /**
@@ -290,7 +293,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      */
     @JsonGetter(ApiNames.STATUS)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Status", required = true)
+    @ApiModelProperty(value = "Status", example = "", required = true)
     Status getStatus();
 
     /**
