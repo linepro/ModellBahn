@@ -21,7 +21,7 @@ public interface IProduktRef extends IPictureRef, IRef {
 
     @JsonGetter(ApiNames.BESTELL_NR)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The order number", example = "3000", required = true)
+    @ApiModelProperty(value = "The part number", example = "3000", required = true)
     String getBestellNr();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)

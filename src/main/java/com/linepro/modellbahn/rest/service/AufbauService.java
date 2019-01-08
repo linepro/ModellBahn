@@ -80,12 +80,12 @@ public class AufbauService extends AbstractItemService<NameKey, Aufbau> {
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Aufbauen by example", response = Aufbau.class, responseContainer = "List")
     @ApiImplicitParams({
-        @ApiImplicitParam( name = ApiNames.ID, value = "Aufbau's id", dataType = "Long", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Aufbau's name", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Aufbau's description", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "if true include deleted Aufbau ", dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "page number for paged queries", dataType = "Integer", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.ID, value = "Aufbau id", dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Aufbau code", example = "LK", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Aufbau description", example = "Fahrgestell der Lok aus Metall", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "if true search for soft deleted items", example = "false", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),
     })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);

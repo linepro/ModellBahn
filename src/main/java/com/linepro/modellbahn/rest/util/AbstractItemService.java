@@ -293,8 +293,12 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
     public Response search(UriInfo info) {
+        return search(info, info.getQueryParameters());
+    }
+
+    public Response search(UriInfo info, MultivaluedMap<String,String> queryParameters) {
         try {
-            E template = getTemplate(info.getQueryParameters());
+            E template = getTemplate(queryParameters);
 
             logGet(getEntityClassName() + ": " + template);
 
@@ -302,8 +306,8 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
             Integer pageSize   = null;
             Integer maxPage    = null;
             
-            String pageNumberStr = info.getQueryParameters().getFirst(ApiNames.PAGE_NUMBER);
-            String pageSizeStr   = info.getQueryParameters().getFirst(ApiNames.PAGE_SIZE);
+            String pageNumberStr = queryParameters.getFirst(ApiNames.PAGE_NUMBER);
+            String pageSizeStr   = queryParameters.getFirst(ApiNames.PAGE_SIZE);
 
             if (pageNumberStr != null || pageSizeStr != null) {
                 pageNumber = NumberUtils.toInt(pageNumberStr, FIRST_PAGE);
@@ -346,9 +350,11 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
     }
 
     protected Link getPageLink(UriInfo info, Integer pageNumber, Integer pageSize, String rel) {
-        UriBuilder uri = info.getAbsolutePathBuilder();
         // copy any non paging query parameters
-        info.getQueryParameters().forEach((k, v) -> { if (!PAGE_FIELDS.contains(k)) { v.forEach(x -> uri.queryParam(k, x)); } });
+        UriBuilder uri = info.getAbsolutePathBuilder();
+        MultivaluedMap<String,String> queryParameters = info.getQueryParameters();
+
+        queryParameters.forEach((k, v) -> { if (!PAGE_FIELDS.contains(k)) { v.forEach(x -> uri.queryParam(k, x)); } });
         uri.queryParam(ApiNames.PAGE_NUMBER, pageNumber.toString());
         uri.queryParam(ApiNames.PAGE_SIZE, pageSize.toString());
 

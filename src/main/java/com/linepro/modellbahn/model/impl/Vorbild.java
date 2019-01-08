@@ -161,7 +161,7 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
     /** The motorbauart. */
     private String motorbauart;
 
-    /** The leistungsuebertragung. */
+    /** The leistungsubertragung. */
     private LeistungsUbertragung leistungsUbertragung;
 
     /** The reichweite. */
@@ -256,7 +256,7 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
      * @param verdampfung the verdampfung
      * @param fahrmotoren the fahrmotoren
      * @param motorbauart the motorbauart
-     * @param leistungsuebertragung the leistungsuebertragung
+     * @param leistungsubertragung the leistungsubertragung
      * @param reichweite the reichweite
      * @param kapazitaet the kapazitaet
      * @param klasse the klasse
@@ -267,18 +267,15 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
      * @param aufbauten the aufbauten
      * @param triebkoepfe the triebkoepfe
      * @param mittelwagen the mittelwagen
-     * @param sitzplatzeTzKL1 the sitz platze TZKL 1
-     * @param sitzplatzeTzKL2 the sitz platze tz KL 2
      * @param drehgestellbauart the drehgestellbauart
      * @param deleted the deleted
-     * @param anmerkung remarks
      */
     public Vorbild(Long id, IGattung gattung, IUnterKategorie unterKategorie, IBahnverwaltung bahnverwaltung, String hersteller, LocalDate bauzeit,
             Integer anzahl, String betreibsNummer, IAntrieb antrieb, IAchsfolg achsfolg, String bezeichnung, BigDecimal anfahrzugkraft,
             BigDecimal leistung, BigDecimal dienstgewicht, Integer geschwindigkeit, BigDecimal lange, LocalDate ausserdienst,
             BigDecimal dmTreibrad, BigDecimal dmLaufradVorn, BigDecimal dmLaufradHinten, Integer zylinder, BigDecimal dmZylinder,
             BigDecimal kolbenhub, BigDecimal kesselueberdruck, BigDecimal rostflaeche, BigDecimal ueberhitzerflaeche, BigDecimal wasservorrat,
-            BigDecimal verdampfung, Integer fahrmotoren, String motorbauart, LeistungsUbertragung leistungsuebertragung, BigDecimal reichweite, BigDecimal kapazitaet, Integer klasse, Integer sitzPlatzeKL1,
+            BigDecimal verdampfung, Integer fahrmotoren, String motorbauart, LeistungsUbertragung leistungsubertragung, BigDecimal reichweite, BigDecimal kapazitaet, Integer klasse, Integer sitzPlatzeKL1,
             Integer sitzPlatzeKL2, Integer sitzPlatzeKL3, Integer sitzPlatzeKL4, String aufbauten, Integer triebkoepfe, Integer mittelwagen, String drehgestellbauart, Boolean deleted) {
         super(id, deleted);
 
@@ -311,7 +308,7 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
         setVerdampfung(verdampfung);
         setFahrmotoren(fahrmotoren);
         setMotorbauart(motorbauart);
-        setLeistungsuebertragung(leistungsuebertragung);
+        setLeistungsubertragung(leistungsubertragung);
         setReichweite(reichweite);
         setKapazitat(kapazitaet);
         setKlasse(klasse);
@@ -323,7 +320,6 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
         setTriebkoepfe(triebkoepfe);
         setMittelwagen(mittelwagen);
         setDrehgestellBauart(drehgestellbauart);
-        setAbbildung(abbildung);
     }
 
     @Override
@@ -649,14 +645,14 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.LEISTUNGSUEBERTRAGUNG)
-    public LeistungsUbertragung getLeistungsuebertragung() {
+    @Column(name = DBNames.LEISTUNGSUBERTRAGUNG)
+    public LeistungsUbertragung getLeistungsubertragung() {
         return leistungsUbertragung;
     }
 
     @Override
-    public void setLeistungsuebertragung(LeistungsUbertragung leistungsuebertragung) {
-        this.leistungsUbertragung = leistungsuebertragung;
+    public void setLeistungsubertragung(LeistungsUbertragung leistungsubertragung) {
+        this.leistungsUbertragung = leistungsubertragung;
     }
 
     @Override
@@ -830,7 +826,7 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
                 .append(ApiNames.VERDAMPFUNG, getVerdampfung())
                 .append(ApiNames.FAHRMOTOREN, getFahrmotoren())
                 .append(ApiNames.MOTORBAUART, getMotorbauart())
-                .append(ApiNames.LEISTUNGSUEBERTRAGUNG, getLeistungsuebertragung())
+                .append(ApiNames.LEISTUNGSUBERTRAGUNG, getLeistungsubertragung())
                 .append(ApiNames.REICHWEITE, getReichweite())
                 .append(ApiNames.KAPAZITAT, getKapazitat())
                 .append(ApiNames.KLASSE, getKlasse())

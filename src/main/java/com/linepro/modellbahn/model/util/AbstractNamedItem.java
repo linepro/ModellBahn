@@ -39,7 +39,7 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
   /**
    * The name.
    */
-  @Pattern(regexp = "^[A-Z0-9\\-\\.]+$", message = "{com.linepro.modellbahn.validator.constraints.name.invalid}")
+  @Pattern(regexp = "^[A-Z0-9\\-.]+$", message = "{com.linepro.modellbahn.validator.constraints.name.invalid}")
   @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.name.notempty}")
   private String name;
 

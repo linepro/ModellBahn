@@ -18,6 +18,6 @@ public interface IZugRef extends INamedItemRef {
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Train description", example = "TEE Bavaria")
+    @ApiModelProperty(value = "Train description", example = "TEE „Bavaria“")
     String getBezeichnung();
 }

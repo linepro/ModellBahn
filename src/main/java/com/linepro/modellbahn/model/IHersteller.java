@@ -30,7 +30,7 @@ public interface IHersteller extends INamedItem<NameKey>, IHerstellerRef {
     @JsonGetter(ApiNames.URL)
     @JsonView(Views.Public.class)
     @JsonSerialize(using= URLSerializer.class)
-    @ApiModelProperty(dataType = "String", value = "", example = "")
+    @ApiModelProperty(dataType = "String", value = "Manufacturer's website", example = "https://www.maerklin.de")
     URL getUrl();
 
     @JsonSetter(ApiNames.URL)
@@ -38,7 +38,7 @@ public interface IHersteller extends INamedItem<NameKey>, IHerstellerRef {
 
     @JsonGetter(ApiNames.TELEFON)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "", example = "")
+    @ApiModelProperty(value = "Manufacturer's phone number", example = "+49 (0) 71 61 608-0")
     String getTelefon();
 
     @JsonSetter(ApiNames.TELEFON)

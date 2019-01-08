@@ -18,6 +18,6 @@ public interface ILandRef extends INamedItemRef {
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Country Name", example = "United Kingdom")
+    @ApiModelProperty(value = "Country Name", example = "Vereinigtes Königreich")
     String getBezeichnung();
 }

@@ -362,7 +362,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
      */
     @JsonGetter(ApiNames.ANMERKUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Remarks", example = "")
+    @ApiModelProperty(value = "Remarks", example = "Ex set")
     String getAnmerkung();
 
     /**
@@ -382,7 +382,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     @JsonGetter(ApiNames.ANLEITUNGEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(using = PathSerializer.class)
-    @ApiModelProperty(dataType = "String", value = "Instructions URL", example = "", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "String", value = "Instructions URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/betrieb_3000.pdf", accessMode = AccessMode.READ_ONLY)
     Path getAnleitungen();
 
     /**
@@ -402,7 +402,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     @JsonGetter(ApiNames.EXPLOSIONSZEICHNUNG)
     @JsonView(Views.Public.class)
     @JsonSerialize(using = PathSerializer.class)
-    @ApiModelProperty(dataType = "String", value = "Parts diagram URL", example = "", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "String", value = "Parts diagram URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/explo_3000.pdf", accessMode = AccessMode.READ_ONLY)
     Path getExplosionszeichnung();
 
     /**

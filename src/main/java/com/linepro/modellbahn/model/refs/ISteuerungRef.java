@@ -18,6 +18,6 @@ public interface ISteuerungRef extends INamedItemRef {
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Steuerung description", example = "fahrrichtungumschalter")
+    @ApiModelProperty(value = "Steuerung description", example = "Fahrrichtungsumschalter")
     String getBezeichnung();
 }

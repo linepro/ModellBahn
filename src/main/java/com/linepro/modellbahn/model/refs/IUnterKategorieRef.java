@@ -13,11 +13,11 @@ public interface IUnterKategorieRef extends INamedItemRef {
 
     @JsonGetter(ApiNames.NAMEN)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Sub category coding", example = "DAMPF", required = true)
+    @ApiModelProperty(value = "Sub category coding", example = "ELEKTRO", required = true)
     String getName();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Sub category description", example = "Dampflok")
+    @ApiModelProperty(value = "Sub category description", example = "Elektro")
     String getBezeichnung();
 }

@@ -68,12 +68,12 @@ public class ZugTypService extends AbstractItemService<NameKey, ZugTyp> {
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds ZugTypen by example", response = ZugTyp.class, responseContainer = "List")
     @ApiImplicitParams({
-        @ApiImplicitParam( name = ApiNames.ID, value = "ZugTyp's id", dataType = "Long", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.NAMEN, value = "ZugTyp's name", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "ZugTyp's description", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "if true include deleted ZugTyp ", dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "page number for paged queries", dataType = "Integer", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.ID, value = "ZugTyp id", dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "ZugTyp code", example = "TEE", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "ZugTyp description", example = "TEE Zug", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "if true search for soft deleted items", example = "false", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),
     })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);

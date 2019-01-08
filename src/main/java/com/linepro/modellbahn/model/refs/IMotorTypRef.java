@@ -18,6 +18,6 @@ public interface IMotorTypRef extends INamedItemRef {
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Motor Type description", example = "(SFCM)")
+    @ApiModelProperty(value = "Motor Type description", example = "Scheibenkollektor (klein)")
     String getBezeichnung();
 }

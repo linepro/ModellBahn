@@ -20,6 +20,6 @@ public interface ILichtRef extends INamedItemRef, IPictureRef {
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Light description", example = "vorn")
+    @ApiModelProperty(value = "Light description", example = "Einfach-Spitzensignal vorne")
     String getBezeichnung();
 }

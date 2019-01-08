@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.rest.service;
 
+import com.linepro.modellbahn.model.util.LeistungsUbertragung;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -67,5 +68,14 @@ public class EnumsService extends AbstractService {
     @ApiOperation(value = "Gets all possible Status values", response = DescribedEnumWrapper.class, responseContainer = "List")
     public Response getStatus() {
         return ok(getEnumList(Status.values())).build();
+    }
+
+    @GET
+    @Path(ApiPaths.ENUMS_LEISTUNGS_UBERTRAGUNG_PATH)
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    @ApiOperation(value = "Gets all possible LeistungsUbertragung values", response = DescribedEnumWrapper.class, responseContainer = "List")
+    public Response getLeistungsUbertragung() {
+        return ok(getEnumList(LeistungsUbertragung.values())).build();
     }
 }

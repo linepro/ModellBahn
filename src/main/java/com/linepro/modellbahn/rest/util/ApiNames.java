@@ -62,7 +62,7 @@ public interface ApiNames {
     String LANGE = "lange";
     String LAND = "land";
     String LEISTUNG = "leistung";
-    String LEISTUNGSUEBERTRAGUNG = "leistungsuebertragung";
+    String LEISTUNGSUBERTRAGUNG = "leistungsubertragung";
     String LICHT = "licht";
     String LINKS = "links";
     String MASSSTAB = "massstab";
@@ -87,8 +87,6 @@ public interface ApiNames {
     String SITZPLATZEKL2 = "sitzplatzeKL2";
     String SITZPLATZEKL3 = "sitzplatzeKL3";
     String SITZPLATZEKL4 = "sitzplatzeKL4";
-    String SitzplatzeTzKL1 = "sitzplatzeTzKL1";
-    String SitzplatzeTzKL2 = "sitzplatzeTzKL2";
     String SONDERMODELL = "sondermodell";
     String SPAN = "span";
     String SPURWEITE = "spurweite";
@@ -102,7 +100,6 @@ public interface ApiNames {
     String TEILEN = "teilen";
     String TELEFON = "telefon";
     String TRIEBKOEPFE = "triebkoepfe";
-    String TRIEBZUGANZEIGEN = "triebzugAnzeigen";
     String UEBERHITZERFLAECHE = "ueberhitzerflaeche";
     String UNTER_KATEGORIE = "unterKategorie";
     String UNTER_KATEGORIEN = "unterKategorien";

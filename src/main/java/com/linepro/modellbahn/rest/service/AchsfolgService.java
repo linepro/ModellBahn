@@ -68,12 +68,12 @@ public class AchsfolgService extends AbstractItemService<NameKey, Achsfolg> {
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Achsfolgen by example", response = Achsfolg.class, responseContainer = "List")
     @ApiImplicitParams({
-        @ApiImplicitParam( name = ApiNames.ID, value = "Achsfolg's id", dataType = "Long", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Achsfolg's name", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Achsfolg's description", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "if true include deleted Achsfolg ", dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "page number for paged queries", dataType = "Integer", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.ID, value = "Achsfolg id", dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Achsfolg code", example = "CH2T", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Achsfolg description", example = "C h2t", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "if true search for soft deleted items", example = "false", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),
     })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);

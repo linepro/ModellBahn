@@ -69,13 +69,13 @@ public class WahrungService extends AbstractItemService<NameKey, Wahrung> {
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Wahrungen by example", response = Wahrung.class, responseContainer = "List")
     @ApiImplicitParams({
-        @ApiImplicitParam( name = ApiNames.ID, value = "Wahrung's id", dataType = "Long", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Wahrung's name", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Wahrung's description", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DECIMALS, value = "Wahrung's decimals", dataType = "Integer", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "if true include deleted Wahrung ", dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "page number for paged queries", dataType = "Integer", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.ID, value = "Wahrung id", dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Wahrung code", example = "GBP", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Wahrung description", example = "Pound Serling", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DECIMALS, value = "Wahrung decimals", dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "if true search for soft deleted items", example = "false", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),
     })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);

@@ -54,7 +54,7 @@ public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializabl
      */
     @JsonGetter(ApiNames.DELETED)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "", example = "", required = true)
+    @ApiModelProperty(value = "True if soft deleted", example = "false", required = true)
     Boolean getDeleted();
 
     /**

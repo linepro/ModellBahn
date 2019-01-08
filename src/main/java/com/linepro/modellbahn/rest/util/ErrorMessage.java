@@ -25,12 +25,17 @@ class ErrorMessage {
     }
 
     public ErrorMessage(final String errorCode, final String userMessage) {
+        this(errorCode, userMessage, null);
+    }
+
+    public ErrorMessage(final String errorCode, final String userMessage, final String developerMessage) {
         this.errorCode = errorCode;
         this.userMessage = userMessage;
+        this.developerMessage = developerMessage;
     }
 
     @JsonGetter("errorCode")
-    @ApiModelProperty(value = "The error code", example = "")
+    @ApiModelProperty(value = "The error code", example = "500")
     public String getErrorCode() {
         return errorCode;
     }
@@ -41,7 +46,7 @@ class ErrorMessage {
     }
 
     @JsonGetter("userMessage")
-    @ApiModelProperty(value = "The error message for user consumption", example = "")
+    @ApiModelProperty(value = "The error message for user consumption", example = "Internal Server Error")
     public String getUserMessage() {
         return userMessage;
     }
@@ -52,7 +57,7 @@ class ErrorMessage {
     }
 
     @JsonGetter("developerMessage")
-    @ApiModelProperty(value = "The detailed error message for developer debugging", example = "")
+    @ApiModelProperty(value = "The detailed error message for developer debugging", example = "NullPointerException")
     public String getDeveloperMessage() {
         return developerMessage;
     }

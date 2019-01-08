@@ -13,11 +13,11 @@ public interface IAchsfolgRef extends INamedItemRef {
 
     @JsonGetter(ApiNames.NAMEN)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Axle coding", example = "BOBO", required = true)
+    @ApiModelProperty(value = "Axle coding", example = "CH2T", required = true)
     String getName();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Axle description", example = "BoBo")
+    @ApiModelProperty(value = "Axle description", example = "C h2t")
     String getBezeichnung();
 }

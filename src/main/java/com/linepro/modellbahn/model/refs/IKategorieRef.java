@@ -13,7 +13,7 @@ public interface IKategorieRef extends INamedItemRef {
 
     @JsonGetter(ApiNames.NAMEN)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Category coding", example = "LOK", required = true)
+    @ApiModelProperty(value = "Category coding", example = "LOKOMOTIV", required = true)
     String getName();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)

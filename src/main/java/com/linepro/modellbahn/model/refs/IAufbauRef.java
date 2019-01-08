@@ -13,11 +13,11 @@ public interface IAufbauRef extends INamedItemRef, IPictureRef {
 
     @JsonGetter(ApiNames.NAMEN)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Construction code", example = "", required = true)
+    @ApiModelProperty(value = "Construction code", example = "LK", required = true)
     String getName();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Construction description", example = "")
+    @ApiModelProperty(value = "Construction description", example = "Fahrgestell der Lok aus Metall")
     String getBezeichnung();
 }

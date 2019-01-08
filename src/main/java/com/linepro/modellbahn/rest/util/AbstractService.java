@@ -122,13 +122,16 @@ public abstract class AbstractService {
     }
 
     protected ResponseBuilder serverError(Exception e) {
-        error("serverError", e);
+        error(Status.INTERNAL_SERVER_ERROR.getReasonPhrase(), e);
 
-        return serverError(null, e.getMessage());
+        return serverError(Status.INTERNAL_SERVER_ERROR.getStatusCode()+"", Status.INTERNAL_SERVER_ERROR.getReasonPhrase(), e.getMessage());
     }
 
-
     protected ResponseBuilder serverError(final String errorCode, final String userMessage) {
-        return Response.serverError().entity(new ErrorMessage(errorCode, userMessage));
+        return serverError(errorCode, userMessage, null);
+    }
+
+    protected ResponseBuilder serverError(final String errorCode, final String userMessage, final String developerMessage) {
+        return Response.serverError().entity(new ErrorMessage(errorCode, userMessage, developerMessage));
     }
 }

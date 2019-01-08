@@ -18,6 +18,6 @@ public interface IMassstabRef extends INamedItemRef {
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Scale description", example = "H0 - 1:87")
+    @ApiModelProperty(value = "Scale description", example = "H0 : 1:87 16,5mm")
     String getBezeichnung();
 }

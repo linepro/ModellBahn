@@ -15,7 +15,7 @@ public interface IKupplungRef extends INamedItemRef, IPictureRef {
 
     @JsonGetter(ApiNames.NAMEN)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Kupplung name", example = "RELEX", required = true)
+    @ApiModelProperty(value = "Kupplung code", example = "RELEX", required = true)
     String getName();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)

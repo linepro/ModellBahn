@@ -341,7 +341,8 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+      //noinspection Duplicates
+      return new ToStringBuilder(this)
                 .appendSuper(super.toString())
                 .append(ApiNames.HERSTELLER, getHersteller())
                 .append(ApiNames.BESTELL_NR, getBestellNr())

@@ -28,6 +28,6 @@ public interface IDecoderTypFunktionRef extends IRef {
 
     @JsonGetter(ApiNames.PROGRAMMABLE)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "", required = true)
+    @ApiModelProperty(value = "True if this function can be reassigned", example = "false", required = true)
     Boolean getProgrammable();
 }

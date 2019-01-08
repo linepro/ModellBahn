@@ -18,6 +18,6 @@ public interface ISpurweiteRef extends INamedItemRef {
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Spurweite description", example = "H0 - 1:87")
+    @ApiModelProperty(value = "Spurweite description", example = "H0 : 16,5mm")
     String getBezeichnung();
 }

@@ -72,14 +72,14 @@ public class HerstellerService extends AbstractItemService<NameKey, Hersteller> 
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Herstelleren by example", response = Hersteller.class, responseContainer = "List")
     @ApiImplicitParams({
-        @ApiImplicitParam( name = ApiNames.ID, value = "Hersteller's id", dataType = "Long", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Hersteller's name", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Hersteller's description", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.TELEFON, value = "Hersteller's telefon", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.URL, value = "Hersteller's url", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "if true include deleted Hersteller ", dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "page number for paged queries", dataType = "Integer", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.ID, value = "Hersteller id", dataType = "Long", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Hersteller code", example = "MARKLIN", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Hersteller description", example = "Märklin", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.TELEFON, value = "Hersteller telefon", example = "+49 (0) 71 61 608-0", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.URL, value = "Hersteller url", example = "https://www.maerklin.de/", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "if true search for soft deleted items", example = "false", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),
     })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);

@@ -55,7 +55,7 @@ public interface IDecoderTypAdress extends IItem<DecoderTypAdressKey>, IDecoderT
      */
     @JsonGetter(ApiNames.INDEX)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "", example = "", required = true)
+    @ApiModelProperty(value = "Adress number", example = "0", required = true)
     Integer getIndex();
 
     /**
@@ -81,7 +81,7 @@ public interface IDecoderTypAdress extends IItem<DecoderTypAdressKey>, IDecoderT
      */
     @JsonGetter(ApiNames.SPAN)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "", example = "", required = true)
+    @ApiModelProperty(value = "Number of adress entries for this address (e.g. turntable decoders take the next 16 addresses)", example = "1", required = true)
     Integer getSpan();
 
     /**
@@ -99,7 +99,7 @@ public interface IDecoderTypAdress extends IItem<DecoderTypAdressKey>, IDecoderT
      */
     @JsonGetter(ApiNames.WERKSEINSTELLUNG)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "", example = "")
+    @ApiModelProperty(value = "Default address", example = "80")
     Integer getAdress();
 
     /**

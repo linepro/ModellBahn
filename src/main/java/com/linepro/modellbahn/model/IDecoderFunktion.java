@@ -29,7 +29,7 @@ public interface IDecoderFunktion extends IItem<DecoderFunktionKey>, IDecoderFun
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IDecoderRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IDecoderRef", value = "", required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IDecoderRef", value = "Parent decoder", required = true)
     IDecoder getDecoder();
 
     @JsonIgnore

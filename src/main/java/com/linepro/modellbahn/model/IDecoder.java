@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
  * @version  $Id$
  */
 @JsonRootName(value = ApiNames.DECODER)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER_ID, ApiNames.DECODER_TYP, ApiNames.BEZEICHNUNG, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.ADRESSEN, ApiNames.DELETED, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS })
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER_ID, ApiNames.DECODER_TYP, ApiNames.BEZEICHNUNG, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.DELETED, ApiNames.ADRESSEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS })
 @ApiModel(value = ApiNames.DECODER, description = "Decoder - installed or spare.")
 public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
 
@@ -49,7 +49,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
     @JsonGetter(ApiNames.PROTOKOLL)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IProtokollRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IProtokollRef", value = "This Decoder's protocol", required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IProtokollRef", value = "This Decoder protocol", required = true)
     IProtokoll getProtokoll();
 
     @JsonSetter(ApiNames.PROTOKOLL)
@@ -58,7 +58,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
 
     @JsonGetter(ApiNames.FAHRSTUFE)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "This Decoder's speed steps", example="27", required = true)
+    @ApiModelProperty(value = "This Decoder speed steps", example="27", required = true)
     Integer getFahrstufe();
 
     @JsonSetter(ApiNames.FAHRSTUFE)

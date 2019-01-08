@@ -18,6 +18,6 @@ public interface IHerstellerRef extends INamedItemRef {
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Hersteller description", example = "Marklin")
+    @ApiModelProperty(value = "Hersteller description", example = "Märklin")
     String getBezeichnung();
 }

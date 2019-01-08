@@ -73,7 +73,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonView(Views.Public.class)
     @JsonFormat(shape=Shape.STRING, pattern= Formats.ISO8601_DATE)
-    @ApiModelProperty(dataType = "java.time.LocalDate", value = "Purchase date", example = "")
+    @ApiModelProperty(dataType = "java.time.LocalDate", value = "Purchase date", example = "1967-08-10")
     LocalDate getKaufdatum();
 
     /**
@@ -112,7 +112,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      */
     @JsonGetter(ApiNames.PREIS)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "Purchase price", example = "")
+    @ApiModelProperty(value = "Purchase price", example = "115.95")
     BigDecimal getPreis();
 
     /**
@@ -130,7 +130,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      */
     @JsonGetter(ApiNames.STUCK)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "Purchase Quantity", required = true, example = "")
+    @ApiModelProperty(value = "Purchase Quantity", example = "1", required = true)
     Integer getStuck();
 
     /**
@@ -248,7 +248,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      */
     @JsonGetter(ApiNames.ANMERKUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Remarks", example = "")
+    @ApiModelProperty(value = "Remarks", example = "5* Motor and decoder")
     String getAnmerkung();
 
     /**
@@ -266,7 +266,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      */
     @JsonGetter(ApiNames.BELADUNG)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "Load", example = "")
+    @ApiModelProperty(value = "Wagon load", example = "holz")
     String getBeladung();
 
     /**
@@ -293,7 +293,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      */
     @JsonGetter(ApiNames.STATUS)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Status", example = "", required = true)
+    @ApiModelProperty(value = "Status", example = "GEKAUFT", required = true)
     Status getStatus();
 
     /**

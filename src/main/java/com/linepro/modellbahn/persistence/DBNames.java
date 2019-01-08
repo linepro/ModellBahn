@@ -94,7 +94,7 @@ public interface DBNames {
     String KUPPLUNG_ID = "kupplung_id";
     String LANGE = "lange";
     String LEISTUNG = "leistung";
-    String LEISTUNGSUEBERTRAGUNG = "leistungsuebertragung";
+    String LEISTUNGSUBERTRAGUNG = "leistungsubertragung";
     String LICHT_ID = "licht_id";
     String LINKS = "links";
     String MASSSTAB_ID = "massstab_id";

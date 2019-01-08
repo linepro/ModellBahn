@@ -17,6 +17,12 @@ import io.swagger.annotations.ApiModel;
 @ApiModel(value = ApiNames.WAHRUNG, description = "A currency.")
 public interface IWahrung extends IWahrungRef {
 
+    @JsonSetter(ApiNames.NAMEN)
+    void setName(String name);
+
+    @JsonSetter(ApiNames.BEZEICHNUNG)
+    void setBezeichnung(String bezeichnung);
+
     @JsonSetter(ApiNames.DECIMALS)
     void setDecimals(Integer decimals);
 }

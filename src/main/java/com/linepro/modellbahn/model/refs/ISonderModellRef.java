@@ -18,6 +18,6 @@ public interface ISonderModellRef extends INamedItemRef {
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "SonderModell description", example = "MHI")
+    @ApiModelProperty(value = "SonderModell description", example = "Märklin Handler Initiative")
     String getBezeichnung();
 }

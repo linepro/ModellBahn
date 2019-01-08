@@ -18,6 +18,6 @@ public interface IEpochRef extends INamedItemRef {
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "ERA description", example = "III - 1965-1973")
+    @ApiModelProperty(value = "ERA description", example = "III : 1949 - 1970")
     String getBezeichnung();
 }
