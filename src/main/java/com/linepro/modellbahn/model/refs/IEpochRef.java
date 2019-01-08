@@ -13,7 +13,7 @@ public interface IEpochRef extends INamedItemRef {
 
     @JsonGetter(ApiNames.NAMEN)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The ERA", example = "III", required = true)
+    @ApiModelProperty(value = "ERA", example = "III", required = true)
     String getName();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)

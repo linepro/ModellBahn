@@ -12,14 +12,14 @@ import io.swagger.annotations.ApiModelProperty;
 public interface IDecoderTypCVRef extends IRef {
 
     @JsonGetter(ApiNames.CV)
-    @ApiModelProperty(value = "The CV number", example = "63", required = true)
+    @ApiModelProperty(value = "CV number", example = "63", required = true)
     Integer getCv();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
-    @ApiModelProperty(value = "The CV usage", example = "Geräuschlautstärke", required = true)
+    @ApiModelProperty(value = "CV usage", example = "Geräuschlautstärke", required = true)
     String getBezeichnung();
 
     @JsonGetter(ApiNames.WERKSEINSTELLUNG)
-    @ApiModelProperty(value = "The default value", example = "63", required = true)
+    @ApiModelProperty(value = "Default value", example = "63", required = true)
     Integer getWerkseinstellung();
 }

@@ -29,7 +29,7 @@ public interface IUnterKategorie extends INamedItem<UnterKategorieKey>, IUnterKa
     @JsonGetter(ApiNames.KATEGORIE)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IKategorieRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IKategorieRef", value = "The head category", required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IKategorieRef", value = "Head category", required = true)
     IKategorie getKategorie();
 
     /**

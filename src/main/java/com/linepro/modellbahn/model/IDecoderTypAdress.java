@@ -36,7 +36,7 @@ public interface IDecoderTypAdress extends IItem<DecoderTypAdressKey>, IDecoderT
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IDecoderTypRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IDecoderTypRef", value = "The decoder type", required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IDecoderTypRef", value = "Decoder type", required = true)
     IDecoderTyp getDecoderTyp();
 
     /**

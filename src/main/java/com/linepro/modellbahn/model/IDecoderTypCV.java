@@ -30,7 +30,7 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey>, IDecoderTypCVRef 
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IDecoderTypRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IDecoderTypRef", value = "The decoder type", required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IDecoderTypRef", value = "Decoder type", required = true)
     IDecoderTyp getDecoderTyp();
 
     @JsonSetter(ApiNames.DECODER_TYP)
@@ -39,7 +39,7 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey>, IDecoderTypCVRef 
 
     @JsonGetter(ApiNames.CV)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The CV", required = true)
+    @ApiModelProperty(value = "CV", required = true)
     Integer getCv();
 
     @JsonSetter(ApiNames.CV)
@@ -50,7 +50,7 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey>, IDecoderTypCVRef 
 
     @JsonGetter(ApiNames.MINIMAL)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "The minimum value", example = "1")
+    @ApiModelProperty(value = "Minimum value", example = "1")
     Integer getMinimal();
 
     @JsonSetter(ApiNames.MINIMAL)
@@ -58,7 +58,7 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey>, IDecoderTypCVRef 
 
     @JsonGetter(ApiNames.MAXIMAL)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "The maximum value", example = "63")
+    @ApiModelProperty(value = "Maximum value", example = "63")
     Integer getMaximal();
 
     @JsonSetter(ApiNames.MAXIMAL)
@@ -66,7 +66,7 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey>, IDecoderTypCVRef 
 
     @JsonGetter(ApiNames.WERKSEINSTELLUNG)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "The default value", example = "40")
+    @ApiModelProperty(value = "Default value", example = "40")
     Integer getWerkseinstellung();
 
     @JsonSetter(ApiNames.WERKSEINSTELLUNG)

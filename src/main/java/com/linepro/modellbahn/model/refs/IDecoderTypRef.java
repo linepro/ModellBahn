@@ -18,15 +18,15 @@ public interface IDecoderTypRef extends IRef {
     @JsonGetter(ApiNames.HERSTELLER)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IHerstellerRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IHerstellerRef", value = "The manufacturer", required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IHerstellerRef", value = "Manufacturer", required = true)
     IHersteller getHersteller();
 
     @JsonGetter(ApiNames.BESTELL_NR)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The product numer", example = "62499", required = true)
+    @ApiModelProperty(value = "Product numer", example = "62499", required = true)
     String getBestellNr();
     
     @JsonGetter(ApiNames.BEZEICHNUNG)
-    @ApiModelProperty(value = "The description", example = "LokSound M4")
+    @ApiModelProperty(value = "Description", example = "LokSound M4")
     String getBezeichnung();
 }

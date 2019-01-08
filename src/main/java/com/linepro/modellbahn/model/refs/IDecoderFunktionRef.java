@@ -18,11 +18,11 @@ public interface IDecoderFunktionRef extends IRef {
     @JsonGetter(ApiNames.FUNKTION)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IDecoderTypFunktionRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IDecoderTypFunktionRef", value = "The function", required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IDecoderTypFunktionRef", value = "Function", required = true)
     IDecoderTypFunktion getFunktion();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The usage", example = "Strinbeleuchtung", required = true)
+    @ApiModelProperty(value = "Usage", example = "Strinbeleuchtung", required = true)
     String getBezeichnung();
 }

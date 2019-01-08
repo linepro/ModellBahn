@@ -18,17 +18,17 @@ public interface IDecoderRef extends IRef {
 
     @JsonGetter(ApiNames.DECODER_ID)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The Decoder's id", example = "00001", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(value = "Decoder's id", example = "00001", accessMode = AccessMode.READ_ONLY, required = true)
     String getDecoderId();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The Decoder's description", example = "ESU Loksound")
+    @ApiModelProperty(value = "Decoder's description", example = "ESU Loksound")
     String getBezeichnung();
 
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IDecoderTypRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IDecoderTypRef", value = "The Decoder's type", required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IDecoderTypRef", value = "Decoder's type", required = true)
     IDecoderTyp getDecoderTyp();
 }

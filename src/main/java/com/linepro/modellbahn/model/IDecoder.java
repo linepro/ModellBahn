@@ -49,7 +49,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
     @JsonGetter(ApiNames.PROTOKOLL)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IProtokollRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IProtokollRef", value = "This Decoder protocol", required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IProtokollRef", value = "Decoder protocol", required = true)
     IProtokoll getProtokoll();
 
     @JsonSetter(ApiNames.PROTOKOLL)
@@ -58,7 +58,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
 
     @JsonGetter(ApiNames.FAHRSTUFE)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "This Decoder speed steps", example="27", required = true)
+    @ApiModelProperty(value = "Decoder speed steps", example="27", required = true)
     Integer getFahrstufe();
 
     @JsonSetter(ApiNames.FAHRSTUFE)
@@ -67,7 +67,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
     @JsonGetter(ApiNames.ADRESSEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentAs= IDecoderAdressRef.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderAdressRef;", value = "This Decoder's addresses", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderAdressRef;", value = "Decoder addresses", accessMode = AccessMode.READ_ONLY, required = true)
     Set<IDecoderAdress> getAdressen();
 
     @JsonSetter(ApiNames.ADRESSEN)
@@ -86,7 +86,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
     @JsonGetter(ApiNames.CVS)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentAs= IDecoderCVRef.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderCVRef;", value = "This Decoder's cv values", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderCVRef;", value = "Decoder cv values", accessMode = AccessMode.READ_ONLY)
     Set<IDecoderCV> getCVs();
 
     @JsonSetter(ApiNames.CVS)
@@ -105,7 +105,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
     @JsonGetter(ApiNames.FUNKTIONEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentAs= IDecoderFunktionRef.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderFunktionRef;", value = "This Decoder's functions", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderFunktionRef;", value = "Decoder functions", accessMode = AccessMode.READ_ONLY, required = true)
     Set<IDecoderFunktion> getFunktionen();
 
     /**

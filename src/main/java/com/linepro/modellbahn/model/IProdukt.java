@@ -66,7 +66,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
  * @version $Id$
  */
 @JsonRootName(value = ApiNames.PRODUKT)
-@JsonPropertyOrder({ ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.UNTER_KATEGORIE, ApiNames.MASSSTAB,
+@JsonPropertyOrder({ ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.UNTER_KATEGORIE, ApiNames.MASSSTAB,
         ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER,
         ApiNames.BAUZEIT, ApiNames.VORBILD, ApiNames.ACHSFOLG, ApiNames.ANMERKUNG, ApiNames.SONDERMODELL,
         ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG, ApiNames.DECODER_TYP,
@@ -96,7 +96,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     @JsonGetter(ApiNames.MASSSTAB)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IMassstabRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IMassstabRef", value = "The scale")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IMassstabRef", value = "Scale")
     IMassstab getMassstab();
 
     @JsonSetter(ApiNames.MASSSTAB)
@@ -116,7 +116,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     @JsonGetter(ApiNames.EPOCH)
     @JsonView(Views.Public.class)
     @JsonSerialize(as= IEpochRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IEpochRef", value = "The ERA")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IEpochRef", value = "ERA")
     IEpoch getEpoch();
 
     @JsonSetter(ApiNames.EPOCH)
@@ -126,7 +126,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     @JsonGetter(ApiNames.BAHNVERWALTUNG)
     @JsonView(Views.Public.class)
     @JsonSerialize(as= IBahnverwaltungRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IBahnverwaltungRef", value = "The railway company")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IBahnverwaltungRef", value = "Railway company")
     IBahnverwaltung getBahnverwaltung();
 
     @JsonSetter(ApiNames.BAHNVERWALTUNG)
@@ -136,7 +136,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     @JsonGetter(ApiNames.GATTUNG)
     @JsonView(Views.Public.class)
     @JsonSerialize(as= IGattungRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IGattungRef", value = "The vehicle class")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IGattungRef", value = "Vehicle class")
     IGattung getGattung();
 
     @JsonSetter(ApiNames.GATTUNG)
@@ -145,7 +145,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
 
     @JsonGetter(ApiNames.BETREIBSNUMMER)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "The service number", example = "89 006")
+    @ApiModelProperty(value = "Service number", example = "89 006")
     String getBetreibsnummer();
 
     @JsonSetter(ApiNames.BETREIBSNUMMER)
@@ -155,7 +155,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonView(Views.Public.class)
     @JsonFormat(shape = Shape.STRING, pattern = Formats.ISO8601_DATE)
-    @ApiModelProperty(dataType = "java.time.LocalDate", value = "The construction date", example = "1934")
+    @ApiModelProperty(dataType = "java.time.LocalDate", value = "Construction date", example = "1934-01-01")
     LocalDate getBauzeit();
 
     @JsonSetter(ApiNames.BAUZEIT)
@@ -165,7 +165,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     @JsonGetter(ApiNames.VORBILD)
     @JsonView(Views.Public.class)
     @JsonSerialize(as= IVorbildRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IVorbildRef", value = "The prototype")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IVorbildRef", value = "Prototype")
     IVorbild getVorbild();
 
     /**
@@ -186,7 +186,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     @JsonGetter(ApiNames.ACHSFOLG)
     @JsonView(Views.Public.class)
     @JsonSerialize(as= IAchsfolgRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IAchsfolgRef", value = "The axle configuration")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IAchsfolgRef", value = "Axle configuration")
     IAchsfolg getAchsfolg();
 
     /**
@@ -228,7 +228,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     @JsonGetter(ApiNames.AUFBAU)
     @JsonView(Views.Public.class)
     @JsonSerialize(as= IAufbauRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IAufbauRef", value = "The construction")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IAufbauRef", value = "Construction")
     IAufbau getAufbau();
 
     /**
@@ -249,7 +249,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     @JsonGetter(ApiNames.LICHT)
     @JsonView(Views.Public.class)
     @JsonSerialize(as= ILichtRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.ILichtRef", value = "The light configuration")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.ILichtRef", value = "Light configuration")
     ILicht getLicht();
 
     /**
@@ -270,7 +270,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     @JsonGetter(ApiNames.KUPPLUNG)
     @JsonView(Views.Public.class)
     @JsonSerialize(as= IKupplungRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IKupplungRef", value = "The coupling configuration")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IKupplungRef", value = "Coupling configuration")
     IKupplung getKupplung();
 
     /**
@@ -291,7 +291,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     @JsonGetter(ApiNames.STEUERUNG)
     @JsonView(Views.Public.class)
     @JsonSerialize(as= ISteuerungRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.ISteuerungRef", value = "The control method")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.ISteuerungRef", value = "Control method")
     ISteuerung getSteuerung();
 
     /**
@@ -312,7 +312,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as = IDecoderTypRef.class) 
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IDecoderTypRef", value = "The decoder type")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IDecoderTypRef", value = "Decoder type")
     IDecoderTyp getDecoderTyp();
 
     /**
@@ -333,7 +333,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     @JsonGetter(ApiNames.MOTOR_TYP)
     @JsonView(Views.Public.class)
     @JsonSerialize(as= IMotorTypRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IMotorTypRef", value = "The motor type")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IMotorTypRef", value = "Motor type")
     IMotorTyp getMotorTyp();
 
     /**

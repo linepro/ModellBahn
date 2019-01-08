@@ -48,7 +48,6 @@ public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
     private static final long serialVersionUID = 44440227704021482L;
 
     @Pattern(regexp = "^[A-Z0-9]+$", message = "{com.linepro.modellbahn.validator.constraints.decoderId.invalid}")
-    @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.decoderId.notempty}")
     private String decoderId;
 
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notnull}")

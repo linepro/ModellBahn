@@ -15,11 +15,11 @@ public interface IDecoderCVRef extends IRef {
 
     @JsonGetter(ApiNames.CV)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The CV", required = true)
+    @ApiModelProperty(value = "CV", required = true)
     Integer getCvValue();
 
     @JsonGetter(ApiNames.WERT)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The CV value", example = "80", required = true)
+    @ApiModelProperty(value = "CV value", example = "80", required = true)
     Integer getWert();
 }

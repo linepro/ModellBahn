@@ -7,14 +7,14 @@ import io.swagger.annotations.ApiModelProperty;
 
 public interface ILink {
     @JsonGetter(ApiNames.HREF)
-    @ApiModelProperty(value = "The url for this link", example = "http://localhost/ModellBahn/api/example", required = true)
+    @ApiModelProperty(value = "Url for this link", example = "http://localhost/ModellBahn/api/example", required = true)
     String getHRef();
 
     @JsonGetter(ApiNames.REL)
-    @ApiModelProperty(value = "The relationship for this link", example = "self", required = true)
+    @ApiModelProperty(value = "Relationship for this link", example = "self", required = true)
     String getRel();
 
     @JsonGetter(ApiNames.METHOD)
-    @ApiModelProperty(value = "The method to be called (GET, DELETE, POST, PUT)", example = "GET", required = true)
+    @ApiModelProperty(value = "Method to be called (GET, DELETE, POST, PUT)", example = "GET", required = true)
     String getMethod();
 }

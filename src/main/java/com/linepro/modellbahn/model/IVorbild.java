@@ -41,7 +41,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @version  $Id$
  */
 @JsonRootName(value = ApiNames.VORBILD)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.GATTUNG, ApiNames.UNTER_KATEGORIE, ApiNames.BAHNVERWALTUNG, ApiNames.HERSTELLER, ApiNames.BAUZEIT, ApiNames.ANZAHL, ApiNames.BETREIBSNUMMER, ApiNames.ANTRIEB, ApiNames.ACHSFOLG, ApiNames.ANFAHRZUGKRAFT, ApiNames.LEISTUNG, ApiNames.DIENSTGEWICHT, ApiNames.GESCHWINDIGKEIT, ApiNames.LANGE, ApiNames.AUSSERDIENST, ApiNames.DMTREIBRAD, ApiNames.DMLAUFRADVORN, ApiNames.DMLAUFRADHINTEN, ApiNames.ZYLINDER, ApiNames.DMZYLINDER, ApiNames.KOLBENHUB, ApiNames.KESSELUEBERDRUCK, ApiNames.ROSTFLAECHE, ApiNames.UEBERHITZERFLAECHE, ApiNames.WASSERVORRAT, ApiNames.VERDAMPFUNG, ApiNames.STEUERUNG, ApiNames.FAHRMOTOREN, ApiNames.MOTORBAUART, ApiNames.LEISTUNGSUBERTRAGUNG, ApiNames.REICHWEITE, ApiNames.KAPAZITAT, ApiNames.KLASSE, ApiNames.SITZPLATZEKL1, ApiNames.SITZPLATZEKL2, ApiNames.SITZPLATZEKL3, ApiNames.SITZPLATZEKL4, ApiNames.AUFBAU, ApiNames.TRIEBKOEPFE, ApiNames.MITTELWAGEN, ApiNames.DREHGESTELLBAUART, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ApiNames.ID, ApiNames.GATTUNG, ApiNames.BEZEICHNUNG, ApiNames.UNTER_KATEGORIE, ApiNames.BAHNVERWALTUNG, ApiNames.HERSTELLER, ApiNames.BAUZEIT, ApiNames.ANZAHL, ApiNames.BETREIBSNUMMER, ApiNames.ANTRIEB, ApiNames.ACHSFOLG, ApiNames.ANFAHRZUGKRAFT, ApiNames.LEISTUNG, ApiNames.DIENSTGEWICHT, ApiNames.GESCHWINDIGKEIT, ApiNames.LANGE, ApiNames.AUSSERDIENST, ApiNames.DMTREIBRAD, ApiNames.DMLAUFRADVORN, ApiNames.DMLAUFRADHINTEN, ApiNames.ZYLINDER, ApiNames.DMZYLINDER, ApiNames.KOLBENHUB, ApiNames.KESSELUEBERDRUCK, ApiNames.ROSTFLAECHE, ApiNames.UEBERHITZERFLAECHE, ApiNames.WASSERVORRAT, ApiNames.VERDAMPFUNG, ApiNames.STEUERUNG, ApiNames.FAHRMOTOREN, ApiNames.MOTORBAUART, ApiNames.LEISTUNGSUBERTRAGUNG, ApiNames.REICHWEITE, ApiNames.KAPAZITAT, ApiNames.KLASSE, ApiNames.SITZPLATZEKL1, ApiNames.SITZPLATZEKL2, ApiNames.SITZPLATZEKL3, ApiNames.SITZPLATZEKL4, ApiNames.AUFBAU, ApiNames.TRIEBKOEPFE, ApiNames.MITTELWAGEN, ApiNames.DREHGESTELLBAUART, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS})
 @ApiModel(value = ApiNames.VORBILD, description = "A real world prototype.")
 public interface IVorbild extends IItem<VorbildKey>, IVorbildRef {
     
@@ -55,7 +55,7 @@ public interface IVorbild extends IItem<VorbildKey>, IVorbildRef {
     @JsonGetter(ApiNames.UNTER_KATEGORIE)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as = IUnterKategorieRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IUnterKategorieRef", value = "The category and subcategory", required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IUnterKategorieRef", value = "Category and subcategory", required = true)
     IUnterKategorie getUnterKategorie();
     
     @JsonSetter(ApiNames.UNTER_KATEGORIE)
@@ -65,7 +65,7 @@ public interface IVorbild extends IItem<VorbildKey>, IVorbildRef {
     @JsonGetter(ApiNames.BAHNVERWALTUNG)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IBahnverwaltungRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IBahnverwaltungRef", value = "The railway company", required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IBahnverwaltungRef", value = "Railway company", required = true)
     IBahnverwaltung getBahnverwaltung();
 
     @JsonSetter(ApiNames.BAHNVERWALTUNG)
@@ -74,7 +74,7 @@ public interface IVorbild extends IItem<VorbildKey>, IVorbildRef {
     
     @JsonGetter(ApiNames.HERSTELLER)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The manunfacturer", example = "Henschel")
+    @ApiModelProperty(value = "Manunfacturer", example = "Henschel")
     String getHersteller();
     
     @JsonSetter(ApiNames.HERSTELLER)
@@ -84,7 +84,7 @@ public interface IVorbild extends IItem<VorbildKey>, IVorbildRef {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonView(Views.DropDown.class)
     @JsonFormat(shape=Shape.STRING, pattern= Formats.ISO8601_DATE)
-    @ApiModelProperty(dataType = "java.time.LocalDate", value = "The construction date", example = "1934")
+    @ApiModelProperty(dataType = "java.time.LocalDate", value = "Construction date", example = "1934-01-01")
     LocalDate getBauzeit();
     
     @JsonSetter(ApiNames.BAUZEIT)
@@ -93,7 +93,7 @@ public interface IVorbild extends IItem<VorbildKey>, IVorbildRef {
     
     @JsonGetter(ApiNames.ANZAHL)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "The number built", example = "10")
+    @ApiModelProperty(value = "Number built", example = "10")
     Integer getAnzahl();
     
     @JsonSetter(ApiNames.ANZAHL)
@@ -101,7 +101,7 @@ public interface IVorbild extends IItem<VorbildKey>, IVorbildRef {
     
     @JsonGetter(ApiNames.BETREIBSNUMMER)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The service number", example = "89 006")
+    @ApiModelProperty(value = "Service number", example = "89 006")
     String getBetreibsNummer();
     
     @JsonSetter(ApiNames.BETREIBSNUMMER)
@@ -110,7 +110,7 @@ public interface IVorbild extends IItem<VorbildKey>, IVorbildRef {
     @JsonGetter(ApiNames.ANTRIEB)
     @JsonView(Views.Public.class)
     @JsonSerialize(as= IAntriebRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IAntriebRef", value = "The drive method")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IAntriebRef", value = "Drive method")
     IAntrieb getAntrieb();
     
     @JsonSetter(ApiNames.ANTRIEB)
@@ -120,7 +120,7 @@ public interface IVorbild extends IItem<VorbildKey>, IVorbildRef {
     @JsonGetter(ApiNames.ACHSFOLG)
     @JsonView(Views.Public.class)
     @JsonSerialize(as= IAchsfolgRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IAchsfolgRef", value = "The axle configuration")
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IAchsfolgRef", value = "Axle configuration")
     IAchsfolg getAchsfolg();
     
     @JsonSetter(ApiNames.ACHSFOLG)
@@ -129,7 +129,7 @@ public interface IVorbild extends IItem<VorbildKey>, IVorbildRef {
     
     @JsonGetter(ApiNames.ANFAHRZUGKRAFT)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "The Tractive Effort in kN", example = "300")
+    @ApiModelProperty(value = "Tractive Effort in kN", example = "300")
     BigDecimal getAnfahrzugkraft();
     
     @JsonSetter(ApiNames.ANFAHRZUGKRAFT)
@@ -145,7 +145,7 @@ public interface IVorbild extends IItem<VorbildKey>, IVorbildRef {
 
     @JsonGetter(ApiNames.DIENSTGEWICHT)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "The service weight in metric tons", example = "46")
+    @ApiModelProperty(value = "Service weight in metric tons", example = "46")
     BigDecimal getDienstgewicht();
 
     @JsonSetter(ApiNames.DIENSTGEWICHT)
@@ -153,7 +153,7 @@ public interface IVorbild extends IItem<VorbildKey>, IVorbildRef {
 
     @JsonGetter(ApiNames.GESCHWINDIGKEIT)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "The maximum speed in km/h", example = "45")
+    @ApiModelProperty(value = "Maximum speed in km/h", example = "45")
     Integer getGeschwindigkeit();
 
     @JsonSetter(ApiNames.GESCHWINDIGKEIT)
@@ -161,7 +161,7 @@ public interface IVorbild extends IItem<VorbildKey>, IVorbildRef {
 
     @JsonGetter(ApiNames.LANGE)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "The length over puffers in mm", example = "9600")
+    @ApiModelProperty(value = "Length over puffers in mm", example = "9600")
     BigDecimal getLange();
 
     @JsonSetter(ApiNames.LANGE)
@@ -348,7 +348,7 @@ public interface IVorbild extends IItem<VorbildKey>, IVorbildRef {
 
     @JsonGetter(ApiNames.AUFBAU)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "Construction", example = "")
+    @ApiModelProperty(value = "Construction", example = "Holz")
     String getAufbau();
 
     @JsonSetter(ApiNames.AUFBAU)
@@ -372,7 +372,7 @@ public interface IVorbild extends IItem<VorbildKey>, IVorbildRef {
 
     @JsonGetter(ApiNames.DREHGESTELLBAUART)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "Bogie Manufacturer and type", example = "")
+    @ApiModelProperty(value = "Bogie Manufacturer and type", example = "Y 25")
     String getDrehgestellBauart();
 
     @JsonSetter(ApiNames.DREHGESTELLBAUART)

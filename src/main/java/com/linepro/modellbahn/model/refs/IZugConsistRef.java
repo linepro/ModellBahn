@@ -25,12 +25,12 @@ public interface IZugConsistRef extends IRef {
 
     @JsonGetter(ApiNames.POSITION)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The contiguous 1 based position in the train (1 = head)", example = "1", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(value = "Contiguous 1 based position in the train (1 = head)", example = "1", accessMode = AccessMode.READ_ONLY, required = true)
     Integer getPosition();
 
     @JsonGetter(ApiNames.ARTIKEL)
     @JsonSerialize(contentAs = IArtikelRef.class)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IProduktRef", value = "The rolling stock item", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IProduktRef", value = "Rolling stock item", accessMode = AccessMode.READ_ONLY, required = true)
     IArtikel getArtikel();
 }

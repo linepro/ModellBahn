@@ -60,7 +60,6 @@ public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
 
     /** The abbildung. */
     @Pattern(regexp = "^[A-Z0-9]+$", message = "{com.linepro.modellbahn.validator.constraints.decoderId.invalid}")
-    @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.artikelId.notempty}")
     private String artikelId;
 
     /** The produkt. */

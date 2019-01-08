@@ -34,7 +34,7 @@ public interface ILand extends INamedItem<NameKey>, ILandRef {
     @JsonGetter(ApiNames.WAHRUNG)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IWahrungRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IWahrungRef", value = "The Currency", required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IWahrungRef", value = "Currency", required = true)
     IWahrung getWahrung();
 
     /**

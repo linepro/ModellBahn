@@ -1,12 +1,16 @@
 package com.linepro.modellbahn.model.refs;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DECIMALS })
+@ApiModel(value = ApiNames.WAHRUNG, description = "A currency.")
 public interface IWahrungRef extends INamedItemRef {
 
     @JsonGetter(ApiNames.NAMEN)
@@ -21,6 +25,6 @@ public interface IWahrungRef extends INamedItemRef {
 
     @JsonGetter(ApiNames.DECIMALS)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The number of decimal places", example = "2", required = true)
+    @ApiModelProperty(value = "Number of decimal places", example = "2", required = true)
     Integer getDecimals();
 }

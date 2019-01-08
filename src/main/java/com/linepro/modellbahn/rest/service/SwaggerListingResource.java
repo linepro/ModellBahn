@@ -25,7 +25,7 @@ public class SwaggerListingResource {
     @GET
     @Path(ApiPaths.SWAGGER_RESOURCE)
     @Produces({MediaType.APPLICATION_JSON, "application/yaml"})
-    @ApiOperation(value = "The swagger definition in either JSON or YAML", hidden = true)
+    @ApiOperation(value = "Swagger definition in either JSON or YAML", hidden = true)
     public Response getListing(
             @Context Application app,
             @Context HttpHeaders headers,

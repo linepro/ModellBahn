@@ -11,11 +11,11 @@ public interface IDescribedEnum extends INamedItemRef {
 
     @JsonGetter(ApiNames.NAMEN)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The Enum name", required = true)
+    @ApiModelProperty(value = "Enum name", required = true)
     String getName();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The Enum display name", required = true)
+    @ApiModelProperty(value = "Enum display name", required = true)
     String getBezeichnung();
 }

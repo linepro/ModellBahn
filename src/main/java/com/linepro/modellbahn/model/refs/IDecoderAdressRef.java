@@ -15,6 +15,6 @@ public interface IDecoderAdressRef extends IAdress, IRef {
 
     @JsonGetter(ApiNames.INDEX)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The 0 based address index (always 0 for single address decoders)", example = "0", required = true)
+    @ApiModelProperty(value = "0 based address index (always 0 for single address decoders)", example = "0", required = true)
     Integer getIndex();
 }

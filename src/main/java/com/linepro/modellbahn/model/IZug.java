@@ -39,7 +39,7 @@ public interface IZug extends INamedItem<NameKey>, IZugRef {
      */
     @JsonGetter(ApiNames.ZUG_TYP)
     @JsonSerialize(as = IZugTypRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IZugTypRef", value = "The Train type", required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IZugTypRef", value = "Train type", required = true)
     IZugTyp getZugTyp();
 
     /**
@@ -57,7 +57,7 @@ public interface IZug extends INamedItem<NameKey>, IZugRef {
     @JsonGetter(ApiNames.CONSIST)
     @JsonSerialize(contentAs = IZugConsistRef.class)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IZugConsistRef;", value = "The train composition", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IZugConsistRef;", value = "Train composition", accessMode = AccessMode.READ_ONLY)
     Set<IZugConsist> getConsist();
 
     /**

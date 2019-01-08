@@ -77,9 +77,9 @@ public class HerstellerService extends AbstractItemService<NameKey, Hersteller> 
         @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Hersteller description", example = "Märklin", dataType = "String", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.TELEFON, value = "Hersteller telefon", example = "+49 (0) 71 61 608-0", dataType = "String", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.URL, value = "Hersteller url", example = "https://www.maerklin.de/", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "if true search for soft deleted items", example = "false", dataType = "Boolean", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DELETED, value = "If true search for soft deleted items", example = "false", dataType = "Boolean", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "Page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),
     })
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);

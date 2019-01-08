@@ -22,6 +22,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import javax.validation.constraints.Pattern;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -61,7 +62,7 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.hersteller.notnull}")
     private IHersteller hersteller;
 
-    @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.bestellNr.notempty}")
+    @Pattern(regexp = "^[A-Z0-9\\-.]+$", message = "{com.linepro.modellbahn.validator.constraints.bestellNr.invalid}")
     private String bestellNr;
 
     @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notempty}")

@@ -15,15 +15,15 @@ public interface IDecoderTypFunktionRef extends IRef {
 
     @JsonGetter(ApiNames.REIHE)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The bank number (0-1) always 0 for single panel decoders", example = "0", required = true)
+    @ApiModelProperty(value = "Bank number (0-1) always 0 for single panel decoders", example = "0", required = true)
     Integer getReihe();
 
     @JsonGetter(ApiNames.FUNKTION)
-    @ApiModelProperty(value = "The function number", example = "F0", required = true)
+    @ApiModelProperty(value = "Function number", example = "F0", required = true)
     String getFunktion();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
-    @ApiModelProperty(value = "The usage", example = "Strinbeleuchtung", required = true)
+    @ApiModelProperty(value = "Usage", example = "Strinbeleuchtung", required = true)
     String getBezeichnung();
 
     @JsonGetter(ApiNames.PROGRAMMABLE)

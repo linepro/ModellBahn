@@ -14,13 +14,13 @@ public class DescribedEnumWrapper {
     }
 
     @JsonGetter(ApiNames.NAMEN)
-    @ApiModelProperty(value = "The enum value", required = true)
+    @ApiModelProperty(value = "Enum value", required = true)
     public String getName() {
         return dEnum.getName();
     }
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
-    @ApiModelProperty(value = "The enum description", required = true)
+    @ApiModelProperty(value = "Enum description", required = true)
     public String getDescription() {
         return dEnum.getBezeichnung();
     }

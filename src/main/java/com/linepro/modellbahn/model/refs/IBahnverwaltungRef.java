@@ -13,12 +13,12 @@ public interface IBahnverwaltungRef extends INamedItemRef, IRef {
 
     @JsonGetter(ApiNames.NAMEN)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The company code", example = "DB", required = true)
+    @ApiModelProperty(value = "Company code", example = "DB", required = true)
     String getName();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "The company name", example = "Deutschen Bundesbahn (DB)")
+    @ApiModelProperty(value = "Company name", example = "Deutschen Bundesbahn (DB)")
     String getBezeichnung();
 
 }

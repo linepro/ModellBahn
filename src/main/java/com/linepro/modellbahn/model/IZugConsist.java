@@ -32,7 +32,7 @@ public interface IZugConsist extends IItem<ZugConsistKey>, IZugConsistRef {
     @JsonGetter(ApiNames.ZUG)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IZugRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IZugRef", value = "The train", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IZugRef", value = "Parent train", accessMode = AccessMode.READ_ONLY, required = true)
     IZug getZug();
 
     @JsonSetter(ApiNames.ZUG)
