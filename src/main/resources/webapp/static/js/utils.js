@@ -133,9 +133,11 @@ const getButtonLink = (href, alt, action) => {
 };
 
 class Column {
-  constructor(heading, binding, editable, required, length) {
+  constructor(heading, binding, getter, setter, editable, required, length) {
     this.heading = heading;
     this.binding = binding;
+    this.getter = getter;
+    this.setter = setter;
     this.editable = editable ? editable : Editable.NEVER;
     this.required = required ? required : false;
     this.length = Math.max(length ? length : heading.length, heading.length+1);
@@ -153,7 +155,7 @@ class Column {
   }
 
   entityValue(entity) {
-    return entity[this.binding];
+    return this.getter(entity);
   }
 
   getLength() {
@@ -209,8 +211,8 @@ class Column {
 }
 
 class BoolColumn extends Column {
-  constructor(heading, binding, editable, required) {
-    super(heading, binding, editable, required, heading.length);
+  constructor(heading, binding, getter, setter, editable, required) {
+    super(heading, binding, getter, setter, editable, required, heading.length);
   }
 
   createControl() {
@@ -229,8 +231,8 @@ class BoolColumn extends Column {
 }
 
 class DateColumn extends Column {
-  constructor(heading, binding, editable, required) {
-    super(heading, binding, editable, required, 12);
+  constructor(heading, binding, getter, setter, editable, required) {
+    super(heading, binding, getter, setter, editable, required, 12);
   }
 
   createControl() {
@@ -241,9 +243,9 @@ class DateColumn extends Column {
 }
 
 class NumberColumn extends Column {
-  constructor(heading, binding, editable, required, max, min, step) {
+  constructor(heading, binding, getter, setter, editable, required, max, min, step) {
     max = max ? max : 255;
-    super(heading, binding, editable, required, Math.max(max.toString().length, heading.length));
+    super(heading, binding, getter, setter, editable, required, Math.max(max.toString().length, heading.length));
     this.max = max;
     this.min = min ? min : 0;
     this.step = step ? step : 1;
@@ -260,8 +262,8 @@ class NumberColumn extends Column {
 }
 
 class PhoneColumn extends Column {
-  constructor(heading, binding, editable, required) {
-    super(heading, binding, editable, required);
+  constructor(heading, binding, getter, setter, editable, required) {
+    super(heading, binding, getter, setter, editable, required);
   }
 
   createControl() {
@@ -272,8 +274,8 @@ class PhoneColumn extends Column {
 }
 
 class TextColumn extends Column {
-  constructor(heading, binding, editable, required, length) {
-    super(heading, binding, editable, required, length);
+  constructor(heading, binding, getter, setter, editable, required, length) {
+    super(heading, binding, getter, setter, editable, required, length);
   }
 
   createControl() {
@@ -285,8 +287,8 @@ class TextColumn extends Column {
 }
 
 class URLColumn extends Column {
-  constructor(heading, binding, editable, required) {
-    super(heading, binding, editable, required);
+  constructor(heading, binding, getter, setter, editable, required) {
+    super(heading, binding, getter, setter, editable, required);
   }
 
   createControl() {
@@ -297,8 +299,8 @@ class URLColumn extends Column {
 }
 
 class IMGColumn extends Column {
-  constructor(heading, binding, onChange, editable, required) {
-    super(heading, binding, editable, required);
+  constructor(heading, binding, getter, setter, onChange, editable, required) {
+    super(heading, binding, getter, setter, editable, required);
     this.onChange = onChange;
   }
 
@@ -317,8 +319,8 @@ class IMGColumn extends Column {
 }
 
 class PDFColumn extends Column {
-  constructor(heading, binding, onChange, editable, required) {
-    super(heading, binding, editable, required);
+  constructor(heading, binding, getter, setter, onChange, editable, required) {
+    super(heading, binding, getter, setter, editable, required);
     this.onChange = onChange;
   }
 
@@ -361,8 +363,8 @@ class PDFColumn extends Column {
 }
 
 class SelectColumn extends Column {
-  constructor(heading, binding, dropDown, editable, required) {
-    super(heading, binding, editable, required, dropDown.length);
+  constructor(heading, binding, getter, setter, dropDown, editable, required) {
+    super(heading, binding, getter, setter, editable, required, dropDown.length);
     this.dropDown = dropDown;
     this.dropSize = 1;
   }
@@ -391,27 +393,20 @@ class SelectColumn extends Column {
     return ctl;
   }
 
-  addOptions(select, dropDown, initial) {
-    let i = 0;
+  addOptions(select, dropDown) {
     dropDown.options.forEach(option => {
       let opt = document.createElement("option");
       opt.text = option.display;
       opt.value = option.value;
 
       select.add(opt);
-
-      if (initial && initial === option.display) {
-        select.selectedIndex = i;
-      }
-
-      i++;
     });
   }
 
   createControl() {
     let ctl = document.createElement("select");
     ctl.size = this.dropSize;
-    this.addOptions(ctl, this.dropDown, 1);
+    this.addOptions(ctl, this.dropDown);
     return ctl;
   }
 
@@ -424,6 +419,7 @@ class SelectColumn extends Column {
   }
 
   setValue(ctl, value) {
+    ctl.value = value;	  
     for (let i = 0; i < ctl.options.length; i++) {
       if (ctl.options[i].value === value) {
         ctl.selectedIndex = i;

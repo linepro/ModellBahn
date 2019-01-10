@@ -2,7 +2,7 @@
 "use strict";
 
 class Option {
-  constructor(display, value, image) {
+  constructor(value, display, image) {
     this.display = display;
     this.value = value;
     this.image = image;
