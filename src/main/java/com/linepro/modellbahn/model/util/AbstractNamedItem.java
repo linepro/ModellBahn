@@ -110,9 +110,9 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
 
   @Override
   public int compareTo(IItem<?> other) {
-    if (other instanceof AbstractNamedItem) {
+    if (other instanceof INamedItem) {
       return new CompareToBuilder()
-          .append(getName(), ((AbstractNamedItem<?>) other).getName())
+          .append(getName(), ((INamedItem<?>) other).getName())
           .toComparison();
     }
 

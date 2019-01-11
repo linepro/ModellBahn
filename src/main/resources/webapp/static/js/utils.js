@@ -132,6 +132,13 @@ const getButtonLink = (href, alt, action) => {
   return a;
 };
 
+const addOption = (select, value, text) => {
+    let opt = document.createElement("option");
+    opt.value = value;
+    opt.text = text;
+    select.add(opt);
+};
+
 class Column {
   constructor(heading, binding, getter, setter, editable, required, length) {
     this.heading = heading;
@@ -394,12 +401,10 @@ class SelectColumn extends Column {
   }
 
   addOptions(select, dropDown) {
-    dropDown.options.forEach(option => {
-      let opt = document.createElement("option");
-      opt.text = option.display;
-      opt.value = option.value;
+  	if (!this.required) addOption(select, undefined, "(n/a)");
 
-      select.add(opt);
+    dropDown.options.forEach(option => {
+    	addOption(select, option.value, option.display);
     });
   }
 

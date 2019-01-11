@@ -13,9 +13,11 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.IKategorie;
 import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.keys.UnterKategorieKey;
@@ -130,5 +132,17 @@ public class UnterKategorie extends AbstractNamedItem<UnterKategorieKey> impleme
                 .appendSuper(super.toString())
                 .append(ApiNames.KATEGORIE, getKategorie())
                 .toString();
+    }
+
+    @Override
+    public int compareTo(IItem<?> other) {
+      if (other instanceof IUnterKategorie) {
+        return new CompareToBuilder()
+            .append(getKategorie().getName(), ((IUnterKategorie) other).getKategorie().getName())
+            .append(getName(), ((IUnterKategorie) other).getName())
+            .toComparison();
+      }
+
+      return super.compareTo(other);
     }
 }

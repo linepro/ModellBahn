@@ -19,11 +19,14 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderAdress;
 import com.linepro.modellbahn.model.IDecoderCV;
 import com.linepro.modellbahn.model.IDecoderFunktion;
 import com.linepro.modellbahn.model.IDecoderTyp;
+import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.IProtokoll;
 import com.linepro.modellbahn.model.keys.DecoderKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
@@ -239,6 +242,17 @@ public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
         addLinks(root, getAdressen(), update, delete);
         addLinks(root, getCVs(), update, delete);
         addLinks(root, getFunktionen(), update, delete);
+    }
+
+    @Override
+    public int compareTo(IItem<?> other) {
+      if (other instanceof IDecoder) {
+        return new CompareToBuilder()
+            .append(getDecoderId(), ((IDecoder) other).getDecoderId())
+            .toComparison();
+      }
+
+      return super.compareTo(other);
     }
 
     @Override

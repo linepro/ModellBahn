@@ -20,10 +20,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+
 import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.IAntrieb;
 import com.linepro.modellbahn.model.IBahnverwaltung;
 import com.linepro.modellbahn.model.IGattung;
+import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.IVorbild;
 import com.linepro.modellbahn.model.keys.VorbildKey;
@@ -792,6 +795,17 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
     @Transient
     public String getLinkId() {
         return getGattung().getLinkId();
+    }
+
+    @Override
+    public int compareTo(IItem<?> other) {
+      if (other instanceof IVorbild) {
+        return new CompareToBuilder()
+            .append(getGattung().getName(), ((IVorbild) other).getGattung().getName())
+            .toComparison();
+      }
+
+      return super.compareTo(other);
     }
 
     @Override

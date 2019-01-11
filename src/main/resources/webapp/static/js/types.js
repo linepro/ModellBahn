@@ -8,10 +8,10 @@ const extractGattung = (entity) => { return new Option(entity.gattung, entity.ga
 const ACHSFOLG_DROP = new DropDown(apiRoot() + "achsfolg", extractName, extractBezeichnung);
 const ADRESS_TYP_DROP = new DropDown(apiRoot() + "enums/adressTyp", extractName, extractBezeichnung);
 const ANTRIEB_DROP = new DropDown(apiRoot() + "antrieb", extractName, extractBezeichnung);
-const ARTIKEL_DROP = new DropDown(apiRoot() + "artikel", "id", extractName);
+const ARTIKEL_DROP = new DropDown(apiRoot() + "artikel", (entity) => { return entity.artikelId; }, extractName);
 const AUFBAU_DROP = new DropDown(apiRoot() + "aufbau", extractName, extractBezeichnung);
 const BAHNVERWALTUNG_DROP = new DropDown(apiRoot() + "bahnverwaltung", extractName, extractBezeichnung);
-const DECODER_DROP = new DropDown(apiRoot() + "decoder", "id", extractName);
+const DECODER_DROP = new DropDown(apiRoot() + "decoder", (entity) => { return entity.decoderId; }, extractName);
 const EPOCH_DROP = new DropDown(apiRoot() + "epoch", extractName, extractBezeichnung);
 const GATTUNG_DROP = new DropDown(apiRoot() + "gattung", extractName, extractBezeichnung);
 const HERSTELLER_DROP = new DropDown(apiRoot() + "hersteller", extractName, extractBezeichnung);
@@ -30,16 +30,16 @@ const STECKER_DROP = new DropDown(apiRoot() + "enums/stecker", extractName, extr
 const STEUERUNG_DROP = new DropDown(apiRoot() + "steuerung", extractName, extractBezeichnung);
 const VORBILD_DROP = new DropDown(apiRoot() + "vorbild", extractGattung, extractGattung);
 const WAHRUNG_DROP = new DropDown(apiRoot() + "wahrung", extractName, extractBezeichnung);
-const ZUG_TYP_DROP = new DropDown(apiRoot() + "zug_Typ", extractName, extractBezeichnung);
+const ZUG_TYP_DROP = new DropDown(apiRoot() + "zugTyp", extractName, extractBezeichnung);
 
-const extractHersteller = (entity) => { return entity.hersteller; };
-const extractBestellNr = (entity) => { return new Option( entity.hersteller, [ new Option(entity.bestellNr, entity.bestellNr)]) };
-const extractKategorie = (entity) => { return entity.kategorie; };
-const extractUnterKategorien = (entity) => { return new Option( entity.kategorie, [ new Option(entity.name, entity.bezeichnung)]) };
+const extractProduktValue = (entity) => { return entity.hersteller.name + "/" + entity.bestellNr ; };
+const extractProduktOption = (entity) => { return new Option( extractHersteller(entity), entity.hersteller.bezeichnung + " - " + entity.bestellNr); };
+const extractKategorieValue = (entity) => { return entity.kategorie.name + "/" + entity.name; };
+const extractKategorieOption = (entity) => { return new Option( extractKategorieValue(entity), entity.kategorie.bezeichnung + " - " + entity.bezeichnung); };
 
-const DECODER_TYP_DROP = new DropDown(apiRoot() + "decoderTyp", extractHersteller, extractBestellNr);
-const PRODUKT_DROP = new DropDown(apiRoot() + "produkt", extractHersteller, extractBestellNr);
-const UNTER_KATEGORIE_DROP = new DropDown(apiRoot() + "kategorie/unterKategorien", extractKategorie, extractUnterKategorien);
+const DECODER_TYP_DROP = new DropDown(apiRoot() + "decoderTyp", extractProduktValue, extractProduktOption);
+const PRODUKT_DROP = new DropDown(apiRoot() + "produkt", extractProduktValue, extractProduktOption);
+const UNTER_KATEGORIE_DROP = new DropDown(apiRoot() + "kategorie/unterKategorien", extractKategorieValue, extractKategorieOption);
 
 const setter = () => {};
 
@@ -64,7 +64,7 @@ const CONSIST = new TextColumn("Consist", "consist", (entity) => { return entity
 const CV = new NumberColumn("CV", "cv", (entity) => { return entity.cv; }, setter,Editable.ADD, true, 127, 1);
 const DECIMALS = new NumberColumn("Decimals", "decimals", (entity) => { return entity.decimals; }, setter,Editable.UPDATE, false, 3, 0);
 const DECODER = new SelectColumn("Decoder", "decoder", (entity) => { return entity.decoder ? entity.decoder.name : undefined; }, setter,DECODER_DROP, Editable.UPDATE, false);
-const DECODER_TYP = new SelectColumn("Decoder Typ", "decoderTyp", (entity) => { return entity.decoderTyp ? entity.decoderTyp.name : undefined; }, setter,DECODER_TYP_DROP, Editable.UPDATE, false);
+const DECODER_TYP = new SelectColumn("Decoder Typ", "decoderTyp", (entity) => { return entity.decoderTyp ? extractProduktValue(entity.decoderTyp) : undefined; }, setter,DECODER_TYP_DROP, Editable.UPDATE, false);
 const DELETED = new BoolColumn("Deleted", "deleted", (entity) => { return entity.deleted; }, setter,Editable.UPDATE, false);
 const DIENSTGEWICHT = new NumberColumn("Dienstgewicht", "dienstgewicht", (entity) => { return entity.dienstgewicht; }, setter,Editable.UPDATE, false, 999, 1);
 const DMLAUFRADHINTEN = new NumberColumn("Laufrad Hinten", "dmLaufradHinten", (entity) => { return entity.dmLaufradHinten; }, setter,Editable.UPDATE, false, 3000, 1);
@@ -105,7 +105,7 @@ const MOTORBAUART = new TextColumn("Motorbauart", "motorbauart", (entity) => { r
 const NAMEN = new TextColumn("Namen", "namen", (entity) => { return entity.name; }, setter,Editable.ADD, true, 30);
 const POSITION = new NumberColumn("Position", "position", (entity) => { return entity.position; }, setter,Editable.UPDATE, false, 30, 0);
 const PREIS = new NumberColumn("Preis", "preis", (entity) => { return entity.preis; }, setter,Editable.UPDATE, false, undefined, 0, .01);
-const PRODUKT = new SelectColumn("Produkt", "produkt", (entity) => { return entity.produkt ? entity.produkt.name : undefined; }, setter,PRODUKT_DROP, Editable.UPDATE, false);
+const PRODUKT = new SelectColumn("Produkt", "produkt", (entity) => { return entity.produkt ? extractProduktValue(entity.produkt) : undefined; }, setter,PRODUKT_DROP, Editable.UPDATE, false);
 const PROGRAMMABLE = new BoolColumn("Programmable", "programmable", (entity) => { return entity.programmable; }, setter,Editable.UPDATE, true);
 const PROTOKOLL = new SelectColumn("Protokoll", "protokoll", (entity) => { return entity.protokoll ? entity.protokoll.name : undefined; }, setter,PROTOKOLL_DROP, Editable.UPDATE, true);
 const REICHWEITE = new NumberColumn("Reichweite", "reichweite", (entity) => { return entity.reichweite; }, setter,Editable.UPDATE, false, 3000, 0);
@@ -126,7 +126,7 @@ const TEIL = new NumberColumn("Teil", "teil", (entity) => { return entity.teil; 
 const TELEFON = new PhoneColumn("Telefon", "telefon", (entity) => { return entity.telefon; }, setter,Editable.UPDATE, false);
 const TRIEBKOEPFE = new NumberColumn("Triebkoepfe", "triebkoepfe", (entity) => { return entity.triebkoepfe; }, setter,Editable.UPDATE, false, 2, 0);
 const UEBERHITZERFLAECHE = new NumberColumn("Ueberhitzerflaeche", "ueberhitzerflaeche", (entity) => { return entity.ueberhitzerflaeche; }, setter,Editable.UPDATE, false, 3000, 0, .01);
-const UNTER_KATEGORIE = new SelectColumn("Unter Kategorie", "unterKategorie", (entity) => { return entity.unterKategorie ? entity.unterKategorie.name : undefined; }, setter,UNTER_KATEGORIE_DROP, Editable.UPDATE, false);
+const UNTER_KATEGORIE = new SelectColumn("Kategorie", "unterKategorie", (entity) => { return entity.unterKategorie ? extractKategorieValue(entity.unterKategorie) : undefined; }, setter,UNTER_KATEGORIE_DROP, Editable.UPDATE, true);
 const URL = new URLColumn("Url", "url", (entity) => { return entity.url; }, setter,Editable.UPDATE, false);
 const VERDAMPFUNG = new NumberColumn("Verdampfung", "verdampfung", (entity) => { return entity.verdampfung; }, setter,Editable.UPDATE, false, 3000, 0, .01);
 const VORBILD = new SelectColumn("Vorbild", "vorbild", (entity) => { return entity.vorbild ? entity.vorbild.name : undefined; }, setter,VORBILD_DROP, Editable.UPDATE, false);

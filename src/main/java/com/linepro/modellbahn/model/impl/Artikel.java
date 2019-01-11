@@ -21,8 +21,11 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+
 import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IDecoder;
+import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.IKupplung;
 import com.linepro.modellbahn.model.ILicht;
 import com.linepro.modellbahn.model.IMotorTyp;
@@ -352,6 +355,17 @@ public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
     @Transient
     public String getLinkId() {
         return getArtikelId();
+    }
+
+    @Override
+    public int compareTo(IItem<?> other) {
+      if (other instanceof IArtikel) {
+        return new CompareToBuilder()
+            .append(getArtikelId(), ((IArtikel) other).getArtikelId())
+            .toComparison();
+      }
+
+      return super.compareTo(other);
     }
 
     @Override
