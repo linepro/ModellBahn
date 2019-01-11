@@ -13,7 +13,6 @@ class ItemGrid {
     this.editMode = editMode ? editMode : EditMode.VIEW;
     this.children = children;
     this.editForm = editForm;
-
     this.current = this.apiUrl;
 
     if (this.apiUrl) {
@@ -67,6 +66,7 @@ class ItemGrid {
     let tableName = grid.tableName;
 
     let totalWidth = 0;
+    let maxLabel   = 0;
 
     columns.forEach(column => {
       column.setTableName(tableName);
@@ -75,18 +75,18 @@ class ItemGrid {
 
     columns.forEach(column => {
       column.setWidth(Math.round((column.getLength() * 100) / totalWidth) + "%");
+      maxLabel = Math.max(column.heading ? column.heading.length : maxLabel,  maxLabel);
     });
-
 
     let table = document.getElementById(grid.tableName);
     removeChildren(table);
     table.className = "table";
 
-    addHeader(tableName, table, columns);
+    addHeader(tableName, table, columns, paged, rowCount);
 
-    addBody(tableName, table, pageSize, columns, rowCount);
+    addBody(tableName, table, pageSize, columns, paged, rowCount, maxLabel);
 
-    addFooter(tableName, table, columns, paged);
+    addFooter(tableName, table, columns, paged, rowCount);
 
     grid.initialized = true;
   }
@@ -156,7 +156,8 @@ class ItemGrid {
 
           ctl = document.createElement("input");
           ctl.type = "text";
-          ctl.disabled = true;
+          ctl.disabled = "true";
+          ctl.readOnly = "true";
           ctl.required = false;
         }
 

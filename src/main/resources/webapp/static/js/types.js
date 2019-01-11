@@ -33,7 +33,7 @@ const WAHRUNG_DROP = new DropDown(apiRoot() + "wahrung", extractName, extractBez
 const ZUG_TYP_DROP = new DropDown(apiRoot() + "zugTyp", extractName, extractBezeichnung);
 
 const extractProduktValue = (entity) => { return entity.hersteller.name + "/" + entity.bestellNr ; };
-const extractProduktOption = (entity) => { return new Option( extractHersteller(entity), entity.hersteller.bezeichnung + " - " + entity.bestellNr); };
+const extractProduktOption = (entity) => { return new Option( extractProduktValue(entity), entity.hersteller.bezeichnung + " - " + entity.bestellNr); };
 const extractKategorieValue = (entity) => { return entity.kategorie.name + "/" + entity.name; };
 const extractKategorieOption = (entity) => { return new Option( extractKategorieValue(entity), entity.kategorie.bezeichnung + " - " + entity.bezeichnung); };
 

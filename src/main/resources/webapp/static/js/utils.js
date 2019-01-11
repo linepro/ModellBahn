@@ -196,6 +196,7 @@ class Column {
       ctl.disabled = !(editMode === EditMode.ADD && this.editable !== Editable.NEVER);
     }
 
+    ctl.readOnly = ctl.disabled;
     ctl.required = this.required;
 
     return ctl;
@@ -609,7 +610,7 @@ const gridButtonColumn = (elementName) => {
     [updateRow, deleteRow]);
 };
 
-const addHeader = (tableName, table, columns) => {
+const addHeader = (tableName, table, columns, paged, rowCount) => {
   let header = document.createElement("div");
   header.id = tableName + "_thead";
   header.className = "thead";
@@ -621,7 +622,8 @@ const addHeader = (tableName, table, columns) => {
   header.append(headRow);
 
   columns.forEach(column => {
-    let th = column.getHeading();
+    let th = paged ? column.getHeading() : document.createElement("div");
+    if (!paged) addText(th, "");
     th.style.width = column.width;
     th.style.maxWidth = column.width;
 
@@ -629,10 +631,10 @@ const addHeader = (tableName, table, columns) => {
   });
 };
 
-const addBody = (tableName, table, pageSize, columns, rowCount) => {
+const addBody = (tableName, table, pageSize, columns, paged, rowCount, maxLabel) => {
   let body = document.createElement("div");
   body.id = tableName + "_tbody";
-  body.className = "tbody";
+  body.className = paged ? "tbody" : "flex-container";
   table.append(body);
 
   let row;
@@ -640,30 +642,50 @@ const addBody = (tableName, table, pageSize, columns, rowCount) => {
   for (row = 0; row < maxRow; row++) {
     let tr = document.createElement("div");
     let rowId = getRowId(tableName, row);
-    tr.className = "table-row";
+    tr.className = paged ? "table-row" : "flex-container";
     tr.id = rowId;
     body.append(tr);
-
+    
     let key = document.createElement("input");
     key.type = "hidden";
     key.id = getKeyId(rowId);
+    key.className = paged ? "table-cell" : "flex-control";
     tr.append(key);
 
     columns.forEach(column => {
       let td = document.createElement("div");
-      td.id = getCellId(rowId, column);
-      td.className = "table-cell";
-      td.style.width = column.width;
-      td.style.maxWidth = column.width;
 
-      addText(td, "");
+      if (!paged) {
+	    td.className = "flex-item";
 
-      tr.append(td);
+	    let th = column.getHeading();
+        th.className = "flex-label";
+        th.style.width = maxLabel;
+        th.style.maxWidth = maxLabel;
+        
+        td.append(th);
+      }
+      
+      let tc = document.createElement("div");
+      
+      tc.id = getCellId(rowId, column);
+      tc.className = paged ? "table-cell" : "flex-control";
+      tc.style.width = column.width;
+      tc.style.maxWidth = column.width;
+      
+      addText(tc, "");
+      
+      if (paged) {
+        tr.append(tc);
+      } else {
+    	td.append(tc);  
+        tr.append(td);
+      } 
     });
   }
 };
 
-const addFooter = (tableName, table, columns, paged) => {
+const addFooter = (tableName, table, columns, paged, rowCount) => {
   if (paged) {
     let footer = document.createElement("div");
     footer.id = tableName + "_tfoot";
