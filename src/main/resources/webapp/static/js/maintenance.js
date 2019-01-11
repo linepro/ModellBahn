@@ -278,7 +278,7 @@ class ItemGrid {
     });
 
     let td = document.getElementById(getCellId(rowId, "buttons"));
-    let save = getButton(rowId, "save", grid.tableName + ".updateRow(" + rowId + ".id)");
+    let save = getButton(rowId, "save", grid.tableName + ".saveRow(" + rowId + ".id)");
     td.appendChild(save);
     let del = getButton(rowId, "delete", grid.tableName + ".removeRow(" + rowId + ".id)");
     td.appendChild(del);
