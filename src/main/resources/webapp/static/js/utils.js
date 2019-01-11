@@ -602,7 +602,7 @@ const newRow = (tableName) => {
 };
 
 const updateRow = (tableName, row) => {
-  return getButton(row, "update", tableName + ".updateRow(" +  row + ".id)");
+  return getButton(row, "save", tableName + ".updateRow(" +  row + ".id)");
 };
 
 const gridButtonColumn = (elementName) => {
