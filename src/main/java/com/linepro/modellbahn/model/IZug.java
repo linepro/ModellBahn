@@ -58,12 +58,11 @@ public interface IZug extends INamedItem<NameKey>, IZugRef {
     @JsonSerialize(contentAs = IZugConsistRef.class)
     @JsonView(Views.Public.class)
     @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IZugConsistRef;", value = "Train composition", accessMode = AccessMode.READ_ONLY)
+    Set<IZugConsist> getSortedConsist();
+
+    @JsonIgnore
     Set<IZugConsist> getConsist();
 
-    /**
-     * Sets the consist.
-     * @param consist the new consist
-     */
     @JsonIgnore
     void setConsist(Set<IZugConsist> consist);
 

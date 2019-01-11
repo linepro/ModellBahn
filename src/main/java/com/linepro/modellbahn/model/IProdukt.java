@@ -423,6 +423,9 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     @JsonIgnore
     void setAbbildung(Path abbildung);
 
+    @JsonIgnore
+    Set<IProduktTeil> getTeilen();
+
     /**
      * Gets the teilen.
      *
@@ -432,7 +435,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     @JsonView(Views.Public.class)
     @JsonSerialize(contentAs = IProduktTeilRef.class)
     @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IProduktTeilRef;", value = "Product components", accessMode = AccessMode.READ_ONLY)
-    Set<IProduktTeil> getTeilen();
+    Set<IProduktTeil> getSortedTeilen();
 
     /**
      * Sets the teilen.

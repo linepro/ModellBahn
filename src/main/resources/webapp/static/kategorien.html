@@ -15,8 +15,8 @@
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
   const columns = [
-  new TextColumn("Namen", "name", Editable.ADD, true, 30),
-  new TextColumn("Bezeichnung", "description", Editable.UPDATE, false, 50),
+  NAMEN,
+  BEZEICHNUNG,
   new ButtonColumn([newRow], [editRow, deleteRow])
 ];
 const kategorie = new ItemGrid(10, fetchUrl("kategorie"), "kategorie", columns, true, EditMode.UPDATE, undefined, "unterkategorien.html");

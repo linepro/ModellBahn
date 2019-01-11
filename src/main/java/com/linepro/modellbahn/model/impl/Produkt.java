@@ -511,6 +511,12 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
     }
 
     @Override
+    @Transient
+    public Set<IProduktTeil> getSortedTeilen() {
+        return new TreeSet<>(getTeilen());
+    }
+
+    @Override
     public void addTeil(IProduktTeil funktion) {
         funktion.setProdukt(this);
         getTeilen().add(funktion);

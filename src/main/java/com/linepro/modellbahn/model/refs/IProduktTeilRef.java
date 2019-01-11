@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 @JsonPropertyOrder({ ApiNames.TEIL, ApiNames.ANZAHL })
 @ApiModel(value = ApiNames.TEIL, description = "Part of product (spares for rolling stock - contents for set &c).")
-public interface IProduktTeilRef extends IRef {
+public interface IProduktTeilRef extends ILinkRef {
 
     @JsonGetter(ApiNames.TEIL)
     @JsonView(Views.DropDown.class)

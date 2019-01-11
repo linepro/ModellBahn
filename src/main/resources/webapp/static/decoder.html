@@ -20,20 +20,20 @@
     SPAN,
     WERKSEINSTELLUNG,
     gridButtonColumn("adressen")
-  ], false, EditMode.UPDATE, undefined);
+  ], Paged.EXPAND, EditMode.UPDATE, undefined);
   const cvs = new ItemGrid(10, undefined, "cvs", [
     CV,
     BEZEICHNUNG,
     WERKSEINSTELLUNG,
     gridButtonColumn("cvs")
-  ], false, EditMode.UPDATE, undefined);
+  ], Paged.EXPAND, EditMode.UPDATE, undefined);
   const funktionen = new ItemGrid(10, undefined, "funktionen", [
     REIHE,
     FUNKTION,
     BEZEICHNUNG,
     PROGRAMMABLE,
     gridButtonColumn("funktionen")
-  ], false, EditMode.UPDATE, undefined);
+  ], Paged.EXPAND, EditMode.UPDATE, undefined);
   const decoder = new ItemGrid(1, fetchUrl("decoder"), "decoder", [
     HERSTELLER,
     BESTELL_NR,
@@ -44,7 +44,7 @@
     I_MAX,
     KONFIGURATION,
     gridButtonColumn("decoder")
-  ], false, EditMode.UPDATE, [
+  ], Paged.PAGED, EditMode.UPDATE, [
     adressen,
     cvs,
     funktionen]);

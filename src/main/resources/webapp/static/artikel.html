@@ -15,6 +15,7 @@
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
 const artikel = new ItemGrid(1, fetchUrl("artikel"), "artikel", [
+  ARTIKEL_ID,
   PRODUKT,
   KAUFDATUM,
   WAHRUNG,
@@ -27,7 +28,7 @@ const artikel = new ItemGrid(1, fetchUrl("artikel"), "artikel", [
   DECODER,
   ANMERKUNG,
   BELADUNG,
-    ABBILDUNG,
+  ABBILDUNG,
   STATUS,
   new ButtonColumn([], [updateRow])],
   false, EditMode.UPDATE, undefined);

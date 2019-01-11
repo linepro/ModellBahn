@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Index;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import com.linepro.modellbahn.model.IKategorie;
@@ -67,6 +68,12 @@ public class Kategorie extends AbstractNamedItem<NameKey> implements IKategorie 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.KATEGORIE, targetEntity = UnterKategorie.class, orphanRemoval = true)
     public Set<IUnterKategorie> getUnterKategorien() {
         return unterKategorien;
+    }
+
+    @Override
+    @Transient
+    public Set<IUnterKategorie> getSortedUnterKategorien() {
+        return new TreeSet<>(getUnterKategorien());
     }
 
     @Override

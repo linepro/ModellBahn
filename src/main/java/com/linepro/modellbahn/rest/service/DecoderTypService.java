@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.rest.service;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -30,6 +28,7 @@ import com.linepro.modellbahn.model.impl.DecoderTypCV;
 import com.linepro.modellbahn.model.impl.DecoderTypFunktion;
 import com.linepro.modellbahn.model.keys.DecoderTypKey;
 import com.linepro.modellbahn.model.util.AdressTyp;
+import com.linepro.modellbahn.model.util.Connector;
 import com.linepro.modellbahn.model.util.Konfiguration;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
@@ -39,6 +38,8 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -75,12 +76,14 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, Decode
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.GERAUSCH) Boolean sound,
             @JsonProperty(value = ApiNames.KONFIGURATION) String konfigurationStr,
+            @JsonProperty(value = ApiNames.STECKER) String steckerStr,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         IHersteller hersteller = findHersteller(herstellerStr, false);
         IProtokoll protokoll = findProtokoll(protokollStr, false);
         Konfiguration konfiguration = Konfiguration.valueOf(konfigurationStr);
+        Connector stecker = Connector.valueOf(steckerStr);
 
-        DecoderTyp entity = new DecoderTyp(id, hersteller, protokoll, name, bezeichnung, sound, konfiguration,
+        DecoderTyp entity = new DecoderTyp(id, hersteller, protokoll, name, bezeichnung, sound, konfiguration, stecker, 
                 deleted);
 
         debug("created: " + entity);

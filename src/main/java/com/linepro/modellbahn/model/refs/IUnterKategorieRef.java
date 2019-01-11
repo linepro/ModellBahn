@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(value = ApiNames.UNTER_KATEGORIE, description = "Sub category.")
-public interface IUnterKategorieRef extends INamedItemRef {
+public interface IUnterKategorieRef extends INamedItemRef, ILinkRef {
 
     @JsonGetter(ApiNames.NAMEN)
     @JsonView(Views.DropDown.class)

@@ -15,15 +15,15 @@
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
   const unterKategorien = new ItemGrid(10, undefined, "unterKategorien", [
-    new TextColumn("Namen", "name", Editable.ADD, true, 30),
-    new TextColumn("Bezeichnung", "description", Editable.UPDATE, false, 50),
-    new ButtonColumn([addRow], [updateRow("this.value"), deleteRow])],
-  false, EditMode.ADD, undefined);
+    NAMEN,
+    BEZEICHNUNG,
+    gridButtonColumn("unterKategorien"),
+  ], Paged.EXPAND, EditMode.ADD, undefined);
 const kategorie = new ItemGrid(1, fetchUrl("kategorie"), "kategorie", [
-    new TextColumn("Namen", "name", Editable.ADD, true, 30),
-    new TextColumn("Bezeichnung", "description", Editable.UPDATE, false, 50),
+    NAMEN,
+    BEZEICHNUNG,
     new ButtonColumn([], [updateRow])],
-  false, EditMode.UPDATE, [unterKategorien]);
+  Paged.PAGED, EditMode.UPDATE, [unterKategorien]);
 
 async function init() {
     await kategorie.init();

@@ -8,6 +8,7 @@ package com.linepro.modellbahn.model;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -40,13 +41,11 @@ public interface IKategorie extends INamedItem<NameKey>, IKategorieRef {
     @JsonView(Views.DropDown.class)
     @JsonSerialize(contentAs = IUnterKategorieRef.class)
     @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IUnterKategorieRef;", value = "Sub categories", accessMode = AccessMode.READ_ONLY, required = true)
-    Set<IUnterKategorie> getUnterKategorien();
+    Set<IUnterKategorie> getSortedUnterKategorien();
 
-    /**
-     * Sets the unter kategorie.
-     *
-     * @param unterKategorien the new unter kategorie
-     */
+    @JsonIgnore
+    Set<IUnterKategorie> getUnterKategorien();
+    
     @JsonSetter(ApiNames.UNTER_KATEGORIEN)
     @JsonDeserialize(contentAs = UnterKategorie.class)
     void setUnterKategorien(Set<IUnterKategorie> unterKategorien);

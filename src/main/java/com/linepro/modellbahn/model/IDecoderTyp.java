@@ -19,6 +19,7 @@ import com.linepro.modellbahn.model.refs.IDecoderTypCVRef;
 import com.linepro.modellbahn.model.refs.IDecoderTypFunktionRef;
 import com.linepro.modellbahn.model.refs.IDecoderTypRef;
 import com.linepro.modellbahn.model.refs.IProtokollRef;
+import com.linepro.modellbahn.model.util.Connector;
 import com.linepro.modellbahn.model.util.Konfiguration;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -133,6 +134,14 @@ public interface IDecoderTyp extends IItem<DecoderTypKey>, IDecoderTypRef {
      */
     @JsonSetter(ApiNames.KONFIGURATION)
     void setKonfiguration(Konfiguration konfiguration);
+
+    @JsonGetter(ApiNames.STECKER)
+    @JsonView(Views.DropDown.class)
+    @ApiModelProperty(value = "Connector", example = "NEM352")
+    Connector getConnector();
+
+    @JsonSetter(ApiNames.STECKER)
+    void setConnector(Connector connector);
 
     /**
      * Gets the adressen.

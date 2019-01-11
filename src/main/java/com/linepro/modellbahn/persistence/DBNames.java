@@ -8,6 +8,7 @@ public interface DBNames {
     String ARTIKEL = "artikel";
     String AUFBAU = "aufbau";
     String BAHNVERWALTUNG = "bahnverwaltung";
+    String CONNECTOR = "connector";
     String DECODER = "decoder";
     String DECODER_ADRESS = "decoderAdress";
     String DECODER_CV = "decoderCV";

@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 @JsonPropertyOrder({ ApiNames.CV,  ApiNames.BEZEICHNUNG, ApiNames.WERKSEINSTELLUNG })
 @ApiModel(value = ApiNames.CV, description = "Decoder type CV - template for Decoder.")
-public interface IDecoderTypCVRef extends IRef {
+public interface IDecoderTypCVRef extends ILinkRef {
 
     @JsonGetter(ApiNames.CV)
     @ApiModelProperty(value = "CV number", example = "63", required = true)

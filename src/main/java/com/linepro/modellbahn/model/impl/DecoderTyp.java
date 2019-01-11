@@ -21,8 +21,8 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
 import javax.validation.constraints.Pattern;
+
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -36,6 +36,7 @@ import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.IProtokoll;
 import com.linepro.modellbahn.model.keys.DecoderTypKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
+import com.linepro.modellbahn.model.util.Connector;
 import com.linepro.modellbahn.model.util.Konfiguration;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
@@ -88,6 +89,8 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.konfiguration.notnull}")
     private Konfiguration konfiguration;
 
+    private Connector connector;
+    
     /** The cv. */
     private Set<IDecoderTypAdress> adressen = new TreeSet<>();
 
@@ -105,7 +108,7 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
     }
 
     public DecoderTyp(Long id, IHersteller hersteller, IProtokoll protokoll, String bestellNr, String bezeichnung,
-            Boolean sound, Konfiguration konfiguration, Boolean deleted) {
+            Boolean sound, Konfiguration konfiguration, Connector connector, Boolean deleted) {
         super(id, deleted);
 
         setHersteller(hersteller);
@@ -114,6 +117,7 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
         setProtokoll(protokoll);
         setSound(sound);
         setKonfiguration(konfiguration);
+        setConnector(connector);
     }
 
     @Override
@@ -208,11 +212,24 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
     }
 
     @Override
+    @Enumerated(EnumType.STRING)
+    @Column(name = DBNames.CONNECTOR, nullable = false, length = 10)
+    public Connector getConnector() {
+        return connector;
+    }
+
+    @Override
+    public void setConnector(Connector connector) {
+        this.connector = connector;
+    }
+
+    @Override
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.DECODER_TYP, targetEntity = DecoderTypAdress.class, orphanRemoval = true)
     public Set<IDecoderTypAdress> getAdressen() {
         return adressen;
     }
 
+    @Override
     @Transient
     public Set<IDecoderTypAdress> getSortedAdressen() {
         return new TreeSet<>(getAdressen());
@@ -241,6 +258,7 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
         return CVs;
     }
 
+    @Override
     @Transient
     public Set<IDecoderTypCV> getSortedCVs() {
         return new TreeSet<>(getCVs());
@@ -268,6 +286,7 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
         return funktionen;
     }
 
+    @Override
     @Transient
     public Set<IDecoderTypFunktion> getSortedFunktionen() {
         return new TreeSet<>(getFunktionen());

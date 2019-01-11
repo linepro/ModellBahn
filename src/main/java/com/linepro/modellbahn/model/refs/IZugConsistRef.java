@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
  */
 @JsonPropertyOrder({ ApiNames.POSITION, ApiNames.ARTIKEL })
 @ApiModel(value = ApiNames.CONSIST, description = "Rolling stock by poisition in a train.")
-public interface IZugConsistRef extends IRef {
+public interface IZugConsistRef extends ILinkRef {
 
     @JsonGetter(ApiNames.POSITION)
     @JsonView(Views.DropDown.class)

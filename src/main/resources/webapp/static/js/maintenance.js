@@ -1,6 +1,12 @@
 // module "maintenance.js"
 "use strict";
 
+const Paged = {
+  FORM: 0,
+  PAGED: 1,
+  EXPAND: 2
+};
+
 class ItemGrid {
   constructor(pageSize, apiUrl, tableName, columns, paged, editMode, children, editForm) {
     this.pageSize = pageSize ? pageSize : 10;
@@ -28,7 +34,7 @@ class ItemGrid {
         search.delete("self");
       }
 
-      if (paged) {
+      if (paged === Paged.PAGED) {
         search.set("pageNumber", "0");
         search.set("pageSize", pageSize);
       }
@@ -118,7 +124,7 @@ class ItemGrid {
     let entities = (grid.parent ? jsonData[grid.tableName] : jsonData.entities ? jsonData.entities : [jsonData]);
     let tableName = grid.tableName;
 
-    let rowCount = grid.paged ? grid.pageSize : Math.max(grid.pageSize, entities.length);
+    let rowCount = grid.paged === Paged.PAGED ? grid.pageSize : Math.max(grid.pageSize, entities.length);
 
     if (!grid.initialized || (rowCount > grid.pageSize)) {
       grid.initGrid(rowCount);
@@ -352,7 +358,7 @@ class ListEditGrid extends ItemGrid {
   constructor(pageSize, dataType, elementName, columns) {
     super(pageSize, fetchUrl(dataType), elementName,
       columns.concat([gridButtonColumn(elementName)]),
-      true, EditMode.UPDATE, undefined);
+      Paged.PAGED, EditMode.UPDATE, undefined);
     this.dataType = dataType;
   }
 

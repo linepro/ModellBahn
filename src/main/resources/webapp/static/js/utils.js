@@ -60,6 +60,7 @@ const addButton = (cell, lnk, action) => {
 };
 
 const getLink = (links, rel) => {
+  if (!links) return;
   return links.find((lnk) => {
     return lnk.rel === rel;
   });
@@ -622,8 +623,14 @@ const addHeader = (tableName, table, columns, paged, rowCount) => {
   header.append(headRow);
 
   columns.forEach(column => {
-    let th = paged ? column.getHeading() : document.createElement("div");
-    if (!paged) addText(th, "");
+	let th; 
+    if (paged === Paged.FORM) {
+      th = document.createElement("div");
+      addText(th, "")
+    } else {
+      th = column.getHeading();
+    }
+
     th.style.width = column.width;
     th.style.maxWidth = column.width;
 
@@ -634,7 +641,7 @@ const addHeader = (tableName, table, columns, paged, rowCount) => {
 const addBody = (tableName, table, pageSize, columns, paged, rowCount, maxLabel) => {
   let body = document.createElement("div");
   body.id = tableName + "_tbody";
-  body.className = paged ? "tbody" : "flex-container";
+  body.className = paged === Paged.FORM ? "flex-container" : "tbody";
   table.append(body);
 
   let row;
@@ -642,20 +649,20 @@ const addBody = (tableName, table, pageSize, columns, paged, rowCount, maxLabel)
   for (row = 0; row < maxRow; row++) {
     let tr = document.createElement("div");
     let rowId = getRowId(tableName, row);
-    tr.className = paged ? "table-row" : "flex-container";
+    tr.className = paged === Paged.FORM ? "flex-container" : "table-row";
     tr.id = rowId;
     body.append(tr);
     
     let key = document.createElement("input");
     key.type = "hidden";
     key.id = getKeyId(rowId);
-    key.className = paged ? "table-cell" : "flex-control";
+    key.className = paged === Paged.FORM ? "flex-control" : "table-cell";
     tr.append(key);
 
     columns.forEach(column => {
       let td = document.createElement("div");
 
-      if (!paged) {
+      if (paged === Paged.FORM) {
 	    td.className = "flex-item";
 
 	    let th = column.getHeading();
@@ -669,54 +676,52 @@ const addBody = (tableName, table, pageSize, columns, paged, rowCount, maxLabel)
       let tc = document.createElement("div");
       
       tc.id = getCellId(rowId, column);
-      tc.className = paged ? "table-cell" : "flex-control";
+      tc.className = paged === Paged.FORM ? "flex-control" : "table-cell";
       tc.style.width = column.width;
       tc.style.maxWidth = column.width;
       
       addText(tc, "");
       
-      if (paged) {
-        tr.append(tc);
-      } else {
-    	td.append(tc);  
+      if (paged === Paged.FORM) {
+      	td.append(tc);  
         tr.append(td);
+      } else {
+          tr.append(tc);
       } 
     });
   }
 };
 
 const addFooter = (tableName, table, columns, paged, rowCount) => {
-  if (paged) {
-    let footer = document.createElement("div");
-    footer.id = tableName + "_tfoot";
-    footer.className = "tfoot";
-    table.append(footer);
-
-    let navRow = document.createElement("div");
-    navRow.className = "table-foot";
-    navRow.id = tableName + "Foot";
-    footer.append(navRow);
-
-    for (let i = 0; i < columns.length; i++) {
-      let tf = document.createElement("div");
-      if (i === 0) {
-        tf.className = "table-prev";
-        tf.id = tableName + "Prev";
-      } else if (i === (columns.length - 1)) {
-        tf.className = "table-next";
-        tf.id = tableName + "Next";
-      } else {
-        tf.className = "table-footer";
-      }
-
-      tf.style.width = columns[i].width;
-      tf.style.maxWidth = columns[i].width;
-
-      addText(tf, "");
-
-      navRow.append(tf);
-    }
-  }
+	let footer = document.createElement("div");
+	footer.id = tableName + "_tfoot";
+	footer.className = "tfoot";
+	table.append(footer);
+	
+	let navRow = document.createElement("div");
+	navRow.className = "table-foot";
+	navRow.id = tableName + "Foot";
+	footer.append(navRow);
+	
+	for (let i = 0; i < columns.length; i++) {
+	  let tf = document.createElement("div");
+	  if (i === 0) {
+	    tf.className = "table-prev";
+	    tf.id = tableName + "Prev";
+	  } else if (i === (columns.length - 1)) {
+	    tf.className = "table-next";
+	    tf.id = tableName + "Next";
+	  } else {
+	    tf.className = "table-footer";
+	  }
+	
+	  tf.style.width = columns[i].width;
+	  tf.style.maxWidth = columns[i].width;
+	
+	  addText(tf, "");
+	
+	  navRow.append(tf);
+	}
 };
 
 async function uploadFile(url, inputCtl) {

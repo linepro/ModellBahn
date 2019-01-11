@@ -45,7 +45,7 @@ const setter = () => {};
 
 const ABBILDUNG = new IMGColumn("Abbildung", "abbildung", (entity) => { return entity.abbildung; }, setter, undefined, Editable.UPDATE, false);
 const ACHSFOLG = new SelectColumn("Achsfolg", "achsfolg", (entity) => { return entity.achsfolg ? entity.achsfolg.name : undefined; }, setter, ACHSFOLG_DROP, Editable.UPDATE, false);
-const ADRESS_TYP = new SelectColumn("Typ", "typ", (entity) => { return entity.adressTyp ? entity.adressTyp.name : undefined; }, setter, ADRESS_TYP_DROP, Editable.UPDATE, true);
+const ADRESS_TYP = new SelectColumn("Typ", "typ", (entity) => { return entity.adressTyp; }, setter, ADRESS_TYP_DROP, Editable.UPDATE, true);
 const ANLEITUNGEN = new PDFColumn("Anleitungen", "anleitungen", (entity) => { return entity.anleitungen; }, setter, undefined, Editable.UPDATE, false);
 const ANMERKUNG = new TextColumn("Anmerkung", "anmerkung", (entity) => { return entity.anmerkung; }, setter, Editable.UPDATE, false, 30);
 const ANTRIEB = new SelectColumn("Antrieb", "antrieb", (entity) => { return entity.antrieb ? entity.antrieb.name : undefined; }, setter, ANTRIEB_DROP, Editable.UPDATE, false);
@@ -57,7 +57,7 @@ const AUSSERDIENST = new NumberColumn("Ausserdienst", "ausserdienst", (entity) =
 const BAHNVERWALTUNG = new SelectColumn("Bahnverwaltung", "bahnverwaltung", (entity) => { return entity.bahnverwalung ? entity.bahnverwalung.name : undefined; }, setter, BAHNVERWALTUNG_DROP, Editable.UPDATE, false);
 const BAUZEIT = new NumberColumn("Bauzeit", "bauzeit", (entity) => { return entity.bauzeit; }, setter, Editable.UPDATE, false, 2100, 1800);
 const BELADUNG = new TextColumn("Beladung", "beladung", (entity) => { return entity.beladung; }, setter, Editable.UPDATE, false, 30);
-const BESTELL_NR = new TextColumn("Bestell Nr", "bestellNr", (entity) => { return entity.bestellNr; }, setter, Editable.ADD, true, 10);
+const BESTELL_NR = new TextColumn("Bestell Nr", "beste	llNr", (entity) => { return entity.bestellNr; }, setter, Editable.ADD, true, 10);
 const BETREIBSNUMMER = new TextColumn("Betreibsnummer", "betreibsnummer", (entity) => { return entity.betreibsnummer; }, setter, Editable.UPDATE, false, 30);
 const BEZEICHNUNG = new TextColumn("Bezeichnung", "bezeichnung", (entity) => { return entity.bezeichnung; }, setter, Editable.UPDATE, false, 50);
 const CONSIST = new TextColumn("Consist", "consist", (entity) => { return entity.consist; }, setter, Editable.UPDATE, false, 30);
@@ -84,12 +84,11 @@ const HERSTELLER = new SelectColumn("Hersteller", "hersteller", (entity) => { re
 const I_MAX = new NumberColumn("I Max", "iMax", (entity) => { return entity.iMax; }, setter, Editable.UPDATE, false, 1000, 1);
 const INDEX = new NumberColumn("Index", "index", (entity) => { return entity.index; }, setter, Editable.ADD, true, 3, 0);
 const KAPAZITAT = new NumberColumn("Kapazitat", "kapazitat", (entity) => { return entity.kapazitat; }, setter, Editable.UPDATE, false, 3000, 1, .01);
-const KATEGORIE = new SelectColumn("Kategorie", "kategorie", (entity) => { return entity.kategorie ? entity.kategorie.name : undefined; }, setter, KATEGORIE_DROP, Editable.UPDATE, false);
 const KAUFDATUM = new DateColumn("Kaufdatum", "kaufdatum", (entity) => { return entity.kaufdatum; }, setter, Editable.UPDATE, false);
 const KESSELUEBERDRUCK = new NumberColumn("Kesselueberdruck", "kesselueberdruck", (entity) => { return entity.kesselueberdruck; }, setter, Editable.UPDATE, false, 3000, 0, .01);
 const KLASSE = new NumberColumn("Klasse", "klasse", (entity) => { return entity.klasse; }, setter, Editable.UPDATE, false, 4, 0);
 const KOLBENHUB = new NumberColumn("Kolbenhub", "kolbenhub", (entity) => { return entity.kolbenhub; }, setter, Editable.UPDATE, false, 3000, 1, .01);
-const KONFIGURATION = new SelectColumn("Konfiguration", "konfiguration", (entity) => { return entity.konfiguration ? entity.konfiguration.name : undefined; }, setter, KONFIGURATION_DROP, Editable.UPDATE, true);
+const KONFIGURATION = new SelectColumn("Konfiguration", "konfiguration", (entity) => { return entity.konfiguration ; }, setter, KONFIGURATION_DROP, Editable.UPDATE, true);
 const KUPPLUNG = new SelectColumn("Kupplung", "kupplung", (entity) => { return entity.kupplung ? entity.kupplung.name : undefined; }, setter, KUPPLUNG_DROP, Editable.UPDATE, false);
 const LAND = new SelectColumn("Land", "land", (entity) => { return entity.land ? entity.land.name : undefined; }, setter, LAND_DROP, Editable.UPDATE, false);
 const LANGE = new NumberColumn("Lange", "lange", (entity) => { return entity.lange; }, setter, Editable.UPDATE, false, 50, 1, .01);
@@ -118,8 +117,8 @@ const SITZPLATZEKL4 = new NumberColumn("SitzplatzeKL4", "sitzplatzeKL4", (entity
 const SONDERMODELL = new SelectColumn("Sondermodell", "sonderModell", (entity) => { return entity.sondermodell ? entity.sondermodell.name : undefined; }, setter, SONDERMODELL_DROP, Editable.UPDATE, false);
 const SPAN = new NumberColumn("Span", "span", (entity) => { return entity.span; }, setter, Editable.UPDATE, true, 16, 1);
 const SPURWEITE = new SelectColumn("Spurweite", "spurweite", (entity) => { return entity.spurweite ? entity.spurweite.name : undefined; }, setter, SPURWEITE_DROP, Editable.UPDATE, false);
-const STATUS = new SelectColumn("Status", "status", (entity) => { return entity.status ? entity.status.name : undefined; }, setter, STATUS_DROP, Editable.UPDATE, false);
-const STECKER = new SelectColumn("Stecker", "stecker", (entity) => { return entity.stecker ? entity.stecker.name : undefined; }, setter, STECKER_DROP, Editable.UPDATE, false);
+const STATUS = new SelectColumn("Status", "status", (entity) => { return entity.status; }, setter, STATUS_DROP, Editable.UPDATE, false);
+const STECKER = new SelectColumn("Stecker", "stecker", (entity) => { return entity.stecker; }, setter, STECKER_DROP, Editable.UPDATE, false);
 const STEUERUNG = new SelectColumn("Steuerung", "steuerung", (entity) => { return entity.steuerung ? entity.steuerung.name : undefined; }, setter, STEUERUNG_DROP, Editable.UPDATE, false);
 const STUCK = new NumberColumn("Stuck", "stuck", (entity) => { return entity.stuck; }, setter, Editable.UPDATE, false, 300, 0);
 const TEIL = new NumberColumn("Teil", "teil", (entity) => { return entity.teil; }, setter, Editable.UPDATE, false, 300, 0);

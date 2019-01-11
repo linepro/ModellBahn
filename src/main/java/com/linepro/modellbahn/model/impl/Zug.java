@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
@@ -88,6 +89,12 @@ public class Zug extends AbstractNamedItem<NameKey> implements IZug {
 	public Set<IZugConsist> getConsist() {
 		return consist;
 	}
+
+    @Override
+    @Transient
+    public Set<IZugConsist> getSortedConsist() {
+        return new TreeSet<>(getConsist());
+    }
 
     @Override
 	public void setConsist(Set<IZugConsist> consist) {
