@@ -11,7 +11,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-@JsonPropertyOrder({ ApiNames.FUNKTION,  ApiNames.BEZEICHNUNG })
+@JsonPropertyOrder({ ApiNames.FUNKTION,  ApiNames.BEZEICHNUNG, ApiNames.LINKS })
 @ApiModel(value = ApiNames.FUNKTION, description = "Decoder function mapping.")
 public interface IDecoderFunktionRef extends ILinkRef {
 

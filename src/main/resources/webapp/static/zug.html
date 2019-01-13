@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"/>    
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="x-ua-compatible" content="ie=edge">
 <script type="text/javascript" src="js/lib/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="js/lib/popper.min-1.14.3.js"></script>
 <link rel="stylesheet" href="css/bootstrap.min-4.1.3.css"/>
@@ -13,50 +14,55 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-  const columns = [
+  const consisten = new ItemGrid(2, undefined, "consisten", [
+    POSITION,
+    UNTER_KATEGORIE,
+    GATTUNG,
+    BEZEICHNUNG,
+    LANGE,
+    gridButtonColumn("consisten")
+  ], Paged.EXPAND, EditMode.ADD, undefined);
+  const zug = new ItemGrid(1, fetchUrl("zug"), "zug",  [
     NAMEN,
     ZUG_TYP,
     BEZEICHNUNG,
     LANGE,
     new ButtonColumn(
-        [ newRow ], 
-        [ editRow, deleteRow ])
-  ];
-  const zugen = new ItemGrid(10, fetchUrl("zug"), "zugen", columns, Paged.PAGED, EditMode.UPDATE, undefined, "zug.html");
+            [], 
+            [updateRow])
+  ], Paged.PAGED, EditMode.UPDATE, [
+    consisten]);
 
   async function init() {
     await ZUG_TYP_DROP.init();
-    await zugen.init();
+    await zug.init();
     about();
 }
 </script>
 <title>Zugen</title>
 </head>
 <body onLoad="init()">
-    <header>
-        <nav>
-            <ul class="nav">
-                <li><a class="nav-button" href='../index.html'>Home</a></li>
-                <li><a class="nav-button" href="#" onclick="history.go(-1)">Back</a></li>
-                <li><a class="nav-button" href="produkten.html">Produkt</a></li>
-                <li><a class="nav-button" href="vorbilder.html">Vorbild</a></li>
-                <li><a class="nav-button" href="artikelen.html">Artikel</a></li>      
-                <li><a class="nav-button" href="decoderen.html">Decoder</a></li>      
-                <li><a class="nav-button" href="zugen.html">Zug</a></li>
-            </ul>
-        </nav>
-        <hr class="highlight" />
-    </header>
-    	
-	<section>
-		<article>
-			<h3 id="heading">Zug</h3>
-			<div id="data">
-				<div id="zugen">
-				</div>
-			</div>
-		</article>
-	</section>
+  <header>
+    <nav>
+      <ul class="nav">
+        <li><a class="nav-button" href='../index.html'>Home</a></li>
+        <li><a class="nav-button" href="#" onclick="history.go(-1)">Back</a></li>
+      </ul>
+    </nav>
+    <hr class="highlight" />
+  </header>
+
+  <section>
+    <article>
+      <h3 id="heading">Zug</h3>
+      <div id="data">
+        <div id="zug">
+        </div>
+       <div id="consisten">
+        </div>
+      </div>
+    </article>
+  </section>
 
     <footer>
         <div id="footer">

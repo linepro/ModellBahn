@@ -7,7 +7,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public interface IDescribedEnum extends INamedItemRef {
+public interface IDescribedEnum extends IRef {
 
     @JsonGetter(ApiNames.NAMEN)
     @JsonView(Views.DropDown.class)

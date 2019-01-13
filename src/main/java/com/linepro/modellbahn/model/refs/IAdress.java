@@ -14,7 +14,7 @@ public interface IAdress {
 
     @JsonGetter(ApiNames.ADRESS_TYP)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.util.AdressTyp", value = "Address type", required = true)
+    @ApiModelProperty(value = "Address type", required = true)
     AdressTyp getAdressTyp();
 
     @JsonGetter(ApiNames.ADRESS)

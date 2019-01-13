@@ -57,8 +57,6 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     @CVValue
     private Integer wert;
 
-    private Integer cvValue;
-
     /**
      * Instantiates a new decoder CV.
      */
@@ -92,30 +90,12 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTypCV.class)
     @JoinColumn(name = DBNames.CV_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_CV + "_fk2"))
     public IDecoderTypCV getCv() {
-        if (cv != null) {
-            setCvValue(cv.getCv());
-        }
-
         return cv;
     }
 
     @Override
     public void setCv(IDecoderTypCV cv) {
         this.cv = cv;
-
-        if (cv != null) {
-            setCvValue(cv.getCv());
-        }
-    }
-
-    @Override
-    public Integer getCvValue() {
-        return cvValue;
-    }
-
-    @Override
-    public void setCvValue(Integer cv) {
-        this.cvValue = cv;
     }
 
     @Override

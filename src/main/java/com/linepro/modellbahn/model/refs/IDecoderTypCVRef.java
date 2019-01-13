@@ -7,7 +7,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-@JsonPropertyOrder({ ApiNames.CV,  ApiNames.BEZEICHNUNG, ApiNames.WERKSEINSTELLUNG })
+@JsonPropertyOrder({ ApiNames.CV,  ApiNames.BEZEICHNUNG, ApiNames.WERKSEINSTELLUNG, ApiNames.LINKS })
 @ApiModel(value = ApiNames.CV, description = "Decoder type CV - template for Decoder.")
 public interface IDecoderTypCVRef extends ILinkRef {
 

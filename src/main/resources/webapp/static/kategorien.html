@@ -19,7 +19,7 @@
   BEZEICHNUNG,
   new ButtonColumn([newRow], [editRow, deleteRow])
 ];
-const kategorie = new ItemGrid(10, fetchUrl("kategorie"), "kategorie", columns, true, EditMode.UPDATE, undefined, "unterkategorien.html");
+const kategorie = new ItemGrid(10, fetchUrl("kategorie"), "kategorie", columns, Paged.PAGED, EditMode.UPDATE, undefined, "unterkategorien.html");
 
 async function init() {
     await kategorie.init();

@@ -23,7 +23,6 @@ import com.linepro.modellbahn.model.keys.VorbildKey;
 import com.linepro.modellbahn.model.refs.IAchsfolgRef;
 import com.linepro.modellbahn.model.refs.IAntriebRef;
 import com.linepro.modellbahn.model.refs.IBahnverwaltungRef;
-import com.linepro.modellbahn.model.refs.IUnterKategorieRef;
 import com.linepro.modellbahn.model.refs.IVorbildRef;
 import com.linepro.modellbahn.model.util.LeistungsUbertragung;
 import com.linepro.modellbahn.rest.json.Formats;
@@ -54,7 +53,7 @@ public interface IVorbild extends IItem<VorbildKey>, IVorbildRef {
     
     @JsonGetter(ApiNames.UNTER_KATEGORIE)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(as = IUnterKategorieRef.class)
+    @JsonSerialize(as = IUnterKategorie.class)
     @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IUnterKategorieRef", value = "Category and subcategory", required = true)
     IUnterKategorie getUnterKategorie();
     

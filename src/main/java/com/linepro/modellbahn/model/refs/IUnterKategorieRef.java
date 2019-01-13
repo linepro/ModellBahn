@@ -1,6 +1,7 @@
 package com.linepro.modellbahn.model.refs;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -8,8 +9,9 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.LINKS })
 @ApiModel(value = ApiNames.UNTER_KATEGORIE, description = "Sub category.")
-public interface IUnterKategorieRef extends INamedItemRef, ILinkRef {
+public interface IUnterKategorieRef extends INamedItemRef     {
 
     @JsonGetter(ApiNames.NAMEN)
     @JsonView(Views.DropDown.class)

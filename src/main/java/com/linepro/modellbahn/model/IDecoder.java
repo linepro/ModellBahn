@@ -3,6 +3,7 @@ package com.linepro.modellbahn.model;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -68,7 +69,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
     @JsonView(Views.Public.class)
     @JsonSerialize(contentAs= IDecoderAdressRef.class)
     @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderAdressRef;", value = "Decoder addresses", accessMode = AccessMode.READ_ONLY, required = true)
-    Set<IDecoderAdress> getAdressen();
+    Set<IDecoderAdress> getSortedAdressen();
 
     @JsonSetter(ApiNames.ADRESSEN)
     @JsonDeserialize(contentAs= DecoderAdress.class)
@@ -87,7 +88,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
     @JsonView(Views.Public.class)
     @JsonSerialize(contentAs= IDecoderCVRef.class)
     @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderCVRef;", value = "Decoder cv values", accessMode = AccessMode.READ_ONLY)
-    Set<IDecoderCV> getCVs();
+    Set<IDecoderCV> getSortedCVs();
 
     @JsonSetter(ApiNames.CVS)
     @JsonDeserialize(contentAs= DecoderCV.class)
@@ -106,7 +107,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
     @JsonView(Views.Public.class)
     @JsonSerialize(contentAs= IDecoderFunktionRef.class)
     @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderFunktionRef;", value = "Decoder functions", accessMode = AccessMode.READ_ONLY, required = true)
-    Set<IDecoderFunktion> getFunktionen();
+    Set<IDecoderFunktion> getSortedFunktionen();
 
     /**
      * Sets the funktionen.
@@ -120,4 +121,13 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
     void addFunktion(IDecoderFunktion cv);
 
     void removeFunktion(IDecoderFunktion cv);
+
+    @JsonIgnore
+    Set<IDecoderAdress> getAdressen();
+
+    @JsonIgnore
+    Set<IDecoderCV> getCVs();
+
+    @JsonIgnore
+    Set<IDecoderFunktion> getFunktionen();
 }

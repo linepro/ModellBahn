@@ -412,7 +412,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, Decoder> {
     private IDecoderCV findDecoderCV(IDecoder decoder, Integer cv, boolean eager) {
         try {
             for (IDecoderCV decoderCV : decoder.getCVs()) {
-                if (cv.equals(decoderCV.getCvValue())) {
+                if (cv.equals(decoderCV.getWert())) {
                     return decoderCV;
                 }
             }

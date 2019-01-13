@@ -177,6 +177,12 @@ public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
     }
 
     @Override
+    @Transient
+    public Set<IDecoderAdress> getSortedAdressen() {
+        return new TreeSet<>(getAdressen());
+    }
+
+    @Override
     public void addAdress(IDecoderAdress adress) {
         adress.setDecoder(this);
         getAdressen().add(adress);
@@ -199,6 +205,12 @@ public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
     }
 
     @Override
+    @Transient
+    public Set<IDecoderCV> getSortedCVs() {
+        return new TreeSet<>(getCVs());
+    }
+
+    @Override
     public void addCV(IDecoderCV cv) {
         cv.setDecoder(this);
         getCVs().add(cv);
@@ -218,6 +230,12 @@ public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
     @Override
     public void setFunktionen(Set<IDecoderFunktion> funktionen) {
         this.funktionen = funktionen;
+    }
+
+    @Override
+    @Transient
+    public Set<IDecoderFunktion> getSortedFunktionen() {
+        return new TreeSet<>(getFunktionen());
     }
 
     @Override

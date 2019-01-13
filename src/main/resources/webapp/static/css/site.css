@@ -553,23 +553,22 @@ button.tabLinks[active] {
 
 div.flex-container {
   display: flex;
-  align-content: space-around;
-  align-items: top;
+  align-content: space-evenly;
+  align-items: baseline;
   flex-direction: row;  
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 div.flex-item {
   display: flex;
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-wrap: nowrap;
-  align-content: space-around;
+  align-content: space-evenly;
   align-items: baseline;
   flex-direction: row;  
   flex-wrap: nowrap;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  flex-grow: 1;
+  flex-shrink: 1;
   order: 1;
   margin: 0.1rem;
   padding: 0.3rem 0.3rem;
@@ -577,7 +576,7 @@ div.flex-item {
 
 div.flex-label {
   color: Grey;
-  flex-grow: 0;
+  flex-grow: 1;
   flex-shrink: 0;
   font-weight: bold;
   margin: 0.1rem;

@@ -17,33 +17,41 @@
   const adressen = new ItemGrid(2, undefined, "adressen", [
     INDEX,
     ADRESS_TYP,
-    SPAN,
-    WERKSEINSTELLUNG,
-    gridButtonColumn("adressen")
+    new NumberColumn("Adress", "adress", (entity) => { return entity.adress; }, undefined, Editable.UPDATE, true, 65535, 1),
+    new ButtonColumn(
+            [], 
+            [updateRow])
   ], Paged.EXPAND, EditMode.UPDATE, undefined);
   const cvs = new ItemGrid(10, undefined, "cvs", [
-    CV,
-    BEZEICHNUNG,
-    WERKSEINSTELLUNG,
-    gridButtonColumn("cvs")
+    new NumberColumn("CV", "cv", (entity) => { return entity.cv.cv; }, undefined, Editable.NEVER, true, 127, 1),
+    new TextColumn("Bezeichnung", "bezeichnung", (entity) => { return entity.cv.bezeichnung; }, undefined, Editable.NEVER, false, 50),
+    new NumberColumn("Werkseinstellung", "werkseinstellung", (entity) => { return entity.cv.werkseinstellung; }, undefined, Editable.NEVER, true, 65535, 1),
+    WERT,
+    new ButtonColumn(
+            [], 
+            [updateRow])
   ], Paged.EXPAND, EditMode.UPDATE, undefined);
   const funktionen = new ItemGrid(10, undefined, "funktionen", [
-    REIHE,
-    FUNKTION,
-    BEZEICHNUNG,
-    PROGRAMMABLE,
-    gridButtonColumn("funktionen")
+  new NumberColumn("Reihe", "reihe", (entity) => { return entity.funktion.reihe; }, undefined, Editable.NEVER, true, 1, 0),
+    new TextColumn("Funktion", "funktion", (entity) => { return entity.funktion.funktion; }, undefined, Editable.NEVER, true, 3),
+    new TextColumn("Bezeichnung", "bezeichnung", (entity) => { return entity.bezeichnung; }, (entity, value) => { entity.bezeichnung = value; }, Editable.UPDATE, false, 50),
+    new BoolColumn("Programmable", "programmable", (entity) => { return entity.funktion.programmable; }, undefined, Editable.NEVER, true),
+    new ButtonColumn(
+            [], 
+            [updateRow])
   ], Paged.EXPAND, EditMode.UPDATE, undefined);
   const decoder = new ItemGrid(1, fetchUrl("decoder"), "decoder", [
-    HERSTELLER,
-    BESTELL_NR,
+  DECODER_ID,
+    DECODER_TYP,
     BEZEICHNUNG,
     PROTOKOLL,
     FAHRSTUFE,
-    GERAUSCH,
-    I_MAX,
-    KONFIGURATION,
-    gridButtonColumn("decoder")
+    new BoolColumn("Gerausch", "gerausch", (entity) => { return entity.decoderTyp.sound; }, undefined, Editable.NEVER, true),
+    new NumberColumn("I Max", "iMax", (entity) => { return entity.decoderTyp.iMax; }, undefined, Editable.NEVER, false, 1000, 1),
+    new SelectColumn("Konfiguration", "konfiguration", (entity) => { return entity.decoderTyp.konfiguration ; }, undefined, KONFIGURATION_DROP, Editable.NEVER, true),
+    new ButtonColumn(
+            [], 
+            [updateRow])
   ], Paged.PAGED, EditMode.UPDATE, [
     adressen,
     cvs,
@@ -63,55 +71,60 @@
 <title>Decoder</title>
 </head>
 <body onload="init()">
-	<header>
-		<nav>
-			<ul class="nav">
-				<li><a class="nav-button" href='../index.html'>Home</a></li>
-                <li><a class="nav-button" href="#" onclick="history.go(-1)">Back</a></li>
-			</ul>
-		</nav>
-		<hr class="highlight" />
-	</header>
-	
-	<section>
-		<article>
-			<h3 id="heading">Decoder</h3>
-			
-			<div id="data">
-				<div id="decoder">
-				</div>
-				
-				<div id="tabbedArea">
-					<div class="tab">
-	                	<button id="adressenLink" class="tabLinks" onclick="setActiveTab(event, 'adressenTab')">Adressen</button>
-	                	<button id="cvsLink" class="tabLinks" onclick="setActiveTab(event, 'cvsTab')">CVS</button>
-	                	<button id="funktionenLink" class="tabLinks" onclick="setActiveTab(event, 'funktionenTab')">Funktionen</button>
-	                </div>
-	                
-	                <div id="adressenTab" class="tabContent">
-	                	<h3>Addressen</h3>
-	                	<div id="adressen">
-	                	</div>
-	                </div>
-	                <div id="cvsTab" class="tabContent">
-	               		<h3>cvs</h3>
-	                	<div id="cvs">
-	                	</div>
-	                </div>
-	                <div id="funktionenTab" class="tabContent">
-	                	<h3>Funktionen</h3>
-	                	<div id="funktionen">
-	                	</div>
-	                </div>
-				</div>
-				
-			</div>
-		</article>
-	</section>
-	
-	<footer>
-		<div>
-		</div>
-	</footer>
+  <header>
+    <nav>
+      <ul class="nav">
+        <li><a class="nav-button" href='../index.html'>Home</a></li>
+        <li><a class="nav-button" href="#" onclick="history.go(-1)">Back</a></li>
+      </ul>
+    </nav>
+    <hr class="highlight" />
+  </header>
+
+  <section>
+    <article>
+      <h3 id="heading">Decoder</h3>
+      <div id="data">
+        <div id="decoder">
+        </div>
+        
+        <div id="tabbedArea">
+          <div class="tab">
+                    <button id="adressenLink" class="tabLinks" onclick="setActiveTab(event, 'adressenTab')">Adressen</button>
+                    <button id="cvsLink" class="tabLinks" onclick="setActiveTab(event, 'cvsTab')">CVS</button>
+                    <button id="funktionenLink" class="tabLinks" onclick="setActiveTab(event, 'funktionenTab')">Funktionen</button>
+                  </div>
+                  
+                  <div id="adressenTab" class="tabContent">
+                    <h3>Addressen</h3>
+                    <div id="adressen">
+                    </div>
+                  </div>
+                  <div id="cvsTab" class="tabContent">
+                     <h3>cvs</h3>
+                    <div id="cvs">
+                    </div>
+                  </div>
+                  <div id="funktionenTab" class="tabContent">
+                    <h3>Funktionen</h3>
+                    <div id="funktionen">
+                    </div>
+                  </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+    <footer>
+        <div id="footer">
+            <div>
+                <hr class="highlight" />
+                <ul class="footer">
+                    <li>Copyright &copy; 2018 ModellBahn Website</li>
+                    <li><a id="license" class="nav-button" href="#">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

@@ -84,11 +84,6 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
 
     void setBezeichnung(String bezeichnung);
 
-    @JsonGetter(ApiNames.UNTER_KATEGORIE)
-    @JsonView(Views.DropDown.class)
-    @JsonSerialize(as = IUnterKategorie.class)
-    IUnterKategorie getUnterKategorie();
-
     @JsonSetter(ApiNames.UNTER_KATEGORIE)
     @JsonDeserialize(as = UnterKategorie.class)
     void setUnterKategorie(IUnterKategorie unterKategorie);

@@ -599,7 +599,7 @@ const editRow = (tableName, row) => {
 };
 
 const newRow = (tableName) => {
-  return getButton(undefined, "update", tableName + ".newRow()");
+  return getButton(undefined, "add", tableName + ".newRow()");
 };
 
 const updateRow = (tableName, row) => {

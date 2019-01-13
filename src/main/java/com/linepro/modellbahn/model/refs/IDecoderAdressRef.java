@@ -9,9 +9,9 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-@JsonPropertyOrder({ ApiNames.INDEX, ApiNames.ADRESS_TYP, ApiNames.ADRESS })
+@JsonPropertyOrder({ ApiNames.INDEX, ApiNames.ADRESS_TYP, ApiNames.ADRESS, ApiNames.LINKS })
 @ApiModel(value = ApiNames.ADRESS, description = "Decoder address setting.")
-public interface IDecoderAdressRef extends IAdress, IRef {
+public interface IDecoderAdressRef extends IAdress, ILinkRef {
 
     @JsonGetter(ApiNames.INDEX)
     @JsonView(Views.DropDown.class)

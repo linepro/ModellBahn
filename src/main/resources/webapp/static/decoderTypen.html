@@ -25,7 +25,7 @@ const columns = [
     [ editRow, deleteRow ]) ];
 
 const decoderTyp = new ItemGrid(10, fetchUrl("decoderTyp"), "decoderTyp",
-    columns, true, EditMode.UPDATE, undefined, "decoderTyp.html");
+    columns, Paged.PAGED, EditMode.UPDATE, undefined, "decoderTyp.html");
 
 async function init() {
   await HERSTELLER_DROP.init();

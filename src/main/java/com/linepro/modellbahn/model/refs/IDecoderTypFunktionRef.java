@@ -9,7 +9,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-@JsonPropertyOrder({ ApiNames.REIHE,  ApiNames.FUNKTION, ApiNames.BEZEICHNUNG, ApiNames.PROGRAMMABLE})
+@JsonPropertyOrder({ ApiNames.REIHE,  ApiNames.FUNKTION, ApiNames.BEZEICHNUNG, ApiNames.PROGRAMMABLE, ApiNames.LINKS })
 @ApiModel(value = ApiNames.FUNKTION, description = "Decoder type function mapping - template for Decoder.")
 public interface IDecoderTypFunktionRef extends ILinkRef {
 

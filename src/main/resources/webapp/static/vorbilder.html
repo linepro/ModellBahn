@@ -27,7 +27,7 @@
       [newRow],
       [editRow, deleteRow]) ];
 
-  const vorbild = new ItemGrid(10, fetchUrl("vorbild"), "vorbild", columns, true, EditMode.UPDATE, undefined, "vorbild.html");
+  const vorbild = new ItemGrid(10, fetchUrl("vorbild"), "vorbild", columns, Paged.PAGED, EditMode.UPDATE, undefined, "vorbild.html");
 
   async function init() {
     await GATTUNG_DROP.init();

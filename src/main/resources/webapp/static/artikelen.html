@@ -15,8 +15,8 @@
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
 const columns = [
-  HERSTELLER,
-  BESTELL_NR,
+  ARTIKEL_ID,
+  PRODUKT,
   KAUFDATUM,
   WAHRUNG,
   PREIS,
@@ -34,7 +34,7 @@ const columns = [
     [newRow],
     [editRow, deleteRow]) ];
 
-const artikel = new ItemGrid(10, fetchUrl("artikel"), "artikel", columns, true, EditMode.UPDATE, undefined, "artikel.html");
+const artikel = new ItemGrid(10, fetchUrl("artikel"), "artikel", columns, Paged.PAGED, EditMode.UPDATE, undefined, "artikel.html");
 
 async function init() {
   await PRODUKT_DROP.init();

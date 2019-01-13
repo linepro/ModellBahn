@@ -80,7 +80,7 @@ class ItemGrid {
     });
 
     columns.forEach(column => {
-      column.setWidth(Math.round((column.getLength() * 100) / totalWidth) + "%");
+      column.setWidth(Math.floor((column.getLength() * 100) / totalWidth) + "%");
       maxLabel = Math.max(column.heading ? column.heading.length : maxLabel,  maxLabel);
     });
 

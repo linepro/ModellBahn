@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiModelProperty.AccessMode;
 
-@JsonPropertyOrder({ ApiNames.TEIL, ApiNames.ANZAHL })
+@JsonPropertyOrder({ ApiNames.TEIL, ApiNames.ANZAHL, ApiNames.LINKS })
 @ApiModel(value = ApiNames.TEIL, description = "Part of product (spares for rolling stock - contents for set &c).")
 public interface IProduktTeilRef extends ILinkRef {
 

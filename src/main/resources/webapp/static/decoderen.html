@@ -16,9 +16,13 @@
   const columns = [
     DECODER_ID,
     DECODER_TYP,
-    gridButtonColumn("decoderen")
+    BEZEICHNUNG,
+    PROTOKOLL,
+    new ButtonColumn(
+    	    [ newRow ], 
+    	    [ editRow, deleteRow ])
   ];
-  const decoderen = new ItemGrid(10, fetchUrl("decoderenType"), "decoderen", columns, true, EditMode.UPDATE, undefined, "decoder.html");
+  const decoderen = new ItemGrid(10, fetchUrl("decoder"), "decoderen", columns, Paged.PAGED, EditMode.UPDATE, undefined, "decoder.html");
 
   async function init() {
     await DECODER_TYP_DROP.init();

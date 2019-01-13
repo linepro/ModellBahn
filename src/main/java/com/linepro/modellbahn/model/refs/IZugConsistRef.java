@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
  * @author   $Author$
  * @version  $Id$
  */
-@JsonPropertyOrder({ ApiNames.POSITION, ApiNames.ARTIKEL })
+@JsonPropertyOrder({ ApiNames.POSITION, ApiNames.ARTIKEL, ApiNames.LINKS })
 @ApiModel(value = ApiNames.CONSIST, description = "Rolling stock by poisition in a train.")
 public interface IZugConsistRef extends ILinkRef {
 

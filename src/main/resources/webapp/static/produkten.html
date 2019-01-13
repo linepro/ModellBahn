@@ -25,7 +25,7 @@ const columns = [
     [newRow],
     [editRow, deleteRow]) ];
 
-const produkt = new ItemGrid(10, fetchUrl("produkt"), "produkt", columns, true, EditMode.UPDATE, undefined, "produkt.html");
+const produkt = new ItemGrid(10, fetchUrl("produkt"), "produkt", columns, Paged.PAGED, EditMode.UPDATE, undefined, "produkt.html");
 
 async function init() {
 	await HERSTELLER_DROP.init();

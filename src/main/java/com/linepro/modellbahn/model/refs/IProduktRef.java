@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.IHersteller;
+import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
@@ -33,6 +34,11 @@ public interface IProduktRef extends IPictureRef, IRef {
     @ApiModelProperty(value = "Description", example = "Dampftenderlok BR 89.0")
     String getBezeichnung();
     
+    @JsonGetter(ApiNames.UNTER_KATEGORIE)
+    @JsonView(Views.DropDown.class)
+    @JsonSerialize(as = IUnterKategorie.class)
+    IUnterKategorie getUnterKategorie();
+
     @JsonGetter(ApiNames.LANGE)
     @JsonView(Views.DropDown.class)
     @ApiModelProperty(value = "Length over puffers in cm.", example = "11.00")
