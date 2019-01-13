@@ -88,7 +88,7 @@ public interface DBNames {
     String KAPAZITAT = "kapazitat";
     String KATEGORIE_ID = "kategorie_id";
     String KAUFDATUM = "kaufdatum";
-    String KESSELUEBERDRUCK = "kesselueberdruck";
+    String KESSELUBERDRUCK = "kesseluberdruck";
     String KLASSE = "klasse";
     String KOLBENHUB = "kolbenhub";
     String KONFIGURATION = "konfiguration";
@@ -112,7 +112,7 @@ public interface DBNames {
     String PROTOKOLL_ID = "protokoll_id";
     String REICHWEITE = "reichweite";
     String REIHE = "reihe";
-    String ROSTFLAECHE = "rostflaeche";
+    String ROSTFLACHE = "rostflache";
     String SITZPLATZEKL1 = "sitzplatzeKL1";
     String SITZPLATZEKL2 = "sitzplatzeKL2";
     String SITZPLATZEKL3 = "sitzplatzeKL3";
@@ -130,9 +130,9 @@ public interface DBNames {
     String TEIL_ID = "teilId";
     String TEILEN = "teilen";
     String TELEFON = "telefon";
-    String TRIEBKOEPFE = "triebkoepfe";
+    String TRIEBKOPF = "triebkopf";
     String TRIEBZUGANZEIGEN = "triebzugAnzeigen";
-    String UEBERHITZERFLAECHE = "ueberhitzerflaeche";
+    String UBERHITZERFLACHE = "uberhitzerflache";
     String UNTER_KATEGORIE_ID = "unter_kategorie_id";
     String UNTER_KATEGORIEN = "unter_kategorieen";
     String URL = "url";

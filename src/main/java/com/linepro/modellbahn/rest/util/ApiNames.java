@@ -54,7 +54,7 @@ public interface ApiNames {
     String KAPAZITAT = "kapazitat";
     String KATEGORIE = "kategorie";
     String KAUFDATUM = "kaufdatum";
-    String KESSELUEBERDRUCK = "kesselueberdruck";
+    String KESSELUBERDRUCK = "kesseluberdruck";
     String KLASSE = "klasse";
     String KOLBENHUB = "kolbenhub";
     String KONFIGURATION = "konfiguration";
@@ -82,7 +82,7 @@ public interface ApiNames {
     String REIHE = "reihe";
     String REICHWEITE = "reichweite";
     String REL = "rel";
-    String ROSTFLAECHE = "rostflaeche";
+    String ROSTFLACHE = "rostflache";
     String SITZPLATZEKL1 = "sitzplatzeKL1";
     String SITZPLATZEKL2 = "sitzplatzeKL2";
     String SITZPLATZEKL3 = "sitzplatzeKL3";
@@ -99,8 +99,8 @@ public interface ApiNames {
     String TEIL_HERSTELLER = "teilHersteller";
     String TEILEN = "teilen";
     String TELEFON = "telefon";
-    String TRIEBKOEPFE = "triebkoepfe";
-    String UEBERHITZERFLAECHE = "ueberhitzerflaeche";
+    String TRIEBKOPF = "triebkopf";
+    String UBERHITZERFLACHE = "uberhitzerflache";
     String UNTER_KATEGORIE = "unterKategorie";
     String UNTER_KATEGORIEN = "unterKategorien";
     String URL = "url";

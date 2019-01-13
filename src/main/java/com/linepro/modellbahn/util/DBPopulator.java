@@ -2109,17 +2109,17 @@ public class DBPopulator {
             Integer anzahl, String betreibsNummer, IAntrieb antrieb, IAchsfolg achsfolg, String bezeichnung, BigDecimal anfahrzugkraft,
             BigDecimal leistung, BigDecimal dienstgewicht, Integer geschwindigkeit, BigDecimal lange, LocalDate ausserdienst,
             BigDecimal dmTreibrad, BigDecimal dmLaufradVorn, BigDecimal dmLaufradHinten, Integer zylinder, BigDecimal dmZylinder,
-            BigDecimal kolbenhub, BigDecimal kesselueberdruck, BigDecimal rostflaeche, BigDecimal ueberhitzerflaeche, BigDecimal wasservorrat,
+            BigDecimal kolbenhub, BigDecimal kesseluberdruck, BigDecimal rostflache, BigDecimal uberhitzerflache, BigDecimal wasservorrat,
             BigDecimal verdampfung, Integer fahrmotoren, String motorbauart, LeistungsUbertragung leistungsUbertragung, BigDecimal reichweite, BigDecimal kapazitaet, Integer klasse, Integer sitzPlatzeKL1,
-            Integer sitzPlatzeKL2, Integer sitzPlatzeKL3, Integer sitzPlatzeKL4, String aufbauten, Integer triebkoepfe, 
+            Integer sitzPlatzeKL2, Integer sitzPlatzeKL3, Integer sitzPlatzeKL4, String aufbauten, Integer triebkopf, 
             Integer mittelwagen, String drehgestellbauart) {
         return save(new Vorbild(null, gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit,
                  anzahl,  betreibsNummer,  antrieb,  achsfolg,  bezeichnung,  anfahrzugkraft,
                  leistung,  dienstgewicht,  geschwindigkeit,  lange,  ausserdienst,
                  dmTreibrad,  dmLaufradVorn,  dmLaufradHinten,  zylinder,  dmZylinder,
-                 kolbenhub,  kesselueberdruck,  rostflaeche,  ueberhitzerflaeche,  wasservorrat,
+                 kolbenhub,  kesseluberdruck,  rostflache,  uberhitzerflache,  wasservorrat,
                  verdampfung,  fahrmotoren,  motorbauart,  leistungsUbertragung,  reichweite,  kapazitaet,  klasse,  sitzPlatzeKL1,
-                 sitzPlatzeKL2,  sitzPlatzeKL3,  sitzPlatzeKL4,  aufbauten, triebkoepfe,  mittelwagen, drehgestellbauart, false));
+                 sitzPlatzeKL2,  sitzPlatzeKL3,  sitzPlatzeKL4,  aufbauten, triebkopf,  mittelwagen, drehgestellbauart, false));
     }
 
     private void populateVorbild() {
@@ -2144,9 +2144,9 @@ public class DBPopulator {
         Integer zylinder = 2;
         BigDecimal dmZylinder = new BigDecimal("0.42");
         BigDecimal kolbenhub = new BigDecimal("0.55");
-        BigDecimal kesselueberdruck = new BigDecimal("14");
-        BigDecimal rostflaeche = new BigDecimal("1.42");
-        BigDecimal ueberhitzerflaeche = new BigDecimal("24.1");
+        BigDecimal kesseluberdruck = new BigDecimal("14");
+        BigDecimal rostflache = new BigDecimal("1.42");
+        BigDecimal uberhitzerflache = new BigDecimal("24.1");
         BigDecimal wasservorrat = new BigDecimal("4.5");
         BigDecimal verdampfung = new BigDecimal("69.86");
         Integer fahrmotoren = null;
@@ -2160,7 +2160,7 @@ public class DBPopulator {
         Integer sitzPlatzeKL3 = null;
         Integer sitzPlatzeKL4 = null;
         String aufbauten = null;
-        Integer triebkoepfe = null;
+        Integer triebkopf = null;
         Integer mittelwagen = null;
         String drehgestellbauart = null;
  
@@ -2168,10 +2168,10 @@ public class DBPopulator {
                 anzahl, betreibsNummer, antrieb, achsfolg, "BR 89.0", anfahrzugkraft,
                 leistung, dienstgewicht, geschwindigkeit, lange, ausserdienst,
                 dmTreibrad, dmLaufradVorn,  dmLaufradHinten,  zylinder,  dmZylinder,
-                kolbenhub, kesselueberdruck, rostflaeche, ueberhitzerflaeche, wasservorrat,
+                kolbenhub, kesseluberdruck, rostflache, uberhitzerflache, wasservorrat,
                 verdampfung, fahrmotoren, motorbauart, leistungsUbertragung,
                 reichweite, kapazitaet, klasse, sitzPlatzeKL1, sitzPlatzeKL2, sitzPlatzeKL3, 
-                sitzPlatzeKL4, aufbauten, triebkoepfe, mittelwagen, drehgestellbauart);
+                sitzPlatzeKL4, aufbauten, triebkopf, mittelwagen, drehgestellbauart);
     }
 
     private Wahrung addWahrung(String name, String bezeichnung, Integer decimals) {

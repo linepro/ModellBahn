@@ -137,17 +137,17 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.kolbenhub.positive}")
     private BigDecimal kolbenhub;
 
-    /** The kesselueberdruck. */
-    @Positive(message = "{com.linepro.modellbahn.validator.constraints.kesselueberdruck.positive}")
-    private BigDecimal kesselueberdruck;
+    /** The kesseluberdruck. */
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.kesseluberdruck.positive}")
+    private BigDecimal kesseluberdruck;
 
-    /** The rostflaeche. */
-    @Positive(message = "{com.linepro.modellbahn.validator.constraints.rostflaeche.positive}")
-    private BigDecimal rostflaeche;
+    /** The rostflache. */
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.rostflache.positive}")
+    private BigDecimal rostflache;
 
-    /** The ueberhitzerflaeche. */
-    @Positive(message = "{com.linepro.modellbahn.validator.constraints.ueberhitzerflaeche.positive}")
-    private BigDecimal ueberhitzerflaeche;
+    /** The uberhitzerflache. */
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.uberhitzerflache.positive}")
+    private BigDecimal uberhitzerflache;
 
     /** The wasservorrat. */
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.wasservorrat.positive}")
@@ -198,9 +198,9 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
     /** The aufbauten. */
     private String aufbau;
 
-    /** The triebkoepfe. */
-    @Positive(message = "{com.linepro.modellbahn.validator.constraints.triebkoepfe.positive}")
-    private Integer triebkoepfe;
+    /** The triebkopf. */
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.triebkopf.positive}")
+    private Integer triebkopf;
 
     /** The mittelwagen. */
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.mittelwagen.positive}")
@@ -252,9 +252,9 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
      * @param zylinder the zylinder
      * @param dmZylinder the dm zylinder
      * @param kolbenhub the kolbenhub
-     * @param kesselueberdruck the kesselueberdruck
-     * @param rostflaeche the rostflaeche
-     * @param ueberhitzerflaeche the ueberhitzerflaeche
+     * @param kesseluberdruck the kesseluberdruck
+     * @param rostflache the rostflache
+     * @param uberhitzerflache the uberhitzerflache
      * @param wasservorrat the wasservorrat
      * @param verdampfung the verdampfung
      * @param fahrmotoren the fahrmotoren
@@ -268,7 +268,7 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
      * @param sitzPlatzeKL3 the sitz platze KL 3
      * @param sitzPlatzeKL4 the sitz platze KL 4
      * @param aufbauten the aufbauten
-     * @param triebkoepfe the triebkoepfe
+     * @param triebkopf the triebkopf
      * @param mittelwagen the mittelwagen
      * @param drehgestellbauart the drehgestellbauart
      * @param deleted the deleted
@@ -277,9 +277,9 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
             Integer anzahl, String betreibsNummer, IAntrieb antrieb, IAchsfolg achsfolg, String bezeichnung, BigDecimal anfahrzugkraft,
             BigDecimal leistung, BigDecimal dienstgewicht, Integer geschwindigkeit, BigDecimal lange, LocalDate ausserdienst,
             BigDecimal dmTreibrad, BigDecimal dmLaufradVorn, BigDecimal dmLaufradHinten, Integer zylinder, BigDecimal dmZylinder,
-            BigDecimal kolbenhub, BigDecimal kesselueberdruck, BigDecimal rostflaeche, BigDecimal ueberhitzerflaeche, BigDecimal wasservorrat,
+            BigDecimal kolbenhub, BigDecimal kesseluberdruck, BigDecimal rostflache, BigDecimal uberhitzerflache, BigDecimal wasservorrat,
             BigDecimal verdampfung, Integer fahrmotoren, String motorbauart, LeistungsUbertragung leistungsubertragung, BigDecimal reichweite, BigDecimal kapazitaet, Integer klasse, Integer sitzPlatzeKL1,
-            Integer sitzPlatzeKL2, Integer sitzPlatzeKL3, Integer sitzPlatzeKL4, String aufbauten, Integer triebkoepfe, Integer mittelwagen, String drehgestellbauart, Boolean deleted) {
+            Integer sitzPlatzeKL2, Integer sitzPlatzeKL3, Integer sitzPlatzeKL4, String aufbauten, Integer triebkopf, Integer mittelwagen, String drehgestellbauart, Boolean deleted) {
         super(id, deleted);
 
         setGattung(gattung);
@@ -304,9 +304,9 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
         setZylinder(zylinder);
         setDmZylinder(dmZylinder);
         setKolbenhub(kolbenhub);
-        setKesselueberdruck(kesselueberdruck);
-        setRostflaeche(rostflaeche);
-        setUeberhitzerflaeche(ueberhitzerflaeche);
+        setKesseluberdruck(kesseluberdruck);
+        setRostflache(rostflache);
+        setuberhitzerflache(uberhitzerflache);
         setWasservorrat(wasservorrat);
         setVerdampfung(verdampfung);
         setFahrmotoren(fahrmotoren);
@@ -320,7 +320,7 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
         setSitzPlatzeKL3(sitzPlatzeKL3);
         setSitzPlatzeKL4(sitzPlatzeKL4);
         setAufbau(aufbauten);
-        setTriebkoepfe(triebkoepfe);
+        setTriebkopf(triebkopf);
         setMittelwagen(mittelwagen);
         setDrehgestellBauart(drehgestellbauart);
     }
@@ -572,36 +572,36 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.KESSELUEBERDRUCK)
-    public BigDecimal getKesselueberdruck() {
-        return kesselueberdruck;
+    @Column(name = DBNames.KESSELUBERDRUCK)
+    public BigDecimal getKesseluberdruck() {
+        return kesseluberdruck;
     }
 
     @Override
-    public void setKesselueberdruck(BigDecimal kesselueberdruck) {
-        this.kesselueberdruck = kesselueberdruck;
+    public void setKesseluberdruck(BigDecimal kesseluberdruck) {
+        this.kesseluberdruck = kesseluberdruck;
     }
 
     @Override
-    @Column(name = DBNames.ROSTFLAECHE)
-    public BigDecimal getRostflaeche() {
-        return rostflaeche;
+    @Column(name = DBNames.ROSTFLACHE)
+    public BigDecimal getRostflache() {
+        return rostflache;
     }
 
     @Override
-    public void setRostflaeche(BigDecimal rostflaeche) {
-        this.rostflaeche = rostflaeche;
+    public void setRostflache(BigDecimal rostflache) {
+        this.rostflache = rostflache;
     }
 
     @Override
-    @Column(name = DBNames.UEBERHITZERFLAECHE)
-    public BigDecimal getUeberhitzerflaeche() {
-        return ueberhitzerflaeche;
+    @Column(name = DBNames.UBERHITZERFLACHE)
+    public BigDecimal getuberhitzerflache() {
+        return uberhitzerflache;
     }
 
     @Override
-    public void setUeberhitzerflaeche(BigDecimal ueberhitzerflaeche) {
-        this.ueberhitzerflaeche = ueberhitzerflaeche;
+    public void setuberhitzerflache(BigDecimal uberhitzerflache) {
+        this.uberhitzerflache = uberhitzerflache;
     }
 
     @Override
@@ -747,14 +747,14 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
     }
 
     @Override
-    @Column(name = DBNames.TRIEBKOEPFE)
-    public Integer getTriebkoepfe() {
-        return triebkoepfe;
+    @Column(name = DBNames.TRIEBKOPF)
+    public Integer getTriebkopf() {
+        return triebkopf;
     }
 
     @Override
-    public void setTriebkoepfe(Integer triebkoepfe) {
-        this.triebkoepfe = triebkoepfe;
+    public void setTriebkopf(Integer triebkopf) {
+        this.triebkopf = triebkopf;
     }
 
     @Override
@@ -833,9 +833,9 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
                 .append(ApiNames.ZYLINDER, getZylinder())
                 .append(ApiNames.DMZYLINDER, getDmZylinder())
                 .append(ApiNames.KOLBENHUB, getKolbenhub())
-                .append(ApiNames.KESSELUEBERDRUCK, getKesselueberdruck())
-                .append(ApiNames.ROSTFLAECHE, getRostflaeche())
-                .append(ApiNames.UEBERHITZERFLAECHE, getUeberhitzerflaeche())
+                .append(ApiNames.KESSELUBERDRUCK, getKesseluberdruck())
+                .append(ApiNames.ROSTFLACHE, getRostflache())
+                .append(ApiNames.UBERHITZERFLACHE, getuberhitzerflache())
                 .append(ApiNames.WASSERVORRAT, getWasservorrat())
                 .append(ApiNames.VERDAMPFUNG, getVerdampfung())
                 .append(ApiNames.FAHRMOTOREN, getFahrmotoren())
@@ -849,7 +849,7 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
                 .append(ApiNames.SITZPLATZEKL3, getSitzPlatzeKL3())
                 .append(ApiNames.SITZPLATZEKL4, getSitzPlatzeKL4())
                 .append(ApiNames.AUFBAU, getAufbau())
-                .append(ApiNames.TRIEBKOEPFE, getTriebkoepfe())
+                .append(ApiNames.TRIEBKOPF, getTriebkopf())
                 .append(ApiNames.MITTELWAGEN, getMittelwagen())
                 .append(ApiNames.DREHGESTELLBAUART, getDrehgestellBauart())
                 .append(ApiNames.ABBILDUNG, getAbbildung())

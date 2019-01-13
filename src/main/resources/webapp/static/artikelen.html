@@ -17,17 +17,12 @@
 const columns = [
   ARTIKEL_ID,
   PRODUKT,
+  new SelectColumn("Kategorie", "unterKategorie", (entity) => { return entity.produkt.unterKategorie ? extractKategorieValue(entity.produkt.unterKategorie) : undefined; }, (entity, value) => { let parts = value.split('/'); entity.unterKategorie.kategorie = parts[0]; entity.unterKategorie.name = parts[1]; }, UNTER_KATEGORIE_DROP, Editable.UPDATE, true),
+  BEZEICHNUNG,
   KAUFDATUM,
-  WAHRUNG,
-  PREIS,
   STUCK,
-  STEUERUNG,
-  MOTOR_TYP,
-  LICHT,
-  KUPPLUNG,
   DECODER,
   ANMERKUNG,
-  BELADUNG,
   ABBILDUNG,
   STATUS,
   new ButtonColumn(
@@ -38,12 +33,7 @@ const artikel = new ItemGrid(10, fetchUrl("artikel"), "artikel", columns, Paged.
 
 async function init() {
   await PRODUKT_DROP.init();
-  await WAHRUNG_DROP.init();
-  await STEUERUNG_DROP.init();
-  await SPURWEITE_DROP.init();
-  await MOTOR_TYP_DROP.init();
-  await LICHT_DROP.init();
-  await KUPPLUNG_DROP.init();
+  await UNTER_KATEGORIE_DROP.init();
   await DECODER_DROP.init();
   await STATUS_DROP.init();
   await artikel.init();
