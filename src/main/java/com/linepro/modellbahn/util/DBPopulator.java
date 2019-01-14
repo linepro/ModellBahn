@@ -416,7 +416,7 @@ public class DBPopulator {
     }
 
     private void populateDecoder() {
-        IPersister<Decoder> persister = persisterFactory.createPersister(Decoder.class);
+        IPersister<IDecoder> persister = persisterFactory.createPersister(IDecoder.class);
 
         DecoderCreator creator = new DecoderCreator(persister);
 

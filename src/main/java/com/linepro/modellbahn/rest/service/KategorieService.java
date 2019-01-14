@@ -49,24 +49,24 @@ import io.swagger.annotations.ApiResponses;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.KATEGORIE, description = "Kategorie maintenance")
+@Api(value = ApiNames.KATEGORIE)
 @Path(ApiPaths.KATEGORIE)
-public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
+public class KategorieService extends AbstractItemService<NameKey,  IKategorie> {
 
-    private final IPersister<UnterKategorie> unterKategoriePersister;
+    private final IPersister<IUnterKategorie> unterKategoriePersister;
 
     public KategorieService() {
-        super(Kategorie.class);
+        super(IKategorie.class);
 
-        unterKategoriePersister = StaticPersisterFactory.get().createPersister(UnterKategorie.class);
+        unterKategoriePersister = StaticPersisterFactory.get().createPersister(IUnterKategorie.class);
     }
 
     @JsonCreator
-    public Kategorie create(@JsonProperty(value = ApiNames.ID) Long id,
+    public IKategorie create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        Kategorie entity = new Kategorie(id, name, bezeichnung, deleted);
+        IKategorie entity = new Kategorie(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
 
@@ -74,7 +74,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     }
 
     @JsonCreator
-    public UnterKategorie create(@JsonProperty(value = ApiNames.ID) Long id,
+    public IUnterKategorie create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.KATEGORIE) String kategorieStr,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
@@ -88,7 +88,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds an Kategorie by name", response = Kategorie.class)
+    @ApiOperation(value = "Finds an Kategorie by name", response = IKategorie.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -96,7 +96,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Kategorieen by example", response = Kategorie.class, responseContainer = "List")
+    @ApiOperation(value = "Finds Kategorieen by example", response = IKategorie.class, responseContainer = "List")
     @ApiImplicitParams({
         @ApiImplicitParam( name = ApiNames.ID, value = "Kategorie id", dataType = "Long", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.NAMEN, value = "Kategorie code", example = "LOKOMOTIV", dataType = "String", paramType = "query"),
@@ -113,8 +113,8 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds an Kategorie", response = Kategorie.class)
-    public Response add(Kategorie entity) {
+    @ApiOperation(code = 201, value = "Adds an Kategorie", response = IKategorie.class)
+    public Response add(IKategorie entity) {
         return super.add(entity);
     }
 
@@ -123,8 +123,8 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates an Kategorie by name", response = Kategorie.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Kategorie entity) {
+    @ApiOperation(code = 202, value = "Updates an Kategorie by name", response = IKategorie.class)
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IKategorie entity) {
         return super.update(name, entity);
     }
 
@@ -140,7 +140,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @GET
     @Path(ApiPaths.UNTER_KATEGORIE_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Finds an UnterKategorie by kategorie and name", response = UnterKategorie.class)
+    @ApiOperation(value = "Finds an UnterKategorie by kategorie and name", response = IUnterKategorie.class)
     public Response get(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) {
         try {
@@ -167,17 +167,17 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Adds an UnterKategorie to a kategorie", response = UnterKategorie.class)
+    @ApiOperation(code = 202, value = "Adds an UnterKategorie to a kategorie", response = IUnterKategorie.class)
     @ApiResponses({
         @ApiResponse(code = 400, message = "Bad request"),
         @ApiResponse(code = 402, message = "Not Found`"),
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
-    public Response add(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, UnterKategorie unterKategorie) {
+    public Response add(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, IUnterKategorie unterKategorie) {
         try {
             logPost(kategorieStr + "/" + unterKategorie);
 
-            Kategorie kategorie = (Kategorie) findKategorie(kategorieStr, true);
+            IKategorie kategorie = findKategorie(kategorieStr, true);
 
             if (kategorie == null) {
                 return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
@@ -198,14 +198,14 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @PUT
     @Path(ApiPaths.UNTER_KATEGORIE_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(code = 202, value = "Updates an UnterKategorie by kategorie and name", response = UnterKategorie.class)
+    @ApiOperation(code = 202, value = "Updates an UnterKategorie by kategorie and name", response = IUnterKategorie.class)
     @ApiResponses({
         @ApiResponse(code = 400, message = "Bad request"),
         @ApiResponse(code = 402, message = "Not Found`"),
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
     public Response update(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
-            @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr, UnterKategorie newUnterKategorie) {
+            @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr, IUnterKategorie newUnterKategorie) {
         try {
             logPut(kategorieStr + "/" + unterKategorieStr + ": " + newUnterKategorie);
 
@@ -215,7 +215,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
                 return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
             }
 
-            UnterKategorie unterKategorie = (UnterKategorie) findUnterKategorie(kategorieStr, unterKategorieStr, false);
+            IUnterKategorie unterKategorie = findUnterKategorie(kategorieStr, unterKategorieStr, false);
 
             if (unterKategorie == null) {
                 return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
@@ -246,13 +246,13 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     public Response delete(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) {
         try {
-            Kategorie kategorie = (Kategorie) findKategorie(kategorieStr, true);
+            IKategorie kategorie = findKategorie(kategorieStr, true);
 
             if (kategorie == null) {
                 return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
             }
 
-            UnterKategorie unterKategorie = (UnterKategorie) findUnterKategorie(kategorie, unterKategorieStr, true);
+            IUnterKategorie unterKategorie = findUnterKategorie(kategorie, unterKategorieStr, true);
 
             if (unterKategorie == null) {
                 return getResponse(badRequest(null, "UnterKategorie " + kategorieStr + "/" + unterKategorieStr + " does not exist"));
@@ -274,7 +274,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
     @Path(ApiPaths.UNTER_KATEGORIEN_PATH)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds UnterKategorieen by kategorie", response = UnterKategorie.class, responseContainer = "List")
+    @ApiOperation(value = "Finds UnterKategorieen by kategorie", response = IUnterKategorie.class, responseContainer = "List")
     @ApiImplicitParams({
             @ApiImplicitParam( name = ApiNames.KATEGORIE, value = "List of Kategorie names", dataType = "[Ljava.lang.String;", paramType = "query"),
             @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
@@ -293,7 +293,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
                 references.put(DBNames.KATEGORIE, kategorien);
             }
 
-            final UnterKategorie template = new UnterKategorie();
+            final IUnterKategorie template = new UnterKategorie();
 
             if (pageNumber != null || pageSize != null) {
                 pageNumber = pageNumber != null ? pageNumber : FIRST_PAGE;
@@ -318,7 +318,7 @@ public class KategorieService extends AbstractItemService<NameKey,  Kategorie> {
         }
     }
 
-    private IPersister<UnterKategorie> getUnterKategoriePersister() {
+    private IPersister<IUnterKategorie> getUnterKategoriePersister() {
         return unterKategoriePersister;
     }
 }

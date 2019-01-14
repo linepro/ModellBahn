@@ -3,6 +3,7 @@ package com.linepro.modellbahn.model;
 import java.net.URL;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -23,6 +24,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @version  $Id$
  */
 @JsonRootName(value = ApiNames.HERSTELLER)
+@JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.TELEFON, ApiNames.URL, ApiNames.DELETED, ApiNames.LINKS})
 @ApiModel(value = ApiNames.HERSTELLER, description = "Manufacturer.")
 public interface IHersteller extends INamedItem<NameKey>, IHerstellerRef {

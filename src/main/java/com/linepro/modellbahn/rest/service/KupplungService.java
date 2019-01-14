@@ -44,20 +44,20 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.KUPPLUNG, description = "Kupplung maintenance")
+@Api(value = ApiNames.KUPPLUNG)
 @Path(ApiPaths.KUPPLUNG)
-public class KupplungService extends AbstractItemService<NameKey, Kupplung> {
+public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
 
     public KupplungService() {
-        super(Kupplung.class);
+        super(IKupplung.class);
     }
 
     @JsonCreator
-    public Kupplung create(@JsonProperty(value = ApiNames.ID) Long id,
+    public IKupplung create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        Kupplung entity = new Kupplung(id, name, bezeichnung, deleted);
+        IKupplung entity = new Kupplung(id, name, bezeichnung, deleted);
         
         debug("created: " + entity);
 
@@ -68,7 +68,7 @@ public class KupplungService extends AbstractItemService<NameKey, Kupplung> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds a Kupplung by name", response = Kupplung.class)
+    @ApiOperation(value = "Finds a Kupplung by name", response = IKupplung.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -76,7 +76,7 @@ public class KupplungService extends AbstractItemService<NameKey, Kupplung> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Kupplungen by example", response = Kupplung.class, responseContainer = "List")
+    @ApiOperation(value = "Finds Kupplungen by example", response = IKupplung.class, responseContainer = "List")
     @ApiImplicitParams({
         @ApiImplicitParam( name = ApiNames.ID, value = "Kupplung id", dataType = "Long", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.NAMEN, value = "Kupplung code", example = "RELEX", dataType = "String", paramType = "query"),
@@ -93,8 +93,8 @@ public class KupplungService extends AbstractItemService<NameKey, Kupplung> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds a Kupplung", response = Kupplung.class)
-    public Response add(Kupplung entity) {
+    @ApiOperation(code = 201, value = "Adds a Kupplung", response = IKupplung.class)
+    public Response add(IKupplung entity) {
         return super.add(entity);
     }
 
@@ -103,8 +103,8 @@ public class KupplungService extends AbstractItemService<NameKey, Kupplung> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates a Kupplung by name", response = Kupplung.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Kupplung entity) {
+    @ApiOperation(code = 202, value = "Updates a Kupplung by name", response = IKupplung.class)
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IKupplung entity) {
         return super.update(name, entity);
     }
 
@@ -122,7 +122,7 @@ public class KupplungService extends AbstractItemService<NameKey, Kupplung> {
     @Consumes({ MediaType.MULTIPART_FORM_DATA })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds or updates the picture for a named Kupplung", response = Kupplung.class)
+    @ApiOperation(code = 201, value = "Adds or updates the picture for a named Kupplung", response = IKupplung.class)
     public Response updateAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
@@ -140,7 +140,7 @@ public class KupplungService extends AbstractItemService<NameKey, Kupplung> {
 
                 kupplung.setAbbildung(file);
 
-                getPersister().update((Kupplung) kupplung);
+                getPersister().update(kupplung);
 
                 return getResponse(ok(kupplung));
             }
@@ -155,7 +155,7 @@ public class KupplungService extends AbstractItemService<NameKey, Kupplung> {
     @Path(ApiPaths.ABBILDUNG_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 204, value = "Deletes the picture from a named Kupplung", response = Kupplung.class)
+    @ApiOperation(code = 204, value = "Deletes the picture from a named Kupplung", response = IKupplung.class)
     public Response deleteAbbildung(@PathParam(ApiPaths.ID_PARAM_NAME) String name) {
         try {
             IKupplung kupplung = findKupplung(name, false);
@@ -165,7 +165,7 @@ public class KupplungService extends AbstractItemService<NameKey, Kupplung> {
 
                 kupplung.setAbbildung(null);
 
-                getPersister().update((Kupplung) kupplung);
+                getPersister().update(kupplung);
 
                 return getResponse(ok(kupplung));
             }

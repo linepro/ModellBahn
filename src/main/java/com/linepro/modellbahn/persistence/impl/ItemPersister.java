@@ -48,9 +48,9 @@ import com.linepro.modellbahn.util.SelectorsBuilder;
  * @author   $Author$
  * @version  $Id$
  *
- * @param <E> the element type
+ * @param <I> the element type
  */
-public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
+public class ItemPersister<I extends IItem<?>> implements IPersister<I> {
 
     /** The entity manager. */
     private final ISessionManagerFactory sessionManagerFactory;
@@ -59,7 +59,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
     private final Logger logger;
 
     /** The entity class. */
-    private final Class<E> entityClass;
+    private final Class<?> entityClass;
 
     /** The selectors. */
     private final Map<String, Selector> selectors;
@@ -83,22 +83,22 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
      *
      * @param sessionManagerFactory the entity manager
      * @param logManager the log manager
-     * @param entityClass the entity class
+     * @param mappedClass the entity class
      */
     @Inject
     public ItemPersister(final ISessionManagerFactory sessionManagerFactory, final ILoggerFactory logManager,
-            @Assisted final Class<E> entityClass) {
+            @Assisted final Class<?> mappedClass) {
         this.sessionManagerFactory = sessionManagerFactory;
-        this.logger = logManager.getLogger(entityClass.getName());
-        this.entityClass = entityClass;
+        this.logger = logManager.getLogger(mappedClass.getName());
+        this.entityClass = mappedClass;
         this.idGenerator = new IdGenerator(sessionManagerFactory);
 
-        businessKeys = new SelectorsBuilder().build(entityClass, BusinessKey.class);
-        collections = new SelectorsBuilder().build(entityClass, OneToMany.class);
-        selectors = new SelectorsBuilder().build(entityClass, Column.class, JoinColumn.class, OneToMany.class);
+        businessKeys = new SelectorsBuilder().build(mappedClass, BusinessKey.class);
+        collections = new SelectorsBuilder().build(mappedClass, OneToMany.class);
+        selectors = new SelectorsBuilder().build(mappedClass, Column.class, JoinColumn.class, OneToMany.class);
 
-        Entity entityAnnotation = entityClass.getAnnotation(Entity.class);
-        entityName = entityAnnotation != null ? entityAnnotation.name() : entityClass.getSimpleName();
+        Entity entityAnnotation = mappedClass.getAnnotation(Entity.class);
+        entityName = entityAnnotation != null ? entityAnnotation.name() : mappedClass.getSimpleName();
 
         StringBuilder queryString = new StringBuilder("SELECT e FROM ")
                 .append(entityName)
@@ -125,7 +125,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
     }
 
     @Override
-    public E add(E entity) throws Exception {
+    public I add(I entity) throws Exception {
         ISessionManager session = getSession();
 
         try {
@@ -148,22 +148,22 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
     }
 
     @Override
-    public E update(Long id, E entity) throws Exception {
+    public I update(Long id, I entity) throws Exception {
         return internalUpdate(new IdKey(id), entity, false);
     }
 
     @Override
-    public E update(E entity) throws Exception {
+    public I update(I entity) throws Exception {
         return internalUpdate(getItemKey(entity), entity, false);
     }
 
     @Override
-    public E update(IKey key, E entity) throws Exception {
+    public I update(IKey key, I entity) throws Exception {
         return internalUpdate(key, entity, false);
     }
 
     @Override
-    public E save(E entity) throws Exception {
+    public I save(I entity) throws Exception {
         return internalUpdate(getItemKey(entity), entity, true);
     }
 
@@ -176,17 +176,17 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
      * @throws Exception the exception
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private E internalUpdate(IKey key, E entity, boolean addOrUpdate) throws Exception {
+    private I internalUpdate(IKey key, I entity, boolean addOrUpdate) throws Exception {
         ISessionManager session = getSession();
 
         try {
-            E found = internalFindByKey(session, key, false);
+            I found = internalFindByKey(session, key, false);
             
             if (found == null && !addOrUpdate) {
                 return null;
             }
 
-            E result;
+            I result;
             
             if (found == null) {
                 // Save the new entity
@@ -227,7 +227,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         ISessionManager session = getSession();
             try {
 
-            E found = findById(id, false);
+            I found = findById(id, false);
 
             session.getEntityManager().remove(found);
 
@@ -243,11 +243,11 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         }
     }
 
-    public void delete(E entity) throws Exception {
+    public void delete(I entity) throws Exception {
         delete(getItemKey(entity));
     }
 
-    private ItemKey getItemKey(E entity) {
+    private ItemKey getItemKey(I entity) {
         return new ItemKey(entity, businessKeys.values());
     }
 
@@ -256,7 +256,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         ISessionManager session = getSession();
 
         try {
-            E found = internalFindByKey(session, key, false);
+            I found = internalFindByKey(session, key, false);
 
             session.getEntityManager().remove(found);
             
@@ -277,14 +277,15 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         deleteAll(null);
     }
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
-    public void deleteAll(E template) throws Exception {
+    public void deleteAll(I template) throws Exception {
         ISessionManager session = getSession();
 
         try {
             CriteriaBuilder builder = session.getEntityManager().getCriteriaBuilder();
-            CriteriaDelete<E> query = builder.createCriteriaDelete(getEntityClass());
-            Root<E> root = query.from(getEntityClass());
+            CriteriaDelete query = builder.createCriteriaDelete(getEntityClass());
+            Root root = query.from(getEntityClass());
 
             List<Predicate> predicates = getConditions(builder, root, template, selectors, Collections.emptyMap(), null);
 
@@ -306,15 +307,16 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public E findById(Long id, boolean eager) throws Exception {
+    public I findById(Long id, boolean eager) throws Exception {
         ISessionManager session = getSession();
 
         try {
-            E result = null;
+            I result = null;
             
             if (id != null) {
-                result = inflate(session.getEntityManager().find(getEntityClass(), id), eager);
+                result = inflate((I) session.getEntityManager().find(getEntityClass(), id), eager);
             }
 
             debug("findById found: " + result);
@@ -332,26 +334,26 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
     }
 
     @Override
-    public E findByKey(Long id, boolean eager) throws Exception {
+    public I findByKey(Long id, boolean eager) throws Exception {
         return findById(id, eager);
     }
 
     @Override
-    public E findByKey(String name, boolean eager) throws Exception {
+    public I findByKey(String name, boolean eager) throws Exception {
         return findByKey(new NameKey(name), eager);
     }
 
     @Override
-    public E findByKey(E entity, boolean eager) throws Exception {
+    public I findByKey(I entity, boolean eager) throws Exception {
         return findByKey(getItemKey(entity), eager);
     }
 
     @Override
-    public E findByKey(IKey key, boolean eager) throws Exception {
+    public I findByKey(IKey key, boolean eager) throws Exception {
         ISessionManager session = getSession();
 
         try {
-            E result = internalFindByKey(session, key, eager);
+            I result = internalFindByKey(session, key, eager);
             
             debug("findByKey found: " + result);
 
@@ -367,19 +369,19 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
         }
     }
 
-    private E internalFindByKey(ISessionManager session, IKey key, boolean eager) throws Exception {
+    private I internalFindByKey(ISessionManager session, IKey key, boolean eager) throws Exception {
         Query query = session.getEntityManager().createQuery(businessKeyQuery);
 
         key.addCriteria(query);
         
         @SuppressWarnings("unchecked")
-        List<E> results = (List<E>) query.getResultList();
+        List<I> results = (List<I>) query.getResultList();
         
         if (results.size() > 1) {
             throw new NonUniqueResultException();
         }
         
-        E result = null;
+        I result = null;
         
         if (results.size() == 1) {
             result = inflate(results.get(0), eager);
@@ -393,18 +395,18 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
     }
 
     @Override
-    public Long countAll(E template) throws Exception {
+    public Long countAll(I template) throws Exception {
         return countAll(null, Collections.emptyMap());
     }
 
     @Override
-    public Long countAll(E template, Map<String,List<String>> references) throws Exception {
+    public Long countAll(I template, Map<String,List<String>> references) throws Exception {
         ISessionManager session = getSession();
 
         try {
             CriteriaBuilder builder = session.getEntityManager().getCriteriaBuilder();
             CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
-            Root<E> root = countQuery.from(getEntityClass());
+            Root<?> root = countQuery.from(getEntityClass());
             countQuery.select(builder.count(root));
 
             List<Predicate> predicates = getConditions(builder, root, template, selectors, references, countQuery);
@@ -430,32 +432,33 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
     }
 
     @Override
-    public List<E> findAll() throws Exception {
+    public List<I> findAll() throws Exception {
         return findAll(null);
     }
 
     @Override
-    public List<E> findAll(E template) throws Exception {
+    public List<I> findAll(I template) throws Exception {
         return findAll(template, null, null);
     }
 
     @Override
-    public List<E> findAll(E template, Integer startPosition, Integer maxSize) throws Exception {
+    public List<I> findAll(I template, Integer startPosition, Integer maxSize) throws Exception {
         return findAll(template, Collections.emptyMap(), startPosition, maxSize);
     }
 
     @Override
-    public List<E> findAll(E template, Map<String,List<String>> references, Integer startPosition, Integer maxSize) throws Exception {
+    public List<I> findAll(I template, Map<String,List<String>> references, Integer startPosition, Integer maxSize) throws Exception {
         return findAll(template, references, selectors, startPosition, maxSize);
     }
 
-    private List<E> findAll(E template, Map<String,List<String>> references, Map<String, Selector> selectors, Integer startPosition, Integer maxResult) throws Exception {
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private List<I> findAll(I template, Map<String,List<String>> references, Map<String, Selector> selectors, Integer startPosition, Integer maxResult) throws Exception {
         ISessionManager session = getSession();
 
         try {
             CriteriaBuilder builder = session.getEntityManager().getCriteriaBuilder();
-            CriteriaQuery<E> criteria = builder.createQuery(getEntityClass());
-            Root<E> root = criteria.from(getEntityClass());
+            CriteriaQuery criteria = builder.createQuery(getEntityClass());
+            Root root = criteria.from(getEntityClass());
 
             List<Predicate> predicates = getConditions(builder, root, template, selectors, references, criteria);
 
@@ -465,7 +468,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
                 criteria.select(root);
             }
 
-            TypedQuery<E> query = session.getEntityManager().createQuery(criteria);
+            TypedQuery<?> query = session.getEntityManager().createQuery(criteria);
 
             if (startPosition != null) {
                 query.setFirstResult(startPosition * maxResult);
@@ -475,7 +478,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
                 query.setMaxResults(maxResult);
             }
 
-            List<E> result = query.getResultList();
+            List<I> result = (List<I>) query.getResultList();
 
             debug("findAll found: " + result);
 
@@ -500,7 +503,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
      * @return the conditions
      * @throws Exception the exception
      */
-    private List<Predicate> getConditions(CriteriaBuilder builder, Root<E> root, E template, Map<String, Selector> selectors,
+    private List<Predicate> getConditions(CriteriaBuilder builder, Root<?> root, I template, Map<String, Selector> selectors,
                                           Map<String,List<String>> references, CriteriaQuery<?> criteria) throws Exception {
         List<Predicate> predicates = new ArrayList<>();
 
@@ -586,7 +589,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
 
     
     @Override
-    public Class<E> getEntityClass() {
+    public Class<?> getEntityClass() {
         return entityClass;
     }
 
@@ -606,9 +609,10 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
      * @return the e
      * @throws Exception if we are naughty
      */
+    @SuppressWarnings("unchecked")
     @Override
-    public E create() throws Exception {
-        return getEntityClass().newInstance();
+    public I create() throws Exception {
+        return (I) getEntityClass().newInstance();
     }
 
     /**
@@ -619,7 +623,7 @@ public class ItemPersister<E extends IItem<?>> implements IPersister<E> {
      * @return the same entity you passed in with it's lazy collections populated
      * @throws Exception if there is a DB error
      */
-    private E inflate(E entity, boolean eager) throws Exception {
+    private I inflate(I entity, boolean eager) throws Exception {
         if (eager && entity != null) {
             for (Selector selector : collections.values()) {
                 Collection<?> collection = (Collection<?>) selector.getGetter().invoke(entity);

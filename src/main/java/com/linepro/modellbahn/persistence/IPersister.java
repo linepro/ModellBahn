@@ -12,9 +12,9 @@ import com.linepro.modellbahn.util.Selector;
  * A data access object for the specified element
  * @author   $Author$
  * @version  $Id$
- * @param <E> the element type
+ * @param <I> the element type
  */
-public interface IPersister<E extends IItem<?>> {
+public interface IPersister<I extends IItem<?>> {
     
     /**
      * Adds the entity checking the primary key; fails if the entity all ready exists.
@@ -23,7 +23,7 @@ public interface IPersister<E extends IItem<?>> {
      * @return the e
      * @throws Exception if the entity all ready exists or there is a DB error.
      */
-    E add(E entity) throws Exception;
+    I add(I entity) throws Exception;
 
     /**
      * Finds the entity by primary key.
@@ -33,11 +33,11 @@ public interface IPersister<E extends IItem<?>> {
      * @return the entity
      * @throws Exception if there more than one match or there is a DB error
      */
-    E findById(Long id, boolean eager) throws Exception;
+    I findById(Long id, boolean eager) throws Exception;
 
-    E findByKey(Long id, boolean eager) throws Exception;
+    I findByKey(Long id, boolean eager) throws Exception;
 
-    E findByKey(String name, boolean eager) throws Exception;
+    I findByKey(String name, boolean eager) throws Exception;
 
     /**
      * Finds the entity by business key.
@@ -47,15 +47,15 @@ public interface IPersister<E extends IItem<?>> {
      * @return the entity
      * @throws Exception if there more than one match or there is a DB error
      */
-     E findByKey(IKey key, boolean eager) throws Exception;
+     I findByKey(IKey key, boolean eager) throws Exception;
 
-     E findByKey(E entity, boolean eager) throws Exception;
+     I findByKey(I entity, boolean eager) throws Exception;
 
      Long countAll() throws Exception;
 
-     Long countAll(E template) throws Exception;
+     Long countAll(I template) throws Exception;
 
-     Long countAll(E template, Map<String,List<String>> references) throws Exception;
+     Long countAll(I template, Map<String,List<String>> references) throws Exception;
 
     /**
      * Finds all the entities.
@@ -63,9 +63,9 @@ public interface IPersister<E extends IItem<?>> {
      * @return the list of entities
      * @throws Exception if there is a DB error
      */
-    List<E> findAll() throws Exception;
+    List<I> findAll() throws Exception;
 
-    List<E> findAll(E template) throws Exception;
+    List<I> findAll(I template) throws Exception;
 
     /**
      * Finds all entities that have fields with the same values as the template suppled (query by example).
@@ -74,18 +74,9 @@ public interface IPersister<E extends IItem<?>> {
      * @return the list of matching entities
      * @throws Exception there is a DB error
      */
-    List<E> findAll(E template, Integer startPosition, Integer maxSize) throws Exception;
+    List<I> findAll(I template, Integer startPosition, Integer maxSize) throws Exception;
 
-    List<E> findAll(E template, Map<String,List<String>> references, Integer startPosition, Integer maxSize) throws Exception;
-
-    /**
-     * Updates the specified entity to match the supplied entity.
-     *
-     * @param entity the new state of the entity.
-     * @return the updated entity.
-     * @throws Exception if the entity does not exist or there is a DB error
-     */
-    E update(Long id, E entity) throws Exception;
+    List<I> findAll(I template, Map<String,List<String>> references, Integer startPosition, Integer maxSize) throws Exception;
 
     /**
      * Updates the specified entity to match the supplied entity.
@@ -94,9 +85,18 @@ public interface IPersister<E extends IItem<?>> {
      * @return the updated entity.
      * @throws Exception if the entity does not exist or there is a DB error
      */
-    E update(E entity) throws Exception;
+    I update(Long id, I entity) throws Exception;
 
-    E update(IKey key, E entity) throws Exception;
+    /**
+     * Updates the specified entity to match the supplied entity.
+     *
+     * @param entity the new state of the entity.
+     * @return the updated entity.
+     * @throws Exception if the entity does not exist or there is a DB error
+     */
+    I update(I entity) throws Exception;
+
+    I update(IKey key, I entity) throws Exception;
 
     /**
      * Deletes the specified entity by primary key.
@@ -106,7 +106,7 @@ public interface IPersister<E extends IItem<?>> {
      */
     void delete(Long id) throws Exception;
 
-    void delete(E entity) throws Exception;
+    void delete(I entity) throws Exception;
 
     /**
      * Deletes the specified entity by business key.
@@ -129,7 +129,7 @@ public interface IPersister<E extends IItem<?>> {
      * @param template the entity to match
      * @throws Exception if there is a DB error
      */
-    void deleteAll(E template) throws Exception;
+    void deleteAll(I template) throws Exception;
 
     /**
      * Adds the entity if it does not exist or updates it if it does.
@@ -138,7 +138,7 @@ public interface IPersister<E extends IItem<?>> {
      * @return the updated entity.
      * @throws Exception if there is a DB error
      */
-    E save(E entity) throws Exception;
+    I save(I entity) throws Exception;
 
     /**
      * Populate lazy collection.
@@ -151,7 +151,7 @@ public interface IPersister<E extends IItem<?>> {
      * Gets the entity class.
      * @return the class
      */
-    Class<E> getEntityClass();
+    Class<?> getEntityClass();
 
     String getEntityName();
 
@@ -164,5 +164,5 @@ public interface IPersister<E extends IItem<?>> {
 
     Map<String, Selector> getSelectors();
 
-    E create() throws Exception;
+    I create() throws Exception;
 }

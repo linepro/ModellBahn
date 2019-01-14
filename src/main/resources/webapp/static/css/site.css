@@ -92,6 +92,16 @@ input[type="checkbox"] {
   width: unset;
 }
 
+[type="date"]::-webkit-inner-spin-button {
+  display: none;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
 input[active], select[active], textarea[active] {
   border: 0.1rem dotted gray;
   background-color: LemonChiffon;
@@ -553,40 +563,58 @@ button.tabLinks[active] {
 
 div.flex-container {
   display: flex;
-  align-content: space-evenly;
+  align-content: flex-start;
   align-items: baseline;
   flex-direction: row;  
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: flex-start;
 }
 
 div.flex-item {
-  display: flex;
-  align-content: space-evenly;
-  align-items: baseline;
-  flex-direction: row;  
-  flex-wrap: nowrap;
-  justify-content: space-evenly;
+  display: inline-block;
   flex-grow: 1;
-  flex-shrink: 1;
+  flex-shrink: 0;
   order: 1;
-  margin: 0.1rem;
-  padding: 0.3rem 0.3rem;
+  margin: 0.1rem 0.1rem 0 0;
+  padding: 0.3rem 0.3rem 0 0;
 }
 
 div.flex-label {
+  display: inline-block;    
   color: Grey;
-  flex-grow: 1;
+  flex-grow: 0;
   flex-shrink: 0;
   font-weight: bold;
-  margin: 0.1rem;
-  padding: 0.3rem 0.3rem;
+  margin: 0.1rem 0 0 0;
+  order: 1;
+  padding: 0.3rem 0 0 0;
+  text-align: left;
+  vertical-align: baseline;
 }
 
 div.flex-control {
-  flex-grow: 1;
-  flex-shrink: 1;
+  display: inline-block;	
+  align-self: flex-start;
+  flex-grow: 0;
+  flex-shrink: 0;
   background-color: inherit;
-  margin: 0.1rem;
-  padding: 0.3rem 0.3rem;
+  margin:  0 0 0 0;
+  order: 2;
+  padding:  0 0 0 0;
+  text-align: left;
+  vertical-align: baseline;
 }
+
+button.selection {
+  background-color: LightSkyBlue;
+  border: 0.1rem solid LightSkyBlue;
+  border-radius: 0.25em;
+  color: white;
+  font-size: 1rem;
+  padding: 0.3rem 0.3rem;
+  height: 0.1rem;
+  width: 0.1rem;
+  text-align: right;
+  vertical-align: top;
+}
+

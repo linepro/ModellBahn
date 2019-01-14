@@ -52,16 +52,16 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.VORBILD, description = "Vorbild maintenance")
+@Api(value = ApiNames.VORBILD)
 @Path(ApiPaths.VORBILD)
-public class VorbildService extends AbstractItemService<VorbildKey, Vorbild> {
+public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
 
     public VorbildService() {
-        super(Vorbild.class);
+        super(IVorbild.class);
     }
 
     @JsonCreator
-    public Vorbild create(@JsonProperty(value = ApiNames.ID) Long id,
+    public IVorbild create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.GATTUNG) IGattung gattung,
             @JsonProperty(value = ApiNames.UNTER_KATEGORIE, required=true) IUnterKategorie unterKategorie,
             @JsonProperty(value = ApiNames.BAHNVERWALTUNG) IBahnverwaltung bahnverwaltung,
@@ -105,7 +105,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, Vorbild> {
             @JsonProperty(value = ApiNames.ANMERKUNG) String anmerkung,
             @JsonProperty(value = ApiNames.ABBILDUNG) String abbildungStr,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        Vorbild entity = new Vorbild(id, gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit, anzahl, betreibsNummer, antrieb, achsfolg, anmerkung, anfahrzugkraft, leistung, dienstgewicht,
+        IVorbild entity = new Vorbild(id, gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit, anzahl, betreibsNummer, antrieb, achsfolg, anmerkung, anfahrzugkraft, leistung, dienstgewicht,
                 geschwindigkeit, lange, ausserdienst, dmTreibrad, dmLaufradVorn, dmLaufradHinten, zylinder, dmZylinder, kolbenhub, kesseluberdruck, rostflache, uberhitzerflache,
                 wasservorrat, verdampfung, fahrmotoren, anmerkung, leistungsUbertragung, reichweite, kapazitaet, klasse, sitzPlatzeKL1, sitzPlatzeKL2, sitzPlatzeKL3,
                 sitzPlatzeKL4, aufbauten, triebkopf, mittelwagen, drehgestellbauart, deleted);
@@ -119,7 +119,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, Vorbild> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds a Vorbild by name", response = Vorbild.class)
+    @ApiOperation(value = "Finds a Vorbild by name", response = IVorbild.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         try {
             return super.get(new VorbildKey(findGattung(name, false)));
@@ -131,7 +131,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, Vorbild> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Vorbilden by example", response = Vorbild.class, responseContainer = "List")
+    @ApiOperation(value = "Finds Vorbilden by example", response = IVorbild.class, responseContainer = "List")
     @ApiImplicitParams({
         @ApiImplicitParam( name = ApiNames.ID, value = "Vorbild id", dataType = "Long", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.GATTUNG, value = "Rolling stock class", example = "BR89.0", dataType = "String", paramType = "query"),
@@ -186,8 +186,8 @@ public class VorbildService extends AbstractItemService<VorbildKey, Vorbild> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds a Vorbild", response = Vorbild.class)
-    public Response add(Vorbild entity) {
+    @ApiOperation(code = 201, value = "Adds a Vorbild", response = IVorbild.class)
+    public Response add(IVorbild entity) {
         return super.add(entity);
     }
 
@@ -196,8 +196,8 @@ public class VorbildService extends AbstractItemService<VorbildKey, Vorbild> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates a Vorbild by name", response = Vorbild.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Vorbild entity) {
+    @ApiOperation(code = 202, value = "Updates a Vorbild by name", response = IVorbild.class)
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IVorbild entity) {
         return super.update(name, entity);
     }
 
@@ -205,7 +205,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, Vorbild> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 204, value = "Deletes a Vorbild by name", response = Vorbild.class)
+    @ApiOperation(code = 204, value = "Deletes a Vorbild by name", response = IVorbild.class)
     public Response delete(@PathParam(ApiPaths.ID_PARAM_NAME) String name) {
         return super.delete(name);
     }
@@ -215,7 +215,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, Vorbild> {
     @Consumes({ MediaType.MULTIPART_FORM_DATA })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds or updates thr picture for a named Vorbild", response = Vorbild.class)
+    @ApiOperation(code = 201, value = "Adds or updates thr picture for a named Vorbild", response = IVorbild.class)
     public Response updateAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
@@ -233,7 +233,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, Vorbild> {
 
                 vorbild.setAbbildung(file);
 
-                getPersister().update((Vorbild) vorbild);
+                getPersister().update(vorbild);
 
                 return getResponse(ok(vorbild));
             }
@@ -248,7 +248,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, Vorbild> {
     @Path(ApiPaths.ABBILDUNG_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Removes the picture from a named Vorbild", response = Vorbild.class)
+    @ApiOperation(value = "Removes the picture from a named Vorbild", response = IVorbild.class)
     public Response deleteAbbildung(@PathParam(ApiPaths.ID_PARAM_NAME) String name) {
         try {
             IVorbild vorbild = findVorbild(name, false);
@@ -258,7 +258,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, Vorbild> {
 
                 vorbild.setAbbildung(null);
 
-                getPersister().update((Vorbild) vorbild);
+                getPersister().update(vorbild);
 
                 return getResponse(ok(vorbild));
             }

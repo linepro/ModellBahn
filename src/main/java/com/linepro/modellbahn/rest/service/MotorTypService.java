@@ -16,6 +16,7 @@ import javax.ws.rs.core.UriInfo;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.linepro.modellbahn.model.IMotorTyp;
 import com.linepro.modellbahn.model.impl.MotorTyp;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.json.Views;
@@ -34,20 +35,20 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.MOTOR_TYP, description = "MotorTyp maintenance")
+@Api(value = ApiNames.MOTOR_TYP)
 @Path(ApiPaths.MOTOR_TYP)
-public class MotorTypService extends AbstractItemService<NameKey, MotorTyp> {
+public class MotorTypService extends AbstractItemService<NameKey, IMotorTyp> {
 
     public MotorTypService() {
-        super(MotorTyp.class);
+        super(IMotorTyp.class);
     }
 
     @JsonCreator
-    public MotorTyp create(@JsonProperty(value = ApiNames.ID) Long id,
+    public IMotorTyp create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        MotorTyp entity = new MotorTyp(id, name, bezeichnung, deleted);
+        IMotorTyp entity = new MotorTyp(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
 
@@ -58,7 +59,7 @@ public class MotorTypService extends AbstractItemService<NameKey, MotorTyp> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds a MotorTyp by name", response = MotorTyp.class)
+    @ApiOperation(value = "Finds a MotorTyp by name", response = IMotorTyp.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -66,7 +67,7 @@ public class MotorTypService extends AbstractItemService<NameKey, MotorTyp> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds MotorTypen by example", response = MotorTyp.class, responseContainer = "List")
+    @ApiOperation(value = "Finds MotorTypen by example", response = IMotorTyp.class, responseContainer = "List")
     @ApiImplicitParams({
         @ApiImplicitParam( name = ApiNames.ID, value = "MotorTyp id", dataType = "Long", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.NAMEN, value = "MotorTyp code", example = "SFCM", dataType = "String", paramType = "query"),
@@ -83,8 +84,8 @@ public class MotorTypService extends AbstractItemService<NameKey, MotorTyp> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds a MotorTyp", response = MotorTyp.class)
-    public Response add(MotorTyp entity) {
+    @ApiOperation(code = 201, value = "Adds a MotorTyp", response = IMotorTyp.class)
+    public Response add(IMotorTyp entity) {
         return super.add(entity);
     }
 
@@ -93,8 +94,8 @@ public class MotorTypService extends AbstractItemService<NameKey, MotorTyp> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates a MotorTyp by name", response = MotorTyp.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, MotorTyp entity) {
+    @ApiOperation(code = 202, value = "Updates a MotorTyp by name", response = IMotorTyp.class)
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IMotorTyp entity) {
         return super.update(name, entity);
     }
 

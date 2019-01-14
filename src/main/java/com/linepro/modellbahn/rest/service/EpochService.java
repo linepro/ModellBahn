@@ -16,6 +16,7 @@ import javax.ws.rs.core.UriInfo;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.linepro.modellbahn.model.IEpoch;
 import com.linepro.modellbahn.model.impl.Epoch;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.json.Views;
@@ -34,20 +35,20 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.EPOCH, description = "Epoch maintenance")
+@Api(value = ApiNames.EPOCH)
 @Path(ApiPaths.EPOCH)
-public class EpochService extends AbstractItemService<NameKey, Epoch> {
+public class EpochService extends AbstractItemService<NameKey, IEpoch> {
 
     public EpochService() {
-        super(Epoch.class);
+        super(IEpoch.class);
     }
 
     @JsonCreator
-    public Epoch create(@JsonProperty(value = ApiNames.ID) Long id,
+    public IEpoch create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        Epoch entity = new Epoch(id, name, bezeichnung, deleted);
+        IEpoch entity = new Epoch(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
 
@@ -58,7 +59,7 @@ public class EpochService extends AbstractItemService<NameKey, Epoch> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds a Epoch by name", response = Epoch.class)
+    @ApiOperation(value = "Finds a Epoch by name", response = IEpoch.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -66,7 +67,7 @@ public class EpochService extends AbstractItemService<NameKey, Epoch> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Epochen by example", response = Epoch.class, responseContainer = "List")
+    @ApiOperation(value = "Finds Epochen by example", response = IEpoch.class, responseContainer = "List")
     @ApiImplicitParams({
         @ApiImplicitParam( name = ApiNames.ID, value = "Epoch id", dataType = "Long", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.NAMEN, value = "Epoch code", example = "III", dataType = "String", paramType = "query"),
@@ -83,8 +84,8 @@ public class EpochService extends AbstractItemService<NameKey, Epoch> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds a Epoch", response = Epoch.class)
-    public Response add(Epoch entity) {
+    @ApiOperation(code = 201, value = "Adds a Epoch", response = IEpoch.class)
+    public Response add(IEpoch entity) {
         return super.add(entity);
     }
 
@@ -93,8 +94,8 @@ public class EpochService extends AbstractItemService<NameKey, Epoch> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates a Epoch by name", response = Epoch.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Epoch entity) {
+    @ApiOperation(code = 202, value = "Updates a Epoch by name", response = IEpoch.class)
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IEpoch entity) {
         return super.update(name, entity);
     }
 

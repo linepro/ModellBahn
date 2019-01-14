@@ -1,13 +1,13 @@
 package com.linepro.modellbahn.model;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.model.impl.DecoderTyp;
 import com.linepro.modellbahn.model.keys.DecoderTypFunktionKey;
 import com.linepro.modellbahn.model.refs.IDecoderTypFunktionRef;
 import com.linepro.modellbahn.model.refs.IDecoderTypRef;
@@ -23,6 +23,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @version  $Id$
  */
 @JsonRootName(ApiNames.FUNKTION)
+@JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.REIHE,  ApiNames.FUNKTION,  ApiNames.BEZEICHNUNG,  ApiNames.PROGRAMMABLE, ApiNames.DELETED, ApiNames.LINKS})
 @ApiModel(value = ApiNames.FUNKTION, description = "Decoder type function mapping - template for Decoder.")
 public interface IDecoderTypFunktion extends IItem<DecoderTypFunktionKey>, IDecoderTypFunktionRef {
@@ -34,8 +35,7 @@ public interface IDecoderTypFunktion extends IItem<DecoderTypFunktionKey>, IDeco
     @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IDecoderTypRef", value = "Decoder type", required = true)
     IDecoderTyp getDecoderTyp();
 
-    @JsonSetter(ApiNames.DECODER_TYP)
-    @JsonDeserialize(as= DecoderTyp.class)
+    @JsonIgnore
     void setDecoderTyp(IDecoderTyp decoderTyp);
 
     @JsonSetter(ApiNames.REIHE)

@@ -4,6 +4,7 @@ import java.nio.file.Path;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -24,6 +25,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
  * @version  $Id$
  */
 @JsonRootName(value = ApiNames.KUPPLUNG)
+@JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
 @ApiModel(value = ApiNames.KUPPLUNG, description = "Coupling configuration - Märklin coding.")
 public interface IKupplung extends INamedItem<NameKey>, IKupplungRef {

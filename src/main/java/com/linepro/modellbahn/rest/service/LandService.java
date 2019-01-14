@@ -16,6 +16,7 @@ import javax.ws.rs.core.UriInfo;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.linepro.modellbahn.model.ILand;
 import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.impl.Land;
 import com.linepro.modellbahn.model.keys.NameKey;
@@ -35,23 +36,23 @@ import io.swagger.annotations.ApiOperation;
  * @author  $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.LAND, description = "Land maintenance")
+@Api(value = ApiNames.LAND)
 @Path(ApiPaths.LAND)
-public class LandService extends AbstractItemService<NameKey, Land> {
+public class LandService extends AbstractItemService<NameKey, ILand> {
 
     public LandService() {
-        super(Land.class);
+        super(ILand.class);
     }
 
     @JsonCreator
-    public Land create(@JsonProperty(value = ApiNames.ID) Long id,
+    public ILand create(@JsonProperty(value = ApiNames.ID) Long id,
                     @JsonProperty(value = ApiPaths.NAME_PARAM_NAME) String name,
                     @JsonProperty(value = ApiNames.WAHRUNG) String wahrungStr,
                     @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
                     @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         IWahrung wahrung = findWahrung(wahrungStr, false);
  
-        Land entity = new Land(id, name, bezeichnung, wahrung, deleted);
+        ILand entity = new Land(id, name, bezeichnung, wahrung, deleted);
 
         debug("created: " + entity);
 
@@ -62,7 +63,7 @@ public class LandService extends AbstractItemService<NameKey, Land> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds a Land by name", response = Land.class)
+    @ApiOperation(value = "Finds a Land by name", response = ILand.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -70,7 +71,7 @@ public class LandService extends AbstractItemService<NameKey, Land> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Landen by example", response = Land.class, responseContainer = "List")
+    @ApiOperation(value = "Finds Landen by example", response = ILand.class, responseContainer = "List")
     @ApiImplicitParams({
         @ApiImplicitParam( name = ApiNames.ID, value = "Land id", dataType = "Long", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.WAHRUNG, value = "Land wahrung", example = "GBP", dataType = "String", paramType = "query"),
@@ -88,8 +89,8 @@ public class LandService extends AbstractItemService<NameKey, Land> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds a Land", response = Land.class)
-    public Response add(Land entity) {
+    @ApiOperation(code = 201, value = "Adds a Land", response = ILand.class)
+    public Response add(ILand entity) {
         return super.add(entity);
     }
 
@@ -98,8 +99,8 @@ public class LandService extends AbstractItemService<NameKey, Land> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates a Land by name", response = Land.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Land entity) {
+    @ApiOperation(code = 202, value = "Updates a Land by name", response = ILand.class)
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, ILand entity) {
         return super.update(name, entity);
     }
 

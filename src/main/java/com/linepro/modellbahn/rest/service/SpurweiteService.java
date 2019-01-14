@@ -16,6 +16,7 @@ import javax.ws.rs.core.UriInfo;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.linepro.modellbahn.model.ISpurweite;
 import com.linepro.modellbahn.model.impl.Spurweite;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.json.Views;
@@ -34,20 +35,20 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.SPURWEITE, description = "Spurweite maintenance")
+@Api(value = ApiNames.SPURWEITE)
 @Path(ApiPaths.SPURWEITE)
-public class SpurweiteService extends AbstractItemService<NameKey, Spurweite> {
+public class SpurweiteService extends AbstractItemService<NameKey, ISpurweite> {
 
     public SpurweiteService() {
-        super(Spurweite.class);
+        super(ISpurweite.class);
     }
 
     @JsonCreator
-    public Spurweite create(@JsonProperty(value = ApiNames.ID) Long id,
+    public ISpurweite create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        Spurweite entity = new Spurweite(id, name, bezeichnung, deleted);
+        ISpurweite entity = new Spurweite(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
 
@@ -58,7 +59,7 @@ public class SpurweiteService extends AbstractItemService<NameKey, Spurweite> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds a Spurweite by name", response = Spurweite.class)
+    @ApiOperation(value = "Finds a Spurweite by name", response = ISpurweite.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -66,7 +67,7 @@ public class SpurweiteService extends AbstractItemService<NameKey, Spurweite> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Spurweiteen by example", response = Spurweite.class, responseContainer = "List")
+    @ApiOperation(value = "Finds Spurweiteen by example", response = ISpurweite.class, responseContainer = "List")
     @ApiImplicitParams({
         @ApiImplicitParam( name = ApiNames.ID, value = "Spurweite id", dataType = "Long", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.NAMEN, value = "Spurweite code", example = "H0", dataType = "String", paramType = "query"),
@@ -83,8 +84,8 @@ public class SpurweiteService extends AbstractItemService<NameKey, Spurweite> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds a Spurweite", response = Spurweite.class)
-    public Response add(Spurweite entity) {
+    @ApiOperation(code = 201, value = "Adds a Spurweite", response = ISpurweite.class)
+    public Response add(ISpurweite entity) {
         return super.add(entity);
     }
 
@@ -93,8 +94,8 @@ public class SpurweiteService extends AbstractItemService<NameKey, Spurweite> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates a Spurweite by name", response = Spurweite.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Spurweite entity) {
+    @ApiOperation(code = 202, value = "Updates a Spurweite by name", response = ISpurweite.class)
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, ISpurweite entity) {
         return super.update(name, entity);
     }
 

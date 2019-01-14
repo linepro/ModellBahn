@@ -33,7 +33,7 @@ class NamedItemConverter implements Converter {
     public <T> T convert(Class<T> type, Object value) {
         try {
             if (StringUtils.isNotBlank(value.toString())) {
-                Class<? extends IItem<?>> entityClass = getPersister().getEntityClass();
+                Class<?> entityClass = getPersister().getEntityClass();
 
                 if (entityClass.isAssignableFrom(type)) {
                     IItem<?> entity = getPersister().findByKey(new NameKey(value.toString()), false);

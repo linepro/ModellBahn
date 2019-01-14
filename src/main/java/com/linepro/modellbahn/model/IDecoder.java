@@ -4,17 +4,13 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.model.impl.DecoderAdress;
-import com.linepro.modellbahn.model.impl.DecoderCV;
-import com.linepro.modellbahn.model.impl.DecoderFunktion;
-import com.linepro.modellbahn.model.impl.DecoderTyp;
-import com.linepro.modellbahn.model.impl.Protokoll;
 import com.linepro.modellbahn.model.keys.DecoderKey;
 import com.linepro.modellbahn.model.refs.IDecoderAdressRef;
 import com.linepro.modellbahn.model.refs.IDecoderCVRef;
@@ -22,6 +18,8 @@ import com.linepro.modellbahn.model.refs.IDecoderFunktionRef;
 import com.linepro.modellbahn.model.refs.IDecoderRef;
 import com.linepro.modellbahn.model.refs.IProtokollRef;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.DecoderTypDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.ProtokollDeserializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
@@ -34,6 +32,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
  * @version  $Id$
  */
 @JsonRootName(value = ApiNames.DECODER)
+@JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER_ID, ApiNames.DECODER_TYP, ApiNames.BEZEICHNUNG, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.DELETED, ApiNames.ADRESSEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS })
 @ApiModel(value = ApiNames.DECODER, description = "Decoder - installed or spare.")
 public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
@@ -42,7 +41,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
     void setDecoderId(String  name);
 
     @JsonSetter(ApiNames.DECODER_TYP)
-    @JsonDeserialize(as= DecoderTyp.class)
+    @JsonDeserialize(using= DecoderTypDeserializer.class)
     void setDecoderTyp(IDecoderTyp decoderTyp );
 
     void setBezeichnung(String bezeichnung);
@@ -54,7 +53,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
     IProtokoll getProtokoll();
 
     @JsonSetter(ApiNames.PROTOKOLL)
-    @JsonDeserialize(as= Protokoll.class)
+    @JsonDeserialize(using= ProtokollDeserializer.class)
     void setProtokoll(IProtokoll protokoll);
 
     @JsonGetter(ApiNames.FAHRSTUFE)
@@ -71,8 +70,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
     @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderAdressRef;", value = "Decoder addresses", accessMode = AccessMode.READ_ONLY, required = true)
     Set<IDecoderAdress> getSortedAdressen();
 
-    @JsonSetter(ApiNames.ADRESSEN)
-    @JsonDeserialize(contentAs= DecoderAdress.class)
+    @JsonIgnore
     void setAdressen(Set<IDecoderAdress> adressen);
 
     void addAdress(IDecoderAdress adress);
@@ -90,8 +88,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
     @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderCVRef;", value = "Decoder cv values", accessMode = AccessMode.READ_ONLY)
     Set<IDecoderCV> getSortedCVs();
 
-    @JsonSetter(ApiNames.CVS)
-    @JsonDeserialize(contentAs= DecoderCV.class)
+    @JsonIgnore
     void setCVs(Set<IDecoderCV> cv);
 
     void addCV(IDecoderCV cv);
@@ -114,8 +111,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
      *
      * @param funktionen the new funktionen
      */
-    @JsonSetter(ApiNames.FUNKTIONEN)
-    @JsonDeserialize(contentAs= DecoderFunktion.class)
+    @JsonIgnore
     void setFunktionen(Set<IDecoderFunktion> funktionen);
 
     void addFunktion(IDecoderFunktion cv);

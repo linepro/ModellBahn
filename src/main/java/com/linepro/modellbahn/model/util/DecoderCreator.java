@@ -13,15 +13,15 @@ import com.linepro.modellbahn.persistence.IPersister;
 
 public class DecoderCreator implements IDecoderCreator {
 
-    private final IPersister<Decoder> persister;
+    private final IPersister<IDecoder> persister;
 
-    public DecoderCreator(IPersister<Decoder> persister) {
+    public DecoderCreator(IPersister<IDecoder> persister) {
         this.persister = persister;
     }
 
     @Override
     public IDecoder create(IDecoderTyp decoderTyp) throws Exception {
-        Decoder decoder = new Decoder(null, decoderTyp, decoderTyp.getProtokoll(), persister.getNextId(), decoderTyp.getBezeichnung(), decoderTyp.getFahrstufe(), false);
+        IDecoder decoder = new Decoder(null, decoderTyp, decoderTyp.getProtokoll(), persister.getNextId(), decoderTyp.getBezeichnung(), decoderTyp.getFahrstufe(), false);
         
         decoder = persister.add(decoder);
 

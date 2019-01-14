@@ -1,13 +1,13 @@
 package com.linepro.modellbahn.model;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.model.impl.DecoderTyp;
 import com.linepro.modellbahn.model.keys.DecoderTypCVKey;
 import com.linepro.modellbahn.model.refs.IDecoderTypCVRef;
 import com.linepro.modellbahn.model.refs.IDecoderTypRef;
@@ -23,6 +23,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @version  $Id$
  */
 @JsonRootName(value = ApiNames.CV)
+@JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.DECODER_TYP,  ApiNames.CV,  ApiNames.BEZEICHNUNG,  ApiNames.MINIMAL,  ApiNames.MAXIMAL,  ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED, ApiNames.LINKS})
 @ApiModel(value = ApiNames.CV, description = "Decoder type CV - template for Decoder.")
 public interface IDecoderTypCV extends IItem<DecoderTypCVKey>, IDecoderTypCVRef {
@@ -33,8 +34,7 @@ public interface IDecoderTypCV extends IItem<DecoderTypCVKey>, IDecoderTypCVRef 
     @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IDecoderTypRef", value = "Decoder type", required = true)
     IDecoderTyp getDecoderTyp();
 
-    @JsonSetter(ApiNames.DECODER_TYP)
-    @JsonDeserialize(as= DecoderTyp.class)
+    @JsonIgnore
     void setDecoderTyp(IDecoderTyp decoderTyp);
 
     @JsonGetter(ApiNames.CV)

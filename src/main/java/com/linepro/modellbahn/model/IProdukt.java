@@ -9,32 +9,16 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.model.impl.Achsfolg;
-import com.linepro.modellbahn.model.impl.Aufbau;
-import com.linepro.modellbahn.model.impl.Bahnverwaltung;
-import com.linepro.modellbahn.model.impl.DecoderTyp;
-import com.linepro.modellbahn.model.impl.Epoch;
-import com.linepro.modellbahn.model.impl.Gattung;
-import com.linepro.modellbahn.model.impl.Hersteller;
-import com.linepro.modellbahn.model.impl.Kupplung;
-import com.linepro.modellbahn.model.impl.Licht;
-import com.linepro.modellbahn.model.impl.Massstab;
-import com.linepro.modellbahn.model.impl.MotorTyp;
-import com.linepro.modellbahn.model.impl.SonderModell;
-import com.linepro.modellbahn.model.impl.Spurweite;
-import com.linepro.modellbahn.model.impl.Steuerung;
-import com.linepro.modellbahn.model.impl.UnterKategorie;
-import com.linepro.modellbahn.model.impl.Vorbild;
 import com.linepro.modellbahn.model.keys.ProduktKey;
 import com.linepro.modellbahn.model.refs.IAchsfolgRef;
 import com.linepro.modellbahn.model.refs.IAufbauRef;
-import com.linepro.modellbahn.model.refs.IBahnverwaltungRef;
 import com.linepro.modellbahn.model.refs.IDecoderTypRef;
 import com.linepro.modellbahn.model.refs.IEpochRef;
 import com.linepro.modellbahn.model.refs.IGattungRef;
@@ -50,9 +34,25 @@ import com.linepro.modellbahn.model.refs.ISteuerungRef;
 import com.linepro.modellbahn.model.refs.IVorbildRef;
 import com.linepro.modellbahn.rest.json.Formats;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.AchsfolgDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.AufbauDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.BahnverwaltungDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.DecoderTypDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.EpochDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.GattungDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.HerstellerDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.KupplungDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.LichtDeserializer;
 import com.linepro.modellbahn.rest.json.serialization.LocalDateDeserializer;
 import com.linepro.modellbahn.rest.json.serialization.LocalDateSerializer;
+import com.linepro.modellbahn.rest.json.serialization.MassstabDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.MotorTypDeserializer;
 import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
+import com.linepro.modellbahn.rest.json.serialization.SonderModellDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.SpurweiteDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.SteuerungDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.UnterKategorieDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.VorbildDeserializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
@@ -66,6 +66,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
  * @version $Id$
  */
 @JsonRootName(value = ApiNames.PRODUKT)
+@JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.UNTER_KATEGORIE, ApiNames.MASSSTAB,
         ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER,
         ApiNames.BAUZEIT, ApiNames.VORBILD, ApiNames.ACHSFOLG, ApiNames.ANMERKUNG, ApiNames.SONDERMODELL,
@@ -76,7 +77,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
 public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
 
     @JsonSetter(ApiNames.HERSTELLER)
-    @JsonDeserialize(as = Hersteller.class)
+    @JsonDeserialize(using= HerstellerDeserializer.class)
     void setHersteller(IHersteller hersteller);
 
     @JsonSetter(ApiNames.BESTELL_NR)
@@ -85,7 +86,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     void setBezeichnung(String bezeichnung);
 
     @JsonSetter(ApiNames.UNTER_KATEGORIE)
-    @JsonDeserialize(as = UnterKategorie.class)
+    @JsonDeserialize(using= UnterKategorieDeserializer.class)
     void setUnterKategorie(IUnterKategorie unterKategorie);
 
     @JsonGetter(ApiNames.MASSSTAB)
@@ -95,7 +96,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     IMassstab getMassstab();
 
     @JsonSetter(ApiNames.MASSSTAB)
-    @JsonDeserialize(as = Massstab.class)
+    @JsonDeserialize(using= MassstabDeserializer.class)
     void setMassstab(IMassstab massstab);
 
     @JsonGetter(ApiNames.SPURWEITE)
@@ -105,7 +106,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     ISpurweite getSpurweite();
 
     @JsonSetter(ApiNames.SPURWEITE)
-    @JsonDeserialize(as = Spurweite.class)
+    @JsonDeserialize(using= SpurweiteDeserializer.class)
     void setSpurweite(ISpurweite spurweite);
 
     @JsonGetter(ApiNames.EPOCH)
@@ -115,17 +116,17 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     IEpoch getEpoch();
 
     @JsonSetter(ApiNames.EPOCH)
-    @JsonDeserialize(as = Epoch.class)
+    @JsonDeserialize(using= EpochDeserializer.class)
     void setEpoch(IEpoch epoch);
 
     @JsonGetter(ApiNames.BAHNVERWALTUNG)
     @JsonView(Views.Public.class)
-    @JsonSerialize(as= IBahnverwaltungRef.class)
+    @JsonSerialize(as= IBahnverwaltung.class)
     @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IBahnverwaltungRef", value = "Railway company")
     IBahnverwaltung getBahnverwaltung();
 
     @JsonSetter(ApiNames.BAHNVERWALTUNG)
-    @JsonDeserialize(as = Bahnverwaltung.class)
+    @JsonDeserialize(using= BahnverwaltungDeserializer.class)
     void setBahnverwaltung(IBahnverwaltung bahnverwaltung);
 
     @JsonGetter(ApiNames.GATTUNG)
@@ -135,7 +136,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     IGattung getGattung();
 
     @JsonSetter(ApiNames.GATTUNG)
-    @JsonDeserialize(as = Gattung.class)
+    @JsonDeserialize(using= GattungDeserializer.class)
     void setGattung(IGattung gattung);
 
     @JsonGetter(ApiNames.BETREIBSNUMMER)
@@ -170,7 +171,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
      *            the new vorbild
      */
     @JsonSetter(ApiNames.VORBILD)
-    @JsonDeserialize(as = Vorbild.class)
+    @JsonDeserialize(using= VorbildDeserializer.class)
     void setVorbild(IVorbild vorbild);
 
     /**
@@ -191,7 +192,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
      *            the new achsfolg
      */
     @JsonSetter(ApiNames.ACHSFOLG)
-    @JsonDeserialize(as = Achsfolg.class)
+    @JsonDeserialize(using= AchsfolgDeserializer.class)
     void setAchsfolg(IAchsfolg achsfolg);
 
     /**
@@ -212,7 +213,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
      *            the new sondermodell
      */
     @JsonSetter(ApiNames.SONDERMODELL)
-    @JsonDeserialize(as = SonderModell.class)
+    @JsonDeserialize(using= SonderModellDeserializer.class)
     void setSondermodell(ISonderModell sondermodell);
 
     /**
@@ -233,7 +234,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
      *            the new aufbau
      */
     @JsonSetter(ApiNames.AUFBAU)
-    @JsonDeserialize(as = Aufbau.class)
+    @JsonDeserialize(using= AufbauDeserializer.class)
     void setAufbau(IAufbau aufbau);
 
     /**
@@ -254,7 +255,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
      *            the new licht
      */
     @JsonSetter(ApiNames.LICHT)
-    @JsonDeserialize(as = Licht.class)
+    @JsonDeserialize(using= LichtDeserializer.class)
     void setLicht(ILicht licht);
 
     /**
@@ -275,7 +276,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
      *            the new kupplung
      */
     @JsonSetter(ApiNames.KUPPLUNG)
-    @JsonDeserialize(as = Kupplung.class)
+    @JsonDeserialize(using= KupplungDeserializer.class)
     void setKupplung(IKupplung kupplung);
 
     /**
@@ -296,7 +297,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
      *            the new steuerung
      */
     @JsonSetter(ApiNames.STEUERUNG)
-    @JsonDeserialize(as = Steuerung.class)
+    @JsonDeserialize(using= SteuerungDeserializer.class)
     void setSteuerung(ISteuerung steuerung);
 
     /**
@@ -306,7 +307,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
      */
     @JsonGetter(ApiNames.DECODER_TYP)
     @JsonView(Views.DropDown.class)
-    @JsonSerialize(as = IDecoderTypRef.class) 
+    @JsonSerialize(as= IDecoderTypRef.class) 
     @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IDecoderTypRef", value = "Decoder type")
     IDecoderTyp getDecoderTyp();
 
@@ -317,7 +318,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
      *            the new decoder typ
      */
     @JsonSetter(ApiNames.DECODER_TYP)
-    @JsonDeserialize(as = DecoderTyp.class)
+    @JsonDeserialize(using= DecoderTypDeserializer.class)
     void setDecoderTyp(IDecoderTyp decoderTyp);
 
     /**
@@ -338,7 +339,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
      *            the new motor typ
      */
     @JsonSetter(ApiNames.MOTOR_TYP)
-    @JsonDeserialize(as = MotorTyp.class)
+    @JsonDeserialize(using= MotorTypDeserializer.class)
     void setMotorTyp(IMotorTyp motorTyp);
 
     /**

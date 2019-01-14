@@ -47,27 +47,26 @@ import io.swagger.annotations.ApiResponses;
 
 /**
  * DecoderService. CRUD service for Decoder
- * 
  * @author $Author:$
  * @version $Id:$
  */
 @Api(value = ApiNames.DECODER)
 @Path(ApiPaths.DECODER)
-public class DecoderService extends AbstractItemService<DecoderKey, Decoder> {
+public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
 
     public DecoderService() {
-        super(Decoder.class);
+        super(IDecoder.class);
     }
 
     @JsonCreator
-    public Decoder create(@JsonProperty(value = ApiNames.ID) Long id,
+    public IDecoder create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.DECODER_TYP) DecoderTyp decoderTyp,
             @JsonProperty(value = ApiNames.PROTOKOLL) Protokoll protokoll,
             @JsonProperty(value = ApiNames.DECODER_ID) String decoderId,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.FAHRSTUFE) Integer fahrstufe,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        Decoder entity = new Decoder(id, decoderTyp, protokoll, decoderId, bezeichnung, fahrstufe, deleted);
+        IDecoder entity = new Decoder(id, decoderTyp, protokoll, decoderId, bezeichnung, fahrstufe, deleted);
 
         debug("created: " + entity);
 
@@ -94,8 +93,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, Decoder> {
     @JsonCreator
     public DecoderCV createCV(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.DECODER_ID) String decoderId,
-            @JsonProperty(value = ApiNames.CV) Integer cvValue,
-            @JsonProperty(value = ApiNames.WERT) Integer wert,
+            @JsonProperty(value = ApiNames.CV) Integer cvValue, @JsonProperty(value = ApiNames.WERT) Integer wert,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         IDecoder decoder = findDecoder(decoderId, false);
 
@@ -128,23 +126,23 @@ public class DecoderService extends AbstractItemService<DecoderKey, Decoder> {
 
     @POST
     @Path(ApiPaths.DECODER_TYP_PATH)
-    @Consumes({ MediaType.APPLICATION_JSON })
+    @Consumes({MediaType.APPLICATION_JSON})
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds a Decoder by hersteller and bestell nr", response = Decoder.class)
-    @ApiResponses({
-        @ApiResponse(code = 400, message = "Bad request"),
-        @ApiResponse(code = 500, message = "Internal Server Error")
-        })
-    public Response addDecoder(@PathParam(ApiNames.HERSTELLER) String herstellerStr, @PathParam(ApiNames.BESTELL_NR) String bestellNr) {
+    @ApiOperation(code = 201, value = "Adds a Decoder by hersteller and bestell nr", response = IDecoder.class)
+    @ApiResponses({@ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    public Response addDecoder(@PathParam(ApiNames.HERSTELLER) String herstellerStr,
+            @PathParam(ApiNames.BESTELL_NR) String bestellNr) {
         try {
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, true);
 
             if (decoderTyp == null) {
-                return getResponse(badRequest(null, "DecoderTyp " + herstellerStr + "/" + bestellNr + " does not exist"));
+                return getResponse(
+                        badRequest(null, "DecoderTyp " + herstellerStr + "/" + bestellNr + " does not exist"));
             }
 
-           IDecoder decoder = new DecoderCreator(getPersister()).create(decoderTyp);
+            IDecoder decoder = new DecoderCreator(getPersister()).create(decoderTyp);
 
             return getResponse(created(), decoder, true, true);
         } catch (Exception e) {
@@ -156,7 +154,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, Decoder> {
     @Path(ApiPaths.DECODER_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds a Decoder by decoderId", response = Decoder.class)
+    @ApiOperation(value = "Finds a Decoder by decoderId", response = IDecoder.class)
     public Response get(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId) {
         return super.get(new DecoderKey(decoderId));
     }
@@ -164,28 +162,27 @@ public class DecoderService extends AbstractItemService<DecoderKey, Decoder> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Decoderen by example", response = Decoder.class, responseContainer = "List")
+    @ApiOperation(value = "Finds Decoderen by example", response = IDecoder.class, responseContainer = "List")
     @ApiImplicitParams({
-        @ApiImplicitParam( name = ApiNames.ID, value = "Decoder id", dataType = "Long", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DECODER_ID, value = "Decoder code", example = "00001", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DECODER_TYP, value = "Decoder type", example = "[\"ESU\",\"62400\"]", dataType = "[Ljava.lang.String;", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Decoder description", example = "LokSound M4", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.PROTOKOLL, value = "Decoder protocoll code", example = "MFX", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.FAHRSTUFE, value = "Decoder speed steps", example = "27", dataType = "Integer", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "If true search for soft deleted items", example = "false", dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "Page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),
-    })
+            @ApiImplicitParam(name = ApiNames.ID, value = "Decoder id", dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = ApiNames.DECODER_ID, value = "Decoder code", example = "00001", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = ApiNames.DECODER_TYP, value = "Decoder type", example = "[\"ESU\",\"62400\"]", dataType = "[Ljava.lang.String;", paramType = "query"),
+            @ApiImplicitParam(name = ApiNames.BEZEICHNUNG, value = "Decoder description", example = "LokSound M4", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = ApiNames.PROTOKOLL, value = "Decoder protocoll code", example = "MFX", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = ApiNames.FAHRSTUFE, value = "Decoder speed steps", example = "27", dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = ApiNames.DELETED, value = "If true search for soft deleted items", example = "false", dataType = "Boolean", paramType = "query"),
+            @ApiImplicitParam(name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = ApiNames.PAGE_SIZE, value = "Page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),})
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
 
     @PUT
     @Path(ApiPaths.DECODER_PART)
-    @Consumes({ MediaType.APPLICATION_JSON })
+    @Consumes({MediaType.APPLICATION_JSON})
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates a Decoder by decoderId", response = Decoder.class)
+    @ApiOperation(code = 202, value = "Updates a Decoder by decoderId", response = IDecoder.class)
     public Response update(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId, Decoder entity) {
         return super.update(new DecoderKey(decoderId), entity);
     }
@@ -194,7 +191,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, Decoder> {
     @Path(ApiPaths.DECODER_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 204, value = "Deletes a Decoder by decoderId", response = Decoder.class)
+    @ApiOperation(code = 204, value = "Deletes a Decoder by decoderId", response = IDecoder.class)
     public Response delete(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId) {
         return super.delete(new DecoderKey(decoderId));
     }
@@ -204,14 +201,12 @@ public class DecoderService extends AbstractItemService<DecoderKey, Decoder> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Finds a DecoderAdress by decoderId and position", response = DecoderAdress.class)
-    @ApiResponses({
-        @ApiResponse(code = 400, message = "Bad request"),
-        @ApiResponse(code = 404, message = "Not Found"),
-        @ApiResponse(code = 500, message = "Internal Server Error")
-        })
-    public Response getAdress(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId, @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index) {
+    @ApiResponses({@ApiResponse(code = 400, message = "Bad request"), @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    public Response getAdress(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId,
+            @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index) {
         try {
-            Decoder decoder = (Decoder) findDecoder(decoderId, true);
+            IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {
                 return getResponse(badRequest(null, "Decoder " + decoderId + " does not exist"));
@@ -231,19 +226,18 @@ public class DecoderService extends AbstractItemService<DecoderKey, Decoder> {
 
     @PUT
     @Path(ApiPaths.DECODER_ADRESS_PATH)
-    @Consumes({ MediaType.APPLICATION_JSON })
+    @Consumes({MediaType.APPLICATION_JSON})
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a DecoderAdress by decoderId and position", response = DecoderAdress.class)
-    @ApiResponses({
-        @ApiResponse(code = 400, message = "Bad request"),
-        @ApiResponse(code = 500, message = "Internal Server Error")
-        })
-    public Response updateAdress(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId, @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index, @QueryParam(ApiNames.ADRESS) Integer adress) {
+    @ApiResponses({@ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    public Response updateAdress(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId,
+            @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index, @QueryParam(ApiNames.ADRESS) Integer adress) {
         try {
             logPut(decoderId + "/" + index + ": " + adress);
 
-            Decoder decoder = (Decoder) findDecoder(decoderId, true);
+            IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {
                 return getResponse(badRequest(null, "Decoder " + decoderId + " does not exist"));
@@ -270,14 +264,12 @@ public class DecoderService extends AbstractItemService<DecoderKey, Decoder> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Finds a DecoderCV by decoderId and cv", response = DecoderCV.class)
-    @ApiResponses({
-        @ApiResponse(code = 400, message = "Bad request"),
-        @ApiResponse(code = 402, message = "Not Found"),
-        @ApiResponse(code = 500, message = "Internal Server Error")
-        })
-    public Response getCv(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId, @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv) {
+    @ApiResponses({@ApiResponse(code = 400, message = "Bad request"), @ApiResponse(code = 402, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    public Response getCv(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId,
+            @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv) {
         try {
-            Decoder decoder = (Decoder) findDecoder(decoderId, true);
+            IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {
                 return getResponse(badRequest(null, "Decoder " + decoderId + " does not exist"));
@@ -297,20 +289,18 @@ public class DecoderService extends AbstractItemService<DecoderKey, Decoder> {
 
     @PUT
     @Path(ApiPaths.DECODER_CV_PATH)
-    @Consumes({ MediaType.APPLICATION_JSON })
+    @Consumes({MediaType.APPLICATION_JSON})
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a DecoderCV by decoderId and cv", response = DecoderCV.class)
-    @ApiResponses({
-        @ApiResponse(code = 400, message = "Bad request"),
-        @ApiResponse(code = 402, message = "Not Found`"),
-        @ApiResponse(code = 500, message = "Internal Server Error")
-        })
-    public Response updateCv(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId, @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv, @QueryParam(ApiNames.WERT) Integer wert) {
+    @ApiResponses({@ApiResponse(code = 400, message = "Bad request"), @ApiResponse(code = 402, message = "Not Found`"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    public Response updateCv(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId,
+            @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv, @QueryParam(ApiNames.WERT) Integer wert) {
         try {
             logPut(decoderId + "/" + cv + ": " + wert);
 
-            Decoder decoder = (Decoder) findDecoder(decoderId, true);
+            IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {
                 return getResponse(badRequest(null, "Decoder " + decoderId + " does not exist"));
@@ -337,14 +327,13 @@ public class DecoderService extends AbstractItemService<DecoderKey, Decoder> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Finds a DecoderFunktion by decoderId and fn", response = DecoderFunktion.class)
-    @ApiResponses({
-        @ApiResponse(code = 400, message = "Bad request"),
-        @ApiResponse(code = 402, message = "Not Found`"),
-        @ApiResponse(code = 500, message = "Internal Server Error")
-        })
-    public Response getFunktion(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId, @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion) {
+    @ApiResponses({@ApiResponse(code = 400, message = "Bad request"), @ApiResponse(code = 402, message = "Not Found`"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    public Response getFunktion(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId,
+            @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe,
+            @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion) {
         try {
-            Decoder decoder = (Decoder) findDecoder(decoderId, true);
+            IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {
                 return getResponse(badRequest(null, "Decoder " + decoderId + " does not exist"));
@@ -364,20 +353,20 @@ public class DecoderService extends AbstractItemService<DecoderKey, Decoder> {
 
     @PUT
     @Path(ApiPaths.DECODER_FUNKTION_PATH)
-    @Consumes({ MediaType.APPLICATION_JSON })
+    @Consumes({MediaType.APPLICATION_JSON})
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a DecoderFunktion by decoderId and fn", response = DecoderFunktion.class)
-    @ApiResponses({
-        @ApiResponse(code = 400, message = "Bad request"),
-        @ApiResponse(code = 402, message = "Not Found`"),
-        @ApiResponse(code = 500, message = "Internal Server Error")
-        })
-    public Response updateFunktion(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId, @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion, @QueryParam(ApiNames.BEZEICHNUNG) String descirption) {
+    @ApiResponses({@ApiResponse(code = 400, message = "Bad request"), @ApiResponse(code = 402, message = "Not Found`"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
+    public Response updateFunktion(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId,
+            @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe,
+            @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion,
+            @QueryParam(ApiNames.BEZEICHNUNG) String descirption) {
         try {
             logPut(decoderId + "/" + reihe + "/" + funktion + ": " + descirption);
 
-            Decoder decoder = (Decoder) findDecoder(decoderId, true);
+            IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {
                 return getResponse(badRequest(null, "Decoder " + decoderId + " does not exist"));
@@ -386,7 +375,8 @@ public class DecoderService extends AbstractItemService<DecoderKey, Decoder> {
             IDecoderFunktion decoderFunktion = findDecoderFunktion(decoder, reihe, funktion, true);
 
             if (decoderFunktion == null) {
-                return getResponse(badRequest(null, "Decoder Funktion " + decoderId + "/" + reihe + "/" + funktion + " does not exist"));
+                return getResponse(badRequest(null,
+                        "Decoder Funktion " + decoderId + "/" + reihe + "/" + funktion + " does not exist"));
             }
 
             decoderFunktion.setBezeichnung(descirption);
@@ -405,7 +395,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, Decoder> {
         } catch (IndexOutOfBoundsException | NullPointerException e) {
             error("Error fetching DecoderAddressen for decoder " + decoder, e);
         }
-        
+
         return null;
     }
 
@@ -419,22 +409,22 @@ public class DecoderService extends AbstractItemService<DecoderKey, Decoder> {
         } catch (IndexOutOfBoundsException | NullPointerException e) {
             error("Error fetching DecoderCV for decoder " + decoder, e);
         }
-        
+
         return null;
     }
 
     private IDecoderFunktion findDecoderFunktion(IDecoder decoder, Integer reihe, String funktion, boolean eager) {
         try {
             for (IDecoderFunktion decoderFunktion : decoder.getFunktionen()) {
-                if (reihe.equals(decoderFunktion.getFunktion().getReihe()) &&
-                    funktion.equals(decoderFunktion.getFunktion().getFunktion())) {
+                if (reihe.equals(decoderFunktion.getFunktion().getReihe())
+                        && funktion.equals(decoderFunktion.getFunktion().getFunktion())) {
                     return decoderFunktion;
                 }
             }
         } catch (IndexOutOfBoundsException | NullPointerException e) {
             error("Error fetching DecoderFunktion for decoder " + decoder, e);
         }
-        
+
         return null;
     }
 }

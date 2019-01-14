@@ -9,13 +9,11 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.model.impl.UnterKategorie;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.refs.IKategorieRef;
 import com.linepro.modellbahn.model.refs.IUnterKategorieRef;
@@ -32,6 +30,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
  * @version  $Id$
  */
 @JsonRootName(value = ApiNames.KATEGORIE)
+@JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.UNTER_KATEGORIEN,
         ApiNames.LINKS })
 @ApiModel(value = ApiNames.KATEGORIE, description = "Category.")
@@ -46,8 +45,7 @@ public interface IKategorie extends INamedItem<NameKey>, IKategorieRef {
     @JsonIgnore
     Set<IUnterKategorie> getUnterKategorien();
     
-    @JsonSetter(ApiNames.UNTER_KATEGORIEN)
-    @JsonDeserialize(contentAs = UnterKategorie.class)
+    @JsonIgnore
     void setUnterKategorien(Set<IUnterKategorie> unterKategorien);
 
     void addUnterKategorie(IUnterKategorie unterKategorie);

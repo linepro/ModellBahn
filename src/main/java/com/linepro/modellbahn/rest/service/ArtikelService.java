@@ -56,16 +56,16 @@ import io.swagger.annotations.ApiResponses;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.ARTIKEL, description = "Artikel maintenance")
+@Api(value = ApiNames.ARTIKEL)
 @Path(ApiPaths.ARTIKEL)
-public class ArtikelService extends AbstractItemService<ArtikelKey, Artikel> {
+public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
 
     public ArtikelService() {
-        super(Artikel.class);
+        super(IArtikel.class);
     }
 
     @JsonCreator
-    public Artikel create(@JsonProperty(value = ApiNames.ID) Long id,
+    public IArtikel create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.HERSTELLER) String herstellerStr,
             @JsonProperty(value = ApiNames.BESTELL_NR) String bestellNr,
             @JsonProperty(value = ApiNames.KAUFDATUM) LocalDate kaufdatum,
@@ -93,7 +93,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, Artikel> {
         IDecoder decoder = findDecoder(decoderId, false);
         Status status = Status.valueOf(statusStr);
         
-        Artikel entity = new Artikel(id, produkt, kaufdatum, wahrung, preis, stuck,
+        IArtikel entity = new Artikel(id, produkt, kaufdatum, wahrung, preis, stuck,
                 steuerung, motorTyp, licht, kupplung, decoder,
                 artikelNr, bezeichnung, anmerkung,
                 beladung, status, deleted);
@@ -107,7 +107,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, Artikel> {
     @Path(ApiPaths.ARTIKEL_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds an Artikel by id", response = Artikel.class)
+    @ApiOperation(value = "Finds an Artikel by id", response = IArtikel.class)
     public Response get(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String id) {
         return super.get(new ArtikelKey(id));
     }
@@ -115,7 +115,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, Artikel> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Artikeln by example", response = Artikel.class, responseContainer = "List")
+    @ApiOperation(value = "Finds Artikeln by example", response = IArtikel.class, responseContainer = "List")
     @ApiImplicitParams({
         @ApiImplicitParam( name = ApiNames.ID, value = "Artikel id", dataType = "Long", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.PRODUKT, value = "Artikel manufacturer", example = "[\"MARKLIN\",\"3000\"]", dataType = "[Ljava.lang.String;", paramType = "query"),
@@ -145,8 +145,8 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, Artikel> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds an Artikel", response = Artikel.class)
-    public Response add(Artikel entity) {
+    @ApiOperation(code = 201, value = "Adds an Artikel", response = IArtikel.class)
+    public Response add(IArtikel entity) {
         return super.add(entity);
     }
 
@@ -155,8 +155,8 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, Artikel> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates an Artikel by id", response = Artikel.class)
-    public Response update(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, Artikel entity) {
+    @ApiOperation(code = 202, value = "Updates an Artikel by id", response = IArtikel.class)
+    public Response update(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, IArtikel entity) {
         return super.update(new ArtikelKey(artikelId), entity);
     }
 
@@ -174,7 +174,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, Artikel> {
     @Consumes({ MediaType.MULTIPART_FORM_DATA })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Adds or updates the image for a named Artikel", response = Artikel.class)
+    @ApiOperation(value = "Adds or updates the image for a named Artikel", response = IArtikel.class)
     @ApiResponses({
         @ApiResponse(code = 400, message = "Bad request"),
         @ApiResponse(code = 404, message = "Not Found"),
@@ -197,7 +197,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, Artikel> {
 
                 artikel.setAbbildung(file);
 
-                getPersister().update((Artikel) artikel);
+                getPersister().update(artikel);
 
                 return getResponse(ok(artikel));
             }
@@ -212,7 +212,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, Artikel> {
     @Path(ApiPaths.ABBILDUNG_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Deletes the image for a named Artikel", response = Artikel.class)
+    @ApiOperation(value = "Deletes the image for a named Artikel", response = IArtikel.class)
     @ApiResponses({
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
@@ -225,7 +225,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, Artikel> {
 
                 artikel.setAbbildung(null);
 
-                getPersister().update((Artikel) artikel);
+                getPersister().update(artikel);
 
                 return getResponse(ok(artikel));
             }

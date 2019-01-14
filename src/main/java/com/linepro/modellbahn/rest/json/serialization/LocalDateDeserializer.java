@@ -2,6 +2,7 @@ package com.linepro.modellbahn.rest.json.serialization;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.ObjectCodec;
@@ -13,6 +14,10 @@ public class LocalDateDeserializer extends StdDeserializer<LocalDate> {
 
     private static final long serialVersionUID = -871977401187476757L;
 
+    protected LocalDateDeserializer() {
+        this(LocalDate.class);
+    }
+
     protected LocalDateDeserializer(Class<?> vc) {
         super(vc);
     }
@@ -22,6 +27,6 @@ public class LocalDateDeserializer extends StdDeserializer<LocalDate> {
         ObjectCodec codec = jp.getCodec();
         TextNode node = codec.readTree(jp);
         String dateString = node.textValue();
-        return LocalDate.parse(dateString);
+        return LocalDate.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE);
     } 
 }

@@ -1,8 +1,5 @@
 package com.linepro.modellbahn.rest.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
@@ -11,8 +8,6 @@ import javax.ws.rs.core.UriInfo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.linepro.modellbahn.model.refs.IDescribedEnum;
 
 /**
  * AbstractService.
@@ -41,16 +36,6 @@ public abstract class AbstractService {
 
     protected Logger getLogger() {
         return logger;
-    }
-
-    protected List<DescribedEnumWrapper> getEnumList(IDescribedEnum[] values) {
-        List<DescribedEnumWrapper> result = new ArrayList<>(values.length);
-        
-        for (IDescribedEnum value : values) {
-            result.add(new DescribedEnumWrapper(value));
-        }
-        
-        return result;
     }
 
     protected void debug(final String message) {

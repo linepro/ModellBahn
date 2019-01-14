@@ -16,6 +16,7 @@ import javax.ws.rs.core.UriInfo;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.impl.Achsfolg;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.json.Views;
@@ -34,20 +35,20 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.ACHSFOLG, description = "Achsfolg (axle configuration) maintenance")
+@Api(value = ApiNames.ACHSFOLG)
 @Path(ApiPaths.ACHSFOLG)
-public class AchsfolgService extends AbstractItemService<NameKey, Achsfolg> {
+public class AchsfolgService extends AbstractItemService<NameKey, IAchsfolg> {
 
     public AchsfolgService() {
-        super(Achsfolg.class);
+        super(IAchsfolg.class);
     }
 
     @JsonCreator
-    public Achsfolg create(@JsonProperty(value = ApiNames.ID) Long id,
+    public IAchsfolg create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        Achsfolg entity = new Achsfolg(id, name, bezeichnung, deleted);
+        IAchsfolg entity = new Achsfolg(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
 
@@ -58,7 +59,7 @@ public class AchsfolgService extends AbstractItemService<NameKey, Achsfolg> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds an Achsfolg by name", response = Achsfolg.class)
+    @ApiOperation(value = "Finds an Achsfolg by name", response = IAchsfolg.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -66,7 +67,7 @@ public class AchsfolgService extends AbstractItemService<NameKey, Achsfolg> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Achsfolgen by example", response = Achsfolg.class, responseContainer = "List")
+    @ApiOperation(value = "Finds Achsfolgen by example", response = IAchsfolg.class, responseContainer = "List")
     @ApiImplicitParams({
         @ApiImplicitParam( name = ApiNames.ID, value = "Achsfolg id", dataType = "Long", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.NAMEN, value = "Achsfolg code", example = "CH2T", dataType = "String", paramType = "query"),
@@ -83,8 +84,8 @@ public class AchsfolgService extends AbstractItemService<NameKey, Achsfolg> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds an Achsfolg", response = Achsfolg.class)
-    public Response add(Achsfolg entity) {
+    @ApiOperation(code = 201, value = "Adds an Achsfolg", response = IAchsfolg.class)
+    public Response add(IAchsfolg entity) {
         return super.add(entity);
     }
 
@@ -93,8 +94,8 @@ public class AchsfolgService extends AbstractItemService<NameKey, Achsfolg> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates an Achsfolg by name", response = Achsfolg.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Achsfolg entity) {
+    @ApiOperation(code = 202, value = "Updates an Achsfolg by name", response = IAchsfolg.class)
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IAchsfolg entity) {
         return super.update(name, entity);
     }
 

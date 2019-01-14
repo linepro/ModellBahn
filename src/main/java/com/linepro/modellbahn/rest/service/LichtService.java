@@ -41,23 +41,23 @@ import io.swagger.annotations.ApiOperation;
 /**
  * LichtService.
  * CRUD service for Licht
- * @author  $Author:$
+ * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.LICHT, description = "Licht maintenance")
+@Api(value = ApiNames.LICHT)
 @Path(ApiPaths.LICHT)
-public class LichtService extends AbstractItemService<NameKey, Licht> {
+public class LichtService extends AbstractItemService<NameKey, ILicht> {
 
     public LichtService() {
-        super(Licht.class);
+        super(ILicht.class);
     }
 
     @JsonCreator
-    public Licht create(@JsonProperty(value = ApiNames.ID) Long id,
-                    @JsonProperty(value = ApiPaths.NAME_PARAM_NAME) String name,
-                    @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
-                    @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        Licht entity = new Licht(id, name, bezeichnung, deleted);
+    public ILicht create(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiPaths.NAME_PARAM_NAME) String name,
+            @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
+        ILicht entity = new Licht(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
 
@@ -68,7 +68,7 @@ public class LichtService extends AbstractItemService<NameKey, Licht> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds a Licht by name", response = Licht.class)
+    @ApiOperation(value = "Finds a Licht by name", response = ILicht.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -76,35 +76,34 @@ public class LichtService extends AbstractItemService<NameKey, Licht> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Lichten by example", response = Licht.class, responseContainer = "List")
+    @ApiOperation(value = "Finds Lichten by example", response = ILicht.class, responseContainer = "List")
     @ApiImplicitParams({
-        @ApiImplicitParam( name = ApiNames.ID, value = "Licht id", dataType = "Long", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Licht code", example = "L1V", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Licht description", example = "Einfach-Spitzensignal vorne", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "If true search for soft deleted items", example = "false", dataType = "Boolean", paramType = "query"),
-            @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
-            @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "Page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),
-})
+            @ApiImplicitParam(name = ApiNames.ID, value = "Licht id", dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = ApiNames.NAMEN, value = "Licht code", example = "L1V", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = ApiNames.BEZEICHNUNG, value = "Licht description", example = "Einfach-Spitzensignal vorne", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = ApiNames.DELETED, value = "If true search for soft deleted items", example = "false", dataType = "Boolean", paramType = "query"),
+            @ApiImplicitParam(name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = ApiNames.PAGE_SIZE, value = "Page size for paged queries", example = "10", dataType = "Integer", paramType = "query")})
     public Response search(@Context UriInfo uriInfo) {
         return super.search(uriInfo);
     }
 
     @POST
-    @Consumes({ MediaType.APPLICATION_JSON })
+    @Consumes({MediaType.APPLICATION_JSON})
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds a Licht", response = Licht.class)
-    public Response add(Licht entity) {
+    @ApiOperation(code = 201, value = "Adds a Licht", response = ILicht.class)
+    public Response add(ILicht entity) {
         return super.add(entity);
     }
 
     @PUT
     @Path(ApiPaths.NAME_PART)
-    @Consumes({ MediaType.APPLICATION_JSON })
+    @Consumes({MediaType.APPLICATION_JSON})
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates a Licht by name", response = Licht.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Licht entity) {
+    @ApiOperation(code = 202, value = "Updates a Licht by name", response = ILicht.class)
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, ILicht entity) {
         return super.update(name, entity);
     }
 
@@ -119,13 +118,13 @@ public class LichtService extends AbstractItemService<NameKey, Licht> {
 
     @PUT
     @Path(ApiPaths.ABBILDUNG_PART)
-    @Consumes({ MediaType.MULTIPART_FORM_DATA })
+    @Consumes({MediaType.MULTIPART_FORM_DATA})
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds or updates the picture for a named Licht", response = Licht.class)
+    @ApiOperation(code = 201, value = "Adds or updates the picture for a named Licht", response = ILicht.class)
     public Response updateAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name,
-                                    @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
-                                    @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
+            @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
+            @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
@@ -136,11 +135,11 @@ public class LichtService extends AbstractItemService<NameKey, Licht> {
             ILicht licht = findLicht(name, false);
 
             if (licht != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { name }, fileDetail, fileData);
+                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] {name}, fileDetail, fileData);
 
                 licht.setAbbildung(file);
 
-                getPersister().update((Licht) licht);
+                getPersister().update(licht);
 
                 return getResponse(ok(licht));
             }
@@ -155,7 +154,7 @@ public class LichtService extends AbstractItemService<NameKey, Licht> {
     @Path(ApiPaths.ABBILDUNG_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 204, value = "Deletes the picture for a named Licht", response = Licht.class)
+    @ApiOperation(code = 204, value = "Deletes the picture for a named Licht", response = ILicht.class)
     public Response deleteAbbildung(@PathParam(ApiPaths.ID_PARAM_NAME) String name) {
         try {
             ILicht licht = findLicht(name, false);
@@ -165,7 +164,7 @@ public class LichtService extends AbstractItemService<NameKey, Licht> {
 
                 licht.setAbbildung(null);
 
-                getPersister().update((Licht) licht);
+                getPersister().update(licht);
 
                 return getResponse(ok(licht));
             }

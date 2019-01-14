@@ -1,18 +1,19 @@
 package com.linepro.modellbahn.model;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.model.impl.Artikel;
-import com.linepro.modellbahn.model.impl.Zug;
 import com.linepro.modellbahn.model.keys.ZugConsistKey;
 import com.linepro.modellbahn.model.refs.IZugConsistRef;
 import com.linepro.modellbahn.model.refs.IZugRef;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.ArtikelDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.ZugDeserializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
@@ -25,6 +26,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
  * @version  $Id$
  */
 @JsonRootName(value = ApiNames.CONSIST)
+@JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.ZUG, ApiNames.POSITION, ApiNames.ARTIKEL, ApiNames.DELETED, ApiNames.LINKS })
 @ApiModel(value = ApiNames.CONSIST, description = "Rolling stock by poisition in a train.")
 public interface IZugConsist extends IItem<ZugConsistKey>, IZugConsistRef {
@@ -36,14 +38,14 @@ public interface IZugConsist extends IItem<ZugConsistKey>, IZugConsistRef {
     IZug getZug();
 
     @JsonSetter(ApiNames.ZUG)
-    @JsonDeserialize(as= Zug.class)
+    @JsonDeserialize(using= ZugDeserializer.class)
     void setZug(IZug zug);
 
     @JsonSetter(ApiNames.POSITION)
     void setPosition(Integer position);
 
     @JsonSetter(ApiNames.ARTIKEL)
-    @JsonDeserialize(contentAs = Artikel.class)
+    @JsonDeserialize(contentUsing = ArtikelDeserializer.class)
     void setArtikel(IArtikel artikel);
 
 }

@@ -87,7 +87,7 @@ public interface ApiNames {
     String SITZPLATZEKL2 = "sitzplatzeKL2";
     String SITZPLATZEKL3 = "sitzplatzeKL3";
     String SITZPLATZEKL4 = "sitzplatzeKL4";
-    String SONDERMODELL = "sondermodell";
+    String SONDERMODELL = "sonderModell";
     String SPAN = "span";
     String SPURWEITE = "spurweite";
     String STATUS = "status";

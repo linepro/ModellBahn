@@ -16,6 +16,7 @@ import javax.ws.rs.core.UriInfo;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.linepro.modellbahn.model.IProtokoll;
 import com.linepro.modellbahn.model.impl.Protokoll;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.json.Views;
@@ -34,20 +35,20 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.PROTOKOLL, description = "Protokoll maintenance")
+@Api(value = ApiNames.PROTOKOLL)
 @Path(ApiPaths.PROTOKOLL)
-public class ProtokollService extends AbstractItemService<NameKey, Protokoll> {
+public class ProtokollService extends AbstractItemService<NameKey, IProtokoll> {
 
     public ProtokollService() {
-        super(Protokoll.class);
+        super(IProtokoll.class);
     }
 
     @JsonCreator
-    public Protokoll create(@JsonProperty(value = ApiNames.ID) Long id,
+    public IProtokoll create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        Protokoll entity = new Protokoll(id, name, bezeichnung, deleted);
+        IProtokoll entity = new Protokoll(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
 
@@ -58,7 +59,7 @@ public class ProtokollService extends AbstractItemService<NameKey, Protokoll> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds a Protokoll by name", response = Protokoll.class)
+    @ApiOperation(value = "Finds a Protokoll by name", response = IProtokoll.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -66,7 +67,7 @@ public class ProtokollService extends AbstractItemService<NameKey, Protokoll> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Protokollen by example", response = Protokoll.class, responseContainer = "List")
+    @ApiOperation(value = "Finds Protokollen by example", response = IProtokoll.class, responseContainer = "List")
     @ApiImplicitParams({
         @ApiImplicitParam( name = ApiNames.ID, value = "Protokoll id", dataType = "Long", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.NAMEN, value = "Protokoll code", example = "MFX", dataType = "String", paramType = "query"),
@@ -83,8 +84,8 @@ public class ProtokollService extends AbstractItemService<NameKey, Protokoll> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds a Protokoll", response = Protokoll.class)
-    public Response add(Protokoll entity) {
+    @ApiOperation(code = 201, value = "Adds a Protokoll", response = IProtokoll.class)
+    public Response add(IProtokoll entity) {
         return super.add(entity);
     }
 
@@ -93,8 +94,8 @@ public class ProtokollService extends AbstractItemService<NameKey, Protokoll> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates a Protokoll by name", response = Protokoll.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Protokoll entity) {
+    @ApiOperation(code = 202, value = "Updates a Protokoll by name", response = IProtokoll.class)
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IProtokoll entity) {
         return super.update(name, entity);
     }
 

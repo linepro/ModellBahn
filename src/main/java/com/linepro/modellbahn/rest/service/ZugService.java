@@ -19,8 +19,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IZug;
+import com.linepro.modellbahn.model.IZugConsist;
 import com.linepro.modellbahn.model.IZugTyp;
-import com.linepro.modellbahn.model.impl.Artikel;
 import com.linepro.modellbahn.model.impl.Zug;
 import com.linepro.modellbahn.model.impl.ZugConsist;
 import com.linepro.modellbahn.model.keys.NameKey;
@@ -42,27 +42,27 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.ZUG, description = "Zug maintenance")
+@Api(value = ApiNames.ZUG)
 @Path(ApiPaths.ZUG)
-public class ZugService extends AbstractItemService<NameKey, Zug> {
+public class ZugService extends AbstractItemService<NameKey, IZug> {
 
-    private final IPersister<ZugConsist> consistPersister;
+    private final IPersister<IZugConsist> consistPersister;
 
     public ZugService() {
-        super(Zug.class);
+        super(IZug.class);
         
-        consistPersister = StaticPersisterFactory.get().createPersister(ZugConsist.class);
+        consistPersister = StaticPersisterFactory.get().createPersister(IZugConsist.class);
     }
 
     @JsonCreator
-    public Zug create(@JsonProperty(value = ApiNames.ID) Long id,
+    public IZug create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.ZUG_TYP) String zugTypStr,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         IZugTyp zugTyp = findZugTyp(zugTypStr, false);
 
-        Zug entity = new Zug(id, name, bezeichnung, zugTyp, deleted);
+        IZug entity = new Zug(id, name, bezeichnung, zugTyp, deleted);
 
         debug("created: " + entity);
 
@@ -70,7 +70,7 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     }
 
     @JsonCreator
-    public ZugConsist createZugConsist(@JsonProperty(value = ApiNames.ID) Long id,
+    public IZugConsist createZugConsist(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.ZUG) String zugStr,
             @JsonProperty(value = ApiNames.POSITION) Integer position,
             @JsonProperty(value = ApiNames.ARTIKEL) String artikelStr,
@@ -78,7 +78,7 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
         IZug zug = findZug(zugStr, true);
         IArtikel artikel = findArtikel(artikelStr, false);
         
-        ZugConsist entity = new ZugConsist(id,  zug, position, artikel, deleted);
+        IZugConsist entity = new ZugConsist(id,  zug, position, artikel, deleted);
 
         debug("created: " + entity);
 
@@ -89,7 +89,7 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds a Zug by name", response = Zug.class)
+    @ApiOperation(value = "Finds a IZug by name", response = IZug.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -97,7 +97,7 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Zugen by example", response = Zug.class, responseContainer = "List")
+    @ApiOperation(value = "Finds Zugen by example", response = IZug.class, responseContainer = "List")
     @ApiImplicitParams({
         @ApiImplicitParam( name = ApiNames.ID, value = "Zug id", dataType = "Long", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.ZUG_TYP, value = "Zug typ", dataType = "String", paramType = "query"),
@@ -115,8 +115,8 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds a Zug", response = Zug.class)
-    public Response add(Zug entity) {
+    @ApiOperation(code = 201, value = "Adds a Zug", response = IZug.class)
+    public Response add(IZug entity) {
         return super.add(entity);
     }
 
@@ -125,8 +125,8 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates a Zug by name", response = Zug.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Zug entity) {
+    @ApiOperation(code = 202, value = "Updates a Zug by name", response = IZug.class)
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IZug entity) {
         return super.update(name, entity);
     }
 
@@ -144,24 +144,24 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds a vehicle to a named Zug", response = ZugConsist.class)
+    @ApiOperation(code = 201, value = "Adds a vehicle to a named Zug", response = IZugConsist.class)
     public Response addConsist(@PathParam(ApiPaths.NAME_PARAM_NAME) String zugStr, @QueryParam(ApiPaths.ARTIKEL) String artikelId) {
         try {
             logPost(zugStr + "/" + artikelId);
 
-            Zug zug = (Zug) findZug(zugStr, true);
+            IZug zug = findZug(zugStr, true);
 
             if (zug == null) {
                 return getResponse(badRequest(null, "Zug " + zugStr + " does not exist"));
             }
 
-            Artikel artikel = (Artikel) findArtikel(artikelId, true);
+            IArtikel artikel = findArtikel(artikelId, true);
 
             if (artikel == null) {
                 return getResponse(badRequest(null, "Artikel " + artikelId + " does not exist"));
             }
 
-            ZugConsist zugConsist = new ZugConsist(null, zug, null, artikel, false);
+            IZugConsist zugConsist = new ZugConsist(null, zug, null, artikel, false);
 
             zug.addConsist(zugConsist);
 
@@ -178,18 +178,18 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates a vehicle in a named Zug", response = ZugConsist.class)
+    @ApiOperation(code = 202, value = "Updates a vehicle in a named Zug", response = IZugConsist.class)
     public Response updateConsist(@PathParam(ApiPaths.ZUG_PARAM_NAME) String zugStr, @PathParam(ApiPaths.POSITION_PARAM_NAME) Integer position, @QueryParam(ApiPaths.ARTIKEL) String artikelId) {
         try {
             logPost(zugStr + "/" + position + "?" + artikelId);
 
-            ZugConsist consist = (ZugConsist) findZugConsist(zugStr, position, true);
+            IZugConsist consist = findZugConsist(zugStr, position, true);
 
             if (consist == null) {
                 return getResponse(badRequest(null, "ZugConsist " + zugStr + "/" + position + " does not exist"));
             }
 
-            Artikel artikel = (Artikel) findArtikel(artikelId, true);
+            IArtikel artikel = findArtikel(artikelId, true);
 
             if (artikel == null) {
                 return getResponse(badRequest(null, "Artikel " + artikelId + " does not exist"));
@@ -212,13 +212,13 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
     @ApiOperation(code = 204, value = "Removes a vehicle from a named Zug")
     public Response deleteConsist(@PathParam(ApiPaths.ZUG_PARAM_NAME) String zugStr, @PathParam(ApiPaths.POSITION_PARAM_NAME) Integer position) {
         try {
-            ZugConsist zugConsist = (ZugConsist) findZugConsist(zugStr, position, true);
+            IZugConsist zugConsist = (ZugConsist) findZugConsist(zugStr, position, true);
 
             if (zugConsist == null) {
                 return getResponse(badRequest(null, "ZugConsist " + zugStr + "/" + position + " does not exist"));
             }
 
-            Zug zug = (Zug) zugConsist.getZug();
+            IZug zug = zugConsist.getZug();
 
             zug.removeConsist(zugConsist);
 
@@ -233,7 +233,7 @@ public class ZugService extends AbstractItemService<NameKey, Zug> {
         }
     }
 
-    private IPersister<ZugConsist> getConsistPersister() {
+    private IPersister<IZugConsist> getConsistPersister() {
         return consistPersister;
     }
 }

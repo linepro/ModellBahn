@@ -1,16 +1,17 @@
 package com.linepro.modellbahn.model;
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.model.impl.Wahrung;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.refs.ILandRef;
 import com.linepro.modellbahn.model.refs.IWahrungRef;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.WahrungDeserializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
@@ -22,6 +23,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @version  $Id$
  */
 @JsonRootName(value = ApiNames.LAND)
+@JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.WAHRUNG, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 @ApiModel(value = ApiNames.LAND, description = "Country.")
 public interface ILand extends INamedItem<NameKey>, ILandRef {
@@ -43,7 +45,7 @@ public interface ILand extends INamedItem<NameKey>, ILandRef {
      * @param wharung the new wahrung
      */
     @JsonSetter(ApiNames.WAHRUNG)
-    @JsonDeserialize(as= Wahrung.class)
+    @JsonDeserialize(using= WahrungDeserializer.class)
     void setWahrung(IWahrung wharung);
 
 }

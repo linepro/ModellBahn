@@ -16,6 +16,7 @@ import javax.ws.rs.core.UriInfo;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.linepro.modellbahn.model.IAntrieb;
 import com.linepro.modellbahn.model.impl.Antrieb;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.json.Views;
@@ -34,20 +35,20 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.ANTRIEB, description = "Antrieb (drive type) maintenance")
+@Api(value = ApiNames.ANTRIEB)
 @Path(ApiPaths.ANTRIEB)
-public class AntriebService extends AbstractItemService<NameKey, Antrieb> {
+public class AntriebService extends AbstractItemService<NameKey, IAntrieb> {
 
     public AntriebService() {
-        super(Antrieb.class);
+        super(IAntrieb.class);
     }
 
     @JsonCreator
-    public Antrieb create(@JsonProperty(value = ApiNames.ID) Long id,
+    public IAntrieb create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        Antrieb entity = new Antrieb(id, name, bezeichnung, deleted);
+        IAntrieb entity = new Antrieb(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
 
@@ -58,7 +59,7 @@ public class AntriebService extends AbstractItemService<NameKey, Antrieb> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds an Antrieb by name", response = Antrieb.class)
+    @ApiOperation(value = "Finds an Antrieb by name", response = IAntrieb.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -66,7 +67,7 @@ public class AntriebService extends AbstractItemService<NameKey, Antrieb> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Antrieben by example", response = Antrieb.class, responseContainer = "List")
+    @ApiOperation(value = "Finds Antrieben by example", response = IAntrieb.class, responseContainer = "List")
     @ApiImplicitParams({
             @ApiImplicitParam( name = ApiNames.ID, value = "Antrieb id", dataType = "Long", paramType = "query"),
             @ApiImplicitParam( name = ApiNames.NAMEN, value = "Antrieb code", example = "DAMPF", dataType = "String", paramType = "query"),
@@ -83,8 +84,8 @@ public class AntriebService extends AbstractItemService<NameKey, Antrieb> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds an Antrieb", response = Antrieb.class)
-    public Response add(Antrieb entity) {
+    @ApiOperation(code = 201, value = "Adds an Antrieb", response = IAntrieb.class)
+    public Response add(IAntrieb entity) {
         return super.add(entity);
     }
 
@@ -93,8 +94,8 @@ public class AntriebService extends AbstractItemService<NameKey, Antrieb> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates an Antrieb by name", response = Antrieb.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Antrieb entity) {
+    @ApiOperation(code = 202, value = "Updates an Antrieb by name", response = IAntrieb.class)
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IAntrieb entity) {
         return super.update(name, entity);
     }
 

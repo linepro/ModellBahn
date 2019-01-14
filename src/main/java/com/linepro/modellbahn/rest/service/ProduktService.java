@@ -34,6 +34,7 @@ import com.linepro.modellbahn.model.ILicht;
 import com.linepro.modellbahn.model.IMassstab;
 import com.linepro.modellbahn.model.IMotorTyp;
 import com.linepro.modellbahn.model.IProdukt;
+import com.linepro.modellbahn.model.IProduktTeil;
 import com.linepro.modellbahn.model.ISonderModell;
 import com.linepro.modellbahn.model.ISpurweite;
 import com.linepro.modellbahn.model.ISteuerung;
@@ -67,18 +68,18 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api(value = ApiNames.PRODUKT, description = "Produkt maintenance")
 @Path(ApiPaths.PRODUKT)
-public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
+public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
-    private final IPersister<ProduktTeil> teilPersister;
+    private final IPersister<IProduktTeil> teilPersister;
     
     public ProduktService() {
-        super(Produkt.class);
+        super(IProdukt.class);
 
-        teilPersister = StaticPersisterFactory.get().createPersister(ProduktTeil.class);
+        teilPersister = StaticPersisterFactory.get().createPersister(IProduktTeil.class);
     }
 
     @JsonCreator
-    public Produkt create(@JsonProperty(value = ApiNames.ID) Long id,
+    public IProdukt create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.HERSTELLER) String herstellerStr,
             @JsonProperty(value = ApiNames.BESTELL_NR) String bestellNr,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
@@ -118,7 +119,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
         ISteuerung steuerung = findSteuerung(steuerungStr, false);
         IMotorTyp motorTyp = findMotorTyp(motorTypStr, false);
 
-        Produkt entity = new Produkt(id,
+        IProdukt entity = new Produkt(id,
                 hersteller,
                 bestellNr,
                 bezeichnung,
@@ -149,12 +150,12 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
     }
 
     @JsonCreator
-    ProduktTeil createProduktTeil(@JsonProperty(value = ApiNames.ID) Long id,
+    IProduktTeil createProduktTeil(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.PRODUKT) Produkt produkt,
             @JsonProperty(value = ApiNames.TEIL) Produkt teil,
             @JsonProperty(value = ApiNames.ANZAHL) Integer anzahl,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        ProduktTeil entity = new ProduktTeil(id, produkt, teil, anzahl, deleted);
+        IProduktTeil entity = new ProduktTeil(id, produkt, teil, anzahl, deleted);
 
         debug("created: " + entity);
 
@@ -275,7 +276,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
 
             // TODO: check for cycles
 
-            ProduktTeil produktTeil = new ProduktTeil(null, produkt, teil, 1, false);
+            IProduktTeil produktTeil = new ProduktTeil(null, produkt, teil, 1, false);
 
             produkt.addTeil(produktTeil);
 
@@ -297,7 +298,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
         try {
             logPut(herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr);
 
-                ProduktTeil produktTeil = findProduktTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, true);
+            IProduktTeil produktTeil = findProduktTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, true);
 
             if (produktTeil == null) {
                 return getResponse(badRequest(null, "ProduktTeil " + herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr + " does not exist"));
@@ -325,7 +326,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
         try {
             logDelete(herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr);
 
-            ProduktTeil produktTeil = findProduktTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, true);
+            IProduktTeil produktTeil = findProduktTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, true);
 
             if (produktTeil == null) {
                 return getResponse(badRequest(null, "ProduktTeil " + herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr + " does not exist"));
@@ -522,7 +523,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, Produkt> {
         return getResponse(notFound());
     }
 
-    private IPersister<ProduktTeil> getTeilPersister() {
+    private IPersister<IProduktTeil> getTeilPersister() {
         return teilPersister;
     }
 }

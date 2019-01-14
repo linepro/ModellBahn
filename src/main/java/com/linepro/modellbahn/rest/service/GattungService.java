@@ -16,6 +16,7 @@ import javax.ws.rs.core.UriInfo;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.linepro.modellbahn.model.IGattung;
 import com.linepro.modellbahn.model.impl.Gattung;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.json.Views;
@@ -34,20 +35,20 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.GATTUNG, description = "Gattung maintenance")
+@Api(value = ApiNames.GATTUNG)
 @Path(ApiPaths.GATTUNG)
-public class GattungService extends AbstractItemService<NameKey, Gattung> {
+public class GattungService extends AbstractItemService<NameKey, IGattung> {
 
     public GattungService() {
-        super(Gattung.class);
+        super(IGattung.class);
     }
 
     @JsonCreator
-    public Gattung create(@JsonProperty(value = ApiNames.ID) Long id,
+    public IGattung create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        Gattung entity = new Gattung(id, name, bezeichnung, deleted);
+        IGattung entity = new Gattung(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
 
@@ -58,7 +59,7 @@ public class GattungService extends AbstractItemService<NameKey, Gattung> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds a Gattung by name", response = Gattung.class)
+    @ApiOperation(value = "Finds a Gattung by name", response = IGattung.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -66,7 +67,7 @@ public class GattungService extends AbstractItemService<NameKey, Gattung> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Gattungen by example", response = Gattung.class, responseContainer = "List")
+    @ApiOperation(value = "Finds Gattungen by example", response = IGattung.class, responseContainer = "List")
     @ApiImplicitParams({
         @ApiImplicitParam( name = ApiNames.ID, value = "Gattung id", dataType = "Long", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.NAMEN, value = "Gattung code", example = "C1HT", dataType = "String", paramType = "query"),
@@ -83,8 +84,8 @@ public class GattungService extends AbstractItemService<NameKey, Gattung> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds a Gattung", response = Gattung.class)
-    public Response add(Gattung entity) {
+    @ApiOperation(code = 201, value = "Adds a Gattung", response = IGattung.class)
+    public Response add(IGattung entity) {
         return super.add(entity);
     }
 
@@ -93,8 +94,8 @@ public class GattungService extends AbstractItemService<NameKey, Gattung> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates a Gattung by name", response = Gattung.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Gattung entity) {
+    @ApiOperation(code = 202, value = "Updates a Gattung by name", response = IGattung.class)
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IGattung entity) {
         return super.update(name, entity);
     }
 

@@ -1,5 +1,5 @@
-// module "utils.js"
-"use strict";
+// module 'utils.js'
+'use strict';
 
 const Editable = {
   NEVER: 0,
@@ -22,19 +22,19 @@ const shouldDisable = (editable, editMode) => {
 };
 
 const apiRoot = () => {
-  return location.protocol + "//" + location.host + "/ModellBahn/api/";
+  return location.protocol + '//' + location.host + '/ModellBahn/api/';
 };
 
 const siteRoot = () => {
-  return location.protocol + "//" + location.host + "/ModellBahn/static/";
+  return location.protocol + '//' + location.host + '/ModellBahn/static/';
 };
 
 const fetchUrl = (dataType) => {
   let fetchUrl = apiRoot() + dataType;
   let searchParams = new URLSearchParams(location.search);
 
-  if (searchParams.has("self")) {
-    fetchUrl = searchParams.get("self");
+  if (searchParams.has('self')) {
+    fetchUrl = searchParams.get('self');
   }
 
   return fetchUrl;
@@ -48,7 +48,7 @@ const removeChildren = (node) => {
 
 const reportError = (error) => {
   console.log(error);
-  //alert("error: " + error.toString());
+  //alert('error: ' + error.toString());
 };
 
 const addButton = (cell, lnk, action) => {
@@ -67,11 +67,11 @@ const getLink = (links, rel) => {
 };
 
 const getFieldId = (rowId, binding) => {
-  return rowId + "_" + binding;
+  return rowId + '_' + binding;
 };
 
 const getKeyId = (rowId) => {
-  return getFieldId(rowId, "key");
+  return getFieldId(rowId, 'key');
 };
 
 const getKeyValue = (rowId) => {
@@ -80,39 +80,43 @@ const getKeyValue = (rowId) => {
 };
 
 const getRowId = (tableName, i) => {
-  return tableName + "_" + i;
+  return tableName + '_' + i;
 };
 
 const getCellId = (rowId, column) => {
   if (column.binding) {
     return getFieldId(rowId, column.binding);
   } else {
-    return getFieldId(rowId, "buttons");
+    return getFieldId(rowId, 'buttons');
   }
 };
 
 const getCellRowId = (cell) => {
- return cell.id.substring(0, cell.id.lastIndexOf("_"));
+ return cell.id.substring(0, cell.id.lastIndexOf('_'));
+};
+
+const getImgSrc = (image) => {
+  return 'img/' + image + '.png';
 };
 
 const getImg = (action) => {
-  let img = document.createElement("img");
+  let img = document.createElement('img');
 
   img.alt = action;
-  img.src = "img/" + action + ".png";
+  img.src = getImgSrc(action);
 
   return img;
 };
 
 const getButton = (value, alt, action) => {
-  let btn = document.createElement("button");
+  let btn = document.createElement('button');
 
-  btn.setAttribute("value", value);
-  btn.setAttribute("onclick", action);
-  btn.className = "nav-button";
+  btn.setAttribute('value', value);
+  btn.setAttribute('onclick', action);
+  btn.className = 'nav-button';
 
   let img = getImg(alt);
-  img.className = "nav-button";
+  img.className = 'nav-button';
 
   btn.appendChild(img);
 
@@ -124,21 +128,25 @@ const addText = (cell, text) => {
 };
 
 const getButtonLink = (href, alt, action) => {
-  let a = document.createElement("a");
+  let a = document.createElement('a');
 
-  a.setAttribute("href", href);
-  a.className = "nav-button";
+  a.setAttribute('href', href);
+  a.className = 'nav-button';
   a.appendChild(getImg(action));
 
   return a;
 };
 
 const addOption = (select, value, text) => {
-    let opt = document.createElement("option");
+    let opt = document.createElement('option');
     opt.value = value;
     opt.text = text;
     select.add(opt);
 };
+
+const selectFile = (ctl, type, filter) => {
+  //TODO: popup selector
+}
 
 class Column {
   constructor(heading, binding, getter, setter, editable, required, length) {
@@ -149,6 +157,7 @@ class Column {
     this.editable = editable ? editable : Editable.NEVER;
     this.required = required ? required : false;
     this.length = Math.max(length ? length : heading.length, heading.length+1);
+    this.width = 0;
   }
 
   setTableName(tableName) {
@@ -156,8 +165,8 @@ class Column {
   }
 
   getHeading() {
-    let td = document.createElement("div");
-    td.className = "table-heading";
+    let td = document.createElement('div');
+    td.className = 'table-heading';
     addText(td, this.heading);
     return td;
   }
@@ -170,18 +179,24 @@ class Column {
     return this.length;
   }
 
+  getHeaderLength() {
+    return this.heading.length;
+  }
+
+  getWidth() {
+	return this.width;
+  }
+
   setWidth(width) {
     this.width = width;
   }
 
   createControl() {
-    return document.createElement("input");
+    return document.createElement('input');
   }
 
   getControl(cell, entity, editMode) {
     let ctl = this.createControl();
-    cell.style.width = this.width;
-    cell.style.maxWidth = this.width;
 
     let value;
 
@@ -226,7 +241,7 @@ class BoolColumn extends Column {
 
   createControl() {
     let ctl = super.createControl();
-    ctl.type = "checkbox";
+    ctl.type = 'checkbox';
     return ctl;
   }
 
@@ -246,27 +261,35 @@ class DateColumn extends Column {
 
   createControl() {
     let ctl = super.createControl();
-    ctl.type = "date";
+    ctl.type = 'date';
     return ctl;
+  }
+
+  setValue(ctl, value) {
+    ctl.checked = value;
   }
 }
 
 class NumberColumn extends Column {
-  constructor(heading, binding, getter, setter, editable, required, max, min, step) {
+  constructor(heading, binding, getter, setter, editable, required, max, min, places) {
     max = max ? max : 255;
     super(heading, binding, getter, setter, editable, required, Math.max(max.toString().length, heading.length));
     this.max = max;
     this.min = min ? min : 0;
-    this.step = step ? step : 1;
+    this.places = places ? places : 0;
   }
 
   createControl() {
     let ctl = super.createControl();
-    ctl.type = "number";
+    ctl.type = 'number';
     ctl.min = this.min;
     ctl.max = this.max;
-    ctl.step = this.step;
+    ctl.step = this.places > 0 ? 1 / this.places : 1;
     return ctl;
+  }
+
+  setValue(ctl, value) {
+    ctl.value = parseFloat(value).toFixed(this.places);
   }
 }
 
@@ -277,7 +300,7 @@ class PhoneColumn extends Column {
 
   createControl() {
     let ctl = super.createControl();
-    ctl.type = "tel";
+    ctl.type = 'tel';
     return ctl;
   }
 }
@@ -289,7 +312,7 @@ class TextColumn extends Column {
 
   createControl() {
     let ctl = super.createControl();
-    ctl.type = "text";
+    ctl.type = 'text';
     ctl.maxLength = this.length;
     return ctl;
   }
@@ -302,7 +325,7 @@ class URLColumn extends Column {
 
   createControl() {
     let ctl = super.createControl();
-    ctl.type = "url";
+    ctl.type = 'url';
     return ctl;
   }
 }
@@ -314,16 +337,28 @@ class IMGColumn extends Column {
   }
 
   createControl() {
-    let ctl = super.createControl();
-    ctl.type = "file";
-    ctl.accept = "image/*";
-    ctl.multiple = false;
+	let div = document.createElement("div");
+	
+    let ctl = getImg('none');
+    ctl.onClick = () => {};
     if (this.onChange) ctl.change = this.onChange;
-    return ctl;
+    div.appendChild(ctl);
+    
+    let btn = document.createElement('button');
+    btn.onclick = selectFile(ctl,'image/*',false);
+    btn.setAttribute('value', '+');
+    btn.className = 'selection';
+    div.appendChild(btn);
+    
+    return div;
   }
 
   getControlValue(ctl) {
-    return ctl.checked;
+    return ctl.src;
+  }
+
+  setValue(ctl, value) {
+    ctl.src = value;
   }
 }
 
@@ -335,8 +370,6 @@ class PDFColumn extends Column {
 
   getControl(cell, entity, editMode) {
     let ctl = this.createControl();
-    cell.style.width = this.width;
-    cell.style.maxWidth = this.width;
 
     let value;
 
@@ -358,30 +391,41 @@ class PDFColumn extends Column {
   }
 
   createControl() {
-    let ctl = super.createControl();
-    ctl.type = "file";
-    ctl.accept = "application/pdf";
-    ctl.multiple = false;
+    let ctl = document.createElement('a');
+    ctl.onClick = () => {};
     if (this.onChange) ctl.change = this.onChange;
+
+    let img = getImg('none');
+    ctl.appendChild(img);
+    
+    let btn = document.createElement('button')
+    btn.onClick = selectFile(ctl, 'application/pdf', false);
+    btn.setAttribute('value', '+');
+    btn.className = 'selection';
+
+    ctl.appendChild(btn);
+
     return ctl;
   }
 
   getControlValue(ctl) {
-    return ctl.checked;
+    return ctl.href;
+  }
+
+  setValue(ctl, value) {
+    ctl.href = value;
   }
 }
 
 class SelectColumn extends Column {
   constructor(heading, binding, getter, setter, dropDown, editable, required) {
-    super(heading, binding, getter, setter, editable, required, dropDown.length);
+    super(heading, binding, getter, setter, editable, required, dropDown.length + 3.5);
     this.dropDown = dropDown;
     this.dropSize = 1;
   }
 
   getControl(cell, entity, editMode) {
     let ctl = this.createControl();
-    cell.style.width = this.width;
-    cell.style.maxWidth = this.width;
 
     let value;
 
@@ -403,7 +447,7 @@ class SelectColumn extends Column {
   }
 
   addOptions(select, dropDown) {
-  	if (!this.required) addOption(select, undefined, "(n/a)");
+  	if (!this.required) addOption(select, undefined, '(n/a)');
 
     dropDown.options.forEach(option => {
     	addOption(select, option.value, option.display);
@@ -411,7 +455,7 @@ class SelectColumn extends Column {
   }
 
   createControl() {
-    let ctl = document.createElement("select");
+    let ctl = document.createElement('select');
     ctl.size = this.dropSize;
     this.addOptions(ctl, this.dropDown);
     return ctl;
@@ -422,7 +466,7 @@ class SelectColumn extends Column {
   }
 
   getLength() {
-    return Math.max(this.dropDown.length, this.heading.length);
+    return Math.max(this.dropDown.length + 3.5, this.getHeaderLength());
   }
 
   setValue(ctl, value) {
@@ -441,6 +485,7 @@ class ButtonColumn {
     this.headLinkage = headLinkage;
     this.btnLinkage = btnLinkage;
     this.length = Math.max(headLinkage.length, btnLinkage.length) * 8;
+    this.width = 0;
   }
 
   setTableName(tableName) {
@@ -448,8 +493,8 @@ class ButtonColumn {
   }
 
   getHeading() {
-    let td = document.createElement("div");
-    td.className = "table-heading-btn";
+    let td = document.createElement('div');
+    td.className = 'table-heading-btn';
     
     let tableName = this.tableName;
 
@@ -459,7 +504,7 @@ class ButtonColumn {
         td.appendChild(btn);
       });
     } else {
-      addText(td, "");
+      addText(td, '');
     }
 
     return td;
@@ -469,19 +514,25 @@ class ButtonColumn {
     return this.length;
   }
 
+  getHeaderLength() {
+    return this.length;
+  }
+  
+  getWidth() {
+    return this.width;
+  }
+
   setWidth(width) {
     this.width = width;
   }
-
+  
   getControl(cell, entity, editMode) {
-    cell.className = "table-btn";
-    cell.style.width = this.width;
-    cell.style.maxWidth = this.width;
+    cell.className = 'table-btn';
 
     let rowId = getCellRowId(cell);
     let tableName = this.tableName;
     
-    let ctl = document.createElement("div");
+    let ctl = document.createElement('div');
 
     if (editMode && this.btnLinkage) {
       this.btnLinkage.forEach(linkage => {
@@ -491,7 +542,7 @@ class ButtonColumn {
         }
       });
     } else {
-      addText(ctl, "");
+      addText(ctl, '');
     }
 
     return ctl;
@@ -512,26 +563,26 @@ async function checkResponse(response) {
 
 async function modal(elementName, title, contentUrl) {
   let anchor = document.getElementById(elementName);
-  let modal = document.getElementById("modal");
+  let modal = document.getElementById('modal');
 
   if (anchor && !modal) {
-    modal = document.createElement("div");
-    modal.id = "modal";
-    modal.className = "modal";
+    modal = document.createElement('div');
+    modal.id = 'modal';
+    modal.className = 'modal';
 
-    let content = document.createElement("div");
-    content.className = "modal-content";
+    let content = document.createElement('div');
+    content.className = 'modal-content';
 
-    let head = document.createElement("div");
-    head.className = "modal-header";
+    let head = document.createElement('div');
+    head.className = 'modal-header';
 
-    let heading = document.createElement("h2");
+    let heading = document.createElement('h2');
     addText(heading, title);
     head.appendChild(heading);
     content.appendChild(head);
 
-    let body = document.createElement("div");
-    body.className = "modal-body";
+    let body = document.createElement('div');
+    body.className = 'modal-body';
 
     let text = await fetch(contentUrl)
       .then(response => response.text())
@@ -540,70 +591,70 @@ async function modal(elementName, title, contentUrl) {
     let area = document.createElement('textarea');
     area.value = text;
     area.color = 'black';
-    area.height = "100%";
-    area.width = "100%";
+    area.height = '100%';
+    area.width = '100%';
     area.readOnly = true;
     area.disabled = true;
 
     body.appendChild(area);
     content.appendChild(body);
 
-    let foot = document.createElement("div");
-    foot.className = "modal-footer";
+    let foot = document.createElement('div');
+    foot.className = 'modal-footer';
 
     content.appendChild(foot);
     modal.appendChild(content);
 
     anchor.appendChild(modal);
-    anchor.href = "#";
+    anchor.href = '#';
     anchor.onclick = function () {
-      modal.style.display = "block";
+      modal.style.display = 'block';
     };
 
     window.onclick = function (event) {
       if (event.target === modal) {
-        modal.style.display = "none";
+        modal.style.display = 'none';
       }
     }
   }
 }
 
 const about = () => {
-  modal("license", "About ModellBahn", siteRoot() + "LICENSE");
+  modal('license', 'About ModellBahn', siteRoot() + 'LICENSE');
 };
 
 const setActiveTab = (event, tabName) => {
-  let tabContents = document.getElementsByClassName("tabContent");
-  let tabLinks = document.getElementsByClassName("tabLinks");
+  let tabContents = document.getElementsByClassName('tabContent');
+  let tabLinks = document.getElementsByClassName('tabLinks');
 
   for (let i = 0; i < tabContents.length; i++) {
-    tabContents[i].style.display = (tabContents[i].id === tabName) ? "block" : "none";
+    tabContents[i].style.display = (tabContents[i].id === tabName) ? 'block' : 'none';
   }
 
-  let linkName = tabName.replace("Tab", "Link");
+  let linkName = tabName.replace('Tab', 'Link');
   for (let i = 0; i < tabLinks.length; i++) {
-	  tabLinks[i].className = (tabLinks[i].id === linkName) ? "tabLinks active" : "tabLinks";
+	  tabLinks[i].className = (tabLinks[i].id === linkName) ? 'tabLinks active' : 'tabLinks';
   }
 };
 
 const addRow = (tableName) => {
-  return getButton(undefined, "add", tableName + ".addRow()");
+  return getButton(undefined, 'add', tableName + '.addRow()');
 };
 
 const deleteRow = (tableName, row) => {
-  return getButton(row, "delete", tableName + ".deleteRow(" + row + ".id)");
+  return getButton(row, 'delete', tableName + '.deleteRow(' + row + '.id)');
 };
 
 const editRow = (tableName, row) => {
-  return getButton(row, "update", tableName + ".editRow(" +  row + ".id)");
+  return getButton(row, 'update', tableName + '.editRow(' +  row + '.id)');
 };
 
 const newRow = (tableName) => {
-  return getButton(undefined, "add", tableName + ".newRow()");
+  return getButton(undefined, 'add', tableName + '.newRow()');
 };
 
 const updateRow = (tableName, row) => {
-  return getButton(row, "save", tableName + ".updateRow(" +  row + ".id)");
+  return getButton(row, 'save', tableName + '.updateRow(' +  row + '.id)');
 };
 
 const gridButtonColumn = (elementName) => {
@@ -612,77 +663,78 @@ const gridButtonColumn = (elementName) => {
 };
 
 const addHeader = (tableName, table, columns, paged, rowCount) => {
-  let header = document.createElement("div");
-  header.id = tableName + "_thead";
-  header.className = "thead";
+  let header = document.createElement('div');
+  header.id = tableName + '_thead';
+  header.className = 'thead';
   table.append(header);
 
-  let headRow = document.createElement("div");
-  headRow.className = "table-head";
-  headRow.id = tableName + "Head";
+  let headRow = document.createElement('div');
+  headRow.className = 'table-head';
+  headRow.id = tableName + 'Head';
   header.append(headRow);
 
   columns.forEach(column => {
 	let th; 
     if (paged === Paged.FORM) {
-      th = document.createElement("div");
-      addText(th, "")
+      th = document.createElement('div');
+      addText(th, '')
     } else {
       th = column.getHeading();
     }
 
-    th.style.width = column.width;
-    th.style.maxWidth = column.width;
+    th.style.width = column.getHeaderLength() + 'ch';
+    th.style.maxWidth = column.getHeaderLength() + 'ch';
 
     headRow.append(th);
   });
 };
 
 const addBody = (tableName, table, pageSize, columns, paged, rowCount, maxLabel) => {
-  let body = document.createElement("div");
-  body.id = tableName + "_tbody";
-  body.className = paged === Paged.FORM ? "flex-container" : "tbody";
+  let body = document.createElement('div');
+  body.id = tableName + '_tbody';
+  let isForm = paged === Paged.FORM;
+  body.className = isForm ? 'flex-container' : 'tbody';
   table.append(body);
 
   let row;
   let maxRow = Math.max(rowCount, pageSize);
   for (row = 0; row < maxRow; row++) {
-    let tr = document.createElement("div");
+    let tr = document.createElement('div');
     let rowId = getRowId(tableName, row);
-    tr.className = paged === Paged.FORM ? "flex-container" : "table-row";
+    tr.className = isForm ? 'flex-container' : 'table-row';
     tr.id = rowId;
     body.append(tr);
     
-    let key = document.createElement("input");
-    key.type = "hidden";
+    let key = document.createElement('input');
+    key.type = 'hidden';
     key.id = getKeyId(rowId);
-    key.className = paged === Paged.FORM ? "flex-control" : "table-cell";
+    key.className = isForm ? 'flex-control' : 'table-cell';
     tr.append(key);
 
     columns.forEach(column => {
-      let td = document.createElement("div");
+      let td = document.createElement('div');
 
-      if (paged === Paged.FORM) {
-	    td.className = "flex-item";
+      if (isForm) {
+	    td.className = 'flex-item';
 
 	    let th = column.getHeading();
-        th.className = "flex-label";
-        th.style.width = maxLabel;
-        th.style.maxWidth = maxLabel;
+        th.className = 'flex-label';
+        th.style.width = maxLabel + 'ch';
+        th.style.maxWidth = maxLabel + 'ch';
         
         td.append(th);
       }
       
-      let tc = document.createElement("div");
+      let tc = document.createElement('div');
       
       tc.id = getCellId(rowId, column);
-      tc.className = paged === Paged.FORM ? "flex-control" : "table-cell";
-      tc.style.width = column.width;
-      tc.style.maxWidth = column.width;
+      tc.className = isForm ? 'flex-control' : 'table-cell';
+      tc.style.width = isForm ? column.getLength() + 'ch' : column.getWidth();
+      tc.style.maxWidth = tc.style.width;
       
-      addText(tc, "");
+      addText(tc, '');
       
-      if (paged === Paged.FORM) {
+      if (isForm) {
       	td.append(tc);  
         tr.append(td);
       } else {
@@ -693,32 +745,32 @@ const addBody = (tableName, table, pageSize, columns, paged, rowCount, maxLabel)
 };
 
 const addFooter = (tableName, table, columns, paged, rowCount) => {
-	let footer = document.createElement("div");
-	footer.id = tableName + "_tfoot";
-	footer.className = "tfoot";
+	let footer = document.createElement('div');
+	footer.id = tableName + '_tfoot';
+	footer.className = 'tfoot';
 	table.append(footer);
 	
-	let navRow = document.createElement("div");
-	navRow.className = "table-foot";
-	navRow.id = tableName + "Foot";
+	let navRow = document.createElement('div');
+	navRow.className = 'table-foot';
+	navRow.id = tableName + 'Foot';
 	footer.append(navRow);
 	
 	for (let i = 0; i < columns.length; i++) {
-	  let tf = document.createElement("div");
+	  let tf = document.createElement('div');
 	  if (i === 0) {
-	    tf.className = "table-prev";
-	    tf.id = tableName + "Prev";
+	    tf.className = 'table-prev';
+	    tf.id = tableName + 'Prev';
 	  } else if (i === (columns.length - 1)) {
-	    tf.className = "table-next";
-	    tf.id = tableName + "Next";
+	    tf.className = 'table-next';
+	    tf.id = tableName + 'Next';
 	  } else {
-	    tf.className = "table-footer";
+	    tf.className = 'table-footer';
 	  }
 	
-	  tf.style.width = columns[i].width;
-	  tf.style.maxWidth = columns[i].width;
+	  tf.style.width = columns[i].getHeaderLength() + 'ch';
+	  tf.style.maxWidth = columns[i].getHeaderLength() + 'ch';
 	
-	  addText(tf, "");
+	  addText(tf, '');
 	
 	  navRow.append(tf);
 	}
@@ -729,10 +781,10 @@ async function uploadFile(url, inputCtl) {
 
   let file = inputCtl.files[0];
 
-  formData.append("FileName", file.name);
-  formData.append("FileData", file);
+  formData.append('FileName', file.name);
+  formData.append('FileData', file);
 
-  await fetch(url, {method: "PUT", body: formData})
+  await fetch(url, {method: 'PUT', body: formData})
     .then(response => checkResponse(response))
     .catch(error => reportError(error));
 }

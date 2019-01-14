@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiModelProperty;
 public interface IDecoderCVRef extends ILinkRef {
 
     @JsonGetter(ApiNames.CV)
-    @JsonSerialize(as = IDecoderTypCVRef.class)
+    @JsonSerialize(as= IDecoderTypCVRef.class)
     @JsonView(Views.Public.class)
     @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IDecoderTypCVRef", value = "Default address", example = "80")
     IDecoderTypCV getCv();

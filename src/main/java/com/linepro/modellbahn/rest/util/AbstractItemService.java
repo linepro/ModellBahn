@@ -371,7 +371,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      * @throws Exception if reflection fails
      */
     private E getTemplate(MultivaluedMap<String, String> queryParameters) throws Exception {
-        E template = create();
+        E template = getPersister().create();
 
         if (!queryParameters.isEmpty()) {
             for (String name : queryParameters.keySet()) {
@@ -398,15 +398,6 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return persister;
     }
 
-    /**
-     * Gets the entity class.
-     *
-     * @return the entity class
-     */
-    private Class<E> getEntityClass() {
-        return entityClass;
-    }
-
     private String getEntityClassName() {
         return entityClass.getSimpleName();
     }
@@ -418,16 +409,6 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      */
     protected Map<String, Selector> getSelectors() {
         return selectors;
-    }
-
-    /**
-     * Creates the.
-     *
-     * @return the e
-     * @throws Exception the exception
-     */
-    private E create() throws Exception {
-        return getEntityClass().newInstance();
     }
 
     /**

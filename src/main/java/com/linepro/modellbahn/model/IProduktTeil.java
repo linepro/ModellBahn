@@ -1,18 +1,18 @@
 package com.linepro.modellbahn.model;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.model.impl.Produkt;
-import com.linepro.modellbahn.model.impl.ProduktTeil;
 import com.linepro.modellbahn.model.keys.ProduktTeilKey;
 import com.linepro.modellbahn.model.refs.IProduktRef;
 import com.linepro.modellbahn.model.refs.IProduktTeilRef;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.ProduktDeserializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
@@ -25,6 +25,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
  * @version  $Id$
  */
 @JsonRootName(value = ApiNames.TEIL)
+@JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.PRODUKT,ApiNames.TEIL, ApiNames.ANZAHL, ApiNames.DELETED, ApiNames.LINKS})
 @ApiModel(value = ApiNames.TEIL, description = "Part of product (spares for rolling stock - contents for set &c).")
 public interface IProduktTeil extends IItem<ProduktTeilKey>, IProduktTeilRef {
@@ -36,11 +37,11 @@ public interface IProduktTeil extends IItem<ProduktTeilKey>, IProduktTeilRef {
     IProdukt getProdukt();
 
     @JsonSetter(ApiNames.PRODUKT)
-    @JsonDeserialize(as= Produkt.class)
+    @JsonDeserialize(using= ProduktDeserializer.class)
     void setProdukt(IProdukt produkt);
 
     @JsonSetter(ApiNames.TEIL)
-    @JsonDeserialize(as= ProduktTeil.class)
+    @JsonDeserialize(using= ProduktDeserializer.class)
     void setTeil(IProdukt teil);
 
     @JsonSetter(ApiNames.ANZAHL)

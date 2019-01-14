@@ -16,6 +16,7 @@ import javax.ws.rs.core.UriInfo;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.impl.Steuerung;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.json.Views;
@@ -34,20 +35,20 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.STEUERUNG, description = "Steuerung maintenance")
+@Api(value = ApiNames.STEUERUNG)
 @Path(ApiPaths.STEUERUNG)
-public class SteuerungService extends AbstractItemService<NameKey, Steuerung> {
+public class SteuerungService extends AbstractItemService<NameKey, ISteuerung> {
 
     public SteuerungService() {
-        super(Steuerung.class);
+        super(ISteuerung.class);
     }
 
     @JsonCreator
-    public Steuerung create(@JsonProperty(value = ApiNames.ID) Long id,
+    public ISteuerung create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        Steuerung entity = new Steuerung(id, name, bezeichnung, deleted);
+        ISteuerung entity = new Steuerung(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
 
@@ -58,7 +59,7 @@ public class SteuerungService extends AbstractItemService<NameKey, Steuerung> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds a Steuerung by name", response = Steuerung.class)
+    @ApiOperation(value = "Finds a Steuerung by name", response = ISteuerung.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -66,7 +67,7 @@ public class SteuerungService extends AbstractItemService<NameKey, Steuerung> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Steuerungen by example", response = Steuerung.class, responseContainer = "List")
+    @ApiOperation(value = "Finds Steuerungen by example", response = ISteuerung.class, responseContainer = "List")
     @ApiImplicitParams({
         @ApiImplicitParam( name = ApiNames.ID, value = "Steuerung id", dataType = "Long", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.NAMEN, value = "Steuerung code", example = "FRU", dataType = "String", paramType = "query"),
@@ -83,8 +84,8 @@ public class SteuerungService extends AbstractItemService<NameKey, Steuerung> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds a Steuerung", response = Steuerung.class)
-    public Response add(Steuerung entity) {
+    @ApiOperation(code = 201, value = "Adds a Steuerung", response = ISteuerung.class)
+    public Response add(ISteuerung entity) {
         return super.add(entity);
     }
 
@@ -93,8 +94,8 @@ public class SteuerungService extends AbstractItemService<NameKey, Steuerung> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates a Steuerung by name", response = Steuerung.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Steuerung entity) {
+    @ApiOperation(code = 202, value = "Updates a Steuerung by name", response = ISteuerung.class)
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, ISteuerung entity) {
         return super.update(name, entity);
     }
 

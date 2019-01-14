@@ -87,6 +87,7 @@ class ItemGrid {
     let table = document.getElementById(grid.tableName);
     removeChildren(table);
     table.className = "table";
+    grid.maxLabel = maxLabel;
 
     addHeader(tableName, table, columns, paged, rowCount);
 
@@ -157,9 +158,8 @@ class ItemGrid {
         if (entity || cell.id.endsWith("_buttons")) {
           ctl = column.getControl(cell, entity, editMode);
         } else {
-          cell.style.width = column.width;
-          cell.style.maxWidth = column.width;
-
+          cell.style.width = column.getLength() + "em";
+          cell.style.maxWidth = this.getLength() + "em";
           ctl = document.createElement("input");
           ctl.type = "text";
           ctl.disabled = "true";

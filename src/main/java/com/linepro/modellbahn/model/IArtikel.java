@@ -8,19 +8,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.model.impl.Decoder;
-import com.linepro.modellbahn.model.impl.Kupplung;
-import com.linepro.modellbahn.model.impl.Licht;
-import com.linepro.modellbahn.model.impl.MotorTyp;
-import com.linepro.modellbahn.model.impl.Produkt;
-import com.linepro.modellbahn.model.impl.Steuerung;
-import com.linepro.modellbahn.model.impl.Wahrung;
 import com.linepro.modellbahn.model.keys.ArtikelKey;
 import com.linepro.modellbahn.model.refs.IArtikelRef;
 import com.linepro.modellbahn.model.refs.IDecoderRef;
@@ -32,8 +26,15 @@ import com.linepro.modellbahn.model.refs.IWahrungRef;
 import com.linepro.modellbahn.model.util.Status;
 import com.linepro.modellbahn.rest.json.Formats;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.DecoderDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.KupplungDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.LichtDeserializer;
 import com.linepro.modellbahn.rest.json.serialization.LocalDateDeserializer;
 import com.linepro.modellbahn.rest.json.serialization.LocalDateSerializer;
+import com.linepro.modellbahn.rest.json.serialization.MotorTypDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.ProduktDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.SteuerungDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.WahrungDeserializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
@@ -45,6 +46,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @version  $Id$
  */
 @JsonRootName(value = ApiNames.ARTIKEL)
+@JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.ARTIKEL_ID, ApiNames.BEZEICHNUNG, ApiNames.PRODUKT, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.STUCK, ApiNames.STEUERUNG, ApiNames.MOTOR_TYP, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.DECODER, ApiNames.ANMERKUNG, ApiNames.BELADUNG, ApiNames.ABBILDUNG, ApiNames.STATUS, ApiNames.DELETED, ApiNames.LINKS})
 @ApiModel(value = ApiNames.ARTIKEL, description = "An article - may differ from product because of modificiations")
 public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
@@ -61,7 +63,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      * @param produkt the new produkt
      */
     @JsonSetter(ApiNames.PRODUKT)
-    @JsonDeserialize(as= Produkt.class)
+    @JsonDeserialize(using= ProduktDeserializer.class)
     void setProdukt(IProdukt produkt);
 
     /**
@@ -102,7 +104,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      * @param wahrung the new wahrung
      */
     @JsonSetter(ApiNames.WAHRUNG)
-    @JsonDeserialize(as= Wahrung.class)
+    @JsonDeserialize(using= WahrungDeserializer.class)
     void setWahrung(IWahrung wahrung);
 
     /**
@@ -158,7 +160,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      * @param steuerung the new steuerung
      */
     @JsonSetter(ApiNames.STEUERUNG)
-    @JsonDeserialize(as= Steuerung.class)
+    @JsonDeserialize(using= SteuerungDeserializer.class)
     void setSteuerung(ISteuerung steuerung);
 
     /**
@@ -178,7 +180,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      * @param motorTyp the new motor typ
      */
     @JsonSetter(ApiNames.MOTOR_TYP)
-    @JsonDeserialize(as= MotorTyp.class)
+    @JsonDeserialize(using= MotorTypDeserializer.class)
     void setMotorTyp(IMotorTyp motorTyp);
 
     /**
@@ -198,7 +200,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      * @param licht the new licht
      */
     @JsonSetter(ApiNames.LICHT)
-    @JsonDeserialize(as= Licht.class)
+    @JsonDeserialize(using= LichtDeserializer.class)
     void setLicht(ILicht licht);
 
     /**
@@ -218,7 +220,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      * @param kupplung the new kupplung
      */
     @JsonSetter(ApiNames.KUPPLUNG)
-    @JsonDeserialize(as= Kupplung.class)
+    @JsonDeserialize(using= KupplungDeserializer.class)
     void setKupplung(IKupplung kupplung);
 
     /**
@@ -238,7 +240,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      * @param decoder the new decoder
      */
     @JsonSetter(ApiNames.DECODER)
-    @JsonDeserialize(as= Decoder.class)
+    @JsonDeserialize(using= DecoderDeserializer.class)
     void setDecoder(IDecoder decoder);
 
     /**

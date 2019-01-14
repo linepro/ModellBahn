@@ -16,6 +16,7 @@ import javax.ws.rs.core.UriInfo;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.linepro.modellbahn.model.ISonderModell;
 import com.linepro.modellbahn.model.impl.SonderModell;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.json.Views;
@@ -34,20 +35,20 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.SONDERMODELL, description = "SonderModell maintenance")
+@Api(value = ApiNames.SONDERMODELL)
 @Path(ApiPaths.SONDERMODELL)
-public class SonderModellService extends AbstractItemService<NameKey, SonderModell> {
+public class SonderModellService extends AbstractItemService<NameKey, ISonderModell> {
 
     public SonderModellService() {
-        super(SonderModell.class);
+        super(ISonderModell.class);
     }
 
     @JsonCreator
-    public SonderModell create(@JsonProperty(value = ApiNames.ID) Long id,
+    public ISonderModell create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        SonderModell entity = new SonderModell(id, name, bezeichnung, deleted);
+        ISonderModell entity = new SonderModell(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
 
@@ -58,7 +59,7 @@ public class SonderModellService extends AbstractItemService<NameKey, SonderMode
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds a SonderModell by name", response = SonderModell.class)
+    @ApiOperation(value = "Finds a SonderModell by name", response = ISonderModell.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -66,7 +67,7 @@ public class SonderModellService extends AbstractItemService<NameKey, SonderMode
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds SonderModellen by example", response = SonderModell.class, responseContainer = "List")
+    @ApiOperation(value = "Finds SonderModellen by example", response = ISonderModell.class, responseContainer = "List")
     @ApiImplicitParams({
         @ApiImplicitParam( name = ApiNames.ID, value = "SonderModell id", dataType = "Long", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.NAMEN, value = "SonderModell code", example = "MHI", dataType = "String", paramType = "query"),
@@ -83,7 +84,7 @@ public class SonderModellService extends AbstractItemService<NameKey, SonderMode
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds a SonderModell", response = SonderModell.class)
+    @ApiOperation(code = 201, value = "Adds a SonderModell", response = ISonderModell.class)
     public Response add(SonderModell entity) {
         return super.add(entity);
     }
@@ -93,8 +94,8 @@ public class SonderModellService extends AbstractItemService<NameKey, SonderMode
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates a SonderModell by name", response = SonderModell.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, SonderModell entity) {
+    @ApiOperation(code = 202, value = "Updates a SonderModell by name", response = ISonderModell.class)
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, ISonderModell entity) {
         return super.update(name, entity);
     }
 

@@ -18,6 +18,7 @@ import javax.ws.rs.core.UriInfo;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.model.impl.Hersteller;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.json.Views;
@@ -36,22 +37,22 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.HERSTELLER, description = "Hersteller maintenance")
+@Api(value = ApiNames.HERSTELLER)
 @Path(ApiPaths.HERSTELLER)
-public class HerstellerService extends AbstractItemService<NameKey, Hersteller> {
+public class HerstellerService extends AbstractItemService<NameKey, IHersteller> {
 
     public HerstellerService() {
-        super(Hersteller.class);
+        super(IHersteller.class);
     }
 
     @JsonCreator
-    public Hersteller create(@JsonProperty(value = ApiNames.ID) Long id,
+    public IHersteller create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.TELEFON) String telefon,
             @JsonProperty(value = ApiNames.URL) URL url,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        Hersteller entity = new Hersteller(id, name, bezeichnung, url, telefon, deleted);
+        IHersteller entity = new Hersteller(id, name, bezeichnung, url, telefon, deleted);
 
         debug("created: " + entity);
 
@@ -62,7 +63,7 @@ public class HerstellerService extends AbstractItemService<NameKey, Hersteller> 
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds a Hersteller by name", response = Hersteller.class)
+    @ApiOperation(value = "Finds a Hersteller by name", response = IHersteller.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -70,7 +71,7 @@ public class HerstellerService extends AbstractItemService<NameKey, Hersteller> 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Herstelleren by example", response = Hersteller.class, responseContainer = "List")
+    @ApiOperation(value = "Finds Herstelleren by example", response = IHersteller.class, responseContainer = "List")
     @ApiImplicitParams({
         @ApiImplicitParam( name = ApiNames.ID, value = "Hersteller id", dataType = "Long", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.NAMEN, value = "Hersteller code", example = "MARKLIN", dataType = "String", paramType = "query"),
@@ -89,8 +90,8 @@ public class HerstellerService extends AbstractItemService<NameKey, Hersteller> 
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds a Hersteller", response = Hersteller.class)
-    public Response add(Hersteller entity) {
+    @ApiOperation(code = 201, value = "Adds a Hersteller", response = IHersteller.class)
+    public Response add(IHersteller entity) {
         return super.add(entity);
     }
 
@@ -99,8 +100,8 @@ public class HerstellerService extends AbstractItemService<NameKey, Hersteller> 
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates a Hersteller by name", response = Hersteller.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Hersteller entity) {
+    @ApiOperation(code = 202, value = "Updates a Hersteller by name", response = IHersteller.class)
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IHersteller entity) {
         return super.update(name, entity);
     }
 

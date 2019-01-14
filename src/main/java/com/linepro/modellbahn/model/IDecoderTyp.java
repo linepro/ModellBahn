@@ -5,14 +5,13 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.model.impl.Hersteller;
-import com.linepro.modellbahn.model.impl.Protokoll;
 import com.linepro.modellbahn.model.keys.DecoderTypKey;
 import com.linepro.modellbahn.model.refs.IDecoderTypAdressRef;
 import com.linepro.modellbahn.model.refs.IDecoderTypCVRef;
@@ -22,6 +21,8 @@ import com.linepro.modellbahn.model.refs.IProtokollRef;
 import com.linepro.modellbahn.model.util.Connector;
 import com.linepro.modellbahn.model.util.Konfiguration;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.HerstellerDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.ProtokollDeserializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
@@ -34,12 +35,13 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
  * @version  $Id$
  */
 @JsonRootName(value = ApiNames.DECODER_TYP)
+@JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.GERAUSCH, ApiNames.I_MAX, ApiNames.KONFIGURATION, ApiNames.DELETED, ApiNames.ADRESSEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS})
 @ApiModel(value = ApiNames.DECODER_TYP, description = "Decoder type - template for Decoder.")
 public interface IDecoderTyp extends IItem<DecoderTypKey>, IDecoderTypRef {
 
     @JsonSetter(ApiNames.HERSTELLER)
-    @JsonDeserialize(as= Hersteller.class)
+    @JsonDeserialize(using= HerstellerDeserializer.class)
     void setHersteller(IHersteller hersteller);
 
     @JsonSetter(ApiNames.BESTELL_NR)
@@ -78,7 +80,7 @@ public interface IDecoderTyp extends IItem<DecoderTypKey>, IDecoderTypRef {
      * @param protokoll the new protokoll
      */
     @JsonSetter(ApiNames.PROTOKOLL)
-    @JsonDeserialize(as= Protokoll.class)
+    @JsonDeserialize(using= ProtokollDeserializer.class)
     void setProtokoll(IProtokoll protokoll);
 
     /**

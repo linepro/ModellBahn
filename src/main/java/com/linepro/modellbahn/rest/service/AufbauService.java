@@ -46,20 +46,20 @@ import io.swagger.annotations.ApiResponses;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.AUFBAU, description = "Aufbau maintenance")
+@Api(value = ApiNames.AUFBAU)
 @Path(ApiPaths.AUFBAU)
-public class AufbauService extends AbstractItemService<NameKey, Aufbau> {
+public class AufbauService extends AbstractItemService<NameKey, IAufbau> {
 
     public AufbauService() {
-        super(Aufbau.class);
+        super(IAufbau.class);
     }
 
     @JsonCreator
-    public Aufbau create(@JsonProperty(value = ApiNames.ID) Long id,
+    public IAufbau create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        Aufbau entity = new Aufbau(id, name, bezeichnung, deleted);
+        IAufbau entity = new Aufbau(id, name, bezeichnung, deleted);
 
         debug("created: " + entity);
 
@@ -70,7 +70,7 @@ public class AufbauService extends AbstractItemService<NameKey, Aufbau> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds an Aufbau by name", response = Aufbau.class)
+    @ApiOperation(value = "Finds an Aufbau by name", response = IAufbau.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -78,7 +78,7 @@ public class AufbauService extends AbstractItemService<NameKey, Aufbau> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Aufbauen by example", response = Aufbau.class, responseContainer = "List")
+    @ApiOperation(value = "Finds Aufbauen by example", response = IAufbau.class, responseContainer = "List")
     @ApiImplicitParams({
         @ApiImplicitParam( name = ApiNames.ID, value = "Aufbau id", dataType = "Long", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.NAMEN, value = "Aufbau code", example = "LK", dataType = "String", paramType = "query"),
@@ -95,8 +95,8 @@ public class AufbauService extends AbstractItemService<NameKey, Aufbau> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds an Aufbau", response = Aufbau.class)
-    public Response add(Aufbau entity) {
+    @ApiOperation(code = 201, value = "Adds an Aufbau", response = IAufbau.class)
+    public Response add(IAufbau entity) {
         return super.add(entity);
     }
 
@@ -105,8 +105,8 @@ public class AufbauService extends AbstractItemService<NameKey, Aufbau> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates an Aufbau by name", response = Aufbau.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Aufbau entity) {
+    @ApiOperation(code = 202, value = "Updates an Aufbau by name", response = IAufbau.class)
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IAufbau entity) {
         return super.update(name, entity);
     }
 
@@ -124,7 +124,7 @@ public class AufbauService extends AbstractItemService<NameKey, Aufbau> {
     @Consumes({ MediaType.MULTIPART_FORM_DATA })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Adds or updates the image for a named Aufbau", response = Aufbau.class)
+    @ApiOperation(value = "Adds or updates the image for a named Aufbau", response = IAufbau.class)
     @ApiResponses({
         @ApiResponse(code = 400, message = "Bad request"),
         @ApiResponse(code = 404, message = "Not Found"),
@@ -147,7 +147,7 @@ public class AufbauService extends AbstractItemService<NameKey, Aufbau> {
 
                 aufbau.setAbbildung(file);
 
-                getPersister().update((Aufbau) aufbau);
+                getPersister().update(aufbau);
 
                 return getResponse(ok(aufbau));
             }
@@ -162,7 +162,7 @@ public class AufbauService extends AbstractItemService<NameKey, Aufbau> {
     @Path(ApiPaths.ABBILDUNG_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Deletes the image for a named Aufbau", response = Aufbau.class)
+    @ApiOperation(value = "Deletes the image for a named Aufbau", response = IAufbau.class)
     @ApiResponses({
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
@@ -175,7 +175,7 @@ public class AufbauService extends AbstractItemService<NameKey, Aufbau> {
 
                 aufbau.setAbbildung(null);
 
-                getPersister().update((Aufbau) aufbau);
+                getPersister().update(aufbau);
 
                 return getResponse(ok(aufbau));
             }

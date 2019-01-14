@@ -16,6 +16,7 @@ import javax.ws.rs.core.UriInfo;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.linepro.modellbahn.model.IMassstab;
 import com.linepro.modellbahn.model.impl.Massstab;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.json.Views;
@@ -34,20 +35,20 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.MASSSTAB, description = "Massstab maintenance")
+@Api(value = ApiNames.MASSSTAB)
 @Path(ApiPaths.MASSSTAB)
-public class MassstabService extends AbstractItemService<NameKey, Massstab> {
+public class MassstabService extends AbstractItemService<NameKey, IMassstab> {
 
     public MassstabService() {
-        super(Massstab.class);
+        super(IMassstab.class);
     }
 
     @JsonCreator
-    public Massstab create(@JsonProperty(value = ApiNames.ID) Long id,
+    public IMassstab create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        Massstab entity = new Massstab(id, name, bezeichnung, deleted);
+        IMassstab entity = new Massstab(id, name, bezeichnung, deleted);
         
         debug("created: " + entity);
 
@@ -58,7 +59,7 @@ public class MassstabService extends AbstractItemService<NameKey, Massstab> {
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds a Massstab by name", response = Massstab.class)
+    @ApiOperation(value = "Finds a Massstab by name", response = IMassstab.class)
     public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -66,7 +67,7 @@ public class MassstabService extends AbstractItemService<NameKey, Massstab> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Massstaben by example", response = Massstab.class, responseContainer = "List")
+    @ApiOperation(value = "Finds Massstaben by example", response = IMassstab.class, responseContainer = "List")
     @ApiImplicitParams({
         @ApiImplicitParam( name = ApiNames.ID, value = "Massstab id", dataType = "Long", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.NAMEN, value = "Massstab code", example = "H0", dataType = "String", paramType = "query"),
@@ -83,8 +84,8 @@ public class MassstabService extends AbstractItemService<NameKey, Massstab> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds a Massstab", response = Massstab.class)
-    public Response add(Massstab entity) {
+    @ApiOperation(code = 201, value = "Adds a Massstab", response = IMassstab.class)
+    public Response add(IMassstab entity) {
         return super.add(entity);
     }
 
@@ -93,8 +94,8 @@ public class MassstabService extends AbstractItemService<NameKey, Massstab> {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates a Massstab by name", response = Massstab.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Massstab entity) {
+    @ApiOperation(code = 202, value = "Updates a Massstab by name", response = IMassstab.class)
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IMassstab entity) {
         return super.update(name, entity);
     }
 
