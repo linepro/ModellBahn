@@ -44,7 +44,6 @@ public interface DBNames {
     String ACHSFOLG_ID = "achsfolg_id";
     String ADRESS = "adress";
     String ADRESS_TYP = "adressTyp";
-    String ADRESSEN = "adressen";
     String ANFAHRZUGKRAFT = "anfahrzugkraft";
     String ANLEITUNGEN = "anleitungen";
     String ANMERKUNG = "anmerkung";
@@ -61,7 +60,6 @@ public interface DBNames {
     String BEZEICHNUNG = "bezeichnung";
     String CV = "cv";
     String CV_ID = "cv_id";
-    String CVS = "cvs";
     String DECIMALS = "decimals";
     String DECODER_ID = "decoder_id";
     String DECODER_TYP_ID = "decoder_typ_id";
@@ -78,7 +76,6 @@ public interface DBNames {
     String FAHRSTUFE = "fahrstufe";
     String FUNKTION = "funktion";
     String FUNKTION_ID = "funktion_id";
-    String FUNKTIONEN = "funktionen";
     String GATTUNG_ID = "gattung_id";
     String GESCHWINDIGKEIT = "geschwindigkeit";
     String HERSTELLER_ID = "hersteller_id";
@@ -117,8 +114,6 @@ public interface DBNames {
     String SITZPLATZEKL2 = "sitzplatzeKL2";
     String SITZPLATZEKL3 = "sitzplatzeKL3";
     String SITZPLATZEKL4 = "sitzplatzeKL4";
-    String SitzplatzeTzKL1 = "sitzplatzeTzKL1";
-    String SitzplatzeTzKL2 = "sitzplatzeTzKL2";
     String SONDERMODELL_ID = "sondermodell_id";
     String SOUND = "sound";
     String SPAN = "span";
@@ -128,13 +123,10 @@ public interface DBNames {
     String STUCK = "stuck";
     String TEIL = "teil";
     String TEIL_ID = "teilId";
-    String TEILEN = "teilen";
     String TELEFON = "telefon";
     String TRIEBKOPF = "triebkopf";
-    String TRIEBZUGANZEIGEN = "triebzugAnzeigen";
     String UBERHITZERFLACHE = "uberhitzerflache";
     String UNTER_KATEGORIE_ID = "unter_kategorie_id";
-    String UNTER_KATEGORIEN = "unter_kategorieen";
     String URL = "url";
     String VERDAMPFUNG = "verdampfung";
     String VORBILD_ID = "vorbild_id";

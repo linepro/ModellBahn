@@ -206,14 +206,6 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.mittelwagen.positive}")
     private Integer mittelwagen;
 
-    /** The sitzplatze TZKL 1. */
-    @Positive(message = "{com.linepro.modellbahn.validator.constraints.sitzplatzeTzKL1.positive}")
-    private Integer sitzplatzeTzKL1;
-
-    /** The sitzplatze tz KL 2. */
-    @Positive(message = "{com.linepro.modellbahn.validator.constraints.sitzplatzeTzKL2.positive}")
-    private Integer sitzplatzeTzKL2;
-
     /** The drehgestell bauart. */
     private String drehgestellBauart;
 

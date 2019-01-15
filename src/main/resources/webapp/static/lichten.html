@@ -16,7 +16,7 @@
 <script type="text/javascript">
   const columns = [NAMEN, BEZEICHNUNG, ABBILDUNG];
 
-  const licht = new ListEditGrid(10, "licht", "licht", columns, Paged.PAGED, EditMode.UPDATE, undefined);
+  const licht = new ListEditGrid(10, "licht", "licht", columns, Paged.PAGED, EditMode.UPDATE);
 
   async function init() {
     await licht.init();

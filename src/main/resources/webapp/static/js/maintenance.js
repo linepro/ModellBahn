@@ -20,6 +20,7 @@ class ItemGrid {
     this.children = children;
     this.editForm = editForm;
     this.current = this.apiUrl;
+    this.maxLabel = 10;
 
     if (this.apiUrl) {
       let search = new URLSearchParams(location.search);
@@ -159,7 +160,7 @@ class ItemGrid {
           ctl = column.getControl(cell, entity, editMode);
         } else {
           cell.style.width = column.getLength() + "em";
-          cell.style.maxWidth = this.getLength() + "em";
+          cell.style.maxWidth = column.getLength() + "em";
           ctl = document.createElement("input");
           ctl.type = "text";
           ctl.disabled = "true";
@@ -246,10 +247,10 @@ class ItemGrid {
     let key = document.getElementById(getKeyId(rowId));
     if (key) {
       grid.columns.forEach(column => {
-        if (column.binding) {
+        if (column.setter) {
           let value = column.getValue(document.getElementById(getFieldId(rowId, column.binding)));
           if (value) {
-            data[column.binding] = value;
+            column.setter(data, value);
           }
         }
       });

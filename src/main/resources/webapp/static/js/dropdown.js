@@ -13,7 +13,7 @@ class Option {
     return this.display;
   }
 
-  getValue(value) {
+  getValue() {
     return this.value;
   }
 

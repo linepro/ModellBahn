@@ -212,7 +212,7 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
     @ApiOperation(code = 204, value = "Removes a vehicle from a named Zug")
     public Response deleteConsist(@PathParam(ApiPaths.ZUG_PARAM_NAME) String zugStr, @PathParam(ApiPaths.POSITION_PARAM_NAME) Integer position) {
         try {
-            IZugConsist zugConsist = (ZugConsist) findZugConsist(zugStr, position, true);
+            IZugConsist zugConsist = findZugConsist(zugStr, position, true);
 
             if (zugConsist == null) {
                 return getResponse(badRequest(null, "ZugConsist " + zugStr + "/" + position + " does not exist"));

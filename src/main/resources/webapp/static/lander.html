@@ -14,11 +14,12 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
+  const columns = [NAMEN, BEZEICHNUNG, WAHRUNG];
 
-  const land = new ListEditGrid(10, "land", "land", [NAMEN, BEZEICHNUNG, WAHRUNG]);
+  const land = new ListEditGrid(10, "land", "land", columns, Paged.PAGED, EditMode.UPDATE);
 
   async function init() {
-	await WAHRUNG_DROP.init();
+	  await WAHRUNG_DROP.init();
     await land.init();
     about();
 }

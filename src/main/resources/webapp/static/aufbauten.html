@@ -16,7 +16,7 @@
 <script type="text/javascript">
   const columns = [NAMEN, BEZEICHNUNG, ABBILDUNG];
 
-  const aufbau = new ListEditGrid(10, "aufbau", "aufbau", columns, Paged.PAGED, EditMode.UPDATE, undefined);
+  const aufbau = new ListEditGrid(10, "aufbau", "aufbau", columns, Paged.PAGED, EditMode.UPDATE);
 
   async function init() {
 	await aufbau.init();

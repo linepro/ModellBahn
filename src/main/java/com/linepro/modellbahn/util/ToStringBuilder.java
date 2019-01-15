@@ -369,9 +369,4 @@ public class ToStringBuilder extends org.apache.commons.lang3.builder.ToStringBu
         super.append(fieldName, value != null ? value.getAbsolutePath() : null);
         return this;
     }
-
-    @Override
-    public String build() {
-        return super.build();
-    }
 }

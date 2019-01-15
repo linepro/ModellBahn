@@ -369,7 +369,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
                 produkt.setAbbildung(file);
 
-                getPersister().update((Produkt) produkt);
+                getPersister().update(produkt);
 
                 return getResponse(ok(produkt));
             }
@@ -394,7 +394,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
                 produkt.setAbbildung(null);
 
-                getPersister().update((Produkt) produkt);
+                getPersister().update(produkt);
 
                 return getResponse(ok(produkt));
             }
@@ -428,7 +428,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
                 produkt.setAnleitungen(file);
 
-                getPersister().update((Produkt) produkt);
+                getPersister().update(produkt);
 
                 return getResponse(ok(produkt));
             }
@@ -453,7 +453,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
                 produkt.setAnleitungen(null);
 
-                getPersister().update((Produkt) produkt);
+                getPersister().update(produkt);
 
                 return getResponse(ok(produkt));
             }
@@ -487,7 +487,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
                 produkt.setExplosionszeichnung(file);
 
-                getPersister().update((Produkt) produkt);
+                getPersister().update(produkt);
 
                 return getResponse(ok(produkt));
             }
@@ -512,7 +512,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
                 produkt.setExplosionszeichnung(null);
 
-                getPersister().update((Produkt) produkt);
+                getPersister().update(produkt);
 
                 return getResponse(ok(produkt));
             }

@@ -146,7 +146,7 @@ const addOption = (select, value, text) => {
 
 const selectFile = (ctl, type, filter) => {
   //TODO: popup selector
-}
+};
 
 class Column {
   constructor(heading, binding, getter, setter, editable, required, length) {
@@ -254,22 +254,6 @@ class BoolColumn extends Column {
   }
 }
 
-class DateColumn extends Column {
-  constructor(heading, binding, getter, setter, editable, required) {
-    super(heading, binding, getter, setter, editable, required, 12);
-  }
-
-  createControl() {
-    let ctl = super.createControl();
-    ctl.type = 'date';
-    return ctl;
-  }
-
-  setValue(ctl, value) {
-    ctl.checked = value;
-  }
-}
-
 class NumberColumn extends Column {
   constructor(heading, binding, getter, setter, editable, required, max, min, places) {
     max = max ? max : 255;
@@ -306,14 +290,16 @@ class PhoneColumn extends Column {
 }
 
 class TextColumn extends Column {
-  constructor(heading, binding, getter, setter, editable, required, length) {
+  constructor(heading, binding, getter, setter, editable, required, length, pattern) {
     super(heading, binding, getter, setter, editable, required, length);
+    this.pattern = pattern;
   }
 
   createControl() {
     let ctl = super.createControl();
     ctl.type = 'text';
     ctl.maxLength = this.length;
+    ctl.pattern = this.pattern;
     return ctl;
   }
 }
@@ -330,6 +316,19 @@ class URLColumn extends Column {
   }
 }
 
+class DateColumn extends TextColumn {
+  constructor(heading, binding, getter, setter, editable, required) {
+    super(heading, binding, getter, setter, editable, required, 12, '^(18[2-9][0-9]|19[0-9]{2}|2[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[0-1])$');
+  }
+
+  createControl() {
+    let ctl = super.createControl();
+    ctl.addEventListener('click',  (e) => {});
+    return ctl;
+  }
+
+}
+
 class IMGColumn extends Column {
   constructor(heading, binding, getter, setter, onChange, editable, required) {
     super(heading, binding, getter, setter, editable, required);
@@ -337,15 +336,15 @@ class IMGColumn extends Column {
   }
 
   createControl() {
-	let div = document.createElement("div");
+	  let div = document.createElement("div");
 	
     let ctl = getImg('none');
-    ctl.onClick = () => {};
+    ctl.addEventListener('click', (e) => {});
     if (this.onChange) ctl.change = this.onChange;
     div.appendChild(ctl);
     
     let btn = document.createElement('button');
-    btn.onclick = selectFile(ctl,'image/*',false);
+    btn.addEventListener('click',  selectFile(ctl,'image/*',false));
     btn.setAttribute('value', '+');
     btn.className = 'selection';
     div.appendChild(btn);
@@ -392,14 +391,14 @@ class PDFColumn extends Column {
 
   createControl() {
     let ctl = document.createElement('a');
-    ctl.onClick = () => {};
+    ctl.addEventListener('click',  (e) => {});
     if (this.onChange) ctl.change = this.onChange;
 
     let img = getImg('none');
     ctl.appendChild(img);
     
-    let btn = document.createElement('button')
-    btn.onClick = selectFile(ctl, 'application/pdf', false);
+    let btn = document.createElement('button');
+    btn.cick = selectFile(ctl, 'application/pdf', false);
     btn.setAttribute('value', '+');
     btn.className = 'selection';
 
@@ -607,15 +606,15 @@ async function modal(elementName, title, contentUrl) {
 
     anchor.appendChild(modal);
     anchor.href = '#';
-    anchor.onclick = function () {
+    anchor.addEventListener('click',  (e) => {
       modal.style.display = 'block';
-    };
+    });
 
-    window.onclick = function (event) {
+    window.addEventListener('click',  (e) => {
       if (event.target === modal) {
         modal.style.display = 'none';
       }
-    }
+    });
   }
 }
 
@@ -674,7 +673,7 @@ const addHeader = (tableName, table, columns, paged, rowCount) => {
   header.append(headRow);
 
   columns.forEach(column => {
-	let th; 
+	  let th;
     if (paged === Paged.FORM) {
       th = document.createElement('div');
       addText(th, '')

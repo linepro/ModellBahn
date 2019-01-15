@@ -60,31 +60,32 @@ public class FileUploadHandler implements IFileUploadHandler {
      * @return the path
      */
     @Override
-	public Path upload(String entityType, String[] entityIds, FormDataContentDisposition fileDetail, InputStream fileData) throws Exception {
-        Files.createDirectory(fileStore.getItemPath(entityType, entityIds));
+    public Path upload(String entityType, String[] entityIds, FormDataContentDisposition fileDetail,
+        InputStream fileData) throws Exception {
+      Files.createDirectory(fileStore.getItemPath(entityType, entityIds));
 
-        String fileName = fileDetail.getFileName();
-        String extension = null;
-        
-        int extensionStart = fileName.lastIndexOf(".");
+      String fileName = fileDetail.getFileName();
+      String extension = null;
 
-        if (extensionStart >= 0) {
-            fileName = fileName.substring(0,  extensionStart);
-            extension = fileName.substring(extensionStart);
-        }
+      int extensionStart = fileName.lastIndexOf(".");
 
-        if (extension == null || AcceptableMediaTypes.EXTENTSIONS_TO_TYPES.get(extension) == null) {
-            throw new IllegalArgumentException("Unsupported mediaType " + fileName);
-        }
-		
-        Path filePath = fileStore.getFilePath(entityType, entityIds, fileName, extension);
+      if (extensionStart >= 0) {
+        fileName = fileName.substring(0, extensionStart);
+        extension = fileName.substring(extensionStart);
+      }
 
-        writeToFile(filePath, fileDetail, fileData);
-		
-		logger.info("File " + fileDetail + " uploaded to " + filePath);
-        
-        return filePath;
-	}
+      if (extension == null || AcceptableMediaTypes.EXTENTSIONS_TO_TYPES.get(extension) == null) {
+        throw new IllegalArgumentException("Unsupported mediaType " + fileName);
+      }
+
+      Path filePath = fileStore.getFilePath(entityType, entityIds, fileName, extension);
+
+      writeToFile(filePath, fileDetail, fileData);
+
+      logger.info("File " + fileDetail + " uploaded to " + filePath);
+
+      return filePath;
+    }
 
 	/**
      * Write to file.
