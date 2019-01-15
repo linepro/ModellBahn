@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.rest.service;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.util.Arrays;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -37,45 +39,50 @@ public class EnumsService extends AbstractService {
     @GET
     @Path(ApiPaths.ENUMS_ADRESS_TYP_PATH)
     @Produces(MediaType.APPLICATION_JSON)
+    @JsonSerialize(contentAs= IDescribedEnum.class)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible AdressTyp values", response = IDescribedEnum.class, responseContainer = "List")
     public Response getAdressTyp() {
-        return ok(AdressTyp.values()).build();
+        return ok(Arrays.asList(AdressTyp.values())).build();
     }
 
     @GET
     @Path(ApiPaths.ENUMS_STECKER_PATH)
     @Produces(MediaType.APPLICATION_JSON)
+    @JsonSerialize(contentAs= IDescribedEnum.class)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible Connector values", response = IDescribedEnum.class, responseContainer = "List")
     public Response getConnector() {
-        return ok(Connector.values()).build();
+        return ok(Arrays.asList(Connector.values())).build();
     }
 
     @GET
     @Path(ApiPaths.ENUMS_KONFIGURATION_PATH)
     @Produces(MediaType.APPLICATION_JSON)
+    @JsonSerialize(contentAs= IDescribedEnum.class)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible Konfiguration values", response = IDescribedEnum.class, responseContainer = "List")
     public Response getKonfiguration() {
-        return ok(Konfiguration.values()).build();
+        return ok(Arrays.asList(Konfiguration.values())).build();
     }
 
     @GET
     @Path(ApiPaths.ENUMS_STATUS_PATH)
     @Produces(MediaType.APPLICATION_JSON)
+    @JsonSerialize(contentAs= IDescribedEnum.class)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible Status values", response = IDescribedEnum.class, responseContainer = "List")
     public Response getStatus() {
-        return ok(Status.values()).build();
+        return ok(Arrays.asList(Status.values())).build();
     }
 
     @GET
     @Path(ApiPaths.ENUMS_LEISTUNGS_UBERTRAGUNG_PATH)
     @Produces(MediaType.APPLICATION_JSON)
+    @JsonSerialize(contentAs= IDescribedEnum.class)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible LeistungsUbertragung values", response = IDescribedEnum.class, responseContainer = "List")
     public Response getLeistungsUbertragung() {
-        return ok(LeistungsUbertragung.values()).build();
+        return ok(Arrays.asList(LeistungsUbertragung.values())).build();
     }
 }

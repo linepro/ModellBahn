@@ -232,6 +232,10 @@ class Column {
   setValue(ctl, value) {
     ctl.value = value;
   }
+
+  isButtons() {
+    return false;
+  }
 }
 
 class BoolColumn extends Column {
@@ -336,7 +340,7 @@ class IMGColumn extends Column {
   }
 
   createControl() {
-	  let div = document.createElement("div");
+	  let div = document.createElement('div');
 	
     let ctl = getImg('none');
     ctl.addEventListener('click', (e) => {});
@@ -503,7 +507,7 @@ class ButtonColumn {
         td.appendChild(btn);
       });
     } else {
-      addText(td, '');
+      addText(td, ' ');
     }
 
     return td;
@@ -541,10 +545,14 @@ class ButtonColumn {
         }
       });
     } else {
-      addText(ctl, '');
+      addText(ctl, ' ');
     }
 
     return ctl;
+  }
+
+  isButtons() {
+    return true;
   }
 }
 
@@ -676,7 +684,10 @@ const addHeader = (tableName, table, columns, paged, rowCount) => {
 	  let th;
     if (paged === Paged.FORM) {
       th = document.createElement('div');
-      addText(th, '')
+      addText(th, ' ');
+      if (column.isButtons()) {
+        th.id = getCellId(getRowId(tableName, 0), column);
+      }
     } else {
       th = column.getHeading();
     }
@@ -714,9 +725,9 @@ const addBody = (tableName, table, pageSize, columns, paged, rowCount, maxLabel)
       let td = document.createElement('div');
 
       if (isForm) {
-	    td.className = 'flex-item';
+	      td.className = 'flex-item';
 
-	    let th = column.getHeading();
+	      let th = column.getHeading();
         th.className = 'flex-label';
         th.style.width = maxLabel + 'ch';
         th.style.maxWidth = maxLabel + 'ch';
@@ -725,13 +736,15 @@ const addBody = (tableName, table, pageSize, columns, paged, rowCount, maxLabel)
       }
       
       let tc = document.createElement('div');
-      
-      tc.id = getCellId(rowId, column);
+
+      if (!isForm || !column.isButtons()) {
+        tc.id = getCellId(rowId, column);
+      }
       tc.className = isForm ? 'flex-control' : 'table-cell';
       tc.style.width = isForm ? column.getLength() + 'ch' : column.getWidth();
       tc.style.maxWidth = tc.style.width;
       
-      addText(tc, '');
+      addText(tc, ' ');
       
       if (isForm) {
       	td.append(tc);  
@@ -769,7 +782,7 @@ const addFooter = (tableName, table, columns, paged, rowCount) => {
 	  tf.style.width = columns[i].getHeaderLength() + 'ch';
 	  tf.style.maxWidth = columns[i].getHeaderLength() + 'ch';
 	
-	  addText(tf, '');
+	  addText(tf, ' ');
 	
 	  navRow.append(tf);
 	}

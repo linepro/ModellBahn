@@ -1,5 +1,5 @@
-// module "maintenance.js"
-"use strict";
+// module 'maintenance.js'
+'use strict';
 
 const Paged = {
   FORM: 0,
@@ -20,29 +20,28 @@ class ItemGrid {
     this.children = children;
     this.editForm = editForm;
     this.current = this.apiUrl;
-    this.maxLabel = 10;
 
     if (this.apiUrl) {
       let search = new URLSearchParams(location.search);
 
-      if (search.has("new")) {
+      if (search.has('new')) {
         this.editMode = EditMode.ADD;
-        search.delete("new");
+        search.delete('new');
       }
 
-      if (search.has("self")) {
-        this.current = search.get("self");
-        search.delete("self");
+      if (search.has('self')) {
+        this.current = search.get('self');
+        search.delete('self');
       }
 
       if (paged === Paged.PAGED) {
-        search.set("pageNumber", "0");
-        search.set("pageSize", pageSize);
+        search.set('pageNumber', '0');
+        search.set('pageSize', pageSize);
       }
 
       let searchString = search.toString();
 
-      this.current = this.current + (searchString.length ? "?" + searchString : "");
+      this.current = this.current + (searchString.length ? '?' + searchString : '');
     }
 
     this.initialized = false;
@@ -81,14 +80,13 @@ class ItemGrid {
     });
 
     columns.forEach(column => {
-      column.setWidth(Math.floor((column.getLength() * 100) / totalWidth) + "%");
+      column.setWidth(Math.floor((column.getLength() * 100) / totalWidth) + '%');
       maxLabel = Math.max(column.heading ? column.heading.length : maxLabel,  maxLabel);
     });
 
     let table = document.getElementById(grid.tableName);
     removeChildren(table);
-    table.className = "table";
-    grid.maxLabel = maxLabel;
+    table.className = 'table';
 
     addHeader(tableName, table, columns, paged, rowCount);
 
@@ -142,12 +140,12 @@ class ItemGrid {
 
       if (entities.length > 0 && row < entities.length) {
         entity = entities[row];
-        let lnk = getLink(entity.links, "self");
+        let lnk = getLink(entity.links, 'self');
         key.value = lnk.href;
         grid.rowsFilled++;
       } else {
         entity = undefined;
-        key.value = "";
+        key.value = '';
       }
 
       columns.forEach(column => {
@@ -156,15 +154,15 @@ class ItemGrid {
         removeChildren(cell);
 
         let ctl;
-        if (entity || cell.id.endsWith("_buttons")) {
+        if (entity || column.isButtons()) {
           ctl = column.getControl(cell, entity, editMode);
         } else {
-          cell.style.width = column.getLength() + "em";
-          cell.style.maxWidth = column.getLength() + "em";
-          ctl = document.createElement("input");
-          ctl.type = "text";
-          ctl.disabled = "true";
-          ctl.readOnly = "true";
+          cell.style.width = column.getLength() + 'em';
+          cell.style.maxWidth = column.getLength() + 'em';
+          ctl = document.createElement('input');
+          ctl.type = 'text';
+          ctl.disabled = 'true';
+          ctl.readOnly = 'true';
           ctl.required = false;
         }
 
@@ -172,31 +170,31 @@ class ItemGrid {
       });
     }
 
-    let prev = document.getElementById(tableName + "Prev");
+    let prev = document.getElementById(tableName + 'Prev');
 
     if (prev) {
       removeChildren(prev);
 
-      let prevLnk = getLink(jsonData.links, "previous");
+      let prevLnk = getLink(jsonData.links, 'previous');
 
       if (prevLnk) {
-        addButton(prev, prevLnk, tableName + ".getData(this.value)");
+        addButton(prev, prevLnk, tableName + '.getData(this.value)');
       } else {
-        addText(prev, "");
+        addText(prev, '');
       }
     }
 
-    let next = document.getElementById(tableName + "Next");
+    let next = document.getElementById(tableName + 'Next');
 
     if (next) {
       removeChildren(next);
 
-      let nextLnk = getLink(jsonData.links, "next");
+      let nextLnk = getLink(jsonData.links, 'next');
 
       if (nextLnk) {
-        addButton(next, nextLnk, tableName + ".getData(this.value)");
+        addButton(next, nextLnk, tableName + '.getData(this.value)');
       } else {
-        addText(next, "");
+        addText(next, '');
       }
     }
   }
@@ -220,7 +218,7 @@ class ItemGrid {
   async getData(restUrl) {
     let grid = this;
 
-    fetch(restUrl, {method: "get", headers: {"Content-type": "application/json"}})
+    fetch(restUrl, {method: 'get', headers: {'Content-type': 'application/json'}})
       .then(response => checkResponse(response))
       .then(jsonData => grid.renderJson(jsonData, restUrl))
       .catch(error => reportError(error));
@@ -273,7 +271,7 @@ class ItemGrid {
     let rowId = getRowId(grid.tableName, rowNum);
 
     let key = document.getElementById(getKeyId(rowId));
-    key.value = "";
+    key.value = '';
 
     grid.columns.forEach(column => {
       let td = document.getElementById(getCellId(rowId, column));
@@ -284,10 +282,10 @@ class ItemGrid {
       td.appendChild(ctl);
     });
 
-    let td = document.getElementById(getCellId(rowId, "buttons"));
-    let save = getButton(rowId, "save", grid.tableName + ".saveRow(" + rowId + ".id)");
+    let td = document.getElementById(getCellId(rowId, 'buttons'));
+    let save = getButton(rowId, 'save', grid.tableName + '.saveRow(' + rowId + '.id)');
     td.appendChild(save);
-    let del = getButton(rowId, "delete", grid.tableName + ".removeRow(" + rowId + ".id)");
+    let del = getButton(rowId, 'delete', grid.tableName + '.removeRow(' + rowId + '.id)');
     td.appendChild(del);
   }
 
@@ -295,7 +293,7 @@ class ItemGrid {
     let grid = this;
     let deleteUrl = getKeyValue(rowId);
     if (deleteUrl) {
-      await fetch(deleteUrl, {method: "DELETE", headers: {"Content-type": "application/json"}})
+      await fetch(deleteUrl, {method: 'DELETE', headers: {'Content-type': 'application/json'}})
         .then(response => {
           if (!response.ok) {
             throw new Error(response.statusText);
@@ -313,13 +311,13 @@ class ItemGrid {
     let grid = this;
     let selfUrl = getKeyValue(rowId);
     if (selfUrl) {
-      window.location.href = grid.editForm + "?self=" + selfUrl;
+      window.location.href = grid.editForm + '?self=' + selfUrl;
     }
   }
 
   newRow() {
     let grid = this;
-    window.location.href = grid.editForm + "?new=true";
+    window.location.href = grid.editForm + '?new=true';
   }
 
   removeRow(rowId) {
@@ -333,7 +331,7 @@ class ItemGrid {
     let data = grid.rowData(rowId);
     let jsonData = JSON.stringify(data);
     if (data) {
-      await fetch(saveUrl, {method: "POST", headers: {"Content-type": "application/json"}, body: jsonData})
+      await fetch(saveUrl, {method: 'POST', headers: {'Content-type': 'application/json'}, body: jsonData})
         .then(response => checkResponse(response))
         .then(jsonData => grid.loadData())
         .catch(error => reportError(error));
@@ -347,7 +345,7 @@ class ItemGrid {
     let jsonData = JSON.stringify(data);
 
     if (data) {
-      await fetch(updateUrl, {method: "PUT", headers: {"Content-type": "application/json"}, body: jsonData})
+      await fetch(updateUrl, {method: 'PUT', headers: {'Content-type': 'application/json'}, body: jsonData})
         .then(response => checkResponse(response))
         .then(jsonData => grid.loadData())
         .catch(error => reportError(error));
@@ -366,7 +364,7 @@ class ListEditGrid extends ItemGrid {
   async init() {
     super.init();
 
-    let h1 = document.getElementById("heading");
+    let h1 = document.getElementById('heading');
 
     if (h1) {
       h1.text = this.dataType;
