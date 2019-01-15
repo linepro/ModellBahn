@@ -1,6 +1,12 @@
 package com.linepro.modellbahn.model.util;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.refs.IDescribedEnum;
+import com.linepro.modellbahn.rest.util.ApiNames;
+
+import io.swagger.annotations.ApiModel;
 
 /**
  * AdressTyp.
@@ -8,6 +14,10 @@ import com.linepro.modellbahn.model.refs.IDescribedEnum;
  * @author   $Author$
  * @version  $Id$
  */
+@JsonRootName(value = ApiNames.ADRESS_TYP)
+@JsonIgnoreProperties(ignoreUnknown=true)
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG })
+@ApiModel(value = ApiNames.ADRESS_TYP, description = "Adress types")
 public enum AdressTyp implements IDescribedEnum {
 
     DCC("A DCC address 0 - 10239."),

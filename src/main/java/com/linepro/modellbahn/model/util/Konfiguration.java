@@ -1,6 +1,12 @@
 package com.linepro.modellbahn.model.util;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.model.refs.IDescribedEnum;
+import com.linepro.modellbahn.rest.util.ApiNames;
+
+import io.swagger.annotations.ApiModel;
 
 /**
  * Konfiguration.
@@ -8,6 +14,10 @@ import com.linepro.modellbahn.model.refs.IDescribedEnum;
  * @author   $Author$
  * @version  $Id$
  */
+@JsonRootName(value = ApiNames.KONFIGURATION)
+@JsonIgnoreProperties(ignoreUnknown=true)
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG })
+@ApiModel(value = ApiNames.KONFIGURATION, description = "Configuration methods")
 public enum Konfiguration implements IDescribedEnum {
 
     NONE("The Decoder cannot be configured."),

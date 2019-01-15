@@ -1,7 +1,9 @@
 package com.linepro.modellbahn.rest.service;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -9,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.refs.IDescribedEnum;
 import com.linepro.modellbahn.model.util.AdressTyp;
 import com.linepro.modellbahn.model.util.Connector;
@@ -16,6 +19,7 @@ import com.linepro.modellbahn.model.util.Konfiguration;
 import com.linepro.modellbahn.model.util.LeistungsUbertragung;
 import com.linepro.modellbahn.model.util.Status;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.DescribedEnumWrapper;
 import com.linepro.modellbahn.rest.util.AbstractService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
@@ -43,7 +47,7 @@ public class EnumsService extends AbstractService {
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible AdressTyp values", response = IDescribedEnum.class, responseContainer = "List")
     public Response getAdressTyp() {
-        return ok(Arrays.asList(AdressTyp.values())).build();
+        return ok(getEnumValues(AdressTyp.values())).build();
     }
 
     @GET
@@ -53,7 +57,7 @@ public class EnumsService extends AbstractService {
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible Connector values", response = IDescribedEnum.class, responseContainer = "List")
     public Response getConnector() {
-        return ok(Arrays.asList(Connector.values())).build();
+        return ok(getEnumValues(Connector.values())).build();
     }
 
     @GET
@@ -63,7 +67,7 @@ public class EnumsService extends AbstractService {
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible Konfiguration values", response = IDescribedEnum.class, responseContainer = "List")
     public Response getKonfiguration() {
-        return ok(Arrays.asList(Konfiguration.values())).build();
+        return ok(getEnumValues(Konfiguration.values())).build();
     }
 
     @GET
@@ -73,7 +77,7 @@ public class EnumsService extends AbstractService {
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible Status values", response = IDescribedEnum.class, responseContainer = "List")
     public Response getStatus() {
-        return ok(Arrays.asList(Status.values())).build();
+        return ok(getEnumValues(Status.values())).build();
     }
 
     @GET
@@ -83,6 +87,10 @@ public class EnumsService extends AbstractService {
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible LeistungsUbertragung values", response = IDescribedEnum.class, responseContainer = "List")
     public Response getLeistungsUbertragung() {
-        return ok(Arrays.asList(LeistungsUbertragung.values())).build();
+        return ok(getEnumValues(LeistungsUbertragung.values())).build();
+    }
+
+    private List<IDescribedEnum> getEnumValues(IDescribedEnum[] values) {
+        return Stream.of(values).map(e -> new DescribedEnumWrapper(e)).collect(Collectors.toList());
     }
 }
