@@ -20,7 +20,7 @@ import com.linepro.modellbahn.model.refs.IAchsfolgRef;
 import com.linepro.modellbahn.model.refs.IAntriebRef;
 import com.linepro.modellbahn.model.refs.IBahnverwaltungRef;
 import com.linepro.modellbahn.model.refs.IVorbildRef;
-import com.linepro.modellbahn.model.util.LeistungsUbertragung;
+import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
 import com.linepro.modellbahn.rest.json.Formats;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.AchsfolgDeserializer;

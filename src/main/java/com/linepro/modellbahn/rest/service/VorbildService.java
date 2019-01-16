@@ -31,7 +31,7 @@ import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.IVorbild;
 import com.linepro.modellbahn.model.impl.Vorbild;
 import com.linepro.modellbahn.model.keys.VorbildKey;
-import com.linepro.modellbahn.model.util.LeistungsUbertragung;
+import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;

@@ -33,7 +33,7 @@ import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.impl.Artikel;
 import com.linepro.modellbahn.model.keys.ArtikelKey;
-import com.linepro.modellbahn.model.util.Status;
+import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;

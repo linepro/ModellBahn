@@ -47,10 +47,6 @@ class DropDown {
       let value = dropDown.keyExtractor(entity);
       let option = dropDown.optionExtractor(entity);
 
-      if (!option || !option.display) {
-        alert(entity);
-      }
-
       dropDown.length = Math.max(option.display.length, dropDown.length);
 
       let current = dropDown.options.find(o => o.getValue() === value);

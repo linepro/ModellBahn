@@ -26,7 +26,7 @@ public interface ApiNames {
     String CONSIST = "consist";
     String CV = "cv";
     String CVS = "cvs";
-    String DECIMALS = "decimals";
+    String DEZIMAL = "dezimal";
     String DECODER = "decoder";
     String DECODER_ID = "decoderId";
     String DECODER_TYP = "decoderTyp";
@@ -99,6 +99,7 @@ public interface ApiNames {
     String TEIL_HERSTELLER = "teilHersteller";
     String TEILEN = "teilen";
     String TELEFON = "telefon";
+    String TOOLTIP = "tooltip";
     String TRIEBKOPF = "triebkopf";
     String UBERHITZERFLACHE = "uberhitzerflache";
     String UNTER_KATEGORIE = "unterKategorie";

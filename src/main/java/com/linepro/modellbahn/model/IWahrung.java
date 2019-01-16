@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiModel;
  */
 @JsonRootName(value = ApiNames.WAHRUNG)
 @JsonIgnoreProperties(ignoreUnknown=true)
-@JsonPropertyOrder({ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DECIMALS, ApiNames.DELETED, ApiNames.LINKS})
+@JsonPropertyOrder({ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DEZIMAL, ApiNames.DELETED, ApiNames.LINKS})
 @ApiModel(value = ApiNames.WAHRUNG, description = "A currency.")
 public interface IWahrung extends INamedItem<NameKey>, IWahrungRef {
 
@@ -26,6 +26,6 @@ public interface IWahrung extends INamedItem<NameKey>, IWahrungRef {
     @JsonSetter(ApiNames.BEZEICHNUNG)
     void setBezeichnung(String bezeichnung);
 
-    @JsonSetter(ApiNames.DECIMALS)
-    void setDecimals(Integer decimals);
+    @JsonSetter(ApiNames.DEZIMAL)
+    void setDecimals(Integer dezimal);
 }

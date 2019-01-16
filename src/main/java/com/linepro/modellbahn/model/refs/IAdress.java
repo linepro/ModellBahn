@@ -2,7 +2,7 @@ package com.linepro.modellbahn.model.refs;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.linepro.modellbahn.model.util.AdressTyp;
+import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.ApiNames;
 

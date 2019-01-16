@@ -30,10 +30,10 @@ public class Wahrung extends AbstractNamedItem<NameKey> implements IWahrung {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 9168067747478159138L;
 
-    /** The decimals. */
-    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decimals.notnull}")
-    @Range(min=0,max=2, message = "{com.linepro.modellbahn.validator.constraints.decimals.range}")
-    private Integer decimals;
+    /** The dezimal. */
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.dezimal.notnull}")
+    @Range(min=0,max=2, message = "{com.linepro.modellbahn.validator.constraints.dezimal.range}")
+    private Integer dezimal;
 	
 	/**
 	 * Instantiates a new wahrung.
@@ -52,31 +52,31 @@ public class Wahrung extends AbstractNamedItem<NameKey> implements IWahrung {
 	 * @param id the id
 	 * @param name the name
 	 * @param bezeichnung the bezeichnung
-	 * @param decimals the decimals
+	 * @param dezimal the dezimal
 	 * @param deleted the deleted
 	 */
-	public Wahrung(Long id, String name, String bezeichnung, Integer decimals, Boolean deleted) {
+	public Wahrung(Long id, String name, String bezeichnung, Integer dezimal, Boolean deleted) {
 		super(id, name, bezeichnung, deleted);
 
-		setDecimals(decimals);
+		setDecimals(dezimal);
 	}
 
 	@Override
-    @Column(name=DBNames.DECIMALS)
+    @Column(name=DBNames.DEZIMAL)
 	public Integer getDecimals() {
-		return decimals;
+		return dezimal;
 	}
 
 	@Override
-    public void setDecimals(Integer decimals) {
-		this.decimals = decimals;
+    public void setDecimals(Integer dezimal) {
+		this.dezimal = dezimal;
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this)
 		        .appendSuper(super.toString())
-		        .append(ApiNames.DECIMALS, getDecimals())
+		        .append(ApiNames.DEZIMAL, getDecimals())
 		        .toString();
 	}
 }

@@ -48,7 +48,7 @@ const removeChildren = (node) => {
 
 const reportError = (error) => {
   console.log(error);
-  //alert('error: ' + error.toString());
+  alert('error: ' + error.toString());
 };
 
 const addButton = (cell, lnk, action) => {
@@ -60,7 +60,9 @@ const addButton = (cell, lnk, action) => {
 };
 
 const getLink = (links, rel) => {
-  if (!links) return;
+  if (!links) {
+    return;
+  }
   return links.find((lnk) => {
     return lnk.rel === rel;
   });
@@ -92,7 +94,7 @@ const getCellId = (rowId, column) => {
 };
 
 const getCellRowId = (cell) => {
- return cell.id.substring(0, cell.id.lastIndexOf('_'));
+  return cell.id.substring(0, cell.id.lastIndexOf('_'));
 };
 
 const getImgSrc = (image) => {
@@ -138,10 +140,10 @@ const getButtonLink = (href, alt, action) => {
 };
 
 const addOption = (select, value, text) => {
-    let opt = document.createElement('option');
-    opt.value = value;
-    opt.text = text;
-    select.add(opt);
+  let opt = document.createElement('option');
+  opt.value = value;
+  opt.text = text;
+  select.add(opt);
 };
 
 const selectFile = (ctl, type, filter) => {
@@ -156,7 +158,8 @@ class Column {
     this.setter = setter;
     this.editable = editable ? editable : Editable.NEVER;
     this.required = required ? required : false;
-    this.length = Math.max(length ? length : heading.length, heading.length+1);
+    this.length = Math.max(length ? length : heading.length,
+        heading.length + 1);
     this.width = 0;
   }
 
@@ -184,7 +187,7 @@ class Column {
   }
 
   getWidth() {
-	return this.width;
+    return this.width;
   }
 
   setWidth(width) {
@@ -200,7 +203,9 @@ class Column {
 
     let value;
 
-    if (entity) value = this.entityValue(entity);
+    if (entity) {
+      value = this.entityValue(entity);
+    }
 
     if (value) {
       this.setValue(ctl, value);
@@ -209,7 +214,8 @@ class Column {
     if (value || entity) {
       ctl.disabled = shouldDisable(this.editable, editMode);
     } else {
-      ctl.disabled = !(editMode === EditMode.ADD && this.editable !== Editable.NEVER);
+      ctl.disabled = !(editMode === EditMode.ADD && this.editable
+          !== Editable.NEVER);
     }
 
     ctl.readOnly = ctl.disabled;
@@ -259,9 +265,11 @@ class BoolColumn extends Column {
 }
 
 class NumberColumn extends Column {
-  constructor(heading, binding, getter, setter, editable, required, max, min, places) {
+  constructor(heading, binding, getter, setter, editable, required, max, min,
+      places) {
     max = max ? max : 255;
-    super(heading, binding, getter, setter, editable, required, Math.max(max.toString().length, heading.length));
+    super(heading, binding, getter, setter, editable, required,
+        Math.max(max.toString().length, heading.length));
     this.max = max;
     this.min = min ? min : 0;
     this.places = places ? places : 0;
@@ -294,7 +302,8 @@ class PhoneColumn extends Column {
 }
 
 class TextColumn extends Column {
-  constructor(heading, binding, getter, setter, editable, required, length, pattern) {
+  constructor(heading, binding, getter, setter, editable, required, length,
+      pattern) {
     super(heading, binding, getter, setter, editable, required, length);
     this.pattern = pattern;
   }
@@ -316,18 +325,21 @@ class URLColumn extends Column {
   createControl() {
     let ctl = super.createControl();
     ctl.type = 'url';
+    ctl.pattern = '^((http[s]{0,1}):\\/\\/){0,1}(\\w+(\\.\\w+)*)(:\\d+){0,1}((\\/){0,1}\\w+)*(\\.\\w+){0,1}$';
     return ctl;
   }
 }
 
 class DateColumn extends TextColumn {
   constructor(heading, binding, getter, setter, editable, required) {
-    super(heading, binding, getter, setter, editable, required, 12, '^(18[2-9][0-9]|19[0-9]{2}|2[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[0-1])$');
+    super(heading, binding, getter, setter, editable, required, 12,
+        '^(18[2-9][0-9]|19[0-9]{2}|2[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[0-1])$');
   }
 
   createControl() {
     let ctl = super.createControl();
-    ctl.addEventListener('click',  (e) => {});
+    ctl.addEventListener('click', (e) => {
+    });
     return ctl;
   }
 
@@ -340,19 +352,23 @@ class IMGColumn extends Column {
   }
 
   createControl() {
-	  let div = document.createElement('div');
-	
+    let div = document.createElement('div');
+
     let ctl = getImg('none');
-    ctl.addEventListener('click', (e) => {});
-    if (this.onChange) ctl.change = this.onChange;
+    ctl.className = 'img-';
+    ctl.addEventListener('click', (e) => {
+    });
+    if (this.onChange) {
+      ctl.change = this.onChange;
+    }
     div.appendChild(ctl);
-    
+
     let btn = document.createElement('button');
-    btn.addEventListener('click',  selectFile(ctl,'image/*',false));
+    btn.addEventListener('click', selectFile(ctl, 'image/*', false));
     btn.setAttribute('value', '+');
     btn.className = 'selection';
     div.appendChild(btn);
-    
+
     return div;
   }
 
@@ -376,7 +392,9 @@ class PDFColumn extends Column {
 
     let value;
 
-    if (entity) value = this.entityValue(entity);
+    if (entity) {
+      value = this.entityValue(entity);
+    }
 
     if (value) {
       this.setValue(ctl, value);
@@ -385,7 +403,8 @@ class PDFColumn extends Column {
     if (value || entity) {
       ctl.disabled = shouldDisable(this.editable, editMode);
     } else {
-      ctl.disabled = !(editMode === EditMode.ADD && this.editable !== Editable.NEVER);
+      ctl.disabled = !(editMode === EditMode.ADD && this.editable
+          !== Editable.NEVER);
     }
 
     ctl.required = this.required;
@@ -395,12 +414,15 @@ class PDFColumn extends Column {
 
   createControl() {
     let ctl = document.createElement('a');
-    ctl.addEventListener('click',  (e) => {});
-    if (this.onChange) ctl.change = this.onChange;
+    ctl.addEventListener('click', (e) => {
+    });
+    if (this.onChange) {
+      ctl.change = this.onChange;
+    }
 
     let img = getImg('none');
     ctl.appendChild(img);
-    
+
     let btn = document.createElement('button');
     btn.cick = selectFile(ctl, 'application/pdf', false);
     btn.setAttribute('value', '+');
@@ -422,7 +444,8 @@ class PDFColumn extends Column {
 
 class SelectColumn extends Column {
   constructor(heading, binding, getter, setter, dropDown, editable, required) {
-    super(heading, binding, getter, setter, editable, required, dropDown.length + 3.5);
+    super(heading, binding, getter, setter, editable, required,
+        dropDown.length + 3.5);
     this.dropDown = dropDown;
     this.dropSize = 1;
   }
@@ -432,7 +455,9 @@ class SelectColumn extends Column {
 
     let value;
 
-    if (entity) value = this.entityValue(entity);
+    if (entity) {
+      value = this.entityValue(entity);
+    }
 
     if (value) {
       this.setValue(ctl, value);
@@ -441,7 +466,8 @@ class SelectColumn extends Column {
     if (value || entity) {
       ctl.disabled = shouldDisable(this.editable, editMode);
     } else {
-      ctl.disabled = !(editMode === EditMode.ADD && this.editable !== Editable.NEVER);
+      ctl.disabled = !(editMode === EditMode.ADD && this.editable
+          !== Editable.NEVER);
     }
 
     ctl.required = this.required;
@@ -450,10 +476,12 @@ class SelectColumn extends Column {
   }
 
   addOptions(select, dropDown) {
-  	if (!this.required) addOption(select, undefined, '(n/a)');
+    if (!this.required) {
+      addOption(select, undefined, '(n/a)');
+    }
 
     dropDown.options.forEach(option => {
-    	addOption(select, option.value, option.display);
+      addOption(select, option.value, option.display);
     });
   }
 
@@ -473,7 +501,7 @@ class SelectColumn extends Column {
   }
 
   setValue(ctl, value) {
-    ctl.value = value;	  
+    ctl.value = value;
     for (let i = 0; i < ctl.options.length; i++) {
       if (ctl.options[i].value === value) {
         ctl.selectedIndex = i;
@@ -498,7 +526,7 @@ class ButtonColumn {
   getHeading() {
     let td = document.createElement('div');
     td.className = 'table-heading-btn';
-    
+
     let tableName = this.tableName;
 
     if (this.headLinkage) {
@@ -520,7 +548,7 @@ class ButtonColumn {
   getHeaderLength() {
     return this.length;
   }
-  
+
   getWidth() {
     return this.width;
   }
@@ -528,13 +556,13 @@ class ButtonColumn {
   setWidth(width) {
     this.width = width;
   }
-  
+
   getControl(cell, entity, editMode) {
     cell.className = 'table-btn';
 
     let rowId = getCellRowId(cell);
     let tableName = this.tableName;
-    
+
     let ctl = document.createElement('div');
 
     if (editMode && this.btnLinkage) {
@@ -557,13 +585,13 @@ class ButtonColumn {
 }
 
 async function checkResponse(response) {
-  if (response.ok) {
-    if (response.status !== 204) {
-      return response.json();
-    } else {
-      return {entities: [], links: []};
-    }
+  if (200 <= response.status && response.status <= 202) {
+    return response.json();
+  } else if (response.status == 204) {
+    return {entities: [], links: []};
   }
+
+  console.log(response);
 
   throw new Error(response.statusText);
 }
@@ -592,8 +620,8 @@ async function modal(elementName, title, contentUrl) {
     body.className = 'modal-body';
 
     let text = await fetch(contentUrl)
-      .then(response => response.text())
-      .catch(error => reportError(error));
+    .then(response => response.text())
+    .catch(error => reportError(error));
 
     let area = document.createElement('textarea');
     area.value = text;
@@ -614,11 +642,11 @@ async function modal(elementName, title, contentUrl) {
 
     anchor.appendChild(modal);
     anchor.href = '#';
-    anchor.addEventListener('click',  (e) => {
+    anchor.addEventListener('click', (e) => {
       modal.style.display = 'block';
     });
 
-    window.addEventListener('click',  (e) => {
+    window.addEventListener('click', (e) => {
       if (event.target === modal) {
         modal.style.display = 'none';
       }
@@ -635,12 +663,14 @@ const setActiveTab = (event, tabName) => {
   let tabLinks = document.getElementsByClassName('tabLinks');
 
   for (let i = 0; i < tabContents.length; i++) {
-    tabContents[i].style.display = (tabContents[i].id === tabName) ? 'block' : 'none';
+    tabContents[i].style.display = (tabContents[i].id === tabName) ? 'block'
+        : 'none';
   }
 
   let linkName = tabName.replace('Tab', 'Link');
   for (let i = 0; i < tabLinks.length; i++) {
-	  tabLinks[i].className = (tabLinks[i].id === linkName) ? 'tabLinks active' : 'tabLinks';
+    tabLinks[i].className = (tabLinks[i].id === linkName) ? 'tabLinks active'
+        : 'tabLinks';
   }
 };
 
@@ -653,7 +683,7 @@ const deleteRow = (tableName, row) => {
 };
 
 const editRow = (tableName, row) => {
-  return getButton(row, 'update', tableName + '.editRow(' +  row + '.id)');
+  return getButton(row, 'update', tableName + '.editRow(' + row + '.id)');
 };
 
 const newRow = (tableName) => {
@@ -661,48 +691,50 @@ const newRow = (tableName) => {
 };
 
 const updateRow = (tableName, row) => {
-  return getButton(row, 'save', tableName + '.updateRow(' +  row + '.id)');
+  return getButton(row, 'save', tableName + '.updateRow(' + row + '.id)');
 };
 
 const gridButtonColumn = (elementName) => {
   return new ButtonColumn([addRow],
-    [updateRow, deleteRow]);
+      [updateRow, deleteRow]);
 };
 
 const addHeader = (tableName, table, columns, paged, rowCount) => {
+  let isForm = paged === Paged.FORM;
   let header = document.createElement('div');
   header.id = tableName + '_thead';
   header.className = 'thead';
   table.append(header);
 
   let headRow = document.createElement('div');
-  headRow.className = 'table-head';
+  headRow.className = isForm ? 'form-head' : 'table-head';
   headRow.id = tableName + 'Head';
   header.append(headRow);
 
   columns.forEach(column => {
-	  let th;
-    if (paged === Paged.FORM) {
-      th = document.createElement('div');
-      addText(th, ' ');
+    if (isForm) {
       if (column.isButtons()) {
+        let th = document.createElement('div');
         th.id = getCellId(getRowId(tableName, 0), column);
+        th.className = 'table-btn';
+
+        headRow.append(th);
       }
     } else {
-      th = column.getHeading();
+      let th = column.getHeading();
+      th.style.width = column.width;
+      th.style.maxWidth = column.width;
+
+      headRow.append(th);
     }
-
-    th.style.width = column.getHeaderLength() + 'ch';
-    th.style.maxWidth = column.getHeaderLength() + 'ch';
-
-    headRow.append(th);
   });
 };
 
-const addBody = (tableName, table, pageSize, columns, paged, rowCount, maxLabel) => {
+const addBody = (tableName, table, pageSize, columns, paged, rowCount,
+    maxLabel) => {
+  let isForm = paged === Paged.FORM;
   let body = document.createElement('div');
   body.id = tableName + '_tbody';
-  let isForm = paged === Paged.FORM;
   body.className = isForm ? 'flex-container' : 'tbody';
   table.append(body);
 
@@ -714,7 +746,7 @@ const addBody = (tableName, table, pageSize, columns, paged, rowCount, maxLabel)
     tr.className = isForm ? 'flex-container' : 'table-row';
     tr.id = rowId;
     body.append(tr);
-    
+
     let key = document.createElement('input');
     key.type = 'hidden';
     key.id = getKeyId(rowId);
@@ -724,68 +756,79 @@ const addBody = (tableName, table, pageSize, columns, paged, rowCount, maxLabel)
     columns.forEach(column => {
       let td = document.createElement('div');
 
-      if (isForm) {
-	      td.className = 'flex-item';
-
-	      let th = column.getHeading();
-        th.className = 'flex-label';
-        th.style.width = maxLabel + 'ch';
-        th.style.maxWidth = maxLabel + 'ch';
-        
-        td.append(th);
-      }
-      
-      let tc = document.createElement('div');
-
       if (!isForm || !column.isButtons()) {
+        if (isForm) {
+          td.className = 'flex-item';
+
+          let th = column.getHeading();
+          th.className = 'flex-label';
+          th.style.width = maxLabel + 'ch';
+          th.style.maxWidth = maxLabel + 'ch';
+
+          td.append(th);
+        }
+
+        let tc = document.createElement('div');
         tc.id = getCellId(rowId, column);
-      }
-      tc.className = isForm ? 'flex-control' : 'table-cell';
-      tc.style.width = isForm ? column.getLength() + 'ch' : column.getWidth();
-      tc.style.maxWidth = tc.style.width;
-      
-      addText(tc, ' ');
-      
-      if (isForm) {
-      	td.append(tc);  
-        tr.append(td);
-      } else {
+        tc.className = isForm ? 'flex-control' : 'table-cell';
+        tc.style.width = isForm ? column.getLength() + 'ch' : column.getWidth();
+        tc.style.maxWidth = tc.style.width;
+
+        addText(tc, ' ');
+
+        if (isForm) {
+          td.append(tc);
+          tr.append(td);
+        } else {
           tr.append(tc);
-      } 
+        }
+      }
     });
   }
 };
 
 const addFooter = (tableName, table, columns, paged, rowCount) => {
-	let footer = document.createElement('div');
-	footer.id = tableName + '_tfoot';
-	footer.className = 'tfoot';
-	table.append(footer);
-	
-	let navRow = document.createElement('div');
-	navRow.className = 'table-foot';
-	navRow.id = tableName + 'Foot';
-	footer.append(navRow);
-	
-	for (let i = 0; i < columns.length; i++) {
-	  let tf = document.createElement('div');
-	  if (i === 0) {
-	    tf.className = 'table-prev';
-	    tf.id = tableName + 'Prev';
-	  } else if (i === (columns.length - 1)) {
-	    tf.className = 'table-next';
-	    tf.id = tableName + 'Next';
-	  } else {
-	    tf.className = 'table-footer';
-	  }
-	
-	  tf.style.width = columns[i].getHeaderLength() + 'ch';
-	  tf.style.maxWidth = columns[i].getHeaderLength() + 'ch';
-	
-	  addText(tf, ' ');
-	
-	  navRow.append(tf);
-	}
+  let isForm = paged === Paged.FORM;
+  let footer = document.createElement('div');
+  footer.id = tableName + '_tfoot';
+  footer.className = 'tfoot';
+  table.append(footer);
+
+  let navRow = document.createElement('div');
+  navRow.className = isForm ? 'form-foot' : 'table-foot';
+  navRow.id = tableName + 'Foot';
+  footer.append(navRow);
+
+  if (isForm) {
+    let tf = document.createElement('div');
+    tf.className = 'table-footer';
+    tf.style.width = '100%';
+    tf.style.maxWidth = '100%';
+
+    addText(tf, ' ');
+
+    navRow.append(tf);
+  } else {
+    for (let i = 0; i < columns.length; i++) {
+      let tf = document.createElement('div');
+      if (i === 0) {
+        tf.className = 'table-prev';
+        tf.id = tableName + 'Prev';
+      } else if (i === (columns.length - 1)) {
+        tf.className = 'table-next';
+        tf.id = tableName + 'Next';
+      } else {
+        tf.className = 'table-footer';
+      }
+
+      tf.style.width = columns[i].getHeaderLength() + 'ch';
+      tf.style.maxWidth = columns[i].getHeaderLength() + 'ch';
+
+      addText(tf, ' ');
+
+      navRow.append(tf);
+    }
+  }
 };
 
 async function uploadFile(url, inputCtl) {
@@ -797,6 +840,6 @@ async function uploadFile(url, inputCtl) {
   formData.append('FileData', file);
 
   await fetch(url, {method: 'PUT', body: formData})
-    .then(response => checkResponse(response))
-    .catch(error => reportError(error));
+  .then(response => checkResponse(response))
+  .catch(error => reportError(error));
 }

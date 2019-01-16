@@ -14,29 +14,40 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-const adressen = new ItemGrid(2, undefined, "adressen", [
-  INDEX,
-  ADRESS_TYP,
-  SPAN,
-  WERKSEINSTELLUNG,
-  gridButtonColumn("adressen")
-], Paged.EXPAND, EditMode.ADD, undefined);
-const cvs = new ItemGrid(10, undefined, "cvs", [
-  CV,
-  BEZEICHNUNG,
-  MAXIMAL,
-  MINIMAL,
-  WERKSEINSTELLUNG,
-  gridButtonColumn("cvs")
-], Paged.EXPAND, EditMode.ADD, undefined);
-const funktionen = new ItemGrid(10, undefined, "funktionen", [
-  REIHE,
-  FUNKTION,
-  BEZEICHNUNG,
-  PROGRAMMABLE,
-  gridButtonColumn("funktionen")
-], Paged.EXPAND, EditMode.ADD, undefined);
-const decoderTyp = new ItemGrid(1, fetchUrl("decoderTyp"), "decoderTyp", [
+  const adressColumns = [
+    INDEX,
+    ADRESS_TYP,
+    SPAN,
+    WERKSEINSTELLUNG,
+    gridButtonColumn("adressen")
+  ];
+
+  const adressen = new ItemGrid(2, undefined, "adressen", adressColumns, Paged.EXPAND, EditMode.ADD,
+      undefined);
+
+  const cvColumns = [
+    CV,
+    BEZEICHNUNG,
+    MAXIMAL,
+    MINIMAL,
+    WERKSEINSTELLUNG,
+    gridButtonColumn("cvs")
+  ];
+
+  const cvs = new ItemGrid(10, undefined, "cvs", cvColumns, Paged.EXPAND, EditMode.ADD, undefined);
+
+  const funktionenColumns = [
+    REIHE,
+    FUNKTION,
+    BEZEICHNUNG,
+    PROGRAMMABLE,
+    gridButtonColumn("funktionen")
+  ];
+
+  const funktionen = new ItemGrid(10, undefined, "funktionen", funktionenColumns, Paged.EXPAND,
+      EditMode.ADD, undefined);
+
+  const columns = [
     HERSTELLER,
     BESTELL_NR,
     BEZEICHNUNG,
@@ -46,13 +57,14 @@ const decoderTyp = new ItemGrid(1, fetchUrl("decoderTyp"), "decoderTyp", [
     I_MAX,
     KONFIGURATION,
     STECKER,
-    new ButtonColumn([], [updateRow])],
-   Paged.PAGED, EditMode.UPDATE, [
-    adressen,
-    cvs,
-    funktionen]);
+    new ButtonColumn([], [updateRow])];
 
-async function init() {
+  const children = [adressen, cvs, funktionen];
+
+  const decoderTyp = new ItemGrid(1, fetchUrl("decoderTyp"), "decoderTyp", columns, Paged.PAGED,
+      EditMode.UPDATE, children);
+
+  async function init() {
     await HERSTELLER_DROP.init();
     await PROTOKOLL_DROP.init();
     await KONFIGURATION_DROP.init();
@@ -60,9 +72,9 @@ async function init() {
     await STECKER_DROP.init();
     await decoderTyp.init();
     about();
-    
+
     setActiveTab(undefined, "adressenTab");
-}
+  }
 </script>
 <title>Decoder Typ</title>
 </head>

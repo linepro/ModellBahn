@@ -5,6 +5,7 @@ import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypAdress;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
+import com.linepro.modellbahn.model.enums.DecoderStatus;
 import com.linepro.modellbahn.model.impl.Decoder;
 import com.linepro.modellbahn.model.impl.DecoderAdress;
 import com.linepro.modellbahn.model.impl.DecoderCV;
@@ -21,7 +22,8 @@ public class DecoderCreator implements IDecoderCreator {
 
     @Override
     public IDecoder create(IDecoderTyp decoderTyp) throws Exception {
-        IDecoder decoder = new Decoder(null, decoderTyp, decoderTyp.getProtokoll(), persister.getNextId(), decoderTyp.getBezeichnung(), decoderTyp.getFahrstufe(), false);
+        IDecoder decoder = new Decoder(null, decoderTyp, decoderTyp.getProtokoll(), persister.getNextId(), decoderTyp.getBezeichnung(), decoderTyp.getFahrstufe(),
+            DecoderStatus.FREI, false);
         
         decoder = persister.add(decoder);
 

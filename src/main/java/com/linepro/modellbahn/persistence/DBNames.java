@@ -8,7 +8,7 @@ public interface DBNames {
     String ARTIKEL = "artikel";
     String AUFBAU = "aufbau";
     String BAHNVERWALTUNG = "bahnverwaltung";
-    String CONNECTOR = "connector";
+    String STECKER = "stecker";
     String DECODER = "decoder";
     String DECODER_ADRESS = "decoderAdress";
     String DECODER_CV = "decoderCV";
@@ -60,7 +60,7 @@ public interface DBNames {
     String BEZEICHNUNG = "bezeichnung";
     String CV = "cv";
     String CV_ID = "cv_id";
-    String DECIMALS = "decimals";
+    String DEZIMAL = "dezimal";
     String DECODER_ID = "decoder_id";
     String DECODER_TYP_ID = "decoder_typ_id";
     String DELETED = "deleted";

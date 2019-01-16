@@ -18,8 +18,8 @@ import com.linepro.modellbahn.model.refs.IDecoderTypCVRef;
 import com.linepro.modellbahn.model.refs.IDecoderTypFunktionRef;
 import com.linepro.modellbahn.model.refs.IDecoderTypRef;
 import com.linepro.modellbahn.model.refs.IProtokollRef;
-import com.linepro.modellbahn.model.util.Connector;
-import com.linepro.modellbahn.model.util.Konfiguration;
+import com.linepro.modellbahn.model.enums.Stecker;
+import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.HerstellerDeserializer;
 import com.linepro.modellbahn.rest.json.serialization.ProtokollDeserializer;
@@ -139,11 +139,11 @@ public interface IDecoderTyp extends IItem<DecoderTypKey>, IDecoderTypRef {
 
     @JsonGetter(ApiNames.STECKER)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Connector", example = "NEM352")
-    Connector getConnector();
+    @ApiModelProperty(value = "Stecker", example = "NEM352")
+    Stecker getStecker();
 
     @JsonSetter(ApiNames.STECKER)
-    void setConnector(Connector connector);
+    void setStecker(Stecker stecker);
 
     /**
      * Gets the adressen.

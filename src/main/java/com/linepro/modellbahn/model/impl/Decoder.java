@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.model.impl;
 
+import com.linepro.modellbahn.model.enums.DecoderStatus;
+import com.linepro.modellbahn.model.validation.Fahrstufe;
 import java.net.URI;
 import java.util.Set;
 import java.util.TreeSet;
@@ -64,8 +66,10 @@ public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
     private IProtokoll protokoll;
 
     /** The fahrstufe. */
-    //@Fahrstufe
+    @Fahrstufe(message = "{com.linepro.modellbahn.validator.constraints.fahrstufe.invalid}")
     private Integer fahrstufe;
+
+    private DecoderStatus status;
 
     /** The adressen. */
     private Set<IDecoderAdress> adressen = new TreeSet<>();
@@ -84,7 +88,7 @@ public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
     }
 
     public Decoder(String decoderId) {
-        this(null, null, null, decoderId, null, null, false);
+        this(null, null, null, decoderId, null, null, null, false);
     }
 
     /**
@@ -98,7 +102,7 @@ public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
      * @param fahrstufe the fahrstufe
      * @param deleted the deleted
      */
-    public Decoder(Long id, IDecoderTyp typ, IProtokoll protokoll, String decoderId, String bezeichnung, Integer fahrstufe, Boolean deleted) {
+    public Decoder(Long id, IDecoderTyp typ, IProtokoll protokoll, String decoderId, String bezeichnung, Integer fahrstufe, DecoderStatus status, Boolean deleted) {
         super(id, deleted);
 
         setDecoderId(decoderId);
@@ -106,6 +110,7 @@ public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
         setDecoderTyp(typ);
         setProtokoll(protokoll);
         setFahrstufe(fahrstufe);
+        setStatus(status);
     }
 
     @Override
@@ -164,6 +169,13 @@ public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
     public void setFahrstufe(Integer fahrstufe) {
         this.fahrstufe = fahrstufe;
     }
+
+    @Override
+    @Column(name = DBNames.STATUS)
+    public DecoderStatus getStatus() { return status; }
+
+    @Override
+    public void setStatus(DecoderStatus status) { this.status = status; }
 
     @Override
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.DECODER, targetEntity = DecoderAdress.class, orphanRemoval = true)
@@ -280,6 +292,7 @@ public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
                 .append(ApiNames.DECODER_TYP, getDecoderTyp())
                 .append(ApiNames.PROTOKOLL, getProtokoll())
                 .append(ApiNames.FAHRSTUFE, getFahrstufe())
+                .append(ApiNames.STATUS, getStatus())
                 .append(ApiNames.ADRESSEN, getAdressen())
                 .append(ApiNames.CVS, getCVs())
                 .append(ApiNames.FUNKTIONEN, getFunktionen())

@@ -170,7 +170,7 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
     @ApiOperation(code = 202, value = "Adds an UnterKategorie to a kategorie", response = IUnterKategorie.class)
     @ApiResponses({
         @ApiResponse(code = 400, message = "Bad request"),
-        @ApiResponse(code = 402, message = "Not Found`"),
+        @ApiResponse(code = 402, message = "Not Found"),
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
     public Response add(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, IUnterKategorie unterKategorie) {
@@ -201,7 +201,7 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
     @ApiOperation(code = 202, value = "Updates an UnterKategorie by kategorie and name", response = IUnterKategorie.class)
     @ApiResponses({
         @ApiResponse(code = 400, message = "Bad request"),
-        @ApiResponse(code = 402, message = "Not Found`"),
+        @ApiResponse(code = 402, message = "Not Found"),
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
     public Response update(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,

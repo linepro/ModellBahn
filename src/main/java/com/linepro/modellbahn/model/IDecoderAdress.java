@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.keys.DecoderAdressKey;
 import com.linepro.modellbahn.model.refs.IDecoderAdressRef;
 import com.linepro.modellbahn.model.refs.IDecoderRef;
-import com.linepro.modellbahn.model.util.AdressTyp;
+import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.DecoderDeserializer;
 import com.linepro.modellbahn.rest.util.ApiNames;

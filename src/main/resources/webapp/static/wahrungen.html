@@ -14,18 +14,19 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-  const columns = [
-      NAMEN,
-      BEZEICHNUNG,
-      DECIMALS
-  ];
+    const columns = [
+        NAMEN,
+        BEZEICHNUNG,
+        DEZIMAL
+    ];
 
-  const wahrung = new ListEditGrid(10, "wahrung", "wahrung", columns, Paged.PAGED, EditMode.UPDATE);
+    const wahrung = new ListEditGrid(10, "wahrung", "wahrung", columns, Paged.PAGED,
+        EditMode.UPDATE);
 
-  async function init() {
-    await wahrung.init();
-    about();
-}
+    async function init() {
+        await wahrung.init();
+        about();
+    }
 </script>
 <title>Wahrungen</title>
 </head>

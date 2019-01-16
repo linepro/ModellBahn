@@ -9,7 +9,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DECIMALS })
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DEZIMAL })
 @ApiModel(value = ApiNames.WAHRUNG, description = "A currency.")
 public interface IWahrungRef extends INamedItemRef {
 
@@ -23,7 +23,7 @@ public interface IWahrungRef extends INamedItemRef {
     @ApiModelProperty(value = "Currency description", example = "Pound Serling")
     String getBezeichnung();
 
-    @JsonGetter(ApiNames.DECIMALS)
+    @JsonGetter(ApiNames.DEZIMAL)
     @JsonView(Views.DropDown.class)
     @ApiModelProperty(value = "Number of decimal places", example = "2", required = true)
     Integer getDecimals();

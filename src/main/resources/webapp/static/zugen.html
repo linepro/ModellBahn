@@ -19,16 +19,18 @@
     BEZEICHNUNG,
     LANGE,
     new ButtonColumn(
-        [ newRow ], 
-        [ editRow, deleteRow ])
+        [newRow],
+        [editRow, deleteRow])
   ];
-  const zugen = new ItemGrid(10, fetchUrl("zug"), "zugen", columns, Paged.PAGED, EditMode.UPDATE, undefined, "zug.html");
+
+  const zugen = new ItemGrid(10, fetchUrl("zug"), "zugen", columns, Paged.PAGED, EditMode.UPDATE,
+      undefined, "zug.html");
 
   async function init() {
     await ZUG_TYP_DROP.init();
     await zugen.init();
     about();
-}
+  }
 </script>
 <title>Zugen</title>
 </head>

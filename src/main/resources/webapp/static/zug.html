@@ -14,30 +14,36 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-  const consisten = new ItemGrid(2, undefined, "consisten", [
+  const consistColumns = [
     POSITION,
     UNTER_KATEGORIE,
     GATTUNG,
     BEZEICHNUNG,
     LANGE,
     gridButtonColumn("consisten")
-  ], Paged.EXPAND, EditMode.ADD, undefined);
-  const zug = new ItemGrid(1, fetchUrl("zug"), "zug",  [
+  ];
+
+  const consisten = new ItemGrid(2, undefined, "consisten", consistColumns, Paged.EXPAND,
+      EditMode.ADD, undefined);
+
+  const columns = [
     NAMEN,
     ZUG_TYP,
     BEZEICHNUNG,
     LANGE,
     new ButtonColumn(
-            [], 
-            [updateRow])
-  ], Paged.PAGED, EditMode.UPDATE, [
-    consisten]);
+        [],
+        [updateRow])
+  ];
+
+  const zug = new ItemGrid(1, fetchUrl("zug"), "zug", columns, Paged.PAGED, EditMode.UPDATE,
+      [consisten]);
 
   async function init() {
     await ZUG_TYP_DROP.init();
     await zug.init();
     about();
-}
+  }
 </script>
 <title>Zugen</title>
 </head>

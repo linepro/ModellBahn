@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.rest.service;
 
+import com.linepro.modellbahn.model.enums.Stecker;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -27,9 +28,8 @@ import com.linepro.modellbahn.model.impl.DecoderTypAdress;
 import com.linepro.modellbahn.model.impl.DecoderTypCV;
 import com.linepro.modellbahn.model.impl.DecoderTypFunktion;
 import com.linepro.modellbahn.model.keys.DecoderTypKey;
-import com.linepro.modellbahn.model.util.AdressTyp;
-import com.linepro.modellbahn.model.util.Connector;
-import com.linepro.modellbahn.model.util.Konfiguration;
+import com.linepro.modellbahn.model.enums.AdressTyp;
+import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.json.Views;
@@ -81,7 +81,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
         IHersteller hersteller = findHersteller(herstellerStr, false);
         IProtokoll protokoll = findProtokoll(protokollStr, false);
         Konfiguration konfiguration = Konfiguration.valueOf(konfigurationStr);
-        Connector stecker = Connector.valueOf(steckerStr);
+        Stecker stecker = Stecker.valueOf(steckerStr);
 
         IDecoderTyp entity = new DecoderTyp(id, hersteller, protokoll, name, bezeichnung, sound, konfiguration, stecker, 
                 deleted);
@@ -398,7 +398,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds a DecoderTypCV by hersteller and bestell nr", response = IDecoderTypCV.class)
+    @ApiOperation(code = 201, value = "Finds a DecoderTypCV by hersteller and bestell nr", response = IDecoderTypCV.class)
     @ApiResponses({
         @ApiResponse(code = 400, message = "Bad request"),
         @ApiResponse(code = 402, message = "Not Found"),

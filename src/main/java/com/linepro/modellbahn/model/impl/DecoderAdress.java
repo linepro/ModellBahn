@@ -29,7 +29,7 @@ import com.linepro.modellbahn.model.IDecoderAdress;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.keys.DecoderAdressKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
-import com.linepro.modellbahn.model.util.AdressTyp;
+import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.model.validation.Adress;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;

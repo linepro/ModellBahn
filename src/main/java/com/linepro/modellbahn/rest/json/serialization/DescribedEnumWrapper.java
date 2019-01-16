@@ -19,4 +19,9 @@ public class DescribedEnumWrapper implements IDescribedEnum {
     public String getBezeichnung() {
         return enumValue.getBezeichnung();
     }
+
+    @Override
+    public String getTooltip() {
+        return enumValue.getTooltip();
+    }
 }

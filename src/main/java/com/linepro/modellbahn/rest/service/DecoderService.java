@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.rest.service;
 
+import com.linepro.modellbahn.model.enums.DecoderStatus;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -31,7 +32,7 @@ import com.linepro.modellbahn.model.impl.DecoderFunktion;
 import com.linepro.modellbahn.model.impl.DecoderTyp;
 import com.linepro.modellbahn.model.impl.Protokoll;
 import com.linepro.modellbahn.model.keys.DecoderKey;
-import com.linepro.modellbahn.model.util.AdressTyp;
+import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.model.util.DecoderCreator;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
@@ -65,8 +66,11 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
             @JsonProperty(value = ApiNames.DECODER_ID) String decoderId,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.FAHRSTUFE) Integer fahrstufe,
+            @JsonProperty(value = ApiNames.STATUS) String statusStr,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        IDecoder entity = new Decoder(id, decoderTyp, protokoll, decoderId, bezeichnung, fahrstufe, deleted);
+        DecoderStatus status = DecoderStatus.valueOf(statusStr);
+
+        IDecoder entity = new Decoder(id, decoderTyp, protokoll, decoderId, bezeichnung, fahrstufe, status, deleted);
 
         debug("created: " + entity);
 
@@ -293,7 +297,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a DecoderCV by decoderId and cv", response = DecoderCV.class)
-    @ApiResponses({@ApiResponse(code = 400, message = "Bad request"), @ApiResponse(code = 402, message = "Not Found`"),
+    @ApiResponses({@ApiResponse(code = 400, message = "Bad request"), @ApiResponse(code = 402, message = "Not Found"),
             @ApiResponse(code = 500, message = "Internal Server Error")})
     public Response updateCv(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId,
             @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv, @QueryParam(ApiNames.WERT) Integer wert) {
@@ -327,7 +331,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Finds a DecoderFunktion by decoderId and fn", response = DecoderFunktion.class)
-    @ApiResponses({@ApiResponse(code = 400, message = "Bad request"), @ApiResponse(code = 402, message = "Not Found`"),
+    @ApiResponses({@ApiResponse(code = 400, message = "Bad request"), @ApiResponse(code = 402, message = "Not Found"),
             @ApiResponse(code = 500, message = "Internal Server Error")})
     public Response getFunktion(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId,
             @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe,
@@ -357,7 +361,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a DecoderFunktion by decoderId and fn", response = DecoderFunktion.class)
-    @ApiResponses({@ApiResponse(code = 400, message = "Bad request"), @ApiResponse(code = 402, message = "Not Found`"),
+    @ApiResponses({@ApiResponse(code = 400, message = "Bad request"), @ApiResponse(code = 402, message = "Not Found"),
             @ApiResponse(code = 500, message = "Internal Server Error")})
     public Response updateFunktion(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId,
             @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe,

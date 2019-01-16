@@ -14,12 +14,15 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-  const hersteller = new NamedItemGrid("hersteller", "hersteller");
+    const columns = [NAMEN, BEZEICHNUNG, TELEFON, URL];
 
-  async function init() {
-    await hersteller.init();
-    about();
-}
+    const hersteller = new ListEditGrid(10, "hersteller", "hersteller", columns, Paged.PAGED,
+        EditMode.UPDATE);
+
+    async function init() {
+        await hersteller.init();
+        about();
+    }
 </script>
 <title>Hersterllern</title>
 </head>

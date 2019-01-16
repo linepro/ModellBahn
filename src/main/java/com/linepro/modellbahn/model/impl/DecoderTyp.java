@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.model.impl;
 
+import com.linepro.modellbahn.model.validation.Fahrstufe;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.util.Set;
@@ -36,8 +37,8 @@ import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.IProtokoll;
 import com.linepro.modellbahn.model.keys.DecoderTypKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
-import com.linepro.modellbahn.model.util.Connector;
-import com.linepro.modellbahn.model.util.Konfiguration;
+import com.linepro.modellbahn.model.enums.Stecker;
+import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -78,7 +79,7 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
     private IProtokoll protokoll;
 
     /** The fahrstufe. */
-    //@Fahrstufe
+    @Fahrstufe(message = "{com.linepro.modellbahn.validator.constraints.fahrstufe.invalid}")
     private Integer fahrstufe;
 
     /** The sound. */
@@ -89,7 +90,7 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.konfiguration.notnull}")
     private Konfiguration konfiguration;
 
-    private Connector connector;
+    private Stecker stecker;
     
     /** The cv. */
     private Set<IDecoderTypAdress> adressen = new TreeSet<>();
@@ -108,7 +109,7 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
     }
 
     public DecoderTyp(Long id, IHersteller hersteller, IProtokoll protokoll, String bestellNr, String bezeichnung,
-            Boolean sound, Konfiguration konfiguration, Connector connector, Boolean deleted) {
+            Boolean sound, Konfiguration konfiguration, Stecker stecker, Boolean deleted) {
         super(id, deleted);
 
         setHersteller(hersteller);
@@ -117,7 +118,7 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
         setProtokoll(protokoll);
         setSound(sound);
         setKonfiguration(konfiguration);
-        setConnector(connector);
+        setStecker(stecker);
     }
 
     @Override
@@ -211,16 +212,14 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
         this.konfiguration = konfiguration;
     }
 
-    @Override
     @Enumerated(EnumType.STRING)
-    @Column(name = DBNames.CONNECTOR, nullable = false, length = 10)
-    public Connector getConnector() {
-        return connector;
+    @Column(name = DBNames.STECKER, nullable = false, length = 10)
+    public Stecker getStecker() {
+        return stecker;
     }
 
-    @Override
-    public void setConnector(Connector connector) {
-        this.connector = connector;
+    public void setStecker(Stecker stecker) {
+        this.stecker = stecker;
     }
 
     @Override

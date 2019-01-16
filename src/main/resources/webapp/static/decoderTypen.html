@@ -14,26 +14,26 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-const columns = [
-  HERSTELLER,
-  BESTELL_NR,
-  PROTOKOLL,
-  GERAUSCH,
-  STECKER,
-  new ButtonColumn(
-    [ newRow ], 
-    [ editRow, deleteRow ]) ];
+    const columns = [
+        HERSTELLER,
+        BESTELL_NR,
+        PROTOKOLL,
+        GERAUSCH,
+        STECKER,
+        new ButtonColumn(
+            [newRow],
+            [editRow, deleteRow])];
 
-const decoderTyp = new ItemGrid(10, fetchUrl("decoderTyp"), "decoderTyp",
-    columns, Paged.PAGED, EditMode.UPDATE, undefined, "decoderTyp.html");
+    const decoderTyp = new ItemGrid(10, fetchUrl("decoderTyp"), "decoderTyp", columns, Paged.PAGED,
+        EditMode.UPDATE, undefined, "decoderTyp.html");
 
-async function init() {
-  await HERSTELLER_DROP.init();
-  await PROTOKOLL_DROP.init();
-  await STECKER_DROP.init();
-  await decoderTyp.init();
-  about();
-}
+    async function init() {
+        await HERSTELLER_DROP.init();
+        await PROTOKOLL_DROP.init();
+        await STECKER_DROP.init();
+        await decoderTyp.init();
+        about();
+    }
 </script>
 <title>Decoder Typen</title>
 </head>

@@ -20,7 +20,7 @@ public interface ILinkRef extends IRef {
     @JsonSerialize(contentUsing= LinkSerializer.class)
     @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.ILink;", value = "HEATOS Links for item", accessMode = AccessMode.READ_ONLY)
     /**
-     * Get the HEATOS links for this entity
+     * Gets the HEATOS links for this entity
      * @return a set of HAETOS links
      */
     Set<Link> getLinks();

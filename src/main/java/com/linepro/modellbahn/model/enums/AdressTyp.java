@@ -1,4 +1,4 @@
-package com.linepro.modellbahn.model.util;
+package com.linepro.modellbahn.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -7,6 +7,7 @@ import com.linepro.modellbahn.model.refs.IDescribedEnum;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * AdressTyp.
@@ -20,31 +21,42 @@ import io.swagger.annotations.ApiModel;
 @ApiModel(value = ApiNames.ADRESS_TYP, description = "Adress types")
 public enum AdressTyp implements IDescribedEnum {
 
-    DCC("A DCC address 0 - 10239."),
+    DCC("DCC lang", "0 - 10239."),
     
-    DCC_SHORT("A DCC short address 1 - 27."),
+    DCC_SHORT("DCC kurz", "1 - 27."),
     
-    DELTA("A Märklin DELTA (locomotive) address 2,6,8,18,20,24,26,54,56,60,62,72,74,78,80."),
+    DELTA("Märklin DELTA", "(2,6,8,18,20,24,26,54,56,60,62,72,74,78,80."),
     
-    MM("A Märklin Motorola (locomotive) address (version 1 or 2) 1 - 80."),
+    MM("Märklin Motorola", "1 - 80."),
     
-    DIGITAL("A Märklin Digital (locomotive) address (fx or mfx) 1 - 255."),
+    DIGITAL("Märklin Digital", "(fx or mfx) 1 - 255."),
     
-    WEICHE("A Märklin Motorola accessory address 1 - 256.");
+    WEICHE("Märklin Magnetartikel", "1 - 256.");
 
     private final String description;
-    
-    AdressTyp(String description) {
+
+    private final String tooltip;
+
+    AdressTyp(String description, String tooltip) {
         this.description = description;
+        this.tooltip = tooltip;
     }
 
     @Override
+    @ApiModelProperty(value = "AdressTyp name", example = "DCC", required = true)
     public String getName() {
         return this.name();
     }
 
     @Override
+    @ApiModelProperty(value = "AdressTyp description", example = "DCC lang.", required = true)
     public String getBezeichnung() {
         return description;
+    }
+
+    @Override
+    @ApiModelProperty(value = "AdressTyp tooltip", example = "0 - 10239.", required = true)
+    public String getTooltip() {
+        return tooltip;
     }
 }

@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.rest.service;
 
+import com.linepro.modellbahn.model.enums.Stecker;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -13,11 +14,10 @@ import javax.ws.rs.core.Response;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.refs.IDescribedEnum;
-import com.linepro.modellbahn.model.util.AdressTyp;
-import com.linepro.modellbahn.model.util.Connector;
-import com.linepro.modellbahn.model.util.Konfiguration;
-import com.linepro.modellbahn.model.util.LeistungsUbertragung;
-import com.linepro.modellbahn.model.util.Status;
+import com.linepro.modellbahn.model.enums.AdressTyp;
+import com.linepro.modellbahn.model.enums.Konfiguration;
+import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
+import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.DescribedEnumWrapper;
 import com.linepro.modellbahn.rest.util.AbstractService;
@@ -55,9 +55,9 @@ public class EnumsService extends AbstractService {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonSerialize(contentAs= IDescribedEnum.class)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Gets all possible Connector values", response = IDescribedEnum.class, responseContainer = "List")
+    @ApiOperation(value = "Gets all possible Stecker values", response = IDescribedEnum.class, responseContainer = "List")
     public Response getConnector() {
-        return ok(getEnumValues(Connector.values())).build();
+        return ok(getEnumValues(Stecker.values())).build();
     }
 
     @GET
@@ -91,6 +91,6 @@ public class EnumsService extends AbstractService {
     }
 
     private List<IDescribedEnum> getEnumValues(IDescribedEnum[] values) {
-        return Stream.of(values).map(e -> new DescribedEnumWrapper(e)).collect(Collectors.toList());
+        return Stream.of(values).map(DescribedEnumWrapper::new).collect(Collectors.toList());
     }
 }

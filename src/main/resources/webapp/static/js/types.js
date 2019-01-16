@@ -58,7 +58,7 @@ const BESTELL_NR = new TextColumn('Bestell Nr', 'bestellNr', (entity) => { retur
 const BETREIBSNUMMER = new TextColumn('Betreibsnummer', 'betreibsnummer', (entity) => { return entity.betreibsnummer; }, (entity, value) => { entity.betreibsnummer = value; }, Editable.UPDATE, false, 30);
 const BEZEICHNUNG = new TextColumn('Bezeichnung', 'bezeichnung', (entity) => { return entity.bezeichnung; }, (entity, value) => { entity.bezeichnung = value; }, Editable.UPDATE, false, 50);
 const CV = new NumberColumn('CV', 'cv', (entity) => { return entity.cv; }, (entity, value) => { entity.cv = value; }, Editable.ADD, true, 127, 1);
-const DECIMALS = new NumberColumn('Decimals', 'decimals', (entity) => { return entity.decimals; }, (entity, value) => { entity.decimals = value; }, Editable.UPDATE, false, 3, 0);
+const DEZIMAL = new NumberColumn('Dezimal', 'dezimal', (entity) => { return entity.dezimal; }, (entity, value) => { entity.dezimal = value; }, Editable.UPDATE, false, 3, 0);
 const DECODER = new SelectColumn('Decoder', 'decoder', (entity) => { return entity.decoder ? entity.decoder.decoderId : undefined; }, (entity, value) => { entity.decoderId = value; }, DECODER_DROP, Editable.UPDATE, false);
 const DECODER_ID = new TextColumn('Decoder', 'decoderId', (entity) => { return entity.decoderId; }, (entity, value) => { entity.decoderId = value; }, Editable.NEVER, false, 5);
 const DECODER_TYP = new SelectColumn('Decoder Typ', 'decoderTyp', (entity) => { return entity.decoderTyp ? extractProduktValue(entity.decoderTyp) : undefined; }, (entity, value) => { let parts = value.split('/'); entity.decoderTyp.hersteller = parts[0]; entity.decoderTyp.bestellNr = parts[1]; }, DECODER_TYP_DROP, Editable.UPDATE, false);
@@ -118,7 +118,6 @@ const STATUS = new SelectColumn('Status', 'status', (entity) => { return entity.
 const STECKER = new SelectColumn('Stecker', 'stecker', (entity) => { return entity.stecker; }, (entity, value) => { entity.stecker = value; }, STECKER_DROP, Editable.UPDATE, false);
 const STEUERUNG = new SelectColumn('Steuerung', 'steuerung', (entity) => { return entity.steuerung ? entity.steuerung.name : undefined; }, (entity, value) => { entity.steuerung = value; }, STEUERUNG_DROP, Editable.UPDATE, false);
 const STUCK = new NumberColumn('Stück', 'stuck', (entity) => { return entity.stuck; }, (entity, value) => { entity.stuck = value; }, Editable.UPDATE, false, 300, 0);
-const TEIL = new NumberColumn('Teil', 'teil', (entity) => { return entity.teil; }, (entity, value) => { entity.teil = value; }, Editable.UPDATE, false, 300, 0);
 const TELEFON = new PhoneColumn('Telefon', 'telefon', (entity) => { return entity.telefon; }, (entity, value) => { entity.telefon = value; }, Editable.UPDATE, false);
 const TRIEBKOPF = new NumberColumn('Triebköpfe', 'triebkopf', (entity) => { return entity.triebkopf; }, (entity, value) => { entity.triebkopf = value; }, Editable.UPDATE, false, 2, 0);
 const UBERHITZERFLACHE = new NumberColumn('Überhitzerfläche', 'uberhitzerflache', (entity) => { return entity.uberhitzerflache; }, (entity, value) => { entity.uberhitzerflache = value; }, Editable.UPDATE, false, 3000, 0, 2);

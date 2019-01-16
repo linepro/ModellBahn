@@ -23,7 +23,8 @@ const columns = [
   BEZEICHNUNG,
   new ButtonColumn(
     [newRow],
-    [editRow, deleteRow]) ];
+    [editRow, deleteRow])
+];
 
 const produkt = new ItemGrid(10, fetchUrl("produkt"), "produkt", columns, Paged.PAGED, EditMode.UPDATE, undefined, "produkt.html");
 

@@ -23,7 +23,7 @@ import com.linepro.modellbahn.model.refs.ILichtRef;
 import com.linepro.modellbahn.model.refs.IMotorTypRef;
 import com.linepro.modellbahn.model.refs.ISteuerungRef;
 import com.linepro.modellbahn.model.refs.IWahrungRef;
-import com.linepro.modellbahn.model.util.Status;
+import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.rest.json.Formats;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.DecoderDeserializer;

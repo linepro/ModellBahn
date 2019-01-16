@@ -14,48 +14,78 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-  const adressen = new ItemGrid(2, undefined, "adressen", [
+  const adressColumns = [
     INDEX,
     ADRESS_TYP,
-    new NumberColumn("Adress", "adress", (entity) => { return entity.adress; }, undefined, Editable.UPDATE, true, 65535, 1),
-    new ButtonColumn(
-            [], 
-            [updateRow])
-  ], Paged.EXPAND, EditMode.UPDATE, undefined);
-  const cvs = new ItemGrid(10, undefined, "cvs", [
-    new NumberColumn("CV", "cv", (entity) => { return entity.cv.cv; }, undefined, Editable.NEVER, true, 127, 1),
-    new TextColumn("Bezeichnung", "bezeichnung", (entity) => { return entity.cv.bezeichnung; }, undefined, Editable.NEVER, false, 50),
-    new NumberColumn("Werkseinstellung", "werkseinstellung", (entity) => { return entity.cv.werkseinstellung; }, undefined, Editable.NEVER, true, 65535, 1),
+    new NumberColumn("Adress", "adress", (entity) => {
+      return entity.adress;
+    }, undefined, Editable.UPDATE, true, 65535, 1),
+    new ButtonColumn([], [updateRow])
+  ];
+
+  const adressen = new ItemGrid(2, undefined, "adressen", adressColumns, Paged.EXPAND,
+      EditMode.UPDATE, undefined);
+
+  const cvColumns = [
+    new NumberColumn("CV", "cv", (entity) => {
+      return entity.cv.cv;
+    }, undefined, Editable.NEVER, true, 127, 1),
+    new TextColumn("Bezeichnung", "bezeichnung", (entity) => {
+      return entity.cv.bezeichnung;
+    }, undefined, Editable.NEVER, false, 50),
+    new NumberColumn("Werkseinstellung", "werkseinstellung", (entity) => {
+      return entity.cv.werkseinstellung;
+    }, undefined, Editable.NEVER, true, 65535, 1),
     WERT,
-    new ButtonColumn(
-            [], 
-            [updateRow])
-  ], Paged.EXPAND, EditMode.UPDATE, undefined);
-  const funktionen = new ItemGrid(10, undefined, "funktionen", [
-  new NumberColumn("Reihe", "reihe", (entity) => { return entity.funktion.reihe; }, undefined, Editable.NEVER, true, 1, 0),
-    new TextColumn("Funktion", "funktion", (entity) => { return entity.funktion.funktion; }, undefined, Editable.NEVER, true, 3),
-    new TextColumn("Bezeichnung", "bezeichnung", (entity) => { return entity.bezeichnung; }, (entity, value) => { entity.bezeichnung = value; }, Editable.UPDATE, false, 50),
-    new BoolColumn("Programmable", "programmable", (entity) => { return entity.funktion.programmable; }, undefined, Editable.NEVER, true),
-    new ButtonColumn(
-            [], 
-            [updateRow])
-  ], Paged.EXPAND, EditMode.UPDATE, undefined);
-  const decoder = new ItemGrid(1, fetchUrl("decoder"), "decoder", [
-  DECODER_ID,
+    new ButtonColumn([], [updateRow])
+  ];
+
+  const cvs = new ItemGrid(10, undefined, "cvs", cvColumns, Paged.EXPAND, EditMode.UPDATE,
+      undefined);
+
+  const funktiononenColumns = [
+    new NumberColumn("Reihe", "reihe", (entity) => {
+      return entity.funktion.reihe;
+    }, undefined, Editable.NEVER, true, 1, 0),
+    new TextColumn("Funktion", "funktion", (entity) => {
+      return entity.funktion.funktion;
+    }, undefined, Editable.NEVER, true, 3),
+    new TextColumn("Bezeichnung", "bezeichnung", (entity) => {
+      return entity.bezeichnung;
+    }, (entity, value) => {
+      entity.bezeichnung = value;
+    }, Editable.UPDATE, false, 50),
+    new BoolColumn("Programmable", "programmable", (entity) => {
+      return entity.funktion.programmable;
+    }, undefined, Editable.NEVER, true),
+    new ButtonColumn([], [updateRow])
+  ];
+
+  const funktionen = new ItemGrid(10, undefined, "funktionen", funktiononenColumns, Paged.EXPAND,
+      EditMode.UPDATE, undefined);
+
+  const decoderColumns = [
+    DECODER_ID,
     DECODER_TYP,
     BEZEICHNUNG,
     PROTOKOLL,
     FAHRSTUFE,
-    new BoolColumn("Gerausch", "gerausch", (entity) => { return entity.decoderTyp.sound; }, undefined, Editable.NEVER, true),
-    new NumberColumn("I Max", "iMax", (entity) => { return entity.decoderTyp.iMax; }, undefined, Editable.NEVER, false, 1000, 1),
-    new SelectColumn("Konfiguration", "konfiguration", (entity) => { return entity.decoderTyp.konfiguration ; }, undefined, KONFIGURATION_DROP, Editable.NEVER, true),
-    new ButtonColumn(
-            [], 
-            [updateRow])
-  ], Paged.PAGED, EditMode.UPDATE, [
-    adressen,
-    cvs,
-    funktionen]);
+    new BoolColumn("Gerausch", "gerausch", (entity) => {
+      return entity.decoderTyp.sound;
+    }, undefined, Editable.NEVER, true),
+    new NumberColumn("I Max", "iMax", (entity) => {
+      return entity.decoderTyp.iMax;
+    }, undefined, Editable.NEVER, false, 1000, 1),
+    new SelectColumn("Konfiguration", "konfiguration", (entity) => {
+      return entity.decoderTyp.konfiguration;
+    }, undefined, KONFIGURATION_DROP, Editable.NEVER, true),
+    new ButtonColumn([], [updateRow])
+  ];
+
+  const children = [adressen, cvs, funktionen];
+
+  const decoder = new ItemGrid(1, fetchUrl("decoder"), "decoder", decoderColumns, Paged.FORM,
+      EditMode.UPDATE, children);
 
   async function init() {
     await DECODER_TYP_DROP.init();
@@ -66,7 +96,7 @@
     about();
 
     setActiveTab(undefined, "adressenTab");
-}
+  }
 </script>
 <title>Decoder</title>
 </head>

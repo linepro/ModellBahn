@@ -3,25 +3,25 @@ html {
   -webkit-text-size-adjust: auto;
   background-color: LightYellow;
   box-sizing: border-box;
-  border-radius: .25em;
-  overflow-x: hidden
+  border-radius: 0.25em;
+  overflow-x: hidden;
 }
 
 aside, details, figcaption, figure, main, menu, section, summary {
-  display: block
+  display: block;
 }
 
 audio:not([controls]) {
   display: none;
-  height: 0
+  height: 0;
 }
 
 audio, canvas, progress, video {
-  display: inline-block
+  display: inline-block;
 }
 
 progress {
-  vertical-align: baseline
+  vertical-align: baseline;
 }
 
 header {
@@ -49,7 +49,7 @@ footer {
 
 body {
   margin: 0;
-  padding: 0.5rem
+  padding: 0.5rem;
 }
 
 html, body {
@@ -61,6 +61,7 @@ html, body {
 }
 
 a {
+  -webkit-text-decoration-skip: objects;
   background-color: transparent;
 }
 
@@ -137,51 +138,51 @@ button {
 
 code, kbd, pre, samp {
   font-family: monospace, monospace;
-  font-size: 1rem
+  font-size: 1rem;
 }
 
 dfn {
-  font-style: italic
+  font-style: italic;
 }
 
 h1 {
-  font-size: 3rem
+  font-size: 3rem;
 }
 
 h2 {
-  font-size: 2.5rem
+  font-size: 2.5rem;
 }
 
 h3 {
-  font-size: 2rem
+  font-size: 2rem;
 }
 
 h4 {
-  font-size: 1.75rem
+  font-size: 1.75rem;
 }
 
 h5 {
-  font-size: 1.5rem
+  font-size: 1.5rem;
 }
 
 h6 {
-  font-size: 1.25rem
+  font-size: 1.25rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Segoe UI", Arial, sans-serif;
   font-weight: 400;
-  margin: 0.8rem 0
+  margin: 0.8rem 0;
 }
 
 fieldset {
   border: 0.1rem solid RoyalBlue;
   margin: 0 0.2rem;
-  padding: .3rem .625rem .75rem
+  padding: 0.3rem 0.625rem 0.75rem;
 }
 
 figure {
-  margin: 0.1rem 4rem
+  margin: 0.1rem 4rem;
 }
 
 hr {
@@ -193,14 +194,14 @@ hr {
   margin: 0.5rem 0;
   overflow: visible;
   text-align: center;
-  width: 100%
+  width: 100%;
 }
 
 img {
   border-style: none;
   height: 1.5rem;
   text-align: center;
-  width: 1.5rem
+  width: 1.5rem;
 }
 
 legend {
@@ -213,7 +214,7 @@ legend {
 
 mark {
   background: RoyalBlue;
-  color: Black
+  color: Black;
 }
 
 nav {
@@ -223,30 +224,30 @@ nav {
 }
 
 optgroup {
-  font-weight: bold
+  font-weight: bold;
 }
 
 small {
-  font-size: 0.8rem
+  font-size: 0.8rem;
 }
 
 sub {
-  bottom: -0.2rem
+  bottom: -0.2rem;
 }
 
 sup {
-  top: -0.1rem
+  top: -0.1rem;
 }
 
 sub, sup {
   font-size: 0.75rem;
   line-height: 0;
   position: relative;
-  vertical-align: baseline
+  vertical-align: baseline;
 }
 
 svg:not(:root) {
-  overflow: hidden
+  overflow: hidden;
 }
 
 table {
@@ -284,15 +285,15 @@ tr:hover {
 }
 
 [hidden], template {
-  display: none
+  display: none;
 }
 
 textarea {
-  overflow: auto
+  overflow: auto;
 }
 
 div.table {
-  display: block;
+  display: table;
   border-collapse: collapse;
   border-bottom: 0.1rem solid LightSkyBlue;
   overflow: hidden;
@@ -303,6 +304,7 @@ div.table {
 }
 
 div.table > div.thead {
+  display: table-header-group;
   background-color: LightSkyBlue;
   color: white;
   font-weight: bold;
@@ -310,10 +312,12 @@ div.table > div.thead {
 }
 
 div.table > div.tbody {
+  display: table-row-group;
   overflow-y: auto;
 }
 
 div.table > div.tfoot {
+  display: table-footer-group;
   background-color: LightSkyBlue;
   color: white;
   font-weight: bold;
@@ -321,57 +325,85 @@ div.table > div.tfoot {
 }
 
 div.table > div.thead > div.table-head {
-  display: flex;
+  display: table-row;
   font-weight: bold;
+  height: 3rem;
+}
+
+div.table > div.thead > div.form-head > div.table-btn {
+  border-right: 1rem;
+  height: 2.7rem;
+  padding-right: 0.5rem;
+  text-align: right;
+  vertical-align: top;
 }
 
 div.table > div.tbody > div.table-row {
-  display: flex;
+  display: table-row;
+  height: 2.5rem;
 }
 
 div.table > div.tbody > div.table-row:nth-child(even) {
   background-color: CornSilk;
+  height: 2.5rem;
 }
 
 div.table > div.tfoot > div.table-foot {
-  display: flex;
+  display: table-row;
   font-weight: bold;
+  height: 2.5rem;
 }
 
 div.table > div.thead > div.table-head > div.table-heading {
-  display: inline-block;
-  margin-top: 1.5rem;
+  display: table-cell;
+  height: 3rem;
+  margin: 1.5rem 1rem 0rem 0.5rem;
+  vertical-align: middle;
 }
 
 div.table > div.thead > div.table-head > div.table-heading-btn {
-  display: inline-block;
+  display: table-cell;
+  height: 3rem;
   text-align: right;
+  vertical-align: middle;
 }
 
 div.table > div.tbody > div.table-row > div.table-cell {
-  display: inline-block;
+  display: table-cell;
+  height: 2.5rem;
+  vertical-align: middle;
 }
 
 div.table > div.tbody > div.table-row > div.table-btn {
-  display: inline-block;
+  display: table-cell;
+  height: 2.5rem;
   margin-top: 0.3rem;
   text-align: right;
   vertical-align: baseline;
 }
 
 div.table > div.tfoot > div.table-foot > div.table-footer {
-  display: inline-block;
+  display: table-cell;
+  height: 2.5rem;
   text-align: center;
 }
 
 div.table > div.tfoot > div.table-foot > div.table-prev {
-  display: inline-block;
+  display: table-cell;
+  height: 2.5rem;
   text-align: left;
 }
 
 div.table > div.tfoot > div.table-foot > div.table-next {
-  display: inline-block;
+  display: table-cell;
+  height: 2.5rem;
   text-align: right;
+}
+
+div.table > div.tfoot > div.form-foot > div.table-footer {
+  display: table-cell;
+  height: 2.5rem;
+  text-align: center;
 }
 
 button.nav-button, a.nav-button, button.tabLinks {
@@ -385,13 +417,17 @@ button.nav-button, a.nav-button, button.tabLinks {
   margin-right: 0.1rem;
   margin-top: 0.1rem;
   padding: 0.3rem 0.3rem;
-  vertical-align: baseline
+  vertical-align: baseline;
 }
 
 img.nav-button {
   background-color: inherit;
+  border-style: none;
+  height: 1.5rem;
   padding: 0.1rem 0.1rem 0.1rem 0.1rem;
-  vertical-align: center
+  text-align: center;
+  vertical-align: center;
+  width: 1.5rem;
 }
 
 ul.nav {
@@ -401,7 +437,7 @@ ul.nav {
   margin: 0;
   overflow: hidden;
   padding: 0.5rem;
-  width: 100%
+  width: 100%;
 }
 
 li.nav {
@@ -417,7 +453,7 @@ ul.footer {
   margin-left: 0;
   overflow: hidden;
   padding: 0.5rem;
-  width: 100%
+  width: 100%;
 }
 
 ul.footer li {
@@ -461,24 +497,24 @@ ul.footer li:last-of-type {
 @-webkit-keyframes animatetop {
   from {
     top: -300px;
-    opacity: 0
+    opacity: 0;
   }
 
   to {
     top: 0;
-    opacity: 1
+    opacity: 1;
   }
 }
 
 @keyframes animatetop {
   from {
     top: -300px;
-    opacity: 0
+    opacity: 0;
   }
 
   to {
     top: 0;
-    opacity: 1
+    opacity: 1;
   }
 }
 
@@ -486,14 +522,14 @@ ul.footer li:last-of-type {
   background-color: LightSkyBlue;
   color: white;
   height: 5rem;
-  width: 100%
+  width: 100%;
 }
 
 .modal-body {
   background-color: LightSkyBlue;
   color: white;
   height: 25rem;
-  width: 100%
+  width: 100%;
 }
 
 .modal-body textarea {
@@ -515,7 +551,7 @@ ul.footer li:last-of-type {
   background-color: LightSkyBlue;
   color: white;
   height: 2rem;
-  width: 100%
+  width: 100%;
 }
 
 #adressen_tbody {
@@ -553,7 +589,7 @@ button.tabLinks[active] {
   margin-right: 0.1rem;
   margin-top: 0.1rem;
   padding: 0.3rem 0.3rem;
-  vertical-align: baseline
+  vertical-align: baseline;
 }
 
 .tab {
@@ -598,9 +634,9 @@ div.flex-control {
   flex-grow: 0;
   flex-shrink: 0;
   background-color: inherit;
-  margin:  0 0 0 0;
+  margin: 0 0 0 0;
   order: 2;
-  padding:  0 0 0 0;
+  padding: 0 0 0 0;
   text-align: left;
   vertical-align: baseline;
 }

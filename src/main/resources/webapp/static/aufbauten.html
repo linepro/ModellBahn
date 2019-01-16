@@ -14,14 +14,14 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-  const columns = [NAMEN, BEZEICHNUNG, ABBILDUNG];
+    const columns = [NAMEN, BEZEICHNUNG, ABBILDUNG];
 
-  const aufbau = new ListEditGrid(10, "aufbau", "aufbau", columns, Paged.PAGED, EditMode.UPDATE);
+    const aufbau = new ListEditGrid(10, "aufbau", "aufbau", columns, Paged.PAGED, EditMode.UPDATE);
 
-  async function init() {
-	await aufbau.init();
-    about();
-}
+    async function init() {
+        await aufbau.init();
+        about();
+    }
 </script>
 <title>Aufbauten</title>
 </head>

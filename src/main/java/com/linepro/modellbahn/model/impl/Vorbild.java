@@ -31,7 +31,7 @@ import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.IVorbild;
 import com.linepro.modellbahn.model.keys.VorbildKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
-import com.linepro.modellbahn.model.util.LeistungsUbertragung;
+import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.persistence.util.PathConverter;

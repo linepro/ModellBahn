@@ -72,12 +72,12 @@ import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.keys.ProduktKey;
 import com.linepro.modellbahn.model.keys.UnterKategorieKey;
 import com.linepro.modellbahn.model.keys.VorbildKey;
-import com.linepro.modellbahn.model.util.AdressTyp;
-import com.linepro.modellbahn.model.util.Connector;
+import com.linepro.modellbahn.model.enums.AdressTyp;
+import com.linepro.modellbahn.model.enums.Stecker;
 import com.linepro.modellbahn.model.util.DecoderCreator;
-import com.linepro.modellbahn.model.util.Konfiguration;
-import com.linepro.modellbahn.model.util.LeistungsUbertragung;
-import com.linepro.modellbahn.model.util.Status;
+import com.linepro.modellbahn.model.enums.Konfiguration;
+import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
+import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.persistence.IKey;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.IPersisterFactory;
@@ -446,12 +446,12 @@ public class DBPopulator {
 
         addDSD2010(weiche, digitalbahn);
 
-        addLokPilotM4(mfx, esu, "61600", "LokPilot M4", Connector.NEM652);
-        addLokPilotM4(mfx, esu, "61601", "LokPilot M4 21MTC", Connector.MTC21);
-        addLokSoundM4(mfx, esu, "62400", "LokSound M4", Connector.NEM652);
-        addLokSoundM4(mfx, esu, "62499", "LokSound M4 21MTC", Connector.MTC21);
-        addLokPilotFX(mm, esu, "52620", "LokPilot FX", Connector.NEM652);
-        addLokPilotFX(mm, esu, "52621", "LokPilot FX 21MTC", Connector.MTC21);
+        addLokPilotM4(mfx, esu, "61600", "LokPilot M4", Stecker.NEM652);
+        addLokPilotM4(mfx, esu, "61601", "LokPilot M4 21MTC", Stecker.MTC21);
+        addLokSoundM4(mfx, esu, "62400", "LokSound M4", Stecker.NEM652);
+        addLokSoundM4(mfx, esu, "62499", "LokSound M4 21MTC", Stecker.MTC21);
+        addLokPilotFX(mm, esu, "52620", "LokPilot FX", Stecker.NEM652);
+        addLokPilotFX(mm, esu, "52621", "LokPilot FX 21MTC", Stecker.MTC21);
         addSwitchPilot(weiche, esu, "51800", "SwitchPilot");
         addSwitchPilot(weiche, esu, "51820", "SwitchPilot 2");
         addSwitchPilotServo(weiche, esu);
@@ -506,7 +506,7 @@ public class DBPopulator {
         addUhlenbrock67900(mm, uhlenbrock);
     }
 
-    private DecoderTyp addDecoderTyp(IHersteller hersteller, IProtokoll protokoll, String bestellNr, String bezeichnung, Boolean sound, Konfiguration konfiguration, Connector stecker) {
+    private DecoderTyp addDecoderTyp(IHersteller hersteller, IProtokoll protokoll, String bestellNr, String bezeichnung, Boolean sound, Konfiguration konfiguration, Stecker stecker) {
         return save(new DecoderTyp(null, hersteller, protokoll, bestellNr, bezeichnung, sound, konfiguration, stecker, false));
     }
     
@@ -523,7 +523,7 @@ public class DBPopulator {
     }
     
     private DecoderTyp add60760(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "60760", "Hochleistungsdecoder", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "60760", "Hochleistungsdecoder", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -538,7 +538,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add46715(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "46715", "46715", false, Konfiguration.CV, Connector.NEM652);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "46715", "46715", false, Konfiguration.CV, Stecker.NEM652);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -553,7 +553,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp addWeicheDecoder(IProtokoll weiche, IHersteller marklin, String bestellNr, String bezeichnung) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, weiche, bestellNr, bezeichnung, false, Konfiguration.SWITCH, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, weiche, bestellNr, bezeichnung, false, Konfiguration.SWITCH, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.WEICHE, 1, 1);
 
@@ -563,7 +563,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp addDrehscheibendekoder(IProtokoll weiche, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, weiche, "7687", "Drehscheibendekoder", false, Konfiguration.LINK, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, weiche, "7687", "Drehscheibendekoder", false, Konfiguration.LINK, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.WEICHE, 1, 16);
 
@@ -590,7 +590,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp addUhlenbrock67900(IProtokoll mm, IHersteller uhlenbrock) {
-        DecoderTyp decoderTyp = addDecoderTyp(uhlenbrock, mm, "67900", "67900", false, Konfiguration.SWITCH, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(uhlenbrock, mm, "67900", "67900", false, Konfiguration.SWITCH, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.MM, 1, 8);
 
@@ -633,7 +633,7 @@ public class DBPopulator {
     }
     
     private DecoderTyp addMarklinDELTADecoder(IProtokoll mm, IHersteller marklin, String bestellNr, String bezeichnung) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mm, bestellNr, bezeichnung, false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mm, bestellNr, bezeichnung, false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DELTA, 1, 80);
         
@@ -645,7 +645,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp addSwitchPilotServo(IProtokoll weiche, IHersteller esu) {
-        DecoderTyp decoderTyp = addDecoderTyp(esu, weiche, "51802", "SwitchPilot Servo", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(esu, weiche, "51802", "SwitchPilot Servo", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.WEICHE, 1, 4);
 
@@ -677,7 +677,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp addSwitchPilot(IProtokoll weiche, IHersteller esu, String bestellNr, String bezeichnung) {
-        DecoderTyp decoderTyp = addDecoderTyp(esu, weiche, bestellNr, bezeichnung, false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(esu, weiche, bestellNr, bezeichnung, false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.WEICHE, 1, 8);
         addAdress(decoderTyp, 2, AdressTyp.WEICHE, 1, 2);
@@ -713,8 +713,8 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    private DecoderTyp addLokPilotFX(IProtokoll mm, IHersteller esu, String bestellNr, String bezeichnung, Connector connector) {
-        DecoderTyp decoderTyp = addDecoderTyp(esu, mm, bestellNr, bezeichnung, false, Konfiguration.CV, connector);
+    private DecoderTyp addLokPilotFX(IProtokoll mm, IHersteller esu, String bestellNr, String bezeichnung, Stecker stecker) {
+        DecoderTyp decoderTyp = addDecoderTyp(esu, mm, bestellNr, bezeichnung, false, Konfiguration.CV, stecker);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
         addAdress(decoderTyp, 2, AdressTyp.DIGITAL, 1, 1);
@@ -731,8 +731,8 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    private DecoderTyp addLokSoundM4(IProtokoll mfx, IHersteller esu, String bestellNr, String bezeichnung, Connector connector) {
-        DecoderTyp decoderTyp = addDecoderTyp(esu, mfx, bestellNr, bezeichnung, true, Konfiguration.CV, connector);
+    private DecoderTyp addLokSoundM4(IProtokoll mfx, IHersteller esu, String bestellNr, String bezeichnung, Stecker stecker) {
+        DecoderTyp decoderTyp = addDecoderTyp(esu, mfx, bestellNr, bezeichnung, true, Konfiguration.CV, stecker);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
         addAdress(decoderTyp, 2, AdressTyp.DIGITAL, 1, 1);
@@ -779,8 +779,8 @@ public class DBPopulator {
         return update(decoderTyp);
     }
 
-    private DecoderTyp addLokPilotM4(IProtokoll mfx, IHersteller esu, String bestellNr, String bezeichnung, Connector connector) {
-        DecoderTyp decoderTyp = addDecoderTyp(esu, mfx, bestellNr, bezeichnung, false, Konfiguration.CV, connector);
+    private DecoderTyp addLokPilotM4(IProtokoll mfx, IHersteller esu, String bestellNr, String bezeichnung, Stecker stecker) {
+        DecoderTyp decoderTyp = addDecoderTyp(esu, mfx, bestellNr, bezeichnung, false, Konfiguration.CV, stecker);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -805,7 +805,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp addMarklinSoundDecoder(IProtokoll mfx, IHersteller marklin, String bestellNr, String bezeichnung) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, bestellNr, bezeichnung, false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, bestellNr, bezeichnung, false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -831,7 +831,7 @@ public class DBPopulator {
         return update(decoderTyp);
     }
     private DecoderTyp add115798(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "115798", "115798", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "115798", "115798", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -845,7 +845,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add150436(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "150436", "150436", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "150436", "150436", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -861,7 +861,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add219574(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "219574", "219574", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "219574", "219574", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -886,7 +886,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add602756(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "602756", "602756", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "602756", "602756", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -903,7 +903,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add608862(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "608862", "608862", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "608862", "608862", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -921,7 +921,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add611105(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "611105", "611105", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "611105", "611105", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -939,7 +939,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add611754(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "611754", "611754", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "611754", "611754", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -956,7 +956,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add115166(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "115166", "115166", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "115166", "115166", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -981,7 +981,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add115673(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "115673", "115673", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "115673", "115673", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1008,7 +1008,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add116836(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "116836", "116836", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "116836", "116836", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1034,7 +1034,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add123572(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "123572", "123572", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "123572", "123572", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1055,7 +1055,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add140131(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "140131", "140131", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "140131", "140131", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1078,7 +1078,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add148924(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "148924", "148924", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "148924", "148924", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1105,7 +1105,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add156787(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "156787", "156787", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "156787", "156787", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1126,7 +1126,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add162946(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "162946", "162946", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "162946", "162946", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1156,7 +1156,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add169274(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "169274", "169274", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "169274", "169274", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1182,7 +1182,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add253201(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "253201", "253201", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "253201", "253201", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1214,7 +1214,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add269706(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "269706", "269706", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "269706", "269706", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1247,7 +1247,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add39970(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "39970", "39970", true, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "39970", "39970", true, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1262,7 +1262,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add60902(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "60902", "Hochleistungselektronik", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "60902", "Hochleistungselektronik", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1274,7 +1274,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add611077(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "611077", "611077", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "611077", "611077", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1291,7 +1291,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add209394(IProtokoll protokoll, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "209394", "209394", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "209394", "209394", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1304,7 +1304,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add42973(IProtokoll protokoll, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "42973", "42973", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "42973", "42973", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1323,7 +1323,7 @@ public class DBPopulator {
 
 
     private DecoderTyp add49960(IProtokoll protokoll, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "49960", "49960", true, Konfiguration.SWITCH, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "49960", "49960", true, Konfiguration.SWITCH, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1339,7 +1339,7 @@ public class DBPopulator {
 
 
     private DecoderTyp add606896(IProtokoll protokoll, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "606896", "606896", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "606896", "606896", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1354,7 +1354,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp add608825(IProtokoll protokoll, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "608825", "608825", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "608825", "608825", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1370,7 +1370,7 @@ public class DBPopulator {
     }
 
     private DecoderTyp addDSD2010(IProtokoll weiche, IHersteller digitalbahn) {
-        DecoderTyp decoderTyp = addDecoderTyp(digitalbahn, weiche, "DSD2010", "Drehscheibendekoder", false, Konfiguration.CV, Connector.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(digitalbahn, weiche, "DSD2010", "Drehscheibendekoder", false, Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.WEICHE, 1, 16);
 
@@ -2174,8 +2174,8 @@ public class DBPopulator {
                 sitzPlatzeKL4, aufbauten, triebkopf, mittelwagen, drehgestellbauart);
     }
 
-    private Wahrung addWahrung(String name, String bezeichnung, Integer decimals) {
-        return save(new Wahrung(null, name, bezeichnung, decimals, false));
+    private Wahrung addWahrung(String name, String bezeichnung, Integer dezimal) {
+        return save(new Wahrung(null, name, bezeichnung, dezimal, false));
     }
 
     private void populateWahrung() {

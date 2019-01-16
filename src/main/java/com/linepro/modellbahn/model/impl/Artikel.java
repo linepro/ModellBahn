@@ -34,7 +34,7 @@ import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.keys.ArtikelKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
-import com.linepro.modellbahn.model.util.Status;
+import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.persistence.util.PathConverter;

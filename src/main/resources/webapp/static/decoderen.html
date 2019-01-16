@@ -13,23 +13,24 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-  const columns = [
-    DECODER_ID,
-    DECODER_TYP,
-    BEZEICHNUNG,
-    PROTOKOLL,
-    new ButtonColumn(
-    	    [ newRow ], 
-    	    [ editRow, deleteRow ])
-  ];
-  const decoderen = new ItemGrid(10, fetchUrl("decoder"), "decoderen", columns, Paged.PAGED, EditMode.UPDATE, undefined, "decoder.html");
+    const columns = [
+        DECODER_ID,
+        DECODER_TYP,
+        BEZEICHNUNG,
+        PROTOKOLL,
+        new ButtonColumn(
+            [newRow],
+            [editRow, deleteRow])
+    ];
+    const decoderen = new ItemGrid(10, fetchUrl("decoder"), "decoderen", columns, Paged.PAGED,
+        EditMode.UPDATE, undefined, "decoder.html");
 
-  async function init() {
-    await DECODER_TYP_DROP.init();
-    await PROTOKOLL_DROP.init();
-    await decoderen.init();
-    about();
-}
+    async function init() {
+        await DECODER_TYP_DROP.init();
+        await PROTOKOLL_DROP.init();
+        await decoderen.init();
+        about();
+    }
 </script>
 <title>Decoder list</title>
 </head>

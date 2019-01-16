@@ -1,4 +1,4 @@
-package com.linepro.modellbahn.model.util;
+package com.linepro.modellbahn.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -7,6 +7,7 @@ import com.linepro.modellbahn.model.refs.IDescribedEnum;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Konfiguration.
@@ -20,27 +21,38 @@ import io.swagger.annotations.ApiModel;
 @ApiModel(value = ApiNames.KONFIGURATION, description = "Configuration methods")
 public enum Konfiguration implements IDescribedEnum {
 
-    NONE("The Decoder cannot be configured."),
+    NONE("Kein", "The Decoder cannot be configured."),
 
-    LINK("The Decoder can be configured by link (solder or jumper)."),
+    LINK("Lötbrücke", "The Decoder can be configured by link (solder or jumper)."),
 
-    SWITCH("The Decoder can be configured by switches."),
+    SWITCH("Schalter", "The Decoder can be configured by switches."),
 
-    CV("The Decoder can be configured by CV values.");
+    CV("CV", "The Decoder can be configured by CV values.");
 
     private final String description;
-    
-    Konfiguration(String description) {
+
+    private final String tooltip;
+
+    Konfiguration(String description, String tooltip) {
         this.description = description;
+        this.tooltip = tooltip;
     }
 
     @Override
+    @ApiModelProperty(value = "Konfiguration name", example = "CV", required = true)
     public String getName() {
         return this.name();
     }
 
     @Override
+    @ApiModelProperty(value = "Konfiguration description", example = "The Decoder can be configured by CV values.", required = true)
     public String getBezeichnung() {
         return description;
+    }
+
+    @Override
+    @ApiModelProperty(value = "AdressTyp tooltip", example = "0 - 10239.", required = true)
+    public String getTooltip() {
+        return tooltip;
     }
 }

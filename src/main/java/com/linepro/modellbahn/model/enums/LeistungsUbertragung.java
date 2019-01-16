@@ -1,4 +1,4 @@
-package com.linepro.modellbahn.model.util;
+package com.linepro.modellbahn.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -7,6 +7,7 @@ import com.linepro.modellbahn.model.refs.IDescribedEnum;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Konfiguration.
@@ -20,29 +21,40 @@ import io.swagger.annotations.ApiModel;
 @ApiModel(value = ApiNames.LEISTUNGSUBERTRAGUNG, description = "Drive mechanisms")
 public enum LeistungsUbertragung implements IDescribedEnum {
 
-    NONE(""),
+    NONE("", ""),
     
-    ELEKTRISH("Elektrish"),
+    ELEKTRISH("Elektrish", ""),
 
-    HYDRAULISH("Hydraulish"),
+    HYDRAULISH("Hydraulish", ""),
 
-    MECHANISH("Mechanish"),
+    MECHANISH("Mechanish", ""),
 
-    PRESSLUFT("Pressluft")    ;
+    PRESSLUFT("Pressluft", "");
 
     private final String description;
-    
-    LeistungsUbertragung(String description) {
+
+    private final String tooltip;
+
+    LeistungsUbertragung(String description, String tooltip) {
         this.description = description;
+        this.tooltip = tooltip;
     }
 
     @Override
+    @ApiModelProperty(value = "LeistungsUbertragung name", example = "ELEKTRISH", required = true)
     public String getName() {
         return this.name();
     }
 
     @Override
+    @ApiModelProperty(value = "LeistungsUbertragung description", example = "Elektrish", required = true)
     public String getBezeichnung() {
         return description;
+    }
+
+    @Override
+    @ApiModelProperty(value = "AdressTyp tooltip", example = "0 - 10239.", required = true)
+    public String getTooltip() {
+        return tooltip;
     }
 }

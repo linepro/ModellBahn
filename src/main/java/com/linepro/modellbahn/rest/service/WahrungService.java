@@ -47,9 +47,9 @@ public class WahrungService extends AbstractItemService<NameKey, IWahrung> {
     public IWahrung create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
-            @JsonProperty(value = ApiNames.DECIMALS) Integer decimals,
+            @JsonProperty(value = ApiNames.DEZIMAL) Integer dezimal,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        IWahrung entity = new Wahrung(id, name, bezeichnung, decimals, deleted);
+        IWahrung entity = new Wahrung(id, name, bezeichnung, dezimal, deleted);
         
         debug("created: " + entity);
 
@@ -73,7 +73,7 @@ public class WahrungService extends AbstractItemService<NameKey, IWahrung> {
         @ApiImplicitParam( name = ApiNames.ID, value = "Wahrung id", dataType = "Long", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.NAMEN, value = "Wahrung code", example = "GBP", dataType = "String", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Wahrung description", example = "Pound Serling", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DECIMALS, value = "Wahrung decimals", dataType = "Integer", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.DEZIMAL, value = "Wahrung dezimal", dataType = "Integer", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.DELETED, value = "If true search for soft deleted items", example = "false", dataType = "Boolean", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "Page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),

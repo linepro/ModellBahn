@@ -14,31 +14,38 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-const columns = [
-  ARTIKEL_ID,
-  PRODUKT,
-  new SelectColumn("Kategorie", "unterKategorie", (entity) => { return entity.produkt.unterKategorie ? extractKategorieValue(entity.produkt.unterKategorie) : undefined; }, (entity, value) => { let parts = value.split('/'); entity.unterKategorie.kategorie = parts[0]; entity.unterKategorie.name = parts[1]; }, UNTER_KATEGORIE_DROP, Editable.UPDATE, true),
-  BEZEICHNUNG,
-  KAUFDATUM,
-  STUCK,
-  DECODER,
-  ANMERKUNG,
-  ABBILDUNG,
-  STATUS,
-  new ButtonColumn(
-    [newRow],
-    [editRow, deleteRow]) ];
+  const columns = [
+    ARTIKEL_ID,
+    PRODUKT,
+    new SelectColumn("Kategorie", "unterKategorie", (entity) => {
+      return entity.produkt.unterKategorie ? extractKategorieValue(entity.produkt.unterKategorie)
+          : undefined;
+    }, (entity, value) => {
+      let parts = value.split('/');
+      entity.unterKategorie.kategorie = parts[0];
+      entity.unterKategorie.name = parts[1];
+    }, UNTER_KATEGORIE_DROP, Editable.UPDATE, true),
+    BEZEICHNUNG,
+    KAUFDATUM,
+    STUCK,
+    DECODER,
+    ANMERKUNG,
+    ABBILDUNG,
+    STATUS,
+    new ButtonColumn([newRow], [editRow, deleteRow])
+  ];
 
-const artikel = new ItemGrid(10, fetchUrl("artikel"), "artikel", columns, Paged.PAGED, EditMode.UPDATE, undefined, "artikel.html");
+  const artikel = new ItemGrid(10, fetchUrl("artikel"), "artikel", columns, Paged.PAGED,
+      EditMode.UPDATE, undefined, "artikel.html");
 
-async function init() {
-  await PRODUKT_DROP.init();
-  await UNTER_KATEGORIE_DROP.init();
-  await DECODER_DROP.init();
-  await STATUS_DROP.init();
-  await artikel.init();
-  about();
-}
+  async function init() {
+    await PRODUKT_DROP.init();
+    await UNTER_KATEGORIE_DROP.init();
+    await DECODER_DROP.init();
+    await STATUS_DROP.init();
+    await artikel.init();
+    about();
+  }
 </script>
 <title>Artikelen</title>
 </head>
