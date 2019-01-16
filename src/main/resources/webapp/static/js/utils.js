@@ -325,7 +325,7 @@ class URLColumn extends Column {
   createControl() {
     let ctl = super.createControl();
     ctl.type = 'url';
-    ctl.pattern = '^((http[s]{0,1}):\\/\\/){0,1}(\\w+(\\.\\w+)*)(:\\d+){0,1}((\\/){0,1}\\w+)*(\\.\\w+){0,1}$';
+    ctl.pattern = '^(?:(http[s]?):\\/\\/)?(\\w+(?:\\.\\w+)*)(?::(\\d+))?(?:\\/(\\w+(?:\\/|\\.\\w+)?))?$';
     return ctl;
   }
 }
