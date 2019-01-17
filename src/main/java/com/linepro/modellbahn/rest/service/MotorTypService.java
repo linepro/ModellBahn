@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IMotorTyp;
@@ -43,16 +44,17 @@ public class MotorTypService extends AbstractItemService<NameKey, IMotorTyp> {
         super(IMotorTyp.class);
     }
 
-    @JsonCreator
-    public IMotorTyp create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static MotorTyp create() {
+        return new MotorTyp();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static MotorTyp create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        IMotorTyp entity = new MotorTyp(id, name, bezeichnung, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new MotorTyp(id, name, bezeichnung, deleted);
     }
 
     @GET
@@ -85,7 +87,7 @@ public class MotorTypService extends AbstractItemService<NameKey, IMotorTyp> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a MotorTyp", response = IMotorTyp.class)
-    public Response add(IMotorTyp entity) {
+    public Response add(MotorTyp entity) {
         return super.add(entity);
     }
 
@@ -95,7 +97,7 @@ public class MotorTypService extends AbstractItemService<NameKey, IMotorTyp> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a MotorTyp by name", response = IMotorTyp.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IMotorTyp entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, MotorTyp entity) {
         return super.update(name, entity);
     }
 

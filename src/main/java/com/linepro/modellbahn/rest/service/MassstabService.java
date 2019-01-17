@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IMassstab;
@@ -43,16 +44,17 @@ public class MassstabService extends AbstractItemService<NameKey, IMassstab> {
         super(IMassstab.class);
     }
 
-    @JsonCreator
-    public IMassstab create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Massstab create() {
+        return new Massstab();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Massstab create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        IMassstab entity = new Massstab(id, name, bezeichnung, deleted);
-        
-        debug("created: " + entity);
-
-        return entity;
+        return new Massstab(id, name, bezeichnung, deleted);
     }
 
     @GET
@@ -85,7 +87,7 @@ public class MassstabService extends AbstractItemService<NameKey, IMassstab> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a Massstab", response = IMassstab.class)
-    public Response add(IMassstab entity) {
+    public Response add(Massstab entity) {
         return super.add(entity);
     }
 
@@ -95,7 +97,7 @@ public class MassstabService extends AbstractItemService<NameKey, IMassstab> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a Massstab by name", response = IMassstab.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IMassstab entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Massstab entity) {
         return super.update(name, entity);
     }
 

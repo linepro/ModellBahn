@@ -13,6 +13,10 @@ const EditMode = {
   ADD: 2
 };
 
+const DATE_PATTERN = '^(18[2-9][0-9]|19[0-9]{2}|2[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[0-1])$';
+
+const URL_PATTERN = '^(?:(http[s]?):\\/\\/)?(\\w+(?:\\.\\w+)*)(?::(\\d+))?(?:\\/(\\w+(?:\\/|\\.\\w+)?))?$';
+
 const shouldDisable = (editable, editMode) => {
   if (editable === Editable.NEVER || editMode === EditMode.VIEW) {
     return true;
@@ -126,7 +130,9 @@ const getButton = (value, alt, action) => {
 };
 
 const addText = (cell, text) => {
-  cell.appendChild(document.createTextNode(text));
+  let txt = document.createTextNode(text);
+  cell.appendChild(txt);
+  return txt;
 };
 
 const getButtonLink = (href, alt, action) => {
@@ -150,6 +156,14 @@ const selectFile = (ctl, type, filter) => {
   //TODO: popup selector
 };
 
+const valueAndUnits = (cssSize) => {
+  let dims = /^(\d+)([^\d]+)$/.exec(cssSize);
+  return {
+    value: dims[1],
+    units: dims[2]
+  };
+};
+
 class Column {
   constructor(heading, binding, getter, setter, editable, required, length) {
     this.heading = heading;
@@ -158,8 +172,7 @@ class Column {
     this.setter = setter;
     this.editable = editable ? editable : Editable.NEVER;
     this.required = required ? required : false;
-    this.length = Math.max(length ? length : heading.length,
-        heading.length + 1);
+    this.length = Math.max(length ? length : heading.length, heading.length + 1);
     this.width = 0;
   }
 
@@ -195,7 +208,9 @@ class Column {
   }
 
   createControl() {
-    return document.createElement('input');
+    let ctl = document.createElement('input');
+    ctl.autocomplete = 'off';
+    return ctl;
   }
 
   getControl(cell, entity, editMode) {
@@ -214,8 +229,7 @@ class Column {
     if (value || entity) {
       ctl.disabled = shouldDisable(this.editable, editMode);
     } else {
-      ctl.disabled = !(editMode === EditMode.ADD && this.editable
-          !== Editable.NEVER);
+      ctl.disabled = !(editMode === EditMode.ADD && this.editable !== Editable.NEVER);
     }
 
     ctl.readOnly = ctl.disabled;
@@ -302,8 +316,7 @@ class PhoneColumn extends Column {
 }
 
 class TextColumn extends Column {
-  constructor(heading, binding, getter, setter, editable, required, length,
-      pattern) {
+  constructor(heading, binding, getter, setter, editable, required, length, pattern) {
     super(heading, binding, getter, setter, editable, required, length);
     this.pattern = pattern;
   }
@@ -317,23 +330,23 @@ class TextColumn extends Column {
   }
 }
 
-class URLColumn extends Column {
+class URLColumn extends TextColumn {
   constructor(heading, binding, getter, setter, editable, required) {
-    super(heading, binding, getter, setter, editable, required);
+    super(heading, binding, getter, setter, editable, required, 60, URL_PATTERN);
   }
 
   createControl() {
     let ctl = super.createControl();
     ctl.type = 'url';
-    ctl.pattern = '^(?:(http[s]?):\\/\\/)?(\\w+(?:\\.\\w+)*)(?::(\\d+))?(?:\\/(\\w+(?:\\/|\\.\\w+)?))?$';
+    ctl.class = 'table-url';
+    ctl.addEventListener('click', (e) => {if (ctl.value) { window.open(ctl.value, '_blank'); }});
     return ctl;
   }
 }
 
 class DateColumn extends TextColumn {
   constructor(heading, binding, getter, setter, editable, required) {
-    super(heading, binding, getter, setter, editable, required, 12,
-        '^(18[2-9][0-9]|19[0-9]{2}|2[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[0-1])$');
+    super(heading, binding, getter, setter, editable, required, 12, DATE_PATTERN);
   }
 
   createControl() {
@@ -355,7 +368,7 @@ class IMGColumn extends Column {
     let div = document.createElement('div');
 
     let ctl = getImg('none');
-    ctl.className = 'img-';
+    //ctl.className = 'img-';
     ctl.addEventListener('click', (e) => {
     });
     if (this.onChange) {
@@ -385,31 +398,6 @@ class PDFColumn extends Column {
   constructor(heading, binding, getter, setter, onChange, editable, required) {
     super(heading, binding, getter, setter, editable, required);
     this.onChange = onChange;
-  }
-
-  getControl(cell, entity, editMode) {
-    let ctl = this.createControl();
-
-    let value;
-
-    if (entity) {
-      value = this.entityValue(entity);
-    }
-
-    if (value) {
-      this.setValue(ctl, value);
-    }
-
-    if (value || entity) {
-      ctl.disabled = shouldDisable(this.editable, editMode);
-    } else {
-      ctl.disabled = !(editMode === EditMode.ADD && this.editable
-          !== Editable.NEVER);
-    }
-
-    ctl.required = this.required;
-
-    return ctl;
   }
 
   createControl() {
@@ -442,72 +430,184 @@ class PDFColumn extends Column {
   }
 }
 
+const closeAutoLists = (elmnt) => {
+  let autoComp = (elmnt ? elmnt : document).getElementsByClassName('autocomplete-list');
+  for (let i = 0 ; i < autoComp.length; i++) {
+    removeChildren(autoComp[i]);
+    autoComp[i].parentNode.removeChild(autoComp[i]);
+  }
+};
+
+document.addEventListener('click', (e) => { closeAutoLists(); });
+
 class SelectColumn extends Column {
   constructor(heading, binding, getter, setter, dropDown, editable, required) {
-    super(heading, binding, getter, setter, editable, required,
-        dropDown.length + 3.5);
+    super(heading, binding, getter, setter, editable, required, dropDown.length);
     this.dropDown = dropDown;
-    this.dropSize = 1;
   }
 
   getControl(cell, entity, editMode) {
-    let ctl = this.createControl();
+    document.addEventListener('click', (e) => { this.leave(e); });
 
-    let value;
+    let ctl = super.getControl(cell, entity, editMode);
 
-    if (entity) {
-      value = this.entityValue(entity);
+    if (!ctl.disabled) {
+      ctl.addEventListener('click', (e) => { this.open(e); });
+      ctl.addEventListener('input', (e) => { this.open(e); });
+      ctl.addEventListener('keydown', (e) => { this.keydown(e); });
+      ctl.addEventListener('onblur', (e) => { this.leave(e); });
+      ctl.addEventListener('onfocusout', (e) => { this.leave(e); });
+      ctl.classList.add('autocomplete');
     }
-
-    if (value) {
-      this.setValue(ctl, value);
-    }
-
-    if (value || entity) {
-      ctl.disabled = shouldDisable(this.editable, editMode);
-    } else {
-      ctl.disabled = !(editMode === EditMode.ADD && this.editable
-          !== Editable.NEVER);
-    }
-
-    ctl.required = this.required;
 
     return ctl;
   }
 
-  addOptions(select, dropDown) {
-    if (!this.required) {
-      addOption(select, undefined, '(n/a)');
-    }
+  getControlValue(ctl) {
+    return ctl.getAttribute('data-name');
+  }
 
-    dropDown.options.forEach(option => {
-      addOption(select, option.value, option.display);
+  setValue(ctl, value) {
+    ctl.setAttribute('data-name', value);
+    this.dropDown.options.forEach((o) => {
+      if (o.value === value) {
+        ctl.value = o.display;
+      }
     });
   }
 
-  createControl() {
-    let ctl = document.createElement('select');
-    ctl.size = this.dropSize;
-    this.addOptions(ctl, this.dropDown);
-    return ctl;
+  getLength() {
+    return Math.max(this.dropDown.length, this.getHeaderLength());
   }
 
-  getControlValue(select) {
-    return select.options[select.selectedIndex].value;
+  caption(txt, o) {
+    return o.display;
+  }
+
+  options(txt) {
+    return this.dropDown.options;
+  }
+
+  leave(e) {
+    let ctl = this;
+    let inp = e.target;
+    let div = inp.parentNode;
+
+    closeAutoLists();
+  }
+
+  open(e) {
+    let ctl = this;
+    let inp = e.target;
+    let div = inp.parentNode;
+
+    e.stopPropagation();
+    closeAutoLists();
+
+    let rect = div.getBoundingClientRect();
+
+    let autoComp = document.createElement('div');
+    autoComp.className = 'autocomplete-list';
+    autoComp.style.top = rect.y + rect.height;
+    div.appendChild(autoComp);
+    let dims = valueAndUnits(getComputedStyle(autoComp).lineHeight);
+
+    let i = 0;
+    ctl.options(inp.value).forEach((o) => {
+      let autoItem = document.createElement('div');
+      autoItem.setAttribute('data-name', o.value);
+      autoItem.className = 'autocomplete-items';
+      autoItem.style.top = (dims.value*i)+dims.units;
+      addText(autoItem, ctl.caption(inp.value, o));
+      autoItem.addEventListener('click', (e) => { this.click(e); });
+      autoComp.appendChild(autoItem);
+      i++;
+    });
+  }
+
+  keydown(e) {
+    let ctl = this;
+    let div = e.target.parentNode;
+
+    let autoComps = div.getElementsByClassName('autocomplete-list');
+
+    if (!autoComps || !autoComps.length) return;
+
+    let autoComp = autoComps[0];
+
+    if (e.keyCode === 40) {
+      ctl.addActive(ctl, autoComp, true);
+    } else if (e.keyCode == 38) {
+      ctl.addActive(ctl, autoComp, false);
+    } else if (e.keyCode == 13) {
+      e.preventDefault();
+      ctl.selectActive(autoComp);
+    }
+  }
+
+  click(e) {
+    let opt = e.target;
+    let autoComp = opt.parentNode;
+    let div = autoComp.parentNode;
+    let inp = div.getElementsByClassName('autocomplete')[0];
+
+    inp.value = opt.innerText;
+    inp.setAttribute('data-name', opt.getAttribute('data-name'));
+
+    closeAutoLists();
+  };
+
+  addActive(ctl, autoComp, up) {
+    let items = autoComp.getElementsByClassName('autocomplete-items');
+    let curr = -1;
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].classList.contains('autocomplete-active')) {
+        if (curr == -1) curr = i;
+        items[i].classList.remove('autocomplete-active');
+      }
+    }
+
+    let next = curr + (up ? 1 : -1);
+    if (0 <= next && next <= items.length) items[next].classList.add('autocomplete-active');
+  }
+
+  selectActive(autoComp) {
+    let active = autoComp.getElementsByClassName('autocomplete-active');
+    if (active.length) active[0].click();
+  }
+}
+
+class AutoCompleteColumn extends SelectColumn {
+  constructor(heading, binding, getter, setter, dropDown, editable, required) {
+    super(heading, binding, getter, setter, editable, required, dropDown.length);
+  }
+
+  options(txt) {
+    return this.dropDown.options.filter((o) => { return o.display.toLowerCase().includes(txt.toLowerCase()); }).slice(0,5);
+  }
+
+  caption(txt, o) {
+    return o.display.replace(/inp.value/i, '<strong>' + inp.value + '</strong>');
+  }
+
+  open(e) {
+    let inp = e.target;
+
+    if (!inp.value) {
+      return false;
+    }
+
+    return super.open(e);
+  }
+}
+
+class DropDownColumn extends SelectColumn {
+  constructor(heading, binding, getter, setter, dropDown, editable, required) {
+    super(heading, binding, getter, setter, dropDown, editable, required);
   }
 
   getLength() {
     return Math.max(this.dropDown.length + 3.5, this.getHeaderLength());
-  }
-
-  setValue(ctl, value) {
-    ctl.value = value;
-    for (let i = 0; i < ctl.options.length; i++) {
-      if (ctl.options[i].value === value) {
-        ctl.selectedIndex = i;
-        return;
-      }
-    }
   }
 }
 
@@ -647,7 +747,7 @@ async function modal(elementName, title, contentUrl) {
     });
 
     window.addEventListener('click', (e) => {
-      if (event.target === modal) {
+      if (e.target === modal) {
         modal.style.display = 'none';
       }
     });
@@ -669,8 +769,7 @@ const setActiveTab = (event, tabName) => {
 
   let linkName = tabName.replace('Tab', 'Link');
   for (let i = 0; i < tabLinks.length; i++) {
-    tabLinks[i].className = (tabLinks[i].id === linkName) ? 'tabLinks active'
-        : 'tabLinks';
+    tabLinks[i].className = (tabLinks[i].id === linkName) ? 'tabLinks active' : 'tabLinks';
   }
 };
 

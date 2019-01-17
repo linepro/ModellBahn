@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.ISonderModell;
@@ -43,16 +44,17 @@ public class SonderModellService extends AbstractItemService<NameKey, ISonderMod
         super(ISonderModell.class);
     }
 
-    @JsonCreator
-    public ISonderModell create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static SonderModell create() {
+        return new SonderModell();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static SonderModell create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        ISonderModell entity = new SonderModell(id, name, bezeichnung, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new SonderModell(id, name, bezeichnung, deleted);
     }
 
     @GET
@@ -95,7 +97,7 @@ public class SonderModellService extends AbstractItemService<NameKey, ISonderMod
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a SonderModell by name", response = ISonderModell.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, ISonderModell entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, SonderModell entity) {
         return super.update(name, entity);
     }
 

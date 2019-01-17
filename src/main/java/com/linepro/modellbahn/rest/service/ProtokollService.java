@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IProtokoll;
@@ -43,16 +44,17 @@ public class ProtokollService extends AbstractItemService<NameKey, IProtokoll> {
         super(IProtokoll.class);
     }
 
-    @JsonCreator
-    public IProtokoll create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Protokoll create() {
+        return new Protokoll();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Protokoll create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        IProtokoll entity = new Protokoll(id, name, bezeichnung, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new Protokoll(id, name, bezeichnung, deleted);
     }
 
     @GET
@@ -85,7 +87,7 @@ public class ProtokollService extends AbstractItemService<NameKey, IProtokoll> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a Protokoll", response = IProtokoll.class)
-    public Response add(IProtokoll entity) {
+    public Response add(Protokoll entity) {
         return super.add(entity);
     }
 
@@ -95,7 +97,7 @@ public class ProtokollService extends AbstractItemService<NameKey, IProtokoll> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a Protokoll by name", response = IProtokoll.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IProtokoll entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Protokoll entity) {
         return super.update(name, entity);
     }
 

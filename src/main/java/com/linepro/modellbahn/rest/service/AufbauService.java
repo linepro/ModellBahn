@@ -19,6 +19,7 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IAufbau;
@@ -54,16 +55,17 @@ public class AufbauService extends AbstractItemService<NameKey, IAufbau> {
         super(IAufbau.class);
     }
 
-    @JsonCreator
-    public IAufbau create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Aufbau create() {
+        return new Aufbau();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Aufbau create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        IAufbau entity = new Aufbau(id, name, bezeichnung, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new Aufbau(id, name, bezeichnung, deleted);
     }
 
     @GET
@@ -96,7 +98,7 @@ public class AufbauService extends AbstractItemService<NameKey, IAufbau> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds an Aufbau", response = IAufbau.class)
-    public Response add(IAufbau entity) {
+    public Response add(Aufbau entity) {
         return super.add(entity);
     }
 
@@ -106,7 +108,7 @@ public class AufbauService extends AbstractItemService<NameKey, IAufbau> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates an Aufbau by name", response = IAufbau.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IAufbau entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Aufbau entity) {
         return super.update(name, entity);
     }
 

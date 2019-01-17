@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IBahnverwaltung;
@@ -43,16 +44,17 @@ public class BahnverwaltungService extends AbstractItemService<NameKey, IBahnver
         super(IBahnverwaltung.class);
     }
 
-    @JsonCreator
-    public IBahnverwaltung create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Bahnverwaltung create() {
+        return new Bahnverwaltung();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Bahnverwaltung create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        IBahnverwaltung entity = new Bahnverwaltung(id, name, bezeichnung, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new Bahnverwaltung(id, name, bezeichnung, deleted);
     }
 
     @GET
@@ -85,7 +87,7 @@ public class BahnverwaltungService extends AbstractItemService<NameKey, IBahnver
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a Bahnverwaltung", response = IBahnverwaltung.class)
-    public Response add(IBahnverwaltung entity) {
+    public Response add(Bahnverwaltung entity) {
         return super.add(entity);
     }
 

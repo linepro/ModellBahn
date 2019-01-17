@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IGattung;
@@ -43,16 +44,17 @@ public class GattungService extends AbstractItemService<NameKey, IGattung> {
         super(IGattung.class);
     }
 
-    @JsonCreator
-    public IGattung create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Gattung create() {
+        return new Gattung();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Gattung create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        IGattung entity = new Gattung(id, name, bezeichnung, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new Gattung(id, name, bezeichnung, deleted);
     }
 
     @GET
@@ -85,7 +87,7 @@ public class GattungService extends AbstractItemService<NameKey, IGattung> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a Gattung", response = IGattung.class)
-    public Response add(IGattung entity) {
+    public Response add(Gattung entity) {
         return super.add(entity);
     }
 
@@ -95,7 +97,7 @@ public class GattungService extends AbstractItemService<NameKey, IGattung> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a Gattung by name", response = IGattung.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IGattung entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Gattung entity) {
         return super.update(name, entity);
     }
 

@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IWahrung;
@@ -35,7 +36,7 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.WAHRUNG, description = "Wahrung (currency) maintenance")
+@Api(value = ApiNames.WAHRUNG)
 @Path(ApiPaths.WAHRUNG)
 public class WahrungService extends AbstractItemService<NameKey, IWahrung> {
 
@@ -43,17 +44,18 @@ public class WahrungService extends AbstractItemService<NameKey, IWahrung> {
         super(IWahrung.class);
     }
 
-    @JsonCreator
-    public IWahrung create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Wahrung create() {
+        return new Wahrung();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Wahrung create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DEZIMAL) Integer dezimal,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        IWahrung entity = new Wahrung(id, name, bezeichnung, dezimal, deleted);
-        
-        debug("created: " + entity);
-
-        return entity;
+        return new Wahrung(id, name, bezeichnung, dezimal, deleted);
     }
 
     @GET
@@ -87,7 +89,7 @@ public class WahrungService extends AbstractItemService<NameKey, IWahrung> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a Wahrung", response = IWahrung.class)
-    public Response add(IWahrung entity) {
+    public Response add(Wahrung entity) {
         return super.add(entity);
     }
 
@@ -97,7 +99,7 @@ public class WahrungService extends AbstractItemService<NameKey, IWahrung> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a Wahrung by name", response = IWahrung.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IWahrung entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Wahrung entity) {
         return super.update(name, entity);
     }
 

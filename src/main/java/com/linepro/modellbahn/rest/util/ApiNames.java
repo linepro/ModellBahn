@@ -30,6 +30,8 @@ public interface ApiNames {
     String DECODER = "decoder";
     String DECODER_ID = "decoderId";
     String DECODER_TYP = "decoderTyp";
+    String DECODER_TYP_HERSTELLER = "decoderTypHersteller";
+    String DECODER_TYP_BESTELL_NR = "decoderTypBestellNr";
     String DELETED = "deleted";
     String DIENSTGEWICHT = "dienstgewicht";
     String DMLAUFRADHINTEN = "dmLaufradHinten";

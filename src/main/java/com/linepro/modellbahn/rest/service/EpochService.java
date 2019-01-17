@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IEpoch;
@@ -43,16 +44,17 @@ public class EpochService extends AbstractItemService<NameKey, IEpoch> {
         super(IEpoch.class);
     }
 
-    @JsonCreator
-    public IEpoch create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Epoch create() {
+        return new Epoch();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Epoch create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        IEpoch entity = new Epoch(id, name, bezeichnung, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new Epoch(id, name, bezeichnung, deleted);
     }
 
     @GET
@@ -85,7 +87,7 @@ public class EpochService extends AbstractItemService<NameKey, IEpoch> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a Epoch", response = IEpoch.class)
-    public Response add(IEpoch entity) {
+    public Response add(Epoch entity) {
         return super.add(entity);
     }
 
@@ -95,7 +97,7 @@ public class EpochService extends AbstractItemService<NameKey, IEpoch> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a Epoch by name", response = IEpoch.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IEpoch entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Epoch entity) {
         return super.update(name, entity);
     }
 

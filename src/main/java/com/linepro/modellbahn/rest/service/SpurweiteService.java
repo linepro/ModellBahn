@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.ISpurweite;
@@ -43,16 +44,17 @@ public class SpurweiteService extends AbstractItemService<NameKey, ISpurweite> {
         super(ISpurweite.class);
     }
 
-    @JsonCreator
-    public ISpurweite create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Spurweite create() {
+        return new Spurweite();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Spurweite create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        ISpurweite entity = new Spurweite(id, name, bezeichnung, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new Spurweite(id, name, bezeichnung, deleted);
     }
 
     @GET
@@ -85,7 +87,7 @@ public class SpurweiteService extends AbstractItemService<NameKey, ISpurweite> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a Spurweite", response = ISpurweite.class)
-    public Response add(ISpurweite entity) {
+    public Response add(Spurweite entity) {
         return super.add(entity);
     }
 
@@ -95,7 +97,7 @@ public class SpurweiteService extends AbstractItemService<NameKey, ISpurweite> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a Spurweite by name", response = ISpurweite.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, ISpurweite entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Spurweite entity) {
         return super.update(name, entity);
     }
 

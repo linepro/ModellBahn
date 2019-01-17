@@ -21,6 +21,7 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IArtikel;
@@ -31,9 +32,9 @@ import com.linepro.modellbahn.model.IMotorTyp;
 import com.linepro.modellbahn.model.IProdukt;
 import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.IWahrung;
+import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.model.impl.Artikel;
 import com.linepro.modellbahn.model.keys.ArtikelKey;
-import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;
@@ -64,8 +65,13 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
         super(IArtikel.class);
     }
 
-    @JsonCreator
-    public IArtikel create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Artikel create() {
+        return new Artikel();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Artikel create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.HERSTELLER) String herstellerStr,
             @JsonProperty(value = ApiNames.BESTELL_NR) String bestellNr,
             @JsonProperty(value = ApiNames.KAUFDATUM) LocalDate kaufdatum,
@@ -93,14 +99,10 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
         IDecoder decoder = findDecoder(decoderId, false);
         Status status = Status.valueOf(statusStr);
         
-        IArtikel entity = new Artikel(id, produkt, kaufdatum, wahrung, preis, stuck,
+        return new Artikel(id, produkt, kaufdatum, wahrung, preis, stuck,
                 steuerung, motorTyp, licht, kupplung, decoder,
                 artikelNr, bezeichnung, anmerkung,
                 beladung, status, deleted);
-
-        debug("created: " + entity);
-
-       return entity;
     }
 
     @GET
@@ -146,7 +148,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds an Artikel", response = IArtikel.class)
-    public Response add(IArtikel entity) {
+    public Response add(Artikel entity) {
         return super.add(entity);
     }
 
@@ -156,7 +158,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates an Artikel by id", response = IArtikel.class)
-    public Response update(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, IArtikel entity) {
+    public Response update(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, Artikel entity) {
         return super.update(new ArtikelKey(artikelId), entity);
     }
 

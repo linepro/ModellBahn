@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IZugTyp;
@@ -43,16 +44,17 @@ public class ZugTypService extends AbstractItemService<NameKey, IZugTyp> {
         super(IZugTyp.class);
     }
 
-    @JsonCreator
-    public IZugTyp create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static ZugTyp create() {
+        return new ZugTyp();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static ZugTyp create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        IZugTyp entity = new ZugTyp(id, name, bezeichnung, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new ZugTyp(id, name, bezeichnung, deleted);
     }
 
     @GET
@@ -85,7 +87,7 @@ public class ZugTypService extends AbstractItemService<NameKey, IZugTyp> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a ZugTyp", response = IZugTyp.class)
-    public Response add(IZugTyp entity) {
+    public Response add(ZugTyp entity) {
         return super.add(entity);
     }
 
@@ -95,7 +97,7 @@ public class ZugTypService extends AbstractItemService<NameKey, IZugTyp> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a ZugTyp by name", response = IZugTyp.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IZugTyp entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, ZugTyp entity) {
         return super.update(name, entity);
     }
 

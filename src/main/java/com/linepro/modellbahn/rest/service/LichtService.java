@@ -19,6 +19,7 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.ILicht;
@@ -52,16 +53,17 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
         super(ILicht.class);
     }
 
-    @JsonCreator
-    public ILicht create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Licht create() {
+        return new Licht();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Licht create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiPaths.NAME_PARAM_NAME) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        ILicht entity = new Licht(id, name, bezeichnung, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new Licht(id, name, bezeichnung, deleted);
     }
 
     @GET
@@ -93,7 +95,7 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a Licht", response = ILicht.class)
-    public Response add(ILicht entity) {
+    public Response add(Licht entity) {
         return super.add(entity);
     }
 
@@ -103,7 +105,7 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a Licht by name", response = ILicht.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, ILicht entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Licht entity) {
         return super.update(name, entity);
     }
 

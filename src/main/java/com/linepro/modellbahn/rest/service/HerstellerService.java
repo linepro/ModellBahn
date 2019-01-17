@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IHersteller;
@@ -45,18 +46,19 @@ public class HerstellerService extends AbstractItemService<NameKey, IHersteller>
         super(IHersteller.class);
     }
 
-    @JsonCreator
-    public IHersteller create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Hersteller create() {
+        return new Hersteller();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Hersteller create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.TELEFON) String telefon,
             @JsonProperty(value = ApiNames.URL) URL url,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        IHersteller entity = new Hersteller(id, name, bezeichnung, url, telefon, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new Hersteller(id, name, bezeichnung, url, telefon, deleted);
     }
 
     @GET
@@ -91,7 +93,7 @@ public class HerstellerService extends AbstractItemService<NameKey, IHersteller>
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a Hersteller", response = IHersteller.class)
-    public Response add(IHersteller entity) {
+    public Response add(Hersteller entity) {
         return super.add(entity);
     }
 
@@ -101,7 +103,7 @@ public class HerstellerService extends AbstractItemService<NameKey, IHersteller>
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a Hersteller by name", response = IHersteller.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IHersteller entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Hersteller entity) {
         return super.update(name, entity);
     }
 

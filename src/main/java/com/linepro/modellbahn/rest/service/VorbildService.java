@@ -21,6 +21,7 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IAchsfolg;
@@ -29,9 +30,9 @@ import com.linepro.modellbahn.model.IBahnverwaltung;
 import com.linepro.modellbahn.model.IGattung;
 import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.IVorbild;
+import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
 import com.linepro.modellbahn.model.impl.Vorbild;
 import com.linepro.modellbahn.model.keys.VorbildKey;
-import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;
@@ -60,17 +61,23 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
         super(IVorbild.class);
     }
 
-    @JsonCreator
-    public IVorbild create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Vorbild create() {
+        return new Vorbild();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Vorbild create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.GATTUNG) IGattung gattung,
-            @JsonProperty(value = ApiNames.UNTER_KATEGORIE, required=true) IUnterKategorie unterKategorie,
-            @JsonProperty(value = ApiNames.BAHNVERWALTUNG) IBahnverwaltung bahnverwaltung,
+            @JsonProperty(value = ApiNames.KATEGORIE) String kategorieStr,
+            @JsonProperty(value = ApiNames.UNTER_KATEGORIE) String unterKategorieStr,
+            @JsonProperty(value = ApiNames.BAHNVERWALTUNG) String bahnverwaltungStr,
             @JsonProperty(value = ApiNames.HERSTELLER) String hersteller,
             @JsonProperty(value = ApiNames.BAUZEIT) LocalDate bauzeit,
             @JsonProperty(value = ApiNames.ANZAHL) Integer anzahl,
             @JsonProperty(value = ApiNames.BETREIBSNUMMER) String betreibsNummer,
-            @JsonProperty(value = ApiNames.ANTRIEB) IAntrieb antrieb,
-            @JsonProperty(value = ApiNames.ACHSFOLG) IAchsfolg achsfolg,
+            @JsonProperty(value = ApiNames.ANTRIEB) String antriebStr,
+            @JsonProperty(value = ApiNames.ACHSFOLG) String achsfolgStr,
             @JsonProperty(value = ApiNames.ANFAHRZUGKRAFT) BigDecimal anfahrzugkraft,
             @JsonProperty(value = ApiNames.LEISTUNG) BigDecimal leistung,
             @JsonProperty(value = ApiNames.DIENSTGEWICHT) BigDecimal dienstgewicht,
@@ -90,7 +97,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
             @JsonProperty(value = ApiNames.VERDAMPFUNG) BigDecimal verdampfung,
             @JsonProperty(value = ApiNames.FAHRMOTOREN) Integer fahrmotoren,
             @JsonProperty(value = ApiNames.MOTORBAUART) String motorbauart,
-            @JsonProperty(value = ApiNames.LEISTUNGSUBERTRAGUNG) LeistungsUbertragung leistungsUbertragung,
+            @JsonProperty(value = ApiNames.LEISTUNGSUBERTRAGUNG) String leistungsUbertragungStr,
             @JsonProperty(value = ApiNames.REICHWEITE) BigDecimal reichweite,
             @JsonProperty(value = ApiNames.KAPAZITAT) BigDecimal kapazitaet,
             @JsonProperty(value = ApiNames.KLASSE) Integer klasse,
@@ -104,15 +111,17 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
             @JsonProperty(value = ApiNames.DREHGESTELLBAUART) String drehgestellbauart,
             @JsonProperty(value = ApiNames.ANMERKUNG) String anmerkung,
             @JsonProperty(value = ApiNames.ABBILDUNG) String abbildungStr,
-            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        IVorbild entity = new Vorbild(id, gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit, anzahl, betreibsNummer, antrieb, achsfolg, anmerkung, anfahrzugkraft, leistung, dienstgewicht,
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
+        IAntrieb antrieb = findAntrieb(antriebStr, false);
+        IAchsfolg achsfolg = findAchsfolg(achsfolgStr, false);
+        IBahnverwaltung bahnverwaltung = findBahnverwaltung(bahnverwaltungStr, false);
+        IUnterKategorie unterKategorie = findUnterKategorie(kategorieStr, unterKategorieStr, false);
+        LeistungsUbertragung leistungsUbertragung = LeistungsUbertragung.valueOf(leistungsUbertragungStr);
+
+        return new Vorbild(id, gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit, anzahl, betreibsNummer, antrieb, achsfolg, anmerkung, anfahrzugkraft, leistung, dienstgewicht,
                 geschwindigkeit, lange, ausserdienst, dmTreibrad, dmLaufradVorn, dmLaufradHinten, zylinder, dmZylinder, kolbenhub, kesseluberdruck, rostflache, uberhitzerflache,
                 wasservorrat, verdampfung, fahrmotoren, anmerkung, leistungsUbertragung, reichweite, kapazitaet, klasse, sitzPlatzeKL1, sitzPlatzeKL2, sitzPlatzeKL3,
                 sitzPlatzeKL4, aufbauten, triebkopf, mittelwagen, drehgestellbauart, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
     }
 
     @GET
@@ -187,7 +196,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a Vorbild", response = IVorbild.class)
-    public Response add(IVorbild entity) {
+    public Response add(Vorbild entity) {
         return super.add(entity);
     }
 
@@ -197,7 +206,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a Vorbild by name", response = IVorbild.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IVorbild entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Vorbild entity) {
         return super.update(name, entity);
     }
 

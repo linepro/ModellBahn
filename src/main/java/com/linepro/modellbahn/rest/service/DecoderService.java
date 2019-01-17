@@ -1,6 +1,5 @@
 package com.linepro.modellbahn.rest.service;
 
-import com.linepro.modellbahn.model.enums.DecoderStatus;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -16,6 +15,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IDecoder;
@@ -25,14 +25,14 @@ import com.linepro.modellbahn.model.IDecoderFunktion;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypCV;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
+import com.linepro.modellbahn.model.IProtokoll;
+import com.linepro.modellbahn.model.enums.AdressTyp;
+import com.linepro.modellbahn.model.enums.DecoderStatus;
 import com.linepro.modellbahn.model.impl.Decoder;
 import com.linepro.modellbahn.model.impl.DecoderAdress;
 import com.linepro.modellbahn.model.impl.DecoderCV;
 import com.linepro.modellbahn.model.impl.DecoderFunktion;
-import com.linepro.modellbahn.model.impl.DecoderTyp;
-import com.linepro.modellbahn.model.impl.Protokoll;
 import com.linepro.modellbahn.model.keys.DecoderKey;
-import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.model.util.DecoderCreator;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
@@ -59,26 +59,35 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
         super(IDecoder.class);
     }
 
-    @JsonCreator
-    public IDecoder create(@JsonProperty(value = ApiNames.ID) Long id,
-            @JsonProperty(value = ApiNames.DECODER_TYP) DecoderTyp decoderTyp,
-            @JsonProperty(value = ApiNames.PROTOKOLL) Protokoll protokoll,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Decoder create() {
+        return new Decoder();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Decoder create(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.HERSTELLER) String herstellerStr,
+            @JsonProperty(value = ApiNames.BESTELL_NR) String bestellNr,
+            @JsonProperty(value = ApiNames.PROTOKOLL) String protokollStr,
             @JsonProperty(value = ApiNames.DECODER_ID) String decoderId,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.FAHRSTUFE) Integer fahrstufe,
             @JsonProperty(value = ApiNames.STATUS) String statusStr,
-            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
+        IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, false);
+        IProtokoll protokoll = findProtokoll(protokollStr, false);
         DecoderStatus status = DecoderStatus.valueOf(statusStr);
 
-        IDecoder entity = new Decoder(id, decoderTyp, protokoll, decoderId, bezeichnung, fahrstufe, status, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new Decoder(id, decoderTyp, protokoll, decoderId, bezeichnung, fahrstufe, status, deleted);
     }
 
-    @JsonCreator
-    public DecoderAdress createAdress(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static DecoderAdress createAdress() {
+        return new DecoderAdress();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static DecoderAdress createAdress(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.DECODER_ID) String decoderId,
             @JsonProperty(value = ApiNames.REIHE) Integer reihe,
             @JsonProperty(value = ApiNames.ADRESS_TYP) String adressTypStr,
@@ -87,15 +96,16 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
         IDecoder decoder = findDecoder(decoderId, false);
         AdressTyp adressTyp = AdressTyp.valueOf(adressTypStr);
 
-        DecoderAdress entity = new DecoderAdress(id, decoder, reihe, adressTyp, adress, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new DecoderAdress(id, decoder, reihe, adressTyp, adress, deleted);
     }
 
-    @JsonCreator
-    public DecoderCV createCV(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static DecoderCV createCV() {
+        return new DecoderCV();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static DecoderCV createCV(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.DECODER_ID) String decoderId,
             @JsonProperty(value = ApiNames.CV) Integer cvValue, @JsonProperty(value = ApiNames.WERT) Integer wert,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
@@ -103,15 +113,16 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
 
         IDecoderTypCV decoderTypCV = findDecoderTypCV(decoder.getDecoderTyp(), cvValue, true);
 
-        DecoderCV entity = new DecoderCV(id, decoder, decoderTypCV, wert, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new DecoderCV(id, decoder, decoderTypCV, wert, deleted);
     }
 
-    @JsonCreator
-    public DecoderFunktion createFunktion(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static DecoderFunktion createFunktion() {
+        return new DecoderFunktion();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static DecoderFunktion createFunktion(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.DECODER_ID) String decoderId,
             @JsonProperty(value = ApiNames.REIHE) Integer reihe,
             @JsonProperty(value = ApiNames.FUNKTION) String funktion,
@@ -121,11 +132,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
 
         IDecoderTypFunktion decoderTypFunktion = findDecoderTypFunktion(decoder.getDecoderTyp(), reihe, funktion, true);
 
-        DecoderFunktion entity = new DecoderFunktion(id, decoder, decoderTypFunktion, bezeichnung, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new DecoderFunktion(id, decoder, decoderTypFunktion, bezeichnung, deleted);
     }
 
     @POST

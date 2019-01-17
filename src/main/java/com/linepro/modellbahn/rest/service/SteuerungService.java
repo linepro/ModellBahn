@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.ISteuerung;
@@ -43,16 +44,17 @@ public class SteuerungService extends AbstractItemService<NameKey, ISteuerung> {
         super(ISteuerung.class);
     }
 
-    @JsonCreator
-    public ISteuerung create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Steuerung create() {
+        return new Steuerung();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Steuerung create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        ISteuerung entity = new Steuerung(id, name, bezeichnung, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new Steuerung(id, name, bezeichnung, deleted);
     }
 
     @GET
@@ -85,7 +87,7 @@ public class SteuerungService extends AbstractItemService<NameKey, ISteuerung> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a Steuerung", response = ISteuerung.class)
-    public Response add(ISteuerung entity) {
+    public Response add(Steuerung entity) {
         return super.add(entity);
     }
 
@@ -95,7 +97,7 @@ public class SteuerungService extends AbstractItemService<NameKey, ISteuerung> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a Steuerung by name", response = ISteuerung.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, ISteuerung entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Steuerung entity) {
         return super.update(name, entity);
     }
 

@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IArtikel;
@@ -54,23 +55,29 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
         consistPersister = StaticPersisterFactory.get().createPersister(IZugConsist.class);
     }
 
-    @JsonCreator
-    public IZug create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Zug create() {
+        return new Zug();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Zug create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.ZUG_TYP) String zugTypStr,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         IZugTyp zugTyp = findZugTyp(zugTypStr, false);
 
-        IZug entity = new Zug(id, name, bezeichnung, zugTyp, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new Zug(id, name, bezeichnung, zugTyp, deleted);
     }
 
-    @JsonCreator
-    public IZugConsist createZugConsist(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static ZugConsist createZugConsist() {
+        return new ZugConsist();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static ZugConsist createZugConsist(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.ZUG) String zugStr,
             @JsonProperty(value = ApiNames.POSITION) Integer position,
             @JsonProperty(value = ApiNames.ARTIKEL) String artikelStr,
@@ -78,11 +85,7 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
         IZug zug = findZug(zugStr, true);
         IArtikel artikel = findArtikel(artikelStr, false);
         
-        IZugConsist entity = new ZugConsist(id,  zug, position, artikel, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new ZugConsist(id,  zug, position, artikel, deleted);
     }
 
     @GET
@@ -116,7 +119,7 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a Zug", response = IZug.class)
-    public Response add(IZug entity) {
+    public Response add(Zug entity) {
         return super.add(entity);
     }
 
@@ -126,7 +129,7 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a Zug by name", response = IZug.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IZug entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Zug entity) {
         return super.update(name, entity);
     }
 

@@ -19,6 +19,7 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IKupplung;
@@ -52,16 +53,17 @@ public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
         super(IKupplung.class);
     }
 
-    @JsonCreator
-    public IKupplung create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Kupplung create() {
+        return new Kupplung();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Kupplung create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        IKupplung entity = new Kupplung(id, name, bezeichnung, deleted);
-        
-        debug("created: " + entity);
-
-        return entity;
+        return new Kupplung(id, name, bezeichnung, deleted);
     }
 
     @GET
@@ -94,7 +96,7 @@ public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a Kupplung", response = IKupplung.class)
-    public Response add(IKupplung entity) {
+    public Response add(Kupplung entity) {
         return super.add(entity);
     }
 
@@ -104,7 +106,7 @@ public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a Kupplung by name", response = IKupplung.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IKupplung entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Kupplung entity) {
         return super.update(name, entity);
     }
 

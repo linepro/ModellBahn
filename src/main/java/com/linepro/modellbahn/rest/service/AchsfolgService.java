@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IAchsfolg;
@@ -42,17 +43,18 @@ public class AchsfolgService extends AbstractItemService<NameKey, IAchsfolg> {
     public AchsfolgService() {
         super(IAchsfolg.class);
     }
-
-    @JsonCreator
-    public IAchsfolg create(@JsonProperty(value = ApiNames.ID) Long id,
+    
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Achsfolg create() {
+        return new Achsfolg();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Achsfolg create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        IAchsfolg entity = new Achsfolg(id, name, bezeichnung, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new Achsfolg(id, name, bezeichnung, deleted);
     }
 
     @GET
@@ -85,7 +87,7 @@ public class AchsfolgService extends AbstractItemService<NameKey, IAchsfolg> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds an Achsfolg", response = IAchsfolg.class)
-    public Response add(IAchsfolg entity) {
+    public Response add(Achsfolg entity) {
         return super.add(entity);
     }
 
@@ -95,7 +97,7 @@ public class AchsfolgService extends AbstractItemService<NameKey, IAchsfolg> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates an Achsfolg by name", response = IAchsfolg.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IAchsfolg entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Achsfolg entity) {
         return super.update(name, entity);
     }
 

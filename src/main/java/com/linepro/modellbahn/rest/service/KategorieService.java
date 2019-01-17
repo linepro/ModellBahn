@@ -21,6 +21,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IKategorie;
@@ -61,20 +62,26 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
         unterKategoriePersister = StaticPersisterFactory.get().createPersister(IUnterKategorie.class);
     }
 
-    @JsonCreator
-    public IKategorie create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Kategorie Kategorie() {
+        return new Kategorie();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Kategorie create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        IKategorie entity = new Kategorie(id, name, bezeichnung, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return  new Kategorie(id, name, bezeichnung, deleted);
     }
 
-    @JsonCreator
-    public IUnterKategorie create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static UnterKategorie createUnterKategorie() {
+        return new UnterKategorie();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static UnterKategorie createUnterKategorie(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.KATEGORIE) String kategorieStr,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
@@ -114,7 +121,7 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds an Kategorie", response = IKategorie.class)
-    public Response add(IKategorie entity) {
+    public Response add(Kategorie entity) {
         return super.add(entity);
     }
 
@@ -124,7 +131,7 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates an Kategorie by name", response = IKategorie.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IKategorie entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Kategorie entity) {
         return super.update(name, entity);
     }
 
@@ -173,7 +180,7 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
         @ApiResponse(code = 402, message = "Not Found"),
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
-    public Response add(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, IUnterKategorie unterKategorie) {
+    public Response add(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, UnterKategorie unterKategorie) {
         try {
             logPost(kategorieStr + "/" + unterKategorie);
 
@@ -205,7 +212,7 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
     public Response update(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
-            @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr, IUnterKategorie newUnterKategorie) {
+            @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr, UnterKategorie newUnterKategorie) {
         try {
             logPut(kategorieStr + "/" + unterKategorieStr + ": " + newUnterKategorie);
 

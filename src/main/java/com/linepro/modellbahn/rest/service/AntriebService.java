@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IAntrieb;
@@ -43,16 +44,17 @@ public class AntriebService extends AbstractItemService<NameKey, IAntrieb> {
         super(IAntrieb.class);
     }
 
-    @JsonCreator
-    public IAntrieb create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Antrieb create() {
+        return new Antrieb();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Antrieb create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        IAntrieb entity = new Antrieb(id, name, bezeichnung, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new Antrieb(id, name, bezeichnung, deleted);
     }
 
     @GET
@@ -85,7 +87,7 @@ public class AntriebService extends AbstractItemService<NameKey, IAntrieb> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds an Antrieb", response = IAntrieb.class)
-    public Response add(IAntrieb entity) {
+    public Response add(Antrieb entity) {
         return super.add(entity);
     }
 
@@ -95,7 +97,7 @@ public class AntriebService extends AbstractItemService<NameKey, IAntrieb> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates an Antrieb by name", response = IAntrieb.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, IAntrieb entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Antrieb entity) {
         return super.update(name, entity);
     }
 

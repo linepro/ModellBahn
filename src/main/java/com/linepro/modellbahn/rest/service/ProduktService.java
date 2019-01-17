@@ -21,11 +21,13 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.IAufbau;
 import com.linepro.modellbahn.model.IBahnverwaltung;
+import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IEpoch;
 import com.linepro.modellbahn.model.IGattung;
 import com.linepro.modellbahn.model.IHersteller;
@@ -38,11 +40,10 @@ import com.linepro.modellbahn.model.IProduktTeil;
 import com.linepro.modellbahn.model.ISonderModell;
 import com.linepro.modellbahn.model.ISpurweite;
 import com.linepro.modellbahn.model.ISteuerung;
+import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.IVorbild;
-import com.linepro.modellbahn.model.impl.DecoderTyp;
 import com.linepro.modellbahn.model.impl.Produkt;
 import com.linepro.modellbahn.model.impl.ProduktTeil;
-import com.linepro.modellbahn.model.impl.UnterKategorie;
 import com.linepro.modellbahn.model.keys.ProduktKey;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
@@ -78,12 +79,18 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
         teilPersister = StaticPersisterFactory.get().createPersister(IProduktTeil.class);
     }
 
-    @JsonCreator
-    public IProdukt create(@JsonProperty(value = ApiNames.ID) Long id,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Produkt create() {
+        return new Produkt();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Produkt create(@JsonProperty(value = ApiNames.ID) Long id,
             @JsonProperty(value = ApiNames.HERSTELLER) String herstellerStr,
             @JsonProperty(value = ApiNames.BESTELL_NR) String bestellNr,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
-            @JsonProperty(value = ApiNames.UNTER_KATEGORIE) UnterKategorie unterKategorie,
+            @JsonProperty(value = ApiNames.KATEGORIE) String kategorieStr,
+            @JsonProperty(value = ApiNames.UNTER_KATEGORIE) String unterKategorieStr,
             @JsonProperty(value = ApiNames.MASSSTAB) String massstabStr,
             @JsonProperty(value = ApiNames.SPURWEITE) String spurweiteStr,
             @JsonProperty(value = ApiNames.BETREIBSNUMMER) String betreibsNummer,
@@ -99,7 +106,8 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
             @JsonProperty(value = ApiNames.LICHT) String lichtStr,
             @JsonProperty(value = ApiNames.KUPPLUNG) String kupplungStr,
             @JsonProperty(value = ApiNames.STEUERUNG) String steuerungStr,
-            @JsonProperty(value = ApiNames.DECODER_TYP) DecoderTyp decoderTyp,
+            @JsonProperty(value = ApiNames.DECODER_TYP_HERSTELLER) String decoderTypHerstellerStr,
+            @JsonProperty(value = ApiNames.DECODER_TYP_BESTELL_NR) String decoderTypBestellNr,
             @JsonProperty(value = ApiNames.MOTOR_TYP) String motorTypStr,
             @JsonProperty(value = ApiNames.LANGE) BigDecimal lange,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
@@ -108,6 +116,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
         IMassstab massstab = findMassstab(massstabStr, false);
         ISpurweite spurweite = findSpurweite(spurweiteStr, false);
         IEpoch epoch = findEpoch(epochStr, false);
+        IDecoderTyp decoderTyp = findDecoderTyp(decoderTypHerstellerStr, decoderTypBestellNr, false);
         IBahnverwaltung bahnverwaltung = findBahnverwaltung(bahnverwaltungStr, false);
         IGattung gattung = findGattung(gattungStr, false);
         IVorbild vorbild = findVorbild(gattungStr, false);
@@ -118,8 +127,9 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
         IKupplung kupplung = findKupplung(kupplungStr, false);
         ISteuerung steuerung = findSteuerung(steuerungStr, false);
         IMotorTyp motorTyp = findMotorTyp(motorTypStr, false);
+        IUnterKategorie unterKategorie = findUnterKategorie(kategorieStr, unterKategorieStr, false);
 
-        IProdukt entity = new Produkt(id,
+        return new Produkt(id,
                 hersteller,
                 bestellNr,
                 bezeichnung,
@@ -143,23 +153,24 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
                 motorTyp,
                 lange,
                 deleted);
-
-        debug("created: " + entity);
-
-        return entity;
     }
 
-    @JsonCreator
-    IProduktTeil createProduktTeil(@JsonProperty(value = ApiNames.ID) Long id,
-            @JsonProperty(value = ApiNames.PRODUKT) Produkt produkt,
-            @JsonProperty(value = ApiNames.TEIL) Produkt teil,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static ProduktTeil createProduktTeil() {
+        return new ProduktTeil();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static ProduktTeil createProduktTeil(@JsonProperty(value = ApiNames.ID) Long id,
+            @JsonProperty(value = ApiNames.HERSTELLER) String herstellerStr,
+            @JsonProperty(value = ApiNames.BESTELL_NR) String bestellNr,
+            @JsonProperty(value = ApiNames.TEIL_HERSTELLER) String teilHerstellerStr,
+            @JsonProperty(value = ApiNames.TEIL_BESTELL_NR) String teilBestellNr,
             @JsonProperty(value = ApiNames.ANZAHL) Integer anzahl,
-            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        IProduktTeil entity = new ProduktTeil(id, produkt, teil, anzahl, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
+       IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
+       IProdukt teil = findProdukt(teilHerstellerStr, teilBestellNr, false);
+       return new ProduktTeil(id, produkt, teil, anzahl, deleted);
     }
 
     @GET

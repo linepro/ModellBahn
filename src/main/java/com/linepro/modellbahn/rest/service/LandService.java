@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.ILand;
@@ -44,19 +45,20 @@ public class LandService extends AbstractItemService<NameKey, ILand> {
         super(ILand.class);
     }
 
-    @JsonCreator
-    public ILand create(@JsonProperty(value = ApiNames.ID) Long id,
-                    @JsonProperty(value = ApiPaths.NAME_PARAM_NAME) String name,
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static Land create() {
+        return new Land();
+    }
+    
+    @JsonCreator(mode= Mode.PROPERTIES)
+    public static Land create(@JsonProperty(value = ApiNames.ID) Long id,
+                    @JsonProperty(value = ApiNames.NAMEN) String name,
                     @JsonProperty(value = ApiNames.WAHRUNG) String wahrungStr,
                     @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
                     @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         IWahrung wahrung = findWahrung(wahrungStr, false);
  
-        ILand entity = new Land(id, name, bezeichnung, wahrung, deleted);
-
-        debug("created: " + entity);
-
-        return entity;
+        return new Land(id, name, bezeichnung, wahrung, deleted);
     }
 
     @GET
@@ -90,7 +92,7 @@ public class LandService extends AbstractItemService<NameKey, ILand> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a Land", response = ILand.class)
-    public Response add(ILand entity) {
+    public Response add(Land entity) {
         return super.add(entity);
     }
 
@@ -100,7 +102,7 @@ public class LandService extends AbstractItemService<NameKey, ILand> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a Land by name", response = ILand.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, ILand entity) {
+    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Land entity) {
         return super.update(name, entity);
     }
 

@@ -79,7 +79,7 @@ option {
 }
 
 input, select, textarea {
-  border: none;
+  border: 0;
   font: inherit;
   background-color: Ivory;
   color: inherit;
@@ -93,13 +93,36 @@ input[type="checkbox"] {
   width: unset;
 }
 
-[type="date"]::-webkit-inner-spin-button {
-  display: none;
+input[type="date"] {
+  border: 0;
+  margin: 0;
+  padding: 0;
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
+input[type="date"]::-webkit-datetime-edit,
+input[type="date"]::-webkit-datetime-edit-fields-wrapper,
+input[type="date"]::-webkit-datetime-edit-text,
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator { background: orange; }
+
+input[type="date"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  display: none;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
   margin: 0; 
 }
 
@@ -121,6 +144,18 @@ input[focus], select[focus], textarea[focus] {
 input[readonly], select[readonly], textarea[readonly] {
   border: none;
   background-color: inherit;
+}
+
+input[type='url'], table-url {
+  cursor:pointer;
+  color:blue;
+  text-decoration:underline;
+}
+
+input[type='url']:hover,
+table-url:hover {
+  text-decoration:none;
+  text-shadow: 1px 1px 1px DimGrey;
 }
 
 select option {
@@ -549,7 +584,7 @@ ul.footer li:last-of-type {
 
 .modal-footer {
   background-color: LightSkyBlue;
-  color: white;
+  color: White;
   height: 2rem;
   width: 100%;
 }
@@ -654,3 +689,41 @@ button.selection {
   vertical-align: top;
 }
 
+.autocomplete {
+  position: relative;
+  display: inline-block;
+}
+
+.autocomplete-list {
+  background-color: white;
+  display: block;
+  line-height: 2rem;
+  padding-left: 0.6rem;
+  position: relative;
+}
+
+.autocomplete-items {
+  background-color: white;
+  border: 1px solid LightSkyBlue;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 99;
+}
+
+.autocomplete-items div {
+  background-color: LightYellow; 
+  cursor: pointer;
+  padding: 10px;
+}
+
+.autocomplete-items div:hover {
+  background-color: LemonChiffon;
+  color: LightSkyBlue;
+}
+
+.autocomplete-active {
+  background-color: LemonChiffon; 
+  color: LightSkyBlue;
+} 
