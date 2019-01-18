@@ -387,36 +387,51 @@ class FileColumn extends Column {
   }
 
   select(e) {
-    let ctl = e.target;
-    let inp = document.createElement('input');
-    inp.type = 'file';
-    inp.accept = this.mask;
-    inp.multiple = false;
-    inp.addEventListener('click', (e) => { this.update(e, ctl.value); });
-    //ctl.parentElement.appendChild(inp);
-    inp.click();
+    let btn = e.target;
+    if (btn.tagName === 'IMG') {
+      btn = btn.parentElement;
+    }
+    let cell = btn.parentElement;
+    let file = document.createElement('input');
+    file.type = 'file';
+    file.accept = this.mask;
+    file.multiple = false;
+    file.style.display = 'none';
+    file.setAttribute('data-opening', true);
+    file.setAttribute('data-update', link);
+    file.addEventListener('click', (e) => { this.update(e); });
+    cell.parentElement.appendChild(file);
+    file.click();
   }
 
   remove(e) {
-    let inp = e.target;
-    let div = inp.parentElement;
-    let ctl = div.getElementsByTagName('input');
-    let link = inp.value;
+    let btn = e.target;
+    if (btn.tagName === 'IMG') {
+      btn = btn.parentElement;
+    }
+    let cell = btn.parentElement;
+    let ctl = cell.getElementsByTagName('input');
+    let link = btn.value;
     if (link) {
+      removeFile(link);
       this.setValue(ctl, undefined);
     }
   }
 
-  update(e, link) {
-    let inp = e.target;
-    let div = inp.parentElement;
-    let newValue = inp.value;
-    //div.removeChild(inp);
+  update(e) {
+    let file = e.target;
+    let isOpening = file.getAttribute('data-opening');
+    file.setAttribute('data-opening', false);
+    if (isOpening) return;
+    let cell = file.parentElement;
+    let newValue = file.value;
+    let link = file.getAttribute('data-update');
     if (newValue && link) {
-      let ctl = div.getElementsByTagName('input');
+      let ctl = cell.getElementsByTagName('input');
       this.setValue(ctl, newValue);
       uploadFile(link, newValue);
     }
+    cell.removeChild(file);
   }
 }
 
