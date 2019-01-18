@@ -38,10 +38,10 @@ const DECODER_TYP_DROP = new DropDown(apiRoot() + 'decoderTyp', extractProduktVa
 const PRODUKT_DROP = new DropDown(apiRoot() + 'produkt', extractProduktValue, extractProduktOption);
 const UNTER_KATEGORIE_DROP = new DropDown(apiRoot() + 'kategorie/unterKategorien', extractKategorieValue, extractKategorieOption);
 
-const ABBILDUNG = new IMGColumn('Abbildung', 'abbildung', (entity) => { return entity.abbildung; }, undefined, undefined, Editable.UPDATE, false);
+const ABBILDUNG = new IMGColumn('Abbildung', 'abbildung', (entity) => { return entity.abbildung; }, Editable.UPDATE, false);
 const ACHSFOLG = new DropDownColumn('Achsfolg', 'achsfolg', (entity) => { return entity.achsfolg ? entity.achsfolg.name : undefined; }, (entity, value) => { entity.achsfolg = value; }, ACHSFOLG_DROP, Editable.UPDATE, false);
 const ADRESS_TYP = new DropDownColumn('Typ', 'typ', (entity) => { return entity.adressTyp; }, (entity, value) => { entity.adressTyp = value; }, ADRESS_TYP_DROP, Editable.UPDATE, true);
-const ANLEITUNGEN = new PDFColumn('Anleitungen', 'anleitungen', (entity) => { return entity.anleitungen; }, (entity, value) => { entity.anleitungen = value; }, undefined, Editable.UPDATE, false);
+const ANLEITUNGEN = new PDFColumn('Anleitungen', 'anleitungen', (entity) => { return entity.anleitungen; }, Editable.UPDATE, false);
 const ANMERKUNG = new TextColumn('Anmerkung', 'anmerkung', (entity) => { return entity.anmerkung; }, (entity, value) => { entity.anmerkung = value; }, Editable.UPDATE, false, 30);
 const ANTRIEB = new DropDownColumn('Antrieb', 'antrieb', (entity) => { return entity.antrieb ? entity.antrieb.name : undefined; }, (entity, value) => { entity.antrieb = value; }, ANTRIEB_DROP, Editable.UPDATE, false);
 const ANFAHRZUGKRAFT = new NumberColumn('Anfahrzugkraft', 'anfahrzugkraft', (entity) => { return entity.anfahrzugkraft; }, (entity, value) => { entity.anfahrzugkraft = value; }, Editable.UPDATE, false, 300000, 1);
@@ -69,7 +69,7 @@ const DMTREIBRAD = new NumberColumn('Treibrad', 'dmTreibrad', (entity) => { retu
 const DMZYLINDER = new NumberColumn('Zylinder', 'dmZylinder', (entity) => { return entity.dmZylinder; }, (entity, value) => { entity.dmZylinder = value; }, Editable.UPDATE, false, 3000, 1);
 const DREHGESTELLBAUART = new TextColumn('Drehgestell', 'drehgestellBauart', (entity) => { return entity.drehgestellBauart; }, (entity, value) => { entity.drehgestellBauart = value; }, Editable.UPDATE, false, 30);
 const EPOCH = new DropDownColumn('Epoch', 'epoch', (entity) => { return entity.epoch ? entity.epoch.name : undefined; }, (entity, value) => { entity.epoch = value; }, EPOCH_DROP, Editable.UPDATE, false);
-const EXPLOSIONSZEICHNUNG = new PDFColumn('Explosionszeichnung', 'explosionszeichnung', (entity) => { return entity.explosionszeichnung; }, (entity, value) => { entity.explosionszeichnung = value; }, undefined, Editable.UPDATE, false);
+const EXPLOSIONSZEICHNUNG = new PDFColumn('Explosionszeichnung', 'explosionszeichnung', (entity) => { return entity.explosionszeichnung; }, Editable.UPDATE, false);
 const FAHRMOTOREN = new NumberColumn('Fahrmotoren', 'fahrmotoren', (entity) => { return entity.fahrmotoren; }, (entity, value) => { entity.fahrmotoren = value; }, Editable.UPDATE, false, 5, 1);
 const FAHRSTUFE = new NumberColumn('Fahrstufe', 'fahrstufe', (entity) => { return entity.fahrstufe; }, (entity, value) => { entity.fahrstufe = value; }, Editable.UPDATE, false, 127, 1);
 const FUNKTION = new TextColumn('Funktion', 'funktion', (entity) => { return entity.funktion; }, (entity, value) => { entity.funktion = value; }, Editable.ADD, true, 3);

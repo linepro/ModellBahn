@@ -338,11 +338,8 @@ class DateColumn extends TextColumn {
 }
 
 class FileColumn extends Column {
-  constructor(heading, binding, getter, add, remove, change, mask, editable, required) {
+  constructor(heading, binding, getter, mask, editable, required) {
     super(heading, binding, getter, undefined, editable, required);
-    this.add = add;
-    this.remove = remove;
-    this.change = change;
     this.mask = mask;
   }
 
@@ -357,20 +354,20 @@ class FileColumn extends Column {
       }
     });
 
-    if (!ctl.disabled) {
-      if (this.add) {
-        let btn = getButton(value, alt, action);
-        btn.addEventListener('click', (e) => { this.selectFile(e); });
-        btn.className = 'selection';
-        div.appendChild(btn);
-      }
+    let add = getLink(entity.links, 'update-'+this.binding);
 
-      if (this.remove) {
-        let btn = getButton(value, alt, action);
-        btn.addEventListener('click', (e) => { this.removeFile(e); });
-        btn.className = 'selection';
-        div.appendChild(btn);
-      }
+    if (add) {
+      let btn = getButton(add.href, 'add', undefined);
+      btn.addEventListener('click', (e) => { this.select(e); });
+      cell.appendChild(btn);
+    }
+
+    let remove = getLink(entity.links, 'delete-'+this.binding);
+
+    if (remove) {
+      let btn = getButton(remove.href, 'delete', undefined);
+      btn.addEventListener('click', (e) => { this.remove(e); });
+      cell.appendChild(btn);
     }
 
     return ctl;
@@ -389,52 +386,49 @@ class FileColumn extends Column {
     ctl.setAttribute('data-file', value);
   }
 
-  selectFile(e) {
+  select(e) {
     let ctl = e.target;
     let inp = document.createElement('input');
     inp.type = 'file';
     inp.accept = this.mask;
     inp.multiple = false;
-    inp.addEventListener('click', (e) => { this.updateFile(e); });
-    ctl.parentElement.appendChild(inp);
+    inp.addEventListener('click', (e) => { this.update(e, ctl.value); });
+    //ctl.parentElement.appendChild(inp);
     inp.click();
   }
 
-  removeFile(e) {
+  remove(e) {
     let inp = e.target;
     let div = inp.parentElement;
-    let value = this.getControlValue(ctl);
-    let newValue = inp.value;
-    if (newValue && this.add) {
-      this.setValue(ctl, newValue);
-      this.add(newValue);
+    let ctl = div.getElementsByTagName('input');
+    let link = inp.value;
+    if (link) {
+      this.setValue(ctl, undefined);
     }
-    div.removeChild(inp);
   }
 
-  updateFile(e) {
+  update(e, link) {
     let inp = e.target;
     let div = inp.parentElement;
     let newValue = inp.value;
-    div.removeChild(inp);
-    if (newValue && this.add) {
-      let ctl = div.getElementsByTagName('input')
-      let value = this.getControlValue(ctl);
+    //div.removeChild(inp);
+    if (newValue && link) {
+      let ctl = div.getElementsByTagName('input');
       this.setValue(ctl, newValue);
-      this.add(newValue);
+      uploadFile(link, newValue);
     }
   }
 }
 
 class IMGColumn extends FileColumn {
-  constructor(heading, binding, getter, add, remove, change, editable, required) {
-    super(heading, binding, getter, add, remove, change, 'image/*', editable, required);
+  constructor(heading, binding, getter, editable, required) {
+    super(heading, binding, getter, 'image/*', editable, required);
   }
 }
 
 class PDFColumn extends Column {
-  constructor(heading, binding, getter, add, remove, change, editable, required) {
-    super(heading, binding, getter, add, remove, change, 'application/pdf', editable, required);
+  constructor(heading, binding, getter, editable, required) {
+    super(heading, binding, getter, 'application/pdf', editable, required);
   }
 }
 
@@ -936,15 +930,22 @@ const addFooter = (tableName, table, columns, paged, rowCount) => {
   }
 };
 
-async function uploadFile(url, inputCtl) {
-  let formData = new FormData();
+async function removeFile(deleteUrl) {
+  await fetch(deleteUrl, {method: 'DELETE', headers: {'Content-type': 'application/json'}})
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+  })
+}
 
-  let file = inputCtl.files[0];
+async function uploadFile(uploadUrl, file) {
+  let formData = new FormData();
 
   formData.append('FileName', file.name);
   formData.append('FileData', file);
 
-  await fetch(url, {method: 'PUT', body: formData})
+  await fetch(uploadUrl, {method: 'PUT', body: formData})
   .then(response => checkResponse(response))
   .catch(error => reportError(error));
 }
