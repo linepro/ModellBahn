@@ -1,5 +1,14 @@
 package com.linepro.modellbahn.rest.service;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.linepro.modellbahn.rest.json.serialization.DecoderDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.KupplungDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.LichtDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.LocalDateDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.MotorTypDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.ProduktDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.SteuerungDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.WahrungDeserializer;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -71,18 +80,25 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
     }
     
     @JsonCreator(mode= Mode.PROPERTIES)
-    public static Artikel create(@JsonProperty(value = ApiNames.ID) Long id,
-            @JsonProperty(value = ApiNames.HERSTELLER) String herstellerStr,
-            @JsonProperty(value = ApiNames.BESTELL_NR) String bestellNr,
-            @JsonProperty(value = ApiNames.KAUFDATUM) LocalDate kaufdatum,
-            @JsonProperty(value = ApiNames.WAHRUNG) String wahrungStr,
+    public static Artikel create(@JsonProperty(value = ApiNames.ARTIKEL_ID) Long id,
+            @JsonProperty(value = ApiNames.PRODUKT)
+            @JsonDeserialize(using= ProduktDeserializer.class) IProdukt produkt,
+            @JsonProperty(value = ApiNames.KAUFDATUM)
+            @JsonDeserialize(using = LocalDateDeserializer.class) LocalDate kaufdatum,
+            @JsonProperty(value = ApiNames.WAHRUNG)
+            @JsonDeserialize(using= WahrungDeserializer.class) IWahrung wahrung,
             @JsonProperty(value = ApiNames.PREIS) BigDecimal preis,
             @JsonProperty(value = ApiNames.STUCK) Integer stuck,
-            @JsonProperty(value = ApiNames.STEUERUNG) String steuerungStr,
-            @JsonProperty(value = ApiNames.MOTOR_TYP) String motorTypStr,
-            @JsonProperty(value = ApiNames.LICHT) String lichtStr,
-            @JsonProperty(value = ApiNames.KUPPLUNG) String kupplungStr,
-            @JsonProperty(value = ApiNames.DECODER) String decoderId,
+            @JsonProperty(value = ApiNames.STEUERUNG)
+            @JsonDeserialize(using= SteuerungDeserializer.class) ISteuerung steuerung,
+            @JsonProperty(value = ApiNames.MOTOR_TYP)
+            @JsonDeserialize(using= MotorTypDeserializer.class) IMotorTyp motorTyp,
+            @JsonProperty(value = ApiNames.LICHT)
+            @JsonDeserialize(using= LichtDeserializer.class) ILicht licht,
+            @JsonProperty(value = ApiNames.KUPPLUNG)
+            @JsonDeserialize(using= KupplungDeserializer.class) IKupplung kupplung,
+            @JsonProperty(value = ApiNames.DECODER)
+            @JsonDeserialize(using= DecoderDeserializer.class) IDecoder decoder,
             @JsonProperty(value = ApiNames.NAMEN) String artikelNr,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.ANMERKUNG) String anmerkung,
@@ -90,13 +106,6 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
             @JsonProperty(value = ApiNames.ABBILDUNG) String abbildungStr,
             @JsonProperty(value = ApiNames.STATUS) String statusStr,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
-        IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
-        IWahrung wahrung = findWahrung(wahrungStr, false);
-        ISteuerung steuerung = findSteuerung(steuerungStr, false);
-        IMotorTyp motorTyp = findMotorTyp(motorTypStr, false);
-        ILicht licht = findLicht(lichtStr, false);
-        IKupplung kupplung = findKupplung(kupplungStr, false);
-        IDecoder decoder = findDecoder(decoderId, false);
         Status status = Status.valueOf(statusStr);
         
         return new Artikel(id, produkt, kaufdatum, wahrung, preis, stuck,
@@ -172,7 +181,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
     }
 
     @PUT
-    @Path(ApiPaths.ARTIKEL_ABBILDUNG)
+    @Path(ApiPaths.ARTIKEL_ABBILDUNG_PART)
     @Consumes({ MediaType.MULTIPART_FORM_DATA })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
@@ -211,14 +220,14 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
     }
 
     @DELETE
-    @Path(ApiPaths.ABBILDUNG_PART)
+    @Path(ApiPaths.ARTIKEL_ABBILDUNG_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Deletes the image for a named Artikel", response = IArtikel.class)
     @ApiResponses({
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
-    public Response deleteAbbildung(@PathParam(ApiPaths.ID_PARAM_NAME) String artikelId) {
+    public Response deleteAbbildung(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId) {
         try {
             IArtikel artikel = findArtikel(artikelId, false);
 

@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.rest.service;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.linepro.modellbahn.rest.json.serialization.KategorieDeserializer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -82,12 +84,11 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
     
     @JsonCreator(mode= Mode.PROPERTIES)
     public static UnterKategorie createUnterKategorie(@JsonProperty(value = ApiNames.ID) Long id,
-            @JsonProperty(value = ApiNames.KATEGORIE) String kategorieStr,
+            @JsonProperty(value = ApiNames.KATEGORIE)
+            @JsonDeserialize(using = KategorieDeserializer.class) IKategorie kategorie,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
-        IKategorie kategorie = findKategorie(kategorieStr, false);
-
         return new UnterKategorie(id, kategorie, name, bezeichnung, deleted);
     }
 

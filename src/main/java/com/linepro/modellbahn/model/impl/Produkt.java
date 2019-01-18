@@ -1,5 +1,8 @@
 package com.linepro.modellbahn.model.impl;
 
+import static javax.ws.rs.HttpMethod.DELETE;
+import static javax.ws.rs.HttpMethod.PUT;
+
 import java.math.BigDecimal;
 import java.net.URI;
 import java.nio.file.Path;
@@ -531,6 +534,22 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
     @Transient
     public String getLinkId() {
         return String.format(ApiPaths.PRODUKT_LINK, getHersteller().getLinkId(), getBestellNr());
+    }
+
+    @Override
+    protected void addDelete(URI root) {
+        super.addDelete(root);
+        getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.DELETE, DELETE));
+        getLinks().add(fileLink(root, ApiNames.ANLEITUNGEN, ApiNames.DELETE, DELETE));
+        getLinks().add(fileLink(root, ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.DELETE, DELETE));
+    }
+
+    @Override
+    protected void addUpdate(URI root) {
+        super.addUpdate(root);
+        getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.UPDATE, PUT));
+        getLinks().add(fileLink(root, ApiNames.ANLEITUNGEN, ApiNames.DELETE, DELETE));
+        getLinks().add(fileLink(root, ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.DELETE, DELETE));
     }
 
     @Override

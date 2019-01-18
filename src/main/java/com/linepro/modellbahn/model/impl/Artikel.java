@@ -1,6 +1,11 @@
 package com.linepro.modellbahn.model.impl;
 
+import static javax.ws.rs.HttpMethod.DELETE;
+import static javax.ws.rs.HttpMethod.PUT;
+
+import com.linepro.modellbahn.rest.util.ApiPaths;
 import java.math.BigDecimal;
+import java.net.URI;
 import java.nio.file.Path;
 import java.time.LocalDate;
 
@@ -355,6 +360,18 @@ public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
     @Transient
     public String getLinkId() {
         return getArtikelId();
+    }
+
+    @Override
+    protected void addDelete(URI root) {
+        super.addDelete(root);
+        getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.DELETE, DELETE));
+    }
+
+    @Override
+    protected void addUpdate(URI root) {
+        super.addUpdate(root);
+        getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.UPDATE, PUT));
     }
 
     @Override

@@ -1,6 +1,10 @@
 package com.linepro.modellbahn.model.impl;
 
+import static javax.ws.rs.HttpMethod.DELETE;
+import static javax.ws.rs.HttpMethod.PUT;
+
 import java.math.BigDecimal;
+import java.net.URI;
 import java.nio.file.Path;
 import java.time.LocalDate;
 
@@ -787,6 +791,18 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
     @Transient
     public String getLinkId() {
         return getGattung().getLinkId();
+    }
+
+    @Override
+    protected void addDelete(URI root) {
+        super.addDelete(root);
+        getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.DELETE, DELETE));
+    }
+
+    @Override
+    protected void addUpdate(URI root) {
+        super.addUpdate(root);
+        getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.UPDATE, PUT));
     }
 
     @Override

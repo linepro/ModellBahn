@@ -360,7 +360,6 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
 
     @Override
     public String toString() {
-      //noinspection Duplicates
       return new ToStringBuilder(this)
                 .appendSuper(super.toString())
                 .append(ApiNames.HERSTELLER, getHersteller())

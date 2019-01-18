@@ -16,7 +16,6 @@ const GATTUNG_DROP = new DropDown(apiRoot() + 'gattung', extractName, extractBez
 const HERSTELLER_DROP = new DropDown(apiRoot() + 'hersteller', extractName, extractBezeichnung);
 const KONFIGURATION_DROP = new DropDown(apiRoot() + 'enums/konfiguration', extractName, extractBezeichnung);
 const KUPPLUNG_DROP = new DropDown(apiRoot() + 'kupplung', extractName, extractBezeichnung);
-const LAND_DROP = new DropDown(apiRoot() + 'land', extractName, extractBezeichnung);
 const LICHT_DROP = new DropDown(apiRoot() + 'licht', extractName, extractBezeichnung);
 const MASSSTAB_DROP = new DropDown(apiRoot() + 'massstab', extractName, extractBezeichnung);
 const MOTOR_TYP_DROP = new DropDown(apiRoot() + 'motorTyp', extractName, extractBezeichnung);
@@ -39,7 +38,7 @@ const DECODER_TYP_DROP = new DropDown(apiRoot() + 'decoderTyp', extractProduktVa
 const PRODUKT_DROP = new DropDown(apiRoot() + 'produkt', extractProduktValue, extractProduktOption);
 const UNTER_KATEGORIE_DROP = new DropDown(apiRoot() + 'kategorie/unterKategorien', extractKategorieValue, extractKategorieOption);
 
-const ABBILDUNG = new IMGColumn('Abbildung', 'abbildung', (entity) => { return entity.abbildung; }, (entity, value) => { entity.abbildung = value; }, undefined, Editable.UPDATE, false);
+const ABBILDUNG = new IMGColumn('Abbildung', 'abbildung', (entity) => { return entity.abbildung; }, undefined, undefined, Editable.UPDATE, false);
 const ACHSFOLG = new DropDownColumn('Achsfolg', 'achsfolg', (entity) => { return entity.achsfolg ? entity.achsfolg.name : undefined; }, (entity, value) => { entity.achsfolg = value; }, ACHSFOLG_DROP, Editable.UPDATE, false);
 const ADRESS_TYP = new DropDownColumn('Typ', 'typ', (entity) => { return entity.adressTyp; }, (entity, value) => { entity.adressTyp = value; }, ADRESS_TYP_DROP, Editable.UPDATE, true);
 const ANLEITUNGEN = new PDFColumn('Anleitungen', 'anleitungen', (entity) => { return entity.anleitungen; }, (entity, value) => { entity.anleitungen = value; }, undefined, Editable.UPDATE, false);

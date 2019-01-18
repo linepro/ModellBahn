@@ -1,5 +1,9 @@
 package com.linepro.modellbahn.model.impl;
 
+import static javax.ws.rs.HttpMethod.DELETE;
+import static javax.ws.rs.HttpMethod.PUT;
+
+import java.net.URI;
 import java.nio.file.Path;
 
 import javax.persistence.Column;
@@ -74,9 +78,22 @@ public class Kupplung extends AbstractNamedItem<NameKey> implements IKupplung {
     }
 
     @Override
+    protected void addDelete(URI root) {
+        super.addDelete(root);
+        getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.DELETE, DELETE));
+    }
+
+    @Override
+    protected void addUpdate(URI root) {
+        super.addUpdate(root);
+        getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.UPDATE, PUT));
+    }
+
+    @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append(ApiNames.ABBILDUNG, getAbbildung())
-                .toString();
+            .appendSuper(super.toString())
+            .append(ApiNames.ABBILDUNG, getAbbildung())
+            .toString();
     }
 }

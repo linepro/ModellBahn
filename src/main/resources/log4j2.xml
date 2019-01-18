@@ -64,20 +64,23 @@
       <AppenderRef ref="File"/>
     </Logger>
 
-    <Logger name="org.apache" level="info" additivity="false">
+    <Logger name="org.apache" level="debug" additivity="false">
       <AppenderRef ref="File"/>
     </Logger>
 
-    <Logger name="org.apache.commons.beanutils.converters.BooleanConverter" level="info"
-      additivity="false">
+    <Logger name="org.apache.commons.beanutils.converters.BooleanConverter" level="info" additivity="false">
       <AppenderRef ref="File"/>
     </Logger>
 
-    <Logger name="org.glassfish.grizzly" level="info" additivity="false">
+    <Logger name="com.fasterxml.jackson" level="debug" additivity="false">
       <AppenderRef ref="File"/>
     </Logger>
 
-    <Root level="error">
+    <Logger name="org.glassfish.grizzly" level="debug" additivity="false">
+      <AppenderRef ref="File"/>
+    </Logger>
+
+    <Root level="debug">
       <AppenderRef ref="Console"/>
       <AppenderRef ref="File"/>
     </Root>

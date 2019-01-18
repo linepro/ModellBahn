@@ -4,6 +4,7 @@ import static javax.ws.rs.HttpMethod.DELETE;
 import static javax.ws.rs.HttpMethod.GET;
 import static javax.ws.rs.HttpMethod.PUT;
 
+import com.linepro.modellbahn.rest.util.ApiPaths;
 import java.net.URI;
 import java.util.Collection;
 import java.util.HashSet;
@@ -113,10 +114,14 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
         return getId().toString();
     }
 
-    private Link makeLink(URI uri, String path, String rel, String method) {
+    protected Link makeLink(URI uri, String path, String rel, String method) {
         return Link.fromUri(UriBuilder.fromUri(uri).path(path).build()).rel(rel).type(method).build();
     }
-    
+
+    protected Link fileLink(URI root, String field, String rel, String method) {
+        return makeLink(root, getLinkId() + ApiPaths.SEPARATOR + field, rel + '-' + field, method);
+    }
+
     @Override
     public IItem<K> addLinks(URI root, boolean update, boolean delete) {
         getLinks().clear();
@@ -155,7 +160,7 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
         }
     }
 
-    private void addDelete(URI root) {
+    protected void addDelete(URI root) {
         getLinks().add(makeLink(root, getLinkId(), ApiNames.DELETE, DELETE));
     }
 
@@ -163,7 +168,7 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
         getLinks().add(makeLink(root, getLinkId(), ApiNames.SELF, GET));
     }
 
-    private void addUpdate(URI root) {
+  protected void addUpdate(URI root) {
         getLinks().add(makeLink(root, getLinkId(), ApiNames.UPDATE, PUT));
     }
 

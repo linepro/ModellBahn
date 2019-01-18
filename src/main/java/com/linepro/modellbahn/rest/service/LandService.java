@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.rest.service;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.linepro.modellbahn.rest.json.serialization.WahrungDeserializer;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -53,11 +55,10 @@ public class LandService extends AbstractItemService<NameKey, ILand> {
     @JsonCreator(mode= Mode.PROPERTIES)
     public static Land create(@JsonProperty(value = ApiNames.ID) Long id,
                     @JsonProperty(value = ApiNames.NAMEN) String name,
-                    @JsonProperty(value = ApiNames.WAHRUNG) String wahrungStr,
+                    @JsonProperty(value = ApiNames.WAHRUNG)
+                    @JsonDeserialize(using = WahrungDeserializer.class) IWahrung wahrung,
                     @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
                     @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
-        IWahrung wahrung = findWahrung(wahrungStr, false);
- 
         return new Land(id, name, bezeichnung, wahrung, deleted);
     }
 

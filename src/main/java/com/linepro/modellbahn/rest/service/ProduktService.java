@@ -1,5 +1,20 @@
 package com.linepro.modellbahn.rest.service;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.linepro.modellbahn.rest.json.serialization.AufbauDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.BahnverwaltungDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.DecoderTypDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.EpochDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.HerstellerDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.KupplungDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.LichtDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.MassstabDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.MotorTypDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.ProduktDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.SonderModellDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.SpurweiteDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.SteuerungDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.UnterKategorieDeserializer;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -86,49 +101,42 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     
     @JsonCreator(mode= Mode.PROPERTIES)
     public static Produkt create(@JsonProperty(value = ApiNames.ID) Long id,
-            @JsonProperty(value = ApiNames.HERSTELLER) String herstellerStr,
+            @JsonProperty(value = ApiNames.HERSTELLER)
+            @JsonDeserialize(using= HerstellerDeserializer.class) IHersteller hersteller,
             @JsonProperty(value = ApiNames.BESTELL_NR) String bestellNr,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
-            @JsonProperty(value = ApiNames.KATEGORIE) String kategorieStr,
-            @JsonProperty(value = ApiNames.UNTER_KATEGORIE) String unterKategorieStr,
-            @JsonProperty(value = ApiNames.MASSSTAB) String massstabStr,
-            @JsonProperty(value = ApiNames.SPURWEITE) String spurweiteStr,
+            @JsonProperty(value = ApiNames.UNTER_KATEGORIE)
+            @JsonDeserialize(using= UnterKategorieDeserializer.class) IUnterKategorie unterKategorie,
+            @JsonProperty(value = ApiNames.MASSSTAB)
+            @JsonDeserialize(using= MassstabDeserializer.class) IMassstab massstab,
+            @JsonProperty(value = ApiNames.SPURWEITE)
+            @JsonDeserialize(using= SpurweiteDeserializer.class) ISpurweite spurweite,
             @JsonProperty(value = ApiNames.BETREIBSNUMMER) String betreibsNummer,
-            @JsonProperty(value = ApiNames.EPOCH) String epochStr,
-            @JsonProperty(value = ApiNames.BAHNVERWALTUNG) String bahnverwaltungStr,
-            @JsonProperty(value = ApiNames.GATTUNG) String gattungStr,
+            @JsonProperty(value = ApiNames.EPOCH)
+            @JsonDeserialize(using= EpochDeserializer.class) IEpoch epoch,
+            @JsonProperty(value = ApiNames.BAHNVERWALTUNG)
+            @JsonDeserialize(using= BahnverwaltungDeserializer.class) IBahnverwaltung bahnverwaltung,
+            @JsonProperty(value = ApiNames.GATTUNG) IGattung gattung,
             @JsonProperty(value = ApiNames.BAUZEIT) LocalDate bauzeit,
-            @JsonProperty(value = ApiNames.ACHSFOLG) String achsfolgStr,
-            @JsonProperty(value = ApiNames.VORBILD) String vorbildStr,
+            @JsonProperty(value = ApiNames.ACHSFOLG) IAchsfolg achsfolg,
+            @JsonProperty(value = ApiNames.VORBILD) IVorbild vorbild,
             @JsonProperty(value = ApiNames.ANMERKUNG) String anmerkung,
-            @JsonProperty(value = ApiNames.SONDERMODELL) String sondermodellStr,
-            @JsonProperty(value = ApiNames.AUFBAU) String aufbauStr,
-            @JsonProperty(value = ApiNames.LICHT) String lichtStr,
-            @JsonProperty(value = ApiNames.KUPPLUNG) String kupplungStr,
-            @JsonProperty(value = ApiNames.STEUERUNG) String steuerungStr,
-            @JsonProperty(value = ApiNames.DECODER_TYP_HERSTELLER) String decoderTypHerstellerStr,
-            @JsonProperty(value = ApiNames.DECODER_TYP_BESTELL_NR) String decoderTypBestellNr,
-            @JsonProperty(value = ApiNames.MOTOR_TYP) String motorTypStr,
+            @JsonProperty(value = ApiNames.SONDERMODELL)
+            @JsonDeserialize(using= SonderModellDeserializer.class) ISonderModell sondermodell,
+            @JsonProperty(value = ApiNames.AUFBAU)
+            @JsonDeserialize(using= AufbauDeserializer.class)  IAufbau aufbau,
+            @JsonProperty(value = ApiNames.LICHT)
+            @JsonDeserialize(using= LichtDeserializer.class) ILicht licht,
+            @JsonProperty(value = ApiNames.KUPPLUNG)
+            @JsonDeserialize(using= KupplungDeserializer.class) IKupplung kupplung,
+            @JsonProperty(value = ApiNames.STEUERUNG)
+            @JsonDeserialize(using= SteuerungDeserializer.class) ISteuerung steuerung,
+            @JsonProperty(value = ApiNames.DECODER_TYP)
+            @JsonDeserialize(using= DecoderTypDeserializer.class) IDecoderTyp decoderTyp,
+            @JsonProperty(value = ApiNames.MOTOR_TYP)
+            @JsonDeserialize(using= MotorTypDeserializer.class) IMotorTyp motorTyp,
             @JsonProperty(value = ApiNames.LANGE) BigDecimal lange,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
-        // Just see if Jackson can work out the embedded objects...
-        IHersteller hersteller = findHersteller(herstellerStr, false);
-        IMassstab massstab = findMassstab(massstabStr, false);
-        ISpurweite spurweite = findSpurweite(spurweiteStr, false);
-        IEpoch epoch = findEpoch(epochStr, false);
-        IDecoderTyp decoderTyp = findDecoderTyp(decoderTypHerstellerStr, decoderTypBestellNr, false);
-        IBahnverwaltung bahnverwaltung = findBahnverwaltung(bahnverwaltungStr, false);
-        IGattung gattung = findGattung(gattungStr, false);
-        IVorbild vorbild = findVorbild(gattungStr, false);
-        IAchsfolg achsfolg = findAchsfolg(achsfolgStr, false);
-        ISonderModell sondermodell = findSonderModell(sondermodellStr, false);
-        IAufbau aufbau = findAufbau(aufbauStr, false);
-        ILicht licht = findLicht(lichtStr, false);
-        IKupplung kupplung = findKupplung(kupplungStr, false);
-        ISteuerung steuerung = findSteuerung(steuerungStr, false);
-        IMotorTyp motorTyp = findMotorTyp(motorTypStr, false);
-        IUnterKategorie unterKategorie = findUnterKategorie(kategorieStr, unterKategorieStr, false);
-
         return new Produkt(id,
                 hersteller,
                 bestellNr,
@@ -162,14 +170,12 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     
     @JsonCreator(mode= Mode.PROPERTIES)
     public static ProduktTeil createProduktTeil(@JsonProperty(value = ApiNames.ID) Long id,
-            @JsonProperty(value = ApiNames.HERSTELLER) String herstellerStr,
-            @JsonProperty(value = ApiNames.BESTELL_NR) String bestellNr,
-            @JsonProperty(value = ApiNames.TEIL_HERSTELLER) String teilHerstellerStr,
-            @JsonProperty(value = ApiNames.TEIL_BESTELL_NR) String teilBestellNr,
+            @JsonProperty(value = ApiNames.PRODUKT)
+            @JsonDeserialize(using= ProduktDeserializer.class) IProdukt produkt,
+            @JsonProperty(value = ApiNames.TEIL)
+            @JsonDeserialize(using= ProduktDeserializer.class) IProdukt teil,
             @JsonProperty(value = ApiNames.ANZAHL) Integer anzahl,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
-       IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
-       IProdukt teil = findProdukt(teilHerstellerStr, teilBestellNr, false);
        return new ProduktTeil(id, produkt, teil, anzahl, deleted);
     }
 

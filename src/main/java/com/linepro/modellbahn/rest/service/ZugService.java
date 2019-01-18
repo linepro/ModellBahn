@@ -1,5 +1,9 @@
 package com.linepro.modellbahn.rest.service;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.linepro.modellbahn.rest.json.serialization.ArtikelDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.ZugDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.ZugTypDeserializer;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -62,12 +66,11 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
     
     @JsonCreator(mode= Mode.PROPERTIES)
     public static Zug create(@JsonProperty(value = ApiNames.ID) Long id,
-            @JsonProperty(value = ApiNames.ZUG_TYP) String zugTypStr,
+            @JsonProperty(value = ApiNames.ZUG_TYP)
+            @JsonDeserialize(using = ZugTypDeserializer.class) IZugTyp zugTyp,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
-        IZugTyp zugTyp = findZugTyp(zugTypStr, false);
-
         return new Zug(id, name, bezeichnung, zugTyp, deleted);
     }
 
@@ -78,13 +81,12 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
     
     @JsonCreator(mode= Mode.PROPERTIES)
     public static ZugConsist createZugConsist(@JsonProperty(value = ApiNames.ID) Long id,
-            @JsonProperty(value = ApiNames.ZUG) String zugStr,
+            @JsonProperty(value = ApiNames.ZUG)
+            @JsonDeserialize(using = ZugDeserializer.class) IZug zug,
             @JsonProperty(value = ApiNames.POSITION) Integer position,
-            @JsonProperty(value = ApiNames.ARTIKEL) String artikelStr,
+            @JsonProperty(value = ApiNames.ARTIKEL)
+            @JsonDeserialize(using = ArtikelDeserializer.class) IArtikel artikel,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
-        IZug zug = findZug(zugStr, true);
-        IArtikel artikel = findArtikel(artikelStr, false);
-        
         return new ZugConsist(id,  zug, position, artikel, deleted);
     }
 

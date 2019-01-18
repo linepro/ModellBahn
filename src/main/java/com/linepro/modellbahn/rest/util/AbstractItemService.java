@@ -480,47 +480,47 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
     }
 
     /** Lookups that are used by more than one service */
-    protected static IAntrieb findAntrieb(String name, boolean eager) throws Exception { 
+    protected IAntrieb findAntrieb(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Antrieb.class).findByKey(name, eager); 
     }
 
-    protected static IAchsfolg findAchsfolg(String name, boolean eager) throws Exception { 
+    protected IAchsfolg findAchsfolg(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Achsfolg.class).findByKey(name, eager); 
     }
 
-    protected static IArtikel findArtikel(String name, boolean eager) throws Exception { 
+    protected IArtikel findArtikel(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Artikel.class).findByKey(new ArtikelKey(name), eager); 
     }
 
-    protected static IAufbau findAufbau(String name, boolean eager) throws Exception { 
+    protected IAufbau findAufbau(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Aufbau.class).findByKey(name, eager); 
     }
 
-    protected static IBahnverwaltung findBahnverwaltung(String name, boolean eager) throws Exception { 
+    protected IBahnverwaltung findBahnverwaltung(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Bahnverwaltung.class).findByKey(name, eager); 
     }
 
-    protected static IDecoder findDecoder(String decoderId, boolean eager) throws Exception {
+    protected IDecoder findDecoder(String decoderId, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Decoder.class).findByKey(new DecoderKey(decoderId), eager); 
     }
 
-    protected static IDecoderTyp findDecoderTyp(String herstellerStr, String bestellNr, boolean eager) throws Exception { 
+    protected IDecoderTyp findDecoderTyp(String herstellerStr, String bestellNr, boolean eager) throws Exception {
         return findDecoderTyp(findHersteller(herstellerStr, eager), bestellNr, eager); 
     }
 
-    private static IDecoderTyp findDecoderTyp(IHersteller hersteller, String bestellNr, boolean eager) throws Exception {
+    private IDecoderTyp findDecoderTyp(IHersteller hersteller, String bestellNr, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(DecoderTyp.class).findByKey(new DecoderTypKey(hersteller, bestellNr), eager); 
     }
 
-    protected static IDecoderTypAdress findDecoderTypAdress(String herstellerStr, String bestellNr, Integer index, boolean eager) throws Exception {
+    protected IDecoderTypAdress findDecoderTypAdress(String herstellerStr, String bestellNr, Integer index, boolean eager) throws Exception {
         return findDecoderTypAdress(findDecoderTyp(herstellerStr, bestellNr, eager), index, eager) ;
     }
 
-    protected static IDecoderTypAdress findDecoderTypAdress(IDecoderTyp decoderTyp, Integer index, boolean eager) throws Exception {
+    protected IDecoderTypAdress findDecoderTypAdress(IDecoderTyp decoderTyp, Integer index, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(DecoderTypAdress.class).findByKey(new DecoderTypAdressKey(decoderTyp, index), eager);
     }
 
-    protected static IDecoderTypCV findDecoderTypCV(String herstellerStr, String bestellNr, Integer cv, boolean eager) throws Exception {
+    protected IDecoderTypCV findDecoderTypCV(String herstellerStr, String bestellNr, Integer cv, boolean eager) throws Exception {
         return findDecoderTypCV(findDecoderTyp(herstellerStr, bestellNr, eager), cv, eager) ;
     }
 
@@ -528,102 +528,102 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return StaticPersisterFactory.get().createPersister(DecoderTypCV.class).findByKey(new DecoderTypCVKey(decoderTyp, cv), eager); 
     }
 
-    protected static IDecoderTypFunktion findDecoderTypFunktion(String herstellerStr, String bestellNr, Integer reihe, String funktion, boolean eager) throws Exception {
+    protected IDecoderTypFunktion findDecoderTypFunktion(String herstellerStr, String bestellNr, Integer reihe, String funktion, boolean eager) throws Exception {
         return findDecoderTypFunktion(findDecoderTyp(herstellerStr, bestellNr, eager), reihe, funktion, eager) ;
     }
 
     protected static IDecoderTypFunktion findDecoderTypFunktion(IDecoderTyp decoderTyp, Integer reihe, String funktion, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(DecoderTypFunktion.class).findByKey(new DecoderTypFunktionKey(decoderTyp, reihe, funktion), eager); 
     }
-    protected static IEpoch findEpoch(String name, boolean eager) throws Exception {
+    protected IEpoch findEpoch(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Epoch.class).findByKey(name, eager); 
     }
 
-    protected static IGattung findGattung(String name, boolean eager) throws Exception { 
+    protected IGattung findGattung(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Gattung.class).findByKey(name, eager); 
     }
 
-    protected static IHersteller findHersteller(String name, boolean eager) throws Exception { 
+    protected IHersteller findHersteller(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Hersteller.class).findByKey(name, eager); 
     }
 
-    protected static IKategorie findKategorie(String name, boolean eager) throws Exception {
+    protected IKategorie findKategorie(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Kategorie.class).findByKey(name, eager); 
     }
 
-    protected static IKupplung findKupplung(String name, boolean eager) throws Exception { 
+    protected IKupplung findKupplung(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Kupplung.class).findByKey(name, eager); 
     }
 
-    protected static ILicht findLicht(String name, boolean eager) throws Exception { 
+    protected ILicht findLicht(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Licht.class).findByKey(name, eager); 
     }
 
-    protected static IMotorTyp findMotorTyp(String name, boolean eager) throws Exception { 
+    protected IMotorTyp findMotorTyp(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(MotorTyp.class).findByKey(name, eager); 
     }
 
-    protected static IMassstab findMassstab(String name, boolean eager) throws Exception { 
+    protected IMassstab findMassstab(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Massstab.class).findByKey(name, eager); 
     }
 
-    protected static IProdukt findProdukt(String herstellerStr, String bestellNr, boolean eager) throws Exception {
+    protected IProdukt findProdukt(String herstellerStr, String bestellNr, boolean eager) throws Exception {
         return findProdukt(findHersteller(herstellerStr, false), bestellNr, eager); 
     }
     
-    protected static IProdukt findProdukt(IHersteller hersteller, String bestellNr, boolean eager) throws Exception {
+    protected IProdukt findProdukt(IHersteller hersteller, String bestellNr, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Produkt.class).findByKey(new ProduktKey(hersteller, bestellNr), eager); 
     }
 
-    protected static ProduktTeil findProduktTeil(String herstellerStr, String bestellNr, String teilHerstellerStr, String teilBestellNr, boolean eager) throws Exception {
+    protected ProduktTeil findProduktTeil(String herstellerStr, String bestellNr, String teilHerstellerStr, String teilBestellNr, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(ProduktTeil.class).findByKey(new ProduktTeilKey(findProdukt(herstellerStr, bestellNr, false), findProdukt(teilHerstellerStr, teilBestellNr, false)), eager);
     }
 
-    protected static IProtokoll findProtokoll(String protokollStr, boolean eager) throws Exception  {
+    protected IProtokoll findProtokoll(String protokollStr, boolean eager) throws Exception  {
         return StaticPersisterFactory.get().createPersister(Protokoll.class).findByKey(new NameKey(protokollStr), eager);
     }
 
-    protected static ISonderModell findSonderModell(String name, boolean eager) throws Exception {
+    protected ISonderModell findSonderModell(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(SonderModell.class).findByKey(name, eager); 
     }
 
-    protected static ISpurweite findSpurweite(String name, boolean eager) throws Exception { 
+    protected ISpurweite findSpurweite(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Spurweite.class).findByKey(name, eager); 
     }
 
-    protected static ISteuerung findSteuerung(String name, boolean eager) throws Exception { 
+    protected ISteuerung findSteuerung(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Steuerung.class).findByKey(name, eager); 
     }
 
-    protected static IUnterKategorie findUnterKategorie(String kategorie, String unterKategorie, boolean eager) throws Exception {
+    protected IUnterKategorie findUnterKategorie(String kategorie, String unterKategorie, boolean eager) throws Exception {
         return findUnterKategorie(findKategorie(kategorie, eager), unterKategorie, eager); 
     }
 
-    protected static IUnterKategorie findUnterKategorie(IKategorie kategorie, String unterKategorie, boolean eager) throws Exception { 
+    protected IUnterKategorie findUnterKategorie(IKategorie kategorie, String unterKategorie, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(UnterKategorie.class).findByKey(new UnterKategorieKey(kategorie, unterKategorie), eager); 
     }
 
-    protected static IVorbild findVorbild(String name, boolean eager) throws Exception { 
+    protected IVorbild findVorbild(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Vorbild.class).findByKey(new VorbildKey(findGattung(name, false)), eager); 
     }
 
-    protected static IWahrung findWahrung(String name, boolean eager) throws Exception { 
+    protected IWahrung findWahrung(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Wahrung.class).findByKey(name, eager); 
     }
 
-    protected static IZug findZug(String name, boolean eager) throws Exception { 
+    protected IZug findZug(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Zug.class).findByKey(name, eager); 
     }
 
-    protected static IZugConsist findZugConsist(String zugStr, Integer position, boolean eager) throws Exception {
+    protected IZugConsist findZugConsist(String zugStr, Integer position, boolean eager) throws Exception {
         return findZugConsist(findZug(zugStr, eager), position, eager) ;
     }
 
-    protected static IZugConsist findZugConsist(IZug zug, Integer position, boolean eager) throws Exception {
+    protected IZugConsist findZugConsist(IZug zug, Integer position, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(ZugConsist.class).findByKey(new ZugConsistKey(zug, position), eager);
     }
 
-    protected static IZugTyp findZugTyp(String name, boolean eager) throws Exception { 
+    protected IZugTyp findZugTyp(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(ZugTyp.class).findByKey(name, eager); 
     }
 

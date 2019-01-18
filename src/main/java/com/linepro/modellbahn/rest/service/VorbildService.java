@@ -1,5 +1,12 @@
 package com.linepro.modellbahn.rest.service;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.linepro.modellbahn.rest.json.serialization.AchsfolgDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.AntriebDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.BahnverwaltungDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.GattungDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.LocalDateDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.UnterKategorieDeserializer;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -68,22 +75,29 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
     
     @JsonCreator(mode= Mode.PROPERTIES)
     public static Vorbild create(@JsonProperty(value = ApiNames.ID) Long id,
-            @JsonProperty(value = ApiNames.GATTUNG) IGattung gattung,
+            @JsonProperty(value = ApiNames.GATTUNG)
+            @JsonDeserialize(using = GattungDeserializer.class) IGattung gattung,
             @JsonProperty(value = ApiNames.KATEGORIE) String kategorieStr,
-            @JsonProperty(value = ApiNames.UNTER_KATEGORIE) String unterKategorieStr,
-            @JsonProperty(value = ApiNames.BAHNVERWALTUNG) String bahnverwaltungStr,
+            @JsonProperty(value = ApiNames.UNTER_KATEGORIE)
+            @JsonDeserialize(using = UnterKategorieDeserializer.class) IUnterKategorie unterKategorie,
+            @JsonProperty(value = ApiNames.BAHNVERWALTUNG)
+            @JsonDeserialize(using = BahnverwaltungDeserializer.class) IBahnverwaltung bahnverwaltung,
             @JsonProperty(value = ApiNames.HERSTELLER) String hersteller,
-            @JsonProperty(value = ApiNames.BAUZEIT) LocalDate bauzeit,
+            @JsonProperty(value = ApiNames.BAUZEIT)
+            @JsonDeserialize(using = LocalDateDeserializer.class) LocalDate bauzeit,
             @JsonProperty(value = ApiNames.ANZAHL) Integer anzahl,
             @JsonProperty(value = ApiNames.BETREIBSNUMMER) String betreibsNummer,
-            @JsonProperty(value = ApiNames.ANTRIEB) String antriebStr,
-            @JsonProperty(value = ApiNames.ACHSFOLG) String achsfolgStr,
+            @JsonProperty(value = ApiNames.ANTRIEB)
+            @JsonDeserialize(using = AntriebDeserializer.class) IAntrieb antrieb,
+            @JsonProperty(value = ApiNames.ACHSFOLG)
+            @JsonDeserialize(using = AchsfolgDeserializer.class) IAchsfolg achsfolg,
             @JsonProperty(value = ApiNames.ANFAHRZUGKRAFT) BigDecimal anfahrzugkraft,
             @JsonProperty(value = ApiNames.LEISTUNG) BigDecimal leistung,
             @JsonProperty(value = ApiNames.DIENSTGEWICHT) BigDecimal dienstgewicht,
             @JsonProperty(value = ApiNames.GESCHWINDIGKEIT) Integer geschwindigkeit,
             @JsonProperty(value = ApiNames.LANGE) BigDecimal lange,
-            @JsonProperty(value = ApiNames.AUSSERDIENST) LocalDate ausserdienst,
+            @JsonProperty(value = ApiNames.AUSSERDIENST)
+            @JsonDeserialize(using = LocalDateDeserializer.class) LocalDate ausserdienst,
             @JsonProperty(value = ApiNames.DMTREIBRAD) BigDecimal dmTreibrad,
             @JsonProperty(value = ApiNames.DMLAUFRADVORN) BigDecimal dmLaufradVorn,
             @JsonProperty(value = ApiNames.DMLAUFRADHINTEN) BigDecimal dmLaufradHinten,
@@ -112,20 +126,16 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
             @JsonProperty(value = ApiNames.ANMERKUNG) String anmerkung,
             @JsonProperty(value = ApiNames.ABBILDUNG) String abbildungStr,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
-        IAntrieb antrieb = findAntrieb(antriebStr, false);
-        IAchsfolg achsfolg = findAchsfolg(achsfolgStr, false);
-        IBahnverwaltung bahnverwaltung = findBahnverwaltung(bahnverwaltungStr, false);
-        IUnterKategorie unterKategorie = findUnterKategorie(kategorieStr, unterKategorieStr, false);
         LeistungsUbertragung leistungsUbertragung = LeistungsUbertragung.valueOf(leistungsUbertragungStr);
 
         return new Vorbild(id, gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit, anzahl, betreibsNummer, antrieb, achsfolg, anmerkung, anfahrzugkraft, leistung, dienstgewicht,
                 geschwindigkeit, lange, ausserdienst, dmTreibrad, dmLaufradVorn, dmLaufradHinten, zylinder, dmZylinder, kolbenhub, kesseluberdruck, rostflache, uberhitzerflache,
-                wasservorrat, verdampfung, fahrmotoren, anmerkung, leistungsUbertragung, reichweite, kapazitaet, klasse, sitzPlatzeKL1, sitzPlatzeKL2, sitzPlatzeKL3,
+                wasservorrat, verdampfung, fahrmotoren, motorbauart, leistungsUbertragung, reichweite, kapazitaet, klasse, sitzPlatzeKL1, sitzPlatzeKL2, sitzPlatzeKL3,
                 sitzPlatzeKL4, aufbauten, triebkopf, mittelwagen, drehgestellbauart, deleted);
     }
 
     @GET
-    @Path(ApiPaths.NAME_PART)
+    @Path(ApiPaths.VORBILD_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Finds a Vorbild by name", response = IVorbild.class)
@@ -201,31 +211,31 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
     }
 
     @PUT
-    @Path(ApiPaths.NAME_PART)
+    @Path(ApiPaths.VORBILD_PART)
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a Vorbild by name", response = IVorbild.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Vorbild entity) {
+    public Response update(@PathParam(ApiPaths.GATTUNG_PARAM_NAME) String name, Vorbild entity) {
         return super.update(name, entity);
     }
 
     @DELETE
-    @Path(ApiPaths.NAME_PART)
+    @Path(ApiPaths.VORBILD_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 204, value = "Deletes a Vorbild by name", response = IVorbild.class)
-    public Response delete(@PathParam(ApiPaths.ID_PARAM_NAME) String name) {
+    public Response delete(@PathParam(ApiPaths.GATTUNG_PARAM_NAME) String name) {
         return super.delete(name);
     }
 
     @PUT
-    @Path(ApiPaths.ABBILDUNG_PART)
+    @Path(ApiPaths.VORBILD_ABBILDUNG_PART)
     @Consumes({ MediaType.MULTIPART_FORM_DATA })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds or updates thr picture for a named Vorbild", response = IVorbild.class)
-    public Response updateAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name,
+    public Response updateAbbildung(@PathParam(ApiPaths.GATTUNG_PARAM_NAME) String name,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
                                     @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
         IFileUploadHandler handler = new FileUploadHandler();
@@ -254,11 +264,11 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
     }
 
     @DELETE
-    @Path(ApiPaths.ABBILDUNG_PART)
+    @Path(ApiPaths.VORBILD_ABBILDUNG_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Removes the picture from a named Vorbild", response = IVorbild.class)
-    public Response deleteAbbildung(@PathParam(ApiPaths.ID_PARAM_NAME) String name) {
+    public Response deleteAbbildung(@PathParam(ApiPaths.GATTUNG_PARAM_NAME) String name) {
         try {
             IVorbild vorbild = findVorbild(name, false);
 

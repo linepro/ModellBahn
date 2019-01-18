@@ -135,27 +135,6 @@ const addText = (cell, text) => {
   return txt;
 };
 
-const getButtonLink = (href, alt, action) => {
-  let a = document.createElement('a');
-
-  a.setAttribute('href', href);
-  a.className = 'nav-button';
-  a.appendChild(getImg(action));
-
-  return a;
-};
-
-const addOption = (select, value, text) => {
-  let opt = document.createElement('option');
-  opt.value = value;
-  opt.text = text;
-  select.add(opt);
-};
-
-const selectFile = (ctl, type, filter) => {
-  //TODO: popup selector
-};
-
 const valueAndUnits = (cssSize) => {
   let dims = /^(\d+)([^\d]+)$/.exec(cssSize);
   return {
@@ -358,75 +337,104 @@ class DateColumn extends TextColumn {
 
 }
 
-class IMGColumn extends Column {
-  constructor(heading, binding, getter, setter, onChange, editable, required) {
-    super(heading, binding, getter, setter, editable, required);
-    this.onChange = onChange;
+class FileColumn extends Column {
+  constructor(heading, binding, getter, add, remove, change, mask, editable, required) {
+    super(heading, binding, getter, undefined, editable, required);
+    this.add = add;
+    this.remove = remove;
+    this.change = change;
+    this.mask = mask;
   }
 
-  createControl() {
-    let div = document.createElement('div');
+  getControl(cell, entity, editMode) {
+    let ctl = super.getControl(cell, entity, editMode);
 
-    let ctl = getImg('none');
-    //ctl.className = 'img-';
     ctl.addEventListener('click', (e) => {
+      let ctl = e.target;
+
+      if (ctl && ctl.getAttribute('data-file')) {
+        window.open(ctl.getAttribute('data-file'), '_blank');
+      }
     });
-    if (this.onChange) {
-      ctl.change = this.onChange;
+
+    if (!ctl.disabled) {
+      if (this.add) {
+        let btn = getButton(value, alt, action);
+        btn.addEventListener('click', (e) => { this.selectFile(e); });
+        btn.className = 'selection';
+        div.appendChild(btn);
+      }
+
+      if (this.remove) {
+        let btn = getButton(value, alt, action);
+        btn.addEventListener('click', (e) => { this.removeFile(e); });
+        btn.className = 'selection';
+        div.appendChild(btn);
+      }
     }
-    div.appendChild(ctl);
-
-    let btn = document.createElement('button');
-    btn.addEventListener('click', selectFile(ctl, 'image/*', false));
-    btn.setAttribute('value', '+');
-    btn.className = 'selection';
-    div.appendChild(btn);
-
-    return div;
-  }
-
-  getControlValue(ctl) {
-    return ctl.src;
-  }
-
-  setValue(ctl, value) {
-    ctl.src = value;
-  }
-}
-
-class PDFColumn extends Column {
-  constructor(heading, binding, getter, setter, onChange, editable, required) {
-    super(heading, binding, getter, setter, editable, required);
-    this.onChange = onChange;
-  }
-
-  createControl() {
-    let ctl = document.createElement('a');
-    ctl.addEventListener('click', (e) => {
-    });
-    if (this.onChange) {
-      ctl.change = this.onChange;
-    }
-
-    let img = getImg('none');
-    ctl.appendChild(img);
-
-    let btn = document.createElement('button');
-    btn.cick = selectFile(ctl, 'application/pdf', false);
-    btn.setAttribute('value', '+');
-    btn.className = 'selection';
-
-    ctl.appendChild(btn);
 
     return ctl;
   }
 
+  createControl() {
+    return getImg('none');
+  }
+
   getControlValue(ctl) {
-    return ctl.href;
+    return ctl.getAttribute('data-file');
   }
 
   setValue(ctl, value) {
-    ctl.href = value;
+    ctl.src = value ? value : 'img/none.png';
+    ctl.setAttribute('data-file', value);
+  }
+
+  selectFile(e) {
+    let ctl = e.target;
+    let inp = document.createElement('input');
+    inp.type = 'file';
+    inp.accept = this.mask;
+    inp.multiple = false;
+    inp.addEventListener('click', (e) => { this.updateFile(e); });
+    ctl.parentElement.appendChild(inp);
+    inp.click();
+  }
+
+  removeFile(e) {
+    let inp = e.target;
+    let div = inp.parentElement;
+    let value = this.getControlValue(ctl);
+    let newValue = inp.value;
+    if (newValue && this.add) {
+      this.setValue(ctl, newValue);
+      this.add(newValue);
+    }
+    div.removeChild(inp);
+  }
+
+  updateFile(e) {
+    let inp = e.target;
+    let div = inp.parentElement;
+    let newValue = inp.value;
+    div.removeChild(inp);
+    if (newValue && this.add) {
+      let ctl = div.getElementsByTagName('input')
+      let value = this.getControlValue(ctl);
+      this.setValue(ctl, newValue);
+      this.add(newValue);
+    }
+  }
+}
+
+class IMGColumn extends FileColumn {
+  constructor(heading, binding, getter, add, remove, change, editable, required) {
+    super(heading, binding, getter, add, remove, change, 'image/*', editable, required);
+  }
+}
+
+class PDFColumn extends Column {
+  constructor(heading, binding, getter, add, remove, change, editable, required) {
+    super(heading, binding, getter, add, remove, change, 'application/pdf', editable, required);
   }
 }
 
@@ -455,8 +463,6 @@ class SelectColumn extends Column {
       ctl.addEventListener('click', (e) => { this.open(e); });
       ctl.addEventListener('input', (e) => { this.open(e); });
       ctl.addEventListener('keydown', (e) => { this.keydown(e); });
-      ctl.addEventListener('onblur', (e) => { this.leave(e); });
-      ctl.addEventListener('onfocusout', (e) => { this.leave(e); });
       ctl.classList.add('autocomplete');
     }
 
@@ -537,9 +543,9 @@ class SelectColumn extends Column {
 
     if (e.keyCode === 40) {
       ctl.addActive(ctl, autoComp, true);
-    } else if (e.keyCode == 38) {
+    } else if (e.keyCode === 38) {
       ctl.addActive(ctl, autoComp, false);
-    } else if (e.keyCode == 13) {
+    } else if (e.keyCode === 13) {
       e.preventDefault();
       ctl.selectActive(autoComp);
     }
@@ -562,7 +568,7 @@ class SelectColumn extends Column {
     let curr = -1;
     for (let i = 0; i < items.length; i++) {
       if (items[i].classList.contains('autocomplete-active')) {
-        if (curr == -1) curr = i;
+        if (curr === -1) curr = i;
         items[i].classList.remove('autocomplete-active');
       }
     }
@@ -579,7 +585,7 @@ class SelectColumn extends Column {
 
 class AutoCompleteColumn extends SelectColumn {
   constructor(heading, binding, getter, setter, dropDown, editable, required) {
-    super(heading, binding, getter, setter, editable, required, dropDown.length);
+    super(heading, binding, getter, setter, dropDown, editable, required);
   }
 
   options(txt) {
@@ -687,7 +693,7 @@ class ButtonColumn {
 async function checkResponse(response) {
   if (200 <= response.status && response.status <= 202) {
     return response.json();
-  } else if (response.status == 204) {
+  } else if (response.status === 204) {
     return {entities: [], links: []};
   }
 

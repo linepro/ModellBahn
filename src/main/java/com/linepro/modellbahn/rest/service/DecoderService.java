@@ -1,5 +1,12 @@
 package com.linepro.modellbahn.rest.service;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.linepro.modellbahn.model.impl.DecoderTypFunktion;
+import com.linepro.modellbahn.model.keys.DecoderTypFunktionKey;
+import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
+import com.linepro.modellbahn.rest.json.serialization.DecoderDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.DecoderTypDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.ProtokollDeserializer;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -66,16 +73,15 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
     
     @JsonCreator(mode= Mode.PROPERTIES)
     public static Decoder create(@JsonProperty(value = ApiNames.ID) Long id,
-            @JsonProperty(value = ApiNames.HERSTELLER) String herstellerStr,
-            @JsonProperty(value = ApiNames.BESTELL_NR) String bestellNr,
-            @JsonProperty(value = ApiNames.PROTOKOLL) String protokollStr,
+        @JsonProperty(value = ApiNames.DECODER_TYP)
+        @JsonDeserialize(using = DecoderTypDeserializer.class) IDecoderTyp decoderTyp,
+            @JsonProperty(value = ApiNames.PROTOKOLL)
+            @JsonDeserialize(using = ProtokollDeserializer.class) IProtokoll protokoll,
             @JsonProperty(value = ApiNames.DECODER_ID) String decoderId,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.FAHRSTUFE) Integer fahrstufe,
             @JsonProperty(value = ApiNames.STATUS) String statusStr,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
-        IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, false);
-        IProtokoll protokoll = findProtokoll(protokollStr, false);
         DecoderStatus status = DecoderStatus.valueOf(statusStr);
 
         return new Decoder(id, decoderTyp, protokoll, decoderId, bezeichnung, fahrstufe, status, deleted);
@@ -88,12 +94,12 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
     
     @JsonCreator(mode= Mode.PROPERTIES)
     public static DecoderAdress createAdress(@JsonProperty(value = ApiNames.ID) Long id,
-            @JsonProperty(value = ApiNames.DECODER_ID) String decoderId,
+            @JsonProperty(value = ApiNames.DECODER)
+            @JsonDeserialize(using = DecoderDeserializer.class) IDecoder decoder,
             @JsonProperty(value = ApiNames.REIHE) Integer reihe,
             @JsonProperty(value = ApiNames.ADRESS_TYP) String adressTypStr,
             @JsonProperty(value = ApiNames.ADRESS) Integer adress,
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
-        IDecoder decoder = findDecoder(decoderId, false);
         AdressTyp adressTyp = AdressTyp.valueOf(adressTypStr);
 
         return new DecoderAdress(id, decoder, reihe, adressTyp, adress, deleted);
@@ -106,11 +112,10 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
     
     @JsonCreator(mode= Mode.PROPERTIES)
     public static DecoderCV createCV(@JsonProperty(value = ApiNames.ID) Long id,
-            @JsonProperty(value = ApiNames.DECODER_ID) String decoderId,
-            @JsonProperty(value = ApiNames.CV) Integer cvValue, @JsonProperty(value = ApiNames.WERT) Integer wert,
-            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
-        IDecoder decoder = findDecoder(decoderId, false);
-
+        @JsonProperty(value = ApiNames.DECODER)
+        @JsonDeserialize(using = DecoderDeserializer.class) IDecoder decoder,
+        @JsonProperty(value = ApiNames.CV) Integer cvValue, @JsonProperty(value = ApiNames.WERT) Integer wert,
+        @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         IDecoderTypCV decoderTypCV = findDecoderTypCV(decoder.getDecoderTyp(), cvValue, true);
 
         return new DecoderCV(id, decoder, decoderTypCV, wert, deleted);
@@ -123,13 +128,12 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
     
     @JsonCreator(mode= Mode.PROPERTIES)
     public static DecoderFunktion createFunktion(@JsonProperty(value = ApiNames.ID) Long id,
-            @JsonProperty(value = ApiNames.DECODER_ID) String decoderId,
-            @JsonProperty(value = ApiNames.REIHE) Integer reihe,
-            @JsonProperty(value = ApiNames.FUNKTION) String funktion,
-            @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
-            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
-        IDecoder decoder = findDecoder(decoderId, false);
-
+        @JsonProperty(value = ApiNames.DECODER)
+        @JsonDeserialize(using = DecoderDeserializer.class) IDecoder decoder,
+        @JsonProperty(value = ApiNames.REIHE) Integer reihe,
+        @JsonProperty(value = ApiNames.FUNKTION) String funktion,
+        @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
+        @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         IDecoderTypFunktion decoderTypFunktion = findDecoderTypFunktion(decoder.getDecoderTyp(), reihe, funktion, true);
 
         return new DecoderFunktion(id, decoder, decoderTypFunktion, bezeichnung, deleted);
