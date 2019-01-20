@@ -548,8 +548,8 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
     protected void addUpdate(URI root) {
         super.addUpdate(root);
         getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.UPDATE, PUT));
-        getLinks().add(fileLink(root, ApiNames.ANLEITUNGEN, ApiNames.DELETE, DELETE));
-        getLinks().add(fileLink(root, ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.DELETE, DELETE));
+        getLinks().add(fileLink(root, ApiNames.ANLEITUNGEN, ApiNames.UPDATE, PUT));
+        getLinks().add(fileLink(root, ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.UPDATE, PUT));
     }
 
     @Override

@@ -3,16 +3,17 @@
  */
 package com.linepro.modellbahn.rest.util;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
+import javax.ws.rs.core.MediaType;
 
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.ContentDisposition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,24 +32,12 @@ public class FileUploadHandler implements IFileUploadHandler {
     private final Logger logger;
 
     /**
-     * Instantiates a new file upload 
+     * Instantiates a new file upload
      */
     @Inject
     public FileUploadHandler() {
         this.fileStore = StaticContentFinder.getStore();
         this.logger = LoggerFactory.getILoggerFactory().getLogger(getClass().getName());
-    }
-
-    @Override
-    public boolean isAcceptable(FormDataContentDisposition fileDetail, InputStream fileData, List<String> extensions) throws Exception {
-        if (fileDetail != null && fileData != null) {
-            for (String extension : extensions) {
-                if (fileDetail.getFileName().endsWith(extension)) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     /**
@@ -60,51 +49,51 @@ public class FileUploadHandler implements IFileUploadHandler {
      * @return the path
      */
     @Override
-    public Path upload(String entityType, String[] entityIds, FormDataContentDisposition fileDetail,
-        InputStream fileData) throws Exception {
-      Files.createDirectory(fileStore.getItemPath(entityType, entityIds));
+    public Path upload(String entityType, String[] entityIds, ContentDisposition fileDetail, InputStream fileData, Map<String, MediaType> accepted)
+            throws Exception {
+        new File(fileStore.getItemPath(entityType, entityIds).toString()).mkdirs();
 
-      String fileName = fileDetail.getFileName();
-      String extension = null;
+        String fileName = fileDetail.getFileName();
+        String extension = null;
 
-      int extensionStart = fileName.lastIndexOf(".");
+        int extensionStart = fileName.lastIndexOf(".");
 
-      if (extensionStart >= 0) {
-        fileName = fileName.substring(0, extensionStart);
-        extension = fileName.substring(extensionStart);
-      }
+        if (extensionStart >= 0) {
+            extension = fileName.substring(extensionStart+1).toLowerCase();
+            fileName = fileName.substring(0, extensionStart);
+        }
 
-      if (extension == null || AcceptableMediaTypes.EXTENTSIONS_TO_TYPES.get(extension) == null) {
-        throw new IllegalArgumentException("Unsupported mediaType " + fileName);
-      }
+        if (extension == null || accepted.get(extension) == null) {
+            throw new IllegalArgumentException("Unsupported mediaType " + fileName);
+        }
 
-      Path filePath = fileStore.getFilePath(entityType, entityIds, fileName, extension);
+        Path filePath = fileStore.getFilePath(entityType, entityIds, fileName, extension);
 
-      writeToFile(filePath, fileDetail, fileData);
+        writeToFile(filePath, fileDetail, fileData);
 
-      logger.info("File " + fileDetail + " uploaded to " + filePath);
+        logger.info("File " + fileDetail + " uploaded to " + filePath);
 
-      return filePath;
+        return filePath;
     }
 
-	/**
+    /**
      * Write to file.
      * @param fileName the file name
      * @param fileDetail the file detail
      * @param fileData the file data
      * @throws Exception the exception
      */
-    private void writeToFile(Path fileName, FormDataContentDisposition fileDetail, InputStream fileData) throws Exception {
-		int read;
-		byte[] buffer = new byte[1024];
+    private void writeToFile(Path fileName, ContentDisposition fileDetail, InputStream fileData) throws Exception {
+        int read;
+        byte[] buffer = new byte[1024];
 
-		OutputStream out = new FileOutputStream(fileName.toFile(), false);
+        OutputStream out = new FileOutputStream(fileName.toFile(), false);
 
-		while ((read = fileData.read(buffer)) != -1) {
-			out.write(buffer, 0, read);
-		}
-			
-		out.flush();
-		out.close();
-	}
+        while ((read = fileData.read(buffer)) != -1) {
+            out.write(buffer, 0, read);
+        }
+
+        out.flush();
+        out.close();
+    }
 }

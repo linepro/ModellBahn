@@ -18,5 +18,7 @@ public interface IFileStore {
 
     void removeFile(Path filePath);
 
+    //String pathForUrl(Path file);
+
     String urlForPath(Path file);
 }

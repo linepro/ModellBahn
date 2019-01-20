@@ -3,7 +3,6 @@ package com.linepro.modellbahn.model.impl;
 import static javax.ws.rs.HttpMethod.DELETE;
 import static javax.ws.rs.HttpMethod.PUT;
 
-import com.linepro.modellbahn.rest.util.ApiPaths;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.nio.file.Path;
@@ -37,9 +36,9 @@ import com.linepro.modellbahn.model.IMotorTyp;
 import com.linepro.modellbahn.model.IProdukt;
 import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.IWahrung;
+import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.model.keys.ArtikelKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
-import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.persistence.util.PathConverter;

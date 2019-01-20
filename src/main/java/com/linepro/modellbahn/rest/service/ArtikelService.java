@@ -44,6 +44,7 @@ import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.model.impl.Artikel;
 import com.linepro.modellbahn.model.keys.ArtikelKey;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;
@@ -72,6 +73,8 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
 
     public ArtikelService() {
         super(IArtikel.class);
+
+        getPersister().getSelectors().get(DBNames.ABBILDUNG).setNullable(true);
     }
 
     @JsonCreator(mode= Mode.DELEGATING)
@@ -192,19 +195,17 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
     public Response updateAbbildung(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId,
-                                    @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
-                                    @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
+            @FormDataParam("file") InputStream fileInputStream,
+            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
+        logPut(getEntityClassName() + ": " + artikelId + ", abbildung, " + contentDispositionHeader);
+
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
-            if (!handler.isAcceptable(fileDetail, fileData, AcceptableMediaTypes.IMAGES)) {
-                return getResponse(badRequest(null, "Invalid file '" + fileDetail.getFileName() + "'"));
-            }
-
             IArtikel artikel = findArtikel(artikelId, false);
 
             if (artikel != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { artikelId }, fileDetail, fileData);
+                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { artikelId }, contentDispositionHeader, fileInputStream, AcceptableMediaTypes.IMAGES);
 
                 artikel.setAbbildung(file);
 
@@ -228,6 +229,8 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
     public Response deleteAbbildung(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId) {
+        logDelete(getEntityClassName() + ": " + artikelId + ", abbildung");
+        
         try {
             IArtikel artikel = findArtikel(artikelId, false);
 

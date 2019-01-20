@@ -20,8 +20,8 @@ public interface IPictureRef extends IRef {
      * @return the abbildung
      */
     @JsonGetter(ApiNames.ABBILDUNG)
-    @JsonView(Views.Public.class)
+    @JsonView(Views.DropDown.class)
     @JsonSerialize(using = PathSerializer.class)
-    @ApiModelProperty(dataType = "String", value = "Image URL", example = "http://localhost:8086/ModellBahn/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "String", value = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
     Path getAbbildung();
 }

@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.ILicht;
 import com.linepro.modellbahn.model.impl.Licht;
 import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;
@@ -51,6 +52,8 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
 
     public LichtService() {
         super(ILicht.class);
+
+        getPersister().getSelectors().get(DBNames.ABBILDUNG).setNullable(true);
     }
 
     @JsonCreator(mode= Mode.DELEGATING)
@@ -125,19 +128,17 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds or updates the picture for a named Licht", response = ILicht.class)
     public Response updateAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name,
-            @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
-            @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
+            @FormDataParam("file") InputStream fileInputStream,
+            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
+        logPut(getEntityClassName() + ": " + name + ", abbildung, " + contentDispositionHeader);
+
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
-            if (!handler.isAcceptable(fileDetail, fileData, AcceptableMediaTypes.IMAGES)) {
-                return getResponse(badRequest(null, "Invalid file '" + fileDetail.getFileName() + "'"));
-            }
-
             ILicht licht = findLicht(name, false);
 
             if (licht != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] {name}, fileDetail, fileData);
+                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] {name}, contentDispositionHeader, fileInputStream, AcceptableMediaTypes.IMAGES);
 
                 licht.setAbbildung(file);
 
@@ -157,7 +158,9 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 204, value = "Deletes the picture for a named Licht", response = ILicht.class)
-    public Response deleteAbbildung(@PathParam(ApiPaths.ID_PARAM_NAME) String name) {
+    public Response deleteAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
+        logDelete(getEntityClassName() + ": " + name + ", abbildung");
+        
         try {
             ILicht licht = findLicht(name, false);
 

@@ -148,23 +148,39 @@ public class ItemPersister<I extends IItem<?>> implements IPersister<I> {
     }
 
     @Override
-    public I update(Long id, I entity) throws Exception {
-        return internalUpdate(new IdKey(id), entity, false);
+    public I merge(Long id, I entity) throws Exception {
+        return merge(new IdKey(id), entity, false);
+    }
+
+    @Override
+    public I merge(IKey key, I entity) throws Exception {
+        return merge(key, entity, false);
     }
 
     @Override
     public I update(I entity) throws Exception {
-        return internalUpdate(getItemKey(entity), entity, false);
-    }
+        ISessionManager session = getSession();
 
-    @Override
-    public I update(IKey key, I entity) throws Exception {
-        return internalUpdate(key, entity, false);
+        try {
+            I result = inflate(session.getEntityManager().merge(entity), true);
+
+            debug("updated: " + result);
+
+            session.commit();
+
+            return result;
+        } catch (Exception e) {
+            error("Update error: " + entity, e);
+
+            session.rollback();
+
+            throw e;
+        }
     }
 
     @Override
     public I save(I entity) throws Exception {
-        return internalUpdate(getItemKey(entity), entity, true);
+        return merge(getItemKey(entity), entity, true);
     }
 
     /**
@@ -176,7 +192,7 @@ public class ItemPersister<I extends IItem<?>> implements IPersister<I> {
      * @throws Exception the exception
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private I internalUpdate(IKey key, I entity, boolean addOrUpdate) throws Exception {
+    private I merge(IKey key, I entity, boolean addOrUpdate) throws Exception {
         ISessionManager session = getSession();
 
         try {
@@ -200,7 +216,7 @@ public class ItemPersister<I extends IItem<?>> implements IPersister<I> {
 
                     if (value instanceof Collection) {
                         ((Collection) selector.getGetter().invoke(found)).addAll((Collection) value);
-                    } else if (value != null) {
+                    } else if (value != null || selector.isNullable()) {
                         selector.getSetter().invoke(result, value);
                     }
                 }
@@ -208,13 +224,13 @@ public class ItemPersister<I extends IItem<?>> implements IPersister<I> {
 
             result = inflate(session.getEntityManager().merge(result), true);
 
-            debug((found == null ? "added" : "updated") + ": " + result);
+            debug((found == null ? "added" : "merged") + ": " + result);
 
             session.commit();
 
             return result;
         } catch (Exception e) {
-            error("Update error: " + entity, e);
+            error("Merge error: " + entity, e);
 
             session.rollback();
 

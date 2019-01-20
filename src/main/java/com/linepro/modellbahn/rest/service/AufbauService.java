@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IAufbau;
 import com.linepro.modellbahn.model.impl.Aufbau;
 import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;
@@ -53,6 +54,8 @@ public class AufbauService extends AbstractItemService<NameKey, IAufbau> {
 
     public AufbauService() {
         super(IAufbau.class);
+        
+        getPersister().getSelectors().get(DBNames.ABBILDUNG).setNullable(true);
     }
 
     @JsonCreator(mode= Mode.DELEGATING)
@@ -133,19 +136,17 @@ public class AufbauService extends AbstractItemService<NameKey, IAufbau> {
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
     public Response updateAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name,
-                                    @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
-                                    @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
+            @FormDataParam("file") InputStream fileInputStream,
+            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
+        logPut(getEntityClassName() + ": " + name + ", abbildung, " + contentDispositionHeader);
+
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
-            if (!handler.isAcceptable(fileDetail, fileData, AcceptableMediaTypes.IMAGES)) {
-                return getResponse(badRequest(null, "Invalid file '" + fileDetail.getFileName() + "'"));
-            }
-
             IAufbau aufbau = findAufbau(name, false);
 
             if (aufbau != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { name }, fileDetail, fileData);
+                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { name }, contentDispositionHeader, fileInputStream, AcceptableMediaTypes.IMAGES);
 
                 aufbau.setAbbildung(file);
 
@@ -168,12 +169,16 @@ public class AufbauService extends AbstractItemService<NameKey, IAufbau> {
     @ApiResponses({
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
-    public Response deleteAbbildung(@PathParam(ApiPaths.ID_PARAM_NAME) String name) {
+    public Response deleteAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
+        logDelete(getEntityClassName() + ": " + name + ", abbildung");
+
         try {
             IAufbau aufbau = findAufbau(name, false);
 
-            if (aufbau != null && aufbau.getAbbildung() != null) {
-                StaticContentFinder.getStore().removeFile(aufbau.getAbbildung());
+            if (aufbau != null) {
+                if (aufbau.getAbbildung() != null) {
+                    StaticContentFinder.getStore().removeFile(aufbau.getAbbildung());
+                }
 
                 aufbau.setAbbildung(null);
 

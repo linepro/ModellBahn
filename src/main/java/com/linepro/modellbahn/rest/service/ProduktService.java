@@ -370,19 +370,17 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds or updates the picture for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response updateAbbildung(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
-                                    @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
-                                    @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
+            @FormDataParam("file") InputStream fileInputStream,
+            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
+        logPut(getEntityClassName() + ": " + herstellerStr + ", " + bestellNr + ", abbildung, " + contentDispositionHeader);
+
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
-            if (!handler.isAcceptable(fileDetail, fileData, AcceptableMediaTypes.IMAGES)) {
-                return getResponse(badRequest(null, "Invalid file '" + fileDetail.getFileName() + "'"));
-            }
-
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
 
             if (produkt != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.PRODUKT, new String[] { herstellerStr, bestellNr }, fileDetail, fileData);
+                java.nio.file.Path file = handler.upload(ApiNames.PRODUKT, new String[] { herstellerStr, bestellNr }, contentDispositionHeader, fileInputStream, AcceptableMediaTypes.IMAGES);
 
                 produkt.setAbbildung(file);
 
@@ -403,6 +401,8 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 204, value = "Deletes the picture for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response deleteAbbildung(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
+        logDelete(getEntityClassName() + ": " + herstellerStr + ", " + bestellNr + ", abbildung");
+        
         try {
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
 
@@ -429,19 +429,17 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds or updates the instructions for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response updateAnleitungen(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
-                                      @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
-                                    @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
+            @FormDataParam("file") InputStream fileInputStream,
+            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
+        logPut(getEntityClassName() + ": " + herstellerStr + ", " + bestellNr + ", anleitungen, " + contentDispositionHeader);
+
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
-            if (!handler.isAcceptable(fileDetail, fileData, AcceptableMediaTypes.DOCUMENTS)) {
-                return getResponse(badRequest(null, "Invalid file '" + fileDetail.getFileName() + "'"));
-            }
-
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
 
             if (produkt != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.PRODUKT, new String[] { herstellerStr, bestellNr }, fileDetail, fileData);
+                java.nio.file.Path file = handler.upload(ApiNames.PRODUKT, new String[] { herstellerStr, bestellNr }, contentDispositionHeader, fileInputStream, AcceptableMediaTypes.DOCUMENTS);
 
                 produkt.setAnleitungen(file);
 
@@ -462,6 +460,8 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 204, value = "Deletes the instructions for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response deleteAnleitungen(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
+        logDelete(getEntityClassName() + ": " + herstellerStr + ", " + bestellNr + ", anleitungen");
+        
         try {
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
 
@@ -488,19 +488,17 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds or updates the drawing for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response updateExplosionszeichnung(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
-                                              @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
-                                    @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
+            @FormDataParam("file") InputStream fileInputStream,
+            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
+        logPut(getEntityClassName() + ": " + herstellerStr + ", " + bestellNr + ", explosionszeichnung, " + contentDispositionHeader);
+
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
-            if (!handler.isAcceptable(fileDetail, fileData, AcceptableMediaTypes.DOCUMENTS)) {
-                return getResponse(badRequest(null, "Invalid file '" + fileDetail.getFileName() + "'"));
-            }
-
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
 
             if (produkt != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.PRODUKT, new String[] { herstellerStr, bestellNr }, fileDetail, fileData);
+                java.nio.file.Path file = handler.upload(ApiNames.PRODUKT, new String[] { herstellerStr, bestellNr }, contentDispositionHeader, fileInputStream, AcceptableMediaTypes.DOCUMENTS);
 
                 produkt.setExplosionszeichnung(file);
 
@@ -521,6 +519,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 204, value = "Deletes the drawing for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response deleteExplosionszeichnung(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
+        logDelete(getEntityClassName() + ": " + herstellerStr + ", " + bestellNr + ", explosionszeichnung");
         try {
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
 

@@ -20,7 +20,6 @@
 
     async function init() {
         await aufbau.init();
-        about();
     }
 </script>
 <title>Aufbauten</title>
@@ -61,6 +60,10 @@
 				<div id="aufbau">
 				</div>
 			</div>
+			<form action="http://linepro2:8086/ModellBahn/api/aufbau/LK/abbildung" method="post" enctype="multipart/form-data">
+			    <input name="file" id="file" type="file" /><br><br>
+			    <button name="submit" type="submit">Upload</button>
+            </form>
 		</article>
 	</section>
 
@@ -70,7 +73,7 @@
                 <hr class="highlight" />
                 <ul class="footer">
                     <li>Copyright &copy; 2018 ModellBahn Website</li>
-                    <li><a id="license" class="nav-button" href="#">About</a></li>
+                    <li><a id="license" class="nav-button" href="#" onclick="about()">About</a></li>
                 </ul>
             </div>
         </div>

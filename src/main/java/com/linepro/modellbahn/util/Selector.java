@@ -27,6 +27,8 @@ public class Selector {
     private final boolean collection;
 
     private final Class<?> type;
+    
+    private boolean nullable;
 
     /**
      * Instantiates a new selector.
@@ -81,6 +83,14 @@ public class Selector {
 
     public boolean isCollection() {
         return collection;
+    }
+
+    public boolean isNullable() {
+        return this.nullable;
+    }
+
+    public void setNullable(boolean nullable) {
+        this.nullable = nullable;
     }
 
     @Override

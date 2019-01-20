@@ -143,6 +143,13 @@ const valueAndUnits = (cssSize) => {
   };
 };
 
+const setCtlValue = (jsonData, ctl, img) => {
+  if (jsonData) {
+    ctl.setValue(img, ctl.getter(jsonData));	
+  }
+};
+
+
 class Column {
   constructor(heading, binding, getter, setter, editable, required, length) {
     this.heading = heading;
@@ -318,7 +325,7 @@ class URLColumn extends TextColumn {
     let ctl = super.createControl();
     ctl.type = 'url';
     ctl.class = 'table-url';
-    ctl.addEventListener('click', (e) => {if (ctl.value) { window.open(ctl.value, '_blank'); }});
+    ctl.addEventListener('click', (e) => {if (ctl.value) { window.open(ctl.value, '_blank'); }}, false);
     return ctl;
   }
 }
@@ -331,7 +338,7 @@ class DateColumn extends TextColumn {
   createControl() {
     let ctl = super.createControl();
     ctl.addEventListener('click', (e) => {
-    });
+    }, false);
     return ctl;
   }
 
@@ -345,20 +352,23 @@ class FileColumn extends Column {
 
   getControl(cell, entity, editMode) {
     let ctl = super.getControl(cell, entity, editMode);
-
+    ctl.className = 'img-display';
+    
     ctl.addEventListener('click', (e) => {
-      let ctl = e.target;
-
-      if (ctl && ctl.getAttribute('data-file')) {
-        window.open(ctl.getAttribute('data-file'), '_blank');
+      let img = e.target;
+      let file = img.getAttribute('data-file');
+      if (file) {
+        this.showContent(file);
       }
-    });
+    }, false);
 
     let add = getLink(entity.links, 'update-'+this.binding);
 
     if (add) {
       let btn = getButton(add.href, 'add', undefined);
-      btn.addEventListener('click', (e) => { this.select(e); });
+      btn.addEventListener('click', (e) => { this.select(e); }, false);
+      btn.className = 'img-button';
+      btn.firstChild.className = 'img-button'; 
       cell.appendChild(btn);
     }
 
@@ -366,7 +376,9 @@ class FileColumn extends Column {
 
     if (remove) {
       let btn = getButton(remove.href, 'delete', undefined);
-      btn.addEventListener('click', (e) => { this.remove(e); });
+      btn.addEventListener('click', (e) => { this.remove(e, ctl); }, false);
+      btn.className = 'img-button';
+      btn.firstChild.className = 'img-button'; 
       cell.appendChild(btn);
     }
 
@@ -391,47 +403,48 @@ class FileColumn extends Column {
     if (btn.tagName === 'IMG') {
       btn = btn.parentElement;
     }
+    let link = btn.value;
     let cell = btn.parentElement;
     let file = document.createElement('input');
     file.type = 'file';
     file.accept = this.mask;
     file.multiple = false;
-    file.style.display = 'none';
-    file.setAttribute('data-opening', true);
     file.setAttribute('data-update', link);
-    file.addEventListener('click', (e) => { this.update(e); });
-    cell.parentElement.appendChild(file);
+    cell.appendChild(file);
+    file.style.display = 'none';
     file.click();
+    file.addEventListener('change', (e) => { this.update(e); }, false);
+    file.addEventListener('click', (e) => { this.update(e); }, false);
+    file.addEventListener('blur', (e) => { this.update(e); }, false);
   }
 
-  remove(e) {
+  remove(e, img) {
     let btn = e.target;
     if (btn.tagName === 'IMG') {
       btn = btn.parentElement;
     }
     let cell = btn.parentElement;
-    let ctl = cell.getElementsByTagName('input');
     let link = btn.value;
     if (link) {
       removeFile(link);
-      this.setValue(ctl, undefined);
+      let ctl = cell.getElementsByTagName('IMG')[0];
+      this.setValue(img, undefined);
     }
   }
 
   update(e) {
     let file = e.target;
-    let isOpening = file.getAttribute('data-opening');
-    file.setAttribute('data-opening', false);
-    if (isOpening) return;
-    let cell = file.parentElement;
-    let newValue = file.value;
+    let fileData = file.files[0];
     let link = file.getAttribute('data-update');
-    if (newValue && link) {
-      let ctl = cell.getElementsByTagName('input');
-      this.setValue(ctl, newValue);
-      uploadFile(link, newValue);
-    }
+    let cell = file.parentElement;
     cell.removeChild(file);
+    if (fileData && link) {
+      let ctl = cell.getElementsByClassName('img-display')[0];
+      readFile(link, fileData, this, ctl);
+    }
+  }
+  
+  showContent(file) {
   }
 }
 
@@ -439,11 +452,28 @@ class IMGColumn extends FileColumn {
   constructor(heading, binding, getter, editable, required) {
     super(heading, binding, getter, 'image/*', editable, required);
   }
+
+  showContent(file) {
+  	let disp = document.createElement('img');
+  	disp.src = file;
+  	showModal('', disp);
+  }
 }
 
-class PDFColumn extends Column {
+class PDFColumn extends FileColumn {
   constructor(heading, binding, getter, editable, required) {
     super(heading, binding, getter, 'application/pdf', editable, required);
+  }
+  
+  setValue(ctl, value) {
+    ctl.src = value ? 'img/pdf.png' : 'img/none.png';
+    ctl.setAttribute('data-file', value);
+  }
+
+  showContent(file) {
+  	let disp = document.createElement('embed');
+  	disp.src = file;
+  	showModal('', disp);
   }
 }
 
@@ -455,7 +485,7 @@ const closeAutoLists = (elmnt) => {
   }
 };
 
-document.addEventListener('click', (e) => { closeAutoLists(); });
+document.addEventListener('click', (e) => { closeAutoLists(); }, false);
 
 class SelectColumn extends Column {
   constructor(heading, binding, getter, setter, dropDown, editable, required) {
@@ -464,14 +494,14 @@ class SelectColumn extends Column {
   }
 
   getControl(cell, entity, editMode) {
-    document.addEventListener('click', (e) => { this.leave(e); });
+    document.addEventListener('click', (e) => { this.leave(e); }, false);
 
     let ctl = super.getControl(cell, entity, editMode);
 
     if (!ctl.disabled) {
-      ctl.addEventListener('click', (e) => { this.open(e); });
-      ctl.addEventListener('input', (e) => { this.open(e); });
-      ctl.addEventListener('keydown', (e) => { this.keydown(e); });
+      ctl.addEventListener('click', (e) => { this.open(e); }, false);
+      ctl.addEventListener('input', (e) => { this.open(e); }, false);
+      ctl.addEventListener('keydown', (e) => { this.keydown(e); }, false);
       ctl.classList.add('autocomplete');
     }
 
@@ -534,7 +564,7 @@ class SelectColumn extends Column {
       autoItem.className = 'autocomplete-items';
       autoItem.style.top = (dims.value*i)+dims.units;
       addText(autoItem, ctl.caption(inp.value, o));
-      autoItem.addEventListener('click', (e) => { this.click(e); });
+      autoItem.addEventListener('click', (e) => { this.click(e); }, false);
       autoComp.appendChild(autoItem);
       i++;
     });
@@ -711,11 +741,10 @@ async function checkResponse(response) {
   throw new Error(response.statusText);
 }
 
-async function modal(elementName, title, contentUrl) {
-  let anchor = document.getElementById(elementName);
+const addModal = () => {
   let modal = document.getElementById('modal');
 
-  if (anchor && !modal) {
+  if (!modal) {
     modal = document.createElement('div');
     modal.id = 'modal';
     modal.className = 'modal';
@@ -727,26 +756,14 @@ async function modal(elementName, title, contentUrl) {
     head.className = 'modal-header';
 
     let heading = document.createElement('h2');
-    addText(heading, title);
+    heading.id = 'modal-title';
     head.appendChild(heading);
     content.appendChild(head);
 
     let body = document.createElement('div');
+    body.id = 'modal-body';
     body.className = 'modal-body';
-
-    let text = await fetch(contentUrl)
-    .then(response => response.text())
-    .catch(error => reportError(error));
-
-    let area = document.createElement('textarea');
-    area.value = text;
-    area.color = 'black';
-    area.height = '100%';
-    area.width = '100%';
-    area.readOnly = true;
-    area.disabled = true;
-
-    body.appendChild(area);
+    
     content.appendChild(body);
 
     let foot = document.createElement('div');
@@ -755,22 +772,39 @@ async function modal(elementName, title, contentUrl) {
     content.appendChild(foot);
     modal.appendChild(content);
 
-    anchor.appendChild(modal);
-    anchor.href = '#';
-    anchor.addEventListener('click', (e) => {
-      modal.style.display = 'block';
-    });
+    let docBody = document.getElementsByTagName('BODY')[0];
+    docBody.appendChild(modal);
 
     window.addEventListener('click', (e) => {
       if (e.target === modal) {
         modal.style.display = 'none';
       }
-    });
+    }, false);
   }
-}
+  
+  return modal;
+};
+
+const showModal = (title, content) => {
+	let modal = addModal();
+	let head = document.getElementById('modal-title');
+	removeChildren(head);
+	addText(head, title);
+	
+	let body = document.getElementById('modal-body');
+	removeChildren(body);
+	body.appendChild(content);
+    modal.style.display = 'block';
+};
 
 const about = () => {
-  modal('license', 'About ModellBahn', siteRoot() + 'LICENSE');
+  fetch(siteRoot() + 'LICENSE')
+    .then(response => {
+    	let area = document.createElement('textarea');
+    	area.text = response.text();
+    	showModal('About ModellBahn', area);
+    })
+	.catch(error => reportError(error));
 };
 
 const setActiveTab = (event, tabName) => {
@@ -954,13 +988,23 @@ async function removeFile(deleteUrl) {
   })
 }
 
-async function uploadFile(uploadUrl, file) {
-  let formData = new FormData();
+async function uploadFile(e, uploadUrl, fileData, ctl, img) {
+  let body = new FormData();
 
-  formData.append('FileName', file.name);
-  formData.append('FileData', file);
+  body.append('file', fileData);
 
-  await fetch(uploadUrl, {method: 'PUT', body: formData})
-  .then(response => checkResponse(response))
-  .catch(error => reportError(error));
+  await fetch(uploadUrl, {method: 'PUT', body: body })
+	    .then(response => checkResponse(response))
+	    .then(jsonData => setCtlValue(jsonData, ctl, img))
+	    .catch(error => reportError(error));
+}
+
+function readFile(uploadUrl, fileData, ctl, img) {
+  var reader = new FileReader();
+  reader.onload = (e) => { uploadFile(e, uploadUrl, fileData, ctl, img) };
+  reader.onerror = (e) => {
+   	reader.abort();
+    reportEror("Problem reading file " + fileData + ": " + e);
+    };
+  reader.readAsDataURL(fileData);
 }

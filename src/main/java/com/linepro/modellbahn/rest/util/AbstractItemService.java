@@ -236,7 +236,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         try {
             logPut(id + ": " + entity);
 
-            E result = getPersister().update(id, entity);
+            E result = getPersister().merge(id, entity);
 
             if (result == null) {
                 return getResponse(notFound());
@@ -398,7 +398,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return persister;
     }
 
-    private String getEntityClassName() {
+    protected String getEntityClassName() {
         return entityClass.getSimpleName();
     }
 

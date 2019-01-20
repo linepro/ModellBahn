@@ -40,6 +40,7 @@ import com.linepro.modellbahn.model.IVorbild;
 import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
 import com.linepro.modellbahn.model.impl.Vorbild;
 import com.linepro.modellbahn.model.keys.VorbildKey;
+import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;
@@ -66,6 +67,8 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
 
     public VorbildService() {
         super(IVorbild.class);
+
+        getPersister().getSelectors().get(DBNames.ABBILDUNG).setNullable(true);
     }
 
     @JsonCreator(mode= Mode.DELEGATING)
@@ -236,19 +239,17 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds or updates thr picture for a named Vorbild", response = IVorbild.class)
     public Response updateAbbildung(@PathParam(ApiPaths.GATTUNG_PARAM_NAME) String name,
-                                    @FormDataParam(ApiPaths.MULTIPART_FILE_DETAIL) FormDataContentDisposition fileDetail,
-                                    @FormDataParam(ApiPaths.MULTIPART_FILE_DATA) InputStream fileData) {
+            @FormDataParam("file") InputStream fileInputStream,
+            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
+        logPut(getEntityClassName() + ": " + name + ", abbildung, " + contentDispositionHeader);
+
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
-            if (!handler.isAcceptable(fileDetail, fileData, AcceptableMediaTypes.IMAGES)) {
-                return getResponse(badRequest(null, "Invalid file '" + fileDetail.getFileName() + "'"));
-            }
-
             IVorbild vorbild = findVorbild(name, false);
 
             if (vorbild != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.VORBILD, new String[] { name }, fileDetail, fileData);
+                java.nio.file.Path file = handler.upload(ApiNames.VORBILD, new String[] { name }, contentDispositionHeader, fileInputStream, AcceptableMediaTypes.IMAGES);
 
                 vorbild.setAbbildung(file);
 
@@ -269,6 +270,8 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Removes the picture from a named Vorbild", response = IVorbild.class)
     public Response deleteAbbildung(@PathParam(ApiPaths.GATTUNG_PARAM_NAME) String name) {
+        logDelete(getEntityClassName() + ": " + name + ", abbildung");
+        
         try {
             IVorbild vorbild = findVorbild(name, false);
 

@@ -79,24 +79,24 @@ public interface IPersister<I extends IItem<?>> {
     List<I> findAll(I template, Map<String,List<String>> references, Integer startPosition, Integer maxSize) throws Exception;
 
     /**
-     * Updates the specified entity to match the supplied entity.
+     * Updates the specified entity to match the supplied entity ignoring null fields.
      *
      * @param entity the new state of the entity.
      * @return the updated entity.
      * @throws Exception if the entity does not exist or there is a DB error
      */
-    I update(Long id, I entity) throws Exception;
+    I merge(Long id, I entity) throws Exception;
+
+    I merge(IKey key, I entity) throws Exception;
 
     /**
-     * Updates the specified entity to match the supplied entity.
+     * Updates the specified entity which must be under db control.
      *
      * @param entity the new state of the entity.
      * @return the updated entity.
      * @throws Exception if the entity does not exist or there is a DB error
      */
     I update(I entity) throws Exception;
-
-    I update(IKey key, I entity) throws Exception;
 
     /**
      * Deletes the specified entity by primary key.

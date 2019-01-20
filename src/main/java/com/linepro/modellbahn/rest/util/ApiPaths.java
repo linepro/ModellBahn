@@ -223,6 +223,6 @@ public interface ApiPaths {
     String SWAGGER_RESOURCE = SEPARATOR + SWAGGER + ".{" + TYPE + ":json|yaml}";
 
     /* Multipart field names */
-    String MULTIPART_FILE_DETAIL = "FileDetail";
+    String MULTIPART_FILE_DETAIL = "FileData";
     String MULTIPART_FILE_DATA = "FileData";
 }
