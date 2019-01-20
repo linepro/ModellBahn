@@ -473,6 +473,7 @@ class PDFColumn extends FileColumn {
   showContent(file) {
   	let disp = document.createElement('embed');
   	disp.src = file;
+  	disp.type="application/pdf"
   	showModal('', disp);
   }
 }
