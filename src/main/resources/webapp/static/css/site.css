@@ -566,14 +566,14 @@ ul.footer li:last-of-type {
 }
 
 .modal-body embed {
-  align-text: center;
+  text-align: center;
   height: 100%;
   overflow: hidden;
   vertical-align: middle;
 }
 
 .modal-body img {
-  align-text: center;
+  text-align: center;
   height: 100%;
   overflow: hidden;
   vertical-align: middle;
@@ -742,7 +742,7 @@ button.selection {
 
 .img-display {
   border: 0;
-  height: 100%;
+  height: 2.5rem;
   margin: 0;
   width: 80%;
 }

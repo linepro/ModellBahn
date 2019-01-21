@@ -471,9 +471,11 @@ class PDFColumn extends FileColumn {
   }
 
   showContent(file) {
-  	let disp = document.createElement('embed');
-  	disp.src = file;
-  	disp.type="application/pdf"
+  	let disp = document.createElement('object');
+  	disp.data = file+'#page=1&view=Fit&scrollbar=1&toolbar=1&statusbar=1&navpanes=1';
+  	disp.type="application/pdf";
+  	disp.width='100%';
+  	disp.height='100%';
   	showModal('', disp);
   }
 }
@@ -1001,11 +1003,11 @@ async function uploadFile(e, uploadUrl, fileData, ctl, img) {
 }
 
 function readFile(uploadUrl, fileData, ctl, img) {
-  var reader = new FileReader();
+  const reader = new FileReader();
   reader.onload = (e) => { uploadFile(e, uploadUrl, fileData, ctl, img) };
   reader.onerror = (e) => {
    	reader.abort();
-    reportEror("Problem reading file " + fileData + ": " + e);
+    reportError("Problem reading file " + fileData + ": " + e);
     };
   reader.readAsDataURL(fileData);
 }
