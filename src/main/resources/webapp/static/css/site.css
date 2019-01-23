@@ -40,8 +40,8 @@ footer {
   bottom: 0;
   color: grey;
   margin-top: 0.3rem;
-  opacity: 1; 
-  overflow : hidden;
+  opacity: 1;
+  overflow: hidden;
   padding: 0.5rem;
   position: sticky;
   width: 100%;
@@ -110,7 +110,9 @@ input[type="date"]::-webkit-datetime-edit-year-field {
   padding: 0;
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator { background: orange; }
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background: orange;
+}
 
 input[type="date"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -123,7 +125,7 @@ input[type="date"]::-webkit-inner-spin-button {
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
-  margin: 0; 
+  margin: 0;
 }
 
 input[active], select[active], textarea[active] {
@@ -147,13 +149,13 @@ input[readonly], select[readonly], textarea[readonly] {
 }
 
 input[type='url'], .table-url {
-  cursor:pointer;
-  color:blue;
-  text-decoration:underline;
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
 }
 
 input[type='url']:hover, .table-url:hover {
-  text-decoration:none;
+  text-decoration: none;
   text-shadow: 1px 1px 1px DimGrey;
 }
 
@@ -517,7 +519,9 @@ ul.footer li:last-of-type {
   background-color: LightSkyBlue;
   border: 0.2rem LightSkyBlue;
   border-radius: 3rem;
+  height: 40rem;
   margin: auto;
+  overflow: hidden;
   padding: 0;
   position: relative;
   width: 60rem;
@@ -550,36 +554,27 @@ ul.footer li:last-of-type {
   }
 }
 
-.modal-header {
+.about {
+  padding: 1rem;
+  height: 100%;
+}
+
+.about-header {
   background-color: LightSkyBlue;
   color: white;
   height: 5rem;
   width: 100%;
 }
 
-.modal-body {
+.about-body {
   background-color: LightSkyBlue;
   color: white;
-  height: 25rem;
+  height: 30rem;
   overflow: hidden;
   width: 100%;
 }
 
-.modal-body embed {
-  text-align: center;
-  height: 100%;
-  overflow: hidden;
-  vertical-align: middle;
-}
-
-.modal-body img {
-  text-align: center;
-  height: 100%;
-  overflow: hidden;
-  vertical-align: middle;
-}
-
-.modal-body textarea {
+.about-body textarea {
   background-color: LightSkyBlue;
   border: none;
   box-sizing: border-box;
@@ -587,14 +582,15 @@ ul.footer li:last-of-type {
   height: 100%;
   line-height: 1.2rem;
   overflow: auto;
+  padding: 1rem;
   width: 100%;
 }
 
-.modal-body textarea[focus] {
+.about-body textarea[focus] {
   border: none;
 }
 
-.modal-footer {
+.about-footer {
   background-color: LightSkyBlue;
   color: White;
   height: 2rem;
@@ -648,7 +644,7 @@ div.flex-container {
   display: flex;
   align-content: flex-start;
   align-items: baseline;
-  flex-direction: row;  
+  flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
 }
@@ -663,7 +659,7 @@ div.flex-item {
 }
 
 div.flex-label {
-  display: inline-block;    
+  display: inline-block;
   color: Grey;
   flex-grow: 0;
   flex-shrink: 0;
@@ -676,7 +672,7 @@ div.flex-label {
 }
 
 div.flex-control {
-  display: inline-block;	
+  display: inline-block;
   align-self: flex-start;
   flex-grow: 0;
   flex-shrink: 0;
@@ -725,7 +721,7 @@ button.selection {
 }
 
 .autocomplete-items div {
-  background-color: LightYellow; 
+  background-color: LightYellow;
   cursor: pointer;
   padding: 10px;
 }
@@ -736,9 +732,9 @@ button.selection {
 }
 
 .autocomplete-active {
-  background-color: LemonChiffon; 
+  background-color: LemonChiffon;
   color: LightSkyBlue;
-} 
+}
 
 .img-display {
   border: 0;
@@ -752,7 +748,7 @@ button.img-button {
   height: 45%;
   width: 10%;
   margin: 0;
-} 
+}
 
 img.img-button {
   border: 0;
@@ -775,4 +771,15 @@ img.img-button {
   /* Position the tooltip */
   position: absolute;
   z-index: 1;
+}
+
+.display-img {
+  height: 100%;
+  padding: 1.5rem;
+}
+
+.display-pdf {
+  background-color: white;
+  height: 100%;
+  padding: 1.5rem;
 }

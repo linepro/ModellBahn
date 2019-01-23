@@ -152,7 +152,7 @@ const valueAndUnits = (cssSize) => {
 
 const setCtlValue = (jsonData, ctl, img) => {
   if (jsonData) {
-    ctl.setValue(img, ctl.getter(jsonData));	
+    ctl.setValue(img, ctl.getter(jsonData));
   }
 };
 
@@ -164,7 +164,7 @@ const blankControl = (cell, column) => {
   ctl.disabled = 'true';
   ctl.readOnly = 'true';
   ctl.required = false;
-	
+
   cell.appendChild(ctl);
 };
 
@@ -176,7 +176,8 @@ class Column {
     this.setter = setter;
     this.editable = editable ? editable : Editable.NEVER;
     this.required = required ? required : false;
-    this.length = Math.max(length ? length : heading.length, heading.length + 1);
+    this.length = Math.max(length ? length : heading.length,
+        heading.length + 1);
     this.width = 0;
   }
 
@@ -233,7 +234,8 @@ class Column {
     if (value || entity) {
       ctl.disabled = shouldDisable(this.editable, editMode);
     } else {
-      ctl.disabled = !(editMode === EditMode.ADD && this.editable !== Editable.NEVER);
+      ctl.disabled = !(editMode === EditMode.ADD && this.editable
+          !== Editable.NEVER);
     }
 
     ctl.readOnly = ctl.disabled;
@@ -322,7 +324,8 @@ class PhoneColumn extends Column {
 }
 
 class TextColumn extends Column {
-  constructor(heading, binding, getter, setter, editable, required, length, pattern) {
+  constructor(heading, binding, getter, setter, editable, required, length,
+      pattern) {
     super(heading, binding, getter, setter, editable, required, length);
     this.pattern = pattern;
   }
@@ -338,21 +341,27 @@ class TextColumn extends Column {
 
 class URLColumn extends TextColumn {
   constructor(heading, binding, getter, setter, editable, required) {
-    super(heading, binding, getter, setter, editable, required, 60, URL_PATTERN);
+    super(heading, binding, getter, setter, editable, required, 60,
+        URL_PATTERN);
   }
 
   createControl() {
     let ctl = super.createControl();
     ctl.type = 'url';
     ctl.class = 'table-url';
-    ctl.addEventListener('click', (e) => {if (ctl.value) { window.open(ctl.value, '_blank'); }}, false);
+    ctl.addEventListener('click', (e) => {
+      if (ctl.value) {
+        window.open(ctl.value, '_blank');
+      }
+    }, false);
     return ctl;
   }
 }
 
 class DateColumn extends TextColumn {
   constructor(heading, binding, getter, setter, editable, required) {
-    super(heading, binding, getter, setter, editable, required, 12, DATE_PATTERN);
+    super(heading, binding, getter, setter, editable, required, 12,
+        DATE_PATTERN);
   }
 
   createControl() {
@@ -373,7 +382,7 @@ class FileColumn extends Column {
   getControl(cell, entity, editMode) {
     let ctl = super.getControl(cell, entity, editMode);
     ctl.className = 'img-display';
-    
+
     ctl.addEventListener('click', (e) => {
       let img = e.target;
       let file = img.getAttribute('data-file');
@@ -382,23 +391,27 @@ class FileColumn extends Column {
       }
     }, false);
 
-    let add = getLink(entity.links, 'update-'+this.binding);
+    let add = getLink(entity.links, 'update-' + this.binding);
 
     if (add) {
       let btn = getButton(add.href, 'add', undefined);
-      btn.addEventListener('click', (e) => { this.select(e); }, false);
+      btn.addEventListener('click', (e) => {
+        this.select(e);
+      }, false);
       btn.className = 'img-button';
-      btn.firstChild.className = 'img-button'; 
+      btn.firstChild.className = 'img-button';
       cell.appendChild(btn);
     }
 
-    let remove = getLink(entity.links, 'delete-'+this.binding);
+    let remove = getLink(entity.links, 'delete-' + this.binding);
 
     if (remove) {
       let btn = getButton(remove.href, 'delete', undefined);
-      btn.addEventListener('click', (e) => { this.remove(e, ctl); }, false);
+      btn.addEventListener('click', (e) => {
+        this.remove(e, ctl);
+      }, false);
       btn.className = 'img-button';
-      btn.firstChild.className = 'img-button'; 
+      btn.firstChild.className = 'img-button';
       cell.appendChild(btn);
     }
 
@@ -406,7 +419,7 @@ class FileColumn extends Column {
       cell.removeChild(ctl);
       cell.insertBefore(ctl, cell.firstChild);
     }
-    
+
     return ctl;
   }
 
@@ -438,9 +451,15 @@ class FileColumn extends Column {
     cell.appendChild(file);
     file.style.display = 'none';
     file.click();
-    file.addEventListener('change', (e) => { this.update(e); }, false);
-    file.addEventListener('click', (e) => { this.update(e); }, false);
-    file.addEventListener('blur', (e) => { this.update(e); }, false);
+    file.addEventListener('change', (e) => {
+      this.update(e);
+    }, false);
+    file.addEventListener('click', (e) => {
+      this.update(e);
+    }, false);
+    file.addEventListener('blur', (e) => {
+      this.update(e);
+    }, false);
   }
 
   remove(e, img) {
@@ -468,7 +487,7 @@ class FileColumn extends Column {
       readFile(link, fileData, this, ctl);
     }
   }
-  
+
   showContent(file) {
   }
 }
@@ -479,9 +498,10 @@ class IMGColumn extends FileColumn {
   }
 
   showContent(file) {
-  	let disp = document.createElement('img');
-  	disp.src = file;
-  	showModal('', disp);
+    let img = document.createElement('img');
+    img.className = 'display-img';
+    img.src = file;
+    showModal(img);
   }
 }
 
@@ -489,35 +509,62 @@ class PDFColumn extends FileColumn {
   constructor(heading, binding, getter, editable, required) {
     super(heading, binding, getter, 'application/pdf', editable, required);
   }
-  
+
   setValue(ctl, value) {
     ctl.src = value ? 'img/pdf.png' : 'img/none.png';
     ctl.setAttribute('data-file', value);
   }
 
   showContent(file) {
-  	let disp = document.createElement('object');
-  	disp.data = file+'#page=1&view=Fit&scrollbar=1&toolbar=1&statusbar=1&navpanes=1';
-  	disp.type="application/pdf";
-  	disp.width='100%';
-  	disp.height='100%';
-  	showModal('', disp);
+    let pdf = document.createElement('object');
+    pdf.className = 'display-pdf';
+    pdf.src = file;
+    pdf.type = 'application/pdf';
+    pdf.width = '100%';
+    pdf.height = '100%';
+
+    let iframe = document.createElement('iframe');
+    iframe.src = file;
+    iframe.width = '100%';
+    iframe.height = '100%';
+    pdf.appendChild(iframe);
+
+    let para = document.createElement('p');
+    addText(para, 'Ihr Browser unterstützt keine PDFs.');
+    let link = document.createElement('a');
+    addText(link, 'Laden Sie das PDF herunter');
+    link.href = file;
+    para.appendChild(link);
+    iframe.appendChild(para);
+
+    let embed = document.createElement('embed');
+    embed.id='plugin';
+    embed.type='application/x-google-chrome-pdf';
+    embed.src=file;
+    embed.javascript='allow'
+
+    showModal(embed);
   }
 }
 
 const closeAutoLists = (elmnt) => {
-  let autoComp = (elmnt ? elmnt : document).getElementsByClassName('autocomplete-list');
-  for (let i = 0 ; i < autoComp.length; i++) {
+  let autoComp = (elmnt ? elmnt : document).getElementsByClassName(
+      'autocomplete-list');
+  for (let i = 0; i < autoComp.length; i++) {
     removeChildren(autoComp[i]);
     autoComp[i].parentNode.removeChild(autoComp[i]);
   }
 };
 
-document.addEventListener('click', (e) => { closeAutoLists(); }, false);
+document.addEventListener('click', (e) => {
+  closeAutoLists();
+}, false);
 
 class SelectColumn extends Column {
-  constructor(heading, binding, getter, setter, dropDown, editable, required, dropSize) {
-    super(heading, binding, getter, setter, editable, required, dropDown.length);
+  constructor(heading, binding, getter, setter, dropDown, editable, required,
+      dropSize) {
+    super(heading, binding, getter, setter, editable, required,
+        dropDown.length);
     this.dropDown = dropDown;
     this.dropSize = dropSize ? dropSize : 5;
   }
@@ -526,9 +573,15 @@ class SelectColumn extends Column {
     let ctl = super.getControl(cell, entity, editMode);
 
     if (!ctl.disabled) {
-      ctl.addEventListener('click', (e) => { this.open(e); }, false);
-      ctl.addEventListener('input', (e) => { this.open(e); }, false);
-      ctl.addEventListener('keydown', (e) => { this.keydown(e); }, false);
+      ctl.addEventListener('click', (e) => {
+        this.open(e);
+      }, false);
+      ctl.addEventListener('input', (e) => {
+        this.open(e);
+      }, false);
+      ctl.addEventListener('keydown', (e) => {
+        this.keydown(e);
+      }, false);
       ctl.classList.add('autocomplete');
     }
 
@@ -581,9 +634,11 @@ class SelectColumn extends Column {
       let autoItem = document.createElement('div');
       autoItem.setAttribute('data-name', o.value);
       autoItem.className = 'autocomplete-items';
-      autoItem.style.top = (dims.value*i)+dims.units;
+      autoItem.style.top = (dims.value * i) + dims.units;
       addText(autoItem, ctl.caption(inp.value, o));
-      autoItem.addEventListener('click', (e) => { this.click(e); }, false);
+      autoItem.addEventListener('click', (e) => {
+        this.click(e);
+      }, false);
       autoComp.appendChild(autoItem);
       i++;
     });
@@ -595,7 +650,9 @@ class SelectColumn extends Column {
 
     let autoComps = div.getElementsByClassName('autocomplete-list');
 
-    if (!autoComps || !autoComps.length) return;
+    if (!autoComps || !autoComps.length) {
+      return;
+    }
 
     let autoComp = autoComps[0];
 
@@ -626,18 +683,25 @@ class SelectColumn extends Column {
     let curr = -1;
     for (let i = 0; i < items.length; i++) {
       if (items[i].classList.contains('autocomplete-active')) {
-        if (curr === -1) curr = i;
+        if (curr === -1) {
+          curr = i;
+        }
         items[i].classList.remove('autocomplete-active');
       }
     }
 
     let next = curr + (up ? 1 : -1);
-    if (0 <= next && next <= items.length) items[next].classList.add('autocomplete-active');
+    if (0 <= next && next <= items.length) {
+      items[next].classList.add(
+          'autocomplete-active');
+    }
   }
 
   selectActive(autoComp) {
     let active = autoComp.getElementsByClassName('autocomplete-active');
-    if (active.length) active[0].click();
+    if (active.length) {
+      active[0].click();
+    }
   }
 }
 
@@ -647,11 +711,14 @@ class AutoCompleteColumn extends SelectColumn {
   }
 
   options(txt) {
-    return this.dropDown.options.filter((o) => { return o.display.toLowerCase().includes(txt.toLowerCase()); }).slice(0,5);
+    return this.dropDown.options.filter((o) => {
+      return o.display.toLowerCase().includes(txt.toLowerCase());
+    }).slice(0, 5);
   }
 
   caption(txt, o) {
-    return o.display.replace(/inp.value/i, '<strong>' + inp.value + '</strong>');
+    return o.display.replace(/inp.value/i,
+        '<strong>' + inp.value + '</strong>');
   }
 
   open(e) {
@@ -675,7 +742,9 @@ class DropDownColumn extends SelectColumn {
 
     let value;
 
-    if (entity) value = this.entityValue(entity);
+    if (entity) {
+      value = this.entityValue(entity);
+    }
 
     if (value) {
       this.setValue(ctl, value);
@@ -684,7 +753,8 @@ class DropDownColumn extends SelectColumn {
     if (value || entity) {
       ctl.disabled = shouldDisable(this.editable, editMode);
     } else {
-      ctl.disabled = !(editMode === EditMode.ADD && this.editable !== Editable.NEVER);
+      ctl.disabled = !(editMode === EditMode.ADD && this.editable
+          !== Editable.NEVER);
     }
 
     ctl.required = this.required;
@@ -695,10 +765,12 @@ class DropDownColumn extends SelectColumn {
   }
 
   addOptions(select, dropDown) {
-  	if (!this.required) addOption(select, undefined, '(n/a)');
+    if (!this.required) {
+      addOption(select, undefined, '(nicht benötigt)');
+    }
 
     dropDown.options.forEach(option => {
-    	addOption(select, option.value, option.display);
+      addOption(select, option.value, option.display);
     });
   }
 
@@ -718,11 +790,11 @@ class DropDownColumn extends SelectColumn {
   }
 
   setValue(ctl, value) {
-    ctl.value = value;	  
+    ctl.value = value;
     for (let i = 0; i < ctl.options.length; i++) {
       let opt = ctl.options[i];
       if (opt.value === value) {
-    	  opt.selected = true;
+        opt.selected = true;
         return;
       }
     }
@@ -814,14 +886,14 @@ async function checkResponse(response) {
 
     if (response.status === 400) {
       let json = await response.json();
-      
+
       if (json) {
-    	errorMessage = json.userMessage;  
+        errorMessage = json.userMessage;
       }
     }
 
     let error = new Error(errorMessage);
-    
+
     console.log(error);
 
     throw error;
@@ -837,26 +909,8 @@ const addModal = () => {
     modal.className = 'modal';
 
     let content = document.createElement('div');
+    content.id = 'modal-content';
     content.className = 'modal-content';
-
-    let head = document.createElement('div');
-    head.className = 'modal-header';
-
-    let heading = document.createElement('h2');
-    heading.id = 'modal-title';
-    head.appendChild(heading);
-    content.appendChild(head);
-
-    let body = document.createElement('div');
-    body.id = 'modal-body';
-    body.className = 'modal-body';
-    
-    content.appendChild(body);
-
-    let foot = document.createElement('div');
-    foot.className = 'modal-footer';
-
-    content.appendChild(foot);
     modal.appendChild(content);
 
     let docBody = document.getElementsByTagName('BODY')[0];
@@ -868,30 +922,52 @@ const addModal = () => {
       }
     }, false);
   }
-  
+
   return modal;
 };
 
-const showModal = (title, content) => {
-	let modal = addModal();
-	let head = document.getElementById('modal-title');
-	removeChildren(head);
-	addText(head, title);
-	
-	let body = document.getElementById('modal-body');
-	removeChildren(body);
-	body.appendChild(content);
-    modal.style.display = 'block';
+const showModal = (content) => {
+  let modal = addModal();
+
+  let contents = document.getElementById('modal-content');
+  removeChildren(contents);
+
+  contents.appendChild(content);
+  modal.style.display = 'block';
 };
 
 const about = () => {
   fetch(siteRoot() + 'LICENSE')
-    .then(response => {
-    	let area = document.createElement('textarea');
-    	area.text = response.text();
-    	showModal('About ModellBahn', area);
-    })
-	.catch(error => reportError(error));
+  .then(response => response.text())
+  .then(text => {
+    let about = document.createElement('div');
+    about.className = 'about';
+
+    let heading = document.createElement('div');
+    heading.className = 'about-header';
+    about.appendChild(heading);
+
+    let title = document.createElement('h2');
+    addText(title, 'Über die ModellBahn');
+    heading.appendChild(title);
+
+    let body = document.createElement('div');
+    body.className = 'about-body';
+    about.appendChild(body);
+
+    let area = document.createElement('textarea');
+    area.value = text;
+    area.readOnly = true;
+    area.disabled = true;
+    body.appendChild(area);
+
+    let footer = document.createElement('div');
+    footer.className = 'about-footer';
+    about.appendChild(footer);
+
+    showModal(about);
+  })
+  .catch(error => reportError(error));
 };
 
 const setActiveTab = (event, tabName) => {
@@ -905,7 +981,8 @@ const setActiveTab = (event, tabName) => {
 
   let linkName = tabName.replace('Tab', 'Link');
   for (let i = 0; i < tabLinks.length; i++) {
-    tabLinks[i].className = (tabLinks[i].id === linkName) ? 'tabLinks active' : 'tabLinks';
+    tabLinks[i].className = (tabLinks[i].id === linkName) ? 'tabLinks active'
+        : 'tabLinks';
   }
 };
 
@@ -995,6 +1072,7 @@ const addBody = (tableName, table, pageSize, columns, paged, rowCount,
         if (isForm) {
           td.className = 'flex-item';
 
+          // TODO: change to label
           let th = column.getHeading();
           th.className = 'flex-label';
           th.style.width = maxLabel + 'ch';
@@ -1067,9 +1145,10 @@ const addFooter = (tableName, table, columns, paged, rowCount) => {
 };
 
 async function removeFile(deleteUrl) {
-  await fetch(deleteUrl, {method: 'DELETE', headers: {'Content-type': 'application/json'}})
-    .then(response => checkResponse(response))
-    .catch(error => reportError(error));
+  await fetch(deleteUrl,
+      {method: 'DELETE', headers: {'Content-type': 'application/json'}})
+  .then(response => checkResponse(response))
+  .catch(error => reportError(error));
 }
 
 async function uploadFile(e, uploadUrl, fileData, ctl, img) {
@@ -1077,18 +1156,20 @@ async function uploadFile(e, uploadUrl, fileData, ctl, img) {
 
   body.append('file', fileData);
 
-  await fetch(uploadUrl, {method: 'PUT', body: body })
-	    .then(response => checkResponse(response))
-	    .then(jsonData => setCtlValue(jsonData, ctl, img))
-	    .catch(error => reportError(error));
+  await fetch(uploadUrl, {method: 'PUT', body: body})
+  .then(response => checkResponse(response))
+  .then(jsonData => setCtlValue(jsonData, ctl, img))
+  .catch(error => reportError(error));
 }
 
 function readFile(uploadUrl, fileData, ctl, img) {
   const reader = new FileReader();
-  reader.onload = (e) => { uploadFile(e, uploadUrl, fileData, ctl, img) };
+  reader.onload = (e) => {
+    uploadFile(e, uploadUrl, fileData, ctl, img)
+  };
   reader.onerror = (e) => {
-   	reader.abort();
-    reportError("Problem reading file " + fileData + ": " + e);
-    };
+    reader.abort();
+    reportError('Problem beim Lesen der Datei ' + fileData + ': ' + e);
+  };
   reader.readAsDataURL(fileData);
 }

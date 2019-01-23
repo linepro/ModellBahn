@@ -8,7 +8,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import java.util.stream.Collectors;
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceException;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Link.Builder;
 import javax.ws.rs.core.MultivaluedMap;
@@ -452,15 +459,20 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
     }
 
     protected Response getResponse(Exception e) {
-        if (e instanceof PersistenceException) {
-            StringBuilder message = new StringBuilder(e.getMessage());
-
-            if (e.getCause() != null) {
-                message.append(": ");
-                message.append(e.getCause().getMessage());
-            }
-
+        if (e instanceof PersistenceException && e.getCause() instanceof ConstraintViolationException) {
+          String message = ((ConstraintViolationException) e.getCause()).getConstraintViolations()
+              .stream()
+              .map(ConstraintViolation::getMessage)
+              .collect(Collectors.joining( ", " ));
             return getResponse(badRequest(message.toString(), e.toString()));
+        } else  if (e instanceof EntityExistsException) {
+            return getResponse(badRequest(e.getMessage(), e.toString()));
+        } else if (e instanceof EntityNotFoundException) {
+            return getResponse(badRequest(e.getMessage(), e.toString()));
+        } else if (e instanceof NonUniqueResultException) {
+            return getResponse(badRequest(e.getMessage(), e.toString()));
+        } else if (e instanceof NoResultException) {
+            return getResponse(badRequest(e.getMessage(), e.toString()));
         }
         
         return getResponse(serverError(e));

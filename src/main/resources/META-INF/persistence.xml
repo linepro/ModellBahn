@@ -1,68 +1,90 @@
 <persistence
-xmlns="http://xmlns.jcp.org/xml/ns/persistence"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
-	version="2.1">
-	
-	<!--
-	Perisistence definitions for ModellBahn project 
-	$Author$
-	$Id$
-	-->
-	<persistence-unit name="ModellBahn" transaction-type="RESOURCE_LOCAL">
-        <description>ModellBahn</description>
-        <!--
-        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        -->
-		
-        <class>com.linepro.modellbahn.model.impl.Achsfolg</class>
-        <class>com.linepro.modellbahn.model.impl.Antrieb</class>
-        <class>com.linepro.modellbahn.model.impl.Artikel</class>
-        <class>com.linepro.modellbahn.model.impl.Aufbau</class>
-        <class>com.linepro.modellbahn.model.impl.Bahnverwaltung</class>
-        <class>com.linepro.modellbahn.model.impl.Decoder</class>
-        <class>com.linepro.modellbahn.model.impl.DecoderAdress</class>
-        <class>com.linepro.modellbahn.model.impl.DecoderCV</class>
-        <class>com.linepro.modellbahn.model.impl.DecoderFunktion</class>
-        <class>com.linepro.modellbahn.model.impl.DecoderTyp</class>
-        <class>com.linepro.modellbahn.model.impl.DecoderTypAdress</class>
-        <class>com.linepro.modellbahn.model.impl.DecoderTypCV</class>
-        <class>com.linepro.modellbahn.model.impl.DecoderTypFunktion</class>
-        <class>com.linepro.modellbahn.model.impl.Epoch</class>
-        <class>com.linepro.modellbahn.model.impl.Gattung</class>
-        <class>com.linepro.modellbahn.model.impl.Hersteller</class>
-        <class>com.linepro.modellbahn.model.impl.Kategorie</class>
-        <class>com.linepro.modellbahn.model.impl.Kupplung</class>
-        <class>com.linepro.modellbahn.model.impl.Land</class>
-        <class>com.linepro.modellbahn.model.impl.Licht</class>
-        <class>com.linepro.modellbahn.model.impl.Massstab</class>
-        <class>com.linepro.modellbahn.model.impl.MotorTyp</class>
-        <class>com.linepro.modellbahn.model.impl.Produkt</class>
-        <class>com.linepro.modellbahn.model.impl.ProduktTeil</class>
-        <class>com.linepro.modellbahn.model.impl.Protokoll</class>
-        <class>com.linepro.modellbahn.model.impl.SonderModell</class>
-        <class>com.linepro.modellbahn.model.impl.Spurweite</class>
-        <class>com.linepro.modellbahn.model.impl.Steuerung</class>
-        <class>com.linepro.modellbahn.model.impl.UnterKategorie</class>
-        <class>com.linepro.modellbahn.model.impl.Vorbild</class>
-        <class>com.linepro.modellbahn.model.impl.Wahrung</class>
-        <class>com.linepro.modellbahn.model.impl.Zug</class>
-        <class>com.linepro.modellbahn.model.impl.ZugConsist</class>
-        <class>com.linepro.modellbahn.model.impl.ZugTyp</class>
-		
-		<properties>
-			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:h2:./modellbahn;TRACE_LEVEL_FILE=4;TRACE_LEVEL_SYSTEM_OUT=3;AUTO_SERVER=TRUE" />
-			<property name="javax.persistence.jdbc.user" value="sa" />
-			<property name="javax.persistence.jdbc.password" value="sa" />
-			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
-			<!--
-			<property name="hibernate.hbm2ddl.auto" value="update" />
-			-->
-            <property name="hibernate.generate_statistics" value="true"/> 
-            <property name="hibernate.hbm2ddl.auto" value="update" />
-			<property name="hibernate.show_sql" value="false" />
-			<property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />
-		</properties>
-	</persistence-unit>
+  xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+  version="2.1">
+
+  <!--
+  Perisistence definitions for ModellBahn project
+  $Author$
+  $Id$
+  -->
+  <persistence-unit name="ModellBahn" transaction-type="RESOURCE_LOCAL">
+    <description>ModellBahn</description>
+    <!-- <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
+
+    <class>com.linepro.modellbahn.model.impl.Achsfolg</class>
+    <class>com.linepro.modellbahn.model.impl.Antrieb</class>
+    <class>com.linepro.modellbahn.model.impl.Artikel</class>
+    <class>com.linepro.modellbahn.model.impl.Aufbau</class>
+    <class>com.linepro.modellbahn.model.impl.Bahnverwaltung</class>
+    <class>com.linepro.modellbahn.model.impl.Decoder</class>
+    <class>com.linepro.modellbahn.model.impl.DecoderAdress</class>
+    <class>com.linepro.modellbahn.model.impl.DecoderCV</class>
+    <class>com.linepro.modellbahn.model.impl.DecoderFunktion</class>
+    <class>com.linepro.modellbahn.model.impl.DecoderTyp</class>
+    <class>com.linepro.modellbahn.model.impl.DecoderTypAdress</class>
+    <class>com.linepro.modellbahn.model.impl.DecoderTypCV</class>
+    <class>com.linepro.modellbahn.model.impl.DecoderTypFunktion</class>
+    <class>com.linepro.modellbahn.model.impl.Epoch</class>
+    <class>com.linepro.modellbahn.model.impl.Gattung</class>
+    <class>com.linepro.modellbahn.model.impl.Hersteller</class>
+    <class>com.linepro.modellbahn.model.impl.Kategorie</class>
+    <class>com.linepro.modellbahn.model.impl.Kupplung</class>
+    <class>com.linepro.modellbahn.model.impl.Land</class>
+    <class>com.linepro.modellbahn.model.impl.Licht</class>
+    <class>com.linepro.modellbahn.model.impl.Massstab</class>
+    <class>com.linepro.modellbahn.model.impl.MotorTyp</class>
+    <class>com.linepro.modellbahn.model.impl.Produkt</class>
+    <class>com.linepro.modellbahn.model.impl.ProduktTeil</class>
+    <class>com.linepro.modellbahn.model.impl.Protokoll</class>
+    <class>com.linepro.modellbahn.model.impl.SonderModell</class>
+    <class>com.linepro.modellbahn.model.impl.Spurweite</class>
+    <class>com.linepro.modellbahn.model.impl.Steuerung</class>
+    <class>com.linepro.modellbahn.model.impl.UnterKategorie</class>
+    <class>com.linepro.modellbahn.model.impl.Vorbild</class>
+    <class>com.linepro.modellbahn.model.impl.Wahrung</class>
+    <class>com.linepro.modellbahn.model.impl.Zug</class>
+    <class>com.linepro.modellbahn.model.impl.ZugConsist</class>
+    <class>com.linepro.modellbahn.model.impl.ZugTyp</class>
+
+    <!--
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+
+    <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+    <validation-mode>AUTO</validation-mode>
+    -->
+
+    <properties>
+      <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:h2:./modellbahn;TRACE_LEVEL_FILE=4;TRACE_LEVEL_SYSTEM_OUT=3;AUTO_SERVER=TRUE"/>
+      <property name="javax.persistence.jdbc.user" value="sa"/>
+      <property name="javax.persistence.jdbc.password" value="sa"/>
+
+      <!--
+      <property name="javax.persistence.lock.timeout" value="100"/>
+      <property name="javax.persistence.query.timeout" value="100"/>
+      -->
+
+      <!--
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
+      <property name="javax.persistence.schema-generation.create-script-source" value="create-db.sql" />
+      <property name="javax.persistence.schema-generation.drop-script-source" value="drop-db.sql" />
+      <property name="javax.persistence.sql-load-script-source" value="data.sql" />
+      -->
+
+      <!--
+      <property name="javax.persistence.schema-generation.scripts.action" value="drop-and-create"/>
+      <property name="javax.persistence.schema-generation.scripts.create-target" value="./create.sql"/>
+      <property name="javax.persistence.schema-generation.scripts.drop-target" value="./drop.sql"/>
+      -->
+
+      <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+      <property name="hibernate.generate_statistics" value="true"/>
+      <!-- <property name="hibernate.hbm2ddl.auto" value="update" /> -->
+      <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+      <property name="hibernate.show_sql" value="false"/>
+      <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/>
+    </properties>
+  </persistence-unit>
 </persistence>

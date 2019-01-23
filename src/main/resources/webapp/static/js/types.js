@@ -109,10 +109,10 @@ const PROTOKOLL = new DropDownColumn('Protokoll', 'protokoll', (entity) => { ret
 const REICHWEITE = new NumberColumn('Reichweite', 'reichweite', (entity) => { return entity.reichweite; }, (entity, value) => { entity.reichweite = value; }, Editable.UPDATE, false, 3000, 0);
 const REIHE = new NumberColumn('Reihe', 'reihe', (entity) => { return entity.reihe; }, (entity, value) => { entity.reihe = value; }, Editable.ADD, true, 1, 0);
 const ROSTFLACHE = new NumberColumn('Rostfläche', 'rostflache', (entity) => { return entity.rostflache; }, (entity, value) => { entity.rostflache = value; }, Editable.UPDATE, false, 3000, 0, 2);
-const SITZPLATZEKL1 = new NumberColumn('SitzplatzeKL1', 'sitzplatzeKL1', (entity) => { return entity.sitzplatzeKL1; }, (entity, value) => { entity.sitzplatzeKL1 = value; }, Editable.UPDATE, false, 300, 0);
-const SITZPLATZEKL2 = new NumberColumn('SitzplatzeKL2', 'sitzplatzeKL2', (entity) => { return entity.sitzplatzeKL2; }, (entity, value) => { entity.sitzplatzeKL2 = value; }, Editable.UPDATE, false, 300, 0);
-const SITZPLATZEKL3 = new NumberColumn('SitzplatzeKL3', 'sitzplatzeKL3', (entity) => { return entity.sitzplatzeKL3; }, (entity, value) => { entity.sitzplatzeKL3 = value; }, Editable.UPDATE, false, 300, 0);
-const SITZPLATZEKL4 = new NumberColumn('SitzplatzeKL4', 'sitzplatzeKL4', (entity) => { return entity.sitzplatzeKL4; }, (entity, value) => { entity.sitzplatzeKL4 = value; }, Editable.UPDATE, false, 300, 0);
+const SITZPLATZEKL1 = new NumberColumn('Sitzplatze KL1', 'sitzplatzeKL1', (entity) => { return entity.sitzplatzeKL1; }, (entity, value) => { entity.sitzplatzeKL1 = value; }, Editable.UPDATE, false, 300, 0);
+const SITZPLATZEKL2 = new NumberColumn('Sitzplatze KL2', 'sitzplatzeKL2', (entity) => { return entity.sitzplatzeKL2; }, (entity, value) => { entity.sitzplatzeKL2 = value; }, Editable.UPDATE, false, 300, 0);
+const SITZPLATZEKL3 = new NumberColumn('Sitzplatze KL3', 'sitzplatzeKL3', (entity) => { return entity.sitzplatzeKL3; }, (entity, value) => { entity.sitzplatzeKL3 = value; }, Editable.UPDATE, false, 300, 0);
+const SITZPLATZEKL4 = new NumberColumn('Sitzplatze KL4', 'sitzplatzeKL4', (entity) => { return entity.sitzplatzeKL4; }, (entity, value) => { entity.sitzplatzeKL4 = value; }, Editable.UPDATE, false, 300, 0);
 const SONDERMODELL = new DropDownColumn('Sonder Modell', 'sonderModell', (entity) => { return entity.sonderModell ? entity.sonderModell.name : undefined; }, (entity, value) => { entity.sonderModell = value; }, SONDERMODELL_DROP, Editable.UPDATE, false);
 const SPAN = new NumberColumn('Span', 'span', (entity) => { return entity.span; }, (entity, value) => { entity.span = value; }, Editable.UPDATE, true, 16, 1);
 const SPURWEITE = new DropDownColumn('Spurweite', 'spurweite', (entity) => { return entity.spurweite ? entity.spurweite.name : undefined; }, (entity, value) => { entity.spurweite = value; }, SPURWEITE_DROP, Editable.UPDATE, false);
@@ -120,6 +120,7 @@ const STATUS = new DropDownColumn('Status', 'status', (entity) => { return entit
 const STECKER = new DropDownColumn('Stecker', 'stecker', (entity) => { return entity.stecker; }, (entity, value) => { entity.stecker = value; }, STECKER_DROP, Editable.UPDATE, false);
 const STEUERUNG = new DropDownColumn('Steuerung', 'steuerung', (entity) => { return entity.steuerung ? entity.steuerung.name : undefined; }, (entity, value) => { entity.steuerung = value; }, STEUERUNG_DROP, Editable.UPDATE, false);
 const STUCK = new NumberColumn('Stück', 'stuck', (entity) => { return entity.stuck; }, (entity, value) => { entity.stuck = value; }, Editable.UPDATE, false, 300, 0);
+const TEIL = new DropDownColumn('Teil', 'teil', (entity) => { return entity.teil ? extractProduktValue(entity.teil) : undefined; }, (entity, value) => { let parts = value.split('/'); entity.teil.hersteller = parts[0]; entity.teil.bestellNr = parts[1]; }, PRODUKT_DROP, Editable.UPDATE, false);
 const TELEFON = new PhoneColumn('Telefon', 'telefon', (entity) => { return entity.telefon; }, (entity, value) => { entity.telefon = value; }, Editable.UPDATE, false);
 const TRIEBKOPF = new NumberColumn('Triebköpfe', 'triebkopf', (entity) => { return entity.triebkopf; }, (entity, value) => { entity.triebkopf = value; }, Editable.UPDATE, false, 2, 0);
 const UBERHITZERFLACHE = new NumberColumn('Überhitzerfläche', 'uberhitzerflache', (entity) => { return entity.uberhitzerflache; }, (entity, value) => { entity.uberhitzerflache = value; }, Editable.UPDATE, false, 3000, 0, 2);

@@ -8,7 +8,8 @@ const Paged = {
 };
 
 class ItemGrid {
-  constructor(pageSize, apiUrl, tableName, columns, paged, editMode, children, editForm) {
+  constructor(pageSize, apiUrl, tableName, columns, paged, editMode, children,
+      editForm) {
     this.pageSize = pageSize ? pageSize : 10;
     this.rowCount = pageSize;
     this.rowsFilled = 0;
@@ -41,20 +42,24 @@ class ItemGrid {
 
       let searchString = search.toString();
 
-      this.current = this.current + (searchString.length ? '?' + searchString : '');
+      this.current = this.current + (searchString.length ? '?' + searchString
+          : '');
     }
 
     this.initialized = false;
 
     let grid = this;
-    if (this.children) this.children.forEach(child => {
-      child.setParent(grid);
-    });
+    if (this.children) {
+      this.children.forEach(child => {
+        child.setParent(grid);
+      });
+    }
   }
 
   setParent(parent) {
     this.parent = parent;
-    this.apiUrl = ((parent && parent.apiUrl) ? parent.apiUrl + '/' : '') + this.apiUrl;
+    this.apiUrl = ((parent && parent.apiUrl) ? parent.apiUrl + '/' : '')
+        + this.apiUrl;
   }
 
   async init() {
@@ -72,7 +77,7 @@ class ItemGrid {
     let tableName = grid.tableName;
 
     let totalWidth = 0;
-    let maxLabel   = 0;
+    let maxLabel = 0;
 
     columns.forEach(column => {
       column.setTableName(tableName);
@@ -80,8 +85,10 @@ class ItemGrid {
     });
 
     columns.forEach(column => {
-      column.setWidth(Math.floor((column.getLength() * 100) / totalWidth) + '%');
-      maxLabel = Math.max(column.heading ? column.heading.length : maxLabel,  maxLabel);
+      column.setWidth(
+          Math.floor((column.getLength() * 100) / totalWidth) + '%');
+      maxLabel = Math.max(column.heading ? column.heading.length : maxLabel,
+          maxLabel);
     });
 
     let table = document.getElementById(grid.tableName);
@@ -121,10 +128,12 @@ class ItemGrid {
     let grid = this;
     let columns = grid.columns;
     let editMode = grid.editMode;
-    let entities = (grid.parent ? jsonData[grid.tableName] : jsonData.entities ? jsonData.entities : [jsonData]);
+    let entities = (grid.parent ? jsonData[grid.tableName] : jsonData.entities
+        ? jsonData.entities : [jsonData]);
     let tableName = grid.tableName;
 
-    let rowCount = grid.paged === Paged.PAGED ? grid.pageSize : Math.max(grid.pageSize, entities.length);
+    let rowCount = grid.paged === Paged.PAGED ? grid.pageSize : Math.max(
+        grid.pageSize, entities.length);
 
     if (!grid.initialized || (rowCount > grid.pageSize)) {
       grid.initGrid(rowCount);
@@ -210,10 +219,11 @@ class ItemGrid {
   async getData(restUrl) {
     let grid = this;
 
-    fetch(restUrl, {method: 'get', headers: {'Content-type': 'application/json'}})
-      .then(response => checkResponse(response))
-      .then(jsonData => grid.renderJson(jsonData, restUrl))
-      .catch(error => reportError(error));
+    fetch(restUrl,
+        {method: 'get', headers: {'Content-type': 'application/json'}})
+    .then(response => checkResponse(response))
+    .then(jsonData => grid.renderJson(jsonData, restUrl))
+    .catch(error => reportError(error));
   }
 
   gridData() {
@@ -238,7 +248,8 @@ class ItemGrid {
     if (key) {
       grid.columns.forEach(column => {
         if (column.setter) {
-          let value = column.getValue(document.getElementById(getFieldId(rowId, column.binding)));
+          let value = column.getValue(
+              document.getElementById(getFieldId(rowId, column.binding)));
           if (value) {
             column.setter(data, value);
           }
@@ -259,7 +270,8 @@ class ItemGrid {
 
   addRow() {
     let grid = this;
-    let rowNum = grid.rowsFilled === grid.rowCount ? grid.rowCount - 1 : grid.rowsFilled; //TODO: add row for non paged if not exists
+    let rowNum = grid.rowsFilled === grid.rowCount ? grid.rowCount - 1
+        : grid.rowsFilled; //TODO: add row for non paged if not exists
     let rowId = getRowId(grid.tableName, rowNum);
 
     let key = document.getElementById(getKeyId(rowId));
@@ -274,9 +286,11 @@ class ItemGrid {
     });
 
     let td = document.getElementById(getCellId(rowId, 'buttons'));
-    let save = getButton(rowId, 'save', grid.tableName + '.saveRow(' + rowId + '.id)');
+    let save = getButton(rowId, 'save',
+        grid.tableName + '.saveRow(' + rowId + '.id)');
     td.appendChild(save);
-    let del = getButton(rowId, 'delete', grid.tableName + '.removeRow(' + rowId + '.id)');
+    let del = getButton(rowId, 'delete',
+        grid.tableName + '.removeRow(' + rowId + '.id)');
     td.appendChild(del);
   }
 
@@ -284,9 +298,10 @@ class ItemGrid {
     let grid = this;
     let deleteUrl = getKeyValue(rowId);
     if (deleteUrl) {
-      await fetch(deleteUrl, {method: 'DELETE', headers: {'Content-type': 'application/json'}})
-        .then(response => checkResponse(response))
-        .catch(error => reportError(error));
+      await fetch(deleteUrl,
+          {method: 'DELETE', headers: {'Content-type': 'application/json'}})
+      .then(response => checkResponse(response))
+      .catch(error => reportError(error));
 
       grid.loadData();
     } else {
@@ -318,10 +333,14 @@ class ItemGrid {
     let data = grid.rowData(rowId);
     let jsonData = JSON.stringify(data);
     if (data) {
-      await fetch(saveUrl, {method: 'POST', headers: {'Content-type': 'application/json'}, body: jsonData})
-        .then(response => checkResponse(response))
-        .then(jsonData => grid.loadData())
-        .catch(error => reportError(error));
+      await fetch(saveUrl, {
+        method: 'POST',
+        headers: {'Content-type': 'application/json'},
+        body: jsonData
+      })
+      .then(response => checkResponse(response))
+      .then(jsonData => grid.loadData())
+      .catch(error => reportError(error));
     }
   }
 
@@ -332,10 +351,14 @@ class ItemGrid {
     let jsonData = JSON.stringify(data);
 
     if (data) {
-      await fetch(updateUrl, {method: 'PUT', headers: {'Content-type': 'application/json'}, body: jsonData})
-        .then(response => checkResponse(response))
-        .then(jsonData => grid.loadData())
-        .catch(error => reportError(error));
+      await fetch(updateUrl, {
+        method: 'PUT',
+        headers: {'Content-type': 'application/json'},
+        body: jsonData
+      })
+      .then(response => checkResponse(response))
+      .then(jsonData => grid.loadData())
+      .catch(error => reportError(error));
     }
   }
 }
@@ -343,8 +366,8 @@ class ItemGrid {
 class ListEditGrid extends ItemGrid {
   constructor(pageSize, dataType, elementName, columns) {
     super(pageSize, fetchUrl(dataType), elementName,
-      columns.concat([gridButtonColumn(elementName)]),
-      Paged.PAGED, EditMode.UPDATE, undefined);
+        columns.concat([gridButtonColumn(elementName)]),
+        Paged.PAGED, EditMode.UPDATE, undefined);
     this.dataType = dataType;
   }
 

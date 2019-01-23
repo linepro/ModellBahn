@@ -19,7 +19,7 @@ class Option {
   }
 
   getTooltip() {
-	return this.tooltip;
+    return this.tooltip;
   }
 
   getImage() {
@@ -72,9 +72,10 @@ class DropDown {
 
   async init() {
     let select = this;
-    await fetch(select.apiQuery, {method: "get", headers: {"Content-type": "application/json"}})
-      .then(response => checkResponse(response))
-      .then(jsonData => select.loadOptions(jsonData))
-      .catch(error => reportError(error));
+    await fetch(select.apiQuery,
+        {method: "get", headers: {"Content-type": "application/json"}})
+    .then(response => checkResponse(response))
+    .then(jsonData => select.loadOptions(jsonData))
+    .catch(error => reportError(error));
   }
 }

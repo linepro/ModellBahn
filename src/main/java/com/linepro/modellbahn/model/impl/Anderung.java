@@ -10,7 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -95,7 +95,7 @@ public class Anderung extends AbstractItem<AnderungKey> implements IAnderung {
 
     @Override
     @BusinessKey
-    @OneToOne(fetch = FetchType.EAGER, targetEntity = Artikel.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Artikel.class)
     @JoinColumn(name = DBNames.ARTIKEL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ANDERUNG + "_fk1"))
     public IArtikel getArtikel() {
         return artikel;
