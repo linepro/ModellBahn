@@ -7,7 +7,10 @@ import java.math.BigDecimal;
 import java.net.URI;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.util.Set;
+import java.util.TreeSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -18,6 +21,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -27,6 +31,7 @@ import javax.validation.constraints.Positive;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 
+import com.linepro.modellbahn.model.IAnderung;
 import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IItem;
@@ -107,6 +112,11 @@ public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.stuck.positive}")
     private Integer stuck;
 
+    /** The stuck. */
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.verbleibende.notnull}")
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.verbleibende.positive}")
+    private Integer verbleibende;
+
     /** The anmerkung. */
     private String anmerkung;
 
@@ -119,6 +129,9 @@ public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
     /** The status. */
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.status.notnull}")
     private Status status;
+
+    /** The anderung. */
+    private Set<IAnderung> anderungen = new TreeSet<>();
 
     /**
      * Instantiates a new artikel.
@@ -149,9 +162,9 @@ public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
      * @param deleted the deleted
      */
     public Artikel(Long id, IProdukt produkt, LocalDate kaufdatum, IWahrung wahrung, BigDecimal preis, Integer stuck,
-            ISteuerung steuerung, IMotorTyp motorTyp, ILicht licht, IKupplung kupplung, IDecoder decoder,
-            String artikelId, String bezeichnung, String anmerkung,
-            String beladung, Status status, Boolean deleted) {
+            Integer verbleibende, ISteuerung steuerung, IMotorTyp motorTyp, ILicht licht, IKupplung kupplung, 
+            IDecoder decoder, String artikelId, String bezeichnung, String anmerkung, String beladung, Status status, 
+            Boolean deleted) {
         super(id, deleted);
 
         setArtikelId(artikelId);
@@ -161,6 +174,7 @@ public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
         setWahrung(wahrung);
         setPreis(preis);
         setStuck(stuck);
+        setVerbleibende(verbleibende);
         setSteuerung(steuerung);
         setMotorTyp(motorTyp);
         setLicht(licht);
@@ -237,6 +251,17 @@ public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
     @Override
     public void setStuck(Integer stuck) {
         this.stuck = stuck;
+    }
+
+    @Override
+    @Column(name = DBNames.VERBLEIBENDE, nullable = false)
+    public Integer getVerbleibende() {
+        return verbleibende;
+    }
+
+    @Override
+    public void setVerbleibende(Integer verbleibende) {
+        this.verbleibende = verbleibende;
     }
 
     @Override
@@ -356,6 +381,47 @@ public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
     }
 
     @Override
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.ARTIKEL, targetEntity=Anderung.class, orphanRemoval = true)
+    public Set<IAnderung> getAnderungen() {
+        return anderungen;
+    }
+
+    @Override
+    @Transient
+    public Set<IAnderung> getSortedAnderungen() {
+        return new TreeSet<>(getAnderungen());
+    }
+
+    @Override
+    public void setAnderungen(Set<IAnderung> anderungen) {
+        this.anderungen = anderungen;
+    }
+   
+    @Override
+    public void addAnderung(IAnderung anderung) {
+        // Add at end semantics
+        anderung.setArtikel(this);
+        anderung.setAnderungsId(getAnderungen().size()+1);
+        anderung.setDeleted(false);
+
+        getAnderungen().add(anderung);
+    }
+
+    @Override
+    public void removeAnderung(IAnderung anderung) {
+        getAnderungen().remove(anderung);
+        
+        // Just renumber the whole lot; don't try and work out from where - it's just as expensive
+        /*
+        int anderungsId = 1;
+
+        for (IAnderung and : getAnderungen()) {
+            and.setAnderungsId(anderungsId++);
+        }
+        */
+    }
+
+    @Override
     @Transient
     public String getLinkId() {
         return getArtikelId();
@@ -371,6 +437,11 @@ public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
     protected void addUpdate(URI root) {
         super.addUpdate(root);
         getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.UPDATE, PUT));
+    }
+
+    @Override
+    protected void addChildLinks(URI root, boolean update, boolean delete) {
+        addLinks(root, getAnderungen(), update, delete);
     }
 
     @Override

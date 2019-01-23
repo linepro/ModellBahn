@@ -166,7 +166,7 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
 
             return getResponse(notFound());
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -181,9 +181,9 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
         @ApiResponse(code = 402, message = "Not Found"),
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
-    public Response add(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, UnterKategorie unterKategorie) {
+    public Response add(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, UnterKategorie newUnterKategorie) {
         try {
-            logPost(kategorieStr + "/" + unterKategorie);
+            logPost(getEntityClassName() + ": " + kategorieStr + ": " + newUnterKategorie);
 
             IKategorie kategorie = findKategorie(kategorieStr, true);
 
@@ -191,15 +191,15 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
                 return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
             }
 
-            unterKategorie.setDeleted(false);
+            newUnterKategorie.setDeleted(false);
 
-            kategorie.addUnterKategorie(unterKategorie);
+            kategorie.addUnterKategorie(newUnterKategorie);
 
             getPersister().update(kategorie);
 
-            return getResponse(created(), unterKategorie, true, true);
+            return getResponse(created(), newUnterKategorie, true, true);
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -215,7 +215,7 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
     public Response update(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr, UnterKategorie newUnterKategorie) {
         try {
-            logPut(kategorieStr + "/" + unterKategorieStr + ": " + newUnterKategorie);
+            logPut(getEntityClassName() + ": " + kategorieStr + ApiPaths.SEPARATOR + unterKategorieStr + ": " + newUnterKategorie);
 
             IKategorie kategorie = findKategorie(kategorieStr, false);
 
@@ -234,11 +234,11 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
                 return getResponse(badRequest(null, "You cannot change the kategorie for an unterkategorie, create a new one"));
             }
 
-            unterKategorie = getUnterKategoriePersister().update(newUnterKategorie);
+            unterKategorie = getUnterKategoriePersister().merge(unterKategorie.getId(), newUnterKategorie);
 
             return getResponse(accepted(), unterKategorie, true, true);
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -263,18 +263,16 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
             IUnterKategorie unterKategorie = findUnterKategorie(kategorie, unterKategorieStr, true);
 
             if (unterKategorie == null) {
-                return getResponse(badRequest(null, "UnterKategorie " + kategorieStr + "/" + unterKategorieStr + " does not exist"));
+                return getResponse(badRequest(null, "UnterKategorie " + kategorieStr + ApiPaths.SEPARATOR + unterKategorieStr + " does not exist"));
             }
 
             kategorie.removeUnterKategorie(unterKategorie);
-
-            //getUnterKategoriePersister().delete(unterKategorie);
 
             getPersister().update(kategorie);
 
             return getResponse(noContent());
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -322,7 +320,7 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
 
             return getResponse(ok(), new ArrayList<>(entities), true, true, navigation);
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 

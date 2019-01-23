@@ -16,14 +16,14 @@
 <script type="text/javascript">
   const consistColumns = [
     POSITION,
-    UNTER_KATEGORIE,
-    GATTUNG,
-    BEZEICHNUNG,
-    LANGE,
+    ARTIKEL,
+    new DropDownColumn('Kategorie', 'unterKategorie', (entity) => { return entity.artikel.produkt.unterKategorie ? extractKategorieValue(entity.artikel.produkt.unterKategorie) : undefined; }, undefined, UNTER_KATEGORIE_DROP, Editable.NEVER, true),
+    new TextColumn('Bezeichnung', 'bezeichnung', (entity) => { return entity.artikel.bezeichnung; }, undefined, Editable.NEVER, false, 50),
+    new NumberColumn('Länge', 'lange', (entity) => { return entity.artikel.produkt.lange; }, undefined, Editable.NEVER, false, 50, 1, 2),
     gridButtonColumn("consisten")
   ];
 
-  const consisten = new ItemGrid(2, undefined, "consisten", consistColumns, Paged.EXPAND,
+  const consisten = new ItemGrid(2, "consisten", "consisten", consistColumns, Paged.EXPAND,
       EditMode.ADD, undefined);
 
   const columns = [
@@ -63,7 +63,7 @@
       <div id="data">
         <div id="zug">
         </div>
-       <div id="consisten">
+        <div id="consisten">
         </div>
       </div>
     </article>

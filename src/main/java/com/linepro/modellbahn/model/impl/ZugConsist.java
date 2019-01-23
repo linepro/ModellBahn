@@ -36,9 +36,13 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name = DBNames.ZUG_CONSIST)
-@Table(name = DBNames.ZUG_CONSIST, indexes = { @Index(columnList = DBNames.ZUG_ID),
-        @Index(columnList = DBNames.ARTIKEL_ID, unique = true) }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { DBNames.ZUG_ID, DBNames.POSITION }) })
+@Table(name = DBNames.ZUG_CONSIST,
+        indexes = {
+                @Index(columnList = DBNames.ZUG_ID),
+                @Index(columnList = DBNames.ARTIKEL_ID)
+        }, uniqueConstraints = {
+                @UniqueConstraint(columnNames = { DBNames.ZUG_ID, DBNames.POSITION })
+        })
 public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsist {
 
     /** The Constant serialVersionUID. */

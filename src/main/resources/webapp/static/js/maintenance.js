@@ -21,7 +21,7 @@ class ItemGrid {
     this.editForm = editForm;
     this.current = this.apiUrl;
 
-    if (this.apiUrl) {
+    if (this.apiUrl && !this.parent) {
       let search = new URLSearchParams(location.search);
 
       if (search.has('new')) {
@@ -54,7 +54,7 @@ class ItemGrid {
 
   setParent(parent) {
     this.parent = parent;
-    this.apiUrl = parent.apiUrl;
+    this.apiUrl = ((parent && parent.apiUrl) ? parent.apiUrl + '/' : '') + this.apiUrl;
   }
 
   async init() {
@@ -157,16 +157,8 @@ class ItemGrid {
         if (entity || column.isButtons()) {
           ctl = column.getControl(cell, entity, editMode);
         } else {
-          cell.style.width = column.getLength() + 'em';
-          cell.style.maxWidth = column.getLength() + 'em';
-          ctl = document.createElement('input');
-          ctl.type = 'text';
-          ctl.disabled = 'true';
-          ctl.readOnly = 'true';
-          ctl.required = false;
+          ctl = blankControl(cell, column);
         }
-
-        cell.appendChild(ctl);
       });
     }
 
@@ -278,8 +270,7 @@ class ItemGrid {
 
       removeChildren(td);
 
-      let ctl = column.getControl(td, undefined, EditMode.ADD);
-      td.appendChild(ctl);
+      column.getControl(td, undefined, EditMode.ADD);
     });
 
     let td = document.getElementById(getCellId(rowId, 'buttons'));
@@ -294,11 +285,7 @@ class ItemGrid {
     let deleteUrl = getKeyValue(rowId);
     if (deleteUrl) {
       await fetch(deleteUrl, {method: 'DELETE', headers: {'Content-type': 'application/json'}})
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(response.statusText);
-          }
-        })
+        .then(response => checkResponse(response))
         .catch(error => reportError(error));
 
       grid.loadData();

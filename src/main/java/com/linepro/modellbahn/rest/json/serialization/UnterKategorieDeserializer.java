@@ -12,6 +12,7 @@ import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.keys.UnterKategorieKey;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
+import com.linepro.modellbahn.rest.util.ApiPaths;
 
 public class UnterKategorieDeserializer extends StdDeserializer<IUnterKategorie> {
 
@@ -37,7 +38,7 @@ public class UnterKategorieDeserializer extends StdDeserializer<IUnterKategorie>
         TextNode node = codec.readTree(jp);
         String name = node.textValue();
         try {
-            String[] parts = name.split("/");
+            String[] parts = name.split(ApiPaths.SEPARATOR);
             
             IKategorie kategorie = kategoriePerisister.findByKey(parts[0], false);
 

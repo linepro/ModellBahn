@@ -14,6 +14,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.linepro.modellbahn.rest.util.ApiPaths;
+
 public class FileStoreTest {
 
     private static final String MODELL_BAHN = "https://localhost/ModellBahn:8086";
@@ -89,6 +91,6 @@ public class FileStoreTest {
 
     @Test
     public void testUrlForPath() throws Exception {
-        assertEquals(fileStore.urlForPath(fileStore.getFilePath(ENTITY_TYPE, IDS, FILE_NAME, FILE_TYPE)), new URI(MODELL_BAHN + "/" + TEST_FILE).toString());
+        assertEquals(fileStore.urlForPath(fileStore.getFilePath(ENTITY_TYPE, IDS, FILE_NAME, FILE_TYPE)), new URI(MODELL_BAHN + ApiPaths.SEPARATOR + TEST_FILE).toString());
     }
 }

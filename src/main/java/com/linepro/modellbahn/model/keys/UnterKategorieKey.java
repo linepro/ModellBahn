@@ -25,7 +25,7 @@ public class UnterKategorieKey extends BaseKey {
     private String getUnterKategorie() {
         return unterKategorie;
     }
-    
+
     @Override
     public void addCriteria(Query query) {
         query.setParameter(DBNames.KATEGORIE, getKategorie());

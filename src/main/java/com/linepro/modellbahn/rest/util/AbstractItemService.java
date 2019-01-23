@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.PersistenceException;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Link.Builder;
 import javax.ws.rs.core.MultivaluedMap;
@@ -18,9 +19,12 @@ import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.linepro.modellbahn.model.IAchsfolg;
+import com.linepro.modellbahn.model.IAnderung;
 import com.linepro.modellbahn.model.IAntrieb;
 import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IAufbau;
@@ -51,6 +55,7 @@ import com.linepro.modellbahn.model.IZug;
 import com.linepro.modellbahn.model.IZugConsist;
 import com.linepro.modellbahn.model.IZugTyp;
 import com.linepro.modellbahn.model.impl.Achsfolg;
+import com.linepro.modellbahn.model.impl.Anderung;
 import com.linepro.modellbahn.model.impl.Antrieb;
 import com.linepro.modellbahn.model.impl.Artikel;
 import com.linepro.modellbahn.model.impl.Aufbau;
@@ -80,6 +85,7 @@ import com.linepro.modellbahn.model.impl.Wahrung;
 import com.linepro.modellbahn.model.impl.Zug;
 import com.linepro.modellbahn.model.impl.ZugConsist;
 import com.linepro.modellbahn.model.impl.ZugTyp;
+import com.linepro.modellbahn.model.keys.AnderungKey;
 import com.linepro.modellbahn.model.keys.ArtikelKey;
 import com.linepro.modellbahn.model.keys.DecoderKey;
 import com.linepro.modellbahn.model.keys.DecoderTypAdressKey;
@@ -121,6 +127,8 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
     /** The persister. */
     private final IPersister<E> persister;
 
+    private final Logger logger;
+
     /** The entity class. */
     private final Class<E> entityClass;
 
@@ -141,10 +149,16 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      * @param entityClass the entity class
      */
     protected AbstractItemService(final Class<E> entityClass) {
+        this.logger = LoggerFactory.getILoggerFactory().getLogger(getClass().getName().replace("AbstractItem", entityClass.getSimpleName()));
         this.entityClass = entityClass;
         this.persister = StaticPersisterFactory.get().createPersister(entityClass);
         this.selectors = new SelectorsBuilder().build(entityClass, JsonGetter.class);
    }
+
+    @Override
+    protected Logger getLogger() {
+        return logger;
+    }
 
     @SuppressWarnings("unchecked")
     @ApiResponses({
@@ -172,7 +186,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      */
     protected Response get(K key) {
         try {
-            logGet(getEntityClassName() + ": " + key);
+            logGet(getEntityClassName() + ": " + getEntityClassName() + ": " + key);
 
             E entity = getPersister().findByKey(key, true);
 
@@ -182,7 +196,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
 
             return getResponse(ok(), entity, true, true);
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -203,7 +217,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
 
             return getResponse(created(), result, true, true);
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -234,7 +248,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      */
     protected Response update(K id, E entity) {
         try {
-            logPut(id + ": " + entity);
+            logPut(getEntityClassName() + ": " + id + ": " + entity);
 
             E result = getPersister().merge(id, entity);
 
@@ -244,7 +258,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
 
             return getResponse(accepted(), result, true, true);
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -278,7 +292,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
 
             return getResponse(noContent());
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -329,7 +343,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
 
             return getResponse(ok(), entities, true, true, navigation);
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -437,6 +451,21 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return getResponse(builder.entity(new ListWithLinks<>(entities, navigation)));
     }
 
+    protected Response getResponse(Exception e) {
+        if (e instanceof PersistenceException) {
+            StringBuilder message = new StringBuilder(e.getMessage());
+
+            if (e.getCause() != null) {
+                message.append(": ");
+                message.append(e.getCause().getMessage());
+            }
+
+            return getResponse(badRequest(message.toString(), e.toString()));
+        }
+        
+        return getResponse(serverError(e));
+    }
+
     /**
      * Gets the response.
      *
@@ -486,6 +515,14 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
 
     protected IAchsfolg findAchsfolg(String name, boolean eager) throws Exception {
         return StaticPersisterFactory.get().createPersister(Achsfolg.class).findByKey(name, eager); 
+    }
+
+    protected IAnderung findAnderung(String artikelId, Integer anderungsId, boolean eager) throws Exception {
+        return findAnderung(findArtikel(artikelId, eager), anderungsId, eager); 
+    }
+
+    protected IAnderung findAnderung(IArtikel artikel, Integer anderungsId, boolean eager) throws Exception {
+        return StaticPersisterFactory.get().createPersister(Anderung.class).findByKey(new AnderungKey(artikel, anderungsId), eager); 
     }
 
     protected IArtikel findArtikel(String name, boolean eager) throws Exception {

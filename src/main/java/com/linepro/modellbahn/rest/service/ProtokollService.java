@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IProtokoll;
 import com.linepro.modellbahn.model.impl.Protokoll;
 import com.linepro.modellbahn.model.keys.NameKey;
-import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -43,10 +42,6 @@ public class ProtokollService extends AbstractItemService<NameKey, IProtokoll> {
 
     public ProtokollService() {
         super(IProtokoll.class);
-
-        getPersister().getSelectors().get(DBNames.ABBILDUNG).setNullable(true);
-        getPersister().getSelectors().get(DBNames.ANLEITUNGEN).setNullable(true);
-        getPersister().getSelectors().get(DBNames.EXPLOSIONSZEICHNUNG).setNullable(true);
     }
 
     @JsonCreator(mode= Mode.DELEGATING)

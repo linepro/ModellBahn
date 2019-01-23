@@ -135,6 +135,13 @@ const addText = (cell, text) => {
   return txt;
 };
 
+const addOption = (select, value, text) => {
+  let opt = document.createElement('option');
+  opt.value = value;
+  opt.text = text;
+  select.add(opt);
+};
+
 const valueAndUnits = (cssSize) => {
   let dims = /^(\d+)([^\d]+)$/.exec(cssSize);
   return {
@@ -149,6 +156,17 @@ const setCtlValue = (jsonData, ctl, img) => {
   }
 };
 
+const blankControl = (cell, column) => {
+  cell.style.width = column.getLength() + 'em';
+  cell.style.maxWidth = column.getLength() + 'em';
+  let ctl = document.createElement('input');
+  ctl.type = 'text';
+  ctl.disabled = 'true';
+  ctl.readOnly = 'true';
+  ctl.required = false;
+	
+  cell.appendChild(ctl);
+};
 
 class Column {
   constructor(heading, binding, getter, setter, editable, required, length) {
@@ -220,6 +238,8 @@ class Column {
 
     ctl.readOnly = ctl.disabled;
     ctl.required = this.required;
+
+    cell.appendChild(ctl);
 
     return ctl;
   }
@@ -382,6 +402,11 @@ class FileColumn extends Column {
       cell.appendChild(btn);
     }
 
+    if (cell.firstChild) {
+      cell.removeChild(ctl);
+      cell.insertBefore(ctl, cell.firstChild);
+    }
+    
     return ctl;
   }
 
@@ -491,14 +516,13 @@ const closeAutoLists = (elmnt) => {
 document.addEventListener('click', (e) => { closeAutoLists(); }, false);
 
 class SelectColumn extends Column {
-  constructor(heading, binding, getter, setter, dropDown, editable, required) {
+  constructor(heading, binding, getter, setter, dropDown, editable, required, dropSize) {
     super(heading, binding, getter, setter, editable, required, dropDown.length);
     this.dropDown = dropDown;
+    this.dropSize = dropSize ? dropSize : 5;
   }
 
   getControl(cell, entity, editMode) {
-    document.addEventListener('click', (e) => { this.leave(e); }, false);
-
     let ctl = super.getControl(cell, entity, editMode);
 
     if (!ctl.disabled) {
@@ -534,14 +558,6 @@ class SelectColumn extends Column {
 
   options(txt) {
     return this.dropDown.options;
-  }
-
-  leave(e) {
-    let ctl = this;
-    let inp = e.target;
-    let div = inp.parentNode;
-
-    closeAutoLists();
   }
 
   open(e) {
@@ -654,8 +670,62 @@ class DropDownColumn extends SelectColumn {
     super(heading, binding, getter, setter, dropDown, editable, required);
   }
 
+  getControl(cell, entity, editMode) {
+    let ctl = this.createControl();
+
+    let value;
+
+    if (entity) value = this.entityValue(entity);
+
+    if (value) {
+      this.setValue(ctl, value);
+    }
+
+    if (value || entity) {
+      ctl.disabled = shouldDisable(this.editable, editMode);
+    } else {
+      ctl.disabled = !(editMode === EditMode.ADD && this.editable !== Editable.NEVER);
+    }
+
+    ctl.required = this.required;
+
+    cell.appendChild(ctl);
+
+    return ctl;
+  }
+
+  addOptions(select, dropDown) {
+  	if (!this.required) addOption(select, undefined, '(n/a)');
+
+    dropDown.options.forEach(option => {
+    	addOption(select, option.value, option.display);
+    });
+  }
+
+  createControl() {
+    let ctl = document.createElement('select');
+    ctl.size = 1;
+    this.addOptions(ctl, this.dropDown);
+    return ctl;
+  }
+
+  getControlValue(select) {
+    return select.options[select.selectedIndex].value;
+  }
+
   getLength() {
     return Math.max(this.dropDown.length + 3.5, this.getHeaderLength());
+  }
+
+  setValue(ctl, value) {
+    ctl.value = value;	  
+    for (let i = 0; i < ctl.options.length; i++) {
+      let opt = ctl.options[i];
+      if (opt.value === value) {
+    	  opt.selected = true;
+        return;
+      }
+    }
   }
 }
 
@@ -724,6 +794,8 @@ class ButtonColumn {
       addText(ctl, ' ');
     }
 
+    cell.appendChild(ctl);
+
     return ctl;
   }
 
@@ -737,11 +809,23 @@ async function checkResponse(response) {
     return response.json();
   } else if (response.status === 204) {
     return {entities: [], links: []};
+  } else {
+    let errorMessage = response.statusText;
+
+    if (response.status === 400) {
+      let json = await response.json();
+      
+      if (json) {
+    	errorMessage = json.userMessage;  
+      }
+    }
+
+    let error = new Error(errorMessage);
+    
+    console.log(error);
+
+    throw error;
   }
-
-  console.log(response);
-
-  throw new Error(response.statusText);
 }
 
 const addModal = () => {
@@ -984,11 +1068,8 @@ const addFooter = (tableName, table, columns, paged, rowCount) => {
 
 async function removeFile(deleteUrl) {
   await fetch(deleteUrl, {method: 'DELETE', headers: {'Content-type': 'application/json'}})
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-  })
+    .then(response => checkResponse(response))
+    .catch(error => reportError(error));
 }
 
 async function uploadFile(e, uploadUrl, fileData, ctl, img) {

@@ -58,7 +58,7 @@ public class DecoderAdress extends AbstractItem<DecoderAdressKey> implements IDe
 
     /** The adress. */
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.index.notnull}")
-    @Range(min=0,max=5, message = "{index.range}")
+    @Range(min=1, max=6, message = "{com.linepro.modellbahn.validator.constraints.index.range}")
     private Integer index;
 
     /** The typ. */

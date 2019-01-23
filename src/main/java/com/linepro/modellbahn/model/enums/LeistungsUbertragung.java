@@ -53,7 +53,7 @@ public enum LeistungsUbertragung implements IDescribedEnum {
     }
 
     @Override
-    @ApiModelProperty(value = "AdressTyp tooltip", example = "0 - 10239.", required = true)
+    @ApiModelProperty(value = "AdressTyp tooltip", example = "0 - 10239.")
     public String getTooltip() {
         return tooltip;
     }

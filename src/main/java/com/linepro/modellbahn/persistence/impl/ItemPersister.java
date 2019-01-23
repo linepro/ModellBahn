@@ -89,7 +89,7 @@ public class ItemPersister<I extends IItem<?>> implements IPersister<I> {
     public ItemPersister(final ISessionManagerFactory sessionManagerFactory, final ILoggerFactory logManager,
             @Assisted final Class<?> mappedClass) {
         this.sessionManagerFactory = sessionManagerFactory;
-        this.logger = logManager.getLogger(mappedClass.getName());
+        this.logger = logManager.getLogger(getClass().getName().replace("Item", mappedClass.getSimpleName()));
         this.entityClass = mappedClass;
         this.idGenerator = new IdGenerator(sessionManagerFactory);
 

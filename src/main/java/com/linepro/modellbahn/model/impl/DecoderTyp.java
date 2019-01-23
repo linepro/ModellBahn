@@ -1,6 +1,5 @@
 package com.linepro.modellbahn.model.impl;
 
-import com.linepro.modellbahn.model.validation.Fahrstufe;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.util.Set;
@@ -35,10 +34,11 @@ import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.IProtokoll;
+import com.linepro.modellbahn.model.enums.Konfiguration;
+import com.linepro.modellbahn.model.enums.Stecker;
 import com.linepro.modellbahn.model.keys.DecoderTypKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
-import com.linepro.modellbahn.model.enums.Stecker;
-import com.linepro.modellbahn.model.enums.Konfiguration;
+import com.linepro.modellbahn.model.validation.Fahrstufe;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -242,12 +242,22 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
     @Override
     public void addAdress(IDecoderTypAdress adress) {
         adress.setDecoderTyp(this);
+        adress.setIndex(getAdressen().size()+1);
+        adress.setDeleted(false);
+
         getAdressen().add(adress);
     }
 
     @Override
     public void removeAdress(IDecoderTypAdress adress) {
         getAdressen().remove(adress);
+        /*
+        int index = 1;
+
+        for (IDecoderTypAdress add : getAdressen()) {
+            add.setIndex(index++);
+        }
+        */
     }
 
 
@@ -271,6 +281,7 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
     @Override
     public void addCV(IDecoderTypCV cv) {
         cv.setDecoderTyp(this);
+        cv.setDeleted(false);
         CVs.add(cv);
     }
 
@@ -299,6 +310,7 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
     @Override
     public void addFunktion(IDecoderTypFunktion funktion) {
         funktion.setDecoderTyp(this);
+        funktion.setDeleted(false);
         getFunktionen().add(funktion);
     }
 

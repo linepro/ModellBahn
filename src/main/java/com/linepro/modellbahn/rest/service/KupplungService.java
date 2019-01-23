@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -25,7 +26,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IKupplung;
 import com.linepro.modellbahn.model.impl.Kupplung;
 import com.linepro.modellbahn.model.keys.NameKey;
-import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;
@@ -52,8 +52,6 @@ public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
 
     public KupplungService() {
         super(IKupplung.class);
-
-        getPersister().getSelectors().get(DBNames.ABBILDUNG).setNullable(true);
     }
 
     @JsonCreator(mode= Mode.DELEGATING)
@@ -130,16 +128,21 @@ public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
     @ApiOperation(code = 201, value = "Adds or updates the picture for a named Kupplung", response = IKupplung.class)
     public Response updateAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name,
             @FormDataParam("file") InputStream fileInputStream,
-            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
-        logPut(getEntityClassName() + ": " + name + ", abbildung, " + contentDispositionHeader);
+            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,  
+            @FormDataParam("file") FormDataBodyPart body) {
+        logPut(getEntityClassName() + ": " + name + ApiPaths.SEPARATOR + ApiNames.ABBILDUNG + ": " + contentDispositionHeader);
 
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
+            if (!handler.isAcceptable(body, AcceptableMediaTypes.IMAGE_TYPES)) {
+                return getResponse(badRequest(null, "Invalid file '" + contentDispositionHeader.getFileName() + "'"));
+            }
+
             IKupplung kupplung = findKupplung(name, false);
 
             if (kupplung != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { name }, contentDispositionHeader, fileInputStream, AcceptableMediaTypes.IMAGES);
+                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { name }, contentDispositionHeader, fileInputStream);
 
                 kupplung.setAbbildung(file);
 
@@ -148,7 +151,7 @@ public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
                 return getResponse(ok(kupplung));
             }
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
 
         return getResponse(notFound());
@@ -175,7 +178,7 @@ public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
                 return getResponse(ok(kupplung));
             }
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
 
         return getResponse(notFound());

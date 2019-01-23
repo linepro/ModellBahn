@@ -4,6 +4,8 @@ public interface DBNames {
 
     /** Entities */
     String ACHSFOLG = "achsfolg";
+    String ANDERUNG = "anderung";
+    String ANDERUNGEN = "anderungen";
     String ANTRIEB = "antrieb";
     String ARTIKEL = "artikel";
     String AUFBAU = "aufbau";
@@ -42,6 +44,9 @@ public interface DBNames {
     /** Fields */
     String ABBILDUNG = "abbildung";
     String ACHSFOLG_ID = "achsfolg_id";
+    String ANDERUNGSDATUM = "anderungsdatum";
+    String ANDERUNGS_TYP = "anderungsTyp";
+    String ANDERUNGS_ID = "anderungsId";
     String ADRESS = "adress";
     String ADRESS_TYP = "adressTyp";
     String ANFAHRZUGKRAFT = "anfahrzugkraft";
@@ -128,6 +133,7 @@ public interface DBNames {
     String UBERHITZERFLACHE = "uberhitzerflache";
     String UNTER_KATEGORIE_ID = "unter_kategorie_id";
     String URL = "url";
+    String VERBLEIBENDE = "verbleibende";
     String VERDAMPFUNG = "verdampfung";
     String VORBILD_ID = "vorbild_id";
     String WAHRUNG_ID = "wahrung_id";

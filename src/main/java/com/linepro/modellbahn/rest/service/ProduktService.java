@@ -32,6 +32,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -188,7 +189,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
         try {
             return super.get(new ProduktKey(findHersteller(herstellerStr, false), bestellNr));
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -237,7 +238,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
         try {
             return super.add(entity);
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -251,7 +252,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
         try {
             return super.update(new ProduktKey(findHersteller(herstellerStr, false), bestellNr), entity);
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -264,7 +265,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
         try {
             return super.delete(new ProduktKey(findHersteller(herstellerStr, false), bestellNr));
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -274,25 +275,23 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a sub produkt  a Produkt by hersteller and bestell nr", response = Produkt.class)
-    public Response addTeil(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathParam(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr, @PathParam(ApiPaths.TEIL_BESTELL_NR_PARAM_NAME) String teilBestellNr) {
+    public Response addTeil(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathParam(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr, @PathParam(ApiPaths.TEIL_BESTELL_NR_PARAM_NAME) String teilBestellNr, Integer anzahl) {
         try {
-            logPost(herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr);
+            logPost(getEntityClassName() + ": " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + ApiPaths.SEPARATOR + ApiNames.TEILEN + ApiPaths.SEPARATOR + teilHerstellerStr + ApiPaths.SEPARATOR + teilBestellNr + ": " + anzahl);
 
-            Produkt produkt = (Produkt) findProdukt(herstellerStr, bestellNr, true);
+            IProdukt produkt = findProdukt(herstellerStr, bestellNr, true);
 
             if (produkt == null) {
-                return getResponse(badRequest(null, "Produkt " + herstellerStr + "/" + bestellNr + " does not exist"));
+                return getResponse(badRequest(null, "Produkt " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + " does not exist"));
             }
 
-            
-            Produkt teil =  (Produkt) findProdukt(teilHerstellerStr, teilBestellNr, true);
+            IProdukt teil = findProdukt(teilHerstellerStr, teilBestellNr, true);
 
             if (teil == null) {
-                return getResponse(badRequest(null, "Produkt " + teilHerstellerStr + "/" + teilBestellNr + " does not exist"));
+                return getResponse(badRequest(null, "Produkt " + teilHerstellerStr + ApiPaths.SEPARATOR + teilBestellNr + " does not exist"));
             }
 
             // TODO: check for cycles
-
             IProduktTeil produktTeil = new ProduktTeil(null, produkt, teil, 1, false);
 
             produkt.addTeil(produktTeil);
@@ -301,7 +300,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
             return getResponse(created(), produktTeil, true, true);
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -311,26 +310,29 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a sub produkt a Produkt by hersteller and bestell nr", response = Produkt.class)
-    public Response updateTeil(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathParam(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr, @PathParam(ApiPaths.TEIL_BESTELL_NR_PARAM_NAME) String teilBestellNr) {
+    public Response updateTeil(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathParam(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr, @PathParam(ApiPaths.TEIL_BESTELL_NR_PARAM_NAME) String teilBestellNr, Integer anzahl) {
         try {
-            logPut(herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr);
+            logPut(getEntityClassName() + ": " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + ApiPaths.SEPARATOR + ApiNames.TEILEN + ApiPaths.SEPARATOR + teilHerstellerStr + ApiPaths.SEPARATOR + teilBestellNr + ":" + anzahl);
+
+            IProdukt produkt = findProdukt(herstellerStr, bestellNr, true);
+
+            if (produkt == null) {
+                return getResponse(badRequest(null, "Produkt " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + " does not exist"));
+            }
 
             IProduktTeil produktTeil = findProduktTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, true);
 
             if (produktTeil == null) {
-                return getResponse(badRequest(null, "ProduktTeil " + herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr + " does not exist"));
+                return getResponse(badRequest(null, "ProduktTeil " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + teilHerstellerStr + ApiPaths.SEPARATOR + teilBestellNr + " does not exist"));
             }
 
-            @SuppressWarnings("unused")
-            IProdukt produkt = produktTeil.getProdukt();
-
-            // TODO: update produktTeil
+			produktTeil.setAnzahl(anzahl);
 
             produktTeil = getTeilPersister().update(produktTeil);
 
             return getResponse(created(), produktTeil, true, true);
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -341,25 +343,27 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @ApiOperation(code = 204, value = "Deletes a sub produkt for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response deleteTeil(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathParam(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr, @PathParam(ApiPaths.TEIL_BESTELL_NR_PARAM_NAME) String teilBestellNr) {
         try {
-            logDelete(herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr);
+            logDelete(getEntityClassName() + ": " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + ApiPaths.SEPARATOR + ApiNames.TEILEN + ApiPaths.SEPARATOR + teilHerstellerStr + ApiPaths.SEPARATOR + teilBestellNr);
+
+            IProdukt produkt = findProdukt(herstellerStr, bestellNr, true);
+
+            if (produkt == null) {
+                return getResponse(badRequest(null, "Produkt " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + " does not exist"));
+            }
 
             IProduktTeil produktTeil = findProduktTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, true);
 
             if (produktTeil == null) {
-                return getResponse(badRequest(null, "ProduktTeil " + herstellerStr + "/" + bestellNr + teilHerstellerStr + "/" + teilBestellNr + " does not exist"));
+                return getResponse(badRequest(null, "ProduktTeil " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + teilHerstellerStr + ApiPaths.SEPARATOR + teilBestellNr + " does not exist"));
             }
 
-            Produkt produkt = (Produkt) produktTeil.getProdukt();
-
             produkt.removeTeil(produktTeil);
-
-            //getProduktTeilPersister().delete(produktTeil);
 
             getPersister().update(produkt);
 
             return getResponse(noContent());
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -371,16 +375,21 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @ApiOperation(code = 201, value = "Adds or updates the picture for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response updateAbbildung(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @FormDataParam("file") InputStream fileInputStream,
-            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
-        logPut(getEntityClassName() + ": " + herstellerStr + ", " + bestellNr + ", abbildung, " + contentDispositionHeader);
+            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,  
+            @FormDataParam("file") FormDataBodyPart body) {
+        logPut(getEntityClassName() + ": " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + ApiPaths.SEPARATOR + ApiNames.ABBILDUNG + ": " + contentDispositionHeader);
 
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
+            if (!handler.isAcceptable(body, AcceptableMediaTypes.IMAGE_TYPES)) {
+                return getResponse(badRequest(null, "Invalid file '" + contentDispositionHeader.getFileName() + "'"));
+            }
+
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
 
             if (produkt != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.PRODUKT, new String[] { herstellerStr, bestellNr }, contentDispositionHeader, fileInputStream, AcceptableMediaTypes.IMAGES);
+                java.nio.file.Path file = handler.upload(ApiNames.PRODUKT, new String[] { herstellerStr, bestellNr }, contentDispositionHeader, fileInputStream);
 
                 produkt.setAbbildung(file);
 
@@ -389,7 +398,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
                 return getResponse(ok(produkt));
             }
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
 
         return getResponse(notFound());
@@ -401,7 +410,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 204, value = "Deletes the picture for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response deleteAbbildung(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
-        logDelete(getEntityClassName() + ": " + herstellerStr + ", " + bestellNr + ", abbildung");
+        logDelete(getEntityClassName() + ": " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + ApiPaths.SEPARATOR + ApiNames.ABBILDUNG);
         
         try {
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
@@ -416,7 +425,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
                 return getResponse(ok(produkt));
             }
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
 
         return getResponse(notFound());
@@ -430,16 +439,21 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @ApiOperation(code = 201, value = "Adds or updates the instructions for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response updateAnleitungen(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @FormDataParam("file") InputStream fileInputStream,
-            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
-        logPut(getEntityClassName() + ": " + herstellerStr + ", " + bestellNr + ", anleitungen, " + contentDispositionHeader);
+            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,  
+            @FormDataParam("file") FormDataBodyPart body) {
+        logPut(getEntityClassName() + ": " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + ApiPaths.SEPARATOR + ApiNames.ANDERUNGEN + ": " + contentDispositionHeader);
 
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
+            if (!handler.isAcceptable(body, AcceptableMediaTypes.DOCUMENT_TYPES)) {
+                return getResponse(badRequest(null, "Invalid file '" + contentDispositionHeader.getFileName() + "'"));
+            }
+
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
 
             if (produkt != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.PRODUKT, new String[] { herstellerStr, bestellNr }, contentDispositionHeader, fileInputStream, AcceptableMediaTypes.DOCUMENTS);
+                java.nio.file.Path file = handler.upload(ApiNames.PRODUKT, new String[] { herstellerStr, bestellNr }, contentDispositionHeader, fileInputStream);
 
                 produkt.setAnleitungen(file);
 
@@ -448,7 +462,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
                 return getResponse(ok(produkt));
             }
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
 
         return getResponse(notFound());
@@ -460,7 +474,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 204, value = "Deletes the instructions for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response deleteAnleitungen(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
-        logDelete(getEntityClassName() + ": " + herstellerStr + ", " + bestellNr + ", anleitungen");
+        logDelete(getEntityClassName() + ": " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + ApiPaths.SEPARATOR + ApiNames.ANDERUNGEN);
         
         try {
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
@@ -475,7 +489,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
                 return getResponse(ok(produkt));
             }
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
 
         return getResponse(notFound());
@@ -489,16 +503,21 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @ApiOperation(code = 201, value = "Adds or updates the drawing for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response updateExplosionszeichnung(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @FormDataParam("file") InputStream fileInputStream,
-            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
-        logPut(getEntityClassName() + ": " + herstellerStr + ", " + bestellNr + ", explosionszeichnung, " + contentDispositionHeader);
+            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,  
+            @FormDataParam("file") FormDataBodyPart body) {
+        logPut(getEntityClassName() + ": " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + ApiPaths.SEPARATOR + ApiNames.EXPLOSIONSZEICHNUNG + ": " + contentDispositionHeader);
 
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
+            if (!handler.isAcceptable(body, AcceptableMediaTypes.DOCUMENT_TYPES)) {
+                return getResponse(badRequest(null, "Invalid file '" + contentDispositionHeader.getFileName() + "'"));
+            }
+
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
 
             if (produkt != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.PRODUKT, new String[] { herstellerStr, bestellNr }, contentDispositionHeader, fileInputStream, AcceptableMediaTypes.DOCUMENTS);
+                java.nio.file.Path file = handler.upload(ApiNames.PRODUKT, new String[] { herstellerStr, bestellNr }, contentDispositionHeader, fileInputStream);
 
                 produkt.setExplosionszeichnung(file);
 
@@ -507,7 +526,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
                 return getResponse(ok(produkt));
             }
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
 
         return getResponse(notFound());
@@ -519,7 +538,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 204, value = "Deletes the drawing for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response deleteExplosionszeichnung(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
-        logDelete(getEntityClassName() + ": " + herstellerStr + ", " + bestellNr + ", explosionszeichnung");
+        logDelete(getEntityClassName() + ": " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + ApiPaths.SEPARATOR + ApiNames.EXPLOSIONSZEICHNUNG);
         try {
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
 
@@ -533,7 +552,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
                 return getResponse(ok(produkt));
             }
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
 
         return getResponse(notFound());

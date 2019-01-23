@@ -29,8 +29,8 @@ public interface IZugConsistRef extends ILinkRef {
     Integer getPosition();
 
     @JsonGetter(ApiNames.ARTIKEL)
-    @JsonSerialize(contentAs = IArtikelRef.class)
+    @JsonSerialize(as = IArtikelRef.class)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IProduktRef", value = "Rolling stock item", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IArtikelRef", value = "Rolling stock item", accessMode = AccessMode.READ_ONLY, required = true)
     IArtikel getArtikel();
 }

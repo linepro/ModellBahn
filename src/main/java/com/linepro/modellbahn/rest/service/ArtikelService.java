@@ -1,14 +1,5 @@
 package com.linepro.modellbahn.rest.service;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.linepro.modellbahn.rest.json.serialization.DecoderDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.KupplungDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.LichtDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.LocalDateDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.MotorTypDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.ProduktDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.SteuerungDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.WahrungDeserializer;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -26,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -33,6 +25,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.linepro.modellbahn.model.IAnderung;
 import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IKupplung;
@@ -42,10 +36,21 @@ import com.linepro.modellbahn.model.IProdukt;
 import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.enums.Status;
+import com.linepro.modellbahn.model.impl.Anderung;
 import com.linepro.modellbahn.model.impl.Artikel;
+import com.linepro.modellbahn.model.keys.AnderungKey;
 import com.linepro.modellbahn.model.keys.ArtikelKey;
-import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.persistence.IPersister;
+import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.DecoderDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.KupplungDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.LichtDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.LocalDateDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.MotorTypDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.ProduktDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.SteuerungDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.WahrungDeserializer;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -71,10 +76,12 @@ import io.swagger.annotations.ApiResponses;
 @Path(ApiPaths.ARTIKEL)
 public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
 
+    private final IPersister<IAnderung> anderungPersister;
+
     public ArtikelService() {
         super(IArtikel.class);
 
-        getPersister().getSelectors().get(DBNames.ABBILDUNG).setNullable(true);
+        anderungPersister = StaticPersisterFactory.get().createPersister(IAnderung.class);
     }
 
     @JsonCreator(mode= Mode.DELEGATING)
@@ -92,6 +99,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
             @JsonDeserialize(using= WahrungDeserializer.class) IWahrung wahrung,
             @JsonProperty(value = ApiNames.PREIS) BigDecimal preis,
             @JsonProperty(value = ApiNames.STUCK) Integer stuck,
+            @JsonProperty(value = ApiNames.VERBLEIBENDE) Integer verbleibende,
             @JsonProperty(value = ApiNames.STEUERUNG)
             @JsonDeserialize(using= SteuerungDeserializer.class) ISteuerung steuerung,
             @JsonProperty(value = ApiNames.MOTOR_TYP)
@@ -111,10 +119,9 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
             @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
         Status status = Status.valueOf(statusStr);
         
-        return new Artikel(id, produkt, kaufdatum, wahrung, preis, stuck,
-                steuerung, motorTyp, licht, kupplung, decoder,
-                artikelNr, bezeichnung, anmerkung,
-                beladung, status, deleted);
+        return new Artikel(id, produkt, kaufdatum, wahrung, preis, stuck, 
+                verbleibende, steuerung, motorTyp, licht, kupplung, decoder,
+                artikelNr, bezeichnung, anmerkung, beladung, status, deleted);
     }
 
     @GET
@@ -196,16 +203,21 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
         })
     public Response updateAbbildung(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId,
             @FormDataParam("file") InputStream fileInputStream,
-            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
-        logPut(getEntityClassName() + ": " + artikelId + ", abbildung, " + contentDispositionHeader);
+            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,  
+            @FormDataParam("file") FormDataBodyPart body) {
+        logPut(getEntityClassName() + ": " + artikelId + ApiPaths.SEPARATOR + ApiNames.ABBILDUNG + ": " + contentDispositionHeader);
 
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
+            if (!handler.isAcceptable(body, AcceptableMediaTypes.IMAGE_TYPES)) {
+                return getResponse(badRequest(null, "Invalid file '" + contentDispositionHeader.getFileName() + "'"));
+            }
+
             IArtikel artikel = findArtikel(artikelId, false);
 
             if (artikel != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { artikelId }, contentDispositionHeader, fileInputStream, AcceptableMediaTypes.IMAGES);
+                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { artikelId }, contentDispositionHeader, fileInputStream);
 
                 artikel.setAbbildung(file);
 
@@ -214,7 +226,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
                 return getResponse(ok(artikel));
             }
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
 
         return getResponse(notFound());
@@ -229,7 +241,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
     public Response deleteAbbildung(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId) {
-        logDelete(getEntityClassName() + ": " + artikelId + ", abbildung");
+        logDelete(getEntityClassName() + ": " + artikelId + ApiPaths.SEPARATOR + ApiNames.ABBILDUNG);
         
         try {
             IArtikel artikel = findArtikel(artikelId, false);
@@ -244,9 +256,105 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
                 return getResponse(ok(artikel));
             }
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
 
         return getResponse(notFound());
+    }
+
+    @POST
+    @Path(ApiPaths.ANDERUNG_ROOT)
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    @ApiOperation(code = 201, value = "Adds a new changed to an article", response = IAnderung.class)
+    public Response addAnderung(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, Anderung newAnderung) {
+        try {
+            logPost(getEntityClassName() + ": " + artikelId + ApiPaths.SEPARATOR + ApiNames.ANDERUNG + ": " + newAnderung);
+
+            IArtikel artikel = findArtikel(artikelId, true);
+
+            if (artikel == null) {
+                return getResponse(badRequest(null, "Artikel " + artikelId + " does not exist"));
+            }
+
+            artikel.addAnderung(newAnderung);
+
+            getPersister().update(artikel);
+
+            return getResponse(created(), newAnderung, true, true);
+        } catch (Exception e) {
+            return getResponse(e);
+        }
+    }
+
+    @PUT
+    @Path(ApiPaths.ANDERUNG_PATH)
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    @ApiOperation(code = 202, value = "Updates a change to an Article", response = IAnderung.class)
+    public Response updateAnderung(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, @PathParam(ApiPaths.ANDERUNGS_ID_PARAM_NAME) Integer anderungsId, Anderung newAnderung) {
+        try {
+            logPut(getEntityClassName() + ": " + artikelId + ApiPaths.SEPARATOR + ApiNames.ANDERUNG + ApiPaths.SEPARATOR + anderungsId + ": " + newAnderung);
+
+            IArtikel artikel = findArtikel(artikelId, true);
+
+            if (artikel == null) {
+                return getResponse(badRequest(null, "Artikel " + artikelId + " does not exist"));
+            }
+
+            IAnderung anderung = findAnderung(artikel, anderungsId, true);
+
+            if (anderung == null) {
+                return getResponse(badRequest(null, "Anderung " + artikelId + ApiPaths.SEPARATOR + anderungsId + " does not exist"));
+            }
+
+            newAnderung.setArtikel(artikel);
+            newAnderung.setAnderungsId(anderungsId);
+
+            anderung = getAnderungPersister().merge(new AnderungKey(artikel, anderung.getAnderungsId()), newAnderung);
+
+            return getResponse(created(), anderung, true, true);
+        } catch (Exception e) {
+            return getResponse(e);
+        }
+    }
+
+    @DELETE
+    @Path(ApiPaths.ANDERUNG_PATH)
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    @ApiOperation(code = 204, value = "Removes a change from an article")
+    public Response deleteAnderung(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, @PathParam(ApiPaths.ANDERUNGS_ID_PARAM_NAME) Integer anderungsId) {
+        try {
+            logDelete(getEntityClassName() + ": " + artikelId + ApiPaths.SEPARATOR + ApiNames.ANDERUNG + ApiPaths.SEPARATOR + anderungsId);
+
+            IArtikel artikel = findArtikel(artikelId, true);
+
+            if (artikel == null) {
+                return getResponse(badRequest(null, "Artikel " + artikelId + " does not exist"));
+            }
+
+            IAnderung anderung = findAnderung(artikelId, anderungsId, true);
+
+            if (anderung == null) {
+                return getResponse(badRequest(null, "Anderung " + artikelId + ApiPaths.SEPARATOR + anderungsId + " does not exist"));
+            }
+
+            artikel.removeAnderung(anderung);
+
+            // TODO: resequence anderungsId for remaining items?
+            
+            getPersister().update(artikel);
+
+            return getResponse(noContent());
+        } catch (Exception e) {
+            return getResponse(e);
+        }
+    }
+
+    private IPersister<IAnderung> getAnderungPersister() {
+        return anderungPersister;
     }
 }

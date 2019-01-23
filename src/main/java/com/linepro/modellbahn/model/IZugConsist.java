@@ -45,7 +45,7 @@ public interface IZugConsist extends IItem<ZugConsistKey>, IZugConsistRef {
     void setPosition(Integer position);
 
     @JsonSetter(ApiNames.ARTIKEL)
-    @JsonDeserialize(contentUsing = ArtikelDeserializer.class)
+    @JsonDeserialize(using = ArtikelDeserializer.class)
     void setArtikel(IArtikel artikel);
 
 }

@@ -41,7 +41,7 @@ import io.swagger.jaxrs.listing.SwaggerSerializers;
  * @author  $Author:$
  * @version $Id:$
  */
-@ApplicationPath("/")
+@ApplicationPath(ApiPaths.SEPARATOR)
 public class ModellBahnConfiguration extends ResourceConfig {
 
     private static final String JERSEY_SERVLET_CONTEXT_PATH = "";

@@ -38,7 +38,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @version $Id:$
  */
 @Entity(name = DBNames.DECODER_TYP_ADRESS)
-@Table(name = DBNames.DECODER_TYP_ADRESS, indexes = { @Index(columnList = DBNames.DECODER_TYP_ID +"," + DBNames.INDEX, unique = true),
+@Table(name = DBNames.DECODER_TYP_ADRESS, indexes = { @Index(columnList = DBNames.DECODER_TYP_ID +", " + DBNames.INDEX, unique = true), 
         @Index(columnList = DBNames.DECODER_TYP_ID), @Index(columnList = DBNames.INDEX) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.DECODER_TYP_ID, DBNames.INDEX }) })
 @Adress
@@ -53,7 +53,7 @@ public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implemen
 
     /** The index. */
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.index.notnull}")
-    @Range(min=1,max=10, message = "{index.range}")
+    @Range(min=1, max=10, message = "{com.linepro.modellbahn.validator.constraints.index.range}")
     private Integer index;
 
     /** The adressTyp. */
@@ -62,7 +62,7 @@ public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implemen
 
     /** The span. */
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.span.notnull}")
-    @Range(min=1,max=32,message = "{span.range}")
+    @Range(min=1, max=32, message = "{com.linepro.modellbahn.validator.constraints.span.range}")
     private Integer span;
 
     /** The werkseinstellung. */
@@ -87,7 +87,7 @@ public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implemen
      * @param werkseinstellung the werkseinstellung
      * @param deleted the deleted
      */
-    public DecoderTypAdress(Long id, IDecoderTyp decoderTyp, Integer index, AdressTyp adressTyp, Integer span,
+    public DecoderTypAdress(Long id, IDecoderTyp decoderTyp, Integer index, AdressTyp adressTyp, Integer span, 
             Integer werkseinstellung, Boolean deleted) {
         super(id, deleted);
 

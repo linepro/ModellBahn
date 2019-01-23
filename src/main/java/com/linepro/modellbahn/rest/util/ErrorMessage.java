@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
 @JsonAutoDetect(fieldVisibility = Visibility.PUBLIC_ONLY)
 class ErrorMessage {
 
-    private String errorCode;
+    private int errorCode;
 
     private String userMessage;
 
@@ -24,11 +24,11 @@ class ErrorMessage {
     public ErrorMessage() {
     }
 
-    public ErrorMessage(final String errorCode, final String userMessage) {
+    public ErrorMessage(final int errorCode, final String userMessage) {
         this(errorCode, userMessage, null);
     }
 
-    public ErrorMessage(final String errorCode, final String userMessage, final String developerMessage) {
+    public ErrorMessage(final int errorCode, final String userMessage, final String developerMessage) {
         this.errorCode = errorCode;
         this.userMessage = userMessage;
         this.developerMessage = developerMessage;
@@ -36,12 +36,12 @@ class ErrorMessage {
 
     @JsonGetter("errorCode")
     @ApiModelProperty(value = "Error code", example = "500")
-    public String getErrorCode() {
+    public int getErrorCode() {
         return errorCode;
     }
 
     @JsonSetter("errorCode")
-    public void setErrorCode(String errorCode) {
+    public void setErrorCode(int errorCode) {
         this.errorCode = errorCode;
     }
 
@@ -80,8 +80,10 @@ class ErrorMessage {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("errorCode", errorCode).append("userMessage", userMessage)
-                .append("developerMessage", developerMessage).append("moreInfo", moreInfo)
+                .append("errorCode", errorCode)
+                .append("userMessage", userMessage)
+                .append("developerMessage", developerMessage)
+                .append("moreInfo", moreInfo)
                 .toString();
     }
 }

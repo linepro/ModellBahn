@@ -32,7 +32,7 @@ public class Wahrung extends AbstractNamedItem<NameKey> implements IWahrung {
 
     /** The dezimal. */
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.dezimal.notnull}")
-    @Range(min=0,max=2, message = "{com.linepro.modellbahn.validator.constraints.dezimal.range}")
+    @Range(min=0, max=2, message = "{com.linepro.modellbahn.validator.constraints.dezimal.range}")
     private Integer dezimal;
 	
 	/**

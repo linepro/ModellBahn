@@ -12,6 +12,7 @@ import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.model.keys.DecoderTypKey;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
+import com.linepro.modellbahn.rest.util.ApiPaths;
 
 public class DecoderTypDeserializer extends StdDeserializer<IDecoderTyp> {
 
@@ -38,7 +39,7 @@ public class DecoderTypDeserializer extends StdDeserializer<IDecoderTyp> {
         TextNode node = codec.readTree(jp);
         String name = node.textValue();
         try {
-            String[] parts = name.split("/");
+            String[] parts = name.split(ApiPaths.SEPARATOR);
 
             IHersteller hersteller = herstellerPerisister.findByKey(parts[0], false);
             

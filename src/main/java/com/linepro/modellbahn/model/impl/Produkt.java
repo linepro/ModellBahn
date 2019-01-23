@@ -520,14 +520,15 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
     }
 
     @Override
-    public void addTeil(IProduktTeil funktion) {
-        funktion.setProdukt(this);
-        getTeilen().add(funktion);
+    public void addTeil(IProduktTeil teil) {
+        teil.setProdukt(this);
+        teil.setDeleted(false);
+        getTeilen().add(teil);
     }
 
     @Override
-    public void removeTeil(IProduktTeil funktion) {
-        getTeilen().remove(funktion);
+    public void removeTeil(IProduktTeil teil) {
+        getTeilen().remove(teil);
     }
 
     @Override

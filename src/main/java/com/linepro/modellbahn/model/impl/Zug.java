@@ -105,7 +105,9 @@ public class Zug extends AbstractNamedItem<NameKey> implements IZug {
     public void addConsist(IZugConsist consist) {
         // Add at end semantics
         consist.setZug(this);
-        consist.setPosition(getConsist().size());
+        consist.setPosition(getConsist().size()+1);
+        consist.setDeleted(false);
+
         getConsist().add(consist);
     }
 
@@ -114,13 +116,14 @@ public class Zug extends AbstractNamedItem<NameKey> implements IZug {
         getConsist().remove(consist);
         
         // Just renumber the whole lot; don't try and work out from where - it's just as expensive
-        int position = 0;
+        /*
+        int position = 1;
 
         for (IZugConsist zc : getConsist()) {
             zc.setPosition(position++);
         }
+        */
     }
-
 
 	@Override
 	public String toString() {

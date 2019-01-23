@@ -151,7 +151,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
 
             if (decoderTyp == null) {
                 return getResponse(
-                        badRequest(null, "DecoderTyp " + herstellerStr + "/" + bestellNr + " does not exist"));
+                        badRequest(null, "DecoderTyp " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + " does not exist"));
             }
 
             IDecoder decoder = new DecoderCreator(getPersister()).create(decoderTyp);
@@ -232,7 +232,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
 
             return getResponse(notFound());
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -247,7 +247,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
     public Response updateAdress(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId,
             @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index, @QueryParam(ApiNames.ADRESS) Integer adress) {
         try {
-            logPut(decoderId + "/" + index + ": " + adress);
+            logPut(getEntityClassName() + ": " + decoderId + ApiPaths.SEPARATOR + index + ": " + adress);
 
             IDecoder decoder = findDecoder(decoderId, true);
 
@@ -258,7 +258,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
             IDecoderAdress decoderAdress = findDecoderAdress(decoder, index, true);
 
             if (decoderAdress == null) {
-                return getResponse(badRequest(null, "Decoder Adress " + decoderId + "/" + index + " does not exist"));
+                return getResponse(badRequest(null, "Decoder Adress " + decoderId + ApiPaths.SEPARATOR + index + " does not exist"));
             }
 
             decoderAdress.setAdress(adress);
@@ -267,7 +267,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
 
             return getResponse(accepted(), decoderAdress, true, true);
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -295,7 +295,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
 
             return getResponse(notFound());
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -310,7 +310,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
     public Response updateCv(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId,
             @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv, @QueryParam(ApiNames.WERT) Integer wert) {
         try {
-            logPut(decoderId + "/" + cv + ": " + wert);
+            logPut(getEntityClassName() + ": " + decoderId + ApiPaths.SEPARATOR + cv + ": " + wert);
 
             IDecoder decoder = findDecoder(decoderId, true);
 
@@ -321,7 +321,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
             IDecoderCV decoderCV = findDecoderCV(decoder, cv, true);
 
             if (decoderCV == null) {
-                return getResponse(badRequest(null, "Decoder CV " + decoderId + "/" + cv + " does not exist"));
+                return getResponse(badRequest(null, "Decoder CV " + decoderId + ApiPaths.SEPARATOR + cv + " does not exist"));
             }
 
             decoderCV.setWert(wert);
@@ -330,7 +330,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
 
             return getResponse(accepted(), decoderCV, true, true);
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -359,7 +359,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
 
             return getResponse(notFound());
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -376,7 +376,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
             @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion,
             @QueryParam(ApiNames.BEZEICHNUNG) String descirption) {
         try {
-            logPut(decoderId + "/" + reihe + "/" + funktion + ": " + descirption);
+            logPut(getEntityClassName() + ": " + decoderId + ApiPaths.SEPARATOR + reihe + ApiPaths.SEPARATOR + funktion + ": " + descirption);
 
             IDecoder decoder = findDecoder(decoderId, true);
 
@@ -388,7 +388,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
 
             if (decoderFunktion == null) {
                 return getResponse(badRequest(null,
-                        "Decoder Funktion " + decoderId + "/" + reihe + "/" + funktion + " does not exist"));
+                        "Decoder Funktion " + decoderId + ApiPaths.SEPARATOR + reihe + ApiPaths.SEPARATOR + funktion + " does not exist"));
             }
 
             decoderFunktion.setBezeichnung(descirption);
@@ -397,7 +397,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
 
             return getResponse(accepted(), decoderFunktion, true, true);
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 

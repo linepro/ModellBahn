@@ -1,12 +1,5 @@
 package com.linepro.modellbahn.rest.service;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.linepro.modellbahn.rest.json.serialization.AchsfolgDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.AntriebDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.BahnverwaltungDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.GattungDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.LocalDateDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.UnterKategorieDeserializer;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -24,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -31,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.IAntrieb;
 import com.linepro.modellbahn.model.IBahnverwaltung;
@@ -40,8 +35,13 @@ import com.linepro.modellbahn.model.IVorbild;
 import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
 import com.linepro.modellbahn.model.impl.Vorbild;
 import com.linepro.modellbahn.model.keys.VorbildKey;
-import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.AchsfolgDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.AntriebDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.BahnverwaltungDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.GattungDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.LocalDateDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.UnterKategorieDeserializer;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -67,8 +67,6 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
 
     public VorbildService() {
         super(IVorbild.class);
-
-        getPersister().getSelectors().get(DBNames.ABBILDUNG).setNullable(true);
     }
 
     @JsonCreator(mode= Mode.DELEGATING)
@@ -146,7 +144,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
         try {
             return super.get(new VorbildKey(findGattung(name, false)));
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
     }
 
@@ -240,16 +238,21 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
     @ApiOperation(code = 201, value = "Adds or updates thr picture for a named Vorbild", response = IVorbild.class)
     public Response updateAbbildung(@PathParam(ApiPaths.GATTUNG_PARAM_NAME) String name,
             @FormDataParam("file") InputStream fileInputStream,
-            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
-        logPut(getEntityClassName() + ": " + name + ", abbildung, " + contentDispositionHeader);
+            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,  
+            @FormDataParam("file") FormDataBodyPart body) {
+        logPut(getEntityClassName() + ": " + name + ApiPaths.SEPARATOR + ApiNames.ABBILDUNG + ": " + contentDispositionHeader);
 
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
+            if (!handler.isAcceptable(body, AcceptableMediaTypes.IMAGE_TYPES)) {
+                return getResponse(badRequest(null, "Invalid file '" + contentDispositionHeader.getFileName() + "'"));
+            }
+
             IVorbild vorbild = findVorbild(name, false);
 
             if (vorbild != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.VORBILD, new String[] { name }, contentDispositionHeader, fileInputStream, AcceptableMediaTypes.IMAGES);
+                java.nio.file.Path file = handler.upload(ApiNames.VORBILD, new String[] { name }, contentDispositionHeader, fileInputStream);
 
                 vorbild.setAbbildung(file);
 
@@ -258,7 +261,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
                 return getResponse(ok(vorbild));
             }
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
 
         return getResponse(notFound());
@@ -270,7 +273,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Removes the picture from a named Vorbild", response = IVorbild.class)
     public Response deleteAbbildung(@PathParam(ApiPaths.GATTUNG_PARAM_NAME) String name) {
-        logDelete(getEntityClassName() + ": " + name + ", abbildung");
+        logDelete(getEntityClassName() + ": " + name + ApiPaths.SEPARATOR + ApiNames.ABBILDUNG);
         
         try {
             IVorbild vorbild = findVorbild(name, false);
@@ -285,7 +288,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
                 return getResponse(ok(vorbild));
             }
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
 
         return getResponse(notFound());

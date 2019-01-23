@@ -5,6 +5,11 @@ public interface ApiNames {
     // Field names
     String ABBILDUNG = "abbildung";
     String ACHSFOLG = "achsfolg";
+    String ANDERUNGSDATUM = "anderungsdatum";
+    String ANDERUNGS_TYP = "anderungsTyp";
+    String ANDERUNG = "anderung";
+    String ANDERUNGEN = "anderungen";
+    String ANDERUNGS_ID = "andernungId";
     String ADRESS = "adress";
     String ADRESSEN = "adressen";
     String ADRESS_TYP = "adressTyp";
@@ -107,12 +112,13 @@ public interface ApiNames {
     String UNTER_KATEGORIE = "unterKategorie";
     String UNTER_KATEGORIEN = "unterKategorien";
     String URL = "url";
-    String WERT = "wert";
+    String VERBLEIBENDE = "verbleibende";
     String VERDAMPFUNG = "verdampfung";
     String VORBILD = "vorbild";
     String WAHRUNG = "wahrung";
     String WASSERVORRAT = "wasservorrat";
     String WERKSEINSTELLUNG = "werkseinstellung";
+    String WERT = "wert";
     String ZUG = "zug";
     String ZUG_TYP = "zugTyp";
     String ZYLINDER = "zylinder";

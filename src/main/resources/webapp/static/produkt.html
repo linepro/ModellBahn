@@ -14,7 +14,13 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-    const columns = [
+   const teilenColumns = [
+	    gridButtonColumn("teilen")
+	    ];
+
+   const teilen = new ItemGrid(5, "teilen", "teilen", teilenColumns, Paged.EXPAND, EditMode.ADD, undefined);
+   
+   const columns = [
         HERSTELLER,
         BESTELL_NR,
         UNTER_KATEGORIE,
@@ -44,7 +50,7 @@
     ];
 
     const produkt = new ItemGrid(1, fetchUrl("produkt"), "produkt", columns, Paged.FORM,
-        EditMode.UPDATE, undefined);
+        EditMode.UPDATE, [teilen]);
 
     async function init() {
         await HERSTELLER_DROP.init();

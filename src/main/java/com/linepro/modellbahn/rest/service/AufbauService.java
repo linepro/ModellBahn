@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -25,7 +26,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IAufbau;
 import com.linepro.modellbahn.model.impl.Aufbau;
 import com.linepro.modellbahn.model.keys.NameKey;
-import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;
@@ -54,8 +54,6 @@ public class AufbauService extends AbstractItemService<NameKey, IAufbau> {
 
     public AufbauService() {
         super(IAufbau.class);
-        
-        getPersister().getSelectors().get(DBNames.ABBILDUNG).setNullable(true);
     }
 
     @JsonCreator(mode= Mode.DELEGATING)
@@ -137,16 +135,21 @@ public class AufbauService extends AbstractItemService<NameKey, IAufbau> {
         })
     public Response updateAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name,
             @FormDataParam("file") InputStream fileInputStream,
-            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
-        logPut(getEntityClassName() + ": " + name + ", abbildung, " + contentDispositionHeader);
+            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,  
+            @FormDataParam("file") FormDataBodyPart body) {
+        logPut(getEntityClassName() + ": " + name + ApiPaths.SEPARATOR + ApiNames.ABBILDUNG + ": " + contentDispositionHeader);
 
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
+            if (!handler.isAcceptable(body, AcceptableMediaTypes.IMAGE_TYPES)) {
+                return getResponse(badRequest(null, "Invalid file '" + contentDispositionHeader.getFileName() + "'"));
+            }
+
             IAufbau aufbau = findAufbau(name, false);
 
             if (aufbau != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { name }, contentDispositionHeader, fileInputStream, AcceptableMediaTypes.IMAGES);
+                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { name }, contentDispositionHeader, fileInputStream);
 
                 aufbau.setAbbildung(file);
 
@@ -155,7 +158,7 @@ public class AufbauService extends AbstractItemService<NameKey, IAufbau> {
                 return getResponse(ok(aufbau));
             }
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
 
         return getResponse(notFound());
@@ -170,7 +173,7 @@ public class AufbauService extends AbstractItemService<NameKey, IAufbau> {
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
     public Response deleteAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
-        logDelete(getEntityClassName() + ": " + name + ", abbildung");
+        logDelete(getEntityClassName() + ": " + name + ApiPaths.SEPARATOR + ApiNames.ABBILDUNG);
 
         try {
             IAufbau aufbau = findAufbau(name, false);
@@ -187,7 +190,7 @@ public class AufbauService extends AbstractItemService<NameKey, IAufbau> {
                 return getResponse(ok(aufbau));
             }
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
 
         return getResponse(notFound());

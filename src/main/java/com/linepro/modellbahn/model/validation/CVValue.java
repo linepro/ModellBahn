@@ -23,13 +23,13 @@ import org.hibernate.validator.constraints.Range;
 @Documented
 @ConstraintComposition(OR)
 @Null
-@Range(min=0,max=255)
+@Range(min=0, max=255, message = "{com.linepro.modellbahn.validator.constraints.cvvalue.range}")
 @ReportAsSingleViolation
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
 public @interface CVValue {
-    String message() default "{com.linepro.modellbahn.validator.constraints.cvvalue.range}";
+    String message() default "{com.linepro.modellbahn.validator.constraints.cvvalue.invalid}";
 
     Class<?>[] groups() default { };
 

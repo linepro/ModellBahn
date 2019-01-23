@@ -1,6 +1,5 @@
 package com.linepro.modellbahn.rest.service;
 
-import com.linepro.modellbahn.model.enums.Stecker;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -11,13 +10,18 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.model.refs.IDescribedEnum;
 import com.linepro.modellbahn.model.enums.AdressTyp;
+import com.linepro.modellbahn.model.enums.AnderungsTyp;
 import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
 import com.linepro.modellbahn.model.enums.Status;
+import com.linepro.modellbahn.model.enums.Stecker;
+import com.linepro.modellbahn.model.refs.IDescribedEnum;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.DescribedEnumWrapper;
 import com.linepro.modellbahn.rest.util.AbstractService;
@@ -37,7 +41,15 @@ import io.swagger.annotations.ApiOperation;
 @Path(ApiPaths.ENUMS)
 public class EnumsService extends AbstractService {
 
+    protected final Logger logger;
+    
     public EnumsService() {
+        this.logger = LoggerFactory.getILoggerFactory().getLogger(getClass().getName());
+    }
+
+    @Override
+    protected Logger getLogger() {
+        return logger;
     }
 
     @GET
@@ -48,6 +60,16 @@ public class EnumsService extends AbstractService {
     @ApiOperation(value = "Gets all possible AdressTyp values", response = IDescribedEnum.class, responseContainer = "List")
     public Response getAdressTyp() {
         return ok(getEnumValues(AdressTyp.values())).build();
+    }
+
+    @GET
+    @Path(ApiPaths.ENUMS_ANDERUNGS_TYP_PATH)
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonSerialize(contentAs= IDescribedEnum.class)
+    @JsonView(Views.Public.class)
+    @ApiOperation(value = "Gets all possible AnderungTyp values", response = IDescribedEnum.class, responseContainer = "List")
+    public Response getAnderungTyp() {
+        return ok(getEnumValues(AnderungsTyp.values())).build();
     }
 
     @GET

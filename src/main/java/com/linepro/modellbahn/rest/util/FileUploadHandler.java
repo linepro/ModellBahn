@@ -8,12 +8,13 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Path;
-import java.util.Map;
+import java.util.Collection;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.MediaType;
 
 import org.glassfish.jersey.media.multipart.ContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +41,13 @@ public class FileUploadHandler implements IFileUploadHandler {
         this.logger = LoggerFactory.getILoggerFactory().getLogger(getClass().getName());
     }
 
+    @Override
+    public boolean isAcceptable(FormDataBodyPart body, Collection<MediaType> accepted) {
+        MediaType mimeType = body.getMediaType();
+        
+        return accepted.contains(mimeType);
+    }
+
     /**
      * Upload.
      * @param entityType the entity type
@@ -49,8 +57,7 @@ public class FileUploadHandler implements IFileUploadHandler {
      * @return the path
      */
     @Override
-    public Path upload(String entityType, String[] entityIds, ContentDisposition fileDetail, InputStream fileData, Map<String, MediaType> accepted)
-            throws Exception {
+    public Path upload(String entityType, String[] entityIds, ContentDisposition fileDetail, InputStream fileData) throws Exception {
         new File(fileStore.getItemPath(entityType, entityIds).toString()).mkdirs();
 
         String fileName = fileDetail.getFileName();
@@ -61,10 +68,6 @@ public class FileUploadHandler implements IFileUploadHandler {
         if (extensionStart >= 0) {
             extension = fileName.substring(extensionStart+1).toLowerCase();
             fileName = fileName.substring(0, extensionStart);
-        }
-
-        if (extension == null || accepted.get(extension) == null) {
-            throw new IllegalArgumentException("Unsupported mediaType " + fileName);
         }
 
         Path filePath = fileStore.getFilePath(entityType, entityIds, fileName, extension);

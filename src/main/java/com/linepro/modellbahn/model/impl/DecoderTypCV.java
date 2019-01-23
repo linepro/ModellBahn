@@ -51,7 +51,7 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
 
     /** The cv. */
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.cv.notnull}")
-    @Range(min=1,max=255,message = "{cv.range}")
+    @Range(min=1, max=255, message = "{com.linepro.modellbahn.validator.constraints.cv.range}")
     private Integer cv;
 
     /** The bezeichnung. */

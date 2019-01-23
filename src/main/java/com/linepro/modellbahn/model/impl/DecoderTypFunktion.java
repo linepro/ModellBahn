@@ -107,6 +107,7 @@ public class DecoderTypFunktion extends AbstractItem<DecoderTypFunktionKey> impl
         this.reihe = reihe;
     }
 
+    @BusinessKey
     @Column(name = DBNames.FUNKTION, length = 4)
     public String getFunktion() {
       return funktion;
@@ -147,7 +148,7 @@ public class DecoderTypFunktion extends AbstractItem<DecoderTypFunktionKey> impl
     @Override
     @Transient
     public String getLinkId() {
-        return String.format(ApiPaths.DECODER_TYP_FUNKTION_LINK, getParentId(), getReihe(), super.getLinkId());
+        return String.format(ApiPaths.DECODER_TYP_FUNKTION_LINK, getParentId(), getReihe(), getFunktion());
     }
 
     @Override

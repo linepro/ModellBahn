@@ -218,14 +218,14 @@ public class DBPopulator {
         addAntrieb("DRUCKLUFT", "Druckluft");
     }
 
-    private Artikel addArtikel(IProdukt produkt, LocalDate kaufdatum, IWahrung wahrung, BigDecimal preis, Integer stuck,
+    private Artikel addArtikel(IProdukt produkt, LocalDate kaufdatum, IWahrung wahrung, BigDecimal preis, Integer stuck, Integer verbleibende,
             ISteuerung steuerung, IMotorTyp motorTyp, ILicht licht, IKupplung kupplung, IDecoder decoder, String bezeichnung,
             String anmerkung, String beladung, Status status) {
 
-        return save(new Artikel(null, produkt,  kaufdatum,  wahrung,  preis,  stuck,
-            steuerung,  motorTyp,  licht,  kupplung,  decoder,
-            persisterFactory.createPersister(Artikel.class).getNextId(),  bezeichnung,  anmerkung,
-            beladung,  status, false));
+        return save(new Artikel(null, produkt, kaufdatum, wahrung, preis, stuck, verbleibende,
+            steuerung, motorTyp, licht, kupplung, decoder,
+            persisterFactory.createPersister(Artikel.class).getNextId(), bezeichnung, anmerkung,
+            beladung, status, false));
     }
 
     private void populateArtikel() {
@@ -236,7 +236,7 @@ public class DBPopulator {
         ILicht licht = findLicht("L1V");
         IKupplung kupplung = findKupplung("RELEX");
 
-        addArtikel(produkt, LocalDate.of(1967,1,1), wahrung, BigDecimal.valueOf(100.0), 1,
+        addArtikel(produkt, LocalDate.of(1967,1,1), wahrung, BigDecimal.valueOf(100.0), 1, 1,
                 steuerung, motorTyp, licht, kupplung, null,
                 "", null, null, Status.GEKAUFT);
     }
@@ -2012,11 +2012,11 @@ public class DBPopulator {
             String betreibsnummer, LocalDate bauzeit, IVorbild vorbild, IAchsfolg achsfolg, String anmerkung,
             ISonderModell sondermodel, IAufbau aufbau, ILicht licht, IKupplung kupplung, ISteuerung steuerung,
             IDecoderTyp decoderTyp, IMotorTyp motorTyp, BigDecimal lange) {
-        return save(new Produkt(null,  hersteller,  bestellNr,  bezeichnung,  unterKategorie,
-                 massstab,  spurweite,  epoch,  bahnverwaltung,  gattung,
-                 betreibsnummer,  bauzeit,  vorbild,  achsfolg,  anmerkung,
-                 sondermodel,  aufbau,  licht,  kupplung,  steuerung,
-                 decoderTyp,  motorTyp,  lange, false));
+        return save(new Produkt(null, hersteller, bestellNr, bezeichnung, unterKategorie,
+                 massstab, spurweite, epoch, bahnverwaltung, gattung,
+                 betreibsnummer, bauzeit, vorbild, achsfolg, anmerkung,
+                 sondermodel, aufbau, licht, kupplung, steuerung,
+                 decoderTyp, motorTyp, lange, false));
     }
 
     @SuppressWarnings("unused")
@@ -2114,12 +2114,12 @@ public class DBPopulator {
             Integer sitzPlatzeKL2, Integer sitzPlatzeKL3, Integer sitzPlatzeKL4, String aufbauten, Integer triebkopf, 
             Integer mittelwagen, String drehgestellbauart) {
         return save(new Vorbild(null, gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit,
-                 anzahl,  betreibsNummer,  antrieb,  achsfolg,  bezeichnung,  anfahrzugkraft,
-                 leistung,  dienstgewicht,  geschwindigkeit,  lange,  ausserdienst,
-                 dmTreibrad,  dmLaufradVorn,  dmLaufradHinten,  zylinder,  dmZylinder,
-                 kolbenhub,  kesseluberdruck,  rostflache,  uberhitzerflache,  wasservorrat,
-                 verdampfung,  fahrmotoren,  motorbauart,  leistungsUbertragung,  reichweite,  kapazitaet,  klasse,  sitzPlatzeKL1,
-                 sitzPlatzeKL2,  sitzPlatzeKL3,  sitzPlatzeKL4,  aufbauten, triebkopf,  mittelwagen, drehgestellbauart, false));
+                 anzahl, betreibsNummer, antrieb, achsfolg, bezeichnung, anfahrzugkraft,
+                 leistung, dienstgewicht, geschwindigkeit, lange, ausserdienst,
+                 dmTreibrad, dmLaufradVorn, dmLaufradHinten, zylinder, dmZylinder,
+                 kolbenhub, kesseluberdruck, rostflache, uberhitzerflache, wasservorrat,
+                 verdampfung, fahrmotoren, motorbauart, leistungsUbertragung, reichweite, kapazitaet, klasse, sitzPlatzeKL1,
+                 sitzPlatzeKL2, sitzPlatzeKL3, sitzPlatzeKL4, aufbauten, triebkopf, mittelwagen, drehgestellbauart, false));
     }
 
     private void populateVorbild() {
@@ -2167,7 +2167,7 @@ public class DBPopulator {
         addVorbild(gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit,
                 anzahl, betreibsNummer, antrieb, achsfolg, "BR 89.0", anfahrzugkraft,
                 leistung, dienstgewicht, geschwindigkeit, lange, ausserdienst,
-                dmTreibrad, dmLaufradVorn,  dmLaufradHinten,  zylinder,  dmZylinder,
+                dmTreibrad, dmLaufradVorn, dmLaufradHinten, zylinder, dmZylinder,
                 kolbenhub, kesseluberdruck, rostflache, uberhitzerflache, wasservorrat,
                 verdampfung, fahrmotoren, motorbauart, leistungsUbertragung,
                 reichweite, kapazitaet, klasse, sitzPlatzeKL1, sitzPlatzeKL2, sitzPlatzeKL3, 

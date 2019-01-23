@@ -11,6 +11,8 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.Index;
@@ -380,6 +382,7 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
     }
 
     @Override
+    @Column(name = DBNames.BAUZEIT)
     public LocalDate getBauzeit() {
         return bauzeit;
     }
@@ -645,6 +648,7 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
 
     @Override
     @Column(name = DBNames.LEISTUNGSUBERTRAGUNG)
+    @Enumerated(EnumType.STRING)
     public LeistungsUbertragung getLeistungsubertragung() {
         return leistungsUbertragung;
     }

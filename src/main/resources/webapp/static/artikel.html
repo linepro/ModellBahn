@@ -14,6 +14,17 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
+  const anderungenColumns = [
+    ANDERUNGS_ID,
+    ANDERUNGS_TYP,
+    ANDERUNGS_DATUM,
+    BEZEICHNUNG,
+    STUCK,
+    gridButtonColumn("anderungen")
+  ];
+
+  const anderungen = new ItemGrid(5, "anderungen", "anderungen", anderungenColumns, Paged.EXPAND, EditMode.ADD, undefined);
+  
   const columns = [
     ARTIKEL_ID,
     PRODUKT,
@@ -32,14 +43,14 @@
     STATUS,
     new ButtonColumn([], [updateRow])];
 
-  const artikel = new ItemGrid(1, fetchUrl("artikel"), "artikel", columns, Paged.FORM,
-      EditMode.UPDATE, undefined);
+  const artikel = new ItemGrid(1, fetchUrl("artikel"), "artikel", columns, Paged.FORM, 
+      EditMode.UPDATE, [anderungen]);
 
   async function init() {
+    await ANDERUNGS_TYP_DROP.init();
     await PRODUKT_DROP.init();
     await WAHRUNG_DROP.init();
     await STEUERUNG_DROP.init();
-    await SPURWEITE_DROP.init();
     await MOTOR_TYP_DROP.init();
     await LICHT_DROP.init();
     await KUPPLUNG_DROP.init();
@@ -67,6 +78,8 @@
 			<div id="data">
 				<div id="artikel">
 				</div>
+		        <div id="anderungen">
+		        </div>
 			</div>
 		</article>
 	</section>

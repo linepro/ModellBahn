@@ -4,10 +4,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.Response.StatusType;
 import javax.ws.rs.core.UriInfo;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * AbstractService.
@@ -17,8 +17,6 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractService {
 
-    private final Logger logger;
-
     /** The uri info injected by Jersey. */
     @Context
     protected UriInfo uriInfo;
@@ -26,17 +24,14 @@ public abstract class AbstractService {
     /**
      * Instantiates a new abstract service.
      */
-    protected AbstractService() {
-        this.logger = LoggerFactory.getILoggerFactory().getLogger(getClass().getName());
+   protected AbstractService() {
    }
 
     UriInfo getUriInfo() {
         return uriInfo;
     }
 
-    protected Logger getLogger() {
-        return logger;
-    }
+    protected abstract Logger getLogger();
 
     protected void debug(final String message) {
         getLogger().debug(message);
@@ -79,7 +74,7 @@ public abstract class AbstractService {
     }
 
     protected ResponseBuilder badRequest(final String errorCode, final String userMessage) {
-        return Response.status(Status.BAD_REQUEST).entity(new ErrorMessage(errorCode, userMessage));
+        return Response.status(Status.BAD_REQUEST).entity(new ErrorMessage(Status.BAD_REQUEST.getStatusCode(), userMessage));
     }
 
     protected ResponseBuilder created() {
@@ -109,14 +104,14 @@ public abstract class AbstractService {
     protected ResponseBuilder serverError(Exception e) {
         error(Status.INTERNAL_SERVER_ERROR.getReasonPhrase(), e);
 
-        return serverError(Status.INTERNAL_SERVER_ERROR.getStatusCode()+"", Status.INTERNAL_SERVER_ERROR.getReasonPhrase(), e.getMessage());
+        return serverError(Status.INTERNAL_SERVER_ERROR, Status.INTERNAL_SERVER_ERROR.getReasonPhrase(), e.getMessage());
     }
 
-    protected ResponseBuilder serverError(final String errorCode, final String userMessage) {
+    protected ResponseBuilder serverError(final StatusType errorCode, final String userMessage) {
         return serverError(errorCode, userMessage, null);
     }
 
-    protected ResponseBuilder serverError(final String errorCode, final String userMessage, final String developerMessage) {
-        return Response.serverError().entity(new ErrorMessage(errorCode, userMessage, developerMessage));
+    protected ResponseBuilder serverError(final StatusType errorCode, final String userMessage, final String developerMessage) {
+        return Response.status(errorCode).entity(new ErrorMessage(errorCode.getStatusCode(), userMessage, developerMessage));
     }
 }

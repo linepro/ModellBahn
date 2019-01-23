@@ -10,48 +10,54 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * Konfiguration.
- * Enum defining the supported Decoder configuration methods
+ * ChangeTyp.
+ * Enum defining the supported address types.
  * @author   $Author$
  * @version  $Id$
  */
-@JsonRootName(value = ApiNames.KONFIGURATION)
+@JsonRootName(value = ApiNames.ANDERUNGS_TYP)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG })
-@ApiModel(value = ApiNames.KONFIGURATION, description = "Configuration methods")
-public enum Konfiguration implements IDescribedEnum {
+@ApiModel(value = ApiNames.ANDERUNGS_TYP, description = "Change types")
+public enum AnderungsTyp implements IDescribedEnum {
 
-    NONE("Kein", "The Decoder cannot be configured."),
-
-    LINK("Lötbrücke", "The Decoder can be configured by link (solder or jumper)."),
-
-    SWITCH("Schalter", "The Decoder can be configured by switches."),
-
-    CV("CV", "The Decoder can be configured by CV values.");
+    AUSGETAUSCHT("ausgetauscht", ""),
+    
+    ERSATZTEILE("Ersatzteile", ""),
+    
+    REPARIERT("repariert", ""),
+    
+    UMGEBAUT("umgebaut", ""),
+    
+    VERKAUFT("verkauft", ""),
+    
+    VERLOREN("verloren", ""),
+    
+    VERSCHROTTET("verschrottet", "");
 
     private final String description;
 
     private final String tooltip;
 
-    Konfiguration(String description, String tooltip) {
+    AnderungsTyp(String description, String tooltip) {
         this.description = description;
         this.tooltip = tooltip;
     }
 
     @Override
-    @ApiModelProperty(value = "Konfiguration name", example = "CV", required = true)
+    @ApiModelProperty(value = "ChangeTyp name", example = "UMGEBAUT", required = true)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @ApiModelProperty(value = "Konfiguration description", example = "The Decoder can be configured by CV values.", required = true)
+    @ApiModelProperty(value = "ChangeTyp description", example = "umgebaut", required = true)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @ApiModelProperty(value = "AdressTyp tooltip", example = "0 - 10239.")
+    @ApiModelProperty(value = "ChangeTyp tooltip")
     public String getTooltip() {
         return tooltip;
     }

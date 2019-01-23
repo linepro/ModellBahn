@@ -3,6 +3,7 @@ package com.linepro.modellbahn.model;
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -15,7 +16,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.model.keys.ArtikelKey;
+import com.linepro.modellbahn.model.refs.IAnderungRef;
 import com.linepro.modellbahn.model.refs.IArtikelRef;
 import com.linepro.modellbahn.model.refs.IDecoderRef;
 import com.linepro.modellbahn.model.refs.IKupplungRef;
@@ -23,7 +26,6 @@ import com.linepro.modellbahn.model.refs.ILichtRef;
 import com.linepro.modellbahn.model.refs.IMotorTypRef;
 import com.linepro.modellbahn.model.refs.ISteuerungRef;
 import com.linepro.modellbahn.model.refs.IWahrungRef;
-import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.rest.json.Formats;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.DecoderDeserializer;
@@ -39,6 +41,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * IArtikel.
@@ -134,6 +137,13 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
     @JsonView(Views.Public.class)
     @ApiModelProperty(value = "Purchase Quantity", example = "1", required = true)
     Integer getStuck();
+
+    @JsonGetter(ApiNames.VERBLEIBENDE)
+    @JsonView(Views.Public.class)
+    @ApiModelProperty(value = "Remaining Quantity", example = "1", required = true)
+    Integer getVerbleibende();
+
+    void setVerbleibende(Integer verbleibende);
 
     /**
      * Sets the stuck.
@@ -305,4 +315,20 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
      */
     @JsonSetter(ApiNames.STATUS)
     void setStatus(Status status);
+    
+    @JsonGetter(ApiNames.ANDERUNGEN)
+    @JsonSerialize(contentAs = IAnderungRef.class)
+    @JsonView(Views.Public.class)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IAnderungRef;", value = "Modifications", accessMode = AccessMode.READ_ONLY)
+    Set<IAnderung> getSortedAnderungen();
+
+    @JsonIgnore
+    Set<IAnderung> getAnderungen();
+
+    @JsonIgnore
+    void setAnderungen(Set<IAnderung> consist);
+
+    void addAnderung(IAnderung consist);
+
+    void removeAnderung(IAnderung consist);
 }

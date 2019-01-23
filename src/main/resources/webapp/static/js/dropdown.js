@@ -2,9 +2,10 @@
 "use strict";
 
 class Option {
-  constructor(value, display, image) {
+  constructor(value, display, tooltip, image) {
     this.display = display;
     this.value = value;
+    this.tooltip = tooltip;
     this.image = image;
     this.options = [];
   }
@@ -15,6 +16,10 @@ class Option {
 
   getValue() {
     return this.value;
+  }
+
+  getTooltip() {
+	return this.tooltip;
   }
 
   getImage() {

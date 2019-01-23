@@ -1,47 +1,27 @@
 package com.linepro.modellbahn.rest.util;
 
-import java.util.AbstractMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.ws.rs.core.MediaType;
 
 public interface AcceptableMediaTypes {
 
-    public static final String BMP = "bmp";
+    public static final  MediaType BMP_TYPE = new MediaType("image", "bmp");
 
-    public static final String GIF = "gif";
+    public static final MediaType GIF_TYPE = new MediaType("image", "gif");
 
-    public static final String JPG = "jpg";
+    public static final MediaType JPG_TYPE = new MediaType("image", "jpg");
 
-    public static final String PDF = "pdf";
+    public static final MediaType JPEG_TYPE = new MediaType("image", "jpeg");
 
-    public static final String PNG = "png";
+    public static final MediaType PDF_TYPE = new MediaType("application", "pdf");
 
-    public static final String TXT = "txt";
+    public static final MediaType PNG_TYPE = new MediaType("image", "png");
 
-    public static final  MediaType BMP_TYPE = new MediaType("image", BMP);
+    public static final MediaType TEXT_TYPE = new MediaType("text", "plain");
 
-    public static final MediaType GIF_TYPE = new MediaType("image", GIF);
+    public static final List<MediaType> DOCUMENT_TYPES = Arrays.asList(PDF_TYPE, TEXT_TYPE);
 
-    public static final MediaType JPG_TYPE = new MediaType("image", JPG);
-
-    public static final MediaType PDF_TYPE = new MediaType("application", PDF);
-
-    public static final MediaType PNG_TYPE = new MediaType("image", PNG);
-
-    public static final MediaType TEXT_TYPE = MediaType.TEXT_PLAIN_TYPE;
-
-    public static final Map<String, MediaType> DOCUMENTS = Stream.of(
-            new AbstractMap.SimpleEntry<>(PDF, PDF_TYPE),
-            new AbstractMap.SimpleEntry<>(TXT, TEXT_TYPE))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-
-    public static final Map<String, MediaType> IMAGES = Stream.of(
-            new AbstractMap.SimpleEntry<>(BMP, BMP_TYPE),
-            new AbstractMap.SimpleEntry<>(GIF, GIF_TYPE),
-            new AbstractMap.SimpleEntry<>(JPG, JPG_TYPE),
-            new AbstractMap.SimpleEntry<>(PNG, PNG_TYPE))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    public static final List<MediaType> IMAGE_TYPES = Arrays.asList(BMP_TYPE, GIF_TYPE, JPG_TYPE, JPEG_TYPE, PNG_TYPE);
 }

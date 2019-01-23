@@ -10,6 +10,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.linepro.modellbahn.rest.util.AbstractService;
 import com.linepro.modellbahn.rest.util.ApiPaths;
@@ -18,9 +20,17 @@ import com.linepro.modellbahn.util.StaticContentFinder;
 @Path(ApiPaths.WEB_ROOT)
 public class HttpService extends AbstractService {
 
-    private static final String WEB_ROOT = StringUtils.strip(ApiPaths.WEB_ROOT, "/");
+    private static final String WEB_ROOT = StringUtils.strip(ApiPaths.WEB_ROOT, ApiPaths.SEPARATOR);
 
+    protected final Logger logger;
+    
     public HttpService() {
+        this.logger = LoggerFactory.getILoggerFactory().getLogger(getClass().getName());
+    }
+
+    @Override
+    protected Logger getLogger() {
+        return logger;
     }
 
     @GET
@@ -41,7 +51,7 @@ public class HttpService extends AbstractService {
         URI requested = uriInfo.getBaseUri().relativize(uriInfo.getRequestUri());
 
         // We really really don't want leading or trailing slashes
-        String stripedPath = StringUtils.strip(StringUtils.removeStart(StringUtils.strip(requested.getPath(), "/"), WEB_ROOT), "/");
+        String stripedPath = StringUtils.strip(StringUtils.removeStart(StringUtils.strip(requested.getPath(), ApiPaths.SEPARATOR), WEB_ROOT), ApiPaths.SEPARATOR);
 
         String path = StringUtils.isBlank(stripedPath) ? "index.html" : stripedPath;
 

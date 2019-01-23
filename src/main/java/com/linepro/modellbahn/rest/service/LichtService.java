@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -25,7 +26,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.ILicht;
 import com.linepro.modellbahn.model.impl.Licht;
 import com.linepro.modellbahn.model.keys.NameKey;
-import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;
@@ -52,8 +52,6 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
 
     public LichtService() {
         super(ILicht.class);
-
-        getPersister().getSelectors().get(DBNames.ABBILDUNG).setNullable(true);
     }
 
     @JsonCreator(mode= Mode.DELEGATING)
@@ -129,16 +127,21 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
     @ApiOperation(code = 201, value = "Adds or updates the picture for a named Licht", response = ILicht.class)
     public Response updateAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name,
             @FormDataParam("file") InputStream fileInputStream,
-            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
-        logPut(getEntityClassName() + ": " + name + ", abbildung, " + contentDispositionHeader);
+            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,  
+            @FormDataParam("file") FormDataBodyPart body) {
+        logPut(getEntityClassName() + ": " + name + ApiPaths.SEPARATOR + ApiNames.ABBILDUNG + ": " + contentDispositionHeader);
 
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
+            if (!handler.isAcceptable(body, AcceptableMediaTypes.IMAGE_TYPES)) {
+                return getResponse(badRequest(null, "Invalid file '" + contentDispositionHeader.getFileName() + "'"));
+            }
+
             ILicht licht = findLicht(name, false);
 
             if (licht != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] {name}, contentDispositionHeader, fileInputStream, AcceptableMediaTypes.IMAGES);
+                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] {name}, contentDispositionHeader, fileInputStream);
 
                 licht.setAbbildung(file);
 
@@ -147,7 +150,7 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
                 return getResponse(ok(licht));
             }
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
 
         return getResponse(notFound());
@@ -159,7 +162,7 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 204, value = "Deletes the picture for a named Licht", response = ILicht.class)
     public Response deleteAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
-        logDelete(getEntityClassName() + ": " + name + ", abbildung");
+        logDelete(getEntityClassName() + ": " + name + ApiPaths.SEPARATOR + ApiNames.ABBILDUNG);
         
         try {
             ILicht licht = findLicht(name, false);
@@ -174,7 +177,7 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
                 return getResponse(ok(licht));
             }
         } catch (Exception e) {
-            return getResponse(serverError(e));
+            return getResponse(e);
         }
 
         return getResponse(notFound());

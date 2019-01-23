@@ -16,6 +16,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.linepro.modellbahn.guice.IModellBahnFactory;
 import com.linepro.modellbahn.guice.ModellBahnModule;
+import com.linepro.modellbahn.rest.util.ApiPaths;
 
 /**
  * Main.
@@ -77,7 +78,7 @@ public class Main {
                 + InetAddress.getLocalHost().getCanonicalHostName()
                 + ":"
                 + port
-                + "/"
+                + ApiPaths.SEPARATOR
                 + webRoot;
             URI baseUri = URI.create(url);
 
