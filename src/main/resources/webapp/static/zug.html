@@ -31,17 +31,16 @@
     ZUG_TYP,
     BEZEICHNUNG,
     LANGE,
-    new ButtonColumn(
-        [],
-        [updateRow])
+    new ButtonColumn([], [updateRow])
   ];
 
   const zug = new ItemGrid(1, fetchUrl("zug"), "zug", columns, Paged.PAGED, EditMode.UPDATE,
       [consisten]);
 
   async function init() {
-    await ZUG_TYP_DROP.init();
-    await zug.init();
+    await ZUG_TYP_DROP.init()
+      .then(() => ARTIKEL_DROP.init())
+      .then(() => zug.init());
   }
 </script>
 <title>Zugen</title>

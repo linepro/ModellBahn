@@ -506,7 +506,7 @@ ul.footer li:last-of-type {
   height: 100%;
   left: 0;
   overflow: auto;
-  padding-top: 10rem;
+  padding-top: 5rem;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -519,12 +519,10 @@ ul.footer li:last-of-type {
   background-color: LightSkyBlue;
   border: 0.2rem LightSkyBlue;
   border-radius: 3rem;
-  height: 40rem;
   margin: auto;
   overflow: hidden;
   padding: 0;
   position: relative;
-  width: 60rem;
   -webkit-animation-name: animatetop;
   -webkit-animation-duration: 0.4s;
 }
@@ -778,23 +776,43 @@ img.img-button {
   padding: 1.5rem;
 }
 
-.display-pdf {
+.display-pdf-container {
   background-color: white;
   height: 100%;
   padding: 1.5rem;
 }
 
+.display-pdf-canvas {
+  height: 95%;
+  text-align: center;
+  width: 100%;
+}
+
+.display-pdf-bar {
+  height: 2rem;
+}
+
+.alert {
+  background-color: transparent;
+  border: 0 solid transparent;
+  color: red;
+  font-size: 1.5rem;
+  font-weight: normal;
+  line-height: 2rem;
+  margin: 0;
+  position: fixed;
+  padding: 0;
+  text-align: left;
+  vertical-align: baseline;
+}
+
 .closebtn {
-  margin-left: 15px;
-  color: white;
-  font-weight: bold;
-  float: right;
-  font-size: 22px;
-  line-height: 20px;
   cursor: pointer;
+  font-weight: bold;
+  margin-right: 0.5rem;
   transition: 0.3s;
 }
 
 .closebtn:hover {
-  color: black;
+  background-color: GrayText;
 }

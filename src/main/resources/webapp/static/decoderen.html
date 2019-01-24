@@ -26,9 +26,9 @@
         EditMode.UPDATE, undefined, "decoder.html");
 
     async function init() {
-        await DECODER_TYP_DROP.init();
-        await PROTOKOLL_DROP.init();
-        await decoderen.init();
+        await DECODER_TYP_DROP.init()
+          .then(() => PROTOKOLL_DROP.init())
+          .then(() => decoderen.init());
     }
 </script>
 <title>Decoder list</title>

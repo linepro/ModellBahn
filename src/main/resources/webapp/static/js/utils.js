@@ -18,20 +18,18 @@ const DATE_PATTERN = '^(18[2-9][0-9]|19[0-9]{2}|2[0-9]{3})-(0[1-9]|1[0-2])-(0[1-
 const URL_PATTERN = '^(?:(http[s]?):\\/\\/)?(\\w+(?:\\.\\w+)*)(?::(\\d+))?(?:\\/(\\w+(?:\\/|\\.\\w+)?))?$';
 
 window.onerror = function (msg, url, lineNo, columnNo, error) {
-  var string = msg.toLowerCase();
-  var substring = "script error";
-  if (string.indexOf(substring) > -1){
-    alert('Script Error: See Browser Console for Detail');
+  if (msg.toLowerCase().includes("script error")){
+    reportError('Script Error: See Browser Console for Detail');
   } else {
-    var message = [
+    const message = [
       'Message: ' + msg,
       'URL: ' + url,
       'Line: ' + lineNo,
       'Column: ' + columnNo,
-      'Error object: ' + JSON.stringify(error)
+      'Error object: ' + Object.toString(error)
     ].join(' - ');
 
-    alert(message);
+    reportError(message);
   }
 
   return false;
@@ -71,16 +69,8 @@ const removeChildren = (node) => {
 };
 
 const addToEnd = (element) => {
-    let docBody = document.getElementsByTagName('BODY')[0];
+  let docBody = document.getElementsByTagName('BODY')[0];
 	docBody.appendChild(element);
-};
-
-const addCloser = (target) => {
-  let closer = document.createElement('span');
-  closer.className = 'closebtn';
-  closer.onclick = (e) => {target.style.display = 'none'; };
-  addText(closer, '&times');
-  target.appendChild(closer);
 };
 
 const reportError = (error) => {
@@ -89,13 +79,24 @@ const reportError = (error) => {
   let alert = document.getElementById('alert-box');
   
   if (!alert) {
-	  let alert = document.createElement('div');
+	  alert = document.createElement('div');
 	  alert.className = 'alert';
-	  addCloser(alert);
+
+    let closer = document.createElement('span');
+    closer.className = 'closebtn';
+    closer.onclick = (e) => {alert.style.display = 'none'; };
+    addText(closer, 'x');
+    alert.appendChild(closer);
+
+    let message = document.createElement('span');
+    message.id = 'alert-message';
+    alert.appendChild(message);
+
 	  addToEnd(alert);
   }
 
-  addText(alert, error);
+  let message = document.getElementById('alert-message');
+  message.innerText = error;
   alert.style.display = 'inline-block';
 };
 
@@ -162,7 +163,7 @@ const getButton = (value, alt, action) => {
   let btn = document.createElement('button');
 
   btn.setAttribute('value', value);
-  btn.setAttribute('onclick', action);
+  if (action) btn.addEventListener('click', action);
   btn.className = 'nav-button';
 
   let img = getImg(alt);
@@ -224,8 +225,7 @@ class Column {
     this.setter = setter;
     this.editable = editable ? editable : Editable.NEVER;
     this.required = required ? required : false;
-    this.length = Math.max(length ? length : heading.length,
-        heading.length + 1);
+    this.length = Math.max(length ? length : heading.length, heading.length + 1);
     this.width = 0;
   }
 
@@ -282,8 +282,7 @@ class Column {
     if (value || entity) {
       ctl.disabled = shouldDisable(this.editable, editMode);
     } else {
-      ctl.disabled = !(editMode === EditMode.ADD && this.editable
-          !== Editable.NEVER);
+      ctl.disabled = !(editMode === EditMode.ADD && this.editable !== Editable.NEVER);
     }
 
     ctl.readOnly = ctl.disabled;
@@ -335,12 +334,9 @@ class BoolColumn extends Column {
 }
 
 class NumberColumn extends Column {
-  constructor(heading, binding, getter, setter, editable, required, max, min,
-      places) {
-    max = max ? max : 255;
-    super(heading, binding, getter, setter, editable, required,
-        Math.max(max.toString().length, heading.length));
-    this.max = max;
+  constructor(heading, binding, getter, setter, editable, required, max, min, places) {
+    super(heading, binding, getter, setter, editable, required, (max ? max : 255).toString(), heading.length);
+    this.max = max ? max : 255;
     this.min = min ? min : 0;
     this.places = places ? places : 0;
   }
@@ -372,8 +368,7 @@ class PhoneColumn extends Column {
 }
 
 class TextColumn extends Column {
-  constructor(heading, binding, getter, setter, editable, required, length,
-      pattern) {
+  constructor(heading, binding, getter, setter, editable, required, length, pattern) {
     super(heading, binding, getter, setter, editable, required, length);
     this.pattern = pattern;
   }
@@ -442,10 +437,7 @@ class FileColumn extends Column {
     let add = getLink(entity.links, 'update-' + this.binding);
 
     if (add) {
-      let btn = getButton(add.href, 'add', undefined);
-      btn.addEventListener('click', (e) => {
-        this.select(e);
-      }, false);
+      let btn = getButton(add.href, 'add', (e) => { this.select(e); });
       btn.className = 'img-button';
       btn.firstChild.className = 'img-button';
       cell.appendChild(btn);
@@ -454,10 +446,7 @@ class FileColumn extends Column {
     let remove = getLink(entity.links, 'delete-' + this.binding);
 
     if (remove) {
-      let btn = getButton(remove.href, 'delete', undefined);
-      btn.addEventListener('click', (e) => {
-        this.remove(e, ctl);
-      }, false);
+      let btn = getButton(remove.href, 'delete', (e) => { this.remove(e, ctl); });
       btn.className = 'img-button';
       btn.firstChild.className = 'img-button';
       cell.appendChild(btn);
@@ -499,15 +488,9 @@ class FileColumn extends Column {
     cell.appendChild(file);
     file.style.display = 'none';
     file.click();
-    file.addEventListener('change', (e) => {
-      this.update(e);
-    }, false);
-    file.addEventListener('click', (e) => {
-      this.update(e);
-    }, false);
-    file.addEventListener('blur', (e) => {
-      this.update(e);
-    }, false);
+    file.addEventListener('change', (e) => { this.update(e); }, false);
+    file.addEventListener('click', (e) => { this.update(e); }, false);
+    file.addEventListener('blur', (e) => { this.update(e); }, false);
   }
 
   remove(e, img) {
@@ -518,9 +501,8 @@ class FileColumn extends Column {
     let cell = btn.parentElement;
     let link = btn.value;
     if (link) {
-      removeFile(link);
-      let ctl = cell.getElementsByTagName('IMG')[0];
-      this.setValue(img, undefined);
+      removeFile(link)
+        .then(() => this.setValue(img, undefined));
     }
   }
 
@@ -564,34 +546,46 @@ class PDFColumn extends FileColumn {
   }
 
   showContent(file) {
+    let div = document.createElement('div');
+    div.className = 'display-pdf-container';
+
     let canvas = document.createElement('canvas');
-    canvas.className = 'display-pdf';
+    canvas.className = 'display-pdf-canvas';
+    div.appendChild(canvas);
+
+    let bar = document.createElement('div');
+    bar.className = 'display-pdf-bar';
+    div.appendChild(bar);
 
     let viewer = new PDFViewer(canvas);
+
+    let prev = getButton('Vorig', 'previous', (e) => { viewer.prevPage(); });
+    prev.style.cssFloat = 'left';
+    bar.appendChild(prev);
+
+    let next = getButton('Nächste', 'next', (e) => { viewer.nextPage(); });
+    next.style.cssFloat = 'right';
+    bar.appendChild(next);
+
     viewer.load(file);
     
-    showModal(canvas);
+    showModal(div, true);
   }
 }
 
 const closeAutoLists = (elmnt) => {
-  let autoComp = (elmnt ? elmnt : document).getElementsByClassName(
-      'autocomplete-list');
+  let autoComp = (elmnt ? elmnt : document).getElementsByClassName( 'autocomplete-list');
   for (let i = 0; i < autoComp.length; i++) {
     removeChildren(autoComp[i]);
     autoComp[i].parentNode.removeChild(autoComp[i]);
   }
 };
 
-document.addEventListener('click', (e) => {
-  closeAutoLists();
-}, false);
+document.addEventListener('click', (e) => { closeAutoLists(); }, false);
 
 class SelectColumn extends Column {
-  constructor(heading, binding, getter, setter, dropDown, editable, required,
-      dropSize) {
-    super(heading, binding, getter, setter, editable, required,
-        dropDown.length);
+  constructor(heading, binding, getter, setter, dropDown, editable, required, dropSize) {
+    super(heading, binding, getter, setter, editable, required, dropDown.length);
     this.dropDown = dropDown;
     this.dropSize = dropSize ? dropSize : 5;
   }
@@ -600,15 +594,9 @@ class SelectColumn extends Column {
     let ctl = super.getControl(cell, entity, editMode);
 
     if (!ctl.disabled) {
-      ctl.addEventListener('click', (e) => {
-        this.open(e);
-      }, false);
-      ctl.addEventListener('input', (e) => {
-        this.open(e);
-      }, false);
-      ctl.addEventListener('keydown', (e) => {
-        this.keydown(e);
-      }, false);
+      ctl.addEventListener('click', (e) => { this.open(e); }, false);
+      ctl.addEventListener('input', (e) => { this.open(e); }, false);
+      ctl.addEventListener('keydown', (e) => { this.keydown(e); }, false);
       ctl.classList.add('autocomplete');
     }
 
@@ -809,7 +797,7 @@ class DropDownColumn extends SelectColumn {
   }
 
   getControlValue(select) {
-    return select.options[select.selectedIndex].value;
+    return select.selectedIndex >= 0 ? select.options[select.selectedIndex].value : undefined;
   }
 
   getLength() {
@@ -908,22 +896,24 @@ async function checkResponse(response) {
     return response.json();
   } else if (response.status === 204) {
     return {entities: [], links: []};
-  } else {
-    let errorMessage = response.statusText;
+  } else if (response.status === 500) {
+    let errorMessage = response.status + ": " + response.statusText;
 
-    if (response.status === 400) {
-      let json = await response.json();
+    try {
+      let jsonData = await response.json();
 
-      if (json) {
-        errorMessage = json.userMessage;
-      }
+      errorMessage = jsonData.errorCode + "  " + jsonData.userMessage + ": " + jsonData.developerMessage;
+    } catch(err) {
+        errorMessage  = await response.text();
     }
 
-    let error = new Error(errorMessage);
+    console.log(errorMessage);
 
-    console.log(error);
+    throw new Error(errorMessage);
+  } else {
+    console.log(response.statusText);
 
-    throw error;
+    throw new Error(response.statusText);
   }
 }
 
@@ -938,6 +928,7 @@ const addModal = () => {
     let content = document.createElement('div');
     content.id = 'modal-content';
     content.className = 'modal-content';
+
     modal.appendChild(content);
     addToEnd(modal);
 
@@ -951,10 +942,12 @@ const addModal = () => {
   return modal;
 };
 
-const showModal = (content) => {
-  let modal = addModal();
+const showModal = (content, big) => {
+  let modal = addModal(big);
 
   let contents = document.getElementById('modal-content');
+  contents.style.height = big ? '90%' : '40rem';
+  contents.style.width = big ? '80%': '60rem';
   removeChildren(contents);
 
   contents.appendChild(content);
@@ -1012,31 +1005,30 @@ const setActiveTab = (event, tabName) => {
 };
 
 const addRow = (tableName) => {
-  return getButton(undefined, 'add', tableName + '.addRow()');
+  return getButton(undefined, 'add', Function(tableName + '.addRow()'));
 };
 
 const deleteRow = (tableName, row) => {
-  return getButton(row, 'delete', tableName + '.deleteRow(' + row + '.id)');
+  return getButton(row, 'delete', Function(tableName + '.deleteRow(' + row + '.id)'));
 };
 
 const editRow = (tableName, row) => {
-  return getButton(row, 'update', tableName + '.editRow(' + row + '.id)');
+  return getButton(row, 'update', Function(tableName + '.editRow(' + row + '.id)'));
 };
 
 const newRow = (tableName) => {
-  return getButton(undefined, 'add', tableName + '.newRow()');
+  return getButton(undefined, 'add', Function(tableName + '.newRow()'));
 };
 
 const updateRow = (tableName, row) => {
-  return getButton(row, 'save', tableName + '.updateRow(' + row + '.id)');
+  return getButton(row, 'save', Function(tableName + '.updateRow(' + row + '.id)'));
 };
 
 const gridButtonColumn = (elementName) => {
-  return new ButtonColumn([addRow],
-      [updateRow, deleteRow]);
+  return new ButtonColumn([addRow], [updateRow, deleteRow]);
 };
 
-const addHeader = (tableName, table, columns, paged, rowCount) => {
+const addHeader = (tableName, table, columns, paged) => {
   let isForm = paged === Paged.FORM;
   let header = document.createElement('div');
   header.id = tableName + '_thead';
@@ -1125,7 +1117,7 @@ const addBody = (tableName, table, pageSize, columns, paged, rowCount,
   }
 };
 
-const addFooter = (tableName, table, columns, paged, rowCount) => {
+const addFooter = (tableName, table, columns, paged) => {
   let isForm = paged === Paged.FORM;
   let footer = document.createElement('div');
   footer.id = tableName + '_tfoot';

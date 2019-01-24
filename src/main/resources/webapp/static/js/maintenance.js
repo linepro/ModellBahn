@@ -162,11 +162,10 @@ class ItemGrid {
 
         removeChildren(cell);
 
-        let ctl;
         if (entity || column.isButtons()) {
-          ctl = column.getControl(cell, entity, editMode);
+          column.getControl(cell, entity, editMode);
         } else {
-          ctl = blankControl(cell, column);
+          blankControl(cell, column);
         }
       });
     }
@@ -179,7 +178,7 @@ class ItemGrid {
       let prevLnk = getLink(jsonData.links, 'previous');
 
       if (prevLnk) {
-        addButton(prev, prevLnk, tableName + '.getData(this.value)');
+        addButton(prev, prevLnk, Function(tableName + '.getData(this.value)'));
       } else {
         addText(prev, '');
       }
@@ -193,7 +192,7 @@ class ItemGrid {
       let nextLnk = getLink(jsonData.links, 'next');
 
       if (nextLnk) {
-        addButton(next, nextLnk, tableName + '.getData(this.value)');
+        addButton(next, nextLnk, Function(tableName + '.getData(this.value)'));
       } else {
         addText(next, '');
       }
@@ -286,11 +285,9 @@ class ItemGrid {
     });
 
     let td = document.getElementById(getCellId(rowId, 'buttons'));
-    let save = getButton(rowId, 'save',
-        grid.tableName + '.saveRow(' + rowId + '.id)');
+    let save = getButton(rowId, 'save', Function(grid.tableName + '.saveRow(' + rowId + '.id)'));
     td.appendChild(save);
-    let del = getButton(rowId, 'delete',
-        grid.tableName + '.removeRow(' + rowId + '.id)');
+    let del = getButton(rowId, 'delete', Function(grid.tableName + '.removeRow(' + rowId + '.id)'));
     td.appendChild(del);
   }
 

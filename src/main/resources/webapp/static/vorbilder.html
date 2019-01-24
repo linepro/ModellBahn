@@ -32,10 +32,10 @@
       EditMode.UPDATE, undefined, "vorbild.html");
 
   async function init() {
-    await GATTUNG_DROP.init();
-    await UNTER_KATEGORIE_DROP.init();
-    await BAHNVERWALTUNG_DROP.init();
-    await vorbild.init();
+    await GATTUNG_DROP.init()
+      .then(() => UNTER_KATEGORIE_DROP.init())
+      .then(() => BAHNVERWALTUNG_DROP.init())
+      .then(() => vorbild.init());
     //about();
   }
 </script>
@@ -59,10 +59,9 @@
     	
 	<section>
 		<article>
-			<h3 id="heading">Vorbild</h3>
+			<h3 id="heading">Vorbilder</h3>
 			<div id="data">
 				<div id="vorbild">
-				TODO
 				</div>
 			</div>
 		</article>

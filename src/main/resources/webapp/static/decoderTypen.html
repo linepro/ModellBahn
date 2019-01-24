@@ -28,10 +28,10 @@
         EditMode.UPDATE, undefined, "decoderTyp.html");
 
     async function init() {
-        await HERSTELLER_DROP.init();
-        await PROTOKOLL_DROP.init();
-        await STECKER_DROP.init();
-        await decoderTyp.init();
+        await HERSTELLER_DROP.init()
+          .then(() => PROTOKOLL_DROP.init())
+          .then(() => STECKER_DROP.init())
+          .then(() => decoderTyp.init());
     }
 </script>
 <title>Decoder Typen</title>

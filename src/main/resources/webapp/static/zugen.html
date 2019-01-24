@@ -27,8 +27,8 @@
       undefined, "zug.html");
 
   async function init() {
-    await ZUG_TYP_DROP.init();
-    await zugen.init();
+    await ZUG_TYP_DROP.init()
+      .then(() => zugen.init());
   }
 </script>
 <title>Zugen</title>
@@ -55,6 +55,8 @@
 			<div id="data">
 				<div id="zugen">
 				</div>
+        <div id="consisten">
+        </div>
 			</div>
 		</article>
 	</section>

@@ -88,11 +88,11 @@
       EditMode.UPDATE, children);
 
   async function init() {
-    await DECODER_TYP_DROP.init();
-    await PROTOKOLL_DROP.init();
-    await KONFIGURATION_DROP.init();
-    await ADRESS_TYP_DROP.init();
-    await decoder.init();
+    await DECODER_TYP_DROP.init()
+      .then(() => PROTOKOLL_DROP.init())
+      .then(() => KONFIGURATION_DROP.init())
+      .then(() => ADRESS_TYP_DROP.init())
+      .then(() => decoder.init());
 
     setActiveTab(undefined, "adressenTab");
   }

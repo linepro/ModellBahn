@@ -1,55 +1,61 @@
 // module 'pdfViewer.js'
 'use strict';
 
-
 class PDFViewer {
-    constructor(canvas) {
-        this.pdfDoc = null;
-        this.pageNum = 1;
-        this.pageRendering = false;
-        this.pageNumPending = null;
-        this.scale = 0.8;
-        this.canvas = canvas,
-        this.ctx = canvas.getContext('2d');
-    }
+  constructor(canvas) {
+    this.pdfDoc = undefined;
+    this.pageNum = 1;
+    this.scale = 0.8;
+    this.canvas = canvas;
+  }
 
-    load(file) {
-        let pdfjsLib = window['pdfjs-dist/build/pdf'];
+  load(file) {
+    let pdfjsLib = window['pdfjs-dist/build/pdf'];
 
-        pdfjsLib.GlobalWorkerOptions.workerSrc = siteRoot() + '/js/lib/pdf.min-2.0.943.worker.js';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = siteRoot() + '/js/lib/pdf.min-2.0.943.worker.js';
 
-        var loadingTask = pdfjsLib.getDocument(file);
-        loadingTask.promise.then(pdf => this.showPage(pdf, 1))
-            .catch(e => reportError(e));
+    pdfjsLib.getDocument({ url: file, disableRange: true, disableStream: true })
+      .then(pdf => this.initialPage(pdf))
+      .catch(e => reportError(e));
+  };
+
+  async initialPage(pdfDoc) {
+    this.pdfDoc = pdfDoc;
+
+    await this.showPage(1);
+  }
+
+  async showPage(pageNum) {
+    this.pageNum = pageNum;
+
+    this.pdfDoc.getPage(pageNum)
+      .then(page => this.renderPage(page))
+      .catch(e => reportError(e));
+  }
+
+  async renderPage(page) {
+    let canvas = this.canvas;
+    let viewport = page.getViewport(this.scale);
+
+    let context = canvas.getContext('2d');
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
+
+    let renderContext = {
+      canvasContext: context,
+      viewport: viewport
     };
 
-    async showPage(pdfDoc, pageNum) {
-        this.pdfDoc = pdfDoc;
-        this.pageNum = pageNum;
+    return await page.render(renderContext);
+  }
 
-        pdfDoc.getPage(pageNum)
-            .then(page => this.renderPage(page))
-            .catch(e => reportError(e));
-    }
+  async prevPage() {
+    let prev = this.pageNum <= 1 ? this.pageNum - 1 : 1;
+    await this.showPage(prev);
+  }
 
-    async renderPage(page) {
-        let viewport = page.getViewport({ scale: this.scale });
-        this.canvas.height = viewport.height;
-        this.canvas.width = viewport.width;
-
-        let renderContext = {
-            canvasContext: this.ctx,
-            viewport: viewport
-        };
-
-        return await page.render(renderContext);
-    }
-
-    prevPage() {
-        this.showPage(this.pageNum <= 1 ? pageNum-- : 1);
-    }
-
-    nextPage() {
-        this.showPage(this.pageNum < pdfDoc.numPages ? pageNum++ : pdfDoc.numPages);
-    }
+  async nextPage() {
+    let next = this.pageNum < this.pdfDoc.numPages ? this.pageNum + 1 : this.pdfDoc.numPages;
+    await this.showPage(next);
+  }
 }

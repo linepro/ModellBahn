@@ -33,8 +33,8 @@
         EditMode.UPDATE, [unterKategorien]);
 
     async function init() {
-        await kategorie.init();
-        await unterKategorien.init();
+        await kategorie.init()
+          .then(() => unterKategorien.init());
     }
 </script>
 <title>Unter Kategorien</title>

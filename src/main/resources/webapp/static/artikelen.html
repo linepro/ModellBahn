@@ -39,11 +39,11 @@
       EditMode.UPDATE, undefined, "artikel.html");
 
   async function init() {
-    await PRODUKT_DROP.init();
-    await UNTER_KATEGORIE_DROP.init();
-    await DECODER_DROP.init();
-    await STATUS_DROP.init();
-    await artikel.init();
+    await PRODUKT_DROP.init()
+      .then(() => UNTER_KATEGORIE_DROP.init())
+      .then(() => DECODER_DROP.init())
+      .then(() => STATUS_DROP.init())
+      .then(() => artikel.init());
   }
 </script>
 <title>Artikelen</title>

@@ -29,14 +29,14 @@ const columns = [
 const produkt = new ItemGrid(10, fetchUrl("produkt"), "produkt", columns, Paged.PAGED, EditMode.UPDATE, undefined, "produkt.html");
 
 async function init() {
-	await HERSTELLER_DROP.init();
-    await UNTER_KATEGORIE_DROP.init();
-    await MASSSTAB_DROP.init();
-    await SPURWEITE_DROP.init();
-    await EPOCH_DROP.init();
-    await BAHNVERWALTUNG_DROP.init();
-    await GATTUNG_DROP.init();
-	await produkt.init();
+	await HERSTELLER_DROP.init()
+    .then(() => UNTER_KATEGORIE_DROP.init())
+    .then(() => MASSSTAB_DROP.init())
+    .then(() => SPURWEITE_DROP.init())
+    .then(() => EPOCH_DROP.init())
+    .then(() => BAHNVERWALTUNG_DROP.init())
+    .then(() => GATTUNG_DROP.init())
+	  .then(() => produkt.init());
 }
 </script>
 <title>Produkten</title>

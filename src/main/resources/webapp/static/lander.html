@@ -19,8 +19,8 @@
     const land = new ListEditGrid(10, "land", "land", columns, Paged.PAGED, EditMode.UPDATE);
 
     async function init() {
-        await WAHRUNG_DROP.init();
-        await land.init();
+        await WAHRUNG_DROP.init()
+          .then(() => land.init());
     }
 </script>
 <title>L&auml;nder</title>

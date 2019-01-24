@@ -47,16 +47,16 @@
       EditMode.UPDATE, [anderungen]);
 
   async function init() {
-    await ANDERUNGS_TYP_DROP.init();
-    await PRODUKT_DROP.init();
-    await WAHRUNG_DROP.init();
-    await STEUERUNG_DROP.init();
-    await MOTOR_TYP_DROP.init();
-    await LICHT_DROP.init();
-    await KUPPLUNG_DROP.init();
-    await DECODER_DROP.init();
-    await STATUS_DROP.init();
-    await artikel.init();
+    await ANDERUNGS_TYP_DROP.init()
+      .then(() => PRODUKT_DROP.init())
+      .then(() => WAHRUNG_DROP.init())
+      .then(() => STEUERUNG_DROP.init())
+      .then(() => MOTOR_TYP_DROP.init())
+      .then(() => LICHT_DROP.init())
+      .then(() => KUPPLUNG_DROP.init())
+      .then(() => DECODER_DROP.init())
+      .then(() => STATUS_DROP.init())
+      .then(() => artikel.init());
   }
 </script>
 <title>Artikelen</title>
