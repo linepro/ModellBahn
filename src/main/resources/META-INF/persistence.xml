@@ -14,6 +14,7 @@
     <!-- <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
 
     <class>com.linepro.modellbahn.model.impl.Achsfolg</class>
+    <class>com.linepro.modellbahn.model.impl.Anderung</class>
     <class>com.linepro.modellbahn.model.impl.Antrieb</class>
     <class>com.linepro.modellbahn.model.impl.Artikel</class>
     <class>com.linepro.modellbahn.model.impl.Aufbau</class>

@@ -95,8 +95,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
         Konfiguration konfiguration = Konfiguration.valueOf(konfigurationStr);
         Stecker stecker = Stecker.valueOf(steckerStr);
 
-        return new DecoderTyp(id, hersteller, protokoll, name, bezeichnung, sound, konfiguration, stecker, 
-                deleted);
+        return new DecoderTyp(id, hersteller, protokoll, name, bezeichnung, sound, konfiguration, stecker, deleted);
     }
 
     @JsonCreator(mode= Mode.DELEGATING)

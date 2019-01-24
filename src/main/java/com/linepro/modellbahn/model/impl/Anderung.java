@@ -95,7 +95,7 @@ public class Anderung extends AbstractItem<AnderungKey> implements IAnderung {
 
     @Override
     @BusinessKey
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Artikel.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Artikel.class)
     @JoinColumn(name = DBNames.ARTIKEL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ANDERUNG + "_fk1"))
     public IArtikel getArtikel() {
         return artikel;
@@ -176,14 +176,14 @@ public class Anderung extends AbstractItem<AnderungKey> implements IAnderung {
 
     @Override
     @Transient
-    public String getLinkId() {
-        return String.format(ApiPaths.ANDERUNG_LINK, getParentId(), getAnderungsId());
+    public String getParentId() {
+        return getArtikel().getLinkId();
     }
 
     @Override
     @Transient
-    public String getParentId() {
-        return getArtikel().getLinkId();
+    public String getLinkId() {
+        return String.format(ApiPaths.ANDERUNG_LINK, getParentId(), getAnderungsId());
     }
 
     @Override
