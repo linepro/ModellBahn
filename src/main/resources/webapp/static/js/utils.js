@@ -17,6 +17,26 @@ const DATE_PATTERN = '^(18[2-9][0-9]|19[0-9]{2}|2[0-9]{3})-(0[1-9]|1[0-2])-(0[1-
 
 const URL_PATTERN = '^(?:(http[s]?):\\/\\/)?(\\w+(?:\\.\\w+)*)(?::(\\d+))?(?:\\/(\\w+(?:\\/|\\.\\w+)?))?$';
 
+window.onerror = function (msg, url, lineNo, columnNo, error) {
+  var string = msg.toLowerCase();
+  var substring = "script error";
+  if (string.indexOf(substring) > -1){
+    alert('Script Error: See Browser Console for Detail');
+  } else {
+    var message = [
+      'Message: ' + msg,
+      'URL: ' + url,
+      'Line: ' + lineNo,
+      'Column: ' + columnNo,
+      'Error object: ' + JSON.stringify(error)
+    ].join(' - ');
+
+    alert(message);
+  }
+
+  return false;
+};
+	
 const shouldDisable = (editable, editMode) => {
   if (editable === Editable.NEVER || editMode === EditMode.VIEW) {
     return true;
@@ -50,9 +70,33 @@ const removeChildren = (node) => {
   }
 };
 
+const addToEnd = (element) => {
+    let docBody = document.getElementsByTagName('BODY')[0];
+	docBody.appendChild(element);
+};
+
+const addCloser = (target) => {
+  let closer = document.createElement('span');
+  closer.className = 'closebtn';
+  closer.onclick = (e) => {target.style.display = 'none'; };
+  addText(closer, '&times');
+  target.appendChild(closer);
+};
+
 const reportError = (error) => {
   console.log(error);
-  alert('error: ' + error.toString());
+  
+  let alert = document.getElementById('alert-box');
+  
+  if (!alert) {
+	  let alert = document.createElement('div');
+	  alert.className = 'alert';
+	  addCloser(alert);
+	  addToEnd(alert);
+  }
+
+  addText(alert, error);
+  alert.style.display = 'inline-block';
 };
 
 const addButton = (cell, lnk, action) => {
@@ -131,7 +175,11 @@ const getButton = (value, alt, action) => {
 
 const addText = (cell, text) => {
   let txt = document.createTextNode(text);
-  cell.appendChild(txt);
+  if (cell.firstChild) {
+	cell.insertBefore(txt, cell.firstChild);
+  } else {
+    cell.appendChild(txt);
+  }
   return txt;
 };
 
@@ -516,34 +564,13 @@ class PDFColumn extends FileColumn {
   }
 
   showContent(file) {
-    let pdf = document.createElement('object');
-    pdf.className = 'display-pdf';
-    pdf.src = file;
-    pdf.type = 'application/pdf';
-    pdf.width = '100%';
-    pdf.height = '100%';
+    let canvas = document.createElement('canvas');
+    canvas.className = 'display-pdf';
 
-    let iframe = document.createElement('iframe');
-    iframe.src = file;
-    iframe.width = '100%';
-    iframe.height = '100%';
-    pdf.appendChild(iframe);
-
-    let para = document.createElement('p');
-    addText(para, 'Ihr Browser unterstützt keine PDFs.');
-    let link = document.createElement('a');
-    addText(link, 'Laden Sie das PDF herunter');
-    link.href = file;
-    para.appendChild(link);
-    iframe.appendChild(para);
-
-    let embed = document.createElement('embed');
-    embed.id='plugin';
-    embed.type='application/x-google-chrome-pdf';
-    embed.src=file;
-    embed.javascript='allow'
-
-    showModal(embed);
+    let viewer = new PDFViewer(canvas);
+    viewer.load(file);
+    
+    showModal(canvas);
   }
 }
 
@@ -912,9 +939,7 @@ const addModal = () => {
     content.id = 'modal-content';
     content.className = 'modal-content';
     modal.appendChild(content);
-
-    let docBody = document.getElementsByTagName('BODY')[0];
-    docBody.appendChild(modal);
+    addToEnd(modal);
 
     window.addEventListener('click', (e) => {
       if (e.target === modal) {
