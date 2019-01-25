@@ -1,13 +1,12 @@
 // module "dropdown.js"
 "use strict";
 
-class Option {
+class DropOption {
   constructor(value, display, tooltip, image) {
     this.display = display;
     this.value = value;
     this.tooltip = tooltip;
     this.image = image;
-    this.options = [];
   }
 
   getDisplay() {
@@ -25,45 +24,34 @@ class Option {
   getImage() {
     return this.image;
   }
-
-  addOption(value) {
-    this.options.push(value);
-  }
-
-  getOptions() {
-    return this.options;
+  
+  getLength() {
+	return this.getDisplay().length;
   }
 }
 
 class DropDown {
-  constructor(apiQuery, keyExtractor, optionExtractor) {
+  constructor(apiQuery, optionExtractor) {
     this.apiQuery = apiQuery;
-    this.keyExtractor = keyExtractor;
     this.optionExtractor = optionExtractor;
-    this.length = 10;
+    this.length = 0;
     this.options = [];
   }
 
   loadOptions(jsonData) {
     let entities = jsonData.entities ? jsonData.entities : jsonData;
     let dropDown = this;
-
+    let length = 0;
+    
     entities.forEach(entity => {
-      let value = dropDown.keyExtractor(entity);
-      let option = dropDown.optionExtractor(entity);
+      let opt = dropDown.optionExtractor(entity);
 
-      dropDown.length = Math.max(option.display.length, dropDown.length);
+      dropDown.options.push(opt);
 
-      let current = dropDown.options.find(o => o.getValue() === value);
-
-      if (!current) {
-        dropDown.options.push(option);
-      } else {
-        option.getOptions().forEach(o => {
-          current.addOption(o)
-        });
-      }
+      length = Math.max(opt.getLength(), length);
     });
+    
+    dropDown.length = length;
   }
 
   getOptions() {
@@ -77,5 +65,9 @@ class DropDown {
     .then(response => checkResponse(response))
     .then(jsonData => select.loadOptions(jsonData))
     .catch(error => reportError(error));
+  }
+  
+  getLength() {
+	 return this.lenght;
   }
 }

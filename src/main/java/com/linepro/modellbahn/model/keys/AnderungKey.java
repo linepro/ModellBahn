@@ -29,14 +29,14 @@ public class AnderungKey extends BaseKey {
     @Override
     public void addCriteria(Query query) {
         query.setParameter(DBNames.ARTIKEL, getArtikel());
-        query.setParameter(DBNames.ANDERUNGS_ID, getAnderungsId());
+        query.setParameter(DBNames.ANDERUNG_ID, getAnderungsId());
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append(ApiNames.ARTIKEL, getArtikel())
-                .append(ApiNames.ANDERUNGS_ID, getAnderungsId())
+                .append(ApiNames.ANDERUNG_ID, getAnderungsId())
                 .toString();
     }
 }

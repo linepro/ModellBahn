@@ -22,10 +22,10 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
 @ApiModel(value = ApiNames.ANDERUNG, description = "Change to an article")
 public interface IAnderungRef extends ILinkRef {
 
-    @JsonGetter(ApiNames.ANDERUNGS_ID)
+    @JsonGetter(ApiNames.ANDERUNG_ID)
     @JsonView(Views.DropDown.class)
     @ApiModelProperty(value = "Change number", example = "00001", accessMode = AccessMode.READ_ONLY)
-    Integer getAnderungsId();
+    Integer getAnderungId();
 
     @JsonGetter(ApiNames.ANDERUNGSDATUM)
     @JsonSerialize(using = LocalDateSerializer.class)

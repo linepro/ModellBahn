@@ -140,7 +140,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Finds a Vorbild by name", response = IVorbild.class)
-    public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
+    public Response get(@PathParam(ApiPaths.GATTUNG_PARAM_NAME) String name) {
         try {
             return super.get(new VorbildKey(findGattung(name, false)));
         } catch (Exception e) {

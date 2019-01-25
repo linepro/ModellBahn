@@ -81,6 +81,7 @@ public class ProduktTeil extends AbstractItem<ProduktTeilKey> implements IProduk
     }
 
     @Override
+    @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
     @JoinColumn(name = DBNames.PRODUKT_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT_TEIL + "_fk1"))
     public IProdukt getProdukt() {
@@ -88,7 +89,6 @@ public class ProduktTeil extends AbstractItem<ProduktTeilKey> implements IProduk
     }
 
     @Override
-    @BusinessKey
     public void setProdukt(IProdukt produkt) {
         this.produkt = produkt;
     }

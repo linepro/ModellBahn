@@ -15,7 +15,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import com.linepro.modellbahn.model.IAnderung;
 import com.linepro.modellbahn.model.IArtikel;
@@ -38,9 +40,9 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Entity(name = DBNames.ANDERUNG)
 @Table(name = DBNames.ANDERUNG, indexes = {
             @Index(columnList = DBNames.ARTIKEL_ID),
-            @Index(columnList = DBNames.ANDERUNGS_ID) 
+            @Index(columnList = DBNames.ANDERUNG_ID) 
         }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { DBNames.ARTIKEL_ID, DBNames.ANDERUNGS_ID } )
+                @UniqueConstraint(columnNames = { DBNames.ARTIKEL_ID, DBNames.ANDERUNG_ID } )
         })
 public class Anderung extends AbstractItem<AnderungKey> implements IAnderung {
 
@@ -49,7 +51,7 @@ public class Anderung extends AbstractItem<AnderungKey> implements IAnderung {
 
     public IArtikel artikel;
 
-    public Integer anderungsId;
+    public Integer anderungId;
 
     public LocalDate anderungsDatum;
 
@@ -73,7 +75,7 @@ public class Anderung extends AbstractItem<AnderungKey> implements IAnderung {
      *
      * @param id the id
      * @param artikel 
-     * @param anderungsId 
+     * @param anderungId 
      * @param anderungsDatum 
      * @param anderungsTyp 
      * @param bezeichnung 
@@ -81,11 +83,11 @@ public class Anderung extends AbstractItem<AnderungKey> implements IAnderung {
      * @param anmerkung 
      * @param deleted the deleted
      */
-    public Anderung(Long id, IArtikel artikel, Integer anderungsId, LocalDate anderungsDatum, AnderungsTyp anderungsTyp, String bezeichnung, Integer stuck, String anmerkung, Boolean deleted) {
+    public Anderung(Long id, IArtikel artikel, Integer anderungId, LocalDate anderungsDatum, AnderungsTyp anderungsTyp, String bezeichnung, Integer stuck, String anmerkung, Boolean deleted) {
         super(id, deleted);
 
         setArtikel(artikel);
-        setAnderungsId(anderungsId);
+        setAnderungId(anderungId);
         setAnderungsDatum(anderungsDatum);
         setAnderungsTyp(anderungsTyp);
         setBezeichnung(bezeichnung);
@@ -108,14 +110,14 @@ public class Anderung extends AbstractItem<AnderungKey> implements IAnderung {
 
     @Override
     @BusinessKey
-    @Column(name = DBNames.ANDERUNGS_ID)
-    public Integer getAnderungsId() {
-        return anderungsId;
+    @Column(name = DBNames.ANDERUNG_ID)
+    public Integer getAnderungId() {
+        return anderungId;
     }
 
     @Override
-    public void setAnderungsId(Integer anderungsId) {
-        this.anderungsId = anderungsId;
+    public void setAnderungId(Integer anderungId) {
+        this.anderungId = anderungId;
     }
 
     @Override
@@ -183,7 +185,7 @@ public class Anderung extends AbstractItem<AnderungKey> implements IAnderung {
     @Override
     @Transient
     public String getLinkId() {
-        return String.format(ApiPaths.ANDERUNG_LINK, getParentId(), getAnderungsId());
+        return String.format(ApiPaths.ANDERUNG_LINK, getParentId(), getAnderungId());
     }
 
     @Override
@@ -191,7 +193,7 @@ public class Anderung extends AbstractItem<AnderungKey> implements IAnderung {
       if (other instanceof IAnderung) {
         return new CompareToBuilder()
             .append(getArtikel(), ((IAnderung) other).getArtikel())
-            .append(getAnderungsId(), ((IAnderung) other).getAnderungsId())
+            .append(getAnderungId(), ((IAnderung) other).getAnderungId())
             .toComparison();
       }
 
@@ -199,15 +201,42 @@ public class Anderung extends AbstractItem<AnderungKey> implements IAnderung {
     }
 
     @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(getArtikel())
+                .append(getAnderungId())
+                .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Anderung)) {
+            return false;
+        }
+
+        Anderung other = (Anderung) obj;
+
+        return new EqualsBuilder()
+                .append(getArtikel(), other.getArtikel())
+                .append(getAnderungId(), other.getAnderungId())
+                .isEquals();
+    }
+
+    @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append(ApiNames.ARTIKEL, artikel)
-                .append(ApiNames.ANDERUNGS_ID, anderungsId)
-                .append(ApiNames.ANDERUNGSDATUM, anderungsDatum)
-                .append(ApiNames.ANDERUNGS_TYP, anderungsTyp)
-                .append(ApiNames.BEZEICHNUNG, bezeichnung)
-                .append(ApiNames.STUCK, stuck)
-                .append(ApiNames.ANMERKUNG, anmerkung)
+                .appendSuper(super.toString())
+                .append(ApiNames.ARTIKEL, getArtikel())
+                .append(ApiNames.ANDERUNG_ID, getAnderungId())
+                .append(ApiNames.ANDERUNGSDATUM, getAnderungsDatum())
+                .append(ApiNames.ANDERUNGS_TYP, getAnderungsTyp())
+                .append(ApiNames.BEZEICHNUNG, getBezeichnung())
+                .append(ApiNames.STUCK, getStuck())
+                .append(ApiNames.ANMERKUNG, getAnmerkung())
                 .toString();
     }
 }

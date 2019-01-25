@@ -44,8 +44,8 @@ public interface IAnderung extends IItem<AnderungKey>, IAnderungRef {
     @JsonDeserialize(using = ArtikelDeserializer.class)
     void setArtikel(IArtikel artikel);
 
-    @JsonSetter(ApiNames.ANDERUNGS_ID)
-    void setAnderungsId(Integer name);
+    @JsonSetter(ApiNames.ANDERUNG_ID)
+    void setAnderungId(Integer name);
 
     @JsonSetter(ApiNames.ANDERUNGSDATUM)
     @JsonDeserialize(using = LocalDateDeserializer.class)

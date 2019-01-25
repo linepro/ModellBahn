@@ -335,7 +335,7 @@ class BoolColumn extends Column {
 
 class NumberColumn extends Column {
   constructor(heading, binding, getter, setter, editable, required, max, min, places) {
-    super(heading, binding, getter, setter, editable, required, (max ? max : 255).toString(), heading.length);
+    super(heading, binding, getter, setter, editable, required, (max ? max : 255).toString().length, heading.length);
     this.max = max ? max : 255;
     this.min = min ? min : 0;
     this.places = places ? places : 0;
@@ -584,8 +584,8 @@ const closeAutoLists = (elmnt) => {
 document.addEventListener('click', (e) => { closeAutoLists(); }, false);
 
 class SelectColumn extends Column {
-  constructor(heading, binding, getter, setter, dropDown, editable, required, dropSize) {
-    super(heading, binding, getter, setter, editable, required, dropDown.length);
+  constructor(heading, binding, getter, setter, dropDown, editable, required, length, dropSize) {
+    super(heading, binding, getter, setter, editable, required, length);
     this.dropDown = dropDown;
     this.dropSize = dropSize ? dropSize : 5;
   }
@@ -617,7 +617,7 @@ class SelectColumn extends Column {
   }
 
   getLength() {
-    return Math.max(this.dropDown.length, this.getHeaderLength());
+    return Math.max(this.dropDown.getLength(), this.getHeaderLength());
   }
 
   caption(txt, o) {
@@ -721,8 +721,8 @@ class SelectColumn extends Column {
 }
 
 class AutoCompleteColumn extends SelectColumn {
-  constructor(heading, binding, getter, setter, dropDown, editable, required) {
-    super(heading, binding, getter, setter, dropDown, editable, required);
+  constructor(heading, binding, getter, setter, dropDown, editable, required, length, dropSize) {
+    super(heading, binding, getter, setter, dropDown, editable, required, length, dropSize);
   }
 
   options(txt) {
@@ -748,8 +748,8 @@ class AutoCompleteColumn extends SelectColumn {
 }
 
 class DropDownColumn extends SelectColumn {
-  constructor(heading, binding, getter, setter, dropDown, editable, required) {
-    super(heading, binding, getter, setter, dropDown, editable, required);
+  constructor(heading, binding, getter, setter, dropDown, editable, required, length, dropSize) {
+    super(heading, binding, getter, setter, dropDown, editable, required, length + 3.5, dropSize);
   }
 
   getControl(cell, entity, editMode) {
@@ -784,8 +784,8 @@ class DropDownColumn extends SelectColumn {
       addOption(select, undefined, '(nicht benötigt)');
     }
 
-    dropDown.options.forEach(option => {
-      addOption(select, option.value, option.display);
+    dropDown.options.forEach(opt => {
+      addOption(select, opt.getValue(), opt.getDisplay());
     });
   }
 
@@ -801,7 +801,7 @@ class DropDownColumn extends SelectColumn {
   }
 
   getLength() {
-    return Math.max(this.dropDown.length + 3.5, this.getHeaderLength());
+    return Math.max(this.dropDown.getLength() + 3.5, this.getHeaderLength());
   }
 
   setValue(ctl, value) {

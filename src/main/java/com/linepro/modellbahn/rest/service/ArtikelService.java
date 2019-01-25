@@ -311,9 +311,9 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
             }
 
             newAnderung.setArtikel(artikel);
-            newAnderung.setAnderungsId(anderungsId);
+            newAnderung.setAnderungId(anderungsId);
 
-            anderung = getAnderungPersister().merge(new AnderungKey(artikel, anderung.getAnderungsId()), newAnderung);
+            anderung = getAnderungPersister().merge(new AnderungKey(artikel, anderung.getAnderungId()), newAnderung);
 
             return getResponse(created(), anderung, true, true);
         } catch (Exception e) {

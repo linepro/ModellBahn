@@ -401,7 +401,7 @@ public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
     public void addAnderung(IAnderung anderung) {
         // Add at end semantics
         anderung.setArtikel(this);
-        anderung.setAnderungsId(getAnderungen().size()+1);
+        anderung.setAnderungId(getAnderungen().size()+1);
         anderung.setDeleted(false);
 
         getAnderungen().add(anderung);

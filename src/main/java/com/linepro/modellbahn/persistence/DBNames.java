@@ -46,7 +46,7 @@ public interface DBNames {
     String ACHSFOLG_ID = "achsfolg_id";
     String ANDERUNGSDATUM = "anderungsdatum";
     String ANDERUNGS_TYP = "anderungsTyp";
-    String ANDERUNGS_ID = "anderungsId";
+    String ANDERUNG_ID = "anderungId";
     String ADRESS = "adress";
     String ADRESS_TYP = "adressTyp";
     String ANFAHRZUGKRAFT = "anfahrzugkraft";
