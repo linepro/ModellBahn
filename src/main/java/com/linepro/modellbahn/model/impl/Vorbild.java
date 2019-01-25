@@ -269,7 +269,7 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
      * @param triebkopf the triebkopf
      * @param mittelwagen the mittelwagen
      * @param drehgestellbauart the drehgestellbauart
-     * @param deleted the deleted
+     * @param deleted if <code>true</code> this item is soft deleted, otherwise it is active
      */
     public Vorbild(Long id, IGattung gattung, IUnterKategorie unterKategorie, IBahnverwaltung bahnverwaltung, String hersteller, LocalDate bauzeit,
             Integer anzahl, String betreibsNummer, IAntrieb antrieb, IAchsfolg achsfolg, String bezeichnung, BigDecimal anfahrzugkraft,

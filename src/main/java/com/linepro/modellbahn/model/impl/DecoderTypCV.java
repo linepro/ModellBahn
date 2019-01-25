@@ -87,7 +87,7 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
      * @param minimal the minimal
      * @param maximal the maximal
      * @param werkseinstellung the werkseinstellung
-     * @param deleted the deleted
+     * @param deleted if <code>true</code> this item is soft deleted, otherwise it is active
      */
     public DecoderTypCV(Long id, IDecoderTyp decoderTyp, Integer cv, String bezeichnung, Integer minimal, Integer maximal,
             Integer werkseinstellung, Boolean deleted) {

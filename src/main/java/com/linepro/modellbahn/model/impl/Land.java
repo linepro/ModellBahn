@@ -55,7 +55,7 @@ public class Land extends AbstractNamedItem<NameKey> implements ILand {
      * @param wahrung
      *            the wahrung
      * @param deleted
-     *            the deleted
+     *            if <code>true</code> this item is soft deleted, otherwise it is active
      */
     public Land(Long id, String name, String bezeichnung, IWahrung wahrung, Boolean deleted) {
         super(id, name, bezeichnung, deleted);

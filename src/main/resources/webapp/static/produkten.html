@@ -15,15 +15,13 @@
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
 const columns = [
-  HERSTELLER,
+  HERSTELLER_SELECT,
   BESTELL_NR,
-  UNTER_KATEGORIE,
-  MASSSTAB,
-  SPURWEITE,
+  UNTER_KATEGORIE_SELECT,
+  MASSSTAB_SELECT,
+  SPURWEITE_SELECT,
   BEZEICHNUNG,
-  new ButtonColumn(
-    [newRow],
-    [editRow, deleteRow])
+  new ButtonColumn([newRow], [editRow, deleteRow])
 ];
 
 const produkt = new ItemGrid(10, fetchUrl("produkt"), "produkt", columns, Paged.PAGED, EditMode.UPDATE, undefined, "produkt.html");

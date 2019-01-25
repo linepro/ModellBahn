@@ -45,7 +45,7 @@ public class MotorTyp extends AbstractNamedItem<NameKey> implements IMotorTyp {
      * @param bezeichnung
      *            the bezeichnung
      * @param deleted
-     *            the deleted
+     *            if <code>true</code> this item is soft deleted, otherwise it is active
      */
     public MotorTyp(Long id, String name, String bezeichnung, Boolean deleted) {
         super(id, name, bezeichnung, deleted);

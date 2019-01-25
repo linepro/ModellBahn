@@ -59,7 +59,7 @@ public class Aufbau extends AbstractNamedItem<NameKey> implements IAufbau {
      * @param bezeichnung
      *            the bezeichnung
      * @param deleted
-     *            the deleted
+     *            if <code>true</code> this item is soft deleted, otherwise it is active
      */
     public Aufbau(Long id, String name, String bezeichnung, Boolean deleted) {
         super(id, name, bezeichnung, deleted);

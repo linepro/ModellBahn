@@ -16,35 +16,34 @@
 <script type="text/javascript">
   const anderungenColumns = [
     ANDERUNGS_ID,
-    ANDERUNGS_TYP,
+    ANDERUNGS_TYP_SELECT,
     ANDERUNGS_DATUM,
     BEZEICHNUNG,
     STUCK,
-    gridButtonColumn("anderungen")
+    gridButtonColumn()
   ];
 
   const anderungen = new ItemGrid(5, "anderungen", "anderungen", anderungenColumns, Paged.EXPAND, EditMode.ADD, undefined);
   
   const columns = [
-    ARTIKEL_ID,
-    PRODUKT,
+    ARTIKEL,
+    PRODUKT_SELECT,
     KAUFDATUM,
-    WAHRUNG,
+    WAHRUNG_SELECT,
     PREIS,
     STUCK,
-    STEUERUNG,
-    MOTOR_TYP,
-    LICHT,
-    KUPPLUNG,
-    DECODER,
+    STEUERUNG_SELECT,
+    MOTOR_TYP_SELECT,
+    LICHT_SELECT,
+    KUPPLUNG_SELECT,
+    DECODER_SELECT,
     ANMERKUNG,
     BELADUNG,
     ABBILDUNG,
-    STATUS,
+    STATUS_SELECT,
     new ButtonColumn([], [updateRow])];
 
-  const artikel = new ItemGrid(1, fetchUrl("artikel"), "artikel", columns, Paged.FORM, 
-      EditMode.UPDATE, [anderungen]);
+  const artikel = new ItemGrid(1, fetchUrl("artikel"), "artikel", columns, Paged.FORM, EditMode.UPDATE, [anderungen]);
 
   async function init() {
     await ANDERUNGS_TYP_DROP.init()

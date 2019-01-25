@@ -53,7 +53,7 @@ public class Wahrung extends AbstractNamedItem<NameKey> implements IWahrung {
 	 * @param name the name
 	 * @param bezeichnung the bezeichnung
 	 * @param dezimal the dezimal
-	 * @param deleted the deleted
+	 * @param deleted if <code>true</code> this item is soft deleted, otherwise it is active
 	 */
 	public Wahrung(Long id, String name, String bezeichnung, Integer dezimal, Boolean deleted) {
 		super(id, name, bezeichnung, deleted);

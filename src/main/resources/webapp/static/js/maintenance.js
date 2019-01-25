@@ -2,14 +2,13 @@
 'use strict';
 
 const Paged = {
-  FORM: 0,
-  PAGED: 1,
+  FORM: 0, 
+  PAGED: 1, 
   EXPAND: 2
 };
 
 class ItemGrid {
-  constructor(pageSize, apiUrl, tableName, columns, paged, editMode, children,
-      editForm) {
+  constructor(pageSize, apiUrl, tableName, columns, paged, editMode, children, editForm) {
     this.pageSize = pageSize ? pageSize : 10;
     this.rowCount = pageSize;
     this.rowsFilled = 0;
@@ -42,8 +41,7 @@ class ItemGrid {
 
       let searchString = search.toString();
 
-      this.current = this.current + (searchString.length ? '?' + searchString
-          : '');
+      this.current = this.current + (searchString.length ? '?' + searchString : '');
     }
 
     this.initialized = false;
@@ -58,8 +56,7 @@ class ItemGrid {
 
   setParent(parent) {
     this.parent = parent;
-    this.apiUrl = ((parent && parent.apiUrl) ? parent.apiUrl + '/' : '')
-        + this.apiUrl;
+    this.apiUrl = ((parent && parent.apiUrl) ? parent.apiUrl + '/' : '') + this.apiUrl;
   }
 
   async init() {
@@ -69,39 +66,40 @@ class ItemGrid {
 
   initGrid(rowCount) {
     let grid = this;
-    grid.rowCount = rowCount;
 
-    let columns = grid.columns;
-    let paged = grid.paged;
-    let pageSize = grid.pageSize;
-    let tableName = grid.tableName;
+    if (!grid.initialized || (rowCount > grid.pageSize)) {
+      grid.rowCount = rowCount;
 
-    let totalWidth = 0;
-    let maxLabel = 0;
+      let columns = grid.columns;
+      let paged = grid.paged;
+      let pageSize = grid.pageSize;
+      let tableName = grid.tableName;
 
-    columns.forEach(column => {
-      column.setTableName(tableName);
-      totalWidth += column.getLength();
-    });
+      let totalWidth = 0;
+      let maxLabel = 0;
 
-    columns.forEach(column => {
-      column.setWidth(
-          Math.floor((column.getLength() * 100) / totalWidth) + '%');
-      maxLabel = Math.max(column.heading ? column.heading.length : maxLabel,
-          maxLabel);
-    });
+      columns.forEach(column => {
+        column.setTableName(tableName);
+        totalWidth += column.getLength();
+      });
 
-    let table = document.getElementById(grid.tableName);
-    removeChildren(table);
-    table.className = 'table';
+      columns.forEach(column => {
+        column.setWidth(Math.floor((column.getLength() * 100) / totalWidth) + '%');
+        maxLabel = Math.max(column.heading ? column.heading.length : maxLabel, maxLabel);
+      });
 
-    addHeader(tableName, table, columns, paged, rowCount);
+      let table = document.getElementById(grid.tableName);
+      removeChildren(table);
+      table.className = 'table';
 
-    addBody(tableName, table, pageSize, columns, paged, rowCount, maxLabel);
+      addHeader(tableName, table, columns, paged, rowCount);
 
-    addFooter(tableName, table, columns, paged, rowCount);
+      addBody(tableName, table, pageSize, columns, paged, rowCount, maxLabel);
 
-    grid.initialized = true;
+      addFooter(tableName, table, columns, paged, rowCount);
+
+      grid.initialized = true;
+    }
   }
 
   async loadData() {
@@ -124,50 +122,41 @@ class ItemGrid {
     }
   }
 
+  renderRow(rowId, entity, columns, editMode) {
+    columns.forEach(column => {
+      let cell = document.getElementById(getCellId(rowId, column));
+
+      removeChildren(cell);
+
+      if (entity || column.isButtons()) {
+        column.getControl(cell, entity, editMode);
+      } else {
+        blankControl(cell, column);
+      }
+    });
+  }
+
   renderData(jsonData) {
     let grid = this;
     let columns = grid.columns;
     let editMode = grid.editMode;
-    let entities = (grid.parent ? jsonData[grid.tableName] : jsonData.entities
-        ? jsonData.entities : [jsonData]);
+    let entities = (grid.parent ? jsonData[grid.tableName] : jsonData.entities ? jsonData.entities : [jsonData]);
     let tableName = grid.tableName;
 
-    let rowCount = grid.paged === Paged.PAGED ? grid.pageSize : Math.max(
-        grid.pageSize, entities.length);
+    let rowCount = grid.paged === Paged.PAGED ? grid.pageSize : Math.max(grid.pageSize, entities.length);
 
-    if (!grid.initialized || (rowCount > grid.pageSize)) {
-      grid.initGrid(rowCount);
-    }
+    grid.initGrid(rowCount);
 
-    let row;
     grid.rowsFilled = 0;
-    for (row = 0; row < rowCount; row++) {
+    for (let row = 0; row < rowCount; row++) {
       let rowId = getRowId(tableName, row);
-      let entity;
+
+      let entity = (entities.length > 0 && row < entities.length) ? entities[row] : undefined;
 
       let key = document.getElementById(getKeyId(rowId));
+      key.value = entity ? getLink(entity.links, 'self').href : '';
 
-      if (entities.length > 0 && row < entities.length) {
-        entity = entities[row];
-        let lnk = getLink(entity.links, 'self');
-        key.value = lnk.href;
-        grid.rowsFilled++;
-      } else {
-        entity = undefined;
-        key.value = '';
-      }
-
-      columns.forEach(column => {
-        let cell = document.getElementById(getCellId(rowId, column));
-
-        removeChildren(cell);
-
-        if (entity || column.isButtons()) {
-          column.getControl(cell, entity, editMode);
-        } else {
-          blankControl(cell, column);
-        }
-      });
+      this.renderRow(rowId, entity, columns, editMode);
     }
 
     let prev = document.getElementById(tableName + 'Prev');
@@ -218,8 +207,10 @@ class ItemGrid {
   async getData(restUrl) {
     let grid = this;
 
-    fetch(restUrl,
-        {method: 'get', headers: {'Content-type': 'application/json'}})
+    fetch(restUrl, {
+      method: 'get', 
+      headers: {'Content-type': 'application/json'}
+    })
     .then(response => checkResponse(response))
     .then(jsonData => grid.renderJson(jsonData, restUrl))
     .catch(error => reportError(error));
@@ -247,8 +238,7 @@ class ItemGrid {
     if (key) {
       grid.columns.forEach(column => {
         if (column.setter) {
-          let value = column.getValue(
-              document.getElementById(getFieldId(rowId, column.binding)));
+          let value = column.getValue( document.getElementById(getFieldId(rowId, column.fieldName)));
           if (value) {
             column.setter(data, value);
           }
@@ -269,8 +259,8 @@ class ItemGrid {
 
   addRow() {
     let grid = this;
-    let rowNum = grid.rowsFilled === grid.rowCount ? grid.rowCount - 1
-        : grid.rowsFilled; //TODO: add row for non paged if not exists
+    let rowNum = grid.rowsFilled === grid.rowCount ? grid.rowCount - 1 : grid.rowsFilled;
+    //TODO: add row for non paged if not exists
     let rowId = getRowId(grid.tableName, rowNum);
 
     let key = document.getElementById(getKeyId(rowId));
@@ -295,8 +285,7 @@ class ItemGrid {
     let grid = this;
     let deleteUrl = getKeyValue(rowId);
     if (deleteUrl) {
-      await fetch(deleteUrl,
-          {method: 'DELETE', headers: {'Content-type': 'application/json'}})
+      await fetch(deleteUrl, {method: 'DELETE', headers: {'Content-type': 'application/json'}})
       .then(response => checkResponse(response))
       .catch(error => reportError(error));
 
@@ -331,8 +320,8 @@ class ItemGrid {
     let jsonData = JSON.stringify(data);
     if (data) {
       await fetch(saveUrl, {
-        method: 'POST',
-        headers: {'Content-type': 'application/json'},
+        method: 'POST', 
+        headers: {'Content-type': 'application/json'}, 
         body: jsonData
       })
       .then(response => checkResponse(response))
@@ -349,8 +338,8 @@ class ItemGrid {
 
     if (data) {
       await fetch(updateUrl, {
-        method: 'PUT',
-        headers: {'Content-type': 'application/json'},
+        method: 'PUT', 
+        headers: {'Content-type': 'application/json'}, 
         body: jsonData
       })
       .then(response => checkResponse(response))
@@ -362,9 +351,7 @@ class ItemGrid {
 
 class ListEditGrid extends ItemGrid {
   constructor(pageSize, dataType, elementName, columns) {
-    super(pageSize, fetchUrl(dataType), elementName,
-        columns.concat([gridButtonColumn(elementName)]),
-        Paged.PAGED, EditMode.UPDATE, undefined);
+    super(pageSize, fetchUrl(dataType), elementName, columns.concat([gridButtonColumn()]), Paged.PAGED, EditMode.UPDATE, undefined);
     this.dataType = dataType;
   }
 

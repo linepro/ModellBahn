@@ -100,7 +100,7 @@ public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
      * @param decoderId the decoder id
      * @param bezeichnung the bezeichnung
      * @param fahrstufe the fahrstufe
-     * @param deleted the deleted
+     * @param deleted if <code>true</code> this item is soft deleted, otherwise it is active
      */
     public Decoder(Long id, IDecoderTyp typ, IProtokoll protokoll, String decoderId, String bezeichnung, Integer fahrstufe, DecoderStatus status, Boolean deleted) {
         super(id, deleted);

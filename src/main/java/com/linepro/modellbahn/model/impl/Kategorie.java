@@ -58,7 +58,7 @@ public class Kategorie extends AbstractNamedItem<NameKey> implements IKategorie 
      * @param bezeichnung
      *            the bezeichnung
      * @param deleted
-     *            the deleted
+     *            if <code>true</code> this item is soft deleted, otherwise it is active
      */
     public Kategorie(Long id, String name, String bezeichnung, Boolean deleted) {
         super(id, name, bezeichnung, deleted);

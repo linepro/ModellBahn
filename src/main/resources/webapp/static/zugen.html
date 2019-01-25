@@ -15,16 +15,13 @@
 <script type="text/javascript">
   const columns = [
     NAMEN,
-    ZUG_TYP,
+    ZUG_TYP_SELECT,
     BEZEICHNUNG,
     LANGE,
-    new ButtonColumn(
-        [newRow],
-        [editRow, deleteRow])
+    new ButtonColumn([newRow], [editRow, deleteRow])
   ];
 
-  const zugen = new ItemGrid(10, fetchUrl("zug"), "zugen", columns, Paged.PAGED, EditMode.UPDATE,
-      undefined, "zug.html");
+  const zugen = new ItemGrid(10, fetchUrl("zug"), "zugen", columns, Paged.PAGED, EditMode.UPDATE, undefined, "zug.html");
 
   async function init() {
     await ZUG_TYP_DROP.init()

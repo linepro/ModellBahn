@@ -60,14 +60,16 @@ class DropDown {
 
   async init() {
     let select = this;
-    await fetch(select.apiQuery,
-        {method: "get", headers: {"Content-type": "application/json"}})
+    await fetch(select.apiQuery, {
+      method: "GET",
+      headers: {"Content-type": "application/json"}
+    })
     .then(response => checkResponse(response))
     .then(jsonData => select.loadOptions(jsonData))
     .catch(error => reportError(error));
   }
   
   getLength() {
-	 return this.lenght;
+	 return this.length;
   }
 }

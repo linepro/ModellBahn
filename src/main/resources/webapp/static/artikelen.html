@@ -14,29 +14,23 @@
 <script type="text/javascript" src="js/types.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
+  const UNTERKATEGORIE_DISPLAY = new DropDownColumn("Kategorie", "unterKategorie", (entity) => { return entity.produkt.unterKategorie ? extractKategorieValue( entity.produkt.unterKategorie) : undefined; }, undefined, UNTER_KATEGORIE_DROP, Editable.NEVER, false)
+
   const columns = [
-    ARTIKEL_ID,
-    PRODUKT,
-    new DropDownColumn("Kategorie", "unterKategorie", (entity) => {
-      return entity.produkt.unterKategorie ? extractKategorieValue(entity.produkt.unterKategorie)
-          : undefined;
-    }, (entity, value) => {
-      let parts = value.split('/');
-      entity.unterKategorie.kategorie = parts[0];
-      entity.unterKategorie.name = parts[1];
-    }, UNTER_KATEGORIE_DROP, Editable.UPDATE, true),
+    ARTIKEL,
+    PRODUKT_SELECT,
+    UNTERKATEGORIE_DISPLAY,
     BEZEICHNUNG,
     KAUFDATUM,
     STUCK,
-    DECODER,
+    DECODER_SELECT,
     ANMERKUNG,
     ABBILDUNG,
-    STATUS,
+    STATUS_SELECT,
     new ButtonColumn([newRow], [editRow, deleteRow])
   ];
 
-  const artikel = new ItemGrid(10, fetchUrl("artikel"), "artikel", columns, Paged.PAGED,
-      EditMode.UPDATE, undefined, "artikel.html");
+  const artikel = new ItemGrid(10, fetchUrl("artikel"), "artikel", columns, Paged.PAGED, EditMode.UPDATE, undefined, "artikel.html");
 
   async function init() {
     await PRODUKT_DROP.init()

@@ -159,7 +159,7 @@ public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
      * @param anmerkung the anmerkung
      * @param beladung the beladung
      * @param status the status
-     * @param deleted the deleted
+     * @param deleted if <code>true</code> this item is soft deleted, otherwise it is active
      */
     public Artikel(Long id, IProdukt produkt, LocalDate kaufdatum, IWahrung wahrung, BigDecimal preis, Integer stuck,
             Integer verbleibende, ISteuerung steuerung, IMotorTyp motorTyp, ILicht licht, IKupplung kupplung, 
@@ -381,7 +381,7 @@ public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
     }
 
     @Override
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.ARTIKEL, targetEntity=Anderung.class, orphanRemoval = true)
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = DBNames.ARTIKEL, targetEntity=Anderung.class, orphanRemoval = true)
     public Set<IAnderung> getAnderungen() {
         return anderungen;
     }

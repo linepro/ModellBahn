@@ -15,17 +15,14 @@
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
     const columns = [
-        HERSTELLER,
+        HERSTELLER_SELECT,
         BESTELL_NR,
-        PROTOKOLL,
+        PROTOKOLL_SELECT,
         GERAUSCH,
-        STECKER,
-        new ButtonColumn(
-            [newRow],
-            [editRow, deleteRow])];
+        STECKER_SELECT,
+        new ButtonColumn([newRow], [editRow, deleteRow])];
 
-    const decoderTyp = new ItemGrid(10, fetchUrl("decoderTyp"), "decoderTyp", columns, Paged.PAGED,
-        EditMode.UPDATE, undefined, "decoderTyp.html");
+    const decoderTyp = new ItemGrid(10, fetchUrl("decoderTyp"), "decoderTyp", columns, Paged.PAGED, EditMode.UPDATE, undefined, "decoderTyp.html");
 
     async function init() {
         await HERSTELLER_DROP.init()

@@ -2,14 +2,14 @@
 'use strict';
 
 const Editable = {
-  NEVER: 0,
-  UPDATE: 1,
+  NEVER: 0, 
+  UPDATE: 1, 
   ADD: 2
 };
 
 const EditMode = {
-  VIEW: 0,
-  UPDATE: 1,
+  VIEW: 0, 
+  UPDATE: 1, 
   ADD: 2
 };
 
@@ -22,11 +22,11 @@ window.onerror = function (msg, url, lineNo, columnNo, error) {
     reportError('Script Error: See Browser Console for Detail');
   } else {
     const message = [
-      'Message: ' + msg,
-      'URL: ' + url,
-      'Line: ' + lineNo,
-      'Column: ' + columnNo,
-      'Error object: ' + Object.toString(error)
+      'Message: ' + msg, 
+      'URL: ' + url, 
+      'Line: ' + lineNo, 
+      'Column: ' + columnNo, 
+      'Error object: ' + error.toString()
     ].join(' - ');
 
     reportError(message);
@@ -117,8 +117,8 @@ const getLink = (links, rel) => {
   });
 };
 
-const getFieldId = (rowId, binding) => {
-  return rowId + '_' + binding;
+const getFieldId = (rowId, fieldName) => {
+  return rowId + '_' + fieldName;
 };
 
 const getKeyId = (rowId) => {
@@ -135,8 +135,8 @@ const getRowId = (tableName, i) => {
 };
 
 const getCellId = (rowId, column) => {
-  if (column.binding) {
-    return getFieldId(rowId, column.binding);
+  if (column.fieldName) {
+    return getFieldId(rowId, column.fieldName);
   } else {
     return getFieldId(rowId, 'buttons');
   }
@@ -177,7 +177,7 @@ const getButton = (value, alt, action) => {
 const addText = (cell, text) => {
   let txt = document.createTextNode(text);
   if (cell.firstChild) {
-	cell.insertBefore(txt, cell.firstChild);
+	  cell.insertBefore(txt, cell.firstChild);
   } else {
     cell.appendChild(txt);
   }
@@ -194,7 +194,7 @@ const addOption = (select, value, text) => {
 const valueAndUnits = (cssSize) => {
   let dims = /^(\d+)([^\d]+)$/.exec(cssSize);
   return {
-    value: dims[1],
+    value: dims[1], 
     units: dims[2]
   };
 };
@@ -205,10 +205,13 @@ const setCtlValue = (jsonData, ctl, img) => {
   }
 };
 
+const boxSize = (length) => {
+  return Math.ceil(length/5)*5;
+};
+
 const blankControl = (cell, column) => {
-  cell.style.width = column.getLength() + 'em';
-  cell.style.maxWidth = column.getLength() + 'em';
   let ctl = document.createElement('input');
+
   ctl.type = 'text';
   ctl.disabled = 'true';
   ctl.readOnly = 'true';
@@ -218,9 +221,9 @@ const blankControl = (cell, column) => {
 };
 
 class Column {
-  constructor(heading, binding, getter, setter, editable, required, length) {
+  constructor(heading, fieldName, getter, setter, editable, required, length) {
     this.heading = heading;
-    this.binding = binding;
+    this.fieldName = fieldName;
     this.getter = getter;
     this.setter = setter;
     this.editable = editable ? editable : Editable.NEVER;
@@ -245,11 +248,11 @@ class Column {
   }
 
   getLength() {
-    return this.length;
+    return boxSize(this.length);
   }
 
   getHeaderLength() {
-    return this.heading.length;
+    return boxSize(this.heading.length);
   }
 
   getWidth() {
@@ -314,8 +317,8 @@ class Column {
 }
 
 class BoolColumn extends Column {
-  constructor(heading, binding, getter, setter, editable, required) {
-    super(heading, binding, getter, setter, editable, required, heading.length);
+  constructor(heading, fieldName, getter, setter, editable, required) {
+    super(heading, fieldName, getter, setter, editable, required, heading.length);
   }
 
   createControl() {
@@ -334,8 +337,8 @@ class BoolColumn extends Column {
 }
 
 class NumberColumn extends Column {
-  constructor(heading, binding, getter, setter, editable, required, max, min, places) {
-    super(heading, binding, getter, setter, editable, required, (max ? max : 255).toString().length, heading.length);
+  constructor(heading, fieldName, getter, setter, editable, required, max, min, places) {
+    super(heading, fieldName, getter, setter, editable, required, (max ? max : 255).toString().length, heading.length);
     this.max = max ? max : 255;
     this.min = min ? min : 0;
     this.places = places ? places : 0;
@@ -356,8 +359,8 @@ class NumberColumn extends Column {
 }
 
 class PhoneColumn extends Column {
-  constructor(heading, binding, getter, setter, editable, required) {
-    super(heading, binding, getter, setter, editable, required);
+  constructor(heading, fieldName, getter, setter, editable, required) {
+    super(heading, fieldName, getter, setter, editable, required);
   }
 
   createControl() {
@@ -368,8 +371,8 @@ class PhoneColumn extends Column {
 }
 
 class TextColumn extends Column {
-  constructor(heading, binding, getter, setter, editable, required, length, pattern) {
-    super(heading, binding, getter, setter, editable, required, length);
+  constructor(heading, fieldName, getter, setter, editable, required, length, pattern) {
+    super(heading, fieldName, getter, setter, editable, required, length);
     this.pattern = pattern;
   }
 
@@ -383,9 +386,8 @@ class TextColumn extends Column {
 }
 
 class URLColumn extends TextColumn {
-  constructor(heading, binding, getter, setter, editable, required) {
-    super(heading, binding, getter, setter, editable, required, 60,
-        URL_PATTERN);
+  constructor(heading, fieldName, getter, setter, editable, required) {
+    super(heading, fieldName, getter, setter, editable, required, 60, URL_PATTERN);
   }
 
   createControl() {
@@ -402,8 +404,8 @@ class URLColumn extends TextColumn {
 }
 
 class DateColumn extends TextColumn {
-  constructor(heading, binding, getter, setter, editable, required) {
-    super(heading, binding, getter, setter, editable, required, 12,
+  constructor(heading, fieldName, getter, setter, editable, required) {
+    super(heading, fieldName, getter, setter, editable, required, 12,
         DATE_PATTERN);
   }
 
@@ -417,8 +419,8 @@ class DateColumn extends TextColumn {
 }
 
 class FileColumn extends Column {
-  constructor(heading, binding, getter, mask, editable, required) {
-    super(heading, binding, getter, undefined, editable, required);
+  constructor(heading, fieldName, getter, mask, editable, required) {
+    super(heading, fieldName, getter, undefined, editable, required);
     this.mask = mask;
   }
 
@@ -434,7 +436,7 @@ class FileColumn extends Column {
       }
     }, false);
 
-    let add = getLink(entity.links, 'update-' + this.binding);
+    let add = getLink(entity.links, 'update-' + this.fieldName);
 
     if (add) {
       let btn = getButton(add.href, 'add', (e) => { this.select(e); });
@@ -443,7 +445,7 @@ class FileColumn extends Column {
       cell.appendChild(btn);
     }
 
-    let remove = getLink(entity.links, 'delete-' + this.binding);
+    let remove = getLink(entity.links, 'delete-' + this.fieldName);
 
     if (remove) {
       let btn = getButton(remove.href, 'delete', (e) => { this.remove(e, ctl); });
@@ -523,8 +525,8 @@ class FileColumn extends Column {
 }
 
 class IMGColumn extends FileColumn {
-  constructor(heading, binding, getter, editable, required) {
-    super(heading, binding, getter, 'image/*', editable, required);
+  constructor(heading, fieldName, getter, editable, required) {
+    super(heading, fieldName, getter, 'image/*', editable, required);
   }
 
   showContent(file) {
@@ -536,8 +538,8 @@ class IMGColumn extends FileColumn {
 }
 
 class PDFColumn extends FileColumn {
-  constructor(heading, binding, getter, editable, required) {
-    super(heading, binding, getter, 'application/pdf', editable, required);
+  constructor(heading, fieldName, getter, editable, required) {
+    super(heading, fieldName, getter, 'application/pdf', editable, required);
   }
 
   setValue(ctl, value) {
@@ -584,8 +586,8 @@ const closeAutoLists = (elmnt) => {
 document.addEventListener('click', (e) => { closeAutoLists(); }, false);
 
 class SelectColumn extends Column {
-  constructor(heading, binding, getter, setter, dropDown, editable, required, length, dropSize) {
-    super(heading, binding, getter, setter, editable, required, length);
+  constructor(heading, fieldName, getter, setter, dropDown, editable, required, length, dropSize) {
+    super(heading, fieldName, getter, setter, editable, required, length);
     this.dropDown = dropDown;
     this.dropSize = dropSize ? dropSize : 5;
   }
@@ -651,9 +653,7 @@ class SelectColumn extends Column {
       autoItem.className = 'autocomplete-items';
       autoItem.style.top = (dims.value * i) + dims.units;
       addText(autoItem, ctl.caption(inp.value, o));
-      autoItem.addEventListener('click', (e) => {
-        this.click(e);
-      }, false);
+      autoItem.addEventListener('click', (e) => { this.click(e); }, false);
       autoComp.appendChild(autoItem);
       i++;
     });
@@ -721,18 +721,18 @@ class SelectColumn extends Column {
 }
 
 class AutoCompleteColumn extends SelectColumn {
-  constructor(heading, binding, getter, setter, dropDown, editable, required, length, dropSize) {
-    super(heading, binding, getter, setter, dropDown, editable, required, length, dropSize);
+  constructor(heading, fieldName, getter, setter, dropDown, editable, required, length, dropSize) {
+    super(heading, fieldName, getter, setter, dropDown, editable, required, length, dropSize);
   }
 
   options(txt) {
-    return this.dropDown.options.filter((o) => {
+    return this.dropDown.getOptions().filter((o) => {
       return o.display.toLowerCase().includes(txt.toLowerCase());
-    }).slice(0, 5);
+    }).slice(0, this.dropSize);
   }
 
   caption(txt, o) {
-    return o.display.replace(/inp.value/i,
+    return o.display.replace(/inp.value/i, 
         '<strong>' + inp.value + '</strong>');
   }
 
@@ -748,8 +748,8 @@ class AutoCompleteColumn extends SelectColumn {
 }
 
 class DropDownColumn extends SelectColumn {
-  constructor(heading, binding, getter, setter, dropDown, editable, required, length, dropSize) {
-    super(heading, binding, getter, setter, dropDown, editable, required, length + 3.5, dropSize);
+  constructor(heading, fieldName, getter, setter, dropDown, editable, required, length, dropSize) {
+    super(heading, fieldName, getter, setter, dropDown, editable, required, length + 3.5, dropSize);
   }
 
   getControl(cell, entity, editMode) {
@@ -768,8 +768,7 @@ class DropDownColumn extends SelectColumn {
     if (value || entity) {
       ctl.disabled = shouldDisable(this.editable, editMode);
     } else {
-      ctl.disabled = !(editMode === EditMode.ADD && this.editable
-          !== Editable.NEVER);
+      ctl.disabled = !(editMode === EditMode.ADD && this.editable !== Editable.NEVER);
     }
 
     ctl.required = this.required;
@@ -801,7 +800,7 @@ class DropDownColumn extends SelectColumn {
   }
 
   getLength() {
-    return Math.max(this.dropDown.getLength() + 3.5, this.getHeaderLength());
+    return boxSize(Math.max(this.dropDown.getLength() + 3, this.getHeaderLength()));
   }
 
   setValue(ctl, value) {
@@ -847,7 +846,7 @@ class ButtonColumn {
   }
 
   getLength() {
-    return this.length;
+    return boxSize(this.length);
   }
 
   getHeaderLength() {
@@ -993,14 +992,12 @@ const setActiveTab = (event, tabName) => {
   let tabLinks = document.getElementsByClassName('tabLinks');
 
   for (let i = 0; i < tabContents.length; i++) {
-    tabContents[i].style.display = (tabContents[i].id === tabName) ? 'block'
-        : 'none';
+    tabContents[i].style.display = (tabContents[i].id === tabName) ? 'block' : 'none';
   }
 
   let linkName = tabName.replace('Tab', 'Link');
   for (let i = 0; i < tabLinks.length; i++) {
-    tabLinks[i].className = (tabLinks[i].id === linkName) ? 'tabLinks active'
-        : 'tabLinks';
+    tabLinks[i].className = (tabLinks[i].id === linkName) ? 'tabLinks active' : 'tabLinks';
   }
 };
 
@@ -1024,7 +1021,7 @@ const updateRow = (tableName, row) => {
   return getButton(row, 'save', Function(tableName + '.updateRow(' + row + '.id)'));
 };
 
-const gridButtonColumn = (elementName) => {
+const gridButtonColumn = () => {
   return new ButtonColumn([addRow], [updateRow, deleteRow]);
 };
 
@@ -1059,8 +1056,7 @@ const addHeader = (tableName, table, columns, paged) => {
   });
 };
 
-const addBody = (tableName, table, pageSize, columns, paged, rowCount,
-    maxLabel) => {
+const addBody = (tableName, table, pageSize, columns, paged, rowCount, maxLabel) => {
   let isForm = paged === Paged.FORM;
   let body = document.createElement('div');
   body.id = tableName + '_tbody';
@@ -1162,8 +1158,10 @@ const addFooter = (tableName, table, columns, paged) => {
 };
 
 async function removeFile(deleteUrl) {
-  await fetch(deleteUrl,
-      {method: 'DELETE', headers: {'Content-type': 'application/json'}})
+  await fetch(deleteUrl, {
+    method: 'DELETE', 
+    headers: {'Content-type': 'application/json'}
+  })
   .then(response => checkResponse(response))
   .catch(error => reportError(error));
 }
@@ -1173,7 +1171,10 @@ async function uploadFile(e, uploadUrl, fileData, ctl, img) {
 
   body.append('file', fileData);
 
-  await fetch(uploadUrl, {method: 'PUT', body: body})
+  await fetch(uploadUrl, {
+    method: 'PUT', 
+    body: body
+  })
   .then(response => checkResponse(response))
   .then(jsonData => setCtlValue(jsonData, ctl, img))
   .catch(error => reportError(error));
@@ -1186,7 +1187,9 @@ function readFile(uploadUrl, fileData, ctl, img) {
   };
   reader.onerror = (e) => {
     reader.abort();
+
     reportError('Problem beim Lesen der Datei ' + fileData + ': ' + e);
   };
+
   reader.readAsDataURL(fileData);
 }

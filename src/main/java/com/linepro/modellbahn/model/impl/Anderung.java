@@ -74,14 +74,14 @@ public class Anderung extends AbstractItem<AnderungKey> implements IAnderung {
      * Instantiates a new artikel.
      *
      * @param id the id
-     * @param artikel 
+     * @param artikel the parent artikel
      * @param anderungId 
-     * @param anderungsDatum 
-     * @param anderungsTyp 
-     * @param bezeichnung 
-     * @param stuck 
-     * @param anmerkung 
-     * @param deleted the deleted
+     * @param anderungsDatum the modification date
+     * @param anderungsTyp the modification type
+     * @param bezeichnung description of the modificiation
+     * @param stuck number of items affected by the modification
+     * @param anmerkung any remarks
+     * @param deleted if <code>true</code> this item is soft deleted, otherwise it is active
      */
     public Anderung(Long id, IArtikel artikel, Integer anderungId, LocalDate anderungsDatum, AnderungsTyp anderungsTyp, String bezeichnung, Integer stuck, String anmerkung, Boolean deleted) {
         super(id, deleted);

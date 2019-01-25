@@ -65,7 +65,7 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
 	 * Instantiates a new abstract item.
 	 *
 	 * @param id the id
-	 * @param deleted the deleted
+	 * @param deleted if <code>true</code> this item is soft deleted, otherwise it is active
 	 */
     public AbstractItem(Long id, Boolean deleted) {
 		setId(id);

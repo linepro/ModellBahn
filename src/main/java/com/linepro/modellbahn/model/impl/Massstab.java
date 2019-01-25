@@ -45,7 +45,7 @@ public class Massstab extends AbstractNamedItem<NameKey> implements IMassstab {
      * @param bezeichnung
      *            the bezeichnung
      * @param deleted
-     *            the deleted
+     *            if <code>true</code> this item is soft deleted, otherwise it is active
      */
     public Massstab(Long id, String name, String bezeichnung, Boolean deleted) {
         super(id, name, bezeichnung, deleted);

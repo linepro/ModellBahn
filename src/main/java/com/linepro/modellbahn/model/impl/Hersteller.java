@@ -64,7 +64,7 @@ public class Hersteller extends AbstractNamedItem<NameKey> implements IHerstelle
      * @param telefon
      *            the telefon
      * @param deleted
-     *            the deleted
+     *            if <code>true</code> this item is soft deleted, otherwise it is active
      */
     public Hersteller(Long id, String name, String bezeichnung, URL url, String telefon, Boolean deleted) {
         super(id, name, bezeichnung, deleted);

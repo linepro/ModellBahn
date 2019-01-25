@@ -80,7 +80,7 @@ public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsi
      * @param artikel
      *            the artikel
      * @param deleted
-     *            the deleted
+     *            if <code>true</code> this item is soft deleted, otherwise it is active
      */
     public ZugConsist(Long id, IZug zug, Integer position, IArtikel artikel, Boolean deleted) {
         super(id, deleted);

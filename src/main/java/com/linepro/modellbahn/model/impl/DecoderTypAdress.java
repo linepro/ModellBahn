@@ -85,7 +85,7 @@ public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implemen
      * @param adressTyp the adressTyp
      * @param span the span
      * @param werkseinstellung the werkseinstellung
-     * @param deleted the deleted
+     * @param deleted if <code>true</code> this item is soft deleted, otherwise it is active
      */
     public DecoderTypAdress(Long id, IDecoderTyp decoderTyp, Integer index, AdressTyp adressTyp, Integer span, 
             Integer werkseinstellung, Boolean deleted) {

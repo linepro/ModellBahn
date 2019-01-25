@@ -16,8 +16,7 @@
 <script type="text/javascript">
     const columns = [NAMEN, BEZEICHNUNG, ABBILDUNG];
 
-    const kupplung = new ListEditGrid(10, "kupplung", "kupplung", columns, Paged.PAGED,
-        EditMode.UPDATE);
+    const kupplung = new ListEditGrid(10, "kupplung", "kupplung", columns, Paged.PAGED, EditMode.UPDATE);
 
     async function init() {
         await kupplung.init();

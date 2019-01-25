@@ -45,7 +45,7 @@ public class Spurweite extends AbstractNamedItem<NameKey> implements ISpurweite 
      * @param bezeichnung
      *            the bezeichnung
      * @param deleted
-     *            the deleted
+     *            if <code>true</code> this item is soft deleted, otherwise it is active
      */
     public Spurweite(Long id, String name, String bezeichnung, Boolean deleted) {
         super(id, name, bezeichnung, deleted);

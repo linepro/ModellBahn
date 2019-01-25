@@ -17,11 +17,10 @@
     const unterKategorieColumns = [
         NAMEN,
         BEZEICHNUNG,
-        gridButtonColumn("unterKategorien"),
+        gridButtonColumn()
     ];
 
-    const unterKategorien = new ItemGrid(10, "unterKategorien", "unterKategorien", unterKategorieColumns,
-        Paged.EXPAND, EditMode.ADD, undefined);
+    const unterKategorien = new ItemGrid(10, "unterKategorien", "unterKategorien", unterKategorieColumns, Paged.EXPAND, EditMode.ADD, undefined);
 
     const columns = [
         NAMEN,
@@ -29,8 +28,7 @@
         new ButtonColumn([], [updateRow])
     ];
 
-    const kategorie = new ItemGrid(1, fetchUrl("kategorie"), "kategorie", columns, Paged.PAGED,
-        EditMode.UPDATE, [unterKategorien]);
+    const kategorie = new ItemGrid(1, fetchUrl("kategorie"), "kategorie", columns, Paged.PAGED, EditMode.UPDATE, [unterKategorien]);
 
     async function init() {
         await kategorie.init()

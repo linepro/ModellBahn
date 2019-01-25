@@ -15,15 +15,15 @@
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
   const columns = [
-    GATTUNG,
-    UNTER_KATEGORIE,
-    BAHNVERWALTUNG,
+    GATTUNG_SELECT,
+    UNTER_KATEGORIE_SELECT,
+    BAHNVERWALTUNG_SELECT,
     HERSTELLER,
     BAUZEIT,
     ANZAHL,
     BETREIBSNUMMER,
-    ANTRIEB,
-    ACHSFOLG,
+    ANTRIEB_SELECT,
+    ACHSFOLG_SELECT,
     ANFAHRZUGKRAFT,
     LEISTUNG,
     DIENSTGEWICHT,
@@ -43,7 +43,7 @@
     VERDAMPFUNG,
     FAHRMOTOREN,
     MOTORBAUART,
-    LEISTUNGSUBERTRAGUNG,
+    LEISTUNGSUBERTRAGUNG_SELECT,
     REICHWEITE,
     KAPAZITAT,
     KLASSE,
@@ -59,8 +59,7 @@
     new ButtonColumn([], [updateRow])
   ];
 
-  const vorbild = new ItemGrid(1, fetchUrl("vorbild"), "vorbild", columns, Paged.FORM,
-      EditMode.UPDATE, undefined);
+  const vorbild = new ItemGrid(1, fetchUrl("vorbild"), "vorbild", columns, Paged.FORM, EditMode.UPDATE, undefined);
 
   async function init() {
     await GATTUNG_DROP.init()
@@ -68,6 +67,7 @@
       .then(() => BAHNVERWALTUNG_DROP.init())
       .then(() => ANTRIEB_DROP.init())
       .then(() => ACHSFOLG_DROP.init())
+      .then(() => LEISTUNGSUBERTRAGUNG_DROP.init())
       .then(() => vorbild.init());
   }
 </script>

@@ -64,7 +64,7 @@ public class Zug extends AbstractNamedItem<NameKey> implements IZug {
 	 * @param name the name
 	 * @param bezeichnung the bezeichnung
 	 * @param zugTyp the zugTyp
-	 * @param deleted the deleted
+	 * @param deleted if <code>true</code> this item is soft deleted, otherwise it is active
 	 */
 	public Zug(Long id, String name, String bezeichnung, IZugTyp zugTyp, Boolean deleted) {
 		super(id, name, bezeichnung, deleted);

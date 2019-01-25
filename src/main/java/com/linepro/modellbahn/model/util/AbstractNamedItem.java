@@ -72,7 +72,7 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
    * @param id the id
    * @param name the name
    * @param bezeichnung the bezeichnung
-   * @param deleted the deleted
+   * @param deleted if <code>true</code> this item is soft deleted, otherwise it is active
    */
   public AbstractNamedItem(Long id, String name, String bezeichnung, Boolean deleted) {
     super(id, deleted);

@@ -16,8 +16,7 @@
 <script type="text/javascript">
     const columns = [NAMEN, BEZEICHNUNG, TELEFON, URL];
 
-    const hersteller = new ListEditGrid(10, "hersteller", "hersteller", columns, Paged.PAGED,
-        EditMode.UPDATE);
+    const hersteller = new ListEditGrid(10, "hersteller", "hersteller", columns, Paged.PAGED, EditMode.UPDATE);
 
     async function init() {
         await hersteller.init();

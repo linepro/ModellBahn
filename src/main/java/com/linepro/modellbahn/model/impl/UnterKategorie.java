@@ -68,7 +68,7 @@ public class UnterKategorie extends AbstractNamedItem<UnterKategorieKey> impleme
      * @param kategorie the kategorie
      * @param name the name
      * @param bezeichnung the bezeichnung
-     * @param deleted the deleted
+     * @param deleted if <code>true</code> this item is soft deleted, otherwise it is active
      */
     public UnterKategorie(Long id, IKategorie kategorie, String name, String bezeichnung, Boolean deleted) {
         super(id, name, bezeichnung, deleted);

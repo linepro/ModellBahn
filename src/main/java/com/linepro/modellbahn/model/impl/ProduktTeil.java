@@ -70,7 +70,7 @@ public class ProduktTeil extends AbstractItem<ProduktTeilKey> implements IProduk
      * @param id the id
      * @param produkt the produkt
      * @param anzahl the anzahl
-     * @param deleted the deleted
+     * @param deleted if <code>true</code> this item is soft deleted, otherwise it is active
      */
     public ProduktTeil(Long id, IProdukt produkt, IProdukt teil, Integer anzahl, Boolean deleted) {
         super(id, deleted);

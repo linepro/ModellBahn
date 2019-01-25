@@ -17,31 +17,31 @@
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
    const teilenColumns = [
-      TEIL,
+      TEIL_SELECT,
       STUCK,
-	    gridButtonColumn("teilen")
+	    gridButtonColumn()
 	    ];
 
    const teilen = new ItemGrid(5, "teilen", "teilen", teilenColumns, Paged.EXPAND, EditMode.ADD, undefined);
    
    const columns = [
-        HERSTELLER,
+        HERSTELLER_SELECT,
         BESTELL_NR,
-        UNTER_KATEGORIE,
-        MASSSTAB,
-        SPURWEITE,
-        EPOCH,
-        BAHNVERWALTUNG,
-        GATTUNG,
-        ACHSFOLG,
-        VORBILD,
-        SONDERMODELL,
-        AUFBAU,
-        LICHT,
-        KUPPLUNG,
-        STEUERUNG,
-        DECODER_TYP,
-        MOTOR_TYP,
+        UNTER_KATEGORIE_SELECT,
+        MASSSTAB_SELECT,
+        SPURWEITE_SELECT,
+        EPOCH_SELECT,
+        BAHNVERWALTUNG_SELECT,
+        GATTUNG_SELECT,
+        ACHSFOLG_SELECT,
+        VORBILD_SELECT,
+        SONDERMODELL_SELECT,
+        AUFBAU_SELECT,
+        LICHT_SELECT,
+        KUPPLUNG_SELECT,
+        STEUERUNG_SELECT,
+        DECODER_TYP_SELECT,
+        MOTOR_TYP_SELECT,
         BEZEICHNUNG,
         BAUZEIT,
         ANMERKUNG,
@@ -53,8 +53,7 @@
         new ButtonColumn([], [updateRow])
     ];
 
-    const produkt = new ItemGrid(1, fetchUrl("produkt"), "produkt", columns, Paged.FORM,
-        EditMode.UPDATE, [teilen]);
+    const produkt = new ItemGrid(1, fetchUrl("produkt"), "produkt", columns, Paged.FORM, EditMode.UPDATE, [teilen]);
 
     async function init() {
       await HERSTELLER_DROP.init()
