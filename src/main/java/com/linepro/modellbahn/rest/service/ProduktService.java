@@ -269,6 +269,16 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
         }
     }
 
+    @GET
+    @Path(ApiPaths.PRODUKT_TEIL_ROOT)
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    @ApiOperation(code = 201, value = "Adds a sub produkt  a Produkt by hersteller and bestell nr", response = Produkt.class)
+    public Response addTeil(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathParam(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr) {
+
+    }
+
     @POST
     @Path(ApiPaths.PRODUKT_TEIL_PATH)
     @Consumes({ MediaType.APPLICATION_JSON })

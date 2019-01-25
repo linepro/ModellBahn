@@ -3,10 +3,12 @@ package com.linepro.modellbahn.rest.service;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.linepro.modellbahn.rest.json.serialization.KategorieDeserializer;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import java.util.stream.Collectors;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -45,6 +47,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.checkerframework.checker.units.qual.A;
 
 /**
  * KategorieService. CRUD service for Kategorie and UnterKategorie
@@ -146,12 +149,13 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
     }
 
     @GET
-    @Path(ApiPaths.UNTER_KATEGORIE_PATH)
+    @Path(ApiPaths.UNTER_KATEGORIE_PART)
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Finds an UnterKategorie by kategorie and name", response = IUnterKategorie.class)
-    public Response get(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
-            @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) {
+    public Response getUnterKategorie(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) {
         try {
+            logGet(getEntityClassName() + ": " + kategorieStr + ApiPaths.SEPARATOR + ApiNames.UNTER_KATEGORIEN + ApiPaths.SEPARATOR + unterKategorieStr);
+
             IKategorie kategorie = findKategorie(kategorieStr, true);
 
             if (kategorie == null) {
@@ -171,7 +175,7 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
     }
 
     @POST
-    @Path(ApiPaths.KATEGORIE_PART)
+    @Path(ApiPaths.UNTER_KATEGORIE_ROOT)
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
@@ -181,9 +185,9 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
         @ApiResponse(code = 402, message = "Not Found"),
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
-    public Response add(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, UnterKategorie newUnterKategorie) {
+    public Response addUnterKategorie(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, UnterKategorie newUnterKategorie) {
         try {
-            logPost(getEntityClassName() + ": " + kategorieStr + ": " + newUnterKategorie);
+            logPost(getEntityClassName() + ": " + kategorieStr + ApiPaths.SEPARATOR + ApiNames.UNTER_KATEGORIEN + ": " + newUnterKategorie);
 
             IKategorie kategorie = findKategorie(kategorieStr, true);
 
@@ -212,10 +216,10 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
         @ApiResponse(code = 402, message = "Not Found"),
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
-    public Response update(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
+    public Response updateUnterKategorie(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr, UnterKategorie newUnterKategorie) {
         try {
-            logPut(getEntityClassName() + ": " + kategorieStr + ApiPaths.SEPARATOR + unterKategorieStr + ": " + newUnterKategorie);
+            logPut(getEntityClassName() + ": " + kategorieStr + ApiPaths.SEPARATOR + ApiNames.UNTER_KATEGORIEN + ApiPaths.SEPARATOR + unterKategorieStr + ": " + newUnterKategorie);
 
             IKategorie kategorie = findKategorie(kategorieStr, false);
 
@@ -251,9 +255,11 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
         @ApiResponse(code = 402, message = "Not Found"),
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
-    public Response delete(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
+    public Response deleteUnterKategorie(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) {
         try {
+            logDelete(getEntityClassName() + ": " + kategorieStr + ApiPaths.SEPARATOR + ApiNames.UNTER_KATEGORIEN + ApiPaths.SEPARATOR + unterKategorieStr);
+
             IKategorie kategorie = findKategorie(kategorieStr, true);
 
             if (kategorie == null) {
@@ -290,7 +296,7 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
             @ApiResponse(code = 204, message = "No Content"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-    public Response search(@Context UriInfo info, @QueryParam(ApiNames.KATEGORIE) final List<String> kategorien, @QueryParam(ApiNames.PAGE_NUMBER) Integer pageNumber, @QueryParam(ApiNames.PAGE_SIZE) Integer pageSize) {
+    public Response searchUnterKategorie(@Context UriInfo info, @QueryParam(ApiNames.KATEGORIE) final List<String> kategorien, @QueryParam(ApiNames.PAGE_NUMBER) Integer pageNumber, @QueryParam(ApiNames.PAGE_SIZE) Integer pageSize) {
         try {
             Integer maxPage = null;
             Map<String,List<String>> references = new HashMap<>(1);

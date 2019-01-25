@@ -246,6 +246,8 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
     public Response getAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index) {
         try {
+            logGet(getEntityClassName() + ":" + herstellerStr + ApiPaths.SEPARATOR + bestellNr + ApiPaths.SEPARATOR + ApiNames.ADRESSEN);
+
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, true);
 
             if (decoderTyp == null) {
@@ -277,7 +279,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
         })
     public Response addAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, DecoderTypAdress newDecoderTypAdress) {
         try {
-            logPost(getEntityClassName() + ": " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + ApiNames.ADRESSEN + ": " + newDecoderTypAdress);
+            logPost(getEntityClassName() + ": " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + ApiPaths.SEPARATOR + ApiNames.ADRESSEN + ": " + newDecoderTypAdress);
 
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, false);
 
@@ -382,6 +384,8 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
     public Response getCV(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv) {
         try {
+            logGet();
+
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, true);
 
             if (decoderTyp == null) {
@@ -527,6 +531,8 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
     public Response getFunktion(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion) {
         try {
+            logGet();
+
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, true);
 
             if (decoderTyp == null) {
