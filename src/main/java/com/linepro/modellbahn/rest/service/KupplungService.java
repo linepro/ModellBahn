@@ -130,13 +130,13 @@ public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
             @FormDataParam("file") InputStream fileInputStream,
             @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,  
             @FormDataParam("file") FormDataBodyPart body) {
-        logPut(getEntityClassName() + ": " + name + ApiPaths.SEPARATOR + ApiNames.ABBILDUNG + ": " + contentDispositionHeader);
+        logPut(String.format(ApiPaths.ABBILDUNG_LOG, getEntityClassName(), name) + ": " + contentDispositionHeader.getFileName());
 
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
             if (!handler.isAcceptable(body, AcceptableMediaTypes.IMAGE_TYPES)) {
-                return getResponse(badRequest(null, "Invalid file '" + contentDispositionHeader.getFileName() + "'"));
+                return getResponse(badRequest(ApiNames.INVALID_FILE + contentDispositionHeader.getFileName() + "'"));
             }
 
             IKupplung kupplung = findKupplung(name, false);
@@ -163,7 +163,7 @@ public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 204, value = "Deletes the picture from a named Kupplung", response = IKupplung.class)
     public Response deleteAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
-        logDelete(getEntityClassName() + ": " + name + ", abbildung");
+        logDelete(String.format(ApiPaths.ABBILDUNG_LOG, getEntityClassName(), name));
         
         try {
             IKupplung kupplung = findKupplung(name, false);

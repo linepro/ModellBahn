@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.persistence.IPersister;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 /**
  * NamedItemConverter.
@@ -42,7 +43,7 @@ class NamedItemConverter implements Converter {
                         return (T) entity;
                     }
 
-                    throw new IllegalArgumentException(value + " does not exist");
+                    throw new IllegalArgumentException(value + ApiNames.DOES_NOT_EXIST);
                 }
 
                 throw new IllegalArgumentException(type + " not supported");

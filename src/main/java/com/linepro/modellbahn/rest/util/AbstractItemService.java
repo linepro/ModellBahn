@@ -464,15 +464,15 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
               .stream()
               .map(ConstraintViolation::getMessage)
               .collect(Collectors.joining( ", " ));
-            return getResponse(badRequest(message.toString(), e.toString()));
+            return getResponse(badRequest(message.toString()));
         } else  if (e instanceof EntityExistsException) {
-            return getResponse(badRequest(e.getMessage(), e.toString()));
+            return getResponse(badRequest(e.getMessage()));
         } else if (e instanceof EntityNotFoundException) {
-            return getResponse(badRequest(e.getMessage(), e.toString()));
+            return getResponse(badRequest(e.getMessage()));
         } else if (e instanceof NonUniqueResultException) {
-            return getResponse(badRequest(e.getMessage(), e.toString()));
+            return getResponse(badRequest(e.getMessage()));
         } else if (e instanceof NoResultException) {
-            return getResponse(badRequest(e.getMessage(), e.toString()));
+            return getResponse(badRequest(e.getMessage()));
         }
         
         return getResponse(serverError(e));

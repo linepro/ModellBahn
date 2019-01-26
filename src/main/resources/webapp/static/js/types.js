@@ -7,12 +7,14 @@ const extractArtikelValue = (entity) => { return entity.artikelId; };
 const extractArtikelOption = (entity) => { return new DropOption( extractArtikelValue(entity), entity.bezeichnung) };
 const extractDecoderValue = (entity) => { return entity.dcoderId; };
 const extractDecoderOption = (entity) => { return new DropOption( extractDecoderValue(entity), entity.bezeichnung) };
-const extractKategorieValue = (entity) => { return entity.unterkategorie.name + '/' + entity.name; };
+const extractKategorieValue = (entity) => { return entity.kategorie.name + '/' + entity.name; };
 const extractKategorieOption = (entity) => { return new DropOption( extractKategorieValue(entity), entity.kategorie.bezeichnung + ' - ' + entity.bezeichnung); };
 const extractProduktValue = (entity) => { return entity.hersteller.name + '/' + entity.bestellNr ; };
 const extractProduktOption = (entity) => { return new DropOption( extractProduktValue(entity), entity.hersteller.bezeichnung + ' - ' + entity.bestellNr); };
 const extractVorbildValue = (entity) => { return entity.gattung.name; };
 const extractVorbildOption = (entity) => { return new DropOption(extractVorbildValue(entity), entity.bezeichnung); };
+
+const extractUnterKategorieValue = (entity) => { return entity.unterKategorie ? extractKategorieValue(entity.unterKategorie) : undefined };
 
 const ACHSFOLG_DROP = new DropDown(apiRoot() + 'achsfolg', extractBezeichnung);
 const ADRESS_TYP_DROP = new DropDown(apiRoot() + 'enums/adressTyp', extractBezeichnung);
@@ -28,7 +30,7 @@ const GATTUNG_DROP = new DropDown(apiRoot() + 'gattung', extractBezeichnung);
 const HERSTELLER_DROP = new DropDown(apiRoot() + 'hersteller', extractBezeichnung);
 const KONFIGURATION_DROP = new DropDown(apiRoot() + 'enums/konfiguration', extractBezeichnung);
 const KUPPLUNG_DROP = new DropDown(apiRoot() + 'kupplung', extractBezeichnung);
-const LEISTUNGSUBERTRAGUNG_DROP = new DropDown(apiRoot() +  + 'enums/leistungsubertragung', extractBezeichnung);
+const LEISTUNGSUBERTRAGUNG_DROP = new DropDown(apiRoot() + 'enums/leistungsubertragung', extractBezeichnung);
 const LICHT_DROP = new DropDown(apiRoot() + 'licht', extractBezeichnung);
 const MASSSTAB_DROP = new DropDown(apiRoot() + 'massstab', extractBezeichnung);
 const MOTOR_TYP_DROP = new DropDown(apiRoot() + 'motorTyp', extractBezeichnung);
@@ -73,7 +75,7 @@ const STATUS_SELECT = new DropDownColumn('Status', 'status', (entity) => { retur
 const STECKER_SELECT = new DropDownColumn('Stecker', 'stecker', (entity) => { return entity.stecker; }, (entity, value) => { entity.stecker = value; }, STECKER_DROP, Editable.UPDATE, false, 30, 5);
 const STEUERUNG_SELECT = new DropDownColumn('Steuerung', 'steuerung', (entity) => { return entity.steuerung ? entity.steuerung.name : undefined; }, (entity, value) => { entity.steuerung = { name: value }; }, STEUERUNG_DROP, Editable.UPDATE, false, 30, 5);
 const TEIL_SELECT = new DropDownColumn('Teil', 'teil', (entity) => { return entity.teil ? extractProduktValue(entity.teil) : undefined; }, (entity, value) => { let parts = value.split('/'); entity.teil = { hersteller: { name: parts[0] }, bestellNr: parts[1] }; }, PRODUKT_DROP, Editable.UPDATE, false, 50, 5);
-const UNTER_KATEGORIE_SELECT = new DropDownColumn('Kategorie', 'unterKategorie', (entity) => { return entity.unterKategorie ? extractKategorieValue(entity.unterKategorie) : undefined; }, (entity, value) => { let parts = value.split('/'); entity.unterKategorie = { kategorie: { name: parts[0] }, name: parts[1] }; }, UNTER_KATEGORIE_DROP, Editable.UPDATE, true);
+const UNTER_KATEGORIE_SELECT = new DropDownColumn('Kategorie', 'unterKategorie', extractUnterKategorieValue, (entity, value) => { let parts = value.split('/'); entity.unterKategorie = { kategorie: { name: parts[0] }, name: parts[1] }; }, UNTER_KATEGORIE_DROP, Editable.UPDATE, true);
 const UNTER_KATEGORIE_DISPLAY = new DropDownColumn('Kategorie', 'unterKategorie', (entity) => { return entity.artikel.produkt.unterKategorie ? extractKategorieValue(entity.artikel.produkt.unterKategorie) : undefined; }, undefined, UNTER_KATEGORIE_DROP, Editable.NEVER, true)
 const VORBILD_SELECT = new DropDownColumn('Vorbild', 'vorbild', (entity) => { return entity.vorbild ? entity.vorbild.gattung.name : undefined; }, (entity, value) => { entity.vorbild = { gattung: { name: value } }; }, VORBILD_DROP, Editable.UPDATE, false, 30, 5);
 const WAHRUNG_SELECT = new DropDownColumn('Wahrung', 'wahrung', (entity) => { return entity.wahrung ? entity.wahrung.name : undefined; }, (entity, value) => { entity.wahrung = { name: value }; }, WAHRUNG_DROP, Editable.UPDATE, false, 30, 5);

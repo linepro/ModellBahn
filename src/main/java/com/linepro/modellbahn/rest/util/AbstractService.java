@@ -73,7 +73,7 @@ public abstract class AbstractService {
         return Response.accepted();
     }
 
-    protected ResponseBuilder badRequest(final String errorCode, final String userMessage) {
+    protected ResponseBuilder badRequest(final String userMessage) {
         return Response.status(Status.BAD_REQUEST).entity(new ErrorMessage(Status.BAD_REQUEST.getStatusCode(), userMessage));
     }
 

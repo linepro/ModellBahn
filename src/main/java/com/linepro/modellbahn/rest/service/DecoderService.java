@@ -151,7 +151,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
 
             if (decoderTyp == null) {
                 return getResponse(
-                        badRequest(null, "DecoderTyp " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + " does not exist"));
+                        badRequest(String.format(ApiNames.DOES_NOT_EXIST, "DecoderTyp ", herstellerStr + ApiPaths.SEPARATOR + bestellNr)));
             }
 
             IDecoder decoder = new DecoderCreator(getPersister()).create(decoderTyp);
@@ -218,10 +218,12 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
     public Response getAdress(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId,
             @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index) {
         try {
+            logGet(String.format(ApiPaths.DECODER_ADRESS_LOG, getEntityClassName(), decoderId, index));
+
             IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {
-                return getResponse(badRequest(null, "Decoder " + decoderId + " does not exist"));
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Decoder ", decoderId)));
             }
 
             IDecoderAdress decoderAdress = findDecoderAdress(decoder, index, true);
@@ -247,18 +249,18 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
     public Response updateAdress(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId,
             @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index, @QueryParam(ApiNames.ADRESS) Integer adress) {
         try {
-            logPut(getEntityClassName() + ": " + decoderId + ApiPaths.SEPARATOR + index + ": " + adress);
+            logPut(String.format(ApiPaths.DECODER_ADRESS_LOG, getEntityClassName(), decoderId, index) + ": " + adress);
 
             IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {
-                return getResponse(badRequest(null, "Decoder " + decoderId + " does not exist"));
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Decoder ", decoderId)));
             }
 
             IDecoderAdress decoderAdress = findDecoderAdress(decoder, index, true);
 
             if (decoderAdress == null) {
-                return getResponse(badRequest(null, "Decoder Adress " + decoderId + ApiPaths.SEPARATOR + index + " does not exist"));
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Decoder Adress ", decoderId + ApiPaths.SEPARATOR + index)));
             }
 
             decoderAdress.setAdress(adress);
@@ -281,10 +283,12 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
     public Response getCv(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId,
             @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv) {
         try {
+            logGet(String.format(ApiPaths.DECODER_CV_LOG, getEntityClassName(), decoderId, cv));
+
             IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {
-                return getResponse(badRequest(null, "Decoder " + decoderId + " does not exist"));
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Decoder ", decoderId)));
             }
 
             IDecoderCV decoderCV = findDecoderCV(decoder, cv, true);
@@ -310,18 +314,18 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
     public Response updateCv(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId,
             @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv, @QueryParam(ApiNames.WERT) Integer wert) {
         try {
-            logPut(getEntityClassName() + ": " + decoderId + ApiPaths.SEPARATOR + cv + ": " + wert);
+            logPut(String.format(ApiPaths.DECODER_CV_LOG, getEntityClassName(), decoderId, cv) + ": " + wert);
 
             IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {
-                return getResponse(badRequest(null, "Decoder " + decoderId + " does not exist"));
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Decoder ", decoderId)));
             }
 
             IDecoderCV decoderCV = findDecoderCV(decoder, cv, true);
 
             if (decoderCV == null) {
-                return getResponse(badRequest(null, "Decoder CV " + decoderId + ApiPaths.SEPARATOR + cv + " does not exist"));
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Decoder CV ", decoderId + ApiPaths.SEPARATOR + cv)));
             }
 
             decoderCV.setWert(wert);
@@ -345,10 +349,12 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
             @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe,
             @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion) {
         try {
+            logGet(String.format(ApiPaths.DECODER_FUNKTION_LOG, getEntityClassName(), decoderId, reihe, funktion));
+
             IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {
-                return getResponse(badRequest(null, "Decoder " + decoderId + " does not exist"));
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Decoder ", decoderId)));
             }
 
             IDecoderFunktion decoderFunktion = findDecoderFunktion(decoder, reihe, funktion, true);
@@ -376,19 +382,18 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
             @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion,
             @QueryParam(ApiNames.BEZEICHNUNG) String descirption) {
         try {
-            logPut(getEntityClassName() + ": " + decoderId + ApiPaths.SEPARATOR + reihe + ApiPaths.SEPARATOR + funktion + ": " + descirption);
+            logPut(String.format(ApiPaths.DECODER_FUNKTION_LOG, getEntityClassName(), decoderId, reihe, funktion) + ": " + descirption);
 
             IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {
-                return getResponse(badRequest(null, "Decoder " + decoderId + " does not exist"));
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Decoder ", decoderId)));
             }
 
             IDecoderFunktion decoderFunktion = findDecoderFunktion(decoder, reihe, funktion, true);
 
             if (decoderFunktion == null) {
-                return getResponse(badRequest(null,
-                        "Decoder Funktion " + decoderId + ApiPaths.SEPARATOR + reihe + ApiPaths.SEPARATOR + funktion + " does not exist"));
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Decoder Funktion ", decoderId + ApiPaths.SEPARATOR + reihe + ApiPaths.SEPARATOR + funktion)));
             }
 
             decoderFunktion.setBezeichnung(descirption);

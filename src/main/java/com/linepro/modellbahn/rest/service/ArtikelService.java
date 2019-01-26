@@ -205,13 +205,13 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
             @FormDataParam("file") InputStream fileInputStream,
             @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,  
             @FormDataParam("file") FormDataBodyPart body) {
-        logPut(getEntityClassName() + ": " + artikelId + ApiPaths.SEPARATOR + ApiNames.ABBILDUNG + ": " + contentDispositionHeader);
+        logPut(String.format(ApiPaths.ABBILDUNG_LOG, getEntityClassName(), artikelId) + ": " + contentDispositionHeader.getFileName());
 
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
             if (!handler.isAcceptable(body, AcceptableMediaTypes.IMAGE_TYPES)) {
-                return getResponse(badRequest(null, "Invalid file '" + contentDispositionHeader.getFileName() + "'"));
+                return getResponse(badRequest(ApiNames.INVALID_FILE + contentDispositionHeader.getFileName() + "'"));
             }
 
             IArtikel artikel = findArtikel(artikelId, false);
@@ -241,7 +241,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
     public Response deleteAbbildung(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId) {
-        logDelete(getEntityClassName() + ": " + artikelId + ApiPaths.SEPARATOR + ApiNames.ABBILDUNG);
+        logDelete(String.format(ApiPaths.ABBILDUNG_LOG, getEntityClassName(), artikelId));
         
         try {
             IArtikel artikel = findArtikel(artikelId, false);
@@ -270,12 +270,12 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
     @ApiOperation(code = 201, value = "Adds a new changed to an article", response = IAnderung.class)
     public Response addAnderung(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, Anderung newAnderung) {
         try {
-            logPost(getEntityClassName() + ": " + artikelId + ApiPaths.SEPARATOR + ApiNames.ANDERUNG + ": " + newAnderung);
+            logPost(String.format(ApiPaths.ANDERUNG_ROOT_LOG, getEntityClassName(), artikelId, "") + ": " + newAnderung);
 
             IArtikel artikel = findArtikel(artikelId, true);
 
             if (artikel == null) {
-                return getResponse(badRequest(null, "Artikel " + artikelId + " does not exist"));
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Artikel ", artikelId)));
             }
 
             artikel.addAnderung(newAnderung);
@@ -294,24 +294,24 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a change to an Article", response = IAnderung.class)
-    public Response updateAnderung(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, @PathParam(ApiPaths.ANDERUNGS_ID_PARAM_NAME) Integer anderungsId, Anderung newAnderung) {
+    public Response updateAnderung(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, @PathParam(ApiPaths.ANDERUNG_ID_PARAM_NAME) Integer anderungId, Anderung newAnderung) {
         try {
-            logPut(getEntityClassName() + ": " + artikelId + ApiPaths.SEPARATOR + ApiNames.ANDERUNG + ApiPaths.SEPARATOR + anderungsId + ": " + newAnderung);
+            logPut(String.format(ApiPaths.ANDERUNG_LOG, getEntityClassName(), artikelId, anderungId) + ": " + newAnderung);
 
             IArtikel artikel = findArtikel(artikelId, true);
 
             if (artikel == null) {
-                return getResponse(badRequest(null, "Artikel " + artikelId + " does not exist"));
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Artikel ", artikelId)));
             }
 
-            IAnderung anderung = findAnderung(artikel, anderungsId, true);
+            IAnderung anderung = findAnderung(artikel, anderungId, true);
 
             if (anderung == null) {
-                return getResponse(badRequest(null, "Anderung " + artikelId + ApiPaths.SEPARATOR + anderungsId + " does not exist"));
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Anderung ", artikelId + ApiPaths.SEPARATOR + anderungId)));
             }
 
             newAnderung.setArtikel(artikel);
-            newAnderung.setAnderungId(anderungsId);
+            newAnderung.setAnderungId(anderungId);
 
             anderung = getAnderungPersister().merge(new AnderungKey(artikel, anderung.getAnderungId()), newAnderung);
 
@@ -326,25 +326,25 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 204, value = "Removes a change from an article")
-    public Response deleteAnderung(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, @PathParam(ApiPaths.ANDERUNGS_ID_PARAM_NAME) Integer anderungsId) {
+    public Response deleteAnderung(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, @PathParam(ApiPaths.ANDERUNG_ID_PARAM_NAME) Integer anderungId) {
         try {
-            logDelete(getEntityClassName() + ": " + artikelId + ApiPaths.SEPARATOR + ApiNames.ANDERUNG + ApiPaths.SEPARATOR + anderungsId);
+            logDelete(String.format(ApiPaths.ANDERUNG_LOG, getEntityClassName(), artikelId, anderungId));
 
             IArtikel artikel = findArtikel(artikelId, true);
 
             if (artikel == null) {
-                return getResponse(badRequest(null, "Artikel " + artikelId + " does not exist"));
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Artikel ", artikelId)));
             }
 
-            IAnderung anderung = findAnderung(artikelId, anderungsId, true);
+            IAnderung anderung = findAnderung(artikelId, anderungId, true);
 
             if (anderung == null) {
-                return getResponse(badRequest(null, "Anderung " + artikelId + ApiPaths.SEPARATOR + anderungsId + " does not exist"));
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Anderung ", artikelId + ApiPaths.SEPARATOR + anderungId)));
             }
 
             artikel.removeAnderung(anderung);
 
-            // TODO: resequence anderungsId for remaining items?
+            // TODO: resequence anderungId for remaining items?
             
             getPersister().update(artikel);
 

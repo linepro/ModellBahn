@@ -83,7 +83,7 @@ public interface IPersister<I extends IItem<?>> {
      *
      * @param entity the new state of the entity.
      * @return the updated entity.
-     * @throws Exception if the entity does not exist or there is a DB error
+     * @throws Exception if the entity ist nicht vorhanden or there is a DB error
      */
     I merge(Long id, I entity) throws Exception;
 
@@ -94,7 +94,7 @@ public interface IPersister<I extends IItem<?>> {
      *
      * @param entity the new state of the entity.
      * @return the updated entity.
-     * @throws Exception if the entity does not exist or there is a DB error
+     * @throws Exception if the entity ist nicht vorhanden or there is a DB error
      */
     I update(I entity) throws Exception;
 
@@ -132,7 +132,7 @@ public interface IPersister<I extends IItem<?>> {
     void deleteAll(I template) throws Exception;
 
     /**
-     * Adds the entity if it does not exist or updates it if it does.
+     * Adds the entity if it ist nicht vorhanden or updates it if it does.
      *
      * @param entity the new state of the entity.
      * @return the updated entity.

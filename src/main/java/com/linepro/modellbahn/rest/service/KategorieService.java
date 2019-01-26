@@ -1,14 +1,10 @@
 package com.linepro.modellbahn.rest.service;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.linepro.modellbahn.rest.json.serialization.KategorieDeserializer;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import java.util.stream.Collectors;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -17,7 +13,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
@@ -28,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.linepro.modellbahn.model.IKategorie;
 import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.impl.Kategorie;
@@ -37,6 +33,7 @@ import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.KategorieDeserializer;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
@@ -47,7 +44,6 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.checkerframework.checker.units.qual.A;
 
 /**
  * KategorieService. CRUD service for Kategorie and UnterKategorie
@@ -149,141 +145,7 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
     }
 
     @GET
-    @Path(ApiPaths.UNTER_KATEGORIE_PART)
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Finds an UnterKategorie by kategorie and name", response = IUnterKategorie.class)
-    public Response getUnterKategorie(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) {
-        try {
-            logGet(getEntityClassName() + ": " + kategorieStr + ApiPaths.SEPARATOR + ApiNames.UNTER_KATEGORIEN + ApiPaths.SEPARATOR + unterKategorieStr);
-
-            IKategorie kategorie = findKategorie(kategorieStr, true);
-
-            if (kategorie == null) {
-                return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
-            }
-
-            IUnterKategorie unterKategorie = findUnterKategorie(kategorieStr, unterKategorieStr, false);
-
-            if (unterKategorie != null) {
-                return getResponse(ok(), unterKategorie, true, true);
-            }
-
-            return getResponse(notFound());
-        } catch (Exception e) {
-            return getResponse(e);
-        }
-    }
-
-    @POST
-    @Path(ApiPaths.UNTER_KATEGORIE_ROOT)
-    @Consumes({ MediaType.APPLICATION_JSON })
-    @Produces(MediaType.APPLICATION_JSON)
-    @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Adds an UnterKategorie to a kategorie", response = IUnterKategorie.class)
-    @ApiResponses({
-        @ApiResponse(code = 400, message = "Bad request"),
-        @ApiResponse(code = 402, message = "Not Found"),
-        @ApiResponse(code = 500, message = "Internal Server Error")
-        })
-    public Response addUnterKategorie(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, UnterKategorie newUnterKategorie) {
-        try {
-            logPost(getEntityClassName() + ": " + kategorieStr + ApiPaths.SEPARATOR + ApiNames.UNTER_KATEGORIEN + ": " + newUnterKategorie);
-
-            IKategorie kategorie = findKategorie(kategorieStr, true);
-
-            if (kategorie == null) {
-                return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
-            }
-
-            newUnterKategorie.setDeleted(false);
-
-            kategorie.addUnterKategorie(newUnterKategorie);
-
-            getPersister().update(kategorie);
-
-            return getResponse(created(), newUnterKategorie, true, true);
-        } catch (Exception e) {
-            return getResponse(e);
-        }
-    }
-
-    @PUT
-    @Path(ApiPaths.UNTER_KATEGORIE_PATH)
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(code = 202, value = "Updates an UnterKategorie by kategorie and name", response = IUnterKategorie.class)
-    @ApiResponses({
-        @ApiResponse(code = 400, message = "Bad request"),
-        @ApiResponse(code = 402, message = "Not Found"),
-        @ApiResponse(code = 500, message = "Internal Server Error")
-        })
-    public Response updateUnterKategorie(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
-            @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr, UnterKategorie newUnterKategorie) {
-        try {
-            logPut(getEntityClassName() + ": " + kategorieStr + ApiPaths.SEPARATOR + ApiNames.UNTER_KATEGORIEN + ApiPaths.SEPARATOR + unterKategorieStr + ": " + newUnterKategorie);
-
-            IKategorie kategorie = findKategorie(kategorieStr, false);
-
-            if (kategorie == null) {
-                return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
-            }
-
-            IUnterKategorie unterKategorie = findUnterKategorie(kategorieStr, unterKategorieStr, false);
-
-            if (unterKategorie == null) {
-                return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
-            } else if (newUnterKategorie.getKategorie() == null) {
-                newUnterKategorie.setKategorie(kategorie);
-            } else if (!newUnterKategorie.getKategorie().equals(kategorie)) {
-                // Attempt to change kategorie not allowed
-                return getResponse(badRequest(null, "You cannot change the kategorie for an unterkategorie, create a new one"));
-            }
-
-            unterKategorie = getUnterKategoriePersister().merge(unterKategorie.getId(), newUnterKategorie);
-
-            return getResponse(accepted(), unterKategorie, true, true);
-        } catch (Exception e) {
-            return getResponse(e);
-        }
-    }
-
-    @DELETE
-    @Path(ApiPaths.UNTER_KATEGORIE_PATH)
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(code = 204, value = "Deletes an UnterKategorie by kategorie and name")
-    @ApiResponses({
-        @ApiResponse(code = 400, message = "Bad request"),
-        @ApiResponse(code = 402, message = "Not Found"),
-        @ApiResponse(code = 500, message = "Internal Server Error")
-        })
-    public Response deleteUnterKategorie(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
-            @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) {
-        try {
-            logDelete(getEntityClassName() + ": " + kategorieStr + ApiPaths.SEPARATOR + ApiNames.UNTER_KATEGORIEN + ApiPaths.SEPARATOR + unterKategorieStr);
-
-            IKategorie kategorie = findKategorie(kategorieStr, true);
-
-            if (kategorie == null) {
-                return getResponse(badRequest(null, "Kategorie " + kategorieStr + " does not exist"));
-            }
-
-            IUnterKategorie unterKategorie = findUnterKategorie(kategorie, unterKategorieStr, true);
-
-            if (unterKategorie == null) {
-                return getResponse(badRequest(null, "UnterKategorie " + kategorieStr + ApiPaths.SEPARATOR + unterKategorieStr + " does not exist"));
-            }
-
-            kategorie.removeUnterKategorie(unterKategorie);
-
-            getPersister().update(kategorie);
-
-            return getResponse(noContent());
-        } catch (Exception e) {
-            return getResponse(e);
-        }
-    }
-
-    @GET
-    @Path(ApiPaths.UNTER_KATEGORIEN_PATH)
+    @Path(ApiNames.UNTER_KATEGORIEN)
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds UnterKategorieen by kategorie", response = IUnterKategorie.class, responseContainer = "List")
@@ -296,9 +158,14 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
             @ApiResponse(code = 204, message = "No Content"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-    public Response searchUnterKategorie(@Context UriInfo info, @QueryParam(ApiNames.KATEGORIE) final List<String> kategorien, @QueryParam(ApiNames.PAGE_NUMBER) Integer pageNumber, @QueryParam(ApiNames.PAGE_SIZE) Integer pageSize) {
+    public Response searchUnterKategorie(@Context UriInfo info) {
         try {
+            logGet(getEntityClassName() + ": " + ApiNames.UNTER_KATEGORIEN + ": " + info);
+
+            Integer pageNumber = null;
+            Integer pageSize = null;
             Integer maxPage = null;
+            List<String> kategorien = null;
             Map<String,List<String>> references = new HashMap<>(1);
 
             if (kategorien != null && !kategorien.isEmpty()) {
@@ -325,6 +192,114 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
             List<Link> navigation = getNavLinks(info, pageNumber, pageSize, maxPage);
 
             return getResponse(ok(), new ArrayList<>(entities), true, true, navigation);
+        } catch (Exception e) {
+            return getResponse(e);
+        }
+    }
+    
+    @POST
+    @Path(ApiPaths.UNTER_KATEGORIE_ROOT)
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(Views.Public.class)
+    @ApiOperation(code = 202, value = "Adds an UnterKategorie to a kategorie", response = IUnterKategorie.class)
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 402, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
+    public Response addUnterKategorie(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, UnterKategorie newUnterKategorie) {
+        try {
+            logPost(String.format(ApiPaths.UNTER_KATEGORIE_ROOT_LOG, getEntityClassName(), kategorieStr) + ": " + newUnterKategorie);
+
+            IKategorie kategorie = findKategorie(kategorieStr, true);
+
+            if (kategorie == null) {
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Kategorie ", kategorieStr)));
+            }
+
+            newUnterKategorie.setDeleted(false);
+
+            kategorie.addUnterKategorie(newUnterKategorie);
+
+            getPersister().update(kategorie);
+
+            return getResponse(created(), newUnterKategorie, true, true);
+        } catch (Exception e) {
+            return getResponse(e);
+        }
+    }
+
+    @PUT
+    @Path(ApiPaths.UNTER_KATEGORIE_PATH)
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(code = 202, value = "Updates an UnterKategorie by kategorie and name", response = IUnterKategorie.class)
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 402, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
+    public Response updateUnterKategorie(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
+            @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr, UnterKategorie newUnterKategorie) {
+        try {
+            logPut(String.format(ApiPaths.UNTER_KATEGORIE_LOG, getEntityClassName(), kategorieStr, unterKategorieStr) + ": " + newUnterKategorie);
+
+            IKategorie kategorie = findKategorie(kategorieStr, false);
+
+            if (kategorie == null) {
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Kategorie ", kategorieStr)));
+            }
+
+            IUnterKategorie unterKategorie = findUnterKategorie(kategorieStr, unterKategorieStr, false);
+
+            if (unterKategorie == null) {
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Kategorie ", kategorieStr)));
+            } else if (newUnterKategorie.getKategorie() == null) {
+                newUnterKategorie.setKategorie(kategorie);
+            } else if (!newUnterKategorie.getKategorie().equals(kategorie)) {
+                // Attempt to change kategorie not allowed
+                return getResponse(badRequest("You cannot change the kategorie for an unterkategorie, create a new one"));
+            }
+
+            unterKategorie = getUnterKategoriePersister().merge(unterKategorie.getId(), newUnterKategorie);
+
+            return getResponse(accepted(), unterKategorie, true, true);
+        } catch (Exception e) {
+            return getResponse(e);
+        }
+    }
+
+    @DELETE
+    @Path(ApiPaths.UNTER_KATEGORIE_PATH)
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(code = 204, value = "Deletes an UnterKategorie by kategorie and name")
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 402, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
+    public Response deleteUnterKategorie(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
+            @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) {
+        try {
+            logDelete(String.format(ApiPaths.UNTER_KATEGORIE_LOG, getEntityClassName(), kategorieStr, unterKategorieStr));
+
+            IKategorie kategorie = findKategorie(kategorieStr, true);
+
+            if (kategorie == null) {
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Kategorie ", kategorieStr)));
+            }
+
+            IUnterKategorie unterKategorie = findUnterKategorie(kategorie, unterKategorieStr, true);
+
+            if (unterKategorie == null) {
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "UnterKategorie ", kategorieStr + ApiPaths.SEPARATOR + unterKategorieStr)));
+            }
+
+            kategorie.removeUnterKategorie(unterKategorie);
+
+            getPersister().update(kategorie);
+
+            return getResponse(noContent());
         } catch (Exception e) {
             return getResponse(e);
         }

@@ -139,4 +139,7 @@ public interface ApiNames {
     String PREVIOUS = "previous";
     String NEXT = "next";
     String ENUMS = "enums";
+
+    String INVALID_FILE = "Ungültige Datei '%s'";
+    String DOES_NOT_EXIST = "%s '%s' ist nicht vorhanden";
 }

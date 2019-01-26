@@ -129,13 +129,13 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
             @FormDataParam("file") InputStream fileInputStream,
             @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,  
             @FormDataParam("file") FormDataBodyPart body) {
-        logPut(getEntityClassName() + ": " + name + ApiPaths.SEPARATOR + ApiNames.ABBILDUNG + ": " + contentDispositionHeader);
+        logPut(String.format(ApiPaths.ABBILDUNG_LOG, getEntityClassName(), name) + ": " + contentDispositionHeader.getFileName());
 
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
             if (!handler.isAcceptable(body, AcceptableMediaTypes.IMAGE_TYPES)) {
-                return getResponse(badRequest(null, "Invalid file '" + contentDispositionHeader.getFileName() + "'"));
+                return getResponse(badRequest(ApiNames.INVALID_FILE + contentDispositionHeader.getFileName() + "'"));
             }
 
             ILicht licht = findLicht(name, false);
@@ -162,7 +162,7 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 204, value = "Deletes the picture for a named Licht", response = ILicht.class)
     public Response deleteAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
-        logDelete(getEntityClassName() + ": " + name + ApiPaths.SEPARATOR + ApiNames.ABBILDUNG);
+        logDelete(String.format(ApiPaths.ABBILDUNG_LOG, getEntityClassName(), name));
         
         try {
             ILicht licht = findLicht(name, false);

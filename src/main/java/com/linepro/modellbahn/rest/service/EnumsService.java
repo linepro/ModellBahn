@@ -59,6 +59,8 @@ public class EnumsService extends AbstractService {
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible AdressTyp values", response = IDescribedEnum.class, responseContainer = "List")
     public Response getAdressTyp() {
+        logGet(ApiPaths.ENUMS_ADRESS_TYP_PATH);
+
         return ok(getEnumValues(AdressTyp.values())).build();
     }
 
@@ -69,6 +71,8 @@ public class EnumsService extends AbstractService {
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible AnderungTyp values", response = IDescribedEnum.class, responseContainer = "List")
     public Response getAnderungTyp() {
+        logGet(ApiPaths.ENUMS_ANDERUNGS_TYP_PATH);
+
         return ok(getEnumValues(AnderungsTyp.values())).build();
     }
 
@@ -79,6 +83,8 @@ public class EnumsService extends AbstractService {
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible Stecker values", response = IDescribedEnum.class, responseContainer = "List")
     public Response getConnector() {
+        logGet(ApiPaths.ENUMS_STECKER_PATH);
+
         return ok(getEnumValues(Stecker.values())).build();
     }
 
@@ -89,6 +95,8 @@ public class EnumsService extends AbstractService {
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible Konfiguration values", response = IDescribedEnum.class, responseContainer = "List")
     public Response getKonfiguration() {
+        logGet(ApiPaths.ENUMS_KONFIGURATION_PATH);
+
         return ok(getEnumValues(Konfiguration.values())).build();
     }
 
@@ -99,6 +107,8 @@ public class EnumsService extends AbstractService {
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible Status values", response = IDescribedEnum.class, responseContainer = "List")
     public Response getStatus() {
+        logGet(ApiPaths.ENUMS_STATUS_PATH);
+
         return ok(getEnumValues(Status.values())).build();
     }
 
@@ -109,6 +119,8 @@ public class EnumsService extends AbstractService {
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible LeistungsUbertragung values", response = IDescribedEnum.class, responseContainer = "List")
     public Response getLeistungsUbertragung() {
+        logGet(ApiPaths.ENUMS_LEISTUNGS_UBERTRAGUNG_PATH);
+
         return ok(getEnumValues(LeistungsUbertragung.values())).build();
     }
 

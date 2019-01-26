@@ -246,7 +246,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
 
         try {
             if (!handler.isAcceptable(body, AcceptableMediaTypes.IMAGE_TYPES)) {
-                return getResponse(badRequest(null, "Invalid file '" + contentDispositionHeader.getFileName() + "'"));
+                return getResponse(badRequest(ApiNames.INVALID_FILE + contentDispositionHeader.getFileName() + "'"));
             }
 
             IVorbild vorbild = findVorbild(name, false);

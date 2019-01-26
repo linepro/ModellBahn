@@ -152,18 +152,18 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
     @ApiOperation(code = 201, value = "Adds a vehicle to the end of a named Zug", response = IZugConsist.class)
     public Response addConsist(@PathParam(ApiPaths.ZUG_PARAM_NAME) String zugStr, @QueryParam(ApiPaths.ARTIKEL) String artikelId) {
         try {
-            logPost(getEntityClassName() + ": " + zugStr + ApiPaths.SEPARATOR + ApiNames.CONSIST + ": " + artikelId);
+            logPost(String.format(ApiPaths.ZUG_CONSIST_ROOT_LOG, getEntityClassName(), zugStr) + ": " + artikelId);
 
             IZug zug = findZug(zugStr, true);
 
             if (zug == null) {
-                return getResponse(badRequest(null, "Zug " + zugStr + " does not exist"));
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Zug ", zugStr)));
             }
 
             IArtikel artikel = findArtikel(artikelId, true);
 
             if (artikel == null) {
-                return getResponse(badRequest(null, "Artikel " + artikelId + " does not exist"));
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Artikel ", artikelId)));
             }
 
             IZugConsist zugConsist = new ZugConsist(null, zug, zug.getConsist().size()+1, artikel, false);
@@ -186,18 +186,18 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
     @ApiOperation(code = 202, value = "Updates a vehicle in a named Zug", response = IZugConsist.class)
     public Response updateConsist(@PathParam(ApiPaths.ZUG_PARAM_NAME) String zugStr, @PathParam(ApiPaths.POSITION_PARAM_NAME) Integer position, @QueryParam(ApiPaths.ARTIKEL) String artikelId) {
         try {
-            logPut(getEntityClassName() + ": " + zugStr + ApiPaths.SEPARATOR + ApiNames.CONSIST + ApiPaths.SEPARATOR + position + ": " + artikelId);
+            logPut(String.format(ApiPaths.ZUG_CONSIST_LOG, getEntityClassName(), zugStr, position) + ": " + artikelId);
 
             IZugConsist consist = findZugConsist(zugStr, position, true);
 
             if (consist == null) {
-                return getResponse(badRequest(null, "ZugConsist " + zugStr + ApiPaths.SEPARATOR + position + " does not exist"));
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "ZugConsist ", zugStr + ApiPaths.SEPARATOR + position)));
             }
 
             IArtikel artikel = findArtikel(artikelId, true);
 
             if (artikel == null) {
-                return getResponse(badRequest(null, "Artikel " + artikelId + " does not exist"));
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Artikel ", artikelId)));
             }
 
             consist.setArtikel(artikel);
@@ -217,12 +217,12 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
     @ApiOperation(code = 204, value = "Removes a vehicle from a named Zug")
     public Response deleteConsist(@PathParam(ApiPaths.ZUG_PARAM_NAME) String zugStr, @PathParam(ApiPaths.POSITION_PARAM_NAME) Integer position) {
         try {
-            logDelete(getEntityClassName() + ": " + zugStr + ApiPaths.SEPARATOR + ApiNames.CONSIST + ApiPaths.SEPARATOR + position);
+            logDelete(String.format(ApiPaths.ZUG_CONSIST_LOG, getEntityClassName(), zugStr, position));
         
             IZugConsist zugConsist = findZugConsist(zugStr, position, true);
 
             if (zugConsist == null) {
-                return getResponse(badRequest(null, "ZugConsist " + zugStr + ApiPaths.SEPARATOR + position + " does not exist"));
+                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "ZugConsist ", zugStr + ApiPaths.SEPARATOR + position)));
             }
 
             IZug zug = zugConsist.getZug();
