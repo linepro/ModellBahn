@@ -59,6 +59,7 @@ public interface ApiNames {
     String I_MAX = "iMax";
     String INDEX = "index";
     String KAPAZITAT = "kapazitat";
+    String KATEGORIEN = "kategorien";
     String KATEGORIE = "kategorie";
     String KAUFDATUM = "kaufdatum";
     String KESSELUBERDRUCK = "kesseluberdruck";
@@ -139,7 +140,4 @@ public interface ApiNames {
     String PREVIOUS = "previous";
     String NEXT = "next";
     String ENUMS = "enums";
-
-    String INVALID_FILE = "Ungültige Datei '%s'";
-    String DOES_NOT_EXIST = "%s '%s' ist nicht vorhanden";
 }

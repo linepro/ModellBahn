@@ -29,6 +29,7 @@ import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;
+import com.linepro.modellbahn.rest.util.ApiMessages;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.rest.util.FileUploadHandler;
@@ -136,7 +137,7 @@ public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
 
         try {
             if (!handler.isAcceptable(body, AcceptableMediaTypes.IMAGE_TYPES)) {
-                return getResponse(badRequest(ApiNames.INVALID_FILE + contentDispositionHeader.getFileName() + "'"));
+                return getResponse(badRequest(getMessage(ApiMessages.INVALID_FILE, contentDispositionHeader.getFileName())));
             }
 
             IKupplung kupplung = findKupplung(name, false);

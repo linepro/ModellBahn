@@ -11,7 +11,6 @@ class ItemGrid {
   constructor(pageSize, apiUrl, tableName, columns, paged, editMode, children, editForm) {
     this.pageSize = pageSize ? pageSize : 10;
     this.rowCount = pageSize;
-    this.rowsFilled = 0;
     this.apiUrl = apiUrl;
     this.tableName = tableName;
     this.columns = columns;
@@ -92,11 +91,11 @@ class ItemGrid {
       removeChildren(table);
       table.className = 'table';
 
-      addHeader(tableName, table, columns, paged, rowCount);
+      initHeader(tableName, table, columns, paged, rowCount);
 
-      addBody(tableName, table, pageSize, columns, paged, rowCount, maxLabel);
+      initBody(tableName, table, pageSize, columns, paged, rowCount, maxLabel);
 
-      addFooter(tableName, table, columns, paged, rowCount);
+      initFooter(tableName, table, columns, paged, rowCount);
 
       grid.initialized = true;
     }
@@ -147,7 +146,6 @@ class ItemGrid {
 
     grid.initGrid(rowCount);
 
-    grid.rowsFilled = 0;
     for (let row = 0; row < rowCount; row++) {
       let rowId = getRowId(tableName, row);
 
@@ -259,26 +257,67 @@ class ItemGrid {
 
   addRow() {
     let grid = this;
-    let rowNum = grid.rowsFilled === grid.rowCount ? grid.rowCount - 1 : grid.rowsFilled;
-    //TODO: add row for non paged if not exists
-    let rowId = getRowId(grid.tableName, rowNum);
+    let columns   = grid.columns;
+    let editMode  = grid.editMode;
+    let rowCount  = grid.rowCount;
+    let paged     = grid.paged;
+    let tableName = grid.tableName;
+
+    let rowNum = undefined;
+    for (let row = 0; row < rowCount && !rowNum; row++) {
+      let rowId = getRowId(tableName, row);
+
+      if (!getKeyValue(rowId)) {
+        rowNum = row;
+      }
+    }
+
+    if (!rowNum) {
+        if (paged === Paged.EXPAND) {
+          // Add a row at end
+          grid.rowCount = grid.rowCount + 1;
+          rowNum = grid.rowCount;
+
+          let body = document.getElementByName(tableName + '_tbody');
+
+          initRow(tableName, rowNum, body, paged, columns);
+        } else if (paged === Paged.PAGED) {
+          // the page is full, new page and add at start          
+          rowNum = 0;
+          for (let row = 1; row < rowCount; row++) {
+            this.renderRow(getRowId(tableName, row), undefined, columns, EditMode.NEVER);
+         }
+          
+          // TODO: reset page links
+        } else {
+          // It's a form - overwrite        	
+          rowNum = 0;
+        }
+    }
+
+    let rowId = getRowId(tableName, rowNum);
 
     let key = document.getElementById(getKeyId(rowId));
     key.value = '';
 
-    grid.columns.forEach(column => {
+    let focusCtl = undefined;
+    columns.forEach(column => {
       let td = document.getElementById(getCellId(rowId, column));
 
       removeChildren(td);
 
-      column.getControl(td, undefined, EditMode.ADD);
+      let ctl = column.getControl(td, undefined, EditMode.ADD)
+      if (!focusCtl) focusCtl = ctl;
     });
 
+    focusCtl.focus();
+
     let td = document.getElementById(getCellId(rowId, 'buttons'));
-    let save = getButton(rowId, 'save', Function(grid.tableName + '.saveRow(' + rowId + '.id)'));
+    let save = getButton(rowId, 'save', Function(tableName + '.saveRow(' + rowId + '.id)'));
     td.appendChild(save);
-    let del = getButton(rowId, 'delete', Function(grid.tableName + '.removeRow(' + rowId + '.id)'));
+    let del = getButton(rowId, 'delete', Function(tableName + '.removeRow(' + rowId + '.id)'));
     td.appendChild(del);
+    
   }
 
   async deleteRow(rowId) {

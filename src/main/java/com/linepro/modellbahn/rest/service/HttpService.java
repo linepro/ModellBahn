@@ -28,6 +28,8 @@ public class HttpService extends AbstractService {
     protected final Logger logger;
     
     public HttpService() {
+        super();
+
         this.logger = LoggerFactory.getILoggerFactory().getLogger(getClass().getName());
     }
 

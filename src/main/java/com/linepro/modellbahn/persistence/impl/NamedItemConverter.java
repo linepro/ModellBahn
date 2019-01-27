@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.persistence.IPersister;
-import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.rest.util.ApiMessages;
 
 /**
  * NamedItemConverter.
@@ -43,16 +43,20 @@ class NamedItemConverter implements Converter {
                         return (T) entity;
                     }
 
-                    throw new IllegalArgumentException(value + ApiNames.DOES_NOT_EXIST);
+                    throw new IllegalArgumentException(getMessage(ApiMessages.DOES_NOT_EXIST, value));
                 }
 
-                throw new IllegalArgumentException(type + " not supported");
+                throw new IllegalArgumentException(getMessage(ApiMessages.NOT_SUPPORTED, type));
             }
         } catch (Exception e) {
             throw new ConversionException(e);
         }
         
         return null;
+    }
+
+    protected String getMessage(String messsgeCode, Object... args) {
+        return String.format(messsgeCode, args);
     }
 
     private IPersister<?> getPersister() {

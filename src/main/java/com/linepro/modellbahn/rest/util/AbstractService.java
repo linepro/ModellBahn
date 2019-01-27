@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.rest.util;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
@@ -20,15 +21,22 @@ public abstract class AbstractService {
     /** The uri info injected by Jersey. */
     @Context
     protected UriInfo uriInfo;
-
+    
+    @Context
+    protected HttpServletRequest request;
+    
     /**
      * Instantiates a new abstract service.
      */
-   protected AbstractService() {
-   }
+    protected AbstractService() {
+    }
 
-    UriInfo getUriInfo() {
+    protected UriInfo getUriInfo() {
         return uriInfo;
+    }
+
+    protected HttpServletRequest getRequest() {
+        return request;
     }
 
     protected abstract Logger getLogger();
@@ -113,5 +121,11 @@ public abstract class AbstractService {
 
     protected ResponseBuilder serverError(final StatusType errorCode, final String userMessage, final String developerMessage) {
         return Response.status(errorCode).entity(new ErrorMessage(errorCode.getStatusCode(), userMessage, developerMessage));
+    }
+
+    protected String getMessage(String messsgeCode, Object... args) {
+        // TODO: delegate to a localisation processor using uriInfo
+        // request.getLocale();
+        return String.format(messsgeCode, args);
     }
 }

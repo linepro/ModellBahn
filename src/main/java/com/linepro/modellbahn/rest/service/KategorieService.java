@@ -13,11 +13,15 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
+import org.apache.commons.lang3.math.NumberUtils;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
@@ -35,6 +39,7 @@ import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.KategorieDeserializer;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
+import com.linepro.modellbahn.rest.util.ApiMessages;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 
@@ -150,7 +155,7 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds UnterKategorieen by kategorie", response = IUnterKategorie.class, responseContainer = "List")
     @ApiImplicitParams({
-            @ApiImplicitParam( name = ApiNames.KATEGORIE, value = "List of Kategorie names", dataType = "[Ljava.lang.String;", paramType = "query"),
+            @ApiImplicitParam( name = ApiNames.KATEGORIEN, value = "List of Kategorie names", dataType = "[Ljava.lang.String;", paramType = "query"),
             @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
             @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "Page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),
     })
@@ -158,25 +163,30 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
             @ApiResponse(code = 204, message = "No Content"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-    public Response searchUnterKategorie(@Context UriInfo info) {
+    public Response searchUnterKategorie(@Context UriInfo uriInfo, @QueryParam(ApiNames.KATEGORIEN) final List<String> kategorien) {
         try {
-            logGet(getEntityClassName() + ": " + ApiNames.UNTER_KATEGORIEN + ": " + info);
+            logGet(String.format(ApiPaths.UNTER_KATEGORIE_ROOT_LOG, getEntityClassName()) + ": " + kategorien);
 
-            Integer pageNumber = null;
-            Integer pageSize = null;
-            Integer maxPage = null;
-            List<String> kategorien = null;
+            MultivaluedMap<String, String> queryParameters = uriInfo.getQueryParameters();
+
+            IUnterKategorie template = new UnterKategorie();
+
             Map<String,List<String>> references = new HashMap<>(1);
 
             if (kategorien != null && !kategorien.isEmpty()) {
                 references.put(DBNames.KATEGORIE, kategorien);
             }
 
-            final IUnterKategorie template = new UnterKategorie();
+            Integer pageNumber = null;
+            Integer pageSize = null;
+            Integer maxPage = null;
 
-            if (pageNumber != null || pageSize != null) {
-                pageNumber = pageNumber != null ? pageNumber : FIRST_PAGE;
-                pageSize = pageSize != null ? pageSize : DEFAULT_PAGE_SIZE;
+            String pageNumberStr = queryParameters.getFirst(ApiNames.PAGE_NUMBER);
+            String pageSizeStr   = queryParameters.getFirst(ApiNames.PAGE_SIZE);
+
+            if (pageNumberStr != null || pageSizeStr != null) {
+                pageNumber = NumberUtils.toInt(pageNumberStr, FIRST_PAGE);
+                pageSize   = NumberUtils.toInt(pageSizeStr, DEFAULT_PAGE_SIZE);
 
                 Long rowCount = getUnterKategoriePersister().countAll(template, references);
 
@@ -189,7 +199,7 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
                 return getResponse(noContent());
             }
 
-            List<Link> navigation = getNavLinks(info, pageNumber, pageSize, maxPage);
+            List<Link> navigation = getNavLinks(uriInfo, pageNumber, pageSize, maxPage);
 
             return getResponse(ok(), new ArrayList<>(entities), true, true, navigation);
         } catch (Exception e) {
@@ -215,7 +225,7 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
             IKategorie kategorie = findKategorie(kategorieStr, true);
 
             if (kategorie == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Kategorie ", kategorieStr)));
+                return getResponse(badRequest(getMessage(ApiMessages.KATEGORIE_DOES_NOT_EXIST, kategorieStr)));
             }
 
             newUnterKategorie.setDeleted(false);
@@ -247,18 +257,18 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
             IKategorie kategorie = findKategorie(kategorieStr, false);
 
             if (kategorie == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Kategorie ", kategorieStr)));
+                return getResponse(badRequest(getMessage(ApiMessages.KATEGORIE_DOES_NOT_EXIST, kategorieStr)));
             }
 
             IUnterKategorie unterKategorie = findUnterKategorie(kategorieStr, unterKategorieStr, false);
 
             if (unterKategorie == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Kategorie ", kategorieStr)));
+                return getResponse(badRequest(getMessage(ApiMessages.KATEGORIE_DOES_NOT_EXIST, kategorieStr)));
             } else if (newUnterKategorie.getKategorie() == null) {
                 newUnterKategorie.setKategorie(kategorie);
             } else if (!newUnterKategorie.getKategorie().equals(kategorie)) {
                 // Attempt to change kategorie not allowed
-                return getResponse(badRequest("You cannot change the kategorie for an unterkategorie, create a new one"));
+                return getResponse(badRequest(ApiMessages.UNTERKATEGORIE_KATEGORIE_FIXED));
             }
 
             unterKategorie = getUnterKategoriePersister().merge(unterKategorie.getId(), newUnterKategorie);
@@ -286,13 +296,13 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
             IKategorie kategorie = findKategorie(kategorieStr, true);
 
             if (kategorie == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Kategorie ", kategorieStr)));
+                return getResponse(badRequest(getMessage(ApiMessages.KATEGORIE_DOES_NOT_EXIST, kategorieStr)));
             }
 
             IUnterKategorie unterKategorie = findUnterKategorie(kategorie, unterKategorieStr, true);
 
             if (unterKategorie == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "UnterKategorie ", kategorieStr + ApiPaths.SEPARATOR + unterKategorieStr)));
+                return getResponse(badRequest(getMessage(ApiMessages.UNTER_KATEGORIE_DOES_NOT_EXIST, kategorieStr, unterKategorieStr)));
             }
 
             kategorie.removeUnterKategorie(unterKategorie);

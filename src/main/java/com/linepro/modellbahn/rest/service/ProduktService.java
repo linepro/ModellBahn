@@ -1,20 +1,5 @@
 package com.linepro.modellbahn.rest.service;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.linepro.modellbahn.rest.json.serialization.AufbauDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.BahnverwaltungDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.DecoderTypDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.EpochDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.HerstellerDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.KupplungDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.LichtDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.MassstabDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.MotorTypDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.ProduktDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.SonderModellDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.SpurweiteDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.SteuerungDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.UnterKategorieDeserializer;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -40,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.IAufbau;
 import com.linepro.modellbahn.model.IBahnverwaltung;
@@ -64,8 +50,23 @@ import com.linepro.modellbahn.model.keys.ProduktKey;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.AufbauDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.BahnverwaltungDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.DecoderTypDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.EpochDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.HerstellerDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.KupplungDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.LichtDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.MassstabDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.MotorTypDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.ProduktDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.SonderModellDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.SpurweiteDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.SteuerungDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.UnterKategorieDeserializer;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;
+import com.linepro.modellbahn.rest.util.ApiMessages;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.rest.util.FileUploadHandler;
@@ -87,7 +88,6 @@ import io.swagger.annotations.ApiOperation;
 @Path(ApiPaths.PRODUKT)
 public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
-    public static final String DOES_NOT_EXIST = ApiNames.DOES_NOT_EXIST;
     private final IPersister<IProduktTeil> teilPersister;
     
     public ProduktService() {
@@ -283,11 +283,11 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, true);
 
             if (produkt == null) {
-                return getResponse(badRequest("Produkt " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + DOES_NOT_EXIST));
+                return getResponse(badRequest(getMessage(ApiMessages.PRODUKT_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
 
             if (cyclic(teil.getTeil())) {
-                return getResponse(badRequest("Produkt " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + DOES_NOT_EXIST));
+                return getResponse(badRequest(getMessage(ApiMessages.PRODUKT_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
             
             teil.setProdukt(produkt);
@@ -315,18 +315,18 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @ApiOperation(code = 202, value = "Updates a sub produkt a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response updateTeil(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathParam(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr, @PathParam(ApiPaths.TEIL_BESTELL_NR_PARAM_NAME) String teilBestellNr, Integer anzahl) {
         try {
-            logPut(getEntityClassName() + ": " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + ApiPaths.SEPARATOR + ApiNames.TEILEN + ApiPaths.SEPARATOR + teilHerstellerStr + ApiPaths.SEPARATOR + teilBestellNr + ":" + anzahl);
+            logPut(String.format(ApiPaths.PRODUKT_TEIL_LOG, getEntityClassName(), herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr) + ":" + anzahl);
 
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, true);
 
             if (produkt == null) {
-                return getResponse(badRequest("Produkt " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + DOES_NOT_EXIST));
+                return getResponse(badRequest(getMessage(ApiMessages.PRODUKT_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
 
             IProduktTeil produktTeil = findProduktTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, true);
 
             if (produktTeil == null) {
-                return getResponse(badRequest("ProduktTeil " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + teilHerstellerStr + ApiPaths.SEPARATOR + teilBestellNr + DOES_NOT_EXIST));
+                return getResponse(badRequest(getMessage(ApiMessages.PRODUKT_TEIL_DOES_NOT_EXIST, herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr)));
             }
 
 			produktTeil.setAnzahl(anzahl);
@@ -346,18 +346,18 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @ApiOperation(code = 204, value = "Deletes a sub produkt for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response deleteTeil(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathParam(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr, @PathParam(ApiPaths.TEIL_BESTELL_NR_PARAM_NAME) String teilBestellNr) {
         try {
-            logDelete(getEntityClassName() + ": " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + ApiPaths.SEPARATOR + ApiNames.TEILEN + ApiPaths.SEPARATOR + teilHerstellerStr + ApiPaths.SEPARATOR + teilBestellNr);
+            logDelete(String.format(ApiPaths.PRODUKT_TEIL_LOG, getEntityClassName(), herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr));
 
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, true);
 
             if (produkt == null) {
-                return getResponse(badRequest("Produkt " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + DOES_NOT_EXIST));
+                return getResponse(badRequest(getMessage(ApiMessages.PRODUKT_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
 
             IProduktTeil produktTeil = findProduktTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, true);
 
             if (produktTeil == null) {
-                return getResponse(badRequest("ProduktTeil " + herstellerStr + ApiPaths.SEPARATOR + bestellNr + teilHerstellerStr + ApiPaths.SEPARATOR + teilBestellNr + DOES_NOT_EXIST));
+                return getResponse(badRequest(getMessage(ApiMessages.PRODUKT_TEIL_DOES_NOT_EXIST, herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr)));
             }
 
             produkt.removeTeil(produktTeil);
@@ -386,7 +386,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
         try {
             if (!handler.isAcceptable(body, AcceptableMediaTypes.IMAGE_TYPES)) {
-                return getResponse(badRequest(ApiNames.INVALID_FILE + contentDispositionHeader.getFileName() + "'"));
+                return getResponse(badRequest(getMessage(ApiMessages.INVALID_FILE, contentDispositionHeader.getFileName())));
             }
 
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
@@ -450,7 +450,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
         try {
             if (!handler.isAcceptable(body, AcceptableMediaTypes.DOCUMENT_TYPES)) {
-                return getResponse(badRequest(ApiNames.INVALID_FILE + contentDispositionHeader.getFileName() + "'"));
+                return getResponse(badRequest(getMessage(ApiMessages.INVALID_FILE, contentDispositionHeader.getFileName())));
             }
 
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
@@ -514,7 +514,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
         try {
             if (!handler.isAcceptable(body, AcceptableMediaTypes.DOCUMENT_TYPES)) {
-                return getResponse(badRequest(ApiNames.INVALID_FILE + contentDispositionHeader.getFileName() + "'"));
+                return getResponse(badRequest(getMessage(ApiMessages.INVALID_FILE, contentDispositionHeader.getFileName())));
             }
 
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);

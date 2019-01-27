@@ -34,7 +34,7 @@ window.onerror = function (msg, url, lineNo, columnNo, error) {
 
   return false;
 };
-	
+  
 const shouldDisable = (editable, editMode) => {
   if (editable === Editable.NEVER || editMode === EditMode.VIEW) {
     return true;
@@ -70,7 +70,7 @@ const removeChildren = (node) => {
 
 const addToEnd = (element) => {
   let docBody = document.getElementsByTagName('BODY')[0];
-	docBody.appendChild(element);
+  docBody.appendChild(element);
 };
 
 const reportError = (error) => {
@@ -79,8 +79,8 @@ const reportError = (error) => {
   let alert = document.getElementById('alert-box');
   
   if (!alert) {
-	  alert = document.createElement('div');
-	  alert.className = 'alert';
+    alert = document.createElement('div');
+    alert.className = 'alert';
 
     let closer = document.createElement('span');
     closer.className = 'closebtn';
@@ -92,7 +92,7 @@ const reportError = (error) => {
     message.id = 'alert-message';
     alert.appendChild(message);
 
-	  addToEnd(alert);
+    addToEnd(alert);
   }
 
   let message = document.getElementById('alert-message');
@@ -177,7 +177,7 @@ const getButton = (value, alt, action) => {
 const addText = (cell, text) => {
   let txt = document.createTextNode(text);
   if (cell.firstChild) {
-	  cell.insertBefore(txt, cell.firstChild);
+    cell.insertBefore(txt, cell.firstChild);
   } else {
     cell.appendChild(txt);
   }
@@ -428,37 +428,39 @@ class FileColumn extends Column {
     let ctl = super.getControl(cell, entity, editMode);
     ctl.className = 'img-display';
 
-    ctl.addEventListener('click', (e) => {
-      let img = e.target;
-      let file = img.getAttribute('data-file');
-      if (file) {
-        this.showContent(file);
-      }
-    }, false);
+    if (entity) {
+      ctl.addEventListener('click', (e) => {
+    	  let img = e.target;
+    	  let file = img.getAttribute('data-file');
+    	  if (file) {
+    		  this.showContent(file);
+    		  }
+    	  }, false);
 
-    let add = getLink(entity.links, 'update-' + this.fieldName);
-
-    if (add) {
-      let btn = getButton(add.href, 'add', (e) => { this.select(e); });
-      btn.className = 'img-button';
-      btn.firstChild.className = 'img-button';
-      cell.appendChild(btn);
+	    let add = getLink(entity.links, 'update-' + this.fieldName);
+	
+	    if (add) {
+	      let btn = getButton(add.href, 'add', (e) => { this.select(e); });
+	      btn.className = 'img-button';
+	      btn.firstChild.className = 'img-button';
+	      cell.appendChild(btn);
+	    }
+	
+	    let remove = getLink(entity.links, 'delete-' + this.fieldName);
+	
+	    if (remove) {
+	      let btn = getButton(remove.href, 'delete', (e) => { this.remove(e, ctl); });
+	      btn.className = 'img-button';
+	      btn.firstChild.className = 'img-button';
+	      cell.appendChild(btn);
+	    }
+	
+	    if (cell.firstChild) {
+	      cell.removeChild(ctl);
+	      cell.insertBefore(ctl, cell.firstChild);
+	    }
     }
-
-    let remove = getLink(entity.links, 'delete-' + this.fieldName);
-
-    if (remove) {
-      let btn = getButton(remove.href, 'delete', (e) => { this.remove(e, ctl); });
-      btn.className = 'img-button';
-      btn.firstChild.className = 'img-button';
-      cell.appendChild(btn);
-    }
-
-    if (cell.firstChild) {
-      cell.removeChild(ctl);
-      cell.insertBefore(ctl, cell.firstChild);
-    }
-
+    
     return ctl;
   }
 
@@ -895,15 +897,15 @@ async function checkResponse(response) {
     return response.json();
   } else if (response.status === 204) {
     return {entities: [], links: []};
-  } else if (response.status === 500) {
+  } else if (response.status === 400 || response.status === 500) {
     let errorMessage = response.status + ": " + response.statusText;
 
     try {
       let jsonData = await response.json();
 
-      errorMessage = jsonData.errorCode + "  " + jsonData.userMessage + ": " + jsonData.developerMessage;
+      errorMessage = jsonData.errorCode + ": " + jsonData.userMessage;
     } catch(err) {
-        errorMessage  = await response.text();
+      errorMessage = await response.text();
     }
 
     console.log(errorMessage);
@@ -1025,7 +1027,7 @@ const gridButtonColumn = () => {
   return new ButtonColumn([addRow], [updateRow, deleteRow]);
 };
 
-const addHeader = (tableName, table, columns, paged) => {
+const initHeader = (tableName, table, columns, paged) => {
   let isForm = paged === Paged.FORM;
   let header = document.createElement('div');
   header.id = tableName + '_thead';
@@ -1056,7 +1058,55 @@ const addHeader = (tableName, table, columns, paged) => {
   });
 };
 
-const addBody = (tableName, table, pageSize, columns, paged, rowCount, maxLabel) => {
+const initRow = (tableName, row, body, paged, columns) => { 
+  let isForm = paged === Paged.FORM;
+  let tr = document.createElement('div');
+  let rowId = getRowId(tableName, row);
+  tr.className = isForm ? 'flex-container' : 'table-row';
+  tr.id = rowId;
+  body.append(tr);
+  
+  let key = document.createElement('input');
+  key.type = 'hidden';
+  key.id = getKeyId(rowId);
+  key.className = isForm ? 'flex-control' : 'table-cell';
+  tr.append(key);
+  
+  columns.forEach(column => {
+    let td = document.createElement('div');
+  
+    if (!isForm || !column.isButtons()) {
+      if (isForm) {
+        td.className = 'flex-item';
+  
+        // TODO: change to label
+        let th = column.getHeading();
+        th.className = 'flex-label';
+        th.style.width = maxLabel + 'ch';
+        th.style.maxWidth = maxLabel + 'ch';
+  
+        td.append(th);
+      }
+  
+      let tc = document.createElement('div');
+      tc.id = getCellId(rowId, column);
+      tc.className = isForm ? 'flex-control' : 'table-cell';
+      tc.style.width = isForm ? column.getLength() + 'ch' : column.getWidth();
+      tc.style.maxWidth = tc.style.width;
+  
+      addText(tc, ' ');
+  
+      if (isForm) {
+        td.append(tc);
+        tr.append(td);
+      } else {
+        tr.append(tc);
+      }
+    }
+  });
+};
+
+const initBody = (tableName, table, pageSize, columns, paged, rowCount, maxLabel) => {
   let isForm = paged === Paged.FORM;
   let body = document.createElement('div');
   body.id = tableName + '_tbody';
@@ -1066,54 +1116,12 @@ const addBody = (tableName, table, pageSize, columns, paged, rowCount, maxLabel)
   let row;
   let maxRow = Math.max(rowCount, pageSize);
   for (row = 0; row < maxRow; row++) {
-    let tr = document.createElement('div');
-    let rowId = getRowId(tableName, row);
-    tr.className = isForm ? 'flex-container' : 'table-row';
-    tr.id = rowId;
-    body.append(tr);
-
-    let key = document.createElement('input');
-    key.type = 'hidden';
-    key.id = getKeyId(rowId);
-    key.className = isForm ? 'flex-control' : 'table-cell';
-    tr.append(key);
-
-    columns.forEach(column => {
-      let td = document.createElement('div');
-
-      if (!isForm || !column.isButtons()) {
-        if (isForm) {
-          td.className = 'flex-item';
-
-          // TODO: change to label
-          let th = column.getHeading();
-          th.className = 'flex-label';
-          th.style.width = maxLabel + 'ch';
-          th.style.maxWidth = maxLabel + 'ch';
-
-          td.append(th);
-        }
-
-        let tc = document.createElement('div');
-        tc.id = getCellId(rowId, column);
-        tc.className = isForm ? 'flex-control' : 'table-cell';
-        tc.style.width = isForm ? column.getLength() + 'ch' : column.getWidth();
-        tc.style.maxWidth = tc.style.width;
-
-        addText(tc, ' ');
-
-        if (isForm) {
-          td.append(tc);
-          tr.append(td);
-        } else {
-          tr.append(tc);
-        }
-      }
-    });
+	initRow(tableName, row, body, paged, columns);
   }
 };
 
-const addFooter = (tableName, table, columns, paged) => {
+
+const initFooter = (tableName, table, columns, paged) => {
   let isForm = paged === Paged.FORM;
   let footer = document.createElement('div');
   footer.id = tableName + '_tfoot';

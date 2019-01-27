@@ -156,6 +156,8 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      * @param entityClass the entity class
      */
     protected AbstractItemService(final Class<E> entityClass) {
+        super();
+
         this.logger = LoggerFactory.getILoggerFactory().getLogger(getClass().getName().replace("AbstractItem", entityClass.getSimpleName()));
         this.entityClass = entityClass;
         this.persister = StaticPersisterFactory.get().createPersister(entityClass);

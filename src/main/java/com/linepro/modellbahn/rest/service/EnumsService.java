@@ -44,6 +44,8 @@ public class EnumsService extends AbstractService {
     protected final Logger logger;
     
     public EnumsService() {
+        super();
+
         this.logger = LoggerFactory.getILoggerFactory().getLogger(getClass().getName());
     }
 

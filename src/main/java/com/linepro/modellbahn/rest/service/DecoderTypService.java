@@ -40,6 +40,7 @@ import com.linepro.modellbahn.rest.json.serialization.DecoderTypDeserializer;
 import com.linepro.modellbahn.rest.json.serialization.HerstellerDeserializer;
 import com.linepro.modellbahn.rest.json.serialization.ProtokollDeserializer;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
+import com.linepro.modellbahn.rest.util.ApiMessages;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 
@@ -251,7 +252,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, true);
 
             if (decoderTyp == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "DecoderTyp ", herstellerStr + ApiPaths.SEPARATOR + bestellNr)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
 
             IDecoderTypAdress decoderTypAdress = findDecoderTypAdress(decoderTyp, index, true);
@@ -284,7 +285,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, false);
 
             if (decoderTyp == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "DecoderTyp ", herstellerStr + ApiPaths.SEPARATOR + bestellNr)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
 
             decoderTyp.addAdress(newDecoderTypAdress);
@@ -314,18 +315,18 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, false);
 
             if (decoderTyp == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "DecoderTyp ", herstellerStr + ApiPaths.SEPARATOR + bestellNr)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
 
             IDecoderTypAdress decoderTypAdress = findDecoderTypAdress(decoderTyp, index, true);
 
             if (decoderTypAdress == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "DecoderTyp ", herstellerStr + ApiPaths.SEPARATOR + bestellNr)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             } else if (newDecoderTypAdress.getDecoderTyp() == null) {
                 newDecoderTypAdress.setDecoderTyp(decoderTyp);
             } else if (!newDecoderTypAdress.getDecoderTyp().equals(decoderTyp)) {
                 // Attempt to change decoderTyp not allowed
-                return getResponse(badRequest("You cannot change the decoderTyp for a decoderTypAdress, create a new one"));
+                return getResponse(badRequest(ApiMessages.DECODER_TYP_ADRESS_DECODER_TYP_FIXED));
             }
 
             decoderTypAdress = getAdressPersister().merge(new DecoderTypAdressKey(decoderTyp, index), newDecoderTypAdress);
@@ -353,13 +354,13 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, true);
 
             if (decoderTyp == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "DecoderTyp ", herstellerStr + ApiPaths.SEPARATOR + bestellNr)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
 
             IDecoderTypAdress decoderTypAdress = findDecoderTypAdress(herstellerStr, bestellNr, index, true);
 
             if (decoderTypAdress == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "DecoderTypAdress ", herstellerStr + ApiPaths.SEPARATOR + bestellNr + ApiPaths.SEPARATOR + index)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_ADRESS_DOES_NOT_EXIST, herstellerStr, bestellNr, index)));
             }
 
             decoderTyp.removeAdress(decoderTypAdress);
@@ -389,7 +390,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, true);
 
             if (decoderTyp == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "DecoderTyp ", herstellerStr + ApiPaths.SEPARATOR + bestellNr)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
 
             IDecoderTypCV decoderTypCV = findDecoderTypCV(decoderTyp, cv, true);
@@ -422,7 +423,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, false);
 
             if (decoderTyp == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "DecoderTyp ", herstellerStr + ApiPaths.SEPARATOR + bestellNr)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
 
             newDecoderTypCV.setDeleted(false);
@@ -454,18 +455,18 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, false);
 
             if (decoderTyp == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "DecoderTyp ", herstellerStr + ApiPaths.SEPARATOR + bestellNr)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
 
             IDecoderTypCV decoderTypCV = findDecoderTypCV(decoderTyp, cv, true);
 
             if (decoderTypCV == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "DecoderTyp ", herstellerStr + ApiPaths.SEPARATOR + bestellNr)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             } else if (newDecoderTypCV.getDecoderTyp() == null) {
                 newDecoderTypCV.setDecoderTyp(decoderTyp);
             } else if (!newDecoderTypCV.getDecoderTyp().equals(decoderTyp)) {
                 // Attempt to change decoderTyp not allowed
-                return getResponse(badRequest("You cannot change the decoderTyp for a decoderTypCV, create a new one"));
+                return getResponse(badRequest(ApiMessages.DECODER_TYP_CV_DECODER_TYP_FIXED));
             }
 
             // Validate  0 < CV < 256 
@@ -500,13 +501,13 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, true);
 
             if (decoderTyp == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "DecoderTyp ", herstellerStr + ApiPaths.SEPARATOR + bestellNr)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
 
             IDecoderTypCV decoderTypCV = findDecoderTypCV(herstellerStr, bestellNr, cv, true);
 
             if (decoderTypCV == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "DecoderTypCV ", herstellerStr + ApiPaths.SEPARATOR + bestellNr + ApiPaths.SEPARATOR + cv)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_CV_DOES_NOT_EXIST, herstellerStr, bestellNr, cv)));
             }
 
             decoderTyp.removeCV(decoderTypCV);
@@ -536,7 +537,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, true);
 
             if (decoderTyp == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "DecoderTyp ", herstellerStr + ApiPaths.SEPARATOR + bestellNr)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
 
             IDecoderTypFunktion decoderTypFunktion = findDecoderTypFunktion(decoderTyp, reihe, funktion, true);
@@ -569,7 +570,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, false);
 
             if (decoderTyp == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "DecoderTyp ", herstellerStr + ApiPaths.SEPARATOR + bestellNr)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
 
             // Validate decoderTypFunktion like F\d{1,2}|K\d{1,2}|S[1-4]
@@ -604,18 +605,18 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, false);
 
             if (decoderTyp == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "DecoderTyp ", herstellerStr + ApiPaths.SEPARATOR + bestellNr)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
 
             IDecoderTypFunktion decoderTypFunktion = findDecoderTypFunktion(decoderTyp, reihe, funktion, true);
 
             if (decoderTypFunktion == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "DecoderTyp ", herstellerStr + ApiPaths.SEPARATOR + bestellNr)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             } else if (newDecoderTypFunktion.getDecoderTyp() == null) {
                 newDecoderTypFunktion.setDecoderTyp(decoderTyp);
             } else if (!newDecoderTypFunktion.getDecoderTyp().equals(decoderTyp)) {
                 // Attempt to change decoderTyp not allowed
-                return getResponse(badRequest("You cannot change the decoderTyp for a decoderTypFunktion, create a new one"));
+                return getResponse(badRequest(ApiMessages.DECODER_TYP_FUNKTION_DECODER_TYP_FIXED));
             }
 
             decoderTypFunktion = getFunktionPersister().merge(decoderTypFunktion.getId(), newDecoderTypFunktion);
@@ -644,13 +645,13 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, true);
 
             if (decoderTyp == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "DecoderTyp ", herstellerStr + ApiPaths.SEPARATOR + bestellNr)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
 
             IDecoderTypFunktion decoderTypFunktion = findDecoderTypFunktion(herstellerStr, bestellNr, reihe, funktion, true);
 
             if (decoderTypFunktion == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "DecoderTypFunktion ", herstellerStr + ApiPaths.SEPARATOR + bestellNr + ApiPaths.SEPARATOR + ApiNames.FUNKTIONEN + ApiPaths.SEPARATOR + reihe + ApiPaths.SEPARATOR + funktion)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_FUNKTION_DOES_NOT_EXIST, herstellerStr, bestellNr, reihe, funktion)));
             }
 
             decoderTyp.removeFunktion(decoderTypFunktion);

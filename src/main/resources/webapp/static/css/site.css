@@ -743,18 +743,20 @@ button.selection {
 
 button.img-button {
   border: 0;
+  display: inline-flex;
   height: 45%;
-  width: 10%;
   margin: 0;
+  padding: 0;
+  width: 10%;
 }
 
 img.img-button {
   border: 0;
-  height: 90%;
-  width: 90%;
+  height: 100%;
   margin: 0;
-  text-align: left;
-  vertical-align: top;
+  padding: 0;
+  text-align: center;
+  width: 100%;
 }
 
 .tooltiptext {

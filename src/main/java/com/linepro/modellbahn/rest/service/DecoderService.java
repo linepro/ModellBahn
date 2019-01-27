@@ -40,6 +40,7 @@ import com.linepro.modellbahn.rest.json.serialization.DecoderDeserializer;
 import com.linepro.modellbahn.rest.json.serialization.DecoderTypDeserializer;
 import com.linepro.modellbahn.rest.json.serialization.ProtokollDeserializer;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
+import com.linepro.modellbahn.rest.util.ApiMessages;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 
@@ -151,7 +152,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
 
             if (decoderTyp == null) {
                 return getResponse(
-                        badRequest(String.format(ApiNames.DOES_NOT_EXIST, "DecoderTyp ", herstellerStr + ApiPaths.SEPARATOR + bestellNr)));
+                        badRequest(getMessage(ApiMessages.DECODER_TYP_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
 
             IDecoder decoder = new DecoderCreator(getPersister()).create(decoderTyp);
@@ -223,7 +224,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
             IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Decoder ", decoderId)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_DOES_NOT_EXIST, decoderId)));
             }
 
             IDecoderAdress decoderAdress = findDecoderAdress(decoder, index, true);
@@ -254,13 +255,13 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
             IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Decoder ", decoderId)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_DOES_NOT_EXIST, decoderId)));
             }
 
             IDecoderAdress decoderAdress = findDecoderAdress(decoder, index, true);
 
             if (decoderAdress == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Decoder Adress ", decoderId + ApiPaths.SEPARATOR + index)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_ADRESS_DOES_NOT_EXIST, decoderId, index)));
             }
 
             decoderAdress.setAdress(adress);
@@ -288,7 +289,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
             IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Decoder ", decoderId)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_DOES_NOT_EXIST, decoderId)));
             }
 
             IDecoderCV decoderCV = findDecoderCV(decoder, cv, true);
@@ -319,13 +320,13 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
             IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Decoder ", decoderId)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_DOES_NOT_EXIST, decoderId)));
             }
 
             IDecoderCV decoderCV = findDecoderCV(decoder, cv, true);
 
             if (decoderCV == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Decoder CV ", decoderId + ApiPaths.SEPARATOR + cv)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_CV_DOES_NOT_EXIST, decoderId, cv)));
             }
 
             decoderCV.setWert(wert);
@@ -354,7 +355,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
             IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Decoder ", decoderId)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_DOES_NOT_EXIST, decoderId)));
             }
 
             IDecoderFunktion decoderFunktion = findDecoderFunktion(decoder, reihe, funktion, true);
@@ -387,13 +388,13 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
             IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Decoder ", decoderId)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_DOES_NOT_EXIST, decoderId)));
             }
 
             IDecoderFunktion decoderFunktion = findDecoderFunktion(decoder, reihe, funktion, true);
 
             if (decoderFunktion == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Decoder Funktion ", decoderId + ApiPaths.SEPARATOR + reihe + ApiPaths.SEPARATOR + funktion)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_FUNKTION_DOES_NOT_EXIST, decoderId, reihe, funktion)));
             }
 
             decoderFunktion.setBezeichnung(descirption);

@@ -1,9 +1,5 @@
 package com.linepro.modellbahn.rest.service;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.linepro.modellbahn.rest.json.serialization.ArtikelDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.ZugDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.ZugTypDeserializer;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -22,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IZug;
 import com.linepro.modellbahn.model.IZugConsist;
@@ -32,7 +29,11 @@ import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.rest.json.serialization.ArtikelDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.ZugDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.ZugTypDeserializer;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
+import com.linepro.modellbahn.rest.util.ApiMessages;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 
@@ -157,13 +158,13 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
             IZug zug = findZug(zugStr, true);
 
             if (zug == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Zug ", zugStr)));
+                return getResponse(badRequest(getMessage(ApiMessages.ZUG_DOES_NOT_EXIST, zugStr)));
             }
 
             IArtikel artikel = findArtikel(artikelId, true);
 
             if (artikel == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Artikel ", artikelId)));
+                return getResponse(badRequest(getMessage(ApiMessages.ARTIKEL_DOES_NOT_EXIST, artikelId)));
             }
 
             IZugConsist zugConsist = new ZugConsist(null, zug, zug.getConsist().size()+1, artikel, false);
@@ -191,13 +192,13 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
             IZugConsist consist = findZugConsist(zugStr, position, true);
 
             if (consist == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "ZugConsist ", zugStr + ApiPaths.SEPARATOR + position)));
+                return getResponse(badRequest(getMessage(ApiMessages.ZUG_CONSIST_DOES_NOT_EXIST, zugStr, position)));
             }
 
             IArtikel artikel = findArtikel(artikelId, true);
 
             if (artikel == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Artikel ", artikelId)));
+                return getResponse(badRequest(getMessage(ApiMessages.ARTIKEL_DOES_NOT_EXIST, artikelId)));
             }
 
             consist.setArtikel(artikel);
@@ -222,7 +223,7 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
             IZugConsist zugConsist = findZugConsist(zugStr, position, true);
 
             if (zugConsist == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "ZugConsist ", zugStr + ApiPaths.SEPARATOR + position)));
+                return getResponse(badRequest(getMessage(ApiMessages.ZUG_CONSIST_DOES_NOT_EXIST, zugStr, position)));
             }
 
             IZug zug = zugConsist.getZug();

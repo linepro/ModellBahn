@@ -53,6 +53,7 @@ import com.linepro.modellbahn.rest.json.serialization.SteuerungDeserializer;
 import com.linepro.modellbahn.rest.json.serialization.WahrungDeserializer;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;
+import com.linepro.modellbahn.rest.util.ApiMessages;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.rest.util.FileUploadHandler;
@@ -211,7 +212,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
 
         try {
             if (!handler.isAcceptable(body, AcceptableMediaTypes.IMAGE_TYPES)) {
-                return getResponse(badRequest(ApiNames.INVALID_FILE + contentDispositionHeader.getFileName() + "'"));
+                return getResponse(badRequest(getMessage(ApiMessages.INVALID_FILE, contentDispositionHeader.getFileName())));
             }
 
             IArtikel artikel = findArtikel(artikelId, false);
@@ -275,7 +276,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
             IArtikel artikel = findArtikel(artikelId, true);
 
             if (artikel == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Artikel ", artikelId)));
+                return getResponse(badRequest(getMessage(ApiMessages.ARTIKEL_DOES_NOT_EXIST, artikelId)));
             }
 
             artikel.addAnderung(newAnderung);
@@ -301,13 +302,13 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
             IArtikel artikel = findArtikel(artikelId, true);
 
             if (artikel == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Artikel ", artikelId)));
+                return getResponse(badRequest(getMessage(ApiMessages.ARTIKEL_DOES_NOT_EXIST, artikelId)));
             }
 
             IAnderung anderung = findAnderung(artikel, anderungId, true);
 
             if (anderung == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Anderung ", artikelId + ApiPaths.SEPARATOR + anderungId)));
+                return getResponse(badRequest(getMessage(ApiMessages.ANDERUNG_DOES_NOT_EXIST, artikelId, anderungId)));
             }
 
             newAnderung.setArtikel(artikel);
@@ -333,13 +334,13 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
             IArtikel artikel = findArtikel(artikelId, true);
 
             if (artikel == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Artikel ", artikelId)));
+                return getResponse(badRequest(getMessage(ApiMessages.ARTIKEL_DOES_NOT_EXIST, artikelId)));
             }
 
             IAnderung anderung = findAnderung(artikelId, anderungId, true);
 
             if (anderung == null) {
-                return getResponse(badRequest(String.format(ApiNames.DOES_NOT_EXIST, "Anderung ", artikelId + ApiPaths.SEPARATOR + anderungId)));
+                return getResponse(badRequest(getMessage(ApiMessages.ANDERUNG_DOES_NOT_EXIST, artikelId, anderungId)));
             }
 
             artikel.removeAnderung(anderung);
