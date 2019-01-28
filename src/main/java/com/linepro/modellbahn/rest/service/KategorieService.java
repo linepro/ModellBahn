@@ -165,7 +165,7 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
     })
     public Response searchUnterKategorie(@Context UriInfo uriInfo, @QueryParam(ApiNames.KATEGORIEN) final List<String> kategorien) {
         try {
-            logGet(String.format(ApiPaths.UNTER_KATEGORIE_ROOT_LOG, getEntityClassName()) + ": " + kategorien);
+            logGet(String.format(ApiPaths.UNTER_KATEGORIEN_LOG, getEntityClassName()) + ": " + kategorien);
 
             MultivaluedMap<String, String> queryParameters = uriInfo.getQueryParameters();
 

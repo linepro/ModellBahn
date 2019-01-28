@@ -69,7 +69,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.UNTER_KATEGORIE, ApiNames.MASSSTAB,
         ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER,
-        ApiNames.BAUZEIT, ApiNames.VORBILD, ApiNames.ACHSFOLG, ApiNames.ANMERKUNG, ApiNames.SONDERMODELL,
+        ApiNames.BAUZEIT, ApiNames.VORBILD, ApiNames.ACHSFOLG, ApiNames.ANMERKUNG, ApiNames.SONDER_MODELL,
         ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG, ApiNames.DECODER_TYP,
         ApiNames.MOTOR_TYP, ApiNames.LANGE, ApiNames.ANLEITUNGEN, ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.ABBILDUNG,
         ApiNames.TEILEN, ApiNames.DELETED, ApiNames.LINKS })
@@ -200,7 +200,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
      *
      * @return the sondermodell
      */
-    @JsonGetter(ApiNames.SONDERMODELL)
+    @JsonGetter(ApiNames.SONDER_MODELL)
     @JsonView(Views.Public.class)
     @JsonSerialize(as= ISonderModellRef.class)
     @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.ISonderModellRef", value = "Special model indicator")
@@ -212,7 +212,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
      * @param sondermodell
      *            the new sondermodell
      */
-    @JsonSetter(ApiNames.SONDERMODELL)
+    @JsonSetter(ApiNames.SONDER_MODELL)
     @JsonDeserialize(using= SonderModellDeserializer.class)
     void setSondermodell(ISonderModell sondermodell);
 

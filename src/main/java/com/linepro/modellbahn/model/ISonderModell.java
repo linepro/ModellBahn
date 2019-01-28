@@ -13,10 +13,10 @@ import io.swagger.annotations.ApiModel;
  * @author   $Author$
  * @version  $Id$
  */
-@JsonRootName(value = ApiNames.SONDERMODELL)
+@JsonRootName(value = ApiNames.SONDER_MODELL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
-@ApiModel(value = ApiNames.SONDERMODELL, description = "Special model - e.g,. MHI &c.")
+@ApiModel(value = ApiNames.SONDER_MODELL, description = "Special model - e.g,. MHI &c.")
 public interface ISonderModell extends INamedItem<NameKey>, ISonderModellRef {
 
 }

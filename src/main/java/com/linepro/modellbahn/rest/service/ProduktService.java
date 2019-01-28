@@ -123,7 +123,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
             @JsonProperty(value = ApiNames.ACHSFOLG) IAchsfolg achsfolg,
             @JsonProperty(value = ApiNames.VORBILD) IVorbild vorbild,
             @JsonProperty(value = ApiNames.ANMERKUNG) String anmerkung,
-            @JsonProperty(value = ApiNames.SONDERMODELL)
+            @JsonProperty(value = ApiNames.SONDER_MODELL)
             @JsonDeserialize(using= SonderModellDeserializer.class) ISonderModell sondermodell,
             @JsonProperty(value = ApiNames.AUFBAU)
             @JsonDeserialize(using= AufbauDeserializer.class)  IAufbau aufbau,
@@ -214,7 +214,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
         @ApiImplicitParam( name = ApiNames.VORBILD, value = "Produkt prototype", example = "BR89.0", dataType = "String", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.ACHSFOLG, value = "Produkt axle configuration", example = "C1HT", dataType = "String", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.ANMERKUNG, value = "Produkt remarks", example = "Aus set 29400", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.SONDERMODELL, value = "Produkt SonderModell", example = "MHI", dataType = "String", paramType = "query"),
+        @ApiImplicitParam( name = ApiNames.SONDER_MODELL, value = "Produkt SonderModell", example = "MHI", dataType = "String", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.AUFBAU, value = "Produkt construction", example = "LK", dataType = "String", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.LICHT, value = "Produkt light configuration", example = "L1V", dataType = "String", paramType = "query"),
         @ApiImplicitParam( name = ApiNames.KUPPLUNG, value = "Produkt coupling configuration", example = "RELEX", dataType = "String", paramType = "query"),

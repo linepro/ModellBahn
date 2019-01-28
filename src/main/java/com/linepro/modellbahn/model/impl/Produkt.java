@@ -77,7 +77,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.MASSSTAB_ID),
         @Index(columnList = DBNames.SPURWEITE_ID),
         @Index(columnList = DBNames.UNTER_KATEGORIE_ID),
-        @Index(columnList = DBNames.SONDERMODELL_ID),
+        @Index(columnList = DBNames.SONDER_MODELL_ID),
         @Index(columnList = DBNames.AUFBAU_ID),
         @Index(columnList = DBNames.LICHT_ID),
         @Index(columnList = DBNames.KUPPLUNG_ID),
@@ -362,7 +362,7 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
 
     @Override
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = SonderModell.class)
-    @JoinColumn(name = DBNames.SONDERMODELL_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk8"))
+    @JoinColumn(name = DBNames.SONDER_MODELL_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk8"))
     public ISonderModell getSondermodell() {
         return sondermodell;
     }
@@ -613,7 +613,7 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
                 .append(ApiNames.ACHSFOLG, getAchsfolg())
                 .append(ApiNames.VORBILD, getVorbild())
                 .append(ApiNames.ANMERKUNG, getAnmerkung())
-                .append(ApiNames.SONDERMODELL, getSondermodell())
+                .append(ApiNames.SONDER_MODELL, getSondermodell())
                 .append(ApiNames.AUFBAU, getAufbau())
                 .append(ApiNames.LICHT, getLicht())
                 .append(ApiNames.KUPPLUNG, getKupplung())

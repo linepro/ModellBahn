@@ -8,14 +8,14 @@ const Paged = {
 };
 
 class ItemGrid {
-  constructor(pageSize, apiUrl, tableName, columns, paged, editMode, children, editForm) {
-    this.pageSize = pageSize ? pageSize : 10;
+  constructor(pageSize = 10, apiUrl, tableName, columns, paged, editMode = EditMode.VIEW, children, editForm) {
+    this.pageSize = pageSize;
     this.rowCount = pageSize;
     this.apiUrl = apiUrl;
     this.tableName = tableName;
     this.columns = columns;
     this.paged = paged;
-    this.editMode = editMode ? editMode : EditMode.VIEW;
+    this.editMode = editMode;
     this.children = children;
     this.editForm = editForm;
     this.current = this.apiUrl;
@@ -84,18 +84,22 @@ class ItemGrid {
 
       columns.forEach(column => {
         column.setWidth(Math.floor((column.getLength() * 100) / totalWidth) + '%');
-        maxLabel = Math.max(column.heading ? column.heading.length : maxLabel, maxLabel);
+        maxLabel = Math.max(column.getHeaderLength(), maxLabel);
       });
 
-      let table = document.getElementById(grid.tableName);
-      removeChildren(table);
-      table.className = 'table';
+      let place = document.getElementById(grid.tableName+'Site');
+      removeChildren(place);
 
-      initHeader(tableName, table, columns, paged, rowCount);
+      let table = document.createElement(paged === Paged.FORM ? 'div' : 'table'); 
+      table.id = grid.tableName;
+      table.className = 'table';
+      place.appendChild(table);
+
+      initHeader(tableName, table, columns, paged);
 
       initBody(tableName, table, pageSize, columns, paged, rowCount, maxLabel);
 
-      initFooter(tableName, table, columns, paged, rowCount);
+      initFooter(tableName, table, columns, paged);
 
       grid.initialized = true;
     }
@@ -142,6 +146,8 @@ class ItemGrid {
     let entities = (grid.parent ? jsonData[grid.tableName] : jsonData.entities ? jsonData.entities : [jsonData]);
     let tableName = grid.tableName;
 
+    if (!entities) entities = {};
+    
     let rowCount = grid.paged === Paged.PAGED ? grid.pageSize : Math.max(grid.pageSize, entities.length);
 
     grid.initGrid(rowCount);
@@ -236,9 +242,9 @@ class ItemGrid {
     if (key) {
       grid.columns.forEach(column => {
         if (column.setter) {
-          let value = column.getValue( document.getElementById(getFieldId(rowId, column.fieldName)));
+          let value = column.getValue(document.getElementById(getFieldId(rowId, column.fieldName)));
           if (value) {
-            column.setter(data, value);
+            column.setter(data, value, column.fieldName);
           }
         }
       });
@@ -255,44 +261,64 @@ class ItemGrid {
     return data;
   }
 
+  getFreeRow(tableName, rowCount) {
+    for (let row = 0; row < rowCount; row++) {
+      let rowId = getRowId(tableName, row);
+
+      if (!getKeyValue(rowId)) {
+        return row;
+      }
+    }
+    
+    return rowCount;
+  }
+
   addRow() {
-    let grid = this;
+    let grid      = this;
     let columns   = grid.columns;
     let editMode  = grid.editMode;
     let rowCount  = grid.rowCount;
     let paged     = grid.paged;
     let tableName = grid.tableName;
+    let rowNum    = this.getFreeRow(tableName, rowCount);
 
-    let rowNum = undefined;
-    for (let row = 0; row < rowCount && !rowNum; row++) {
-      let rowId = getRowId(tableName, row);
+    if (paged == Paged.EXPAND) {
+      if (rowNum === rowCount) {
+        // Add a row at end
+        grid.rowCount = rowCount + 1;
+        rowNum = grid.rowCount;
 
-      if (!getKeyValue(rowId)) {
-        rowNum = row;
+        let body = document.getElementById(tableName + '_tbody');
+
+        initRow(tableName, rowNum, body, paged, columns);
       }
-    }
-
-    if (!rowNum) {
-        if (paged === Paged.EXPAND) {
-          // Add a row at end
-          grid.rowCount = grid.rowCount + 1;
-          rowNum = grid.rowCount;
-
-          let body = document.getElementByName(tableName + '_tbody');
-
-          initRow(tableName, rowNum, body, paged, columns);
-        } else if (paged === Paged.PAGED) {
-          // the page is full, new page and add at start          
-          rowNum = 0;
-          for (let row = 1; row < rowCount; row++) {
-            this.renderRow(getRowId(tableName, row), undefined, columns, EditMode.NEVER);
-         }
-          
-          // TODO: reset page links
-        } else {
-          // It's a form - overwrite        	
-          rowNum = 0;
+    } else if (paged === Paged.PAGED) {
+      if (rowNum === rowCount) {
+        // the page is full, new page and add at start
+        rowNum = 0;
+        for (let row = 1; row < rowCount; row++) {
+          this.renderRow(getRowId(tableName, row), undefined, columns, EditMode.NEVER);
         }
+          
+        let prev = document.getElementById(tableName + 'Prev');
+
+        if (prev) {
+          removeChildren(prev);
+
+          addButton(prev, grid.current, Function(tableName + '.getData(this.value)'));
+        }
+
+        let next = document.getElementById(tableName + 'Next');
+
+        if (next) {
+          removeChildren(next);
+          
+          addText(next, '');
+        }
+      }
+    } else {
+      // Don't care just use first row.
+      rowNum = 0;
     }
 
     let rowId = getRowId(tableName, rowNum);
@@ -407,7 +433,7 @@ class ListEditGrid extends ItemGrid {
 
 class NamedItemGrid extends ListEditGrid {
   constructor(dataType, elementName) {
-    super(10, dataType, elementName, [NAMEN, BEZEICHNUNG]);
+    super(10, dataType, elementName, [NAMEN(), BEZEICHNUNG()]);
   }
 }
 

@@ -326,7 +326,7 @@ textarea {
   overflow: auto;
 }
 
-div.table {
+.table {
   display: table;
   border-collapse: collapse;
   border-bottom: 0.1rem solid LightSkyBlue;
@@ -337,7 +337,7 @@ div.table {
   width: 100%;
 }
 
-div.table > div.thead {
+.table > .thead {
   display: table-header-group;
   background-color: LightSkyBlue;
   color: white;
@@ -345,12 +345,12 @@ div.table > div.thead {
   height: 3rem;
 }
 
-div.table > div.tbody {
+.table > .tbody {
   display: table-row-group;
   overflow-y: auto;
 }
 
-div.table > div.tfoot {
+.table > .tfoot {
   display: table-footer-group;
   background-color: LightSkyBlue;
   color: white;
@@ -358,13 +358,13 @@ div.table > div.tfoot {
   height: 2.5rem;
 }
 
-div.table > div.thead > div.table-head {
+.table > .thead > .table-head {
   display: table-row;
   font-weight: bold;
   height: 3rem;
 }
 
-div.table > div.thead > div.form-head > div.table-btn {
+.table > .thead > div.form-head > .table-btn {
   border-right: 1rem;
   height: 2.7rem;
   padding-right: 0.5rem;
@@ -372,43 +372,43 @@ div.table > div.thead > div.form-head > div.table-btn {
   vertical-align: top;
 }
 
-div.table > div.tbody > div.table-row {
+.table > .tbody > .table-row {
   display: table-row;
   height: 2.5rem;
 }
 
-div.table > div.tbody > div.table-row:nth-child(even) {
+.table > .tbody > .table-row:nth-child(even) {
   background-color: CornSilk;
   height: 2.5rem;
 }
 
-div.table > div.tfoot > div.table-foot {
+.table > .tfoot > .table-foot {
   display: table-row;
   font-weight: bold;
   height: 2.5rem;
 }
 
-div.table > div.thead > div.table-head > div.table-heading {
+.table > .thead > .table-head > .table-heading {
   display: table-cell;
   height: 3rem;
   margin: 1.5rem 1rem 0 0.5rem;
   vertical-align: middle;
 }
 
-div.table > div.thead > div.table-head > div.table-heading-btn {
+.table > .thead > .table-head > .table-heading-btn {
   display: table-cell;
   height: 3rem;
   text-align: right;
   vertical-align: middle;
 }
 
-div.table > div.tbody > div.table-row > div.table-cell {
+.table > .tbody > .table-row > .table-cell {
   display: table-cell;
   height: 2.5rem;
   vertical-align: middle;
 }
 
-div.table > div.tbody > div.table-row > div.table-btn {
+.table > .tbody > .table-row > .table-btn {
   display: table-cell;
   height: 2.5rem;
   margin-top: 0.3rem;
@@ -416,27 +416,27 @@ div.table > div.tbody > div.table-row > div.table-btn {
   vertical-align: baseline;
 }
 
-div.table > div.tfoot > div.table-foot > div.table-footer {
+.table > .tfoot > .table-foot > .table-footer {
   display: table-cell;
   height: 2.5rem;
   text-align: center;
 }
 
-div.table > div.tfoot > div.table-foot > div.table-prev {
+.table > .tfoot > .table-foot > .table-prev {
   display: table-cell;
   height: 2.5rem;
   text-align: left;
 }
 
-div.table > div.tfoot > div.table-foot > div.table-next {
+.table > .tfoot > .table-foot > .table-next {
   display: table-cell;
   height: 2.5rem;
   text-align: right;
 }
 
-div.table > div.tfoot > div.form-foot > div.table-footer {
+.table > .tfoot > div.form-foot > div.form-footer {
   display: table-cell;
-  height: 2.5rem;
+  height: .25rem;
   text-align: center;
 }
 
@@ -744,10 +744,15 @@ button.selection {
 button.img-button {
   border: 0;
   display: inline-flex;
-  height: 45%;
+  height: 1.2rem;
   margin: 0;
   padding: 0;
-  width: 10%;
+  width: 1.2rem;
+}
+
+div.img-button {
+  display: inline-grid;
+  vertical-align: middle;
 }
 
 img.img-button {
@@ -817,4 +822,106 @@ img.img-button {
 
 .closebtn:hover {
   background-color: GrayText;
+}
+
+.rtable {
+  /*!
+  // IE needs inline-block to position scrolling shadows otherwise use:
+  // display: block;
+  // max-width: min-content;
+  */
+  display: inline-block;
+  vertical-align: top;
+  max-width: 100%;
+  
+  overflow-x: auto;
+  
+  // optional - looks better for small cell values
+  white-space: nowrap;
+
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.rtable,
+.rtable--flip tbody {
+  // optional - enable iOS momentum scrolling
+  -webkit-overflow-scrolling: touch;
+  
+  // scrolling shadows
+  background: radial-gradient(left, ellipse, rgba(0,0,0, .2) 0%, rgba(0,0,0, 0) 75%) 0 center,
+              radial-gradient(right, ellipse, rgba(0,0,0, .2) 0%, rgba(0,0,0, 0) 75%) 100% center;
+  background-size: 10px 100%, 10px 100%;
+  background-attachment: scroll, scroll;
+  background-repeat: no-repeat;
+}
+
+.rtable td:first-child,
+.rtable--flip tbody tr:first-child {
+  background-image: linear-gradient(to right, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%);
+  background-repeat: no-repeat;
+  background-size: 20px 100%;
+}
+
+.rtable td:last-child,
+.rtable--flip tbody tr:last-child {
+  background-image: linear-gradient(to left, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%);
+  background-repeat: no-repeat;
+  background-position: 100% 0;
+  background-size: 20px 100%;
+}
+
+.rtable th {
+  font-size: 11px;
+  text-align: left;
+  text-transform: uppercase;
+  background: #f2f0e6;
+}
+
+.rtable th,
+.rtable td {
+  padding: 6px 12px;
+  border: 1px solid #d9d7ce;
+}
+
+.rtable--flip {
+  display: flex;
+  overflow: hidden;
+  background: none;
+}
+
+.rtable--flip thead {
+  display: flex;
+  flex-shrink: 0;
+  min-width: min-content;
+}
+
+.rtable--flip tbody {
+  display: flex;
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.rtable--flip tr {
+  display: flex;
+  flex-direction: column;
+  min-width: min-content;
+  flex-shrink: 0;
+}
+
+.rtable--flip td,
+.rtable--flip th {
+  display: block;
+}
+
+.rtable--flip td {
+  background-image: none !important;
+  // border-collapse is no longer active
+  border-left: 0;
+}
+
+.rtable--flip th:not(:last-child),
+.rtable--flip td:not(:last-child) {
+  border-bottom: 0;
 }

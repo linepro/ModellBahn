@@ -11,18 +11,18 @@
 <link rel="stylesheet" href="css/site.css"/>
 <script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
-<script type="text/javascript" src="js/types.js"></script>
+<script type="text/javascript" src="js/fields.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
   const columns = [
-    GATTUNG_SELECT,
-    UNTER_KATEGORIE_SELECT,
-    BAHNVERWALTUNG_SELECT,
-    HERSTELLER,
-    BAUZEIT,
-    AUSSERDIENST,
-    ANZAHL,
-    ABBILDUNG,
+    GATTUNG_SELECT(Editable.NEVER, true),
+    UNTER_KATEGORIE_SELECT(),
+    BAHNVERWALTUNG_SELECT(),
+    HERSTELLER(Editable.UPDATE, false),
+    BAUZEIT(),
+    AUSSERDIENST(),
+    ANZAHL(),
+    ABBILDUNG(),
     new ButtonColumn(
         [newRow],
         [editRow, deleteRow])
@@ -60,7 +60,7 @@
 		<article>
 			<h3 id="heading">Vorbilder</h3>
 			<div id="data">
-				<div id="vorbild">
+				<div id="vorbildSite">
 				</div>
 			</div>
 		</article>
@@ -71,8 +71,8 @@
             <div>
                 <hr class="highlight" />
                 <ul class="footer">
-                    <li>Copyright &copy; 2018 ModellBahn Website</li>
-                    <li><a id="license" class="nav-button" href="#" onclick="about()">About</a></li>
+                    <li>Copyright &copy; 2018, 2019 John &amp; Andrew Goff</li>
+                    <li><a id="license" class="nav-button" href="#" onclick="about()">&Uuml;ber</a></li>
                 </ul>
             </div>
         </div>

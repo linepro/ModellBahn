@@ -11,16 +11,16 @@
 <link rel="stylesheet" href="css/site.css"/>
 <script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
-<script type="text/javascript" src="js/types.js"></script>
+<script type="text/javascript" src="js/fields.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
 const columns = [
-  HERSTELLER_SELECT,
-  BESTELL_NR,
-  UNTER_KATEGORIE_SELECT,
-  MASSSTAB_SELECT,
-  SPURWEITE_SELECT,
-  BEZEICHNUNG,
+  HERSTELLER_SELECT(Editable.ADD, true),
+  BESTELL_NR(Editable.ADD, true),
+  UNTER_KATEGORIE_SELECT(),
+  MASSSTAB_SELECT(),
+  SPURWEITE_SELECT(),
+  BEZEICHNUNG(Editable.UPDATE, true),
   new ButtonColumn([newRow], [editRow, deleteRow])
 ];
 
@@ -59,7 +59,7 @@ async function init() {
 		<article>
 			<h3 id="heading">Produkt</h3>
 			<div id="data">
-				<div id="produkt">
+				<div id="produktSite">
 				</div>
 			</div>
 		</article>
@@ -70,8 +70,8 @@ async function init() {
             <div>
                 <hr class="highlight" />
                 <ul class="footer">
-                    <li>Copyright &copy; 2018 ModellBahn Website</li>
-                    <li><a id="license" class="nav-button" href="#" onclick="about()">About</a></li>
+                    <li>Copyright &copy; 2018, 2019 John &amp; Andrew Goff</li>
+                    <li><a id="license" class="nav-button" href="#" onclick="about()">&Uuml;ber</a></li>
                 </ul>
             </div>
         </div>

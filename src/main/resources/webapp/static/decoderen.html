@@ -10,14 +10,14 @@
 <link rel="stylesheet" href="css/site.css"/>
 <script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
-<script type="text/javascript" src="js/types.js"></script>
+<script type="text/javascript" src="js/fields.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
     const columns = [
-        DECODER,
-        DECODER_TYP_SELECT,
-        BEZEICHNUNG,
-        PROTOKOLL_SELECT,
+        DECODER(),
+        DECODER_TYP_SELECT(),
+        BEZEICHNUNG(),
+        PROTOKOLL_SELECT(),
         new ButtonColumn([newRow], [editRow, deleteRow])
     ];
     const decoderen = new ItemGrid(10, fetchUrl("decoder"), "decoderen", columns, Paged.PAGED, EditMode.UPDATE, undefined, "decoder.html");
@@ -50,7 +50,7 @@
         <article>
             <h1 id="heading">Decoder</h1>
             <div id="data">
-                <div id="decoderen">
+                <div id="decoderenSite">
                 </div>
             </div>
         </article>
@@ -61,8 +61,8 @@
             <div>
                 <hr class="highlight" />
                 <ul class="footer">
-                    <li>Copyright &copy; 2018 ModellBahn Website</li>
-                    <li><a id="license" class="nav-button" href="#" onclick="about()">About</a></li>
+                    <li>Copyright &copy; 2018, 2019 John &amp; Andrew Goff</li>
+                    <li><a id="license" class="nav-button" href="#" onclick="about()">&Uuml;ber</a></li>
                 </ul>
             </div>
         </div>

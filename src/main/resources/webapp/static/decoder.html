@@ -11,47 +11,47 @@
 <link rel="stylesheet" href="css/site.css"/>
 <script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
-<script type="text/javascript" src="js/types.js"></script>
+<script type="text/javascript" src="js/fields.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
   const adressColumns = [
-    INDEX_DISPLAY,
-    ADRESS_TYP_DISPLAY,
-    ADRESS,
+    INDEX(Editable.NEVER, false),
+    ADRESS_TYP_SELECT(),
+    ADRESS(),
     new ButtonColumn([], [updateRow])
   ];
 
   const adressen = new ItemGrid(2, undefined, "adressen", adressColumns, Paged.EXPAND, EditMode.UPDATE, undefined);
 
   const cvColumns = [
-    CV_DISPLAY,
-    BEZEICHNUNG_CV_DISPLAY,
-    WERKEINSTELLING_DISPLAY,
-    WERT,
+	CV(Editable.NEVER, false, decoderCvCvGetter, noOpSetter),
+    BEZEICHNUNG(Editable.NEVER, false, decoderCvBezeichnungGetter, noOpSetter),
+    WERKSEINSTELLUNG(Editable.NEVER, false, decoderCvWerkseinstellungGetter, noOpSetter),
+    WERT(),
     new ButtonColumn([], [updateRow])
   ];
 
   const cvs = new ItemGrid(10, undefined, "cvs", cvColumns, Paged.EXPAND, EditMode.UPDATE, undefined);
 
   const funktiononenColumns = [
-    REIHE_DISPLAY,
-    FUNKTION_DISPLAY,
-    BEZEICHNUNG,
-    PROGRAMMABLE_DISPLAY,
+	REIHE(Editable.NEVER, false, decoderFunktionReiheGetter, noOpSetter),
+	FUNKTION(Editable.NEVER, false, decoderFunktionFunktionGetter, noOpSetter),
+    BEZEICHNUNG(),
+    PROGRAMMABLE(Editable.NEVER, false, decoderFunktionProgrammableGetter, noOpSetter),
     new ButtonColumn([], [updateRow])
   ];
 
   const funktionen = new ItemGrid(10, undefined, "funktionen", funktiononenColumns, Paged.EXPAND, EditMode.UPDATE, undefined);
 
   const decoderColumns = [
-    DECODER,
-    DECODER_TYP_DISPLAY,
-    BEZEICHNUNG_TYP_DISPLAY,
-    PROTOKOLL_SELECT,
-    FAHRSTUFE,
-    GERAUSCH_DISPLAY,
-    I_MAX_DISPLAY,
-    KONFIGURATION_DISPLAY,
+    DECODER(),
+    DECODER_TYP_SELECT(Editable.NEVER, false),
+    BEZEICHNUNG(Editable.NEVER, false, decoderTypBezeichnungGetter, noOpSetter),
+    PROTOKOLL_SELECT(),
+    FAHRSTUFE(),
+    GERAUSCH(Editable.NEVER, false, decoderTypSoundGetter, noOpSetter),
+    I_MAX(Editable.NEVER, false, decoderTypIMaxGetter, noOpSetter),
+    KONFIGURATION_SELECT(Editable.NEVER, false, decoderTypKonfigurationGetter, noOpSetter),
     new ButtonColumn([], [updateRow])
   ];
 
@@ -86,7 +86,7 @@
     <article>
       <h3 id="heading">Decoder</h3>
       <div id="data">
-        <div id="decoder">
+        <div id="decoderSite">
         </div>
         
         <div id="tabbedArea">
@@ -98,17 +98,17 @@
                   
                   <div id="adressenTab" class="tabContent">
                     <h3>Addressen</h3>
-                    <div id="adressen">
+                    <div id="adressenSite">
                     </div>
                   </div>
                   <div id="cvsTab" class="tabContent">
                      <h3>cvs</h3>
-                    <div id="cvs">
+                    <div id="cvsSite">
                     </div>
                   </div>
                   <div id="funktionenTab" class="tabContent">
                     <h3>Funktionen</h3>
-                    <div id="funktionen">
+                    <div id="funktionenSite">
                     </div>
                   </div>
         </div>
@@ -121,8 +121,8 @@
             <div>
                 <hr class="highlight" />
                 <ul class="footer">
-                    <li>Copyright &copy; 2018 ModellBahn Website</li>
-                    <li><a id="license" class="nav-button" href="#" onclick="about()">About</a></li>
+                    <li>Copyright &copy; 2018, 2019 John &amp; Andrew Goff</li>
+                    <li><a id="license" class="nav-button" href="#" onclick="about()">&Uuml;ber</a></li>
                 </ul>
             </div>
         </div>

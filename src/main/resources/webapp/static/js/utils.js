@@ -236,15 +236,15 @@ class Column {
     this.tableName = tableName;
   }
 
-  getHeading() {
-    let td = document.createElement('div');
+  getHeading(tagName) {
+    let td = document.createElement(tagName);
     td.className = 'table-heading';
     addText(td, this.heading);
     return td;
   }
 
   entityValue(entity) {
-    return this.getter(entity);
+    return this.getter(entity, this.fieldName);
   }
 
   getLength() {
@@ -337,11 +337,11 @@ class BoolColumn extends Column {
 }
 
 class NumberColumn extends Column {
-  constructor(heading, fieldName, getter, setter, editable, required, max, min, places) {
-    super(heading, fieldName, getter, setter, editable, required, (max ? max : 255).toString().length, heading.length);
-    this.max = max ? max : 255;
-    this.min = min ? min : 0;
-    this.places = places ? places : 0;
+  constructor(heading, fieldName, getter, setter, editable, required, max = 255, min = 0, places = 0) {
+    super(heading, fieldName, getter, setter, editable, required, max.toString().length, heading.length);
+    this.max = max;
+    this.min = min;
+    this.places = places;
   }
 
   createControl() {
@@ -437,13 +437,17 @@ class FileColumn extends Column {
     		  }
     	  }, false);
 
+      let bar = document.createElement('div');
+      bar.className = 'img-button';
+      cell.append(bar);
+      
 	    let add = getLink(entity.links, 'update-' + this.fieldName);
 	
 	    if (add) {
 	      let btn = getButton(add.href, 'add', (e) => { this.select(e); });
 	      btn.className = 'img-button';
 	      btn.firstChild.className = 'img-button';
-	      cell.appendChild(btn);
+	      bar.appendChild(btn);
 	    }
 	
 	    let remove = getLink(entity.links, 'delete-' + this.fieldName);
@@ -452,7 +456,7 @@ class FileColumn extends Column {
 	      let btn = getButton(remove.href, 'delete', (e) => { this.remove(e, ctl); });
 	      btn.className = 'img-button';
 	      btn.firstChild.className = 'img-button';
-	      cell.appendChild(btn);
+	      bar.appendChild(btn);
 	    }
 	
 	    if (cell.firstChild) {
@@ -483,7 +487,8 @@ class FileColumn extends Column {
       btn = btn.parentElement;
     }
     let link = btn.value;
-    let cell = btn.parentElement;
+    let bar = btn.parentElement;
+    let cell = bar.parentElement;
     let file = document.createElement('input');
     file.type = 'file';
     file.accept = this.mask;
@@ -502,7 +507,8 @@ class FileColumn extends Column {
     if (btn.tagName === 'IMG') {
       btn = btn.parentElement;
     }
-    let cell = btn.parentElement;
+    let bar = btn.parentElement;
+    let cell = bar.parentElement;
     let link = btn.value;
     if (link) {
       removeFile(link)
@@ -577,8 +583,8 @@ class PDFColumn extends FileColumn {
   }
 }
 
-const closeAutoLists = (elmnt) => {
-  let autoComp = (elmnt ? elmnt : document).getElementsByClassName( 'autocomplete-list');
+const closeAutoLists = (elmnt = document) => {
+  let autoComp = elmnt.getElementsByClassName( 'autocomplete-list');
   for (let i = 0; i < autoComp.length; i++) {
     removeChildren(autoComp[i]);
     autoComp[i].parentNode.removeChild(autoComp[i]);
@@ -588,10 +594,10 @@ const closeAutoLists = (elmnt) => {
 document.addEventListener('click', (e) => { closeAutoLists(); }, false);
 
 class SelectColumn extends Column {
-  constructor(heading, fieldName, getter, setter, dropDown, editable, required, length, dropSize) {
+  constructor(heading, fieldName, getter, setter, dropDown, editable, required, length, dropSize = 5) {
     super(heading, fieldName, getter, setter, editable, required, length);
     this.dropDown = dropDown;
-    this.dropSize = dropSize ? dropSize : 5;
+    this.dropSize = dropSize;
   }
 
   getControl(cell, entity, editMode) {
@@ -829,8 +835,8 @@ class ButtonColumn {
     this.tableName = tableName;
   }
 
-  getHeading() {
-    let td = document.createElement('div');
+  getHeading(tagName) {
+    let td = document.createElement(tagName);
     td.className = 'table-heading-btn';
 
     let tableName = this.tableName;
@@ -1027,88 +1033,134 @@ const gridButtonColumn = () => {
   return new ButtonColumn([addRow], [updateRow, deleteRow]);
 };
 
-const initHeader = (tableName, table, columns, paged) => {
-  let isForm = paged === Paged.FORM;
+const initTableHeader = (tableName, table, columns) => {
   let header = document.createElement('div');
   header.id = tableName + '_thead';
   header.className = 'thead';
   table.append(header);
 
   let headRow = document.createElement('div');
-  headRow.className = isForm ? 'form-head' : 'table-head';
+  headRow.className = 'table-head';
   headRow.id = tableName + 'Head';
   header.append(headRow);
 
   columns.forEach(column => {
-    if (isForm) {
-      if (column.isButtons()) {
-        let th = document.createElement('div');
-        th.id = getCellId(getRowId(tableName, 0), column);
-        th.className = 'table-btn';
+    let th = column.getHeading('div');
+    th.style.width = column.width;
+    th.style.maxWidth = column.width;
 
-        headRow.append(th);
-      }
-    } else {
-      let th = column.getHeading();
-      th.style.width = column.width;
-      th.style.maxWidth = column.width;
+    headRow.append(th);
+  });
+};
+
+const initFormHeader = (tableName, table, columns) => {
+  let header = document.createElement('div');
+  header.id = tableName + '_thead';
+  header.className = 'thead';
+  table.append(header);
+
+  let headRow = document.createElement('div');
+  headRow.className = 'form-head';
+  headRow.id = tableName + 'Head';
+  header.append(headRow);
+
+  columns.forEach(column => {
+    if (column.isButtons()) {
+      let th = document.createElement('div');
+      th.id = getCellId(getRowId(tableName, 0), column);
+      th.className = 'table-btn';
 
       headRow.append(th);
     }
   });
 };
 
-const initRow = (tableName, row, body, paged, columns) => { 
-  let isForm = paged === Paged.FORM;
+const initHeader = (tableName, table, columns, paged) => {
+  if (paged === Paged.FORM) {
+    initFormHeader(tableName, table, columns);
+  } else {
+    initTableHeader(tableName, table, columns);
+  }
+};
+
+const initFormRow = (tableName, row, body, columns, maxLabel) => { 
   let tr = document.createElement('div');
   let rowId = getRowId(tableName, row);
-  tr.className = isForm ? 'flex-container' : 'table-row';
+  tr.className = 'flex-container';
   tr.id = rowId;
   body.append(tr);
   
   let key = document.createElement('input');
   key.type = 'hidden';
   key.id = getKeyId(rowId);
-  key.className = isForm ? 'flex-control' : 'table-cell';
+  key.className = 'flex-control';
   tr.append(key);
   
   columns.forEach(column => {
     let td = document.createElement('div');
   
-    if (!isForm || !column.isButtons()) {
-      if (isForm) {
-        td.className = 'flex-item';
-  
-        // TODO: change to label
-        let th = column.getHeading();
-        th.className = 'flex-label';
-        th.style.width = maxLabel + 'ch';
-        th.style.maxWidth = maxLabel + 'ch';
-  
-        td.append(th);
-      }
+    if (!column.isButtons()) {
+      td.className = 'flex-item';
+
+      // TODO: change to label
+      let th = column.getHeading('div');
+      th.className = 'flex-label';
+      th.style.width = maxLabel + 'ch';
+      th.style.maxWidth = maxLabel + 'ch';
+
+      td.append(th);
   
       let tc = document.createElement('div');
       tc.id = getCellId(rowId, column);
-      tc.className = isForm ? 'flex-control' : 'table-cell';
-      tc.style.width = isForm ? column.getLength() + 'ch' : column.getWidth();
+      tc.className = 'flex-control';
+      tc.style.width = column.getLength() + 'ch';
       tc.style.maxWidth = tc.style.width;
   
       addText(tc, ' ');
   
-      if (isForm) {
-        td.append(tc);
-        tr.append(td);
-      } else {
-        tr.append(tc);
-      }
+      td.append(tc);
+      tr.append(td);
     }
   });
 };
 
+const initTableRow = (tableName, row, body, columns) => { 
+  let tr = document.createElement('div');
+  let rowId = getRowId(tableName, row);
+  tr.className = 'table-row';
+  tr.id = rowId;
+  body.append(tr);
+  
+  let key = document.createElement('input');
+  key.type = 'hidden';
+  key.id = getKeyId(rowId);
+  key.className = 'table-cell';
+  tr.append(key);
+  
+  columns.forEach(column => {
+    let td = document.createElement('div');
+    td.id = getCellId(rowId, column);
+    td.className = 'table-cell';
+    td.style.width = column.getWidth();
+    td.style.maxWidth = td.style.width;
+
+    addText(td, ' ');
+
+    tr.append(td);
+  });
+};
+
+const initRow = (tableName, row, body, paged, columns, maxLabel) => {
+  if (paged === Paged.FORM) {
+    initFormRow(tableName, row, body, columns, maxLabel); 
+  } else {
+    initTableRow(tableName, row, body, columns); 
+  }
+};
+
 const initBody = (tableName, table, pageSize, columns, paged, rowCount, maxLabel) => {
   let isForm = paged === Paged.FORM;
-  let body = document.createElement('div');
+  let body = document.createElement(isForm ? 'div' : 'div');
   body.id = tableName + '_tbody';
   body.className = isForm ? 'flex-container' : 'tbody';
   table.append(body);
@@ -1116,52 +1168,68 @@ const initBody = (tableName, table, pageSize, columns, paged, rowCount, maxLabel
   let row;
   let maxRow = Math.max(rowCount, pageSize);
   for (row = 0; row < maxRow; row++) {
-	initRow(tableName, row, body, paged, columns);
+    initRow(tableName, row, body, paged, columns, maxLabel);
   }
 };
 
-
-const initFooter = (tableName, table, columns, paged) => {
-  let isForm = paged === Paged.FORM;
+const initFormFooter = (tableName, table, columns) => {
   let footer = document.createElement('div');
   footer.id = tableName + '_tfoot';
   footer.className = 'tfoot';
   table.append(footer);
 
   let navRow = document.createElement('div');
-  navRow.className = isForm ? 'form-foot' : 'table-foot';
+  navRow.className = 'form-foot';
   navRow.id = tableName + 'Foot';
   footer.append(navRow);
 
-  if (isForm) {
+  let tf = document.createElement('div');
+  tf.className = 'form-footer';
+  tf.style.width = '100%';
+  tf.style.maxWidth = '100%';
+
+  addText(tf, ' ');
+
+  navRow.append(tf);
+};
+
+const initTableFooter = (tableName, table, columns) => {
+  let footer = document.createElement('div');
+  footer.id = tableName + '_tfoot';
+  footer.className = 'tfoot';
+  table.append(footer);
+
+  let navRow = document.createElement('div');
+  navRow.className = 'table-foot';
+  navRow.id = tableName + 'Foot';
+  footer.append(navRow);
+
+  for (let i = 0; i < columns.length; i++) {
     let tf = document.createElement('div');
-    tf.className = 'table-footer';
-    tf.style.width = '100%';
-    tf.style.maxWidth = '100%';
+    if (i === 0) {
+      tf.className = 'table-prev';
+      tf.id = tableName + 'Prev';
+    } else if (i === (columns.length - 1)) {
+      tf.className = 'table-next';
+      tf.id = tableName + 'Next';
+    } else {
+      tf.className = 'table-footer';
+    }
+
+    tf.style.width = columns[i].getHeaderLength() + 'ch';
+    tf.style.maxWidth = columns[i].getHeaderLength() + 'ch';
 
     addText(tf, ' ');
 
     navRow.append(tf);
+  }
+};
+
+const initFooter = (tableName, table, columns, paged) => {
+  if (paged === Paged.FORM) {
+    initFormFooter(tableName, table, columns);
   } else {
-    for (let i = 0; i < columns.length; i++) {
-      let tf = document.createElement('div');
-      if (i === 0) {
-        tf.className = 'table-prev';
-        tf.id = tableName + 'Prev';
-      } else if (i === (columns.length - 1)) {
-        tf.className = 'table-next';
-        tf.id = tableName + 'Next';
-      } else {
-        tf.className = 'table-footer';
-      }
-
-      tf.style.width = columns[i].getHeaderLength() + 'ch';
-      tf.style.maxWidth = columns[i].getHeaderLength() + 'ch';
-
-      addText(tf, ' ');
-
-      navRow.append(tf);
-    }
+    initTableFooter(tableName, table, columns);
   }
 };
 

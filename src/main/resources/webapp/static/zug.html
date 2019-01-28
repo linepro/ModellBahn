@@ -11,29 +11,29 @@
 <link rel="stylesheet" href="css/site.css"/>
 <script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
-<script type="text/javascript" src="js/types.js"></script>
+<script type="text/javascript" src="js/fields.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
   const consistColumns = [
-    POSITION,
-    ARTIKEL_SELECT,
-    UNTER_KATEGORIE_DISPLAY,
-    BEZEICHNUNG_ARTIKEL_DISPLAY,
-    LANGE_DISPLAY,
+    POSITION(),
+    ARTIKEL_SELECT(),
+    UNTER_KATEGORIE(Editable.NEVER, false, artikelProduktKategorieGetter, noOpSetter),
+    BEZEICHNUNG(Editable.NEVER(), false(), artikelBezeichnungGetter(), noOpSetter)(),
+    LANGE(Editable.NEVER, false, artikelProduktLangeGetter, noOpSetter),
     gridButtonColumn()
   ];
 
   const consisten = new ItemGrid(2, "consisten", "consisten", consistColumns, Paged.EXPAND, EditMode.ADD, undefined);
 
   const columns = [
-    NAMEN,
-    ZUG_TYP_SELECT,
-    BEZEICHNUNG,
-    LANGE,
+    NAMEN(),
+    ZUG_TYP_SELECT(),
+    BEZEICHNUNG(),
+    LANGE(),
     new ButtonColumn([], [updateRow])
   ];
 
-  const zug = new ItemGrid(1, fetchUrl("zug"), "zug", columns, Paged.PAGED, EditMode.UPDATE, [consisten]);
+  const zug = new ItemGrid(1, fetchUrl("zug"), "zug", columns, Paged.FORM, EditMode.UPDATE, [consisten]);
 
   async function init() {
     await ZUG_TYP_DROP.init()
@@ -58,9 +58,9 @@
     <article>
       <h3 id="heading">Zug</h3>
       <div id="data">
-        <div id="zug">
+        <div id="zugSite">
         </div>
-        <div id="consisten">
+        <div id="consistenSite">
         </div>
       </div>
     </article>
@@ -71,8 +71,8 @@
             <div>
                 <hr class="highlight" />
                 <ul class="footer">
-                    <li>Copyright &copy; 2018 ModellBahn Website</li>
-                    <li><a id="license" class="nav-button" href="#" onclick="about()">About</a></li>
+                    <li>Copyright &copy; 2018, 2019 John &amp; Andrew Goff</li>
+                    <li><a id="license" class="nav-button" href="#" onclick="about()">&Uuml;ber</a></li>
                 </ul>
             </div>
         </div>
