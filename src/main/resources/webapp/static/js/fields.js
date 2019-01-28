@@ -67,65 +67,65 @@ const defaultNameGetter = (entity, fieldName) => { return entity[fieldName] ? en
 const defaultNameSetter = (entity, value, fieldName) => { return entity[fieldName] = { name: value } };
 
 const ACHSFOLG_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) => 
- { return new DropDownColumn('Achsfolg', 'achsfolg', defaultNameGetter, defaultNameSetter, ACHSFOLG_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn('Achsfolg', 'achsfolg', getter, setter, ACHSFOLG_DROP, editable, required, 30, 5) };
 const ADRESS_TYP_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) => 
  { return new DropDownColumn('Typ', 'adressTyp', getter, setter, ADRESS_TYP_DROP, editable, required, 5) };
 const ANDERUNGS_TYP_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new DropDownColumn('Typ', 'anderungsTyp', getter, setter, ANDERUNGS_TYP_DROP, editable, required) };
 const ANTRIEB_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Antrieb', 'antrieb', defaultNameGetter, defaultNameSetter, ANTRIEB_DROP, editable, required, 30, 5) };
-const ARTIKEL_SELECT = (editable, required, getter, setter) =>
- { return new DropDownColumn('Artikel', 'artikel', artikelIdGetter, artikelIdSetter, ARTIKEL_DROP, editable, required, 50, 5) };
+ { return new DropDownColumn('Antrieb', 'antrieb', getter, setter, ANTRIEB_DROP, editable, required, 30, 5) };
+const ARTIKEL_SELECT = (editable, required, getter = artikelIdGetter, setter = artikelIdSetter) =>
+ { return new DropDownColumn('Artikel', 'artikel', getter, setter, ARTIKEL_DROP, editable, required, 50, 5) };
 const AUFBAU_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Aufbau', 'aufbau', defaultNameGetter, defaultNameSetter, AUFBAU_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn('Aufbau', 'aufbau', getter, setter, AUFBAU_DROP, editable, required, 30, 5) };
 const BAHNVERWALTUNG_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Bahnverwaltung', 'bahnverwaltung', defaultNameGetter, defaultNameSetter, BAHNVERWALTUNG_DROP, editable, required, 30, 5) };
-const DECODER_SELECT = (editable, required, getter, setter) =>
- { return new DropDownColumn('Decoder', 'decoder', decoderIdGetter, decoderIdSetter, DECODER_DROP, editable, required, 30, 5) };
-const DECODER_TYP_SELECT = (editable, required, getter, setter) =>
- { return new DropDownColumn('Decoder Typ', 'decoderTyp', decoderTypGetter, decoderTypSetter, DECODER_TYP_DROP, editable, required, 50, 5) };
+ { return new DropDownColumn('Bahnverwaltung', 'bahnverwaltung', getter, setter, BAHNVERWALTUNG_DROP, editable, required, 30, 5) };
+const DECODER_SELECT = (editable, required, getter = decoderIdGetter, setter = decoderIdSetter) =>
+ { return new DropDownColumn('Decoder', 'decoder', getter, setter, DECODER_DROP, editable, required, 30, 5) };
+const DECODER_TYP_SELECT = (editable, required, getter = decoderTypGetter, setter = decoderTypSetter) =>
+ { return new DropDownColumn('Decoder Typ', 'decoderTyp', getter, setter, DECODER_TYP_DROP, editable, required, 50, 5) };
 const EPOCH_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Epoch', 'epoch', defaultNameGetter, defaultNameSetter, EPOCH_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn('Epoch', 'epoch', getter, setter, EPOCH_DROP, editable, required, 30, 5) };
 const GATTUNG_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Gattung', 'gattung', defaultNameGetter, defaultNameSetter, GATTUNG_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn('Gattung', 'gattung', getter, setter, GATTUNG_DROP, editable, required, 30, 5) };
 const HERSTELLER_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Hersteller', 'hersteller', defaultNameGetter, defaultNameSetter, HERSTELLER_DROP, editable, required) };
-const KONFIGURATION_SELECT = (editable, required, getter, setter) =>
+ { return new DropDownColumn('Hersteller', 'hersteller', getter, setter, HERSTELLER_DROP, editable, required) };
+const KONFIGURATION_SELECT = (editable, required, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new DropDownColumn('Konfiguration', 'konfiguration', getter, setter, KONFIGURATION_DROP, editable, required) };
 const KUPPLUNG_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Kupplung', 'kupplung', defaultNameGetter, defaultNameSetter, KUPPLUNG_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn('Kupplung', 'kupplung', getter, setter, KUPPLUNG_DROP, editable, required, 30, 5) };
 const LEISTUNGSUBERTRAGUNG_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new DropDownColumn('Leistungsübertragung', 'leistungsubertragung', getter, setter, LEISTUNGSUBERTRAGUNG_DROP, editable, required, 30, 5) };
 const LICHT_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new DropDownColumn('Licht', 'licht', defaultNameGetter, defaultFieldSetter, LICHT_DROP, editable, required, 30, 5) };
 const MASSSTAB_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Maßstab', 'massstab', defaultNameGetter, defaultNameSetter, MASSSTAB_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn('Maßstab', 'massstab', getter, setter, MASSSTAB_DROP, editable, required, 30, 5) };
 const MOTOR_TYP_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('MotorTyp', 'motorTyp', defaultNameGetter, defaultNameSetter, MOTOR_TYP_DROP, editable, required, 30, 5) };
-const PRODUKT_SELECT = (editable, required, getter, setter) =>
- { return new DropDownColumn('Produkt', 'produkt', produktGetter, produktSetter, PRODUKT_DROP, editable, required, 50, 5) };
+ { return new DropDownColumn('MotorTyp', 'motorTyp', getter, setter, MOTOR_TYP_DROP, editable, required, 30, 5) };
+const PRODUKT_SELECT = (editable, required, getter = produktGetter, setter = produktSetter) =>
+ { return new DropDownColumn('Produkt', 'produkt', getter, setter, PRODUKT_DROP, editable, required, 50, 5) };
 const PROTOKOLL_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Protokoll', 'protokoll', defaultNameGetter, defaultNameSetter, PROTOKOLL_DROP, editable, required) };
+ { return new DropDownColumn('Protokoll', 'protokoll', getter, setter, PROTOKOLL_DROP, editable, required) };
 const SONDER_MODELL_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Sonder Modell', 'sonderModell', defaultNameGetter, defaultNameSetter, SONDER_MODELL_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn('Sonder Modell', 'sonderModell', getter, setter, SONDER_MODELL_DROP, editable, required, 30, 5) };
 const SPURWEITE_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Spurweite', 'spurweite', defaultNameGetter, defaultNameSetter, SPURWEITE_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn('Spurweite', 'spurweite', getter, setter, SPURWEITE_DROP, editable, required, 30, 5) };
 const STATUS_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new DropDownColumn('Status', 'status', getter, setter, STATUS_DROP, editable, required, 30, 5) };
 const STECKER_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new DropDownColumn('Stecker', 'stecker', getter, setter, STECKER_DROP, editable, required, 30, 5) };
 const STEUERUNG_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Steuerung', 'steuerung', defaultNameGetter, defaultNameSetter, STEUERUNG_DROP, editable, required, 30, 5) };
-const TEIL_SELECT = (editable = Editable.UPDATE, required = false, getter, setter) =>
- { return new DropDownColumn('Teil', 'teil', produktTeilGetter, produktTeilSetter, PRODUKT_DROP, editable, required, 50, 5) };
-const UNTER_KATEGORIE_SELECT = (editable = Editable.UPDATE, required = false, getter, setter) =>
- { return new DropDownColumn('Kategorie', 'unterKategorie', unterKategorieGetter, unterKategorieSetter, UNTER_KATEGORIE_DROP, editable, required) };
-const VORBILD_SELECT = (editable = Editable.UPDATE, required = false, getter, setter) =>
- { return new DropDownColumn('Vorbild', 'vorbild', vorbildGetter, vorbildSetter, VORBILD_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn('Steuerung', 'steuerung', getter, setter, STEUERUNG_DROP, editable, required, 30, 5) };
+const TEIL_SELECT = (editable = Editable.UPDATE, required = false, getter = produktTeilGetter, setter = produktTeilSetter) =>
+ { return new DropDownColumn('Teil', 'teil', getter, setter, PRODUKT_DROP, editable, required, 50, 5) };
+const UNTER_KATEGORIE_SELECT = (editable = Editable.UPDATE, required = false, getter = unterKategorieGetter, setter = unterKategorieSetter) =>
+ { return new DropDownColumn('Kategorie', 'unterKategorie', getter, setter, UNTER_KATEGORIE_DROP, editable, required) };
+const VORBILD_SELECT = (editable = Editable.UPDATE, required = false, getter = vorbildGetter, setter = vorbildSetter) =>
+ { return new DropDownColumn('Vorbild', 'vorbild', getter, setter, VORBILD_DROP, editable, required, 30, 5) };
 const WAHRUNG_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Wahrung', 'wahrung', defaultNameGetter, defaultNameSetter, WAHRUNG_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn('Wahrung', 'wahrung', getter, setter, WAHRUNG_DROP, editable, required, 30, 5) };
 const ZUG_TYP_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Typ', 'typ', defaultNameGetter, defaultNameSetter, ZUG_TYP_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn('Typ', 'typ', getter, setter, ZUG_TYP_DROP, editable, required, 30, 5) };
 
 const ABBILDUNG = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter) =>
  { return new IMGColumn('Abbildung', 'abbildung', defaultFieldGetter, editable, required) };
