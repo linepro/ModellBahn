@@ -13,6 +13,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import javax.validation.constraints.Pattern;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -53,7 +54,7 @@ public class DecoderTypFunktion extends AbstractItem<DecoderTypFunktionKey> impl
     @Range(min=0, max=1, message = "{com.linepro.modellbahn.validator.constraints.reihe.range}")
     private Integer reihe;
 
-    @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.funktion.notempty}")
+    @Pattern(regexp = "^F([12]\\d|3[012]|\\d)$|^K(1[012345]|\\d)$|^S[0123456]$", message = "{com.linepro.modellbahn.validator.constraints.funktion.invalid}")
     private String funktion;
 
     @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notempty}")

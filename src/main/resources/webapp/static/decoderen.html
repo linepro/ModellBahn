@@ -14,10 +14,10 @@
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
     const columns = [
-        DECODER(),
-        DECODER_TYP_SELECT(),
-        BEZEICHNUNG(),
-        PROTOKOLL_SELECT(),
+        DECODER(Editable.NEVER, true),
+        DECODER_TYP_SELECT(Editable.NEVER, true),
+        BEZEICHNUNG(Editable.UPDATE, false),
+        PROTOKOLL_SELECT(Editable.UPDATE, true),
         new ButtonColumn([newRow], [editRow, deleteRow])
     ];
     const decoderen = new ItemGrid(10, fetchUrl("decoder"), "decoderen", columns, Paged.PAGED, EditMode.UPDATE, undefined, "decoder.html");

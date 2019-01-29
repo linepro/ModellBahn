@@ -7,8 +7,27 @@ const Paged = {
   EXPAND: 2
 };
 
+const defaultRowSetter = (rowId, columns) => {
+  let data = {};
+
+  if (document.getElementById(getKeyId(rowId))) {
+    columns.forEach(column => {
+      if (column.setter) {
+        let value = column.getValue(document.getElementById(getFieldId(rowId, column.fieldName)));
+
+        if (value) {
+          column.setter(data, value, column.fieldName);
+        }
+      }
+    });
+  }
+
+  return data;
+};
+
+
 class ItemGrid {
-  constructor(pageSize = 10, apiUrl, tableName, columns, paged, editMode = EditMode.VIEW, children, editForm) {
+  constructor(pageSize = 10, apiUrl, tableName, columns, paged, editMode = EditMode.VIEW, children = undefined, editForm = undefined, rowSetter = defaultRowSetter) {
     this.pageSize = pageSize;
     this.rowCount = pageSize;
     this.apiUrl = apiUrl;
@@ -18,6 +37,8 @@ class ItemGrid {
     this.editMode = editMode;
     this.children = children;
     this.editForm = editForm;
+    this.rowSetter = rowSetter;
+
     this.current = this.apiUrl;
 
     if (this.apiUrl && !this.parent) {
@@ -35,7 +56,7 @@ class ItemGrid {
 
       if (paged === Paged.PAGED) {
         search.set('pageNumber', '0');
-        search.set('pageSize', pageSize);
+        search.set('pageSize', pageSize.toString());
       }
 
       let searchString = search.toString();
@@ -134,7 +155,7 @@ class ItemGrid {
       if (entity || column.isButtons()) {
         column.getControl(cell, entity, editMode);
       } else {
-        blankControl(cell, column);
+        blankControl(cell);
       }
     });
   }
@@ -220,41 +241,38 @@ class ItemGrid {
     .catch(error => reportError(error));
   }
 
-  gridData() {
+  rowData(rowId) {
     let grid = this;
-    let data = [];
+    let data = grid.rowSetter(rowId, grid.columns);
 
-    for (let row = 0; row < grid.rowCount; row++) {
-      let row = grid.rowData(getRowId(grid.tableName, row));
-      if (row.length) {
-        data.push(row);
-      }
+    if (Object.entries(data).length) {
+      grid.childData(grid, data);
     }
 
     return data;
   }
 
-  rowData(rowId) {
-    let grid = this;
-    let data = {};
+  childData(grid, data) {
+    if (grid.children) {
+      grid.children.forEach(child => {
+        let childData = child.gridData();
 
-    let key = document.getElementById(getKeyId(rowId));
-    if (key) {
-      grid.columns.forEach(column => {
-        if (column.setter) {
-          let value = column.getValue(document.getElementById(getFieldId(rowId, column.fieldName)));
-          if (value) {
-            column.setter(data, value, column.fieldName);
-          }
+        if (Object.entries(childData).length) {
+          data[child.tableName] = child.gridData();
         }
       });
+    }
+  }
 
-      if (grid.children) {
-        grid.children.forEach(child => {
-          if (data && data.length) {
-            data[child.tableName] = child.gridData();
-          }
-        });
+  gridData() {
+    let grid = this;
+    let data = [];
+
+    for (let row = 0; row < grid.rowCount; row++) {
+      let rowData = grid.rowData(getRowId(grid.tableName, row));
+
+      if (Object.entries(rowData).length) {
+        data.push(rowData);
       }
     }
 
@@ -276,13 +294,12 @@ class ItemGrid {
   addRow() {
     let grid      = this;
     let columns   = grid.columns;
-    let editMode  = grid.editMode;
     let rowCount  = grid.rowCount;
     let paged     = grid.paged;
     let tableName = grid.tableName;
     let rowNum    = this.getFreeRow(tableName, rowCount);
 
-    if (paged == Paged.EXPAND) {
+    if (paged === Paged.EXPAND) {
       if (rowNum === rowCount) {
         // Add a row at end
         grid.rowCount = rowCount + 1;
@@ -332,11 +349,12 @@ class ItemGrid {
 
       removeChildren(td);
 
-      let ctl = column.getControl(td, undefined, EditMode.ADD)
-      if (!focusCtl) focusCtl = ctl;
+      let ctl = column.getControl(td, undefined, EditMode.ADD);
+      if (!focusCtl) {
+        focusCtl = ctl;
+        ctl.focus();
+      }
     });
-
-    focusCtl.focus();
 
     let td = document.getElementById(getCellId(rowId, 'buttons'));
     let save = getButton(rowId, 'save', Function(tableName + '.saveRow(' + rowId + '.id)'));

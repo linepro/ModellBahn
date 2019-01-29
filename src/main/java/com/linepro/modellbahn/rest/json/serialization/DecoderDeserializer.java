@@ -1,6 +1,7 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
 import com.linepro.modellbahn.model.IDecoder;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 public class DecoderDeserializer extends AbstractItemDeserializer<IDecoder> {
 
@@ -11,6 +12,6 @@ public class DecoderDeserializer extends AbstractItemDeserializer<IDecoder> {
     }
 
     protected DecoderDeserializer(Class<IDecoder> vc) {
-        super(vc);
+        super(vc, ApiNames.DECODER_ID);
     }
 }

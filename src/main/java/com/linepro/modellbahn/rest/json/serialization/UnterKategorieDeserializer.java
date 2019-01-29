@@ -1,5 +1,10 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.linepro.modellbahn.model.IHersteller;
+import com.linepro.modellbahn.model.keys.DecoderTypKey;
+import com.linepro.modellbahn.rest.util.ApiNames;
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonParser;
@@ -35,18 +40,19 @@ public class UnterKategorieDeserializer extends StdDeserializer<IUnterKategorie>
     @Override
     public IUnterKategorie deserialize(JsonParser jp,  DeserializationContext dc) throws IOException {
         ObjectCodec codec = jp.getCodec();
-        TextNode node = codec.readTree(jp);
-        String name = node.textValue();
-        try {
-            String[] parts = name.split(ApiPaths.SEPARATOR);
-            
-            IKategorie kategorie = kategoriePerisister.findByKey(parts[0], false);
+        ObjectNode node = codec.readTree(jp);
+        JsonNode kategorieJson = node.get(ApiNames.KATEGORIE);
+        String kategorieStr = kategorieJson.get(ApiNames.NAMEN).asText();
+        String unterKategorieStr = node.get(ApiNames.NAMEN).asText();
+
+         try {
+            IKategorie kategorie = kategoriePerisister.findByKey(kategorieStr, false);
 
             if (kategorie == null) {
                 return null;
             }
 
-            return perisister.findByKey(new UnterKategorieKey(kategorie, parts[1]), false);
+            return perisister.findByKey(new UnterKategorieKey(kategorie, unterKategorieStr), false);
         } catch (Exception e) {
             throw new IOException(e.getMessage());
         }

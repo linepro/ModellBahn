@@ -15,9 +15,9 @@
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
     const columns = [
-    	NAMEN(), 
-    	BEZEICHNUNG(), 
-    	ABBILDUNG()
+        NAMEN(Editable.ADD, true),
+        BEZEICHNUNG(Editable.UPDATE, true),
+        ABBILDUNG(Editable.NEVER)
     	];
 
     const kupplung = new ListEditGrid(10, "kupplung", "kupplung", columns, Paged.PAGED, EditMode.UPDATE);

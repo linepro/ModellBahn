@@ -75,7 +75,7 @@ public class Anderung extends AbstractItem<AnderungKey> implements IAnderung {
      *
      * @param id the id
      * @param artikel the parent artikel
-     * @param anderungId 
+     * @param anderungId the modification sequence
      * @param anderungsDatum the modification date
      * @param anderungsTyp the modification type
      * @param bezeichnung description of the modificiation

@@ -70,7 +70,7 @@ public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
     private static final long serialVersionUID = 8652624782179487496L;
 
     /** The abbildung. */
-    @Pattern(regexp = "^[A-Z0-9]+$", message = "{com.linepro.modellbahn.validator.constraints.decoderId.invalid}")
+    @Pattern(regexp = "^[A-Z0-9]+$", message = "{com.linepro.modellbahn.validator.constraints.artikelId.invalid}")
     private String artikelId;
 
     /** The produkt. */

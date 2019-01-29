@@ -247,7 +247,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
     public Response getAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index) {
         try {
-            logGet(String.format(ApiPaths.DECODER_TYP_ADRESS_LOG, getEntityClassName(), herstellerStr, bestellNr));
+            logGet(String.format(ApiPaths.DECODER_TYP_ADRESS_LOG, getEntityClassName(), herstellerStr, bestellNr, index));
 
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, true);
 
@@ -426,8 +426,6 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
                 return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
 
-            newDecoderTypCV.setDeleted(false);
-
             decoderTyp.addCV(newDecoderTypCV);
 
             getPersister().update(decoderTyp);
@@ -572,11 +570,6 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             if (decoderTyp == null) {
                 return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
-
-            // Validate decoderTypFunktion like F\d{1,2}|K\d{1,2}|S[1-4]
-            // Validate reihe [01]
-            // Validate bezeichnung unique by reihe / decoderTyp
-            newDecoderTypFunktion.setDeleted(false);
 
             decoderTyp.addFunktion(newDecoderTypFunktion);
 

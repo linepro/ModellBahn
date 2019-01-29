@@ -17,8 +17,8 @@
   const consistColumns = [
     POSITION(),
     ARTIKEL_SELECT(),
-    UNTER_KATEGORIE(Editable.NEVER, false, artikelProduktKategorieGetter, noOpSetter),
-    BEZEICHNUNG(Editable.NEVER(), false(), artikelBezeichnungGetter(), noOpSetter)(),
+    UNTER_KATEGORIE_SELECT(Editable.NEVER, false, artikelProduktKategorieGetter, noOpSetter),
+    BEZEICHNUNG(Editable.NEVER(), false, artikelBezeichnungGetter, noOpSetter),
     LANGE(Editable.NEVER, false, artikelProduktLangeGetter, noOpSetter),
     gridButtonColumn()
   ];

@@ -15,11 +15,11 @@
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
     const columns = [
-        HERSTELLER_SELECT(),
-        BESTELL_NR(),
-        PROTOKOLL_SELECT(),
-        GERAUSCH(),
-        STECKER_SELECT(),
+        HERSTELLER_SELECT(Editable.ADD),
+        BESTELL_NR(Editable.ADD),
+        PROTOKOLL_SELECT(Editable.UPDATE, true),
+        GERAUSCH(Editable.UPDATE, true),
+        STECKER_SELECT(Editable.UPDATE, true),
         new ButtonColumn([newRow], [editRow, deleteRow])];
 
     const decoderTyp = new ItemGrid(10, fetchUrl("decoderTyp"), "decoderTyp", columns, Paged.PAGED, EditMode.UPDATE, undefined, "decoderTyp.html");

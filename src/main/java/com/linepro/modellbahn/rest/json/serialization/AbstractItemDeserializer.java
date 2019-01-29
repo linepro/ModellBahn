@@ -4,10 +4,12 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
+import com.linepro.modellbahn.rest.util.ApiNames;
 import java.io.IOException;
 
 public class AbstractItemDeserializer<I extends IItem<?>> extends StdDeserializer<I> {
@@ -16,17 +18,24 @@ public class AbstractItemDeserializer<I extends IItem<?>> extends StdDeserialize
 
     private final IPersister<I> perisister;
 
+    private final String fieldName;
+
     protected AbstractItemDeserializer(Class<I> vc) {
+        this(vc, ApiNames.NAMEN);
+    }
+
+    protected AbstractItemDeserializer(Class<I> vc, String fieldName) {
         super(vc);
         
-        perisister = StaticPersisterFactory.get().createPersister(vc);
+        this.perisister = StaticPersisterFactory.get().createPersister(vc);
+        this.fieldName = fieldName;
     }
 
     @Override
     public I deserialize(JsonParser jp,  DeserializationContext dc) throws IOException {
         ObjectCodec codec = jp.getCodec();
-        TextNode node = codec.readTree(jp);
-        String name = node.textValue();
+        ObjectNode node = codec.readTree(jp);
+        String name = node.get(fieldName).asText();
         try {
             return perisister.findByKey(name, false);
         } catch (Exception e) {

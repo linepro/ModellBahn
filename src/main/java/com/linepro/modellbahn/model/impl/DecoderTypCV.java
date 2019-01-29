@@ -55,7 +55,7 @@ public class DecoderTypCV extends AbstractItem<DecoderTypCVKey> implements IDeco
     private Integer cv;
 
     /** The bezeichnung. */
-    @NotEmpty
+    @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notempty}")
     private String bezeichnung;
 
     /** The minimal. */

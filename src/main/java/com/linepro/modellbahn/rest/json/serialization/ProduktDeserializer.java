@@ -1,5 +1,9 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.linepro.modellbahn.model.keys.DecoderTypKey;
+import com.linepro.modellbahn.rest.util.ApiNames;
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonParser;
@@ -36,18 +40,19 @@ public class ProduktDeserializer extends StdDeserializer<IProdukt> {
     @Override
     public IProdukt deserialize(JsonParser jp,  DeserializationContext dc) throws IOException {
         ObjectCodec codec = jp.getCodec();
-        TextNode node = codec.readTree(jp);
-        String name = node.textValue();
+        ObjectNode node = codec.readTree(jp);
+        JsonNode herstellerJson = node.get(ApiNames.HERSTELLER);
+        String herstellerStr = herstellerJson.get(ApiNames.NAMEN).asText();
+        String bestellNr = node.get(ApiNames.BESTELL_NR).asText();
+
         try {
-            String[] parts = name.split(ApiPaths.SEPARATOR);
-            
-            IHersteller hersteller = herstellerPerisister.findByKey(parts[0], false);
-            
+            IHersteller hersteller = herstellerPerisister.findByKey(herstellerStr, false);
+
             if (hersteller == null) {
                 return null;
             }
 
-            return perisister.findByKey(new ProduktKey(hersteller, parts[1]), false);
+            return perisister.findByKey(new DecoderTypKey(hersteller, bestellNr), false);
         } catch (Exception e) {
             throw new IOException(e.getMessage());
         }

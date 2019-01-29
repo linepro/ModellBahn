@@ -14,19 +14,19 @@
 <script type="text/javascript" src="js/fields.js"></script>
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
-  const UNTERKATEGORIE_DISPLAY = new DropDownColumn("Kategorie", "unterKategorie", (entity) => { return entity.produkt.unterKategorie ? extractKategorieValue( entity.produkt.unterKategorie) : undefined; }, undefined, UNTER_KATEGORIE_DROP, Editable.NEVER, false)
+  const UNTERKATEGORIE_DISPLAY = new DropDownColumn("Kategorie", "unterKategorie", (entity) => { return entity.produkt.unterKategorie ? extractKategorieValue( entity.produkt.unterKategorie) : undefined; }, undefined, UNTER_KATEGORIE_DROP, Editable.NEVER, false);
 
   const columns = [
-    ARTIKEL(),
-    PRODUKT_SELECT(),
-    UNTERKATEGORIE_DISPLAY(),
+    ARTIKEL(Editable.ADD, true),
+    PRODUKT_SELECT(Editable.NEVER, false),
+    UNTER_KATEGORIE_SELECT(),
     BEZEICHNUNG(),
-    KAUFDATUM(),
+    KAUFDATUM(Editable.UPDATE, false),
     STUCK(),
-    DECODER_SELECT(),
-    ANMERKUNG(),
-    ABBILDUNG(),
-    STATUS_SELECT(),
+    DECODER_SELECT(Editable.UPDATE, false),
+    ANMERKUNG(Editable.UPDATE, false),
+    ABBILDUNG(Editable.NEVER),
+    STATUS_SELECT(Editable.UPDATE, true),
     new ButtonColumn([newRow], [editRow, deleteRow])
   ];
 

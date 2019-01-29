@@ -51,7 +51,7 @@ const decoderIdSetter = (entity, value) => { entity.decoder = { decoderId: value
 const decoderTypGetter = (entity) => { return entity.decoderTyp ? extractProduktValue(entity.decoderTyp) : undefined };
 const decoderTypSetter = (entity, value) => { let parts = value.split('/'); entity.decoderTyp = { hersteller: { name: parts[0] }, bestellNr: parts[1] } };
 const produktGetter = (entity) => { return entity.produkt ? extractProduktValue(entity.produkt) : undefined };
-const produktsetter = (entity, value) => { let parts = value.split('/'); entity.produkt = { hersteller: { name: parts[0] }, bestellNr: parts[1] } };
+const produktSetter = (entity, value) => { let parts = value.split('/'); entity.produkt = { hersteller: { name: parts[0] }, bestellNr: parts[1] } };
 const produktTeilGetter = (entity) => { return entity.teil ? extractProduktValue(entity.teil) : undefined };
 const produktTeilSetter = (entity, value) => { let parts = value.split('/'); entity.teil = { hersteller: { name: parts[0] }, bestellNr: parts[1] } };
 const unterKategorieGetter = (entity) => { return entity.unterKategorie ? extractKategorieValue(entity.unterKategorie) : undefined };
@@ -90,14 +90,14 @@ const GATTUNG_SELECT = (editable = Editable.UPDATE, required = false, getter = d
  { return new DropDownColumn('Gattung', 'gattung', getter, setter, GATTUNG_DROP, editable, required, 30, 5) };
 const HERSTELLER_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
  { return new DropDownColumn('Hersteller', 'hersteller', getter, setter, HERSTELLER_DROP, editable, required) };
-const KONFIGURATION_SELECT = (editable, required, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
+const KONFIGURATION_SELECT = (editable, required = true, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new DropDownColumn('Konfiguration', 'konfiguration', getter, setter, KONFIGURATION_DROP, editable, required) };
 const KUPPLUNG_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
  { return new DropDownColumn('Kupplung', 'kupplung', getter, setter, KUPPLUNG_DROP, editable, required, 30, 5) };
 const LEISTUNGSUBERTRAGUNG_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new DropDownColumn('Leistungsübertragung', 'leistungsubertragung', getter, setter, LEISTUNGSUBERTRAGUNG_DROP, editable, required, 30, 5) };
-const LICHT_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new DropDownColumn('Licht', 'licht', defaultNameGetter, defaultFieldSetter, LICHT_DROP, editable, required, 30, 5) };
+const LICHT_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
+ { return new DropDownColumn('Licht', 'licht', getter, setter, LICHT_DROP, editable, required, 30, 5) };
 const MASSSTAB_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
  { return new DropDownColumn('Maßstab', 'massstab', getter, setter, MASSSTAB_DROP, editable, required, 30, 5) };
 const MOTOR_TYP_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
@@ -112,7 +112,7 @@ const SPURWEITE_SELECT = (editable = Editable.UPDATE, required = false, getter =
  { return new DropDownColumn('Spurweite', 'spurweite', getter, setter, SPURWEITE_DROP, editable, required, 30, 5) };
 const STATUS_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new DropDownColumn('Status', 'status', getter, setter, STATUS_DROP, editable, required, 30, 5) };
-const STECKER_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
+const STECKER_SELECT = (editable = Editable.UPDATE, required = true, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new DropDownColumn('Stecker', 'stecker', getter, setter, STECKER_DROP, editable, required, 30, 5) };
 const STEUERUNG_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
  { return new DropDownColumn('Steuerung', 'steuerung', getter, setter, STEUERUNG_DROP, editable, required, 30, 5) };
@@ -128,15 +128,15 @@ const ZUG_TYP_SELECT = (editable = Editable.UPDATE, required = false, getter = d
  { return new DropDownColumn('Typ', 'typ', getter, setter, ZUG_TYP_DROP, editable, required, 30, 5) };
 
 const ABBILDUNG = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter) =>
- { return new IMGColumn('Abbildung', 'abbildung', defaultFieldGetter, editable, required) };
+ { return new IMGColumn('Abbildung', 'abbildung', getter, editable, required) };
 const ADRESS = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new NumberColumn("Adress", "adress", getter, setter, editable, required, 65535, 1) };
 const ANDERUNGS_DATUM = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new DateColumn('Datum', 'anderungsDatum', getter, setter, editable, required, 5) };
 const ANDERUNGS_ID = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new NumberColumn('Änderung', 'anderungId', getter, setter, editable, required, 30, 0) };
-const ANLEITUNGEN = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new PDFColumn('Anleitungen', 'anleitungen', defaultFieldGetter, editable, required) };
+const ANLEITUNGEN = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter) =>
+ { return new PDFColumn('Anleitungen', 'anleitungen', getter, editable, required) };
 const ANMERKUNG = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new TextColumn('Anmerkung', 'anmerkung', getter, setter, editable, required, 30) };
 const ANFAHRZUGKRAFT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
@@ -157,7 +157,7 @@ const BESTELL_NR = (editable = Editable.ADD, required = true, getter = defaultFi
  { return new TextColumn('Bestell Nr', 'bestellNr', getter, setter, editable, required, 10) };
 const BETREIBSNUMMER = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new TextColumn('Betreibsnummer', 'betreibsnummer', getter, setter, editable, required, 30) };
-const BEZEICHNUNG = (editable = Editable.ADD, required = true, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
+const BEZEICHNUNG = (editable = Editable.UPDATE, required = true, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new TextColumn('Bezeichnung', 'bezeichnung', getter, setter, editable, required, 50) };
 const CV = (editable = Editable.ADD, required = true, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new NumberColumn('CV', 'cv', getter, setter, editable, required, 127, 1) };
@@ -179,8 +179,8 @@ const DMZYLINDER = (editable = Editable.UPDATE, required = false, getter = defau
  { return new NumberColumn('DM Zylinder', 'dmZylinder', getter, setter, editable, required, 3000, 1) };
 const DREHGESTELLBAUART = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new TextColumn('Drehgestell', 'drehgestellBauart', getter, setter, editable, required, 30) };
-const EXPLOSIONSZEICHNUNG = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new PDFColumn('Explosionszeichnung', 'explosionszeichnung', defaultFieldGetter, editable, required) };
+const EXPLOSIONSZEICHNUNG = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter) =>
+ { return new PDFColumn('Explosionszeichnung', 'explosionszeichnung', getter, editable, required) };
 const FAHRMOTOREN = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new NumberColumn('Fahrmotoren', 'fahrmotoren', getter, setter, editable, required, 5, 1) };
 const FAHRSTUFE = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
@@ -197,8 +197,7 @@ const I_MAX = (editable = Editable.UPDATE, required = false, getter = defaultFie
  { return new NumberColumn('I Max', 'iMax', getter, setter, editable, required, 1000, 1) };
 const INDEX = (editable = Editable.ADD, required = true, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new NumberColumn('Index', 'index', getter, setter, editable, required, 3, 0) };
-const INDEX_DISPLAY = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Index', 'index', defaultFieldGetter, noOpSetter, editable, required, 3, 0) };
+
 const KAPAZITAT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new NumberColumn('Kapazität', 'kapazitat', getter, setter, editable, required, 3000, 1, 2) };
 const KAUFDATUM = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
@@ -247,14 +246,16 @@ const SPAN = (editable = Editable.UPDATE, required = false, getter = defaultFiel
  { return new NumberColumn('Span', 'span', getter, setter, editable, required, 16, 1) };
 const STUCK = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new NumberColumn('Stück', 'stuck', getter, setter, editable, required, 300, 0) };
-const TELEFON = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
+const HERSTELLER_TELEFON = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new PhoneColumn('Telefon', 'telefon', getter, setter, editable, required) };
 const TRIEBKOPF = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new NumberColumn('Triebköpfe', 'triebkopf', getter, setter, editable, required, 2, 0) };
 const UBERHITZERFLACHE = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new NumberColumn('Überhitzerfläche', 'uberhitzerflache', getter, setter, editable, required, 3000, 0, 2) };
-const URL = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
+const HERSTELLER_URL = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new URLColumn('Url', 'url', getter, setter, editable, required) };
+const VERBLEIBENDE = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
+{ return new NumberColumn('Verbleibende', 'verbleibende', getter, setter, editable, required, 300, 0) };
 const VERDAMPFUNG = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new NumberColumn('Verdampfung', 'verdampfung', getter, setter, editable, required, 3000, 0, 2) };
 const WASSERVORRAT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
@@ -269,6 +270,7 @@ const ZYLINDER = (editable = Editable.UPDATE, required = false, getter = default
  { return new NumberColumn('Zylinder', 'zylinder', getter, setter, editable, required, 100, 1) };
 
 const artikelBezeichnungGetter = (entity) => { return entity.artikel.bezeichnung; };
+const artikelProduktKategorieGetter = (entity) => { return unterKategorieGetter(entity.artikel.produkt); };
 const artikelProduktLangeGetter = (entity) => { return entity.artikel.produkt.lange; };
 const decoderCvBezeichnungGetter = (entity) => { return entity.cv.bezeichnung; };
 const decoderCvCvGetter = (entity) => { return entity.cv.cv; };

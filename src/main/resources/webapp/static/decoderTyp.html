@@ -15,46 +15,46 @@
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
   const adressColumns = [
-    INDEX(),
-    ADRESS_TYP_SELECT(),
-    SPAN(),
-    WERKSEINSTELLUNG(),
+    INDEX(Editable.ADD, true),
+    ADRESS_TYP_SELECT(Editable.UPDATE, true),
+    SPAN(Editable.UPDATE, true),
+    WERKSEINSTELLUNG(Editable.UPDATE, true),
     gridButtonColumn()
   ];
 
   const adressen = new ItemGrid(2, "adressen", "adressen", adressColumns, Paged.EXPAND, EditMode.ADD, undefined);
 
   const cvColumns = [
-    CV(),
-    BEZEICHNUNG(),
-    MAXIMAL(),
-    MINIMAL(),
-    WERKSEINSTELLUNG(),
+    CV(Editable.ADD, true),
+    BEZEICHNUNG(Editable.UPDATE, true),
+    MAXIMAL(Editable.UPDATE, false),
+    MINIMAL(Editable.UPDATE, false),
+    WERKSEINSTELLUNG(Editable.UPDATE, false),
     gridButtonColumn()
   ];
 
   const cvs = new ItemGrid(10, "cvs", "cvs", cvColumns, Paged.EXPAND, EditMode.ADD, undefined);
 
   const funktionenColumns = [
-    REIHE(),
-    FUNKTION(),
-    WERKSEINSTELLUNG(),
-    PROGRAMMABLE(),
+    REIHE(Editable.ADD, true),
+    FUNKTION(Editable.ADD, true),
+    WERKSEINSTELLUNG(Editable.UPDATE, true),
+    PROGRAMMABLE(Editable.UPDATE, true),
     gridButtonColumn()
   ];
 
   const funktionen = new ItemGrid(10, "funktionen", "funktionen", funktionenColumns, Paged.EXPAND, EditMode.ADD, undefined);
 
   const columns = [
-    HERSTELLER_SELECT(Editable.NEVER),
-    BESTELL_NR(Editable.NEVER),
-    BEZEICHNUNG(),
-    PROTOKOLL_SELECT(),
-    FAHRSTUFE(),
-    GERAUSCH(),
-    I_MAX(),
-    KONFIGURATION_SELECT(),
-    STECKER_SELECT(),
+    HERSTELLER_SELECT(Editable.ADD, true),
+    BESTELL_NR(Editable.ADD, true),
+    BEZEICHNUNG(Editable.UPDATE, true),
+    PROTOKOLL_SELECT(Editable.UPDATE, true),
+    FAHRSTUFE(Editable.UPDATE, true),
+    GERAUSCH(Editable.UPDATE, true),
+    I_MAX(Editable.UPDATE, true),
+    KONFIGURATION_SELECT(Editable.UPDATE, true),
+    STECKER_SELECT(Editable.UPDATE, true),
     new ButtonColumn([], [updateRow])];
 
   const children = [adressen, cvs, funktionen];

@@ -142,7 +142,7 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
             ILicht licht = findLicht(name, false);
 
             if (licht != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] {name}, contentDispositionHeader, fileInputStream);
+                java.nio.file.Path file = handler.upload(ApiNames.LICHT, new String[] {name}, contentDispositionHeader, fileInputStream);
 
                 licht.setAbbildung(file);
 

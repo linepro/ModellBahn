@@ -15,32 +15,34 @@
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
   const anderungenColumns = [
-    ANDERUNGS_ID(),
-    ANDERUNGS_TYP_SELECT(),
-    ANDERUNGS_DATUM(),
-    BEZEICHNUNG(),
-    STUCK(),
+    ANDERUNGS_ID(Editable.NEVER, true),
+    ANDERUNGS_TYP_SELECT(Editable.UPDATE, true),
+    ANDERUNGS_DATUM(Editable.UPDATE, true),
+    BEZEICHNUNG(Editable.UPDATE, true),
+    STUCK(Editable.UPDATE, true),
     gridButtonColumn()
   ];
 
   const anderungen = new ItemGrid(5, "anderungen", "anderungen", anderungenColumns, Paged.EXPAND, EditMode.ADD, undefined);
   
   const columns = [
-    ARTIKEL(),
-    PRODUKT_SELECT(),
-    KAUFDATUM(),
-    WAHRUNG_SELECT(),
-    PREIS(),
-    STUCK(),
-    STEUERUNG_SELECT(),
-    MOTOR_TYP_SELECT(),
-    LICHT_SELECT(),
-    KUPPLUNG_SELECT(),
-    DECODER_SELECT(),
-    ANMERKUNG(),
-    BELADUNG(),
-    ABBILDUNG(),
-    STATUS_SELECT(),
+    ARTIKEL(Editable.NEVER, true),
+    PRODUKT_SELECT(Editable.ADD, true),
+    BEZEICHNUNG(Editable.UPDATE, true),
+    KAUFDATUM(Editable.UPDATE, false),
+    WAHRUNG_SELECT(Editable.UPDATE, false),
+    PREIS(Editable.UPDATE, false),
+    STUCK(Editable.UPDATE, true),
+    VERBLEIBENDE(Editable.UPDATE, true),
+    STEUERUNG_SELECT(Editable.UPDATE, false),
+    MOTOR_TYP_SELECT(Editable.UPDATE, false),
+    LICHT_SELECT(Editable.UPDATE, false),
+    KUPPLUNG_SELECT(Editable.UPDATE, false),
+    DECODER_SELECT(Editable.UPDATE, false),
+    ANMERKUNG(Editable.UPDATE, false),
+    BELADUNG(Editable.UPDATE, false),
+    ABBILDUNG(Editable.UPDATE, false),
+    STATUS_SELECT(Editable.UPDATE, true),
     new ButtonColumn([], [updateRow])];
 
   const artikel = new ItemGrid(1, fetchUrl("artikel"), "artikel", columns, Paged.FORM, EditMode.UPDATE, [anderungen]);

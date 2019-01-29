@@ -15,8 +15,8 @@
 <script type="text/javascript" src="js/maintenance.js"></script>
 <script type="text/javascript">
     const columns = [
-        NAMEN(),
-        BEZEICHNUNG(),
+        NAMEN(Editable.ADD, true),
+        BEZEICHNUNG(Editable.UPDATE, true),
         new ButtonColumn([newRow], [editRow, deleteRow])
     ];
 

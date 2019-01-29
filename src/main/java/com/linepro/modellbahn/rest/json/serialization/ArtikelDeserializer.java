@@ -1,6 +1,7 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
 import com.linepro.modellbahn.model.IArtikel;
+import com.linepro.modellbahn.rest.util.ApiNames;
 
 public class ArtikelDeserializer extends AbstractItemDeserializer<IArtikel> {
 
@@ -11,6 +12,6 @@ public class ArtikelDeserializer extends AbstractItemDeserializer<IArtikel> {
     }
 
     protected ArtikelDeserializer(Class<IArtikel> vc) {
-        super(vc);
+        super(vc, ApiNames.ARTIKEL_ID);
     }
 }

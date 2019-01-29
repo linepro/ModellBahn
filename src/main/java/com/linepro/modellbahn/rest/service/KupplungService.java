@@ -143,7 +143,7 @@ public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
             IKupplung kupplung = findKupplung(name, false);
 
             if (kupplung != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { name }, contentDispositionHeader, fileInputStream);
+                java.nio.file.Path file = handler.upload(ApiNames.KUPPLUNG, new String[] { name }, contentDispositionHeader, fileInputStream);
 
                 kupplung.setAbbildung(file);
 

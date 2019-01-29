@@ -16,9 +16,9 @@
 <script type="text/javascript">
     const columns = [
     	NAMEN(), 
-    	BEZEICHNUNG(), 
-    	TELEFON(), 
-    	URL()
+    	BEZEICHNUNG(),
+        HERSTELLER_TELEFON(),
+    	HERSTELLER_URL()
     	];
 
     const hersteller = new ListEditGrid(10, "hersteller", "hersteller", columns, Paged.PAGED, EditMode.UPDATE);

@@ -150,7 +150,7 @@ public class AufbauService extends AbstractItemService<NameKey, IAufbau> {
             IAufbau aufbau = findAufbau(name, false);
 
             if (aufbau != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.ARTIKEL, new String[] { name }, contentDispositionHeader, fileInputStream);
+                java.nio.file.Path file = handler.upload(ApiNames.AUFBAU, new String[] { name }, contentDispositionHeader, fileInputStream);
 
                 aufbau.setAbbildung(file);
 

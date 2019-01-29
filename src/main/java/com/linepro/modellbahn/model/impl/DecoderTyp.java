@@ -44,6 +44,7 @@ import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import org.hibernate.validator.constraints.Range;
 
 /**
  * DecoderTyp. Represents a Decoder type (manufacturer : part numer)
@@ -71,7 +72,7 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
     private String bezeichnung;
 
     /** The i max. */
-    //@IMax
+    @Range(max = 10, min = 0, message = "{com.linepro.modellbahn.validator.constraints.imax.range}")
     private BigDecimal iMax;
 
     /** The protokoll. */
@@ -79,7 +80,7 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
     private IProtokoll protokoll;
 
     /** The fahrstufe. */
-    @Fahrstufe(message = "{com.linepro.modellbahn.validator.constraints.fahrstufe.invalid}")
+    @Fahrstufe
     private Integer fahrstufe;
 
     /** The sound. */

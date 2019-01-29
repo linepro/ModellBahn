@@ -159,6 +159,10 @@ input[type='url']:hover, .table-url:hover {
   text-shadow: 1px 1px 1px DimGrey;
 }
 
+input:invalid {
+  border: red 1px dot-dot-dash;
+}
+
 select option {
   background-color: Ivory;
 }

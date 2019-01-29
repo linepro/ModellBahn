@@ -169,6 +169,8 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds an Artikel", response = IArtikel.class)
     public Response add(Artikel entity) {
+        entity.setArtikelId(getPersister().getNextId());
+
         return super.add(entity);
     }
 
@@ -271,7 +273,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
     @ApiOperation(code = 201, value = "Adds a new changed to an article", response = IAnderung.class)
     public Response addAnderung(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, Anderung newAnderung) {
         try {
-            logPost(String.format(ApiPaths.ANDERUNG_ROOT_LOG, getEntityClassName(), artikelId, "") + ": " + newAnderung);
+            logPost(String.format(ApiPaths.ANDERUNG_ROOT_LOG, getEntityClassName(), artikelId) + ": " + newAnderung);
 
             IArtikel artikel = findArtikel(artikelId, true);
 
