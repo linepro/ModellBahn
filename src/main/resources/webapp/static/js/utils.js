@@ -13,12 +13,18 @@ const EditMode = {
   ADD: 2
 };
 
+const NavMenu = {
+  BACK: 0,
+  REF_DATA: 1,
+  INVENTORY: 2
+};
+
 const DATE_PATTERN = '^(18[2-9][0-9]|19[0-9]{2}|2[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[0-1])$';
 
 const URL_PATTERN = '^(?:(http[s]?):\\/\\/)?(\\w+(?:\\.\\w+)*)(?::(\\d+))?(?:\\/(\\w+(?:\\/|\\.\\w+)?))?$';
 
 window.onerror = function (msg, url, lineNo, columnNo, error) {
-  if (msg.toLowerCase().includes("script error")){
+  if (msg.toLowerCase().includes('script error')){
     reportError('Script Error: See Browser Console for Detail');
   } else {
     const message = [
@@ -919,12 +925,12 @@ async function checkResponse(response) {
   } else if (response.status === 204) {
     return {entities: [], links: []};
   } else if (response.status === 400 || response.status === 500) {
-    let errorMessage = response.status + ": " + response.statusText;
+    let errorMessage = response.status + ': ' + response.statusText;
 
     try {
       let jsonData = await response.json();
 
-      errorMessage = jsonData.errorCode + ": " + jsonData.userMessage;
+      errorMessage = jsonData.errorCode + ': ' + jsonData.userMessage;
     } catch(err) {
       errorMessage = await clone.text();
     }
@@ -1271,7 +1277,7 @@ async function uploadFile(e, uploadUrl, fileData, ctl, img) {
   .catch(error => reportError(error));
 }
 
-function readFile(uploadUrl, fileData, ctl, img) {
+const readFile = (uploadUrl, fileData, ctl, img) => {
   const reader = new FileReader();
   reader.onload = (e) => {
     uploadFile(e, uploadUrl, fileData, ctl, img)
@@ -1283,4 +1289,87 @@ function readFile(uploadUrl, fileData, ctl, img) {
   };
 
   reader.readAsDataURL(fileData);
-}
+};
+
+const navLink = (ul, title, href, action, id) => {
+  let li = document.createElement('li');
+
+  let a = document.createElement('a');
+  if (id) a.id = id;
+  a.className = 'nav-button';
+  a.href = href;
+  if (action) a.addEventListener('click', action);
+  addText(a, title);
+  li.appendChild(a);
+
+  ul.appendChild(li);
+
+  return li;
+};
+
+const addNavBar = (menuStyle) => {
+  let header = document.getElementsByTagName('HEADER')[0];
+  removeChildren(header);
+
+  let nav = document.createElement('nav');
+  header.appendChild(nav);
+
+  let ul = document.createElement('ul');
+  ul.className='nav';
+  nav.appendChild(ul);
+
+  navLink(ul, 'Home', siteRoot()+'/index.html');
+  navLink(ul, 'Back', '#', history.go(-1));
+
+  if (menuStyle === NavMenu.REF_DATA) {
+    navLink(ul, 'Aufbau', 'aufbauten.html');
+    navLink(ul, 'Antrieb', 'antrieben.html');
+    navLink(ul, 'Bahnverwaltung', 'bahnverwaltungen.html');
+    navLink(ul, 'Decoder Typ', 'decoderTypen.html');
+    navLink(ul, 'Hersteller', 'herstellern.html');
+    navLink(ul, 'Katogorie', 'kategorien.html');
+    navLink(ul, 'Kupplung', 'kupplungen.html');
+    navLink(ul, 'Land', 'lander.html');
+    navLink(ul, 'Licht', 'lichten.html');
+    navLink(ul, 'Maßstab', 'massstaben.html');
+    navLink(ul, 'Motor Typ', 'motorTypen.html');
+    navLink(ul, 'Protokoll', 'protokollen.html');
+    navLink(ul, 'SonderModell', 'sonderModellen.html');
+    navLink(ul, 'Spurwiete', 'spurweiten.html');
+    navLink(ul, 'Steuerung', 'steuerungen.html');
+    navLink(ul, 'Wahrung', 'wahrungen.html');
+    navLink(ul, 'Zug Typ', 'zugtypen.html');
+  }
+
+  if (menuStyle === NavMenu.INVENTORY) {
+    navLink(ul, 'Produkt', 'produkten.html');
+    navLink(ul, 'Vorbild', 'vorbilder.html');
+    navLink(ul, 'Artikel', 'artikelen.html');
+    navLink(ul, 'Decoder', 'decoderen.html');
+    navLink(ul, 'Zug','zugen.html');
+  }
+
+  let hr = document.createElement('hr');
+  hr.className = 'highlight';
+  nav.appendChild(hr);
+};
+
+const addFooter = () => {
+  let div = document.getElementById('footer');
+
+  removeChildren(div);
+
+  let hr = document.createElement('hr');
+  hr.className = 'highlight';
+  div.appendChild(hr);
+
+  let ul = document.createElement('ul');
+  ul.className = 'footer';
+  div.appendChild(ul);
+
+  let li = document.createElement('li');
+  addText(li, 'Copyright &copy; 2018, 2019 John &amp; Andrew Goff');
+  ul.appendChild(li);
+
+  navLink(ul,'&Uuml;ber', '#', about, 'license');
+};

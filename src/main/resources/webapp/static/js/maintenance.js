@@ -153,7 +153,7 @@ class ItemGrid {
 
       removeChildren(cell);
 
-      if (this.parent && editMode === EditMode.ADD) {
+      if (!this.parent && editMode === EditMode.ADD) {
         blankControl(cell);
       } else if (entity || column.isButtons()) {
         column.getControl(cell, entity, editMode);
@@ -166,10 +166,10 @@ class ItemGrid {
   renderUpdate(jsonData, rowId) {
     let grid = this;
 
-    renderRow(rowId, jsonData, grid.columns, grid.editMode);
+    grid.renderRow(rowId, jsonData, grid.columns, grid.editMode);
 
     if (grid.editMode === EditMode.ADD) {
-      let self = getLink(entity.links, 'self').href;
+      let self = getLink(jsonData.links, 'self').href;
       grid.current = self;
       grid.editMode = EditMode.UPDATE;
     }
