@@ -136,7 +136,7 @@ class ItemGrid {
 
       if (grid.children) {
         grid.children.forEach(child => {
-          child.editMode = grid.editMode;
+          child.editMode = EditMode.NEVER;
           child.initGrid(child.rowCount);
           child.addRow();
         });
@@ -160,6 +160,17 @@ class ItemGrid {
     });
   }
 
+  renderUpdate(jsonData, rowId) {
+    let grid = this;
+
+    renderRow(rowId, jsonData, grid.columns, grid.editMode);
+
+    if (grid.editMode === EditMode.ADD) {
+      let self = getLink(entity.links, 'self').href;
+      grid.current = self;
+    }
+  }
+  
   renderData(jsonData) {
     let grid = this;
     let columns = grid.columns;
@@ -253,7 +264,7 @@ class ItemGrid {
   }
 
   childData(grid, data) {
-    if (grid.children) {
+    if (grid.children && grid.editMode !== EditMode.ADD) {
       grid.children.forEach(child => {
         let childData = child.gridData();
 
@@ -408,7 +419,7 @@ class ItemGrid {
         body: jsonData
       })
       .then(response => checkResponse(response))
-      .then(jsonData => grid.loadData())
+      .then(jsonData => grid.renderUpdate(jsonData, rowId))
       .catch(error => reportError(error));
     }
   }
@@ -426,7 +437,7 @@ class ItemGrid {
         body: jsonData
       })
       .then(response => checkResponse(response))
-      .then(jsonData => grid.loadData())
+      .then(jsonData => grid.renderUpdate(jsonData, rowId))
       .catch(error => reportError(error));
     }
   }

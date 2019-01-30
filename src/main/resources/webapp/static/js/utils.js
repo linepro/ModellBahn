@@ -73,6 +73,11 @@ const addToEnd = (element) => {
   docBody.appendChild(element);
 };
 
+const addToStart = (element) => {
+  let docBody = document.getElementsByTagName('BODY')[0];
+  docBody.insertBefore(element, docBody.firstChild);
+};
+
 const reportError = (error) => {
   console.log(error);
   
@@ -84,7 +89,7 @@ const reportError = (error) => {
 
     let closer = document.createElement('span');
     closer.className = 'closebtn';
-    closer.onclick = (e) => {alert.style.display = 'none'; };
+    closer.onclick = (e) => {alert.style.display = 'none' };
     addText(closer, 'x');
     alert.appendChild(closer);
 
@@ -92,7 +97,8 @@ const reportError = (error) => {
     message.id = 'alert-message';
     alert.appendChild(message);
 
-    addToEnd(alert);
+    let content = document.getElementById('data');
+    content.insertBefore(alert, content.firstChild);
   }
 
   let message = document.getElementById('alert-message');
@@ -907,6 +913,7 @@ class ButtonColumn {
 }
 
 async function checkResponse(response) {
+  let clone = response.clone();
   if (200 <= response.status && response.status <= 202) {
     return response.json();
   } else if (response.status === 204) {
@@ -919,7 +926,7 @@ async function checkResponse(response) {
 
       errorMessage = jsonData.errorCode + ": " + jsonData.userMessage;
     } catch(err) {
-      errorMessage = await response.text();
+      errorMessage = await clone.text();
     }
 
     console.log(errorMessage);
