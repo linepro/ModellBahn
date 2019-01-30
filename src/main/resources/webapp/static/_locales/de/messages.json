@@ -1,0 +1,447 @@
+{
+  "home": {
+    "message": "Home",
+    "description": ""
+  },
+  "Addresses": {
+    "message": "Adressen",
+    "description": ""
+  },
+  "CVS": {
+    "message": "CVS",
+    "description": ""
+  },
+  "functions": {
+    "message": "Funktionen",
+    "description": ""
+  },
+  "about": {
+    "message": "&Uuml,ber",
+    "description": ""
+  },
+  "achsfolg": {
+    "message": "Achsfolg",
+    "description": ""
+  },
+  "adressTyp": {
+    "message": "Typ",
+    "description": ""
+  },
+  "anderungsTyp": {
+    "message": "Typ",
+    "description": ""
+  },
+  "antrieb": {
+    "message": "Antrieb",
+    "description": ""
+  },
+  "artikel": {
+    "message": "Artikel",
+    "description": ""
+  },
+  "aufbau": {
+    "message": "Aufbau",
+    "description": ""
+  },
+  "bahnverwaltung": {
+    "message": "Bahnverwaltung",
+    "description": ""
+  },
+  "decoder": {
+    "message": "Decoder",
+    "description": ""
+  },
+  "decoderTyp": {
+    "message": "Decoder Typ",
+    "description": ""
+  },
+  "epoch": {
+    "message": "Epoch",
+    "description": ""
+  },
+  "gattung": {
+    "message": "Gattung",
+    "description": ""
+  },
+  "hersteller": {
+    "message": "Hersteller",
+    "description": ""
+  },
+  "konfiguration": {
+    "message": "Konfiguration",
+    "description": ""
+  },
+  "kupplung": {
+    "message": "Kupplung",
+    "description": ""
+  },
+  "leistungsubertragung": {
+    "message": "Leistungsübertragung",
+    "description": ""
+  },
+  "licht": {
+    "message": "Licht",
+    "description": ""
+  },
+  "massstab": {
+    "message": "Maßstab",
+    "description": ""
+  },
+  "motorTyp": {
+    "message": "MotorTyp",
+    "description": ""
+  },
+  "produkt": {
+    "message": "Produkt",
+    "description": ""
+  },
+  "protokoll": {
+    "message": "Protokoll",
+    "description": ""
+  },
+  "sonderModell": {
+    "message": "Sonder Modell",
+    "description": ""
+  },
+  "spurweite": {
+    "message": "Spurweite",
+    "description": ""
+  },
+  "status": {
+    "message": "Status",
+    "description": ""
+  },
+  "stecker": {
+    "message": "Stecker",
+    "description": ""
+  },
+  "steuerung": {
+    "message": "Steuerung",
+    "description": ""
+  },
+  "teil": {
+    "message": "Teil",
+    "description": ""
+  },
+  "unterKategorie": {
+    "message": "Kategorie",
+    "description": ""
+  },
+  "vorbild": {
+    "message": "Vorbild",
+    "description": ""
+  },
+  "wahrung": {
+    "message": "Wahrung",
+    "description": ""
+  },
+  "typ": {
+    "message": "Typ",
+    "description": ""
+  },
+  "abbildung": {
+    "message": "Abbildung",
+    "description": ""
+  },
+  "anderungsDatum": {
+    "message": "Datum",
+    "description": ""
+  },
+  "anderungId": {
+    "message": "Änderung",
+    "description": ""
+  },
+  "anleitungen": {
+    "message": "Anleitungen",
+    "description": ""
+  },
+  "anmerkung": {
+    "message": "Anmerkung",
+    "description": ""
+  },
+  "anfahrzugkraft": {
+    "message": "Anfahrzugkraft",
+    "description": ""
+  },
+  "anzahl": {
+    "message": "Anzahl",
+    "description": ""
+  },
+  "artikelId": {
+    "message": "Artikel",
+    "description": ""
+  },
+  "ausserdienst": {
+    "message": "Außerdienst",
+    "description": ""
+  },
+  "bauzeit": {
+    "message": "Bauzeit",
+    "description": ""
+  },
+  "beladung": {
+    "message": "Beladung",
+    "description": ""
+  },
+  "bestellNr": {
+    "message": "Bestell Nr",
+    "description": ""
+  },
+  "betreibsnummer": {
+    "message": "Betreibsnummer",
+    "description": ""
+  },
+  "bezeichnung": {
+    "message": "Bezeichnung",
+    "description": ""
+  },
+  "cv": {
+    "message": "CV",
+    "description": ""
+  },
+  "dezimal": {
+    "message": "Dezimal",
+    "description": ""
+  },
+  "decoderId": {
+    "message": "Decoder",
+    "description": ""
+  },
+  "deleted": {
+    "message": "Deleted",
+    "description": ""
+  },
+  "dienstgewicht": {
+    "message": "Dienstgewicht",
+    "description": ""
+  },
+  "dmLaufradHinten": {
+    "message": "DM Laufrad Hinten",
+    "description": ""
+  },
+  "dmLaufradVorn": {
+    "message": "DM Laufrad Vorn",
+    "description": ""
+  },
+  "dmTreibrad": {
+    "message": "DM Treibrad",
+    "description": ""
+  },
+  "dmZylinder": {
+    "message": "DM Zylinder",
+    "description": ""
+  },
+  "drehgestellBauart": {
+    "message": "Drehgestell",
+    "description": ""
+  },
+  "explosionszeichnung": {
+    "message": "Explosionszeichnung",
+    "description": ""
+  },
+  "fahrmotoren": {
+    "message": "Fahrmotoren",
+    "description": ""
+  },
+  "fahrstufe": {
+    "message": "Fahrstufe",
+    "description": ""
+  },
+  "funktion": {
+    "message": "Funktion",
+    "description": ""
+  },
+  "gerausch": {
+    "message": "Geräusch",
+    "description": ""
+  },
+  "geschwindigkeit": {
+    "message": "Geschwindigkeit",
+    "description": ""
+  },
+  "iMax": {
+    "message": "I Max",
+    "description": ""
+  },
+  "index": {
+    "message": "Index",
+    "description": ""
+  },
+  "kapazitat": {
+    "message": "Kapazität",
+    "description": ""
+  },
+  "kaufdatum": {
+    "message": "Kaufdatum",
+    "description": ""
+  },
+  "kesseluberdruck": {
+    "message": "Kesselüberdruck",
+    "description": ""
+  },
+  "klasse": {
+    "message": "Klasse",
+    "description": ""
+  },
+  "kolbenhub": {
+    "message": "Kolbenhub",
+    "description": ""
+  },
+  "lange": {
+    "message": "Länge",
+    "description": ""
+  },
+  "leistung": {
+    "message": "Leistung",
+    "description": ""
+  },
+  "maximal": {
+    "message": "Maximal",
+    "description": ""
+  },
+  "minimal": {
+    "message": "Minimal",
+    "description": ""
+  },
+  "mittelwagen": {
+    "message": "Mittelwagen",
+    "description": ""
+  },
+  "motorbauart": {
+    "message": "Motorbauart",
+    "description": ""
+  },
+  "name": {
+    "message": "Namen",
+    "description": ""
+  },
+  "position": {
+    "message": "Position",
+    "description": ""
+  },
+  "preis": {
+    "message": "Preis",
+    "description": ""
+  },
+  "programmable": {
+    "message": "Programmable",
+    "description": ""
+  },
+  "reichweite": {
+    "message": "Reichweite",
+    "description": ""
+  },
+  "reihe": {
+    "message": "Reihe",
+    "description": ""
+  },
+  "rostflache": {
+    "message": "Rostfläche",
+    "description": ""
+  },
+  "sitzplatzeKL1": {
+    "message": "Sitzplatze KL1",
+    "description": ""
+  },
+  "sitzplatzeKL2": {
+    "message": "Sitzplatze KL2",
+    "description": ""
+  },
+  "sitzplatzeKL3": {
+    "message": "Sitzplatze KL3",
+    "description": ""
+  },
+  "sitzplatzeKL4": {
+    "message": "Sitzplatze KL4",
+    "description": ""
+  },
+  "span": {
+    "message": "Span",
+    "description": ""
+  },
+  "stuck": {
+    "message": "Stück",
+    "description": ""
+  },
+  "telefon": {
+    "message": "Telefon",
+    "description": ""
+  },
+  "triebkopf": {
+    "message": "Triebköpfe",
+    "description": ""
+  },
+  "uberhitzerflache": {
+    "message": "Überhitzerfläche",
+    "description": ""
+  },
+  "url": {
+    "message": "Url",
+    "description": ""
+  },
+  "verbleibende": {
+    "message": "Verbleibende",
+    "description": ""
+  },
+  "verdampfung": {
+    "message": "Verdampfung",
+    "description": ""
+  },
+  "wasservorrat": {
+    "message": "Wasservorrat",
+    "description": ""
+  },
+  "werkseinstellung": {
+    "message": "Werkseinstellung",
+    "description": ""
+  },
+  "wert": {
+    "message": "Wert",
+    "description": ""
+  },
+  "zug": {
+    "message": "Zug",
+    "description": ""
+  },
+  "zylinder": {
+    "message": "Zylinder",
+    "description": ""
+  },
+  "error": {
+    "message": "Script Error: See Browser Console for Detail",
+    "description": ""
+  },
+  "errorDetail": {
+    "message": "message: ${msg}\nURL: ${url}\nLine: ${lineNo}\nColumn: ${columnNo}\nError object: ${error} }",
+    "description": "",
+    "placeholders": {
+      "msg": {
+        "content": "$1"
+      },
+      "url": {
+        "content": "$1"
+      },
+      "lineNo": {
+        "content": "$1"
+      },
+      "columnNo": {
+        "content": "$1"
+      },
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "previous": {
+    "message": "Vorig",
+    "description": ""
+  },
+  "next": {
+    "message": "Nächste",
+    "description": ""
+  },
+  "badfile": {
+    "message": "Problem beim Lesen der Datei '${fileData}'",
+    "description": ""
+  }
+}

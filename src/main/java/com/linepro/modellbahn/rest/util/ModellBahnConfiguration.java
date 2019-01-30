@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.rest.util;
 
+import com.linepro.modellbahn.util.i18n.RequestLocaleFilter;
 import java.net.URI;
 import java.util.EnumSet;
 import java.util.logging.Level;
@@ -114,6 +115,7 @@ public class ModellBahnConfiguration extends ResourceConfig {
 
         register(LoggingFilter.class);
         register(SecurityRequestFilter.class);
+        register(RequestLocaleFilter.class);
 
         //register(MvcFeature.class);
         register(JspMvcFeature.class);

@@ -1101,10 +1101,10 @@
 							</reportSet>
 						</reportSets>
 						<ruleset comparisonMethod="maven">
-	                        <ignoreVersions>
-	                            <ignoreVersion type="regex">.*-beta?</ignoreVersion>
-	                            <ignoreVersion type="regex">.*\.Alpha?</ignoreVersion>
-	                        </ignoreVersions>
+							<ignoreVersions>
+									<ignoreVersion type="regex">.*-beta?</ignoreVersion>
+									<ignoreVersion type="regex">.*\.Alpha?</ignoreVersion>
+							</ignoreVersions>
 						</ruleset>
 					</configuration>
 				</plugin>

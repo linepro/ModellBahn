@@ -1,5 +1,8 @@
 package com.linepro.modellbahn.rest.util;
 
+import java.util.Locale;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -123,9 +126,13 @@ public abstract class AbstractService {
         return Response.status(errorCode).entity(new ErrorMessage(errorCode.getStatusCode(), userMessage, developerMessage));
     }
 
-    protected String getMessage(String messsgeCode, Object... args) {
-        // TODO: delegate to a localisation processor using uriInfo
-        // request.getLocale();
-        return String.format(messsgeCode, args);
+    protected String getMessage(String messageCode, Object... args) {
+        Locale locale = (request != null) ? request.getLocale() : Locale.GERMAN;
+
+        ResourceBundle bundle = ResourceBundle.getBundle("ValidationMessages", locale);
+
+        String format = bundle.getString(messageCode);
+
+        return String.format(format, args);
     }
 }

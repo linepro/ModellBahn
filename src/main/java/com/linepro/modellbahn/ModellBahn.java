@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.inject.Inject;
 
+import javax.validation.Validation;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
@@ -85,7 +86,10 @@ public class ModellBahn implements IModellBahn {
             //configuration.configureJsp(server);
 
             Runtime.getRuntime().addShutdownHook(new Thread(server::shutdownNow));
-            
+
+            Validation.byDefaultProvider().configure();
+
+
             server.start();
 
             logger.info("Application started with Static content served on {}{}\n" +

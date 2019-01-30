@@ -77,6 +77,7 @@ class ItemGrid {
   setParent(parent) {
     this.parent = parent;
     this.apiUrl = ((parent && parent.apiUrl) ? parent.apiUrl + '/' : '') + this.apiUrl;
+    this.editMode = parent.editMode;
   }
 
   async init() {
@@ -136,7 +137,7 @@ class ItemGrid {
 
       if (grid.children) {
         grid.children.forEach(child => {
-          child.editMode = EditMode.NEVER;
+          child.editMode = editMode;
           child.initGrid(child.rowCount);
           child.addRow();
         });
@@ -152,7 +153,9 @@ class ItemGrid {
 
       removeChildren(cell);
 
-      if (entity || column.isButtons()) {
+      if (this.parent && editMode === EditMode.ADD) {
+        blankControl(cell);
+      } else if (entity || column.isButtons()) {
         column.getControl(cell, entity, editMode);
       } else {
         blankControl(cell);
@@ -168,6 +171,7 @@ class ItemGrid {
     if (grid.editMode === EditMode.ADD) {
       let self = getLink(entity.links, 'self').href;
       grid.current = self;
+      grid.editMode = EditMode.UPDATE;
     }
   }
   
