@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import java.io.IOException;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -9,7 +11,6 @@ import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.rest.util.ApiNames;
-import java.io.IOException;
 
 public class AbstractItemDeserializer<I extends IItem<?>> extends StdDeserializer<I> {
 
