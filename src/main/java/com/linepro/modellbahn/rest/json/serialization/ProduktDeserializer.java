@@ -10,13 +10,10 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.node.TextNode;
 import com.linepro.modellbahn.model.IHersteller;
 import com.linepro.modellbahn.model.IProdukt;
-import com.linepro.modellbahn.model.keys.ProduktKey;
 import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
-import com.linepro.modellbahn.rest.util.ApiPaths;
 
 public class ProduktDeserializer extends StdDeserializer<IProdukt> {
 

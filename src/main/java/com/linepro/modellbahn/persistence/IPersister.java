@@ -155,11 +155,6 @@ public interface IPersister<I extends IItem<?>> {
 
     String getEntityName();
 
-    /**
-     * Populates any lazy collections for the item
-     */
-    void populateLazyCollections();
-
     String getNextId();
 
     Map<String, Selector> getSelectors();

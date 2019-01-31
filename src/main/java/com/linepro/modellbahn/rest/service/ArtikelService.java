@@ -117,7 +117,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
             @JsonProperty(value = ApiNames.BELADUNG) String beladung,
             @JsonProperty(value = ApiNames.ABBILDUNG) String abbildungStr,
             @JsonProperty(value = ApiNames.STATUS) String statusStr,
-            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         Status status = Status.valueOf(statusStr);
         
         return new Artikel(id, produkt, kaufdatum, wahrung, preis, stuck, 

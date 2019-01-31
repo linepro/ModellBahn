@@ -117,11 +117,7 @@ class ItemGrid {
       table.className = 'table';
       place.appendChild(table);
 
-      initHeader(tableName, table, columns, paged);
-
-      initBody(tableName, table, pageSize, columns, paged, rowCount, maxLabel);
-
-      initFooter(tableName, table, columns, paged);
+      initGrid(tableName, table, pageSize, columns, grid.paged, grid.rowCount, maxLabel);
 
       grid.initialized = true;
     }

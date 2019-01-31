@@ -4,7 +4,7 @@ import java.util.Locale;
 
 public class ThreadLocale {
 
-  public static final ThreadLocal<Locale> THREAD_LOCAL = new ThreadLocal<Locale>();
+  public static final ThreadLocal<Locale> THREAD_LOCAL = new ThreadLocal<>();
 
   public static Locale get() {
     return (THREAD_LOCAL.get() == null) ? Locale.getDefault() : THREAD_LOCAL.get();

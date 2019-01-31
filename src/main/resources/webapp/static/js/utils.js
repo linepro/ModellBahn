@@ -1055,22 +1055,16 @@ const gridButtonColumn = () => {
 };
 
 const initTableHeader = (tableName, table, columns) => {
-  let header = document.createElement('div');
+  let header = document.createElement('thead');
   header.id = tableName + '_thead';
-  header.className = 'thead';
   table.append(header);
 
-  let headRow = document.createElement('div');
-  headRow.className = 'table-head';
-  headRow.id = tableName + 'Head';
-  header.append(headRow);
-
   columns.forEach(column => {
-    let th = column.getHeading('div');
+    let th = column.getHeading('th');
     th.style.width = column.width;
     th.style.maxWidth = column.width;
 
-    headRow.append(th);
+    header.append(th);
   });
 };
 
@@ -1096,15 +1090,7 @@ const initFormHeader = (tableName, table, columns) => {
   });
 };
 
-const initHeader = (tableName, table, columns, paged) => {
-  if (paged === Paged.FORM) {
-    initFormHeader(tableName, table, columns);
-  } else {
-    initTableHeader(tableName, table, columns);
-  }
-};
-
-const initFormRow = (tableName, row, body, columns, maxLabel) => { 
+const initFormRow = (tableName, row, body, columns, maxLabel) => {
   let tr = document.createElement('div');
   let rowId = getRowId(tableName, row);
   tr.className = 'flex-container';
@@ -1146,7 +1132,7 @@ const initFormRow = (tableName, row, body, columns, maxLabel) => {
 };
 
 const initTableRow = (tableName, row, body, columns) => { 
-  let tr = document.createElement('div');
+  let tr = document.createElement('tr');
   let rowId = getRowId(tableName, row);
   tr.className = 'table-row';
   tr.id = rowId;
@@ -1159,7 +1145,7 @@ const initTableRow = (tableName, row, body, columns) => {
   tr.append(key);
   
   columns.forEach(column => {
-    let td = document.createElement('div');
+    let td = document.createElement('td');
     td.id = getCellId(rowId, column);
     td.className = 'table-cell';
     td.style.width = column.getWidth();
@@ -1181,7 +1167,7 @@ const initRow = (tableName, row, body, paged, columns, maxLabel) => {
 
 const initBody = (tableName, table, pageSize, columns, paged, rowCount, maxLabel) => {
   let isForm = paged === Paged.FORM;
-  let body = document.createElement(isForm ? 'div' : 'div');
+  let body = document.createElement(isForm ? 'div' : 'tbody');
   body.id = tableName + '_tbody';
   body.className = isForm ? 'flex-container' : 'tbody';
   table.append(body);
@@ -1215,18 +1201,12 @@ const initFormFooter = (tableName, table) => {
 };
 
 const initTableFooter = (tableName, table, columns) => {
-  let footer = document.createElement('div');
+  let footer = document.createElement('tfoot');
   footer.id = tableName + '_tfoot';
-  footer.className = 'tfoot';
   table.append(footer);
 
-  let navRow = document.createElement('div');
-  navRow.className = 'table-foot';
-  navRow.id = tableName + 'Foot';
-  footer.append(navRow);
-
   for (let i = 0; i < columns.length; i++) {
-    let tf = document.createElement('div');
+    let tf = document.createElement('td');
     if (i === 0) {
       tf.className = 'table-prev';
       tf.id = tableName + 'Prev';
@@ -1242,14 +1222,22 @@ const initTableFooter = (tableName, table, columns) => {
 
     addText(tf, ' ');
 
-    navRow.append(tf);
+    footer.append(tf);
   }
 };
 
-const initFooter = (tableName, table, columns, paged) => {
+const initGrid = (tableName, table, pageSize, columns, paged, rowCount, maxLabel) => {
   if (paged === Paged.FORM) {
+    initFormHeader(tableName, table, columns);
+
+    initBody(tableName, table, pageSize, columns, paged, rowCount, maxLabel);
+
     initFormFooter(tableName, table);
   } else {
+    initTableHeader(tableName, table, columns);
+
+    initBody(tableName, table, pageSize, columns, paged, rowCount, maxLabel);
+
     initTableFooter(tableName, table, columns);
   }
 };
