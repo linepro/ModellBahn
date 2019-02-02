@@ -84,7 +84,7 @@ import io.swagger.annotations.ApiOperation;
  * @author  $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.PRODUKT, description = "Produkt maintenance")
+@Api(value = ApiNames.PRODUKT)
 @Path(ApiPaths.PRODUKT)
 public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
@@ -138,7 +138,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
             @JsonProperty(value = ApiNames.MOTOR_TYP)
             @JsonDeserialize(using= MotorTypDeserializer.class) IMotorTyp motorTyp,
             @JsonProperty(value = ApiNames.LANGE) BigDecimal lange,
-            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         return new Produkt(id,
                 hersteller,
                 bestellNr,
@@ -177,7 +177,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
             @JsonProperty(value = ApiNames.TEIL)
             @JsonDeserialize(using= ProduktDeserializer.class) IProdukt teil,
             @JsonProperty(value = ApiNames.ANZAHL) Integer anzahl,
-            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
        return new ProduktTeil(id, produkt, teil, anzahl, deleted);
     }
 
@@ -194,6 +194,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
         }
     }
 
+    @Override
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
@@ -286,7 +287,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
                 return getResponse(badRequest(getMessage(ApiMessages.PRODUKT_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
 
-            if (cyclic(teil.getTeil())) {
+            if (cyclic(produkt, teil.getTeil())) {
                 return getResponse(badRequest(getMessage(ApiMessages.PRODUKT_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             }
             
@@ -302,9 +303,8 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
         }
     }
 
-    private boolean cyclic(IProdukt teil) {
-        // TODO: check for cycles
-        return false;
+    private boolean cyclic(IProdukt produkt, IProdukt teil) {
+        return produkt.equals(teil);
     }
 
     @PUT
@@ -398,7 +398,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
                 getPersister().update(produkt);
 
-                return getResponse(ok(produkt));
+                return getResponse(ok(), produkt, true, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -425,7 +425,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
                 getPersister().update(produkt);
 
-                return getResponse(ok(produkt));
+                return getResponse(ok(), produkt, true, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -462,7 +462,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
                 getPersister().update(produkt);
 
-                return getResponse(ok(produkt));
+                return getResponse(ok(), produkt, true, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -489,7 +489,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
                 getPersister().update(produkt);
 
-                return getResponse(ok(produkt));
+                return getResponse(ok(), produkt, true, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -526,7 +526,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
                 getPersister().update(produkt);
 
-                return getResponse(ok(produkt));
+                return getResponse(ok(), produkt, true, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -552,7 +552,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
                 getPersister().update(produkt);
 
-                return getResponse(ok(produkt));
+                return getResponse(ok(), produkt, true, true);
             }
         } catch (Exception e) {
             return getResponse(e);

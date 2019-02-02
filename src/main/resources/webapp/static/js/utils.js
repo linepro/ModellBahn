@@ -95,7 +95,7 @@ const reportError = (error) => {
 
     let closer = document.createElement('span');
     closer.className = 'closebtn';
-    closer.onclick = (e) => {alert.style.display = 'none' };
+    closer.onclick = (e) => { alert.style.display = 'none' };
     addText(closer, 'x');
     alert.appendChild(closer);
 
@@ -142,8 +142,8 @@ const getKeyValue = (rowId) => {
   return keyField.value;
 };
 
-const getRowId = (tableName, i) => {
-  return tableName + '_' + i;
+const getRowId = (tableId, i) => {
+  return tableId + '_' + i;
 };
 
 const getCellId = (rowId, column) => {
@@ -211,12 +211,6 @@ const valueAndUnits = (cssSize) => {
   };
 };
 
-const setCtlValue = (jsonData, ctl, img) => {
-  if (jsonData) {
-    ctl.setValue(img, ctl.getter(jsonData));
-  }
-};
-
 const boxSize = (length) => {
   return Math.ceil(length/5)*5;
 };
@@ -234,18 +228,19 @@ const blankControl = (cell) => {
 
 class Column {
   constructor(heading, fieldName, getter, setter, editable, required, length) {
-    this.heading = heading;
+    this.heading   = heading;
     this.fieldName = fieldName;
-    this.getter = getter;
-    this.setter = setter;
-    this.editable = editable ? editable : Editable.NEVER;
-    this.required = required ? required : false;
-    this.length = Math.max(length ? length : heading.length, heading.length + 1);
-    this.width = 0;
+    this.getter    = getter;
+    this.setter    = setter;
+    this.editable  = editable ? editable : Editable.NEVER;
+    this.required  = required ? required : false;
+    this.length    = Math.max(length ? length : heading.length, heading.length + 1);
+    this.width     = 0;
   }
 
-  setTableName(tableName) {
-    this.tableName = tableName;
+  setContext(grid, table) {
+    this.grid  = grid;
+    this.table = table;
   }
 
   getHeading(tagName) {
@@ -350,7 +345,7 @@ class BoolColumn extends Column {
 
 class NumberColumn extends Column {
   constructor(heading, fieldName, getter, setter, editable, required, max = 255, min = 0, places = 0) {
-    super(heading, fieldName, getter, setter, editable, required, max.toString().length, heading.length);
+    super(heading, fieldName, getter, setter, editable, required, Math.max(max.toString().length, heading.length));
     this.max = max;
     this.min = min;
     this.places = places;
@@ -376,7 +371,7 @@ class NumberColumn extends Column {
 
 class PhoneColumn extends Column {
   constructor(heading, fieldName, getter, setter, editable, required) {
-    super(heading, fieldName, getter, setter, editable, required);
+    super(heading, fieldName, getter, setter, editable, required, 10);
   }
 
   getControlValue(tel) {
@@ -440,7 +435,7 @@ class DateColumn extends TextColumn {
 
 class FileColumn extends Column {
   constructor(heading, fieldName, getter, mask, editable, required) {
-    super(heading, fieldName, getter, undefined, editable, required);
+    super(heading, fieldName, getter, undefined, editable, required, 20);
     this.mask = mask;
   }
 
@@ -462,9 +457,11 @@ class FileColumn extends Column {
       cell.append(bar);
       
 	    let add = getLink(entity.links, 'update-' + this.fieldName);
-	
+	    let grid = this.grid;
+      let rowId = getCellRowId(cell);
+
 	    if (add) {
-	      let btn = getButton(add.href, 'add', (e) => { this.select(e, img); });
+	      let btn = getButton(add.href, 'add', (e) => { this.select(e, grid, rowId); });
 	      btn.className = 'img-button';
 	      btn.firstChild.className = 'img-button';
 	      bar.appendChild(btn);
@@ -473,10 +470,12 @@ class FileColumn extends Column {
 	    let remove = getLink(entity.links, 'delete-' + this.fieldName);
 	
 	    if (remove) {
-	      let btn = getButton(remove.href, 'delete', (e) => { this.remove(e, img); });
+	      let btn = getButton(remove.href, 'delete', (e) => { this.remove(e, grid, rowId); });
 	      btn.className = 'img-button';
 	      btn.firstChild.className = 'img-button';
+	      btn.disabled = true;
 	      bar.appendChild(btn);
+        this.delBtn = btn;
 	    }
 	
 	    if (cell.firstChild) {
@@ -489,7 +488,7 @@ class FileColumn extends Column {
   }
 
   createControl() {
-    return getImg('none');
+    return getImg('add-picture');
   }
 
   getControlValue(img) {
@@ -497,11 +496,12 @@ class FileColumn extends Column {
   }
 
   setValue(img, value) {
-    img.src = value ? value : 'img/none.png';
+    img.src = value ? value : 'img/addImage.png';
     img.setAttribute('data-file', value);
+    if (this.delBtn && value) this.delBtn.disabled = false;
   }
 
-  select(e, img) {
+  select(e, grid, rowId) {
     let btn = e.target;
     if (btn.tagName === 'IMG') {
       btn = btn.parentElement;
@@ -517,31 +517,30 @@ class FileColumn extends Column {
     cell.appendChild(file);
     file.style.display = 'none';
     file.click();
-    file.addEventListener('change', (e) => { this.update(e, img); }, false);
-    file.addEventListener('click', (e) => { this.update(e, img); }, false);
-    file.addEventListener('blur', (e) => { this.update(e, img); }, false);
+    file.addEventListener('change', (e) => { this.update(e, grid, rowId); }, false);
+    file.addEventListener('click', (e) => { this.update(e, grid, rowId); }, false);
+    file.addEventListener('blur', (e) => { this.update(e, grid, rowId); }, false);
   }
 
-  remove(e, img) {
+  remove(e, grid, rowId) {
     let btn = e.target;
     if (btn.tagName === 'IMG') {
       btn = btn.parentElement;
     }
     let link = btn.value;
     if (link) {
-      removeFile(link)
-        .then(() => this.setValue(img, undefined));
+      removeFile(link, grid, rowId);
     }
   }
 
-  update(e, img) {
+  update(e, grid, rowId) {
     let file = e.target;
     let fileData = file.files[0];
     let link = file.getAttribute('data-update');
     let cell = file.parentElement;
     cell.removeChild(file);
     if (fileData && link) {
-      readFile(link, fileData, this, img);
+      readFile(link, fileData, grid, rowId);
     }
   }
 
@@ -609,7 +608,7 @@ const closeAutoLists = (elmnt = document) => {
   }
 };
 
-document.addEventListener('click', (e) => { closeAutoLists(); }, false);
+document.addEventListener('click', (e) => { closeAutoLists() }, false);
 
 class SelectColumn extends Column {
   constructor(heading, fieldName, getter, setter, dropDown, editable, required, length, dropSize = 5) {
@@ -851,19 +850,20 @@ class ButtonColumn {
     this.width = 0;
   }
 
-  setTableName(tableName) {
-    this.tableName = tableName;
+  setContext(grid, table) {
+    this.grid = grid;
+    this.table = table;
   }
 
   getHeading(tagName) {
-    let td = document.createElement(tagName);
-    td.className = 'table-heading-btn';
+    let grid  = this.grid;
+    let td    = document.createElement(tagName);
 
-    let tableName = this.tableName;
+    td.className = 'table-heading-btn';
 
     if (this.headLinkage) {
       this.headLinkage.forEach(linkage => {
-        let btn = linkage(tableName);
+        let btn = linkage(grid);
         td.appendChild(btn);
       });
     } else {
@@ -890,17 +890,15 @@ class ButtonColumn {
   }
 
   getControl(cell, entity, editMode) {
-    cell.className = 'table-btn';
-
     let rowId = getCellRowId(cell);
-    let tableName = this.tableName;
+    let grid  = this.grid;
 
     let ctl = document.createElement('div');
 
     if (editMode && this.btnLinkage) {
       this.btnLinkage.forEach(linkage => {
         if (entity) {
-          let btn = linkage(tableName, rowId);
+          let btn = linkage(grid, rowId);
           ctl.appendChild(btn);
         }
       });
@@ -971,7 +969,7 @@ const addModal = () => {
 };
 
 const showModal = (content, big) => {
-  let modal = addModal(big);
+  let modal = addModal();
 
   let contents = document.getElementById('modal-content');
   contents.style.height = big ? '90%' : '40rem';
@@ -1024,89 +1022,94 @@ const setActiveTab = (event, tabName) => {
     tabContents[i].style.display = (tabContents[i].id === tabName) ? 'block' : 'none';
   }
 
+  resizeTables();
+
   let linkName = tabName.replace('Tab', 'Link');
   for (let i = 0; i < tabLinks.length; i++) {
     tabLinks[i].className = (tabLinks[i].id === linkName) ? 'tabLinks active' : 'tabLinks';
   }
 };
 
-const addRow = (tableName) => {
-  return getButton(undefined, 'add', Function(tableName + '.addRow()'));
+const addRow = (grid) => {
+  return getButton(undefined, 'add', (e) => { grid.addRow() });
 };
 
-const deleteRow = (tableName, row) => {
-  return getButton(row, 'delete', Function(tableName + '.deleteRow(' + row + '.id)'));
+const deleteRow = (grid, rowId) => {
+  return getButton(rowId, 'delete', (e) => { grid.deleteRow(rowId) });
 };
 
-const editRow = (tableName, row) => {
-  return getButton(row, 'update', Function(tableName + '.editRow(' + row + '.id)'));
+const editRow = (grid, rowId) => {
+  return getButton(rowId, 'update', (e) => { grid.editRow(rowId) });
 };
 
-const newRow = (tableName) => {
-  return getButton(undefined, 'add', Function(tableName + '.newRow()'));
+const newRow = (grid) => {
+  return getButton(undefined, 'add', (e) => { grid.newRow() });
 };
 
-const updateRow = (tableName, row) => {
-  return getButton(row, 'save', Function(tableName + '.updateRow(' + row + '.id)'));
+const updateRow = (grid, rowId) => {
+  return getButton(rowId, 'save', (e) => { grid.updateRow(rowId) });
 };
 
 const gridButtonColumn = () => {
   return new ButtonColumn([addRow], [updateRow, deleteRow]);
 };
 
-const initTableHeader = (tableName, table, columns) => {
-  let header = document.createElement('div');
-  header.id = tableName + '_thead';
-  header.className = 'thead';
-  table.append(header);
-
-  let headRow = document.createElement('div');
-  headRow.className = 'table-head';
-  headRow.id = tableName + 'Head';
-  header.append(headRow);
-
-  columns.forEach(column => {
-    let th = column.getHeading('div');
-    th.style.width = column.width;
-    th.style.maxWidth = column.width;
-
-    headRow.append(th);
-  });
+const setWidths = (element, width) => {
+  element.width = width;  
+  //element.maxWidth = width;  
+  element.style.width = width;  
+  element.style.maxWidth = width;  
 };
 
-const initFormHeader = (tableName, table, columns) => {
+const initializeForm = (grid, table) => {
+  let maxLabel = 10;
+
+  grid.columns.forEach(column => {
+    column.setContext(grid, table);
+    maxLabel = Math.max(column.getHeaderLength(), maxLabel);
+  });
+
+  grid.maxlabel = maxLabel;
+};
+
+const initializeFormHeader = (grid, table) => {
   let header = document.createElement('div');
-  header.id = tableName + '_thead';
-  header.className = 'thead';
+  header.id = table.id + '_thead';
+  header.className = 'fhead';
   table.append(header);
 
   let headRow = document.createElement('div');
   headRow.className = 'form-head';
-  headRow.id = tableName + 'Head';
+  headRow.id = table.id + 'Head';
   header.append(headRow);
 
-  columns.forEach(column => {
+  grid.columns.forEach(column => {
     if (column.isButtons()) {
       let th = document.createElement('div');
-      th.id = getCellId(getRowId(tableName, 0), column);
-      th.className = 'table-btn';
-
+      th.id = getCellId(getRowId(table.id, 0), column);
+      th.className = 'form-heading-btn';
       headRow.append(th);
     }
   });
 };
 
-const initHeader = (tableName, table, columns, paged) => {
-  if (paged === Paged.FORM) {
-    initFormHeader(tableName, table, columns);
-  } else {
-    initTableHeader(tableName, table, columns);
+const initializeFormBody = (grid, table, maxLabel) => {
+  let body = document.createElement('div');
+  body.id = table.id + '_tbody';
+  body.className = 'flex-container';
+  table.append(body);
+
+  let maxRow = Math.max(grid.rowCount, grid.pageSize);
+  for (let rowNum = 0; rowNum < maxRow; rowNum++) {
+    initializeFormRow(grid, table); 
   }
 };
 
-const initFormRow = (tableName, row, body, columns, maxLabel) => { 
+const initializeFormRow = (grid, table) => {
+  let body = document.getElementById(table.id + '_tbody');
+
   let tr = document.createElement('div');
-  let rowId = getRowId(tableName, row);
+  let rowId = getRowId(table.id, 0);
   tr.className = 'flex-container';
   tr.id = rowId;
   body.append(tr);
@@ -1117,7 +1120,7 @@ const initFormRow = (tableName, row, body, columns, maxLabel) => {
   key.className = 'flex-control';
   tr.append(key);
   
-  columns.forEach(column => {
+  grid.columns.forEach(column => {
     let td = document.createElement('div');
   
     if (!column.isButtons()) {
@@ -1126,16 +1129,14 @@ const initFormRow = (tableName, row, body, columns, maxLabel) => {
       // TODO: change to label
       let th = column.getHeading('div');
       th.className = 'flex-label';
-      th.style.width = maxLabel + 'ch';
-      th.style.maxWidth = maxLabel + 'ch';
+      setWidths(th, grid.maxLabel + 'ch');
 
       td.append(th);
   
       let tc = document.createElement('div');
       tc.id = getCellId(rowId, column);
       tc.className = 'flex-control';
-      tc.style.width = column.getLength() + 'ch';
-      tc.style.maxWidth = tc.style.width;
+      setWidths(tc, column.getLength() + 'ch');
   
       addText(tc, ' ');
   
@@ -1145,9 +1146,118 @@ const initFormRow = (tableName, row, body, columns, maxLabel) => {
   });
 };
 
-const initTableRow = (tableName, row, body, columns) => { 
-  let tr = document.createElement('div');
-  let rowId = getRowId(tableName, row);
+const initializeFormFooter = (grid, table) => {
+  let footer = document.createElement('div');
+  footer.id = table.id + '_tfoot';
+  footer.className = 'ffoot';
+  table.append(footer);
+
+  let navRow = document.createElement('div');
+  navRow.className = 'form-foot';
+  navRow.id = table.id + 'Foot';
+  footer.append(navRow);
+
+  let tf = document.createElement('div');
+  tf.className = 'form-footer';
+  setWidths(tf, '100%');
+
+  addText(tf, ' ');
+
+  navRow.append(tf);
+};
+
+const resizeGroup = (element, newWidths, tableWidth, rowWidth) => {
+  setWidths(element, tableWidth);
+  let childTag = element.tagName === 'THEAD' ? 'TH' : 'TD';
+  let rows = element.getElementsByTagName('TR');
+  for (let i = 0; i < rows.length; i++) {
+    setWidths(rows[i], rowWidth);
+    let cells = rows[i].getElementsByTagName(childTag);
+    for (let j = 0; j < cells.length; j++) {
+      setWidths(cells[j], newWidths[j]);
+    }
+  }
+};
+
+const resizeTables = (element = document) => {
+  let tables = element.getElementsByTagName('TABLE');
+  for (let i = 0; i < tables.length; i++) {
+    let rect = tables[i].getBoundingClientRect();
+    setWidths(tables[i].getElementsByTagName('TBODY')[0], rect.width+'px');
+  }
+};
+
+window.addEventListener('resize', (e) => { resizeTables() }, true);
+
+const initializeTable = (grid, table) => {
+  if (grid.name && !grid.parent) {
+    let caption = document.createElement('caption');
+    addText(caption, grid.name);
+    table.appendChild(caption);
+  }
+
+  setWidths(table, '100%');
+
+  let colGroup = document.createElement('colgroup');
+  setWidths(colGroup, '100%');
+
+  let totalLength = 0;
+  grid.columns.forEach(column => {
+    column.setContext(grid, table);
+    totalLength += column.getLength();
+  });
+
+  grid.columns.forEach(column => {
+    let col = document.createElement('col');
+    let colWidth = Math.floor((column.getLength() * 100) / totalLength)+'%';
+    column.setWidth(colWidth);
+    setWidths(col, column.getWidth());
+    colGroup.append(col);
+  });
+
+  table.appendChild(colGroup);
+};
+
+const initializeTableHeader = (grid, table) => {
+  let header = document.createElement('thead');
+  header.id = table.id + '_thead';
+  header.className = 'thead';
+  table.append(header);
+
+  let headRow = document.createElement('tr');
+  headRow.id = table.id + 'Head';
+  headRow.className = 'table-head';
+  header.append(headRow);
+
+  grid.columns.forEach(column => {
+    let th = column.getHeading('th');
+    th.className = column.isButtons() ? 'table-heading-btn' : 'table-heading';
+    setWidths(th, column.getWidth());
+
+    headRow.append(th);
+  });
+};
+
+const initializeTableBody = (grid, table) => {
+  let body = document.createElement('tbody');
+  let rect = table.getBoundingClientRect();
+  body.id = table.id + '_tbody';
+  body.className = 'tbody';
+  setWidths(body, rect.width+'px');
+  table.append(body);
+
+  let maxRow = Math.max(grid.rowCount, grid.pageSize);
+  for (let rowNum = 0; rowNum < maxRow; rowNum++) {
+    initializeTableRow(grid, table);
+  }
+};
+
+const initializeTableRow = (grid, table) => {
+  let body = table.getElementsByTagName('TBODY')[0];
+  let rows = body.getElementsByTagName('TR');
+
+  let tr = document.createElement('tr');
+  let rowId = getRowId(table.id, rows.length);
   tr.className = 'table-row';
   tr.id = rowId;
   body.append(tr);
@@ -1158,12 +1268,11 @@ const initTableRow = (tableName, row, body, columns) => {
   key.className = 'table-cell';
   tr.append(key);
   
-  columns.forEach(column => {
-    let td = document.createElement('div');
+  grid.columns.forEach(column => {
+    let td = document.createElement('td');
     td.id = getCellId(rowId, column);
-    td.className = 'table-cell';
-    td.style.width = column.getWidth();
-    td.style.maxWidth = td.style.width;
+    td.className = column.isButtons() ? 'table-cell-btn' : 'table-cell';
+    setWidths(td, column.getWidth());
 
     addText(td, ' ');
 
@@ -1171,99 +1280,70 @@ const initTableRow = (tableName, row, body, columns) => {
   });
 };
 
-const initRow = (tableName, row, body, paged, columns, maxLabel) => {
-  if (paged === Paged.FORM) {
-    initFormRow(tableName, row, body, columns, maxLabel); 
-  } else {
-    initTableRow(tableName, row, body, columns); 
-  }
-};
-
-const initBody = (tableName, table, pageSize, columns, paged, rowCount, maxLabel) => {
-  let isForm = paged === Paged.FORM;
-  let body = document.createElement(isForm ? 'div' : 'div');
-  body.id = tableName + '_tbody';
-  body.className = isForm ? 'flex-container' : 'tbody';
-  table.append(body);
-
-  let row;
-  let maxRow = Math.max(rowCount, pageSize);
-  for (row = 0; row < maxRow; row++) {
-    initRow(tableName, row, body, paged, columns, maxLabel);
-  }
-};
-
-const initFormFooter = (tableName, table) => {
-  let footer = document.createElement('div');
-  footer.id = tableName + '_tfoot';
+const initializeTableFooter = (grid, table) => {
+  let footer = document.createElement('tfoot');
+  footer.id = table.id + '_tfoot';
   footer.className = 'tfoot';
   table.append(footer);
 
-  let navRow = document.createElement('div');
-  navRow.className = 'form-foot';
-  navRow.id = tableName + 'Foot';
-  footer.append(navRow);
-
-  let tf = document.createElement('div');
-  tf.className = 'form-footer';
-  tf.style.width = '100%';
-  tf.style.maxWidth = '100%';
-
-  addText(tf, ' ');
-
-  navRow.append(tf);
-};
-
-const initTableFooter = (tableName, table, columns) => {
-  let footer = document.createElement('div');
-  footer.id = tableName + '_tfoot';
-  footer.className = 'tfoot';
-  table.append(footer);
-
-  let navRow = document.createElement('div');
+  let navRow = document.createElement('tr');
+  navRow.id = table.id + 'Foot';
   navRow.className = 'table-foot';
-  navRow.id = tableName + 'Foot';
   footer.append(navRow);
 
-  for (let i = 0; i < columns.length; i++) {
-    let tf = document.createElement('div');
-    if (i === 0) {
-      tf.className = 'table-prev';
-      tf.id = tableName + 'Prev';
-    } else if (i === (columns.length - 1)) {
-      tf.className = 'table-next';
-      tf.id = tableName + 'Next';
-    } else {
-      tf.className = 'table-footer';
-    }
-
-    tf.style.width = columns[i].getHeaderLength() + 'ch';
-    tf.style.maxWidth = columns[i].getHeaderLength() + 'ch';
+  grid.columns.forEach(column => {
+    let tf = document.createElement('td');
+    tf.className = 'table-footer';
+    tf.width = column.getWidth();
+    setWidths(tf, column.getWidth());
 
     addText(tf, ' ');
 
     navRow.append(tf);
-  }
+  });
+
+  navRow.firstChild.className = 'table-prev';
+  navRow.firstChild.id = table.id + 'Prev';
+  
+  navRow.lastChild.className = 'table-next';
+  navRow.lastChild.id = table.id + 'Next';
 };
 
-const initFooter = (tableName, table, columns, paged) => {
-  if (paged === Paged.FORM) {
-    initFormFooter(tableName, table);
+const initializeGrid = (grid, table) => {
+  if (grid.paged === Paged.FORM) {
+    let maxLabel = initializeForm(grid, table);
+
+    grid.columns.forEach(column => {
+      maxLabel = Math.max(column.getHeaderLength(), maxLabel);
+    });
+    
+    initializeFormHeader(grid, table);
+
+    initializeFormBody(grid, table, maxLabel);
+
+    initializeFormFooter(grid, table);
   } else {
-    initTableFooter(tableName, table, columns);
+    initializeTable(grid, table);
+
+    initializeTableHeader(grid, table);
+
+    initializeTableBody(grid, table);
+
+    initializeTableFooter(grid, table);
   }
 };
 
-async function removeFile(deleteUrl) {
+async function removeFile(deleteUrl, grid, rowId) {
   await fetch(deleteUrl, {
     method: 'DELETE', 
     headers: {'Content-type': 'application/json'}
   })
   .then(response => checkResponse(response))
+  .then(jsonData => grid.renderUpdate(jsonData, rowId))
   .catch(error => reportError(error));
 }
 
-async function uploadFile(e, uploadUrl, fileData, ctl, img) {
+async function uploadFile(e, uploadUrl, fileData, grid, rowId) {
   let body = new FormData();
 
   body.append('file', fileData);
@@ -1273,15 +1353,17 @@ async function uploadFile(e, uploadUrl, fileData, ctl, img) {
     body: body
   })
   .then(response => checkResponse(response))
-  .then(jsonData => setCtlValue(jsonData, ctl, img))
+  .then(jsonData => grid.renderUpdate(jsonData, rowId))
   .catch(error => reportError(error));
 }
 
-const readFile = (uploadUrl, fileData, ctl, img) => {
+const readFile = (uploadUrl, fileData, grid, rowId) => {
   const reader = new FileReader();
+
   reader.onload = (e) => {
-    uploadFile(e, uploadUrl, fileData, ctl, img)
+    uploadFile(e, uploadUrl, fileData, grid, rowId)
   };
+
   reader.onerror = (e) => {
     reader.abort();
 
@@ -1292,6 +1374,8 @@ const readFile = (uploadUrl, fileData, ctl, img) => {
 };
 
 const navLink = (ul, title, href, action, id) => {
+  if (document.location.href === href) return;
+
   let li = document.createElement('li');
 
   let a = document.createElement('a');
@@ -1315,38 +1399,38 @@ const addNavBar = (menuStyle) => {
   header.appendChild(nav);
 
   let ul = document.createElement('ul');
-  ul.className='nav';
+  ul.className = 'nav';
   nav.appendChild(ul);
 
-  navLink(ul, 'Home', siteRoot()+'/index.html');
-  navLink(ul, 'Back', '#', history.go(-1));
+  navLink(ul, 'Home', siteRoot().replace('/static/', '/index.html'));
+  navLink(ul, 'Back', '#', (e) => { history.go(-1) });
 
   if (menuStyle === NavMenu.REF_DATA) {
-    navLink(ul, 'Aufbau', 'aufbauten.html');
-    navLink(ul, 'Antrieb', 'antrieben.html');
-    navLink(ul, 'Bahnverwaltung', 'bahnverwaltungen.html');
-    navLink(ul, 'Decoder Typ', 'decoderTypen.html');
-    navLink(ul, 'Hersteller', 'herstellern.html');
-    navLink(ul, 'Katogorie', 'kategorien.html');
-    navLink(ul, 'Kupplung', 'kupplungen.html');
-    navLink(ul, 'Land', 'lander.html');
-    navLink(ul, 'Licht', 'lichten.html');
-    navLink(ul, 'Maßstab', 'massstaben.html');
-    navLink(ul, 'Motor Typ', 'motorTypen.html');
-    navLink(ul, 'Protokoll', 'protokollen.html');
-    navLink(ul, 'SonderModell', 'sonderModellen.html');
-    navLink(ul, 'Spurwiete', 'spurweiten.html');
-    navLink(ul, 'Steuerung', 'steuerungen.html');
-    navLink(ul, 'Wahrung', 'wahrungen.html');
-    navLink(ul, 'Zug Typ', 'zugtypen.html');
+    navLink(ul, 'Aufbau', siteRoot()+'aufbauten.html');
+    navLink(ul, 'Antrieb', siteRoot()+'antrieben.html');
+    navLink(ul, 'Bahnverwaltung', siteRoot()+'bahnverwaltungen.html');
+    navLink(ul, 'Decoder Typ', siteRoot()+'decoderTypen.html');
+    navLink(ul, 'Hersteller', siteRoot()+'herstellern.html');
+    navLink(ul, 'Katogorie', siteRoot()+'kategorien.html');
+    navLink(ul, 'Kupplung', siteRoot()+'kupplungen.html');
+    navLink(ul, 'Land', siteRoot()+'lander.html');
+    navLink(ul, 'Licht', siteRoot()+'lichten.html');
+    navLink(ul, 'Maßstab', siteRoot()+'massstaben.html');
+    navLink(ul, 'Motor Typ', siteRoot()+'motorTypen.html');
+    navLink(ul, 'Protokoll', siteRoot()+'protokollen.html');
+    navLink(ul, 'SonderModell', siteRoot()+'sonderModellen.html');
+    navLink(ul, 'Spurwiete', siteRoot()+'spurweiten.html');
+    navLink(ul, 'Steuerung', siteRoot()+'steuerungen.html');
+    navLink(ul, 'Wahrung', siteRoot()+'wahrungen.html');
+    navLink(ul, 'Zug Typ', siteRoot()+'zugtypen.html');
   }
 
   if (menuStyle === NavMenu.INVENTORY) {
-    navLink(ul, 'Produkt', 'produkten.html');
-    navLink(ul, 'Vorbild', 'vorbilder.html');
-    navLink(ul, 'Artikel', 'artikelen.html');
-    navLink(ul, 'Decoder', 'decoderen.html');
-    navLink(ul, 'Zug','zugen.html');
+    navLink(ul, 'Produkt', siteRoot()+'produkten.html');
+    navLink(ul, 'Vorbild', siteRoot()+'vorbilder.html');
+    navLink(ul, 'Artikel', siteRoot()+'artikelen.html');
+    navLink(ul, 'Decoder', siteRoot()+'decoderen.html');
+    navLink(ul, 'Zug', siteRoot()+'zugen.html');
   }
 
   let hr = document.createElement('hr');
@@ -1355,8 +1439,7 @@ const addNavBar = (menuStyle) => {
 };
 
 const addFooter = () => {
-  let div = document.getElementById('footer');
-
+  let div = document.getElementsByTagName('FOOTER')[0];
   removeChildren(div);
 
   let hr = document.createElement('hr');
@@ -1368,8 +1451,12 @@ const addFooter = () => {
   div.appendChild(ul);
 
   let li = document.createElement('li');
-  addText(li, 'Copyright &copy; 2018, 2019 John &amp; Andrew Goff');
+  addText(li, 'Copyright © 2018, 2019 John & Andrew Goff');
   ul.appendChild(li);
 
-  navLink(ul,'&Uuml;ber', '#', about, 'license');
+  navLink(ul,'Über', '#', about, 'license');
 };
+
+const createStyle = () => {
+  
+}

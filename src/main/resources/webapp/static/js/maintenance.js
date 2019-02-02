@@ -27,16 +27,16 @@ const defaultRowSetter = (rowId, columns) => {
 
 
 class ItemGrid {
-  constructor(pageSize = 10, apiUrl, tableName, columns, paged, editMode = EditMode.VIEW, children = undefined, editForm = undefined, rowSetter = defaultRowSetter) {
-    this.pageSize = pageSize;
-    this.rowCount = pageSize;
-    this.apiUrl = apiUrl;
-    this.tableName = tableName;
-    this.columns = columns;
-    this.paged = paged;
-    this.editMode = editMode;
-    this.children = children;
-    this.editForm = editForm;
+  constructor(pageSize, apiUrl, tableId, columns, paged, editMode = EditMode.VIEW, children = undefined, editForm = undefined, rowSetter = defaultRowSetter) {
+    this.pageSize  = pageSize;
+    this.rowCount  = pageSize;
+    this.apiUrl    = apiUrl;
+    this.tableId   = tableId;
+    this.columns   = columns;
+    this.paged     = paged;
+    this.editMode  = editMode;
+    this.children  = children;
+    this.editForm  = editForm;
     this.rowSetter = rowSetter;
 
     this.current = this.apiUrl;
@@ -91,37 +91,15 @@ class ItemGrid {
     if (!grid.initialized || (rowCount > grid.pageSize)) {
       grid.rowCount = rowCount;
 
-      let columns = grid.columns;
-      let paged = grid.paged;
-      let pageSize = grid.pageSize;
-      let tableName = grid.tableName;
-
-      let totalWidth = 0;
-      let maxLabel = 0;
-
-      columns.forEach(column => {
-        column.setTableName(tableName);
-        totalWidth += column.getLength();
-      });
-
-      columns.forEach(column => {
-        column.setWidth(Math.floor((column.getLength() * 100) / totalWidth) + '%');
-        maxLabel = Math.max(column.getHeaderLength(), maxLabel);
-      });
-
-      let place = document.getElementById(grid.tableName+'Site');
+      let place = document.getElementById(grid.tableId+'Site');
       removeChildren(place);
 
-      let table = document.createElement(paged === Paged.FORM ? 'div' : 'table'); 
-      table.id = grid.tableName;
+      let table = document.createElement(grid.paged === Paged.FORM ? 'div' : 'table'); 
+      table.id = grid.tableId;
       table.className = 'table';
       place.appendChild(table);
 
-      initHeader(tableName, table, columns, paged);
-
-      initBody(tableName, table, pageSize, columns, paged, rowCount, maxLabel);
-
-      initFooter(tableName, table, columns, paged);
+      initializeGrid(grid, table);
 
       grid.initialized = true;
     }
@@ -137,7 +115,7 @@ class ItemGrid {
 
       if (grid.children) {
         grid.children.forEach(child => {
-          child.editMode = editMode;
+          child.editMode = grid.editMode;
           child.initGrid(child.rowCount);
           child.addRow();
         });
@@ -179,8 +157,8 @@ class ItemGrid {
     let grid = this;
     let columns = grid.columns;
     let editMode = grid.editMode;
-    let entities = (grid.parent ? jsonData[grid.tableName] : jsonData.entities ? jsonData.entities : [jsonData]);
-    let tableName = grid.tableName;
+    let entities = (grid.parent ? jsonData[grid.tableId] : jsonData.entities ? jsonData.entities : [jsonData]);
+    let tableId = grid.tableId;
 
     if (!entities) entities = {};
     
@@ -189,7 +167,7 @@ class ItemGrid {
     grid.initGrid(rowCount);
 
     for (let row = 0; row < rowCount; row++) {
-      let rowId = getRowId(tableName, row);
+      let rowId = getRowId(tableId, row);
 
       let entity = (entities.length > 0 && row < entities.length) ? entities[row] : undefined;
 
@@ -199,7 +177,7 @@ class ItemGrid {
       this.renderRow(rowId, entity, columns, editMode);
     }
 
-    let prev = document.getElementById(tableName + 'Prev');
+    let prev = document.getElementById(tableId + 'Prev');
 
     if (prev) {
       removeChildren(prev);
@@ -207,13 +185,13 @@ class ItemGrid {
       let prevLnk = getLink(jsonData.links, 'previous');
 
       if (prevLnk) {
-        addButton(prev, prevLnk, Function(tableName + '.getData(this.value)'));
+        addButton(prev, prevLnk, (e) => { grid.getData(prevLnk) });
       } else {
         addText(prev, '');
       }
     }
 
-    let next = document.getElementById(tableName + 'Next');
+    let next = document.getElementById(tableId + 'Next');
 
     if (next) {
       removeChildren(next);
@@ -221,7 +199,7 @@ class ItemGrid {
       let nextLnk = getLink(jsonData.links, 'next');
 
       if (nextLnk) {
-        addButton(next, nextLnk, Function(tableName + '.getData(this.value)'));
+        addButton(next, nextLnk, (e) => { grid.getData(nextLnk) });
       } else {
         addText(next, '');
       }
@@ -273,7 +251,7 @@ class ItemGrid {
         let childData = child.gridData();
 
         if (Object.entries(childData).length) {
-          data[child.tableName] = child.gridData();
+          data[child.tableId] = child.gridData();
         }
       });
     }
@@ -284,7 +262,7 @@ class ItemGrid {
     let data = [];
 
     for (let row = 0; row < grid.rowCount; row++) {
-      let rowData = grid.rowData(getRowId(grid.tableName, row));
+      let rowData = grid.rowData(getRowId(grid.tableId, row));
 
       if (Object.entries(rowData).length) {
         data.push(rowData);
@@ -294,9 +272,9 @@ class ItemGrid {
     return data;
   }
 
-  getFreeRow(tableName, rowCount) {
+  getFreeRow(tableId, rowCount) {
     for (let row = 0; row < rowCount; row++) {
-      let rowId = getRowId(tableName, row);
+      let rowId = getRowId(tableId, row);
 
       if (!getKeyValue(rowId)) {
         return row;
@@ -311,8 +289,8 @@ class ItemGrid {
     let columns   = grid.columns;
     let rowCount  = grid.rowCount;
     let paged     = grid.paged;
-    let tableName = grid.tableName;
-    let rowNum    = this.getFreeRow(tableName, rowCount);
+    let tableId   = grid.tableId;
+    let rowNum    = this.getFreeRow(tableId, rowCount);
 
     if (paged === Paged.EXPAND) {
       if (rowNum === rowCount) {
@@ -320,27 +298,27 @@ class ItemGrid {
         grid.rowCount = rowCount + 1;
         rowNum = grid.rowCount;
 
-        let body = document.getElementById(tableName + '_tbody');
+        let table = document.getElementById(tableId);
 
-        initRow(tableName, rowNum, body, paged, columns);
+        initializeTableRow(this, table);
       }
     } else if (paged === Paged.PAGED) {
       if (rowNum === rowCount) {
         // the page is full, new page and add at start
         rowNum = 0;
         for (let row = 1; row < rowCount; row++) {
-          this.renderRow(getRowId(tableName, row), undefined, columns, EditMode.NEVER);
+          this.renderRow(getRowId(tableId, row), undefined, columns, EditMode.NEVER);
         }
           
-        let prev = document.getElementById(tableName + 'Prev');
+        let prev = document.getElementById(tableId + 'Prev');
 
         if (prev) {
           removeChildren(prev);
 
-          addButton(prev, grid.current, Function(tableName + '.getData(this.value)'));
+          addButton(prev, grid.current, (e) => { grid.getData(grid.current) });
         }
 
-        let next = document.getElementById(tableName + 'Next');
+        let next = document.getElementById(tableId + 'Next');
 
         if (next) {
           removeChildren(next);
@@ -353,7 +331,7 @@ class ItemGrid {
       rowNum = 0;
     }
 
-    let rowId = getRowId(tableName, rowNum);
+    let rowId = getRowId(tableId, rowNum);
 
     let key = document.getElementById(getKeyId(rowId));
     key.value = '';
@@ -372,9 +350,9 @@ class ItemGrid {
     });
 
     let td = document.getElementById(getCellId(rowId, 'buttons'));
-    let save = getButton(rowId, 'save', Function(tableName + '.saveRow(' + rowId + '.id)'));
+    let save = getButton(rowId, 'save', (e) => { grid.saveRow(rowId) });
     td.appendChild(save);
-    let del = getButton(rowId, 'delete', Function(tableName + '.removeRow(' + rowId + '.id)'));
+    let del = getButton(rowId, 'delete', (e) => { grid.removeRow(rowId) });
     td.appendChild(del);
     
   }

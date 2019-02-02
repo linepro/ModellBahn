@@ -66,7 +66,7 @@ public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
     private IProtokoll protokoll;
 
     /** The fahrstufe. */
-    @Fahrstufe(message = "{com.linepro.modellbahn.validator.constraints.fahrstufe.invalid}")
+    @Fahrstufe
     private Integer fahrstufe;
 
     private DecoderStatus status;

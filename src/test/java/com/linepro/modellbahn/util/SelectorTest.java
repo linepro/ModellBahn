@@ -26,11 +26,14 @@ public class SelectorTest {
     
     private Method setter;
 
+    private String value = "";
+
     protected String getter() {
-        return "";
+        return value;
     }
 
     protected void setter(String value) {
+        this.value = value;
     }
 
     @BeforeMethod

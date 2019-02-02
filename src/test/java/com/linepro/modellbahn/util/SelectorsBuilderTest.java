@@ -16,9 +16,11 @@ import static org.testng.Assert.assertTrue;
 public class SelectorsBuilderTest {
 
     class Base {
-        public void setId(Integer id) {}
+        private Integer id = 1;
 
-        Integer getId() { return 1; }
+        public void setId(Integer id) { this.id = id; }
+
+        Integer getId() { return id; }
 
         @Basic
         String getName() { return "fred"; }

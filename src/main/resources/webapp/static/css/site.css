@@ -1,13 +1,29 @@
 html {
   -ms-text-size-adjust: auto;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   -webkit-text-size-adjust: auto;
   background-color: LightYellow;
   box-sizing: border-box;
   border-radius: 0.25em;
-  overflow-x: hidden;
+  display: block;
+  font-family: Verdana, sans-serif;
+  font-size: 12px;
+  line-height: 0.15rem;
+  overflow: hidden;
+  padding: 0.5rem;
 }
 
-aside, details, figcaption, figure, main, menu, section, summary {
+body {
+  border: transparent 0px;
+  margin: 0;
+  opacity: 1;
+  overflow: hidden;
+  padding: 0 1rem 0 0;
+  width: 98%;
+}
+
+aside, details, figcaption, figure, main, menu, summary {
   display: block;
 }
 
@@ -26,38 +42,28 @@ progress {
 
 header {
   background-color: inherit;
-  margin-bottom: 0.3rem;
-  opacity: 1;
-  overflow: hidden;
-  padding: 0.5rem;
-  position: sticky;
+  height: 5rem;
+  position: fixed;
   top: 0;
-  width: 100%;
+  width: inherit;
+}
+
+section {
+  background-color: inherit;
+  height: auto;
+  position: fixed;
+  top: 5rem;
+  width: inherit;
 }
 
 footer {
   background-color: inherit;
   bottom: 0;
   color: grey;
+  height: 5rem;
   margin-top: 0.3rem;
-  opacity: 1;
-  overflow: hidden;
-  padding: 0.5rem;
-  position: sticky;
-  width: 100%;
-}
-
-body {
-  margin: 0;
-  padding: 0.5rem;
-}
-
-html, body {
-  background-color: LightYellow;
-  font-family: Verdana, sans-serif;
-  font-size: 12px;
-  line-height: 0.15rem;
-  padding: 0.5rem;
+  position: fixed;
+  width: inherit;
 }
 
 a {
@@ -90,7 +96,9 @@ input, select, textarea {
 }
 
 input[type="checkbox"] {
+  margin: 0 0.3rem 0.3rem 0.3rem;
   width: unset;
+  vertical-align: middle;
 }
 
 input[type="date"] {
@@ -209,10 +217,10 @@ h6 {
   font-size: 1.25rem;
 }
 
-h1, h2, h3, h4, h5, h6 {
+caption, h1, h2, h3, h4, h5, h6 {
   font-family: "Segoe UI", Arial, sans-serif;
   font-weight: 400;
-  margin: 0.8rem 0;
+  padding: 0;
 }
 
 fieldset {
@@ -256,9 +264,10 @@ mark {
 }
 
 nav {
-  display: block;
+  display: inline-block;
   color: inherit;
-  padding: 0.5rem;
+  padding: 0.5rem 0;
+  width: 100%;
 }
 
 optgroup {
@@ -291,35 +300,192 @@ svg:not(:root) {
 table {
   border-collapse: collapse;
   border-bottom: 0.1rem solid LightSkyBlue;
+  overflow: hidden;
+  padding: 0;
+  table-layout: fixed;
+  text-align: left;
   vertical-align: middle;
-  padding: 0.5rem;
   width: 100%;
 }
 
+caption {
+  font-size: 2rem;
+  line-height: 2.5rem;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+div.fhead,
 thead {
   background-color: LightSkyBlue;
   color: white;
   font-weight: bold;
-  height: 2rem;
-  padding: 0.5rem;
+  height: 3rem;
+  padding: 0;
   text-align: left;
+  width: 100%;
 }
 
-tfoot {
-  background-color: LightSkyBlue;
+div.form-head,
+tr.table-head {
   font-weight: bold;
-  color: white;
-  height: 2rem;
-  padding: 0.5rem;
-  text-align: center;
+  height: 3rem;
+  width: 100%;
+}
+
+th.table-heading {
+  height: 3rem;
+  margin: 1.5rem 1rem 0 0.5rem;
+  vertical-align: middle;
+}
+
+div.fhead > button.nav-button,
+div.form-heading-btn,
+th.table-heading-btn {
+  height: 3rem;
+  text-align: right;
+  vertical-align: middle;
+}
+
+div.form-btn {
+  border-right: 1rem;
+  height: 2.7rem;
+  padding-right: 0.5rem;
+  text-align: right;
+  vertical-align: top;
 }
 
 tbody {
-  padding: 0.5rem;
+  display: block;
+  height: 31.8rem;
+  max-height: 31.8rem;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 0;
+  width: 100%;
 }
 
-tr:hover {
+div.flex-container {
+  display: flex;
+  align-content: flex-start;
+  align-items: baseline;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+tr {
+  width: 100%;
+}
+
+tr.table-row {
+  height: 2.5rem;
+  width: 100%;
+}
+
+tr.table-row:hover {
   background-color: Khaki;
+}
+
+tr.table-row:nth-child(even) {
+  background-color: CornSilk;
+}
+
+tr.table-row:nth-child(even):hover {
+  background-color: Khaki;
+}
+
+div.ffoot,
+tfoot {
+  background-color: LightSkyBlue;
+  color: white;
+  font-weight: bold;
+  height: 2.5rem;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+}
+
+div.form-foot,
+tr.table-foot {
+  font-weight: bold;
+  height: 2.5rem;
+  width: 100%;
+}
+
+div.form-footer {
+  display: table-cell;
+  text-align: center;
+}
+
+div.ffoot,
+div.form-foot,
+div.form-footer {
+  height: .25rem;
+}
+	
+td.table-footer {
+  height: 2.5rem;
+  text-align: center;
+}
+
+div.flex-item {
+  display: inline-block;
+  flex-grow: 1;
+  flex-shrink: 0;
+  order: 1;
+  margin: 0.1rem 0.1rem 0 0;
+  padding: 0.3rem 0.3rem 0 0;
+}
+
+div.flex-label {
+  display: inline-block;
+  color: Grey;
+  flex-grow: 0;
+  flex-shrink: 0;
+  font-weight: bold;
+  margin: 0.1rem 0 0 0;
+  order: 1;
+  padding: 0.3rem 0 0 0;
+  text-align: left;
+  vertical-align: baseline;
+}
+
+div.flex-control {
+  display: inline-block;
+  align-self: flex-start;
+  flex-grow: 0;
+  flex-shrink: 0;
+  background-color: inherit;
+  margin: 0 0 0 0;
+  order: 2;
+  padding: 0 0 0 0;
+  text-align: left;
+  vertical-align: baseline;
+}
+
+td.table-cell-btn {
+  border-right: 1rem;
+  height: 2.5rem;
+  margin-top: 0.3rem;
+  padding-right: 0.5rem;
+  text-align: right;
+  vertical-align: middle;
+}
+
+td.table-cell {
+  height: 2.5rem;
+  vertical-align: middle;
+}
+
+td.table-next {
+  height: 2.5rem;
+  text-align: right;
+}
+
+td.table-prev {
+  height: 2.5rem;
+  text-align: left;
 }
 
 [hidden], template {
@@ -330,121 +496,9 @@ textarea {
   overflow: auto;
 }
 
-.table {
-  display: table;
-  border-collapse: collapse;
-  border-bottom: 0.1rem solid LightSkyBlue;
-  overflow: hidden;
-  padding: 0.5rem;
-  text-align: left;
-  vertical-align: middle;
-  width: 100%;
-}
-
-.table > .thead {
-  display: table-header-group;
-  background-color: LightSkyBlue;
-  color: white;
-  font-weight: bold;
-  height: 3rem;
-}
-
-.table > .tbody {
-  display: table-row-group;
-  overflow-y: auto;
-}
-
-.table > .tfoot {
-  display: table-footer-group;
-  background-color: LightSkyBlue;
-  color: white;
-  font-weight: bold;
-  height: 2.5rem;
-}
-
-.table > .thead > .table-head {
-  display: table-row;
-  font-weight: bold;
-  height: 3rem;
-}
-
-.table > .thead > div.form-head > .table-btn {
-  border-right: 1rem;
-  height: 2.7rem;
-  padding-right: 0.5rem;
-  text-align: right;
-  vertical-align: top;
-}
-
-.table > .tbody > .table-row {
-  display: table-row;
-  height: 2.5rem;
-}
-
-.table > .tbody > .table-row:nth-child(even) {
-  background-color: CornSilk;
-  height: 2.5rem;
-}
-
-.table > .tfoot > .table-foot {
-  display: table-row;
-  font-weight: bold;
-  height: 2.5rem;
-}
-
-.table > .thead > .table-head > .table-heading {
-  display: table-cell;
-  height: 3rem;
-  margin: 1.5rem 1rem 0 0.5rem;
-  vertical-align: middle;
-}
-
-.table > .thead > .table-head > .table-heading-btn {
-  display: table-cell;
-  height: 3rem;
-  text-align: right;
-  vertical-align: middle;
-}
-
-.table > .tbody > .table-row > .table-cell {
-  display: table-cell;
-  height: 2.5rem;
-  vertical-align: middle;
-}
-
-.table > .tbody > .table-row > .table-btn {
-  display: table-cell;
-  height: 2.5rem;
-  margin-top: 0.3rem;
-  text-align: right;
-  vertical-align: baseline;
-}
-
-.table > .tfoot > .table-foot > .table-footer {
-  display: table-cell;
-  height: 2.5rem;
-  text-align: center;
-}
-
-.table > .tfoot > .table-foot > .table-prev {
-  display: table-cell;
-  height: 2.5rem;
-  text-align: left;
-}
-
-.table > .tfoot > .table-foot > .table-next {
-  display: table-cell;
-  height: 2.5rem;
-  text-align: right;
-}
-
-.table > .tfoot > div.form-foot > div.form-footer {
-  display: table-cell;
-  height: .25rem;
-  text-align: center;
-}
-
-button.nav-button, a.nav-button, button.tabLinks {
+a.nav-button, 
+button.nav-button, 
+button.tabLinks {
   background-color: LightSkyBlue;
   border: 0.1rem solid LightSkyBlue;
   border-radius: 0.3rem;
@@ -454,18 +508,23 @@ button.nav-button, a.nav-button, button.tabLinks {
   margin-left: 0.1rem;
   margin-right: 0.1rem;
   margin-top: 0.1rem;
-  padding: 0.3rem 0.3rem;
-  vertical-align: baseline;
+  vertical-align: middle;
+}
+
+a.nav-button, 
+button.tabLinks {
+  padding: 0.3rem;
 }
 
 img.nav-button {
   background-color: inherit;
   border-style: none;
-  height: 1.5rem;
-  padding: 0.1rem 0.1rem 0.1rem 0.1rem;
+  height: 1.3rem;
+  margin: 0 0 0.1rem 0;
+  padding: 0;
   text-align: center;
-  vertical-align: center;
-  width: 1.5rem;
+  vertical-align: top;
+  width: 1.3rem;
 }
 
 ul.nav {
@@ -599,22 +658,6 @@ ul.footer li:last-of-type {
   width: 100%;
 }
 
-#adressen_tbody {
-  max-height: 6rem;
-}
-
-#cvs_tbody {
-  max-height: 20rem;
-}
-
-#funktionen_tbody {
-  max-height: 30rem;
-}
-
-#unterKategorien_tbody {
-  max-height: 30rem;
-}
-
 .tabContent {
   display: none;
   border: 0.1rem solid LightSkyBlue;
@@ -640,50 +683,6 @@ button.tabLinks[active] {
 .tab {
   overflow: hidden;
   background-color: inherit;
-}
-
-div.flex-container {
-  display: flex;
-  align-content: flex-start;
-  align-items: baseline;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
-
-div.flex-item {
-  display: inline-block;
-  flex-grow: 1;
-  flex-shrink: 0;
-  order: 1;
-  margin: 0.1rem 0.1rem 0 0;
-  padding: 0.3rem 0.3rem 0 0;
-}
-
-div.flex-label {
-  display: inline-block;
-  color: Grey;
-  flex-grow: 0;
-  flex-shrink: 0;
-  font-weight: bold;
-  margin: 0.1rem 0 0 0;
-  order: 1;
-  padding: 0.3rem 0 0 0;
-  text-align: left;
-  vertical-align: baseline;
-}
-
-div.flex-control {
-  display: inline-block;
-  align-self: flex-start;
-  flex-grow: 0;
-  flex-shrink: 0;
-  background-color: inherit;
-  margin: 0 0 0 0;
-  order: 2;
-  padding: 0 0 0 0;
-  text-align: left;
-  vertical-align: baseline;
 }
 
 button.selection {
@@ -738,34 +737,42 @@ button.selection {
   color: LightSkyBlue;
 }
 
-.img-display {
+img.img-display {
   border: 0;
-  height: 2.5rem;
-  margin: 0;
-  width: 80%;
+  height: 100%;
+  margin: 0.1rem 0.3rem;
+  padding: 0;
+  width: auto;
+  vertical-align: bottom;
+}
+
+div.img-button {
+  display: inline-flex;
+  vertical-align: top;
 }
 
 button.img-button {
   border: 0;
-  display: inline-flex;
+  display: inline-grid;
   height: 1.2rem;
-  margin: 0;
+  margin: 0.1rem;
   padding: 0;
   width: 1.2rem;
+  vertical-align: top;
 }
 
-div.img-button {
-  display: inline-grid;
-  vertical-align: middle;
+button.img-button:disabled {
+  background-color: LightGrey;
+  color: White;
 }
 
 img.img-button {
   border: 0;
-  height: 100%;
+  display: inline-grid;
+  height: 1.2rem;
   margin: 0;
   padding: 0;
-  text-align: center;
-  width: 100%;
+  width: 1.2rem;
 }
 
 .tooltiptext {
@@ -928,4 +935,33 @@ img.img-button {
 .rtable--flip th:not(:last-child),
 .rtable--flip td:not(:last-child) {
   border-bottom: 0;
+}
+
+ul.nav {
+  display: inline-block;
+  width: 90%;
+}
+
+ul.nav > li {
+  display: inline-block;
+}
+
+#adressen_tbody {
+  height: 6rem;
+  max-height: 6rem;
+}
+
+#cvs_tbody {
+  height: 31.8rem;
+  max-height: 31.8rem;
+}
+
+#funktionen_tbody {
+  height: 31.8rem;
+  max-height: 31.8rem;
+}
+
+#unterKategorien_tbody {
+  height: 31.8rem;
+  max-height: 31.8rem;
 }

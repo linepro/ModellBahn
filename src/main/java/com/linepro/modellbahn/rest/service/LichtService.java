@@ -68,6 +68,7 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
         return new Licht(id, name, bezeichnung, deleted);
     }
 
+    @Override
     @GET
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
@@ -77,6 +78,7 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
         return super.get(name);
     }
 
+    @Override
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
@@ -111,6 +113,7 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
         return super.update(name, entity);
     }
 
+    @Override
     @DELETE
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
@@ -148,7 +151,7 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
 
                 getPersister().update(licht);
 
-                return getResponse(ok(licht));
+                return getResponse(ok(), licht, true, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -175,7 +178,7 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
 
                 getPersister().update(licht);
 
-                return getResponse(ok(licht));
+                return getResponse(ok(), licht, true, true);
             }
         } catch (Exception e) {
             return getResponse(e);

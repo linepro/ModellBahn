@@ -557,11 +557,6 @@ public class ItemPersister<I extends IItem<?>> implements IPersister<I> {
         session.commit();
     }
 
-    @Override
-    public void populateLazyCollections() {
-        
-    }
-
     /**
      * Gets the logger.
      *
