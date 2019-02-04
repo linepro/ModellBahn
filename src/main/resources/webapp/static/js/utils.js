@@ -16,7 +16,8 @@ const EditMode = {
 const NavMenu = {
   BACK: 0,
   REF_DATA: 1,
-  INVENTORY: 2
+  INVENTORY: 2,
+  HOME: 3
 };
 
 const DATE_PATTERN = '^(18[2-9][0-9]|19[0-9]{2}|2[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[0-1])$';
@@ -91,6 +92,7 @@ const reportError = (error) => {
   
   if (!alert) {
     alert = document.createElement('div');
+    alert.id = 'alert-box';
     alert.className = 'alert';
 
     let closer = document.createElement('span');
@@ -256,6 +258,10 @@ class Column {
 
   getLength() {
     return boxSize(this.length);
+  }
+
+  getDisplayLength() {
+    return this.getLength()+'ch';
   }
 
   getHeaderLength() {
@@ -442,6 +448,7 @@ class FileColumn extends Column {
   getControl(cell, entity, editMode) {
     let img = super.getControl(cell, entity, editMode);
     img.className = 'img-display';
+    img.id = cell.id + '_img';
 
     if (entity) {
       img.addEventListener('click', (e) => {
@@ -463,6 +470,7 @@ class FileColumn extends Column {
 	    if (add) {
 	      let btn = getButton(add.href, 'add', (e) => { this.select(e, grid, rowId); });
 	      btn.className = 'img-button';
+	      btn.id = cell.id + '_add';
 	      btn.firstChild.className = 'img-button';
 	      bar.appendChild(btn);
 	    }
@@ -472,6 +480,7 @@ class FileColumn extends Column {
 	    if (remove) {
 	      let btn = getButton(remove.href, 'delete', (e) => { this.remove(e, grid, rowId); });
 	      btn.className = 'img-button';
+        btn.id = cell.id + '_delete';
 	      btn.firstChild.className = 'img-button';
 	      btn.disabled = true;
 	      bar.appendChild(btn);
@@ -498,7 +507,12 @@ class FileColumn extends Column {
   setValue(img, value) {
     img.src = value ? value : 'img/addImage.png';
     img.setAttribute('data-file', value);
-    if (this.delBtn && value) this.delBtn.disabled = false;
+    let delBtn = document.getElementById(img.id.replace('_img','_delete'));
+    if (delBtn) delBtn.disabled = !value;
+  }
+
+  getDisplayLength() {
+    return 'auto';
   }
 
   select(e, grid, rowId) {
@@ -972,9 +986,15 @@ const showModal = (content, big) => {
   let modal = addModal();
 
   let contents = document.getElementById('modal-content');
-  contents.style.height = big ? '90%' : '40rem';
-  contents.style.width = big ? '80%': '60rem';
+  //contents.style.height = big ? '90%' : '40rem';
+  //contents.style.width = big ? '80%': '60rem';
   removeChildren(contents);
+
+  //let closer = document.createElement('span');
+  //closer.className = 'closebtn';
+  //closer.onclick = (e) => { modal.style.display = 'none' };
+  //addText(closer, 'x');
+  //contents.appendChild(closer);
 
   contents.appendChild(content);
   modal.style.display = 'block';
@@ -1136,7 +1156,7 @@ const initializeFormRow = (grid, table) => {
       let tc = document.createElement('div');
       tc.id = getCellId(rowId, column);
       tc.className = 'flex-control';
-      setWidths(tc, column.getLength() + 'ch');
+      setWidths(tc, column.getDisplayLength());
   
       addText(tc, ' ');
   
@@ -1402,10 +1422,12 @@ const addNavBar = (menuStyle) => {
   ul.className = 'nav';
   nav.appendChild(ul);
 
-  navLink(ul, 'Home', siteRoot().replace('/static/', '/index.html'));
-  navLink(ul, 'Back', '#', (e) => { history.go(-1) });
+  if (menuStyle !== NavMenu.HOME) {
+    navLink(ul, 'Home', siteRoot().replace('/static/', '/index.html'));
+    navLink(ul, 'Back', '#', (e) => { history.go(-1) });
+  }
 
-  if (menuStyle === NavMenu.REF_DATA) {
+  if (menuStyle === NavMenu.REF_DATA || menuStyle === NavMenu.HOME) {
     navLink(ul, 'Aufbau', siteRoot()+'aufbauten.html');
     navLink(ul, 'Antrieb', siteRoot()+'antrieben.html');
     navLink(ul, 'Bahnverwaltung', siteRoot()+'bahnverwaltungen.html');
@@ -1425,7 +1447,7 @@ const addNavBar = (menuStyle) => {
     navLink(ul, 'Zug Typ', siteRoot()+'zugtypen.html');
   }
 
-  if (menuStyle === NavMenu.INVENTORY) {
+  if (menuStyle === NavMenu.INVENTORY || menuStyle === NavMenu.HOME) {
     navLink(ul, 'Produkt', siteRoot()+'produkten.html');
     navLink(ul, 'Vorbild', siteRoot()+'vorbilder.html');
     navLink(ul, 'Artikel', siteRoot()+'artikelen.html');

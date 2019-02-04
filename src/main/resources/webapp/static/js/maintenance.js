@@ -185,7 +185,7 @@ class ItemGrid {
       let prevLnk = getLink(jsonData.links, 'previous');
 
       if (prevLnk) {
-        addButton(prev, prevLnk, (e) => { grid.getData(prevLnk) });
+        addButton(prev, prevLnk, (e) => { grid.getData(prevLnk.href) });
       } else {
         addText(prev, '');
       }
@@ -199,7 +199,7 @@ class ItemGrid {
       let nextLnk = getLink(jsonData.links, 'next');
 
       if (nextLnk) {
-        addButton(next, nextLnk, (e) => { grid.getData(nextLnk) });
+        addButton(next, nextLnk, (e) => { grid.getData(nextLnk.href) });
       } else {
         addText(next, '');
       }
