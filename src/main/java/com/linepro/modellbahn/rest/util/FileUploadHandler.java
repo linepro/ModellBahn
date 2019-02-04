@@ -61,9 +61,7 @@ public class FileUploadHandler implements IFileUploadHandler {
     public Path upload(String entityType, String[] entityIds, ContentDisposition fileDetail, InputStream fileData) throws Exception {
         String pathname = fileStore.getItemPath(entityType, entityIds).toString();
 
-        if (!new File(pathname).mkdirs()) {
-            throw new FileNotFoundException(pathname);
-        }
+        new File(pathname).mkdirs();
 
         String fileName = fileDetail.getFileName();
         String extension = null;

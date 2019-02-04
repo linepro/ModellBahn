@@ -152,8 +152,6 @@ class ItemGrid {
           child.addRow();
         });
       }
-
-
     }
 
     grid.renderRow(rowId, jsonData, grid.columns, grid.editMode);

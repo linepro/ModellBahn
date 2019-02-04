@@ -293,8 +293,9 @@ class Column {
 
     if (value) {
       inp.setAttribute('data-value', value);
-      this.setValue(inp, value);
     }
+
+    this.setValue(inp, value);
 
     if (value || entity) {
       inp.disabled = shouldDisable(this.editable, editMode);
@@ -322,8 +323,9 @@ class Column {
   }
 
   setValue(ctl, value) {
-    ctl.setAttribute('data-value', value);
-    ctl.value = value;
+    if (value) {
+      ctl.value = value;
+    }
   }
 
   isButtons() {
@@ -347,7 +349,6 @@ class BoolColumn extends Column {
   }
 
   setValue(chk, value) {
-    super.setValue(chk, value);
     chk.checked = value;
   }
 }
@@ -374,8 +375,9 @@ class NumberColumn extends Column {
   }
 
   setValue(num, value) {
-    super.setValue(num, value);
-    num.value = parseFloat(value).toFixed(this.places);
+    if (value) {
+      num.value = parseFloat(value).toFixed(this.places);
+    }
   }
 }
 
@@ -511,8 +513,7 @@ class FileColumn extends Column {
   defaultImage() {}
 
   setValue(img, value) {
-    super.setValue(img, value);
-    img.src = value ? value : defaultImage();
+    img.src = value ? value : this.defaultImage();
   }
 
   getDisplayLength() {
@@ -580,7 +581,7 @@ class IMGColumn extends FileColumn {
   }
 
   defaultImage() {
-    return getImgSrc('add-picture');
+    return siteRoot() + getImgSrc('add-picture');
   }
 }
 
@@ -590,7 +591,7 @@ class PDFColumn extends FileColumn {
   }
 
   defaultImage() {
-    return getImgSrc('add-document');
+    return siteRoot() + getImgSrc('add-document');
   }
 
   showContent(pdf) {
@@ -656,12 +657,13 @@ class SelectColumn extends Column {
   }
 
   setValue(sel, value) {
-    super.setValue(sel, value);
-    this.dropDown.options.forEach((o) => {
-      if (o.value === value) {
-        sel.value = o.display;
-      }
-    });
+    if (value) {
+      this.dropDown.options.forEach((o) => {
+        if (o.value === value) {
+          sel.value = o.display;
+        }
+      });
+    }
   }
 
   getLength() {
@@ -799,32 +801,6 @@ class DropDownColumn extends SelectColumn {
     super(heading, fieldName, getter, setter, dropDown, editable, required, length + 3.5, dropSize);
   }
 
-  getControl(cell, entity, editMode) {
-    let sel = this.createControl();
-
-    let value;
-
-    if (entity) {
-      value = this.entityValue(entity);
-    }
-
-    if (value !== undefined) {
-      this.setValue(sel, value);
-    }
-
-    if (value || entity) {
-      sel.disabled = shouldDisable(this.editable, editMode);
-    } else {
-      sel.disabled = !(editMode === EditMode.ADD && this.editable !== Editable.NEVER);
-    }
-
-    sel.required = this.required;
-
-    cell.appendChild(sel);
-
-    return sel;
-  }
-
   addOptions(select, dropDown) {
     if (!this.required) {
       addOption(select, undefined, '(nicht benötigt)');
@@ -852,13 +828,14 @@ class DropDownColumn extends SelectColumn {
   }
 
   setValue(sel, value) {
-    super.setValue(sel, value);
-    sel.value = value;
-    for (let i = 0; i < sel.options.length; i++) {
-      let opt = sel.options[i];
-      if (opt.value === value) {
-        opt.selected = true;
-        return;
+    if (value) {
+      sel.value = value;
+      for (let i = 0; i < sel.options.length; i++) {
+        let opt = sel.options[i];
+        if (opt.value === value) {
+          opt.selected = true;
+          return;
+        }
       }
     }
   }
