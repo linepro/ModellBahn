@@ -68,6 +68,7 @@ public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
         return new Kupplung(id, name, bezeichnung, deleted);
     }
 
+    @Override
     @GET
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
@@ -77,6 +78,7 @@ public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
         return super.get(name);
     }
 
+    @Override
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
@@ -112,6 +114,7 @@ public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
         return super.update(name, entity);
     }
 
+    @Override
     @DELETE
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
@@ -149,7 +152,7 @@ public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
 
                 getPersister().update(kupplung);
 
-                return getResponse(ok(kupplung));
+                return getResponse(ok(), kupplung, true, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -176,7 +179,7 @@ public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
 
                 getPersister().update(kupplung);
 
-                return getResponse(ok(kupplung));
+                return getResponse(ok(), kupplung, true, true);
             }
         } catch (Exception e) {
             return getResponse(e);

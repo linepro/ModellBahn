@@ -71,7 +71,7 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
             @JsonDeserialize(using = ZugTypDeserializer.class) IZugTyp zugTyp,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
-            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         return new Zug(id, name, bezeichnung, zugTyp, deleted);
     }
 
@@ -87,10 +87,11 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
             @JsonProperty(value = ApiNames.POSITION) Integer position,
             @JsonProperty(value = ApiNames.ARTIKEL)
             @JsonDeserialize(using = ArtikelDeserializer.class) IArtikel artikel,
-            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         return new ZugConsist(id,  zug, position, artikel, deleted);
     }
 
+    @Override
     @GET
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
@@ -100,6 +101,7 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
         return super.get(name);
     }
 
+    @Override
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
@@ -136,6 +138,7 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
         return super.update(name, entity);
     }
 
+    @Override
     @DELETE
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
@@ -230,7 +233,6 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
 
             zug.removeConsist(zugConsist);
 
-            //getZugConsistPersister().delete(zugConsist);
             // TODO: resequence position for remaining items
             
             getPersister().update(zug);

@@ -466,7 +466,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
               .stream()
               .map(ConstraintViolation::getMessage)
               .collect(Collectors.joining( ", " ));
-            return getResponse(badRequest(message.toString()));
+            return getResponse(badRequest(message));
         } else  if (e instanceof EntityExistsException) {
             return getResponse(badRequest(e.getMessage()));
         } else if (e instanceof EntityNotFoundException) {

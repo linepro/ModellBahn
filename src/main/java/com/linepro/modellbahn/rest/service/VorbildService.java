@@ -119,7 +119,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
             @JsonProperty(value = ApiNames.DREHGESTELLBAUART) String drehgestellbauart,
             @JsonProperty(value = ApiNames.ANMERKUNG) String anmerkung,
             @JsonProperty(value = ApiNames.ABBILDUNG) String abbildungStr,
-            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         LeistungsUbertragung leistungsUbertragung = LeistungsUbertragung.valueOf(leistungsUbertragungStr);
 
         return new Vorbild(id, gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit, anzahl, betreibsNummer,
@@ -130,6 +130,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
                 sitzPlatzeKL4, aufbauten, triebkopf, mittelwagen, drehgestellbauart, deleted);
     }
 
+    @Override
     @GET
     @Path(ApiPaths.VORBILD_PART)
     @Produces(MediaType.APPLICATION_JSON)
@@ -143,6 +144,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
         }
     }
 
+    @Override
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
@@ -215,6 +217,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
         return super.update(name, entity);
     }
 
+    @Override
     @DELETE
     @Path(ApiPaths.VORBILD_PART)
     @Produces(MediaType.APPLICATION_JSON)
@@ -255,7 +258,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
 
                 getPersister().update(vorbild);
 
-                return getResponse(ok(vorbild));
+                return getResponse(ok(), vorbild, true, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -282,7 +285,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
 
                 getPersister().update(vorbild);
 
-                return getResponse(ok(vorbild));
+                return getResponse(ok(), vorbild, true, true);
             }
         } catch (Exception e) {
             return getResponse(e);

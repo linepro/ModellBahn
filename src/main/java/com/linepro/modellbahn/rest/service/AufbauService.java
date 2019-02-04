@@ -70,6 +70,7 @@ public class AufbauService extends AbstractItemService<NameKey, IAufbau> {
         return new Aufbau(id, name, bezeichnung, deleted);
     }
 
+    @Override
     @GET
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
@@ -79,6 +80,7 @@ public class AufbauService extends AbstractItemService<NameKey, IAufbau> {
         return super.get(name);
     }
 
+    @Override
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
@@ -114,6 +116,7 @@ public class AufbauService extends AbstractItemService<NameKey, IAufbau> {
         return super.update(name, entity);
     }
 
+    @Override
     @DELETE
     @Path(ApiPaths.NAME_PART)
     @Produces(MediaType.APPLICATION_JSON)
@@ -156,7 +159,7 @@ public class AufbauService extends AbstractItemService<NameKey, IAufbau> {
 
                 getPersister().update(aufbau);
 
-                return getResponse(ok(aufbau));
+                return getResponse(ok(), aufbau, true, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -188,7 +191,7 @@ public class AufbauService extends AbstractItemService<NameKey, IAufbau> {
 
                 getPersister().update(aufbau);
 
-                return getResponse(ok(aufbau));
+                return getResponse(ok(), aufbau, true, true);
             }
         } catch (Exception e) {
             return getResponse(e);

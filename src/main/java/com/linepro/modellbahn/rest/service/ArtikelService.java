@@ -125,6 +125,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
                 artikelNr, bezeichnung, anmerkung, beladung, status, deleted);
     }
 
+    @Override
     @GET
     @Path(ApiPaths.ARTIKEL_PART)
     @Produces(MediaType.APPLICATION_JSON)
@@ -134,6 +135,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
         return super.get(new ArtikelKey(id));
     }
 
+    @Override
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
@@ -184,6 +186,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
         return super.update(new ArtikelKey(artikelId), entity);
     }
 
+    @Override
     @DELETE
     @Path(ApiPaths.ARTIKEL_PART)
     @Produces(MediaType.APPLICATION_JSON)
@@ -226,7 +229,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
 
                 getPersister().update(artikel);
 
-                return getResponse(ok(artikel));
+                return getResponse(ok(), artikel, true, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -256,7 +259,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
 
                 getPersister().update(artikel);
 
-                return getResponse(ok(artikel));
+                return getResponse(ok(), artikel, true, true);
             }
         } catch (Exception e) {
             return getResponse(e);
