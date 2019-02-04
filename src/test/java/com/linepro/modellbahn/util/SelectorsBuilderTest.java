@@ -18,13 +18,14 @@ public class SelectorsBuilderTest {
     class Base {
         private Integer id = 1;
 
-        public void setId(Integer id) { this.id = id; }
+        private String name = "fred";
 
         Integer getId() { return id; }
+        public void setId(Integer id) { this.id = id; }
 
         @Basic
-        String getName() { return "fred"; }
-        public void setName(String name) {}
+        String getName() { return name; }
+        public void setName(String name) { this.name = name; }
     }
     
     public class Annotated extends Base {

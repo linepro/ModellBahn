@@ -79,7 +79,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.FAHRSTUFE) Integer fahrstufe,
             @JsonProperty(value = ApiNames.STATUS) String statusStr,
-            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         DecoderStatus status = DecoderStatus.valueOf(statusStr);
 
         return new Decoder(id, decoderTyp, protokoll, decoderId, bezeichnung, fahrstufe, status, deleted);
@@ -97,7 +97,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
             @JsonProperty(value = ApiNames.REIHE) Integer reihe,
             @JsonProperty(value = ApiNames.ADRESS_TYP) String adressTypStr,
             @JsonProperty(value = ApiNames.ADRESS) Integer adress,
-            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         AdressTyp adressTyp = AdressTyp.valueOf(adressTypStr);
 
         return new DecoderAdress(id, decoder, reihe, adressTyp, adress, deleted);

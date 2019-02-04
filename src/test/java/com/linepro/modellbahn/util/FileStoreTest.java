@@ -39,7 +39,7 @@ public class FileStoreTest {
     private Path root;
 
     @BeforeMethod
-    public void setUp() throws Exception {
+    public void setUp() {
         root = Paths.get( System.getProperty("java.io.tmpdir"), "FileStoreTest", LocalDate.now().format(null));
 
         fileStore = new FileStore();

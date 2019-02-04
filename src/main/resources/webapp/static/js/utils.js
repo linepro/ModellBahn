@@ -292,6 +292,7 @@ class Column {
     }
 
     if (value) {
+      inp.setAttribute('data-value', value);
       this.setValue(inp, value);
     }
 
@@ -321,6 +322,7 @@ class Column {
   }
 
   setValue(ctl, value) {
+    ctl.setAttribute('data-value', value);
     ctl.value = value;
   }
 
@@ -345,6 +347,7 @@ class BoolColumn extends Column {
   }
 
   setValue(chk, value) {
+    super.setValue(chk, value);
     chk.checked = value;
   }
 }
@@ -371,6 +374,7 @@ class NumberColumn extends Column {
   }
 
   setValue(num, value) {
+    super.setValue(num, value);
     num.value = parseFloat(value).toFixed(this.places);
   }
 }
@@ -453,7 +457,7 @@ class FileColumn extends Column {
     if (entity) {
       img.addEventListener('click', (e) => {
     	  let img = e.target;
-    	  let file = img.getAttribute('data-file');
+    	  let file = img.getAttribute('data-value');
     	  if (file) {
     		  this.showContent(file);
     		  }
@@ -482,7 +486,7 @@ class FileColumn extends Column {
 	      btn.className = 'img-button';
         btn.id = cell.id + '_delete';
 	      btn.firstChild.className = 'img-button';
-	      btn.disabled = true;
+	      btn.disabled = !img.getAttribute('data-value');
 	      bar.appendChild(btn);
         this.delBtn = btn;
 	    }
@@ -497,18 +501,18 @@ class FileColumn extends Column {
   }
 
   createControl() {
-    return getImg('add-picture');
+    return document.createElement('img');
   }
 
   getControlValue(img) {
-    return img.getAttribute('data-file');
+    return img.getAttribute('data-value');
   }
 
+  defaultImage() {}
+
   setValue(img, value) {
-    img.src = value ? value : 'img/addImage.png';
-    img.setAttribute('data-file', value);
-    let delBtn = document.getElementById(img.id.replace('_img','_delete'));
-    if (delBtn) delBtn.disabled = !value;
+    super.setValue(img, value);
+    img.src = value ? value : defaultImage();
   }
 
   getDisplayLength() {
@@ -574,6 +578,10 @@ class IMGColumn extends FileColumn {
     img.src = file;
     showModal(img);
   }
+
+  defaultImage() {
+    return getImgSrc('add-picture');
+  }
 }
 
 class PDFColumn extends FileColumn {
@@ -581,9 +589,8 @@ class PDFColumn extends FileColumn {
     super(heading, fieldName, getter, 'application/pdf', editable, required);
   }
 
-  setValue(pdf, value) {
-    pdf.src = value ? 'img/pdf.png' : 'img/none.png';
-    pdf.setAttribute('data-file', value);
+  defaultImage() {
+    return getImgSrc('add-document');
   }
 
   showContent(pdf) {
@@ -645,11 +652,11 @@ class SelectColumn extends Column {
   }
 
   getControlValue(sel) {
-    return sel.getAttribute('data-name');
+    return sel.getAttribute('data-value');
   }
 
   setValue(sel, value) {
-    sel.setAttribute('data-name', value);
+    super.setValue(sel, value);
     this.dropDown.options.forEach((o) => {
       if (o.value === value) {
         sel.value = o.display;
@@ -689,7 +696,7 @@ class SelectColumn extends Column {
     let i = 0;
     sel.options(inp.value).forEach((o) => {
       let autoItem = document.createElement('div');
-      autoItem.setAttribute('data-name', o.value);
+      autoItem.setAttribute('data-value', o.value);
       autoItem.className = 'autocomplete-items';
       autoItem.style.top = (dims.value * i) + dims.units;
       addText(autoItem, sel.caption(inp.value, o));
@@ -728,7 +735,7 @@ class SelectColumn extends Column {
     let inp = div.getElementsByClassName('autocomplete')[0];
 
     inp.value = opt.innerText;
-    inp.setAttribute('data-name', opt.getAttribute('data-name'));
+    inp.setAttribute('data-value', opt.getAttribute('data-value'));
 
     closeAutoLists();
   };
@@ -801,7 +808,7 @@ class DropDownColumn extends SelectColumn {
       value = this.entityValue(entity);
     }
 
-    if (value) {
+    if (value !== undefined) {
       this.setValue(sel, value);
     }
 
@@ -845,6 +852,7 @@ class DropDownColumn extends SelectColumn {
   }
 
   setValue(sel, value) {
+    super.setValue(sel, value);
     sel.value = value;
     for (let i = 0; i < sel.options.length; i++) {
       let opt = sel.options[i];
@@ -1424,7 +1432,7 @@ const addNavBar = (menuStyle) => {
 
   if (menuStyle !== NavMenu.HOME) {
     navLink(ul, 'Home', siteRoot().replace('/static/', '/index.html'));
-    navLink(ul, 'Back', '#', (e) => { history.go(-1) });
+    navLink(ul, 'Back', '#', (e) => { history.back() });
   }
 
   if (menuStyle === NavMenu.REF_DATA || menuStyle === NavMenu.HOME) {

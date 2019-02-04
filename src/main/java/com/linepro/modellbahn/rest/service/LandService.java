@@ -58,7 +58,7 @@ public class LandService extends AbstractItemService<NameKey, ILand> {
                     @JsonProperty(value = ApiNames.WAHRUNG)
                     @JsonDeserialize(using = WahrungDeserializer.class) IWahrung wahrung,
                     @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
-                    @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
+                    @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         return new Land(id, name, bezeichnung, wahrung, deleted);
     }
 

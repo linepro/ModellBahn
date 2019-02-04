@@ -92,7 +92,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             @JsonProperty(value = ApiNames.GERAUSCH) Boolean sound,
             @JsonProperty(value = ApiNames.KONFIGURATION) String konfigurationStr,
             @JsonProperty(value = ApiNames.STECKER) String steckerStr,
-            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         Konfiguration konfiguration = Konfiguration.valueOf(konfigurationStr);
         Stecker stecker = Stecker.valueOf(steckerStr);
 
@@ -112,7 +112,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             @JsonProperty(value = ApiNames.ADRESS_TYP) String adressTypStr,
             @JsonProperty(value = ApiNames.SPAN) Integer span,
             @JsonProperty(value = ApiNames.WERKSEINSTELLUNG) Integer werkeinstellung,
-            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         AdressTyp adressTyp = AdressTyp.valueOf(adressTypStr);
         
         return new DecoderTypAdress(id, decoderTyp, index, adressTyp, span, werkeinstellung, deleted);
@@ -132,7 +132,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             @JsonProperty(value = ApiNames.CV) Integer cv,
             @JsonProperty(value = ApiNames.MINIMAL) Integer max,
             @JsonProperty(value = ApiNames.MAXIMAL) Integer min,
-            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         return new DecoderTypCV(id, decoderTyp, cv, bezeichnung, cv, min, max, deleted);
     }
 
@@ -149,7 +149,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             @JsonProperty(value = ApiNames.NAMEN) String funktion,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
             @JsonProperty(value = ApiNames.PROGRAMMABLE) Boolean programmable,
-            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         return new DecoderTypFunktion(id, decoderTyp, reihe, funktion, bezeichnung, programmable,
                 deleted);
     }

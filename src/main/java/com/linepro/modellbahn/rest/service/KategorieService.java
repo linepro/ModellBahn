@@ -92,7 +92,7 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
             @JsonDeserialize(using = KategorieDeserializer.class) IKategorie kategorie,
             @JsonProperty(value = ApiNames.NAMEN) String name,
             @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
-            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) throws Exception {
+            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
         return new UnterKategorie(id, kategorie, name, bezeichnung, deleted);
     }
 

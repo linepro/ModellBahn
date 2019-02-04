@@ -1,6 +1,5 @@
 package com.linepro.modellbahn.util.i18n;
 
-import java.io.IOException;
 import javax.annotation.Priority;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -16,7 +15,7 @@ public class RequestLocaleFilter implements ContainerRequestFilter {
   private HttpHeaders headers;
 
   @Override
-  public void filter(ContainerRequestContext requestContext) throws IOException {
+  public void filter(ContainerRequestContext requestContext) {
     ThreadLocale.set(headers.getAcceptableLanguages().get(0));
   }
 }

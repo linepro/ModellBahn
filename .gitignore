@@ -1,23 +1,22 @@
 # Eclipse artefacts
 .metadata/
 .settings/
-.settings/*.prefs
-.svn/
-.idea/
-bin/
 eclipse/
-target/
-test-output/
 .checkstyle
 .classpath
 .project
+
+# Intellij artefacts
+.idea/
 .DS_Store
-
-# java artefacts
-*.class
-
-*.ear
 *.iml
+
+# java build artefacts
+bin/
+target/
+test-output/
+*.class
+*.ear
 *.jar
 *.war
 
@@ -29,22 +28,20 @@ pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
 pom.xml.next
-release.properties
-dependency-reduced-pom.xml
 buildNumber.properties
-
-# python artefacts
-*.pyc
+dependency-reduced-pom.xml
+release.properties
 
 # ModellBahn artefacts
-*.log
-/modellbahn.mv.db
-/modellbahn.trace.db
 docs/
 /modellbahn.lock.db
-/webapp/
+/modellbahn.mv.db
+/modellbahn.trace.db
+/src/main/resources/webapp/store
+/webapp
+*.log
 
-# Windows shit
+# Windows stuff
 Thumbs.db
 
 # Unused icons
@@ -52,21 +49,8 @@ src/main/resources/webapp/static/img/18/
 src/main/resources/webapp/static/img/24/
 src/main/resources/webapp/static/img/36/
 src/main/resources/webapp/static/img/48/
-/my-app/
-/Capture.JPG
-/Lokomotive.JPG
-/Lokomotiven.JPG
-/Vorbild (dampflok).JPG
-/Vorbild (diesellok).JPG
-/Vorbild (elok).JPG
-/Vorbild (personen wagen).JPG
-/Vorbild (treibwagen).JPG
-/Vorbild (wagen).JPG
-/Vorbild.JPG
-/Vorbilder.JPG
 
-react
-/produkt.html
-/jaxrs-ri-2.27.zip
-/jersey-examples-2.27-all.zip
-/Tests/
+# Node stuff
+node_modules/
+package.json
+package-lock.json

@@ -4,6 +4,7 @@
 package com.linepro.modellbahn.rest.util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -58,7 +59,11 @@ public class FileUploadHandler implements IFileUploadHandler {
      */
     @Override
     public Path upload(String entityType, String[] entityIds, ContentDisposition fileDetail, InputStream fileData) throws Exception {
-        new File(fileStore.getItemPath(entityType, entityIds).toString()).mkdirs();
+        String pathname = fileStore.getItemPath(entityType, entityIds).toString();
+
+        if (!new File(pathname).mkdirs()) {
+            throw new FileNotFoundException(pathname);
+        }
 
         String fileName = fileDetail.getFileName();
         String extension = null;

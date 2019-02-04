@@ -15,7 +15,7 @@ const defaultRowSetter = (rowId, columns) => {
       if (column.setter) {
         let value = column.getValue(document.getElementById(getFieldId(rowId, column.fieldName)));
 
-        if (value) {
+        if (value !== undefined) {
           column.setter(data, value, column.fieldName);
         }
       }
@@ -112,14 +112,6 @@ class ItemGrid {
     } else if (grid.editMode === EditMode.ADD) {
       grid.initGrid(grid.rowCount);
       grid.addRow();
-
-      if (grid.children) {
-        grid.children.forEach(child => {
-          child.editMode = grid.editMode;
-          child.initGrid(child.rowCount);
-          child.addRow();
-        });
-      }
     } else {
       grid.getData(grid.current);
     }
@@ -144,13 +136,27 @@ class ItemGrid {
   renderUpdate(jsonData, rowId) {
     let grid = this;
 
-    grid.renderRow(rowId, jsonData, grid.columns, grid.editMode);
-
     if (grid.editMode === EditMode.ADD) {
       let self = getLink(jsonData.links, 'self').href;
       grid.current = self;
+      grid.apiUrl = self;
       grid.editMode = EditMode.UPDATE;
+
+      history.replaceState({}, null, window.location.href.replace('new=true', self));
+
+      if (grid.children) {
+        grid.children.forEach(child => {
+          child.editMode = grid.editMode;
+          child.setParent(grid);
+          child.initGrid(child.rowCount);
+          child.addRow();
+        });
+      }
+
+
     }
+
+    grid.renderRow(rowId, jsonData, grid.columns, grid.editMode);
   }
   
   renderData(jsonData) {
