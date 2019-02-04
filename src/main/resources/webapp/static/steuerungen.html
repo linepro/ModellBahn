@@ -8,47 +8,24 @@
 <script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/fields.js"></script>
-<script type="text/javascript" src="js/maintenance.js"></script>
+<script type="text/javascript" src="js/grids.js"></script>
 <script type="text/javascript">
   const steuerung = new NamedItemGrid("steuerung", "steuerung");
 
   async function init() {
-    await steuerung.init();
+      addNavBar(NavMenu.REF_DATA);
+      addFooter();
+      await steuerung.init();
   }
 </script>
 <title>Steuerungen</title>
 </head>
-<body onload="init()">
+<body onLoad="init()">
     <header>
-        <nav>
-            <ul class="nav">
-                <li><a class="nav-button" href='../index.html'>Home</a></li>
-                <li><a class="nav-button" href="#" onclick="history.go(-1)">Back</a></li>
-                <li><a class="nav-button" href="aufbauten.html">Aufbau</a></li>
-                <li><a class="nav-button" href="antrieben.html">Antrieb</a></li>
-                <li><a class="nav-button" href="bahnverwaltungen.html">Bahnverwaltung</a></li>  
-                <li><a class="nav-button" href="decoderTypen.html">Decoder Typ</a></li>
-                <li><a class="nav-button" href="herstellern.html">Hersteller</a></li>
-                <li><a class="nav-button" href="kategorien.html">Katogorie</a></li>
-                <li><a class="nav-button" href="kupplungen.html">Kupplung</a></li>
-                <li><a class="nav-button" href="lander.html">Land</a></li>
-                <li><a class="nav-button" href="lichten.html">Licht</a></li>
-                <li><a class="nav-button" href="massstaben.html">Maßstab</a></li>
-                <li><a class="nav-button" href="motorTypen.html">Motor Typ</a></li>
-                <li><a class="nav-button" href="protokollen.html">Protokoll</a></li>
-                <li><a class="nav-button" href="sonderModellen.html">SonderModell</a></li>
-                <li><a class="nav-button" href="spurweiten.html">Spurwiete</a></li>
-                <li><a class="nav-button" href="steuerungen.html">Steuerung</a></li>
-                <li><a class="nav-button" href="wahrungen.html">Wahrung</a></li>
-                <li><a class="nav-button" href="zugtypen.html">Zug Typ</a></li>
-            </ul>
-        </nav>
-        <hr class="highlight" />
     </header>
-    	
+
 	<section>
 		<article>
-			<h3 id="heading">Steuerung</h3>
 			<div id="data">
 				<div id="steuerungSite">
 				</div>
@@ -57,15 +34,6 @@
 	</section>
 
     <footer>
-        <div id="footer">
-            <div>
-                <hr class="highlight" />
-                <ul class="footer">
-	                <li>Copyright &copy; 2018, 2019 John &amp; Andrew Goff</li>
-	                <li><a id="license" class="nav-button" href="#" onclick="about()">&Uuml;ber</a></li>
-                </ul>
-            </div>
-        </div>
     </footer>
 </body>
 </html>

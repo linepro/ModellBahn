@@ -8,7 +8,7 @@
 <script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/fields.js"></script>
-<script type="text/javascript" src="js/maintenance.js"></script>
+<script type="text/javascript" src="js/grids.js"></script>
 <script type="text/javascript">
   const adressColumns = [
     INDEX(Editable.ADD, true),
@@ -58,6 +58,8 @@
   const decoderTyp = new ItemGrid(1, fetchUrl("decoderTyp"), "decoderTyp", columns, Paged.FORM, EditMode.UPDATE, children);
 
   async function init() {
+      addNavBar(NavMenu.REF_DATA);
+      addFooter();
     await HERSTELLER_DROP.init()
       .then(() => PROTOKOLL_DROP.init())
       .then(() => KONFIGURATION_DROP.init())
@@ -72,13 +74,6 @@
 </head>
 <body onload="init()">
     <header>
-        <nav>
-            <ul class="nav">
-                <li><a class="nav-button" href='../index.html'>Home</a></li>
-                <li><a class="nav-button" href="#" onclick="history.go(-1)">Back</a></li>
-            </ul>
-        </nav>
-        <hr class="highlight" />
     </header>
 
     <section>
@@ -113,15 +108,6 @@
     </section>
 
     <footer>
-        <div id="footer">
-            <div>
-                <hr class="highlight" />
-                <ul class="footer">
-                    <li>Copyright &copy; 2018, 2019 John &amp; Andrew Goff</li>
-                    <li><a id="license" class="nav-button" href="#" onclick="about()">&Uuml;ber</a></li>
-                </ul>
-            </div>
-        </div>
     </footer>
 </body>
 </html>

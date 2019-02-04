@@ -67,207 +67,207 @@ const defaultNameGetter = (entity, fieldName) => { return entity[fieldName] ? en
 const defaultNameSetter = (entity, value, fieldName) => { return entity[fieldName] = { name: value } };
 
 const ACHSFOLG_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) => 
- { return new DropDownColumn('Achsfolg', 'achsfolg', getter, setter, ACHSFOLG_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn(getMessage('ACHSFOLG'), 'achsfolg', getter, setter, ACHSFOLG_DROP, editable, required, 30, 5) };
 const ADRESS_TYP_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) => 
- { return new DropDownColumn('Typ', 'adressTyp', getter, setter, ADRESS_TYP_DROP, editable, required, 5) };
+ { return new DropDownColumn(getMessage('ADRESS_TYP'), 'adressTyp', getter, setter, ADRESS_TYP_DROP, editable, required, 5) };
 const ANDERUNGS_TYP_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new DropDownColumn('Typ', 'anderungsTyp', getter, setter, ANDERUNGS_TYP_DROP, editable, required) };
+ { return new DropDownColumn(getMessage('ANDERUNGS_TYP'), 'anderungsTyp', getter, setter, ANDERUNGS_TYP_DROP, editable, required) };
 const ANTRIEB_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Antrieb', 'antrieb', getter, setter, ANTRIEB_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn(getMessage('ANTRIEB'), 'antrieb', getter, setter, ANTRIEB_DROP, editable, required, 30, 5) };
 const ARTIKEL_SELECT = (editable, required, getter = artikelIdGetter, setter = artikelIdSetter) =>
- { return new DropDownColumn('Artikel', 'artikel', getter, setter, ARTIKEL_DROP, editable, required, 50, 5) };
+ { return new DropDownColumn(getMessage('ARTIKEL'), 'artikel', getter, setter, ARTIKEL_DROP, editable, required, 50, 5) };
 const AUFBAU_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Aufbau', 'aufbau', getter, setter, AUFBAU_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn(getMessage('AUFBAU'), 'aufbau', getter, setter, AUFBAU_DROP, editable, required, 30, 5) };
 const BAHNVERWALTUNG_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Bahnverwaltung', 'bahnverwaltung', getter, setter, BAHNVERWALTUNG_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn(getMessage('BAHNVERWALTUNG'), 'bahnverwaltung', getter, setter, BAHNVERWALTUNG_DROP, editable, required, 30, 5) };
 const DECODER_SELECT = (editable, required, getter = decoderIdGetter, setter = decoderIdSetter) =>
- { return new DropDownColumn('Decoder', 'decoder', getter, setter, DECODER_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn(getMessage('DECODER'), 'decoder', getter, setter, DECODER_DROP, editable, required, 30, 5) };
 const DECODER_TYP_SELECT = (editable, required, getter = decoderTypGetter, setter = decoderTypSetter) =>
- { return new DropDownColumn('Decoder Typ', 'decoderTyp', getter, setter, DECODER_TYP_DROP, editable, required, 50, 5) };
+ { return new DropDownColumn(getMessage('DECODER_TYP'), 'decoderTyp', getter, setter, DECODER_TYP_DROP, editable, required, 50, 5) };
 const EPOCH_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Epoch', 'epoch', getter, setter, EPOCH_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn(getMessage('EPOCH'), 'epoch', getter, setter, EPOCH_DROP, editable, required, 30, 5) };
 const GATTUNG_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Gattung', 'gattung', getter, setter, GATTUNG_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn(getMessage('GATTUNG'), 'gattung', getter, setter, GATTUNG_DROP, editable, required, 30, 5) };
 const HERSTELLER_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Hersteller', 'hersteller', getter, setter, HERSTELLER_DROP, editable, required) };
+ { return new DropDownColumn(getMessage('HERSTELLER'), 'hersteller', getter, setter, HERSTELLER_DROP, editable, required) };
 const KONFIGURATION_SELECT = (editable, required = true, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new DropDownColumn('Konfiguration', 'konfiguration', getter, setter, KONFIGURATION_DROP, editable, required) };
+ { return new DropDownColumn(getMessage('KONFIGURATION'), 'konfiguration', getter, setter, KONFIGURATION_DROP, editable, required) };
 const KUPPLUNG_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Kupplung', 'kupplung', getter, setter, KUPPLUNG_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn(getMessage('KUPPLUNG'), 'kupplung', getter, setter, KUPPLUNG_DROP, editable, required, 30, 5) };
 const LEISTUNGSUBERTRAGUNG_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new DropDownColumn('Leistungsübertragung', 'leistungsubertragung', getter, setter, LEISTUNGSUBERTRAGUNG_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn(getMessage('LEISTUNGSUBERTRAGUNG'), 'leistungsubertragung', getter, setter, LEISTUNGSUBERTRAGUNG_DROP, editable, required, 30, 5) };
 const LICHT_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Licht', 'licht', getter, setter, LICHT_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn(getMessage('LICHT'), 'licht', getter, setter, LICHT_DROP, editable, required, 30, 5) };
 const MASSSTAB_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Maßstab', 'massstab', getter, setter, MASSSTAB_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn(getMessage('MASSSTAB'), 'massstab', getter, setter, MASSSTAB_DROP, editable, required, 30, 5) };
 const MOTOR_TYP_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('MotorTyp', 'motorTyp', getter, setter, MOTOR_TYP_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn(getMessage('MOTORTYP'), 'motorTyp', getter, setter, MOTOR_TYP_DROP, editable, required, 30, 5) };
 const PRODUKT_SELECT = (editable, required, getter = produktGetter, setter = produktSetter) =>
- { return new DropDownColumn('Produkt', 'produkt', getter, setter, PRODUKT_DROP, editable, required, 50, 5) };
+ { return new DropDownColumn(getMessage('PRODUKT'), 'produkt', getter, setter, PRODUKT_DROP, editable, required, 50, 5) };
 const PROTOKOLL_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Protokoll', 'protokoll', getter, setter, PROTOKOLL_DROP, editable, required) };
+ { return new DropDownColumn(getMessage('PROTOKOLL'), 'protokoll', getter, setter, PROTOKOLL_DROP, editable, required) };
 const SONDER_MODELL_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Sonder Modell', 'sonderModell', getter, setter, SONDER_MODELL_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn(getMessage('SONDER_MODELL'), 'sonderModell', getter, setter, SONDER_MODELL_DROP, editable, required, 30, 5) };
 const SPURWEITE_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Spurweite', 'spurweite', getter, setter, SPURWEITE_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn(getMessage('SPURWEITE'), 'spurweite', getter, setter, SPURWEITE_DROP, editable, required, 30, 5) };
 const STATUS_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new DropDownColumn('Status', 'status', getter, setter, STATUS_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn(getMessage('STATUS'), 'status', getter, setter, STATUS_DROP, editable, required, 30, 5) };
 const STECKER_SELECT = (editable = Editable.UPDATE, required = true, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new DropDownColumn('Stecker', 'stecker', getter, setter, STECKER_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn(getMessage('STECKER'), 'stecker', getter, setter, STECKER_DROP, editable, required, 30, 5) };
 const STEUERUNG_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Steuerung', 'steuerung', getter, setter, STEUERUNG_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn(getMessage('STEUERUNG'), 'steuerung', getter, setter, STEUERUNG_DROP, editable, required, 30, 5) };
 const TEIL_SELECT = (editable = Editable.UPDATE, required = false, getter = produktTeilGetter, setter = produktTeilSetter) =>
- { return new DropDownColumn('Teil', 'teil', getter, setter, PRODUKT_DROP, editable, required, 50, 5) };
+ { return new DropDownColumn(getMessage('TEIL'), 'teil', getter, setter, PRODUKT_DROP, editable, required, 50, 5) };
 const UNTER_KATEGORIE_SELECT = (editable = Editable.UPDATE, required = false, getter = unterKategorieGetter, setter = unterKategorieSetter) =>
- { return new DropDownColumn('Kategorie', 'unterKategorie', getter, setter, UNTER_KATEGORIE_DROP, editable, required) };
+ { return new DropDownColumn(getMessage('KATEGORIE'), 'unterKategorie', getter, setter, UNTER_KATEGORIE_DROP, editable, required) };
 const VORBILD_SELECT = (editable = Editable.UPDATE, required = false, getter = vorbildGetter, setter = vorbildSetter) =>
- { return new DropDownColumn('Vorbild', 'vorbild', getter, setter, VORBILD_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn(getMessage('VORBILD'), 'vorbild', getter, setter, VORBILD_DROP, editable, required, 30, 5) };
 const WAHRUNG_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Wahrung', 'wahrung', getter, setter, WAHRUNG_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn(getMessage('WAHRUNG'), 'wahrung', getter, setter, WAHRUNG_DROP, editable, required, 30, 5) };
 const ZUG_TYP_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn('Typ', 'typ', getter, setter, ZUG_TYP_DROP, editable, required, 30, 5) };
+ { return new DropDownColumn(getMessage('ZUG_TYP'), 'typ', getter, setter, ZUG_TYP_DROP, editable, required, 30, 5) };
 
 const ABBILDUNG = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter) =>
- { return new IMGColumn('Abbildung', 'abbildung', getter, editable, required) };
+ { return new IMGColumn(getMessage('ABBILDUNG'), 'abbildung', getter, editable, required) };
 const ADRESS = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn("Adress", "adress", getter, setter, editable, required, 65535, 1) };
+ { return new NumberColumn(getMessage('ADRESS'), 'adress', getter, setter, editable, required, 65535, 1) };
 const ANDERUNGS_DATUM = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new DateColumn('Datum', 'anderungsDatum', getter, setter, editable, required, 5) };
+ { return new DateColumn(getMessage('DATUM'), 'anderungsDatum', getter, setter, editable, required, 5) };
 const ANDERUNGS_ID = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Änderung', 'anderungId', getter, setter, editable, required, 30, 0) };
+ { return new NumberColumn(getMessage('ANDERUNG'), 'anderungId', getter, setter, editable, required, 30, 0) };
 const ANLEITUNGEN = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter) =>
- { return new PDFColumn('Anleitungen', 'anleitungen', getter, editable, required) };
+ { return new PDFColumn(getMessage('ANLEITUNGEN'), 'anleitungen', getter, editable, required) };
 const ANMERKUNG = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new TextColumn('Anmerkung', 'anmerkung', getter, setter, editable, required, 30) };
+ { return new TextColumn(getMessage('ANMERKUNG'), 'anmerkung', getter, setter, editable, required, 30) };
 const ANFAHRZUGKRAFT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Anfahrzugkraft', 'anfahrzugkraft', getter, setter, editable, required, 300000, 1) };
+ { return new NumberColumn(getMessage('ANFAHRZUGKRAFT'), 'anfahrzugkraft', getter, setter, editable, required, 300000, 1) };
 const ANZAHL = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Anzahl', 'anzahl', getter, setter, editable, required, 300000, 1) };
+ { return new NumberColumn(getMessage('ANZAHL'), 'anzahl', getter, setter, editable, required, 300000, 1) };
 const ARTIKEL = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new TextColumn('Artikel', 'artikelId', getter, setter, editable, required, 5) };
+ { return new TextColumn(getMessage('ARTIKEL'), 'artikelId', getter, setter, editable, required, 5) };
 const AUFBAU = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new TextColumn('Aufbau', 'aufbau', getter, setter, editable, required, 5) };
+ { return new TextColumn(getMessage('AUFBAU'), 'aufbau', getter, setter, editable, required, 5) };
 const AUSSERDIENST = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new DateColumn('Außerdienst', 'ausserdienst', getter, setter, editable, required) };
+ { return new DateColumn(getMessage('AUSSERDIENST'), 'ausserdienst', getter, setter, editable, required) };
 const BAUZEIT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new DateColumn('Bauzeit', 'bauzeit', getter, setter, editable, required) };
+ { return new DateColumn(getMessage('BAUZEIT'), 'bauzeit', getter, setter, editable, required) };
 const BELADUNG = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new TextColumn('Beladung', 'beladung', getter, setter, editable, required, 30) };
+ { return new TextColumn(getMessage('BELADUNG'), 'beladung', getter, setter, editable, required, 30) };
 const BESTELL_NR = (editable = Editable.ADD, required = true, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new TextColumn('Bestell Nr', 'bestellNr', getter, setter, editable, required, 10) };
+ { return new TextColumn(getMessage('BESTELL_NR'), 'bestellNr', getter, setter, editable, required, 10) };
 const BETREIBSNUMMER = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new TextColumn('Betreibsnummer', 'betreibsnummer', getter, setter, editable, required, 30) };
+ { return new TextColumn(getMessage('BETREIBSNUMMER'), 'betreibsnummer', getter, setter, editable, required, 30) };
 const BEZEICHNUNG = (editable = Editable.UPDATE, required = true, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new TextColumn('Bezeichnung', 'bezeichnung', getter, setter, editable, required, 50) };
+ { return new TextColumn(getMessage('BEZEICHNUNG'), 'bezeichnung', getter, setter, editable, required, 50) };
 const CV = (editable = Editable.ADD, required = true, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('CV', 'cv', getter, setter, editable, required, 127, 1) };
+ { return new NumberColumn(getMessage('CV'), 'cv', getter, setter, editable, required, 127, 1) };
 const DEZIMAL = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Dezimal', 'dezimal', getter, setter, editable, required, 3, 0) };
+ { return new NumberColumn(getMessage('DEZIMAL'), 'dezimal', getter, setter, editable, required, 3, 0) };
 const DECODER = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new TextColumn('Decoder', 'decoderId', getter, setter, editable, required, 5) };
+ { return new TextColumn(getMessage('DECODER'), 'decoderId', getter, setter, editable, required, 5) };
 const DELETED = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new BoolColumn('Deleted', 'deleted', getter, setter, editable, required) };
+ { return new BoolColumn(getMessage('DELETED'), 'deleted', getter, setter, editable, required) };
 const DIENSTGEWICHT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Dienstgewicht', 'dienstgewicht', getter, setter, editable, required, 999, 1) };
+ { return new NumberColumn(getMessage('DIENSTGEWICHT'), 'dienstgewicht', getter, setter, editable, required, 999, 1) };
 const DMLAUFRADHINTEN = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('DM Laufrad Hinten', 'dmLaufradHinten', getter, setter, editable, required, 3000, 1) };
+ { return new NumberColumn(getMessage('DM_LAUFRAD_HINTEN'), 'dmLaufradHinten', getter, setter, editable, required, 3000, 1) };
 const DMLAUFRADVORN = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('DM Laufrad Vorn', 'dmLaufradVorn', getter, setter, editable, required, 3000, 1) };
+ { return new NumberColumn(getMessage('DM_LAUFRAD_VORN'), 'dmLaufradVorn', getter, setter, editable, required, 3000, 1) };
 const DMTREIBRAD = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('DM Treibrad', 'dmTreibrad', getter, setter, editable, required, 3000, 1) };
+ { return new NumberColumn(getMessage('DM_TREIBRAD'), 'dmTreibrad', getter, setter, editable, required, 3000, 1) };
 const DMZYLINDER = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('DM Zylinder', 'dmZylinder', getter, setter, editable, required, 3000, 1) };
+ { return new NumberColumn(getMessage('DM_ZYLINDER'), 'dmZylinder', getter, setter, editable, required, 3000, 1) };
 const DREHGESTELLBAUART = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new TextColumn('Drehgestell', 'drehgestellBauart', getter, setter, editable, required, 30) };
+ { return new TextColumn(getMessage('DREHGESTELL'), 'drehgestellBauart', getter, setter, editable, required, 30) };
 const EXPLOSIONSZEICHNUNG = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter) =>
- { return new PDFColumn('Explosionszeichnung', 'explosionszeichnung', getter, editable, required) };
+ { return new PDFColumn(getMessage('EXPLOSIONSZEICHNUNG'), 'explosionszeichnung', getter, editable, required) };
 const FAHRMOTOREN = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Fahrmotoren', 'fahrmotoren', getter, setter, editable, required, 5, 1) };
+ { return new NumberColumn(getMessage('FAHRMOTOREN'), 'fahrmotoren', getter, setter, editable, required, 5, 1) };
 const FAHRSTUFE = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Fahrstufe', 'fahrstufe', getter, setter, editable, required, 127, 1) };
+ { return new NumberColumn(getMessage('FAHRSTUFE'), 'fahrstufe', getter, setter, editable, required, 127, 1) };
 const FUNKTION = (editable = Editable.ADD, required = true, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new TextColumn('Funktion', 'funktion', getter, setter, editable, required, 3) };
+ { return new TextColumn(getMessage('FUNKTION'), 'funktion', getter, setter, editable, required, 3) };
 const GERAUSCH = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new BoolColumn('Geräusch', 'gerausch', getter, setter, editable, required) };
+ { return new BoolColumn(getMessage('GERAUSCH'), 'gerausch', getter, setter, editable, required) };
 const GESCHWINDIGKEIT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Geschwindigkeit', 'geschwindigkeit', getter, setter, editable, required, 300, 1) };
+ { return new NumberColumn(getMessage('GESCHWINDIGKEIT'), 'geschwindigkeit', getter, setter, editable, required, 300, 1) };
 const HERSTELLER = (editable = Editable.ADD, required = true, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new TextColumn('Hersteller', 'hersteller', getter, setter, editable, required, 3) };
+ { return new TextColumn(getMessage('HERSTELLER'), 'hersteller', getter, setter, editable, required, 3) };
 const I_MAX = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('I Max', 'iMax', getter, setter, editable, required, 1000, 1) };
+ { return new NumberColumn(getMessage('I_MAX'), 'iMax', getter, setter, editable, required, 1000, 1) };
 const INDEX = (editable = Editable.ADD, required = true, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Index', 'index', getter, setter, editable, required, 3, 0) };
+ { return new NumberColumn(getMessage('INDEX'), 'index', getter, setter, editable, required, 3, 0) };
 
 const KAPAZITAT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Kapazität', 'kapazitat', getter, setter, editable, required, 3000, 1, 2) };
+ { return new NumberColumn(getMessage('KAPAZITAT'), 'kapazitat', getter, setter, editable, required, 3000, 1, 2) };
 const KAUFDATUM = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new DateColumn('Kaufdatum', 'kaufdatum', getter, setter, editable, required) };
+ { return new DateColumn(getMessage('KAUFDATUM'), 'kaufdatum', getter, setter, editable, required) };
 const KESSELUBERDRUCK = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Kesselüberdruck', 'kesseluberdruck', getter, setter, editable, required, 3000, 0, 2) };
+ { return new NumberColumn(getMessage('KESSELUBERDRUCK'), 'kesseluberdruck', getter, setter, editable, required, 3000, 0, 2) };
 const KLASSE = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Klasse', 'klasse', getter, setter, editable, required, 4, 0) };
+ { return new NumberColumn(getMessage('KLASSE'), 'klasse', getter, setter, editable, required, 4, 0) };
 const KOLBENHUB = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Kolbenhub', 'kolbenhub', getter, setter, editable, required, 3000, 1, 2) };
+ { return new NumberColumn(getMessage('KOLBENHUB'), 'kolbenhub', getter, setter, editable, required, 3000, 1, 2) };
 const LANGE = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Länge', 'lange', getter, setter, editable, required, 50, 1, 2) };
+ { return new NumberColumn(getMessage('LANGE'), 'lange', getter, setter, editable, required, 50, 1, 2) };
 const LEISTUNG = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Leistung', 'leistung', getter, setter, editable, required, 10000, 0, 2) };
+ { return new NumberColumn(getMessage('LEISTUNG'), 'leistung', getter, setter, editable, required, 10000, 0, 2) };
 const MAXIMAL = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Maximal', 'maximal', getter, setter, editable, required, 30) };
+ { return new NumberColumn(getMessage('MAXIMAL'), 'maximal', getter, setter, editable, required, 30) };
 const MINIMAL = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Minimal', 'minimal', getter, setter, editable, required, 30) };
+ { return new NumberColumn(getMessage('MINIMAL'), 'minimal', getter, setter, editable, required, 30) };
 const MITTELWAGEN = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Mittelwagen', 'mittelwagen', getter, setter, editable, required, 30, 0) };
+ { return new NumberColumn(getMessage('MITTELWAGEN'), 'mittelwagen', getter, setter, editable, required, 30, 0) };
 const MOTORBAUART = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new TextColumn('Motorbauart', 'motorbauart', getter, setter, editable, required, 30) };
+ { return new TextColumn(getMessage('MOTORBAUART'), 'motorbauart', getter, setter, editable, required, 30) };
 const NAMEN = (editable = Editable.ADD, required = true, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new TextColumn('Namen', 'name', getter, setter, editable, required, 30, '^[A-Z0-9.]+$') };
+ { return new TextColumn(getMessage('NAMEN'), 'name', getter, setter, editable, required, 30, '^[A-Z0-9.]+$') };
 const POSITION = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Position', 'position', getter, setter, editable, required, 30, 0) };
+ { return new NumberColumn(getMessage('POSITION'), 'position', getter, setter, editable, required, 30, 0) };
 const PREIS = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Preis', 'preis', getter, setter, editable, required, noOpSetter, 0, 2) };
+ { return new NumberColumn(getMessage('PREIS'), 'preis', getter, setter, editable, required, noOpSetter, 0, 2) };
 const PROGRAMMABLE = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new BoolColumn('Programmable', 'programmable', getter, setter, editable, required) };
+ { return new BoolColumn(getMessage('PROGRAMMABLE'), 'programmable', getter, setter, editable, required) };
 const REICHWEITE = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Reichweite', 'reichweite', getter, setter, editable, required, 3000, 0) };
+ { return new NumberColumn(getMessage('REICHWEITE'), 'reichweite', getter, setter, editable, required, 3000, 0) };
 const REIHE = (editable = Editable.ADD, required = true, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Reihe', 'reihe', getter, setter, editable, required, 1, 0) };
+ { return new NumberColumn(getMessage('REIHE'), 'reihe', getter, setter, editable, required, 1, 0) };
 const ROSTFLACHE = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Rostfläche', 'rostflache', getter, setter, editable, required, 3000, 0, 2) };
+ { return new NumberColumn(getMessage('ROSTFLACHE'), 'rostflache', getter, setter, editable, required, 3000, 0, 2) };
 const SITZPLATZEKL1 = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Sitzplatze KL1', 'sitzplatzeKL1', getter, setter, editable, required, 300, 0) };
+ { return new NumberColumn(getMessage('SITZPLATZE_KL1'), 'sitzplatzeKL1', getter, setter, editable, required, 300, 0) };
 const SITZPLATZEKL2 = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Sitzplatze KL2', 'sitzplatzeKL2', getter, setter, editable, required, 300, 0) };
+ { return new NumberColumn(getMessage('SITZPLATZE_KL2'), 'sitzplatzeKL2', getter, setter, editable, required, 300, 0) };
 const SITZPLATZEKL3 = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Sitzplatze KL3', 'sitzplatzeKL3', getter, setter, editable, required, 300, 0) };
+ { return new NumberColumn(getMessage('SITZPLATZE_KL3'), 'sitzplatzeKL3', getter, setter, editable, required, 300, 0) };
 const SITZPLATZEKL4 = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Sitzplatze KL4', 'sitzplatzeKL4', getter, setter, editable, required, 300, 0) };
+ { return new NumberColumn(getMessage('SITZPLATZE_KL4'), 'sitzplatzeKL4', getter, setter, editable, required, 300, 0) };
 const SPAN = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Span', 'span', getter, setter, editable, required, 16, 1) };
+ { return new NumberColumn(getMessage('SPAN'), 'span', getter, setter, editable, required, 16, 1) };
 const STUCK = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Stück', 'stuck', getter, setter, editable, required, 300, 0) };
+ { return new NumberColumn(getMessage('STUCK'), 'stuck', getter, setter, editable, required, 300, 0) };
 const HERSTELLER_TELEFON = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new PhoneColumn('Telefon', 'telefon', getter, setter, editable, required) };
+ { return new PhoneColumn(getMessage('TELEFON'), 'telefon', getter, setter, editable, required) };
 const TRIEBKOPF = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Triebköpfe', 'triebkopf', getter, setter, editable, required, 2, 0) };
+ { return new NumberColumn(getMessage('TRIEBKOPFE'), 'triebkopf', getter, setter, editable, required, 2, 0) };
 const UBERHITZERFLACHE = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Überhitzerfläche', 'uberhitzerflache', getter, setter, editable, required, 3000, 0, 2) };
+ { return new NumberColumn(getMessage('UBERHITZERFLACHE'), 'uberhitzerflache', getter, setter, editable, required, 3000, 0, 2) };
 const HERSTELLER_URL = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new URLColumn('Url', 'url', getter, setter, editable, required) };
+ { return new URLColumn(getMessage('URL'), 'url', getter, setter, editable, required) };
 const VERBLEIBENDE = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
-{ return new NumberColumn('Verbleibende', 'verbleibende', getter, setter, editable, required, 300, 0) };
+{ return new NumberColumn(getMessage('VERBLEIBENDE'), 'verbleibende', getter, setter, editable, required, 300, 0) };
 const VERDAMPFUNG = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Verdampfung', 'verdampfung', getter, setter, editable, required, 3000, 0, 2) };
+ { return new NumberColumn(getMessage('VERDAMPFUNG'), 'verdampfung', getter, setter, editable, required, 3000, 0, 2) };
 const WASSERVORRAT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Wasservorrat', 'wasservorrat', getter, setter, editable, required, 3000, 0, 2) };
+ { return new NumberColumn(getMessage('WASSERVORRAT'), 'wasservorrat', getter, setter, editable, required, 3000, 0, 2) };
 const WERKSEINSTELLUNG = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Werkseinstellung', 'werkseinstellung', getter, setter, editable, required, 65535, 1) };
+ { return new NumberColumn(getMessage('WERKSEINSTELLUNG'), 'werkseinstellung', getter, setter, editable, required, 65535, 1) };
 const WERT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Wert', 'wert', getter, setter, editable, required, 65535, 1) };
+ { return new NumberColumn(getMessage('WERT'), 'wert', getter, setter, editable, required, 65535, 1) };
 const ZUG = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new TextColumn('Zug', 'zug', getter, setter, editable, required, 30) };
+ { return new TextColumn(getMessage('ZUG'), 'zug', getter, setter, editable, required, 30) };
 const ZYLINDER = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
- { return new NumberColumn('Zylinder', 'zylinder', getter, setter, editable, required, 100, 1) };
+ { return new NumberColumn(getMessage('ZYLINDER'), 'zylinder', getter, setter, editable, required, 100, 1) };
 
 const artikelBezeichnungGetter = (entity) => { return entity.artikel.bezeichnung; };
 const artikelProduktKategorieGetter = (entity) => { return unterKategorieGetter(entity.artikel.produkt); };

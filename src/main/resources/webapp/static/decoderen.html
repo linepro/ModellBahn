@@ -7,7 +7,7 @@
 <script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/fields.js"></script>
-<script type="text/javascript" src="js/maintenance.js"></script>
+<script type="text/javascript" src="js/grids.js"></script>
 <script type="text/javascript">
     const columns = [
         DECODER(Editable.NEVER, true),
@@ -19,6 +19,8 @@
     const decoderen = new ItemGrid(10, fetchUrl("decoder"), "decoderen", columns, Paged.PAGED, EditMode.UPDATE, undefined, "decoder.html");
 
     async function init() {
+      addNavBar(NavMenu.REF_DATA);
+      addFooter();
         await DECODER_TYP_DROP.init()
           .then(() => PROTOKOLL_DROP.init())
           .then(() => decoderen.init());
@@ -28,23 +30,10 @@
 </head>
 <body onload="init()">
     <header>
-        <nav>
-            <ul class="nav">
-                <li><a class="nav-button" href='../index.html'>Home</a></li>
-                <li><a class="nav-button" href="#" onclick="history.go(-1)">Back</a></li>
-                <li><a class="nav-button" href="produkten.html">Produkt</a></li>
-                <li><a class="nav-button" href="vorbilder.html">Vorbild</a></li>
-                <li><a class="nav-button" href="artikelen.html">Artikel</a></li>      
-                <li><a class="nav-button" href="decoderen.html">Decoder</a></li>      
-                <li><a class="nav-button" href="zugen.html">Zug</a></li>
-            </ul>
-        </nav>
-        <hr class="highlight" />
     </header>
         
     <section>
         <article>
-            <h1 id="heading">Decoder</h1>
             <div id="data">
                 <div id="decoderenSite">
                 </div>
@@ -53,15 +42,6 @@
     </section>
 
     <footer>
-        <div id="footer">
-            <div>
-                <hr class="highlight" />
-                <ul class="footer">
-                    <li>Copyright &copy; 2018, 2019 John &amp; Andrew Goff</li>
-                    <li><a id="license" class="nav-button" href="#" onclick="about()">&Uuml;ber</a></li>
-                </ul>
-            </div>
-        </div>
     </footer>
 </body>
 </html>

@@ -8,7 +8,7 @@
 <script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/fields.js"></script>
-<script type="text/javascript" src="js/maintenance.js"></script>
+<script type="text/javascript" src="js/grids.js"></script>
 <script type="text/javascript">
   const UNTERKATEGORIE_DISPLAY = new DropDownColumn("Kategorie", "unterKategorie", (entity) => { return entity.produkt.unterKategorie ? extractKategorieValue( entity.produkt.unterKategorie) : undefined; }, undefined, UNTER_KATEGORIE_DROP, Editable.NEVER, false);
 
@@ -29,6 +29,8 @@
   const artikel = new ItemGrid(10, fetchUrl("artikel"), "artikel", columns, Paged.PAGED, EditMode.UPDATE, undefined, "artikel.html");
 
   async function init() {
+      addNavBar(NavMenu.REF_DATA);
+      addFooter();
     await PRODUKT_DROP.init()
       .then(() => UNTER_KATEGORIE_DROP.init())
       .then(() => DECODER_DROP.init())
@@ -40,23 +42,10 @@
 </head>
 <body onload="init()">
     <header>
-        <nav>
-            <ul class="nav">
-              <li><a class="nav-button" href='../index.html'>Home</a></li>
-              <li><a class="nav-button" href="#" onclick="history.go(-1)">Back</a></li>
-	            <li><a class="nav-button" href="produkten.html">Produkt</a></li>
-	            <li><a class="nav-button" href="vorbilder.html">Vorbild</a></li>
-	            <li><a class="nav-button" href="artikelen.html">Artikel</a></li>      
-              <li><a class="nav-button" href="decoderen.html">Decoder</a></li>
-	            <li><a class="nav-button" href="zugen.html">Zug</a></li>
-            </ul>
-        </nav>
-        <hr class="highlight" />
     </header>
     	
 	<section>
 		<article>
-			<h1 id="heading">Artikel</h1>
 			<div id="data">
 				<div id="artikelSite">
 				</div>
@@ -65,15 +54,6 @@
 	</section>
 
     <footer>
-        <div id="footer">
-            <div>
-                <hr class="highlight" />
-                <ul class="footer">
-                    <li>Copyright &copy; 2018, 2019 John &amp; Andrew Goff</li>
-                    <li><a id="license" class="nav-button" href="#" onclick="about()">&Uuml;ber</a></li>
-                </ul>
-            </div>
-        </div>
     </footer>
 </body>
 </html>

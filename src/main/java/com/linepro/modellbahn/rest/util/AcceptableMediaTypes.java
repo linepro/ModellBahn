@@ -60,6 +60,7 @@ public interface AcceptableMediaTypes {
     String JPEG = "jpeg";
     String JPG = "jpg";
     String JS = "js";
+    String JSON = "json";
     String KAR = "kar";
     String KSH = "ksh";
     String LA = "la";
@@ -185,7 +186,8 @@ public interface AcceptableMediaTypes {
     MediaType JPE_TYPE = new MediaType("image", "jpeg");
     MediaType JPEG_TYPE = new MediaType("image", "jpeg");
     MediaType JPG_TYPE = new MediaType("image", "jpg");
-    MediaType JS_TYPE = new MediaType("text", "javascript");
+    MediaType JS_TYPE = new MediaType("application", "javascript");
+    MediaType JSON_TYPE = new MediaType("application", "json"); 
     MediaType KAR_TYPE = new MediaType("audio", "midi");
     MediaType KSH_TYPE = new MediaType("application", "x-ksh");
     MediaType LA_TYPE = new MediaType("audio", "nspaudio");
@@ -317,6 +319,7 @@ public interface AcceptableMediaTypes {
         new AbstractMap.SimpleEntry<>(JPEG, JPEG_TYPE),
         new AbstractMap.SimpleEntry<>(JPG, JPG_TYPE),
         new AbstractMap.SimpleEntry<>(JS, JS_TYPE),
+        new AbstractMap.SimpleEntry<>(JSON, JSON_TYPE),
         new AbstractMap.SimpleEntry<>(KAR, KAR_TYPE),
         new AbstractMap.SimpleEntry<>(KSH, KSH_TYPE),
         new AbstractMap.SimpleEntry<>(LA, LA_TYPE),

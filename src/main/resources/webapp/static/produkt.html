@@ -10,7 +10,7 @@
 <script type="text/javascript" src="js/pdfViewer.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/fields.js"></script>
-<script type="text/javascript" src="js/maintenance.js"></script>
+<script type="text/javascript" src="js/grids.js"></script>
 <script type="text/javascript">
    const teilenColumns = [
       TEIL_SELECT(),
@@ -52,6 +52,8 @@
     const produkt = new ItemGrid(1, fetchUrl("produkt"), "produkt", columns, Paged.FORM, EditMode.UPDATE, [teilen]);
 
     async function init() {
+      addNavBar(NavMenu.REF_DATA);
+      addFooter();
       await HERSTELLER_DROP.init()
         .then(() => UNTER_KATEGORIE_DROP.init())
         .then(() => MASSSTAB_DROP.init())
@@ -76,37 +78,20 @@
 </head>
 <body onload="init()">
     <header>
-        <nav>
-            <ul class="nav">
-                <li><a class="nav-button" href='../index.html'>Home</a></li>
-                <li><a class="nav-button" href="#" onclick="history.go(-1)">Back</a></li>
-            </ul>
-        </nav>
-        <hr class="highlight" />
     </header>
 
-    <section>
-      <article>
-        <h3 id="heading">Produkt</h3>
-        <div id="data">
-          <div id="produktSite">
-          </div>
-          <div id="teilenSite">
-          </div>
-        </div>
-      </article>
-    </section>
+	<section>
+		<article>
+			<div id="data">
+                               <div id="produktSite">
+                               </div>
+                               <div id="teilenSite">
+				</div>
+			</div>
+		</article>
+	</section>
 
     <footer>
-        <div id="footer">
-            <div>
-                <hr class="highlight" />
-                <ul class="footer">
-                    <li>Copyright &copy; 2018, 2019 John &amp; Andrew Goff</li>
-                    <li><a id="license" class="nav-button" href="#" onclick="about()">&Uuml;ber</a></li>
-                </ul>
-            </div>
-        </div>
     </footer>
 </body>
 </html>

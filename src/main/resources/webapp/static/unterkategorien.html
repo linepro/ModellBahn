@@ -8,7 +8,7 @@
 <script type="text/javascript" src="js/dropdown.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/fields.js"></script>
-<script type="text/javascript" src="js/maintenance.js"></script>
+<script type="text/javascript" src="js/grids.js"></script>
 <script type="text/javascript">
     const unterKategorieColumns = [
         NAMEN(Editable.ADD),
@@ -19,34 +19,28 @@
     const unterKategorien = new ItemGrid(10, "unterKategorien", "unterKategorien", unterKategorieColumns, Paged.EXPAND, EditMode.ADD, undefined);
 
     const columns = [
-        NAMEN(Editable.ADD, true),
-        BEZEICHNUNG(Editable.ADD, true),
-        new ButtonColumn([], [updateRow])
+      NAMEN(Editable.ADD, true),
+      BEZEICHNUNG(Editable.ADD, true),
+      new ButtonColumn([], [updateRow])
     ];
 
     const kategorie = new ItemGrid(1, fetchUrl("kategorie"), "kategorie", columns, Paged.FORM, EditMode.UPDATE, [unterKategorien]);
 
     async function init() {
-        await kategorie.init()
-          .then(() => unterKategorien.init());
+      addNavBar(NavMenu.REF_DATA);
+      addFooter();
+      await kategorie.init()
+        .then(() => unterKategorien.init());
     }
 </script>
 <title>Unter Kategorien</title>
 </head>
 <body onload="init()">
     <header>
-        <nav>
-            <ul class="nav">
-                <li><a class="nav-button" href='../index.html'>Home</a></li>
-                <li><a class="nav-button" href="#" onclick="history.go(-1)">Back</a></li>
-            </ul>
-        </nav>
-        <hr class="highlight" />
     </header>
 
     <section>
         <article>
-            <h3 id="heading">Unter Kategorie</h3>
             <div id="data">
                 <div id="kategorieSite">
                 </div>
@@ -57,15 +51,6 @@
     </section>
 
     <footer>
-        <div id="footer">
-            <div>
-                <hr class="highlight" />
-                <ul class="footer">
-                    <li>Copyright &copy; 2018, 2019 John &amp; Andrew Goff</li>
-                    <li><a id="license" class="nav-button" href="#" onclick="about()">&Uuml;ber</a></li>
-                </ul>
-            </div>
-        </div>
     </footer>
 </body>
 </html>
