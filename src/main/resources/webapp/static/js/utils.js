@@ -320,9 +320,7 @@ const resizeAll = (element = document) => {
   }
 };
 
-window.addEventListener('resize', (e) => {
-  resizeAll()
-}, true);
+window.addEventListener('resize', (e) => { resizeAll() }, true);
 
 async function removeFile(deleteUrl, grid, rowId) {
   await fetch(deleteUrl, {
@@ -351,9 +349,7 @@ async function uploadFile(e, uploadUrl, fileData, grid, rowId) {
 const readFile = (uploadUrl, fileData, grid, rowId) => {
   const reader = new FileReader();
 
-  reader.onload = (e) => {
-    uploadFile(e, uploadUrl, fileData, grid, rowId)
-  };
+  reader.onload = (e) => { uploadFile(e, uploadUrl, fileData, grid, rowId) };
 
   reader.onerror = (e) => {
     reader.abort();
@@ -408,9 +404,7 @@ const addNavBar = (menuStyle) => {
       addHeading(nav, 'H3', 'REF_DATA');
     } else {
       navLink(ul, 'HOME', siteRoot().replace('/static/', '/index.html'));
-      navLink(ul, 'BACK', '#', (e) => {
-        history.back()
-      });
+      navLink(ul, 'BACK', '#', (e) => { history.back() });
     }
 
     if (menuStyle !== NavMenu.BACK) {
@@ -445,9 +439,7 @@ const addNavBar = (menuStyle) => {
       addHeading(nav, 'H3', 'INVENTORY');
     } else {
       navLink(ul, 'HOME', siteRoot().replace('/static/', '/index.html'));
-      navLink(ul, 'BACK', '#', (e) => {
-        history.back()
-      });
+      navLink(ul, 'BACK', '#', (e) => { history.back() });
     }
 
     navLink(ul, 'PRODUKT', siteRoot() + 'produkten.html');

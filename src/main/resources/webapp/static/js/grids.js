@@ -98,8 +98,7 @@ class Column {
     this.setter = setter;
     this.editable = editable ? editable : Editable.NEVER;
     this.required = required ? required : false;
-    this.length = Math.max(length ? length : heading.length,
-        heading.length + 1);
+    this.length = Math.max(length ? length : heading.length, heading.length + 1);
     this.width = 0;
   }
 
@@ -163,8 +162,7 @@ class Column {
     if (value || entity) {
       inp.disabled = shouldDisable(this.editable, editMode);
     } else {
-      inp.disabled = !(editMode === EditMode.ADD && this.editable
-          !== Editable.NEVER);
+      inp.disabled = !(editMode === EditMode.ADD && this.editable !== Editable.NEVER);
     }
 
     inp.readOnly = inp.disabled;
@@ -199,8 +197,7 @@ class Column {
 
 class BoolColumn extends Column {
   constructor(heading, fieldName, getter, setter, editable, required) {
-    super(heading, fieldName, getter, setter, editable, required,
-        heading.length);
+    super(heading, fieldName, getter, setter, editable, required, heading.length);
   }
 
   createControl() {
@@ -219,10 +216,8 @@ class BoolColumn extends Column {
 }
 
 class NumberColumn extends Column {
-  constructor(heading, fieldName, getter, setter, editable, required, max = 255,
-      min = 0, places = 0) {
-    super(heading, fieldName, getter, setter, editable, required,
-        Math.max(max.toString().length, heading.length));
+  constructor(heading, fieldName, getter, setter, editable, required, max = 255, min = 0, places = 0) {
+    super(heading, fieldName, getter, setter, editable, required, Math.max(max.toString().length, heading.length));
     this.max = max;
     this.min = min;
     this.places = places;
@@ -265,8 +260,7 @@ class PhoneColumn extends Column {
 }
 
 class TextColumn extends Column {
-  constructor(heading, fieldName, getter, setter, editable, required, length,
-      pattern) {
+  constructor(heading, fieldName, getter, setter, editable, required, length, pattern) {
     super(heading, fieldName, getter, setter, editable, required, length);
     this.pattern = pattern;
   }
@@ -282,8 +276,7 @@ class TextColumn extends Column {
 
 class URLColumn extends TextColumn {
   constructor(heading, fieldName, getter, setter, editable, required) {
-    super(heading, fieldName, getter, setter, editable, required, 60,
-        URL_PATTERN);
+    super(heading, fieldName, getter, setter, editable, required, 60, URL_PATTERN);
   }
 
   createControl() {
@@ -304,33 +297,45 @@ class DateColumn extends TextColumn {
     super(heading, fieldName, getter, setter, editable, required, 12, DATE_PATTERN);
   }
 
-  createControl() {
-    let dte = super.createControl();
-    dte.addEventListener('click', (e) => { this.datePicker(e) }, false);
-    return dte;
+  getControl(cell, entity, editMode) {
+    let ctl = super.getControl(cell, entity, editMode);
+
+    if (!ctl.disabled) {
+      window.DatePickerX.setDefaults({
+        mondayFirst: false,
+        format: 'yyyy-mm-dd',
+        minDate: '1800-01-01',
+        weekDayLabels: [
+          getMessage('MO'), getMessage('TU'), getMessage('WE'), getMessage('TH'), 
+          getMessage('FR'), getMessage('SA'), getMessage('SU')
+          ],
+        shortMonthLabels: [
+          getMessage('JAN'), getMessage('FEB'), getMessage('MAR'), getMessage('APR'), 
+          getMessage('MAY'), getMessage('JUN'), getMessage('JUL'), getMessage('AUG'), 
+          getMessage('SEP'), getMessage('OCT'), getMessage('NOV'), getMessage('DEC')
+          ],
+        singleMonthLabels: [
+          getMessage('JANUARY'), getMessage('FEBRUARY'), getMessage('MARCH'), 
+          getMessage('APRIL'), getMessage('MAY'), getMessage('JUNE'), 
+          getMessage('JULY'), getMessage('AUGUST'), getMessage('SEPTEMBER'), 
+          getMessage('OCTOBER'), getMessage('NOVEMBER'), getMessage('DECEMBER')
+          ],
+        todayButton: false,
+        clearButton: false
+        });
+
+      ctl.DatePickerX.init();
+    }
+
+    return ctl;
   }
-
-  datePicker(e) {
-    let ctl = this;
-    let inp = e.target;
-    let div = inp.parentElement;
-
-    let pick = document.createElement('input');
-    pick.type = 'date';
-    pick.style.display = 'none';
-    pick.value = inp.value;
-    pick.addEventListener('click', (e) => { this.update(inp, e) });
-    pick.addEventListener('change', (e) => { this.update(inp, e) });
-    pick.addEventListener('blur', (e) => { this.update(inp, e) });
-    div.appendChild(pick);
-    pick.click();
-  }
-
-  update(inp, e) {
-    let pick = e.target;
-    let div = pick.parentElement;
-    this.setValue(inp, pick.value);
-    div.removeChild(pick);
+  
+  setValue(dte, value) {
+    super.setValue(dte, value);
+    
+    if (!dte.disabled) {
+      dte.DatePickerX.setValue(new Date(value));
+    }
   }
 }
 
