@@ -9,14 +9,14 @@ const NavMenu = {
 };
 
 window.onerror = function (msg, url, lineNo, columnNo, error) {
-  if (msg.toLowerCase().includes('script error')){
+  if (msg.toLowerCase().includes('script error')) {
     reportError('Script Error: See Browser Console for Detail');
   } else {
     const message = [
-      'Message: ' + msg, 
-      'URL: ' + url, 
-      'Line: ' + lineNo, 
-      'Column: ' + columnNo, 
+      'Message: ' + msg,
+      'URL: ' + url,
+      'Line: ' + lineNo,
+      'Column: ' + columnNo,
       'Error object: ' + error.toString()
     ].join(' - ');
 
@@ -25,7 +25,7 @@ window.onerror = function (msg, url, lineNo, columnNo, error) {
 
   return false;
 };
-  
+
 const apiRoot = () => {
   return location.protocol + '//' + location.host + '/ModellBahn/api/';
 };
@@ -33,10 +33,6 @@ const apiRoot = () => {
 const siteRoot = () => {
   return location.protocol + '//' + location.host + '/ModellBahn/static/';
 };
-
-const getMessage = (message, substitutions) => {
-  return message; // browser.i18n.getMessage(message.toUpperCase(), substitutions);
-}
 
 const fetchUrl = (dataType) => {
   let fetchUrl = apiRoot() + dataType;
@@ -67,9 +63,9 @@ const addToStart = (element) => {
 
 const reportError = (error) => {
   console.log(error);
-  
+
   let alert = document.getElementById('alert-box');
-  
+
   if (!alert) {
     alert = document.createElement('div');
     alert.id = 'alert-box';
@@ -77,7 +73,9 @@ const reportError = (error) => {
 
     let closer = document.createElement('span');
     closer.className = 'closebtn';
-    closer.onclick = (e) => { alert.style.display = 'none' };
+    closer.onclick = (e) => {
+      alert.style.display = 'none'
+    };
     addText(closer, 'x');
     alert.appendChild(closer);
 
@@ -128,7 +126,9 @@ const getButton = (value, alt, action) => {
   let btn = document.createElement('button');
 
   btn.value = getMessage(value.toUpperCase());
-  if (action) btn.addEventListener('click', action);
+  if (action) {
+    btn.addEventListener('click', action);
+  }
   btn.className = 'nav-button';
 
   let img = getImg(alt);
@@ -159,13 +159,13 @@ const addOption = (select, value, text) => {
 const valueAndUnits = (cssSize) => {
   let dims = /^(\d+)([^\d]+)$/.exec(cssSize);
   return {
-    value: dims[1], 
+    value: dims[1],
     units: dims[2]
   };
 };
 
 const boxSize = (length) => {
-  return Math.ceil(length/5)*5;
+  return Math.ceil(length / 5) * 5;
 };
 
 const addHeading = (element, type, text) => {
@@ -195,7 +195,7 @@ async function checkResponse(response) {
       let jsonData = await response.json();
 
       errorMessage = jsonData.errorCode + ': ' + jsonData.userMessage;
-    } catch(err) {
+    } catch (err) {
       errorMessage = await clone.text();
     }
 
@@ -254,8 +254,8 @@ const showModal = (content, big) => {
 
 const about = () => {
   fetch(siteRoot() + 'LICENSE')
-    .then(response => response.text())
-    .then(text => {
+  .then(response => response.text())
+  .then(text => {
     let about = document.createElement('div');
     about.className = 'about';
 
@@ -292,7 +292,7 @@ const setActiveTab = (event, tabName) => {
     tabContents[i].style.display = (tabContents[i].id === tabName) ? 'block' : 'none';
   }
 
-  resizeTables();
+  resizeAll();
 
   let linkName = tabName.replace('Tab', 'Link');
   for (let i = 0; i < tabLinks.length; i++) {
@@ -301,30 +301,32 @@ const setActiveTab = (event, tabName) => {
 };
 
 const setWidths = (element, width) => {
-  element.width = width;  
+  element.width = width;
   //element.maxWidth = width;  
-  element.style.width = width;  
-  element.style.maxWidth = width;  
+  element.style.width = width;
+  element.style.maxWidth = width;
 };
 
 const resizeAll = (element = document) => {
   let nav = element.getElementsByTagName('NAV')[0];
   let rect = nav.getBoundingClientRect();
   let section = document.getElementsByTagName('SECTION')[0];
-  section.style.top = rect.height+'px';
-  
+  section.style.top = rect.height + 'px';
+
   let tables = element.getElementsByTagName('TABLE');
   for (let i = 0; i < tables.length; i++) {
     let rect = tables[i].getBoundingClientRect();
-    setWidths(tables[i].getElementsByTagName('TBODY')[0], rect.width+'px');
+    setWidths(tables[i].getElementsByTagName('TBODY')[0], rect.width + 'px');
   }
 };
 
-window.addEventListener('resize', (e) => { resizeAll() }, true);
+window.addEventListener('resize', (e) => {
+  resizeAll()
+}, true);
 
 async function removeFile(deleteUrl, grid, rowId) {
   await fetch(deleteUrl, {
-    method: 'DELETE', 
+    method: 'DELETE',
     headers: {'Content-type': 'application/json'}
   })
   .then(response => checkResponse(response))
@@ -338,7 +340,7 @@ async function uploadFile(e, uploadUrl, fileData, grid, rowId) {
   body.append('file', fileData);
 
   await fetch(uploadUrl, {
-    method: 'PUT', 
+    method: 'PUT',
     body: body
   })
   .then(response => checkResponse(response))
@@ -363,15 +365,21 @@ const readFile = (uploadUrl, fileData, grid, rowId) => {
 };
 
 const navLink = (ul, title, href, action, id) => {
-  if (document.location.href === href) return;
+  if (document.location.href === href) {
+    return;
+  }
 
   let li = document.createElement('li');
 
   let a = document.createElement('a');
-  if (id) a.id = id;
+  if (id) {
+    a.id = id;
+  }
   a.className = 'nav-button';
   a.href = href;
-  if (action) a.addEventListener('click', action);
+  if (action) {
+    a.addEventListener('click', action);
+  }
   addText(a, title);
   li.appendChild(a);
 
@@ -392,34 +400,39 @@ const addNavBar = (menuStyle) => {
     addRule(nav);
   }
 
-  if (menuStyle === NavMenu.REF_DATA || menuStyle === NavMenu.HOME) {
+  if (menuStyle !== NavMenu.INVENTORY) {
     let ul = document.createElement('ul');
     ul.className = 'nav';
 
     if (menuStyle === NavMenu.HOME) {
       addHeading(nav, 'H3', 'REF_DATA');
     } else {
-      navLink(ul, getMessage('HOME'), siteRoot().replace('/static/', '/index.html'));
-      navLink(ul, getMessage('BACK'), '#', (e) => { history.back() });
+      navLink(ul, 'HOME', siteRoot().replace('/static/', '/index.html'));
+      navLink(ul, 'BACK', '#', (e) => {
+        history.back()
+      });
     }
 
-    navLink(ul, getMessage('AUFBAU'), siteRoot()+'aufbauten.html');
-    navLink(ul, getMessage('ANTRIEB'), siteRoot()+'antrieben.html');
-    navLink(ul, getMessage('BAHNVERWALTUNG'), siteRoot()+'bahnverwaltungen.html');
-    navLink(ul, getMessage('DECODER_TYP'), siteRoot()+'decoderTypen.html');
-    navLink(ul, getMessage('HERSTELLER'), siteRoot()+'herstellern.html');
-    navLink(ul, getMessage('KATOGORIE'), siteRoot()+'kategorien.html');
-    navLink(ul, getMessage('KUPPLUNG'), siteRoot()+'kupplungen.html');
-    navLink(ul, getMessage('LAND'), siteRoot()+'lander.html');
-    navLink(ul, getMessage('LICHT'), siteRoot()+'lichten.html');
-    navLink(ul, getMessage('MASSSTAB'), siteRoot()+'massstaben.html');
-    navLink(ul, getMessage('MOTOR_TYP'), siteRoot()+'motorTypen.html');
-    navLink(ul, getMessage('PROTOKOLL'), siteRoot()+'protokollen.html');
-    navLink(ul, getMessage('SONDERMODELL'), siteRoot()+'sonderModellen.html');
-    navLink(ul, getMessage('SPURWIETE'), siteRoot()+'spurweiten.html');
-    navLink(ul, getMessage('STEUERUNG'), siteRoot()+'steuerungen.html');
-    navLink(ul, getMessage('WAHRUNG'), siteRoot()+'wahrungen.html');
-    navLink(ul, getMessage('ZUG_TYP'), siteRoot()+'zugtypen.html');
+    if (menuStyle !== NavMenu.BACK) {
+      navLink(ul, 'AUFBAU', siteRoot() + 'aufbauten.html');
+      navLink(ul, 'ANTRIEB', siteRoot() + 'antrieben.html');
+      navLink(ul, 'BAHNVERWALTUNG', siteRoot() + 'bahnverwaltungen.html');
+      navLink(ul, 'DECODER_TYP', siteRoot() + 'decoderTypen.html');
+      navLink(ul, 'HERSTELLER', siteRoot() + 'herstellern.html');
+      navLink(ul, 'KATEGORIE', siteRoot() + 'kategorien.html');
+      navLink(ul, 'KUPPLUNG', siteRoot() + 'kupplungen.html');
+      navLink(ul, 'LAND', siteRoot() + 'lander.html');
+      navLink(ul, 'LICHT', siteRoot() + 'lichten.html');
+      navLink(ul, 'MASSSTAB', siteRoot() + 'massstaben.html');
+      navLink(ul, 'MOTOR_TYP', siteRoot() + 'motorTypen.html');
+      navLink(ul, 'PROTOKOLL', siteRoot() + 'protokollen.html');
+      navLink(ul, 'SONDER_MODELL', siteRoot() + 'sonderModellen.html');
+      navLink(ul, 'SPURWEITE', siteRoot() + 'spurweiten.html');
+      navLink(ul, 'STEUERUNG', siteRoot() + 'steuerungen.html');
+      navLink(ul, 'WAHRUNG', siteRoot() + 'wahrungen.html');
+      navLink(ul, 'ZUG_TYP', siteRoot() + 'zugtypen.html');
+    }
+
     nav.appendChild(ul);
     addRule(nav);
   }
@@ -431,22 +444,24 @@ const addNavBar = (menuStyle) => {
     if (menuStyle === NavMenu.HOME) {
       addHeading(nav, 'H3', 'INVENTORY');
     } else {
-      navLink(ul, getMessage('HOME'), siteRoot().replace('/static/', '/index.html'));
-      navLink(ul, getMessage('BACK'), '#', (e) => { history.back() });
+      navLink(ul, 'HOME', siteRoot().replace('/static/', '/index.html'));
+      navLink(ul, 'BACK', '#', (e) => {
+        history.back()
+      });
     }
 
-    navLink(ul, getMessage('PRODUKT'), siteRoot()+'produkten.html');
-    navLink(ul, getMessage('VORBILD'), siteRoot()+'vorbilder.html');
-    navLink(ul, getMessage('ARTIKEL'), siteRoot()+'artikelen.html');
-    navLink(ul, getMessage('DECODER'), siteRoot()+'decoderen.html');
-    navLink(ul, getMessage('ZUG'), siteRoot()+'zugen.html');
+    navLink(ul, 'PRODUKT', siteRoot() + 'produkten.html');
+    navLink(ul, 'VORBILD', siteRoot() + 'vorbilder.html');
+    navLink(ul, 'ARTIKEL', siteRoot() + 'artikelen.html');
+    navLink(ul, 'DECODER', siteRoot() + 'decoderen.html');
+    navLink(ul, 'ZUG', siteRoot() + 'zugen.html');
     nav.appendChild(ul);
     addRule(nav);
   }
-  
+
   let rect = nav.getBoundingClientRect();
   let section = document.getElementsByTagName('SECTION')[0];
-  section.style.top = rect.height+'px';
+  section.style.top = rect.height + 'px';
 };
 
 const addFooter = () => {
@@ -465,9 +480,12 @@ const addFooter = () => {
   addText(li, 'COPYRIGHT');
   ul.appendChild(li);
 
-  navLink(ul, getMessage('ABOUT'), '#', about, 'license');
+  navLink(ul, 'ABOUT', '#', about, 'license');
 };
 
-const createStyle = () => {
-  
-}
+const createStyle = (className, values) => {
+  let style = document.createElement('style');
+  style.type = 'text/css';
+  style.innerHTML = className & ' ' & JSON.stringify(values, null, 1).replace(/"/g, '');
+  document.getElementsByTagName('head')[0].appendChild(style);
+};

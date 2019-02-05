@@ -24,9 +24,9 @@ class DropOption {
   getImage() {
     return this.image;
   }
-  
+
   getLength() {
-	return this.getDisplay().length;
+    return this.getDisplay().length;
   }
 }
 
@@ -36,13 +36,16 @@ class DropDown {
     this.optionExtractor = optionExtractor;
     this.length = 0;
     this.options = [];
+    this.initialized = false;
   }
 
   loadOptions(jsonData) {
     let entities = jsonData.entities ? jsonData.entities : jsonData;
     let dropDown = this;
     let length = 0;
-    
+
+    dropDown.options = [];
+
     entities.forEach(entity => {
       let opt = dropDown.optionExtractor(entity);
 
@@ -50,7 +53,7 @@ class DropDown {
 
       length = Math.max(opt.getLength(), length);
     });
-    
+
     dropDown.length = length;
   }
 
@@ -58,18 +61,23 @@ class DropDown {
     return this.options;
   }
 
-  async init() {
+  async init(force) {
     let select = this;
-    await fetch(select.apiQuery, {
-      method: "GET",
-      headers: {"Content-type": "application/json"}
-    })
-    .then(response => checkResponse(response))
-    .then(jsonData => select.loadOptions(jsonData))
-    .catch(error => reportError(error));
+
+    if (!select.initialized || force) {
+      await fetch(select.apiQuery, {
+        method: "GET",
+        headers: {"Content-type": "application/json"}
+      })
+      .then(response => checkResponse(response))
+      .then(jsonData => select.loadOptions(jsonData))
+      .catch(error => reportError(error));
+    }
+
+    select.initialized = true;
   }
-  
+
   getLength() {
-	 return this.length;
+    return this.length;
   }
 }

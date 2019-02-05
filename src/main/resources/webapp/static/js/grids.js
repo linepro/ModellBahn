@@ -2,20 +2,20 @@
 'use strict';
 
 const Editable = {
-  NEVER: 0, 
-  UPDATE: 1, 
+  NEVER: 0,
+  UPDATE: 1,
   ADD: 2
 };
 
 const EditMode = {
-  VIEW: 0, 
-  UPDATE: 1, 
+  VIEW: 0,
+  UPDATE: 1,
   ADD: 2
 };
 
 const Paged = {
-  FORM: 0, 
-  PAGED: 1, 
+  FORM: 0,
+  PAGED: 1,
   EXPAND: 2
 };
 
@@ -29,7 +29,8 @@ const defaultRowSetter = (rowId, columns) => {
   if (document.getElementById(getKeyId(rowId))) {
     columns.forEach(column => {
       if (column.setter) {
-        let value = column.getValue(document.getElementById(getFieldId(rowId, column.fieldName)));
+        let value = column.getValue(
+            document.getElementById(getFieldId(rowId, column.fieldName)));
 
         if (value !== undefined) {
           column.setter(data, value, column.fieldName);
@@ -91,18 +92,19 @@ const blankControl = (cell) => {
 
 class Column {
   constructor(heading, fieldName, getter, setter, editable, required, length) {
-    this.heading   = heading;
+    this.heading = heading;
     this.fieldName = fieldName;
-    this.getter    = getter;
-    this.setter    = setter;
-    this.editable  = editable ? editable : Editable.NEVER;
-    this.required  = required ? required : false;
-    this.length    = Math.max(length ? length : heading.length, heading.length + 1);
-    this.width     = 0;
+    this.getter = getter;
+    this.setter = setter;
+    this.editable = editable ? editable : Editable.NEVER;
+    this.required = required ? required : false;
+    this.length = Math.max(length ? length : heading.length,
+        heading.length + 1);
+    this.width = 0;
   }
 
   setContext(grid, table) {
-    this.grid  = grid;
+    this.grid = grid;
     this.table = table;
   }
 
@@ -122,7 +124,7 @@ class Column {
   }
 
   getDisplayLength() {
-    return this.getLength()+'ch';
+    return this.getLength() + 'ch';
   }
 
   getHeaderLength() {
@@ -161,7 +163,8 @@ class Column {
     if (value || entity) {
       inp.disabled = shouldDisable(this.editable, editMode);
     } else {
-      inp.disabled = !(editMode === EditMode.ADD && this.editable !== Editable.NEVER);
+      inp.disabled = !(editMode === EditMode.ADD && this.editable
+          !== Editable.NEVER);
     }
 
     inp.readOnly = inp.disabled;
@@ -196,7 +199,8 @@ class Column {
 
 class BoolColumn extends Column {
   constructor(heading, fieldName, getter, setter, editable, required) {
-    super(heading, fieldName, getter, setter, editable, required, heading.length);
+    super(heading, fieldName, getter, setter, editable, required,
+        heading.length);
   }
 
   createControl() {
@@ -215,8 +219,10 @@ class BoolColumn extends Column {
 }
 
 class NumberColumn extends Column {
-  constructor(heading, fieldName, getter, setter, editable, required, max = 255, min = 0, places = 0) {
-    super(heading, fieldName, getter, setter, editable, required, Math.max(max.toString().length, heading.length));
+  constructor(heading, fieldName, getter, setter, editable, required, max = 255,
+      min = 0, places = 0) {
+    super(heading, fieldName, getter, setter, editable, required,
+        Math.max(max.toString().length, heading.length));
     this.max = max;
     this.min = min;
     this.places = places;
@@ -259,7 +265,8 @@ class PhoneColumn extends Column {
 }
 
 class TextColumn extends Column {
-  constructor(heading, fieldName, getter, setter, editable, required, length, pattern) {
+  constructor(heading, fieldName, getter, setter, editable, required, length,
+      pattern) {
     super(heading, fieldName, getter, setter, editable, required, length);
     this.pattern = pattern;
   }
@@ -275,7 +282,8 @@ class TextColumn extends Column {
 
 class URLColumn extends TextColumn {
   constructor(heading, fieldName, getter, setter, editable, required) {
-    super(heading, fieldName, getter, setter, editable, required, 60, URL_PATTERN);
+    super(heading, fieldName, getter, setter, editable, required, 60,
+        URL_PATTERN);
   }
 
   createControl() {
@@ -293,7 +301,8 @@ class URLColumn extends TextColumn {
 
 class DateColumn extends TextColumn {
   constructor(heading, fieldName, getter, setter, editable, required) {
-    super(heading, fieldName, getter, setter, editable, required, 12, DATE_PATTERN);
+    super(heading, fieldName, getter, setter, editable, required, 12,
+        DATE_PATTERN);
   }
 
   createControl() {
@@ -319,47 +328,51 @@ class FileColumn extends Column {
 
     if (entity) {
       img.addEventListener('click', (e) => {
-    	  let img = e.target;
-    	  let file = img.getAttribute('data-value');
-    	  if (file) {
-    		  this.showContent(file);
-    		  }
-    	  }, false);
+        let img = e.target;
+        let file = img.getAttribute('data-value');
+        if (file) {
+          this.showContent(file);
+        }
+      }, false);
 
       let bar = document.createElement('div');
       bar.className = 'img-button';
       cell.append(bar);
-      
-	    let add = getLink(entity.links, 'update-' + this.fieldName);
-	    let grid = this.grid;
+
+      let add = getLink(entity.links, 'update-' + this.fieldName);
+      let grid = this.grid;
       let rowId = getCellRowId(cell);
 
-	    if (add) {
-	      let btn = getButton(add.href, 'add', (e) => { this.select(e, grid, rowId); });
-	      btn.className = 'img-button';
-	      btn.id = cell.id + '_add';
-	      btn.firstChild.className = 'img-button';
-	      bar.appendChild(btn);
-	    }
-	
-	    let remove = getLink(entity.links, 'delete-' + this.fieldName);
-	
-	    if (remove) {
-	      let btn = getButton(remove.href, 'delete', (e) => { this.remove(e, grid, rowId); });
-	      btn.className = 'img-button';
+      if (add) {
+        let btn = getButton(add.href, 'add', (e) => {
+          this.select(e, grid, rowId);
+        });
+        btn.className = 'img-button';
+        btn.id = cell.id + '_add';
+        btn.firstChild.className = 'img-button';
+        bar.appendChild(btn);
+      }
+
+      let remove = getLink(entity.links, 'delete-' + this.fieldName);
+
+      if (remove) {
+        let btn = getButton(remove.href, 'delete', (e) => {
+          this.remove(e, grid, rowId);
+        });
+        btn.className = 'img-button';
         btn.id = cell.id + '_delete';
-	      btn.firstChild.className = 'img-button';
-	      btn.disabled = !img.getAttribute('data-value');
-	      bar.appendChild(btn);
+        btn.firstChild.className = 'img-button';
+        btn.disabled = !img.getAttribute('data-value');
+        bar.appendChild(btn);
         this.delBtn = btn;
-	    }
-	
-	    if (cell.firstChild) {
-	      cell.removeChild(img);
-	      cell.insertBefore(img, cell.firstChild);
-	    }
+      }
+
+      if (cell.firstChild) {
+        cell.removeChild(img);
+        cell.insertBefore(img, cell.firstChild);
+      }
     }
-    
+
     return img;
   }
 
@@ -371,7 +384,8 @@ class FileColumn extends Column {
     return img.getAttribute('data-value');
   }
 
-  defaultImage() {}
+  defaultImage() {
+  }
 
   setValue(img, value) {
     img.src = value ? value : this.defaultImage();
@@ -397,9 +411,15 @@ class FileColumn extends Column {
     cell.appendChild(file);
     file.style.display = 'none';
     file.click();
-    file.addEventListener('change', (e) => { this.update(e, grid, rowId); }, false);
-    file.addEventListener('click', (e) => { this.update(e, grid, rowId); }, false);
-    file.addEventListener('blur', (e) => { this.update(e, grid, rowId); }, false);
+    file.addEventListener('change', (e) => {
+      this.update(e, grid, rowId);
+    }, false);
+    file.addEventListener('click', (e) => {
+      this.update(e, grid, rowId);
+    }, false);
+    file.addEventListener('blur', (e) => {
+      this.update(e, grid, rowId);
+    }, false);
   }
 
   remove(e, grid, rowId) {
@@ -469,32 +489,39 @@ class PDFColumn extends FileColumn {
 
     let viewer = new PDFViewer(canvas);
 
-    let prev = getButton('vorig', 'previous', (e) => { viewer.prevPage(); });
+    let prev = getButton('vorig', 'previous', (e) => {
+      viewer.prevPage();
+    });
     prev.style.cssFloat = 'left';
     bar.appendChild(prev);
 
-    let next = getButton('nachste', 'next', (e) => { viewer.nextPage(); });
+    let next = getButton('nachste', 'next', (e) => {
+      viewer.nextPage();
+    });
     next.style.cssFloat = 'right';
     bar.appendChild(next);
 
     viewer.load(pdf);
-    
+
     showModal(div, true);
   }
 }
 
 const closeAutoLists = (elmnt = document) => {
-  let autoComp = elmnt.getElementsByClassName( 'autocomplete-list');
+  let autoComp = elmnt.getElementsByClassName('autocomplete-list');
   for (let i = 0; i < autoComp.length; i++) {
     removeChildren(autoComp[i]);
     autoComp[i].parentNode.removeChild(autoComp[i]);
   }
 };
 
-document.addEventListener('click', (e) => { closeAutoLists() }, false);
+document.addEventListener('click', (e) => {
+  closeAutoLists()
+}, false);
 
 class SelectColumn extends Column {
-  constructor(heading, fieldName, getter, setter, dropDown, editable, required, length, dropSize = 5) {
+  constructor(heading, fieldName, getter, setter, dropDown, editable, required,
+      length, dropSize = 5) {
     super(heading, fieldName, getter, setter, editable, required, length);
     this.dropDown = dropDown;
     this.dropSize = dropSize;
@@ -504,9 +531,15 @@ class SelectColumn extends Column {
     let sel = super.getControl(cell, entity, editMode);
 
     if (!sel.disabled) {
-      sel.addEventListener('click', (e) => { this.open(e); }, false);
-      sel.addEventListener('input', (e) => { this.open(e); }, false);
-      sel.addEventListener('keydown', (e) => { this.keydown(e); }, false);
+      sel.addEventListener('click', (e) => {
+        this.open(e);
+      }, false);
+      sel.addEventListener('input', (e) => {
+        this.open(e);
+      }, false);
+      sel.addEventListener('keydown', (e) => {
+        this.keydown(e);
+      }, false);
       sel.classList.add('autocomplete');
     }
 
@@ -563,7 +596,9 @@ class SelectColumn extends Column {
       autoItem.className = 'autocomplete-items';
       autoItem.style.top = (dims.value * i) + dims.units;
       addText(autoItem, sel.caption(inp.value, o));
-      autoItem.addEventListener('click', (e) => { this.click(e); }, false);
+      autoItem.addEventListener('click', (e) => {
+        this.click(e);
+      }, false);
       autoComp.appendChild(autoItem);
       i++;
     });
@@ -631,8 +666,10 @@ class SelectColumn extends Column {
 }
 
 class AutoCompleteColumn extends SelectColumn {
-  constructor(heading, fieldName, getter, setter, dropDown, editable, required, length, dropSize) {
-    super(heading, fieldName, getter, setter, dropDown, editable, required, length, dropSize);
+  constructor(heading, fieldName, getter, setter, dropDown, editable, required,
+      length, dropSize) {
+    super(heading, fieldName, getter, setter, dropDown, editable, required,
+        length, dropSize);
   }
 
   options(txt) {
@@ -642,7 +679,7 @@ class AutoCompleteColumn extends SelectColumn {
   }
 
   caption(txt, o) {
-    return o.display.replace(/inp.value/i, 
+    return o.display.replace(/inp.value/i,
         '<strong>' + inp.value + '</strong>');
   }
 
@@ -658,8 +695,10 @@ class AutoCompleteColumn extends SelectColumn {
 }
 
 class DropDownColumn extends SelectColumn {
-  constructor(heading, fieldName, getter, setter, dropDown, editable, required, length, dropSize) {
-    super(heading, fieldName, getter, setter, dropDown, editable, required, length + 3.5, dropSize);
+  constructor(heading, fieldName, getter, setter, dropDown, editable, required,
+      length, dropSize) {
+    super(heading, fieldName, getter, setter, dropDown, editable, required,
+        length + 3.5, dropSize);
   }
 
   addOptions(select, dropDown) {
@@ -681,11 +720,13 @@ class DropDownColumn extends SelectColumn {
   }
 
   getControlValue(select) {
-    return select.selectedIndex >= 0 ? select.options[select.selectedIndex].value : undefined;
+    return select.selectedIndex >= 0
+        ? select.options[select.selectedIndex].value : undefined;
   }
 
   getLength() {
-    return boxSize(Math.max(this.dropDown.getLength() + 3, this.getHeaderLength()));
+    return boxSize(
+        Math.max(this.dropDown.getLength() + 3, this.getHeaderLength()));
   }
 
   setValue(sel, value) {
@@ -716,8 +757,8 @@ class ButtonColumn {
   }
 
   getHeading(tagName) {
-    let grid  = this.grid;
-    let td    = document.createElement(tagName);
+    let grid = this.grid;
+    let td = document.createElement(tagName);
 
     td.className = 'table-heading-btn';
 
@@ -751,7 +792,7 @@ class ButtonColumn {
 
   getControl(cell, entity, editMode) {
     let rowId = getCellRowId(cell);
-    let grid  = this.grid;
+    let grid = this.grid;
 
     let ctl = document.createElement('div');
 
@@ -776,25 +817,34 @@ class ButtonColumn {
   }
 }
 
-
 const addRow = (grid) => {
-  return getButton('add', 'add', (e) => { grid.addRow() });
+  return getButton('add', 'add', (e) => {
+    grid.addRow()
+  });
 };
 
 const deleteRow = (grid, rowId) => {
-  return getButton('delete', 'delete', (e) => { grid.deleteRow(rowId) });
+  return getButton('delete', 'delete', (e) => {
+    grid.deleteRow(rowId)
+  });
 };
 
 const editRow = (grid, rowId) => {
-  return getButton('update', 'update', (e) => { grid.editRow(rowId) });
+  return getButton('update', 'update', (e) => {
+    grid.editRow(rowId)
+  });
 };
 
 const newRow = (grid) => {
-  return getButton('new', 'add', (e) => { grid.newRow() });
+  return getButton('new', 'add', (e) => {
+    grid.newRow()
+  });
 };
 
 const updateRow = (grid, rowId) => {
-  return getButton('update', 'save', (e) => { grid.updateRow(rowId) });
+  return getButton('update', 'save', (e) => {
+    grid.updateRow(rowId)
+  });
 };
 
 const gridButtonColumn = () => {
@@ -805,7 +855,9 @@ const initializeForm = (grid, table) => {
   let maxLabel = 10;
 
   let parent = table.parentElement;
-  addHeading(parent, 'H3', grid.tableId);
+  let h = document.createElement('H3');
+  addText(h, grid.tableId);
+  parent.insertBefore(h, parent.firstChild);
 
   grid.columns.forEach(column => {
     column.setContext(grid, table);
@@ -844,7 +896,7 @@ const initializeFormBody = (grid, table, maxLabel) => {
 
   let maxRow = Math.max(grid.rowCount, grid.pageSize);
   for (let rowNum = 0; rowNum < maxRow; rowNum++) {
-    initializeFormRow(grid, table); 
+    initializeFormRow(grid, table);
   }
 };
 
@@ -856,16 +908,16 @@ const initializeFormRow = (grid, table) => {
   tr.className = 'flex-container';
   tr.id = rowId;
   body.append(tr);
-  
+
   let key = document.createElement('input');
   key.type = 'hidden';
   key.id = getKeyId(rowId);
   key.className = 'flex-control';
   tr.append(key);
-  
+
   grid.columns.forEach(column => {
     let td = document.createElement('div');
-  
+
     if (!column.isButtons()) {
       td.className = 'flex-item';
 
@@ -875,14 +927,14 @@ const initializeFormRow = (grid, table) => {
       setWidths(th, grid.maxLabel + 'ch');
 
       td.append(th);
-  
+
       let tc = document.createElement('div');
       tc.id = getCellId(rowId, column);
       tc.className = 'flex-control';
       setWidths(tc, column.getDisplayLength());
-  
+
       addText(tc, ' ');
-  
+
       td.append(tc);
       tr.append(td);
     }
@@ -923,9 +975,15 @@ const resizeGroup = (element, newWidths, tableWidth, rowWidth) => {
 };
 
 const initializeTable = (grid, table) => {
-  let caption = document.createElement('caption');
-  addText(caption, grid.tableId);
-  table.appendChild(caption);
+  let tab = document.getElementById(table.id+'Link');
+
+  if (tab) {
+    tab.innerText = getMessage(tab.id);
+  } else {
+    let caption = document.createElement('caption');
+    addText(caption, grid.tableId);
+    table.appendChild(caption);
+  }
 
   setWidths(table, '100%');
 
@@ -940,7 +998,7 @@ const initializeTable = (grid, table) => {
 
   grid.columns.forEach(column => {
     let col = document.createElement('col');
-    let colWidth = Math.floor((column.getLength() * 100) / totalLength)+'%';
+    let colWidth = Math.floor((column.getLength() * 100) / totalLength) + '%';
     column.setWidth(colWidth);
     setWidths(col, column.getWidth());
     colGroup.append(col);
@@ -974,7 +1032,7 @@ const initializeTableBody = (grid, table) => {
   let rect = table.getBoundingClientRect();
   body.id = table.id + '_tbody';
   body.className = 'tbody';
-  setWidths(body, rect.width+'px');
+  setWidths(body, rect.width + 'px');
   table.append(body);
 
   let maxRow = Math.max(grid.rowCount, grid.pageSize);
@@ -992,13 +1050,13 @@ const initializeTableRow = (grid, table) => {
   tr.className = 'table-row';
   tr.id = rowId;
   body.append(tr);
-  
+
   let key = document.createElement('input');
   key.type = 'hidden';
   key.id = getKeyId(rowId);
   key.className = 'table-cell';
   tr.append(key);
-  
+
   grid.columns.forEach(column => {
     let td = document.createElement('td');
     td.id = getCellId(rowId, column);
@@ -1035,7 +1093,7 @@ const initializeTableFooter = (grid, table) => {
 
   navRow.firstChild.className = 'table-prev';
   navRow.firstChild.id = table.id + 'Prev';
-  
+
   navRow.lastChild.className = 'table-next';
   navRow.lastChild.id = table.id + 'Next';
 };
@@ -1047,7 +1105,7 @@ const initializeGrid = (grid, table) => {
     grid.columns.forEach(column => {
       maxLabel = Math.max(column.getHeaderLength(), maxLabel);
     });
-    
+
     initializeFormHeader(grid, table);
 
     initializeFormBody(grid, table, maxLabel);
@@ -1065,16 +1123,18 @@ const initializeGrid = (grid, table) => {
 };
 
 class ItemGrid {
-  constructor(pageSize, apiUrl, tableId, columns, paged, editMode = EditMode.VIEW, children = undefined, editForm = undefined, rowSetter = defaultRowSetter) {
-    this.pageSize  = pageSize;
-    this.rowCount  = pageSize;
-    this.apiUrl    = apiUrl;
-    this.tableId   = tableId;
-    this.columns   = columns;
-    this.paged     = paged;
-    this.editMode  = editMode;
-    this.children  = children;
-    this.editForm  = editForm;
+  constructor(pageSize, apiUrl, tableId, columns, paged,
+      editMode = EditMode.VIEW, children = undefined, editForm = undefined,
+      rowSetter = defaultRowSetter) {
+    this.pageSize = pageSize;
+    this.rowCount = pageSize;
+    this.apiUrl = apiUrl;
+    this.tableId = tableId;
+    this.columns = columns;
+    this.paged = paged;
+    this.editMode = editMode;
+    this.children = children;
+    this.editForm = editForm;
     this.rowSetter = rowSetter;
 
     this.current = this.apiUrl;
@@ -1099,7 +1159,8 @@ class ItemGrid {
 
       let searchString = search.toString();
 
-      this.current = this.current + (searchString.length ? '?' + searchString : '');
+      this.current = this.current + (searchString.length ? '?' + searchString
+          : '');
     }
 
     this.initialized = false;
@@ -1114,7 +1175,8 @@ class ItemGrid {
 
   setParent(parent) {
     this.parent = parent;
-    this.apiUrl = ((parent && parent.apiUrl) ? parent.apiUrl + '/' : '') + this.apiUrl;
+    this.apiUrl = ((parent && parent.apiUrl) ? parent.apiUrl + '/' : '')
+        + this.apiUrl;
     this.editMode = parent.editMode;
   }
 
@@ -1129,10 +1191,11 @@ class ItemGrid {
     if (!grid.initialized || (rowCount > grid.pageSize)) {
       grid.rowCount = rowCount;
 
-      let place = document.getElementById(grid.tableId+'Site');
+      let place = document.getElementById(grid.tableId + 'Site');
       removeChildren(place);
 
-      let table = document.createElement(grid.paged === Paged.FORM ? 'div' : 'table'); 
+      let table = document.createElement(
+          grid.paged === Paged.FORM ? 'div' : 'table');
       table.id = grid.tableId;
       table.className = 'table';
       place.appendChild(table);
@@ -1180,7 +1243,8 @@ class ItemGrid {
       grid.apiUrl = self;
       grid.editMode = EditMode.UPDATE;
 
-      history.replaceState({}, null, window.location.href.replace('new=true', self));
+      history.replaceState({}, null,
+          window.location.href.replace('new=true', self));
 
       if (grid.children) {
         grid.children.forEach(child => {
@@ -1194,24 +1258,29 @@ class ItemGrid {
 
     grid.renderRow(rowId, jsonData, grid.columns, grid.editMode);
   }
-  
+
   renderData(jsonData) {
     let grid = this;
     let columns = grid.columns;
     let editMode = grid.editMode;
-    let entities = (grid.parent ? jsonData[grid.tableId] : jsonData.entities ? jsonData.entities : [jsonData]);
+    let entities = (grid.parent ? jsonData[grid.tableId] : jsonData.entities
+        ? jsonData.entities : [jsonData]);
     let tableId = grid.tableId;
 
-    if (!entities) entities = {};
-    
-    let rowCount = grid.paged === Paged.PAGED ? grid.pageSize : Math.max(grid.pageSize, entities.length);
+    if (!entities) {
+      entities = {};
+    }
+
+    let rowCount = grid.paged === Paged.PAGED ? grid.pageSize : Math.max(
+        grid.pageSize, entities.length);
 
     grid.initGrid(rowCount);
 
     for (let row = 0; row < rowCount; row++) {
       let rowId = getRowId(tableId, row);
 
-      let entity = (entities.length > 0 && row < entities.length) ? entities[row] : undefined;
+      let entity = (entities.length > 0 && row < entities.length)
+          ? entities[row] : undefined;
 
       let key = document.getElementById(getKeyId(rowId));
       key.value = entity ? getLink(entity.links, 'self').href : '';
@@ -1227,7 +1296,9 @@ class ItemGrid {
       let prevLnk = getLink(jsonData.links, 'previous');
 
       if (prevLnk) {
-        addButton(prev, prevLnk, (e) => { grid.getData(prevLnk.href) });
+        addButton(prev, prevLnk, (e) => {
+          grid.getData(prevLnk.href)
+        });
       } else {
         addText(prev, '');
       }
@@ -1241,7 +1312,9 @@ class ItemGrid {
       let nextLnk = getLink(jsonData.links, 'next');
 
       if (nextLnk) {
-        addButton(next, nextLnk, (e) => { grid.getData(nextLnk.href) });
+        addButton(next, nextLnk, (e) => {
+          grid.getData(nextLnk.href)
+        });
       } else {
         addText(next, '');
       }
@@ -1268,7 +1341,7 @@ class ItemGrid {
     let grid = this;
 
     fetch(restUrl, {
-      method: 'get', 
+      method: 'get',
       headers: {'Content-type': 'application/json'}
     })
     .then(response => checkResponse(response))
@@ -1322,17 +1395,17 @@ class ItemGrid {
         return row;
       }
     }
-    
+
     return rowCount;
   }
 
   addRow() {
-    let grid      = this;
-    let columns   = grid.columns;
-    let rowCount  = grid.rowCount;
-    let paged     = grid.paged;
-    let tableId   = grid.tableId;
-    let rowNum    = this.getFreeRow(tableId, rowCount);
+    let grid = this;
+    let columns = grid.columns;
+    let rowCount = grid.rowCount;
+    let paged = grid.paged;
+    let tableId = grid.tableId;
+    let rowNum = this.getFreeRow(tableId, rowCount);
 
     if (paged === Paged.EXPAND) {
       if (rowNum === rowCount) {
@@ -1349,22 +1422,25 @@ class ItemGrid {
         // the page is full, new page and add at start
         rowNum = 0;
         for (let row = 1; row < rowCount; row++) {
-          this.renderRow(getRowId(tableId, row), undefined, columns, EditMode.NEVER);
+          this.renderRow(getRowId(tableId, row), undefined, columns,
+              EditMode.NEVER);
         }
-          
+
         let prev = document.getElementById(tableId + 'Prev');
 
         if (prev) {
           removeChildren(prev);
 
-          addButton(prev, grid.current, (e) => { grid.getData(grid.current) });
+          addButton(prev, grid.current, (e) => {
+            grid.getData(grid.current)
+          });
         }
 
         let next = document.getElementById(tableId + 'Next');
 
         if (next) {
           removeChildren(next);
-          
+
           addText(next, '');
         }
       }
@@ -1392,18 +1468,23 @@ class ItemGrid {
     });
 
     let td = document.getElementById(getCellId(rowId, 'buttons'));
-    let save = getButton('save', 'save', (e) => { grid.saveRow(rowId) });
+    let save = getButton('save', 'save', (e) => {
+      grid.saveRow(rowId)
+    });
     td.appendChild(save);
-    let del = getButton('delete', 'delete', (e) => { grid.removeRow(rowId) });
+    let del = getButton('delete', 'delete', (e) => {
+      grid.removeRow(rowId)
+    });
     td.appendChild(del);
-    
+
   }
 
   async deleteRow(rowId) {
     let grid = this;
     let deleteUrl = getKeyValue(rowId);
     if (deleteUrl) {
-      await fetch(deleteUrl, {method: 'DELETE', headers: {'Content-type': 'application/json'}})
+      await fetch(deleteUrl,
+          {method: 'DELETE', headers: {'Content-type': 'application/json'}})
       .then(response => checkResponse(response))
       .catch(error => reportError(error));
 
@@ -1438,8 +1519,8 @@ class ItemGrid {
     let jsonData = JSON.stringify(data);
     if (data) {
       await fetch(saveUrl, {
-        method: 'POST', 
-        headers: {'Content-type': 'application/json'}, 
+        method: 'POST',
+        headers: {'Content-type': 'application/json'},
         body: jsonData
       })
       .then(response => checkResponse(response))
@@ -1456,8 +1537,8 @@ class ItemGrid {
 
     if (data) {
       await fetch(updateUrl, {
-        method: 'PUT', 
-        headers: {'Content-type': 'application/json'}, 
+        method: 'PUT',
+        headers: {'Content-type': 'application/json'},
         body: jsonData
       })
       .then(response => checkResponse(response))
@@ -1469,7 +1550,9 @@ class ItemGrid {
 
 class ListEditGrid extends ItemGrid {
   constructor(pageSize, dataType, elementName, columns) {
-    super(pageSize, fetchUrl(dataType), elementName, columns.concat([gridButtonColumn()]), Paged.PAGED, EditMode.UPDATE, undefined);
+    super(pageSize, fetchUrl(dataType), elementName,
+        columns.concat([gridButtonColumn()]), Paged.PAGED, EditMode.UPDATE,
+        undefined);
     this.dataType = dataType;
   }
 

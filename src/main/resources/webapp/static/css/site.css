@@ -15,7 +15,7 @@ html {
 }
 
 body {
-  border: transparent 0px;
+  border: transparent 0;
   margin: 0;
   opacity: 1;
   overflow: hidden;
@@ -422,7 +422,7 @@ div.form-foot,
 div.form-footer {
   height: .25rem;
 }
-	
+
 td.table-footer {
   height: 2.5rem;
   text-align: center;
@@ -497,8 +497,8 @@ textarea {
   overflow: auto;
 }
 
-a.nav-button, 
-button.nav-button, 
+a.nav-button,
+button.nav-button,
 button.tabLinks {
   background-color: LightSkyBlue;
   border: 0.1rem solid LightSkyBlue;
@@ -512,7 +512,7 @@ button.tabLinks {
   vertical-align: middle;
 }
 
-a.nav-button, 
+a.nav-button,
 button.tabLinks {
   padding: 0.3rem;
 }
@@ -847,11 +847,10 @@ img.img-button {
   display: inline-block;
   vertical-align: top;
   max-width: 100%;
-  
+
   overflow-x: auto;
-  
-  // optional - looks better for small cell values
-  white-space: nowrap;
+
+/ / optional - looks better for small cell values white-space: nowrap;
 
   border-collapse: collapse;
   border-spacing: 0;
@@ -859,12 +858,10 @@ img.img-button {
 
 .rtable,
 .rtable--flip tbody {
-  // optional - enable iOS momentum scrolling
-  -webkit-overflow-scrolling: touch;
-  
-  // scrolling shadows
-  background: radial-gradient(left, ellipse, rgba(0,0,0, .2) 0%, rgba(0,0,0, 0) 75%) 0 center,
-              radial-gradient(right, ellipse, rgba(0,0,0, .2) 0%, rgba(0,0,0, 0) 75%) 100% center;
+/ / optional - enable iOS momentum scrolling -webkit-overflow-scrolling: touch;
+
+/ / scrolling shadows background: radial-gradient(left, ellipse, rgba(0, 0, 0, .2) 0 %, rgba(0, 0, 0, 0) 75 %) 0 center,
+radial-gradient(right, ellipse, rgba(0, 0, 0, .2) 0 %, rgba(0, 0, 0, 0) 75 %) 100 % center;
   background-size: 10px 100%, 10px 100%;
   background-attachment: scroll, scroll;
   background-repeat: no-repeat;
@@ -872,14 +869,14 @@ img.img-button {
 
 .rtable td:first-child,
 .rtable--flip tbody tr:first-child {
-  background-image: linear-gradient(to right, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%);
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
   background-repeat: no-repeat;
   background-size: 20px 100%;
 }
 
 .rtable td:last-child,
 .rtable--flip tbody tr:last-child {
-  background-image: linear-gradient(to left, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%);
+  background-image: linear-gradient(to left, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
   background-repeat: no-repeat;
   background-position: 100% 0;
   background-size: 20px 100%;
@@ -931,8 +928,7 @@ img.img-button {
 
 .rtable--flip td {
   background-image: none !important;
-  // border-collapse is no longer active
-  border-left: 0;
+/ / border-collapse is no longer active border-left: 0;
 }
 
 .rtable--flip th:not(:last-child),

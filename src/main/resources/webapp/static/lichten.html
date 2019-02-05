@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<link rel="stylesheet" href="css/site.css"/>
-<script type="text/javascript" src="js/dropdown.js"></script>
-<script type="text/javascript" src="js/utils.js"></script>
-<script type="text/javascript" src="js/fields.js"></script>
-<script type="text/javascript" src="js/grids.js"></script>
-<script type="text/javascript">
-const columns = [
-    NAMEN(Editable.ADD, true),
-    BEZEICHNUNG(Editable.UPDATE, true),
-    ABBILDUNG(Editable.NEVER)
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/site.css"/>
+  <script type="text/javascript" src="js/i18n.js"></script>
+  <script type="text/javascript" src="js/utils.js"></script>
+  <script type="text/javascript" src="js/dropdown.js"></script>
+  <script type="text/javascript" src="js/fields.js"></script>
+  <script type="text/javascript" src="js/grids.js"></script>
+  <script type="text/javascript">
+    const columns = [
+      NAMEN(Editable.ADD, true),
+      BEZEICHNUNG(Editable.UPDATE, true),
+      ABBILDUNG(Editable.NEVER)
     ];
 
     const licht = new ListEditGrid(10, "licht", "licht", columns, Paged.PAGED, EditMode.UPDATE);
@@ -23,23 +24,23 @@ const columns = [
       addFooter();
       await licht.init();
     }
-</script>
-<title>Lichten</title>
+  </script>
+  <title>Lichten</title>
 </head>
 <body onload="init()">
-    <header>
-    </header>
-    	
-	<section>
-		<article>
-			<div id="data">
-				<div id="lichtSite">
-				</div>
-			</div>
-		</article>
-	</section>
+<header>
+</header>
 
-    <footer>
-    </footer>
+<section>
+  <article>
+    <div id="data">
+      <div id="lichtSite">
+      </div>
+    </div>
+  </article>
+</section>
+
+<footer>
+</footer>
 </body>
 </html>

@@ -1,61 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<link rel="stylesheet" href="css/site.css"/>
-<script type="text/javascript" src="js/dropdown.js"></script>
-<script type="text/javascript" src="js/utils.js"></script>
-<script type="text/javascript" src="js/fields.js"></script>
-<script type="text/javascript" src="js/grids.js"></script>
-<script type="text/javascript">
-  const consistColumns = [
-    POSITION(),
-    ARTIKEL_SELECT(),
-    UNTER_KATEGORIE_SELECT(Editable.NEVER, false, artikelProduktKategorieGetter, noOpSetter),
-    BEZEICHNUNG(Editable.NEVER(), false, artikelBezeichnungGetter, noOpSetter),
-    LANGE(Editable.NEVER, false, artikelProduktLangeGetter, noOpSetter),
-    gridButtonColumn()
-  ];
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/site.css"/>
+  <script type="text/javascript" src="js/i18n.js"></script>
+  <script type="text/javascript" src="js/utils.js"></script>
+  <script type="text/javascript" src="js/dropdown.js"></script>
+  <script type="text/javascript" src="js/fields.js"></script>
+  <script type="text/javascript" src="js/grids.js"></script>
+  <script type="text/javascript">
+    const consistColumns = [
+      POSITION(),
+      ARTIKEL_SELECT(),
+      UNTER_KATEGORIE_SELECT(Editable.NEVER, false, artikelProduktKategorieGetter, noOpSetter),
+      BEZEICHNUNG(Editable.NEVER, false, artikelBezeichnungGetter, noOpSetter),
+      LANGE(Editable.NEVER, false, artikelProduktLangeGetter, noOpSetter),
+      gridButtonColumn()
+    ];
 
-  const consisten = new ItemGrid(2, "consisten", "consisten", consistColumns, Paged.EXPAND, EditMode.ADD, undefined);
+    const consisten = new ItemGrid(2, "consisten", "consisten", consistColumns, Paged.EXPAND,
+        EditMode.ADD, undefined);
 
-  const columns = [
-    NAMEN(),
-    ZUG_TYP_SELECT(),
-    BEZEICHNUNG(),
-    LANGE(),
-    new ButtonColumn([], [updateRow])
-  ];
+    const columns = [
+      NAMEN(),
+      ZUG_TYP_SELECT(),
+      BEZEICHNUNG(),
+      LANGE(),
+      new ButtonColumn([], [updateRow])
+    ];
 
-  const zug = new ItemGrid(1, fetchUrl("zug"), "zug", columns, Paged.FORM, EditMode.UPDATE, [consisten]);
+    const zug = new ItemGrid(1, fetchUrl("zug"), "zug", columns, Paged.FORM, EditMode.UPDATE,
+        [consisten]);
 
-  async function init() {
-    addNavBar(NavMenu.BACK);
-    addFooter();
-    await ZUG_TYP_DROP.init()
+    async function init() {
+      addNavBar(NavMenu.BACK);
+      addFooter();
+      await ZUG_TYP_DROP.init()
       .then(() => ARTIKEL_DROP.init())
       .then(() => zug.init());
-  }
-</script>
-<title>Zugen</title>
+    }
+  </script>
+  <title>Zugen</title>
 </head>
 <body onLoad="init()">
-    <header>
-    </header>
+<header>
+</header>
 
-	<section>
-		<article>
-			<div id="data">
-                               <div id="zugSite">
-				</div>
-                                <div id="consistenSite">
-			</div>
-		</article>
-	</section>
+<section>
+  <article>
+    <div id="data">
+      <div id="zugSite">
+      </div>
+      <div id="consistenSite">
+      </div>
+    </div>
+  </article>
+</section>
 
-    <footer>
-    </footer>
+<footer>
+</footer>
 </body>
 </html>

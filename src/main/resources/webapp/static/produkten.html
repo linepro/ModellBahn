@@ -1,56 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<link rel="stylesheet" href="css/site.css"/>
-<script type="text/javascript" src="js/dropdown.js"></script>
-<script type="text/javascript" src="js/utils.js"></script>
-<script type="text/javascript" src="js/fields.js"></script>
-<script type="text/javascript" src="js/grids.js"></script>
-<script type="text/javascript">
-const columns = [
-  HERSTELLER_SELECT(Editable.ADD, true),
-  BESTELL_NR(Editable.ADD, true),
-  UNTER_KATEGORIE_SELECT(Editable.UPDATE, true),
-  MASSSTAB_SELECT(Editable.UPDATE, false),
-  SPURWEITE_SELECT(Editable.UPDATE, false),
-  BEZEICHNUNG(Editable.UPDATE, true),
-  new ButtonColumn([newRow], [editRow, deleteRow])
-];
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/site.css"/>
+  <script type="text/javascript" src="js/i18n.js"></script>
+  <script type="text/javascript" src="js/utils.js"></script>
+  <script type="text/javascript" src="js/dropdown.js"></script>
+  <script type="text/javascript" src="js/fields.js"></script>
+  <script type="text/javascript" src="js/grids.js"></script>
+  <script type="text/javascript">
+    const columns = [
+      HERSTELLER_SELECT(Editable.ADD, true),
+      BESTELL_NR(Editable.ADD, true),
+      UNTER_KATEGORIE_SELECT(Editable.UPDATE, true),
+      MASSSTAB_SELECT(Editable.UPDATE, false),
+      SPURWEITE_SELECT(Editable.UPDATE, false),
+      BEZEICHNUNG(Editable.UPDATE, true),
+      new ButtonColumn([newRow], [editRow, deleteRow])
+    ];
 
-const produkt = new ItemGrid(10, fetchUrl("produkt"), "produkt", columns, Paged.PAGED, EditMode.UPDATE, undefined, "produkt.html");
+    const produkt = new ItemGrid(10, fetchUrl("produkt"), "produkt", columns, Paged.PAGED,
+        EditMode.UPDATE, undefined, "produkt.html");
 
-async function init() {
+    async function init() {
       addNavBar(NavMenu.INVENTORY);
       addFooter();
       await HERSTELLER_DROP.init()
-        .then(() => UNTER_KATEGORIE_DROP.init())
-        .then(() => MASSSTAB_DROP.init())
-        .then(() => SPURWEITE_DROP.init())
-        .then(() => EPOCH_DROP.init())
-        .then(() => BAHNVERWALTUNG_DROP.init())
-        .then(() => GATTUNG_DROP.init())
-        .then(() => produkt.init());
-}
-</script>
-<title>Produkten</title>
+      .then(() => UNTER_KATEGORIE_DROP.init())
+      .then(() => MASSSTAB_DROP.init())
+      .then(() => SPURWEITE_DROP.init())
+      .then(() => EPOCH_DROP.init())
+      .then(() => BAHNVERWALTUNG_DROP.init())
+      .then(() => GATTUNG_DROP.init())
+      .then(() => produkt.init());
+    }
+  </script>
+  <title>Produkten</title>
 </head>
 <body onLoad="init()">
-    <header>
-    </header>
+<header>
+</header>
 
-	<section>
-		<article>
-			<div id="data">
-				<div id="produktSite">
-				</div>
-			</div>
-		</article>
-	</section>
+<section>
+  <article>
+    <div id="data">
+      <div id="produktSite">
+      </div>
+    </div>
+  </article>
+</section>
 
-    <footer>
-    </footer>
+<footer>
+</footer>
 </body>
 </html>

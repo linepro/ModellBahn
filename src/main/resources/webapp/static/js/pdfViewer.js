@@ -12,11 +12,12 @@ class PDFViewer {
   load(file) {
     let pdfjsLib = window['pdfjs-dist/build/pdf'];
 
-    pdfjsLib.GlobalWorkerOptions.workerSrc = siteRoot() + '/js/lib/pdf.min-2.0.943.worker.js';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = siteRoot()
+        + '/js/lib/pdf.min-2.0.943.worker.js';
 
-    pdfjsLib.getDocument({ url: file, disableRange: true, disableStream: true })
-      .then(pdf => this.initialPage(pdf))
-      .catch(e => reportError(e));
+    pdfjsLib.getDocument({url: file, disableRange: true, disableStream: true})
+    .then(pdf => this.initialPage(pdf))
+    .catch(error => reportError(error));
   };
 
   async initialPage(pdfDoc) {
@@ -29,8 +30,8 @@ class PDFViewer {
     this.pageNum = pageNum;
 
     this.pdfDoc.getPage(pageNum)
-      .then(page => this.renderPage(page))
-      .catch(e => reportError(e));
+    .then(page => this.renderPage(page))
+    .catch(error => reportError(error));
   }
 
   async renderPage(page) {
@@ -55,7 +56,8 @@ class PDFViewer {
   }
 
   async nextPage() {
-    let next = this.pageNum < this.pdfDoc.numPages ? this.pageNum + 1 : this.pdfDoc.numPages;
+    let next = this.pageNum < this.pdfDoc.numPages ? this.pageNum + 1
+        : this.pdfDoc.numPages;
     await this.showPage(next);
   }
 }

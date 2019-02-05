@@ -1,47 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"/>    
-<link rel="stylesheet" href="css/site.css"/>
-<script type="text/javascript" src="js/dropdown.js"></script>
-<script type="text/javascript" src="js/utils.js"></script>
-<script type="text/javascript" src="js/fields.js"></script>
-<script type="text/javascript" src="js/grids.js"></script>
-<script type="text/javascript">
-  const columns = [
-    NAMEN(),
-    ZUG_TYP_SELECT(),
-    BEZEICHNUNG(),
-    LANGE(),
-    new ButtonColumn([newRow], [editRow, deleteRow])
-  ];
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="css/site.css"/>
+  <script type="text/javascript" src="js/i18n.js"></script>
+  <script type="text/javascript" src="js/utils.js"></script>
+  <script type="text/javascript" src="js/dropdown.js"></script>
+  <script type="text/javascript" src="js/fields.js"></script>
+  <script type="text/javascript" src="js/grids.js"></script>
+  <script type="text/javascript">
+    const columns = [
+      NAMEN(),
+      ZUG_TYP_SELECT(),
+      BEZEICHNUNG(),
+      LANGE(),
+      new ButtonColumn([newRow], [editRow, deleteRow])
+    ];
 
-  const zugen = new ItemGrid(10, fetchUrl("zug"), "zugen", columns, Paged.PAGED, EditMode.UPDATE, undefined, "zug.html");
+    const zugen = new ItemGrid(10, fetchUrl("zug"), "zugen", columns, Paged.PAGED, EditMode.UPDATE,
+        undefined, "zug.html");
 
-  async function init() {
-    addNavBar(NavMenu.INVENTORY);
-    addFooter();
-    await ZUG_TYP_DROP.init()
+    async function init() {
+      addNavBar(NavMenu.INVENTORY);
+      addFooter();
+      await ZUG_TYP_DROP.init()
       .then(() => zugen.init());
-  }
-</script>
-<title>Zugen</title>
+    }
+  </script>
+  <title>Zugen</title>
 </head>
 <body onLoad="init()">
-    <header>
-    </header>
+<header>
+</header>
 
-	<section>
-		<article>
-			<div id="data">
-				<div id="zugenSite">
-				</div>
-			</div>
-		</article>
-	</section>
+<section>
+  <article>
+    <div id="data">
+      <div id="zugenSite">
+      </div>
+    </div>
+  </article>
+</section>
 
-    <footer>
-    </footer>
+<footer>
+</footer>
 </body>
 </html>

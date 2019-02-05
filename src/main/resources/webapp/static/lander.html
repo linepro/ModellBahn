@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<link rel="stylesheet" href="css/site.css"/>
-<script type="text/javascript" src="js/dropdown.js"></script>
-<script type="text/javascript" src="js/utils.js"></script>
-<script type="text/javascript" src="js/fields.js"></script>
-<script type="text/javascript" src="js/grids.js"></script>
-<script type="text/javascript">
-const columns = [
-    NAMEN(), 
-    BEZEICHNUNG(), 
-    WAHRUNG_SELECT()
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/site.css"/>
+  <script type="text/javascript" src="js/i18n.js"></script>
+  <script type="text/javascript" src="js/utils.js"></script>
+  <script type="text/javascript" src="js/dropdown.js"></script>
+  <script type="text/javascript" src="js/fields.js"></script>
+  <script type="text/javascript" src="js/grids.js"></script>
+  <script type="text/javascript">
+    const columns = [
+      NAMEN(),
+      BEZEICHNUNG(),
+      WAHRUNG_SELECT()
     ];
 
     const land = new ListEditGrid(10, "land", "land", columns, Paged.PAGED, EditMode.UPDATE);
@@ -22,25 +23,25 @@ const columns = [
       addNavBar(NavMenu.REF_DATA);
       addFooter();
       await WAHRUNG_DROP.init()
-        .then(() => land.init());
+      .then(() => land.init());
     }
-</script>
-<title>L&auml;nder</title>
+  </script>
+  <title>L&auml;nder</title>
 </head>
 <body onload="init()">
-    <header>
-    </header>
-    	
-	<section>
-		<article>
-			<div id="data">
-				<div id="landSite">
-				</div>
-			</div>
-		</article>
-	</section>
+<header>
+</header>
 
-    <footer>
-    </footer>
+<section>
+  <article>
+    <div id="data">
+      <div id="landSite">
+      </div>
+    </div>
+  </article>
+</section>
+
+<footer>
+</footer>
 </body>
 </html>
