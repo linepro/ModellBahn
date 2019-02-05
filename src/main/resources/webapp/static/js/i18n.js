@@ -45,8 +45,8 @@ const getMessage = (messageKey, substitutions) => {
     if (substitutions) {
       Object.keys(substitutions).forEach(substitute => {
         let token = new RegExp('${' + substitute + '}');
-        let substitution = substitions[substitute];
-        message = message.replace(token, substition);
+        let substitution = substitutions[substitute];
+        message = message.replace(token, substitution);
       });
     }
 

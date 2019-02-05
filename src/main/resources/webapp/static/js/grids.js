@@ -301,18 +301,37 @@ class URLColumn extends TextColumn {
 
 class DateColumn extends TextColumn {
   constructor(heading, fieldName, getter, setter, editable, required) {
-    super(heading, fieldName, getter, setter, editable, required, 12,
-        DATE_PATTERN);
+    super(heading, fieldName, getter, setter, editable, required, 12, DATE_PATTERN);
   }
 
   createControl() {
     let dte = super.createControl();
-    dte.addEventListener('click', (e) => {
-      // TODO pop up date picker.
-    }, false);
+    dte.addEventListener('click', (e) => { this.datePicker(e) }, false);
     return dte;
   }
 
+  datePicker(e) {
+    let ctl = this;
+    let inp = e.target;
+    let div = inp.parentElement;
+
+    let pick = document.createElement('input');
+    pick.type = 'date';
+    pick.style.display = 'none';
+    pick.value = inp.value;
+    pick.addEventListener('click', (e) => { this.update(inp, e) });
+    pick.addEventListener('change', (e) => { this.update(inp, e) });
+    pick.addEventListener('blur', (e) => { this.update(inp, e) });
+    div.appendChild(pick);
+    pick.click();
+  }
+
+  update(inp, e) {
+    let pick = e.target;
+    let div = pick.parentElement;
+    this.setValue(inp, pick.value);
+    div.removeChild(pick);
+  }
 }
 
 class FileColumn extends Column {
@@ -411,15 +430,9 @@ class FileColumn extends Column {
     cell.appendChild(file);
     file.style.display = 'none';
     file.click();
-    file.addEventListener('change', (e) => {
-      this.update(e, grid, rowId);
-    }, false);
-    file.addEventListener('click', (e) => {
-      this.update(e, grid, rowId);
-    }, false);
-    file.addEventListener('blur', (e) => {
-      this.update(e, grid, rowId);
-    }, false);
+    file.addEventListener('change', (e) => { this.update(e, grid, rowId); }, false);
+    file.addEventListener('click', (e) => { this.update(e, grid, rowId); }, false);
+    file.addEventListener('blur', (e) => { this.update(e, grid, rowId); }, false);
   }
 
   remove(e, grid, rowId) {
@@ -511,7 +524,7 @@ const closeAutoLists = (elmnt = document) => {
   let autoComp = elmnt.getElementsByClassName('autocomplete-list');
   for (let i = 0; i < autoComp.length; i++) {
     removeChildren(autoComp[i]);
-    autoComp[i].parentNode.removeChild(autoComp[i]);
+    autoComp[i].parentElement.removeChild(autoComp[i]);
   }
 };
 
@@ -576,7 +589,7 @@ class SelectColumn extends Column {
   open(e) {
     let sel = this;
     let inp = e.target;
-    let div = inp.parentNode;
+    let div = inp.parentElement;
 
     e.stopPropagation();
     closeAutoLists();
@@ -606,7 +619,7 @@ class SelectColumn extends Column {
 
   keydown(e) {
     let ctl = this;
-    let div = e.target.parentNode;
+    let div = e.target.parentElement;
 
     let autoComps = div.getElementsByClassName('autocomplete-list');
 
@@ -628,8 +641,8 @@ class SelectColumn extends Column {
 
   click(e) {
     let opt = e.target;
-    let autoComp = opt.parentNode;
-    let div = autoComp.parentNode;
+    let autoComp = opt.parentElement;
+    let div = autoComp.parentElement;
     let inp = div.getElementsByClassName('autocomplete')[0];
 
     inp.value = opt.innerText;
@@ -864,7 +877,7 @@ const initializeForm = (grid, table) => {
     maxLabel = Math.max(column.getHeaderLength(), maxLabel);
   });
 
-  grid.maxlabel = maxLabel;
+  return maxLabel;
 };
 
 const initializeFormHeader = (grid, table) => {
@@ -896,11 +909,11 @@ const initializeFormBody = (grid, table, maxLabel) => {
 
   let maxRow = Math.max(grid.rowCount, grid.pageSize);
   for (let rowNum = 0; rowNum < maxRow; rowNum++) {
-    initializeFormRow(grid, table);
+    initializeFormRow(grid, table, maxLabel);
   }
 };
 
-const initializeFormRow = (grid, table) => {
+const initializeFormRow = (grid, table, maxLabel) => {
   let body = document.getElementById(table.id + '_tbody');
 
   let tr = document.createElement('div');
@@ -924,7 +937,7 @@ const initializeFormRow = (grid, table) => {
       // TODO: change to label
       let th = column.getHeading('div');
       th.className = 'flex-label';
-      setWidths(th, grid.maxLabel + 'ch');
+      setWidths(th, maxLabel + 'ch');
 
       td.append(th);
 

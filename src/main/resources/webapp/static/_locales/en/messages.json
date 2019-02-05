@@ -127,7 +127,7 @@
   "WERKSEINSTELLUNG": { "message": "Default", "description": "" },
   "WERT": { "message": "Value", "description": "" },
   "ZUG": { "message": "Train", "description": "" },
-  "ZUG_TYP": { "message": "Train Type", "description": "" },
-  "ZYLINDER": { "message": "Cylinders", "description": "" },
   "ZUGEN": { "message": "Trains", "description": "" },
+  "ZUG_TYP": { "message": "Train Type", "description": "" },
+  "ZYLINDER": { "message": "Cylinders", "description": "" }
 }
