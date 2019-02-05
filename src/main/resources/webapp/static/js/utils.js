@@ -311,8 +311,7 @@ const resizeAll = (element = document) => {
   let nav = element.getElementsByTagName('NAV')[0];
   let rect = nav.getBoundingClientRect();
   let section = document.getElementsByTagName('SECTION')[0];
-  section.top = rect.height;
-  section.style.top = rect.height;
+  section.style.top = rect.height+'px';
   
   let tables = element.getElementsByTagName('TABLE');
   for (let i = 0; i < tables.length; i++) {
@@ -447,8 +446,7 @@ const addNavBar = (menuStyle) => {
   
   let rect = nav.getBoundingClientRect();
   let section = document.getElementsByTagName('SECTION')[0];
-  section.top = rect.height;
-  section.style.top = rect.height;
+  section.style.top = rect.height+'px';
 };
 
 const addFooter = () => {
