@@ -23,7 +23,7 @@ const columns = [
 const produkt = new ItemGrid(10, fetchUrl("produkt"), "produkt", columns, Paged.PAGED, EditMode.UPDATE, undefined, "produkt.html");
 
 async function init() {
-      addNavBar(NavMenu.REF_DATA);
+      addNavBar(NavMenu.INVENTORY);
       addFooter();
       await HERSTELLER_DROP.init()
         .then(() => UNTER_KATEGORIE_DROP.init())

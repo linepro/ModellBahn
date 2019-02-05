@@ -27,8 +27,8 @@
   const vorbild = new ItemGrid(10, fetchUrl("vorbild"), "vorbild", columns, Paged.PAGED, EditMode.UPDATE, undefined, "vorbild.html");
 
   async function init() {
-      addNavBar(NavMenu.REF_DATA);
-      addFooter();
+    addNavBar(NavMenu.INVENTORY);
+    addFooter();
     await GATTUNG_DROP.init()
       .then(() => UNTER_KATEGORIE_DROP.init())
       .then(() => BAHNVERWALTUNG_DROP.init())

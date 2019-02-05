@@ -44,7 +44,7 @@
   const artikel = new ItemGrid(1, fetchUrl("artikel"), "artikel", columns, Paged.FORM, EditMode.UPDATE, [anderungen]);
 
   async function init() {
-      addNavBar(NavMenu.REF_DATA);
+      addNavBar(NavMenu.BACK);
       addFooter();
       await ANDERUNGS_TYP_DROP.init()
         .then(() => PRODUKT_DROP.init())

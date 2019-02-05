@@ -52,7 +52,7 @@
     const produkt = new ItemGrid(1, fetchUrl("produkt"), "produkt", columns, Paged.FORM, EditMode.UPDATE, [teilen]);
 
     async function init() {
-      addNavBar(NavMenu.REF_DATA);
+      addNavBar(NavMenu.BACK);
       addFooter();
       await HERSTELLER_DROP.init()
         .then(() => UNTER_KATEGORIE_DROP.init())

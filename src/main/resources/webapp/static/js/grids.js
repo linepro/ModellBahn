@@ -804,6 +804,9 @@ const gridButtonColumn = () => {
 const initializeForm = (grid, table) => {
   let maxLabel = 10;
 
+  let parent = table.parentElement;
+  addHeading(parent, 'H3', grid.tableId);
+
   grid.columns.forEach(column => {
     column.setContext(grid, table);
     maxLabel = Math.max(column.getHeaderLength(), maxLabel);
@@ -920,11 +923,9 @@ const resizeGroup = (element, newWidths, tableWidth, rowWidth) => {
 };
 
 const initializeTable = (grid, table) => {
-  if (grid.name && !grid.parent) {
-    let caption = document.createElement('caption');
-    addText(caption, grid.name);
-    table.appendChild(caption);
-  }
+  let caption = document.createElement('caption');
+  addText(caption, grid.tableId);
+  table.appendChild(caption);
 
   setWidths(table, '100%');
 

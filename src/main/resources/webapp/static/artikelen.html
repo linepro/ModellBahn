@@ -29,8 +29,8 @@
   const artikel = new ItemGrid(10, fetchUrl("artikel"), "artikel", columns, Paged.PAGED, EditMode.UPDATE, undefined, "artikel.html");
 
   async function init() {
-      addNavBar(NavMenu.REF_DATA);
-      addFooter();
+    addNavBar(NavMenu.INVENTORY);
+    addFooter();
     await PRODUKT_DROP.init()
       .then(() => UNTER_KATEGORIE_DROP.init())
       .then(() => DECODER_DROP.init())

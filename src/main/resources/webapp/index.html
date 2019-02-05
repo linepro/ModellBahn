@@ -8,6 +8,8 @@
 <script type="text/javascript" src="static/js/utils.js"></script>
 <script type="text/javascript">
 async function init() {
+  addNavBar(NavMenu.HOME);
+  addFooter();
 }
 </script>
 <title>ModellBahn</title>
@@ -15,61 +17,14 @@ async function init() {
 <body onload="init()">
     <header>
         <h1>ModellBahn</h1>
-        <hr class="highlight" />
-        <nav>
-            <div>
-                <h2>Konfiguration</h2>
-                <ul class="nav">
-                    <li><a class="nav-button" href="static/aufbauten.html">Aufbau</a></li>
-                    <li><a class="nav-button" href="static/antrieben.html">Antrieb</a></li>      
-                    <li><a class="nav-button" href="static/bahnverwaltungen.html">Bahnverwaltung</a></li>      
-                    <li><a class="nav-button" href="static/decoderTypen.html">Decoder Typ</a></li>
-                    <li><a class="nav-button" href="static/herstellern.html">Hersteller</a></li>
-                    <li><a class="nav-button" href="static/kategorien.html">Katogorie</a></li>
-                    <li><a class="nav-button" href="static/kupplungen.html">Kupplung</a></li>
-                    <li><a class="nav-button" href="static/lander.html">Land</a></li>
-                    <li><a class="nav-button" href="static/lichten.html">Licht</a></li>
-                    <li><a class="nav-button" href="static/massstaben.html">Maßstab</a></li>
-                    <li><a class="nav-button" href="static/motorTypen.html">Motor Typ</a></li>
-                    <li><a class="nav-button" href="static/protokollen.html">Protokoll</a></li>
-                    <li><a class="nav-button" href="static/sonderModellen.html">SonderModell</a></li>
-                    <li><a class="nav-button" href="static/spurweiten.html">Spurwiete</a></li>
-                    <li><a class="nav-button" href="static/steuerungen.html">Steuerung</a></li>
-                    <li><a class="nav-button" href="static/wahrungen.html">Wahrung</a></li>
-                    <li><a class="nav-button" href="static/zugtypen.html">Zug Typ</a></li>
-                </ul>
-            </div>
-            <hr class="highlight" />
-            <div>
-                <h2>Data</h2>
-                <ul class="nav">
-                    <li><a class="nav-button" href="static/produkten.html">Produkt</a></li>
-                    <li><a class="nav-button" href="static/artikelen.html">Artikel</a></li>
-                    <li><a class="nav-button" href="static/decoderen.html">Decoder</a></li>
-                    <li><a class="nav-button" href="static/vorbilder.html">Vorbild</a></li>
-                    <li><a class="nav-button" href="static/zugen.html">Zug</a></li>
-                </ul>
-            </div>
-        </nav>
-        <hr class="highlight" />
     </header>
 
     <section>
         <article>
-            
         </article>
     </section>
 
     <footer>
-        <div id="footer">
-            <div>
-                <hr class="highlight" />
-                <ul class="footer">
-	                <li>Copyright &copy; 2018, 2019 John &amp; Andrew Goff</li>
-                    <li><a id="license" class="nav-button" href="#" onclick="about()">&Uuml;ber</a></li>
-                </ul>
-            </div>
-        </div>
     </footer>
 </body>
 </html>

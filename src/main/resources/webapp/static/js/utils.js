@@ -140,7 +140,7 @@ const getButton = (value, alt, action) => {
 };
 
 const addText = (cell, text) => {
-  let txt = document.createTextNode(text);
+  let txt = document.createTextNode(getMessage(text));
   if (cell.firstChild) {
     cell.insertBefore(txt, cell.firstChild);
   } else {
@@ -166,6 +166,20 @@ const valueAndUnits = (cssSize) => {
 
 const boxSize = (length) => {
   return Math.ceil(length/5)*5;
+};
+
+const addHeading = (element, type, text) => {
+  let h = document.createElement(type);
+  addText(h, text);
+  element.appendChild(h);
+  return h;
+};
+
+const addRule = (element) => {
+  let hr = document.createElement('hr');
+  hr.className = 'highlight';
+  element.appendChild(hr);
+  return hr;
 };
 
 async function checkResponse(response) {
@@ -249,9 +263,7 @@ const about = () => {
     heading.className = 'about-header';
     about.appendChild(heading);
 
-    let title = document.createElement('h2');
-    addText(title, getMessage('ABOUT'));
-    heading.appendChild(title);
+    addHeading(heading, 'h2', 'ABOUT');
 
     let body = document.createElement('div');
     body.className = 'about-body';
@@ -295,7 +307,13 @@ const setWidths = (element, width) => {
   element.style.maxWidth = width;  
 };
 
-const resizeTables = (element = document) => {
+const resizeAll = (element = document) => {
+  let nav = element.getElementsByTagName('NAV')[0];
+  let rect = nav.getBoundingClientRect();
+  let section = document.getElementsByTagName('SECTION')[0];
+  section.top = rect.height;
+  section.style.top = rect.height;
+  
   let tables = element.getElementsByTagName('TABLE');
   for (let i = 0; i < tables.length; i++) {
     let rect = tables[i].getBoundingClientRect();
@@ -303,7 +321,7 @@ const resizeTables = (element = document) => {
   }
 };
 
-window.addEventListener('resize', (e) => { resizeTables() }, true);
+window.addEventListener('resize', (e) => { resizeAll() }, true);
 
 async function removeFile(deleteUrl, grid, rowId) {
   await fetch(deleteUrl, {
@@ -370,16 +388,22 @@ const addNavBar = (menuStyle) => {
   let nav = document.createElement('nav');
   header.appendChild(nav);
 
-  let ul = document.createElement('ul');
-  ul.className = 'nav';
-  nav.appendChild(ul);
-
-  if (menuStyle !== NavMenu.HOME) {
-    navLink(ul, getMessage('HOME'), siteRoot().replace('/static/', '/index.html'));
-    navLink(ul, getMessage('BACK'), '#', (e) => { history.back() });
+  if (menuStyle === NavMenu.HOME) {
+    addHeading(nav, 'H1', 'MODELLBAHN');
+    addRule(nav);
   }
 
   if (menuStyle === NavMenu.REF_DATA || menuStyle === NavMenu.HOME) {
+    let ul = document.createElement('ul');
+    ul.className = 'nav';
+
+    if (menuStyle === NavMenu.HOME) {
+      addHeading(nav, 'H3', 'REF_DATA');
+    } else {
+      navLink(ul, getMessage('HOME'), siteRoot().replace('/static/', '/index.html'));
+      navLink(ul, getMessage('BACK'), '#', (e) => { history.back() });
+    }
+
     navLink(ul, getMessage('AUFBAU'), siteRoot()+'aufbauten.html');
     navLink(ul, getMessage('ANTRIEB'), siteRoot()+'antrieben.html');
     navLink(ul, getMessage('BAHNVERWALTUNG'), siteRoot()+'bahnverwaltungen.html');
@@ -397,19 +421,34 @@ const addNavBar = (menuStyle) => {
     navLink(ul, getMessage('STEUERUNG'), siteRoot()+'steuerungen.html');
     navLink(ul, getMessage('WAHRUNG'), siteRoot()+'wahrungen.html');
     navLink(ul, getMessage('ZUG_TYP'), siteRoot()+'zugtypen.html');
+    nav.appendChild(ul);
+    addRule(nav);
   }
 
   if (menuStyle === NavMenu.INVENTORY || menuStyle === NavMenu.HOME) {
+    let ul = document.createElement('ul');
+    ul.className = 'nav';
+
+    if (menuStyle === NavMenu.HOME) {
+      addHeading(nav, 'H3', 'INVENTORY');
+    } else {
+      navLink(ul, getMessage('HOME'), siteRoot().replace('/static/', '/index.html'));
+      navLink(ul, getMessage('BACK'), '#', (e) => { history.back() });
+    }
+
     navLink(ul, getMessage('PRODUKT'), siteRoot()+'produkten.html');
     navLink(ul, getMessage('VORBILD'), siteRoot()+'vorbilder.html');
     navLink(ul, getMessage('ARTIKEL'), siteRoot()+'artikelen.html');
     navLink(ul, getMessage('DECODER'), siteRoot()+'decoderen.html');
     navLink(ul, getMessage('ZUG'), siteRoot()+'zugen.html');
+    nav.appendChild(ul);
+    addRule(nav);
   }
-
-  let hr = document.createElement('hr');
-  hr.className = 'highlight';
-  nav.appendChild(hr);
+  
+  let rect = nav.getBoundingClientRect();
+  let section = document.getElementsByTagName('SECTION')[0];
+  section.top = rect.height;
+  section.style.top = rect.height;
 };
 
 const addFooter = () => {
@@ -425,7 +464,7 @@ const addFooter = () => {
   div.appendChild(ul);
 
   let li = document.createElement('li');
-  addText(li, getMessage('COPYRIGHT'));
+  addText(li, 'COPYRIGHT');
   ul.appendChild(li);
 
   navLink(ul, getMessage('ABOUT'), '#', about, 'license');

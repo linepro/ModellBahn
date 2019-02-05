@@ -58,8 +58,8 @@
   const decoderTyp = new ItemGrid(1, fetchUrl("decoderTyp"), "decoderTyp", columns, Paged.FORM, EditMode.UPDATE, children);
 
   async function init() {
-      addNavBar(NavMenu.REF_DATA);
-      addFooter();
+    addNavBar(NavMenu.BACK);
+    addFooter();
     await HERSTELLER_DROP.init()
       .then(() => PROTOKOLL_DROP.init())
       .then(() => KONFIGURATION_DROP.init())
