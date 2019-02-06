@@ -41,7 +41,7 @@ const getMessage = (messageKey, substitutions) => {
     let message = TRANSLATIONS[key] ? TRANSLATIONS[key] : messageKey;
     if (substitutions) {
       Object.keys(substitutions).forEach(substitute => {
-        let token = new RegExp('${' + substitute + '}');
+        let token = new RegExp('\\$\\{' + substitute + '\\}');
         let substitution = substitutions[substitute];
         message = message.replace(token, substitution);
       });

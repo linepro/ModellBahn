@@ -60,30 +60,40 @@ const addToStart = (element) => {
 const reportError = (error) => {
   console.log(error);
 
-  let alert = document.getElementById('alert-box');
+  let alertBox = document.getElementById('alert-box');
 
-  if (!alert) {
-    alert = document.createElement('div');
-    alert.id = 'alert-box';
-    alert.className = 'alert';
+  if (!alertBox) {
+    alertBox = document.createElement('div');
+    alertBox.id = 'alert-box';
+    alertBox.className = 'alert';
 
     let closer = document.createElement('span');
     closer.className = 'closebtn';
-    closer.onclick = () => { alert.style.display = 'none' };
+    closer.onclick = () => { alertBox.style.display = 'none' };
     addText(closer, 'x');
-    alert.appendChild(closer);
+    alertBox.appendChild(closer);
 
     let message = document.createElement('span');
     message.id = 'alert-message';
-    alert.appendChild(message);
+    alertBox.appendChild(message);
 
-    let content = document.getElementById('data');
-    content.insertBefore(alert, content.firstChild);
+    let body = document.getElementsByTagName('BODY')[0];
+    if (body) {
+      if (body.firstChild) {
+        body.insertBefore(alertBox, body.firstChild);
+      } else {
+        body.appendChild(alertBox);
+      }
+    } else {
+      alert(error);
+    }
   }
 
   let message = document.getElementById('alert-message');
-  message.innerText = error;
-  alert.style.display = 'inline-block';
+  if (message) {
+    message.innerText = error;
+    alertBox.style.display = 'inline-block';
+  }
 };
 
 const addButton = (cell, lnk, action) => {

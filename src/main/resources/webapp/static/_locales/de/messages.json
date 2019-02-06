@@ -49,7 +49,7 @@
   "DREHGESTELLBAUART": { "message": "Drehgestell", "description": "" },
   "EPOCH": { "message": "Epoch", "description": "" },
   "ERROR": { "message": "Skriptfehler: Weitere Informationen finden Sie unter Browserkonsole", "description": "" },
-  "ERROR_DETAIL": { "message": "Meldung: ${msg}\nURL: ${url}\nLine: ${lineNo}\nColumn: ${columnNo}\nError object: ${error} }", "description": "", "placeholders": { "msg": { "content": "$1" }, "url": { "content": "$1" }, "lineNo": { "content": "$1" }, "columnNo": { "content": "$1" }, "error": { "content": "$1" } } },
+  "ERROR_DETAIL": { "message": "Meldung: ${msg}\nURL: ${url}\nLine: ${lineNo}\nColumn: ${columnNo}\nError object: ${error}", "description": "", "placeholders": { "msg": { "content": "$1" }, "url": { "content": "$1" }, "lineNo": { "content": "$1" }, "columnNo": { "content": "$1" }, "error": { "content": "$1" } } },
   "EXPLOSIONSZEICHNUNG": { "message": "Explosionszeichnung", "description": "" },
   "FAHRMOTOREN": { "message": "Fahrmotoren", "description": "" },
   "FAHRSTUFE": { "message": "Fahrstufe", "description": "" },
