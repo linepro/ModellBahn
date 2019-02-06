@@ -12,13 +12,13 @@ window.onerror = function (msg, url, lineNo, columnNo, error) {
   if (msg.toLowerCase().includes('script error')) {
     reportError('Script Error: See Browser Console for Detail');
   } else {
-    const message = [
-      'Message: ' + msg,
-      'URL: ' + url,
-      'Line: ' + lineNo,
-      'Column: ' + columnNo,
-      'Error object: ' + error.toString()
-    ].join(' - ');
+    const message = getMessage('ERROR_DETAIL', {
+      msg: msg,
+      url: url,
+      lineNo: lineNo,
+      columnNo: columnNo,
+      error:  error.toString()
+    });
 
     reportError(message);
   }
@@ -38,17 +38,13 @@ const fetchUrl = (dataType) => {
   let fetchUrl = apiRoot() + dataType;
   let searchParams = new URLSearchParams(location.search);
 
-  if (searchParams.has('self')) {
-    fetchUrl = searchParams.get('self');
-  }
+  if (searchParams.has('self')) { fetchUrl = searchParams.get('self') }
 
   return fetchUrl;
 };
 
 const removeChildren = (node) => {
-  while (node.firstChild) {
-    node.removeChild(node.firstChild);
-  }
+  while (node.firstChild) { node.removeChild(node.firstChild) }
 };
 
 const addToEnd = (element) => {
@@ -73,9 +69,7 @@ const reportError = (error) => {
 
     let closer = document.createElement('span');
     closer.className = 'closebtn';
-    closer.onclick = (e) => {
-      alert.style.display = 'none'
-    };
+    closer.onclick = () => { alert.style.display = 'none' };
     addText(closer, 'x');
     alert.appendChild(closer);
 
@@ -101,12 +95,8 @@ const addButton = (cell, lnk, action) => {
 };
 
 const getLink = (links, rel) => {
-  if (!links) {
-    return;
-  }
-  return links.find((lnk) => {
-    return lnk.rel === rel;
-  });
+  if (!links) { return; }
+  return links.find((lnk) => { return lnk.rel === rel; });
 };
 
 const getImgSrc = (image) => {
@@ -126,9 +116,7 @@ const getButton = (value, alt, action) => {
   let btn = document.createElement('button');
 
   btn.value = getMessage(value.toUpperCase());
-  if (action) {
-    btn.addEventListener('click', action);
-  }
+  if (action) { btn.addEventListener('click', action) }
   btn.className = 'nav-button';
 
   let img = getImg(alt);
@@ -224,29 +212,23 @@ const addModal = () => {
     modal.appendChild(content);
     addToEnd(modal);
 
-    window.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.style.display = 'none';
-      }
-    }, false);
+    window.addEventListener('click', (e) => { if (e.target === modal) { modal.style.display = 'none'; } }, false);
   }
 
   return modal;
 };
 
-const showModal = (content, big) => {
+const showModal = (content) => {
   let modal = addModal();
 
   let contents = document.getElementById('modal-content');
-  //contents.style.height = big ? '90%' : '40rem';
-  //contents.style.width = big ? '80%': '60rem';
   removeChildren(contents);
 
-  //let closer = document.createElement('span');
-  //closer.className = 'closebtn';
-  //closer.onclick = (e) => { modal.style.display = 'none' };
-  //addText(closer, 'x');
-  //contents.appendChild(closer);
+  let closer = document.createElement('span');
+  closer.className = 'closebtn';
+  closer.onclick = () => { modal.style.display = 'none' };
+  addText(closer, 'x');
+  contents.appendChild(closer);
 
   contents.appendChild(content);
   modal.style.display = 'block';
@@ -320,13 +302,10 @@ const resizeAll = (element = document) => {
   }
 };
 
-window.addEventListener('resize', (e) => { resizeAll() }, true);
+window.addEventListener('resize', () => { resizeAll() }, true);
 
 async function removeFile(deleteUrl, grid, rowId) {
-  await fetch(deleteUrl, {
-    method: 'DELETE',
-    headers: {'Content-type': 'application/json'}
-  })
+  await fetch(deleteUrl, { method: 'DELETE', headers: {'Content-type': 'application/json'} })
   .then(response => checkResponse(response))
   .then(jsonData => grid.renderUpdate(jsonData, rowId))
   .catch(error => reportError(error));
@@ -337,10 +316,7 @@ async function uploadFile(e, uploadUrl, fileData, grid, rowId) {
 
   body.append('file', fileData);
 
-  await fetch(uploadUrl, {
-    method: 'PUT',
-    body: body
-  })
+  await fetch(uploadUrl, { method: 'PUT', body: body })
   .then(response => checkResponse(response))
   .then(jsonData => grid.renderUpdate(jsonData, rowId))
   .catch(error => reportError(error));
@@ -361,21 +337,15 @@ const readFile = (uploadUrl, fileData, grid, rowId) => {
 };
 
 const navLink = (ul, title, href, action, id) => {
-  if (document.location.href === href) {
-    return;
-  }
+  if (document.location.href === href) { return; }
 
   let li = document.createElement('li');
 
   let a = document.createElement('a');
-  if (id) {
-    a.id = id;
-  }
+  if (id) { a.id = id; }
   a.className = 'nav-button';
   a.href = href;
-  if (action) {
-    a.addEventListener('click', action);
-  }
+  if (action) { a.addEventListener('click', action) }
   addText(a, title);
   li.appendChild(a);
 
@@ -404,7 +374,7 @@ const addNavBar = (menuStyle) => {
       addHeading(nav, 'H3', 'REF_DATA');
     } else {
       navLink(ul, 'HOME', siteRoot().replace('/static/', '/index.html'));
-      navLink(ul, 'BACK', '#', (e) => { history.back() });
+      navLink(ul, 'BACK', '#', () => { history.back() });
     }
 
     if (menuStyle !== NavMenu.BACK) {
@@ -439,7 +409,7 @@ const addNavBar = (menuStyle) => {
       addHeading(nav, 'H3', 'INVENTORY');
     } else {
       navLink(ul, 'HOME', siteRoot().replace('/static/', '/index.html'));
-      navLink(ul, 'BACK', '#', (e) => { history.back() });
+      navLink(ul, 'BACK', '#', () => { history.back() });
     }
 
     navLink(ul, 'PRODUKT', siteRoot() + 'produkten.html');

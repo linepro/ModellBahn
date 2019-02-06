@@ -19,8 +19,7 @@
       gridButtonColumn()
     ];
 
-    const adressen = new ItemGrid(2, "adressen", "adressen", adressColumns, Paged.EXPAND,
-        EditMode.ADD, undefined);
+    const adressen = new ItemGrid(2, "adressen", "adressen", adressColumns, Paged.EXPAND, EditMode.ADD, undefined);
 
     const cvColumns = [
       CV(Editable.ADD, true),
@@ -41,8 +40,7 @@
       gridButtonColumn()
     ];
 
-    const funktionen = new ItemGrid(10, "funktionen", "funktionen", funktionenColumns, Paged.EXPAND,
-        EditMode.ADD, undefined);
+    const funktionen = new ItemGrid(10, "funktionen", "funktionen", funktionenColumns, Paged.EXPAND, EditMode.ADD, undefined);
 
     const columns = [
       HERSTELLER_SELECT(Editable.ADD, true),
@@ -58,8 +56,7 @@
 
     const children = [adressen, cvs, funktionen];
 
-    const decoderTyp = new ItemGrid(1, fetchUrl("decoderTyp"), "decoderTyp", columns, Paged.FORM,
-        EditMode.UPDATE, children);
+    const decoderTyp = new ItemGrid(1, fetchUrl("decoderTyp"), "decoderTyp", columns, Paged.FORM, EditMode.UPDATE, children);
 
     async function init() {
       addNavBar(NavMenu.BACK);

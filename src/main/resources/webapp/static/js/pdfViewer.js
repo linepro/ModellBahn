@@ -5,15 +5,14 @@ class PDFViewer {
   constructor(canvas) {
     this.pdfDoc = undefined;
     this.pageNum = 1;
-    this.scale = 0.8;
+    this.scale = 1;
     this.canvas = canvas;
   }
 
   load(file) {
     let pdfjsLib = window['pdfjs-dist/build/pdf'];
 
-    pdfjsLib.GlobalWorkerOptions.workerSrc = siteRoot()
-        + '/js/lib/pdf.min-2.0.943.worker.js';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = siteRoot() + '/js/lib/pdf.min-2.0.943.worker.js';
 
     pdfjsLib.getDocument({url: file, disableRange: true, disableStream: true})
     .then(pdf => this.initialPage(pdf))
@@ -50,14 +49,18 @@ class PDFViewer {
     return await page.render(renderContext);
   }
 
+  async zoom(newScale) {
+    this.scale = newScale;
+    await this.showPage(this.pageNum);
+  }
+
   async prevPage() {
     let prev = this.pageNum <= 1 ? this.pageNum - 1 : 1;
     await this.showPage(prev);
   }
 
   async nextPage() {
-    let next = this.pageNum < this.pdfDoc.numPages ? this.pageNum + 1
-        : this.pdfDoc.numPages;
+    let next = this.pageNum < this.pdfDoc.numPages ? this.pageNum + 1 : this.pdfDoc.numPages;
     await this.showPage(next);
   }
 }

@@ -9,9 +9,8 @@
   <script type="text/javascript" src="js/utils.js"></script>
   <script type="text/javascript" src="js/dropdown.js"></script>
   <script type="text/javascript" src="js/fields.js"></script>
+  <script src="js/lib/DatePickerX-1.0.4.min.js"></script>
   <script type="text/javascript" src="js/grids.js"></script>
-  <link rel="stylesheet" href="css/DatePickerX.min.css">
-  <script src="js/lib/DatePickerX.min.js"></script>
   <script type="text/javascript">
     const columns = [
       GATTUNG_SELECT(Editable.ADD, true),
@@ -58,8 +57,7 @@
       new ButtonColumn([], [updateRow])
     ];
 
-    const vorbild = new ItemGrid(1, fetchUrl("vorbild"), "vorbild", columns, Paged.FORM,
-        EditMode.UPDATE, undefined);
+    const vorbild = new ItemGrid(1, fetchUrl("vorbild"), "vorbild", columns, Paged.FORM, EditMode.UPDATE, undefined);
 
     async function init() {
       addNavBar(NavMenu.BACK);

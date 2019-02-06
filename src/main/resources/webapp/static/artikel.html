@@ -9,6 +9,7 @@
   <script type="text/javascript" src="js/utils.js"></script>
   <script type="text/javascript" src="js/dropdown.js"></script>
   <script type="text/javascript" src="js/fields.js"></script>
+  <script src="js/lib/DatePickerX-1.0.4.min.js"></script>
   <script type="text/javascript" src="js/grids.js"></script>
   <script type="text/javascript">
     const anderungenColumns = [
@@ -20,8 +21,7 @@
       gridButtonColumn()
     ];
 
-    const anderungen = new ItemGrid(5, "anderungen", "anderungen", anderungenColumns, Paged.EXPAND,
-        EditMode.ADD, undefined);
+    const anderungen = new ItemGrid(5, "anderungen", "anderungen", anderungenColumns, Paged.EXPAND, EditMode.ADD, undefined);
 
     const columns = [
       ARTIKEL(Editable.NEVER, true),
@@ -43,8 +43,7 @@
       STATUS_SELECT(Editable.UPDATE, true),
       new ButtonColumn([], [updateRow])];
 
-    const artikel = new ItemGrid(1, fetchUrl("artikel"), "artikel", columns, Paged.FORM,
-        EditMode.UPDATE, [anderungen]);
+    const artikel = new ItemGrid(1, fetchUrl("artikel"), "artikel", columns, Paged.FORM, EditMode.UPDATE, [anderungen]);
 
     async function init() {
       addNavBar(NavMenu.BACK);

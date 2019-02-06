@@ -65,10 +65,7 @@ class DropDown {
     let select = this;
 
     if (!select.initialized || force) {
-      await fetch(select.apiQuery, {
-        method: "GET",
-        headers: {"Content-type": "application/json"}
-      })
+      await fetch(select.apiQuery, { method: "GET", headers: {"Content-type": "application/json"} })
       .then(response => checkResponse(response))
       .then(jsonData => select.loadOptions(jsonData))
       .catch(error => reportError(error));

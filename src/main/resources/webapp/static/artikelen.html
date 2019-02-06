@@ -9,17 +9,13 @@
   <script type="text/javascript" src="js/utils.js"></script>
   <script type="text/javascript" src="js/dropdown.js"></script>
   <script type="text/javascript" src="js/fields.js"></script>
+  <script src="js/lib/DatePickerX-1.0.4.min.js"></script>
   <script type="text/javascript" src="js/grids.js"></script>
   <script type="text/javascript">
-    const UNTERKATEGORIE_DISPLAY = new DropDownColumn("Kategorie", "unterKategorie", (entity) => {
-      return entity.produkt.unterKategorie ? extractKategorieValue(entity.produkt.unterKategorie)
-          : undefined;
-    }, undefined, UNTER_KATEGORIE_DROP, Editable.NEVER, false);
-
     const columns = [
       ARTIKEL(Editable.ADD, true),
       PRODUKT_SELECT(Editable.NEVER, false),
-      UNTER_KATEGORIE_SELECT(),
+      UNTER_KATEGORIE_SELECT(Editable.NEVER, false),
       BEZEICHNUNG(),
       KAUFDATUM(Editable.UPDATE, false),
       STUCK(),
@@ -30,8 +26,7 @@
       new ButtonColumn([newRow], [editRow, deleteRow])
     ];
 
-    const artikel = new ItemGrid(10, fetchUrl("artikel"), "artikel", columns, Paged.PAGED,
-        EditMode.UPDATE, undefined, "artikel.html");
+    const artikel = new ItemGrid(10, fetchUrl("artikel"), "artikel", columns, Paged.PAGED, EditMode.UPDATE, undefined, "artikel.html");
 
     async function init() {
       addNavBar(NavMenu.INVENTORY);

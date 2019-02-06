@@ -9,9 +9,10 @@
   <script type="text/javascript" src="js/utils.js"></script>
   <script type="text/javascript" src="js/dropdown.js"></script>
   <script type="text/javascript" src="js/fields.js"></script>
+  <script type="text/javascript" src="js/lib/DatePickerX-1.0.4.min.js"></script>
+  <script type="text/javascript" src="js/pdfViewer.js"></script>
   <script type="text/javascript" src="js/grids.js"></script>
   <script type="text/javascript" src="js/lib/pdf.min-2.0.943.js"></script>
-  <script type="text/javascript" src="js/pdfViewer.js"></script>
   <script type="text/javascript">
     const teilenColumns = [
       TEIL_SELECT(),
@@ -19,8 +20,7 @@
       gridButtonColumn()
     ];
 
-    const teilen = new ItemGrid(5, "teilen", "teilen", teilenColumns, Paged.EXPAND, EditMode.ADD,
-        undefined);
+    const teilen = new ItemGrid(5, "teilen", "teilen", teilenColumns, Paged.EXPAND, EditMode.ADD, undefined);
 
     const columns = [
       HERSTELLER_SELECT(Editable.ADD, true),
@@ -51,8 +51,7 @@
       new ButtonColumn([], [updateRow])
     ];
 
-    const produkt = new ItemGrid(1, fetchUrl("produkt"), "produkt", columns, Paged.FORM,
-        EditMode.UPDATE, [teilen]);
+    const produkt = new ItemGrid(1, fetchUrl("produkt"), "produkt", columns, Paged.FORM, EditMode.UPDATE, [teilen]);
 
     async function init() {
       addNavBar(NavMenu.BACK);

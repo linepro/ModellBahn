@@ -23,10 +23,7 @@ const loadTranslations = async (language) => {
     await fetch(translations)
       .then(response => response.json())
       .then(json => setTranslations(language, json))
-      .catch(async error => {
-      if (language !== 'de') {
-        loadTranslations('de');
-      }
+      .catch(async () => { if (language !== 'de') { loadTranslations('de'); }
     });
   }
 };

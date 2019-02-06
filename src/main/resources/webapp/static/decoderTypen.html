@@ -19,8 +19,7 @@
       STECKER_SELECT(Editable.UPDATE, true),
       new ButtonColumn([newRow], [editRow, deleteRow])];
 
-    const decoderTyp = new ItemGrid(10, fetchUrl("decoderTyp"), "decoderTyp", columns, Paged.PAGED,
-        EditMode.UPDATE, undefined, "decoderTyp.html");
+    const decoderTyp = new ItemGrid(10, fetchUrl("decoderTyp"), "decoderTyp", columns, Paged.PAGED, EditMode.UPDATE, undefined, "decoderTyp.html");
 
     async function init() {
       addNavBar(NavMenu.REF_DATA);
