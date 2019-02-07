@@ -342,7 +342,7 @@ class DateColumn extends TextColumn {
       value = dte.DatePickerX.getValue();
     }
 
-    let iso = value ? value.toISOString() : undefined;
+    let iso = value ? new Date(value).toISOString().replace(/T.*/,'') : undefined;
 
     if (iso) dte.setAttribute('data-value', iso);
 
@@ -412,13 +412,6 @@ class FileColumn extends Column {
     return img.getAttribute('data-value') ? img.getAttribute('data-value') : undefined;
   }
 
-  defaultImage() {
-  }
-
-  setValue(img, value) {
-    img.src = value ? value : this.defaultImage();
-  }
-
   getDisplayLength() {
     return 'auto';
   }
@@ -473,9 +466,10 @@ class IMGColumn extends FileColumn {
     showModal(img);
   }
 
-  defaultImage() {
-    return siteRoot() + getImgSrc('add-picture');
+  setValue(img, value) {
+    img.src = value ? value : siteRoot() + getImgSrc('add-picture');
   }
+
 }
 
 class PDFColumn extends FileColumn {
@@ -483,8 +477,8 @@ class PDFColumn extends FileColumn {
     super(heading, fieldName, getter, 'application/pdf', editable, required);
   }
 
-  defaultImage() {
-    return siteRoot() + getImgSrc('add-document');
+  setValue(img, value) {
+    img.src = siteRoot() + (value ? getImgSrc('pdf') : getImgSrc('add-document'));
   }
 
   showContent(pdf) {

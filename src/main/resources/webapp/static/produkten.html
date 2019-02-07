@@ -14,10 +14,10 @@
     const columns = [
       HERSTELLER_SELECT(Editable.ADD, true),
       BESTELL_NR(Editable.ADD, true),
-      UNTER_KATEGORIE_SELECT(Editable.UPDATE, true),
-      MASSSTAB_SELECT(Editable.UPDATE, false),
-      SPURWEITE_SELECT(Editable.UPDATE, false),
-      BEZEICHNUNG(Editable.UPDATE, true),
+      UNTER_KATEGORIE_SELECT(Editable.ADD, true),
+      MASSSTAB_SELECT(Editable.ADD, false),
+      SPURWEITE_SELECT(Editable.ADD, false),
+      BEZEICHNUNG(Editable.ADD, true),
       new ButtonColumn([newRow], [editRow, deleteRow])
     ];
 

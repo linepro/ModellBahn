@@ -13,8 +13,8 @@
     const columns = [
       DECODER(Editable.NEVER, true),
       DECODER_TYP_SELECT(Editable.NEVER, true),
-      BEZEICHNUNG(Editable.UPDATE, false),
-      PROTOKOLL_SELECT(Editable.UPDATE, true),
+      BEZEICHNUNG(Editable.ADD, false),
+      PROTOKOLL_SELECT(Editable.ADD, true),
       new ButtonColumn([newRow], [editRow, deleteRow])
     ];
     const decoderen = new ItemGrid(10, fetchUrl("decoder"), "decoderen", columns, Paged.PAGED, EditMode.UPDATE, undefined, "decoder.html");

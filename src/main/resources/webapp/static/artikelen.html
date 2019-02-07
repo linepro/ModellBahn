@@ -18,13 +18,13 @@
 
     const columns = [
       ARTIKEL(Editable.ADD, true),
-      PRODUKT_SELECT(Editable.NEVER, false),
-      UNTER_KATEGORIE_SELECT(Editable.NEVER, false, artikelUnterKategorieGetter),
+      PRODUKT_SELECT(Editable.ADD, false),
+      UNTER_KATEGORIE_SELECT(Editable.ADD, false, artikelUnterKategorieGetter),
       BEZEICHNUNG(),
-      DECODER_SELECT(Editable.UPDATE, false),
-      ANMERKUNG(Editable.UPDATE, false),
+      DECODER_SELECT(Editable.ADD, false),
+      ANMERKUNG(Editable.ADD, false),
       ABBILDUNG(Editable.NEVER),
-      STATUS_SELECT(Editable.UPDATE, true),
+      STATUS_SELECT(Editable.ADD, true),
       new ButtonColumn([newRow], [editRow, deleteRow])
     ];
 

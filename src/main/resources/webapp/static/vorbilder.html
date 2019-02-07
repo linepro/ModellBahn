@@ -13,13 +13,13 @@
   <script type="text/javascript" src="js/grids.js"></script>
   <script type="text/javascript">
     const columns = [
-      GATTUNG_SELECT(Editable.NEVER, true),
-      UNTER_KATEGORIE_SELECT(Editable.UPDATE, true),
-      BAHNVERWALTUNG_SELECT(Editable.UPDATE, false),
-      HERSTELLER(Editable.UPDATE, false),
-      BAUZEIT(Editable.UPDATE, false),
-      AUSSERDIENST(Editable.UPDATE, false),
-      ANZAHL(Editable.UPDATE, false),
+      GATTUNG_SELECT(Editable.ADD, true),
+      UNTER_KATEGORIE_SELECT(Editable.ADD, true),
+      BAHNVERWALTUNG_SELECT(Editable.ADD, false),
+      HERSTELLER(Editable.ADD, false),
+      BAUZEIT(Editable.ADD, false),
+      AUSSERDIENST(Editable.ADD, false),
+      ANZAHL(Editable.ADD, false),
       ABBILDUNG(Editable.NEVER, false),
       new ButtonColumn(
           [newRow],

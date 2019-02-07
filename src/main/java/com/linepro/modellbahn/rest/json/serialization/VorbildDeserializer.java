@@ -1,5 +1,8 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.linepro.modellbahn.rest.util.ApiNames;
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonParser;
@@ -35,8 +38,9 @@ public class VorbildDeserializer extends StdDeserializer<IVorbild> {
     @Override
     public IVorbild deserialize(JsonParser jp,  DeserializationContext dc) throws IOException {
         ObjectCodec codec = jp.getCodec();
-        TextNode node = codec.readTree(jp);
-        String name = node.textValue();
+        ObjectNode node = codec.readTree(jp);
+        JsonNode gattungNode = node.get(ApiNames.GATTUNG);
+        String name = gattungNode.get(ApiNames.NAMEN).asText();
         try {
             IGattung gattung = gattungPerisister.findByKey(name, false);
             

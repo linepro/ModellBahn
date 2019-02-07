@@ -15,8 +15,8 @@
   <script type="text/javascript" src="js/lib/pdf.min-2.0.943.js"></script>
   <script type="text/javascript">
     const teilenColumns = [
-      TEIL_SELECT(),
-      STUCK(),
+      TEIL_SELECT(Editable.ADD, true),
+      STUCK(Editable.UPDATE, true),
       gridButtonColumn()
     ];
 
