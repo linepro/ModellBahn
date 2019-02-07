@@ -1207,14 +1207,6 @@ class ItemGrid {
     grid.renderRow(rowId, jsonData, grid.columns, grid.editMode);
   }
 
-  addButton(cell, value, alt, action) {
-    removeChildren(cell);
-
-    if (lnk) {
-      cell.appendChild(getButton(value, alt, action));
-    }
-  };
-
   renderData(jsonData) {
     let grid = this;
     let columns = grid.columns;
@@ -1249,7 +1241,7 @@ class ItemGrid {
       let prevLnk = getLink(jsonData.links, 'previous');
 
       if (prevLnk) {
-        addButton(prev, 'vorige', 'prev', () => { grid.getData(prevLnk.href) });
+        prev.appendChild(getButton('vorige', 'prev', () => { grid.getData(prevLnk.href) }));
       } else {
         addText(prev, '');
       }
@@ -1263,7 +1255,7 @@ class ItemGrid {
       let nextLnk = getLink(jsonData.links, 'next');
 
       if (nextLnk) {
-        addButton(next, 'nachcste', 'next', () => { grid.getData(nextLnk.href) });
+        next.appendChild(getButton('nachste', 'next', () => { grid.getData(nextLnk.href) }));
       } else {
         addText(next, '');
       }
