@@ -21,7 +21,7 @@
       new ButtonColumn([newRow], [editRow, deleteRow])
     ];
 
-    const produkt = new ItemGrid(10, fetchUrl("produkt"), "produkt", columns, Paged.PAGED, EditMode.UPDATE, undefined, "produkt.html");
+    const produkten = new ItemGrid(10, fetchUrl("produkt"), "produkten", columns, Paged.PAGED, EditMode.UPDATE, undefined, "produkt.html");
 
     async function init() {
       addNavBar(NavMenu.INVENTORY);
@@ -33,7 +33,7 @@
       .then(() => EPOCH_DROP.init())
       .then(() => BAHNVERWALTUNG_DROP.init())
       .then(() => GATTUNG_DROP.init())
-      .then(() => produkt.init());
+      .then(() => produkten.init());
     }
   </script>
   <title>Produkten</title>
@@ -45,7 +45,7 @@
 <section>
   <article>
     <div id="data">
-      <div id="produktSite">
+      <div id="produkten">
       </div>
     </div>
   </article>

@@ -12,13 +12,15 @@
   <script src="js/lib/DatePickerX-1.0.4.min.js"></script>
   <script type="text/javascript" src="js/grids.js"></script>
   <script type="text/javascript">
+    const artikelUnterKategorieGetter = (entity) => {
+      return entity.produkt ? unterKategorieGetter(entity.produkt) : undefined
+    };
+
     const columns = [
       ARTIKEL(Editable.ADD, true),
       PRODUKT_SELECT(Editable.NEVER, false),
-      UNTER_KATEGORIE_SELECT(Editable.NEVER, false),
+      UNTER_KATEGORIE_SELECT(Editable.NEVER, false, artikelUnterKategorieGetter),
       BEZEICHNUNG(),
-      KAUFDATUM(Editable.UPDATE, false),
-      STUCK(),
       DECODER_SELECT(Editable.UPDATE, false),
       ANMERKUNG(Editable.UPDATE, false),
       ABBILDUNG(Editable.NEVER),
@@ -26,7 +28,7 @@
       new ButtonColumn([newRow], [editRow, deleteRow])
     ];
 
-    const artikel = new ItemGrid(10, fetchUrl("artikel"), "artikel", columns, Paged.PAGED, EditMode.UPDATE, undefined, "artikel.html");
+    const artikelen = new ItemGrid(10, fetchUrl("artikel"), "artikelen", columns, Paged.PAGED, EditMode.UPDATE, undefined, "artikel.html");
 
     async function init() {
       addNavBar(NavMenu.INVENTORY);
@@ -35,7 +37,7 @@
       .then(() => UNTER_KATEGORIE_DROP.init())
       .then(() => DECODER_DROP.init())
       .then(() => STATUS_DROP.init())
-      .then(() => artikel.init());
+      .then(() => artikelen.init());
     }
   </script>
   <title>Artikelen</title>
@@ -47,7 +49,7 @@
 <section>
   <article>
     <div id="data">
-      <div id="artikelSite">
+      <div id="artikelen">
       </div>
     </div>
   </article>

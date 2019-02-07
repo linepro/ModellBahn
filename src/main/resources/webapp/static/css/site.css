@@ -835,9 +835,9 @@ img.img-button {
 }
 
 .alert {
-  background-color: transparent;
+  background-color: Red;
   border: 0 solid transparent;
-  color: red;
+  color: White;
   font-size: 1.5rem;
   font-weight: normal;
   line-height: 2rem;
@@ -846,6 +846,8 @@ img.img-button {
   padding: 0;
   text-align: left;
   vertical-align: baseline;
+  width: 100%;
+  z-index: 999;
 }
 
 .closebtn {

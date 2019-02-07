@@ -18,12 +18,12 @@
       HERSTELLER_URL()
     ];
 
-    const hersteller = new ListEditGrid(10, "hersteller", "hersteller", columns, Paged.PAGED, EditMode.UPDATE);
+    const herstellern = new ListEditGrid(10, "hersteller", "herstellern", columns, Paged.PAGED, EditMode.UPDATE);
 
     async function init() {
       addNavBar(NavMenu.REF_DATA);
       addFooter();
-      await hersteller.init();
+      await herstellern.init();
     }
   </script>
   <title>Hersterllern</title>
@@ -35,7 +35,7 @@
 <section>
   <article>
     <div id="data">
-      <div id="herstellerSite">
+      <div id="herstellern">
       </div>
     </div>
   </article>

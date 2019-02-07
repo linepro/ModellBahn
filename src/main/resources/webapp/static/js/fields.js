@@ -34,7 +34,7 @@ const MASSSTAB_DROP = new DropDown(apiRoot() + 'massstab', extractBezeichnung);
 const MOTOR_TYP_DROP = new DropDown(apiRoot() + 'motorTyp', extractBezeichnung);
 const PRODUKT_DROP = new DropDown(apiRoot() + 'produkt', extractProduktOption);
 const PROTOKOLL_DROP = new DropDown(apiRoot() + 'protokoll', extractBezeichnung);
-const SONDER_MODELL_DROP = new DropDown(apiRoot() + 'sonderModell', extractBezeichnung);
+const SONDERMODELL_DROP = new DropDown(apiRoot() + 'sonderModell', extractBezeichnung);
 const SPURWEITE_DROP = new DropDown(apiRoot() + 'spurweite', extractBezeichnung);
 const STATUS_DROP = new DropDown(apiRoot() + 'enums/status', extractBezeichnung);
 const STECKER_DROP = new DropDown(apiRoot() + 'enums/stecker', extractBezeichnung);
@@ -106,8 +106,8 @@ const PRODUKT_SELECT = (editable, required, getter = produktGetter, setter = pro
  { return new DropDownColumn(getMessage('PRODUKT'), 'produkt', getter, setter, PRODUKT_DROP, editable, required, 50, 5) };
 const PROTOKOLL_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
  { return new DropDownColumn(getMessage('PROTOKOLL'), 'protokoll', getter, setter, PROTOKOLL_DROP, editable, required) };
-const SONDER_MODELL_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
- { return new DropDownColumn(getMessage('SONDER_MODELL'), 'sonderModell', getter, setter, SONDER_MODELL_DROP, editable, required, 30, 5) };
+const SONDERMODELL_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
+ { return new DropDownColumn(getMessage('SONDERMODELL'), 'sonderModell', getter, setter, SONDERMODELL_DROP, editable, required, 30, 5) };
 const SPURWEITE_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultNameGetter, setter = defaultNameSetter) =>
  { return new DropDownColumn(getMessage('SPURWEITE'), 'spurweite', getter, setter, SPURWEITE_DROP, editable, required, 30, 5) };
 const STATUS_SELECT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>

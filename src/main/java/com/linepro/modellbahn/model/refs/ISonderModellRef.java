@@ -8,7 +8,7 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-@ApiModel(value = ApiNames.SONDER_MODELL, description = "Special model - e.g,. MHI &c.")
+@ApiModel(value = ApiNames.SONDERMODELL, description = "Special model - e.g,. MHI &c.")
 public interface ISonderModellRef extends INamedItemRef {
 
     @JsonGetter(ApiNames.NAMEN)

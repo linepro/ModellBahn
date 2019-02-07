@@ -17,13 +17,13 @@
       WAHRUNG_SELECT()
     ];
 
-    const land = new ListEditGrid(10, "land", "land", columns, Paged.PAGED, EditMode.UPDATE);
+    const lander = new ListEditGrid(10, "land", "lander", columns, Paged.PAGED, EditMode.UPDATE);
 
     async function init() {
       addNavBar(NavMenu.REF_DATA);
       addFooter();
       await WAHRUNG_DROP.init()
-      .then(() => land.init());
+      .then(() => lander.init());
     }
   </script>
   <title>L&auml;nder</title>
@@ -35,7 +35,7 @@
 <section>
   <article>
     <div id="data">
-      <div id="landSite">
+      <div id="lander">
       </div>
     </div>
   </article>

@@ -377,7 +377,7 @@ class FileColumn extends Column {
       let rowId = getCellRowId(cell);
 
       if (add) {
-        let btn = getButton(add.href, 'add', (e) => { this.select(e, grid, rowId); });
+        let btn = getButton('add', 'add', (e) => { this.select(e, grid, rowId, add.href); });
         btn.className = 'img-button';
         btn.id = cell.id + '_add';
         btn.firstChild.className = 'img-button';
@@ -387,7 +387,7 @@ class FileColumn extends Column {
       let remove = getLink(entity.links, 'delete-' + this.fieldName);
 
       if (remove) {
-        let btn = getButton(remove.href, 'delete', (e) => { this.remove(e, grid, rowId); });
+        let btn = getButton('delete', 'delete', (e) => { this.remove(e, grid, rowId, remove.href); });
         btn.className = 'img-button';
         btn.id = cell.id + '_delete';
         btn.firstChild.className = 'img-button';
@@ -423,7 +423,7 @@ class FileColumn extends Column {
     return 'auto';
   }
 
-  select(e, grid, rowId) {
+  select(e, grid, rowId, href) {
     let btn = e.target;
     if (btn.tagName === 'IMG') {
       btn = btn.parentElement;
@@ -439,25 +439,21 @@ class FileColumn extends Column {
     cell.appendChild(file);
     file.style.display = 'none';
     file.click();
-    file.addEventListener('change', (e) => { this.update(e, grid, rowId); }, false);
-    file.addEventListener('click', (e) => { this.update(e, grid, rowId); }, false);
-    file.addEventListener('blur', (e) => { this.update(e, grid, rowId); }, false);
+    file.addEventListener('change', (e) => { this.update(e, grid, rowId, href); }, false);
+    file.addEventListener('click', (e) => { this.update(e, grid, rowId, href); }, false);
+    file.addEventListener('blur', (e) => { this.update(e, grid, rowId, href); }, false);
   }
 
-  remove(e, grid, rowId) {
-    let btn = e.target;
-    if (btn.tagName === 'IMG') { btn = btn.parentElement; }
-    let link = btn.value;
-    if (link) { removeFile(link, grid, rowId); }
+  remove(e, grid, rowId, href) {
+    removeFile(href, link, grid, rowId);
   }
 
-  update(e, grid, rowId) {
+  update(e, grid, rowId, href) {
     let file = e.target;
     let fileData = file.files[0];
-    let link = file.getAttribute('data-update');
     let cell = file.parentElement;
     cell.removeChild(file);
-    if (fileData && link) { readFile(link, fileData, grid, rowId); }
+    if (fileData) { readFile(href, fileData, grid, rowId); }
   }
 
   showContent() {
@@ -1160,7 +1156,7 @@ class ItemGrid {
     if (!grid.initialized || (rowCount > grid.pageSize)) {
       grid.rowCount = rowCount;
 
-      let place = document.getElementById(grid.tableId + 'Site');
+      let place = document.getElementById(grid.tableId);
       removeChildren(place);
 
       let table = document.createElement(grid.paged === Paged.FORM ? 'div' : 'table');

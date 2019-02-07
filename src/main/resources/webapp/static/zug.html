@@ -20,8 +20,7 @@
       gridButtonColumn()
     ];
 
-    const consisten = new ItemGrid(2, "consisten", "consisten", consistColumns, Paged.EXPAND,
-        EditMode.ADD, undefined);
+    const consisten = new ItemGrid(2, "consisten", "consisten", consistColumns, Paged.EXPAND, EditMode.ADD, undefined);
 
     const columns = [
       NAMEN(),
@@ -31,8 +30,7 @@
       new ButtonColumn([], [updateRow])
     ];
 
-    const zug = new ItemGrid(1, fetchUrl("zug"), "zug", columns, Paged.FORM, EditMode.UPDATE,
-        [consisten]);
+    const zug = new ItemGrid(1, fetchUrl("zug"), "zug", columns, Paged.FORM, EditMode.UPDATE, [consisten]);
 
     async function init() {
       addNavBar(NavMenu.BACK);
@@ -51,9 +49,9 @@
 <section>
   <article>
     <div id="data">
-      <div id="zugSite">
+      <div id="zug">
       </div>
-      <div id="consistenSite">
+      <div id="consisten">
       </div>
     </div>
   </article>

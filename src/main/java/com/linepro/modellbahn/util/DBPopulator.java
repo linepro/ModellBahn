@@ -260,7 +260,7 @@ public class DBPopulator {
     }
 
     private void populateBahnverwaltung() {
-        addBahnverwaltung("AAE", "AAE");
+        addBahnverwaltung("AAE", "Ahaus Alstätter Eisenbahn (AAE)");
         addBahnverwaltung("ADTRANZ", "ABB Daimler-Benz Transportation (ADtranz)");
         addBahnverwaltung("AL", "Anhaltische Leopoldsbahn (AL)");
         addBahnverwaltung("ALNO", "ALNO Küchen");

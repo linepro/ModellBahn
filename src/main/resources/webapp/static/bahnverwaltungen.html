@@ -11,12 +11,12 @@
   <script type="text/javascript" src="js/fields.js"></script>
   <script type="text/javascript" src="js/grids.js"></script>
   <script type="text/javascript">
-    const bahnverwaltung = new NamedItemGrid("bahnverwaltung", "bahnverwaltung");
+    const bahnverwaltungen = new NamedItemGrid("bahnverwaltung", "bahnverwaltungen");
 
     async function init() {
       addNavBar(NavMenu.REF_DATA);
       addFooter();
-      await bahnverwaltung.init();
+      await bahnverwaltungen.init();
     }
   </script>
   <title>Bahnverwaltungen</title>
@@ -28,7 +28,7 @@
 <section>
   <article>
     <div id="data">
-      <div id="bahnverwaltungSite">
+      <div id="bahnverwaltungen">
       </div>
     </div>
   </article>

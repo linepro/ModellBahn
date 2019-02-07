@@ -17,13 +17,13 @@
       DEZIMAL()
     ];
 
-    const wahrung = new ListEditGrid(10, "wahrung", "wahrung", columns, Paged.PAGED,
+    const wahrungen = new ListEditGrid(10, "wahrung", "wahrungen", columns, Paged.PAGED,
         EditMode.UPDATE);
 
     async function init() {
       addNavBar(NavMenu.REF_DATA);
       addFooter();
-      await wahrung.init();
+      await wahrungen.init();
     }
   </script>
   <title>Wahrungen</title>
@@ -35,7 +35,7 @@
 <section>
   <article>
     <div id="data">
-      <div id="wahrungSite">
+      <div id="wahrungen">
       </div>
     </div>
   </article>

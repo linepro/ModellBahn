@@ -16,8 +16,8 @@ import com.linepro.modellbahn.persistence.DBNames;
  * @author $Author:$
  * @version $Id:$
  */
-@Entity(name = DBNames.SONDER_MODELL)
-@Table(name = DBNames.SONDER_MODELL, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
+@Entity(name = DBNames.SONDERMODELL)
+@Table(name = DBNames.SONDERMODELL, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
 public class SonderModell extends AbstractNamedItem<NameKey> implements ISonderModell {
 

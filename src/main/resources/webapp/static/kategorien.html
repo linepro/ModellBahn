@@ -17,12 +17,12 @@
       new ButtonColumn([newRow], [editRow, deleteRow])
     ];
 
-    const kategorie = new ItemGrid(10, fetchUrl("kategorie"), "kategorie", columns, Paged.PAGED, EditMode.UPDATE, undefined, "unterkategorien.html");
+    const kategorien = new ItemGrid(10, fetchUrl("kategorie"), "kategorien", columns, Paged.PAGED, EditMode.UPDATE, undefined, "unterkategorien.html");
 
     async function init() {
       addNavBar(NavMenu.REF_DATA);
       addFooter();
-      await kategorie.init();
+      await kategorien.init();
     }
   </script>
   <title>Kategorien</title>
@@ -34,7 +34,7 @@
 <section>
   <article>
     <div id="data">
-      <div id="kategorieSite">
+      <div id="kategorien">
       </div>
     </div>
   </article>

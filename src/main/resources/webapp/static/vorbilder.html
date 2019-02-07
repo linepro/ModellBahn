@@ -26,7 +26,7 @@
           [editRow, deleteRow])
     ];
 
-    const vorbild = new ItemGrid(10, fetchUrl("vorbild"), "vorbild", columns, Paged.PAGED, EditMode.UPDATE, undefined, "vorbild.html");
+    const vorbilder = new ItemGrid(10, fetchUrl("vorbild"), "vorbilder", columns, Paged.PAGED, EditMode.UPDATE, undefined, "vorbild.html");
 
     async function init() {
       addNavBar(NavMenu.INVENTORY);
@@ -34,7 +34,7 @@
       await GATTUNG_DROP.init()
       .then(() => UNTER_KATEGORIE_DROP.init())
       .then(() => BAHNVERWALTUNG_DROP.init())
-      .then(() => vorbild.init());
+      .then(() => vorbilder.init());
     }
   </script>
   <title>Vorbilder</title>
@@ -46,7 +46,7 @@
 <section>
   <article>
     <div id="data">
-      <div id="vorbildSite">
+      <div id="vorbilder">
       </div>
     </div>
   </article>

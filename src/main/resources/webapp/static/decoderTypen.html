@@ -19,7 +19,7 @@
       STECKER_SELECT(Editable.UPDATE, true),
       new ButtonColumn([newRow], [editRow, deleteRow])];
 
-    const decoderTyp = new ItemGrid(10, fetchUrl("decoderTyp"), "decoderTyp", columns, Paged.PAGED, EditMode.UPDATE, undefined, "decoderTyp.html");
+    const decoderTypen = new ItemGrid(10, fetchUrl("decoderTyp"), "decoderTypen", columns, Paged.PAGED, EditMode.UPDATE, undefined, "decoderTyp.html");
 
     async function init() {
       addNavBar(NavMenu.REF_DATA);
@@ -27,7 +27,7 @@
       await HERSTELLER_DROP.init()
       .then(() => PROTOKOLL_DROP.init())
       .then(() => STECKER_DROP.init())
-      .then(() => decoderTyp.init());
+      .then(() => decoderTypen.init());
     }
   </script>
   <title>Decoder Typen</title>
@@ -39,7 +39,7 @@
 <section>
   <article>
     <div id="data">
-      <div id="decoderTypSite">
+      <div id="decoderTypen">
       </div>
     </div>
   </article>

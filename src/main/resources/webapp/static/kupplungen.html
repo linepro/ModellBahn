@@ -17,12 +17,12 @@
       ABBILDUNG(Editable.NEVER)
     ];
 
-    const kupplung = new ListEditGrid(10, "kupplung", "kupplung", columns, Paged.PAGED, EditMode.UPDATE);
+    const kupplungen = new ListEditGrid(10, "kupplung", "kupplungen", columns, Paged.PAGED, EditMode.UPDATE);
 
     async function init() {
       addNavBar(NavMenu.REF_DATA);
       addFooter();
-      await kupplung.init();
+      await kupplungen.init();
     }
   </script>
   <title>Kupplungen</title>
@@ -34,7 +34,7 @@
 <section>
   <article>
     <div id="data">
-      <div id="kupplungSite">
+      <div id="kupplungen">
       </div>
     </div>
   </article>

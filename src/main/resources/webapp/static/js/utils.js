@@ -346,11 +346,8 @@ const readFile = (uploadUrl, fileData, grid, rowId) => {
   reader.readAsDataURL(fileData);
 };
 
-const navLink = (ul, title, href, action, id) => {
-  if (document.location.href === href) { return; }
-
+const navLink = (title, href, action, id) => {
   let li = document.createElement('li');
-
   let a = document.createElement('a');
   if (id) { a.id = id; }
   a.className = 'nav-button';
@@ -358,8 +355,6 @@ const navLink = (ul, title, href, action, id) => {
   if (action) { a.addEventListener('click', action) }
   addText(a, title);
   li.appendChild(a);
-
-  ul.appendChild(li);
 
   return li;
 };
@@ -376,35 +371,45 @@ const addNavBar = (menuStyle) => {
     addRule(nav);
   }
 
+  const addHomeBack = (ul) => {
+    ul.appendChild(navLink('HOME', siteRoot().replace('/static/', '/index.html')));
+    ul.appendChild(navLink('BACK', '#', () => { history.back() }));
+  };
+
   if (menuStyle !== NavMenu.INVENTORY) {
     let ul = document.createElement('ul');
     ul.className = 'nav';
-
+    
     if (menuStyle === NavMenu.HOME) {
       addHeading(nav, 'H3', 'REF_DATA');
     } else {
-      navLink(ul, 'HOME', siteRoot().replace('/static/', '/index.html'));
-      navLink(ul, 'BACK', '#', () => { history.back() });
+      addHomeBack(ul);
     }
 
     if (menuStyle !== NavMenu.BACK) {
-      navLink(ul, 'AUFBAU', siteRoot() + 'aufbauten.html');
-      navLink(ul, 'ANTRIEB', siteRoot() + 'antrieben.html');
-      navLink(ul, 'BAHNVERWALTUNG', siteRoot() + 'bahnverwaltungen.html');
-      navLink(ul, 'DECODER_TYP', siteRoot() + 'decoderTypen.html');
-      navLink(ul, 'HERSTELLER', siteRoot() + 'herstellern.html');
-      navLink(ul, 'KATEGORIE', siteRoot() + 'kategorien.html');
-      navLink(ul, 'KUPPLUNG', siteRoot() + 'kupplungen.html');
-      navLink(ul, 'LAND', siteRoot() + 'lander.html');
-      navLink(ul, 'LICHT', siteRoot() + 'lichten.html');
-      navLink(ul, 'MASSSTAB', siteRoot() + 'massstaben.html');
-      navLink(ul, 'MOTOR_TYP', siteRoot() + 'motorTypen.html');
-      navLink(ul, 'PROTOKOLL', siteRoot() + 'protokollen.html');
-      navLink(ul, 'SONDER_MODELL', siteRoot() + 'sonderModellen.html');
-      navLink(ul, 'SPURWEITE', siteRoot() + 'spurweiten.html');
-      navLink(ul, 'STEUERUNG', siteRoot() + 'steuerungen.html');
-      navLink(ul, 'WAHRUNG', siteRoot() + 'wahrungen.html');
-      navLink(ul, 'ZUG_TYP', siteRoot() + 'zugtypen.html');
+      let lnks = [];
+      lnks.push(navLink('ANTRIEBEN', siteRoot() + 'antrieben.html'));
+      lnks.push(navLink('AUFBAUTEN', siteRoot() + 'aufbauten.html'));
+      lnks.push(navLink('BAHNVERWALTUNGEN', siteRoot() + 'bahnverwaltungen.html'));
+      lnks.push(navLink('DECODER_TYPEN', siteRoot() + 'decoderTypen.html'));
+      lnks.push(navLink('EPOCHEN', siteRoot() + 'epochen.html'));
+      lnks.push(navLink('GATTUNGEN', siteRoot() + 'gattungen.html'));
+      lnks.push(navLink('HERSTELLERN', siteRoot() + 'herstellern.html'));
+      lnks.push(navLink('KATEGORIEN', siteRoot() + 'kategorien.html'));
+      lnks.push(navLink('KUPPLUNGEN', siteRoot() + 'kupplungen.html'));
+      lnks.push(navLink('LANDER', siteRoot() + 'lander.html'));
+      lnks.push(navLink('LICHTEN', siteRoot() + 'lichten.html'));
+      lnks.push(navLink('MASSSTABEN', siteRoot() + 'massstaben.html'));
+      lnks.push(navLink('MOTOR_TYPEN', siteRoot() + 'motorTypen.html'));
+      lnks.push(navLink('PROTOKOLLEN', siteRoot() + 'protokollen.html'));
+      lnks.push(navLink('SONDERMODELLEN', siteRoot() + 'sonderModellen.html'));
+      lnks.push(navLink('SPURWEITEN', siteRoot() + 'spurweiten.html'));
+      lnks.push(navLink('STEUERUNGEN', siteRoot() + 'steuerungen.html'));
+      lnks.push(navLink('WAHRUNGEN', siteRoot() + 'wahrungen.html'));
+      lnks.push(navLink('ZUG_TYPEN', siteRoot() + 'zugtypen.html'));
+      lnks.filter(li => { return document.location.href !== li.firstChild.href })
+          .sort((a, b) => { return a.innerText.localeCompare(b.innerText) })
+          .forEach(li => ul.appendChild(li));
     }
 
     nav.appendChild(ul);
@@ -418,15 +423,19 @@ const addNavBar = (menuStyle) => {
     if (menuStyle === NavMenu.HOME) {
       addHeading(nav, 'H3', 'INVENTORY');
     } else {
-      navLink(ul, 'HOME', siteRoot().replace('/static/', '/index.html'));
-      navLink(ul, 'BACK', '#', () => { history.back() });
+      addHomeBack(ul);
     }
 
-    navLink(ul, 'PRODUKT', siteRoot() + 'produkten.html');
-    navLink(ul, 'VORBILD', siteRoot() + 'vorbilder.html');
-    navLink(ul, 'ARTIKEL', siteRoot() + 'artikelen.html');
-    navLink(ul, 'DECODER', siteRoot() + 'decoderen.html');
-    navLink(ul, 'ZUG', siteRoot() + 'zugen.html');
+    let lnks = [];
+    lnks.push(navLink('ARTIKELEN', siteRoot() + 'artikelen.html'));
+    lnks.push(navLink('DECODEREN', siteRoot() + 'decoderen.html'));
+    lnks.push(navLink('PRODUKTEN', siteRoot() + 'produkten.html'));
+    lnks.push(navLink('VORBILDER', siteRoot() + 'vorbilder.html'));
+    lnks.push(navLink('ZUGEN', siteRoot() + 'zugen.html'));
+    lnks.filter(li => { return document.location.href !== li.firstChild.href })
+        .sort((a, b) => { return a.innerText.localeCompare(b.innerText) })
+        .forEach(li => ul.appendChild(li));
+
     nav.appendChild(ul);
     addRule(nav);
   }
@@ -452,7 +461,7 @@ const addFooter = () => {
   addText(li, 'COPYRIGHT');
   ul.appendChild(li);
 
-  navLink(ul, 'ABOUT', '#', about, 'license');
+  ul.appendChild(navLink('ABOUT', '#', about, 'license'));
 };
 
 const createStyle = (className, values) => {

@@ -96,7 +96,7 @@ public interface ApiPaths {
 
     String PROTOKOLL = API_ROOT + ApiNames.PROTOKOLL;
     
-    String SONDER_MODELL = API_ROOT + ApiNames.SONDER_MODELL;
+    String SONDERMODELL = API_ROOT + ApiNames.SONDERMODELL;
     
     String SPURWEITE = API_ROOT + ApiNames.SPURWEITE;
     

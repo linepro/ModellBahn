@@ -17,12 +17,12 @@
       ABBILDUNG(Editable.NEVER)
     ];
 
-    const licht = new ListEditGrid(10, "licht", "licht", columns, Paged.PAGED, EditMode.UPDATE);
+    const lichten = new ListEditGrid(10, "licht", "lichten", columns, Paged.PAGED, EditMode.UPDATE);
 
     async function init() {
       addNavBar(NavMenu.REF_DATA);
       addFooter();
-      await licht.init();
+      await lichten.init();
     }
   </script>
   <title>Lichten</title>
@@ -34,7 +34,7 @@
 <section>
   <article>
     <div id="data">
-      <div id="lichtSite">
+      <div id="lichten">
       </div>
     </div>
   </article>
