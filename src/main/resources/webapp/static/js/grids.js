@@ -106,10 +106,11 @@ class Column {
     this.table = table;
   }
 
-  getHeading(tagName) {
-    let td = document.createElement(tagName);
-    td.className = 'table-heading';
-    addText(td, this.heading);
+  getHeading(isForm) {
+    let td = document.createElement(isForm ? 'div' : 'th');
+    td.className = isForm ? 'flex-label' : 'table-heading';
+    let txt = document.createTextNode(this.heading);
+    td.appendChild(txt);
     return td;
   }
 
@@ -297,8 +298,9 @@ class DateColumn extends TextColumn {
       dte.DatePickerX.init({
         minDate: new Date('1800-01-01'),
         weekDayLabels: [
-          getMessage('MO'), getMessage('TU'), getMessage('WE'), getMessage('TH'),
-          getMessage('FR'), getMessage('SA'), getMessage('SU')
+          getMessage('MO'), getMessage('TU'), getMessage('WE'),
+          getMessage('TH'), getMessage('FR'), getMessage('SA'),
+          getMessage('SU')
         ],
         shortMonthLabels: [
           getMessage('JAN'), getMessage('FEB'), getMessage('MAR'),
@@ -325,13 +327,7 @@ class DateColumn extends TextColumn {
 
   setValue(inp, value) {
     if (value) {
-      let dte = new Date(value);
-
-      if (inp.DatePickerX) {
-        inp.DatePickerX.setValue(dte);
-      }
-
-      inp.value = dte.toLocaleDateString(language());
+      inp.value = new Date(value).toLocaleDateString(language());
     }
   }
 
@@ -438,7 +434,7 @@ class FileColumn extends Column {
   }
 
   remove(e, grid, rowId, href) {
-    removeFile(href, link, grid, rowId);
+    removeFile(href, grid, rowId);
   }
 
   update(e, grid, rowId, href) {
@@ -743,10 +739,9 @@ class ButtonColumn {
     this.table = table;
   }
 
-  getHeading(tagName) {
+  getHeading(isForm) {
     let grid = this.grid;
-    let td = document.createElement(tagName);
-
+    let td = document.createElement(isForm ? 'div' : 'th');
     td.className = 'table-heading-btn';
 
     if (this.headLinkage) {
@@ -899,10 +894,8 @@ const initializeFormRow = (grid, table, maxLabel) => {
       td.className = 'flex-item';
 
       // TODO: change to label
-      let th = column.getHeading('div');
-      th.className = 'flex-label';
+      let th = column.getHeading(true);
       setWidths(th, maxLabel + 'ch');
-
       td.append(th);
 
       let tc = document.createElement('div');
@@ -983,8 +976,7 @@ const initializeTableHeader = (grid, table) => {
   header.append(headRow);
 
   grid.columns.forEach(column => {
-    let th = column.getHeading('th');
-    th.className = column.isButtons() ? 'table-heading-btn' : 'table-heading';
+    let th = column.getHeading(false);
     setWidths(th, column.getWidth());
 
     headRow.append(th);

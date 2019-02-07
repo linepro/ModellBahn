@@ -184,5 +184,6 @@
   "WE": { "message": "We", "description": "" },
   "TH": { "message": "Th", "description": "" },
   "FR": { "message": "Fr", "description": "" },
-  "SA": { "message": "Sa", "description": "" }
+  "SA": { "message": "Sa", "description": "" },
+  "X": { "message":  "X", "description": "" }
 }

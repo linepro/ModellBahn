@@ -183,5 +183,6 @@
   "WE": { "message": "Mi", "description": "" },
   "TH": { "message": "Do", "description": "" },
   "FR": { "message": "Fr", "description": "" },
-  "SA": { "message": "Sa", "description": "" }
+  "SA": { "message": "Sa", "description": "" },
+  "X": { "message":  "X", "description": "" }
 }

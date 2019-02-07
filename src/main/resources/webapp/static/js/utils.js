@@ -234,7 +234,7 @@ const showModal = (content) => {
   let contents = document.getElementById('modal-content');
   removeChildren(contents);
 
-  let closer = document.createElement('span');
+  let closer = document.createElement('div');
   closer.className = 'closebtn';
   closer.onclick = () => { modal.style.display = 'none' };
   addText(closer, 'x');

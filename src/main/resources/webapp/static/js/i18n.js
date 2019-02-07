@@ -36,7 +36,7 @@ const getMessage = (messageKey, substitutions) => {
   try {
     const key = messageKey.toUpperCase();
     if (!TRANSLATIONS[key]) {
-      console.log("No translation : '" + messageKey + '"');
+      console.log("No translation : '" + messageKey + '"\n' + new Error().stack);
     }
     let message = TRANSLATIONS[key] ? TRANSLATIONS[key] : messageKey;
     if (substitutions) {
