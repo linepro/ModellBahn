@@ -604,7 +604,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             IDecoderTypFunktion decoderTypFunktion = findDecoderTypFunktion(decoderTyp, reihe, funktion, true);
 
             if (decoderTypFunktion == null) {
-                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_DOES_NOT_EXIST, herstellerStr, bestellNr)));
+                return getResponse(badRequest(getMessage(ApiMessages.DECODER_TYP_FUNKTION_DOES_NOT_EXIST, herstellerStr, bestellNr)));
             } else if (newDecoderTypFunktion.getDecoderTyp() == null) {
                 newDecoderTypFunktion.setDecoderTyp(decoderTyp);
             } else if (!newDecoderTypFunktion.getDecoderTyp().equals(decoderTyp)) {

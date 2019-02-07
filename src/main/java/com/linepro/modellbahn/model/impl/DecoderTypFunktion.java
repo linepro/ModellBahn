@@ -51,7 +51,7 @@ public class DecoderTypFunktion extends AbstractItem<DecoderTypFunktionKey> impl
 
     /** The reihe. */
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.reihe.notnull}")
-    @Range(min=0, max=1, message = "{com.linepro.modellbahn.validator.constraints.reihe.range}")
+    @Range(min=1, max=2, message = "{com.linepro.modellbahn.validator.constraints.reihe.range}")
     private Integer reihe;
 
     @Pattern(regexp = "^F([12]\\d|3[012]|\\d)$|^K(1[012345]|\\d)$|^S[0123456]$", message = "{com.linepro.modellbahn.validator.constraints.funktion.invalid}")

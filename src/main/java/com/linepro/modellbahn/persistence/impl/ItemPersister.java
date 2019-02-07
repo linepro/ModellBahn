@@ -30,7 +30,6 @@ import org.slf4j.Logger;
 import com.google.inject.assistedinject.Assisted;
 import com.linepro.modellbahn.guice.ISessionManagerFactory;
 import com.linepro.modellbahn.model.IItem;
-import com.linepro.modellbahn.model.keys.IdKey;
 import com.linepro.modellbahn.model.keys.ItemKey;
 import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.persistence.DBNames;
@@ -149,12 +148,37 @@ public class ItemPersister<I extends IItem<?>> implements IPersister<I> {
 
     @Override
     public I merge(Long id, I entity) throws Exception {
-        return merge(new IdKey(id), entity, false);
+        ISessionManager session = getSession();
+
+        try {
+            @SuppressWarnings("unchecked")
+            I found =  inflate((I) session.getEntityManager().find(getEntityClass(), id), false);
+
+            return merge(session, found, entity, false);
+        } catch (Exception e) {
+            error("Merge error: " + entity, e);
+
+            session.rollback();
+
+            throw e;
+        }
     }
 
     @Override
     public I merge(IKey key, I entity) throws Exception {
-        return merge(key, entity, false);
+        ISessionManager session = getSession();
+
+        try {
+            I found = internalFindByKey(session, key, false);
+
+            return merge(session, found, entity, false);
+        } catch (Exception e) {
+            error("Merge error: " + entity, e);
+
+            session.rollback();
+
+            throw e;
+        }
     }
 
     @Override
@@ -180,7 +204,19 @@ public class ItemPersister<I extends IItem<?>> implements IPersister<I> {
 
     @Override
     public I save(I entity) throws Exception {
-        return merge(getItemKey(entity), entity, true);
+        ISessionManager session = getSession();
+
+        try {
+            I found = internalFindByKey(session, getItemKey(entity), false);
+
+            return merge(session, found, entity, true);
+        } catch (Exception e) {
+            error("Merge error: " + entity, e);
+
+            session.rollback();
+
+            throw e;
+        }
     }
 
     /**
@@ -192,50 +228,38 @@ public class ItemPersister<I extends IItem<?>> implements IPersister<I> {
      * @throws Exception the exception
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private I merge(IKey key, I entity, boolean addOrUpdate) throws Exception {
-        ISessionManager session = getSession();
+    private I merge(ISessionManager session, I found, I entity, boolean addOrUpdate) throws Exception {
+        if (found == null && !addOrUpdate) {
+            return null;
+        }
 
-        try {
-            I found = internalFindByKey(session, key, false);
-            
-            if (found == null && !addOrUpdate) {
-                return null;
-            }
+        I result;
+        
+        if (found == null) {
+            // Save the new entity
+            result = entity;
+        } else {
+            result = found;
 
-            I result;
-            
-            if (found == null) {
-                // Save the new entity
-                result = entity;
-            } else {
-                result = found;
+            // Copy updated values into existing entity
+            for (Selector selector : selectors.values()) {
+                Object value = selector.getGetter().invoke(entity);
 
-                // Copy updated values into existing entity
-                for (Selector selector : selectors.values()) {
-                    Object value = selector.getGetter().invoke(entity);
-
-                    if (value instanceof Collection) {
-                        ((Collection) selector.getGetter().invoke(found)).addAll((Collection) value);
-                    } else if (value != null || selector.isNullable()) {
-                        selector.getSetter().invoke(result, value);
-                    }
+                if (value instanceof Collection) {
+                    ((Collection) selector.getGetter().invoke(found)).addAll((Collection) value);
+                } else if (value != null || selector.isNullable()) {
+                    selector.getSetter().invoke(result, value);
                 }
             }
-
-            result = inflate(session.getEntityManager().merge(result), true);
-
-            debug((found == null ? "added" : "merged") + ": " + result);
-
-            session.commit();
-
-            return result;
-        } catch (Exception e) {
-            error("Merge error: " + entity, e);
-
-            session.rollback();
-
-            throw e;
         }
+
+        result = inflate(session.getEntityManager().merge(result), true);
+
+        debug((found == null ? "added" : "merged") + ": " + result);
+
+        session.commit();
+
+        return result;
     }
 
     @Override
@@ -402,6 +426,7 @@ public class ItemPersister<I extends IItem<?>> implements IPersister<I> {
         if (results.size() == 1) {
             result = inflate(results.get(0), eager);
         }
+
         return result;
     }
 

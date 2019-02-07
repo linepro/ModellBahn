@@ -1046,17 +1046,17 @@ const initializeTableRow = (grid, table) => {
 const initializeTableFooter = (grid, table) => {
   let footer = document.createElement('tfoot');
   footer.id = table.id + '_tfoot';
-  footer.className = grid.parent ? 'tfoot-thin' : 'tfoot';
+  footer.className = 'tfoot';
   table.append(footer);
 
   let navRow = document.createElement('tr');
   navRow.id = table.id + 'Foot';
-  navRow.className = grid.parent ? 'table-foot-thin' : 'table-foot';
+  navRow.className = 'table-foot';
   footer.append(navRow);
 
   grid.columns.forEach(column => {
     let tf = document.createElement('td');
-    tf.className = grid.parent ? 'table-footer-thin' : 'table-footer';
+    tf.className = 'table-footer';
     tf.width = column.getWidth();
     setWidths(tf, column.getWidth());
 

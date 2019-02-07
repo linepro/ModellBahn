@@ -24,6 +24,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
@@ -109,7 +110,7 @@ public class Artikel extends AbstractItem<ArtikelKey> implements IArtikel {
 
     /** The stuck. */
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.stuck.notnull}")
-    @Positive(message = "{com.linepro.modellbahn.validator.constraints.stuck.positive}")
+    @Min(value=1, message = "{com.linepro.modellbahn.validator.constraints.stuck.positive}")
     private Integer stuck;
 
     /** The stuck. */

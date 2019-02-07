@@ -532,7 +532,7 @@ public class DBPopulator {
         addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
 
-        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
 
         return update(decoderTyp);
     }
@@ -545,9 +545,9 @@ public class DBPopulator {
         addCV(decoderTyp, 1, "Adresse", 1, 80, null);
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
 
-        addFunktion(decoderTyp, 0, "F1", "Kranhaus drehen", false);
-        addFunktion(decoderTyp, 0, "F2", "Kranausleger Heben heben", false);
-        addFunktion(decoderTyp, 0, "F3", "Haken heben", false);
+        addFunktion(decoderTyp, 1, "F1", "Kranhaus drehen", false);
+        addFunktion(decoderTyp, 1, "F2", "Kranausleger Heben heben", false);
+        addFunktion(decoderTyp, 1, "F3", "Haken heben", false);
 
         return update(decoderTyp);
     }
@@ -569,22 +569,22 @@ public class DBPopulator {
 
         addCV(decoderTyp, 1, "Adresse", 14, 15, 14);
 
-        addFunktion(decoderTyp, 0, "F0", "End", false);
-        addFunktion(decoderTyp, 0, "F1", "Input", false);
-        addFunktion(decoderTyp, 0, "F2", "Clear", false);
-        addFunktion(decoderTyp, 0, "F3", "180", false);
-        addFunktion(decoderTyp, 0, "F4", "Step >", false);
-        addFunktion(decoderTyp, 0, "F5", "Step <", false);
-        addFunktion(decoderTyp, 0, "F6", "Spoke 1", false);
-        addFunktion(decoderTyp, 0, "F7", "Spoke 2", false);
-        addFunktion(decoderTyp, 0, "F8", "Spoke 3", false);
-        addFunktion(decoderTyp, 0, "F9", "Spoke 3", false);
-        addFunktion(decoderTyp, 0, "F10", "Spoke 4", false);
-        addFunktion(decoderTyp, 0, "F11", "Spoke 5", false);
-        addFunktion(decoderTyp, 0, "F12", "Spoke 6", false);
-        addFunktion(decoderTyp, 0, "F13", "Spoke 7", false);
-        addFunktion(decoderTyp, 0, "F14", "Spoke 8", false);
-        addFunktion(decoderTyp, 0, "F15", "Spoke 9", false);
+        addFunktion(decoderTyp, 1, "F0", "End", false);
+        addFunktion(decoderTyp, 1, "F1", "Input", false);
+        addFunktion(decoderTyp, 1, "F2", "Clear", false);
+        addFunktion(decoderTyp, 1, "F3", "180", false);
+        addFunktion(decoderTyp, 1, "F4", "Step >", false);
+        addFunktion(decoderTyp, 1, "F5", "Step <", false);
+        addFunktion(decoderTyp, 1, "F6", "Spoke 1", false);
+        addFunktion(decoderTyp, 1, "F7", "Spoke 2", false);
+        addFunktion(decoderTyp, 1, "F8", "Spoke 3", false);
+        addFunktion(decoderTyp, 1, "F9", "Spoke 3", false);
+        addFunktion(decoderTyp, 1, "F10", "Spoke 4", false);
+        addFunktion(decoderTyp, 1, "F11", "Spoke 5", false);
+        addFunktion(decoderTyp, 1, "F12", "Spoke 6", false);
+        addFunktion(decoderTyp, 1, "F13", "Spoke 7", false);
+        addFunktion(decoderTyp, 1, "F14", "Spoke 8", false);
+        addFunktion(decoderTyp, 1, "F15", "Spoke 9", false);
 
         return update(decoderTyp);
     }
@@ -623,11 +623,11 @@ public class DBPopulator {
         addCV(decoderTyp, 98, "Zeitbegrenztes Einschalten der Ausgänge A1 + A2", 0, 3, 3);
         addCV(decoderTyp, 99, "Maximale Einschaltzeit in Sekunden", 0, 255, 45);
 
-        addFunktion(decoderTyp, 0, "F0", "Kranhaken/Laufkatze", false);
-        addFunktion(decoderTyp, 0, "F1", "F1", false);
-        addFunktion(decoderTyp, 0, "F2", "F2", false);
-        addFunktion(decoderTyp, 0, "F3", "F3", false);
-        addFunktion(decoderTyp, 0, "F4", "F4", false);
+        addFunktion(decoderTyp, 1, "F0", "Kranhaken/Laufkatze", false);
+        addFunktion(decoderTyp, 1, "F1", "F1", false);
+        addFunktion(decoderTyp, 1, "F2", "F2", false);
+        addFunktion(decoderTyp, 1, "F3", "F3", false);
+        addFunktion(decoderTyp, 1, "F4", "F4", false);
 
         return update(decoderTyp);
     }
@@ -639,7 +639,7 @@ public class DBPopulator {
         
         addCV(decoderTyp, 1, "Adresse", 1, 80, 11);
 
-        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
 
         return update(decoderTyp);
     }
@@ -668,10 +668,10 @@ public class DBPopulator {
         addCV(decoderTyp, 47, "Servo 4, Stellung „A“", 1, 63, 24);
         addCV(decoderTyp, 48, "Servo 4, Stellung „B“", 1, 63, 40);
 
-        addFunktion(decoderTyp, 0, "S1", "Servo 1", false);
-        addFunktion(decoderTyp, 0, "S2", "Servo 2", false);
-        addFunktion(decoderTyp, 0, "S3", "Servo 3", false);
-        addFunktion(decoderTyp, 0, "S4", "Servo 4", false);
+        addFunktion(decoderTyp, 1, "S1", "Servo 1", false);
+        addFunktion(decoderTyp, 1, "S2", "Servo 2", false);
+        addFunktion(decoderTyp, 1, "S3", "Servo 3", false);
+        addFunktion(decoderTyp, 1, "S4", "Servo 4", false);
 
         return update(decoderTyp);
     }
@@ -703,12 +703,12 @@ public class DBPopulator {
         addCV(decoderTyp, 41, "Servo 2, Stellung „A“", 1, 63, 24);
         addCV(decoderTyp, 42, "Servo 2, Stellung „B“", 1, 63, 40);
 
-        addFunktion(decoderTyp, 0, "K1", "Funktion 1", false);
-        addFunktion(decoderTyp, 0, "K2", "Funktion 2", false);
-        addFunktion(decoderTyp, 0, "K3", "Funktion 3", false);
-        addFunktion(decoderTyp, 0, "K4", "Funktion 4", false);
-        addFunktion(decoderTyp, 0, "S1", "Servo 1", false);
-        addFunktion(decoderTyp, 0, "S2", "Servo 2", false);
+        addFunktion(decoderTyp, 1, "K1", "Funktion 1", false);
+        addFunktion(decoderTyp, 1, "K2", "Funktion 2", false);
+        addFunktion(decoderTyp, 1, "K3", "Funktion 3", false);
+        addFunktion(decoderTyp, 1, "K4", "Funktion 4", false);
+        addFunktion(decoderTyp, 1, "S1", "Servo 1", false);
+        addFunktion(decoderTyp, 1, "S2", "Servo 2", false);
 
         return update(decoderTyp);
     }
@@ -722,11 +722,11 @@ public class DBPopulator {
         addCV(decoderTyp, 1, "Adresse", 1, 80, null);
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
 
-        addFunktion(decoderTyp, 0, "F0", "Funktion 0", false);
-        addFunktion(decoderTyp, 0, "F1", "Funktion 1", false);
-        addFunktion(decoderTyp, 0, "F2", "Funktion 2", false);
-        addFunktion(decoderTyp, 0, "F3", "Funktion 3", false);
-        addFunktion(decoderTyp, 0, "F4", "Funktion 4", false);
+        addFunktion(decoderTyp, 1, "F0", "Funktion 0", false);
+        addFunktion(decoderTyp, 1, "F1", "Funktion 1", false);
+        addFunktion(decoderTyp, 1, "F2", "Funktion 2", false);
+        addFunktion(decoderTyp, 1, "F3", "Funktion 3", false);
+        addFunktion(decoderTyp, 1, "F4", "Funktion 4", false);
 
         return update(decoderTyp);
     }
@@ -759,22 +759,22 @@ public class DBPopulator {
         addCV(decoderTyp, 78, "Anfahrspannung Analog AC", 1, 63, 25);
         addCV(decoderTyp, 79, "Höchstgeschwindigkeit Analog AC", 1, 63, 63);
 
-        addFunktion(decoderTyp, 0, "F0", "Funktion 0", false);
-        addFunktion(decoderTyp, 0, "F1", "Funktion 1", false);
-        addFunktion(decoderTyp, 0, "F2", "Funktion 2", false);
-        addFunktion(decoderTyp, 0, "F3", "Funktion 3", false);
-        addFunktion(decoderTyp, 0, "F4", "Funktion 4", false);
-        addFunktion(decoderTyp, 0, "F5", "Funktion 5", false);
-        addFunktion(decoderTyp, 0, "F6", "Funktion 6", false);
-        addFunktion(decoderTyp, 0, "F7", "Funktion 7", false);
-        addFunktion(decoderTyp, 0, "F8", "Funktion 8", false);
-        addFunktion(decoderTyp, 0, "F9", "Funktion 9", false);
-        addFunktion(decoderTyp, 0, "F10", "Funktion 10", false);
-        addFunktion(decoderTyp, 0, "F11", "Funktion 11", false);
-        addFunktion(decoderTyp, 0, "F12", "Funktion 12", false);
-        addFunktion(decoderTyp, 0, "F13", "Funktion 13", false);
-        addFunktion(decoderTyp, 0, "F14", "Funktion 14", false);
-        addFunktion(decoderTyp, 0, "F15", "Funktion 15", false);
+        addFunktion(decoderTyp, 1, "F0", "Funktion 0", false);
+        addFunktion(decoderTyp, 1, "F1", "Funktion 1", false);
+        addFunktion(decoderTyp, 1, "F2", "Funktion 2", false);
+        addFunktion(decoderTyp, 1, "F3", "Funktion 3", false);
+        addFunktion(decoderTyp, 1, "F4", "Funktion 4", false);
+        addFunktion(decoderTyp, 1, "F5", "Funktion 5", false);
+        addFunktion(decoderTyp, 1, "F6", "Funktion 6", false);
+        addFunktion(decoderTyp, 1, "F7", "Funktion 7", false);
+        addFunktion(decoderTyp, 1, "F8", "Funktion 8", false);
+        addFunktion(decoderTyp, 1, "F9", "Funktion 9", false);
+        addFunktion(decoderTyp, 1, "F10", "Funktion 10", false);
+        addFunktion(decoderTyp, 1, "F11", "Funktion 11", false);
+        addFunktion(decoderTyp, 1, "F12", "Funktion 12", false);
+        addFunktion(decoderTyp, 1, "F13", "Funktion 13", false);
+        addFunktion(decoderTyp, 1, "F14", "Funktion 14", false);
+        addFunktion(decoderTyp, 1, "F15", "Funktion 15", false);
 
         return update(decoderTyp);
     }
@@ -799,7 +799,7 @@ public class DBPopulator {
         addCV(decoderTyp, 78, "Anfahrspannung Analog AC", 1, 63, 25);
         addCV(decoderTyp, 79, "Höchstgeschwindigkeit Analog AC", 1, 63, 63);
 
-        addFunktion(decoderTyp, 0, "F0", "Funktion 0", false);
+        addFunktion(decoderTyp, 1, "F0", "Funktion 0", false);
 
         return update(decoderTyp);
     }
@@ -816,17 +816,17 @@ public class DBPopulator {
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
         addCV(decoderTyp, 63, "Lautstärke", 1, 63, null);
 
-        addFunktion(decoderTyp, 0, "F0", "Spitzensignal", false);
-        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F1", "Rauchgenerator", false);
-        addFunktion(decoderTyp, 0, "F2", "Lokpfeife", false);
-        addFunktion(decoderTyp, 0, "F3", "Fahrgeräusch", false);
-        addFunktion(decoderTyp, 0, "F4", "ABV", false);
-        addFunktion(decoderTyp, 0, "F5", "Luftpumpe", false);
-        addFunktion(decoderTyp, 0, "F6", "Triebwerksbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F7", "Bremsenquietschen aus", false);
-        addFunktion(decoderTyp, 0, "F8", "Rangierpfeife", false);
-        addFunktion(decoderTyp, 0, "F9", "Dampf ablassen", false);
+        addFunktion(decoderTyp, 1, "F0", "Spitzensignal", false);
+        addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F1", "Rauchgenerator", false);
+        addFunktion(decoderTyp, 1, "F2", "Lokpfeife", false);
+        addFunktion(decoderTyp, 1, "F3", "Fahrgeräusch", false);
+        addFunktion(decoderTyp, 1, "F4", "ABV", false);
+        addFunktion(decoderTyp, 1, "F5", "Luftpumpe", false);
+        addFunktion(decoderTyp, 1, "F6", "Triebwerksbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F7", "Bremsenquietschen aus", false);
+        addFunktion(decoderTyp, 1, "F8", "Rangierpfeife", false);
+        addFunktion(decoderTyp, 1, "F9", "Dampf ablassen", false);
 
         return update(decoderTyp);
     }
@@ -854,8 +854,8 @@ public class DBPopulator {
         addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
 
-        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F4", "ABV", false);
+        addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F4", "ABV", false);
 
         return update(decoderTyp);
     }
@@ -869,18 +869,18 @@ public class DBPopulator {
         addCV(decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null);
         addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, null);
 
-        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F1", "Rauchgenerator", false);
-        addFunktion(decoderTyp, 0, "F11", "Schüttelrost", false);
-        addFunktion(decoderTyp, 0, "F2", "Lokpfeife", false);
-        addFunktion(decoderTyp, 0, "F3", "Dampftriebwerk", false);
-        addFunktion(decoderTyp, 0, "F4", "ABV", false);
-        addFunktion(decoderTyp, 0, "F5", "Luftpumpe", false);
-        addFunktion(decoderTyp, 0, "F6", "Feuerschein - Feuerbüchse", false);
-        addFunktion(decoderTyp, 0, "F7", "Bremsenquietschen", false);
-        addFunktion(decoderTyp, 0, "F8", "Rangierpfiff", false);
-        addFunktion(decoderTyp, 0, "F9", "Dampf ablassen", false);
-        addFunktion(decoderTyp, 0, "F10", "Kohleschaufeln", false);
+        addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F1", "Rauchgenerator", false);
+        addFunktion(decoderTyp, 1, "F11", "Schüttelrost", false);
+        addFunktion(decoderTyp, 1, "F2", "Lokpfeife", false);
+        addFunktion(decoderTyp, 1, "F3", "Dampftriebwerk", false);
+        addFunktion(decoderTyp, 1, "F4", "ABV", false);
+        addFunktion(decoderTyp, 1, "F5", "Luftpumpe", false);
+        addFunktion(decoderTyp, 1, "F6", "Feuerschein - Feuerbüchse", false);
+        addFunktion(decoderTyp, 1, "F7", "Bremsenquietschen", false);
+        addFunktion(decoderTyp, 1, "F8", "Rangierpfiff", false);
+        addFunktion(decoderTyp, 1, "F9", "Dampf ablassen", false);
+        addFunktion(decoderTyp, 1, "F10", "Kohleschaufeln", false);
 
         return update(decoderTyp);
     }
@@ -893,11 +893,11 @@ public class DBPopulator {
         addCV(decoderTyp, 1, "Adresse", 1, 80, null);
         addCV(decoderTyp, 2, "Lautstärke", 1, 63, null);
 
-        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F1", "Schleuderrad Geräusch", false);
-        addFunktion(decoderTyp, 0, "F2", "Schleuderrad", false);
-        addFunktion(decoderTyp, 0, "F3", "Pfeife", false);
-        addFunktion(decoderTyp, 0, "F4", "Signalstreckenlampen", false);
+        addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F1", "Schleuderrad Geräusch", false);
+        addFunktion(decoderTyp, 1, "F2", "Schleuderrad", false);
+        addFunktion(decoderTyp, 1, "F3", "Pfeife", false);
+        addFunktion(decoderTyp, 1, "F4", "Signalstreckenlampen", false);
 
         return update(decoderTyp);
     }
@@ -911,11 +911,11 @@ public class DBPopulator {
         addCV(decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null);
         addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, null);
 
-        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F1", "Maschinenraumbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F2", "Stromabnehmer vorn", false);
-        addFunktion(decoderTyp, 0, "F3", "Stromabnehmer hinten", false);
-        addFunktion(decoderTyp, 0, "F4", "ABV", false);
+        addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F1", "Maschinenraumbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F2", "Stromabnehmer vorn", false);
+        addFunktion(decoderTyp, 1, "F3", "Stromabnehmer hinten", false);
+        addFunktion(decoderTyp, 1, "F4", "ABV", false);
 
         return update(decoderTyp);
     }
@@ -929,11 +929,11 @@ public class DBPopulator {
         addCV(decoderTyp, 2, "Bedienung festgelegt", 0, 1, 0);
         addCV(decoderTyp, 3, "Baggerschaufel Zeitbegrenzung", 0, 1, 0);
 
-        addFunktion(decoderTyp, 0, "F0", "Kohleschaufe schließen", false);
-        addFunktion(decoderTyp, 0, "F1", "Laufgestell Motoren", false);
-        addFunktion(decoderTyp, 0, "F2", "Führerhaus Beleuchtung", false);
-        addFunktion(decoderTyp, 0, "F3", "Kohleschaufe Heben", false);
-        addFunktion(decoderTyp, 0, "F4", "Führerhaus Drehen", false);
+        addFunktion(decoderTyp, 1, "F0", "Kohleschaufe schließen", false);
+        addFunktion(decoderTyp, 1, "F1", "Laufgestell Motoren", false);
+        addFunktion(decoderTyp, 1, "F2", "Führerhaus Beleuchtung", false);
+        addFunktion(decoderTyp, 1, "F3", "Kohleschaufe Heben", false);
+        addFunktion(decoderTyp, 1, "F4", "Führerhaus Drehen", false);
 
         return update(decoderTyp);
     }
@@ -948,9 +948,9 @@ public class DBPopulator {
         addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
 
-        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F2", "Telex-Kupplung", false);
-        addFunktion(decoderTyp, 0, "F4", "ABV", false);
+        addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F2", "Telex-Kupplung", false);
+        addFunktion(decoderTyp, 1, "F4", "ABV", false);
 
         return update(decoderTyp);
     }
@@ -967,15 +967,15 @@ public class DBPopulator {
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
         addCV(decoderTyp, 63, "Lautstärke", 1, 63, null);
 
-        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung / Innenbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F1", "Schlusslicht ausschalten", false);
-        addFunktion(decoderTyp, 0, "F2", "Dieselmotor und Bremse", false);
-        addFunktion(decoderTyp, 0, "F3", "Signalhorn", false);
-        addFunktion(decoderTyp, 0, "F4", "ABV", false);
-        addFunktion(decoderTyp, 0, "F5", "Bremsenquietschen", false);
-        addFunktion(decoderTyp, 0, "F6", "Türe Zu", false);
-        addFunktion(decoderTyp, 0, "F7", "Glocke", false);
-        addFunktion(decoderTyp, 0, "F8", "Abfahrtspfiff", false);
+        addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung / Innenbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F1", "Schlusslicht ausschalten", false);
+        addFunktion(decoderTyp, 1, "F2", "Dieselmotor und Bremse", false);
+        addFunktion(decoderTyp, 1, "F3", "Signalhorn", false);
+        addFunktion(decoderTyp, 1, "F4", "ABV", false);
+        addFunktion(decoderTyp, 1, "F5", "Bremsenquietschen", false);
+        addFunktion(decoderTyp, 1, "F6", "Türe Zu", false);
+        addFunktion(decoderTyp, 1, "F7", "Glocke", false);
+        addFunktion(decoderTyp, 1, "F8", "Abfahrtspfiff", false);
 
         return update(decoderTyp);
     }
@@ -992,17 +992,17 @@ public class DBPopulator {
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, null);
         addCV(decoderTyp, 63, "Lautstärke", 1, 63, 63);
 
-        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F1", "Rauchgenerator", false);
-        addFunktion(decoderTyp, 0, "F2", "Betriebsgeräusch", false);
-        addFunktion(decoderTyp, 0, "F3", "Pfeife", false);
-        addFunktion(decoderTyp, 0, "F4", "ABV", false);
-        addFunktion(decoderTyp, 0, "F5", "Luftpumpe", false);
-        addFunktion(decoderTyp, 0, "F6", "Kohleschaufeln", false);
-        addFunktion(decoderTyp, 0, "F7", "Glocke", false);
-        addFunktion(decoderTyp, 0, "F8", "Dampf ablassen", false);
-        addFunktion(decoderTyp, 0, "F9", "Bremsenquietschen", false);
-        addFunktion(decoderTyp, 0, "F10", "Schüttelrost", false);
+        addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F1", "Rauchgenerator", false);
+        addFunktion(decoderTyp, 1, "F2", "Betriebsgeräusch", false);
+        addFunktion(decoderTyp, 1, "F3", "Pfeife", false);
+        addFunktion(decoderTyp, 1, "F4", "ABV", false);
+        addFunktion(decoderTyp, 1, "F5", "Luftpumpe", false);
+        addFunktion(decoderTyp, 1, "F6", "Kohleschaufeln", false);
+        addFunktion(decoderTyp, 1, "F7", "Glocke", false);
+        addFunktion(decoderTyp, 1, "F8", "Dampf ablassen", false);
+        addFunktion(decoderTyp, 1, "F9", "Bremsenquietschen", false);
+        addFunktion(decoderTyp, 1, "F10", "Schüttelrost", false);
 
         return update(decoderTyp);
     }
@@ -1019,16 +1019,16 @@ public class DBPopulator {
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
         addCV(decoderTyp, 63, "Lautstärke", 1, 63, null);
 
-        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F2", "Betriebsgeräusch", false);
-        addFunktion(decoderTyp, 0, "F3", "Signalhorn", false);
-        addFunktion(decoderTyp, 0, "F4", "ABV", false);
-        addFunktion(decoderTyp, 0, "F5", "Bremsenquietschen", false);
-        addFunktion(decoderTyp, 0, "F6", "Metallsäge", false);
-        addFunktion(decoderTyp, 0, "F7", "Hämmern", false);
-        addFunktion(decoderTyp, 0, "F8", "Winkelschleifer", false);
-        addFunktion(decoderTyp, 0, "F9", "Elektroschweißen", false);
-        addFunktion(decoderTyp, 0, "F10", "Schleifbock", false);
+        addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F2", "Betriebsgeräusch", false);
+        addFunktion(decoderTyp, 1, "F3", "Signalhorn", false);
+        addFunktion(decoderTyp, 1, "F4", "ABV", false);
+        addFunktion(decoderTyp, 1, "F5", "Bremsenquietschen", false);
+        addFunktion(decoderTyp, 1, "F6", "Metallsäge", false);
+        addFunktion(decoderTyp, 1, "F7", "Hämmern", false);
+        addFunktion(decoderTyp, 1, "F8", "Winkelschleifer", false);
+        addFunktion(decoderTyp, 1, "F9", "Elektroschweißen", false);
+        addFunktion(decoderTyp, 1, "F10", "Schleifbock", false);
 
         return update(decoderTyp);
     }
@@ -1046,10 +1046,10 @@ public class DBPopulator {
         addCV(decoderTyp, 63, "Lautstärke", 0, 63, 63);
 
 
-        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung / Innenbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F2", "Bahnhofsansage", false);
-        addFunktion(decoderTyp, 0, "F3", "Signalhorn", false);
-        addFunktion(decoderTyp, 0, "F4", "ABV", false);
+        addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung / Innenbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F2", "Bahnhofsansage", false);
+        addFunktion(decoderTyp, 1, "F3", "Signalhorn", false);
+        addFunktion(decoderTyp, 1, "F4", "ABV", false);
 
         return update(decoderTyp);
     }
@@ -1066,13 +1066,13 @@ public class DBPopulator {
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
         addCV(decoderTyp, 63, "Lautstärke", 1, 63, null);
 
-        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung / Schlusslicht", false);
-        addFunktion(decoderTyp, 0, "F1", "Schlusslicht ausschalten", false);
-        addFunktion(decoderTyp, 0, "F2", "Betriebsgeräusch", false);
-        addFunktion(decoderTyp, 0, "F3", "Signalhorn", false);
-        addFunktion(decoderTyp, 0, "F4", "ABV", false);
-        addFunktion(decoderTyp, 0, "F5", "Druckluft ablassen", false);
-        addFunktion(decoderTyp, 0, "F6", "Bremsenquietschen", false);
+        addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung / Schlusslicht", false);
+        addFunktion(decoderTyp, 1, "F1", "Schlusslicht ausschalten", false);
+        addFunktion(decoderTyp, 1, "F2", "Betriebsgeräusch", false);
+        addFunktion(decoderTyp, 1, "F3", "Signalhorn", false);
+        addFunktion(decoderTyp, 1, "F4", "ABV", false);
+        addFunktion(decoderTyp, 1, "F5", "Druckluft ablassen", false);
+        addFunktion(decoderTyp, 1, "F6", "Bremsenquietschen", false);
 
         return update(decoderTyp);
     }
@@ -1091,15 +1091,15 @@ public class DBPopulator {
         addCV(decoderTyp, 63, "Lautstärke", 1, 63, null);
 
 
-        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F1", "Schlusslicht ausschalten", false);
-        addFunktion(decoderTyp, 0, "F2", "Betriebsgeräusch", false);
-        addFunktion(decoderTyp, 0, "F3", "Horn", false);
-        addFunktion(decoderTyp, 0, "F4", "ABV", false);
-        addFunktion(decoderTyp, 0, "F5", "Druckluft ablassen", false);
-        addFunktion(decoderTyp, 0, "F6", "Bremsenquietschen", false);
-        addFunktion(decoderTyp, 0, "F7", "Führerstandsbeleuchtung vorn", false);
-        addFunktion(decoderTyp, 0, "F8", "Führerstandsbeleuchtung hinten", false);
+        addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F1", "Schlusslicht ausschalten", false);
+        addFunktion(decoderTyp, 1, "F2", "Betriebsgeräusch", false);
+        addFunktion(decoderTyp, 1, "F3", "Horn", false);
+        addFunktion(decoderTyp, 1, "F4", "ABV", false);
+        addFunktion(decoderTyp, 1, "F5", "Druckluft ablassen", false);
+        addFunktion(decoderTyp, 1, "F6", "Bremsenquietschen", false);
+        addFunktion(decoderTyp, 1, "F7", "Führerstandsbeleuchtung vorn", false);
+        addFunktion(decoderTyp, 1, "F8", "Führerstandsbeleuchtung hinten", false);
 
         return update(decoderTyp);
     }
@@ -1115,12 +1115,12 @@ public class DBPopulator {
         addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
 
-        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F1", "Innenbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F2", "Begrüßungs-Ansage", false);
-        addFunktion(decoderTyp, 0, "F3", "Pfeife", false);
-        addFunktion(decoderTyp, 0, "F4", "ABV", false);
-        addFunktion(decoderTyp, 0, "F5", "Innenbeleuchtung dimmen", false);
+        addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F1", "Innenbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F2", "Begrüßungs-Ansage", false);
+        addFunktion(decoderTyp, 1, "F3", "Pfeife", false);
+        addFunktion(decoderTyp, 1, "F4", "ABV", false);
+        addFunktion(decoderTyp, 1, "F5", "Innenbeleuchtung dimmen", false);
 
         return update(decoderTyp);
     }
@@ -1137,20 +1137,20 @@ public class DBPopulator {
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
         addCV(decoderTyp, 63, "Lautstärke", 1, 63, null);
 
-        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F1", "Innenbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F2", "Betriebsgeräusch ", false);
-        addFunktion(decoderTyp, 0, "F3", "Horn", false);
-        addFunktion(decoderTyp, 0, "F4", "ABV", false);
-        addFunktion(decoderTyp, 0, "F5", "Bremsenquietschen", false);
-        addFunktion(decoderTyp, 0, "F6", "Bahnhofsansage", false);
-        addFunktion(decoderTyp, 0, "F7", "Türe zu", false);
-        addFunktion(decoderTyp, 0, "F8", "Schaffnerpfiff", false);
-        addFunktion(decoderTyp, 0, "F9", "Hilfsdiesel", false);
-        addFunktion(decoderTyp, 0, "F10", "Lüfter", false);
-        addFunktion(decoderTyp, 0, "F11", "Kompressor", false);
-        addFunktion(decoderTyp, 0, "F12", "Überdruckventil", false);
-        addFunktion(decoderTyp, 0, "F13", "Druckluft ablassen", false);
+        addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F1", "Innenbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F2", "Betriebsgeräusch ", false);
+        addFunktion(decoderTyp, 1, "F3", "Horn", false);
+        addFunktion(decoderTyp, 1, "F4", "ABV", false);
+        addFunktion(decoderTyp, 1, "F5", "Bremsenquietschen", false);
+        addFunktion(decoderTyp, 1, "F6", "Bahnhofsansage", false);
+        addFunktion(decoderTyp, 1, "F7", "Türe zu", false);
+        addFunktion(decoderTyp, 1, "F8", "Schaffnerpfiff", false);
+        addFunktion(decoderTyp, 1, "F9", "Hilfsdiesel", false);
+        addFunktion(decoderTyp, 1, "F10", "Lüfter", false);
+        addFunktion(decoderTyp, 1, "F11", "Kompressor", false);
+        addFunktion(decoderTyp, 1, "F12", "Überdruckventil", false);
+        addFunktion(decoderTyp, 1, "F13", "Druckluft ablassen", false);
 
         return update(decoderTyp);
     }
@@ -1167,16 +1167,16 @@ public class DBPopulator {
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, null);
         addCV(decoderTyp, 63, "Lautstärke", 0, 63, 63);
 
-        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F1", "Tischlampen", false);
-        addFunktion(decoderTyp, 0, "F2", "Betriebsgeräusch", false);
-        addFunktion(decoderTyp, 0, "F3", "Horn", false);
-        addFunktion(decoderTyp, 0, "F4", "ABV", false);
-        addFunktion(decoderTyp, 0, "F5", "Bremsenquietschen", false);
-        addFunktion(decoderTyp, 0, "F6", "Schaffnerpfiff", false);
-        addFunktion(decoderTyp, 0, "F7", "Türen", false);
-        addFunktion(decoderTyp, 0, "F8", "Bahnhofsansage", false);
-        addFunktion(decoderTyp, 0, "F9", "Rangierpfiff", false);
+        addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F1", "Tischlampen", false);
+        addFunktion(decoderTyp, 1, "F2", "Betriebsgeräusch", false);
+        addFunktion(decoderTyp, 1, "F3", "Horn", false);
+        addFunktion(decoderTyp, 1, "F4", "ABV", false);
+        addFunktion(decoderTyp, 1, "F5", "Bremsenquietschen", false);
+        addFunktion(decoderTyp, 1, "F6", "Schaffnerpfiff", false);
+        addFunktion(decoderTyp, 1, "F7", "Türen", false);
+        addFunktion(decoderTyp, 1, "F8", "Bahnhofsansage", false);
+        addFunktion(decoderTyp, 1, "F9", "Rangierpfiff", false);
 
         return update(decoderTyp);
     }
@@ -1193,22 +1193,22 @@ public class DBPopulator {
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
         addCV(decoderTyp, 63, "Lautstärke", 1, 63, null);
 
-        addFunktion(decoderTyp, 0, "F0", "Innenbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F1", "Start / Stopp", false);
-        addFunktion(decoderTyp, 0, "F2", "Pause", false);
-        addFunktion(decoderTyp, 0, "F3", "ein Lied vor", false);
-        addFunktion(decoderTyp, 0, "F4", "ein Lied zurück", false);
-        addFunktion(decoderTyp, 0, "F5", "Lauter", false);
-        addFunktion(decoderTyp, 0, "F6", "Leiser", false);
-        addFunktion(decoderTyp, 0, "F7", "Lichtorgel an / aus", false);
-        addFunktion(decoderTyp, 0, "F8", "Barbeleuchtung an / aus", false);
-        addFunktion(decoderTyp, 0, "F9", "Strom führende Kupplung", false);
-        addFunktion(decoderTyp, 0, "F10", "Stroboskop", false);
-        addFunktion(decoderTyp, 0, "F11", "Umgebungsgeräusch 1", false);
-        addFunktion(decoderTyp, 0, "F12", "Umgebungsgeräusch 2", false);
-        addFunktion(decoderTyp, 0, "F13", "Betriebsgeräusch 1", false);
-        addFunktion(decoderTyp, 0, "F14", "Betriebsgeräusch 2", false);
-        addFunktion(decoderTyp, 0, "F15", "Betriebsgeräusch 3", false);
+        addFunktion(decoderTyp, 1, "F0", "Innenbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F1", "Start / Stopp", false);
+        addFunktion(decoderTyp, 1, "F2", "Pause", false);
+        addFunktion(decoderTyp, 1, "F3", "ein Lied vor", false);
+        addFunktion(decoderTyp, 1, "F4", "ein Lied zurück", false);
+        addFunktion(decoderTyp, 1, "F5", "Lauter", false);
+        addFunktion(decoderTyp, 1, "F6", "Leiser", false);
+        addFunktion(decoderTyp, 1, "F7", "Lichtorgel an / aus", false);
+        addFunktion(decoderTyp, 1, "F8", "Barbeleuchtung an / aus", false);
+        addFunktion(decoderTyp, 1, "F9", "Strom führende Kupplung", false);
+        addFunktion(decoderTyp, 1, "F10", "Stroboskop", false);
+        addFunktion(decoderTyp, 1, "F11", "Umgebungsgeräusch 1", false);
+        addFunktion(decoderTyp, 1, "F12", "Umgebungsgeräusch 2", false);
+        addFunktion(decoderTyp, 1, "F13", "Betriebsgeräusch 1", false);
+        addFunktion(decoderTyp, 1, "F14", "Betriebsgeräusch 2", false);
+        addFunktion(decoderTyp, 1, "F15", "Betriebsgeräusch 3", false);
 
         return update(decoderTyp);
     }
@@ -1226,22 +1226,22 @@ public class DBPopulator {
         addCV(decoderTyp, 50, "Protokolle", 1, 15, 15);
         addCV(decoderTyp, 63, "Lautstärke", 1, 63, null);
 
-        addFunktion(decoderTyp, 0, "F0", "Spitzensignal", false);
-        addFunktion(decoderTyp, 0, "F1", "Innenbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F2", "Fahrgeräusch", false);
-        addFunktion(decoderTyp, 0, "F3", "Signalton", false);
-        addFunktion(decoderTyp, 0, "F4", "Direktsteuerung", false);
-        addFunktion(decoderTyp, 0, "F5", "Bremsenquietschen aus", false);
-        addFunktion(decoderTyp, 0, "F6", "Spitzensignal Lokseite 2", false);
-        addFunktion(decoderTyp, 0, "F7", "Schaffnerpfiff", false);
-        addFunktion(decoderTyp, 0, "F8", "Spitzensignal Lokseite 1", false);
-        addFunktion(decoderTyp, 0, "F9", "Türenschließen", false);
-        addFunktion(decoderTyp, 0, "F10", "Schienenstoß", false);
-        addFunktion(decoderTyp, 0, "F11", "Bahnhofsansage", false);
-        addFunktion(decoderTyp, 0, "F12", "Dialog", false);
-        addFunktion(decoderTyp, 0, "F13", "Dialog", false);
-        addFunktion(decoderTyp, 0, "F14", "Dialog", false);
-        addFunktion(decoderTyp, 0, "F15", "Dialog ", false);
+        addFunktion(decoderTyp, 1, "F0", "Spitzensignal", false);
+        addFunktion(decoderTyp, 1, "F1", "Innenbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F2", "Fahrgeräusch", false);
+        addFunktion(decoderTyp, 1, "F3", "Signalton", false);
+        addFunktion(decoderTyp, 1, "F4", "Direktsteuerung", false);
+        addFunktion(decoderTyp, 1, "F5", "Bremsenquietschen aus", false);
+        addFunktion(decoderTyp, 1, "F6", "Spitzensignal Lokseite 2", false);
+        addFunktion(decoderTyp, 1, "F7", "Schaffnerpfiff", false);
+        addFunktion(decoderTyp, 1, "F8", "Spitzensignal Lokseite 1", false);
+        addFunktion(decoderTyp, 1, "F9", "Türenschließen", false);
+        addFunktion(decoderTyp, 1, "F10", "Schienenstoß", false);
+        addFunktion(decoderTyp, 1, "F11", "Bahnhofsansage", false);
+        addFunktion(decoderTyp, 1, "F12", "Dialog", false);
+        addFunktion(decoderTyp, 1, "F13", "Dialog", false);
+        addFunktion(decoderTyp, 1, "F14", "Dialog", false);
+        addFunktion(decoderTyp, 1, "F15", "Dialog ", false);
 
         return update(decoderTyp);
     }
@@ -1253,10 +1253,10 @@ public class DBPopulator {
 
         addCV(decoderTyp, 1, "Adresse", 1, 80, null);
 
-        addFunktion(decoderTyp, 0, "F1", "Arbeitsbühne heben", false);
-        addFunktion(decoderTyp, 0, "F2", "Arbeitsbühne schwenken", false);
-        addFunktion(decoderTyp, 0, "F3", "Stromabnehmer", false);
-        addFunktion(decoderTyp, 0, "F4", "Initialisierung", false);
+        addFunktion(decoderTyp, 1, "F1", "Arbeitsbühne heben", false);
+        addFunktion(decoderTyp, 1, "F2", "Arbeitsbühne schwenken", false);
+        addFunktion(decoderTyp, 1, "F3", "Stromabnehmer", false);
+        addFunktion(decoderTyp, 1, "F4", "Initialisierung", false);
 
         return update(decoderTyp);
     }
@@ -1284,8 +1284,8 @@ public class DBPopulator {
         addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
 
-        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F4", "ABV", false);
+        addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F4", "ABV", false);
 
         return update(decoderTyp);
     }
@@ -1298,7 +1298,7 @@ public class DBPopulator {
         addCV(decoderTyp, 1, "Adresse", null, null, 54);
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
 
-        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
 
         return update(decoderTyp);
     }
@@ -1315,8 +1315,8 @@ public class DBPopulator {
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
         addCV(decoderTyp, 63, "Lautstärke", 1, 63, 63);
 
-        addFunktion(decoderTyp, 0, "F2", "Pantograf", false);
-        addFunktion(decoderTyp, 0, "F3", "Geräusch einer Schaffner", false);
+        addFunktion(decoderTyp, 1, "F2", "Pantograf", false);
+        addFunktion(decoderTyp, 1, "F3", "Geräusch einer Schaffner", false);
 
         return update(decoderTyp);
     }
@@ -1329,10 +1329,10 @@ public class DBPopulator {
 
         addCV(decoderTyp, 1, "Adresse", 1, 80, null);
 
-        addFunktion(decoderTyp, 0, "F1", "Meßbereich", false);
-        addFunktion(decoderTyp, 0, "F2", "Meßbereich", false);
-        addFunktion(decoderTyp, 0, "F3", "Maßeinheit", false);
-        addFunktion(decoderTyp, 0, "F4", "Anzeigen", false);
+        addFunktion(decoderTyp, 1, "F1", "Meßbereich", false);
+        addFunktion(decoderTyp, 1, "F2", "Meßbereich", false);
+        addFunktion(decoderTyp, 1, "F3", "Maßeinheit", false);
+        addFunktion(decoderTyp, 1, "F4", "Anzeigen", false);
 
         return update(decoderTyp);
     }
@@ -1347,8 +1347,8 @@ public class DBPopulator {
         addCV(decoderTyp, 2, "Höchstgeschwindigkeit", 1, 63, null);
         addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, null);
 
-        addFunktion(decoderTyp, 0, "F0", "Strinbeleuchtung", false);
-        addFunktion(decoderTyp, 0, "F4", "ABV", false);
+        addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
+        addFunktion(decoderTyp, 1, "F4", "ABV", false);
 
         return update(decoderTyp);
     }
@@ -1378,22 +1378,22 @@ public class DBPopulator {
         addCV(decoderTyp, 2, "DCC / Motorola", 0, 1, 1);
         addCV(decoderTyp, 3, "Position specification", 0, 1, 0);
 
-        addFunktion(decoderTyp, 0, "K0", "Licht", false);
-        addFunktion(decoderTyp, 0, "K1", "Step", false);
-        addFunktion(decoderTyp, 0, "K2", "Turn", false);
-        addFunktion(decoderTyp, 0, "K3", "Richtung", false);
-        addFunktion(decoderTyp, 0, "K4", "Spoke 1", false);
-        addFunktion(decoderTyp, 0, "K5", "Spoke 2", false);
-        addFunktion(decoderTyp, 0, "K6", "Spoke 3", false);
-        addFunktion(decoderTyp, 0, "K7", "Spoke 3", false);
-        addFunktion(decoderTyp, 0, "K8", "Spoke 4", false);
-        addFunktion(decoderTyp, 0, "K9", "Spoke 5", false);
-        addFunktion(decoderTyp, 0, "K10", "Spoke 6", false);
-        addFunktion(decoderTyp, 0, "K11", "Spoke 7", false);
-        addFunktion(decoderTyp, 0, "K12", "Spoke 8", false);
-        addFunktion(decoderTyp, 0, "K13", "Spoke 9", false);
-        addFunktion(decoderTyp, 0, "K14", "Spoke 10", false);
-        addFunktion(decoderTyp, 0, "K15", "Spoke 11", false);
+        addFunktion(decoderTyp, 1, "K0", "Licht", false);
+        addFunktion(decoderTyp, 1, "K1", "Step", false);
+        addFunktion(decoderTyp, 1, "K2", "Turn", false);
+        addFunktion(decoderTyp, 1, "K3", "Richtung", false);
+        addFunktion(decoderTyp, 1, "K4", "Spoke 1", false);
+        addFunktion(decoderTyp, 1, "K5", "Spoke 2", false);
+        addFunktion(decoderTyp, 1, "K6", "Spoke 3", false);
+        addFunktion(decoderTyp, 1, "K7", "Spoke 3", false);
+        addFunktion(decoderTyp, 1, "K8", "Spoke 4", false);
+        addFunktion(decoderTyp, 1, "K9", "Spoke 5", false);
+        addFunktion(decoderTyp, 1, "K10", "Spoke 6", false);
+        addFunktion(decoderTyp, 1, "K11", "Spoke 7", false);
+        addFunktion(decoderTyp, 1, "K12", "Spoke 8", false);
+        addFunktion(decoderTyp, 1, "K13", "Spoke 9", false);
+        addFunktion(decoderTyp, 1, "K14", "Spoke 10", false);
+        addFunktion(decoderTyp, 1, "K15", "Spoke 11", false);
 
         return update(decoderTyp);
     }

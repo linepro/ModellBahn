@@ -14,10 +14,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Positive;
 
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.linepro.modellbahn.model.IAnderung;
 import com.linepro.modellbahn.model.IArtikel;
@@ -49,19 +53,25 @@ public class Anderung extends AbstractItem<AnderungKey> implements IAnderung {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8652624782179487496L;
 
-    public IArtikel artikel;
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.artikel.notnull}")
+    private IArtikel artikel;
 
-    public Integer anderungId;
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.anderungId.notnull}")
+    @Min(value=1, message = "{com.linepro.modellbahn.validator.constraints.anderungId.positive}")
+    private Integer anderungId;
 
-    public LocalDate anderungsDatum;
+    @Past(message = "{com.linepro.modellbahn.validator.constraints.anderungsDatum.past}")
+    private LocalDate anderungsDatum;
 
-    public AnderungsTyp anderungsTyp;
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.anderungsTyp.notnull}")
+    private AnderungsTyp anderungsTyp;
 
-    public String bezeichnung;
+    private String bezeichnung;
 
-    public Integer stuck;
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.stuck.positive}")
+    private Integer stuck;
 
-    public String anmerkung;
+    private String anmerkung;
 
     /**
      * Instantiates a new artikel.

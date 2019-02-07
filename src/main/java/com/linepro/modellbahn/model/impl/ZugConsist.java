@@ -10,8 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -54,7 +54,7 @@ public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsi
 
     /** The position. */
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.position.notnull}")
-    @Positive(message = "{com.linepro.modellbahn.validator.constraints.position.positive}")
+    @Min(value=1, message = "{com.linepro.modellbahn.validator.constraints.position.positive}")
     private Integer position;
 
     /** The artikel. */
