@@ -96,14 +96,6 @@ const reportError = (error) => {
   }
 };
 
-const addButton = (cell, lnk, action) => {
-  removeChildren(cell);
-
-  if (lnk) {
-    cell.appendChild(getButton(lnk.href, lnk.rel, action));
-  }
-};
-
 const getLink = (links, rel) => {
   if (!links) { return; }
   return links.find((lnk) => { return lnk.rel === rel; });

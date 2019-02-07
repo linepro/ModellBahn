@@ -28,7 +28,7 @@ const loadTranslations = async (language) => {
   }
 };
 
-loadTranslations(language());
+(async () => { await loadTranslations(language()) })();
 
 const getMessage = (messageKey, substitutions) => {
   if (/^\s*$/.test(messageKey)) return messageKey;

@@ -109,8 +109,7 @@ class Column {
   getHeading(isForm) {
     let td = document.createElement(isForm ? 'div' : 'th');
     td.className = isForm ? 'flex-label' : 'table-heading';
-    let txt = document.createTextNode(this.heading);
-    td.appendChild(txt);
+    addText(td, this.heading);
     return td;
   }
 
@@ -1208,6 +1207,14 @@ class ItemGrid {
     grid.renderRow(rowId, jsonData, grid.columns, grid.editMode);
   }
 
+  addButton(cell, value, alt, action) {
+    removeChildren(cell);
+
+    if (lnk) {
+      cell.appendChild(getButton(value, alt, action));
+    }
+  };
+
   renderData(jsonData) {
     let grid = this;
     let columns = grid.columns;
@@ -1242,7 +1249,7 @@ class ItemGrid {
       let prevLnk = getLink(jsonData.links, 'previous');
 
       if (prevLnk) {
-        addButton(prev, prevLnk, () => { grid.getData(prevLnk.href) });
+        addButton(prev, 'vorige', 'prev', () => { grid.getData(prevLnk.href) });
       } else {
         addText(prev, '');
       }
@@ -1256,7 +1263,7 @@ class ItemGrid {
       let nextLnk = getLink(jsonData.links, 'next');
 
       if (nextLnk) {
-        addButton(next, nextLnk, () => { grid.getData(nextLnk.href) });
+        addButton(next, 'nachcste', 'next', () => { grid.getData(nextLnk.href) });
       } else {
         addText(next, '');
       }
