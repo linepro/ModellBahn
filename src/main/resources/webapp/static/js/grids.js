@@ -1353,7 +1353,7 @@ class ItemGrid {
         if (prev) {
           removeChildren(prev);
 
-          this.addButton(prev, grid.current, () => { grid.getData(grid.current) });
+          prev.appendChild(getButton(prev, grid.current, () => { grid.getData(grid.current) }));
         }
 
         let next = document.getElementById(tableId + 'Next');
@@ -1497,8 +1497,7 @@ const updateByFieldValue = (grid, rowId, column) => {
     if (data) {
       await fetch(updateUrl.toString(), {
         method: 'PUT',
-        headers: {'Content-type': 'application/json'},
-        body: {}
+        headers: {'Content-type': 'application/json'}
       })
       .then(response => checkResponse(response))
       .then(jsonData => grid.renderUpdate(jsonData, rowId))
