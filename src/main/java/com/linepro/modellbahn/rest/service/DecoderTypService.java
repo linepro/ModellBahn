@@ -258,7 +258,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             IDecoderTypAdress decoderTypAdress = findDecoderTypAdress(decoderTyp, index, true);
 
             if (decoderTypAdress != null) {
-                return getResponse(ok(), decoderTypAdress, true, true);
+                return getResponse(ok(), decoderTypAdress, true);
             }
 
             return getResponse(notFound());
@@ -292,7 +292,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
 
             getPersister().update(decoderTyp);
 
-            return getResponse(created(), newDecoderTypAdress, true, true);
+            return getResponse(created(), newDecoderTypAdress, true);
         } catch (Exception e) {
             return getResponse(e);
         }
@@ -331,7 +331,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
 
             decoderTypAdress = getAdressPersister().merge(new DecoderTypAdressKey(decoderTyp, index), newDecoderTypAdress);
 
-            return getResponse(accepted(), decoderTypAdress, true, true);
+            return getResponse(accepted(), decoderTypAdress, true);
         } catch (Exception e) {
             return getResponse(e);
         }
@@ -396,7 +396,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             IDecoderTypCV decoderTypCV = findDecoderTypCV(decoderTyp, cv, true);
 
             if (decoderTypCV != null) {
-                return getResponse(ok(), decoderTypCV, true, true);
+                return getResponse(ok(), decoderTypCV, true);
             }
 
             return getResponse(notFound());
@@ -430,7 +430,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
 
             getPersister().update(decoderTyp);
 
-            return getResponse(created(), newDecoderTypCV, true, true);
+            return getResponse(created(), newDecoderTypCV, true);
         } catch (Exception e) {
             return getResponse(e);
         }
@@ -476,7 +476,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
 
             decoderTypCV = getCVPersister().merge(decoderTypCV.getId(), newDecoderTypCV);
 
-            return getResponse(accepted(), decoderTypCV, true, true);
+            return getResponse(accepted(), decoderTypCV, true);
         } catch (Exception e) {
             return getResponse(e);
         }
@@ -541,7 +541,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
             IDecoderTypFunktion decoderTypFunktion = findDecoderTypFunktion(decoderTyp, reihe, funktion, true);
 
             if (decoderTypFunktion != null) {
-                return getResponse(ok(), decoderTypFunktion, true, true);
+                return getResponse(ok(), decoderTypFunktion, true);
             }
 
             return getResponse(notFound());
@@ -575,7 +575,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
 
             getPersister().update(decoderTyp);
 
-            return getResponse(created(), newDecoderTypFunktion, true, true);
+            return getResponse(created(), newDecoderTypFunktion, true);
         } catch (Exception e) {
             return getResponse(e);
         }
@@ -614,7 +614,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
 
             decoderTypFunktion = getFunktionPersister().merge(decoderTypFunktion.getId(), newDecoderTypFunktion);
 
-            return getResponse(accepted(), decoderTypFunktion, true, true);
+            return getResponse(accepted(), decoderTypFunktion, true);
         } catch (Exception e) {
             return getResponse(e);
         }

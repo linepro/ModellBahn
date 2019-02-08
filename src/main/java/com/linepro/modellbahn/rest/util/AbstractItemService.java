@@ -203,7 +203,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
                 return getResponse(notFound());
             }
 
-            return getResponse(ok(), entity, true, true);
+            return getResponse(ok(), entity, true);
         } catch (Exception e) {
             return getResponse(e);
         }
@@ -224,7 +224,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
 
             E result = getPersister().add(entity);
 
-            return getResponse(created(), result, true, true);
+            return getResponse(created(), result, true);
         } catch (Exception e) {
             return getResponse(e);
         }
@@ -265,7 +265,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
                 return getResponse(notFound());
             }
 
-            return getResponse(accepted(), result, true, true);
+            return getResponse(accepted(), result, true);
         } catch (Exception e) {
             return getResponse(e);
         }
@@ -350,7 +350,7 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
 
             List<Link> navigation = getNavLinks(info, pageNumber, pageSize, maxPage);
 
-            return getResponse(ok(), entities, true, true, navigation);
+            return getResponse(ok(), entities, true, navigation);
         } catch (Exception e) {
             return getResponse(e);
         }
@@ -447,14 +447,14 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         return Link.fromUri(UriBuilder.fromUri(uri).path( path).build()).rel(rel).type(method).build();
     }
 
-    protected Response getResponse(ResponseBuilder builder, IItem<?> entity, boolean update, boolean delete) {
-        entity.addLinks(getServiceURI(), update, delete);
+    protected Response getResponse(ResponseBuilder builder, IItem<?> entity, boolean modification) {
+        entity.addLinks(getServiceURI(), modification);
         return getResponse(builder.entity(entity));
     }
 
-    protected Response getResponse(ResponseBuilder builder, List<IItem<?>> entities, boolean update, boolean delete, List<Link> navigation) {
+    protected Response getResponse(ResponseBuilder builder, List<IItem<?>> entities, boolean modification, List<Link> navigation) {
         for (IItem<?> entity : entities) {
-            entity.addLinks(getServiceURI(), update, delete);
+            entity.addLinks(getServiceURI(), modification);
         }
         
         return getResponse(builder.entity(new ListWithLinks<>(entities, navigation)));

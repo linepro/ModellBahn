@@ -159,7 +159,7 @@ public class AufbauService extends AbstractItemService<NameKey, IAufbau> {
 
                 getPersister().update(aufbau);
 
-                return getResponse(ok(), aufbau, true, true);
+                return getResponse(ok(), aufbau, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -191,7 +191,7 @@ public class AufbauService extends AbstractItemService<NameKey, IAufbau> {
 
                 getPersister().update(aufbau);
 
-                return getResponse(ok(), aufbau, true, true);
+                return getResponse(ok(), aufbau, true);
             }
         } catch (Exception e) {
             return getResponse(e);

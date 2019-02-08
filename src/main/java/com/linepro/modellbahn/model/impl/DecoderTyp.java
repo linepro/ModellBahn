@@ -1,5 +1,9 @@
 package com.linepro.modellbahn.model.impl;
 
+import static javax.ws.rs.HttpMethod.DELETE;
+import static javax.ws.rs.HttpMethod.POST;
+import static javax.ws.rs.HttpMethod.PUT;
+
 import java.math.BigDecimal;
 import java.net.URI;
 import java.util.Set;
@@ -326,11 +330,21 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
         return String.format(ApiPaths.DECODER_TYP_LINK, getHersteller().getLinkId(), getBestellNr());
     }
 
+  @Override
+  protected void addModification(URI root) {
+    super.addModification(root);
+    getLinks().add(fileLink(root, ApiNames.ANLEITUNGEN, ApiNames.UPDATE, PUT));
+    getLinks().add(fileLink(root, ApiNames.ANLEITUNGEN, ApiNames.DELETE, DELETE));
+    getLinks().add(fileLink(root, ApiNames.ADRESSEN, ApiNames.ADD, POST));
+    getLinks().add(fileLink(root, ApiNames.CVS, ApiNames.ADD, POST));
+    getLinks().add(fileLink(root, ApiNames.FUNKTIONEN, ApiNames.ADD, POST));
+  }
+
     @Override
-    protected void addChildLinks(URI root, boolean update, boolean delete) {
-        addLinks(root, getAdressen(), update, delete);
-        addLinks(root, getCVs(), update, delete);
-        addLinks(root, getFunktionen(), update, delete);
+    protected void addChildLinks(URI root, boolean modification) {
+        addLinks(root, getAdressen(), modification);
+        addLinks(root, getCVs(), modification);
+        addLinks(root, getFunktionen(), modification);
     }
     
     @Override

@@ -134,6 +134,7 @@ public interface ApiNames {
 
     String PARENT = "parent";
     String SELF = "self";
+    String ADD = "add";
     String UPDATE = "update";
     String DELETE = "delete";
 

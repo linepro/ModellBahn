@@ -176,7 +176,7 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
 
             getPersister().update(zug);
 
-            return getResponse(created(), zugConsist, true, true);
+            return getResponse(created(), zugConsist, true);
         } catch (Exception e) {
             return getResponse(e);
         }
@@ -208,7 +208,7 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
 
             consist = getConsistPersister().update(consist);
 
-            return getResponse(created(), consist, true, true);
+            return getResponse(created(), consist, true);
         } catch (Exception e) {
             return getResponse(e);
         }

@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.model.impl;
 
+import static javax.ws.rs.HttpMethod.POST;
+
 import java.net.URI;
 import java.util.Set;
 import java.util.TreeSet;
@@ -93,8 +95,14 @@ public class Kategorie extends AbstractNamedItem<NameKey> implements IKategorie 
     }
 
     @Override
-    protected void addChildLinks(URI root, boolean update, boolean delete) {
-        addLinks(root, getUnterKategorien(), update, delete);
+    protected void addModification(URI root) {
+        super.addModification(root);
+        getLinks().add(fileLink(root, ApiNames.UNTER_KATEGORIEN, ApiNames.ADD, POST));
+    }
+
+    @Override
+    protected void addChildLinks(URI root, boolean modification) {
+        addLinks(root, getUnterKategorien(), modification);
     }
 
     @Override

@@ -151,7 +151,7 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
 
                 getPersister().update(licht);
 
-                return getResponse(ok(), licht, true, true);
+                return getResponse(ok(), licht, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -178,7 +178,7 @@ public class LichtService extends AbstractItemService<NameKey, ILicht> {
 
                 getPersister().update(licht);
 
-                return getResponse(ok(), licht, true, true);
+                return getResponse(ok(), licht, true);
             }
         } catch (Exception e) {
             return getResponse(e);

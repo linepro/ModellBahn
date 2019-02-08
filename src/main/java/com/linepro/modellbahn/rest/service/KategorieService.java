@@ -201,7 +201,7 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
 
             List<Link> navigation = getNavLinks(uriInfo, pageNumber, pageSize, maxPage);
 
-            return getResponse(ok(), new ArrayList<>(entities), true, true, navigation);
+            return getResponse(ok(), new ArrayList<>(entities), true, navigation);
         } catch (Exception e) {
             return getResponse(e);
         }
@@ -234,7 +234,7 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
 
             getPersister().update(kategorie);
 
-            return getResponse(created(), newUnterKategorie, true, true);
+            return getResponse(created(), newUnterKategorie, true);
         } catch (Exception e) {
             return getResponse(e);
         }
@@ -273,7 +273,7 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
 
             unterKategorie = getUnterKategoriePersister().merge(unterKategorie.getId(), newUnterKategorie);
 
-            return getResponse(accepted(), unterKategorie, true, true);
+            return getResponse(accepted(), unterKategorie, true);
         } catch (Exception e) {
             return getResponse(e);
         }

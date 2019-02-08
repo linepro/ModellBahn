@@ -1168,6 +1168,10 @@ class ItemGrid {
   }
 
   renderRow(rowId, entity, columns, editMode) {
+
+    let key = document.getElementById(getKeyId(rowId));
+    key.value = entity ? getLink(entity.links, 'self').href : '';
+
     columns.forEach(column => {
       let cell = document.getElementById(getCellId(rowId, column));
 
@@ -1226,9 +1230,6 @@ class ItemGrid {
       let rowId = getRowId(tableId, row);
 
       let entity = (entities.length > 0 && row < entities.length) ? entities[row] : undefined;
-
-      let key = document.getElementById(getKeyId(rowId));
-      key.value = entity ? getLink(entity.links, 'self').href : '';
 
       this.renderRow(rowId, entity, columns, editMode);
     }

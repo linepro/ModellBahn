@@ -297,7 +297,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
             getPersister().update(produkt);
 
-            return getResponse(created(), teil, true, true);
+            return getResponse(created(), teil, true);
         } catch (Exception e) {
             return getResponse(e);
         }
@@ -333,7 +333,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
             produktTeil = getTeilPersister().update(produktTeil);
 
-            return getResponse(created(), produktTeil, true, true);
+            return getResponse(created(), produktTeil, true);
         } catch (Exception e) {
             return getResponse(e);
         }
@@ -398,7 +398,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
                 getPersister().update(produkt);
 
-                return getResponse(ok(), produkt, true, true);
+                return getResponse(ok(), produkt, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -425,7 +425,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
                 getPersister().update(produkt);
 
-                return getResponse(ok(), produkt, true, true);
+                return getResponse(ok(), produkt, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -462,7 +462,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
                 getPersister().update(produkt);
 
-                return getResponse(ok(), produkt, true, true);
+                return getResponse(ok(), produkt, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -489,7 +489,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
                 getPersister().update(produkt);
 
-                return getResponse(ok(), produkt, true, true);
+                return getResponse(ok(), produkt, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -526,7 +526,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
                 getPersister().update(produkt);
 
-                return getResponse(ok(), produkt, true, true);
+                return getResponse(ok(), produkt, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -552,7 +552,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
 
                 getPersister().update(produkt);
 
-                return getResponse(ok(), produkt, true, true);
+                return getResponse(ok(), produkt, true);
             }
         } catch (Exception e) {
             return getResponse(e);

@@ -152,7 +152,7 @@ public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
 
                 getPersister().update(kupplung);
 
-                return getResponse(ok(), kupplung, true, true);
+                return getResponse(ok(), kupplung, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -179,7 +179,7 @@ public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
 
                 getPersister().update(kupplung);
 
-                return getResponse(ok(), kupplung, true, true);
+                return getResponse(ok(), kupplung, true);
             }
         } catch (Exception e) {
             return getResponse(e);

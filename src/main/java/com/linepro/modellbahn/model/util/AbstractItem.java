@@ -123,32 +123,28 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
     }
 
     @Override
-    public IItem<K> addLinks(URI root, boolean update, boolean delete) {
+    public IItem<K> addLinks(URI root, boolean modification) {
         getLinks().clear();
 
         addParent(root);
         addSelf(root);
 
-        if (update) {
-            addUpdate(root);
-        }
-        
-        if (delete) {
-            addDelete(root);
+        if (modification) {
+            addModification(root);
         }
 
-        addChildLinks(root, update, delete);
+        addChildLinks(root, modification);
 
         return this;
     }
     
-    protected void addChildLinks(URI root, boolean update, boolean delete) {
+    protected void addChildLinks(URI root, boolean modification) {
     }
 
-    protected void addLinks(URI root, Collection<? extends IItem<?>> items, boolean update, boolean delete) {
+    protected void addLinks(URI root, Collection<? extends IItem<?>> items, boolean modification) {
         if (!items.isEmpty()) {
             for (IItem<?> item : items) {
-                item.addLinks(root, update, delete);
+                item.addLinks(root, modification);
             }
         }
         
@@ -160,16 +156,13 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
         }
     }
 
-    protected void addDelete(URI root) {
-        getLinks().add(makeLink(root, getLinkId(), ApiNames.DELETE, DELETE));
-    }
-
     private void addSelf(URI root) {
         getLinks().add(makeLink(root, getLinkId(), ApiNames.SELF, GET));
     }
 
-  protected void addUpdate(URI root) {
-        getLinks().add(makeLink(root, getLinkId(), ApiNames.UPDATE, PUT));
+    protected void addModification(URI root) {
+      getLinks().add(makeLink(root, getLinkId(), ApiNames.DELETE, DELETE));
+      getLinks().add(makeLink(root, getLinkId(), ApiNames.UPDATE, PUT));
     }
 
     @Override

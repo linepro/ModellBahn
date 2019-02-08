@@ -1,5 +1,10 @@
 package com.linepro.modellbahn.model.impl;
 
+import static javax.ws.rs.HttpMethod.DELETE;
+import static javax.ws.rs.HttpMethod.POST;
+import static javax.ws.rs.HttpMethod.PUT;
+
+import java.net.URI;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -125,8 +130,19 @@ public class Zug extends AbstractNamedItem<NameKey> implements IZug {
         */
     }
 
-	@Override
-	public String toString() {
+	  @Override
+	  protected void addModification(URI root) {
+		    super.addModification(root);
+		    getLinks().add(fileLink(root, ApiNames.CONSIST, ApiNames.ADD, POST));
+	  }
+
+	  @Override
+	  protected void addChildLinks(URI root, boolean modification) {
+		    addLinks(root, getConsist(), modification);
+  	}
+
+  	@Override
+	  public String toString() {
 		return new ToStringBuilder(this)
 		        .appendSuper(super.toString())
 				.append(ApiNames.ZUG_TYP, getZugTyp())

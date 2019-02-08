@@ -78,14 +78,9 @@ public class Aufbau extends AbstractNamedItem<NameKey> implements IAufbau {
     }
 
     @Override
-    protected void addDelete(URI root) {
-        super.addDelete(root);
+    protected void addModification(URI root) {
+        super.addModification(root);
         getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.DELETE, DELETE));
-    }
-
-    @Override
-    protected void addUpdate(URI root) {
-        super.addUpdate(root);
         getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.UPDATE, PUT));
     }
 

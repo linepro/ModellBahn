@@ -258,7 +258,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
 
                 getPersister().update(vorbild);
 
-                return getResponse(ok(), vorbild, true, true);
+                return getResponse(ok(), vorbild, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -285,7 +285,7 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
 
                 getPersister().update(vorbild);
 
-                return getResponse(ok(), vorbild, true, true);
+                return getResponse(ok(), vorbild, true);
             }
         } catch (Exception e) {
             return getResponse(e);

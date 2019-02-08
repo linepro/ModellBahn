@@ -157,7 +157,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
 
             IDecoder decoder = new DecoderCreator(getPersister()).create(decoderTyp);
 
-            return getResponse(created(), decoder, true, true);
+            return getResponse(created(), decoder, true);
         } catch (Exception e) {
             return serverError(e).build();
         }
@@ -230,7 +230,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
             IDecoderAdress decoderAdress = findDecoderAdress(decoder, index, true);
 
             if (decoderAdress != null) {
-                return getResponse(ok(), decoderAdress, true, true);
+                return getResponse(ok(), decoderAdress, true);
             }
 
             return getResponse(notFound());
@@ -268,7 +268,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
 
             getPersister().save(decoder);
 
-            return getResponse(accepted(), decoderAdress, true, true);
+            return getResponse(accepted(), decoderAdress, true);
         } catch (Exception e) {
             return getResponse(e);
         }
@@ -295,7 +295,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
             IDecoderCV decoderCV = findDecoderCV(decoder, cv, true);
 
             if (decoderCV != null) {
-                return getResponse(ok(), decoderCV, true, true);
+                return getResponse(ok(), decoderCV, true);
             }
 
             return getResponse(notFound());
@@ -333,7 +333,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
 
             getPersister().save(decoder);
 
-            return getResponse(accepted(), decoderCV, true, true);
+            return getResponse(accepted(), decoderCV, true);
         } catch (Exception e) {
             return getResponse(e);
         }
@@ -361,7 +361,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
             IDecoderFunktion decoderFunktion = findDecoderFunktion(decoder, reihe, funktion, true);
 
             if (decoderFunktion != null) {
-                return getResponse(ok(), decoderFunktion, true, true);
+                return getResponse(ok(), decoderFunktion, true);
             }
 
             return getResponse(notFound());
@@ -401,7 +401,7 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
 
             getPersister().save(decoder);
 
-            return getResponse(accepted(), decoderFunktion, true, true);
+            return getResponse(accepted(), decoderFunktion, true);
         } catch (Exception e) {
             return getResponse(e);
         }

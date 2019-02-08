@@ -69,10 +69,9 @@ public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializabl
      * Adds the HATEOAS links for this item.
      * Always adds self and parent, optionally adds update and delete
      * @param root the root uri
-     * @param update add an update link
-     * @param delete add a delete link
+     * @param modification add a modification links
      */
-    IItem<?> addLinks(URI root, boolean update, boolean delete);
+    IItem<?> addLinks(URI root, boolean modification);
 
     @JsonIgnore
     String getParentId();

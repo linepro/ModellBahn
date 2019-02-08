@@ -229,7 +229,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
 
                 getPersister().update(artikel);
 
-                return getResponse(ok(), artikel, true, true);
+                return getResponse(ok(), artikel, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -259,7 +259,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
 
                 getPersister().update(artikel);
 
-                return getResponse(ok(), artikel, true, true);
+                return getResponse(ok(), artikel, true);
             }
         } catch (Exception e) {
             return getResponse(e);
@@ -288,7 +288,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
 
             getPersister().update(artikel);
 
-            return getResponse(created(), newAnderung, true, true);
+            return getResponse(created(), newAnderung, true);
         } catch (Exception e) {
             return getResponse(e);
         }
@@ -321,7 +321,7 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
 
             anderung = getAnderungPersister().merge(new AnderungKey(artikel, anderung.getAnderungId()), newAnderung);
 
-            return getResponse(created(), anderung, true, true);
+            return getResponse(created(), anderung, true);
         } catch (Exception e) {
             return getResponse(e);
         }

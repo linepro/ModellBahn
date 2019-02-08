@@ -1,6 +1,7 @@
 package com.linepro.modellbahn.model.impl;
 
 import static javax.ws.rs.HttpMethod.DELETE;
+import static javax.ws.rs.HttpMethod.POST;
 import static javax.ws.rs.HttpMethod.PUT;
 
 import java.math.BigDecimal;
@@ -538,24 +539,20 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
     }
 
     @Override
-    protected void addDelete(URI root) {
-        super.addDelete(root);
+    protected void addModification(URI root) {
+        super.addModification(root);
+        getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.UPDATE, PUT));
         getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.DELETE, DELETE));
+        getLinks().add(fileLink(root, ApiNames.ANLEITUNGEN, ApiNames.UPDATE, PUT));
         getLinks().add(fileLink(root, ApiNames.ANLEITUNGEN, ApiNames.DELETE, DELETE));
         getLinks().add(fileLink(root, ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.DELETE, DELETE));
-    }
-
-    @Override
-    protected void addUpdate(URI root) {
-        super.addUpdate(root);
-        getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.UPDATE, PUT));
-        getLinks().add(fileLink(root, ApiNames.ANLEITUNGEN, ApiNames.UPDATE, PUT));
         getLinks().add(fileLink(root, ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.UPDATE, PUT));
+        getLinks().add(fileLink(root, ApiNames.TEILEN, ApiNames.ADD, POST));
     }
 
     @Override
-    protected void addChildLinks(URI root, boolean update, boolean delete) {
-        addLinks(root, getTeilen(), update, delete);
+    protected void addChildLinks(URI root, boolean modification) {
+        addLinks(root, getTeilen(), modification);
     }
 
     @Override
