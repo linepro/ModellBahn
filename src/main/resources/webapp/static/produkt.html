@@ -17,7 +17,7 @@
     const teilenColumns = [
       TEIL_SELECT(Editable.ADD, true),
       STUCK(Editable.UPDATE, true),
-      gridButtonColumn()
+      new ButtonColumn([], [ (grid, rowId) => { updateByFieldValue(grid, rowId, STUCK) } ])
     ];
 
     const teilen = new ItemGrid(5, "teilen", "teilen", teilenColumns, Paged.EXPAND, EditMode.ADD, undefined);

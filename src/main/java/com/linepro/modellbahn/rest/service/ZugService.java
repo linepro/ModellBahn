@@ -1,19 +1,5 @@
 package com.linepro.modellbahn.rest.service;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -23,6 +9,7 @@ import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IZug;
 import com.linepro.modellbahn.model.IZugConsist;
 import com.linepro.modellbahn.model.IZugTyp;
+import com.linepro.modellbahn.model.impl.Artikel;
 import com.linepro.modellbahn.model.impl.Zug;
 import com.linepro.modellbahn.model.impl.ZugConsist;
 import com.linepro.modellbahn.model.keys.NameKey;
@@ -36,11 +23,23 @@ import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.ApiMessages;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * ZugService. CRUD service for Zug
@@ -154,20 +153,14 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a vehicle to the end of a named Zug", response = IZugConsist.class)
-    public Response addConsist(@PathParam(ApiPaths.ZUG_PARAM_NAME) String zugStr, @QueryParam(ApiPaths.ARTIKEL) String artikelId) {
+    public Response addConsist(@PathParam(ApiPaths.ZUG_PARAM_NAME) String zugStr, Artikel artikel) {
         try {
-            logPost(String.format(ApiPaths.ZUG_CONSIST_ROOT_LOG, getEntityClassName(), zugStr) + ": " + artikelId);
+            logPost(String.format(ApiPaths.ZUG_CONSIST_ROOT_LOG, getEntityClassName(), zugStr) + ": " + artikel);
 
             IZug zug = findZug(zugStr, true);
 
             if (zug == null) {
                 return getResponse(badRequest(getMessage(ApiMessages.ZUG_DOES_NOT_EXIST, zugStr)));
-            }
-
-            IArtikel artikel = findArtikel(artikelId, true);
-
-            if (artikel == null) {
-                return getResponse(badRequest(getMessage(ApiMessages.ARTIKEL_DOES_NOT_EXIST, artikelId)));
             }
 
             IZugConsist zugConsist = new ZugConsist(null, zug, zug.getConsist().size()+1, artikel, false);
@@ -188,20 +181,14 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a vehicle in a named Zug", response = IZugConsist.class)
-    public Response updateConsist(@PathParam(ApiPaths.ZUG_PARAM_NAME) String zugStr, @PathParam(ApiPaths.POSITION_PARAM_NAME) Integer position, @QueryParam(ApiPaths.ARTIKEL) String artikelId) {
+    public Response updateConsist(@PathParam(ApiPaths.ZUG_PARAM_NAME) String zugStr, @PathParam(ApiPaths.POSITION_PARAM_NAME) Integer position, Artikel artikel) {
         try {
-            logPut(String.format(ApiPaths.ZUG_CONSIST_LOG, getEntityClassName(), zugStr, position) + ": " + artikelId);
+            logPut(String.format(ApiPaths.ZUG_CONSIST_LOG, getEntityClassName(), zugStr, position) + ": " + artikel);
 
             IZugConsist consist = findZugConsist(zugStr, position, true);
 
             if (consist == null) {
                 return getResponse(badRequest(getMessage(ApiMessages.ZUG_CONSIST_DOES_NOT_EXIST, zugStr, position)));
-            }
-
-            IArtikel artikel = findArtikel(artikelId, true);
-
-            if (artikel == null) {
-                return getResponse(badRequest(getMessage(ApiMessages.ARTIKEL_DOES_NOT_EXIST, artikelId)));
             }
 
             consist.setArtikel(artikel);

@@ -1486,3 +1486,23 @@ class NamedItemGrid extends ListEditGrid {
   }
 }
 
+const updateByFieldValue = (grid, rowId, column) => {
+  return getButton('update', 'save', async () => {
+    let updateUrl = new URL(getKeyValue(rowId));
+    let cell = getCellId(rowId, column);
+    let data = column.getValue(cell);
+
+    updateUrl.searchParams.append(column.binding,data);
+
+    if (data) {
+      await fetch(updateUrl.toString(), {
+        method: 'PUT',
+        headers: {'Content-type': 'application/json'},
+        body: {}
+      })
+      .then(response => checkResponse(response))
+      .then(jsonData => grid.renderUpdate(jsonData, rowId))
+      .catch(error => reportError(error));
+    }
+  });
+};
