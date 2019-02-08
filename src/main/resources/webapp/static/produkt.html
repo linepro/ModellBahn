@@ -14,10 +14,12 @@
   <script type="text/javascript" src="js/grids.js"></script>
   <script type="text/javascript" src="js/lib/pdf.min-2.0.943.js"></script>
   <script type="text/javascript">
+    const stuck = STUCK(Editable.UPDATE, true);
+
     const teilenColumns = [
       TEIL_SELECT(Editable.ADD, true),
-      STUCK(Editable.UPDATE, true),
-      new ButtonColumn([], [ (grid, rowId) => { updateByFieldValue(grid, rowId, STUCK) } ])
+      stuck,
+      new ButtonColumn([], [ (grid, rowId) => { return getButton( 'update', 'save', () => { updateByFieldValue(grid, rowId, stuck) } ) } ])
     ];
 
     const teilen = new ItemGrid(5, "teilen", "teilen", teilenColumns, Paged.EXPAND, EditMode.ADD, undefined);

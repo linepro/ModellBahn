@@ -11,31 +11,37 @@
   <script type="text/javascript" src="js/fields.js"></script>
   <script type="text/javascript" src="js/grids.js"></script>
   <script type="text/javascript">
+    const adress = ADRESS(Editable.UPDATE, true);
+
     const adressColumns = [
       INDEX(Editable.NEVER, false),
       ADRESS_TYP_SELECT(Editable.UPDATE, true),
-      ADRESS(Editable.UPDATE, true),
-      new ButtonColumn([], [ (grid, rowId) => { updateByFieldValue(grid, rowId, ADRESS) } ])
+      adress,
+      new ButtonColumn([], [ (grid, rowId) => { return getButton( 'update', 'save', () => { updateByFieldValue(grid, rowId, adress) } ) } ])
     ];
 
     const adressen = new ItemGrid(2, undefined, "adressen", adressColumns, Paged.EXPAND, EditMode.UPDATE, undefined);
+
+    const wert = WERT(Editable.UPDATE, false);
 
     const cvColumns = [
       CV(Editable.NEVER, false, decoderCvCvGetter, noOpSetter),
       BEZEICHNUNG(Editable.NEVER, false, decoderCvBezeichnungGetter, noOpSetter),
       WERKSEINSTELLUNG(Editable.NEVER, false, decoderCvWerkseinstellungGetter, noOpSetter),
-      WERT(Editable.UPDATE, false),
-      new ButtonColumn([], [ (grid, rowId) => { updateByFieldValue(grid, rowId, WERT) } ])
+      wert,
+      new ButtonColumn([], [ (grid, rowId) => { return getButton( 'update', 'save', () => { updateByFieldValue(grid, rowId, wert) } ) } ])
     ];
 
     const cvs = new ItemGrid(10, undefined, "cvs", cvColumns, Paged.EXPAND, EditMode.UPDATE, undefined);
 
+    const funktion = FUNKTION(Editable.NEVER, false, decoderFunktionFunktionGetter, noOpSetter);
+
     const funktiononenColumns = [
       REIHE(Editable.NEVER, false, decoderFunktionReiheGetter, noOpSetter),
-      FUNKTION(Editable.NEVER, false, decoderFunktionFunktionGetter, noOpSetter),
+      funktion,
       BEZEICHNUNG(Editable.UPDATE, true),
       PROGRAMMABLE(Editable.NEVER, false, decoderFunktionProgrammableGetter, noOpSetter),
-      new ButtonColumn([], [ (grid, rowId) => { updateByFieldValue(grid, rowId, FUNKTION) } ])
+      new ButtonColumn([], [ (grid, rowId) => { return getButton( 'update', 'save', () => { updateByFieldValue(grid, rowId, funktion) } ) } ])
     ];
 
     const funktionen = new ItemGrid(10, undefined, "funktionen", funktiononenColumns, Paged.EXPAND, EditMode.UPDATE, undefined);
@@ -95,7 +101,7 @@
         </div>
         <div id="cvsTab" class="tabContent">
           <h3>cvs</h3>
-          <div id="cvsen">
+          <div id="cvs">
           </div>
         </div>
         <div id="funktionenTab" class="tabContent">
