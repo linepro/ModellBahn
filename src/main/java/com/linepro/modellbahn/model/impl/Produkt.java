@@ -210,7 +210,7 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
     }
 
     @Override
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Hersteller.class)
     @JoinColumn(name = DBNames.HERSTELLER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk16"))
     @BusinessKey
     public IHersteller getHersteller() {

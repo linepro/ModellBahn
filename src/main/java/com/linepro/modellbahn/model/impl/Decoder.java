@@ -136,7 +136,7 @@ public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
     }
     
     @Override
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = DecoderTyp.class)
     @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER + "_fk1"))
     public IDecoderTyp getDecoderTyp() {
         return decoderTyp;

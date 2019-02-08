@@ -87,7 +87,7 @@ public class DecoderCV extends AbstractItem<DecoderCVKey> implements IDecoderCV 
 
     @Override
     @BusinessKey
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTypCV.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = DecoderTypCV.class)
     @JoinColumn(name = DBNames.CV_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_CV + "_fk2"))
     public IDecoderTypCV getCv() {
         return cv;

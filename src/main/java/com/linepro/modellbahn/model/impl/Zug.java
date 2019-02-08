@@ -1,7 +1,6 @@
 package com.linepro.modellbahn.model.impl;
 
 import static javax.ws.rs.HttpMethod.POST;
-import static javax.ws.rs.HttpMethod.PUT;
 
 import java.net.URI;
 import java.util.Set;

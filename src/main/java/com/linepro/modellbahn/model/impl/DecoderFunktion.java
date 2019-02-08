@@ -91,7 +91,7 @@ public class DecoderFunktion extends AbstractItem<DecoderFunktionKey> implements
 
     @Override
     @BusinessKey
-    @ManyToOne(fetch=FetchType.LAZY, targetEntity=DecoderTypFunktion.class)
+    @ManyToOne(fetch=FetchType.EAGER, targetEntity=DecoderTypFunktion.class)
     @JoinColumn(name = DBNames.FUNKTION_ID, nullable = false, referencedColumnName=DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_FUNKTION + "_fk2"))
     public IDecoderTypFunktion getFunktion() {
         return funktion;

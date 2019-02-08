@@ -5,7 +5,7 @@ const extractName = (entity) => { return entity.name };
 const extractBezeichnung = (entity) => { return new DropOption( extractName(entity), entity.bezeichnung, entity.tooltip, entity.abbildung) };
 const extractArtikelValue = (entity) => { return entity.artikelId };
 const extractArtikelOption = (entity) => { return new DropOption( extractArtikelValue(entity), entity.bezeichnung) };
-const extractDecoderValue = (entity) => { return entity.dcoderId };
+const extractDecoderValue = (entity) => { return entity.decoderId };
 const extractDecoderOption = (entity) => { return new DropOption( extractDecoderValue(entity), entity.bezeichnung) };
 const extractKategorieValue = (entity) => { return entity.kategorie.name + '/' + entity.name };
 const extractKategorieOption = (entity) => { return new DropOption( extractKategorieValue(entity), entity.kategorie.bezeichnung + ' - ' + entity.bezeichnung) };

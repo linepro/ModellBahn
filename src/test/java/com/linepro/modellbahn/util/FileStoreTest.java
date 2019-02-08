@@ -40,7 +40,10 @@ public class FileStoreTest {
 
     @BeforeMethod
     public void setUp() {
-        root = Paths.get( System.getProperty("java.io.tmpdir"), "FileStoreTest", LocalDate.now().format(null));
+        String testDate = LocalDate.now().atStartOfDay().toString();
+        root = Paths.get( System.getProperty("java.io.tmpdir"), 
+                "FileStoreTest", 
+                testDate.substring(0, testDate.indexOf("T")));
 
         fileStore = new FileStore();
         fileStore.setBaseUri(URI.create(MODELL_BAHN));

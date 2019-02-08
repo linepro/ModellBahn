@@ -168,6 +168,7 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
         }
     }
 
+    @Override
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(Views.DropDown.class)
