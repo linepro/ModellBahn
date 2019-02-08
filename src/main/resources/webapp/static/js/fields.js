@@ -197,7 +197,6 @@ const I_MAX = (editable = Editable.UPDATE, required = false, getter = defaultFie
  { return new NumberColumn('I_MAX', 'iMax', getter, setter, editable, required, 1000, 1) };
 const INDEX = (editable = Editable.ADD, required = true, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new NumberColumn('INDEX', 'index', getter, setter, editable, required, 3, 0) };
-
 const KAPAZITAT = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
  { return new NumberColumn('KAPAZITAT', 'kapazitat', getter, setter, editable, required, 3000, 1, 2) };
 const KAUFDATUM = (editable = Editable.UPDATE, required = false, getter = defaultFieldGetter, setter = defaultFieldSetter) =>
