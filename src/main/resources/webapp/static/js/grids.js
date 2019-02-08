@@ -1353,7 +1353,7 @@ class ItemGrid {
         if (prev) {
           removeChildren(prev);
 
-          addButton(prev, grid.current, () => { grid.getData(grid.current) });
+          this.addButton(prev, grid.current, () => { grid.getData(grid.current) });
         }
 
         let next = document.getElementById(tableId + 'Next');

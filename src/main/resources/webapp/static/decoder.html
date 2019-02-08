@@ -11,37 +11,63 @@
   <script type="text/javascript" src="js/fields.js"></script>
   <script type="text/javascript" src="js/grids.js"></script>
   <script type="text/javascript">
+    const updateAdress = (grid, rowId) => {
+      return getButton('update', 'save', async () => {
+        let updateUrl = new URL(getKeyValue(rowId));
+        let data = grid.rowData(rowId);
+        let jsonData = JSON.stringify(data);
+
+        updateUrl.searchParams.append(,);
+
+        if (data) {
+          await fetch(updateUrl.toString(), {
+            method: 'PUT',
+            headers: {'Content-type': 'application/json'},
+            body: {}
+          })
+          .then(response => checkResponse(response))
+          .then(jsonData => grid.renderUpdate(jsonData, rowId))
+          .catch(error => reportError(error));
+        }
+      });
+    };
+
     const adressColumns = [
       INDEX(Editable.NEVER, false),
       ADRESS_TYP_SELECT(Editable.UPDATE, true),
       ADRESS(Editable.UPDATE, true),
-      new ButtonColumn([], [updateRow])
+      new ButtonColumn([], [updateAdress])
     ];
 
-    const adressen = new ItemGrid(2, undefined, "adressen", adressColumns, Paged.EXPAND,
-        EditMode.UPDATE, undefined);
+    const adressen = new ItemGrid(2, undefined, "adressen", adressColumns, Paged.EXPAND, EditMode.UPDATE, undefined);
+
+    const updateCV = (grid, rowId) => {
+      return getButton('update', 'save', () => { grid.updateRow(rowId) });
+    };
 
     const cvColumns = [
       CV(Editable.NEVER, false, decoderCvCvGetter, noOpSetter),
       BEZEICHNUNG(Editable.NEVER, false, decoderCvBezeichnungGetter, noOpSetter),
       WERKSEINSTELLUNG(Editable.NEVER, false, decoderCvWerkseinstellungGetter, noOpSetter),
       WERT(Editable.UPDATE, false),
-      new ButtonColumn([], [updateRow])
+      new ButtonColumn([], [updateCV])
     ];
 
-    const cvs = new ItemGrid(10, undefined, "cvs", cvColumns, Paged.EXPAND, EditMode.UPDATE,
-        undefined);
+    const cvs = new ItemGrid(10, undefined, "cvs", cvColumns, Paged.EXPAND, EditMode.UPDATE, undefined);
+
+    const updateCV = (grid, rowId) => {
+      return getButton('update', 'save', () => { grid.updateRow(rowId) });
+    };
 
     const funktiononenColumns = [
       REIHE(Editable.NEVER, false, decoderFunktionReiheGetter, noOpSetter),
       FUNKTION(Editable.NEVER, false, decoderFunktionFunktionGetter, noOpSetter),
       BEZEICHNUNG(Editable.UPDATE, true),
       PROGRAMMABLE(Editable.NEVER, false, decoderFunktionProgrammableGetter, noOpSetter),
-      new ButtonColumn([], [updateRow])
+      new ButtonColumn([], [updateFunktiononen])
     ];
 
-    const funktionen = new ItemGrid(10, undefined, "funktionen", funktiononenColumns, Paged.EXPAND,
-        EditMode.UPDATE, undefined);
+    const funktionen = new ItemGrid(10, undefined, "funktionen", funktiononenColumns, Paged.EXPAND, EditMode.UPDATE, undefined);
 
     const decoderColumns = [
       DECODER(Editable.NEVER, true),

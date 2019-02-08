@@ -1,6 +1,5 @@
 package com.linepro.modellbahn.model.impl;
 
-import static javax.ws.rs.HttpMethod.DELETE;
 import static javax.ws.rs.HttpMethod.POST;
 import static javax.ws.rs.HttpMethod.PUT;
 
