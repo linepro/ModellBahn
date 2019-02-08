@@ -1,6 +1,8 @@
 package com.linepro.modellbahn.model;
 
+import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
 import java.math.BigDecimal;
+import java.nio.file.Path;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
@@ -144,6 +146,26 @@ public interface IDecoderTyp extends IItem<DecoderTypKey>, IDecoderTypRef {
 
     @JsonSetter(ApiNames.STECKER)
     void setStecker(Stecker stecker);
+
+    /**
+     * Gets the anleitungen.
+     *
+     * @return the anleitungen
+     */
+    @JsonGetter(ApiNames.ANLEITUNGEN)
+    @JsonView(Views.Public.class)
+    @JsonSerialize(using = PathSerializer.class)
+    @ApiModelProperty(dataType = "String", value = "Instructions URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/betrieb_3000.pdf", accessMode = AccessMode.READ_ONLY)
+    Path getAnleitungen();
+
+    /**
+     * Sets the anleitungen.
+     *
+     * @param anleitungen
+     *            the new anleitungen
+     */
+    @JsonIgnore
+    void setAnleitungen(Path anleitungen);
 
     /**
      * Gets the adressen.

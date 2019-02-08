@@ -504,44 +504,11 @@ class PDFColumn extends FileColumn {
   }
 }
 
-const closeAutoLists = (elmnt = document) => {
-  let autoComp = elmnt.getElementsByClassName('autocomplete-list');
-  for (let i = 0; i < autoComp.length; i++) {
-    removeChildren(autoComp[i]);
-    autoComp[i].parentElement.removeChild(autoComp[i]);
-  }
-};
-
-document.addEventListener('click', () => { closeAutoLists() }, false);
-
 class SelectColumn extends Column {
   constructor(heading, fieldName, getter, setter, dropDown, editable, required, length, dropSize = 5) {
     super(heading, fieldName, getter, setter, editable, required, length);
     this.dropDown = dropDown;
     this.dropSize = dropSize;
-  }
-
-  getControl(cell, entity, editMode) {
-    let sel = super.getControl(cell, entity, editMode);
-
-    if (!sel.disabled) {
-      sel.addEventListener('click', (e) => {
-        this.open(e);
-      }, false);
-      sel.addEventListener('input', (e) => {
-        this.open(e);
-      }, false);
-      sel.addEventListener('keydown', (e) => {
-        this.keydown(e);
-      }, false);
-      sel.classList.add('autocomplete');
-    }
-
-    return sel;
-  }
-
-  getControlValue(sel) {
-    return sel.getAttribute('data-value') ? sel.getAttribute('data-value') : undefined;
   }
 
   setValue(sel, value) {
@@ -558,19 +525,70 @@ class SelectColumn extends Column {
     return Math.max(this.dropDown.getLength(), this.getHeaderLength());
   }
 
-  caption(txt, o) {
-    return o.display;
+  addOptions(select, dropDown) {
+    if (!this.required) {
+      addOption(select, undefined, getMessage('NICHT_BENOTIGT'));
+    }
+
+    dropDown.options.forEach(opt => {
+      addOption(select, opt.getValue(), opt.getDisplay());
+    });
   }
 
   options() {
     // Filter only for AutoComplete...
     return this.dropDown.options;
   }
+}
+
+const closeAutoLists = (elmnt = document) => {
+  let autoComp = elmnt.getElementsByClassName('autocomplete-list');
+  for (let i = 0; i < autoComp.length; i++) {
+    removeChildren(autoComp[i]);
+    autoComp[i].parentElement.removeChild(autoComp[i]);
+  }
+};
+
+document.addEventListener('click', () => { closeAutoLists() }, false);
+
+class AutoCompleteColumn extends SelectColumn {
+  constructor(heading, fieldName, getter, setter, dropDown, editable, required, length, dropSize) {
+    super(heading, fieldName, getter, setter, dropDown, editable, required, length, dropSize);
+  }
+
+  getControl(cell, entity, editMode) {
+    let sel = super.getControl(cell, entity, editMode);
+
+    if (!sel.disabled) {
+      sel.addEventListener('click', (e) => { this.open(e); }, false);
+      sel.addEventListener('input', (e) => { this.open(e); }, false);
+      sel.addEventListener('keydown', (e) => { this.keydown(e); }, false);
+      sel.classList.add('autocomplete');
+    }
+
+    return sel;
+  }
+
+  getControlValue(sel) {
+    return sel.getAttribute('data-value') ? sel.getAttribute('data-value') : undefined;
+  }
+
+  options(txt) {
+    return this.dropDown.getOptions().filter((o) => {
+      return o.display.toLowerCase().includes(txt.toLowerCase());
+    }).slice(0, this.dropSize);
+  }
+
+  caption(txt, o) {
+    return o.display.replace(/inp.value/i, '<strong>' + inp.value + '</strong>');
+  }
 
   open(e) {
-    let sel = this;
     let inp = e.target;
+    let sel = this;
     let div = inp.parentElement;
+
+    if (!inp.value) { return false; }
 
     e.stopPropagation();
     closeAutoLists();
@@ -656,43 +674,9 @@ class SelectColumn extends Column {
   }
 }
 
-class AutoCompleteColumn extends SelectColumn {
-  constructor(heading, fieldName, getter, setter, dropDown, editable, required, length, dropSize) {
-    super(heading, fieldName, getter, setter, dropDown, editable, required, length, dropSize);
-  }
-
-  options(txt) {
-    return this.dropDown.getOptions().filter((o) => {
-      return o.display.toLowerCase().includes(txt.toLowerCase());
-    }).slice(0, this.dropSize);
-  }
-
-  caption(txt, o) {
-    return o.display.replace(/inp.value/i, '<strong>' + inp.value + '</strong>');
-  }
-
-  open(e) {
-    let inp = e.target;
-
-    if (!inp.value) { return false; }
-
-    return super.open(e);
-  }
-}
-
 class DropDownColumn extends SelectColumn {
   constructor(heading, fieldName, getter, setter, dropDown, editable, required, length, dropSize) {
     super(heading, fieldName, getter, setter, dropDown, editable, required, length + 3.5, dropSize);
-  }
-
-  addOptions(select, dropDown) {
-    if (!this.required) {
-      addOption(select, undefined, getMessage('NICHT_BENOTIGT'));
-    }
-
-    dropDown.options.forEach(opt => {
-      addOption(select, opt.getValue(), opt.getDisplay());
-    });
   }
 
   createControl() {

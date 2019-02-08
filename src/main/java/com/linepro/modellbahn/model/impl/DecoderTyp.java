@@ -4,13 +4,16 @@ import static javax.ws.rs.HttpMethod.DELETE;
 import static javax.ws.rs.HttpMethod.POST;
 import static javax.ws.rs.HttpMethod.PUT;
 
+import com.linepro.modellbahn.persistence.util.PathConverter;
 import java.math.BigDecimal;
 import java.net.URI;
+import java.nio.file.Path;
 import java.util.Set;
 import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -96,7 +99,10 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
     private Konfiguration konfiguration;
 
     private Stecker stecker;
-    
+
+    /** The anleitungen. */
+    private Path anleitungen;
+
     /** The cv. */
     private Set<IDecoderTypAdress> adressen = new TreeSet<>();
 
@@ -223,8 +229,21 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
         return stecker;
     }
 
+    @Override
     public void setStecker(Stecker stecker) {
         this.stecker = stecker;
+    }
+
+    @Override
+    @Column(name = DBNames.ANLEITUNGEN, length = 512)
+    @Convert(converter = PathConverter.class)
+    public Path getAnleitungen() {
+        return anleitungen;
+    }
+
+    @Override
+    public void setAnleitungen(Path anleitungen) {
+        this.anleitungen = anleitungen;
     }
 
     @Override
@@ -397,6 +416,7 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
                 .append(ApiNames.FAHRSTUFE, getFahrstufe())
                 .append(ApiNames.GERAUSCH, getSound())
                 .append(ApiNames.KONFIGURATION, getKonfiguration())
+                .append(ApiNames.ANLEITUNGEN, getAnleitungen())
                 .append(ApiNames.ADRESSEN, getAdressen())
                 .append(ApiNames.CVS, getCVs())
                 .append(ApiNames.FUNKTIONEN, getFunktionen())
