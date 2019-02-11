@@ -20,7 +20,7 @@
       gridButtonColumn()
     ];
 
-    const consisten = new ItemGrid(2, "consisten", "consisten", consistColumns, Paged.EXPAND, EditMode.ADD, undefined);
+    const consisten = new ItemGrid(2, "consist", "consist", consistColumns, Paged.EXPAND, EditMode.ADD, undefined);
 
     const columns = [
       NAMEN(Editable.ADD, true),
@@ -37,6 +37,7 @@
       addFooter();
       await ZUG_TYP_DROP.init()
       .then(() => ARTIKEL_DROP.init())
+      .then(() => UNTER_KATEGORIE_DROP.init())
       .then(() => zug.init());
     }
   </script>
@@ -51,7 +52,7 @@
     <div id="data">
       <div id="zug">
       </div>
-      <div id="consisten">
+      <div id="consist">
       </div>
     </div>
   </article>

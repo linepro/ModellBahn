@@ -112,41 +112,27 @@
 		<commons-lang3.version>3.8.1</commons-lang3.version>
 		<dagger.version>2.16</dagger.version>
 		<esapi.version>2.1.0.1</esapi.version>
-		<grizzly-http.version>2.4.3.1</grizzly-http.version>
-		<grizzly-http-all.version>2.4.3.1</grizzly-http-all.version>
-		<grizzly-http-server.version>2.4.3.1</grizzly-http-server.version>
-		<grizzly-http-servlet.version>2.4.3.1</grizzly-http-servlet.version>
+        <grizzly.version>2.4.3.1</grizzly.version>
 		<guava.version>27.0.1-jre</guava.version>
 		<guice-assistedinject.version>4.2.2</guice-assistedinject.version>
 		<guice.version>4.2.2</guice.version>
 		<h2.version>1.4.197</h2.version>
+		<hamcrest.version>2.1</hamcrest.version>
 		<hibernate-core.version>5.4.0.Final</hibernate-core.version>
 		<hibernate-validator.version>6.0.13.Final</hibernate-validator.version>
-		<hibernate-validator-annotation-processor.version>6.0.13.Final</hibernate-validator-annotation-processor.version>
-		<jackson-annotations.version>2.9.8</jackson-annotations.version>
-		<jackson-dataformat-yaml.version>2.9.8</jackson-dataformat-yaml.version>
-		<jackson-databind.version>2.9.8</jackson-databind.version>
-		<jackson-datatype-jdk8.version>2.9.8</jackson-datatype-jdk8.version>
-		<jackson-datatype-jsr310.version>2.9.8</jackson-datatype-jsr310.version>
-		<jackson-module-jaxb-annotations.version>2.9.8</jackson-module-jaxb-annotations.version>
-		<jackson-module-parameter-names.version>2.9.8</jackson-module-parameter-names.version>
-		<javax.el.version>2.2.6</javax.el.version>
+        <jackson.version>2.9.8</jackson.version>
+		<javax.el.version>3.0.1-b11</javax.el.version>
 		<javax.el-api.version>3.0.1-b06</javax.el-api.version>
 		<javax.servlet.jsp.version>2.3.4</javax.servlet.jsp.version>
 		<javax.servlet.jsp.jstl.version>1.2.5</javax.servlet.jsp.jstl.version>
 		<jersey.version>2.27</jersey.version>
-		<jersey-container-grizzly2-servlet.version>2.27</jersey-container-grizzly2-servlet.version>
 		<jersey-guice.version>1.19.4</jersey-guice.version>
 		<jetty.version>9.4.11.v20180605</jetty.version>
 		<jul-to-slf4j.version>1.7.25</jul-to-slf4j.version>
-		<log4j-api.version>2.11.1</log4j-api.version>
-		<log4j-core.version>2.11.1</log4j-core.version>
-		<log4j-jcl.version>2.11.1</log4j-jcl.version>
-		<log4j-slf4j-impl.version>2.11.1</log4j-slf4j-impl.version>
+		<log4j.version>2.11.1</log4j.version>
 		<mockito.version>1.9.0</mockito.version>
 		<slf4j.version>1.7.25</slf4j.version>
-		<swagger-annotations.version>1.5.21</swagger-annotations.version>
-		<swagger-jersey2-jaxrs.version>1.5.21</swagger-jersey2-jaxrs.version>
+		<swagger.version>1.5.21</swagger.version>
 		<swagger-ui.version>1.16.0-118</swagger-ui.version>
 		<testng.version>6.14.3</testng.version>
 		<validation-api.version>2.0.1.Final</validation-api.version>
@@ -215,9 +201,9 @@
 
 		<!-- Javax -->
 		<dependency>
-			<groupId>javax.el</groupId>
-			<artifactId>javax.el-api</artifactId>
-			<version>${javax.el-api.version}</version>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<version>1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -225,21 +211,21 @@
 			<version>${javax.servlet-api.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<version>${validation-api.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.glassfish.web</groupId>
-			<artifactId>javax.servlet.jsp</artifactId>
-			<version>${javax.servlet.jsp.version}</version>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>2.1</version>
 		</dependency>
-		<dependency>
-			<groupId>org.glassfish.web</groupId>
-			<artifactId>javax.servlet.jsp.jstl</artifactId>
-			<version>${javax.servlet.jsp.jstl.version}</version>
-		</dependency>
-
+        
 		<!-- OWASP XSS filters -->
 		<dependency>
 			<groupId>org.owasp.esapi</groupId>
@@ -287,7 +273,49 @@
 			<version>${commons-lang3.version}</version>
 		</dependency>
 
+        <!-- Hamcrest -->
+		<dependency>
+		    <groupId>org.hamcrest</groupId>
+		    <artifactId>hamcrest</artifactId>
+		    <version>${hamcrest.version}</version>
+		</dependency>
+
 		<!-- Jersey -->
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.json</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.grizzly</groupId>
+			<artifactId>grizzly-framework</artifactId>
+			<version>2.4.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.hk2.external</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>2.5.0-b42</version>
+		</dependency>
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>javax.servlet.jsp</artifactId>
+            <version>${javax.servlet.jsp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>javax.servlet.jsp.jstl</artifactId>
+            <version>${javax.servlet.jsp.jstl.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.servlet.jsp</groupId>
+                    <artifactId>jsp-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-common</artifactId>
@@ -302,11 +330,28 @@
 			<groupId>org.glassfish.jersey.containers</groupId>
 			<artifactId>jersey-container-grizzly2-http</artifactId>
 			<version>${jersey.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.glassfish.grizzly</groupId>
+					<artifactId>grizzly-http-server</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet-core</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
 			<artifactId>jersey-container-grizzly2-servlet</artifactId>
-			<version>${jersey-container-grizzly2-servlet.version}</version>
+			<version>${jersey.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.glassfish.grizzly</groupId>
+					<artifactId>grizzly-http-servlet</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
@@ -317,6 +362,16 @@
 			<groupId>org.glassfish.jersey.inject</groupId>
 			<artifactId>jersey-hk2</artifactId>
 			<version>${jersey.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.glassfish.hk2.external</groupId>
+					<artifactId>aopalliance-repackaged</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.inject</groupId>
+					<artifactId>javax.inject</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
@@ -347,6 +402,14 @@
 					<groupId>org.hibernate</groupId>
 					<artifactId>hibernate-validator</artifactId>
 				</exclusion>
+                <exclusion>
+                    <groupId>org.glassfish.web</groupId>
+                    <artifactId>javax.el</artifactId>
+                </exclusion>
+                <exclusion>
+                	<groupId>javax.el</groupId>
+                	<artifactId>javax.el-api</artifactId>
+                </exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -363,6 +426,12 @@
 			<groupId>org.glassfish.jersey.ext</groupId>
 			<artifactId>jersey-mvc</artifactId>
 			<version>${jersey.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.servlet</groupId>
+					<artifactId>servlet-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.ext</groupId>
@@ -379,64 +448,108 @@
 			<artifactId>jersey-wadl-doclet</artifactId>
 			<version>${jersey.version}</version>
 		</dependency>
+		<!--
 		<dependency>
 			<groupId>org.glassfish.web</groupId>
 			<artifactId>javax.el</artifactId>
 			<version>${javax.el.version}</version>
 		</dependency>
-
+        -->
+  
 		<!-- Grizzly -->
 		<dependency>
 			<groupId>org.glassfish.grizzly</groupId>
 			<artifactId>grizzly-http</artifactId>
-			<version>${grizzly-http.version}</version>
+			<version>${grizzly.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.grizzly</groupId>
 			<artifactId>grizzly-http-all</artifactId>
-			<version>${grizzly-http-all.version}</version>
+			<version>${grizzly.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.glassfish.grizzly</groupId>
+					<artifactId>grizzly-http</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.glassfish.grizzly</groupId>
+					<artifactId>grizzly-http-servlet</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.glassfish.grizzly</groupId>
+					<artifactId>grizzly-http-server</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.glassfish.grizzly</groupId>
+					<artifactId>grizzly-framework</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.grizzly</groupId>
 			<artifactId>grizzly-http-server</artifactId>
-			<version>${grizzly-http-server.version}</version>
+			<version>${grizzly.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.glassfish.grizzly</groupId>
+                    <artifactId>grizzly-http</artifactId>
+                </exclusion>
+            </exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.grizzly</groupId>
 			<artifactId>grizzly-http-servlet</artifactId>
-			<version>${grizzly-http-servlet.version}</version>
+			<version>${grizzly.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.glassfish.grizzly</groupId>
+                    <artifactId>grizzly-http-server</artifactId>
+                </exclusion>
+            </exclusions>
 		</dependency>
-		<!-- <dependency> <groupId>com.fasterxml.jackson.module</groupId> <artifactId>jackson-module-parameter-names</artifactId> 
-			<version>${jackson-module-parameter-names.version}</version> </dependency> -->
+		
+        <!-- Jackson -->
+		<!-- 
+		<dependency>
+		    <groupId>com.fasterxml.jackson.module</groupId>
+		    <artifactId>jackson-module-parameter-names</artifactId> 
+			<version>${jackson.version}</version>
+		</dependency>
+		-->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>${jackson-annotations.version}</version>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>${jackson-databind.version}</version>
+			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-yaml</artifactId>
-			<version>${jackson-dataformat-yaml.version}</version>
+			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jdk8</artifactId>
-			<version>${jackson-datatype-jdk8.version}</version>
+			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
-			<version>${jackson-datatype-jsr310.version}</version>
+			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.module</groupId>
 			<artifactId>jackson-module-jaxb-annotations</artifactId>
-			<version>${jackson-module-jaxb-annotations.version}</version>
+			<version>${jackson.version}</version>
 		</dependency>
 
 		<!-- Hibernate -->
@@ -453,7 +566,7 @@
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator-annotation-processor</artifactId>
-			<version>${hibernate-validator-annotation-processor.version}</version>
+			<version>${hibernate-validator.version}</version>
 		</dependency>
 
 		<!-- Logging -->
@@ -465,22 +578,22 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
-			<version>${log4j-api.version}</version>
+			<version>${log4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
-			<version>${log4j-core.version}</version>
+			<version>${log4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j-impl</artifactId>
-			<version>${log4j-slf4j-impl.version}</version>
+			<version>${log4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-jcl</artifactId>
-			<version>${log4j-jcl.version}</version>
+			<version>${log4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -492,12 +605,17 @@
 		<dependency>
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-annotations</artifactId>
-			<version>${swagger-annotations.version}</version>
+			<version>${swagger.version}</version>
 		</dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-jaxrs</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
 		<dependency>
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-jersey2-jaxrs</artifactId>
-			<version>${swagger-jersey2-jaxrs.version}</version>
+			<version>${swagger.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.cafapi</groupId>
@@ -802,8 +920,6 @@
 										<include>com.fasterxml.jackson.datatype:jackson-datatype-jdk8:*</include>
 										<include>com.fasterxml.jackson.module:jackson-module-jaxb-annotations:*</include>
 										<include>com.google.guava:guava:*</include>
-										<include>com.google.guava:guava
-											com.google.inject.extensions:guice-assistedinject:*</include>
 										<include>com.google.inject.extensions:guice-assistedinject:*</include>
 										<include>com.google.inject:guice:*</include>
 										<include>com.google.j2objc:j2objc-annotations:*</include>
@@ -923,6 +1039,46 @@
 											<exclude>META-INF/*.RSA</exclude>
 										</excludes>
 									</filter>
+					                <filter>
+					                  <artifact>org.glassfish.grizzly:grizzly-core</artifact>
+					                  <excludes>
+					                    <exclude>org/glassfish/grizzly/portunif/**</exclude>
+                                        <exclude>org/hamcrest/**</exclude>
+					                  </excludes>
+					                </filter>
+					                <filter>
+					                  <artifact>org.glassfish.grizzly:grizzly-http-all</artifact>
+					                  <excludes>
+					                    <exclude>org/glassfish/grizzly/http/**</exclude>
+					                    <exclude>org/glassfish/grizzly/comet/**</exclude>
+					                    <exclude>org/glassfish/grizzly/http/ajp/**</exclude>
+					                    <exclude>org/glassfish/grizzly/http/multipart/**</exclude>
+					                    <exclude>org/glassfish/grizzly/http/server/**</exclude>
+					                    <exclude>org/glassfish/grizzly/http2/**</exclude>
+					                    <exclude>org/glassfish/grizzly/multipart/**</exclude>
+					                    <exclude>org/glassfish/grizzly/npn/**</exclude>
+					                    <exclude>org/glassfish/grizzly/npn/servlet/**</exclude>
+					                    <exclude>org/glassfish/grizzly/portunif/**</exclude>
+					                    <exclude>org/glassfish/grizzly/servlet/**</exclude>
+					                    <exclude>org/glassfish/grizzly/websockets/**</exclude>
+                                        <exclude>org/hamcrest/**</exclude>
+					                    <exclude>javax/servlet/**</exclude>
+					                  </excludes>
+					                </filter>
+					                <filter>
+					                  <artifact>org.glassfish.grizzly:grizzly-http-server-core</artifact>
+					                  <excludes>
+					                    <exclude>org/glassfish/grizzly/http/**</exclude>
+					                    <exclude>org/glassfish/grizzly/http/ajp/**</exclude>
+					                    <exclude>org/glassfish/grizzly/http/multipart/**</exclude>
+					                    <exclude>org/glassfish/grizzly/http/server/**</exclude>
+					                    <exclude>org/glassfish/grizzly/http2/**</exclude>
+					                    <exclude>org/glassfish/grizzly/multipart/**</exclude>
+					                    <exclude>org/glassfish/grizzly/npn/**</exclude>
+					                    <exclude>org/glassfish/grizzly/portunif/**</exclude>
+					                    <exclude>org/hamcrest/**</exclude>
+					                  </excludes>
+					                </filter>
 								</filters>
 								<transformers>
 									<transformer
