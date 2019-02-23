@@ -1066,6 +1066,7 @@ class ItemGrid {
     this.pageSize = pageSize;
     this.rowCount = pageSize;
     this.apiUrl = apiUrl;
+    this.apiRoot = apiUrl;
     this.tableId = tableId;
     this.columns = columns;
     this.paged = paged;
@@ -1110,7 +1111,7 @@ class ItemGrid {
 
   setParent(parent) {
     this.parent = parent;
-    this.apiUrl = ((parent && parent.apiUrl) ? parent.apiUrl + '/' : '') + this.apiUrl;
+    this.apiUrl = parent.apiUrl + '/' + this.apiRoot;
     this.editMode = parent.editMode;
   }
 
@@ -1180,7 +1181,7 @@ class ItemGrid {
       grid.apiUrl = self;
       grid.editMode = EditMode.UPDATE;
 
-      history.replaceState({}, null, window.location.href.replace('new=true', self));
+      history.replaceState({}, null, window.location.href.replace('new=true', 'self='+self));
 
       if (grid.children) {
         grid.children.forEach(child => {
