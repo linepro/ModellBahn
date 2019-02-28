@@ -48,7 +48,7 @@ const getMessage = (messageKey, substitutions) => {
     }
 
     return message;
-  } catch {
+  } catch (err) {
     return messageKey;
   }
 };

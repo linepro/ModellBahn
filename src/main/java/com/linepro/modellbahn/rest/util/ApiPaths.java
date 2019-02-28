@@ -2,6 +2,8 @@ package com.linepro.modellbahn.rest.util;
 
 public interface ApiPaths {
 
+    public static final String API = "api";
+
     String SEPARATOR = "/";
 
     String VERSION = "1.0.0";
@@ -49,11 +51,13 @@ public interface ApiPaths {
 
     /** Root paths */
 
-    String API_ROOT = SEPARATOR + "api" + SEPARATOR;
+    String API_ROOT = SEPARATOR + API + SEPARATOR;
 
     String WEB_ROOT = SEPARATOR;
 
-    String WEB_PART = "{path: .*}";
+    String PATH_PARAM_NAME = "path";
+
+    String WEB_PART = "{" + PATH_PARAM_NAME + ":.*}";
 
     String APPLICATION_WADL = "application.wadl";
     

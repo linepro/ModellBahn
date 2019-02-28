@@ -3,11 +3,11 @@ package com.linepro.modellbahn.rest.service;
 import static com.linepro.modellbahn.rest.util.AcceptableMediaTypes.MEDIA_TYPES;
 
 import java.io.File;
-import java.net.URI;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -22,8 +22,6 @@ import com.linepro.modellbahn.util.StaticContentFinder;
 
 @Path(ApiPaths.WEB_ROOT)
 public class HttpService extends AbstractService {
-
-    private static final String WEB_ROOT = StringUtils.strip(ApiPaths.WEB_ROOT, ApiPaths.SEPARATOR);
 
     protected final Logger logger;
     
@@ -41,28 +39,25 @@ public class HttpService extends AbstractService {
     @GET
     @Path(ApiPaths.WEB_PART)
     @Produces()
-    public Response getFile() {
-        return handleRequest();
+    public Response getFile(@PathParam(ApiPaths.PATH_PARAM_NAME) String path) {
+        return handleRequest(path);
     }
 
     @POST
     @Path(ApiPaths.WEB_PART)
     @Produces()
-    public Response postFile() {
-        return handleRequest();
+    public Response postFile(@PathParam(ApiPaths.PATH_PARAM_NAME) String path) {
+        return handleRequest(path);
     }
 
-    private Response handleRequest() {
-        URI requested = uriInfo.getBaseUri().relativize(uriInfo.getRequestUri());
+    private Response handleRequest(String path) {
+        String requested = StringUtils.strip(path, ApiPaths.SEPARATOR);
 
-        // We really really don't want leading or trailing slashes
-        String stripedPath = StringUtils.strip(StringUtils.removeStart(StringUtils.strip(requested.getPath(), ApiPaths.SEPARATOR), WEB_ROOT), ApiPaths.SEPARATOR);
+        String filePath = StringUtils.isBlank(requested) ? "index.html" : requested;
 
-        String path = StringUtils.isBlank(stripedPath) ? "index.html" : stripedPath;
+        logGet(filePath);
 
-        logGet(path);
-
-        File file = StaticContentFinder.getFinder().findFile(path);
+        File file = StaticContentFinder.getFinder().findFile(filePath);
 
         if (file != null) {
             return Response.ok(file).type(getMediaType(file)).build();

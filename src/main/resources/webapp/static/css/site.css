@@ -1036,19 +1036,15 @@ ul.nav > li {
   position: relative
 }
 
-.date-picker-x-container {
-  position: relative;
-}
-
 .date-picker-x {
-  background: Moccasin;
+  background: LightSkyBlue;
   box-sizing: content-box;
   color: White;
   display: none;
   font-family: Verdana, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 0.3rem;
+  font-size: 10px;
+  font-weight: 400;
+  padding: 0.1rem;
   position: absolute;
   top: 100%;
   -webkit-transform: translateY(15px);
@@ -1057,17 +1053,17 @@ ul.nav > li {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  width: 27rem;
+  width: 14rem;
   z-index: 1;
 }
 
 .date-picker-x::before {
   border-color: Moccasin transparent;
   border-style: solid;
-  border-width: 0 0.3rem 0.3rem;
+  border-width: 0 0.1rem 0.1rem;
   bottom: 100%;
   content: "";
-  left: 1.6rem;
+  left: .8rem;
   position: absolute;
 }
 
@@ -1079,13 +1075,15 @@ ul.nav > li {
 }
 
 .date-picker-x.to-top::before {
-  border-width: 0.3rem 0.3rem 0;
+  border-width: 0.1rem 0.1rem 0;
   bottom: auto;
   top: 100%;
 }
 
 .date-picker-x.active {
   display: block;
+  top: 0;
+  z-index: 99;
 }
 
 .date-picker-x * {
@@ -1100,11 +1098,11 @@ ul.nav > li {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  height: 3.5rem;
+  height: 1.75rem;
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  padding-bottom: 0.3rem;
+  padding-bottom: 0.1rem;
 }
 
 .date-picker-x .dpx-prev,
@@ -1112,12 +1110,11 @@ ul.nav > li {
   color: White;
   cursor: pointer;
   display: block;
-  font-size: 1.8rem;
   line-height: 0.33rem;
   opacity: 0.6;
   text-align: center;
   transition: .2s;
-  width: 4.2rem;
+  width: 2.1rem;
 }
 
 .date-picker-x .dpx-prev:hover,
@@ -1127,9 +1124,8 @@ ul.nav > li {
 
 .date-picker-x .dpx-title {
   display: block;
-  font-size: 1.5rem;
-  line-height: 3.5rem;
-  padding: 0 0.3rem;
+  line-height: 1.75rem;
+  padding: 0 0.1rem;
 }
 
 .date-picker-x:not([data-dpx-type="year"]) .dpx-title {
@@ -1143,11 +1139,11 @@ ul.nav > li {
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  height: 24rem;
+  height: 12rem;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding-top: 0.3rem;
+  padding-top: 0.1rem;
 }
 
 .date-picker-x .dpx-btns {
@@ -1155,14 +1151,14 @@ ul.nav > li {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding-top: 0.3rem;
+  padding-top: 0.1rem;
 }
 
 .date-picker-x .dpx-btns .dpx-item {
   -webkit-box-flex: 1;
   -ms-flex: 1 1 0;
   flex: 1 1 0;
-  height: 2.5rem !important;
+  height: 1.25rem !important;
 }
 
 .date-picker-x .dpx-item {
@@ -1185,22 +1181,19 @@ ul.nav > li {
 }
 
 .date-picker-x .dpx-item:not(.dpx-weekday):hover {
-  box-shadow: inset 0 0 0 2px DodgerBlue, inset 0 0 0 4px Moccasin;
+  box-shadow: inset 0 0 0 1px DodgerBlue, inset 0 0 0 2px Moccasin;
 }
 
 .date-picker-x .dpx-weekday {
-  font-size: 1.25rem;
-  height: 2rem !important;
 }
 
 .date-picker-x[data-dpx-type="day"] .dpx-item {
-  -ms-flex-preferred-size: 3.7rem;
-  flex-basis: 3.7rem;
-  height: 3.7rem;
+  -ms-flex-preferred-size: 1.8rem;
+  flex-basis: 1.8rem;
 }
 
 .date-picker-x .dpx-current {
-  box-shadow: inset 0 0 0 2px LightSkyBlue;
+  box-shadow: inset 0 0 0 1px LightSkyBlue;
 }
 
 .date-picker-x .dpx-selected {
@@ -1208,11 +1201,11 @@ ul.nav > li {
 }
 
 .date-picker-x .dpx-weekend {
-  color: Chocolate;
+  color: NavajoWhite;
 }
 
 .date-picker-x .dpx-out {
-  color: Silver;
+  color: DimGrey;
 }
 
 .date-picker-x .dpx-disabled {
@@ -1222,5 +1215,5 @@ ul.nav > li {
 }
 
 .date-picker-x .dpx-disabled.dpx-current {
-  box-shadow: inset 0 0 0 2px LightSkyBlue !important;
+  box-shadow: inset 0 0 0 1px LightSkyBlue !important;
 }
