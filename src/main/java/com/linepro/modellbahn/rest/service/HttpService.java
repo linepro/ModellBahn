@@ -70,7 +70,7 @@ public class HttpService extends AbstractService {
         String fileName = path.toString();
         String extension = null;
 
-        int extensionStart = fileName.lastIndexOf(".");
+        int extensionStart = fileName.lastIndexOf('.');
 
         if (extensionStart >= 0) {
             extension = fileName.substring(extensionStart+1).toLowerCase();

@@ -8,9 +8,6 @@ public class LocaleSpecificMessageInterpolator implements MessageInterpolator {
 
   private final MessageInterpolator defaultInterpolator = new ResourceBundleMessageInterpolator();
 
-  public LocaleSpecificMessageInterpolator() {
-  }
-
   @Override
   public String interpolate(String message, Context context) {
     return defaultInterpolator.interpolate(message, context, getLocale());

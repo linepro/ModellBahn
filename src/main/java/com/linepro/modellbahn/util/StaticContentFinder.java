@@ -11,6 +11,9 @@ public class StaticContentFinder {
 
     private static final IFileStore fileStore = new FileStore();
 
+    private StaticContentFinder() {
+    }
+
     /**
      * Gets the file finder.
      *

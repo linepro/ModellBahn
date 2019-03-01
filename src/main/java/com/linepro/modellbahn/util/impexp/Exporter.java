@@ -30,7 +30,6 @@ import com.linepro.modellbahn.persistence.IPersister;
 import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
 import com.linepro.modellbahn.util.Selector;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Exporter.
  * @param <E> the element type
@@ -74,19 +73,23 @@ public class Exporter<E extends IItem<?>> {
         try ( Writer out = Files.newBufferedWriter(path);
               CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader(headers.toArray(new String[0])))) {
             for (E item : persister.findAll()) {
-                try {
-                    List<Object> values = new ArrayList<>(headers.size());
-                    
-                    for (String column : headers) {
-                        Selector selector = persister.getSelectors().get(column);
-                        
-                        values.add(convert(selector.getGetter().invoke(item)));
-                        
-                        printer.printRecord(values);
-                    }
-                } catch (Exception e) {
-                    logger.error("", e);
-                }
+                writeObject(printer, item);
+            }
+        } catch (Exception e) {
+            logger.error("", e);
+        }
+    }
+
+    private void writeObject(CSVPrinter printer, E item) {
+        try {
+            List<Object> values = new ArrayList<>(headers.size());
+            
+            for (String column : headers) {
+                Selector selector = persister.getSelectors().get(column);
+                
+                values.add(convert(selector.getGetter().invoke(item)));
+                
+                printer.printRecord(values);
             }
         } catch (Exception e) {
             logger.error("", e);
