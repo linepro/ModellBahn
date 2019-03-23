@@ -66,9 +66,8 @@
         <downloads-maven-plugin.version>0.6</downloads-maven-plugin.version>
         <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
         <findbugs-maven-plugin.version>3.0.5</findbugs-maven-plugin.version>
-        <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
-        <maven.version>3.0.5</maven.version>
+        <maven.version>3.6.0</maven.version>
         <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
         <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
         <maven-changelog-plugin.version>2.3</maven-changelog-plugin.version>
@@ -123,6 +122,7 @@
         <jackson.version>2.9.8</jackson.version>
         <javax.el.version>3.0.1-b11</javax.el.version>
         <javax.el-api.version>3.0.1-b06</javax.el-api.version>
+        <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <javax.servlet.jsp.version>2.3.4</javax.servlet.jsp.version>
         <javax.servlet.jsp.jstl.version>1.2.5</javax.servlet.jsp.jstl.version>
         <jersey.version>2.27</jersey.version>

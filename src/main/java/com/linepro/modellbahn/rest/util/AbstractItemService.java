@@ -194,9 +194,9 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      * @return the response
      */
     protected Response get(K key) {
-        try {
-            logGet(getEntityClassName() + ": " + getEntityClassName() + ": " + key);
+        logGet(getEntityClassName() + ": " + getEntityClassName() + ": " + key);
 
+        try {
             E entity = getPersister().findByKey(key, true);
 
             if (entity == null) {
@@ -219,9 +219,9 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
     public Response add(E entity) {
-        try {
-            logPost(getEntityClassName() + ": " + entity);
+        logPost(getEntityClassName() + ": " + entity);
 
+        try {
             E result = getPersister().add(entity);
 
             return getResponse(created(), result, true);
@@ -256,9 +256,9 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      * @return the response
      */
     protected Response update(K id, E entity) {
-        try {
-            logPut(getEntityClassName() + ": " + id + ": " + entity);
+        logPut(getEntityClassName() + ": " + id + ": " + entity);
 
+        try {
             E result = getPersister().merge(id, entity);
 
             if (result == null) {
@@ -294,9 +294,9 @@ public abstract class AbstractItemService<K extends IKey, E extends IItem<?>> ex
      * @return the response
      */
     protected Response delete(K id) {
-        try {
-            logDelete(getEntityClassName() + ": " + id);
+        logDelete(getEntityClassName() + ": " + id);
 
+        try {
             getPersister().delete(id);
 
             return getResponse(noContent());

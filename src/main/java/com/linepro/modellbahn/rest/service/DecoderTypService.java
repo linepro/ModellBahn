@@ -310,9 +310,9 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
         })
     public Response updateAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index, DecoderTypAdress newDecoderTypAdress) {
-        try {
-            logPut(String.format(ApiPaths.DECODER_TYP_ADRESS_LOG, getEntityClassName(), herstellerStr, bestellNr, index) + ": " + newDecoderTypAdress);
+        logPut(String.format(ApiPaths.DECODER_TYP_ADRESS_LOG, getEntityClassName(), herstellerStr, bestellNr, index) + ": " + newDecoderTypAdress);
 
+        try {
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, false);
 
             if (decoderTyp == null) {
@@ -349,9 +349,9 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
         })
     public Response deleteAdress(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index) {
-        try {
-            logDelete(String.format(ApiPaths.DECODER_TYP_ADRESS_LOG, getEntityClassName(), herstellerStr, bestellNr, index));
+        logDelete(String.format(ApiPaths.DECODER_TYP_ADRESS_LOG, getEntityClassName(), herstellerStr, bestellNr, index));
 
+        try {
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, true);
 
             if (decoderTyp == null) {
@@ -448,9 +448,9 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
         })
     public Response updateCV(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv, DecoderTypCV newDecoderTypCV) {
-        try {
-            logPut(String.format(ApiPaths.DECODER_TYP_CV_LOG, getEntityClassName(), herstellerStr, bestellNr, cv) + ": " + newDecoderTypCV);
+        logPut(String.format(ApiPaths.DECODER_TYP_CV_LOG, getEntityClassName(), herstellerStr, bestellNr, cv) + ": " + newDecoderTypCV);
 
+        try {
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, false);
 
             if (decoderTyp == null) {
@@ -494,9 +494,9 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
         })
     public Response deleteCV(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv) {
-        try {
-            logDelete(String.format(ApiPaths.DECODER_TYP_CV_LOG, getEntityClassName(), herstellerStr, bestellNr, cv));
+        logDelete(String.format(ApiPaths.DECODER_TYP_CV_LOG, getEntityClassName(), herstellerStr, bestellNr, cv));
 
+        try {
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, true);
 
             if (decoderTyp == null) {
@@ -593,9 +593,9 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
         })
     public Response updateFunktion(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion, DecoderTypFunktion newDecoderTypFunktion) {
-        try {
-            logPut(String.format(ApiPaths.DECODER_TYP_FUNKTION_LOG, getEntityClassName(), herstellerStr, bestellNr, reihe, funktion) + ": " + newDecoderTypFunktion);
+        logPut(String.format(ApiPaths.DECODER_TYP_FUNKTION_LOG, getEntityClassName(), herstellerStr, bestellNr, reihe, funktion) + ": " + newDecoderTypFunktion);
 
+        try {
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, false);
 
             if (decoderTyp == null) {
@@ -632,10 +632,9 @@ public class DecoderTypService extends AbstractItemService<DecoderTypKey, IDecod
         })
     public Response deleteFunktion(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion) {
+        logDelete(String.format(ApiPaths.DECODER_TYP_FUNKTION_LOG, getEntityClassName(), herstellerStr, bestellNr, reihe, funktion));
+
         try {
-            logDelete(String.format(ApiPaths.DECODER_TYP_FUNKTION_LOG, getEntityClassName(), herstellerStr, bestellNr, reihe, funktion));
-
-
             IDecoderTyp decoderTyp = findDecoderTyp(herstellerStr, bestellNr, true);
 
             if (decoderTyp == null) {

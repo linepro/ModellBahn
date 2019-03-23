@@ -444,7 +444,7 @@ class FileColumn extends Column {
     if (fileData) { readFile(href, fileData, grid, rowId); }
   }
 
-  showContent() {
+  showContent(arg) {
     // Do nothimg.
   }
 }
@@ -1423,7 +1423,7 @@ class ItemGrid {
     window.location.href = grid.editForm + '?new=true';
   }
 
-  removeRow() {
+  removeRow(rowId) {
     let grid = this;
     grid.loadData();
   }

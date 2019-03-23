@@ -155,9 +155,9 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a vehicle to the end of a named Zug", response = IZugConsist.class)
     public Response addConsist(@PathParam(ApiPaths.ZUG_PARAM_NAME) String zugStr, Artikel artikel) {
-        try {
-            logPost(String.format(ApiPaths.ZUG_CONSIST_ROOT_LOG, getEntityClassName(), zugStr) + ": " + artikel);
+        logPost(String.format(ApiPaths.ZUG_CONSIST_ROOT_LOG, getEntityClassName(), zugStr) + ": " + artikel);
 
+        try {
             IZug zug = findZug(zugStr, true);
 
             if (zug == null) {
@@ -183,9 +183,9 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a vehicle in a named Zug", response = IZugConsist.class)
     public Response updateConsist(@PathParam(ApiPaths.ZUG_PARAM_NAME) String zugStr, @PathParam(ApiPaths.POSITION_PARAM_NAME) Integer position, Artikel artikel) {
-        try {
-            logPut(String.format(ApiPaths.ZUG_CONSIST_LOG, getEntityClassName(), zugStr, position) + ": " + artikel);
+        logPut(String.format(ApiPaths.ZUG_CONSIST_LOG, getEntityClassName(), zugStr, position) + ": " + artikel);
 
+        try {
             IZugConsist consist = findZugConsist(zugStr, position, true);
 
             if (consist == null) {
@@ -208,9 +208,9 @@ public class ZugService extends AbstractItemService<NameKey, IZug> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 204, value = "Removes a vehicle from a named Zug")
     public Response deleteConsist(@PathParam(ApiPaths.ZUG_PARAM_NAME) String zugStr, @PathParam(ApiPaths.POSITION_PARAM_NAME) Integer position) {
-        try {
-            logDelete(String.format(ApiPaths.ZUG_CONSIST_LOG, getEntityClassName(), zugStr, position));
+        logDelete(String.format(ApiPaths.ZUG_CONSIST_LOG, getEntityClassName(), zugStr, position));
         
+        try {
             IZugConsist zugConsist = findZugConsist(zugStr, position, true);
 
             if (zugConsist == null) {

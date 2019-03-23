@@ -249,9 +249,9 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
             @ApiResponse(code = 500, message = "Internal Server Error")})
     public Response updateAdress(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId,
             @PathParam(ApiPaths.INDEX_PARAM_NAME) Integer index, @QueryParam(ApiNames.ADRESS) Integer adress) {
-        try {
-            logPut(String.format(ApiPaths.DECODER_ADRESS_LOG, getEntityClassName(), decoderId, index) + ": " + adress);
+        logPut(String.format(ApiPaths.DECODER_ADRESS_LOG, getEntityClassName(), decoderId, index) + ": " + adress);
 
+        try {
             IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {
@@ -314,9 +314,9 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
             @ApiResponse(code = 500, message = "Internal Server Error")})
     public Response updateCv(@PathParam(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId,
             @PathParam(ApiPaths.CV_PARAM_NAME) Integer cv, @QueryParam(ApiNames.WERT) Integer wert) {
-        try {
-            logPut(String.format(ApiPaths.DECODER_CV_LOG, getEntityClassName(), decoderId, cv) + ": " + wert);
+        logPut(String.format(ApiPaths.DECODER_CV_LOG, getEntityClassName(), decoderId, cv) + ": " + wert);
 
+        try {
             IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {
@@ -382,9 +382,9 @@ public class DecoderService extends AbstractItemService<DecoderKey, IDecoder> {
             @PathParam(ApiPaths.REIHE_PARAM_NAME) Integer reihe,
             @PathParam(ApiPaths.FUNKTION_PARAM_NAME) String funktion,
             @QueryParam(ApiNames.BEZEICHNUNG) String descirption) {
-        try {
-            logPut(String.format(ApiPaths.DECODER_FUNKTION_LOG, getEntityClassName(), decoderId, reihe, funktion) + ": " + descirption);
+        logPut(String.format(ApiPaths.DECODER_FUNKTION_LOG, getEntityClassName(), decoderId, reihe, funktion) + ": " + descirption);
 
+        try {
             IDecoder decoder = findDecoder(decoderId, true);
 
             if (decoder == null) {

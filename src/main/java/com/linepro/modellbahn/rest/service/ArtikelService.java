@@ -275,9 +275,9 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a new changed to an article", response = IAnderung.class)
     public Response addAnderung(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, Anderung newAnderung) {
-        try {
-            logPost(String.format(ApiPaths.ANDERUNG_ROOT_LOG, getEntityClassName(), artikelId) + ": " + newAnderung);
+        logPost(String.format(ApiPaths.ANDERUNG_ROOT_LOG, getEntityClassName(), artikelId) + ": " + newAnderung);
 
+        try {
             IArtikel artikel = findArtikel(artikelId, true);
 
             if (artikel == null) {
@@ -301,9 +301,9 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a change to an Article", response = IAnderung.class)
     public Response updateAnderung(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, @PathParam(ApiPaths.ANDERUNG_ID_PARAM_NAME) Integer anderungId, Anderung newAnderung) {
-        try {
-            logPut(String.format(ApiPaths.ANDERUNG_LOG, getEntityClassName(), artikelId, anderungId) + ": " + newAnderung);
+        logPut(String.format(ApiPaths.ANDERUNG_LOG, getEntityClassName(), artikelId, anderungId) + ": " + newAnderung);
 
+        try {
             IArtikel artikel = findArtikel(artikelId, true);
 
             if (artikel == null) {
@@ -333,9 +333,9 @@ public class ArtikelService extends AbstractItemService<ArtikelKey, IArtikel> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 204, value = "Removes a change from an article")
     public Response deleteAnderung(@PathParam(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, @PathParam(ApiPaths.ANDERUNG_ID_PARAM_NAME) Integer anderungId) {
-        try {
-            logDelete(String.format(ApiPaths.ANDERUNG_LOG, getEntityClassName(), artikelId, anderungId));
+        logDelete(String.format(ApiPaths.ANDERUNG_LOG, getEntityClassName(), artikelId, anderungId));
 
+        try {
             IArtikel artikel = findArtikel(artikelId, true);
 
             if (artikel == null) {

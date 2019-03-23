@@ -219,8 +219,9 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
         @ApiResponse(code = 500, message = "Internal Server Error")
         })
     public Response addUnterKategorie(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, UnterKategorie newUnterKategorie) {
+        logPost(String.format(ApiPaths.UNTER_KATEGORIE_ROOT_LOG, getEntityClassName(), kategorieStr) + ": " + newUnterKategorie);
+
         try {
-            logPost(String.format(ApiPaths.UNTER_KATEGORIE_ROOT_LOG, getEntityClassName(), kategorieStr) + ": " + newUnterKategorie);
 
             IKategorie kategorie = findKategorie(kategorieStr, true);
 
@@ -251,9 +252,9 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
         })
     public Response updateUnterKategorie(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr, UnterKategorie newUnterKategorie) {
-        try {
-            logPut(String.format(ApiPaths.UNTER_KATEGORIE_LOG, getEntityClassName(), kategorieStr, unterKategorieStr) + ": " + newUnterKategorie);
+        logPut(String.format(ApiPaths.UNTER_KATEGORIE_LOG, getEntityClassName(), kategorieStr, unterKategorieStr) + ": " + newUnterKategorie);
 
+        try {
             IKategorie kategorie = findKategorie(kategorieStr, false);
 
             if (kategorie == null) {
@@ -290,9 +291,9 @@ public class KategorieService extends AbstractItemService<NameKey,  IKategorie> 
         })
     public Response deleteUnterKategorie(@PathParam(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathParam(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) {
-        try {
-            logDelete(String.format(ApiPaths.UNTER_KATEGORIE_LOG, getEntityClassName(), kategorieStr, unterKategorieStr));
+        logDelete(String.format(ApiPaths.UNTER_KATEGORIE_LOG, getEntityClassName(), kategorieStr, unterKategorieStr));
 
+        try {
             IKategorie kategorie = findKategorie(kategorieStr, true);
 
             if (kategorie == null) {

@@ -40,6 +40,8 @@ public class HttpService extends AbstractService {
     @Path(ApiPaths.WEB_PART)
     @Produces()
     public Response getFile(@PathParam(ApiPaths.PATH_PARAM_NAME) String path) {
+        logGet(path);
+
         return handleRequest(path);
     }
 
@@ -47,6 +49,8 @@ public class HttpService extends AbstractService {
     @Path(ApiPaths.WEB_PART)
     @Produces()
     public Response postFile(@PathParam(ApiPaths.PATH_PARAM_NAME) String path) {
+        logPost(path);
+        
         return handleRequest(path);
     }
 
@@ -54,8 +58,6 @@ public class HttpService extends AbstractService {
         String requested = StringUtils.strip(path, ApiPaths.SEPARATOR);
 
         String filePath = StringUtils.isBlank(requested) ? "index.html" : requested;
-
-        logGet(filePath);
 
         File file = StaticContentFinder.getFinder().findFile(filePath);
 

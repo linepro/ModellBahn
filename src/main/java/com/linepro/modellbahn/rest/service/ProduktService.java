@@ -278,9 +278,9 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a sub produkt  a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response addTeil(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, ProduktTeil teil) {
-        try {
-            logPost(String.format(ApiPaths.PRODUKT_TEIL_ROOT_LOG, getEntityClassName(), herstellerStr, bestellNr) + ": " + teil);
+        logPost(String.format(ApiPaths.PRODUKT_TEIL_ROOT_LOG, getEntityClassName(), herstellerStr, bestellNr) + ": " + teil);
 
+        try {
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, true);
 
             if (produkt == null) {
@@ -314,9 +314,9 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a sub produkt a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response updateTeil(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathParam(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr, @PathParam(ApiPaths.TEIL_BESTELL_NR_PARAM_NAME) String teilBestellNr, Integer anzahl) {
-        try {
-            logPut(String.format(ApiPaths.PRODUKT_TEIL_LOG, getEntityClassName(), herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr) + ":" + anzahl);
+        logPut(String.format(ApiPaths.PRODUKT_TEIL_LOG, getEntityClassName(), herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr) + ":" + anzahl);
 
+        try {
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, true);
 
             if (produkt == null) {
@@ -345,9 +345,9 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @JsonView(Views.Public.class)
     @ApiOperation(code = 204, value = "Deletes a sub produkt for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response deleteTeil(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathParam(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr, @PathParam(ApiPaths.TEIL_BESTELL_NR_PARAM_NAME) String teilBestellNr) {
-        try {
-            logDelete(String.format(ApiPaths.PRODUKT_TEIL_LOG, getEntityClassName(), herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr));
+        logDelete(String.format(ApiPaths.PRODUKT_TEIL_LOG, getEntityClassName(), herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr));
 
+        try {
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, true);
 
             if (produkt == null) {
@@ -542,6 +542,7 @@ public class ProduktService extends AbstractItemService<ProduktKey, IProdukt> {
     @ApiOperation(code = 204, value = "Deletes the drawing for a Produkt by hersteller and bestell nr", response = Produkt.class)
     public Response deleteExplosionszeichnung(@PathParam(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathParam(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
         logDelete(String.format(ApiPaths.PRODUKT_EXPLOSIONSZEICHNUNG_LOG, getEntityClassName(), herstellerStr, bestellNr));
+
         try {
             IProdukt produkt = findProdukt(herstellerStr, bestellNr, false);
 
