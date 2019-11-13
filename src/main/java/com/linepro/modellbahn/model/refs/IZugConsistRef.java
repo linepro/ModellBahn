@@ -10,7 +10,6 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * LinkSerializer.
@@ -21,16 +20,16 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
  */
 @JsonPropertyOrder({ ApiNames.POSITION, ApiNames.ARTIKEL, ApiNames.LINKS })
 @ApiModel(value = ApiNames.CONSIST, description = "Rolling stock by poisition in a train.")
-public interface IZugConsistRef extends ILinkRef {
+public interface IZugConsistRef {
 
     @JsonGetter(ApiNames.POSITION)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Contiguous 1 based position in the train (1 = head)", example = "1", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(value = "Contiguous 1 based position in the train (1 = head)", example = "1", access = "READ_ONLY", required = true)
     Integer getPosition();
 
     @JsonGetter(ApiNames.ARTIKEL)
     @JsonSerialize(as = IArtikelRef.class)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IArtikelRef", value = "Rolling stock item", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IArtikelRef", value = "Rolling stock item", access = "READ_ONLY", required = true)
     IArtikel getArtikel();
 }

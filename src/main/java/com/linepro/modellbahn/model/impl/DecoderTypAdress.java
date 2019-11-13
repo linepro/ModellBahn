@@ -20,9 +20,8 @@ import org.hibernate.validator.constraints.Range;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypAdress;
 import com.linepro.modellbahn.model.IItem;
-import com.linepro.modellbahn.model.keys.DecoderTypAdressKey;
-import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.model.enums.AdressTyp;
+import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.model.validation.Adress;
 import com.linepro.modellbahn.model.validation.CVValue;
 import com.linepro.modellbahn.persistence.DBNames;
@@ -42,7 +41,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.DECODER_TYP_ID), @Index(columnList = DBNames.INDEX) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.DECODER_TYP_ID, DBNames.INDEX }) })
 @Adress
-public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implements IDecoderTypAdress {
+public class DecoderTypAdress extends AbstractItem<DecoderTypAdress> implements IDecoderTypAdress {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -5202372019371973750L;
@@ -169,7 +168,7 @@ public class DecoderTypAdress extends AbstractItem<DecoderTypAdressKey> implemen
     }
 
     @Override
-    public int compareTo(IItem<?> other) {
+    public int compareTo(IItem other) {
         if (other instanceof DecoderTypAdress) {
             return new CompareToBuilder()
                     .append(getDecoderTyp(), ((DecoderTypAdress) other).getDecoderTyp())

@@ -1,7 +1,9 @@
 package com.linepro.modellbahn.util.i18n;
 
 import java.util.Locale;
+
 import javax.validation.MessageInterpolator;
+
 import org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator;
 
 public class LocaleSpecificMessageInterpolator implements MessageInterpolator {

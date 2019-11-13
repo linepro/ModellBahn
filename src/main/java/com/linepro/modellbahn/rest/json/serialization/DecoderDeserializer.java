@@ -1,26 +1,25 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonComponent;
+
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.linepro.modellbahn.model.IDecoder;
-import com.linepro.modellbahn.model.keys.DecoderKey;
-import com.linepro.modellbahn.persistence.IKey;
+import com.linepro.modellbahn.persistence.repository.IDecoderRepository;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
+@JsonComponent
 public class DecoderDeserializer extends AbstractItemDeserializer<IDecoder> {
 
-    private static final long serialVersionUID = -871977401187476757L;
+	private IDecoderRepository persister;
 
-    protected DecoderDeserializer() {
-        this(IDecoder.class);
+	@Autowired
+    protected DecoderDeserializer(IDecoderRepository persister) {
+        this.persister = persister;
     }
 
-    protected DecoderDeserializer(Class<IDecoder> vc) {
-        super(vc, ApiNames.DECODER_ID);
-    }
-
-    @Override
-    protected IKey getKey(ObjectNode node) throws Exception {
-        String decoderId = node.get(fieldName).asText();
-        return new DecoderKey(decoderId);
-    }
+	@Override
+	IDecoder findItem(ObjectNode node) throws Exception {
+		return persister.findByDecoderId(node.get(ApiNames.DECODER_ID).asText());
+	}
 }

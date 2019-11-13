@@ -1,11 +1,6 @@
 package com.linepro.modellbahn.model.impl;
 
-import static javax.ws.rs.HttpMethod.DELETE;
-import static javax.ws.rs.HttpMethod.POST;
-import static javax.ws.rs.HttpMethod.PUT;
-
 import java.math.BigDecimal;
-import java.net.URI;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.Set;
@@ -53,7 +48,6 @@ import com.linepro.modellbahn.model.ISpurweite;
 import com.linepro.modellbahn.model.ISteuerung;
 import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.IVorbild;
-import com.linepro.modellbahn.model.keys.ProduktKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
@@ -87,7 +81,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.DECODER_TYP_ID),
         @Index(columnList = DBNames.MOTOR_TYP_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.HERSTELLER_ID, DBNames.BESTELL_NR }) })
-public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
+public class Produkt extends AbstractItem<Produkt> implements IProdukt {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8098838727023710484L;
@@ -539,24 +533,7 @@ public class Produkt extends AbstractItem<ProduktKey> implements IProdukt {
     }
 
     @Override
-    protected void addModification(URI root) {
-        super.addModification(root);
-        getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.UPDATE, PUT));
-        getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.DELETE, DELETE));
-        getLinks().add(fileLink(root, ApiNames.ANLEITUNGEN, ApiNames.UPDATE, PUT));
-        getLinks().add(fileLink(root, ApiNames.ANLEITUNGEN, ApiNames.DELETE, DELETE));
-        getLinks().add(fileLink(root, ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.DELETE, DELETE));
-        getLinks().add(fileLink(root, ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.UPDATE, PUT));
-        getLinks().add(fileLink(root, ApiNames.TEILEN, ApiNames.ADD, POST));
-    }
-
-    @Override
-    protected void addChildLinks(URI root, boolean modification) {
-        addLinks(root, getTeilen(), modification);
-    }
-
-    @Override
-    public int compareTo(IItem<?> other) {
+    public int compareTo(IItem other) {
         if (other instanceof Produkt) {
             return new CompareToBuilder()
                     .append(getHersteller(), ((Produkt) other).getHersteller())

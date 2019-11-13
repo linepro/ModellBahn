@@ -2,7 +2,6 @@ package com.linepro.modellbahn.util;
 
 /**
  * StaticContentFinder.
- * A static to bridge Guice / CDI because I can't get the official bridge to work
  */
 public class StaticContentFinder {
 

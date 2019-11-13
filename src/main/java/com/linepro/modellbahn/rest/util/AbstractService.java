@@ -5,17 +5,20 @@ import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.Response.StatusType;
 import javax.ws.rs.core.UriInfo;
 
 import org.slf4j.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriBuilder;
 
 /**
  * AbstractService.
- * Basic CRUD rest service 
+ * Basic CRUD rest service
  * @author $Author$
  * @version $Id$
  */
@@ -24,18 +27,18 @@ public abstract class AbstractService {
     /** The uri info injected by Jersey. */
     @Context
     protected UriInfo uriInfo;
-    
+
     @Context
     protected HttpServletRequest request;
-    
+
     /**
      * Instantiates a new abstract service.
      */
     protected AbstractService() {
     }
 
-    protected UriInfo getUriInfo() {
-        return uriInfo;
+    protected UriBuilder getUriInfo() {
+        return ServletUriComponentsBuilder.fromCurrentRequest();
     }
 
     protected HttpServletRequest getRequest() {
@@ -59,7 +62,7 @@ public abstract class AbstractService {
     private void info(final String message) {
         getLogger().info(message);
     }
-    
+
     protected void warn(final String message) {
         getLogger().warn(message);
     }
@@ -80,50 +83,57 @@ public abstract class AbstractService {
         info("PUT : " + message);
     }
 
-    protected ResponseBuilder accepted() {
-        return Response.accepted();
+    protected ResponseEntity<?> accepted(Object entity) {
+        return ResponseEntity.accepted().body(entity);
     }
 
-    protected ResponseBuilder badRequest(final String userMessage) {
-        return Response.status(Status.BAD_REQUEST).entity(new ErrorMessage(Status.BAD_REQUEST.getStatusCode(), userMessage));
+    protected ResponseEntity<?> badRequest(final String userMessage) {
+        return ResponseEntity.badRequest().body(new ErrorMessage(Status.BAD_REQUEST.getStatusCode(), userMessage));
     }
 
-    protected ResponseBuilder created() {
-        return Response.status(Status.CREATED);
+    protected ResponseEntity<?> created(Object entity) {
+        return ResponseEntity.created(null).body(entity);
     }
 
-    protected ResponseBuilder noContent() {
-        return Response.noContent();
+    protected ResponseEntity<?> noContent() {
+        return ResponseEntity.noContent().build();
     }
 
-    protected ResponseBuilder notFound() {
-        return Response.status(Status.NOT_FOUND);
+    protected ResponseEntity<?> notFound() {
+        return ResponseEntity.notFound().build();
     }
 
-    protected ResponseBuilder notModified() {
-        return Response.status(Status.NOT_MODIFIED);
+    protected ResponseEntity<?> notModified() {
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
-    protected ResponseBuilder ok() {
-        return Response.ok();
+    protected ResponseEntity<?> ok() {
+        return ResponseEntity.ok().build();
     }
 
-    protected ResponseBuilder ok(Object entity) {
-        return Response.ok(entity);
+    protected ResponseEntity<?> ok(Object entity) {
+        return ResponseEntity.ok().body(entity);
     }
 
-    protected ResponseBuilder serverError(Exception e) {
+    protected ResponseEntity<?> serverError(Exception e) {
         error(Status.INTERNAL_SERVER_ERROR.getReasonPhrase(), e);
 
-        return serverError(Status.INTERNAL_SERVER_ERROR, Status.INTERNAL_SERVER_ERROR.getReasonPhrase(), e.getMessage());
+        return serverError(Status.INTERNAL_SERVER_ERROR, Status.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+                e.getMessage());
     }
 
-    protected ResponseBuilder serverError(final StatusType errorCode, final String userMessage) {
+    protected ResponseEntity<?> serverError(final StatusType errorCode, final String userMessage) {
         return serverError(errorCode, userMessage, null);
     }
 
-    protected ResponseBuilder serverError(final StatusType errorCode, final String userMessage, final String developerMessage) {
-        return Response.status(errorCode).entity(new ErrorMessage(errorCode.getStatusCode(), userMessage, developerMessage));
+    protected ResponseEntity<?> serverError(final StatusType errorCode, final String userMessage,
+            final String developerMessage) {
+        return ResponseEntity.status(errorCode.getStatusCode())
+                .body(new ErrorMessage(errorCode.getStatusCode(), userMessage, developerMessage));
+    }
+
+    protected ResponseEntity<?> getResponse(BodyBuilder builder) {
+        return builder.build();
     }
 
     protected String getMessage(String messageCode, Object... args) {

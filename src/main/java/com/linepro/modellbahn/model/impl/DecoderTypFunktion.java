@@ -12,8 +12,8 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
 import javax.validation.constraints.Pattern;
+
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -22,7 +22,6 @@ import org.hibernate.validator.constraints.Range;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypFunktion;
 import com.linepro.modellbahn.model.IItem;
-import com.linepro.modellbahn.model.keys.DecoderTypFunktionKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
@@ -40,7 +39,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Table(name = DBNames.DECODER_TYP_FUNKTION, indexes = { @Index(columnList = DBNames.DECODER_TYP_ID + "," + DBNames.REIHE + "," + DBNames.FUNKTION, unique = true),
         @Index(columnList = DBNames.DECODER_TYP_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.DECODER_TYP_ID, DBNames.REIHE, DBNames.FUNKTION }) })
-public class DecoderTypFunktion extends AbstractItem<DecoderTypFunktionKey> implements IDecoderTypFunktion {
+public class DecoderTypFunktion extends AbstractItem<DecoderTypFunktion> implements IDecoderTypFunktion {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -9194895557054214626L;
@@ -153,7 +152,7 @@ public class DecoderTypFunktion extends AbstractItem<DecoderTypFunktionKey> impl
     }
 
     @Override
-    public int compareTo(IItem<?> other) {
+    public int compareTo(IItem other) {
         if (other instanceof DecoderTypFunktion) {
             return new CompareToBuilder()
                     .append(getDecoderTyp(), ((DecoderTypFunktion) other).getDecoderTyp())

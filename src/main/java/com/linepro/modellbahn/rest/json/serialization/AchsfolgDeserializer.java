@@ -1,16 +1,16 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonComponent;
+
 import com.linepro.modellbahn.model.IAchsfolg;
+import com.linepro.modellbahn.persistence.repository.IAchsfolgRepository;
 
-public class AchsfolgDeserializer extends AbstractItemDeserializer<IAchsfolg> {
+@JsonComponent
+public class AchsfolgDeserializer extends AbstractNamedItemDeserializer<IAchsfolg> {
 
-    private static final long serialVersionUID = -871977401187476757L;
-
-    protected AchsfolgDeserializer() {
-        super(IAchsfolg.class);
-    }
-
-    protected AchsfolgDeserializer(Class<IAchsfolg> vc) {
-        super(vc);
+    @Autowired
+    public AchsfolgDeserializer(IAchsfolgRepository persister) {
+        super(persister);
     }
 }

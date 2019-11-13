@@ -1,47 +1,26 @@
 package com.linepro.modellbahn.rest.service;
 
-import java.io.InputStream;
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.Map;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-
-import org.glassfish.jersey.media.multipart.FormDataBodyPart;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.linepro.modellbahn.model.IAchsfolg;
-import com.linepro.modellbahn.model.IAntrieb;
-import com.linepro.modellbahn.model.IBahnverwaltung;
-import com.linepro.modellbahn.model.IGattung;
-import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.IVorbild;
-import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
 import com.linepro.modellbahn.model.impl.Vorbild;
-import com.linepro.modellbahn.model.keys.VorbildKey;
+import com.linepro.modellbahn.persistence.repository.IVorbildRepository;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.rest.json.serialization.AchsfolgDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.AntriebDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.BahnverwaltungDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.GattungDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.LocalDateDeserializer;
-import com.linepro.modellbahn.rest.json.serialization.UnterKategorieDeserializer;
 import com.linepro.modellbahn.rest.util.AbstractItemService;
 import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;
 import com.linepro.modellbahn.rest.util.ApiMessages;
@@ -55,6 +34,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * VorbildService. CRUD service for Vorbild
@@ -62,93 +43,35 @@ import io.swagger.annotations.ApiOperation;
  * @version $Id:$
  */
 @Api(value = ApiNames.VORBILD)
-@Path(ApiPaths.VORBILD)
-public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
+@RestController
+@RequestMapping(ApiPaths.VORBILD)
+public class VorbildService extends AbstractItemService<IVorbild,Vorbild> {
 
-    public VorbildService() {
-        super(IVorbild.class);
+	private IVorbildRepository persister;
+
+    @Autowired
+    public VorbildService(IVorbildRepository persister) {
+        super(persister);
+        
+        this.persister = persister;
     }
 
-    @JsonCreator(mode = Mode.DELEGATING)
-    public static Vorbild create() {
+    @JsonCreator(mode= Mode.DELEGATING)
+    public static IVorbild create() {
         return new Vorbild();
     }
 
-    @JsonCreator(mode = Mode.PROPERTIES)
-    public static Vorbild create(@JsonProperty(value = ApiNames.ID) Long id,
-            @JsonProperty(value = ApiNames.GATTUNG) @JsonDeserialize(using = GattungDeserializer.class) IGattung gattung,
-            @JsonProperty(value = ApiNames.KATEGORIE) String kategorieStr,
-            @JsonProperty(value = ApiNames.UNTER_KATEGORIE) @JsonDeserialize(using = UnterKategorieDeserializer.class) IUnterKategorie unterKategorie,
-            @JsonProperty(value = ApiNames.BAHNVERWALTUNG) @JsonDeserialize(using = BahnverwaltungDeserializer.class) IBahnverwaltung bahnverwaltung,
-            @JsonProperty(value = ApiNames.HERSTELLER) String hersteller,
-            @JsonProperty(value = ApiNames.BAUZEIT) @JsonDeserialize(using = LocalDateDeserializer.class) LocalDate bauzeit,
-            @JsonProperty(value = ApiNames.ANZAHL) Integer anzahl,
-            @JsonProperty(value = ApiNames.BETREIBSNUMMER) String betreibsNummer,
-            @JsonProperty(value = ApiNames.ANTRIEB) @JsonDeserialize(using = AntriebDeserializer.class) IAntrieb antrieb,
-            @JsonProperty(value = ApiNames.ACHSFOLG) @JsonDeserialize(using = AchsfolgDeserializer.class) IAchsfolg achsfolg,
-            @JsonProperty(value = ApiNames.ANFAHRZUGKRAFT) BigDecimal anfahrzugkraft,
-            @JsonProperty(value = ApiNames.LEISTUNG) BigDecimal leistung,
-            @JsonProperty(value = ApiNames.DIENSTGEWICHT) BigDecimal dienstgewicht,
-            @JsonProperty(value = ApiNames.GESCHWINDIGKEIT) Integer geschwindigkeit,
-            @JsonProperty(value = ApiNames.LANGE) BigDecimal lange,
-            @JsonProperty(value = ApiNames.AUSSERDIENST) @JsonDeserialize(using = LocalDateDeserializer.class) LocalDate ausserdienst,
-            @JsonProperty(value = ApiNames.DMTREIBRAD) BigDecimal dmTreibrad,
-            @JsonProperty(value = ApiNames.DMLAUFRADVORN) BigDecimal dmLaufradVorn,
-            @JsonProperty(value = ApiNames.DMLAUFRADHINTEN) BigDecimal dmLaufradHinten,
-            @JsonProperty(value = ApiNames.ZYLINDER) Integer zylinder,
-            @JsonProperty(value = ApiNames.DMZYLINDER) BigDecimal dmZylinder,
-            @JsonProperty(value = ApiNames.KOLBENHUB) BigDecimal kolbenhub,
-            @JsonProperty(value = ApiNames.KESSELUBERDRUCK) BigDecimal kesseluberdruck,
-            @JsonProperty(value = ApiNames.ROSTFLACHE) BigDecimal rostflache,
-            @JsonProperty(value = ApiNames.UBERHITZERFLACHE) BigDecimal uberhitzerflache,
-            @JsonProperty(value = ApiNames.WASSERVORRAT) BigDecimal wasservorrat,
-            @JsonProperty(value = ApiNames.VERDAMPFUNG) BigDecimal verdampfung,
-            @JsonProperty(value = ApiNames.FAHRMOTOREN) Integer fahrmotoren,
-            @JsonProperty(value = ApiNames.MOTORBAUART) String motorbauart,
-            @JsonProperty(value = ApiNames.LEISTUNGSUBERTRAGUNG) String leistungsUbertragungStr,
-            @JsonProperty(value = ApiNames.REICHWEITE) BigDecimal reichweite,
-            @JsonProperty(value = ApiNames.KAPAZITAT) BigDecimal kapazitaet,
-            @JsonProperty(value = ApiNames.KLASSE) Integer klasse,
-            @JsonProperty(value = ApiNames.SITZPLATZEKL1) Integer sitzPlatzeKL1,
-            @JsonProperty(value = ApiNames.SITZPLATZEKL2) Integer sitzPlatzeKL2,
-            @JsonProperty(value = ApiNames.SITZPLATZEKL3) Integer sitzPlatzeKL3,
-            @JsonProperty(value = ApiNames.SITZPLATZEKL4) Integer sitzPlatzeKL4,
-            @JsonProperty(value = ApiNames.AUFBAU) String aufbauten,
-            @JsonProperty(value = ApiNames.TRIEBKOPF) Integer triebkopf,
-            @JsonProperty(value = ApiNames.MITTELWAGEN) Integer mittelwagen,
-            @JsonProperty(value = ApiNames.DREHGESTELLBAUART) String drehgestellbauart,
-            @JsonProperty(value = ApiNames.ANMERKUNG) String anmerkung,
-            @JsonProperty(value = ApiNames.ABBILDUNG) String abbildungStr,
-            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        LeistungsUbertragung leistungsUbertragung = LeistungsUbertragung.valueOf(leistungsUbertragungStr);
-
-        return new Vorbild(id, gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit, anzahl, betreibsNummer,
-                antrieb, achsfolg, anmerkung, anfahrzugkraft, leistung, dienstgewicht, geschwindigkeit, lange,
-                ausserdienst, dmTreibrad, dmLaufradVorn, dmLaufradHinten, zylinder, dmZylinder, kolbenhub,
-                kesseluberdruck, rostflache, uberhitzerflache, wasservorrat, verdampfung, fahrmotoren, motorbauart,
-                leistungsUbertragung, reichweite, kapazitaet, klasse, sitzPlatzeKL1, sitzPlatzeKL2, sitzPlatzeKL3,
-                sitzPlatzeKL4, aufbauten, triebkopf, mittelwagen, drehgestellbauart, deleted);
-    }
-
-    @Override
-    @GET
-    @Path(ApiPaths.VORBILD_PART)
-    @Produces(MediaType.APPLICATION_JSON)
+    @GetMapping(ApiPaths.VORBILD_PART)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Finds a Vorbild by name", response = IVorbild.class)
-    public Response get(@PathParam(ApiPaths.GATTUNG_PARAM_NAME) String name) {
-        try {
-            return super.get(new VorbildKey(findGattung(name, false)));
-        } catch (Exception e) {
-            return getResponse(e);
-        }
+    public  ResponseEntity<?> get(@PathVariable(ApiPaths.GATTUNG_PARAM_NAME) String name) {
+        return super.get(persister.findByGattung(name));
     }
 
     @Override
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @GetMapping(ApiPaths.SEARCH)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Vorbilden by example", response = IVorbild.class, responseContainer = "List")
+    @ApiOperation(value = "Finds Vorbilder by example", response = IVorbild.class, responseContainer = "List")
     @ApiImplicitParams({
             @ApiImplicitParam(name = ApiNames.ID, value = "Vorbild id", dataType = "Long", paramType = "query"),
             @ApiImplicitParam(name = ApiNames.GATTUNG, value = "Rolling stock class", example = "BR89.0", dataType = "String", paramType = "query"),
@@ -193,104 +116,96 @@ public class VorbildService extends AbstractItemService<VorbildKey, IVorbild> {
             @ApiImplicitParam(name = ApiNames.DREHGESTELLBAUART, value = "Bogie Manufacturer and type", example = "Y 25", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = ApiNames.DELETED, value = "If true search for soft deleted items", example = "false", dataType = "Boolean", paramType = "query"),
             @ApiImplicitParam(name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
-            @ApiImplicitParam(name = ApiNames.PAGE_SIZE, value = "Page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),})
-    public Response search(@Context UriInfo uriInfo) {
-        return super.search(uriInfo);
-    }
-
-    @POST
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces(MediaType.APPLICATION_JSON)
-    @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds a Vorbild", response = IVorbild.class)
-    public Response add(Vorbild entity) {
-        return super.add(entity);
-    }
-
-    @PUT
-    @Path(ApiPaths.VORBILD_PART)
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces(MediaType.APPLICATION_JSON)
-    @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates a Vorbild by name", response = IVorbild.class)
-    public Response update(@PathParam(ApiPaths.GATTUNG_PARAM_NAME) String name, Vorbild entity) {
-        return super.update(name, entity);
+            @ApiImplicitParam(name = ApiNames.PAGE_SIZE, value = "Page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),
+    })
+    public    ResponseEntity<?> search(@RequestBody Map<String,String> arguments) {
+        return super.search(arguments);
     }
 
     @Override
-    @DELETE
-    @Path(ApiPaths.VORBILD_PART)
-    @Produces(MediaType.APPLICATION_JSON)
+    @PostMapping(ApiPaths.ADD)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 204, value = "Deletes a Vorbild by name", response = IVorbild.class)
-    public Response delete(@PathParam(ApiPaths.GATTUNG_PARAM_NAME) String name) {
-        return super.delete(name);
+    @ApiOperation(code = 201, value = "Adds a Vorbild", response = IVorbild.class)
+    public  ResponseEntity<?> add(IVorbild entity) {
+        return super.add(entity);
     }
 
-    @PUT
-    @Path(ApiPaths.VORBILD_ABBILDUNG_PART)
-    @Consumes({MediaType.MULTIPART_FORM_DATA})
-    @Produces(MediaType.APPLICATION_JSON)
+    @PutMapping(ApiPaths.VORBILD_PART)
+    @JsonView(Views.Public.class)
+    @ApiOperation(code = 202, value = "Updates a Vorbild by name", response = IVorbild.class)
+    public  ResponseEntity<?> update(@PathVariable(ApiPaths.GATTUNG_PARAM_NAME) String name, IVorbild entity) {
+        return super.update(persister.findByGattung(name), entity);
+    }
+
+    @DeleteMapping(ApiPaths.VORBILD_PART)
+    @JsonView(Views.Public.class)
+    @ApiOperation(code = 204, value = "Deletes a Vorbild by name", response = IVorbild.class)
+    public  ResponseEntity<?> delete(@PathVariable(ApiPaths.GATTUNG_PARAM_NAME) String name) {
+        return super.delete(persister.findByGattung(name));
+    }
+
+    @PutMapping(ApiPaths.VORBILD_ABBILDUNG_PART)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds or updates thr picture for a named Vorbild", response = IVorbild.class)
-    public Response updateAbbildung(@PathParam(ApiPaths.GATTUNG_PARAM_NAME) String name,
-            @FormDataParam("file") InputStream fileInputStream,
-            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,
-            @FormDataParam("file") FormDataBodyPart body) {
-        logPut(String.format(ApiPaths.ABBILDUNG_LOG, getEntityClassName(), name) + ": "
-                + contentDispositionHeader.getFileName());
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 404, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
+    public  ResponseEntity<?> updateAbbildung(@PathVariable(ApiPaths.GATTUNG_PARAM_NAME) String name,
+            @PathVariable("file") MultipartFile multipart) {
+        logPut(String.format(ApiPaths.ABBILDUNG_LOG, getEntityClassName(), name) + ": " + multipart.getOriginalFilename());
 
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
-            if (!handler.isAcceptable(body, AcceptableMediaTypes.IMAGE_TYPES)) {
-                return getResponse(
-                        badRequest(getMessage(ApiMessages.INVALID_FILE, contentDispositionHeader.getFileName())));
+            if (!handler.isAcceptable(multipart, AcceptableMediaTypes.IMAGE_TYPES)) {
+                return badRequest(getMessage(ApiMessages.INVALID_FILE, multipart.getOriginalFilename()));
             }
 
-            IVorbild vorbild = findVorbild(name, false);
+            IVorbild vorbild = persister.findByGattung(name);
 
             if (vorbild != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.VORBILD, new String[] {name},
-                        contentDispositionHeader, fileInputStream);
+                java.nio.file.Path file = handler.upload(ApiNames.VORBILD, new String[] {name}, multipart);
 
                 vorbild.setAbbildung(file);
 
-                getPersister().update(vorbild);
+                persister.saveAndFlush((Vorbild) vorbild);
 
-                return getResponse(ok(), vorbild, true);
+                return ok(vorbild);
             }
         } catch (Exception e) {
             return getResponse(e);
         }
 
-        return getResponse(notFound());
+        return notFound();
     }
 
-    @DELETE
-    @Path(ApiPaths.VORBILD_ABBILDUNG_PART)
-    @Produces(MediaType.APPLICATION_JSON)
+    @DeleteMapping(ApiPaths.VORBILD_ABBILDUNG_PART)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Removes the picture from a named Vorbild", response = IVorbild.class)
-    public Response deleteAbbildung(@PathParam(ApiPaths.GATTUNG_PARAM_NAME) String name) {
+    @ApiOperation(code = 204, value = "Removes the picture from a named Vorbild", response = IVorbild.class)
+    @ApiResponses({
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
+    public  ResponseEntity<?> deleteAbbildung(@PathVariable(ApiPaths.GATTUNG_PARAM_NAME) String name) {
         logDelete(String.format(ApiPaths.ABBILDUNG_LOG, getEntityClassName(), name));
 
         try {
-            IVorbild vorbild = findVorbild(name, false);
+            IVorbild vorbild = persister.findByGattung(name);
 
             if (vorbild != null && vorbild.getAbbildung() != null) {
                 StaticContentFinder.getStore().removeFile(vorbild.getAbbildung());
 
                 vorbild.setAbbildung(null);
 
-                getPersister().update(vorbild);
+                persister.saveAndFlush((Vorbild) vorbild);
 
-                return getResponse(ok(), vorbild, true);
+                return ok(vorbild);
             }
         } catch (Exception e) {
             return getResponse(e);
         }
 
-        return getResponse(notFound());
+        return notFound();
     }
 }

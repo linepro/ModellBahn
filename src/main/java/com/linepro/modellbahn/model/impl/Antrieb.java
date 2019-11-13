@@ -6,7 +6,6 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import com.linepro.modellbahn.model.IAntrieb;
-import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 
@@ -19,7 +18,7 @@ import com.linepro.modellbahn.persistence.DBNames;
 @Entity(name = DBNames.ANTRIEB)
 @Table(name = DBNames.ANTRIEB, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
-public class Antrieb extends AbstractNamedItem<NameKey> implements IAntrieb {
+public class Antrieb extends AbstractNamedItem<Antrieb> implements IAntrieb {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6791703187859778429L;

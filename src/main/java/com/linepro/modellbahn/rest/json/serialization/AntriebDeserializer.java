@@ -1,16 +1,16 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonComponent;
+
 import com.linepro.modellbahn.model.IAntrieb;
+import com.linepro.modellbahn.persistence.repository.IAntriebRepository;
 
-public class AntriebDeserializer extends AbstractItemDeserializer<IAntrieb> {
+@JsonComponent
+public class AntriebDeserializer extends AbstractNamedItemDeserializer<IAntrieb> {
 
-    private static final long serialVersionUID = -871977401187476757L;
-
-    protected AntriebDeserializer() {
-        this(IAntrieb.class);
-    }
-
-    protected AntriebDeserializer(Class<IAntrieb> vc) {
-        super(vc);
+	@Autowired
+    protected AntriebDeserializer(IAntriebRepository persister) {
+        super(persister);
     }
 }

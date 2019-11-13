@@ -1,16 +1,16 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonComponent;
+
 import com.linepro.modellbahn.model.IProtokoll;
+import com.linepro.modellbahn.persistence.repository.IProtokollRepository;
 
-public class ProtokollDeserializer extends AbstractItemDeserializer<IProtokoll> {
+@JsonComponent
+public class ProtokollDeserializer extends AbstractNamedItemDeserializer<IProtokoll> {
 
-    private static final long serialVersionUID = -871977401187476757L;
-
-    protected ProtokollDeserializer() {
-        this(IProtokoll.class);
-    }
-
-    protected ProtokollDeserializer(Class<IProtokoll> vc) {
-        super(vc);
+    @Autowired
+    protected ProtokollDeserializer(IProtokollRepository persister) {
+        super(persister);
     }
 }

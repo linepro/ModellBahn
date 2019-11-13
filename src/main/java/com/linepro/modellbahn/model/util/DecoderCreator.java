@@ -1,5 +1,8 @@
 package com.linepro.modellbahn.model.util;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.linepro.modellbahn.model.IDecoder;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypAdress;
@@ -10,22 +13,24 @@ import com.linepro.modellbahn.model.impl.Decoder;
 import com.linepro.modellbahn.model.impl.DecoderAdress;
 import com.linepro.modellbahn.model.impl.DecoderCV;
 import com.linepro.modellbahn.model.impl.DecoderFunktion;
-import com.linepro.modellbahn.persistence.IPersister;
+import com.linepro.modellbahn.persistence.repository.IDecoderRepository;
 
+@Component
 public class DecoderCreator implements IDecoderCreator {
 
-    private final IPersister<IDecoder> persister;
+    private final IDecoderRepository persister;
 
-    public DecoderCreator(IPersister<IDecoder> persister) {
+    @Autowired
+    public DecoderCreator(IDecoderRepository persister) {
         this.persister = persister;
     }
 
     @Override
     public IDecoder create(IDecoderTyp decoderTyp) throws Exception {
-        IDecoder decoder = new Decoder(null, decoderTyp, decoderTyp.getProtokoll(), persister.getNextId(), decoderTyp.getBezeichnung(), decoderTyp.getFahrstufe(),
+        Decoder decoder = new Decoder(null, decoderTyp, decoderTyp.getProtokoll(), null, decoderTyp.getBezeichnung(), decoderTyp.getFahrstufe(),
             DecoderStatus.FREI, false);
         
-        decoder = persister.add(decoder);
+        decoder = persister.saveAndFlush(decoder);
 
         for (IDecoderTypAdress adress : decoderTyp.getAdressen()) {
             decoder.addAdress(new DecoderAdress(null, decoder, adress.getIndex(), adress.getAdressTyp(), adress.getAdress(), false));
@@ -39,7 +44,7 @@ public class DecoderCreator implements IDecoderCreator {
             decoder.addFunktion(new DecoderFunktion(null, decoder, funktion, funktion.getBezeichnung(), false));
         }
 
-        decoder = persister.update(decoder);
+        decoder = persister.saveAndFlush(decoder);
 
         return decoder;
     }

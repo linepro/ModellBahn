@@ -27,7 +27,6 @@ import com.linepro.modellbahn.model.IAnderung;
 import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.enums.AnderungsTyp;
-import com.linepro.modellbahn.model.keys.AnderungKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
@@ -48,7 +47,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.ARTIKEL_ID, DBNames.ANDERUNG_ID } )
         })
-public class Anderung extends AbstractItem<AnderungKey> implements IAnderung {
+public class Anderung extends AbstractItem<Anderung> implements IAnderung {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8652624782179487496L;
@@ -199,7 +198,7 @@ public class Anderung extends AbstractItem<AnderungKey> implements IAnderung {
     }
 
     @Override
-    public int compareTo(IItem<?> other) {
+    public int compareTo(IItem other) {
       if (other instanceof IAnderung) {
         return new CompareToBuilder()
             .append(getArtikel(), ((IAnderung) other).getArtikel())

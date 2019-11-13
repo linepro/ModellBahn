@@ -17,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.enums.Status;
-import com.linepro.modellbahn.model.keys.ArtikelKey;
 import com.linepro.modellbahn.model.refs.IAnderungRef;
 import com.linepro.modellbahn.model.refs.IArtikelRef;
 import com.linepro.modellbahn.model.refs.IDecoderRef;
@@ -41,7 +40,6 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * IArtikel.
@@ -52,7 +50,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.ARTIKEL_ID, ApiNames.BEZEICHNUNG, ApiNames.PRODUKT, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.STUCK, ApiNames.STEUERUNG, ApiNames.MOTOR_TYP, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.DECODER, ApiNames.ANMERKUNG, ApiNames.BELADUNG, ApiNames.ABBILDUNG, ApiNames.STATUS, ApiNames.DELETED, ApiNames.LINKS})
 @ApiModel(value = ApiNames.ARTIKEL, description = "An article - may differ from product because of modificiations")
-public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
+public interface IArtikel extends IItem, IArtikelRef {
 
     @JsonSetter(ApiNames.ARTIKEL_ID)
     void setArtikelId(String artikelId);
@@ -319,7 +317,7 @@ public interface IArtikel extends IItem<ArtikelKey>, IArtikelRef {
     @JsonGetter(ApiNames.ANDERUNGEN)
     @JsonSerialize(contentAs = IAnderungRef.class)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IAnderungRef;", value = "Modifications", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IAnderungRef;", value = "Modifications", access = "READ_ONLY")
     Set<IAnderung> getSortedAnderungen();
 
     @JsonIgnore

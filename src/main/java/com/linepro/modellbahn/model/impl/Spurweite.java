@@ -6,7 +6,6 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import com.linepro.modellbahn.model.ISpurweite;
-import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 
@@ -19,7 +18,7 @@ import com.linepro.modellbahn.persistence.DBNames;
 @Entity(name = DBNames.SPURWEITE)
 @Table(name = DBNames.SPURWEITE, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
-public class Spurweite extends AbstractNamedItem<NameKey> implements ISpurweite {
+public class Spurweite extends AbstractNamedItem<Spurweite> implements ISpurweite {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3673395807313729165L;

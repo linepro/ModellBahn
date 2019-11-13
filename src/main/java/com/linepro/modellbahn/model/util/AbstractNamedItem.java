@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.model.util;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
@@ -12,11 +10,11 @@ import javax.validation.constraints.Pattern;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.hateoas.RepresentationModel;
 
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.INamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.persistence.IKey;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
@@ -27,14 +25,9 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author $Author$
  * @version $Id$
  */
+@SuppressWarnings("serial")
 @MappedSuperclass
-public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> implements
-    INamedItem<K>, Serializable {
-
-  /**
-   * The Constant serialVersionUID.
-   */
-  private static final long serialVersionUID = -278823660682127691L;
+public abstract class AbstractNamedItem<T extends RepresentationModel<? extends T>> extends AbstractItem<T> implements INamedItem {
 
   /**
    * The name.
@@ -109,10 +102,10 @@ public abstract class AbstractNamedItem<K extends IKey> extends AbstractItem<K> 
   }
 
   @Override
-  public int compareTo(IItem<?> other) {
+  public int compareTo(IItem other) {
     if (other instanceof INamedItem) {
       return new CompareToBuilder()
-          .append(getName(), ((INamedItem<?>) other).getName())
+          .append(getName(), ((INamedItem) other).getName())
           .toComparison();
     }
 

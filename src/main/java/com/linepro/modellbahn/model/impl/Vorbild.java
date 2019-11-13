@@ -1,10 +1,6 @@
 package com.linepro.modellbahn.model.impl;
 
-import static javax.ws.rs.HttpMethod.DELETE;
-import static javax.ws.rs.HttpMethod.PUT;
-
 import java.math.BigDecimal;
-import java.net.URI;
 import java.nio.file.Path;
 import java.time.LocalDate;
 
@@ -35,9 +31,8 @@ import com.linepro.modellbahn.model.IGattung;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.IUnterKategorie;
 import com.linepro.modellbahn.model.IVorbild;
-import com.linepro.modellbahn.model.keys.VorbildKey;
-import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
+import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.persistence.util.PathConverter;
@@ -56,7 +51,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.ANTRIEB_ID),
         @Index(columnList = DBNames.ACHSFOLG_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.GATTUNG_ID }) })
-public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
+public class Vorbild extends AbstractItem<Vorbild> implements IVorbild {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -4852882107081643608L;
@@ -798,14 +793,7 @@ public class Vorbild extends AbstractItem<VorbildKey> implements IVorbild {
     }
 
     @Override
-    protected void addModification(URI root) {
-        super.addModification(root);
-        getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.DELETE, DELETE));
-        getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.UPDATE, PUT));
-    }
-
-    @Override
-    public int compareTo(IItem<?> other) {
+    public int compareTo(IItem other) {
       if (other instanceof IVorbild) {
         return new CompareToBuilder()
             .append(getGattung().getName(), ((IVorbild) other).getGattung().getName())

@@ -3,11 +3,11 @@ package com.linepro.modellbahn.rest.util;
 import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.List;
-
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.ws.rs.core.MediaType;
+
+import org.springframework.http.MediaType;
 
 public interface AcceptableMediaTypes {
 

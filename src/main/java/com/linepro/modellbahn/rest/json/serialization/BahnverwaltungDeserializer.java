@@ -1,16 +1,16 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonComponent;
+
 import com.linepro.modellbahn.model.IBahnverwaltung;
+import com.linepro.modellbahn.persistence.repository.IBahnverwaltungRepository;
 
-public class BahnverwaltungDeserializer extends AbstractItemDeserializer<IBahnverwaltung> {
+@JsonComponent
+public class BahnverwaltungDeserializer extends AbstractNamedItemDeserializer<IBahnverwaltung> {
 
-    private static final long serialVersionUID = -871977401187476757L;
-
-    protected BahnverwaltungDeserializer() {
-        this(IBahnverwaltung.class);
-    }
-
-    protected BahnverwaltungDeserializer(Class<IBahnverwaltung> vc) {
-        super(vc);
+	@Autowired
+    protected BahnverwaltungDeserializer(IBahnverwaltungRepository persister) {
+    	super(persister);
     }
 }

@@ -1,16 +1,16 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonComponent;
+
 import com.linepro.modellbahn.model.ILicht;
+import com.linepro.modellbahn.persistence.repository.ILandRepository;
 
-public class LichtDeserializer extends AbstractItemDeserializer<ILicht> {
+@JsonComponent
+public class LichtDeserializer extends AbstractNamedItemDeserializer<ILicht> {
 
-    private static final long serialVersionUID = -871977401187476757L;
-
-    protected LichtDeserializer() {
-        this(ILicht.class);
-    }
-
-    protected LichtDeserializer(Class<ILicht> vc) {
-        super(vc);
+	@Autowired
+    protected LichtDeserializer(ILandRepository persister) {
+        super(persister);
     }
 }

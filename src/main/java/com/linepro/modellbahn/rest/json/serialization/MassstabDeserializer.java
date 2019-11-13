@@ -1,16 +1,16 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonComponent;
+
 import com.linepro.modellbahn.model.IMassstab;
+import com.linepro.modellbahn.persistence.repository.IMassstabRepository;
 
-public class MassstabDeserializer extends AbstractItemDeserializer<IMassstab> {
+@JsonComponent
+public class MassstabDeserializer extends AbstractNamedItemDeserializer<IMassstab> {
 
-    private static final long serialVersionUID = -871977401187476757L;
-
-    protected MassstabDeserializer() {
-        this(IMassstab.class);
-    }
-
-    protected MassstabDeserializer(Class<IMassstab> vc) {
-        super(vc);
+	@Autowired
+    protected MassstabDeserializer(IMassstabRepository persister) {
+        super(persister);
     }
 }

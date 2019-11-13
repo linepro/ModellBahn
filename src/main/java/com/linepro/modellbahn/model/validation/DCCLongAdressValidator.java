@@ -3,8 +3,8 @@ package com.linepro.modellbahn.model.validation;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.linepro.modellbahn.model.refs.IAdress;
 import com.linepro.modellbahn.model.enums.AdressTyp;
+import com.linepro.modellbahn.model.refs.IAdress;
 
 public class DCCLongAdressValidator implements ConstraintValidator<DCCLongAdress, IAdress> {
 

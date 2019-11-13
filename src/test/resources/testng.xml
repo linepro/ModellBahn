@@ -1,7 +1,0 @@
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="DummySuite" verbose="1">
-	<test name="Dummy">
-		<classes>
-		</classes>
-	</test>
-</suite> 

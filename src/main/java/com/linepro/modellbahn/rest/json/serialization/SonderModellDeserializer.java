@@ -1,16 +1,16 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonComponent;
+
 import com.linepro.modellbahn.model.ISonderModell;
+import com.linepro.modellbahn.persistence.repository.ISonderModellRepository;
 
-public class SonderModellDeserializer extends AbstractItemDeserializer<ISonderModell> {
+@JsonComponent
+public class SonderModellDeserializer extends AbstractNamedItemDeserializer<ISonderModell> {
 
-    private static final long serialVersionUID = -871977401187476757L;
-
-    protected SonderModellDeserializer() {
-        this(ISonderModell.class);
-    }
-
-    protected SonderModellDeserializer(Class<ISonderModell> vc) {
-        super(vc);
+	@Autowired
+    protected SonderModellDeserializer(ISonderModellRepository persister) {
+        super(persister);
     }
 }

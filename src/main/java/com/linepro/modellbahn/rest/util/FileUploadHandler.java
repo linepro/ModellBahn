@@ -5,18 +5,16 @@ package com.linepro.modellbahn.rest.util;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Collection;
 
 import javax.inject.Inject;
-import javax.ws.rs.core.MediaType;
 
-import org.glassfish.jersey.media.multipart.ContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.util.IFileStore;
 import com.linepro.modellbahn.util.StaticContentFinder;
@@ -42,8 +40,8 @@ public class FileUploadHandler implements IFileUploadHandler {
     }
 
     @Override
-    public boolean isAcceptable(FormDataBodyPart body, Collection<MediaType> accepted) {
-        MediaType mimeType = body.getMediaType();
+    public boolean isAcceptable(MultipartFile multipart, Collection<MediaType> accepted) {
+        MediaType mimeType = MediaType.valueOf(multipart.getContentType());
         
         return accepted.contains(mimeType);
     }
@@ -57,15 +55,15 @@ public class FileUploadHandler implements IFileUploadHandler {
      * @return the path
      */
     @Override
-    public Path upload(String entityType, String[] entityIds, ContentDisposition fileDetail, InputStream fileData) throws Exception {
+    public Path upload(String entityType, String[] entityIds, MultipartFile multipart) throws Exception {
         String pathname = fileStore.getItemPath(entityType, entityIds).toString();
 
         new File(pathname).mkdirs();
 
-        String fileName = fileDetail.getFileName();
+        String fileName = multipart.getOriginalFilename();
         String extension = null;
 
-        int extensionStart = fileName.lastIndexOf(".");
+        int extensionStart = fileName.lastIndexOf('.');
 
         if (extensionStart >= 0) {
             extension = fileName.substring(extensionStart+1).toLowerCase();
@@ -74,9 +72,9 @@ public class FileUploadHandler implements IFileUploadHandler {
 
         Path filePath = fileStore.getFilePath(entityType, entityIds, fileName, extension);
 
-        writeToFile(filePath, fileDetail, fileData);
+        writeToFile(multipart);
 
-        logger.info("File " + fileDetail + " uploaded to " + filePath);
+        logger.info("File {} uploaded to {}", multipart.getOriginalFilename(), filePath);
 
         return filePath;
     }
@@ -88,13 +86,13 @@ public class FileUploadHandler implements IFileUploadHandler {
      * @param fileData the file data
      * @throws Exception the exception
      */
-    private void writeToFile(Path fileName, ContentDisposition fileDetail, InputStream fileData) throws Exception {
+    private void writeToFile(MultipartFile multipart) throws Exception {
         int read;
         byte[] buffer = new byte[1024];
 
-        OutputStream out = new FileOutputStream(fileName.toFile(), false);
+        OutputStream out = new FileOutputStream(multipart.getOriginalFilename(), false);
 
-        while ((read = fileData.read(buffer)) != -1) {
+        while ((read = multipart.getInputStream().read(buffer)) != -1) {
             out.write(buffer, 0, read);
         }
 

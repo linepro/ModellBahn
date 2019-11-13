@@ -16,15 +16,14 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 @JsonPropertyOrder({ApiNames.ANDERUNGSDATUM, ApiNames.ANDERUNGS_TYP, ApiNames.BEZEICHNUNG, ApiNames.STUCK})
 @ApiModel(value = ApiNames.ANDERUNG, description = "Change to an article")
-public interface IAnderungRef extends ILinkRef {
+public interface IAnderungRef {
 
     @JsonGetter(ApiNames.ANDERUNG_ID)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Change number", example = "00001", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(value = "Change number", example = "00001", access = "READ_ONLY")
     Integer getAnderungId();
 
     @JsonGetter(ApiNames.ANDERUNGSDATUM)

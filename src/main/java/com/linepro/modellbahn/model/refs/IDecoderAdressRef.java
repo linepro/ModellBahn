@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 @JsonPropertyOrder({ ApiNames.INDEX, ApiNames.ADRESS_TYP, ApiNames.ADRESS, ApiNames.LINKS })
 @ApiModel(value = ApiNames.ADRESS, description = "Decoder address setting.")
-public interface IDecoderAdressRef extends IAdress, ILinkRef {
+public interface IDecoderAdressRef extends IAdress {
 
     @JsonGetter(ApiNames.INDEX)
     @JsonView(Views.DropDown.class)

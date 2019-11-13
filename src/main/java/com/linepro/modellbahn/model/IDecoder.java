@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.model.keys.DecoderKey;
 import com.linepro.modellbahn.model.refs.IDecoderAdressRef;
 import com.linepro.modellbahn.model.refs.IDecoderCVRef;
 import com.linepro.modellbahn.model.refs.IDecoderFunktionRef;
@@ -24,7 +23,6 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * IDecoder.
@@ -35,7 +33,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER_ID, ApiNames.DECODER_TYP, ApiNames.BEZEICHNUNG, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.DELETED, ApiNames.ADRESSEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS })
 @ApiModel(value = ApiNames.DECODER, description = "Decoder - installed or spare.")
-public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
+public interface IDecoder extends IItem, IDecoderRef {
 
     @JsonSetter(ApiNames.DECODER_ID)
     void setDecoderId(String  name);
@@ -67,7 +65,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
     @JsonGetter(ApiNames.ADRESSEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentAs= IDecoderAdressRef.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderAdressRef;", value = "Decoder addresses", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderAdressRef;", value = "Decoder addresses", access = "READ_ONLY", required = true)
     Set<IDecoderAdress> getSortedAdressen();
 
     @JsonIgnore
@@ -85,7 +83,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
     @JsonGetter(ApiNames.CVS)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentAs= IDecoderCVRef.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderCVRef;", value = "Decoder cv values", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderCVRef;", value = "Decoder cv values", access = "READ_ONLY")
     Set<IDecoderCV> getSortedCVs();
 
     @JsonIgnore
@@ -103,7 +101,7 @@ public interface IDecoder extends IItem<DecoderKey>, IDecoderRef {
     @JsonGetter(ApiNames.FUNKTIONEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentAs= IDecoderFunktionRef.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderFunktionRef;", value = "Decoder functions", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderFunktionRef;", value = "Decoder functions", access = "READ_ONLY", required = true)
     Set<IDecoderFunktion> getSortedFunktionen();
 
     /**

@@ -12,7 +12,6 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 @JsonPropertyOrder({ ApiNames.DECODER_ID, ApiNames.DECODER_TYP, ApiNames.BEZEICHNUNG })
 @ApiModel(value = ApiNames.DECODER, description = "Decoder - installed or spare.")
@@ -20,7 +19,7 @@ public interface IDecoderRef extends IRef {
 
     @JsonGetter(ApiNames.DECODER_ID)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Decoder's id", example = "00001", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(value = "Decoder's id", example = "00001", access = "READ_ONLY", required = true)
     String getDecoderId();
 
     @JsonGetter(ApiNames.BEZEICHNUNG)

@@ -1,21 +1,21 @@
 package com.linepro.modellbahn.model;
 
 import java.io.Serializable;
-import java.net.URI;
+
+import org.springframework.hateoas.Links;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.linepro.modellbahn.model.refs.ILinkRef;
-import com.linepro.modellbahn.persistence.IKey;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiModelProperty.AccessMode;
+
 
 /**
  * IItem
@@ -27,7 +27,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
  * NB. All properties are objects because they may need to be null for template matching.
  */
 @JsonAutoDetect(fieldVisibility = Visibility.PUBLIC_ONLY)
-public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializable, ILinkRef {
+public interface IItem extends Comparable<IItem>, Serializable {
 
     /**
      * Gets the primary key of this item
@@ -36,7 +36,7 @@ public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializabl
      */
     @JsonGetter(ApiNames.ID)
     @JsonView(Views.Internal.class)
-    @ApiModelProperty(accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(access = "READ_ONLY", required = true)
     Long getId();
 
     /**
@@ -65,17 +65,12 @@ public interface IItem<K extends IKey> extends Comparable<IItem<?>>, Serializabl
     @JsonSetter(ApiNames.DELETED)
     void setDeleted(Boolean deleted);
 
-    /**
-     * Adds the HATEOAS links for this item.
-     * Always adds self and parent, optionally adds update and delete
-     * @param root the root uri
-     * @param modification add a modification links
-     */
-    IItem<?> addLinks(URI root, boolean modification);
-
     @JsonIgnore
     String getParentId();
 
     @JsonIgnore
     String getLinkId();
+
+    @JsonProperty("links")
+    public Links getLinks();
 }

@@ -1,8 +1,5 @@
 package com.linepro.modellbahn.model.impl;
 
-import com.linepro.modellbahn.model.enums.DecoderStatus;
-import com.linepro.modellbahn.model.validation.Fahrstufe;
-import java.net.URI;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -30,10 +27,12 @@ import com.linepro.modellbahn.model.IDecoderFunktion;
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.IProtokoll;
-import com.linepro.modellbahn.model.keys.DecoderKey;
+import com.linepro.modellbahn.model.enums.DecoderStatus;
 import com.linepro.modellbahn.model.util.AbstractItem;
+import com.linepro.modellbahn.model.validation.Fahrstufe;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
+import com.linepro.modellbahn.persistence.util.DecoderId;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
@@ -46,7 +45,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Entity(name = DBNames.DECODER)
 @Table(name = DBNames.DECODER, indexes = { @Index(columnList = DBNames.DECODER_ID, unique = true), @Index(columnList = DBNames.DECODER_TYP_ID),
         @Index(columnList = DBNames.PROTOKOLL_ID) }, uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.DECODER_ID }) })
-public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
+public class Decoder extends AbstractItem<Decoder> implements IDecoder {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 44440227704021482L;
@@ -115,6 +114,7 @@ public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
 
     @Override
     @BusinessKey
+    @DecoderId
     @Column(name=DBNames.DECODER_ID, unique=true, length=50)
     public String getDecoderId() {
         return decoderId;
@@ -268,14 +268,7 @@ public class Decoder extends AbstractItem<DecoderKey> implements IDecoder {
     }
 
     @Override
-    protected void addChildLinks(URI root, boolean modification) {
-        addLinks(root, getAdressen(), modification);
-        addLinks(root, getCVs(), modification);
-        addLinks(root, getFunktionen(), modification);
-    }
-
-    @Override
-    public int compareTo(IItem<?> other) {
+    public int compareTo(IItem other) {
       if (other instanceof IDecoder) {
         return new CompareToBuilder()
             .append(getDecoderId(), ((IDecoder) other).getDecoderId())

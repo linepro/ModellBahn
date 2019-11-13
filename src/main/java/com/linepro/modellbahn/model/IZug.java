@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.refs.IZugConsistRef;
 import com.linepro.modellbahn.model.refs.IZugRef;
 import com.linepro.modellbahn.model.refs.IZugTypRef;
@@ -21,7 +20,6 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * IZug.
@@ -33,7 +31,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
 @JsonPropertyOrder({ApiNames.ID, ApiNames.ZUG_TYP, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED,
         ApiNames.CONSIST, ApiNames.LINKS})
 @ApiModel(value = ApiNames.ZUG, description = "A running train configuration.")
-public interface IZug extends INamedItem<NameKey>, IZugRef {
+public interface IZug extends INamedItem, IZugRef {
 
     /**
      * Gets the typ.
@@ -59,7 +57,7 @@ public interface IZug extends INamedItem<NameKey>, IZugRef {
     @JsonGetter(ApiNames.CONSIST)
     @JsonSerialize(contentAs = IZugConsistRef.class)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IZugConsistRef;", value = "Train composition", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IZugConsistRef;", value = "Train composition", access = "READ_ONLY")
     Set<IZugConsist> getSortedConsist();
 
     @JsonIgnore

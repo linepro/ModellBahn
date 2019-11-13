@@ -1,6 +1,5 @@
 package com.linepro.modellbahn.model;
 
-import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.util.Set;
@@ -14,22 +13,21 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.model.keys.DecoderTypKey;
+import com.linepro.modellbahn.model.enums.Konfiguration;
+import com.linepro.modellbahn.model.enums.Stecker;
 import com.linepro.modellbahn.model.refs.IDecoderTypAdressRef;
 import com.linepro.modellbahn.model.refs.IDecoderTypCVRef;
 import com.linepro.modellbahn.model.refs.IDecoderTypFunktionRef;
 import com.linepro.modellbahn.model.refs.IDecoderTypRef;
 import com.linepro.modellbahn.model.refs.IProtokollRef;
-import com.linepro.modellbahn.model.enums.Stecker;
-import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.HerstellerDeserializer;
+import com.linepro.modellbahn.rest.json.serialization.PathSerializer;
 import com.linepro.modellbahn.rest.json.serialization.ProtokollDeserializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * IDecoderTyp.
@@ -40,7 +38,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.GERAUSCH, ApiNames.I_MAX, ApiNames.KONFIGURATION, ApiNames.DELETED, ApiNames.ADRESSEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.LINKS})
 @ApiModel(value = ApiNames.DECODER_TYP, description = "Decoder type - template for Decoder.")
-public interface IDecoderTyp extends IItem<DecoderTypKey>, IDecoderTypRef {
+public interface IDecoderTyp extends IItem, IDecoderTypRef {
 
     @JsonSetter(ApiNames.HERSTELLER)
     @JsonDeserialize(using= HerstellerDeserializer.class)
@@ -155,7 +153,7 @@ public interface IDecoderTyp extends IItem<DecoderTypKey>, IDecoderTypRef {
     @JsonGetter(ApiNames.ANLEITUNGEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(using = PathSerializer.class)
-    @ApiModelProperty(dataType = "String", value = "Instructions URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/betrieb_3000.pdf", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "String", value = "Instructions URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/betrieb_3000.pdf", access = "READ_ONLY")
     Path getAnleitungen();
 
     /**
@@ -230,18 +228,18 @@ public interface IDecoderTyp extends IItem<DecoderTypKey>, IDecoderTypRef {
     @JsonGetter(ApiNames.ADRESSEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentAs = IDecoderTypAdressRef.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderTypAdressRef;", value = "Assignable adresses", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderTypAdressRef;", value = "Assignable adresses", access = "READ_ONLY", required = true)
     Set<IDecoderTypAdress> getSortedAdressen();
 
     @JsonGetter(ApiNames.CVS)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentAs = IDecoderTypCVRef.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderTypCVRef;", value = "Configurable CVs", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderTypCVRef;", value = "Configurable CVs", access = "READ_ONLY")
     Set<IDecoderTypCV> getSortedCVs();
 
     @JsonGetter(ApiNames.FUNKTIONEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentAs = IDecoderTypFunktionRef.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderTypFunktionRef;", value = "Available function mappings", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IDecoderTypFunktionRef;", value = "Available function mappings", access = "READ_ONLY", required = true)
     Set<IDecoderTypFunktion> getSortedFunktionen();
 }

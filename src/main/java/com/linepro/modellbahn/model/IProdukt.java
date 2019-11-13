@@ -16,7 +16,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.model.keys.ProduktKey;
 import com.linepro.modellbahn.model.refs.IAchsfolgRef;
 import com.linepro.modellbahn.model.refs.IAufbauRef;
 import com.linepro.modellbahn.model.refs.IDecoderTypRef;
@@ -57,7 +56,6 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * IProdukt.
@@ -74,7 +72,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
         ApiNames.MOTOR_TYP, ApiNames.LANGE, ApiNames.ANLEITUNGEN, ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.ABBILDUNG,
         ApiNames.TEILEN, ApiNames.DELETED, ApiNames.LINKS })
 @ApiModel(value = ApiNames.PRODUKT, description = "Product - template for article.")
-public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
+public interface IProdukt extends IItem, IProduktRef {
 
     @JsonSetter(ApiNames.HERSTELLER)
     @JsonDeserialize(using= HerstellerDeserializer.class)
@@ -378,7 +376,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     @JsonGetter(ApiNames.ANLEITUNGEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(using = PathSerializer.class)
-    @ApiModelProperty(dataType = "String", value = "Instructions URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/betrieb_3000.pdf", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "String", value = "Instructions URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/betrieb_3000.pdf", access = "READ_ONLY")
     Path getAnleitungen();
 
     /**
@@ -398,7 +396,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     @JsonGetter(ApiNames.EXPLOSIONSZEICHNUNG)
     @JsonView(Views.Public.class)
     @JsonSerialize(using = PathSerializer.class)
-    @ApiModelProperty(dataType = "String", value = "Parts diagram URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/explo_3000.pdf", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "String", value = "Parts diagram URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/explo_3000.pdf", access = "READ_ONLY")
     Path getExplosionszeichnung();
 
     /**
@@ -430,7 +428,7 @@ public interface IProdukt extends IItem<ProduktKey>, IProduktRef {
     @JsonGetter(ApiNames.TEILEN)
     @JsonView(Views.Public.class)
     @JsonSerialize(contentAs = IProduktTeilRef.class)
-    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IProduktTeilRef;", value = "Product components", accessMode = AccessMode.READ_ONLY)
+    @ApiModelProperty(dataType = "[Lcom.linepro.modellbahn.model.refs.IProduktTeilRef;", value = "Product components", access = "READ_ONLY")
     Set<IProduktTeil> getSortedTeilen();
 
     /**

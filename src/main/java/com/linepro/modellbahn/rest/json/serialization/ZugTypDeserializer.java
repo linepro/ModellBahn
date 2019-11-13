@@ -1,16 +1,16 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonComponent;
+
 import com.linepro.modellbahn.model.IZugTyp;
+import com.linepro.modellbahn.persistence.repository.IZugTypRepository;
 
-public class ZugTypDeserializer extends AbstractItemDeserializer<IZugTyp> {
+@JsonComponent
+public class ZugTypDeserializer extends AbstractNamedItemDeserializer<IZugTyp> {
 
-    private static final long serialVersionUID = -871977401187476757L;
-
-    protected ZugTypDeserializer() {
-        this(IZugTyp.class);
-    }
-
-    protected ZugTypDeserializer(Class<IZugTyp> vc) {
-        super(vc);
+    @Autowired
+    protected ZugTypDeserializer(IZugTypRepository persister) {
+        super(persister);
     }
 }

@@ -4,14 +4,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -33,16 +34,16 @@ import io.swagger.annotations.ApiOperation;
 
 /**
  * DecoderTypService. CRUD service for DecoderTyp, DecoderTypCV and DecoderTypFunktion
- * 
  * @author $Author:$
  * @version $Id:$
  */
 @Api(value = ApiNames.ENUMS)
-@Path(ApiPaths.ENUMS)
+@RestController
+@RequestMapping(ApiPaths.ENUMS)
 public class EnumsService extends AbstractService {
 
     protected final Logger logger;
-    
+
     public EnumsService() {
         super();
 
@@ -54,76 +55,70 @@ public class EnumsService extends AbstractService {
         return logger;
     }
 
-    @GET
-    @Path(ApiPaths.ENUMS_ADRESS_TYP_PATH)
+    @GetMapping(ApiPaths.ENUMS_ADRESS_TYP_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @JsonSerialize(contentAs= IDescribedEnum.class)
+    @JsonSerialize(contentAs = IDescribedEnum.class)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible AdressTyp values", response = IDescribedEnum.class, responseContainer = "List")
-    public Response getAdressTyp() {
+    public ResponseEntity<?> getAdressTyp() {
         logGet(ApiPaths.ENUMS_ADRESS_TYP_PATH);
 
-        return ok(getEnumValues(AdressTyp.values())).build();
+        return ok(getEnumValues(AdressTyp.values()));
     }
 
-    @GET
-    @Path(ApiPaths.ENUMS_ANDERUNGS_TYP_PATH)
+    @GetMapping(ApiPaths.ENUMS_ANDERUNGS_TYP_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @JsonSerialize(contentAs= IDescribedEnum.class)
+    @JsonSerialize(contentAs = IDescribedEnum.class)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible AnderungTyp values", response = IDescribedEnum.class, responseContainer = "List")
-    public Response getAnderungTyp() {
+    public ResponseEntity<?> getAnderungTyp() {
         logGet(ApiPaths.ENUMS_ANDERUNGS_TYP_PATH);
 
-        return ok(getEnumValues(AnderungsTyp.values())).build();
+        return ok(getEnumValues(AnderungsTyp.values()));
     }
 
-    @GET
-    @Path(ApiPaths.ENUMS_STECKER_PATH)
+    @GetMapping(ApiPaths.ENUMS_STECKER_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @JsonSerialize(contentAs= IDescribedEnum.class)
+    @JsonSerialize(contentAs = IDescribedEnum.class)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible Stecker values", response = IDescribedEnum.class, responseContainer = "List")
-    public Response getConnector() {
+    public ResponseEntity<?> getConnector() {
         logGet(ApiPaths.ENUMS_STECKER_PATH);
 
-        return ok(getEnumValues(Stecker.values())).build();
+        return ok(getEnumValues(Stecker.values()));
     }
 
-    @GET
-    @Path(ApiPaths.ENUMS_KONFIGURATION_PATH)
+    @GetMapping(ApiPaths.ENUMS_KONFIGURATION_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @JsonSerialize(contentAs= IDescribedEnum.class)
+    @JsonSerialize(contentAs = IDescribedEnum.class)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible Konfiguration values", response = IDescribedEnum.class, responseContainer = "List")
-    public Response getKonfiguration() {
+    public ResponseEntity<?> getKonfiguration() {
         logGet(ApiPaths.ENUMS_KONFIGURATION_PATH);
 
-        return ok(getEnumValues(Konfiguration.values())).build();
+        return ok(getEnumValues(Konfiguration.values()));
     }
 
-    @GET
-    @Path(ApiPaths.ENUMS_STATUS_PATH)
+    @GetMapping(ApiPaths.ENUMS_STATUS_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @JsonSerialize(contentAs= IDescribedEnum.class)
+    @JsonSerialize(contentAs = IDescribedEnum.class)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible Status values", response = IDescribedEnum.class, responseContainer = "List")
-    public Response getStatus() {
+    public ResponseEntity<?> getStatus() {
         logGet(ApiPaths.ENUMS_STATUS_PATH);
 
-        return ok(getEnumValues(Status.values())).build();
+        return ok(getEnumValues(Status.values()));
     }
 
-    @GET
-    @Path(ApiPaths.ENUMS_LEISTUNGS_UBERTRAGUNG_PATH)
+    @GetMapping(ApiPaths.ENUMS_LEISTUNGS_UBERTRAGUNG_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    @JsonSerialize(contentAs= IDescribedEnum.class)
+    @JsonSerialize(contentAs = IDescribedEnum.class)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Gets all possible LeistungsUbertragung values", response = IDescribedEnum.class, responseContainer = "List")
-    public Response getLeistungsUbertragung() {
+    public ResponseEntity<?> getLeistungsUbertragung() {
         logGet(ApiPaths.ENUMS_LEISTUNGS_UBERTRAGUNG_PATH);
 
-        return ok(getEnumValues(LeistungsUbertragung.values())).build();
+        return ok(getEnumValues(LeistungsUbertragung.values()));
     }
 
     private List<IDescribedEnum> getEnumValues(IDescribedEnum[] values) {

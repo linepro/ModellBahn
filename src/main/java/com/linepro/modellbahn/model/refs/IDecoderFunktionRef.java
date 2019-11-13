@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 @JsonPropertyOrder({ ApiNames.FUNKTION,  ApiNames.BEZEICHNUNG, ApiNames.LINKS })
 @ApiModel(value = ApiNames.FUNKTION, description = "Decoder function mapping.")
-public interface IDecoderFunktionRef extends ILinkRef {
+public interface IDecoderFunktionRef {
 
     @JsonGetter(ApiNames.FUNKTION)
     @JsonView(Views.DropDown.class)

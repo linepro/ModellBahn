@@ -1,9 +1,5 @@
 package com.linepro.modellbahn.model.impl;
 
-import static javax.ws.rs.HttpMethod.DELETE;
-import static javax.ws.rs.HttpMethod.PUT;
-
-import java.net.URI;
 import java.nio.file.Path;
 
 import javax.persistence.Column;
@@ -14,7 +10,6 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import com.linepro.modellbahn.model.IAufbau;
-import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.PathConverter;
@@ -30,7 +25,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Entity(name = DBNames.AUFBAU)
 @Table(name = DBNames.AUFBAU, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
-public class Aufbau extends AbstractNamedItem<NameKey> implements IAufbau {
+public class Aufbau extends AbstractNamedItem<Aufbau> implements IAufbau {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 233985591709407388L;
@@ -75,13 +70,6 @@ public class Aufbau extends AbstractNamedItem<NameKey> implements IAufbau {
     @Override
     public void setAbbildung(Path abbildung) {
         this.abbildung = abbildung;
-    }
-
-    @Override
-    protected void addModification(URI root) {
-        super.addModification(root);
-        getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.DELETE, DELETE));
-        getLinks().add(fileLink(root, ApiNames.ABBILDUNG, ApiNames.UPDATE, PUT));
     }
 
     @Override

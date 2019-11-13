@@ -1,16 +1,13 @@
 package com.linepro.modellbahn.rest.util;
 
-import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.Collection;
 
-import javax.ws.rs.core.MediaType;
-
-import org.glassfish.jersey.media.multipart.ContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.springframework.http.MediaType;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface IFileUploadHandler {
-    boolean isAcceptable(FormDataBodyPart body, Collection<MediaType> accepted);
+    boolean isAcceptable(MultipartFile multipart, Collection<MediaType> accepted);
 
-    Path upload(String entityType, String[] entityIds, ContentDisposition fileDetail, InputStream fileData) throws Exception;
+    Path upload(String entityType, String[] entityIds, MultipartFile multipart) throws Exception;
 }

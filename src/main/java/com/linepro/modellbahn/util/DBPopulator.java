@@ -5,10 +5,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
 
-import javax.inject.Inject;
-
-import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.model.IAchsfolg;
 import com.linepro.modellbahn.model.IAntrieb;
@@ -36,12 +36,16 @@ import com.linepro.modellbahn.model.IVorbild;
 import com.linepro.modellbahn.model.IWahrung;
 import com.linepro.modellbahn.model.IZug;
 import com.linepro.modellbahn.model.IZugTyp;
+import com.linepro.modellbahn.model.enums.AdressTyp;
+import com.linepro.modellbahn.model.enums.Konfiguration;
+import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
+import com.linepro.modellbahn.model.enums.Status;
+import com.linepro.modellbahn.model.enums.Stecker;
 import com.linepro.modellbahn.model.impl.Achsfolg;
 import com.linepro.modellbahn.model.impl.Antrieb;
 import com.linepro.modellbahn.model.impl.Artikel;
 import com.linepro.modellbahn.model.impl.Aufbau;
 import com.linepro.modellbahn.model.impl.Bahnverwaltung;
-import com.linepro.modellbahn.model.impl.Decoder;
 import com.linepro.modellbahn.model.impl.DecoderTyp;
 import com.linepro.modellbahn.model.impl.DecoderTypAdress;
 import com.linepro.modellbahn.model.impl.DecoderTypCV;
@@ -67,31 +71,148 @@ import com.linepro.modellbahn.model.impl.Wahrung;
 import com.linepro.modellbahn.model.impl.Zug;
 import com.linepro.modellbahn.model.impl.ZugConsist;
 import com.linepro.modellbahn.model.impl.ZugTyp;
-import com.linepro.modellbahn.model.keys.DecoderTypKey;
-import com.linepro.modellbahn.model.keys.NameKey;
-import com.linepro.modellbahn.model.keys.ProduktKey;
-import com.linepro.modellbahn.model.keys.UnterKategorieKey;
-import com.linepro.modellbahn.model.keys.VorbildKey;
-import com.linepro.modellbahn.model.enums.AdressTyp;
-import com.linepro.modellbahn.model.enums.Stecker;
-import com.linepro.modellbahn.model.util.DecoderCreator;
-import com.linepro.modellbahn.model.enums.Konfiguration;
-import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
-import com.linepro.modellbahn.model.enums.Status;
-import com.linepro.modellbahn.persistence.IKey;
-import com.linepro.modellbahn.persistence.IPersister;
-import com.linepro.modellbahn.persistence.IPersisterFactory;
+import com.linepro.modellbahn.model.util.IDecoderCreator;
+import com.linepro.modellbahn.persistence.repository.IAchsfolgRepository;
+import com.linepro.modellbahn.persistence.repository.IAntriebRepository;
+import com.linepro.modellbahn.persistence.repository.IArtikelRepository;
+import com.linepro.modellbahn.persistence.repository.IAufbauRepository;
+import com.linepro.modellbahn.persistence.repository.IBahnverwaltungRepository;
+import com.linepro.modellbahn.persistence.repository.IDecoderRepository;
+import com.linepro.modellbahn.persistence.repository.IDecoderTypRepository;
+import com.linepro.modellbahn.persistence.repository.IEpochRepository;
+import com.linepro.modellbahn.persistence.repository.IGattungRepository;
+import com.linepro.modellbahn.persistence.repository.IHerstellerRepository;
+import com.linepro.modellbahn.persistence.repository.IKategorieRepository;
+import com.linepro.modellbahn.persistence.repository.IKupplungRepository;
+import com.linepro.modellbahn.persistence.repository.ILandRepository;
+import com.linepro.modellbahn.persistence.repository.ILichtRepository;
+import com.linepro.modellbahn.persistence.repository.IMassstabRepository;
+import com.linepro.modellbahn.persistence.repository.IMotorTypRepository;
+import com.linepro.modellbahn.persistence.repository.IProduktRepository;
+import com.linepro.modellbahn.persistence.repository.IProduktTeilRepository;
+import com.linepro.modellbahn.persistence.repository.IProtokollRepository;
+import com.linepro.modellbahn.persistence.repository.ISonderModellRepository;
+import com.linepro.modellbahn.persistence.repository.ISpurweiteRepository;
+import com.linepro.modellbahn.persistence.repository.ISteuerungRepository;
+import com.linepro.modellbahn.persistence.repository.IUnterKategorieRepository;
+import com.linepro.modellbahn.persistence.repository.IVorbildRepository;
+import com.linepro.modellbahn.persistence.repository.IWahrungRepository;
+import com.linepro.modellbahn.persistence.repository.IZugConsistRepository;
+import com.linepro.modellbahn.persistence.repository.IZugRepository;
+import com.linepro.modellbahn.persistence.repository.IZugTypRepository;
+import com.linepro.modellbahn.persistence.util.IItemRepository;
 
+/**
+ * TODO: split into separate populators...
+ * @author JohnG
+ *
+ */
+@Component
 public class DBPopulator {
 
-    private final IPersisterFactory persisterFactory;
+    private final Logger logger = LoggerFactory.getLogger(DBPopulator.class);
 
-    private final Logger logger;
+    private final IAchsfolgRepository achsfolgPersister;
 
-    @Inject
-    public DBPopulator(IPersisterFactory persisterFactory, ILoggerFactory logManger) {
-        this.persisterFactory = persisterFactory;
-        this.logger = logManger.getLogger(getClass().getName());
+    private final IAntriebRepository antriebPersister;
+
+    private final IArtikelRepository artikelPersister;
+
+    private final IAufbauRepository aufbauPersister;
+
+    private final IBahnverwaltungRepository bahnverwaltungPersister;
+
+    private final IDecoderCreator creator;
+
+    private final IDecoderRepository decoderPersister;
+
+    private final IDecoderTypRepository decoderTypPersister;
+
+    private final IEpochRepository epochPersister;
+
+    private final IGattungRepository gattungPersister;
+
+    private final IHerstellerRepository herstellerPersister;
+
+    private final IKategorieRepository kategoriePersister;
+
+    private final IKupplungRepository kupplungPersister;
+
+    private final ILandRepository landPersister;
+
+    private final ILichtRepository lichtPersister;
+
+    private final IMassstabRepository massstabPersister;
+
+    private final IMotorTypRepository motorTypPersister;
+
+    private final IProduktRepository produktPersister;
+
+    private final IProduktTeilRepository produktTeilPersister;
+
+    private final IProtokollRepository protokollPersister;
+
+    private final ISonderModellRepository sonderModellPersister;
+
+    private final ISpurweiteRepository spurweitePersister;
+
+    private final ISteuerungRepository steuerungPersister;
+
+    private final IUnterKategorieRepository unterKategoriePersister;
+
+    private final IVorbildRepository vorbildPersister;
+
+    private final IWahrungRepository wahrungPersister;
+
+    private final IZugRepository zugPersister;
+
+    private final IZugTypRepository zugTypPersister;
+
+    private final IZugConsistRepository zugConsistPersister;
+
+    @Autowired
+    public DBPopulator(IAchsfolgRepository achsfolgPersister, IAntriebRepository antriebPersister,
+            IArtikelRepository artikelPersister, IAufbauRepository aufbauPersister,
+            IBahnverwaltungRepository bahnverwaltungPersister, IDecoderCreator creator,
+            IDecoderRepository decoderPersister, IDecoderTypRepository decoderTypPersister,
+            IEpochRepository epochPersister, IGattungRepository gattungPersister,
+            IHerstellerRepository herstellerPersister, IKategorieRepository kategoriePersister,
+            IKupplungRepository kupplungPersister, ILandRepository landPersister, ILichtRepository lichtPersister,
+            IMassstabRepository massstabPersister, IMotorTypRepository motorTypPersister,
+            IProduktRepository produktPersister, IProduktTeilRepository produktTeilPersister, IProtokollRepository protokollPersister,
+            ISonderModellRepository sonderModellPersister, ISpurweiteRepository spurweitePersister,
+            ISteuerungRepository steuerungPersister, IUnterKategorieRepository unterKatergoriePersister, IVorbildRepository vorbildPersister,
+            IWahrungRepository wahrungPersister, IZugRepository zugPersister, IZugTypRepository zugTypPersister, IZugConsistRepository zugConsistPersister
+    ) {
+        this.achsfolgPersister = achsfolgPersister;
+        this.antriebPersister = antriebPersister;
+        this.artikelPersister = artikelPersister;
+        this.aufbauPersister = aufbauPersister;
+        this.bahnverwaltungPersister = bahnverwaltungPersister;
+        this.creator = creator;
+        this.decoderPersister = decoderPersister;
+        this.decoderTypPersister = decoderTypPersister;
+        this.epochPersister = epochPersister;
+        this.gattungPersister = gattungPersister;
+        this.herstellerPersister = herstellerPersister;
+        this.kategoriePersister = kategoriePersister;
+        this.kupplungPersister = kupplungPersister;
+        this.landPersister = landPersister;
+        this.lichtPersister = lichtPersister;
+        this.massstabPersister = massstabPersister;
+        this.motorTypPersister = motorTypPersister;
+        this.produktPersister = produktPersister;
+        this.produktTeilPersister = produktTeilPersister;
+        this.protokollPersister = protokollPersister;
+        this.sonderModellPersister = sonderModellPersister;
+        this.spurweitePersister = spurweitePersister;
+        this.steuerungPersister = steuerungPersister;
+        this.unterKategoriePersister = unterKatergoriePersister;
+        this.vorbildPersister = vorbildPersister;
+        this.wahrungPersister = wahrungPersister;
+        this.zugPersister = zugPersister;
+        this.zugTypPersister = zugTypPersister;
+        this.zugConsistPersister = zugConsistPersister;
     }
 
     public void populate() {
@@ -134,45 +255,45 @@ public class DBPopulator {
     }
 
     protected void dump() {
-        dump(Achsfolg.class);
-        dump(Antrieb.class);
-        dump(Aufbau.class);
-        dump(Bahnverwaltung.class);
-        dump(Epoch.class);
-        dump(Gattung.class);
-        dump(Hersteller.class);
-        dump(Kupplung.class);
-        dump(Licht.class);
-        dump(Massstab.class);
-        dump(MotorTyp.class);
-        dump(Protokoll.class);
-        dump(SonderModell.class);
-        dump(Spurweite.class);
-        dump(Steuerung.class);
+        dump(achsfolgPersister);
+        dump(antriebPersister);
+        dump(aufbauPersister);
+        dump(bahnverwaltungPersister);
+        dump(epochPersister);
+        dump(gattungPersister);
+        dump(herstellerPersister);
+        dump(kupplungPersister);
+        dump(lichtPersister);
+        dump(massstabPersister);
+        dump(motorTypPersister);
+        dump(protokollPersister);
+        dump(sonderModellPersister);
+        dump(spurweitePersister);
+        dump(steuerungPersister);
 
-        dump(Kategorie.class);
+        dump(kategoriePersister);
 
-        dump(Wahrung.class);
-        dump(Land.class);
+        dump(wahrungPersister);
+        dump(landPersister);
 
-        dump(DecoderTyp.class);
+        dump(decoderTypPersister);
 
-        dump(Vorbild.class);
+        dump(vorbildPersister);
 
-        dump(Decoder.class);
+        dump(decoderPersister);
 
-        dump(Produkt.class);
-        dump(ProduktTeil.class);
+        dump(produktPersister);
+        dump(produktTeilPersister);
 
-        dump(Artikel.class);
+        dump(artikelPersister);
 
-        dump(ZugTyp.class);
-        dump(Zug.class);
-        dump(ZugConsist.class);
+        dump(zugTypPersister);
+        dump(zugPersister);
+        dump(zugConsistPersister);
     }
 
     private Achsfolg addAchsfolg(String namen, String bezeichnung) {
-        return save(new Achsfolg(null, namen, bezeichnung, false));
+        return achsfolgPersister.save(new Achsfolg(null, namen, bezeichnung, false));
     }
 
     private void populateAchsfolg() {
@@ -207,7 +328,7 @@ public class DBPopulator {
     }
 
     private Antrieb addAntrieb(String namen, String bezeichnung) {
-        return save(new Antrieb(null, namen, bezeichnung, false));
+        return antriebPersister.save(new Antrieb(null, namen, bezeichnung, false));
     }
 
     private void populateAntrieb() {
@@ -218,14 +339,12 @@ public class DBPopulator {
         addAntrieb("DRUCKLUFT", "Druckluft");
     }
 
-    private Artikel addArtikel(IProdukt produkt, LocalDate kaufdatum, IWahrung wahrung, BigDecimal preis, Integer stuck, Integer verbleibende,
-            ISteuerung steuerung, IMotorTyp motorTyp, ILicht licht, IKupplung kupplung, IDecoder decoder, String bezeichnung,
-            String anmerkung, String beladung, Status status) {
+    private Artikel addArtikel(IProdukt produkt, LocalDate kaufdatum, IWahrung wahrung, BigDecimal preis, Integer stuck,
+            Integer verbleibende, ISteuerung steuerung, IMotorTyp motorTyp, ILicht licht, IKupplung kupplung,
+            IDecoder decoder, String bezeichnung, String anmerkung, String beladung, Status status) {
 
-        return save(new Artikel(null, produkt, kaufdatum, wahrung, preis, stuck, verbleibende,
-            steuerung, motorTyp, licht, kupplung, decoder,
-            persisterFactory.createPersister(Artikel.class).getNextId(), bezeichnung, anmerkung,
-            beladung, status, false));
+        return artikelPersister.save(new Artikel(null, produkt, kaufdatum, wahrung, preis, stuck, verbleibende,
+                steuerung, motorTyp, licht, kupplung, decoder, null, bezeichnung, anmerkung, beladung, status, false));
     }
 
     private void populateArtikel() {
@@ -236,13 +355,12 @@ public class DBPopulator {
         ILicht licht = findLicht("L1V");
         IKupplung kupplung = findKupplung("RELEX");
 
-        addArtikel(produkt, LocalDate.of(1967,1,1), wahrung, BigDecimal.valueOf(100.0), 1, 1,
-                steuerung, motorTyp, licht, kupplung, null,
-                "", null, null, Status.GEKAUFT);
+        addArtikel(produkt, LocalDate.of(1967, 1, 1), wahrung, BigDecimal.valueOf(100.0), 1, 1, steuerung, motorTyp,
+                licht, kupplung, null, "", null, null, Status.GEKAUFT);
     }
 
     private Aufbau addAufbau(String namen, String bezeichnung) {
-        return save(new Aufbau(null, namen, bezeichnung, false));
+        return aufbauPersister.save(new Aufbau(null, namen, bezeichnung, false));
     }
 
     private void populateAufbau() {
@@ -256,7 +374,7 @@ public class DBPopulator {
     }
 
     private Bahnverwaltung addBahnverwaltung(String namen, String bezeichnung) {
-        return save(new Bahnverwaltung(null, namen, bezeichnung, false));
+        return bahnverwaltungPersister.save(new Bahnverwaltung(null, namen, bezeichnung, false));
     }
 
     private void populateBahnverwaltung() {
@@ -335,7 +453,8 @@ public class DBPopulator {
         addBahnverwaltung("KEG", "Karsdorfer Eisenbahngesellschaft GmbH (KEG)");
         addBahnverwaltung("KH", "Kraftwerk Herne");
         addBahnverwaltung("KLVM", "KLVM");
-        addBahnverwaltung("KPUGHSTE", "Königlich Preußische und Großherzoglich Hessischen Staatseisenbahnen (K.Pu.G.H.St.E");
+        addBahnverwaltung("KPUGHSTE",
+                "Königlich Preußische und Großherzoglich Hessischen Staatseisenbahnen (K.Pu.G.H.St.E");
         addBahnverwaltung("KSACHSSTE", "Königlich Sächsische Staatseisenbahnen (K.Sächs.St.E)");
         addBahnverwaltung("KWSTE", "Königlich Württembergischen Staatseisenbahnen (K.W.St.E)");
         addBahnverwaltung("LAG", "Lokalbahn Aktien-Gesellschaft (LAG)");
@@ -416,10 +535,6 @@ public class DBPopulator {
     }
 
     private void populateDecoder() {
-        IPersister<IDecoder> persister = persisterFactory.createPersister(IDecoder.class);
-
-        DecoderCreator creator = new DecoderCreator(persister);
-
         IDecoderTyp decoderTyp = findDecoderTyp("ESU", "62400");
 
         try {
@@ -457,7 +572,7 @@ public class DBPopulator {
         addSwitchPilotServo(weiche, esu);
 
         addMarklinSoundDecoder(mfx, marklin, "103787", "103787");
-        
+
         addMarklinDELTADecoder(mm, marklin, "49940", "49940");
         addMarklinDELTADecoder(mm, marklin, "49961", "49961");
         addMarklinDELTADecoder(delta, marklin, "602850", "602850");
@@ -467,7 +582,7 @@ public class DBPopulator {
         addMarklinDELTADecoder(delta, marklin, "66031", "Delta Modul mit Zusatzfunktion");
         addMarklinDELTADecoder(delta, marklin, "66032", "Delta Modul mit automatischer Systemerkennung");
         addMarklinDELTADecoder(delta, marklin, "670040", "670040");
-    
+
         add46715(fx, marklin);
         add60760(fx, marklin);
         add115798(fx, marklin);
@@ -498,32 +613,40 @@ public class DBPopulator {
         add49960(mm, marklin);
         add606896(mm, marklin);
         add608825(mm, marklin);
-    
+
         addWeicheDecoder(weiche, marklin, "74460", "Einbau-Digital-Decoder");
-    
+
         addDrehscheibendekoder(weiche, marklin);
-    
+
         addUhlenbrock67900(mm, uhlenbrock);
     }
 
-    private DecoderTyp addDecoderTyp(IHersteller hersteller, IProtokoll protokoll, String bestellNr, String bezeichnung, Boolean sound, Konfiguration konfiguration, Stecker stecker) {
-        return save(new DecoderTyp(null, hersteller, protokoll, bestellNr, bezeichnung, sound, konfiguration, stecker, false));
-    }
-    
-    private void addAdress(IDecoderTyp decoderTyp, Integer index, AdressTyp adressTyp, Integer span, Integer werkseinstellung) {
-        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, index, adressTyp, span, werkseinstellung, false));
-    }
-    
-    private void addCV(IDecoderTyp decoderTyp, Integer cv, String bezeichnung, Integer minimal, Integer maximal, Integer werkseinstellung) {
-        decoderTyp.addCV(new DecoderTypCV(null, decoderTyp, cv, bezeichnung, minimal, maximal, werkseinstellung, false));
+    private DecoderTyp addDecoderTyp(IHersteller hersteller, IProtokoll protokoll, String bestellNr, String bezeichnung,
+            Boolean sound, Konfiguration konfiguration, Stecker stecker) {
+        return decoderTypPersister.save(new DecoderTyp(null, hersteller, protokoll, bestellNr, bezeichnung, sound,
+                konfiguration, stecker, false));
     }
 
-    private void addFunktion(IDecoderTyp decoderTyp, Integer reihe, String funktion, String bezeichnung, Boolean programmable) {
-        decoderTyp.addFunktion(new DecoderTypFunktion(null, decoderTyp, reihe, funktion, bezeichnung, programmable, false));
+    private void addAdress(IDecoderTyp decoderTyp, Integer index, AdressTyp adressTyp, Integer span,
+            Integer werkseinstellung) {
+        decoderTyp.addAdress(new DecoderTypAdress(null, decoderTyp, index, adressTyp, span, werkseinstellung, false));
     }
-    
+
+    private void addCV(IDecoderTyp decoderTyp, Integer cv, String bezeichnung, Integer minimal, Integer maximal,
+            Integer werkseinstellung) {
+        decoderTyp
+                .addCV(new DecoderTypCV(null, decoderTyp, cv, bezeichnung, minimal, maximal, werkseinstellung, false));
+    }
+
+    private void addFunktion(IDecoderTyp decoderTyp, Integer reihe, String funktion, String bezeichnung,
+            Boolean programmable) {
+        decoderTyp.addFunktion(
+                new DecoderTypFunktion(null, decoderTyp, reihe, funktion, bezeichnung, programmable, false));
+    }
+
     private DecoderTyp add60760(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "60760", "Hochleistungsdecoder", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "60760", "Hochleistungsdecoder", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -534,7 +657,7 @@ public class DBPopulator {
 
         addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add46715(IProtokoll fx, IHersteller marklin) {
@@ -549,21 +672,23 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F2", "Kranausleger Heben heben", false);
         addFunktion(decoderTyp, 1, "F3", "Haken heben", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp addWeicheDecoder(IProtokoll weiche, IHersteller marklin, String bestellNr, String bezeichnung) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, weiche, bestellNr, bezeichnung, false, Konfiguration.SWITCH, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, weiche, bestellNr, bezeichnung, false, Konfiguration.SWITCH,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.WEICHE, 1, 1);
 
         addCV(decoderTyp, 1, "Adresse", 1, 255, null);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp addDrehscheibendekoder(IProtokoll weiche, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, weiche, "7687", "Drehscheibendekoder", false, Konfiguration.LINK, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, weiche, "7687", "Drehscheibendekoder", false, Konfiguration.LINK,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.WEICHE, 1, 16);
 
@@ -586,11 +711,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F14", "Spoke 8", false);
         addFunktion(decoderTyp, 1, "F15", "Spoke 9", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp addUhlenbrock67900(IProtokoll mm, IHersteller uhlenbrock) {
-        DecoderTyp decoderTyp = addDecoderTyp(uhlenbrock, mm, "67900", "67900", false, Konfiguration.SWITCH, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(uhlenbrock, mm, "67900", "67900", false, Konfiguration.SWITCH,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.MM, 1, 8);
 
@@ -629,23 +755,26 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F3", "F3", false);
         addFunktion(decoderTyp, 1, "F4", "F4", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
-    
-    private DecoderTyp addMarklinDELTADecoder(IProtokoll mm, IHersteller marklin, String bestellNr, String bezeichnung) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mm, bestellNr, bezeichnung, false, Konfiguration.CV, Stecker.EINGEBAUT);
+
+    private DecoderTyp addMarklinDELTADecoder(IProtokoll mm, IHersteller marklin, String bestellNr,
+            String bezeichnung) {
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mm, bestellNr, bezeichnung, false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DELTA, 1, 80);
-        
+
         addCV(decoderTyp, 1, "Adresse", 1, 80, 11);
 
         addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp addSwitchPilotServo(IProtokoll weiche, IHersteller esu) {
-        DecoderTyp decoderTyp = addDecoderTyp(esu, weiche, "51802", "SwitchPilot Servo", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(esu, weiche, "51802", "SwitchPilot Servo", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.WEICHE, 1, 4);
 
@@ -673,11 +802,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "S3", "Servo 3", false);
         addFunktion(decoderTyp, 1, "S4", "Servo 4", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp addSwitchPilot(IProtokoll weiche, IHersteller esu, String bestellNr, String bezeichnung) {
-        DecoderTyp decoderTyp = addDecoderTyp(esu, weiche, bestellNr, bezeichnung, false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(esu, weiche, bestellNr, bezeichnung, false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.WEICHE, 1, 8);
         addAdress(decoderTyp, 2, AdressTyp.WEICHE, 1, 2);
@@ -710,10 +840,11 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "S1", "Servo 1", false);
         addFunktion(decoderTyp, 1, "S2", "Servo 2", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
-    private DecoderTyp addLokPilotFX(IProtokoll mm, IHersteller esu, String bestellNr, String bezeichnung, Stecker stecker) {
+    private DecoderTyp addLokPilotFX(IProtokoll mm, IHersteller esu, String bestellNr, String bezeichnung,
+            Stecker stecker) {
         DecoderTyp decoderTyp = addDecoderTyp(esu, mm, bestellNr, bezeichnung, false, Konfiguration.CV, stecker);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
@@ -728,10 +859,11 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F3", "Funktion 3", false);
         addFunktion(decoderTyp, 1, "F4", "Funktion 4", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
-    private DecoderTyp addLokSoundM4(IProtokoll mfx, IHersteller esu, String bestellNr, String bezeichnung, Stecker stecker) {
+    private DecoderTyp addLokSoundM4(IProtokoll mfx, IHersteller esu, String bestellNr, String bezeichnung,
+            Stecker stecker) {
         DecoderTyp decoderTyp = addDecoderTyp(esu, mfx, bestellNr, bezeichnung, true, Konfiguration.CV, stecker);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
@@ -776,10 +908,11 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F14", "Funktion 14", false);
         addFunktion(decoderTyp, 1, "F15", "Funktion 15", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
-    private DecoderTyp addLokPilotM4(IProtokoll mfx, IHersteller esu, String bestellNr, String bezeichnung, Stecker stecker) {
+    private DecoderTyp addLokPilotM4(IProtokoll mfx, IHersteller esu, String bestellNr, String bezeichnung,
+            Stecker stecker) {
         DecoderTyp decoderTyp = addDecoderTyp(esu, mfx, bestellNr, bezeichnung, false, Konfiguration.CV, stecker);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
@@ -801,11 +934,13 @@ public class DBPopulator {
 
         addFunktion(decoderTyp, 1, "F0", "Funktion 0", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
-    private DecoderTyp addMarklinSoundDecoder(IProtokoll mfx, IHersteller marklin, String bestellNr, String bezeichnung) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, bestellNr, bezeichnung, false, Konfiguration.CV, Stecker.EINGEBAUT);
+    private DecoderTyp addMarklinSoundDecoder(IProtokoll mfx, IHersteller marklin, String bestellNr,
+            String bezeichnung) {
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, bestellNr, bezeichnung, false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -828,10 +963,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F8", "Rangierpfeife", false);
         addFunktion(decoderTyp, 1, "F9", "Dampf ablassen", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
+
     private DecoderTyp add115798(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "115798", "115798", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "115798", "115798", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -841,11 +978,12 @@ public class DBPopulator {
         addCV(decoderTyp, 5, "Höchstgeschwindigkeit", 1, 63, null);
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add150436(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "150436", "150436", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "150436", "150436", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -857,11 +995,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
         addFunktion(decoderTyp, 1, "F4", "ABV", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add219574(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "219574", "219574", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "219574", "219574", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -882,11 +1021,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F9", "Dampf ablassen", false);
         addFunktion(decoderTyp, 1, "F10", "Kohleschaufeln", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add602756(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "602756", "602756", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "602756", "602756", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -899,11 +1039,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F3", "Pfeife", false);
         addFunktion(decoderTyp, 1, "F4", "Signalstreckenlampen", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add608862(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "608862", "608862", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "608862", "608862", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -917,11 +1058,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F3", "Stromabnehmer hinten", false);
         addFunktion(decoderTyp, 1, "F4", "ABV", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add611105(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "611105", "611105", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "611105", "611105", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -935,11 +1077,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F3", "Kohleschaufe Heben", false);
         addFunktion(decoderTyp, 1, "F4", "Führerhaus Drehen", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add611754(IProtokoll fx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "611754", "611754", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, fx, "611754", "611754", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -952,11 +1095,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F2", "Telex-Kupplung", false);
         addFunktion(decoderTyp, 1, "F4", "ABV", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add115166(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "115166", "115166", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "115166", "115166", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -977,11 +1121,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F7", "Glocke", false);
         addFunktion(decoderTyp, 1, "F8", "Abfahrtspfiff", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add115673(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "115673", "115673", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "115673", "115673", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1004,11 +1149,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F9", "Bremsenquietschen", false);
         addFunktion(decoderTyp, 1, "F10", "Schüttelrost", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add116836(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "116836", "116836", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "116836", "116836", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1030,11 +1176,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F9", "Elektroschweißen", false);
         addFunktion(decoderTyp, 1, "F10", "Schleifbock", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add123572(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "123572", "123572", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "123572", "123572", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1045,17 +1192,17 @@ public class DBPopulator {
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, null);
         addCV(decoderTyp, 63, "Lautstärke", 0, 63, 63);
 
-
         addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung / Innenbeleuchtung", false);
         addFunktion(decoderTyp, 1, "F2", "Bahnhofsansage", false);
         addFunktion(decoderTyp, 1, "F3", "Signalhorn", false);
         addFunktion(decoderTyp, 1, "F4", "ABV", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add140131(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "140131", "140131", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "140131", "140131", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1074,11 +1221,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F5", "Druckluft ablassen", false);
         addFunktion(decoderTyp, 1, "F6", "Bremsenquietschen", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add148924(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "148924", "148924", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "148924", "148924", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1090,7 +1238,6 @@ public class DBPopulator {
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
         addCV(decoderTyp, 63, "Lautstärke", 1, 63, null);
 
-
         addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
         addFunktion(decoderTyp, 1, "F1", "Schlusslicht ausschalten", false);
         addFunktion(decoderTyp, 1, "F2", "Betriebsgeräusch", false);
@@ -1101,11 +1248,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F7", "Führerstandsbeleuchtung vorn", false);
         addFunktion(decoderTyp, 1, "F8", "Führerstandsbeleuchtung hinten", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add156787(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "156787", "156787", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "156787", "156787", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1122,11 +1270,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F4", "ABV", false);
         addFunktion(decoderTyp, 1, "F5", "Innenbeleuchtung dimmen", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add162946(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "162946", "162946", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "162946", "162946", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1152,11 +1301,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F12", "Überdruckventil", false);
         addFunktion(decoderTyp, 1, "F13", "Druckluft ablassen", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add169274(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "169274", "169274", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "169274", "169274", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1178,11 +1328,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F8", "Bahnhofsansage", false);
         addFunktion(decoderTyp, 1, "F9", "Rangierpfiff", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add253201(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "253201", "253201", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "253201", "253201", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1210,11 +1361,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F14", "Betriebsgeräusch 2", false);
         addFunktion(decoderTyp, 1, "F15", "Betriebsgeräusch 3", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add269706(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "269706", "269706", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "269706", "269706", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1243,11 +1395,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F14", "Dialog", false);
         addFunktion(decoderTyp, 1, "F15", "Dialog ", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add39970(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "39970", "39970", true, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "39970", "39970", true, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1258,11 +1411,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F3", "Stromabnehmer", false);
         addFunktion(decoderTyp, 1, "F4", "Initialisierung", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add60902(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "60902", "Hochleistungselektronik", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "60902", "Hochleistungselektronik", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1270,11 +1424,12 @@ public class DBPopulator {
         addCV(decoderTyp, 2, "Anfahrverzögerung", 1, 63, 3);
         addCV(decoderTyp, 3, "Anfahrverzögerung", 1, 63, null);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add611077(IProtokoll mfx, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "611077", "611077", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, mfx, "611077", "611077", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1287,11 +1442,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
         addFunktion(decoderTyp, 1, "F4", "ABV", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add209394(IProtokoll protokoll, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "209394", "209394", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "209394", "209394", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1300,11 +1456,12 @@ public class DBPopulator {
 
         addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add42973(IProtokoll protokoll, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "42973", "42973", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "42973", "42973", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1318,12 +1475,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F2", "Pantograf", false);
         addFunktion(decoderTyp, 1, "F3", "Geräusch einer Schaffner", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
-
     private DecoderTyp add49960(IProtokoll protokoll, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "49960", "49960", true, Konfiguration.SWITCH, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "49960", "49960", true, Konfiguration.SWITCH,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1334,12 +1491,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F3", "Maßeinheit", false);
         addFunktion(decoderTyp, 1, "F4", "Anzeigen", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
-
     private DecoderTyp add606896(IProtokoll protokoll, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "606896", "606896", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "606896", "606896", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1350,11 +1507,12 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "F0", "Strinbeleuchtung", false);
         addFunktion(decoderTyp, 1, "F4", "ABV", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp add608825(IProtokoll protokoll, IHersteller marklin) {
-        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "608825", "608825", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(marklin, protokoll, "608825", "608825", false, Konfiguration.CV,
+                Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.DIGITAL, 1, 1);
 
@@ -1366,11 +1524,12 @@ public class DBPopulator {
         addCV(decoderTyp, 8, "Rückstellen auf Serienwerte", null, null, 8);
         addCV(decoderTyp, 63, "Lautstärke", 1, 63, null);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private DecoderTyp addDSD2010(IProtokoll weiche, IHersteller digitalbahn) {
-        DecoderTyp decoderTyp = addDecoderTyp(digitalbahn, weiche, "DSD2010", "Drehscheibendekoder", false, Konfiguration.CV, Stecker.EINGEBAUT);
+        DecoderTyp decoderTyp = addDecoderTyp(digitalbahn, weiche, "DSD2010", "Drehscheibendekoder", false,
+                Konfiguration.CV, Stecker.EINGEBAUT);
 
         addAdress(decoderTyp, 1, AdressTyp.WEICHE, 1, 16);
 
@@ -1395,11 +1554,11 @@ public class DBPopulator {
         addFunktion(decoderTyp, 1, "K14", "Spoke 10", false);
         addFunktion(decoderTyp, 1, "K15", "Spoke 11", false);
 
-        return update(decoderTyp);
+        return decoderTypPersister.save(decoderTyp);
     }
 
     private Epoch addEpoch(String namen, String bezeichnung) {
-        return save(new Epoch(null, namen, bezeichnung, false));
+        return epochPersister.save(new Epoch(null, namen, bezeichnung, false));
     }
 
     private void populateEpoch() {
@@ -1427,7 +1586,7 @@ public class DBPopulator {
     }
 
     private Gattung addGattung(String namen, String bezeichnung) {
-        return save(new Gattung(null, namen, bezeichnung, false));
+        return gattungPersister.save(new Gattung(null, namen, bezeichnung, false));
     }
 
     private void populateGattung() {
@@ -1533,15 +1692,15 @@ public class DBPopulator {
 
     private URL getURL(String url) {
         try {
-            if (url != null ) return new URL(url);
+            if (url != null) return new URL(url);
         } catch (MalformedURLException e) {
             logger.error("Invalid url: " + url, e);
         }
         return null;
     }
 
-    private Hersteller addHersteller( String name, String bezeichnung, String url, String telefon) {
-        return save(new Hersteller(null, name, bezeichnung, getURL(url), telefon, false));
+    private Hersteller addHersteller(String name, String bezeichnung, String url, String telefon) {
+        return herstellerPersister.save(new Hersteller(null, name, bezeichnung, getURL(url), telefon, false));
     }
 
     private void populateHersteller() {
@@ -1591,7 +1750,8 @@ public class DBPopulator {
         addHersteller("RATIO", "Ratio", "https://peco-uk.com/pages/ratio", null);
         addHersteller("REDLINE", "Red Line", "http://www.redline.com/", null);
         addHersteller("REVELL", "Revell", "https://www.revell.de/", null);
-        addHersteller("RIVAROSSI", "Rivarossi", "https://www.hornby.com/uk-en/shop/brands/rivarossi-h0-1-87.html", null);
+        addHersteller("RIVAROSSI", "Rivarossi", "https://www.hornby.com/uk-en/shop/brands/rivarossi-h0-1-87.html",
+                null);
         addHersteller("ROCO", "Roco", "https://www.roco.cc/en/home/index.html", null);
         addHersteller("SCHUCO", "Schuco", "https://www.schuco.de/", null);
         addHersteller("SEUTHE", "Seuthe Dampf", "http://seuthe-dampf.de/", null);
@@ -1612,7 +1772,7 @@ public class DBPopulator {
     }
 
     private Kategorie addKategorie(String name, String bezeichnung) {
-        return save(new Kategorie(null, name, bezeichnung, false));
+        return kategoriePersister.save(new Kategorie(null, name, bezeichnung, false));
     }
 
     private void addUnterKategorie(IKategorie kategorie, String name, String bezeichnung) {
@@ -1633,7 +1793,7 @@ public class DBPopulator {
         addUnterKategorie(kategorie, "ZEICHEN", "Zeichen");
         addUnterKategorie(kategorie, "ZAUNE", "Zäune");
 
-        update(kategorie);
+        kategoriePersister.save(kategorie);
 
         kategorie = addKategorie("BELEUCHTUNG", "Beleuchtung");
 
@@ -1645,14 +1805,14 @@ public class DBPopulator {
         addUnterKategorie(kategorie, "STROMZUFUHRUNG", "Stromzuführung");
         addUnterKategorie(kategorie, "ZUGSCHLUSSBELEUCHTUNG", "Zugschlussbeleuchtung");
 
-        update(kategorie);
+        kategoriePersister.save(kategorie);
 
         kategorie = addKategorie("DECODER", "Decoder");
 
         addUnterKategorie(kategorie, "DECODER", "Decoder");
         addUnterKategorie(kategorie, "LAUTSPRECHER", "Lautsprecher");
 
-        update(kategorie);
+        kategoriePersister.save(kategorie);
 
         kategorie = addKategorie("ERSATZTEIL", "Ersatzteil");
 
@@ -1706,13 +1866,13 @@ public class DBPopulator {
         addUnterKategorie(kategorie, "ZUGFEDER", "Zugfeder");
         addUnterKategorie(kategorie, "ZYLINDERSCHRAUBE", "Zylinderschraube");
 
-        update(kategorie);
+        kategoriePersister.save(kategorie);
 
         kategorie = addKategorie("FAHRZEUG", "Fahrzeug");
 
         addUnterKategorie(kategorie, "FAHRZEUG", "Fahrzeug");
 
-        update(kategorie);
+        kategoriePersister.save(kategorie);
 
         kategorie = addKategorie("GEBAUDE", "Gebaüde");
 
@@ -1721,19 +1881,19 @@ public class DBPopulator {
         addUnterKategorie(kategorie, "DREHSCHEIBE", "Drehscheibe");
         addUnterKategorie(kategorie, "GEBAUDE", "Gebaüde");
 
-        update(kategorie);
+        kategoriePersister.save(kategorie);
 
         kategorie = addKategorie("GLEISMATERIEL", "Gleismateriel");
 
         addUnterKategorie(kategorie, "GLEISMATERIEL", "Gleismateriel");
 
-        update(kategorie);
+        kategoriePersister.save(kategorie);
 
         kategorie = addKategorie("LANDSCHAFTSBAU", "Landschaftsbau");
 
         addUnterKategorie(kategorie, "LANDSCHAFTSBAU", "Landschaftsbau");
 
-        update(kategorie);
+        kategoriePersister.save(kategorie);
 
         kategorie = addKategorie("LOKOMOTIV", "Lokomotiv");
 
@@ -1743,39 +1903,39 @@ public class DBPopulator {
         addUnterKategorie(kategorie, "DIESEL", "Diesel");
         addUnterKategorie(kategorie, "ELEKTRO", "Elektro");
 
-        update(kategorie);
+        kategoriePersister.save(kategorie);
 
         kategorie = addKategorie("OBERLEITUNG", "Oberleitung");
 
         addUnterKategorie(kategorie, "OBERLEITUNG", "Oberleitung");
 
-        update(kategorie);
+        kategoriePersister.save(kategorie);
 
         kategorie = addKategorie("SET", "Set");
 
         addUnterKategorie(kategorie, "SET", "Set");
 
-        update(kategorie);
+        kategoriePersister.save(kategorie);
 
         kategorie = addKategorie("SIGNALTECHNIK", "Signaltechnik");
 
         addUnterKategorie(kategorie, "SIGNALBIRNE", "Signalbirne");
         addUnterKategorie(kategorie, "SIGNALTECHNIK", "Signaltechnik");
 
-        update(kategorie);
+        kategoriePersister.save(kategorie);
 
         kategorie = addKategorie("SONSTIGES", "Sonstiges");
 
         addUnterKategorie(kategorie, "SONSTIGES", "Sonstiges");
 
-        update(kategorie);
+        kategoriePersister.save(kategorie);
 
         kategorie = addKategorie("STEUERUNGSTECHNIK", "Steuerungstechnik");
 
         addUnterKategorie(kategorie, "STEUERUNGSTECHNIK", "Steuerungstechnik");
         addUnterKategorie(kategorie, "STROMVERSORGUNG", "Stromversorgung");
 
-        update(kategorie);
+        kategoriePersister.save(kategorie);
 
         kategorie = addKategorie("TREIBWAGEN", "Treibwagen");
 
@@ -1784,7 +1944,7 @@ public class DBPopulator {
         addUnterKategorie(kategorie, "STEURWAGEN", "Steurwagen");
         addUnterKategorie(kategorie, "TREIBWAGEN", "Treibwagen");
 
-        update(kategorie);
+        kategoriePersister.save(kategorie);
 
         kategorie = addKategorie("WAGEN", "Wagen");
 
@@ -1837,7 +1997,7 @@ public class DBPopulator {
         addUnterKategorie(kategorie, "WEIHNACHTS", "Weihnachtswagen");
         addUnterKategorie(kategorie, "WEIN", "Weinwagen");
 
-        update(kategorie);
+        kategoriePersister.save(kategorie);
 
         Kategorie werkzeug = addKategorie("WERKZEUG", "Werkzeug");
 
@@ -1846,18 +2006,18 @@ public class DBPopulator {
         addUnterKategorie(werkzeug, "KLEB", "Kleb");
         addUnterKategorie(werkzeug, "WERKZEUG", "Werkzeug");
 
-        save(werkzeug);
+        kategoriePersister.save(werkzeug);
 
         Kategorie zubehor = addKategorie("ZUBEHOR", "Zubehör");
 
         addUnterKategorie(zubehor, "BESCHRIFTIGUNG", "Beschriftigung");
         addUnterKategorie(zubehor, "ZUBEHOR", "Zubehör");
 
-        save(zubehor);
+        kategoriePersister.save(zubehor);
     }
 
     private Kupplung addKupplung(String name, String bezeichnung) {
-        return save(new Kupplung(null, name, bezeichnung, false));
+        return kupplungPersister.save(new Kupplung(null, name, bezeichnung, false));
     }
 
     private void populateKupplung() {
@@ -1870,7 +2030,7 @@ public class DBPopulator {
     }
 
     private Land addLand(String name, String bezeichnung, IWahrung wahrung) {
-        return save(new Land(null, name, bezeichnung, wahrung, false));
+        return landPersister.save(new Land(null, name, bezeichnung, wahrung, false));
     }
 
     private void populateLand() {
@@ -1878,7 +2038,7 @@ public class DBPopulator {
         IWahrung eur = findWahrung("EUR");
         IWahrung gbp = findWahrung("GBP");
         IWahrung usd = findWahrung("USD");
-        
+
         addLand("AU", "Australien", aud);
         addLand("BE", "Belgien", eur);
         addLand("DE", "Deutschland", eur);
@@ -1890,29 +2050,29 @@ public class DBPopulator {
     }
 
     private Licht addLicht(String namen, String bezeichnung) {
-        return save(new Licht(null, namen, bezeichnung, false));
+        return lichtPersister.save(new Licht(null, namen, bezeichnung, false));
     }
-   
+
     private void populateLicht() {
-       addLicht("L1V", "Einfach-Spitzensignal vorne");
-       addLicht("L1W", "Einfach-Spitzensignal mit der Fahrtrichtung wechselnd.");
-       addLicht("L2V", "Zweilicht-Spitzensignal vorne");
-       addLicht("L2L2", "Zweilicht-Spitzensignal vorne und hinten");
-       addLicht("L2W", "Zweilicht-Spitzensignal mit der Fahrtrichtung wechselnd");
-       addLicht("L3V", "Dreilicht-Spitzensignal vorne");
-       addLicht("L3W", "Dreilicht-Spitzensignal mit der Fahrtrichtung wechselnd");
-       addLicht("L4W", "Vierlicht-Spitzensignal mit der Fahrtrichtung wechselnd");
-       addLicht("R1H", "Ein rotes Schlusslicht");
-       addLicht("R2H", "Zwei rote Schlusslichter");
-       addLicht("L2R2W", "Zweilicht-Spitzensignal und zwei rote Schlusslichter mit der Fahrtrichtung wechselnd");
-       addLicht("L3R1W", "Dreilicht-Spitzensignal und ein rotes Schlusslicht mit der Fahrtrichtung wechselnd");
-       addLicht("L3R2W", "Dreilicht-Spitzensignal und zwei rote Schlusslichter mit der Fahrtrichtung wechselnd");
-       addLicht("L3L1W", "Dreilicht-Spitzensignal und ein weißes Schlusslicht mit der Fahrtrichtung wechselnd");
-       addLicht("L3L2W", "Dreilicht-Spitzensignal und zwei weißes Schlusslicht mit der Fahrtrichtung wechselnd");
+        addLicht("L1V", "Einfach-Spitzensignal vorne");
+        addLicht("L1W", "Einfach-Spitzensignal mit der Fahrtrichtung wechselnd.");
+        addLicht("L2V", "Zweilicht-Spitzensignal vorne");
+        addLicht("L2L2", "Zweilicht-Spitzensignal vorne und hinten");
+        addLicht("L2W", "Zweilicht-Spitzensignal mit der Fahrtrichtung wechselnd");
+        addLicht("L3V", "Dreilicht-Spitzensignal vorne");
+        addLicht("L3W", "Dreilicht-Spitzensignal mit der Fahrtrichtung wechselnd");
+        addLicht("L4W", "Vierlicht-Spitzensignal mit der Fahrtrichtung wechselnd");
+        addLicht("R1H", "Ein rotes Schlusslicht");
+        addLicht("R2H", "Zwei rote Schlusslichter");
+        addLicht("L2R2W", "Zweilicht-Spitzensignal und zwei rote Schlusslichter mit der Fahrtrichtung wechselnd");
+        addLicht("L3R1W", "Dreilicht-Spitzensignal und ein rotes Schlusslicht mit der Fahrtrichtung wechselnd");
+        addLicht("L3R2W", "Dreilicht-Spitzensignal und zwei rote Schlusslichter mit der Fahrtrichtung wechselnd");
+        addLicht("L3L1W", "Dreilicht-Spitzensignal und ein weißes Schlusslicht mit der Fahrtrichtung wechselnd");
+        addLicht("L3L2W", "Dreilicht-Spitzensignal und zwei weißes Schlusslicht mit der Fahrtrichtung wechselnd");
     }
 
     private Massstab addMassstab(String name, String bezeichnung) {
-        return save(new Massstab(null, name, bezeichnung, false));
+        return massstabPersister.save(new Massstab(null, name, bezeichnung, false));
     }
 
     private void populateMassstab() {
@@ -1984,7 +2144,7 @@ public class DBPopulator {
     }
 
     private MotorTyp addMotorTyp(String name, String bezeichnung) {
-        return save(new MotorTyp(null, name, bezeichnung, false));
+        return motorTypPersister.save(new MotorTyp(null, name, bezeichnung, false));
     }
 
     private void populateMotorTyp() {
@@ -2007,16 +2167,15 @@ public class DBPopulator {
         addMotorTyp("SFCM", "Scheibenkollektor (klein)");
     }
 
-    private Produkt addProdukt(IHersteller hersteller, String bestellNr, String bezeichnung, IUnterKategorie unterKategorie,
-            IMassstab massstab, ISpurweite spurweite, IEpoch epoch, IBahnverwaltung bahnverwaltung, IGattung gattung,
-            String betreibsnummer, LocalDate bauzeit, IVorbild vorbild, IAchsfolg achsfolg, String anmerkung,
-            ISonderModell sondermodel, IAufbau aufbau, ILicht licht, IKupplung kupplung, ISteuerung steuerung,
-            IDecoderTyp decoderTyp, IMotorTyp motorTyp, BigDecimal lange) {
-        return save(new Produkt(null, hersteller, bestellNr, bezeichnung, unterKategorie,
-                 massstab, spurweite, epoch, bahnverwaltung, gattung,
-                 betreibsnummer, bauzeit, vorbild, achsfolg, anmerkung,
-                 sondermodel, aufbau, licht, kupplung, steuerung,
-                 decoderTyp, motorTyp, lange, false));
+    private Produkt addProdukt(IHersteller hersteller, String bestellNr, String bezeichnung,
+            IUnterKategorie unterKategorie, IMassstab massstab, ISpurweite spurweite, IEpoch epoch,
+            IBahnverwaltung bahnverwaltung, IGattung gattung, String betreibsnummer, LocalDate bauzeit,
+            IVorbild vorbild, IAchsfolg achsfolg, String anmerkung, ISonderModell sondermodel, IAufbau aufbau,
+            ILicht licht, IKupplung kupplung, ISteuerung steuerung, IDecoderTyp decoderTyp, IMotorTyp motorTyp,
+            BigDecimal lange) {
+        return produktPersister.save(new Produkt(null, hersteller, bestellNr, bezeichnung, unterKategorie, massstab,
+                spurweite, epoch, bahnverwaltung, gattung, betreibsnummer, bauzeit, vorbild, achsfolg, anmerkung,
+                sondermodel, aufbau, licht, kupplung, steuerung, decoderTyp, motorTyp, lange, false));
     }
 
     @SuppressWarnings("unused")
@@ -2030,7 +2189,7 @@ public class DBPopulator {
         IMotorTyp motorTyp = findMotorTyp("SFCM");
         ILicht licht = findLicht("L1V");
         IKupplung kupplung = findKupplung("RELEX");
-        IUnterKategorie unterKategorie = findUnterKategorie("LOKOMOTIV" ,"DAMPF");
+        IUnterKategorie unterKategorie = findUnterKategorie("LOKOMOTIV", "DAMPF");
         IMassstab massstab = findMassstab("H0");
         ISpurweite spurweite = findSpurweite("H0");
         IEpoch epoch = findEpoch("III");
@@ -2040,15 +2199,13 @@ public class DBPopulator {
         IAchsfolg achsfolg = findAchsfolg("CH2T");
         IAufbau aufbau = findAufbau("LK");
 
-        addProdukt(hersteller, "3000", "BR 89.0", unterKategorie, massstab,
-            spurweite, epoch, bahnverwaltung, gattung, "89 028",
-            LocalDate.of(1907,1,1), vorbild, achsfolg, null,
-            null, aufbau, licht, kupplung, steuerung,
-            null, motorTyp, BigDecimal.valueOf(11.0));
+        addProdukt(hersteller, "3000", "BR 89.0", unterKategorie, massstab, spurweite, epoch, bahnverwaltung, gattung,
+                "89 028", LocalDate.of(1907, 1, 1), vorbild, achsfolg, null, null, aufbau, licht, kupplung, steuerung,
+                null, motorTyp, BigDecimal.valueOf(11.0));
     }
 
     private Protokoll addProtokoll(String name, String bezeichnung) {
-        return save(new Protokoll(null, name, bezeichnung, false));
+        return protokollPersister.save(new Protokoll(null, name, bezeichnung, false));
     }
 
     private void populateProtokoll() {
@@ -2061,7 +2218,7 @@ public class DBPopulator {
     }
 
     private SonderModell addSonderModell(String name, String bezeichnung) {
-        return save(new SonderModell(null, name, bezeichnung, false));
+        return sonderModellPersister.save(new SonderModell(null, name, bezeichnung, false));
     }
 
     private void populateSonderModell() {
@@ -2077,7 +2234,7 @@ public class DBPopulator {
     }
 
     private Spurweite addSpurweite(String name, String bezeichnung) {
-        return save(new Spurweite(null, name, bezeichnung, false));
+        return spurweitePersister.save(new Spurweite(null, name, bezeichnung, false));
     }
 
     private void populateSpurweite() {
@@ -2096,7 +2253,7 @@ public class DBPopulator {
     }
 
     private Steuerung addSteuerung(String name, String bezeichnung) {
-        return save(new Steuerung(null, name, bezeichnung, false));
+        return steuerungPersister.save(new Steuerung(null, name, bezeichnung, false));
     }
 
     private void populateSteuerung() {
@@ -2105,33 +2262,34 @@ public class DBPopulator {
         addSteuerung("USE", "Umschaltelektronik");
     }
 
-    private Vorbild addVorbild(IGattung gattung, IUnterKategorie unterKategorie, IBahnverwaltung bahnverwaltung, String hersteller, LocalDate bauzeit,
-            Integer anzahl, String betreibsNummer, IAntrieb antrieb, IAchsfolg achsfolg, String bezeichnung, BigDecimal anfahrzugkraft,
-            BigDecimal leistung, BigDecimal dienstgewicht, Integer geschwindigkeit, BigDecimal lange, LocalDate ausserdienst,
-            BigDecimal dmTreibrad, BigDecimal dmLaufradVorn, BigDecimal dmLaufradHinten, Integer zylinder, BigDecimal dmZylinder,
-            BigDecimal kolbenhub, BigDecimal kesseluberdruck, BigDecimal rostflache, BigDecimal uberhitzerflache, BigDecimal wasservorrat,
-            BigDecimal verdampfung, Integer fahrmotoren, String motorbauart, LeistungsUbertragung leistungsUbertragung, BigDecimal reichweite, BigDecimal kapazitaet, Integer klasse, Integer sitzPlatzeKL1,
-            Integer sitzPlatzeKL2, Integer sitzPlatzeKL3, Integer sitzPlatzeKL4, String aufbauten, Integer triebkopf, 
-            Integer mittelwagen, String drehgestellbauart) {
-        return save(new Vorbild(null, gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit,
-                 anzahl, betreibsNummer, antrieb, achsfolg, bezeichnung, anfahrzugkraft,
-                 leistung, dienstgewicht, geschwindigkeit, lange, ausserdienst,
-                 dmTreibrad, dmLaufradVorn, dmLaufradHinten, zylinder, dmZylinder,
-                 kolbenhub, kesseluberdruck, rostflache, uberhitzerflache, wasservorrat,
-                 verdampfung, fahrmotoren, motorbauart, leistungsUbertragung, reichweite, kapazitaet, klasse, sitzPlatzeKL1,
-                 sitzPlatzeKL2, sitzPlatzeKL3, sitzPlatzeKL4, aufbauten, triebkopf, mittelwagen, drehgestellbauart, false));
+    private Vorbild addVorbild(IGattung gattung, IUnterKategorie unterKategorie, IBahnverwaltung bahnverwaltung,
+            String hersteller, LocalDate bauzeit, Integer anzahl, String betreibsNummer, IAntrieb antrieb,
+            IAchsfolg achsfolg, String bezeichnung, BigDecimal anfahrzugkraft, BigDecimal leistung,
+            BigDecimal dienstgewicht, Integer geschwindigkeit, BigDecimal lange, LocalDate ausserdienst,
+            BigDecimal dmTreibrad, BigDecimal dmLaufradVorn, BigDecimal dmLaufradHinten, Integer zylinder,
+            BigDecimal dmZylinder, BigDecimal kolbenhub, BigDecimal kesseluberdruck, BigDecimal rostflache,
+            BigDecimal uberhitzerflache, BigDecimal wasservorrat, BigDecimal verdampfung, Integer fahrmotoren,
+            String motorbauart, LeistungsUbertragung leistungsUbertragung, BigDecimal reichweite, BigDecimal kapazitaet,
+            Integer klasse, Integer sitzPlatzeKL1, Integer sitzPlatzeKL2, Integer sitzPlatzeKL3, Integer sitzPlatzeKL4,
+            String aufbauten, Integer triebkopf, Integer mittelwagen, String drehgestellbauart) {
+        return vorbildPersister.save(new Vorbild(null, gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit,
+                anzahl, betreibsNummer, antrieb, achsfolg, bezeichnung, anfahrzugkraft, leistung, dienstgewicht,
+                geschwindigkeit, lange, ausserdienst, dmTreibrad, dmLaufradVorn, dmLaufradHinten, zylinder, dmZylinder,
+                kolbenhub, kesseluberdruck, rostflache, uberhitzerflache, wasservorrat, verdampfung, fahrmotoren,
+                motorbauart, leistungsUbertragung, reichweite, kapazitaet, klasse, sitzPlatzeKL1, sitzPlatzeKL2,
+                sitzPlatzeKL3, sitzPlatzeKL4, aufbauten, triebkopf, mittelwagen, drehgestellbauart, false));
     }
 
     private void populateVorbild() {
         IGattung gattung = findGattung("BR89.0");
-        IUnterKategorie unterKategorie = findUnterKategorie("LOKOMOTIV" ,"DAMPF");
+        IUnterKategorie unterKategorie = findUnterKategorie("LOKOMOTIV", "DAMPF");
         IAntrieb antrieb = findAntreib("DAMPF");
         IBahnverwaltung bahnverwaltung = findBahnverwaltung("DB");
         IAchsfolg achsfolg = findAchsfolg("CH2T");
         String hersteller = "Henschel";
         LocalDate bauzeit = LocalDate.of(1934, 1, 1);
         Integer anzahl = 10;
-        String  betreibsNummer = "89 006"; 
+        String betreibsNummer = "89 006";
         BigDecimal anfahrzugkraft = null;
         BigDecimal leistung = new BigDecimal("385.0");
         BigDecimal dienstgewicht = new BigDecimal("46.6");
@@ -2163,19 +2321,17 @@ public class DBPopulator {
         Integer triebkopf = null;
         Integer mittelwagen = null;
         String drehgestellbauart = null;
- 
-        addVorbild(gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit,
-                anzahl, betreibsNummer, antrieb, achsfolg, "BR 89.0", anfahrzugkraft,
-                leistung, dienstgewicht, geschwindigkeit, lange, ausserdienst,
-                dmTreibrad, dmLaufradVorn, dmLaufradHinten, zylinder, dmZylinder,
-                kolbenhub, kesseluberdruck, rostflache, uberhitzerflache, wasservorrat,
-                verdampfung, fahrmotoren, motorbauart, leistungsUbertragung,
-                reichweite, kapazitaet, klasse, sitzPlatzeKL1, sitzPlatzeKL2, sitzPlatzeKL3, 
-                sitzPlatzeKL4, aufbauten, triebkopf, mittelwagen, drehgestellbauart);
+
+        addVorbild(gattung, unterKategorie, bahnverwaltung, hersteller, bauzeit, anzahl, betreibsNummer, antrieb,
+                achsfolg, "BR 89.0", anfahrzugkraft, leistung, dienstgewicht, geschwindigkeit, lange, ausserdienst,
+                dmTreibrad, dmLaufradVorn, dmLaufradHinten, zylinder, dmZylinder, kolbenhub, kesseluberdruck,
+                rostflache, uberhitzerflache, wasservorrat, verdampfung, fahrmotoren, motorbauart, leistungsUbertragung,
+                reichweite, kapazitaet, klasse, sitzPlatzeKL1, sitzPlatzeKL2, sitzPlatzeKL3, sitzPlatzeKL4, aufbauten,
+                triebkopf, mittelwagen, drehgestellbauart);
     }
 
     private Wahrung addWahrung(String name, String bezeichnung, Integer dezimal) {
-        return save(new Wahrung(null, name, bezeichnung, dezimal, false));
+        return wahrungPersister.save(new Wahrung(null, name, bezeichnung, dezimal, false));
     }
 
     private void populateWahrung() {
@@ -2188,7 +2344,7 @@ public class DBPopulator {
     }
 
     private Zug addZug(String name, String bezeichnung, IZugTyp zugTyp) {
-        return save(new Zug(null, name, bezeichnung, zugTyp, false));
+        return zugPersister.save(new Zug(null, name, bezeichnung, zugTyp, false));
     }
 
     private void addConsist(IZug zug, Integer position, IArtikel artikel) {
@@ -2204,7 +2360,7 @@ public class DBPopulator {
     }
 
     private ZugTyp addZugTyp(String name, String bezeichnung) {
-        return save(new ZugTyp(null, name, bezeichnung, false));
+        return zugTypPersister.save(new ZugTyp(null, name, bezeichnung, false));
     }
 
     private void populateZugTyp() {
@@ -2217,155 +2373,110 @@ public class DBPopulator {
         addZugTyp("MILITAR", "Militär Zug");
     }
 
-    private <E extends IItem<?>> E findByKey(IKey key, Class<E> entityClass) {
-        try {
-            IPersister<E> persister = persisterFactory.createPersister(entityClass);
-
-            return persister.findByKey(key, false);
-        } catch (Exception e) {
-            logger.error("Error finding " + key, e);
-        }
-        
-        return null;
-    }
-
-    private <E extends IItem<?>> E findName(String name, Class<E> entityClass) {
-        return findByKey(new NameKey(name), entityClass);
-    }
-
     private IAchsfolg findAchsfolg(String name) {
-        return findName(name, Achsfolg.class);
+        return achsfolgPersister.findByName(name);
     }
 
     private IAntrieb findAntreib(String name) {
-        return findName(name, Antrieb.class);
+        return antriebPersister.findByName(name);
     }
 
     private IAufbau findAufbau(String name) {
-        return findName(name, Aufbau.class);
+        return aufbauPersister.findByName(name);
     }
 
     private IBahnverwaltung findBahnverwaltung(String name) {
-        return findName(name, Bahnverwaltung.class);
+        return bahnverwaltungPersister.findByName(name);
     }
 
     protected IDecoder findDecoder(String name) {
-        return findName(name, Decoder.class);
+        return decoderPersister.findByDecoderId(name);
     }
 
     private IDecoderTyp findDecoderTyp(String hersteller, String bestellNr) {
-        return findByKey(new DecoderTypKey(findHersteller(hersteller), bestellNr), DecoderTyp.class);
+        return decoderTypPersister.findByHerstellerAndBestelNr(hersteller, bestellNr);
     }
 
     private IEpoch findEpoch(String name) {
-        return findName(name, Epoch.class);
+        return epochPersister.findByName(name);
     }
 
     private IGattung findGattung(String name) {
-        return findName(name, Gattung.class);
+        return gattungPersister.findByName(name);
     }
 
     private IHersteller findHersteller(String name) {
-        return findName(name, Hersteller.class);
+        return herstellerPersister.findByName(name);
     }
 
     private IKategorie findKategorie(String name) {
-        return findName(name, Kategorie.class);
+        return kategoriePersister.findByName(name);
     }
 
-
     private IKupplung findKupplung(String name) {
-        return findName(name, Kupplung.class);
+        return kupplungPersister.findByName(name);
     }
 
     private ILicht findLicht(String name) {
-        return findName(name, Licht.class);
+        return lichtPersister.findByName(name);
     }
 
     private IMassstab findMassstab(String name) {
-        return findName(name, Massstab.class);
+        return massstabPersister.findByName(name);
     }
 
     private IMotorTyp findMotorTyp(String name) {
-        return findName(name, MotorTyp.class);
+        return motorTypPersister.findByName(name);
     }
 
     private IProdukt findProdukt(String hersteller, String bestellNr) {
-        return findByKey(new ProduktKey(findHersteller(hersteller), bestellNr), Produkt.class);
+        return produktPersister.findByHerstellerAndBestellNr(hersteller, bestellNr);
     }
 
     private IProtokoll findProtokoll(String name) {
-        return findName(name, Protokoll.class);
+        return protokollPersister.findByName(name);
     }
 
     protected ISonderModell findSonderModell(String name) {
-        return findName(name, SonderModell.class);
+        return sonderModellPersister.findByName(name);
     }
 
     private ISpurweite findSpurweite(String name) {
-        return findName(name, Spurweite.class);
+        return spurweitePersister.findByName(name);
     }
 
     private ISteuerung findSteuerung(String name) {
-        return findName(name, Steuerung.class);
+        return steuerungPersister.findByName(name);
     }
 
     private IUnterKategorie findUnterKategorie(String kategorie, String unterKategorie) {
-        return findByKey(new UnterKategorieKey(findKategorie(kategorie), unterKategorie), UnterKategorie.class);
+        return unterKategoriePersister.findByKategorieAndName(kategorie, unterKategorie);
     }
 
     private IVorbild findVorbild(String name) {
-        return findByKey(new VorbildKey(findGattung(name)), Vorbild.class);
+        return vorbildPersister.findByGattung(name);
     }
 
     private IWahrung findWahrung(String name) {
-        return findName(name, Wahrung.class);
+        return wahrungPersister.findByName(name);
     }
 
     private IZugTyp findZugTyp(String name) {
-        return findByKey(new NameKey(name), ZugTyp.class);
-    }
-    
-    private <E extends IItem<?>> E save(E item) {
-        try {
-            @SuppressWarnings("unchecked")
-            IPersister<E> persister = (IPersister<E>) persisterFactory.createPersister(item.getClass());
-
-            return persister.save(item);
-        } catch (Exception e) {
-            logger.error("Failed to save " + item + " : " + e.getMessage(), e);
-        }
-        
-        return null;
+        return zugTypPersister.findByName(name);
     }
 
-    private <E extends IItem<?>> E update(E item) {
+    private void dump(IItemRepository<?> persister) {
         try {
-            @SuppressWarnings("unchecked")
-            IPersister<E> persister = (IPersister<E>) persisterFactory.createPersister(item.getClass());
-
-            return persister.update(item);
-        } catch (Exception e) {
-            logger.error("Failed to save " + item + " : " + e.getMessage(), e);
-        }
-        
-        return null;
-    }
-
-    private <E extends IItem<?>> void dump(Class<E> entityClass) {
-        try {
-            IPersister<E> persister = persisterFactory.createPersister(entityClass);
-        
             int i = 0;
-    
-            for (E item : persister.findAll()) {
+
+            for (IItem item : persister.findAll()) {
                 i++;
                 System.out.println(item);
             }
-            
-            logger.debug("dumped: " + i + " " + entityClass.getSimpleName());
+
+            logger.debug("dumped: {} {}", i, persister.getClass().getSimpleName());
         } catch (Exception e) {
-            logger.error("dump error: " + entityClass.getSimpleName());
+            logger.error("dump error: {}", persister.getClass().getSimpleName());
         }
     }
 }

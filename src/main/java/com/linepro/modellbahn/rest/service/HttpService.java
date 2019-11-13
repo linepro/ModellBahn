@@ -4,23 +4,23 @@ import static com.linepro.modellbahn.rest.util.AcceptableMediaTypes.MEDIA_TYPES;
 
 import java.io.File;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.linepro.modellbahn.rest.util.AbstractService;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.util.StaticContentFinder;
 
-@Path(ApiPaths.WEB_ROOT)
+@Controller
+@RequestMapping(ApiPaths.WEB_ROOT)
 public class HttpService extends AbstractService {
 
     protected final Logger logger;
@@ -36,25 +36,21 @@ public class HttpService extends AbstractService {
         return logger;
     }
 
-    @GET
-    @Path(ApiPaths.WEB_PART)
-    @Produces()
-    public Response getFile(@PathParam(ApiPaths.PATH_PARAM_NAME) String path) {
+    @GetMapping(ApiPaths.WEB_PART)
+    public ResponseEntity<?> getFile(@PathVariable(ApiPaths.PATH_PARAM_NAME) String path) {
         logGet(path);
 
         return handleRequest(path);
     }
 
-    @POST
-    @Path(ApiPaths.WEB_PART)
-    @Produces()
-    public Response postFile(@PathParam(ApiPaths.PATH_PARAM_NAME) String path) {
+    @PostMapping(ApiPaths.WEB_PART)
+    public ResponseEntity<?> postFile(@PathVariable(ApiPaths.PATH_PARAM_NAME) String path) {
         logPost(path);
         
         return handleRequest(path);
     }
 
-    private Response handleRequest(String path) {
+    private ResponseEntity<?> handleRequest(String path) {
         String requested = StringUtils.strip(path, ApiPaths.SEPARATOR);
 
         String filePath = StringUtils.isBlank(requested) ? "index.html" : requested;
@@ -62,10 +58,10 @@ public class HttpService extends AbstractService {
         File file = StaticContentFinder.getFinder().findFile(filePath);
 
         if (file != null) {
-            return Response.ok(file).type(getMediaType(file)).build();
+            return ResponseEntity.ok().contentType(getMediaType(file)).body(file);
         }
 
-        return notFound().build();
+        return notFound();
     }
 
     private String getExtension(File path) {
@@ -88,6 +84,6 @@ public class HttpService extends AbstractService {
             return mediaType;
         }
 
-        return MediaType.APPLICATION_OCTET_STREAM_TYPE;
+        return MediaType.APPLICATION_OCTET_STREAM;
     }
 }

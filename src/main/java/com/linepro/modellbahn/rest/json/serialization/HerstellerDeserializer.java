@@ -1,16 +1,16 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonComponent;
+
 import com.linepro.modellbahn.model.IHersteller;
+import com.linepro.modellbahn.persistence.repository.IHerstellerRepository;
 
-public class HerstellerDeserializer extends AbstractItemDeserializer<IHersteller> {
+@JsonComponent
+public class HerstellerDeserializer extends AbstractNamedItemDeserializer<IHersteller> {
 
-    private static final long serialVersionUID = -871977401187476757L;
-
-    protected HerstellerDeserializer() {
-        this(IHersteller.class);
-    }
-
-    protected HerstellerDeserializer(Class<IHersteller> vc) {
-        super(vc);
+	@Autowired
+    protected HerstellerDeserializer(IHerstellerRepository persister) {
+        super(persister);
     }
 }

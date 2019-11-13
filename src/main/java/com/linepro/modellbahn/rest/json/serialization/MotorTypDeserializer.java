@@ -1,16 +1,16 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonComponent;
+
 import com.linepro.modellbahn.model.IMotorTyp;
+import com.linepro.modellbahn.persistence.repository.IMotorTypRepository;
 
-public class MotorTypDeserializer extends AbstractItemDeserializer<IMotorTyp> {
+@JsonComponent
+public class MotorTypDeserializer extends AbstractNamedItemDeserializer<IMotorTyp> {
 
-    private static final long serialVersionUID = -871977401187476757L;
-
-    protected MotorTypDeserializer() {
-        this(IMotorTyp.class);
-    }
-
-    protected MotorTypDeserializer(Class<IMotorTyp> vc) {
-        super(vc);
+    @Autowired
+    protected MotorTypDeserializer(IMotorTypRepository persister) {
+        super(persister);
     }
 }

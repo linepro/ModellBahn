@@ -1,8 +1,5 @@
 package com.linepro.modellbahn.model.impl;
 
-import static javax.ws.rs.HttpMethod.POST;
-
-import java.net.URI;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -17,7 +14,6 @@ import javax.persistence.UniqueConstraint;
 
 import com.linepro.modellbahn.model.IKategorie;
 import com.linepro.modellbahn.model.IUnterKategorie;
-import com.linepro.modellbahn.model.keys.NameKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -32,7 +28,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
 @Entity(name = DBNames.KATEGORIE)
 @Table(name = DBNames.KATEGORIE, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
         @UniqueConstraint(columnNames = { DBNames.NAME }) })
-public class Kategorie extends AbstractNamedItem<NameKey> implements IKategorie {
+public class Kategorie extends AbstractNamedItem<Kategorie> implements IKategorie {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2964561580499221297L;
@@ -92,17 +88,6 @@ public class Kategorie extends AbstractNamedItem<NameKey> implements IKategorie 
     @Override
     public void removeUnterKategorie(IUnterKategorie unterKategorie) {
         getUnterKategorien().remove(unterKategorie);
-    }
-
-    @Override
-    protected void addModification(URI root) {
-        super.addModification(root);
-        getLinks().add(fileLink(root, ApiNames.UNTER_KATEGORIEN, ApiNames.ADD, POST));
-    }
-
-    @Override
-    protected void addChildLinks(URI root, boolean modification) {
-        addLinks(root, getUnterKategorien(), modification);
     }
 
     @Override

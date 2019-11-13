@@ -1,16 +1,16 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonComponent;
+
 import com.linepro.modellbahn.model.IEpoch;
+import com.linepro.modellbahn.persistence.repository.IEpochRepository;
 
-public class EpochDeserializer extends AbstractItemDeserializer<IEpoch> {
+@JsonComponent
+public class EpochDeserializer extends AbstractNamedItemDeserializer<IEpoch> {
 
-    private static final long serialVersionUID = -871977401187476757L;
-
-    protected EpochDeserializer() {
-        this(IEpoch.class);
-    }
-
-    protected EpochDeserializer(Class<IEpoch> vc) {
-        super(vc);
+	@Autowired
+    protected EpochDeserializer(IEpochRepository persister) {
+        super(persister);
     }
 }

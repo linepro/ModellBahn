@@ -20,7 +20,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.IKategorie;
 import com.linepro.modellbahn.model.IUnterKategorie;
-import com.linepro.modellbahn.model.keys.UnterKategorieKey;
 import com.linepro.modellbahn.model.util.AbstractNamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
@@ -39,7 +38,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @Index(columnList = DBNames.KATEGORIE_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.KATEGORIE_ID, DBNames.NAME }) })
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, length = 50))
-public class UnterKategorie extends AbstractNamedItem<UnterKategorieKey> implements IUnterKategorie {
+public class UnterKategorie extends AbstractNamedItem<UnterKategorie> implements IUnterKategorie {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5346529720680464691L;
@@ -135,7 +134,7 @@ public class UnterKategorie extends AbstractNamedItem<UnterKategorieKey> impleme
     }
 
     @Override
-    public int compareTo(IItem<?> other) {
+    public int compareTo(IItem other) {
       if (other instanceof IUnterKategorie) {
         return new CompareToBuilder()
             .append(getKategorie().getName(), ((IUnterKategorie) other).getKategorie().getName())

@@ -1,16 +1,16 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonComponent;
+
 import com.linepro.modellbahn.model.ISpurweite;
+import com.linepro.modellbahn.persistence.repository.ISpurweiteRepository;
 
-public class SpurweiteDeserializer extends AbstractItemDeserializer<ISpurweite> {
+@JsonComponent
+public class SpurweiteDeserializer extends AbstractNamedItemDeserializer<ISpurweite> {
 
-    private static final long serialVersionUID = -871977401187476757L;
-
-    protected SpurweiteDeserializer() {
-        this(ISpurweite.class);
-    }
-
-    protected SpurweiteDeserializer(Class<ISpurweite> vc) {
-        super(vc);
+    @Autowired
+    protected SpurweiteDeserializer(ISpurweiteRepository persister) {
+        super(persister);
      }
 }

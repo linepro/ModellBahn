@@ -21,7 +21,6 @@ import com.linepro.modellbahn.model.IArtikel;
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.IZug;
 import com.linepro.modellbahn.model.IZugConsist;
-import com.linepro.modellbahn.model.keys.ZugConsistKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
@@ -43,7 +42,7 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.ZUG_ID, DBNames.POSITION })
         })
-public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsist {
+public class ZugConsist extends AbstractItem<ZugConsist> implements IZugConsist {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3941436184732408563L;
@@ -140,7 +139,7 @@ public class ZugConsist extends AbstractItem<ZugConsistKey> implements IZugConsi
     }
 
     @Override
-    public int compareTo(IItem<?> other) {
+    public int compareTo(IItem other) {
         if (other instanceof ZugConsist) {
             return new CompareToBuilder()
                     .append(getZug(), ((ZugConsist) other).getZug())

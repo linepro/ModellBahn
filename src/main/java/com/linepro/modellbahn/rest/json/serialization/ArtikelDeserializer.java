@@ -1,26 +1,25 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonComponent;
+
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.linepro.modellbahn.model.IArtikel;
-import com.linepro.modellbahn.model.keys.ArtikelKey;
-import com.linepro.modellbahn.persistence.IKey;
+import com.linepro.modellbahn.persistence.repository.IArtikelRepository;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
+@JsonComponent
 public class ArtikelDeserializer extends AbstractItemDeserializer<IArtikel> {
 
-    private static final long serialVersionUID = -871977401187476757L;
+    private IArtikelRepository persister;
 
-    protected ArtikelDeserializer() {
-        this(IArtikel.class);
-    }
-
-    protected ArtikelDeserializer(Class<IArtikel> vc) {
-        super(vc, ApiNames.ARTIKEL_ID);
+    @Autowired
+    protected ArtikelDeserializer(IArtikelRepository persister) {
+        this.persister = persister;
     }
 
     @Override
-    protected IKey getKey(ObjectNode node) throws Exception {
-        String artikelId = node.get(fieldName).asText();
-        return new ArtikelKey(artikelId);
+	IArtikel findItem(ObjectNode node) throws Exception {
+		return persister.findByArtikelId(node.get(ApiNames.ARTIKEL_ID).asText());
     }
 }

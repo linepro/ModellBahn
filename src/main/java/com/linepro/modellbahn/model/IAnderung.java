@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.linepro.modellbahn.model.enums.AnderungsTyp;
-import com.linepro.modellbahn.model.keys.AnderungKey;
 import com.linepro.modellbahn.model.refs.IAnderungRef;
 import com.linepro.modellbahn.model.refs.IArtikelRef;
 import com.linepro.modellbahn.rest.json.Views;
@@ -21,7 +20,6 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * IArtikel.
@@ -32,12 +30,12 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ApiNames.ID, ApiNames.ARTIKEL_ID, ApiNames.ANDERUNGSDATUM, ApiNames.ANDERUNGS_TYP, ApiNames.BEZEICHNUNG, ApiNames.STUCK, ApiNames.ANMERKUNG, ApiNames.DELETED, ApiNames.LINKS})
 @ApiModel(value = ApiNames.ANDERUNG, description = "Changes tp an article")
-public interface IAnderung extends IItem<AnderungKey>, IAnderungRef {
+public interface IAnderung extends IItem, IAnderungRef {
     
     @JsonGetter(ApiNames.ARTIKEL)
     @JsonSerialize(as = IArtikelRef.class)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IArtikelRef", value = "Changed artikel", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IArtikelRef", value = "Changed artikel", access = "READ_ONLY", required = true)
     IArtikel getArtikel();
 
     @JsonSetter(ApiNames.ARTIKEL)

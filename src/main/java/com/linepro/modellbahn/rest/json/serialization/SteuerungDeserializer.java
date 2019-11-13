@@ -1,16 +1,16 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonComponent;
+
 import com.linepro.modellbahn.model.ISteuerung;
+import com.linepro.modellbahn.persistence.repository.ISteuerungRepository;
 
-public class SteuerungDeserializer extends AbstractItemDeserializer<ISteuerung> {
+@JsonComponent
+public class SteuerungDeserializer extends AbstractNamedItemDeserializer<ISteuerung> {
 
-    private static final long serialVersionUID = -871977401187476757L;
-
-    protected SteuerungDeserializer() {
-        this(ISteuerung.class);
-    }
-
-    protected SteuerungDeserializer(Class<ISteuerung> vc) {
-        super(vc);
+    @Autowired
+    protected SteuerungDeserializer(ISteuerungRepository persister) {
+         super(persister);
     }
 }

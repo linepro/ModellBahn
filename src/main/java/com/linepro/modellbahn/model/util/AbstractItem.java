@@ -1,14 +1,7 @@
 package com.linepro.modellbahn.model.util;
 
-import static javax.ws.rs.HttpMethod.DELETE;
-import static javax.ws.rs.HttpMethod.GET;
-import static javax.ws.rs.HttpMethod.PUT;
-
-import com.linepro.modellbahn.rest.util.ApiPaths;
-import java.net.URI;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -18,16 +11,17 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-import javax.ws.rs.core.Link;
-import javax.ws.rs.core.UriBuilder;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.LinkRelation;
+import org.springframework.hateoas.Links;
+import org.springframework.hateoas.RepresentationModel;
 
 import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.persistence.IKey;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
@@ -39,21 +33,19 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  */
 @MappedSuperclass
 @Cacheable
-public abstract class AbstractItem<K extends IKey> implements IItem<K> {
+public abstract class AbstractItem<T extends RepresentationModel<? extends T>> extends RepresentationModel<T> implements IItem {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 938276986391979417L;
 
     /** The primary key id. */
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.id.notnull}")
+    @GeneratedValue
     private Long id;
 
 	/** The soft deleted state. */
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.deleted.notnull}")
 	private Boolean deleted;
-	
-	/** Set of HATEOAS links for Json serialization */
-    private final Set<Link> links = new HashSet<>();
 
 	/**
 	 * Instantiates a new abstract item.
@@ -98,12 +90,6 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
 
     @Override
     @Transient
-    public Set<Link> getLinks() {
-        return links;
-    }
-
-    @Override
-    @Transient
     public String getParentId() {
         return null;
     }
@@ -114,59 +100,50 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
         return getId().toString();
     }
 
-    protected Link makeLink(URI uri, String path, String rel, String method) {
-        return Link.fromUri(UriBuilder.fromUri(uri).path(path).build()).rel(rel).type(method).build();
-    }
-
-    protected Link fileLink(URI root, String field, String rel, String method) {
-        return makeLink(root, getLinkId() + ApiPaths.SEPARATOR + field, rel + '-' + field, method);
+    @Override
+    @Transient
+    public Links getLinks() {
+        return super.getLinks();
     }
 
     @Override
-    public IItem<K> addLinks(URI root, boolean modification) {
-        getLinks().clear();
-
-        addParent(root);
-        addSelf(root);
-
-        if (modification) {
-            addModification(root);
-        }
-
-        addChildLinks(root, modification);
-
-        return this;
-    }
-    
-    protected void addChildLinks(URI root, boolean modification) {
-    }
-
-    protected void addLinks(URI root, Collection<? extends IItem<?>> items, boolean modification) {
-        if (!items.isEmpty()) {
-            for (IItem<?> item : items) {
-                item.addLinks(root, modification);
-            }
-        }
-        
-    }
-
-    private void addParent(URI root) {
-        if (getParentId() != null) {
-            getLinks().add(makeLink(root, getParentId(), ApiNames.PARENT, GET));
-        }
-    }
-
-    private void addSelf(URI root) {
-        getLinks().add(makeLink(root, getLinkId(), ApiNames.SELF, GET));
-    }
-
-    protected void addModification(URI root) {
-      getLinks().add(makeLink(root, getLinkId(), ApiNames.DELETE, DELETE));
-      getLinks().add(makeLink(root, getLinkId(), ApiNames.UPDATE, PUT));
+    @Transient
+    public Optional<Link> getLink(String relation) {
+        return super.getLink(relation);
     }
 
     @Override
-    public int compareTo(IItem<?> other) {
+    @Transient
+    public Optional<Link> getLink(LinkRelation relation) {
+        return super.getLink(relation);
+    }
+
+    @Override
+    @Transient
+    public Link getRequiredLink(String relation) {
+        return super.getRequiredLink(relation);
+    }
+
+    @Override
+    @Transient
+    public Link getRequiredLink(LinkRelation relation) {
+        return super.getRequiredLink(relation);
+    }
+
+    @Override
+    @Transient
+    public List<Link> getLinks(String relation) {
+        return super.getLinks(relation);
+    }
+
+    @Override
+    @Transient
+    public List<Link> getLinks(LinkRelation relation) {
+        return super.getLinks(relation);
+    }
+
+    @Override
+    public int compareTo(IItem other) {
         return new CompareToBuilder()
                 .append(getId(), other.getId())
                 .toComparison();
@@ -191,7 +168,7 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
 			return false;
 		}
 
-		IItem<?> other = (IItem<?>) obj;
+		IItem other = (IItem) obj;
 
 		return new EqualsBuilder().append(getId(), other.getId()).isEquals();
 	}
@@ -201,6 +178,7 @@ public abstract class AbstractItem<K extends IKey> implements IItem<K> {
 		return new ToStringBuilder(this)
 		        .append(ApiNames.ID, getId())
 				.append(ApiNames.DELETED, getDeleted())
+                .appendSuper(super.toString())
 				.toString();
 	}
 }

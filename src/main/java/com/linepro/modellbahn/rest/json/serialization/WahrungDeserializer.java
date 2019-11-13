@@ -1,16 +1,16 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonComponent;
+
 import com.linepro.modellbahn.model.IWahrung;
+import com.linepro.modellbahn.persistence.repository.IWahrungRepository;
 
-public class WahrungDeserializer extends AbstractItemDeserializer<IWahrung> {
+@JsonComponent
+public class WahrungDeserializer extends AbstractNamedItemDeserializer<IWahrung> {
 
-    private static final long serialVersionUID = -871977401187476757L;
-
-    protected WahrungDeserializer() {
-        this(IWahrung.class);
-    }
-
-    protected WahrungDeserializer(Class<IWahrung> vc) {
-        super(vc);
+    @Autowired
+    protected WahrungDeserializer(IWahrungRepository persister) {
+        super(persister);
     }
 }

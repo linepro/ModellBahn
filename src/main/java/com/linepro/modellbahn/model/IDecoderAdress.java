@@ -8,10 +8,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.model.keys.DecoderAdressKey;
+import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.model.refs.IDecoderAdressRef;
 import com.linepro.modellbahn.model.refs.IDecoderRef;
-import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.rest.json.serialization.DecoderDeserializer;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -28,7 +27,7 @@ import io.swagger.annotations.ApiModelProperty;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.DECODER, ApiNames.INDEX, ApiNames.ADRESS_TYP, ApiNames.ADRESS, ApiNames.DELETED, ApiNames.LINKS })
 @ApiModel(value = ApiNames.ADRESS, description = "Decoder address setting.")
-public interface IDecoderAdress extends IItem<DecoderAdressKey>, IDecoderAdressRef {
+public interface IDecoderAdress extends IItem, IDecoderAdressRef {
 
     @JsonGetter(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)

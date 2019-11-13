@@ -1,12 +1,6 @@
 package com.linepro.modellbahn.model.impl;
 
-import static javax.ws.rs.HttpMethod.DELETE;
-import static javax.ws.rs.HttpMethod.POST;
-import static javax.ws.rs.HttpMethod.PUT;
-
-import com.linepro.modellbahn.persistence.util.PathConverter;
 import java.math.BigDecimal;
-import java.net.URI;
 import java.nio.file.Path;
 import java.util.Set;
 import java.util.TreeSet;
@@ -33,6 +27,7 @@ import javax.validation.constraints.Pattern;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.validator.constraints.Range;
 
 import com.linepro.modellbahn.model.IDecoderTyp;
 import com.linepro.modellbahn.model.IDecoderTypAdress;
@@ -43,15 +38,14 @@ import com.linepro.modellbahn.model.IItem;
 import com.linepro.modellbahn.model.IProtokoll;
 import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.model.enums.Stecker;
-import com.linepro.modellbahn.model.keys.DecoderTypKey;
 import com.linepro.modellbahn.model.util.AbstractItem;
 import com.linepro.modellbahn.model.validation.Fahrstufe;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
+import com.linepro.modellbahn.persistence.util.PathConverter;
 import com.linepro.modellbahn.rest.util.ApiNames;
 import com.linepro.modellbahn.rest.util.ApiPaths;
 import com.linepro.modellbahn.util.ToStringBuilder;
-import org.hibernate.validator.constraints.Range;
 
 /**
  * DecoderTyp. Represents a Decoder type (manufacturer : part numer)
@@ -63,7 +57,7 @@ import org.hibernate.validator.constraints.Range;
 @Table(name = DBNames.DECODER_TYP, indexes = { @Index(columnList = DBNames.HERSTELLER_ID),
         @Index(columnList = DBNames.PROTOKOLL_ID) }, uniqueConstraints = {
                 @UniqueConstraint(columnNames = { DBNames.HERSTELLER_ID, DBNames.BESTELL_NR }) })
-public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderTyp {
+public class DecoderTyp extends AbstractItem<DecoderTyp> implements IDecoderTyp {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8503812316290492490L;
@@ -348,26 +342,9 @@ public class DecoderTyp extends AbstractItem<DecoderTypKey> implements IDecoderT
     public String getLinkId() {
         return String.format(ApiPaths.DECODER_TYP_LINK, getHersteller().getLinkId(), getBestellNr());
     }
-
-  @Override
-  protected void addModification(URI root) {
-    super.addModification(root);
-    getLinks().add(fileLink(root, ApiNames.ANLEITUNGEN, ApiNames.UPDATE, PUT));
-    getLinks().add(fileLink(root, ApiNames.ANLEITUNGEN, ApiNames.DELETE, DELETE));
-    getLinks().add(fileLink(root, ApiNames.ADRESSEN, ApiNames.ADD, POST));
-    getLinks().add(fileLink(root, ApiNames.CVS, ApiNames.ADD, POST));
-    getLinks().add(fileLink(root, ApiNames.FUNKTIONEN, ApiNames.ADD, POST));
-  }
-
-    @Override
-    protected void addChildLinks(URI root, boolean modification) {
-        addLinks(root, getAdressen(), modification);
-        addLinks(root, getCVs(), modification);
-        addLinks(root, getFunktionen(), modification);
-    }
     
     @Override
-    public int compareTo(IItem<?> other) {
+    public int compareTo(IItem other) {
         if (other instanceof DecoderTyp) {
             return new CompareToBuilder()
                     .append(getHersteller(), ((DecoderTyp) other).getHersteller())

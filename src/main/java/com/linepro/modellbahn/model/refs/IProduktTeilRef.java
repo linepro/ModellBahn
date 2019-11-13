@@ -10,16 +10,15 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 @JsonPropertyOrder({ ApiNames.TEIL, ApiNames.ANZAHL, ApiNames.LINKS })
 @ApiModel(value = ApiNames.TEIL, description = "Part of product (spares for rolling stock - contents for set &c).")
-public interface IProduktTeilRef extends ILinkRef {
+public interface IProduktTeilRef {
 
     @JsonGetter(ApiNames.TEIL)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IProduktRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IProduktRef", value = "Sub product details (spare parts / set contents)", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IProduktRef", value = "Sub product details (spare parts / set contents)", access = "READ_ONLY", required = true)
     IProdukt getTeil();
 
     @JsonGetter(ApiNames.ANZAHL)

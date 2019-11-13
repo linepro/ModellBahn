@@ -1,36 +1,25 @@
 package com.linepro.modellbahn.rest.json.serialization;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonComponent;
+
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.linepro.modellbahn.model.IGattung;
 import com.linepro.modellbahn.model.IVorbild;
-import com.linepro.modellbahn.model.keys.VorbildKey;
-import com.linepro.modellbahn.persistence.IKey;
-import com.linepro.modellbahn.persistence.IPersister;
-import com.linepro.modellbahn.persistence.impl.StaticPersisterFactory;
+import com.linepro.modellbahn.persistence.repository.IVorbildRepository;
 import com.linepro.modellbahn.rest.util.ApiNames;
 
-public class VorbildDeserializer extends  AbstractItemDeserializer<IVorbild> {
+@JsonComponent
+public class VorbildDeserializer extends AbstractItemDeserializer<IVorbild> {
 
-    private static final long serialVersionUID = -871977401187476757L;
+    private final IVorbildRepository persister;
 
-    private final IPersister<IGattung> gattungPerisister;
-
-    protected VorbildDeserializer() {
-        this(IVorbild.class);
-    }
-
-    protected VorbildDeserializer(Class<IVorbild> vc) {
-        super(vc);
-        
-        gattungPerisister = StaticPersisterFactory.get().createPersister(IGattung.class);
+    @Autowired
+    protected VorbildDeserializer(IVorbildRepository persister) {
+        this.persister = persister;
     }
 
     @Override
-    protected IKey getKey(ObjectNode node) throws Exception {
-        JsonNode gattungNode = node.get(ApiNames.GATTUNG);
-        String name = gattungNode.get(ApiNames.NAMEN).asText();
-        IGattung gattung = gattungPerisister.findByKey(name, false);
-        return new VorbildKey(gattung);
+    protected IVorbild findItem(ObjectNode node) throws Exception {
+        return persister.findByGattung(node.get(ApiNames.GATTUNG).get(ApiNames.NAMEN).asText());
     }
 }

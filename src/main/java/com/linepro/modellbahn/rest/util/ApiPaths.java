@@ -127,6 +127,9 @@ public interface ApiPaths {
 
     String NAME_PART = FIELD_START + NAME_PARAM_NAME + NOT_NULL_REGEX + FIELD_END;
 
+    String ADD = "/";
+    String SEARCH = "/";
+
     String ABBILDUNG_PART = FIELD_START + NAME_PARAM_NAME + NOT_NULL_REGEX + FIELD_END + SEPARATOR + ApiNames.ABBILDUNG;
     String ABBILDUNG_LOG = LOG_PREFIX + SEPARATOR + ApiNames.ABBILDUNG;
 

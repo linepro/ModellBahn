@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.model.keys.ZugConsistKey;
 import com.linepro.modellbahn.model.refs.IZugConsistRef;
 import com.linepro.modellbahn.model.refs.IZugRef;
 import com.linepro.modellbahn.rest.json.Views;
@@ -18,7 +17,6 @@ import com.linepro.modellbahn.rest.util.ApiNames;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 /**
  * IZugConsist.
@@ -29,12 +27,12 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.ID, ApiNames.ZUG, ApiNames.POSITION, ApiNames.ARTIKEL, ApiNames.DELETED, ApiNames.LINKS })
 @ApiModel(value = ApiNames.CONSIST, description = "Rolling stock by poisition in a train.")
-public interface IZugConsist extends IItem<ZugConsistKey>, IZugConsistRef {
+public interface IZugConsist extends IItem, IZugConsistRef {
 
     @JsonGetter(ApiNames.ZUG)
     @JsonView(Views.DropDown.class)
     @JsonSerialize(as= IZugRef.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IZugRef", value = "Parent train", accessMode = AccessMode.READ_ONLY, required = true)
+    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.refs.IZugRef", value = "Parent train", access = "READ_ONLY", required = true)
     IZug getZug();
 
     @JsonSetter(ApiNames.ZUG)

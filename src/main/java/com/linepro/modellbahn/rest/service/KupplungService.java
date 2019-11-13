@@ -1,33 +1,28 @@
 package com.linepro.modellbahn.rest.service;
 
-import java.io.InputStream;
+import java.util.Map;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-
-import org.glassfish.jersey.media.multipart.FormDataBodyPart;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.model.IKupplung;
 import com.linepro.modellbahn.model.impl.Kupplung;
-import com.linepro.modellbahn.model.keys.NameKey;
+import com.linepro.modellbahn.persistence.repository.IKupplungRepository;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.rest.util.AbstractItemService;
+import com.linepro.modellbahn.rest.util.AbstractNamedItemService;
 import com.linepro.modellbahn.rest.util.AcceptableMediaTypes;
 import com.linepro.modellbahn.rest.util.ApiMessages;
 import com.linepro.modellbahn.rest.util.ApiNames;
@@ -40,6 +35,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * KupplungService. CRUD service for Kupplung
@@ -48,39 +45,34 @@ import io.swagger.annotations.ApiOperation;
  * @version $Id:$
  */
 @Api(value = ApiNames.KUPPLUNG)
-@Path(ApiPaths.KUPPLUNG)
-public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
+@RestController
+@RequestMapping(ApiPaths.KUPPLUNG)
+public class KupplungService extends AbstractNamedItemService<IKupplung,Kupplung> {
 
-    public KupplungService() {
-        super(IKupplung.class);
+    private final IKupplungRepository persister;
+    
+    @Autowired
+    public KupplungService(IKupplungRepository persister) {
+        super(persister);
+        
+        this.persister = persister;
     }
 
     @JsonCreator(mode= Mode.DELEGATING)
-    public static Kupplung create() {
+    public static IKupplung create() {
         return new Kupplung();
     }
     
-    @JsonCreator(mode= Mode.PROPERTIES)
-    public static Kupplung create(@JsonProperty(value = ApiNames.ID) Long id,
-            @JsonProperty(value = ApiNames.NAMEN) String name,
-            @JsonProperty(value = ApiNames.BEZEICHNUNG) String bezeichnung,
-            @JsonProperty(value = ApiNames.DELETED) Boolean deleted) {
-        return new Kupplung(id, name, bezeichnung, deleted);
-    }
-
     @Override
-    @GET
-    @Path(ApiPaths.NAME_PART)
-    @Produces(MediaType.APPLICATION_JSON)
+    @GetMapping(ApiPaths.NAME_PART)
     @JsonView(Views.Public.class)
     @ApiOperation(value = "Finds a Kupplung by name", response = IKupplung.class)
-    public Response get(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
+    public  ResponseEntity<?> get(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
 
     @Override
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @GetMapping(ApiPaths.SEARCH)
     @JsonView(Views.DropDown.class)
     @ApiOperation(value = "Finds Kupplungen by example", response = IKupplung.class, responseContainer = "List")
     @ApiImplicitParams({
@@ -91,100 +83,99 @@ public class KupplungService extends AbstractItemService<NameKey, IKupplung> {
             @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
             @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "Page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),
 })
-    public Response search(@Context UriInfo uriInfo) {
-        return super.search(uriInfo);
+    public    ResponseEntity<?> search(@RequestBody Map<String,String> arguments) {
+        return super.search(arguments);
     }
 
-    @POST
-    @Consumes({ MediaType.APPLICATION_JSON })
-    @Produces(MediaType.APPLICATION_JSON)
+    @Override
+    @PostMapping(ApiPaths.ADD)
+    @ResponseBody
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds a Kupplung", response = IKupplung.class)
-    public Response add(Kupplung entity) {
+    public  ResponseEntity<?> add(IKupplung entity) {
         return super.add(entity);
     }
 
-    @PUT
-    @Path(ApiPaths.NAME_PART)
-    @Consumes({ MediaType.APPLICATION_JSON })
-    @Produces(MediaType.APPLICATION_JSON)
+    @Override
+    @PutMapping(ApiPaths.NAME_PART)
+    @ResponseBody
     @JsonView(Views.Public.class)
     @ApiOperation(code = 202, value = "Updates a Kupplung by name", response = IKupplung.class)
-    public Response update(@PathParam(ApiPaths.NAME_PARAM_NAME) String name, Kupplung entity) {
+    public  ResponseEntity<?> update(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name, IKupplung entity) {
         return super.update(name, entity);
     }
 
     @Override
-    @DELETE
-    @Path(ApiPaths.NAME_PART)
-    @Produces(MediaType.APPLICATION_JSON)
+    @DeleteMapping(ApiPaths.NAME_PART)
+    @ResponseBody
     @JsonView(Views.Public.class)
     @ApiOperation(code = 204, value = "Deletes a Kupplung by name")
-    public Response delete(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
+    public  ResponseEntity<?> delete(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }
 
-    @PUT
-    @Path(ApiPaths.ABBILDUNG_PART)
-    @Consumes({ MediaType.MULTIPART_FORM_DATA })
-    @Produces(MediaType.APPLICATION_JSON)
+    @PutMapping(ApiPaths.ABBILDUNG_PART)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 201, value = "Adds or updates the picture for a named Kupplung", response = IKupplung.class)
-    public Response updateAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name,
-            @FormDataParam("file") InputStream fileInputStream,
-            @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,  
-            @FormDataParam("file") FormDataBodyPart body) {
-        logPut(String.format(ApiPaths.ABBILDUNG_LOG, getEntityClassName(), name) + ": " + contentDispositionHeader.getFileName());
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 404, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
+    public  ResponseEntity<?> updateAbbildung(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name,
+            @PathVariable("file") MultipartFile multipart) {
+        logPut(String.format(ApiPaths.ABBILDUNG_LOG, getEntityClassName(), name) + ": " + multipart.getOriginalFilename());
 
         IFileUploadHandler handler = new FileUploadHandler();
 
         try {
-            if (!handler.isAcceptable(body, AcceptableMediaTypes.IMAGE_TYPES)) {
-                return getResponse(badRequest(getMessage(ApiMessages.INVALID_FILE, contentDispositionHeader.getFileName())));
+            if (!handler.isAcceptable(multipart, AcceptableMediaTypes.IMAGE_TYPES)) {
+                return badRequest(getMessage(ApiMessages.INVALID_FILE, multipart.getOriginalFilename()));
             }
 
-            IKupplung kupplung = findKupplung(name, false);
+            IKupplung kupplung = persister.findByName(name);
 
             if (kupplung != null) {
-                java.nio.file.Path file = handler.upload(ApiNames.KUPPLUNG, new String[] { name }, contentDispositionHeader, fileInputStream);
+                java.nio.file.Path file = handler.upload(ApiNames.KUPPLUNG, new String[] { name }, multipart);
 
                 kupplung.setAbbildung(file);
 
-                getPersister().update(kupplung);
+                persister.saveAndFlush((Kupplung) kupplung);
 
-                return getResponse(ok(), kupplung, true);
+                return ok(kupplung);
             }
         } catch (Exception e) {
             return getResponse(e);
         }
 
-        return getResponse(notFound());
+        return notFound();
     }
 
-    @DELETE
-    @Path(ApiPaths.ABBILDUNG_PART)
-    @Produces(MediaType.APPLICATION_JSON)
+    @DeleteMapping(ApiPaths.ABBILDUNG_PART)
     @JsonView(Views.Public.class)
     @ApiOperation(code = 204, value = "Deletes the picture from a named Kupplung", response = IKupplung.class)
-    public Response deleteAbbildung(@PathParam(ApiPaths.NAME_PARAM_NAME) String name) {
+    @ApiResponses({
+        @ApiResponse(code = 500, message = "Internal Server Error")
+        })
+    public  ResponseEntity<?> deleteAbbildung(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name) {
         logDelete(String.format(ApiPaths.ABBILDUNG_LOG, getEntityClassName(), name));
         
         try {
-            IKupplung kupplung = findKupplung(name, false);
+            IKupplung kupplung = persister.findByName(name);
 
             if (kupplung != null && kupplung.getAbbildung() != null) {
                 StaticContentFinder.getStore().removeFile(kupplung.getAbbildung());
 
                 kupplung.setAbbildung(null);
 
-                getPersister().update(kupplung);
+                persister.saveAndFlush((Kupplung) kupplung);
 
-                return getResponse(ok(), kupplung, true);
+                return ok(kupplung);
             }
         } catch (Exception e) {
             return getResponse(e);
         }
 
-        return getResponse(notFound());
+        return notFound();
     }
 }
