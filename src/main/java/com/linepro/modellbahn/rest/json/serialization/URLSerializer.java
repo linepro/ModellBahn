@@ -3,9 +3,11 @@ package com.linepro.modellbahn.rest.json.serialization;
 import java.io.IOException;
 import java.net.URL;
 
+import org.springframework.boot.jackson.JsonComponent;
+
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 /**
  * LinkSerializer.
@@ -14,17 +16,8 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
  * @author   $Author$
  * @version  $Id$
  */
-public class URLSerializer extends StdSerializer<URL> {
-
-    private static final long serialVersionUID = 5659169256684166251L;
-
-    public URLSerializer() {
-        this(URL.class);
-    }
-
-    public URLSerializer(Class<URL> t) {
-        super(t);
-    }
+@JsonComponent
+public class URLSerializer extends JsonSerializer<URL> {
 
     @Override
     public void serialize(URL value, JsonGenerator gen, SerializerProvider serializers) throws IOException {

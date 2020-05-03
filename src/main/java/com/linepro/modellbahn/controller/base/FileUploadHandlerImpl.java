@@ -1,0 +1,99 @@
+/*
+ * 
+ */
+package com.linepro.modellbahn.controller.base;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.nio.file.Path;
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.linepro.modellbahn.util.FileStore;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * The Class FileUpload
+ */
+@Component
+@Slf4j
+public class FileUploadHandlerImpl implements FileUploadHandler {
+
+    /** The file store. */
+    private final FileStore fileStore;
+
+    /**
+     * Instantiates a new file upload
+     */
+    @Autowired
+    public FileUploadHandlerImpl(FileStore fileStore) {
+        this.fileStore = fileStore;
+    }
+
+    @Override
+    public boolean isAcceptable(MultipartFile multipart, Collection<MediaType> accepted) {
+        MediaType mimeType = MediaType.valueOf(multipart.getContentType());
+        
+        return accepted.contains(mimeType);
+    }
+
+    /**
+     * Upload.
+     * @param entityType the entity type
+     * @param entityIds the entity ids
+     * @param fileDetail the file detail
+     * @param fileData the file data
+     * @return the path
+     */
+    @Override
+    public Path upload(MultipartFile multipart, String modelName, String fieldName, String...identifiers) throws Exception {
+        String pathname = fileStore.getItemPath(modelName, identifiers).toString();
+
+        new File(pathname).mkdirs();
+
+        String fileName = multipart.getOriginalFilename();
+        String extension = null;
+
+        int extensionStart = fileName.lastIndexOf('.');
+
+        if (extensionStart >= 0) {
+            extension = fileName.substring(extensionStart+1).toLowerCase();
+            fileName = fileName.substring(0, extensionStart);
+        }
+
+        Path filePath = fileStore.getFilePath(extension, modelName, fieldName, identifiers);
+
+        writeToFile(multipart);
+
+        log.info("File {} uploaded to {}", multipart.getOriginalFilename(), filePath);
+
+        return filePath;
+    }
+
+    /**
+     * Write to file.
+     * @param fileName the file name
+     * @param fileDetail the file detail
+     * @param fileData the file data
+     * @throws Exception the exception
+     */
+    private void writeToFile(MultipartFile multipart) throws Exception {
+        int read;
+        byte[] buffer = new byte[1024];
+
+        OutputStream out = new FileOutputStream(multipart.getOriginalFilename(), false);
+
+        while ((read = multipart.getInputStream().read(buffer)) != -1) {
+            out.write(buffer, 0, read);
+        }
+
+        out.flush();
+        out.close();
+    }
+}

@@ -1,18 +1,18 @@
 create sequence hibernate_sequence start with 1 increment by 1
 create table achsfolg (id bigint not null, deleted boolean not null, bezeichnung varchar(100) not null, name varchar(50), primary key (id))
-create table anderung (id bigint not null, deleted boolean not null, anderungsdatum date, anderungsId integer, anderungsTyp varchar(255), anmerkung varchar(255), bezeichnung varchar(100), stuck integer, artikel_id bigint not null, primary key (id))
+create table anderung (id bigint not null, deleted boolean not null, anderungsId integer not null check (anderungId>=1), anderungsdatum date, anderungsTyp varchar(255) not null, anmerkung varchar(255), bezeichnung varchar(100), stuck integer, artikel_id bigint not null, primary key (id))
 create table antrieb (id bigint not null, deleted boolean not null, bezeichnung varchar(100) not null, name varchar(50), primary key (id))
-create table artikel (id bigint not null, deleted boolean not null, abbildung varchar(255), anmerkung varchar(100), artikel_id varchar(50), beladung varchar(100), bezeichnung varchar(100) not null, kaufdatum date, preis decimal(6,2), status varchar(255) not null, stuck integer not null, verbleibende integer not null, decoder_id bigint, kupplung_id bigint, licht_id bigint, motor_typ_id bigint, produkt_id bigint not null, steuerung_id bigint, wahrung_id bigint, primary key (id))
+create table artikel (id bigint not null, deleted boolean not null, abbildung varchar(255), anmerkung varchar(100), artikel_id varchar(50), beladung varchar(100), bezeichnung varchar(100) not null, kaufdatum date, preis decimal(6,2), status varchar(255) not null, stuck integer not null check (stuck>=1), verbleibende integer not null, decoder_id bigint, kupplung_id bigint, licht_id bigint, motor_typ_id bigint, produkt_id bigint not null, steuerung_id bigint, wahrung_id bigint, primary key (id))
 create table aufbau (id bigint not null, deleted boolean not null, bezeichnung varchar(100) not null, name varchar(50), abbildung varchar(255), primary key (id))
 create table bahnverwaltung (id bigint not null, deleted boolean not null, bezeichnung varchar(100) not null, name varchar(50), primary key (id))
 create table decoder (id bigint not null, deleted boolean not null, bezeichnung varchar(100) not null, decoder_id varchar(50), fahrstufe integer, status integer, decoder_typ_id bigint not null, protokoll_id bigint not null, primary key (id))
 create table decoderAdress (id bigint not null, deleted boolean not null, adress integer not null, adressTyp varchar(10) not null, index integer not null check (index>=1 AND index<=6), decoder_id bigint not null, primary key (id))
 create table decoderCV (id bigint not null, deleted boolean not null, wert integer check (wert>=0 AND wert<=255), cv_id bigint not null, decoder_id bigint not null, primary key (id))
 create table decoderFunktion (id bigint not null, deleted boolean not null, bezeichnung varchar(100) not null, decoder_id bigint not null, funktion_id bigint not null, primary key (id))
-create table decoderTyp (id bigint not null, deleted boolean not null, bestellNr varchar(255), bezeichnung varchar(100), fahrstufe integer, i_max decimal(6,2), konfiguration varchar(15) not null, sound boolean not null, stecker varchar(10) not null, hersteller_id bigint not null, protokoll_id bigint not null, primary key (id))
+create table decoderTyp (id bigint not null, deleted boolean not null, anleitungen varchar(512), bestellNr varchar(255), bezeichnung varchar(100), fahrstufe integer, i_max decimal(6,2) check (i_max>=0 AND i_max<=10), konfiguration varchar(15) not null, sound boolean not null, stecker varchar(10) not null, hersteller_id bigint not null, protokoll_id bigint not null, primary key (id))
 create table decoderTypAdress (id bigint not null, deleted boolean not null, werkseinstellung integer, adressTyp integer not null, index integer not null check (index>=1 AND index<=10), span integer not null check (span<=32 AND span>=1), decoder_typ_id bigint not null, primary key (id))
 create table decoderTypCV (id bigint not null, deleted boolean not null, bezeichnung varchar(100), cv integer not null check (cv>=1 AND cv<=255), maximal integer check (maximal>=0 AND maximal<=255), minimal integer check (minimal>=0 AND minimal<=255), werkseinstellung integer check (werkseinstellung>=0 AND werkseinstellung<=255), decoder_typ_id bigint not null, primary key (id))
-create table decoderTypFunktion (id bigint not null, deleted boolean not null, bezeichnung varchar(100), funktion varchar(4), programmable boolean not null, reihe integer not null check (reihe<=1 AND reihe>=0), decoder_typ_id bigint not null, primary key (id))
+create table decoderTypFunktion (id bigint not null, deleted boolean not null, bezeichnung varchar(100), funktion varchar(4), programmable boolean not null, reihe integer not null check (reihe>=1 AND reihe<=2), decoder_typ_id bigint not null, primary key (id))
 create table epoch (id bigint not null, deleted boolean not null, bezeichnung varchar(100) not null, name varchar(50), primary key (id))
 create table gattung (id bigint not null, deleted boolean not null, bezeichnung varchar(100) not null, name varchar(50), primary key (id))
 create table hersteller (id bigint not null, deleted boolean not null, bezeichnung varchar(100) not null, name varchar(50), telefon varchar(20), url varchar(255), primary key (id))
@@ -25,14 +25,14 @@ create table motorTyp (id bigint not null, deleted boolean not null, bezeichnung
 create table produkt (id bigint not null, deleted boolean not null, abbildung varchar(255), anleitungen varchar(512), anmerkung varchar(100), bauzeit date, bestellNr varchar(255), betreibsnummer varchar(100), bezeichnung varchar(100), explosionszeichnung varchar(512), lange decimal(6,2), achsfolg_id bigint, aufbau_id bigint, bahnverwaltung_id bigint, decoder_typ_id bigint, epoch_id bigint, gattung_id bigint, hersteller_id bigint not null, kupplung_id bigint, licht_id bigint, massstab_id bigint not null, motor_typ_id bigint, sondermodell_id bigint, spurweite_id bigint not null, steuerung_id bigint, unter_kategorie_id bigint not null, vorbild_id bigint, primary key (id))
 create table produktTeil (id bigint not null, deleted boolean not null, anzahl integer not null, produkt_id bigint not null, teilId bigint not null, primary key (id))
 create table protokoll (id bigint not null, deleted boolean not null, bezeichnung varchar(100) not null, name varchar(50), primary key (id))
-create table sondermodell (id bigint not null, deleted boolean not null, bezeichnung varchar(100) not null, name varchar(50), primary key (id))
+create table sonderModell (id bigint not null, deleted boolean not null, bezeichnung varchar(100) not null, name varchar(50), primary key (id))
 create table spurweite (id bigint not null, deleted boolean not null, bezeichnung varchar(100) not null, name varchar(50), primary key (id))
 create table steuerung (id bigint not null, deleted boolean not null, bezeichnung varchar(100) not null, name varchar(50), primary key (id))
 create table unterKategorie (id bigint not null, deleted boolean not null, bezeichnung varchar(100) not null, name varchar(50), kategorie_id bigint not null, primary key (id))
 create table vorbild (id bigint not null, deleted boolean not null, abbildung varchar(255), anfahrzugkraft decimal(19,2), anzahl integer, aufbau varchar(100), ausserdienst date, bauzeit date, betreibsnummer varchar(100), bezeichnung varchar(100), dienstgewicht decimal(19,2), dmLaufradHinten decimal(19,2), dmLaufradVorn decimal(19,2), dmTreibrad decimal(19,2), dmZylinder decimal(19,2), drehgestellBauart varchar(100), fahrmotoren integer, geschwindigkeit integer, hersteller varchar(100), kapazitat decimal(19,2), kesseluberdruck decimal(19,2), klasse integer, kolbenhub decimal(19,2), lange decimal(19,2), leistung decimal(19,2), leistungsubertragung varchar(255), mittelwagen integer, motorbauart varchar(100), reichweite decimal(19,2), rostflache decimal(19,2), sitzplatzeKL1 integer, sitzplatzeKL2 integer, sitzplatzeKL3 integer, sitzplatzeKL4 integer, triebkopf integer, uberhitzerflache decimal(19,2), verdampfung decimal(19,2), wasservorrat decimal(19,2), zylinder integer, achsfolg_id bigint not null, antrieb_id bigint not null, bahnverwaltung_id bigint not null, gattung_id bigint not null, unter_kategorie_id bigint not null, primary key (id))
 create table wahrung (id bigint not null, deleted boolean not null, bezeichnung varchar(100) not null, name varchar(50), dezimal integer, primary key (id))
 create table zug (id bigint not null, deleted boolean not null, bezeichnung varchar(100) not null, name varchar(50), zugTyp_id bigint not null, primary key (id))
-create table zugConsist (id bigint not null, deleted boolean not null, position integer not null, artikel_id bigint not null, zug_id bigint not null, primary key (id))
+create table zugConsist (id bigint not null, deleted boolean not null, position integer not null check (position>=1), artikel_id bigint not null, zug_id bigint not null, primary key (id))
 create table zugTyp (id bigint not null, deleted boolean not null, bezeichnung varchar(100) not null, name varchar(50), primary key (id))
 alter table achsfolg add constraint UK_fy8u67u46v5hprxwgkqqwb9c3 unique (name)
 create index IDXmtw1iy4tkctqef980gn2jdwh4 on anderung (artikel_id)
@@ -96,7 +96,7 @@ create index IDX3056l5epodek0rn9pbmapg7mg on produktTeil (produkt_id)
 create index IDXotrkv30skdhfcsay1cyrb0bu5 on produktTeil (teilId)
 alter table produktTeil add constraint UKmmsr9br51n5p6no2i3y8buf33 unique (produkt_id, teilId)
 alter table protokoll add constraint UK_pxsao93ktnqoob2u03ndnbmec unique (name)
-alter table sondermodell add constraint UK_kcrr5n98ewdsfy22gxh6je1l unique (name)
+alter table sonderModell add constraint UK_kcrr5n98ewdsfy22gxh6je1l unique (name)
 alter table spurweite add constraint UK_jl307ih43drnqd394se5yb52r unique (name)
 alter table steuerung add constraint UK_5u32ddl5aef15b8b1ysdnx9m6 unique (name)
 create index IDX8r5s8dml89mynays255hn2uk8 on unterKategorie (kategorie_id)
@@ -144,7 +144,7 @@ alter table produkt add constraint produkt_fk11 foreign key (kupplung_id) refere
 alter table produkt add constraint produkt_fk10 foreign key (licht_id) references licht
 alter table produkt add constraint produkt_fk5 foreign key (massstab_id) references massstab
 alter table produkt add constraint produkt_fk15 foreign key (motor_typ_id) references motorTyp
-alter table produkt add constraint produkt_fk8 foreign key (sondermodell_id) references sondermodell
+alter table produkt add constraint produkt_fk8 foreign key (sondermodell_id) references sonderModell
 alter table produkt add constraint produkt_fk6 foreign key (spurweite_id) references spurweite
 alter table produkt add constraint produkt_fk13 foreign key (steuerung_id) references steuerung
 alter table produkt add constraint produkt_fk7 foreign key (unter_kategorie_id) references unterKategorie

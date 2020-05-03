@@ -2,11 +2,15 @@ package com.linepro.modellbahn.rest.json.serialization;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.jackson.JsonComponent;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import com.linepro.modellbahn.util.StaticContentFinder;
 
 /**
  * LinkSerializer.
@@ -15,20 +19,22 @@ import com.linepro.modellbahn.util.StaticContentFinder;
  * @author   $Author$
  * @version  $Id$
  */
-public class PathSerializer extends StdSerializer<Path> {
+@JsonComponent
+public class PathSerializer extends JsonSerializer<Path> {
 
-    private static final long serialVersionUID = 5659169256684166251L;
+    @Value("${filestore.root:./}")
+    private String fileRoot;
 
-    public PathSerializer() {
-        this(Path.class);
-    }
-
-    public PathSerializer(Class<Path> t) {
-        super(t);
-    }
+    @Value("${filestore.name:store}")
+    private String storeFolder;
 
     @Override
     public void serialize(Path value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-        gen.writeString(StaticContentFinder.getStore().urlForPath(value));
+        gen.writeString(
+                ServletUriComponentsBuilder.fromCurrentContextPath()
+                                           .pathSegment(Paths.get(fileRoot, storeFolder).relativize(value).toString())
+                                           .build()
+                                           .toString()
+                                           );
     }
 }

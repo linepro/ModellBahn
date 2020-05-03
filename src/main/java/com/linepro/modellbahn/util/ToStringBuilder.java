@@ -4,14 +4,14 @@ import java.io.File;
 
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import com.linepro.modellbahn.model.IArtikel;
-import com.linepro.modellbahn.model.IDecoder;
-import com.linepro.modellbahn.model.IDecoderTyp;
-import com.linepro.modellbahn.model.IProdukt;
-import com.linepro.modellbahn.model.IProduktTeil;
-import com.linepro.modellbahn.model.IUnterKategorie;
-import com.linepro.modellbahn.model.IZugConsist;
-import com.linepro.modellbahn.model.refs.INamedItemRef;
+import com.linepro.modellbahn.model.ArtikelModel;
+import com.linepro.modellbahn.model.DecoderModel;
+import com.linepro.modellbahn.model.DecoderTypModel;
+import com.linepro.modellbahn.model.ProduktModel;
+import com.linepro.modellbahn.model.ProduktTeilModel;
+import com.linepro.modellbahn.model.UnterKategorieModel;
+import com.linepro.modellbahn.model.ZugConsistModel;
+import com.linepro.modellbahn.model.base.NamedItemModel;
 
 /**
  * TODO: by proxy??
@@ -325,42 +325,42 @@ public class ToStringBuilder extends org.apache.commons.lang3.builder.ToStringBu
         return this;
     }
 
-    public ToStringBuilder append(String fieldName, IArtikel value) {
+    public ToStringBuilder append(String fieldName, ArtikelModel value) {
         super.append(fieldName, value != null ? new Object[] {value.getArtikelId(), value.getBezeichnung()} : null);
         return this;
     }
 
-    public ToStringBuilder append(String fieldName, IDecoder value) {
+    public ToStringBuilder append(String fieldName, DecoderModel value) {
         super.append(fieldName, value != null ? new Object[] {value.getDecoderId(), value.getBezeichnung()} : null);
         return this;
     }
 
-    public ToStringBuilder append(String fieldName, INamedItemRef value) {
+    public ToStringBuilder append(String fieldName, NamedItemModel value) {
         super.append(fieldName, value != null ? new Object[] {value.getName(), value.getBezeichnung()} : null);
         return this;
     }
 
-    public ToStringBuilder append(String fieldName, IDecoderTyp value) {
+    public ToStringBuilder append(String fieldName, DecoderTypModel value) {
         super.append(fieldName, value != null ? new Object[] {value.getHersteller(), value.getBestellNr()} : null);
         return this;
     }
 
-    public ToStringBuilder append(String fieldName, IProdukt value) {
+    public ToStringBuilder append(String fieldName, ProduktModel value) {
         super.append(fieldName, value != null ? new Object[] {value.getHersteller(), value.getBestellNr()} : null);
         return this;
     }
 
-    public ToStringBuilder append(String fieldName, IProduktTeil value) {
+    public ToStringBuilder append(String fieldName, ProduktTeilModel value) {
         super.append(fieldName, value != null ? new Object[] { value.getTeil(), value.getAnzahl()} : null);
         return this;
     }
 
-    public ToStringBuilder append(String fieldName, IUnterKategorie value) {
+    public ToStringBuilder append(String fieldName, UnterKategorieModel value) {
         super.append(fieldName, value != null ? new Object[] {value.getName(), value.getBezeichnung()} : null);
         return this;
     }
 
-    public ToStringBuilder append(String fieldName, IZugConsist value) {
+    public ToStringBuilder append(String fieldName, ZugConsistModel value) {
         super.append(fieldName, value != null ? new Object[] {value.getPosition(), value.getArtikel()} : null);
         return this;
     }

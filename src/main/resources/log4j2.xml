@@ -31,7 +31,7 @@
     <Logger name="org.hibernate" level="error" additivity="false">
       <AppenderRef ref="File"/>
     </Logger>
-
+    
     <!-- Log SQL statements -->
     <Logger name="org.hibernate.SQL" level="error" additivity="false">
       <AppenderRef ref="File"/>
@@ -74,6 +74,10 @@
     <Logger name="org.reflections.Reflections" level="error" additivity="false">
       <AppenderRef ref="File"/>
     </Logger> 
+
+    <Logger name="org.springframework.web" level="error" additivity="false">
+      <AppenderRef ref="File"/>
+    </Logger>
 
     <Logger name="com.fasterxml.jackson" level="info" additivity="false">
       <AppenderRef ref="File"/>

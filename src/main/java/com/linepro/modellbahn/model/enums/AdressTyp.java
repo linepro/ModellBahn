@@ -3,8 +3,7 @@ package com.linepro.modellbahn.model.enums;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.linepro.modellbahn.model.refs.IDescribedEnum;
-import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.controller.base.ApiNames;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -19,7 +18,7 @@ import io.swagger.annotations.ApiModelProperty;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG })
 @ApiModel(value = ApiNames.ADRESS_TYP, description = "Adress types")
-public enum AdressTyp implements IDescribedEnum {
+public enum AdressTyp implements DescribedEnum {
 
     DCC("DCC lang", "0 - 10239."),
     
@@ -29,7 +28,7 @@ public enum AdressTyp implements IDescribedEnum {
     
     MM("Märklin Motorola", "1 - 80."),
     
-    DIGITAL("Märklin Digital", "(fx or mfx) 1 - 255."),
+    DIGITAL("Märklin Digital", "(fx/mfx) 1 - 255."),
     
     WEICHE("Märklin Magnetartikel", "1 - 256.");
 

@@ -7,15 +7,15 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import com.linepro.modellbahn.model.enums.AdressTyp;
-import com.linepro.modellbahn.model.refs.IAdress;
+import com.linepro.modellbahn.util.WithAdress;
 
-public class DELTAAdressValidator implements ConstraintValidator<DELTAAdress, IAdress> {
+public class DELTAAdressValidator implements ConstraintValidator<DELTAAdress, WithAdress> {
 
     private static final Collection<Integer> VALID_ADRESSES = Arrays
             .asList(2, 6, 8, 18, 20, 24, 26, 54, 56, 60, 62, 72, 74, 78, 80);
 
     @Override
-    public boolean isValid(IAdress value, ConstraintValidatorContext context) {
+    public boolean isValid(WithAdress value, ConstraintValidatorContext context) {
         if (value == null || AdressTyp.DELTA != value.getAdressTyp()) {
             return true;
         }

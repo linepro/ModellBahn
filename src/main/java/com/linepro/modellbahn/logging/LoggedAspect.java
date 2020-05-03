@@ -1,5 +1,13 @@
 package com.linepro.modellbahn.logging;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.logging.log4j.core.pattern.NameAbbreviator;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -9,8 +17,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -18,13 +24,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.HttpServletRequest;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Aspect that automagically wraps:
@@ -38,8 +37,6 @@ import java.util.List;
 @Aspect
 @Configuration
 public class LoggedAspect {
-
-    private static final Logger logger = LoggerFactory.getLogger(LoggedAspect.class);
 
     static final Logged DEFAULT_LOGGING_POLICY = createPolicy(BusinessEvent.GENERIC, Level.INFO, false, false, false);
 

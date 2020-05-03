@@ -13,7 +13,7 @@ public interface DBNames {
     String STECKER = "stecker";
     String DECODER = "decoder";
     String DECODER_ADRESS = "decoderAdress";
-    String DECODER_CV = "decoderCV";
+    String DECODER_CV = "DecoderCv";
     String DECODER_FUNKTION = "decoderFunktion";
     String DECODER_TYP = "decoderTyp";
     String DECODER_TYP_ADRESS = "decoderTypAdress";
