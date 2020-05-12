@@ -38,29 +38,35 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Configuration
 public class LoggedAspect {
 
-    static final Logged DEFAULT_LOGGING_POLICY = createPolicy(BusinessEvent.GENERIC, Level.INFO, false, false, false);
+    protected static final String LOGGED_ANNOTATION = "com.linepro.modellbahn.logging.Logged";
 
-    static final Logged CONTROLLER_LOGGING_POLICY = createPolicy(BusinessEvent.GENERIC, Level.INFO, true, true, false);
+    protected static final String CLASS_LEVEL_POINTCUT = "within(@" + LOGGED_ANNOTATION + " *) || " +
+            "within(@org.springframework.stereotype.Service *) || " +
+            "within(@org.springframework.web.bind.annotation.RestController *)";
 
-    static final Logged SERVICE_LOGGING_POLICY = DEFAULT_LOGGING_POLICY;
+    protected static final String METHOD_LEVEL_POINTCUT = "@annotation(" + LOGGED_ANNOTATION + ")";
 
-    static final Logged NO_LOGGING_POLICY = createPolicy(BusinessEvent.GENERIC, Level.INFO, false, false, true);
+    protected static final Logged DEFAULT_LOGGING_POLICY = createPolicy(BusinessEvent.GENERIC, Level.INFO, false, false, false);
 
-    private static final NameAbbreviator abbreviator = NameAbbreviator.getAbbreviator("2");
+    protected static final Logged CONTROLLER_LOGGING_POLICY = createPolicy(BusinessEvent.GENERIC, Level.INFO, true, true, false);
+
+    protected static final Logged SERVICE_LOGGING_POLICY = DEFAULT_LOGGING_POLICY;
+
+    protected static final Logged NO_LOGGING_POLICY = createPolicy(BusinessEvent.GENERIC, Level.INFO, false, false, true);
+
+    protected static final NameAbbreviator abbreviator = NameAbbreviator.getAbbreviator("2");
 
     /**
      * Pointcut that matches any class or interface tagged by @Logged, any @Service or @RestController.
      */
-    @Pointcut("within(@com.linepro.application.logging.Logged *) || " +
-            "within(@org.springframework.stereotype.Service *) || " +
-            "within(@org.springframework.web.bind.annotation.RestController *)")
+    @Pointcut(CLASS_LEVEL_POINTCUT)
     public void classLevelPointcut() {
     }
 
     /**
      * Pointcut that matches any method tagged by @Loggged.
      */
-    @Pointcut("@annotation(com.linepro.application.logging.Logged)")
+    @Pointcut(METHOD_LEVEL_POINTCUT)
     public void methodLevelPointcut() {
     }
 

@@ -6,11 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
@@ -28,8 +26,6 @@ import org.springframework.util.StringUtils;
  * Default scopes are set on all end points, but can be overridden by specifying more specific ones by annotation or
  * additional configure(HttpSecurity http) bean instances.
  */
-@Configuration
-@EnableResourceServer
 public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(OAuth2ResourceServerConfig.class);
@@ -49,10 +45,10 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
     /**
      * A set of uris to fetch jwkSets from
      */
-    @Value("${com.linepro.modellbahn.jwkSetUris}")
+    @Value("${com.linepro.modellbahn.jwkSetUris:https://www.linepro.com/.wellknown}")
     private String jwkSetUris;
 
-    @Value("${CLOUD_CONFIG_PREFIX}")
+    @Value("${CLOUD_CONFIG_PREFIX:CL}")
     private String configRoot;
 
     /**

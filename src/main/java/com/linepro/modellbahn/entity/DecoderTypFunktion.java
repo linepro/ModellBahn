@@ -18,9 +18,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Range;
 
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.entity.base.Item;
-import com.linepro.modellbahn.entity.base.ItemImpl;
+import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.util.ToStringBuilder;
@@ -31,10 +29,16 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author $Author:$
  * @version $Id:$
  */
+//@formatter:off
 @Entity(name = DBNames.DECODER_TYP_FUNKTION)
-@Table(name = DBNames.DECODER_TYP_FUNKTION, indexes = { @Index(columnList = DBNames.DECODER_TYP_ID + "," + DBNames.REIHE + "," + DBNames.FUNKTION, unique = true),
-        @Index(columnList = DBNames.DECODER_TYP_ID) }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { DBNames.DECODER_TYP_ID, DBNames.REIHE, DBNames.FUNKTION }) })
+@Table(name = DBNames.DECODER_TYP_FUNKTION,
+    indexes = { 
+        @Index(name = DBNames.DECODER_TYP_FUNKTION + "_IX1", columnList = DBNames.DECODER_TYP_ID + "," + DBNames.REIHE + "," + DBNames.FUNKTION, unique = true),
+        @Index(name = DBNames.DECODER_TYP_FUNKTION + "_IX2", columnList = DBNames.DECODER_TYP_ID)
+    }, uniqueConstraints = {
+        @UniqueConstraint(name = DBNames.DECODER_TYP_FUNKTION + "_UC1", columnNames = { DBNames.DECODER_TYP_ID, DBNames.REIHE, DBNames.FUNKTION })
+    })
+//@formatter:on
 public class DecoderTypFunktion extends ItemImpl {
 
     /** The decoder typ. */
@@ -177,9 +181,9 @@ public class DecoderTypFunktion extends ItemImpl {
     public String toString() {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
-                .append(ApiNames.DECODER_TYP, getDecoderTyp())
-                .append(ApiNames.REIHE, getReihe())
-                .append(ApiNames.PROGRAMMABLE, getProgrammable())
+                .append(DBNames.DECODER_TYP, getDecoderTyp())
+                .append(DBNames.REIHE, getReihe())
+                .append(DBNames.PROGRAMMABLE, getProgrammable())
                 .toString();
     }
 }

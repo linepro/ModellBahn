@@ -9,11 +9,11 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.entity.base.NamedItemImpl;
+import com.linepro.modellbahn.entity.impl.NamedItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.URLConverter;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.validation.Country;
 
 /**
  * Hersteller. The manufacturer for a product
@@ -21,9 +21,15 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author $Author:$
  * @version $Id:$
  */
+//@formatter:off
 @Entity(name = DBNames.HERSTELLER)
-@Table(name = DBNames.HERSTELLER, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
-        @UniqueConstraint(columnNames = { DBNames.NAME }) })
+@Table(name = DBNames.HERSTELLER,
+    indexes = { 
+        @Index(name = DBNames.HERSTELLER + "_IX1", columnList = DBNames.NAME, unique = true)
+    }, uniqueConstraints = {
+        @UniqueConstraint(name = DBNames.HERSTELLER + "_UC1", columnNames = { DBNames.NAME })
+    })
+//@formatter:on
 public class Hersteller extends NamedItemImpl {
 
     /** The url. */
@@ -31,8 +37,11 @@ public class Hersteller extends NamedItemImpl {
     private URL url;
 
     /** The Telefon. */
-    //@Telephone
+    //@Telephone(message = "{com.linepro.modellbahn.validator.constraints.land.invalid}")
     private String Telefon;
+
+    @Country(message = "{com.linepro.modellbahn.validator.constraints.land.invalid}")
+    private String land;
 
     /**
      * Instantiates a new hersteller.
@@ -114,11 +123,21 @@ public class Hersteller extends NamedItemImpl {
     }
 
     
+    
+    @Column(name = DBNames.LAND, length = 2)
+    public String getLand() {
+        return land;
+    }
+
+    public void setLand(String land) {
+        this.land = land;
+    }
+
     public String toString() {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
-                .append(ApiNames.URL, getUrl())
-                .append(ApiNames.TELEFON, getTelefon())
+                .append(DBNames.URL, getUrl())
+                .append(DBNames.TELEFON, getTelefon())
                 .toString();
     }
 }

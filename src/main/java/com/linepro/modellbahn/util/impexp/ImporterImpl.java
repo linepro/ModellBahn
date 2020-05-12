@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.linepro.modellbahn.entity.base.Item;
+import com.linepro.modellbahn.entity.Item;
 import com.linepro.modellbahn.repository.base.ItemRepository;
 import com.linepro.modellbahn.util.ReflectionUtils;
 
@@ -24,15 +24,15 @@ public class ImporterImpl<E extends Item> {
     /** The logger. */
     private static final Logger logger = LoggerFactory.getLogger(ImporterImpl.class);
 
-    /** The persister. */
-    private final ItemRepository<E> persister;
+    /** The repository. */
+    private final ItemRepository<E> repository;
     
     private Class<E> persistentClass;
 
     @SuppressWarnings("unchecked")
     @Autowired
-    public ImporterImpl(ItemRepository<E> persister) {
-        this.persister = persister;
+    public ImporterImpl(ItemRepository<E> repository) {
+        this.repository = repository;
 
         persistentClass = (Class<E>) ReflectionUtils.getParameterizedTypes(this.getClass())[0];
     }
@@ -52,7 +52,7 @@ public class ImporterImpl<E extends Item> {
 
                 BeanUtils.populate(item, properties);
                 
-                persister.save(item);
+                repository.save(item);
             }
         } catch (Exception e) {
             logger.error("", e);

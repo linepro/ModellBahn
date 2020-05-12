@@ -6,7 +6,6 @@ package com.linepro.modellbahn.util.impexp;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.linepro.modellbahn.entity.base.Item;
+import com.linepro.modellbahn.entity.Item;
 import com.linepro.modellbahn.repository.base.ItemRepository;
 import com.linepro.modellbahn.util.ReflectionUtils;
 
@@ -31,7 +30,7 @@ public class ExporterImpl<E extends Item> {
     /** The logger. */
     private final Logger logger = LoggerFactory.getLogger(ExporterImpl.class);
 
-    private final ItemRepository<E> persister;
+    private final ItemRepository<E> repository;
     
     private Class<E> persistentClass;
 
@@ -43,8 +42,8 @@ public class ExporterImpl<E extends Item> {
      */
     @SuppressWarnings("unchecked")
     @Autowired
-    public ExporterImpl(ItemRepository<E> persister) {
-        this.persister = persister;
+    public ExporterImpl(ItemRepository<E> repository) {
+        this.repository = repository;
 
         persistentClass = (Class<E>) ReflectionUtils.getParameterizedTypes(this.getClass())[0];
     }
@@ -59,7 +58,7 @@ public class ExporterImpl<E extends Item> {
 
             try (CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader(headers.toArray(new String[0])))) {
 
-                for (E item : persister.findAll()) {
+                for (E item : repository.findAll()) {
                     writeObject(printer, headers, item);
                 }
             } catch (Exception e) {

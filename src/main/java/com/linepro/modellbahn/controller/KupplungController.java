@@ -1,9 +1,9 @@
 package com.linepro.modellbahn.controller;
 
-import java.util.Map;
-import java.util.Optional;
+import static org.springframework.http.ResponseEntity.of;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,28 +12,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.linepro.modellbahn.controller.base.AbstractNamedItemController;
-import com.linepro.modellbahn.controller.base.AcceptableMediaTypes;
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.controller.base.ApiPaths;
-import com.linepro.modellbahn.controller.base.FileServiceImpl;
-import com.linepro.modellbahn.entity.Kupplung;
+import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.controller.impl.ApiPaths;
+import com.linepro.modellbahn.controller.impl.NamedItemController;
 import com.linepro.modellbahn.model.KupplungModel;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.service.KupplungService;
+import com.linepro.modellbahn.service.impl.KupplungService;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * KupplungService. CRUD service for Kupplung
@@ -41,18 +40,19 @@ import io.swagger.annotations.ApiResponses;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.KUPPLUNG)
+@Tag(name = ApiNames.KUPPLUNG)
 @RestController
 @RequestMapping(ApiPaths.KUPPLUNG)
-public class KupplungController extends AbstractNamedItemController<KupplungModel,Kupplung> {
+@ExposesResourceFor(KupplungModel.class)
+public class KupplungController extends NamedItemController<KupplungModel> {
 
-    private final FileServiceImpl fileService;
+    private final KupplungService service;
     
     @Autowired
-    public KupplungController(KupplungService service, FileServiceImpl fileService) {
+    public KupplungController(KupplungService service) {
         super(service);
         
-        this.fileService = fileService;
+        this.service = service;
     }
 
     @JsonCreator(mode= Mode.DELEGATING)
@@ -63,7 +63,15 @@ public class KupplungController extends AbstractNamedItemController<KupplungMode
     @Override
     @GetMapping(ApiPaths.NAME_PART)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds a Kupplung by name", response = KupplungModel.class)
+    @Operation(summary = "Finds an Kupplung by name", description = "Finds a coupling configuration", operationId = "get", tags = { "Kupplung" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
     public ResponseEntity<?> get(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -71,90 +79,103 @@ public class KupplungController extends AbstractNamedItemController<KupplungMode
     @Override
     @GetMapping(ApiPaths.SEARCH)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Kupplungen by example", response = KupplungModel.class, responseContainer = "List")
-    @ApiImplicitParams({
-        @ApiImplicitParam( name = ApiNames.ID, value = "Kupplung id", dataType = "Long", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Kupplung code", example = "RELEX", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Kupplung description", example = "Relex", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "If true search for soft deleted items", example = "false", dataType = "Boolean", paramType = "query"),
-            @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
-            @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "Page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),
+    @Operation(summary = "Finds Kupplungen by example", description = "Finds coupling configurations", operationId = "get", tags = { "Kupplung" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = KupplungModel.class))) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found, content = @Content"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
 })
-    public ResponseEntity<?> search(@RequestBody Map<String,String> arguments) {
-        return super.search(arguments);
+    public ResponseEntity<?> search(@RequestBody KupplungModel model, @RequestParam(name = ApiNames.PAGE_NUMBER, required = false) Integer pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE, required = false) Integer pageSize) {
+        return super.search(model, pageNumber, pageSize);
     }
 
     @Override
     @PostMapping(ApiPaths.ADD)
-
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds a Kupplung", response = KupplungModel.class)
-    public ResponseEntity<?> add(KupplungModel model) {
+    @Operation(summary = "Adds an Kupplung", description = "Update a coupling configuration", operationId = "update", tags = { "Kupplung" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Kupplung not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
+    public ResponseEntity<?> add(@RequestBody KupplungModel model) {
         return super.add(model);
     }
 
     @Override
     @PutMapping(ApiPaths.NAME_PART)
-
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates a Kupplung by name", response = KupplungModel.class)
-    public ResponseEntity<?> update(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name, KupplungModel model) {
+    @Operation(summary = "Updates an Kupplung by name", description = "Update a coupling configuration", operationId = "update", tags = { "Kupplung" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Kupplung not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
+    public ResponseEntity<?> update(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name, @RequestBody KupplungModel model) {
         return super.update(name, model);
     }
 
     @Override
     @DeleteMapping(ApiPaths.NAME_PART)
-
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 204, value = "Deletes a Kupplung by name")
+    @Operation(summary = "Deletes an Kupplung by name", description = "Delete a coupling configuration", operationId = "update", tags = { "Kupplung" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Kupplung not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
     public ResponseEntity<?> delete(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }
 
     @PutMapping(ApiPaths.ABBILDUNG_PART)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds or updates the picture of a named Kupplung", response = KupplungModel.class)
-    @ApiResponses({
-        @ApiResponse(code = 400, message = "Bad request"),
-        @ApiResponse(code = 404, message = "Not Found"),
-        @ApiResponse(code = 500, message = "Internal Server Error")
+    @Operation(summary = "Add an Kupplung picture", description = "Adds or updates the picture of a named Kupplung", operationId = "update", tags = { "Kupplung" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Kupplung not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
         })
     public ResponseEntity<?> updateAbbildung(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name, @PathVariable("file") MultipartFile multipart) throws Exception {
         logPut(String.format(ApiPaths.ABBILDUNG_LOG, ApiNames.KUPPLUNG, name) + ": " + multipart.getOriginalFilename());
 
-        KupplungModel kupplung = getModel(name);
-
-        kupplung.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.KUPPLUNG, ApiNames.ABBILDUNG, name));
-
-        return update(kupplung);
+        return of(service.updateAbbildung(name, multipart));
     }
 
     @DeleteMapping(ApiPaths.ABBILDUNG_PART)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Deletes the picture of a named Kupplung", response = KupplungModel.class)
-    @ApiResponses({
-        @ApiResponse(code = 304, message = "Not Modified"),
-        @ApiResponse(code = 400, message = "Bad request"),
-        @ApiResponse(code = 404, message = "Not Found"),
-        @ApiResponse(code = 500, message = "Internal Server Error")
+    @Operation(summary = "Delete an Kupplung picture", description = "Deletes the picture of a named Kupplung", operationId = "update", tags = { "Kupplung" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Kupplung not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
         })
     public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name) throws Exception {
         logDelete(String.format(ApiPaths.ABBILDUNG_LOG, ApiNames.KUPPLUNG, name));
-
-        Optional<KupplungModel> kupplung = service.get(getModel(name));
         
-        if (kupplung.isPresent()) {
-            KupplungModel kupplungModel = kupplung.get();
-
-            if (kupplungModel.getAbbildung() != null) {
-                fileService.deleteFile(kupplungModel.getAbbildung());
-                kupplungModel.setAbbildung(null);
-                return update(kupplungModel);
-            }
-            
-            return notModified();
-        }
-        
-        return notFound();
+        return of(service.deleteAbbildung(name));
     }
 }

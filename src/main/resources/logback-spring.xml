@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<appender name="ASYNC-FULL-STDOUT-NOJSON" class="ch.qos.logback.classic.AsyncAppender">
+		<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+			<encoder>
+				<pattern>%green(%d{dd-MM-yyyy HH:mm:ss.SSS}) %magenta([%thread]) %highlight(%-5level) %red(%logger{30}) - %magenta(%msg) %rEx{full,java.lang.reflect.Method,
+					ByCGLIB,
+					BySpringCGLIB,
+					com.zaxxer.hikari,
+					java.lang.Thread,
+					java.net,
+					java.util.concurrent,
+					javax,
+					net.sf.cglib,
+					org.apache.catalina,
+					org.apache.coyote,
+					org.apache.http,
+					org.apache.tomcat,
+					org.eclipse.jetty,
+					org.h2,
+                    org.hibernate,
+					org.springframework,
+					sun.reflect,
+					sun.security.ssl
+					}%n
+				</pattern>
+			</encoder>
+		</appender>
+	</appender>
+
+	<appender name="ASYNC-FULL-STDOUT" class="ch.qos.logback.classic.AsyncAppender">
+		<appender name="ASYNC-FULL-STDOUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+			<file>./logs/modellbahn.json</file>
+
+			<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+				<fileNamePattern>./logs/modellbahn.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+				<!-- each archived file, size max 100MB -->
+				<maxFileSize>100MB</maxFileSize>
+				<!-- total size of all archive files, if total size > 1GB, it will delete old archived file -->
+				<totalSizeCap>1GB</totalSizeCap>
+				<!-- 3 days to keep -->
+				<maxHistory>3</maxHistory>
+			</rollingPolicy>
+
+			<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+				<providers>
+					<timestamp>
+						<fieldName>timestamp</fieldName>
+						<pattern>yyyy-MM-dd'T'HH:mm:ss.SSSZZ</pattern>
+					</timestamp>
+					<logLevel/>
+					<context/>
+					<loggerName/>
+					<logstashMarkers/>
+					<message/>
+					<tags/>
+					<stackTrace>
+						<throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter"/>
+					</stackTrace>
+					<mdc/>
+				</providers>
+			</encoder>
+		</appender>
+	</appender>
+
+	<root level="WARN">
+		<appender-ref ref="ASYNC-FULL-STDOUT-NOJSON"/>
+	</root>
+	<logger additivity="false" level="INFO" name="org.apache.http.http.headers">
+		<appender-ref ref="ASYNC-FULL-STDOUT-NOJSON"/>
+	</logger>
+	<logger additivity="false" level="INFO" name="org.apache.http.wire">
+		<appender-ref ref="ASYNC-FULL-STDOUT-NOJSON"/>
+	</logger>
+	<logger additivity="false" level="WARN" name="org.hibernate">
+		<appender-ref ref="ASYNC-FULL-STDOUT-NOJSON"/>
+	</logger>
+	<logger additivity="false" level="WARN" name="org.springframework">
+		<appender-ref ref="ASYNC-FULL-STDOUT-NOJSON"/>
+	</logger>
+	<logger additivity="false" level="INFO" name="com.linepro.modellbahn">
+		<appender-ref ref="ASYNC-FULL-STDOUT-NOJSON"/>
+		<appender-ref ref="ASYNC-FULL-STDOUT"/>
+	</logger>
+
+</configuration>

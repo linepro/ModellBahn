@@ -12,8 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.entity.base.NamedItemImpl;
+import com.linepro.modellbahn.entity.impl.NamedItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
@@ -23,9 +22,15 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author $Author:$
  * @version $Id:$
  */
+//@formatter:off
 @Entity(name = DBNames.KATEGORIE)
-@Table(name = DBNames.KATEGORIE, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
-        @UniqueConstraint(columnNames = { DBNames.NAME }) })
+@Table(name = DBNames.KATEGORIE,
+    indexes = { 
+        @Index(name = DBNames.KATEGORIE + "_IX1", columnList = DBNames.NAME, unique = true)
+    }, uniqueConstraints = {
+        @UniqueConstraint(name = DBNames.KATEGORIE + "_UC1", columnNames = { DBNames.NAME })
+    })
+//@formatter:on
 public class Kategorie extends NamedItemImpl {
 
     private Set<UnterKategorie> unterKategorien;
@@ -89,7 +94,7 @@ public class Kategorie extends NamedItemImpl {
     public String toString() {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
-                .append(ApiNames.UNTER_KATEGORIEN, getUnterKategorien())
+                .append(DBNames.UNTER_KATEGORIE, getUnterKategorien())
                 .toString();
     }
 }

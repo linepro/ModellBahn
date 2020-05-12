@@ -15,9 +15,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.entity.base.Item;
-import com.linepro.modellbahn.entity.base.ItemImpl;
+import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.util.ToStringBuilder;
@@ -28,9 +26,15 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author  $Author:$
  * @version $Id:$
  */
+//@formatter:off
 @Entity(name = DBNames.DECODER_FUNKTION)
-@Table(name = DBNames.DECODER_FUNKTION, indexes = { @Index(columnList = DBNames.DECODER_ID + "," + DBNames.FUNKTION_ID, unique = true) },
-       uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.FUNKTION_ID })})
+@Table(name = DBNames.DECODER_FUNKTION,
+    indexes = { 
+        @Index(name = DBNames.DECODER_FUNKTION + "_IX1", columnList = DBNames.DECODER_ID + "," + DBNames.FUNKTION_ID, unique = true)
+    }, uniqueConstraints = { 
+        @UniqueConstraint(name = DBNames.DECODER_FUNKTION + "_UC1", columnNames = { DBNames.DECODER_ID, DBNames.FUNKTION_ID })
+    })
+//@formatter:on
 public class DecoderFunktion extends ItemImpl {
 
     /** The decoder. */
@@ -146,9 +150,9 @@ public class DecoderFunktion extends ItemImpl {
 	public String toString() {
 		return new ToStringBuilder(this)
                 .appendSuper(super.toString())
-                .append(ApiNames.DECODER, getDecoder())
-				.append(ApiNames.FUNKTION, getFunktion())
-				.append(ApiNames.BEZEICHNUNG, getBezeichnung())
+                .append(DBNames.DECODER, getDecoder())
+				.append(DBNames.FUNKTION, getFunktion())
+				.append(DBNames.BEZEICHNUNG, getBezeichnung())
 				.toString();
 	}
 }

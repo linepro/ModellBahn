@@ -1,9 +1,15 @@
 package com.linepro.modellbahn.controller;
 
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.notFound;
+import static org.springframework.http.ResponseEntity.of;
+import static org.springframework.http.ResponseEntity.ok;
+
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,22 +24,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.linepro.modellbahn.controller.base.AbstractNamedItemController;
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.controller.base.ApiPaths;
-import com.linepro.modellbahn.entity.Kategorie;
+import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.controller.impl.ApiPaths;
+import com.linepro.modellbahn.controller.impl.NamedItemController;
 import com.linepro.modellbahn.model.KategorieModel;
 import com.linepro.modellbahn.model.UnterKategorieModel;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.service.KategorieService;
-import com.linepro.modellbahn.service.UnterKategorieService;
+import com.linepro.modellbahn.service.impl.KategorieService;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * KategorieService. CRUD service for Kategorie and UnterKategorie
@@ -41,18 +46,19 @@ import io.swagger.annotations.ApiResponses;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.KATEGORIE)
+@Tag(name = ApiNames.KATEGORIE)
 @RestController
 @RequestMapping(ApiPaths.KATEGORIE)
-public class KategorieController extends AbstractNamedItemController<KategorieModel,Kategorie> {
+@ExposesResourceFor(KategorieModel.class)
+public class KategorieController extends NamedItemController<KategorieModel> {
 
-    private final UnterKategorieService unterKategorieService;
+    private final KategorieService service;
     
     @Autowired
-    public KategorieController(KategorieService service,UnterKategorieService unterKategorieService) {
+    public KategorieController(KategorieService service) {
         super(service);
         
-        this.unterKategorieService = unterKategorieService;
+        this.service = service;
     }
 
     @JsonCreator(mode = Mode.DELEGATING)
@@ -68,7 +74,15 @@ public class KategorieController extends AbstractNamedItemController<KategorieMo
     @Override
     @GetMapping(ApiPaths.NAME_PART)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds an Kategorie by name", response = KategorieModel.class)
+    @Operation(summary = "Finds an Kategorie by name", description = "Finds a category", operationId = "get", tags = { "Kategorie" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KategorieModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
     public ResponseEntity<?> get(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -76,91 +90,142 @@ public class KategorieController extends AbstractNamedItemController<KategorieMo
     @Override
     @GetMapping(ApiPaths.SEARCH)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Kategorieen by example", response = KategorieModel.class, responseContainer = "List")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = ApiNames.ID, value = "Kategorie id", dataType = "Long", paramType = "query"),
-            @ApiImplicitParam(name = ApiNames.NAMEN, value = "Kategorie code", example = "LOKOMOTIV", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = ApiNames.BEZEICHNUNG, value = "Kategorie description", example = "Lokomotiv", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = ApiNames.DELETED, value = "If true search for soft deleted items", example = "false", dataType = "Boolean", paramType = "query"),
-            @ApiImplicitParam(name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
-            @ApiImplicitParam(name = ApiNames.PAGE_SIZE, value = "Page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),})
-    public ResponseEntity<?> search(@RequestBody Map<String, String> arguments) {
-        return super.search(arguments);
+    @Operation(summary = "Finds Kategorieen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Kategorie" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = KategorieModel.class))) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found, content = @Content"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
+    public ResponseEntity<?> search(@RequestBody KategorieModel model, @RequestParam(name = ApiNames.PAGE_NUMBER, required = false) Integer pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE, required = false) Integer pageSize) {
+        return super.search(model, pageNumber, pageSize);
     }
 
     @Override
     @PostMapping(ApiPaths.ADD)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds an Kategorie", response = KategorieModel.class)
-    public ResponseEntity<?> add(KategorieModel model) {
+    @Operation(summary = "Add a new Kategorie", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Kategorie" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KategorieModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
+    public ResponseEntity<?> add(@RequestBody KategorieModel model) {
         return super.add(model);
     }
 
     @Override
     @PutMapping(ApiPaths.NAME_PART)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates an Kategorie by name", response = KategorieModel.class)
-    public ResponseEntity<?> update(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name, KategorieModel model) {
+    @Operation(summary = "Updates an Kategorie by name", description = "Update a category", operationId = "update", tags = { "Kategorie" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KategorieModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
+    public ResponseEntity<?> update(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name, @RequestBody KategorieModel model) {
         return super.update(name, model);
     }
 
     @Override
     @DeleteMapping(ApiPaths.NAME_PART)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 204, value = "Deletes an Kategorie by name")
+    @Operation(summary = "Deletes an Kategorie by name", description = "Delete a category", operationId = "update", tags = { "Kategorie" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
     public ResponseEntity<?> delete(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }
 
     @GetMapping(ApiPaths.UNTER_KATEGORIE_ROOT)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds UnterKategorieen by kategorie", response = UnterKategorieModel.class, responseContainer = "List")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = ApiNames.KATEGORIEN, value = "List of Kategorie names", dataType = "[Ljava.lang.String;", paramType = "query"),
-            @ApiImplicitParam(name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
-            @ApiImplicitParam(name = ApiNames.PAGE_SIZE, value = "Page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),})
-    @ApiResponses({@ApiResponse(code = 204, message = "No Content"),
-            @ApiResponse(code = 500, message = "Internal Server Error")})
-    public ResponseEntity<?> searchUnterKategorie(@RequestParam(ApiNames.KATEGORIEN) List<String> kategorieen, @RequestBody Map<String, String> arguments) {
+    @Operation(summary = "Finds Kategorieen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "UnterKategorie" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = UnterKategorieModel.class))) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found, content = @Content"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
+    public ResponseEntity<?> searchUnterKategorie(@RequestParam(ApiNames.KATEGORIEN) List<String> kategorieen, @RequestBody UnterKategorieModel model) {
         logGet(String.format(ApiPaths.UNTER_KATEGORIEN_LOG, ApiNames.KATEGORIE) + ": " + kategorieen);
 
-        return unterKategorieService.search(kategorieen, getPageRequest(arguments));
+        Page<UnterKategorieModel> page = service.searchUnterKategorie(kategorieen, model);
+
+        return page.hasContent() ? ok(page) : notFound().build();
     }
 
     @PostMapping(ApiPaths.UNTER_KATEGORIE_ROOT)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds an UnterKategorie to a kategorie", response = UnterKategorieModel.class)
-    @ApiResponses({@ApiResponse(code = 400, message = "Bad request"), @ApiResponse(code = 402, message = "Not Found"),
-            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "UnterKategorie" })
+    @ApiResponses(value = {
+                    @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UnterKategorieModel.class)) }),
+                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+                })
     public ResponseEntity<?> addUnterKategorie(@PathVariable(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, UnterKategorieModel unterKategorie) {
         logPost(String.format(ApiPaths.UNTER_KATEGORIE_ROOT_LOG, ApiNames.KATEGORIE, kategorieStr) + ": " + unterKategorie);
 
-        unterKategorie.setKategorie(getModel(kategorieStr));
-
-        return created(unterKategorieService.add(unterKategorie));
+        return of(service.addUnterKategorie(kategorieStr, unterKategorie));
     }
 
     @PutMapping(ApiPaths.UNTER_KATEGORIE_PATH)
-    @ApiOperation(code = 202, value = "Updates an UnterKategorie by kategorie and name", response = UnterKategorieModel.class)
-    @ApiResponses({@ApiResponse(code = 400, message = "Bad request"), @ApiResponse(code = 402, message = "Not Found"),
-            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @JsonView(Views.Public.class)
+    @Operation(summary = "Updates a change to an Article", description = "", operationId = "", tags = { "UnterKategorie" })
+    @ApiResponses(value = {
+                    @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UnterKategorieModel.class)) }),
+                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+                })
     public ResponseEntity<?> updateUnterKategorie(@PathVariable(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathVariable(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr, UnterKategorieModel unterKategorie) {
         logPut(String.format(ApiPaths.UNTER_KATEGORIE_LOG, ApiNames.KATEGORIE, kategorieStr, unterKategorieStr) + ": " + unterKategorie);
 
-        unterKategorie.setKategorie(getModel(kategorieStr));
-
-        return accepted(unterKategorieService.update(unterKategorie));
+        return of(service.updateUnterKategorie(kategorieStr, unterKategorieStr, unterKategorie));
     }
 
     @DeleteMapping(ApiPaths.UNTER_KATEGORIE_PATH)
-    @ApiOperation(code = 204, value = "Deletes an UnterKategorie by kategorie and name")
-    @ApiResponses({@ApiResponse(code = 400, message = "Bad request"), @ApiResponse(code = 402, message = "Not Found"),
-            @ApiResponse(code = 500, message = "Internal Server Error")})
+    @JsonView(Views.Public.class)
+    @Operation(summary = "Removes a change from an article", description = "", operationId = "", tags = { "UnterKategorie" })
+    @ApiResponses(value = {
+                    @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
+                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+                })
     public ResponseEntity<?> deleteUnterKategorie(@PathVariable(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathVariable(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) {
         logDelete(String.format(ApiPaths.UNTER_KATEGORIE_LOG, ApiNames.KATEGORIE, kategorieStr, unterKategorieStr));
 
-        return unterKategorieService.delete(UnterKategorieModel.builder().kategorie(getModel(kategorieStr)).name(unterKategorieStr).build()) ? noContent() : notFound();
+        return (service.deleteUnterKategorie(kategorieStr, unterKategorieStr) ? noContent() : notFound()).build();
     }
 }

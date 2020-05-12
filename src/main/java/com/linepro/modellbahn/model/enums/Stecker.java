@@ -3,10 +3,9 @@ package com.linepro.modellbahn.model.enums;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.linepro.modellbahn.controller.base.ApiNames;
+import com.linepro.modellbahn.controller.impl.ApiNames;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Stecker. Enumeration of Decoder connections
@@ -17,7 +16,7 @@ import io.swagger.annotations.ApiModelProperty;
 @JsonRootName(value = ApiNames.STECKER)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG })
-@ApiModel(value = ApiNames.STECKER, description = "Stecker types")
+@Schema(name = ApiNames.STECKER, description = "Stecker types")
 public enum Stecker implements DescribedEnum {
 
     EINGEBAUT("Eingebaut", "Eingebaut / bedrahten"),
@@ -50,19 +49,19 @@ public enum Stecker implements DescribedEnum {
     }
 
     @Override
-    @ApiModelProperty(value = "Stecker type name", example = "EINGEBAUT", required = true)
+    @Schema(name = "Stecker type name", example = "EINGEBAUT", required = true)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @ApiModelProperty(value = "Stecker type description", example = "Builin / Hardwired.", required = true)
+    @Schema(name = "Stecker type description", example = "Builin / Hardwired.", required = true)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @ApiModelProperty(value = "AdressTyp tooltip", example = "0 - 10239.")
+    @Schema(name = "AdressTyp tooltip", example = "0 - 10239.")
     public String getTooltip() {
         return tooltip;
     }

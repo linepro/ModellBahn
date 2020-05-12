@@ -7,11 +7,11 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.linepro.modellbahn.model.ArtikelModel;
 import com.linepro.modellbahn.model.DecoderModel;
 import com.linepro.modellbahn.model.DecoderTypModel;
+import com.linepro.modellbahn.model.NamedItemModel;
 import com.linepro.modellbahn.model.ProduktModel;
 import com.linepro.modellbahn.model.ProduktTeilModel;
 import com.linepro.modellbahn.model.UnterKategorieModel;
 import com.linepro.modellbahn.model.ZugConsistModel;
-import com.linepro.modellbahn.model.base.NamedItemModel;
 
 /**
  * TODO: by proxy??
@@ -351,7 +351,7 @@ public class ToStringBuilder extends org.apache.commons.lang3.builder.ToStringBu
     }
 
     public ToStringBuilder append(String fieldName, ProduktTeilModel value) {
-        super.append(fieldName, value != null ? new Object[] { value.getTeil(), value.getAnzahl()} : null);
+        super.append(fieldName, value != null ? new Object[] { value.getTeilHersteller(), value.getTeilBestellNr(), value.getAnzahl()} : null);
         return this;
     }
 

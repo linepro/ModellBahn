@@ -1,8 +1,10 @@
 package com.linepro.modellbahn.model;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import com.linepro.modellbahn.model.enums.DescribedEnum;
 
-public class DescribedEnumModel implements DescribedEnum {
+public class DescribedEnumModel extends RepresentationModel<DescribedEnumModel> implements DescribedEnum {
 
     private final DescribedEnum enumValue;
     

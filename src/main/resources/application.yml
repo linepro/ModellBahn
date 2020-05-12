@@ -1,0 +1,78 @@
+server:
+   address: 127.0.0.1
+   error:
+      whitelabel:
+         enabled: false
+   port: 8086
+#   ssl:
+#      enabled: true
+#      key-store-type: PKCS12
+#      key-store: ${HOME}/.ssh/keystore.p12
+#      key-store-password: password
+#      key-alias: yapily-dev
+#      key-password: password
+   tomcat:
+      accesslog:
+         enabled: true
+security:
+   oauth2:
+      client:
+         client-id: first-client
+         client-secret: noonewilleverguess
+#   require-ssl: true
+
+spring:
+   application:
+      name: ModellBahn
+   datasource:
+      url: jdbc:h2:./modellbahn;TRACE_LEVEL_FILE=3;TRACE_LEVEL_SYSTEM_OUT=2;AUTO_SERVER=TRUE
+      driverClassName: org.h2.Driver
+      username: sa
+      password: password
+      tomcat:
+         initial-size: 1
+         max-wait: 10000
+         max-active: 5
+         test-on-borrow: true
+   flyway:
+      baseline-description: Initial
+      baseline-on-migrate: true
+      baseline-version: 1
+      check-location: true
+      clean-disabled: true
+      clean-on-validation-error: false
+      encoding: UTF-8
+      installed-by: flyway
+      locations: classpath:db/migration
+      mixed: false
+      validate-on-migrate: true
+   jmx:
+      enabled: false
+   jpa:
+      database-platform: org.hibernate.dialect.H2Dialect
+      hibernate.ddl-auto: update
+      open-in-view: false
+      properties:
+         hibernate:
+            format_sql: true
+            generate_statistics: false
+            temp:
+               use_jdbc_metadata_defaults: false
+      show-sql: true
+   mail:
+      host: smtp.mailhost.com
+      username: mailUser
+      password: mailPass
+      port: 587
+      properties:
+         mail:
+            smtp:
+               auth: true
+               starttls:
+                  enable: true
+   mvc:
+      servlet:
+         path: /ModellBahn
+   thymeleaf:
+      mode: LEGACYHTML5
+      cache: false

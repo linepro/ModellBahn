@@ -6,17 +6,19 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.linepro.modellbahn.controller.base.ApiNames;
+import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.entity.DecoderTypAdress;
-import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.repository.base.ItemRepository;
 
 @Repository
 public interface DecoderTypAdressRepository extends ItemRepository<DecoderTypAdress> {
 
-    @Query("SELECT a FROM " + DBNames.DECODER_TYP_ADRESS + 
-            " a WHERE a." + DBNames.DECODER_TYP + "." + DBNames.HERSTELLER + "." + DBNames.NAME + " = :" + ApiNames.HERSTELLER + 
-            " AND a." + DBNames.DECODER_TYP + "." + ApiNames.BESTELL_NR + " = :" + ApiNames.BESTELL_NR +
-            " AND a." + DBNames.INDEX + " = :" + ApiNames.INDEX)
+    //@formatter:off
+    @Query("SELECT a " + 
+           "FROM   decoderTypAdress a " + 
+           "WHERE  a.decoderTyp.hersteller.name = :" + ApiNames.HERSTELLER + " " +
+           "AND    a.decoderTyp.bestellNr       = :" + ApiNames.BESTELL_NR + " " +
+           "AND    a.index                      = :" + ApiNames.INDEX)
+    //@formatter:on
     Optional<DecoderTypAdress> findByIndex(@Param(ApiNames.HERSTELLER) String herstellerStr, @Param(ApiNames.BESTELL_NR) String bestellNr, @Param(ApiNames.INDEX) Integer index);
 }

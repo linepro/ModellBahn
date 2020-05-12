@@ -3,10 +3,9 @@ package com.linepro.modellbahn.model.enums;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.linepro.modellbahn.controller.base.ApiNames;
+import com.linepro.modellbahn.controller.impl.ApiNames;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * AdressTyp.
@@ -17,7 +16,7 @@ import io.swagger.annotations.ApiModelProperty;
 @JsonRootName(value = ApiNames.ADRESS_TYP)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG })
-@ApiModel(value = ApiNames.ADRESS_TYP, description = "Adress types")
+@Schema(name = ApiNames.ADRESS_TYP, description = "Adress types")
 public enum AdressTyp implements DescribedEnum {
 
     DCC("DCC lang", "0 - 10239."),
@@ -42,19 +41,19 @@ public enum AdressTyp implements DescribedEnum {
     }
 
     @Override
-    @ApiModelProperty(value = "AdressTyp name", example = "DCC", required = true)
+    @Schema(name = "AdressTyp name", example = "DCC", required = true)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @ApiModelProperty(value = "AdressTyp description", example = "DCC lang.", required = true)
+    @Schema(name = "AdressTyp description", example = "DCC lang.", required = true)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @ApiModelProperty(value = "AdressTyp tooltip", example = "0 - 10239.", required = true)
+    @Schema(name = "AdressTyp tooltip", example = "0 - 10239.", required = true)
     public String getTooltip() {
         return tooltip;
     }

@@ -1,16 +1,17 @@
 package com.linepro.modellbahn.model;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.model.base.ItemModelImpl;
+import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.rest.json.Views;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,8 +21,8 @@ import lombok.ToString;
 
 /**
  * IDecoderFunktion.
- * @author   $Author$
- * @version  $Id$
+ * @author $Author$
+ * @version $Id$
  */
 @Builder
 @AllArgsConstructor
@@ -30,35 +31,40 @@ import lombok.ToString;
 @Setter
 @ToString
 @JsonRootName(value = ApiNames.FUNKTION)
-@JsonIgnoreProperties(ignoreUnknown=true)
-@JsonPropertyOrder({ApiNames.DECODER, ApiNames.FUNKTION,  ApiNames.BEZEICHNUNG, ApiNames.DELETED})
-@ApiModel(value = ApiNames.FUNKTION, description = "Decoder function mapping.")
-public class DecoderFunktionModel extends ItemModelImpl<DecoderFunktionModel> {
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonPropertyOrder({ ApiNames.DECODER_ID, ApiNames.REIHE, ApiNames.FUNKTION, ApiNames.BEZEICHNUNG, ApiNames.PROGRAMMABLE, ApiNames.DELETED })
+@Schema(name = ApiNames.FUNKTION, description = "Decoder function mapping.")
+public class DecoderFunktionModel extends RepresentationModel<DecoderFunktionModel> implements ItemModel {
 
     private static final long serialVersionUID = -5315298133158215960L;
 
-    @JsonProperty(ApiNames.DECODER)
+    @JsonProperty(ApiNames.DECODER_ID)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.DecoderModel", value = "Parent decoder", required = true)
-    private DecoderModel decoder;
+    @Schema(name = "Decoder's id", example = "00001", accessMode = AccessMode.READ_ONLY, required = true)
+    private String decoderId;
 
-    @JsonProperty(ApiNames.FUNKTION)
+    @JsonProperty(ApiNames.REIHE)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Reihe - Bank Number", example = "0", required = true)
+    @Schema(name = "Bank number (0-1) always 0 for single panel decoders", example = "0", required = true)
     private Integer reihe;
 
     @JsonProperty(ApiNames.FUNKTION)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Function Key", example = "F0", required = true)
+    @Schema(name = "Function Key", example = "F0", required = true)
     private String funktion;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Usage", example = "Strinbeleuchtung", required = true)
+    @Schema(name = "Usage", example = "Strinbeleuchtung", required = true)
     private String bezeichnung;
+
+    @JsonProperty(ApiNames.PROGRAMMABLE)
+    @JsonView(Views.Public.class)
+    @Schema(name = "True if this function can be reassigned", example = "false", required = true)
+    private Boolean programmable;
 
     @JsonProperty(ApiNames.DELETED)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "True if soft deleted", example = "false", required = true)
+    @Schema(name = "True if soft deleted", example = "false", required = true)
     protected Boolean deleted;
 }

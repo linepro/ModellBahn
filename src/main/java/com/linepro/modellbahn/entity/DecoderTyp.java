@@ -29,18 +29,16 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Range;
 
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.entity.base.Item;
-import com.linepro.modellbahn.entity.base.ItemImpl;
+import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.model.HerstellerModel;
 import com.linepro.modellbahn.model.ProtokollModel;
 import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.model.enums.Stecker;
-import com.linepro.modellbahn.model.validation.Fahrstufe;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.persistence.util.PathConverter;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.validation.Fahrstufe;
 
 /**
  * DecoderTyp. Represents a Decoder type (manufacturer : part numer)
@@ -48,10 +46,16 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author $Author:$
  * @version $Id:$
  */
+//@formatter:off
 @Entity(name = DBNames.DECODER_TYP)
-@Table(name = DBNames.DECODER_TYP, indexes = { @Index(columnList = DBNames.HERSTELLER_ID),
-        @Index(columnList = DBNames.PROTOKOLL_ID) }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { DBNames.HERSTELLER_ID, DBNames.BESTELL_NR }) })
+@Table(name = DBNames.DECODER_TYP,
+    indexes = { 
+        @Index(name = DBNames.DECODER_TYP + "_IX1", columnList = DBNames.HERSTELLER_ID),
+        @Index(name = DBNames.DECODER_TYP + "_IX2", columnList = DBNames.PROTOKOLL_ID)
+    }, uniqueConstraints = {
+        @UniqueConstraint(name = DBNames.DECODER_TYP + "_UC1", columnNames = { DBNames.HERSTELLER_ID, DBNames.BESTELL_NR })
+    })
+//@formatter:on
 public class DecoderTyp extends ItemImpl {
 
     /** The hersteller. */
@@ -371,18 +375,18 @@ public class DecoderTyp extends ItemImpl {
     public String toString() {
       return new ToStringBuilder(this)
                 .appendSuper(super.toString())
-                .append(ApiNames.HERSTELLER, getHersteller())
-                .append(ApiNames.BESTELL_NR, getBestellNr())
-                .append(ApiNames.BEZEICHNUNG, getBezeichnung())
-                .append(ApiNames.PROTOKOLL, getProtokoll())
-                .append(ApiNames.I_MAX, getiMax())
-                .append(ApiNames.FAHRSTUFE, getFahrstufe())
-                .append(ApiNames.GERAUSCH, getSound())
-                .append(ApiNames.KONFIGURATION, getKonfiguration())
-                .append(ApiNames.ANLEITUNGEN, getAnleitungen())
-                .append(ApiNames.ADRESSEN, getAdressen())
-                .append(ApiNames.CVS, getCVs())
-                .append(ApiNames.FUNKTIONEN, getFunktionen())
+                .append(DBNames.HERSTELLER, getHersteller())
+                .append(DBNames.BESTELL_NR, getBestellNr())
+                .append(DBNames.BEZEICHNUNG, getBezeichnung())
+                .append(DBNames.PROTOKOLL, getProtokoll())
+                .append(DBNames.I_MAX, getiMax())
+                .append(DBNames.FAHRSTUFE, getFahrstufe())
+                .append(DBNames.SOUND, getSound())
+                .append(DBNames.KONFIGURATION, getKonfiguration())
+                .append(DBNames.ANLEITUNGEN, getAnleitungen())
+                .append(DBNames.DECODER_ADRESS, getAdressen())
+                .append(DBNames.DECODER_CV, getCVs())
+                .append(DBNames.DECODER_FUNKTION, getFunktionen())
                 .toString();
     }
 }

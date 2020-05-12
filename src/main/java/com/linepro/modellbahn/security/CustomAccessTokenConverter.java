@@ -7,15 +7,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.UserAuthenticationConverter;
-import org.springframework.stereotype.Component;
 
-@Component
 public class CustomAccessTokenConverter extends DefaultAccessTokenConverter {
 
     /** Cognito user id is the sent as "sub" */
     public static final String SUB = "sub";
 
-    @Value("${clientId}")
+    @Value("${clientId:clientId}")
     private String clientId;
 
     @Override

@@ -16,9 +16,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.entity.base.Item;
-import com.linepro.modellbahn.entity.base.ItemImpl;
+import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.util.ToStringBuilder;
@@ -29,14 +27,16 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author $Author:$
  * @version $Id:$
  */
+//@formatter:off
 @Entity(name = DBNames.ZUG_CONSIST)
 @Table(name = DBNames.ZUG_CONSIST,
-        indexes = {
-                @Index(columnList = DBNames.ZUG_ID),
-                @Index(columnList = DBNames.ARTIKEL_ID)
-        }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { DBNames.ZUG_ID, DBNames.POSITION })
+    indexes = {
+        @Index(name = DBNames.ZUG_CONSIST + "_IX1", columnList = DBNames.ZUG_ID),
+        @Index(name = DBNames.ZUG_CONSIST + "_IX2", columnList = DBNames.ARTIKEL_ID)
+    }, uniqueConstraints = {
+        @UniqueConstraint(name = DBNames.ZUG_CONSIST + "_UC1", columnNames = { DBNames.ZUG_ID, DBNames.POSITION })
         })
+//@formatter:on
 public class ZugConsist extends ItemImpl {
 
     /** The zug. */
@@ -160,9 +160,9 @@ public class ZugConsist extends ItemImpl {
     public String toString() {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
-                .append(ApiNames.ZUG, getZug())
-                .append(ApiNames.POSITION, getPosition())
-                .append(ApiNames.ARTIKEL, getArtikel())
+                .append(DBNames.ZUG, getZug())
+                .append(DBNames.POSITION, getPosition())
+                .append(DBNames.ARTIKEL, getArtikel())
                 .toString();
     }
 }

@@ -29,9 +29,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.entity.base.Item;
-import com.linepro.modellbahn.entity.base.ItemImpl;
+import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.model.EpochModel;
 import com.linepro.modellbahn.model.MassstabModel;
 import com.linepro.modellbahn.model.SpurweiteModel;
@@ -46,25 +44,30 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author $Author:$
  * @version $Id:$
  */
+//@formatter:off
 @Entity(name = DBNames.PRODUKT)
-@Table(name = DBNames.PRODUKT, indexes = {
-        @Index(columnList = DBNames.HERSTELLER_ID),
-        @Index(columnList = DBNames.EPOCH_ID),
-        @Index(columnList = DBNames.GATTUNG_ID),
-        @Index(columnList = DBNames.BAHNVERWALTUNG_ID),
-        @Index(columnList = DBNames.ACHSFOLG_ID),
-        @Index(columnList = DBNames.MASSSTAB_ID),
-        @Index(columnList = DBNames.SPURWEITE_ID),
-        @Index(columnList = DBNames.UNTER_KATEGORIE_ID),
-        @Index(columnList = DBNames.SONDERMODELL_ID),
-        @Index(columnList = DBNames.AUFBAU_ID),
-        @Index(columnList = DBNames.LICHT_ID),
-        @Index(columnList = DBNames.KUPPLUNG_ID),
-        @Index(columnList = DBNames.VORBILD_ID),
-        @Index(columnList = DBNames.STEUERUNG_ID),
-        @Index(columnList = DBNames.DECODER_TYP_ID),
-        @Index(columnList = DBNames.MOTOR_TYP_ID) }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { DBNames.HERSTELLER_ID, DBNames.BESTELL_NR }) })
+@Table(name = DBNames.PRODUKT,
+    indexes = {
+        @Index(name = DBNames.PRODUKT + "_IX1", columnList = DBNames.HERSTELLER_ID),
+        @Index(name = DBNames.PRODUKT + "_IX2", columnList = DBNames.EPOCH_ID),
+        @Index(name = DBNames.PRODUKT + "_IX3", columnList = DBNames.GATTUNG_ID),
+        @Index(name = DBNames.PRODUKT + "_IX4", columnList = DBNames.BAHNVERWALTUNG_ID),
+        @Index(name = DBNames.PRODUKT + "_IX5", columnList = DBNames.ACHSFOLG_ID),
+        @Index(name = DBNames.PRODUKT + "_IX6", columnList = DBNames.MASSSTAB_ID),
+        @Index(name = DBNames.PRODUKT + "_IX7", columnList = DBNames.SPURWEITE_ID),
+        @Index(name = DBNames.PRODUKT + "_IX8", columnList = DBNames.UNTER_KATEGORIE_ID),
+        @Index(name = DBNames.PRODUKT + "_IX9", columnList = DBNames.SONDERMODELL_ID),
+        @Index(name = DBNames.PRODUKT + "_IX10", columnList = DBNames.AUFBAU_ID),
+        @Index(name = DBNames.PRODUKT + "_IX11", columnList = DBNames.LICHT_ID),
+        @Index(name = DBNames.PRODUKT + "_IX12", columnList = DBNames.KUPPLUNG_ID),
+        @Index(name = DBNames.PRODUKT + "_IX13", columnList = DBNames.VORBILD_ID),
+        @Index(name = DBNames.PRODUKT + "_IX14", columnList = DBNames.STEUERUNG_ID),
+        @Index(name = DBNames.PRODUKT + "_IX15", columnList = DBNames.DECODER_TYP_ID),
+        @Index(name = DBNames.PRODUKT + "_IX16", columnList = DBNames.MOTOR_TYP_ID)
+    }, uniqueConstraints = {
+        @UniqueConstraint(name = DBNames.PRODUKT + "_UC1", columnNames = { DBNames.HERSTELLER_ID, DBNames.BESTELL_NR })
+    })
+//@formatter:on
 public class Produkt extends ItemImpl {
 
     /** The hersteller. */
@@ -549,31 +552,31 @@ public class Produkt extends ItemImpl {
     public String toString() {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
-                .append(ApiNames.HERSTELLER, getHersteller())
-                .append(ApiNames.BESTELL_NR, getBestellNr())
-                .append(ApiNames.UNTER_KATEGORIE, getUnterKategorie())
-                .append(ApiNames.MASSSTAB, getMassstab())
-                .append(ApiNames.SPURWEITE, getSpurweite())
-                .append(ApiNames.BETREIBSNUMMER, getBetreibsnummer())
-                .append(ApiNames.EPOCH, getEpoch())
-                .append(ApiNames.BAHNVERWALTUNG, getBahnverwaltung())
-                .append(ApiNames.GATTUNG, getGattung())
-                .append(ApiNames.BAUZEIT, getBauzeit())
-                .append(ApiNames.ACHSFOLG, getAchsfolg())
-                .append(ApiNames.VORBILD, getVorbild())
-                .append(ApiNames.ANMERKUNG, getAnmerkung())
-                .append(ApiNames.SONDERMODELL, getSondermodell())
-                .append(ApiNames.AUFBAU, getAufbau())
-                .append(ApiNames.LICHT, getLicht())
-                .append(ApiNames.KUPPLUNG, getKupplung())
-                .append(ApiNames.STEUERUNG, getSteuerung())
-                .append(ApiNames.DECODER_TYP, getDecoderTyp())
-                .append(ApiNames.MOTOR_TYP, getMotorTyp())
-                .append(ApiNames.LANGE, getLange())
-                .append(ApiNames.ANLEITUNGEN, getAnleitungen())
-                .append(ApiNames.EXPLOSIONSZEICHNUNG, getExplosionszeichnung())
-                .append(ApiNames.ABBILDUNG, getAbbildung())
-                .append(ApiNames.TEILEN, getTeilen())
+                .append(DBNames.HERSTELLER, getHersteller())
+                .append(DBNames.BESTELL_NR, getBestellNr())
+                .append(DBNames.UNTER_KATEGORIE, getUnterKategorie())
+                .append(DBNames.MASSSTAB, getMassstab())
+                .append(DBNames.SPURWEITE, getSpurweite())
+                .append(DBNames.BETREIBSNUMMER, getBetreibsnummer())
+                .append(DBNames.EPOCH, getEpoch())
+                .append(DBNames.BAHNVERWALTUNG, getBahnverwaltung())
+                .append(DBNames.GATTUNG, getGattung())
+                .append(DBNames.BAUZEIT, getBauzeit())
+                .append(DBNames.ACHSFOLG, getAchsfolg())
+                .append(DBNames.VORBILD, getVorbild())
+                .append(DBNames.ANMERKUNG, getAnmerkung())
+                .append(DBNames.SONDERMODELL, getSondermodell())
+                .append(DBNames.AUFBAU, getAufbau())
+                .append(DBNames.LICHT, getLicht())
+                .append(DBNames.KUPPLUNG, getKupplung())
+                .append(DBNames.STEUERUNG, getSteuerung())
+                .append(DBNames.DECODER_TYP, getDecoderTyp())
+                .append(DBNames.MOTOR_TYP, getMotorTyp())
+                .append(DBNames.LANGE, getLange())
+                .append(DBNames.ANLEITUNGEN, getAnleitungen())
+                .append(DBNames.EXPLOSIONSZEICHNUNG, getExplosionszeichnung())
+                .append(DBNames.ABBILDUNG, getAbbildung())
+                .append(DBNames.PRODUKT_TEIL, getTeilen())
                 .toString();
     }
 }

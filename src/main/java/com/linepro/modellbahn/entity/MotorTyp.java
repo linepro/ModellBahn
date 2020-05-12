@@ -5,7 +5,7 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.linepro.modellbahn.entity.base.NamedItemImpl;
+import com.linepro.modellbahn.entity.impl.NamedItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 
 /**
@@ -14,9 +14,15 @@ import com.linepro.modellbahn.persistence.DBNames;
  * @author $Author:$
  * @version $Id:$
  */
+//@formatter:off
 @Entity(name = DBNames.MOTOR_TYP)
-@Table(name = DBNames.MOTOR_TYP, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
-        @UniqueConstraint(columnNames = { DBNames.NAME }) })
+@Table(name = DBNames.MOTOR_TYP,
+    indexes = { 
+        @Index(name = DBNames.MOTOR_TYP + "_IX1", columnList = DBNames.NAME, unique = true)
+    }, uniqueConstraints = {
+        @UniqueConstraint(name = DBNames.MOTOR_TYP + "_UC1", columnNames = { DBNames.NAME })
+    })
+//@formatter:on
 public class MotorTyp extends NamedItemImpl {
 
     /**

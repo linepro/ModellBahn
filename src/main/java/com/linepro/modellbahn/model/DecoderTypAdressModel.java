@@ -1,17 +1,17 @@
 package com.linepro.modellbahn.model;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.model.base.ItemModelImpl;
+import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.rest.json.Views;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,37 +32,38 @@ import lombok.ToString;
 @ToString
 @JsonRootName(value = ApiNames.ADRESS)
 @JsonIgnoreProperties(ignoreUnknown=true)
-@JsonPropertyOrder({ApiNames.DECODER_TYP,  ApiNames.INDEX,  ApiNames.ADRESS_TYP,  ApiNames.SPAN,  ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED})
-@ApiModel(value = ApiNames.ADRESS, description = "Decoder type address - template for Decoder.")
-public class DecoderTypAdressModel extends ItemModelImpl<DecoderTypAdressModel> {
+@JsonPropertyOrder({ApiNames.INDEX,  ApiNames.ADRESS_TYP,  ApiNames.SPAN,  ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED})
+@Schema(name = ApiNames.ADRESS, description = "Decoder type address - template for Decoder.")
+public class DecoderTypAdressModel extends RepresentationModel<DecoderTypAdressModel> implements ItemModel {
 
     private static final long serialVersionUID = 1826497356359114726L;
 
-    @JsonProperty(ApiNames.DECODER_TYP)
-    @JsonView(Views.DropDown.class)
-    @ApiModelProperty(dataType = "com.linepro.modellbahn.model.DecoderTypModel", value = "Decoder type", required = true)
-    private DecoderTypModel decoderTyp;
-
     @JsonProperty(ApiNames.INDEX)
-    @ApiModelProperty(value = "0 based address index (always 0 for single address decoders)", example = "0", required = true)
+    @JsonView(Views.DropDown.class)
+    @Schema(name = "0 based address index (always 0 for single address decoders)", example = "0", required = true)
     private Integer index;
 
+    @JsonProperty(ApiNames.BEZEICHNUNG)
+    @JsonView(Views.DropDown.class)
+    @Schema(name = "Description", example = "First Motorola Address")
+    private String bezeichnung;
+
     @JsonProperty(ApiNames.SPAN)
-    @ApiModelProperty(value = "Number of addresses consumed (1-16)", example = "1", required = true)
+    @Schema(name = "Number of addresses consumed (1-16)", example = "1", required = true)
     private Integer span;
 
     @JsonProperty(ApiNames.ADRESS_TYP)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Address type", required = true)
+    @Schema(name = "Address type", required = true)
     private AdressTyp adressTyp;
 
-    @JsonProperty(ApiNames.ADRESS)
+    @JsonProperty(ApiNames.WERKSEINSTELLUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Digital address", example = "80", required = true)
-    private Integer adress;
+    @Schema(name = "Default digital address", example = "80", required = true)
+    private Integer werkeinstellung;
 
     @JsonProperty(ApiNames.DELETED)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "True if soft deleted", example = "false", required = true)
+    @Schema(name = "True if soft deleted", example = "false", required = true)
     protected Boolean deleted;
 }

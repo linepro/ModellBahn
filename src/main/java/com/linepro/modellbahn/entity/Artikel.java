@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -28,15 +29,14 @@ import javax.validation.constraints.Positive;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.entity.base.Item;
-import com.linepro.modellbahn.entity.base.ItemImpl;
+import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.ArtikelId;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.persistence.util.PathConverter;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.validation.Currency;
 
 /**
  * Artikel.
@@ -44,14 +44,21 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author  $Author:$
  * @version $Id:$
  */
+//@formatter:off
 @Entity(name = DBNames.ARTIKEL)
-@Table(name = DBNames.ARTIKEL, indexes = { @Index(columnList = DBNames.PRODUKT_ID),
-        @Index(columnList = DBNames.WAHRUNG_ID),
-        @Index(columnList = DBNames.STEUERUNG_ID),
-        @Index(columnList = DBNames.MOTOR_TYP_ID),
-        @Index(columnList = DBNames.LICHT_ID),
-        @Index(columnList = DBNames.KUPPLUNG_ID),
-        @Index(columnList = DBNames.DECODER_ID) })
+@Table(name = DBNames.ARTIKEL,
+    indexes = { 
+        @Index(name = DBNames.ARTIKEL + "_IX1", columnList = DBNames.PRODUKT_ID),
+        @Index(name = DBNames.ARTIKEL + "_IX2", columnList = DBNames.WAHRUNG_ID),
+        @Index(name = DBNames.ARTIKEL + "_IX3", columnList = DBNames.STEUERUNG_ID),
+        @Index(name = DBNames.ARTIKEL + "_IX4", columnList = DBNames.MOTOR_TYP_ID),
+        @Index(name = DBNames.ARTIKEL + "_IX5", columnList = DBNames.LICHT_ID),
+        @Index(name = DBNames.ARTIKEL + "_IX6", columnList = DBNames.KUPPLUNG_ID),
+        @Index(name = DBNames.ARTIKEL + "_IX7", columnList = DBNames.DECODER_ID) 
+    }, uniqueConstraints = {
+        @UniqueConstraint(name = DBNames.ARTIKEL + "_UC1", columnNames = { DBNames.ARTIKEL_ID }) 
+    })
+//@formatter:on
 public class Artikel extends ItemImpl {
 
     /** The abbildung. */
@@ -67,7 +74,8 @@ public class Artikel extends ItemImpl {
     private LocalDate kaufdatum;
 
     /** The wahrung. */
-    private Wahrung wahrung;
+    @Currency(message = "{com.linepro.modellbahn.validator.constraints.wahrung.invalid}")
+    private String wahrung;
 
     /** The steuerung. */
     private Steuerung steuerung;
@@ -146,7 +154,7 @@ public class Artikel extends ItemImpl {
      * @param status the status
      * @param deleted if  { this item is soft deleted, otherwise it is active
      */
-    public Artikel(Long id, Produkt produkt, LocalDate kaufdatum, Wahrung wahrung, BigDecimal preis, Integer stuck,
+    public Artikel(Long id, Produkt produkt, LocalDate kaufdatum, String wahrung, BigDecimal preis, Integer stuck,
             Integer verbleibende, Steuerung steuerung, MotorTyp motorTyp, Licht licht, Kupplung kupplung, 
             Decoder decoder, String artikelId, String bezeichnung, String anmerkung, String beladung, Status status, 
             Boolean deleted) {
@@ -172,7 +180,7 @@ public class Artikel extends ItemImpl {
 
     @BusinessKey
     @ArtikelId
-    @Column(name = DBNames.ARTIKEL_ID, unique = true, length = 50)
+    @Column(name = DBNames.ARTIKEL_ID, unique = true, length = 6, nullable = false, updatable = false)
     public String getArtikelId() {
       return artikelId;
     }
@@ -206,14 +214,13 @@ public class Artikel extends ItemImpl {
     }
 
     
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Wahrung.class)
-    @JoinColumn(name = DBNames.WAHRUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk2"))
-    public Wahrung getWahrung() {
+    @Column(name = DBNames.WAHRUNG, length = 3)
+    public String getWahrung() {
         return wahrung;
     }
 
     
-    public void setWahrung(Wahrung wahrung) {
+    public void setWahrung(String wahrung) {
         this.wahrung = wahrung;
     }
 
@@ -428,20 +435,20 @@ public class Artikel extends ItemImpl {
     public String toString() {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
-                .append(ApiNames.PRODUKT, getProdukt())
-                .append(ApiNames.KAUFDATUM, getKaufdatum())
-                .append(ApiNames.WAHRUNG, getWahrung())
-                .append(ApiNames.PREIS, getPreis())
-                .append(ApiNames.STUCK, getStuck())
-                .append(ApiNames.STEUERUNG, getSteuerung())
-                .append(ApiNames.MOTOR_TYP, getMotorTyp())
-                .append(ApiNames.LICHT, getLicht())
-                .append(ApiNames.KUPPLUNG, getKupplung())
-                .append(ApiNames.DECODER, getDecoder())
-                .append(ApiNames.ANMERKUNG, getAnmerkung())
-                .append(ApiNames.BELADUNG, getBeladung())
-                .append(ApiNames.ABBILDUNG, getAbbildung())
-                .append(ApiNames.STATUS, getStatus())
+                .append(DBNames.PRODUKT, getProdukt())
+                .append(DBNames.KAUFDATUM, getKaufdatum())
+                .append(DBNames.WAHRUNG, getWahrung())
+                .append(DBNames.PREIS, getPreis())
+                .append(DBNames.STUCK, getStuck())
+                .append(DBNames.STEUERUNG, getSteuerung())
+                .append(DBNames.MOTOR_TYP, getMotorTyp())
+                .append(DBNames.LICHT, getLicht())
+                .append(DBNames.KUPPLUNG, getKupplung())
+                .append(DBNames.DECODER, getDecoder())
+                .append(DBNames.ANMERKUNG, getAnmerkung())
+                .append(DBNames.BELADUNG, getBeladung())
+                .append(DBNames.ABBILDUNG, getAbbildung())
+                .append(DBNames.STATUS, getStatus())
                 .toString();
     }
 }

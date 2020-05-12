@@ -22,9 +22,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.entity.base.Item;
-import com.linepro.modellbahn.entity.base.ItemImpl;
+import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.model.enums.AnderungsTyp;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
@@ -36,10 +34,16 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author $Author:$
  * @version $Id:$
  */
+//@formatter:off
 @Entity(name = DBNames.ANDERUNG)
-@Table(name = DBNames.ANDERUNG, indexes = {@Index(columnList = DBNames.ARTIKEL_ID),
-        @Index(columnList = DBNames.ANDERUNG_ID)}, uniqueConstraints = {
-                @UniqueConstraint(columnNames = {DBNames.ARTIKEL_ID, DBNames.ANDERUNG_ID})})
+@Table(name = DBNames.ANDERUNG,
+    indexes = {
+        @Index(name = DBNames.ANDERUNG + "_IX1", columnList = DBNames.ARTIKEL_ID),
+        @Index(name = DBNames.ANDERUNG + "_IX2", columnList = DBNames.ANDERUNG_ID)
+    },uniqueConstraints = {
+        @UniqueConstraint(name = DBNames.ANDERUNG + "_UC1", columnNames = {DBNames.ARTIKEL_ID, DBNames.ANDERUNG_ID})
+    })
+//@formatter:on
 public class Anderung extends ItemImpl {
 
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.artikel.notnull}")
@@ -96,8 +100,7 @@ public class Anderung extends ItemImpl {
 
     @BusinessKey
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Artikel.class)
-    @JoinColumn(name = DBNames.ARTIKEL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ANDERUNG
-            + "_fk1"))
+    @JoinColumn(name = DBNames.ARTIKEL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ANDERUNG + "_fk1"))
     public Artikel getArtikel() {
         return artikel;
     }
@@ -107,7 +110,7 @@ public class Anderung extends ItemImpl {
     }
 
     @BusinessKey
-    @Column(name = DBNames.ANDERUNG_ID)
+    @Column(name = DBNames.ANDERUNG_ID, nullable = false)
     public Integer getAnderungId() {
         return anderungId;
     }
@@ -125,7 +128,7 @@ public class Anderung extends ItemImpl {
         this.anderungsDatum = anderungsDatum;
     }
 
-    @Column(name = DBNames.ANDERUNGS_TYP)
+    @Column(name = DBNames.ANDERUNGS_TYP, nullable = false)
     @Enumerated(EnumType.STRING)
     public AnderungsTyp getAnderungsTyp() {
         return anderungsTyp;
@@ -195,9 +198,9 @@ public class Anderung extends ItemImpl {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).appendSuper(super.toString()).append(ApiNames.ARTIKEL, getArtikel())
-                .append(ApiNames.ANDERUNG_ID, getAnderungId()).append(ApiNames.ANDERUNGSDATUM, getAnderungsDatum())
-                .append(ApiNames.ANDERUNGS_TYP, getAnderungsTyp()).append(ApiNames.BEZEICHNUNG, getBezeichnung())
-                .append(ApiNames.STUCK, getStuck()).append(ApiNames.ANMERKUNG, getAnmerkung()).toString();
+        return new ToStringBuilder(this).appendSuper(super.toString()).append(DBNames.ARTIKEL, getArtikel())
+                .append(DBNames.ANDERUNG_ID, getAnderungId()).append(DBNames.ANDERUNGSDATUM, getAnderungsDatum())
+                .append(DBNames.ANDERUNGS_TYP, getAnderungsTyp()).append(DBNames.BEZEICHNUNG, getBezeichnung())
+                .append(DBNames.STUCK, getStuck()).append(DBNames.ANMERKUNG, getAnmerkung()).toString();
     }
 }

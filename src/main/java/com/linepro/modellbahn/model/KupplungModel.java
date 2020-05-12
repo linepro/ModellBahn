@@ -2,18 +2,18 @@ package com.linepro.modellbahn.model;
 
 import java.nio.file.Path;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.model.base.NamedItemModelImpl;
-import com.linepro.modellbahn.model.base.NamedWithAbbildungModel;
+import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.rest.json.Views;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,28 +35,28 @@ import lombok.ToString;
 @JsonRootName(value = ApiNames.KUPPLUNG)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED })
-@ApiModel(value = ApiNames.KUPPLUNG, description = "Coupling configuration - Märklin coding.")
-public class KupplungModel extends NamedItemModelImpl<KupplungModel> implements NamedWithAbbildungModel {
+@Schema(name = ApiNames.KUPPLUNG, description = "Coupling configuration - Märklin coding.")
+public class KupplungModel extends RepresentationModel<KupplungModel> implements NamedWithAbbildungModel {
 
     private static final long serialVersionUID = -4227031769285101775L;
 
     @JsonProperty(ApiNames.NAMEN)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Kupplung code", example = "RELEX", required = true)
+    @Schema(name = "Kupplung code", example = "RELEX", required = true)
     private String name;
     
     @JsonProperty(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(value = "Kupplung description", example = "Relex")
+    @Schema(name = "Kupplung description", example = "Relex")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.ABBILDUNG)
     @JsonView(Views.DropDown.class)
-    @ApiModelProperty(dataType = "String", value = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", access = "READ_ONLY")
+    @Schema(implementation = String.class, name = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
     private Path abbildung;
 
     @JsonProperty(ApiNames.DELETED)
     @JsonView(Views.Public.class)
-    @ApiModelProperty(value = "True if soft deleted", example = "false", required = true)
+    @Schema(name = "True if soft deleted", example = "false", required = true)
     protected Boolean deleted;
 }

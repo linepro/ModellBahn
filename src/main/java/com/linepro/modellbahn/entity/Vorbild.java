@@ -23,9 +23,7 @@ import javax.validation.constraints.Positive;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.entity.base.Item;
-import com.linepro.modellbahn.entity.base.ItemImpl;
+import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
@@ -38,12 +36,18 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author  $Author:$
  * @version $Id:$
  */
+//@formatter:off
 @Entity(name = DBNames.VORBILD)
-@Table(name = DBNames.VORBILD, indexes = { @Index(columnList = DBNames.GATTUNG_ID, unique = true),
-        @Index(columnList = DBNames.UNTER_KATEGORIE_ID),
-        @Index(columnList = DBNames.ANTRIEB_ID),
-        @Index(columnList = DBNames.ACHSFOLG_ID) }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { DBNames.GATTUNG_ID }) })
+@Table(name = DBNames.VORBILD,
+    indexes = { 
+        @Index(name = DBNames.VORBILD + "_IX1", columnList = DBNames.GATTUNG_ID, unique = true),
+        @Index(name = DBNames.VORBILD + "_IX2", columnList = DBNames.UNTER_KATEGORIE_ID),
+        @Index(name = DBNames.VORBILD + "_IX3", columnList = DBNames.ANTRIEB_ID),
+        @Index(name = DBNames.VORBILD + "_IX4", columnList = DBNames.ACHSFOLG_ID)
+    }, uniqueConstraints = {
+        @UniqueConstraint(name = DBNames.VORBILD + "_UC1", columnNames = { DBNames.GATTUNG_ID })
+    })
+//@formatter:on
 public class Vorbild extends ItemImpl {
 
     /** The gattung. */
@@ -791,47 +795,47 @@ public class Vorbild extends ItemImpl {
     public String toString() {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
-                .append(ApiNames.GATTUNG, getGattung())
-                .append(ApiNames.UNTER_KATEGORIE, getUnterKategorie())
-                .append(ApiNames.BAHNVERWALTUNG, getBahnverwaltung())
-                .append(ApiNames.HERSTELLER, getHersteller())
-                .append(ApiNames.BAUZEIT, getBauzeit())
-                .append(ApiNames.ANZAHL, getAnzahl())
-                .append(ApiNames.BETREIBSNUMMER, getBetreibsNummer())
-                .append(ApiNames.ANTRIEB, getAntrieb())
-                .append(ApiNames.ACHSFOLG, getAchsfolg())
-                .append(ApiNames.ANFAHRZUGKRAFT, getAnfahrzugkraft())
-                .append(ApiNames.LEISTUNG, getLeistung())
-                .append(ApiNames.DIENSTGEWICHT, getDienstgewicht())
-                .append(ApiNames.GESCHWINDIGKEIT, getGeschwindigkeit())
-                .append(ApiNames.LANGE, getLange())
-                .append(ApiNames.AUSSERDIENST, getAusserdienst())
-                .append(ApiNames.DMTREIBRAD, getDmTreibrad())
-                .append(ApiNames.DMLAUFRADVORN, getDmLaufradVorn())
-                .append(ApiNames.DMLAUFRADHINTEN, getDmLaufradHinten())
-                .append(ApiNames.ZYLINDER, getZylinder())
-                .append(ApiNames.DMZYLINDER, getDmZylinder())
-                .append(ApiNames.KOLBENHUB, getKolbenhub())
-                .append(ApiNames.KESSELUBERDRUCK, getKesseluberdruck())
-                .append(ApiNames.ROSTFLACHE, getRostflache())
-                .append(ApiNames.UBERHITZERFLACHE, getuberhitzerflache())
-                .append(ApiNames.WASSERVORRAT, getWasservorrat())
-                .append(ApiNames.VERDAMPFUNG, getVerdampfung())
-                .append(ApiNames.FAHRMOTOREN, getFahrmotoren())
-                .append(ApiNames.MOTORBAUART, getMotorbauart())
-                .append(ApiNames.LEISTUNGSUBERTRAGUNG, getLeistungsubertragung())
-                .append(ApiNames.REICHWEITE, getReichweite())
-                .append(ApiNames.KAPAZITAT, getKapazitat())
-                .append(ApiNames.KLASSE, getKlasse())
-                .append(ApiNames.SITZPLATZEKL1, getSitzPlatzeKL1())
-                .append(ApiNames.SITZPLATZEKL2, getSitzPlatzeKL2())
-                .append(ApiNames.SITZPLATZEKL3, getSitzPlatzeKL3())
-                .append(ApiNames.SITZPLATZEKL4, getSitzPlatzeKL4())
-                .append(ApiNames.AUFBAU, getAufbau())
-                .append(ApiNames.TRIEBKOPF, getTriebkopf())
-                .append(ApiNames.MITTELWAGEN, getMittelwagen())
-                .append(ApiNames.DREHGESTELLBAUART, getDrehgestellBauart())
-                .append(ApiNames.ABBILDUNG, getAbbildung())
+                .append(DBNames.GATTUNG, getGattung())
+                .append(DBNames.UNTER_KATEGORIE, getUnterKategorie())
+                .append(DBNames.BAHNVERWALTUNG, getBahnverwaltung())
+                .append(DBNames.HERSTELLER, getHersteller())
+                .append(DBNames.BAUZEIT, getBauzeit())
+                .append(DBNames.ANZAHL, getAnzahl())
+                .append(DBNames.BETREIBSNUMMER, getBetreibsNummer())
+                .append(DBNames.ANTRIEB, getAntrieb())
+                .append(DBNames.ACHSFOLG, getAchsfolg())
+                .append(DBNames.ANFAHRZUGKRAFT, getAnfahrzugkraft())
+                .append(DBNames.LEISTUNG, getLeistung())
+                .append(DBNames.DIENSTGEWICHT, getDienstgewicht())
+                .append(DBNames.GESCHWINDIGKEIT, getGeschwindigkeit())
+                .append(DBNames.LANGE, getLange())
+                .append(DBNames.AUSSERDIENST, getAusserdienst())
+                .append(DBNames.DMTREIBRAD, getDmTreibrad())
+                .append(DBNames.DMLAUFRADVORN, getDmLaufradVorn())
+                .append(DBNames.DMLAUFRADHINTEN, getDmLaufradHinten())
+                .append(DBNames.ZYLINDER, getZylinder())
+                .append(DBNames.DMZYLINDER, getDmZylinder())
+                .append(DBNames.KOLBENHUB, getKolbenhub())
+                .append(DBNames.KESSELUBERDRUCK, getKesseluberdruck())
+                .append(DBNames.ROSTFLACHE, getRostflache())
+                .append(DBNames.UBERHITZERFLACHE, getuberhitzerflache())
+                .append(DBNames.WASSERVORRAT, getWasservorrat())
+                .append(DBNames.VERDAMPFUNG, getVerdampfung())
+                .append(DBNames.FAHRMOTOREN, getFahrmotoren())
+                .append(DBNames.MOTORBAUART, getMotorbauart())
+                .append(DBNames.LEISTUNGSUBERTRAGUNG, getLeistungsubertragung())
+                .append(DBNames.REICHWEITE, getReichweite())
+                .append(DBNames.KAPAZITAT, getKapazitat())
+                .append(DBNames.KLASSE, getKlasse())
+                .append(DBNames.SITZPLATZEKL1, getSitzPlatzeKL1())
+                .append(DBNames.SITZPLATZEKL2, getSitzPlatzeKL2())
+                .append(DBNames.SITZPLATZEKL3, getSitzPlatzeKL3())
+                .append(DBNames.SITZPLATZEKL4, getSitzPlatzeKL4())
+                .append(DBNames.AUFBAU, getAufbau())
+                .append(DBNames.TRIEBKOPF, getTriebkopf())
+                .append(DBNames.MITTELWAGEN, getMittelwagen())
+                .append(DBNames.DREHGESTELLBAUART, getDrehgestellBauart())
+                .append(DBNames.ABBILDUNG, getAbbildung())
                 .toString();
     }
 }

@@ -13,11 +13,11 @@ public interface DBNames {
     String STECKER = "stecker";
     String DECODER = "decoder";
     String DECODER_ADRESS = "decoderAdress";
-    String DECODER_CV = "DecoderCv";
+    String DECODER_CV = "decoderCv";
     String DECODER_FUNKTION = "decoderFunktion";
     String DECODER_TYP = "decoderTyp";
     String DECODER_TYP_ADRESS = "decoderTypAdress";
-    String DECODER_TYP_CV = "decoderTypCV";
+    String DECODER_TYP_CV = "decoderTypCv";
     String DECODER_TYP_FUNKTION = "decoderTypFunktion";
     String EPOCH = "epoch";
     String GATTUNG = "gattung";
@@ -143,5 +143,18 @@ public interface DBNames {
     String ZUG_ID = "zug_id";
     String ZUG_TYP_ID = "zugTyp_id";
     String ZYLINDER = "zylinder";
+
+    String USER = "user";
+    String EMAIL = "email";
+    String PASSWORD = "password";
+    String FIRST_NAME = "first_name";
+    String LAST_NAME = "last_name";
+    String ENABLED = "enabled";
+    String CONFIRMATION_TOKEN = "confirmation_token";
+    String RESET_TOKEN = "reset_token";
+    String EXPIRED = "expired";
+    String LOCKED = "locked";
+    String CREDENTIALS_EXPIRED = "credentials_expired";
+    String ROLES = "roles";
 }
     

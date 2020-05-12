@@ -8,10 +8,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import com.linepro.modellbahn.configuration.SwaggerConfig;
+import com.linepro.modellbahn.configuration.MvcConfig;
 import com.linepro.modellbahn.controller.AchsfolgController;
 import com.linepro.modellbahn.controller.AntriebController;
 import com.linepro.modellbahn.controller.ArtikelController;
@@ -25,7 +23,6 @@ import com.linepro.modellbahn.controller.GattungController;
 import com.linepro.modellbahn.controller.HerstellerController;
 import com.linepro.modellbahn.controller.KategorieController;
 import com.linepro.modellbahn.controller.KupplungController;
-import com.linepro.modellbahn.controller.LandController;
 import com.linepro.modellbahn.controller.LichtController;
 import com.linepro.modellbahn.controller.MassstabController;
 import com.linepro.modellbahn.controller.MotorTypController;
@@ -35,11 +32,14 @@ import com.linepro.modellbahn.controller.SonderModellController;
 import com.linepro.modellbahn.controller.SpurweiteController;
 import com.linepro.modellbahn.controller.SteuerungController;
 import com.linepro.modellbahn.controller.VorbildController;
-import com.linepro.modellbahn.controller.WahrungController;
 import com.linepro.modellbahn.controller.ZugController;
 import com.linepro.modellbahn.controller.ZugTypController;
-import com.linepro.modellbahn.converter.AchsfolgModelConverter;
-import com.linepro.modellbahn.hateoas.NamedItemModelProcessor;
+import com.linepro.modellbahn.controller.impl.FileServiceImpl;
+import com.linepro.modellbahn.controller.impl.FileUploadHandlerImpl;
+import com.linepro.modellbahn.controller.user.UserController;
+import com.linepro.modellbahn.hateoas.AchsfolgModelProcessor;
+import com.linepro.modellbahn.i18n.MessageTranslatorImpl;
+import com.linepro.modellbahn.i18n.RequestLocaleFilter;
 import com.linepro.modellbahn.logging.BusinessLogger;
 import com.linepro.modellbahn.logging.LoggedAspect;
 import com.linepro.modellbahn.logging.RequestLoggingConfiguration;
@@ -48,51 +48,72 @@ import com.linepro.modellbahn.security.CorsConfig;
 import com.linepro.modellbahn.security.CustomAccessTokenConverter;
 import com.linepro.modellbahn.security.OAuth2ResourceServerConfig;
 import com.linepro.modellbahn.security.WebSecurityConfig;
-import com.linepro.modellbahn.service.AchsfolgService;
-import com.linepro.modellbahn.service.AntriebService;
-import com.linepro.modellbahn.service.ArtikelService;
-import com.linepro.modellbahn.service.AufbauService;
-import com.linepro.modellbahn.service.BahnverwaltungService;
-import com.linepro.modellbahn.service.DecoderService;
-import com.linepro.modellbahn.service.DecoderTypService;
-import com.linepro.modellbahn.service.EmailService;
-import com.linepro.modellbahn.service.EnumsService;
-import com.linepro.modellbahn.service.EpochService;
-import com.linepro.modellbahn.service.GattungService;
-import com.linepro.modellbahn.service.HerstellerService;
-import com.linepro.modellbahn.service.KategorieService;
-import com.linepro.modellbahn.service.KupplungService;
-import com.linepro.modellbahn.service.LandService;
-import com.linepro.modellbahn.service.LichtService;
-import com.linepro.modellbahn.service.MassstabService;
-import com.linepro.modellbahn.service.MotorTypService;
-import com.linepro.modellbahn.service.ProduktService;
-import com.linepro.modellbahn.service.ProtokollService;
-import com.linepro.modellbahn.service.SonderModellService;
-import com.linepro.modellbahn.service.SpurweiteService;
-import com.linepro.modellbahn.service.SteuerungService;
-import com.linepro.modellbahn.service.UserService;
-import com.linepro.modellbahn.service.VorbildService;
-import com.linepro.modellbahn.service.WahrungService;
-import com.linepro.modellbahn.service.ZugService;
-import com.linepro.modellbahn.service.ZugTypService;
-import com.linepro.modellbahn.util.i18n.MessageTranslatorImpl;
+import com.linepro.modellbahn.service.impl.AchsfolgService;
+import com.linepro.modellbahn.service.impl.AntriebService;
+import com.linepro.modellbahn.service.impl.ArtikelService;
+import com.linepro.modellbahn.service.impl.AufbauService;
+import com.linepro.modellbahn.service.impl.BahnverwaltungService;
+import com.linepro.modellbahn.service.impl.DecoderService;
+import com.linepro.modellbahn.service.impl.DecoderTypService;
+import com.linepro.modellbahn.service.impl.EmailService;
+import com.linepro.modellbahn.service.impl.EnumsService;
+import com.linepro.modellbahn.service.impl.EpochService;
+import com.linepro.modellbahn.service.impl.GattungService;
+import com.linepro.modellbahn.service.impl.HerstellerService;
+import com.linepro.modellbahn.service.impl.KategorieService;
+import com.linepro.modellbahn.service.impl.KupplungService;
+import com.linepro.modellbahn.service.impl.LichtService;
+import com.linepro.modellbahn.service.impl.MassstabService;
+import com.linepro.modellbahn.service.impl.MotorTypService;
+import com.linepro.modellbahn.service.impl.ProduktService;
+import com.linepro.modellbahn.service.impl.ProtokollService;
+import com.linepro.modellbahn.service.impl.SonderModellService;
+import com.linepro.modellbahn.service.impl.SpurweiteService;
+import com.linepro.modellbahn.service.impl.SteuerungService;
+import com.linepro.modellbahn.service.impl.UserService;
+import com.linepro.modellbahn.service.impl.VorbildService;
+import com.linepro.modellbahn.service.impl.ZugService;
+import com.linepro.modellbahn.service.impl.ZugTypService;
+import com.linepro.modellbahn.swagger.SwaggerConfig;
+import com.linepro.modellbahn.util.ErrorHandler;
+import com.linepro.modellbahn.util.FileFinderImpl;
+import com.linepro.modellbahn.util.FileStoreImpl;
 
 @SpringBootConfiguration
 @EnableAutoConfiguration
 @EnableHypermediaSupport(type = {HypermediaType.HAL})
-@EnableJpaRepositories("com.linepro.modellbahn.persistence.repository") 
-@EntityScan( basePackages = {"com.linepro.modellbahn.model.impl"} )
+@EnableJpaRepositories("com.linepro.modellbahn.repository") 
+@EntityScan( basePackages = {"com.linepro.modellbahn.entity"} )
 //@ComponentScan
 @Import({
-    // @Configuration
-    SwaggerConfig.class,
+    // Logging
+    BusinessLogger.class,
     LoggedAspect.class,
     RequestLoggingConfiguration.class,
+    RequestLocaleFilter.class,
+
+   // @Configuration
+    ErrorHandler.class,
+    MvcConfig.class,
+    SwaggerConfig.class,
+
+    // Utils
+    FileFinderImpl.class,
+    FileServiceImpl.class,
+    FileStoreImpl.class,
+    FileUploadHandlerImpl.class,
+    MessageTranslatorImpl.class,
+
+    // Security
     AuthorizationServerConfig.class,
     CorsConfig.class,
+    CustomAccessTokenConverter.class,
     OAuth2ResourceServerConfig.class,
+    UserController.class,
     WebSecurityConfig.class,
+
+    // HATAEOS
+    AchsfolgModelProcessor.class,
 
     // @Service
     AchsfolgService.class,
@@ -109,7 +130,6 @@ import com.linepro.modellbahn.util.i18n.MessageTranslatorImpl;
     HerstellerService.class,
     KategorieService.class,
     KupplungService.class,
-    LandService.class,
     LichtService.class,
     MassstabService.class,
     MotorTypService.class,
@@ -120,7 +140,6 @@ import com.linepro.modellbahn.util.i18n.MessageTranslatorImpl;
     SteuerungService.class,
     UserService.class,
     VorbildService.class,
-    WahrungService.class,
     ZugService.class,
     ZugTypService.class,
     
@@ -138,7 +157,6 @@ import com.linepro.modellbahn.util.i18n.MessageTranslatorImpl;
     HerstellerController.class,
     KategorieController.class,
     KupplungController.class,
-    LandController.class,
     LichtController.class,
     MassstabController.class,
     MotorTypController.class,
@@ -148,19 +166,11 @@ import com.linepro.modellbahn.util.i18n.MessageTranslatorImpl;
     SpurweiteController.class,
     SteuerungController.class,
     VorbildController.class,
-    WahrungController.class,
     ZugController.class,
-    ZugTypController.class,
+    ZugTypController.class
     
-	// @Component
-	AchsfolgModelConverter.class,
-    NamedItemModelProcessor.class,
-    BusinessLogger.class,
-    CustomAccessTokenConverter.class,
-    MessageTranslatorImpl.class,
+    // @Component
 })
-@EnableWebMvc
-@EnableAuthorizationServer
 public class ModellbahnApplication {
 
 	public static void main(String[] args) {

@@ -1,73 +1,92 @@
 package com.linepro.modellbahn.entity;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.linepro.modellbahn.persistence.DBNames;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Builder
 @Data
-@Entity
-@Table(name = "user")
+//@formatter:off
+@Entity(name = DBNames.USER)
+@Table(name = DBNames.USER,
+  indexes = { 
+      @Index(name = DBNames.USER + "_IX1", columnList = DBNames.EMAIL, unique = true)
+  }, uniqueConstraints = {
+      @UniqueConstraint(name = DBNames.USER + "_UC1", columnNames = { DBNames.EMAIL }) 
+  })
+//@formatter:on
 public class User implements UserDetails {
 
     private static final long serialVersionUID = -3641616292070768935L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = DBNames.ID)
     private int id;
     
-    @Column(name = "email", nullable = false, unique = true)
-    @Email(message = "Please provide a valid e-mail")
-    @NotEmpty(message = "Please provide an e-mail")
+    @Column(name = DBNames.EMAIL, nullable = false)
+    @Email(message = "{com.linepro.modellbahn.validator.user.email.valid}")
+    @NotEmpty(message = "{com.linepro.modellbahn.validator.user.email.notempty}")
     private String email;
     
-    @Column(name = "password")
+    @Column(name = DBNames.PASSWORD, nullable = false)
+    @NotEmpty(message = "{com.linepro.modellbahn.validator.user.password.notempty}")
     @Transient
     private String password;
     
-    @Column(name = "first_name")
-    @NotEmpty(message = "Please provide your first name")
+    @Column(name = DBNames.FIRST_NAME, nullable = false)
+    @NotEmpty(message = "{com.linepro.modellbahn.validator.user.firstname.notempty}")
     private String firstName;
     
-    @Column(name = "last_name")
-    @NotEmpty(message = "Please provide your last name")
+    @Column(name = DBNames.LAST_NAME, nullable = false)
+    @NotEmpty(message = "{com.linepro.modellbahn.validator.user.lastname.notempty}")
     private String lastName;
     
-    @Column(name = "enabled")
+    @Column(name = DBNames.ENABLED)
     private boolean enabled;
     
-    @Column(name = "confirmation_token")
+    @Column(name = DBNames.CONFIRMATION_TOKEN)
     private String confirmationToken;
 
-    @Column(name = "reset_token")
+    @Column(name = DBNames.RESET_TOKEN)
     private String resetToken;
     
-    @Column(name = "expired")
+    @Column(name = DBNames.EXPIRED)
     private boolean expired;
     
-    @Column(name = "locked")
+    @Column(name = DBNames.LOCKED)
     private boolean locked;
 
-    @Column(name = "credentialsExpired")
+    @Column(name = DBNames.CREDENTIALS_EXPIRED)
     private boolean credentialsExpired;
-    
-    @Column(name = "authorities")
-    private Collection<? extends GrantedAuthority> authorities;
+
+    @ElementCollection
+    @Column(name = DBNames.ROLES)
+    private List<String> roles;
 
     @Transient
     @Override
@@ -97,10 +116,15 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
-
+    
+    @Transient
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return Optional.ofNullable(roles)
+                       .map(r -> r.stream()
+                                  .map(o -> new SimpleGrantedAuthority(o))
+                                  .collect(Collectors.toList()))
+                       .orElse(Collections.emptyList());
     }
 
     @Override

@@ -1,9 +1,9 @@
 package com.linepro.modellbahn.controller;
 
-import java.util.Map;
-import java.util.Optional;
+import static org.springframework.http.ResponseEntity.of;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,28 +12,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.linepro.modellbahn.controller.base.AbstractNamedItemController;
-import com.linepro.modellbahn.controller.base.AcceptableMediaTypes;
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.controller.base.ApiPaths;
-import com.linepro.modellbahn.controller.base.FileServiceImpl;
-import com.linepro.modellbahn.entity.Licht;
+import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.controller.impl.ApiPaths;
+import com.linepro.modellbahn.controller.impl.NamedItemController;
 import com.linepro.modellbahn.model.LichtModel;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.service.LichtService;
+import com.linepro.modellbahn.service.impl.LichtService;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * LichtService. CRUD service for Licht
@@ -41,18 +40,19 @@ import io.swagger.annotations.ApiResponses;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.LICHT)
+@Tag(name = ApiNames.LICHT)
 @RestController
 @RequestMapping(ApiPaths.LICHT)
-public class LichtController extends AbstractNamedItemController<LichtModel,Licht> {
+@ExposesResourceFor(LichtModel.class)
+public class LichtController extends NamedItemController<LichtModel> {
 
-    private final FileServiceImpl fileService;
+    private final LichtService service;
     
     @Autowired
-    public LichtController(LichtService service, FileServiceImpl fileService) {
+    public LichtController(LichtService service) {
         super(service);
         
-        this.fileService = fileService;
+        this.service = service;
     }
 
     @JsonCreator(mode= Mode.DELEGATING)
@@ -63,7 +63,15 @@ public class LichtController extends AbstractNamedItemController<LichtModel,Lich
     @Override
     @GetMapping(ApiPaths.NAME_PART)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds a Licht by name", response = LichtModel.class)
+    @Operation(summary = "Finds an Licht by name", description = "Finds a light configuration", operationId = "get", tags = { "Licht" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LichtModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
     public ResponseEntity<?> get(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -71,90 +79,103 @@ public class LichtController extends AbstractNamedItemController<LichtModel,Lich
     @Override
     @GetMapping(ApiPaths.SEARCH)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Lichten by example", response = LichtModel.class, responseContainer = "List")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = ApiNames.ID, value = "Licht id", dataType = "Long", paramType = "query"),
-            @ApiImplicitParam(name = ApiNames.NAMEN, value = "Licht code", example = "L1V", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = ApiNames.BEZEICHNUNG, value = "Licht description", example = "Einfach-Spitzensignal vorne", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = ApiNames.DELETED, value = "If true search for soft deleted items", example = "false", dataType = "Boolean", paramType = "query"),
-            @ApiImplicitParam(name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
-            @ApiImplicitParam(name = ApiNames.PAGE_SIZE, value = "Page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),
+    @Operation(summary = "Finds Lichten by example", description = "Finds light configurations", operationId = "get", tags = { "Licht" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = LichtModel.class))) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found, content = @Content"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
 })
-    public ResponseEntity<?> search(@RequestBody Map<String,String> arguments) {
-        return super.search(arguments);
+    public ResponseEntity<?> search(@RequestBody LichtModel model, @RequestParam(name = ApiNames.PAGE_NUMBER, required = false) Integer pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE, required = false) Integer pageSize) {
+        return super.search(model, pageNumber, pageSize);
     }
 
     @Override
     @PostMapping(ApiPaths.ADD)
-
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds a Licht", response = LichtModel.class)
-    public ResponseEntity<?> add(LichtModel model) {
+    @Operation(summary = "Adds an Licht", description = "Update a light configuration", operationId = "update", tags = { "Licht" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LichtModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Licht not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
+    public ResponseEntity<?> add(@RequestBody LichtModel model) {
         return super.add(model);
     }
 
     @Override
     @PutMapping(ApiPaths.NAME_PART)
-
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates a Licht by name", response = LichtModel.class)
-    public ResponseEntity<?> update(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name, LichtModel model) {
+    @Operation(summary = "Updates an Licht by name", description = "Update a light configuration", operationId = "update", tags = { "Licht" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LichtModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Licht not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
+    public ResponseEntity<?> update(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name, @RequestBody LichtModel model) {
         return super.update(name, model);
     }
 
     @Override
     @DeleteMapping(ApiPaths.NAME_PART)
-
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 204, value = "Deletes a Licht by name")
+    @Operation(summary = "Deletes an Licht by name", description = "Delete a light configuration", operationId = "update", tags = { "Licht" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Licht not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
     public ResponseEntity<?> delete(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }
 
     @PutMapping(ApiPaths.ABBILDUNG_PART)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds or updates the picture of a named Licht", response = LichtModel.class)
-    @ApiResponses({
-        @ApiResponse(code = 400, message = "Bad request"),
-        @ApiResponse(code = 404, message = "Not Found"),
-        @ApiResponse(code = 500, message = "Internal Server Error")
+    @Operation(summary = "Add an Licht picture", description = "Adds or updates the picture of a named Licht", operationId = "update", tags = { "Licht" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LichtModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Licht not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
         })
     public ResponseEntity<?> updateAbbildung(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name, @PathVariable("file") MultipartFile multipart) throws Exception {
         logPut(String.format(ApiPaths.ABBILDUNG_LOG, ApiNames.LICHT, name) + ": " + multipart.getOriginalFilename());
 
-        LichtModel licht = getModel(name);
-
-        licht.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.LICHT, ApiNames.ABBILDUNG, name));
-
-        return update(licht);
+        return of(service.updateAbbildung(name, multipart));
     }
 
     @DeleteMapping(ApiPaths.ABBILDUNG_PART)
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Deletes the picture of a named Licht", response = LichtModel.class)
-    @ApiResponses({
-        @ApiResponse(code = 304, message = "Not Modified"),
-        @ApiResponse(code = 400, message = "Bad request"),
-        @ApiResponse(code = 404, message = "Not Found"),
-        @ApiResponse(code = 500, message = "Internal Server Error")
+    @Operation(summary = "Delete an Licht picture", description = "Deletes the picture of a named Licht", operationId = "update", tags = { "Licht" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LichtModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Licht not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
         })
     public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name) throws Exception {
         logDelete(String.format(ApiPaths.ABBILDUNG_LOG, ApiNames.LICHT, name));
-
-        Optional<LichtModel> licht = service.get(getModel(name));
-        
-        if (licht.isPresent()) {
-            LichtModel lichtModel = licht.get();
-
-            if (lichtModel.getAbbildung() != null) {
-                fileService.deleteFile(lichtModel.getAbbildung());
-                lichtModel.setAbbildung(null);
-                return update(lichtModel);
-            }
-            
-            return notModified();
-        }
-        
-        return notFound();
+     
+        return of(service.deleteAbbildung(name));
     }
 }

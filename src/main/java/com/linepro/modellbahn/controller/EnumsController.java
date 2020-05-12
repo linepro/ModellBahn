@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.controller.base.ApiPaths;
+import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.model.enums.AnderungsTyp;
 import com.linepro.modellbahn.model.enums.DescribedEnum;
@@ -23,18 +23,18 @@ import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
 import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.model.enums.Stecker;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.service.EnumsService;
-import com.linepro.modellbahn.service.base.AbstractService;
+import com.linepro.modellbahn.service.impl.AbstractService;
+import com.linepro.modellbahn.service.impl.EnumsService;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * DecoderTypService. CRUD service for DecoderTyp, DecoderTypCv and DecoderTypFunktion
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.ENUMS)
+@Tag(name = ApiNames.ENUMS)
 @RestController
 @RequestMapping(ApiPaths.ENUMS)
 public class EnumsController extends AbstractService {
@@ -50,10 +50,7 @@ public class EnumsController extends AbstractService {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonSerialize(contentAs = DescribedEnum.class)
     @JsonView(Views.Public.class)
-    @ApiOperation(
-            value = "Gets all possible AdressTyp values",
-            response = DescribedEnum.class,
-            responseContainer = "List")
+    @Operation(summary = "Gets all possible AdressTyp values")
     public ResponseEntity<?> getAdressTyp() {
         logGet(ApiPaths.ENUMS_ADRESS_TYP_PATH);
 
@@ -64,10 +61,7 @@ public class EnumsController extends AbstractService {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonSerialize(contentAs = DescribedEnum.class)
     @JsonView(Views.Public.class)
-    @ApiOperation(
-            value = "Gets all possible AnderungTyp values",
-            response = DescribedEnum.class,
-            responseContainer = "List")
+    @Operation(summary = "Gets all possible AnderungTyp values")
     public ResponseEntity<?> getAnderungTyp() {
         logGet(ApiPaths.ENUMS_ANDERUNGS_TYP_PATH);
 
@@ -78,10 +72,7 @@ public class EnumsController extends AbstractService {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonSerialize(contentAs = DescribedEnum.class)
     @JsonView(Views.Public.class)
-    @ApiOperation(
-            value = "Gets all possible Stecker values",
-            response = DescribedEnum.class,
-            responseContainer = "List")
+    @Operation(summary = "Gets all possible Stecker values")
     public ResponseEntity<?> getConnector() {
         logGet(ApiPaths.ENUMS_STECKER_PATH);
 
@@ -92,10 +83,7 @@ public class EnumsController extends AbstractService {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonSerialize(contentAs = DescribedEnum.class)
     @JsonView(Views.Public.class)
-    @ApiOperation(
-            value = "Gets all possible Konfiguration values",
-            response = DescribedEnum.class,
-            responseContainer = "List")
+    @Operation(summary = "Gets all possible Konfiguration values")
     public ResponseEntity<?> getKonfiguration() {
         logGet(ApiPaths.ENUMS_KONFIGURATION_PATH);
 
@@ -106,7 +94,7 @@ public class EnumsController extends AbstractService {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonSerialize(contentAs = DescribedEnum.class)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Gets all possible Status values", response = DescribedEnum.class, responseContainer = "List")
+    @Operation(summary = "Gets all possible Status values")
     public ResponseEntity<?> getStatus() {
         logGet(ApiPaths.ENUMS_STATUS_PATH);
 
@@ -117,10 +105,7 @@ public class EnumsController extends AbstractService {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonSerialize(contentAs = DescribedEnum.class)
     @JsonView(Views.Public.class)
-    @ApiOperation(
-            value = "Gets all possible LeistungsUbertragung values",
-            response = DescribedEnum.class,
-            responseContainer = "List")
+    @Operation(summary = "Gets all possible LeistungsUbertragung values")
     public ResponseEntity<?> getLeistungsUbertragung() {
         logGet(ApiPaths.ENUMS_LEISTUNGS_UBERTRAGUNG_PATH);
 

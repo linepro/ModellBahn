@@ -1,8 +1,7 @@
 package com.linepro.modellbahn.controller;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,23 +10,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.linepro.modellbahn.controller.base.AbstractNamedItemController;
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.controller.base.ApiPaths;
-import com.linepro.modellbahn.entity.Bahnverwaltung;
+import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.controller.impl.ApiPaths;
+import com.linepro.modellbahn.controller.impl.NamedItemController;
 import com.linepro.modellbahn.model.BahnverwaltungModel;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.service.BahnverwaltungService;
+import com.linepro.modellbahn.service.impl.BahnverwaltungService;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * BahnverwaltungService. CRUD service for Bahnverwaltung
@@ -35,10 +37,11 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.BAHNVERWALTUNG)
+@Tag(name = ApiNames.BAHNVERWALTUNG)
 @RestController
 @RequestMapping(ApiPaths.BAHNVERWALTUNG)
-public class BahnverwaltungController extends AbstractNamedItemController<BahnverwaltungModel,Bahnverwaltung> {
+@ExposesResourceFor(BahnverwaltungModel.class)
+public class BahnverwaltungController extends NamedItemController<BahnverwaltungModel> {
 
     @Autowired
     public BahnverwaltungController(BahnverwaltungService service) {
@@ -53,7 +56,15 @@ public class BahnverwaltungController extends AbstractNamedItemController<Bahnve
     @Override
     @GetMapping(ApiPaths.NAME_PART)
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds a Bahnverwaltung by name", response = BahnverwaltungModel.class)
+    @Operation(summary = "Finds an Bahnverwaltung by name", description = "Finds an UIC axle configuration", operationId = "get",  tags = { "Bahnverwaltung" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BahnverwaltungModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
     public ResponseEntity<?> get(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
@@ -61,42 +72,66 @@ public class BahnverwaltungController extends AbstractNamedItemController<Bahnve
     @Override
     @GetMapping(ApiPaths.SEARCH)
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Bahnverwaltungen by example", response = BahnverwaltungModel.class, responseContainer = "List")
-    @ApiImplicitParams({
-        @ApiImplicitParam( name = ApiNames.ID, value = "Bahnverwaltung id", dataType = "Long", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Bahnverwaltung code", example = "DB", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Bahnverwaltung description", example = "Deutschen Bundesbahn (DB)", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "If true search for soft deleted items", example = "false", dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "Page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),
+    @Operation(summary = "Finds Bahnverwaltungen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Bahnverwaltung" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = BahnverwaltungModel.class))) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found, content = @Content"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> search(@RequestBody Map<String,String> arguments) {
-        return super.search(arguments);
+    public ResponseEntity<?> search(@RequestBody BahnverwaltungModel model, @RequestParam(name = ApiNames.PAGE_NUMBER, required = false) Integer pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE, required = false) Integer pageSize) {
+        return super.search(model, pageNumber, pageSize);
     }
 
     @Override
     @PostMapping(ApiPaths.ADD)
-
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds a Bahnverwaltung", response = BahnverwaltungModel.class)
-    public ResponseEntity<?> add(BahnverwaltungModel model) {
+    @Operation(summary = "Adds an Bahnverwaltung", description = "Update a railway company", operationId = "update", tags = { "Bahnverwaltung" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BahnverwaltungModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
+    public ResponseEntity<?> add(@RequestBody BahnverwaltungModel model) {
         return super.add(model);
     }
 
     @Override
     @PutMapping(ApiPaths.NAME_PART)
-
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates a Bahnverwaltung by name", response = BahnverwaltungModel.class)
-    public ResponseEntity<?> update(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name, BahnverwaltungModel model) {
+    @Operation(summary = "Updates an Bahnverwaltung by name", description = "Update a railway company", operationId = "update", tags = { "Bahnverwaltung" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BahnverwaltungModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
+    public ResponseEntity<?> update(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name, @RequestBody BahnverwaltungModel model) {
         return super.update(name, model);
     }
 
     @Override
     @DeleteMapping(ApiPaths.NAME_PART)
-
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 204, value = "Deletes a Bahnverwaltung by name")
+    @Operation(summary = "Deletes an Bahnverwaltung by name", description = "Delete a railway company", operationId = "update", tags = { "Bahnverwaltung" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
     public ResponseEntity<?> delete(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }

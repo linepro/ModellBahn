@@ -25,7 +25,13 @@ public class ApplicationReadyListener implements ApplicationListener<Application
         if (applicationContext.equals(context)) {
             String application = context.getId();
             List<String> beanz = Stream.of(context.getBeanDefinitionNames())
-                    .map(b -> AopUtils.getTargetClass(context.getBean(b)).getName())
+                    .map(b -> {
+                        try {
+                            return AopUtils.getTargetClass(context.getBean(b)).getName();       
+                        } catch(Throwable e) {
+                            return "";
+                        }
+                    })
                     .filter(b -> b.startsWith("com.linepro"))
                     .map(b -> b.substring(0, b.indexOf('$') > 0 ? b.indexOf('$') : b.length()))
                     .sorted()

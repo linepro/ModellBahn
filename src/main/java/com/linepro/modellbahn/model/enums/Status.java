@@ -3,10 +3,9 @@ package com.linepro.modellbahn.model.enums;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.linepro.modellbahn.controller.base.ApiNames;
+import com.linepro.modellbahn.controller.impl.ApiNames;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Status.
@@ -17,7 +16,7 @@ import io.swagger.annotations.ApiModelProperty;
 @JsonRootName(value = ApiNames.STATUS)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG })
-@ApiModel(value = ApiNames.STATUS, description = "Article status")
+@Schema(name = ApiNames.STATUS, description = "Article status")
 public enum Status implements DescribedEnum {
 	
     WUNSCHMODEL("Wunschmodel", ""),
@@ -38,19 +37,19 @@ public enum Status implements DescribedEnum {
     }
 
     @Override
-    @ApiModelProperty(value = "Article status name", example = "GEKAUFT", required = true)
+    @Schema(name = "Article status name", example = "GEKAUFT", required = true)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @ApiModelProperty(value = "Article status description", example = "Purchased.", required = true)
+    @Schema(name = "Article status description", example = "Purchased.", required = true)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @ApiModelProperty(value = "AdressTyp tooltip", example = "0 - 10239.")
+    @Schema(name = "AdressTyp tooltip", example = "0 - 10239.")
     public String getTooltip() {
         return tooltip;
     }

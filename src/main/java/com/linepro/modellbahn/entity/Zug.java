@@ -16,10 +16,10 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.entity.base.NamedItemImpl;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import com.linepro.modellbahn.entity.impl.NamedItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.util.ToStringBuilder;
 
 /**
  * Zug.
@@ -27,9 +27,16 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author $Author:$
  * @version $Id:$
  */
+//@formatter:off
 @Entity(name = DBNames.ZUG)
-@Table(name = DBNames.ZUG, indexes = {@Index(columnList = DBNames.NAME, unique = true),
-        @Index(columnList = DBNames.ZUG_TYP_ID)}, uniqueConstraints = {@UniqueConstraint(columnNames = {DBNames.NAME})})
+@Table(name = DBNames.ZUG,
+    indexes = {
+        @Index(name = DBNames.ZUG + "_IX1", columnList = DBNames.NAME, unique = true),
+        @Index(name = DBNames.ZUG + "_IX2", columnList = DBNames.ZUG_TYP_ID)
+    }, uniqueConstraints = {
+        @UniqueConstraint(name = DBNames.ZUG + "_UC1", columnNames = {DBNames.NAME})
+    })
+//@formatter:on
 public class Zug extends NamedItemImpl {
 
     /** The zugTyp. */
@@ -66,8 +73,7 @@ public class Zug extends NamedItemImpl {
 
     
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = ZugTyp.class)
-    @JoinColumn(name = DBNames.ZUG_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ZUG
-            + "_fk1"))
+    @JoinColumn(name = DBNames.ZUG_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ZUG + "_fk1"))
     public ZugTyp getZugTyp() {
         return zugTyp;
     }
@@ -121,8 +127,8 @@ public class Zug extends NamedItemImpl {
     public String toString() {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
-                .append(ApiNames.ZUG_TYP, getZugTyp())
-                .append(ApiNames.CONSIST, getConsist())
+                .append(DBNames.ZUG_TYP, getZugTyp())
+                .append(DBNames.ZUG_CONSIST, getConsist())
                 .toString();
     }
 }

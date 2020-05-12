@@ -20,15 +20,13 @@ import javax.validation.constraints.Pattern;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.entity.base.Item;
-import com.linepro.modellbahn.entity.base.ItemImpl;
+import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.model.enums.DecoderStatus;
-import com.linepro.modellbahn.model.validation.Fahrstufe;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.persistence.util.DecoderId;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.validation.Fahrstufe;
 
 /**
  * Decoder.
@@ -36,9 +34,17 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author  $Author:$
  * @version $Id:$
  */
+//@formatter:off
 @Entity(name = DBNames.DECODER)
-@Table(name = DBNames.DECODER, indexes = { @Index(columnList = DBNames.DECODER_ID, unique = true), @Index(columnList = DBNames.DECODER_TYP_ID),
-        @Index(columnList = DBNames.PROTOKOLL_ID) }, uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.DECODER_ID }) })
+@Table(name = DBNames.DECODER, 
+    indexes = {
+        @Index(name = DBNames.DECODER + "_IX1", columnList = DBNames.DECODER_ID, unique = true), 
+        @Index(name = DBNames.DECODER + "_IX2", columnList = DBNames.DECODER_TYP_ID),
+        @Index(name = DBNames.DECODER + "_IX3", columnList = DBNames.PROTOKOLL_ID)
+    }, uniqueConstraints = {
+        @UniqueConstraint(name = DBNames.DECODER + "_UC1", columnNames = { DBNames.DECODER_ID }) 
+        })
+//@formatter:on
 public class Decoder extends ItemImpl {
 
     @Pattern(regexp = "^[A-Z0-9]+$", message = "{com.linepro.modellbahn.validator.constraints.decoderId.invalid}")
@@ -106,7 +112,7 @@ public class Decoder extends ItemImpl {
     
     @BusinessKey
     @DecoderId
-    @Column(name=DBNames.DECODER_ID, unique=true, length=50)
+    @Column(name=DBNames.DECODER_ID, unique=true, length=6, nullable = false, updatable = false)
     public String getDecoderId() {
         return decoderId;
     }
@@ -267,13 +273,13 @@ public class Decoder extends ItemImpl {
     public String toString() {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
-                .append(ApiNames.DECODER_TYP, getDecoderTyp())
-                .append(ApiNames.PROTOKOLL, getProtokoll())
-                .append(ApiNames.FAHRSTUFE, getFahrstufe())
-                .append(ApiNames.STATUS, getStatus())
-                .append(ApiNames.ADRESSEN, getAdressen())
-                .append(ApiNames.CVS, getCVs())
-                .append(ApiNames.FUNKTIONEN, getFunktionen())
+                .append(DBNames.DECODER_TYP, getDecoderTyp())
+                .append(DBNames.PROTOKOLL, getProtokoll())
+                .append(DBNames.FAHRSTUFE, getFahrstufe())
+                .append(DBNames.STATUS, getStatus())
+                .append(DBNames.DECODER_ADRESS, getAdressen())
+                .append(DBNames.DECODER_CV, getCVs())
+                .append(DBNames.DECODER_FUNKTION, getFunktionen())
                 .toString();
     }
 }

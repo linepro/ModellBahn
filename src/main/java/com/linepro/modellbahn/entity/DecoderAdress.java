@@ -23,15 +23,13 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Range;
 
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.entity.base.Item;
-import com.linepro.modellbahn.entity.base.ItemImpl;
+import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.model.enums.AdressTyp;
-import com.linepro.modellbahn.model.validation.Adress;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.util.WithAdress;
+import com.linepro.modellbahn.validation.Adress;
 
 /**
  * DecoderAdress. An address for a decoder (several have more than one)
@@ -39,10 +37,16 @@ import com.linepro.modellbahn.util.WithAdress;
  * @author $Author:$
  * @version $Id:$
  */
+//@formatter:off
 @Entity(name = DBNames.DECODER_ADRESS)
-@Table(name =  DBNames.DECODER_ADRESS, indexes = { @Index(columnList = DBNames.DECODER_ID + "," + DBNames.INDEX, unique = true) },
-        uniqueConstraints = { @UniqueConstraint(columnNames = { DBNames.DECODER_ID, DBNames.INDEX }) })
+@Table(name =  DBNames.DECODER_ADRESS,
+    indexes = { 
+        @Index(name = DBNames.DECODER_ADRESS + "_IX1", columnList = DBNames.DECODER_ID + "," + DBNames.INDEX, unique = true) 
+    }, uniqueConstraints = { 
+        @UniqueConstraint(name = DBNames.DECODER_ADRESS + "_UC1", columnNames = { DBNames.DECODER_ID, DBNames.INDEX }) 
+        })
 @Adress
+//@formatter:on
 public class DecoderAdress extends ItemImpl implements WithAdress {
 
     /** The decoder. */
@@ -162,10 +166,10 @@ public class DecoderAdress extends ItemImpl implements WithAdress {
     public String toString() {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
-                .append(ApiNames.DECODER, getDecoder())
-                .append(ApiNames.INDEX, getIndex())
-                .append(ApiNames.ADRESS_TYP, getAdressTyp())
-                .append(ApiNames.ADRESS, getAdress())
+                .append(DBNames.DECODER, getDecoder())
+                .append(DBNames.INDEX, getIndex())
+                .append(DBNames.ADRESS_TYP, getAdressTyp())
+                .append(DBNames.ADRESS, getAdress())
                 .toString();
     }
 }

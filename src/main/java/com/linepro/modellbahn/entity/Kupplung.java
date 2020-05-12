@@ -5,7 +5,7 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.linepro.modellbahn.entity.base.NamedWithAbbildungImpl;
+import com.linepro.modellbahn.entity.impl.NamedWithAbbildungImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 
 /**
@@ -14,9 +14,15 @@ import com.linepro.modellbahn.persistence.DBNames;
  * @author $Author:$
  * @version $Id:$
  */
+//@formatter:off
 @Entity(name = DBNames.KUPPLUNG)
-@Table(name = DBNames.KUPPLUNG, indexes = { @Index(columnList = DBNames.NAME, unique = true) }, uniqueConstraints = {
-        @UniqueConstraint(columnNames = { DBNames.NAME }) })
+@Table(name = DBNames.KUPPLUNG,
+    indexes = { 
+        @Index(name = DBNames.KUPPLUNG + "_IX1", columnList = DBNames.NAME, unique = true)
+    }, uniqueConstraints = {
+        @UniqueConstraint(name = DBNames.KUPPLUNG + "_UC1", columnNames = { DBNames.NAME })
+    })
+//@formatter:on
 public class Kupplung extends NamedWithAbbildungImpl {
 
     /**

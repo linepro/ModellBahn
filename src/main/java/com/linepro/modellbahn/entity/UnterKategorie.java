@@ -16,8 +16,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.entity.base.NamedItemImpl;
+import com.linepro.modellbahn.entity.impl.NamedItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.util.ToStringBuilder;
@@ -28,11 +27,17 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author  $Author:$
  * @version $Id:$
  */
+//@formatter:off
 @Entity(name = DBNames.UNTER_KATEGORIE)
-@Table(name = DBNames.UNTER_KATEGORIE, indexes = { @Index(columnList = DBNames.KATEGORIE_ID +"," + DBNames.NAME, unique = true),
-        @Index(columnList = DBNames.KATEGORIE_ID) }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { DBNames.KATEGORIE_ID, DBNames.NAME }) })
+@Table(name = DBNames.UNTER_KATEGORIE,
+    indexes = { 
+        @Index(name = DBNames.UNTER_KATEGORIE + "_IX1", columnList = DBNames.KATEGORIE_ID +"," + DBNames.NAME, unique = true),
+        @Index(name = DBNames.UNTER_KATEGORIE + "_IX2", columnList = DBNames.KATEGORIE_ID)
+    }, uniqueConstraints = {
+        @UniqueConstraint(name = DBNames.UNTER_KATEGORIE + "_UC1", columnNames = { DBNames.KATEGORIE_ID, DBNames.NAME })
+    })
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, length = 50))
+//@formatter:on
 public class UnterKategorie extends NamedItemImpl {
 
     /** The kategorie. */
@@ -108,7 +113,7 @@ public class UnterKategorie extends NamedItemImpl {
     public String toString() {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
-                .append(ApiNames.KATEGORIE, getKategorie())
+                .append(DBNames.KATEGORIE, getKategorie())
                 .toString();
     }
 

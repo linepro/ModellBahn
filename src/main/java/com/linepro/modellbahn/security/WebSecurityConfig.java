@@ -31,6 +31,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/forgot").permitAll()
             .antMatchers("/login").permitAll()
             .antMatchers("/register").permitAll()
-            .anyRequest().authenticated();
+            .anyRequest().permitAll();
     }
 }

@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.controller;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
@@ -12,23 +10,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.linepro.modellbahn.controller.base.AbstractNamedItemController;
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.controller.base.ApiPaths;
-import com.linepro.modellbahn.entity.Achsfolg;
+import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.controller.impl.ApiPaths;
+import com.linepro.modellbahn.controller.impl.NamedItemController;
 import com.linepro.modellbahn.model.AchsfolgModel;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.service.AchsfolgService;
+import com.linepro.modellbahn.service.impl.AchsfolgService;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * AchsfolgService. CRUD service for Achsfolg
@@ -36,11 +37,11 @@ import io.swagger.annotations.ApiOperation;
  * @author $Author:$
  * @version $Id:$
  */
-@Api(value = ApiNames.ACHSFOLG)
+@Tag(name = ApiNames.ACHSFOLG)
 @RestController
 @RequestMapping(ApiPaths.ACHSFOLG)
 @ExposesResourceFor(AchsfolgModel.class)
-public class AchsfolgController extends AbstractNamedItemController<AchsfolgModel,Achsfolg> {
+public class AchsfolgController extends NamedItemController<AchsfolgModel> {
 
     @Autowired
     public AchsfolgController(AchsfolgService service) {
@@ -54,53 +55,83 @@ public class AchsfolgController extends AbstractNamedItemController<AchsfolgMode
     
     @Override
     @GetMapping(ApiPaths.NAME_PART)
-
     @JsonView(Views.Public.class)
-    @ApiOperation(value = "Finds an Achsfolg by name", response = AchsfolgModel.class)
+    @Operation(summary = "Finds an Achsfolg by name", description = "Finds an UIC axle configuration", operationId = "get", tags = { "Achsfolg" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AchsfolgModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
     public ResponseEntity<?> get(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.get(name);
     }
 
     @Override
     @GetMapping(ApiPaths.SEARCH)
-
     @JsonView(Views.DropDown.class)
-    @ApiOperation(value = "Finds Achsfolgen by example", response = AchsfolgModel.class, responseContainer = "List")
-    @ApiImplicitParams({
-        @ApiImplicitParam( name = ApiNames.ID, value = "Achsfolg id", dataType = "Long", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.NAMEN, value = "Achsfolg code", example = "CH2T", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.BEZEICHNUNG, value = "Achsfolg description", example = "C h2t", dataType = "String", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.DELETED, value = "If true search for soft deleted items", example = "false", dataType = "Boolean", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.PAGE_NUMBER, value = "0 based page number for paged queries", example = "1", dataType = "Integer", paramType = "query"),
-        @ApiImplicitParam( name = ApiNames.PAGE_SIZE, value = "Page size for paged queries", example = "10", dataType = "Integer", paramType = "query"),
+    @Operation(summary = "Finds Achsfolgen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Achsfolg" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AchsfolgModel.class))) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found, content = @Content"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> search(@RequestBody Map<String,String> arguments) {
-        return super.search(arguments);
+    public ResponseEntity<?> search(@RequestBody AchsfolgModel model, @RequestParam(name = ApiNames.PAGE_NUMBER, required = false) Integer pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE, required = false) Integer pageSize) {
+        return super.search(model, pageNumber, pageSize);
     }
 
     @Override
     @PostMapping(ApiPaths.ADD)
-
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 201, value = "Adds an Achsfolg", response = AchsfolgModel.class)
+    @Operation(summary = "Add a new Achsfolg", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Achsfolg" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AchsfolgModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
     public ResponseEntity<?> add(@RequestBody AchsfolgModel model) {
         return super.add(model);
     }
 
     @Override
     @PutMapping(ApiPaths.NAME_PART)
-
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 202, value = "Updates an Achsfolg by name", response = AchsfolgModel.class)
+    @Operation(summary = "Updates an Achsfolg by name", description = "Update an UIC axle configuration", operationId = "update", tags = { "Achsfolg" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AchsfolgModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
     public ResponseEntity<?> update(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name, @RequestBody AchsfolgModel model) {
         return super.update(name, model);
     }
 
     @Override
     @DeleteMapping(ApiPaths.NAME_PART)
-
     @JsonView(Views.Public.class)
-    @ApiOperation(code = 204, value = "Deletes an Achsfolg by name")
+    @Operation(summary = "Deletes an Achsfolg by name", description = "Delete an UIC axle configuration", operationId = "update", tags = { "Achsfolg" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
     public ResponseEntity<?> delete(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name) {
         return super.delete(name);
     }

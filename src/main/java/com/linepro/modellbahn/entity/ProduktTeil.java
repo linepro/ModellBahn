@@ -16,9 +16,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import com.linepro.modellbahn.controller.base.ApiNames;
-import com.linepro.modellbahn.entity.base.Item;
-import com.linepro.modellbahn.entity.base.ItemImpl;
+import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.BusinessKey;
 import com.linepro.modellbahn.util.ToStringBuilder;
@@ -30,11 +28,17 @@ import com.linepro.modellbahn.util.ToStringBuilder;
  * @author  $Author:$
  * @version $Id:$
  */
+//@formatter:off
 @Entity(name = DBNames.PRODUKT_TEIL)
-@Table(name = DBNames.PRODUKT_TEIL, indexes = { @Index(columnList = DBNames.PRODUKT_ID + "," + DBNames.TEIL_ID, unique = true),
-        @Index(columnList = DBNames.PRODUKT_ID),
-        @Index(columnList = DBNames.TEIL_ID) }, uniqueConstraints = {
-                @UniqueConstraint(columnNames = { DBNames.PRODUKT_ID, DBNames.TEIL_ID }) })
+@Table(name = DBNames.PRODUKT_TEIL,
+    indexes = { 
+        @Index(name = DBNames.PRODUKT_TEIL + "_IX1", columnList = DBNames.PRODUKT_ID + "," + DBNames.TEIL_ID, unique = true),
+        @Index(name = DBNames.PRODUKT_TEIL + "_IX2", columnList = DBNames.PRODUKT_ID),
+        @Index(name = DBNames.PRODUKT_TEIL + "_IX3", columnList = DBNames.TEIL_ID)
+    }, uniqueConstraints = {
+        @UniqueConstraint(name = DBNames.PRODUKT_TEIL + "_UC1", columnNames = { DBNames.PRODUKT_ID, DBNames.TEIL_ID })
+    })
+//@formatter:on
 public class ProduktTeil extends ItemImpl {
     
     /** The produkt. */
@@ -151,9 +155,9 @@ public class ProduktTeil extends ItemImpl {
     public String toString() {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
-                .append(ApiNames.PRODUKT, getProdukt())
-                .append(ApiNames.TEIL, getTeil())
-                .append(ApiNames.ANZAHL, getAnzahl())
+                .append(DBNames.PRODUKT, getProdukt())
+                .append(DBNames.TEIL, getTeil())
+                .append(DBNames.ANZAHL, getAnzahl())
                 .toString();
     }
 }
