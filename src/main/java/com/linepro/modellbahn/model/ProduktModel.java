@@ -3,7 +3,7 @@ package com.linepro.modellbahn.model;
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.hateoas.RepresentationModel;
 
@@ -43,7 +43,7 @@ import lombok.ToString;
 @JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.LANGE,
         ApiNames.UNTER_KATEGORIE, ApiNames.MASSSTAB, ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG,
         ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER, ApiNames.BAUZEIT, ApiNames.VORBILD, ApiNames.ACHSFOLG,
-        ApiNames.ANMERKUNG, ApiNames.SONDERMODELL, ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG,
+        ApiNames.ANMERKUNG, ApiNames.SONDERMODEL, ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG,
         ApiNames.STEUERUNG, ApiNames.DECODER_TYP, ApiNames.MOTOR_TYP, ApiNames.LANGE, ApiNames.ANLEITUNGEN,
         ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.TEILEN, ApiNames.DELETED})
 @Schema(name = ApiNames.PRODUKT, description = "Product - template for article.")
@@ -120,10 +120,10 @@ public class ProduktModel extends RepresentationModel<ProduktModel> implements I
     @Schema(implementation = AchsfolgModel.class, name = "Axle configuration")
     private AchsfolgModel achsfolg;
 
-    @JsonProperty(ApiNames.SONDERMODELL)
+    @JsonProperty(ApiNames.SONDERMODEL)
     @JsonView(Views.Public.class)
-    @Schema(implementation = SonderModellModel.class, name = "Special model indicator")
-    private SonderModellModel sondermodell;
+    @Schema(implementation = SonderModelModel.class, name = "Special model indicator")
+    private SonderModelModel sonderModel;
 
     @JsonProperty(ApiNames.AUFBAU)
     @JsonView(Views.Public.class)
@@ -173,7 +173,7 @@ public class ProduktModel extends RepresentationModel<ProduktModel> implements I
     @JsonProperty(ApiNames.TEILEN)
     @JsonView(Views.Public.class)
     @Schema(implementation = ProduktTeilModel.class, name = "Product components", accessMode = AccessMode.READ_ONLY)
-    private Set<ProduktTeilModel> teilen;
+    private List<ProduktTeilModel> teilen;
 
     @JsonProperty(ApiNames.ABBILDUNG)
     @JsonView(Views.DropDown.class)
@@ -183,5 +183,5 @@ public class ProduktModel extends RepresentationModel<ProduktModel> implements I
     @JsonProperty(ApiNames.DELETED)
     @JsonView(Views.Public.class)
     @Schema(name = "True if soft deleted", example = "false", required = true)
-    protected Boolean deleted;
+    private Boolean deleted;
 }

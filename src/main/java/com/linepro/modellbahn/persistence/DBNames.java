@@ -31,7 +31,7 @@ public interface DBNames {
     String PRODUKT = "produkt";
     String PRODUKT_TEIL = "produktTeil";
     String PROTOKOLL = "protokoll";
-    String SONDERMODELL = "sonderModell";
+    String SONDERMODEL = "sonderModel";
     String SPURWEITE = "spurweite";
     String STEUERUNG = "steuerung";
     String UNTER_KATEGORIE = "unterKategorie";
@@ -48,6 +48,7 @@ public interface DBNames {
     String ANDERUNGS_TYP = "anderungsTyp";
     String ANDERUNG_ID = "anderungId";
     String ADRESS = "adress";
+    String ADRESS_ID = "adressId";
     String ADRESS_TYP = "adressTyp";
     String ANFAHRZUGKRAFT = "anfahrzugkraft";
     String ANLEITUNGEN = "anleitungen";
@@ -119,7 +120,7 @@ public interface DBNames {
     String SITZPLATZEKL2 = "sitzplatzeKL2";
     String SITZPLATZEKL3 = "sitzplatzeKL3";
     String SITZPLATZEKL4 = "sitzplatzeKL4";
-    String SONDERMODELL_ID = "sondermodell_id";
+    String SONDERMODEL_ID = "sondermodel_id";
     String SOUND = "sound";
     String SPAN = "span";
     String SPURWEITE_ID = "spurweite_id";

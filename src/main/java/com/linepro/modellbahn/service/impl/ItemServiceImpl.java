@@ -15,8 +15,8 @@ import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.entity.Item;
 import com.linepro.modellbahn.model.ItemModel;
 import com.linepro.modellbahn.repository.base.ItemRepository;
+import com.linepro.modellbahn.repository.lookup.Lookup;
 import com.linepro.modellbahn.service.ItemService;
-import com.linepro.modellbahn.service.Lookup;
 
 import lombok.SneakyThrows;
 
@@ -27,7 +27,7 @@ import lombok.SneakyThrows;
  * @version $Id$
  * @param <E> the element type
  */
-public abstract class ItemServiceImpl<M extends ItemModel, E extends Item> extends AbstractService implements ItemService<M> {
+public abstract class ItemServiceImpl<M extends ItemModel, E extends Item> implements ItemService<M> {
 
     protected static final List<String> PAGE_FIELDS = Arrays.asList(ApiNames.PAGE_NUMBER, ApiNames.PAGE_SIZE);
 
@@ -54,31 +54,23 @@ public abstract class ItemServiceImpl<M extends ItemModel, E extends Item> exten
 
     @Transactional
     protected Optional<M> get(Lookup<E> lookup) {
-        logGet(lookup);
-
         return lookup.find()
                      .map(e -> entityMutator.convert(e));
     }
 
     @Transactional
     public M add(M model) {
-        logPut(model);
-
         return entityMutator.convert(repository.saveAndFlush(modelMutator.convert(model)));
     }
 
     @Transactional
     protected Optional<M> update(Lookup<E> lookup, M model) {
-        logPut(model);
-
         return lookup.find()
                      .map(e -> entityMutator.convert(repository.saveAndFlush(modelMutator.apply(model,e))));
     }
 
     @Transactional
     public boolean delete(Lookup<E> lookup) {
-        logDelete(lookup);
-
         return lookup.find()
                      .map(e -> {
                          repository.delete(e);
@@ -91,8 +83,6 @@ public abstract class ItemServiceImpl<M extends ItemModel, E extends Item> exten
     @Transactional
     @SneakyThrows
     public Page<M> search(M model, Integer pageNumber, Integer pageSize) {
-        logGet(model, pageNumber, pageSize);
-
         return repository.findAll(
                             Example.of(modelMutator.convert(model)), 
                             PageRequest.of(

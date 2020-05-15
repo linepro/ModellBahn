@@ -1,20 +1,26 @@
 package com.linepro.modellbahn.entity;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Index;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import com.linepro.modellbahn.entity.impl.NamedItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.util.ToStringBuilder;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Kategorie. The category for a product
@@ -31,70 +37,28 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @UniqueConstraint(name = DBNames.KATEGORIE + "_UC1", columnNames = { DBNames.NAME })
     })
 //@formatter:on
+@SuperBuilder
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Cacheable
 public class Kategorie extends NamedItemImpl {
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.KATEGORIE, targetEntity = UnterKategorie.class, orphanRemoval = true)
     private Set<UnterKategorie> unterKategorien;
 
-    /**
-     * Instantiates a new kategorie.
-     */
-    public Kategorie() {
-        super();
-    }
-
-    public Kategorie(String name) {
-        super(name);
-    }
-
-    /**
-     * Instantiates a new kategorie.
-     *
-     * @param id
-     *            the id
-     * @param name
-     *            the name
-     * @param bezeichnung
-     *            the bezeichnung
-     * @param deleted
-     *            if  { this item is soft deleted, otherwise it is active
-     */
-    public Kategorie(Long id, String name, String bezeichnung, Boolean deleted) {
-        super(id, name, bezeichnung, deleted);
-    }
-
-    
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.KATEGORIE, targetEntity = UnterKategorie.class, orphanRemoval = true)
-    public Set<UnterKategorie> getUnterKategorien() {
-        return unterKategorien;
-    }
-
-    
-    @Transient
-    public Set<UnterKategorie> getSortedUnterKategorien() {
-        return new TreeSet<UnterKategorie>(getUnterKategorien());
-    }
-
-    
-    public void setUnterKategorien(Set<UnterKategorie> unterKategorien) {
-        this.unterKategorien = unterKategorien;
-    }
-
-    
     public void addUnterKategorie(UnterKategorie unterKategorie) {
         unterKategorie.setKategorie(this);
-        getUnterKategorien().add(unterKategorie);
+        unterKategorie.setDeleted(false);
+        if (unterKategorien == null) { unterKategorien = new HashSet<>(); }
+        unterKategorien.add(unterKategorie);
     }
 
     
     public void removeUnterKategorie(UnterKategorie unterKategorie) {
-        getUnterKategorien().remove(unterKategorie);
+        unterKategorien.remove(unterKategorie);
     }
 
-    
-    public String toString() {
-        return new ToStringBuilder(this)
-                .appendSuper(super.toString())
-                .append(DBNames.UNTER_KATEGORIE, getUnterKategorien())
-                .toString();
-    }
 }

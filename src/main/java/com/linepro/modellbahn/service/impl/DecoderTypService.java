@@ -2,13 +2,23 @@ package com.linepro.modellbahn.service.impl;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.linepro.modellbahn.converter.entity.DecoderTypTranscriber;
-import com.linepro.modellbahn.converter.impl.MutatorImpl;
-import com.linepro.modellbahn.converter.model.DecoderTypModelTranscriber;
+import com.linepro.modellbahn.converter.entity.DecoderTypAdressMutator;
+import com.linepro.modellbahn.converter.entity.DecoderTypCvMutator;
+import com.linepro.modellbahn.converter.entity.DecoderTypFunktionMutator;
+import com.linepro.modellbahn.converter.entity.DecoderTypMutator;
+import com.linepro.modellbahn.converter.model.DecoderTypAdressModelMutator;
+import com.linepro.modellbahn.converter.model.DecoderTypCvModelMutator;
+import com.linepro.modellbahn.converter.model.DecoderTypFunktionModelMutator;
+import com.linepro.modellbahn.converter.model.DecoderTypModelMutator;
 import com.linepro.modellbahn.entity.DecoderTyp;
+import com.linepro.modellbahn.entity.DecoderTypAdress;
+import com.linepro.modellbahn.entity.DecoderTypCv;
+import com.linepro.modellbahn.entity.DecoderTypFunktion;
 import com.linepro.modellbahn.model.DecoderTypAdressModel;
 import com.linepro.modellbahn.model.DecoderTypCvModel;
 import com.linepro.modellbahn.model.DecoderTypFunktionModel;
@@ -28,20 +38,38 @@ import com.linepro.modellbahn.service.ItemService;
 public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTyp> implements ItemService<DecoderTypModel> {
 
     private final DecoderTypRepository repository;
+    
     private final DecoderTypAdressRepository adressRepository;
+    private final DecoderTypAdressModelMutator adressModelMutator;
+    private final DecoderTypAdressMutator adressMutator;
+
     private final DecoderTypCvRepository cvRepository;
+    private final DecoderTypCvModelMutator cvModelMutator;
+    private final DecoderTypCvMutator cvMutator;
+
     private final DecoderTypFunktionRepository funktionRepository;
+    private final DecoderTypFunktionModelMutator funktionModelMutator;
+    private final DecoderTypFunktionMutator funktionMutator;
 
     @Autowired
-    public DecoderTypService(DecoderTypRepository repository, DecoderTypAdressRepository adressRepository, DecoderTypCvRepository cvRepository, DecoderTypFunktionRepository funktionRepository) {
-        super(repository, 
-              new MutatorImpl<DecoderTypModel, DecoderTyp>(() -> new DecoderTyp(), new DecoderTypModelTranscriber()),
-              new MutatorImpl<DecoderTyp, DecoderTypModel>(() -> new DecoderTypModel(), new DecoderTypTranscriber())
-              );
+    public DecoderTypService(DecoderTypRepository repository, DecoderTypModelMutator decoderTypModelMutator, DecoderTypMutator decoderTypMutator,
+                    DecoderTypAdressRepository adressRepository, DecoderTypAdressModelMutator adressModelMutator, DecoderTypAdressMutator adressMutator,
+                    DecoderTypCvRepository cvRepository, DecoderTypCvModelMutator cvModelMutator, DecoderTypCvMutator cvMutator,
+                    DecoderTypFunktionRepository funktionRepository,  DecoderTypFunktionModelMutator funktionModelMutator, DecoderTypFunktionMutator funktionMutator) {
+        super(repository, decoderTypModelMutator, decoderTypMutator);
         this.repository = repository;
+
         this.adressRepository = adressRepository;
+        this.adressModelMutator = adressModelMutator;
+        this.adressMutator = adressMutator;
+
         this.cvRepository = cvRepository;
+        this.cvModelMutator = cvModelMutator;
+        this.cvMutator = cvMutator;
+
         this.funktionRepository = funktionRepository;
+        this.funktionModelMutator= funktionModelMutator;
+        this.funktionMutator = funktionMutator;
     }
 
     public Optional<DecoderTypModel> get(String herstellerStr, String bestellNr) {
@@ -56,51 +84,102 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTy
         return super.delete(() -> repository.findByBestellNr(herstellerStr, bestellNr));
     }
 
+    @Transactional
     public Optional<DecoderTypAdressModel> getAdress(String herstellerStr, String bestellNr, Integer index) {
-        return Optional.empty();
+        return adressRepository.findByIndex(herstellerStr, bestellNr, index)
+                               .map(a -> adressMutator.convert(a));
     }
 
+    @Transactional
     public Optional<DecoderTypAdressModel> addAdress(String herstellerStr, String bestellNr, DecoderTypAdressModel model) {
-        return Optional.empty();
+        return repository.findByBestellNr(herstellerStr, bestellNr)
+                        .map(d -> {
+                            DecoderTypAdress adress = adressModelMutator.convert(model);
+                            d.addAdress(adress);
+                            repository.saveAndFlush(d);
+                            return adressMutator.convert(adress);
+                        });
     }
 
+    @Transactional
     public Optional<DecoderTypAdressModel> updateAdress(String herstellerStr, String bestellNr, Integer index, DecoderTypAdressModel model) {
-        return Optional.empty();
+        return adressRepository.findByIndex(herstellerStr, bestellNr, index)
+                               .map(a -> adressMutator.convert(adressRepository.saveAndFlush(adressModelMutator.convert(model))));
     }
 
+    @Transactional
     public boolean deleteAdress(String herstellerStr, String bestellNr, Integer index) {
-        return false;
+       return adressRepository.findByIndex(herstellerStr, bestellNr, index)
+                              .map(a -> {
+                                  adressRepository.delete(a);
+                                  return true;
+                              })
+                              .orElse(false);
     }
 
+    @Transactional
     public Optional<DecoderTypCvModel> getCV(String herstellerStr, String bestellNr, Integer cv) {
-        return Optional.empty();
+        return cvRepository.findByCv(herstellerStr, bestellNr, cv)
+                           .map(c -> cvMutator.convert(c));
     }
 
+    @Transactional
     public Optional<DecoderTypCvModel> addCv(String herstellerStr, String bestellNr, DecoderTypCvModel model) {
-        return Optional.empty();
+        return repository.findByBestellNr(herstellerStr, bestellNr)
+                         .map(d -> {
+                             DecoderTypCv cv = cvModelMutator.convert(model);
+                             d.addCv(cv);
+                             repository.saveAndFlush(d);
+                             return cvMutator.convert(cv);
+                         });
     }
 
+    @Transactional
     public Optional<DecoderTypCvModel> updateCv(String herstellerStr, String bestellNr, Integer cv, DecoderTypCvModel model) {
-        return Optional.empty();
+        return cvRepository.findByCv(herstellerStr, bestellNr, cv)
+                           .map(a -> cvMutator.convert(cvRepository.saveAndFlush(cvModelMutator.convert(model))));
     }
 
+    @Transactional
     public boolean deleteCv(String herstellerStr, String bestellNr, Integer cv) {
-        return false;
+        return cvRepository.findByCv(herstellerStr, bestellNr, cv)
+                        .map(c -> {
+                            cvRepository.delete(c);
+                            return true;
+                        })
+                        .orElse(false);
     }
 
+    @Transactional
     public Optional<DecoderTypFunktionModel> getFunktion(String herstellerStr, String bestellNr, Integer reihe, String funktion) {
-        return Optional.empty();
+        return funktionRepository.findByFunktion(herstellerStr, bestellNr, reihe, funktion)
+                                 .map(f -> funktionMutator.convert(f));
     }
 
+    @Transactional
     public Optional<DecoderTypFunktionModel> addFunktion(String herstellerStr, String bestellNr, DecoderTypFunktionModel model) {
-        return Optional.empty();
+        return repository.findByBestellNr(herstellerStr, bestellNr)
+                        .map(d -> {
+                            DecoderTypFunktion funktion = funktionModelMutator.convert(model);
+                            d.addFunktion(funktion);
+                            repository.saveAndFlush(d);
+                            return funktionMutator.convert(funktion);
+                        });
     }
 
+    @Transactional
     public Optional<DecoderTypFunktionModel> updateFunktion(String herstellerStr, String bestellNr, Integer reihe, String funktion, DecoderTypFunktionModel model) {
-        return Optional.empty();
+        return funktionRepository.findByFunktion(herstellerStr, bestellNr, reihe, funktion)
+                                 .map(a -> funktionMutator.convert(funktionRepository.saveAndFlush(funktionModelMutator.convert(model))));
     }
 
+    @Transactional
     public boolean deleteFunktion(String herstellerStr, String bestellNr, Integer reihe, String funktion) {
-        return false;
+        return funktionRepository.findByFunktion(herstellerStr, bestellNr, reihe, funktion)
+                                 .map(f -> {
+                                     funktionRepository.delete(f);
+                                     return true;
+                                 })
+                                 .orElse(false);
     }
 }

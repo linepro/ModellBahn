@@ -25,11 +25,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.linepro.modellbahn.persistence.DBNames;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Builder
-@Data
 //@formatter:off
 @Entity(name = DBNames.USER)
 @Table(name = DBNames.USER,
@@ -39,6 +41,12 @@ import lombok.Data;
       @UniqueConstraint(name = DBNames.USER + "_UC1", columnNames = { DBNames.EMAIL }) 
   })
 //@formatter:on
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class User implements UserDetails {
 
     private static final long serialVersionUID = -3641616292070768935L;

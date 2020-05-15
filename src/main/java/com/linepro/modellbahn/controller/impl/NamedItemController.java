@@ -1,9 +1,5 @@
 package com.linepro.modellbahn.controller.impl;
 
-import static org.springframework.http.ResponseEntity.noContent;
-import static org.springframework.http.ResponseEntity.notFound;
-import static org.springframework.http.ResponseEntity.of;
-
 import org.springframework.http.ResponseEntity;
 
 import com.linepro.modellbahn.model.NamedItemModel;
@@ -20,14 +16,14 @@ public class NamedItemController<M extends NamedItemModel> extends AbstractItemC
     }
 
     protected ResponseEntity<?> get(String name) {
-        return of(service.get(name));
+        return added(service.get(name));
     }
 
     protected ResponseEntity<?> update(String name, M model) {
-        return of(service.update(name, model));
+        return updated(service.update(name, model));
     }
 
     protected ResponseEntity<?> delete(String name) {
-        return (service.delete(name) ? noContent() : notFound()).build();
+        return deleted(service.delete(name));
     }
 }

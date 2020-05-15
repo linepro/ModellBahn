@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.model;
 
+import java.io.Serializable;
 import java.nio.file.Path;
 
 import org.springframework.hateoas.RepresentationModel;
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.rest.json.Views;
+import com.linepro.modellbahn.util.NamedWithAbbildung;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -36,7 +38,7 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED })
 @Schema(name = ApiNames.LICHT, description = "Light configuration - Märklin coding.")
-public class LichtModel extends RepresentationModel<LichtModel> implements NamedWithAbbildungModel {
+public class LichtModel extends RepresentationModel<LichtModel> implements NamedItemModel, NamedWithAbbildung, Serializable {
 
     private static final long serialVersionUID = -8159511842362226637L;
 
@@ -58,5 +60,5 @@ public class LichtModel extends RepresentationModel<LichtModel> implements Named
     @JsonProperty(ApiNames.DELETED)
     @JsonView(Views.Public.class)
     @Schema(name = "True if soft deleted", example = "false", required = true)
-    protected Boolean deleted;
+    private Boolean deleted;
 }

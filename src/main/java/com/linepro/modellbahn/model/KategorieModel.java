@@ -5,7 +5,7 @@
  */
 package com.linepro.modellbahn.model;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.hateoas.RepresentationModel;
 
@@ -59,10 +59,10 @@ public class KategorieModel extends RepresentationModel<KategorieModel> implemen
     @JsonProperty(ApiNames.UNTER_KATEGORIEN)
     @JsonView(Views.DropDown.class)
     @Schema(implementation = UnterKategorieModel.class, name = "Sub categories", accessMode = AccessMode.READ_ONLY, required = true)
-    private Set<UnterKategorieModel> unterKategorien;
+    private List<UnterKategorieModel> unterKategorien;
 
     @JsonProperty(ApiNames.DELETED)
     @JsonView(Views.Public.class)
     @Schema(name = "True if soft deleted", example = "false", required = true)
-    protected Boolean deleted;
+    private Boolean deleted;
 }

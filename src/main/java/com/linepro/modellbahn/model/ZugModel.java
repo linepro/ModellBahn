@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.model;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.hateoas.RepresentationModel;
 
@@ -58,10 +58,10 @@ public class ZugModel extends RepresentationModel<ZugModel> implements NamedItem
     @JsonProperty(ApiNames.CONSIST)
     @JsonView(Views.Public.class)
     @Schema(implementation = ZugConsistModel.class, name = "Train composition", accessMode = AccessMode.READ_ONLY)
-    private Set<ZugConsistModel> consist;
+    private List<ZugConsistModel> consist;
 
     @JsonProperty(ApiNames.DELETED)
     @JsonView(Views.Public.class)
     @Schema(name = "True if soft deleted", example = "false", required = true)
-    protected Boolean deleted;
+    private Boolean deleted;
 }

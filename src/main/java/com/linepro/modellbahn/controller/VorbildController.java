@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.controller;
 
-import static org.springframework.http.ResponseEntity.noContent;
-import static org.springframework.http.ResponseEntity.notFound;
 import static org.springframework.http.ResponseEntity.of;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,8 +73,6 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> get(@PathVariable(ApiPaths.GATTUNG_PARAM_NAME) String gattung) {
-        logGet(gattung);
-
         return of(service.get(gattung));
     }
 
@@ -126,7 +122,7 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> update(@PathVariable(ApiPaths.GATTUNG_PARAM_NAME) String gattung, VorbildModel model) {
-        return of(service.update(gattung, model));
+        return updated(service.update(gattung, model));
     }
 
     @DeleteMapping(ApiPaths.VORBILD_PART)
@@ -142,9 +138,7 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
    public ResponseEntity<?> delete(@PathVariable(ApiPaths.GATTUNG_PARAM_NAME) String gattung) {
-        logDelete(gattung);
-
-        return (service.delete(gattung) ? noContent() : notFound()).build();
+        return deleted(service.delete(gattung));
     }
 
      @PutMapping(ApiPaths.VORBILD_PART)
@@ -160,9 +154,7 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
         })
     public ResponseEntity<?> updateAbbildung(@PathVariable(ApiPaths.GATTUNG_PARAM_NAME) String gattung, @PathVariable("file") MultipartFile multipart) throws Exception {
-        logPut(String.format(ApiPaths.ABBILDUNG_LOG, ApiNames.VORBILD, gattung) + ": " + multipart.getOriginalFilename());
-
-        return of(service.updateAbbildung(gattung, multipart));
+        return updated(service.updateAbbildung(gattung, multipart));
     }
 
     @DeleteMapping(ApiPaths.VORBILD_ABBILDUNG_PART)
@@ -178,8 +170,6 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
         })
     public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiPaths.GATTUNG_PARAM_NAME) String gattung) throws Exception {
-        logDelete(String.format(ApiPaths.ABBILDUNG_LOG, ApiNames.VORBILD, gattung));
-
-        return of(service.deleteAbbildung(gattung));
+        return updated(service.deleteAbbildung(gattung));
     }
 }

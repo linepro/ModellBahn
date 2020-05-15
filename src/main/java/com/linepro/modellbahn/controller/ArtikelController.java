@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.controller;
 
-import static org.springframework.http.ResponseEntity.noContent;
-import static org.springframework.http.ResponseEntity.notFound;
 import static org.springframework.http.ResponseEntity.of;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,8 +78,6 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> get(@PathVariable(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId) {
-        logGet(artikelId);
-
         return of(service.get(artikelId));
     }
 
@@ -131,7 +127,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> update(@PathVariable(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, ArtikelModel model) {
-        return of(service.update(artikelId, model));
+        return updated(service.update(artikelId, model));
     }
 
     @DeleteMapping(ApiPaths.ARTIKEL_PART)
@@ -147,9 +143,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> delete(@PathVariable(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId) {
-        logDelete(artikelId);
-
-        return (service.delete(artikelId) ? noContent() : notFound()).build();
+        return deleted(service.delete(artikelId));
     }
 
     @PutMapping(ApiPaths.ARTIKEL_ABBILDUNG_PART)
@@ -165,9 +159,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> updateAbbildung(@PathVariable(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, @PathVariable("file") MultipartFile multipart) throws Exception {
-        logPut(String.format(ApiPaths.ABBILDUNG_LOG, ApiNames.ARTIKEL, artikelId) + ": " + multipart.getOriginalFilename());
-
-        return of(service.updateAbbildung(artikelId, multipart));
+        return updated(service.updateAbbildung(artikelId, multipart));
     }
 
     @DeleteMapping(ApiPaths.ARTIKEL_ABBILDUNG_PART)
@@ -183,9 +175,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId) throws Exception {
-        logDelete(String.format(ApiPaths.ABBILDUNG_LOG, ApiNames.ARTIKEL, artikelId));
-        
-        return of(service.deleteAbbildung(artikelId));
+        return updated(service.deleteAbbildung(artikelId));
     }
 
     @PostMapping(ApiPaths.ANDERUNG_ROOT)
@@ -201,9 +191,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> addAnderung(@PathVariable(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, @RequestBody AnderungModel anderungModel) {
-        logPost(String.format(ApiPaths.ANDERUNG_ROOT_LOG, ApiNames.ARTIKEL, artikelId) + ": " + anderungModel);
-
-        return of(service.addAnderung(artikelId, anderungModel));
+        return added(service.addAnderung(artikelId, anderungModel));
     }
 
     @PutMapping(ApiPaths.ANDERUNG_PATH)
@@ -219,9 +207,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> updateAnderung(@PathVariable(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, @PathVariable(ApiPaths.ANDERUNG_ID_PARAM_NAME) Integer anderungId, @RequestBody AnderungModel anderungModel) {
-        logPut(String.format(ApiPaths.ANDERUNG_LOG, ApiNames.ARTIKEL, artikelId, anderungId) + ": " + anderungModel);
-
-        return of(service.updateAnderung(artikelId, anderungId, anderungModel));
+        return updated(service.updateAnderung(artikelId, anderungId, anderungModel));
     }
 
     @DeleteMapping(ApiPaths.ANDERUNG_PATH)
@@ -237,8 +223,6 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> deleteAnderung(@PathVariable(ApiPaths.ARTIKEL_ID_PARAM_NAME) String artikelId, @PathVariable(ApiPaths.ANDERUNG_ID_PARAM_NAME) Integer anderungId) {
-        logDelete(String.format(ApiPaths.ANDERUNG_LOG, ApiNames.ARTIKEL, artikelId, anderungId));
-
-        return (service.deleteAnderung(artikelId, anderungId) ? noContent() : notFound()).build();
+        return deleted(service.deleteAnderung(artikelId, anderungId));
     }
 }

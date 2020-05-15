@@ -1,9 +1,5 @@
 package com.linepro.modellbahn.controller;
 
-import static org.springframework.http.ResponseEntity.noContent;
-import static org.springframework.http.ResponseEntity.notFound;
-import static org.springframework.http.ResponseEntity.of;
-
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -163,9 +159,7 @@ public class ZugController extends NamedItemController<ZugModel> {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> addConsist(@PathVariable(ApiPaths.ZUG_PARAM_NAME) String zugStr, @RequestParam(ApiNames.ARTIKEL_ID) String artikelId) {
-        logPost(String.format(ApiPaths.ZUG_CONSIST_ROOT_LOG, ApiNames.ZUG, zugStr) + ": " + artikelId);
-
-        return of(service.addConsist(zugStr, artikelId));
+        return added(service.addConsist(zugStr, artikelId));
     }
 
     @PutMapping(ApiPaths.ZUG_CONSIST_PATH)
@@ -181,9 +175,7 @@ public class ZugController extends NamedItemController<ZugModel> {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> updateConsist(@PathVariable(ApiPaths.ZUG_PARAM_NAME) String zugStr, @PathVariable(ApiPaths.POSITION_PARAM_NAME) Integer position, @RequestParam(ApiNames.ARTIKEL_ID) String artikelId) {
-        logPut(String.format(ApiPaths.ZUG_CONSIST_LOG, ApiNames.ZUG, zugStr, position) + ": " + artikelId);
-
-        return of(service.updateConsist(zugStr, position, artikelId));
+        return updated(service.updateConsist(zugStr, position, artikelId));
     }
 
     @DeleteMapping(ApiPaths.ZUG_CONSIST_PATH)
@@ -200,8 +192,6 @@ public class ZugController extends NamedItemController<ZugModel> {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> deleteConsist(@PathVariable(ApiPaths.ZUG_PARAM_NAME) String zugStr, @PathVariable(ApiPaths.POSITION_PARAM_NAME) Integer position) {
-        logDelete(String.format(ApiPaths.ZUG_CONSIST_LOG, ApiNames.ZUG, zugStr, position));
-
-        return (service.deleteConsist(zugStr, position) ? noContent() : notFound()).build();
+        return deleted(service.deleteConsist(zugStr, position));
     }
 }

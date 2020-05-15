@@ -12,7 +12,6 @@ import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.rest.json.Views;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,11 +37,6 @@ import lombok.ToString;
 public class DecoderAdressModel extends RepresentationModel<DecoderAdressModel> implements ItemModel {
 
     private static final long serialVersionUID = 5617027998164314206L;
-
-    @JsonProperty(ApiNames.DECODER_ID)
-    @JsonView(Views.DropDown.class)
-    @Schema(name = "Decoder's id", example = "00001", accessMode = AccessMode.READ_ONLY, required = true)
-    private String decoderId;
 
     @JsonProperty(ApiNames.INDEX)
     @JsonView(Views.DropDown.class)
@@ -76,5 +70,5 @@ public class DecoderAdressModel extends RepresentationModel<DecoderAdressModel> 
     @JsonProperty(ApiNames.DELETED)
     @JsonView(Views.Public.class)
     @Schema(name = "True if soft deleted", example = "false", required = true)
-    protected Boolean deleted;
+    private Boolean deleted;
 }

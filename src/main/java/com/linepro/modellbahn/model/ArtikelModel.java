@@ -3,7 +3,7 @@ package com.linepro.modellbahn.model;
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.hateoas.RepresentationModel;
 
@@ -63,7 +63,7 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
     @JsonProperty(ApiNames.HERSTELLER)
     @JsonView(Views.DropDown.class)
     @Schema(name = "Manufacturer", example = "Marklin", required = true)
-    private NamedItemModel hersteller;
+    private HerstellerModel hersteller;
 
     @JsonProperty(ApiNames.BESTELL_NR)
     @JsonView(Views.DropDown.class)
@@ -99,22 +99,22 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
     @JsonProperty(ApiNames.STEUERUNG)
     @JsonView(Views.Public.class)
     @Schema(implementation = SteuerungModel.class, name = "Control method", example = "Digital")
-    private NamedItemModel steuerung;
+    private SteuerungModel steuerung;
 
     @JsonProperty(ApiNames.MOTOR_TYP)
     @JsonView(Views.Public.class)
     @Schema(implementation = MotorTypModel.class, name = "Motor type", example = "5*")
-    private NamedItemModel motorTyp;
+    private MotorTypModel motorTyp;
 
     @JsonProperty(ApiNames.LICHT)
     @JsonView(Views.Public.class)
     @Schema(implementation = LichtModel.class, name = "Light Configuration", example = "")
-    private NamedItemModel licht;
+    private LichtModel licht;
 
     @JsonProperty(ApiNames.KUPPLUNG)
     @JsonView(Views.Public.class)
     @Schema(implementation = KupplungModel.class, name = "Coupling configuration", example = "")
-    private NamedItemModel kupplung;
+    private KupplungModel kupplung;
 
     @JsonProperty(ApiNames.DECODER)
     @JsonView(Views.DropDown.class)
@@ -139,7 +139,7 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
     @JsonProperty(ApiNames.ANDERUNGEN)
     @JsonView(Views.Public.class)
     @Schema(implementation = AnderungModel.class, name = "Modifications", accessMode = AccessMode.READ_ONLY)
-    private Set<AnderungModel> anderungen;
+    private List<AnderungModel> anderungen;
 
     @JsonProperty(ApiNames.ABBILDUNG)
     @JsonView(Views.DropDown.class)
@@ -149,5 +149,5 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
     @JsonProperty(ApiNames.DELETED)
     @JsonView(Views.Public.class)
     @Schema(name = "True if soft deleted", example = "false", required = true)
-    protected Boolean deleted;
+    private Boolean deleted;
 }

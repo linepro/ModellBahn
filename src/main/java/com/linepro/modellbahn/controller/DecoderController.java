@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.controller;
 
-import static org.springframework.http.ResponseEntity.noContent;
-import static org.springframework.http.ResponseEntity.notFound;
 import static org.springframework.http.ResponseEntity.of;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,7 +121,7 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
     })
     public ResponseEntity<?> addDecoder(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
                     @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
-        return of(service.add(herstellerStr, bestellNr));
+        return added(service.add(herstellerStr, bestellNr));
     }
 
     @PutMapping(ApiPaths.DECODER_PART)
@@ -139,7 +137,7 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> update(@PathVariable(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId, DecoderModel model) {
-        return of(service.update(decoderId, model));
+        return updated(service.update(decoderId, model));
     }
 
     @DeleteMapping(ApiPaths.DECODER_PART)
@@ -155,7 +153,7 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> delete(@PathVariable(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId) {
-        return (service.delete(decoderId) ? noContent() : notFound()).build();
+        return deleted(service.delete(decoderId));
     }
 
     @PutMapping(ApiPaths.DECODER_ADRESS_PATH)
@@ -172,9 +170,7 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
                 })
     public ResponseEntity<?> updateAdress(@PathVariable(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId,
                     @PathVariable(ApiPaths.INDEX_PARAM_NAME) Integer index, @RequestParam(ApiNames.ADRESS) Integer adress) {
-        logPut(String.format(ApiPaths.DECODER_ADRESS_LOG, ApiNames.DECODER, decoderId, index) + ": " + adress);
-
-        return of(service.updateAdress(decoderId, index, adress));
+        return updated(service.updateAdress(decoderId, index, adress));
     }
 
     @PutMapping(ApiPaths.DECODER_CV_PATH)
@@ -191,9 +187,7 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
                 })
     public ResponseEntity<?> updateCv(@PathVariable(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId,
                     @PathVariable(ApiPaths.CV_PARAM_NAME) Integer cv, @RequestParam(ApiNames.WERT) Integer wert) {
-        logPut(String.format(ApiPaths.DECODER_CV_LOG, ApiNames.DECODER, decoderId, cv) + ": " + wert);
-
-        return of(service.updateCv(decoderId, cv, wert));
+        return updated(service.updateCv(decoderId, cv, wert));
     }
 
     @PutMapping(ApiPaths.DECODER_FUNKTION_PATH)
@@ -211,8 +205,6 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
    public ResponseEntity<?> updateFunktion(@PathVariable(ApiPaths.DECODER_ID_PARAM_NAME) String decoderId,
                     @PathVariable(ApiPaths.REIHE_PARAM_NAME) Integer reihe, @PathVariable(ApiPaths.FUNKTION_PARAM_NAME) String funktion,
                     @RequestParam(ApiNames.BEZEICHNUNG) String bezeichnung) {
-        logPut(String.format(ApiPaths.DECODER_FUNKTION_LOG, ApiNames.DECODER, decoderId, reihe, funktion) + ": " + bezeichnung);
-
-        return of(service.updateFunktion(decoderId, reihe, funktion, bezeichnung));
+        return updated(service.updateFunktion(decoderId, reihe, funktion, bezeichnung));
     }
 }

@@ -46,9 +46,14 @@ public class HerstellerModel extends RepresentationModel<HerstellerModel> implem
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
-    @Schema(name = "Hersteller description", example = "M�rklin")
+    @Schema(name = "Hersteller description", example = "Märklin")
     private String bezeichnung;
 
+    @JsonProperty(ApiNames.LAND)
+    @JsonView(Views.DropDown.class)
+    @Schema(name = "Country ISO 3166 Code", example = "DE")
+    private String land;
+    
     @JsonProperty(ApiNames.URL)
     @JsonView(Views.Public.class)
     @Schema(implementation = String.class, name = "Manufacturer's website", example = "https://www.maerklin.de")
@@ -62,5 +67,5 @@ public class HerstellerModel extends RepresentationModel<HerstellerModel> implem
     @JsonProperty(ApiNames.DELETED)
     @JsonView(Views.Public.class)
     @Schema(name = "True if soft deleted", example = "false", required = true)
-    protected Boolean deleted;
+    private Boolean deleted;
 }

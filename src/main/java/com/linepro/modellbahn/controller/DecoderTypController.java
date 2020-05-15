@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.controller;
 
-import static org.springframework.http.ResponseEntity.noContent;
-import static org.springframework.http.ResponseEntity.notFound;
 import static org.springframework.http.ResponseEntity.of;
 
 import javax.ws.rs.Produces;
@@ -141,9 +139,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> update(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @RequestBody DecoderTypModel model) {
-        logPut(herstellerStr, bestellNr, model);
-
-        return of(service.update(herstellerStr, bestellNr, model));
+        return updated(service.update(herstellerStr, bestellNr, model));
     }
 
     @DeleteMapping(ApiPaths.DECODER_TYP_PATH)
@@ -159,7 +155,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> delete(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
-        return (service.delete(herstellerStr, bestellNr) ? noContent() : notFound()).build();
+        return deleted(service.delete(herstellerStr, bestellNr));
     }
 
     @PostMapping(ApiPaths.DECODER_TYP_ADRESS_ROOT)
@@ -177,9 +173,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
  
     public ResponseEntity<?> addAdress(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
                     @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @RequestBody DecoderTypAdressModel model) {
-            logPost(String.format(ApiPaths.DECODER_TYP_ADRESS_ROOT_LOG, ApiNames.DECODER_TYP, herstellerStr, bestellNr) + ": " + model);
-
-            return of(service.addAdress(herstellerStr, bestellNr, model));
+            return added(service.addAdress(herstellerStr, bestellNr, model));
     }
 
     @PutMapping(ApiPaths.DECODER_TYP_ADRESS_PATH)
@@ -196,9 +190,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     public ResponseEntity<?> updateAdress(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
                     @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathVariable(ApiPaths.INDEX_PARAM_NAME) Integer index,
                     @RequestBody DecoderTypAdressModel model) {
-        logPut(String.format(ApiPaths.DECODER_TYP_ADRESS_LOG, ApiNames.DECODER_TYP, herstellerStr, bestellNr, index) + ": " + model);
-
-        return of(service.updateAdress(herstellerStr, bestellNr, index, model));
+        return updated(service.updateAdress(herstellerStr, bestellNr, index, model));
    }
 
     @DeleteMapping(ApiPaths.DECODER_TYP_ADRESS_PATH)
@@ -214,9 +206,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
                 })
     public ResponseEntity<?> deleteAdress(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
                     @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathVariable(ApiPaths.INDEX_PARAM_NAME) Integer index) {
-        logDelete(String.format(ApiPaths.DECODER_TYP_ADRESS_LOG, ApiNames.DECODER_TYP, herstellerStr, bestellNr, index));
-
-        return (service.deleteAdress(herstellerStr, bestellNr, index) ? noContent() : notFound()).build();
+        return deleted(service.deleteAdress(herstellerStr, bestellNr, index));
     }
 
     @PostMapping(ApiPaths.DECODER_TYP_CV_ROOT)
@@ -233,9 +223,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
                 })
      public ResponseEntity<?> addCV(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
                     @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @RequestBody DecoderTypCvModel model) {
-            logPost(String.format(ApiPaths.DECODER_TYP_CV_ROOT_LOG, ApiNames.DECODER_TYP, herstellerStr, bestellNr) + ": " + model);
-
-            return of(service.addCv(herstellerStr, bestellNr, model));
+            return added(service.addCv(herstellerStr, bestellNr, model));
      }
 
     @PutMapping(ApiPaths.DECODER_TYP_CV_PATH)
@@ -252,9 +240,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     public ResponseEntity<?> updateCV(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
                     @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathVariable(ApiPaths.CV_PARAM_NAME) Integer cv,
                     @RequestBody DecoderTypCvModel model) {
-        logPut(String.format(ApiPaths.DECODER_TYP_CV_LOG, ApiNames.DECODER_TYP, herstellerStr, bestellNr, cv) + ": " + model);
-
-        return of(service.updateCv(herstellerStr, bestellNr, cv, model));
+        return updated(service.updateCv(herstellerStr, bestellNr, cv, model));
     }
 
     @DeleteMapping(ApiPaths.DECODER_TYP_CV_PATH)
@@ -273,9 +259,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
             @PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
             @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathVariable(ApiPaths.CV_PARAM_NAME) Integer cv) {
-        logDelete(String.format(ApiPaths.DECODER_TYP_CV_LOG, ApiNames.DECODER_TYP, herstellerStr, bestellNr, cv));
-
-        return (service.deleteCv(herstellerStr, bestellNr, cv) ? noContent() : notFound()).build();
+        return deleted(service.deleteCv(herstellerStr, bestellNr, cv));
     }
 
     @PostMapping(ApiPaths.DECODER_TYP_FUNKTION_ROOT)
@@ -292,9 +276,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
                 })
      public ResponseEntity<?> addFunktion(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
                     @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @RequestBody DecoderTypFunktionModel model) {
-        logPost(String.format(ApiPaths.DECODER_TYP_FUNKTION_ROOT_LOG, ApiNames.DECODER_TYP, herstellerStr, bestellNr) + ": " + model);
-
-        return of(service.addFunktion(herstellerStr, bestellNr, model));
+        return added(service.addFunktion(herstellerStr, bestellNr, model));
     }
 
     @PutMapping(ApiPaths.DECODER_TYP_FUNKTION_PATH)
@@ -312,9 +294,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     public ResponseEntity<?> updateFunktion(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
                     @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathVariable(ApiPaths.REIHE_PARAM_NAME) Integer reihe,
                     @PathVariable(ApiPaths.FUNKTION_PARAM_NAME) String funktion, @RequestBody DecoderTypFunktionModel model) {
-        logPut(String.format(ApiPaths.DECODER_TYP_FUNKTION_LOG, ApiNames.DECODER_TYP, herstellerStr, bestellNr, reihe, funktion) + ": " + model);
-
-        return of(service.updateFunktion(herstellerStr, bestellNr, reihe, funktion, model));
+        return updated(service.updateFunktion(herstellerStr, bestellNr, reihe, funktion, model));
     }
 
     @DeleteMapping(ApiPaths.DECODER_TYP_FUNKTION_PATH)
@@ -331,8 +311,6 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     public ResponseEntity<?> deleteFunktion(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr,
                     @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathVariable(ApiPaths.REIHE_PARAM_NAME) Integer reihe,
                     @PathVariable(ApiPaths.FUNKTION_PARAM_NAME) String funktion) {
-        logDelete(String.format(ApiPaths.DECODER_TYP_FUNKTION_LOG, ApiNames.DECODER_TYP, herstellerStr, bestellNr, reihe, funktion));
-
-        return (service.deleteFunktion(herstellerStr, bestellNr, reihe, funktion) ? noContent() : notFound()).build();
+        return deleted(service.deleteFunktion(herstellerStr, bestellNr, reihe, funktion));
     }
 }

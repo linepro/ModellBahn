@@ -54,5 +54,5 @@ public class UnterKategorieModel extends RepresentationModel<UnterKategorieModel
     @JsonProperty(ApiNames.DELETED)
     @JsonView(Views.Public.class)
     @Schema(name = "True if soft deleted", example = "false", required = true)
-    protected Boolean deleted;
+    private Boolean deleted;
 }

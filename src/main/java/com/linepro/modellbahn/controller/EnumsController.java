@@ -23,7 +23,6 @@ import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
 import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.model.enums.Stecker;
 import com.linepro.modellbahn.rest.json.Views;
-import com.linepro.modellbahn.service.impl.AbstractService;
 import com.linepro.modellbahn.service.impl.EnumsService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,7 +36,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = ApiNames.ENUMS)
 @RestController
 @RequestMapping(ApiPaths.ENUMS)
-public class EnumsController extends AbstractService {
+public class EnumsController {
 
     private final EnumsService service;
 
@@ -52,8 +51,6 @@ public class EnumsController extends AbstractService {
     @JsonView(Views.Public.class)
     @Operation(summary = "Gets all possible AdressTyp values")
     public ResponseEntity<?> getAdressTyp() {
-        logGet(ApiPaths.ENUMS_ADRESS_TYP_PATH);
-
         return ok(service.getEnumValues(AdressTyp.class));
     }
 
@@ -63,8 +60,6 @@ public class EnumsController extends AbstractService {
     @JsonView(Views.Public.class)
     @Operation(summary = "Gets all possible AnderungTyp values")
     public ResponseEntity<?> getAnderungTyp() {
-        logGet(ApiPaths.ENUMS_ANDERUNGS_TYP_PATH);
-
         return ok(service.getEnumValues(AnderungsTyp.class));
     }
 
@@ -74,8 +69,6 @@ public class EnumsController extends AbstractService {
     @JsonView(Views.Public.class)
     @Operation(summary = "Gets all possible Stecker values")
     public ResponseEntity<?> getConnector() {
-        logGet(ApiPaths.ENUMS_STECKER_PATH);
-
         return ok(service.getEnumValues(Stecker.class));
     }
 
@@ -85,8 +78,6 @@ public class EnumsController extends AbstractService {
     @JsonView(Views.Public.class)
     @Operation(summary = "Gets all possible Konfiguration values")
     public ResponseEntity<?> getKonfiguration() {
-        logGet(ApiPaths.ENUMS_KONFIGURATION_PATH);
-
         return ok(service.getEnumValues(Konfiguration.class));
     }
 
@@ -96,8 +87,6 @@ public class EnumsController extends AbstractService {
     @JsonView(Views.Public.class)
     @Operation(summary = "Gets all possible Status values")
     public ResponseEntity<?> getStatus() {
-        logGet(ApiPaths.ENUMS_STATUS_PATH);
-
         return ok(service.getEnumValues(Status.class));
     }
 
@@ -107,8 +96,6 @@ public class EnumsController extends AbstractService {
     @JsonView(Views.Public.class)
     @Operation(summary = "Gets all possible LeistungsUbertragung values")
     public ResponseEntity<?> getLeistungsUbertragung() {
-        logGet(ApiPaths.ENUMS_LEISTUNGS_UBERTRAGUNG_PATH);
-
         return ok(service.getEnumValues(LeistungsUbertragung.class));
     }
 }

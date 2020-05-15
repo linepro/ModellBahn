@@ -11,7 +11,6 @@ import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.rest.json.Views;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,11 +37,6 @@ public class DecoderFunktionModel extends RepresentationModel<DecoderFunktionMod
 
     private static final long serialVersionUID = -5315298133158215960L;
 
-    @JsonProperty(ApiNames.DECODER_ID)
-    @JsonView(Views.DropDown.class)
-    @Schema(name = "Decoder's id", example = "00001", accessMode = AccessMode.READ_ONLY, required = true)
-    private String decoderId;
-
     @JsonProperty(ApiNames.REIHE)
     @JsonView(Views.DropDown.class)
     @Schema(name = "Bank number (0-1) always 0 for single panel decoders", example = "0", required = true)
@@ -66,5 +60,5 @@ public class DecoderFunktionModel extends RepresentationModel<DecoderFunktionMod
     @JsonProperty(ApiNames.DELETED)
     @JsonView(Views.Public.class)
     @Schema(name = "True if soft deleted", example = "false", required = true)
-    protected Boolean deleted;
+    private Boolean deleted;
 }

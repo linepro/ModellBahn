@@ -102,7 +102,7 @@ public interface ApiPaths {
 
     String PROTOKOLL = API_ROOT + ApiNames.PROTOKOLL;
     
-    String SONDERMODELL = API_ROOT + ApiNames.SONDERMODELL;
+    String SONDERMODEL = API_ROOT + ApiNames.SONDERMODEL;
     
     String SPURWEITE = API_ROOT + ApiNames.SPURWEITE;
     

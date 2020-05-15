@@ -46,8 +46,14 @@ public class BahnverwaltungModel extends RepresentationModel<BahnverwaltungModel
     @Schema(name = "Company name", example = "Deutschen Bundesbahn (DB)")
     private String bezeichnung;
 
+    @JsonProperty(ApiNames.LAND)
+    @JsonView(Views.DropDown.class)
+    @Schema(name = "Country ISO 3166 Code", example = "DE")
+    private String land;
+
     @JsonProperty(ApiNames.DELETED)
     @JsonView(Views.Public.class)
     @Schema(name = "True if soft deleted", example = "false", required = true)
-    protected Boolean deleted;
+    private Boolean deleted;
+
 }

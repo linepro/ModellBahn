@@ -2,7 +2,7 @@ package com.linepro.modellbahn.model;
 
 import java.math.BigDecimal;
 import java.nio.file.Path;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.hateoas.RepresentationModel;
 
@@ -98,20 +98,20 @@ public class DecoderTypModel extends RepresentationModel<DecoderTypModel> implem
     @JsonProperty(ApiNames.ADRESSEN)
     @JsonView(Views.Public.class)
     @Schema(implementation = DecoderTypAdressModel.class, name = "Assignable adresses", accessMode = AccessMode.READ_ONLY, required = true)
-    private Set<DecoderTypAdressModel> adressen;
+    private List<DecoderTypAdressModel> adressen;
 
     @JsonProperty(ApiNames.CVS)
     @JsonView(Views.Public.class)
     @Schema(implementation = DecoderTypCvModel.class, name = "Configurable CVs", accessMode = AccessMode.READ_ONLY)
-    private Set<DecoderTypCvModel> cvs;
+    private List<DecoderTypCvModel> cvs;
 
     @JsonProperty(ApiNames.FUNKTIONEN)
     @JsonView(Views.Public.class)
     @Schema(implementation = DecoderTypFunktionModel.class, name = "Available function mappings", accessMode = AccessMode.READ_ONLY, required = true)
-    private Set<DecoderTypFunktionModel> funktionen;
+    private List<DecoderTypFunktionModel> funktionen;
 
     @JsonProperty(ApiNames.DELETED)
     @JsonView(Views.Public.class)
     @Schema(name = "True if soft deleted", example = "false", required = true)
-    protected Boolean deleted;
+    private Boolean deleted;
 }

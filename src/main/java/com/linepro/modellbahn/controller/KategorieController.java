@@ -1,8 +1,6 @@
 package com.linepro.modellbahn.controller;
 
-import static org.springframework.http.ResponseEntity.noContent;
 import static org.springframework.http.ResponseEntity.notFound;
-import static org.springframework.http.ResponseEntity.of;
 import static org.springframework.http.ResponseEntity.ok;
 
 import java.util.List;
@@ -165,10 +163,8 @@ public class KategorieController extends NamedItemController<KategorieModel> {
         @ApiResponse(responseCode = "404", description = "Not found, content = @Content"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> searchUnterKategorie(@RequestParam(ApiNames.KATEGORIEN) List<String> kategorieen, @RequestBody UnterKategorieModel model) {
-        logGet(String.format(ApiPaths.UNTER_KATEGORIEN_LOG, ApiNames.KATEGORIE) + ": " + kategorieen);
-
-        Page<UnterKategorieModel> page = service.searchUnterKategorie(kategorieen, model);
+    public ResponseEntity<?> searchUnterKategorie(@RequestParam(ApiNames.KATEGORIEN) List<String> kategorieen, @RequestBody UnterKategorieModel model, @RequestParam(name = ApiNames.PAGE_NUMBER, required = false) Integer pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE, required = false) Integer pageSize) {
+        Page<UnterKategorieModel> page = service.searchUnterKategorie(kategorieen, model, pageNumber, pageSize);
 
         return page.hasContent() ? ok(page) : notFound().build();
     }
@@ -186,9 +182,7 @@ public class KategorieController extends NamedItemController<KategorieModel> {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> addUnterKategorie(@PathVariable(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr, UnterKategorieModel unterKategorie) {
-        logPost(String.format(ApiPaths.UNTER_KATEGORIE_ROOT_LOG, ApiNames.KATEGORIE, kategorieStr) + ": " + unterKategorie);
-
-        return of(service.addUnterKategorie(kategorieStr, unterKategorie));
+        return added(service.addUnterKategorie(kategorieStr, unterKategorie));
     }
 
     @PutMapping(ApiPaths.UNTER_KATEGORIE_PATH)
@@ -205,9 +199,7 @@ public class KategorieController extends NamedItemController<KategorieModel> {
                 })
     public ResponseEntity<?> updateUnterKategorie(@PathVariable(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathVariable(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr, UnterKategorieModel unterKategorie) {
-        logPut(String.format(ApiPaths.UNTER_KATEGORIE_LOG, ApiNames.KATEGORIE, kategorieStr, unterKategorieStr) + ": " + unterKategorie);
-
-        return of(service.updateUnterKategorie(kategorieStr, unterKategorieStr, unterKategorie));
+        return updated(service.updateUnterKategorie(kategorieStr, unterKategorieStr, unterKategorie));
     }
 
     @DeleteMapping(ApiPaths.UNTER_KATEGORIE_PATH)
@@ -224,8 +216,6 @@ public class KategorieController extends NamedItemController<KategorieModel> {
                 })
     public ResponseEntity<?> deleteUnterKategorie(@PathVariable(ApiPaths.KATEGORIE_PARAM_NAME) String kategorieStr,
             @PathVariable(ApiPaths.UNTER_KATEGORIE_PARAM_NAME) String unterKategorieStr) {
-        logDelete(String.format(ApiPaths.UNTER_KATEGORIE_LOG, ApiNames.KATEGORIE, kategorieStr, unterKategorieStr));
-
-        return (service.deleteUnterKategorie(kategorieStr, unterKategorieStr) ? noContent() : notFound()).build();
+        return deleted(service.deleteUnterKategorie(kategorieStr, unterKategorieStr));
     }
 }

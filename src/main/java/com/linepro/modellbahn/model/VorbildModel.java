@@ -58,7 +58,7 @@ public class VorbildModel extends RepresentationModel<VorbildModel> implements I
     @JsonProperty(ApiNames.GATTUNG)
     @JsonView(Views.DropDown.class)
     @Schema(implementation = GattungModel.class, name = "Rolling stock class", example = "BR 89.0", required = true)
-    private GattungModel gattung;
+    private String gattung;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
     @JsonView(Views.DropDown.class)
@@ -205,7 +205,7 @@ public class VorbildModel extends RepresentationModel<VorbildModel> implements I
     @JsonProperty(ApiNames.LEISTUNGSUBERTRAGUNG)
     @JsonView(Views.Public.class)
     @Schema(name = "Power transfer method (IC engines)", example = "MECHANISH")
-    private LeistungsUbertragung leistungsubertragung;
+    private LeistungsUbertragung leistungsUbertragung;
 
     @JsonProperty(ApiNames.REICHWEITE)
     @JsonView(Views.Public.class)
@@ -270,5 +270,5 @@ public class VorbildModel extends RepresentationModel<VorbildModel> implements I
     @JsonProperty(ApiNames.DELETED)
     @JsonView(Views.Public.class)
     @Schema(name = "True if soft deleted", example = "false", required = true)
-    protected Boolean deleted;
+    private Boolean deleted;
 }

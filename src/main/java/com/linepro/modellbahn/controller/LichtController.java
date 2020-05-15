@@ -156,8 +156,6 @@ public class LichtController extends NamedItemController<LichtModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
         })
     public ResponseEntity<?> updateAbbildung(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name, @PathVariable("file") MultipartFile multipart) throws Exception {
-        logPut(String.format(ApiPaths.ABBILDUNG_LOG, ApiNames.LICHT, name) + ": " + multipart.getOriginalFilename());
-
         return of(service.updateAbbildung(name, multipart));
     }
 
@@ -174,8 +172,6 @@ public class LichtController extends NamedItemController<LichtModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
         })
     public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name) throws Exception {
-        logDelete(String.format(ApiPaths.ABBILDUNG_LOG, ApiNames.LICHT, name));
-     
         return of(service.deleteAbbildung(name));
     }
 }

@@ -56,5 +56,5 @@ public class ZugConsistModel extends RepresentationModel<ZugConsistModel> implem
     @JsonProperty(ApiNames.DELETED)
     @JsonView(Views.Public.class)
     @Schema(name = "True if soft deleted", example = "false", required = true)
-    protected Boolean deleted;
+    private Boolean deleted;
 }

@@ -2,6 +2,7 @@ package com.linepro.modellbahn.entity;
 
 import java.time.LocalDate;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -18,15 +19,16 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
 
-import org.apache.commons.lang3.builder.CompareToBuilder;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.model.enums.AnderungsTyp;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.persistence.util.BusinessKey;
-import com.linepro.modellbahn.util.ToStringBuilder;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Artikel.
@@ -44,163 +46,41 @@ import com.linepro.modellbahn.util.ToStringBuilder;
         @UniqueConstraint(name = DBNames.ANDERUNG + "_UC1", columnNames = {DBNames.ARTIKEL_ID, DBNames.ANDERUNG_ID})
     })
 //@formatter:on
+@SuperBuilder
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Cacheable
 public class Anderung extends ItemImpl {
 
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Artikel.class)
+    @JoinColumn(name = DBNames.ARTIKEL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ANDERUNG + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.artikel.notnull}")
     private Artikel artikel;
 
+    @Column(name = DBNames.ANDERUNG_ID, nullable = false)
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.anderungId.notnull}")
     @Min(value = 1, message = "{com.linepro.modellbahn.validator.constraints.anderungId.positive}")
     private Integer anderungId;
 
+    @Column(name = DBNames.ANDERUNGSDATUM)
     @Past(message = "{com.linepro.modellbahn.validator.constraints.anderungsDatum.past}")
     private LocalDate anderungsDatum;
 
+    @Column(name = DBNames.ANDERUNGS_TYP, nullable = false)
+    @Enumerated(EnumType.STRING)
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.anderungsTyp.notnull}")
     private AnderungsTyp anderungsTyp;
 
+    @Column(name = DBNames.BEZEICHNUNG, length = 100)
     private String bezeichnung;
 
+    @Column(name = DBNames.STUCK)
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.stuck.positive}")
     private Integer stuck;
 
-    private String anmerkung;
-
-    /**
-     * Instantiates a new artikel.
-     */
-    public Anderung() {
-        super();
-    }
-
-    /**
-     * Instantiates a new artikel.
-     * @param id the id
-     * @param artikel the parent artikel
-     * @param anderungId the modification sequence
-     * @param anderungsDatum the modification date
-     * @param anderungsTyp the modification type
-     * @param bezeichnung description of the modificiation
-     * @param stuck number of items affected by the modification
-     * @param anmerkung any remarks
-     * @param deleted if { this item is soft deleted, otherwise it is active
-     */
-    public Anderung(Long id, Artikel artikel, Integer anderungId, LocalDate anderungsDatum, AnderungsTyp anderungsTyp,
-            String bezeichnung, Integer stuck, String anmerkung, Boolean deleted) {
-        super(id, deleted);
-
-        setArtikel(artikel);
-        setAnderungId(anderungId);
-        setAnderungsDatum(anderungsDatum);
-        setAnderungsTyp(anderungsTyp);
-        setBezeichnung(bezeichnung);
-        setStuck(stuck);
-        setAnmerkung(anmerkung);
-    }
-
-    @BusinessKey
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Artikel.class)
-    @JoinColumn(name = DBNames.ARTIKEL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ANDERUNG + "_fk1"))
-    public Artikel getArtikel() {
-        return artikel;
-    }
-
-    public void setArtikel(Artikel artikel) {
-        this.artikel = artikel;
-    }
-
-    @BusinessKey
-    @Column(name = DBNames.ANDERUNG_ID, nullable = false)
-    public Integer getAnderungId() {
-        return anderungId;
-    }
-
-    public void setAnderungId(Integer anderungId) {
-        this.anderungId = anderungId;
-    }
-
-    @Column(name = DBNames.ANDERUNGSDATUM)
-    public LocalDate getAnderungsDatum() {
-        return anderungsDatum;
-    }
-
-    public void setAnderungsDatum(LocalDate anderungsDatum) {
-        this.anderungsDatum = anderungsDatum;
-    }
-
-    @Column(name = DBNames.ANDERUNGS_TYP, nullable = false)
-    @Enumerated(EnumType.STRING)
-    public AnderungsTyp getAnderungsTyp() {
-        return anderungsTyp;
-    }
-
-    public void setAnderungsTyp(AnderungsTyp changeTyp) {
-        this.anderungsTyp = changeTyp;
-    }
-
-    @Column(name = DBNames.BEZEICHNUNG, length = 100)
-    public String getBezeichnung() {
-        return bezeichnung;
-    }
-
-    public void setBezeichnung(String bezeichnung) {
-        this.bezeichnung = bezeichnung;
-    }
-
-    @Column(name = DBNames.STUCK)
-    public Integer getStuck() {
-        return stuck;
-    }
-
-    public void setStuck(Integer stuck) {
-        this.stuck = stuck;
-    }
-
     @Column(name = DBNames.ANMERKUNG)
-    public String getAnmerkung() {
-        return anmerkung;
-    }
-
-    public void setAnmerkung(String anmerkung) {
-        this.anmerkung = anmerkung;
-    }
-
-    @Override
-    public int compareTo(Item other) {
-        if (other instanceof Anderung) {
-            return new CompareToBuilder().append(getArtikel(), ((Anderung) other).getArtikel())
-                    .append(getAnderungId(), ((Anderung) other).getAnderungId()).toComparison();
-        }
-
-        return super.compareTo(other);
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(getArtikel()).append(getAnderungId()).hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (!(obj instanceof Anderung)) {
-            return false;
-        }
-
-        Anderung other = (Anderung) obj;
-
-        return new EqualsBuilder().append(getArtikel(), other.getArtikel())
-                .append(getAnderungId(), other.getAnderungId()).isEquals();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this).appendSuper(super.toString()).append(DBNames.ARTIKEL, getArtikel())
-                .append(DBNames.ANDERUNG_ID, getAnderungId()).append(DBNames.ANDERUNGSDATUM, getAnderungsDatum())
-                .append(DBNames.ANDERUNGS_TYP, getAnderungsTyp()).append(DBNames.BEZEICHNUNG, getBezeichnung())
-                .append(DBNames.STUCK, getStuck()).append(DBNames.ANMERKUNG, getAnmerkung()).toString();
-    }
+    private String anmerkung;
 }

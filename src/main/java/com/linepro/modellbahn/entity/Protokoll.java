@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.entity;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
@@ -7,6 +8,13 @@ import javax.persistence.UniqueConstraint;
 
 import com.linepro.modellbahn.entity.impl.NamedItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Protokoll. The communications protocol used by a Decoder
@@ -23,32 +31,12 @@ import com.linepro.modellbahn.persistence.DBNames;
         @UniqueConstraint(name = DBNames.PROTOKOLL + "_UC1", columnNames = { DBNames.NAME })
     })
 //@formatter:on
+@SuperBuilder
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Cacheable
 public class Protokoll extends NamedItemImpl {
-
-    /**
-     * Instantiates a new protokoll.
-     */
-    public Protokoll() {
-        super();
-    }
-
-    public Protokoll(String name) {
-        super(name);
-    }
-
-    /**
-     * Instantiates a new protokoll.
-     *
-     * @param id
-     *            the id
-     * @param name
-     *            the name
-     * @param bezeichnung
-     *            the bezeichnung
-     * @param deleted
-     *            if  { this item is soft deleted, otherwise it is active
-     */
-    public Protokoll(Long id, String name, String bezeichnung, Boolean deleted) {
-        super(id, name, bezeichnung, deleted);
-    }
 }

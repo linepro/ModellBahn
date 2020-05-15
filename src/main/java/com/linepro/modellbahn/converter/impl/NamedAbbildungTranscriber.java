@@ -3,7 +3,7 @@ package com.linepro.modellbahn.converter.impl;
 import com.linepro.modellbahn.util.NamedWithAbbildung;
 
 public class NamedAbbildungTranscriber<S extends NamedWithAbbildung, D extends NamedWithAbbildung> extends NamedTranscriber<S, D> {
-    public D apply(S source, D destination) {
+    public D apply(S source, D destination, int depth) {
         destination = super.apply(source, destination);
 
         if (source != null) {

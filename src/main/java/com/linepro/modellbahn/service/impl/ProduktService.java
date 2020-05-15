@@ -11,10 +11,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.FileService;
-import com.linepro.modellbahn.converter.entity.ProduktTranscriber;
-import com.linepro.modellbahn.converter.impl.MutatorImpl;
-import com.linepro.modellbahn.converter.model.ProduktModelTranscriber;
+import com.linepro.modellbahn.converter.entity.ProduktMutator;
+import com.linepro.modellbahn.converter.entity.ProduktTeilMutator;
+import com.linepro.modellbahn.converter.model.ProduktModelMutator;
 import com.linepro.modellbahn.entity.Produkt;
+import com.linepro.modellbahn.entity.ProduktTeil;
 import com.linepro.modellbahn.model.ProduktModel;
 import com.linepro.modellbahn.model.ProduktTeilModel;
 import com.linepro.modellbahn.repository.ProduktRepository;
@@ -27,98 +28,129 @@ import com.linepro.modellbahn.service.ItemService;
  * @author  $Author:$
  * @version $Id:$
  */
-
 @Service
 
 public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implements ItemService<ProduktModel> {
 
     private final ProduktRepository repository;
     
+    private final FileService fileService;
+    
     private final ProduktTeilRepository teilRepository;
     
-    private final FileService fileService;
+    private final ProduktTeilMutator teilMutator;
 
     @Autowired
-    public ProduktService(ProduktRepository repository, ProduktTeilRepository teilRepository, FileService fileService) {
-        super(repository, 
-                        new MutatorImpl<ProduktModel, Produkt>(() -> new Produkt(), new ProduktModelTranscriber()),
-                        new MutatorImpl<Produkt, ProduktModel>(() -> new ProduktModel(), new ProduktTranscriber())
-                        );
+    public ProduktService(ProduktRepository repository, ProduktModelMutator produktModelMutator, ProduktMutator produktMutator, FileService fileService, 
+                    ProduktTeilRepository teilRepository, ProduktTeilMutator teilMutator) {
+        super(repository, produktModelMutator, produktMutator);
         this.repository = repository;
-        this.teilRepository = teilRepository;
         this.fileService = fileService;
+
+        this.teilRepository = teilRepository;
+        this.teilMutator = teilMutator;
     }
 
-    public Optional<ProduktModel> get(String hersterller, String bestellNr) {
-        return super.get(() -> repository.findByBestellNr(hersterller, bestellNr));
+    public Optional<ProduktModel> get(String hersteller, String bestellNr) {
+        return super.get(() -> repository.findByBestellNr(hersteller, bestellNr));
     }
 
-    public Optional<ProduktModel> update(String hersterller, String bestellNr, ProduktModel model) {
-        return super.update(() -> repository.findByBestellNr(hersterller, bestellNr), model);
+    public Optional<ProduktModel> update(String hersteller, String bestellNr, ProduktModel model) {
+        return super.update(() -> repository.findByBestellNr(hersteller, bestellNr), model);
     }
 
-    public boolean delete(String hersterller, String bestellNr) {
-        return super.delete(() -> repository.findByBestellNr(hersterller, bestellNr));
-    }
-
-    public Optional<ProduktTeilModel> addTeil(String hersterller, String bestellNr, ProduktTeilModel teil) {
-        return Optional.empty();
-    }
-
-    public Optional<ProduktTeilModel> updateTeil(String hersterller, String bestellNr, String teilHerstellerStr, String teilBestellNr, ProduktTeilModel teil) {
-        return Optional.empty();
-    }
-
-    public boolean deleteTeil(String hersterller, String bestellNr, String teilHerstellerStr, String teilBestellNr) {
-        return false;
+    public boolean delete(String hersteller, String bestellNr) {
+        return super.delete(() -> repository.findByBestellNr(hersteller, bestellNr));
     }
 
     @Transactional
-    public Optional<ProduktModel> updateAbbildung(String hersterller, String bestellNr, MultipartFile multipart) {
-        return  repository.findByBestellNr(hersterller, bestellNr)
+    public Optional<ProduktTeilModel> addTeil(String hersteller, String bestellNr, String teilHersteller, String teilBestellNr, Integer anzahl) {
+        Optional<Produkt> pt = repository.findByBestellNr(teilHersteller, teilBestellNr);
+        
+        if (pt.isPresent()) {
+            return repository.findByBestellNr(hersteller, bestellNr)
+                             .map(p -> {
+                                 ProduktTeil teil = new ProduktTeil();
+                                 teil.setTeil(pt.get());
+                                 teil.setAnzahl(anzahl);
+                                 teil.setDeleted(false);
+                              
+                                 p.addTeil(teil);
+                              
+                                 repository.saveAndFlush(p);
+                              
+                                 return teilMutator.convert(teil);
+                                 });
+        }
+        
+        return Optional.empty();
+    }
+
+    @Transactional
+    public Optional<ProduktTeilModel> updateTeil(String hersteller, String bestellNr, String teilHersteller, String teilBestellNr, Integer anzahl) {
+        return teilRepository.findByTeil(hersteller, bestellNr, teilHersteller, teilBestellNr)
+                             .map(t -> {
+                                 t.setAnzahl(anzahl);
+                                 return teilMutator.convert(teilRepository.saveAndFlush(t));
+                             });
+    }
+
+    @Transactional
+    public boolean deleteTeil(String hersteller, String bestellNr, String teilHersteller, String teilBestellNr) {
+        return teilRepository.findByTeil(hersteller, bestellNr, teilHersteller, teilBestellNr)
+                             .map(t -> {
+                                 teilRepository.delete(t);
+                                 return true;
+                             })
+                             .orElse(false);
+    }
+
+    @Transactional
+    public Optional<ProduktModel> updateAbbildung(String hersteller, String bestellNr, MultipartFile multipart) {
+        return  repository.findByBestellNr(hersteller, bestellNr)
                         .map(a -> {
-                            a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.PRODUKT, ApiNames.ABBILDUNG, hersterller, bestellNr));
+                            a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.PRODUKT, ApiNames.ABBILDUNG, hersteller, bestellNr));
                             return entityMutator.convert(a);
                             });
     }
 
     @Transactional
-    public Optional<ProduktModel> deleteAbbildung(String hersterller, String bestellNr) {
-        return repository.findByBestellNr(hersterller, bestellNr)
+    public Optional<ProduktModel> deleteAbbildung(String hersteller, String bestellNr) {
+        return repository.findByBestellNr(hersteller, bestellNr)
                         .map(a -> {
                             a.setAbbildung(fileService.deleteFile(a.getAbbildung()));
                             return entityMutator.convert(a);
                             });    }
 
     @Transactional
-    public Optional<ProduktModel> updateAnleitungen(String hersterller, String bestellNr, MultipartFile multipart) {
-        return  repository.findByBestellNr(hersterller, bestellNr)
+    public Optional<ProduktModel> updateAnleitungen(String hersteller, String bestellNr, MultipartFile multipart) {
+        return  repository.findByBestellNr(hersteller, bestellNr)
                         .map(a -> {
-                            a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.PRODUKT, ApiNames.ANDERUNGEN, hersterller, bestellNr));
+                            a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.PRODUKT, ApiNames.ANDERUNGEN, hersteller, bestellNr));
                             return entityMutator.convert(a);
                             });
     }
 
     @Transactional
-    public Optional<ProduktModel> deleteAnleitungen(String hersterller, String bestellNr) {
-        return repository.findByBestellNr(hersterller, bestellNr)
+    public Optional<ProduktModel> deleteAnleitungen(String hersteller, String bestellNr) {
+        return repository.findByBestellNr(hersteller, bestellNr)
                         .map(a -> {
                             a.setAbbildung(fileService.deleteFile(a.getAbbildung()));
                             return entityMutator.convert(a);
                             });    }
 
     @Transactional
-    public Optional<ProduktModel> updateExplosionszeichnung(String hersterller, String bestellNr, MultipartFile multipart) {
-        return  repository.findByBestellNr(hersterller, bestellNr)
+    public Optional<ProduktModel> updateExplosionszeichnung(String hersteller, String bestellNr, MultipartFile multipart) {
+        return  repository.findByBestellNr(hersteller, bestellNr)
                         .map(a -> {
-                            a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.PRODUKT, ApiNames.EXPLOSIONSZEICHNUNG, hersterller, bestellNr));
+                            a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.PRODUKT, ApiNames.EXPLOSIONSZEICHNUNG, hersteller, bestellNr));
                             return entityMutator.convert(a);
                             });
     }
 
     @Transactional
-    public Optional<ProduktModel> deleteExplosionszeichnung(String hersterller, String bestellNr) {
-        return repository.findByBestellNr(hersterller, bestellNr)
+    public Optional<ProduktModel> deleteExplosionszeichnung(String hersteller, String bestellNr) {
+        return repository.findByBestellNr(hersteller, bestellNr)
                         .map(a -> {
                             a.setAbbildung(fileService.deleteFile(a.getAbbildung()));
                             return entityMutator.convert(a);

@@ -49,5 +49,5 @@ public class GattungModel extends RepresentationModel<GattungModel> implements N
     @JsonProperty(ApiNames.DELETED)
     @JsonView(Views.Public.class)
     @Schema(name = "True if soft deleted", example = "false", required = true)
-    protected Boolean deleted;
+    private Boolean deleted;
 }

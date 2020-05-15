@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.controller;
 
-import static org.springframework.http.ResponseEntity.noContent;
-import static org.springframework.http.ResponseEntity.notFound;
 import static org.springframework.http.ResponseEntity.of;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,8 +78,6 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> get(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
-        logGet(herstellerStr, bestellNr);
-
         return of(service.get(herstellerStr, bestellNr));
     }
 
@@ -131,9 +127,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> update(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, ProduktModel model) {
-        logPut(herstellerStr, bestellNr);
-
-        return of(service.update(herstellerStr, bestellNr, model));
+        return updated(service.update(herstellerStr, bestellNr, model));
     }
 
     @DeleteMapping(ApiPaths.PRODUKT_PART)
@@ -149,7 +143,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> delete(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
-        return (service.delete(herstellerStr, bestellNr) ? noContent() : notFound()).build();
+        return deleted(service.delete(herstellerStr, bestellNr));
     }
 
     @PostMapping(ApiPaths.PRODUKT_TEIL_ROOT)
@@ -165,9 +159,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> addTeil(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, ProduktTeilModel teil) {
-        logPost(String.format(ApiPaths.PRODUKT_TEIL_ROOT_LOG, ApiNames.PRODUKT, herstellerStr, bestellNr) + ": " + teil);
-
-        return of(service.addTeil(herstellerStr, bestellNr, teil));
+        return added(service.addTeil(herstellerStr, bestellNr, teil.getTeilHersteller(), teil.getTeilBestellNr(), teil.getAnzahl()));
     }
 
     @PutMapping(ApiPaths.PRODUKT_TEIL_PATH)
@@ -182,10 +174,8 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
-    public ResponseEntity<?> updateTeil(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathVariable(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr, @PathVariable(ApiPaths.TEIL_BESTELL_NR_PARAM_NAME) String teilBestellNr, ProduktTeilModel teil) {
-        logPut(String.format(ApiPaths.PRODUKT_TEIL_LOG, ApiNames.PRODUKT, herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr) + ":" + teil);
-
-        return of(service.updateTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, teil));
+    public ResponseEntity<?> updateTeil(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathVariable(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr, @PathVariable(ApiPaths.TEIL_BESTELL_NR_PARAM_NAME) String teilBestellNr, Integer anzahl) {
+        return updated(service.updateTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, anzahl));
     }
 
     @DeleteMapping(ApiPaths.PRODUKT_TEIL_PATH)
@@ -201,9 +191,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> deleteTeil(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathVariable(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr, @PathVariable(ApiPaths.TEIL_BESTELL_NR_PARAM_NAME) String teilBestellNr) {
-        logDelete(String.format(ApiPaths.PRODUKT_TEIL_LOG, ApiNames.PRODUKT, herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr));
-
-        return (service.deleteTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr) ? noContent() : notFound()).build();
+        return deleted(service.deleteTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr));
     }
 
     @PutMapping(ApiPaths.PRODUKT_ABBILDUNG)
@@ -219,9 +207,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> updateAbbildung(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathVariable("file") MultipartFile multipart) throws Exception {
-        logPut(String.format(ApiPaths.PRODUKT_ABBILDUNG_LOG, ApiNames.PRODUKT, herstellerStr, bestellNr) + ": " + multipart.getOriginalFilename());
-
-        return of(service.updateAbbildung(herstellerStr, bestellNr, multipart));
+        return updated(service.updateAbbildung(herstellerStr, bestellNr, multipart));
     }
 
     @DeleteMapping(ApiPaths.PRODUKT_ABBILDUNG)
@@ -237,9 +223,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) throws Exception {
-        logDelete(String.format(ApiPaths.PRODUKT_ABBILDUNG_LOG, ApiNames.PRODUKT, herstellerStr, bestellNr));
-
-        return of(service.deleteAbbildung(herstellerStr, bestellNr));
+        return updated(service.deleteAbbildung(herstellerStr, bestellNr));
     }
 
     @PutMapping(ApiPaths.PRODUKT_ANLEITUNGEN)
@@ -256,9 +240,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     })
     public ResponseEntity<?> updateAnleitungen(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathVariable("file") MultipartFile multipart) throws Exception {
-        logPut(String.format(ApiPaths.PRODUKT_ANLEITUNGEN_LOG, ApiNames.PRODUKT, herstellerStr, bestellNr) + ": " + multipart.getOriginalFilename());
-
-        return of(service.updateAnleitungen(herstellerStr, bestellNr, multipart));
+        return updated(service.updateAnleitungen(herstellerStr, bestellNr, multipart));
     }
 
     @DeleteMapping(ApiPaths.PRODUKT_ANLEITUNGEN)
@@ -273,9 +255,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> deleteAnleitungen(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) throws Exception {
-        logDelete(String.format(ApiPaths.PRODUKT_ANLEITUNGEN_LOG, ApiNames.PRODUKT, herstellerStr, bestellNr));
-
-        return of(service.deleteAnleitungen(herstellerStr, bestellNr));
+        return updated(service.deleteAnleitungen(herstellerStr, bestellNr));
     }
 
     @PutMapping(ApiPaths.PRODUKT_EXPLOSIONSZEICHNUNG)
@@ -292,9 +272,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     })
     public ResponseEntity<?> updateExplosionszeichnung(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
             @PathVariable("file") MultipartFile multipart) throws Exception {
-        logPut(String.format(ApiPaths.PRODUKT_EXPLOSIONSZEICHNUNG_LOG, ApiNames.PRODUKT, herstellerStr, bestellNr) + ": " + multipart.getOriginalFilename());
-
-        return of(service.updateExplosionszeichnung(herstellerStr, bestellNr, multipart));
+        return updated(service.updateExplosionszeichnung(herstellerStr, bestellNr, multipart));
     }
 
     @DeleteMapping(ApiPaths.PRODUKT_EXPLOSIONSZEICHNUNG)
@@ -310,8 +288,6 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> deleteExplosionszeichnung(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) throws Exception {
-        logDelete(String.format(ApiPaths.PRODUKT_EXPLOSIONSZEICHNUNG_LOG, ApiNames.PRODUKT, herstellerStr, bestellNr));
-
-        return of(service.deleteExplosionszeichnung(herstellerStr, bestellNr));
+        return updated(service.deleteExplosionszeichnung(herstellerStr, bestellNr));
     }
 }

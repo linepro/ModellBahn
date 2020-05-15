@@ -3,6 +3,8 @@ package com.linepro.modellbahn.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.linepro.modellbahn.converter.entity.AchsfolgMutator;
+import com.linepro.modellbahn.converter.model.AchsfolgModelMutator;
 import com.linepro.modellbahn.entity.Achsfolg;
 import com.linepro.modellbahn.model.AchsfolgModel;
 import com.linepro.modellbahn.repository.AchsfolgRepository;
@@ -16,7 +18,7 @@ import com.linepro.modellbahn.repository.AchsfolgRepository;
 public class AchsfolgService extends NamedItemServiceImpl<AchsfolgModel,Achsfolg> {
 
     @Autowired
-    public AchsfolgService(AchsfolgRepository repository) {
-        super(repository, () -> new AchsfolgModel(), () -> new Achsfolg());
+    public AchsfolgService(AchsfolgRepository repository, AchsfolgModelMutator modelMutator, AchsfolgMutator entityMutator) {
+        super(repository, modelMutator, entityMutator);
     }
 }
