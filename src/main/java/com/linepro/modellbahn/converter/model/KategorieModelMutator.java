@@ -13,10 +13,4 @@ public class KategorieModelMutator extends MutatorImpl<KategorieModel, Kategorie
     public KategorieModelMutator() {
         super(() -> new Kategorie(), new NamedTranscriber<KategorieModel, Kategorie>());
     }
-
-    @Override
-    public Kategorie apply(KategorieModel source, Kategorie destination, int depth) {
-        return super.apply(source, destination, depth);
-    }
-
 }

@@ -14,9 +14,9 @@ import javax.validation.Payload;
 @Documented
 @Retention(RUNTIME)
 @Target( {FIELD, ANNOTATION_TYPE})
-@Constraint(validatedBy = {CurrencyValidator.class})
+@Constraint(validatedBy = {CountryValidator.class})
 public @interface Country {
-    String message() default "{com.linepro.modellbahn.validator.constraints.currency.invalid}";
+    String message() default "{com.linepro.modellbahn.validator.constraints.country.invalid}";
 
     Class<?>[] groups() default { };
 

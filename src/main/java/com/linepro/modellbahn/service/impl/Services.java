@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Import;
     BahnverwaltungService.class,
     DecoderService.class,
     DecoderTypService.class,
-    EmailService.class,
     EnumsService.class,
     EpochService.class,
     GattungService.class,

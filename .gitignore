@@ -34,9 +34,8 @@ release.properties
 
 # ModellBahn artefacts
 docs/
-/modellbahn.lock.db
-/modellbahn.mv.db
-/modellbahn.trace.db
+logs/
+/modellbahn.*.db
 /src/main/resources/webapp/store
 /webapp
 *.log

@@ -1,6 +1,5 @@
 package com.linepro.modellbahn.entity;
 
-import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -31,9 +30,7 @@ import lombok.experimental.SuperBuilder;
 //@formatter:off
 @Entity(name = DBNames.DECODER_FUNKTION)
 @Table(name = DBNames.DECODER_FUNKTION,
-    indexes = { 
-        @Index(name = DBNames.DECODER_FUNKTION + "_IX1", columnList = DBNames.DECODER_ID + "," + DBNames.FUNKTION_ID, unique = true)
-    }, uniqueConstraints = { 
+    uniqueConstraints = { 
         @UniqueConstraint(name = DBNames.DECODER_FUNKTION + "_UC1", columnNames = { DBNames.DECODER_ID, DBNames.FUNKTION_ID })
     })
 //@formatter:on
@@ -43,12 +40,11 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@Cacheable
 public class DecoderFunktion extends ItemImpl {
 
     /** The decoder. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
-    @JoinColumn(name = DBNames.DECODER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name =  DBNames.DECODER_ADRESS + "_fk1"))
+    @JoinColumn(name = DBNames.DECODER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name =  DBNames.DECODER_FUNKTION + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoder.notnull}")
     private Decoder decoder;
     

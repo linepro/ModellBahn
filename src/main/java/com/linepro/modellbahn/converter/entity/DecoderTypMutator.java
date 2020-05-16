@@ -42,7 +42,7 @@ public class DecoderTypMutator implements Mutator<DecoderTyp,DecoderTypModel> {
         destination.setStecker(source.getStecker());
         destination.setAnleitungen(source.getAnleitungen());
         
-        if (depth >= 0) {
+        if (depth > 0) {
             destination.setAdressen(source.getAdressen()
                             .stream()
                             .sorted()

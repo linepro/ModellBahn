@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-	<appender name="ASYNC-FULL-STDOUT-NOJSON" class="ch.qos.logback.classic.AsyncAppender">
+	<appender name="console" class="ch.qos.logback.classic.AsyncAppender">
 		<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 			<encoder>
 				<pattern>%green(%d{dd-MM-yyyy HH:mm:ss.SSS}) %magenta([%thread]) %highlight(%-5level) %red(%logger{30}) - %magenta(%msg) %rEx{full,java.lang.reflect.Method,
@@ -29,8 +29,8 @@
 		</appender>
 	</appender>
 
-	<appender name="ASYNC-FULL-STDOUT" class="ch.qos.logback.classic.AsyncAppender">
-		<appender name="ASYNC-FULL-STDOUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<appender name="logfile" class="ch.qos.logback.classic.AsyncAppender">
+		<appender name="logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
 			<file>./logs/modellbahn.json</file>
 
 			<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
@@ -65,23 +65,28 @@
 	</appender>
 
 	<root level="WARN">
-		<appender-ref ref="ASYNC-FULL-STDOUT-NOJSON"/>
+		<appender-ref ref="console"/>
+        <appender-ref ref="logfile"/>
 	</root>
 	<logger additivity="false" level="INFO" name="org.apache.http.http.headers">
-		<appender-ref ref="ASYNC-FULL-STDOUT-NOJSON"/>
+		<appender-ref ref="console"/>
+        <appender-ref ref="logfile"/>
 	</logger>
 	<logger additivity="false" level="INFO" name="org.apache.http.wire">
-		<appender-ref ref="ASYNC-FULL-STDOUT-NOJSON"/>
+		<appender-ref ref="console"/>
+        <appender-ref ref="logfile"/>
 	</logger>
 	<logger additivity="false" level="WARN" name="org.hibernate">
-		<appender-ref ref="ASYNC-FULL-STDOUT-NOJSON"/>
+		<appender-ref ref="console"/>
+        <appender-ref ref="logfile"/>
 	</logger>
 	<logger additivity="false" level="WARN" name="org.springframework">
-		<appender-ref ref="ASYNC-FULL-STDOUT-NOJSON"/>
+		<appender-ref ref="console"/>
+        <appender-ref ref="logfile"/>
 	</logger>
 	<logger additivity="false" level="INFO" name="com.linepro.modellbahn">
-		<appender-ref ref="ASYNC-FULL-STDOUT-NOJSON"/>
-		<appender-ref ref="ASYNC-FULL-STDOUT"/>
+		<appender-ref ref="console"/>
+		<appender-ref ref="logfile"/>
 	</logger>
 
 </configuration>

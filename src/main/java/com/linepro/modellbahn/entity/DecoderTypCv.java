@@ -1,6 +1,5 @@
 package com.linepro.modellbahn.entity;
 
-import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,10 +35,9 @@ import lombok.experimental.SuperBuilder;
 @Entity(name = DBNames.DECODER_TYP_CV)
 @Table(name = DBNames.DECODER_TYP_CV,
     indexes = { 
-        @Index(name = DBNames.DECODER_TYP_CV + "_IX1", columnList = DBNames.DECODER_TYP_ID +"," + DBNames.CV, unique = true),
-        @Index(name = DBNames.DECODER_TYP_CV + "_IX2", columnList = DBNames.DECODER_TYP_ID), 
-        @Index(name = DBNames.DECODER_TYP_CV + "_IX3", columnList = DBNames.CV) }, 
-    uniqueConstraints = {
+        @Index(name = DBNames.DECODER_TYP_CV + "_IX1", columnList = DBNames.DECODER_TYP_ID), 
+        @Index(name = DBNames.DECODER_TYP_CV + "_IX2", columnList = DBNames.CV)
+    }, uniqueConstraints = {
         @UniqueConstraint(name = DBNames.DECODER_TYP_CV + "_UC1", columnNames = { DBNames.DECODER_TYP_ID, DBNames.CV }) 
     })
 //@formatter:on
@@ -49,7 +47,6 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@Cacheable
 public class DecoderTypCv extends ItemImpl {
 
     /** The decoder typ. */

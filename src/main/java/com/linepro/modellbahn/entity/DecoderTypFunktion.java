@@ -1,6 +1,5 @@
 package com.linepro.modellbahn.entity;
 
-import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,8 +35,7 @@ import lombok.experimental.SuperBuilder;
 @Entity(name = DBNames.DECODER_TYP_FUNKTION)
 @Table(name = DBNames.DECODER_TYP_FUNKTION,
     indexes = { 
-        @Index(name = DBNames.DECODER_TYP_FUNKTION + "_IX1", columnList = DBNames.DECODER_TYP_ID + "," + DBNames.REIHE + "," + DBNames.FUNKTION, unique = true),
-        @Index(name = DBNames.DECODER_TYP_FUNKTION + "_IX2", columnList = DBNames.DECODER_TYP_ID)
+        @Index(name = DBNames.DECODER_TYP_FUNKTION + "_IX1", columnList = DBNames.DECODER_TYP_ID)
     }, uniqueConstraints = {
         @UniqueConstraint(name = DBNames.DECODER_TYP_FUNKTION + "_UC1", columnNames = { DBNames.DECODER_TYP_ID, DBNames.REIHE, DBNames.FUNKTION })
     })
@@ -48,7 +46,6 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@Cacheable
 public class DecoderTypFunktion extends ItemImpl {
 
     /** The decoder typ. */

@@ -1,4 +1,0 @@
-{"timestamp":"2020-05-15T09:46:55.048+01:00","level":"INFO","logger_name":"com.linepro.modellbahn.configuration.ApplicationReadyListener","message":"application started with these beans: []"}
-{"timestamp":"2020-05-15T09:46:55.561+01:00","level":"INFO","logger_name":"com.linepro.modellbahn.ModellbahnApplication","message":"No active profile set, falling back to default profiles: default"}
-{"timestamp":"2020-05-15T09:49:49.701+01:00","level":"INFO","logger_name":"com.linepro.modellbahn.configuration.ApplicationReadyListener","message":"application started with these beans: []"}
-{"timestamp":"2020-05-15T09:49:50.208+01:00","level":"INFO","logger_name":"com.linepro.modellbahn.ModellbahnApplication","message":"No active profile set, falling back to default profiles: default"}

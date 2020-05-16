@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.converter.impl;
 
-import com.linepro.modellbahn.util.NamedWithAbbildung;
+import com.linepro.modellbahn.model.NamedWithAbbildung;
 
 public class NamedAbbildungTranscriber<S extends NamedWithAbbildung, D extends NamedWithAbbildung> extends NamedTranscriber<S, D> {
     public D apply(S source, D destination, int depth) {

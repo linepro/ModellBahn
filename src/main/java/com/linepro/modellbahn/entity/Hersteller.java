@@ -31,9 +31,7 @@ import lombok.experimental.SuperBuilder;
 //@formatter:off
 @Entity(name = DBNames.HERSTELLER)
 @Table(name = DBNames.HERSTELLER,
-    indexes = { 
-        @Index(name = DBNames.HERSTELLER + "_IX1", columnList = DBNames.NAME, unique = true)
-    }, uniqueConstraints = {
+    uniqueConstraints = {
         @UniqueConstraint(name = DBNames.HERSTELLER + "_UC1", columnNames = { DBNames.NAME })
     })
 //@formatter:on

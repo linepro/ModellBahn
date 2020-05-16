@@ -109,7 +109,7 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
         return super.add(model);
     }
 
-    @PutMapping(ApiPaths.VORBILD_PART)
+    @PostMapping(ApiPaths.VORBILD_PART)
     @JsonView(Views.Public.class)
     @Operation(summary = "Updates an Vorbild by name", description = "Update a prototyp", operationId = "update", tags = { "Vorbild" })
     @ApiResponses(value = {
@@ -141,7 +141,7 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
         return deleted(service.delete(gattung));
     }
 
-     @PutMapping(ApiPaths.VORBILD_PART)
+    @PutMapping(ApiPaths.VORBILD_PART)
     @JsonView(Views.Public.class)
     @Operation(summary = "Updates an Vorbild by name", description = "Update a prototype", operationId = "update", tags = { "Vorbild" })
     @ApiResponses(value = {

@@ -3,7 +3,6 @@ package com.linepro.modellbahn.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,12 +42,11 @@ import lombok.experimental.SuperBuilder;
 @Entity(name = DBNames.DECODER)
 @Table(name = DBNames.DECODER, 
     indexes = {
-        @Index(name = DBNames.DECODER + "_IX1", columnList = DBNames.DECODER_ID, unique = true), 
-        @Index(name = DBNames.DECODER + "_IX2", columnList = DBNames.DECODER_TYP_ID),
-        @Index(name = DBNames.DECODER + "_IX3", columnList = DBNames.PROTOKOLL_ID)
+        @Index(name = DBNames.DECODER + "_IX1", columnList = DBNames.DECODER_TYP_ID),
+        @Index(name = DBNames.DECODER + "_IX2", columnList = DBNames.PROTOKOLL_ID)
     }, uniqueConstraints = {
         @UniqueConstraint(name = DBNames.DECODER + "_UC1", columnNames = { DBNames.DECODER_ID }) 
-        })
+    })
 //@formatter:on
 @SuperBuilder
 @NoArgsConstructor
@@ -56,7 +54,6 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@Cacheable
 public class Decoder extends ItemImpl {
 
     @DecoderId

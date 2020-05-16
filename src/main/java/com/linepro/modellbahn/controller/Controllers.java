@@ -3,7 +3,7 @@ package com.linepro.modellbahn.controller;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import com.linepro.modellbahn.controller.user.UserController;
+import com.linepro.modellbahn.security.UserController;
 
 @Import({
     AchsfolgController.class, 

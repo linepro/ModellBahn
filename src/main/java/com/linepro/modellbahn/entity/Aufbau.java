@@ -25,9 +25,7 @@ import lombok.experimental.SuperBuilder;
 //@formatter:off
 @Entity(name = DBNames.AUFBAU)
 @Table(name = DBNames.AUFBAU,
-    indexes = {
-        @Index(name = DBNames.AUFBAU + "_IX1", columnList = DBNames.NAME, unique = true)
-    }, uniqueConstraints = {
+    uniqueConstraints = {
         @UniqueConstraint(name = DBNames.AUFBAU + "_UC1", columnNames = { DBNames.NAME }) 
     })
 //@formatter:on

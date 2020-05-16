@@ -10,10 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.controller.impl.FileService;
 import com.linepro.modellbahn.converter.entity.KupplungMutator;
 import com.linepro.modellbahn.converter.model.KupplungModelMutator;
 import com.linepro.modellbahn.entity.Kupplung;
+import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.KupplungModel;
 import com.linepro.modellbahn.repository.KupplungRepository;
 import com.linepro.modellbahn.service.ItemService;

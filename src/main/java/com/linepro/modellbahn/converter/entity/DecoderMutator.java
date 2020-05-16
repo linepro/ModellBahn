@@ -33,26 +33,30 @@ public class DecoderMutator implements Mutator<Decoder, DecoderModel> {
     public DecoderModel apply(Decoder source, DecoderModel destination, int depth) {
         destination.setDecoderId(source.getDecoderId());
         destination.setBezeichnung(source.getBezeichnung());
-        destination.setDecoderTyp(decoderTypMutator.convert(source.getDecoderTyp(), depth-1));
+        destination.setDecoderTyp(decoderTypMutator.convert(source.getDecoderTyp(), depth));
         destination.setStatus(source.getStatus());
         destination.setProtokoll(protokollMutator.convert(source.getProtokoll()));
         destination.setFahrstufe(source.getFahrstufe());
-        destination.setAdressen(source.getAdressen()
-                                      .stream()
-                                      .sorted()
-                                      .map(a -> adressMutator.convert(a))
-                                      .collect(Collectors.toList()));
-        destination.setCvs(source.getCvs()
-                                 .stream()
-                                 .sorted()
-                                 .map(c -> cvMutator.convert(c))
-                                 .collect(Collectors.toList()));
-        destination.setFunktionen(source.getFunktionen()
-                                        .stream()
-                                        .sorted()
-                                        .map(f -> funktionMutator.convert(f))
-                                        .collect(Collectors.toList()));
-        destination.setDeleted(source.getDeleted());
+        
+        if (depth > 0) {
+            destination.setAdressen(source.getAdressen()
+                                          .stream()
+                                          .sorted()
+                                          .map(a -> adressMutator.convert(a))
+                                          .collect(Collectors.toList()));
+            destination.setCvs(source.getCvs()
+                                     .stream()
+                                     .sorted()
+                                     .map(c -> cvMutator.convert(c))
+                                     .collect(Collectors.toList()));
+            destination.setFunktionen(source.getFunktionen()
+                                            .stream()
+                                            .sorted()
+                                            .map(f -> funktionMutator.convert(f))
+                                            .collect(Collectors.toList()));
+            destination.setDeleted(source.getDeleted());
+        }
+        
         return destination;
     }
 

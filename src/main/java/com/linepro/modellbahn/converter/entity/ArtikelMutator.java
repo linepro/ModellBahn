@@ -53,7 +53,7 @@ public class ArtikelMutator implements Mutator<Artikel, ArtikelModel> {
         destination.setStatus(source.getStatus());
         destination.setDeleted(source.getDeleted());
 
-        if (depth >= 0) {
+        if (depth > 0) {
             destination.setAnderungen(source.getAnderungen()
                                             .stream()
                                             .sorted()

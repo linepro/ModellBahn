@@ -8,10 +8,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.controller.impl.FileService;
 import com.linepro.modellbahn.converter.entity.VorbildMutator;
 import com.linepro.modellbahn.converter.model.VorbildModelMutator;
 import com.linepro.modellbahn.entity.Vorbild;
+import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.VorbildModel;
 import com.linepro.modellbahn.repository.VorbildRepository;
 import com.linepro.modellbahn.service.ItemService;

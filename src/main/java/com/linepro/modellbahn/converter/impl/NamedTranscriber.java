@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.converter.impl;
 
-import com.linepro.modellbahn.util.Named;
+import com.linepro.modellbahn.model.Named;
 
 public class NamedTranscriber<S extends Named, D extends Named> extends SoftDeleteTranscriber<S, D> {
 
@@ -9,7 +9,9 @@ public class NamedTranscriber<S extends Named, D extends Named> extends SoftDele
         destination = super.apply(source, destination);
 
         if (source != null) {
-            destination.setName(source.getName());
+            if (depth > 0) {
+                destination.setName(source.getName());
+            }
             destination.setBezeichnung(source.getBezeichnung());
         }
         

@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -53,7 +52,6 @@ import lombok.experimental.SuperBuilder;
 @Table(name = DBNames.ARTIKEL,
     indexes = { 
         @Index(name = DBNames.ARTIKEL + "_IX1", columnList = DBNames.PRODUKT_ID),
-        @Index(name = DBNames.ARTIKEL + "_IX2", columnList = DBNames.WAHRUNG_ID),
         @Index(name = DBNames.ARTIKEL + "_IX3", columnList = DBNames.STEUERUNG_ID),
         @Index(name = DBNames.ARTIKEL + "_IX4", columnList = DBNames.MOTOR_TYP_ID),
         @Index(name = DBNames.ARTIKEL + "_IX5", columnList = DBNames.LICHT_ID),
@@ -69,12 +67,11 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@Cacheable
 public class Artikel extends ItemImpl {
 
     /** The abbildung. */
     @ArtikelId
-    @Column(name = DBNames.ARTIKEL_ID, unique = true, length = 6, nullable = false, updatable = false)
+    @Column(name = DBNames.ARTIKEL_ID, length = 6, nullable = false, updatable = false)
     @Pattern(regexp = "^[A-Z0-9]+$", message = "{com.linepro.modellbahn.validator.constraints.artikelId.invalid}")
     private String artikelId;
 

@@ -36,8 +36,7 @@ import lombok.experimental.SuperBuilder;
 @Entity(name = DBNames.ZUG)
 @Table(name = DBNames.ZUG,
     indexes = {
-        @Index(name = DBNames.ZUG + "_IX1", columnList = DBNames.NAME, unique = true),
-        @Index(name = DBNames.ZUG + "_IX2", columnList = DBNames.ZUG_TYP_ID)
+        @Index(name = DBNames.ZUG + "_IX1", columnList = DBNames.ZUG_TYP_ID)
     }, uniqueConstraints = {
         @UniqueConstraint(name = DBNames.ZUG + "_UC1", columnNames = {DBNames.NAME})
     })

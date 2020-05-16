@@ -10,13 +10,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.controller.impl.FileService;
 import com.linepro.modellbahn.converter.entity.AnderungMutator;
 import com.linepro.modellbahn.converter.entity.ArtikelMutator;
 import com.linepro.modellbahn.converter.model.AnderungModelMutator;
 import com.linepro.modellbahn.converter.model.ArtikelModelMutator;
 import com.linepro.modellbahn.entity.Anderung;
 import com.linepro.modellbahn.entity.Artikel;
+import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.AnderungModel;
 import com.linepro.modellbahn.model.ArtikelModel;
 import com.linepro.modellbahn.repository.AnderungRepository;

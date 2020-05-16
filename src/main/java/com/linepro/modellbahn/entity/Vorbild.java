@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.time.LocalDate;
 
-import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -44,10 +43,9 @@ import lombok.experimental.SuperBuilder;
 @Entity(name = DBNames.VORBILD)
 @Table(name = DBNames.VORBILD,
     indexes = { 
-        @Index(name = DBNames.VORBILD + "_IX1", columnList = DBNames.GATTUNG_ID, unique = true),
-        @Index(name = DBNames.VORBILD + "_IX2", columnList = DBNames.UNTER_KATEGORIE_ID),
-        @Index(name = DBNames.VORBILD + "_IX3", columnList = DBNames.ANTRIEB_ID),
-        @Index(name = DBNames.VORBILD + "_IX4", columnList = DBNames.ACHSFOLG_ID)
+        @Index(name = DBNames.VORBILD + "_IX1", columnList = DBNames.UNTER_KATEGORIE_ID),
+        @Index(name = DBNames.VORBILD + "_IX2", columnList = DBNames.ANTRIEB_ID),
+        @Index(name = DBNames.VORBILD + "_IX3", columnList = DBNames.ACHSFOLG_ID)
     }, uniqueConstraints = {
         @UniqueConstraint(name = DBNames.VORBILD + "_UC1", columnNames = { DBNames.GATTUNG_ID })
     })
@@ -58,7 +56,6 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@Cacheable
 public class Vorbild extends ItemImpl {
 
     /** The gattung. */

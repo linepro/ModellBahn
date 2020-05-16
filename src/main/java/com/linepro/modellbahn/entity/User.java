@@ -35,9 +35,7 @@ import lombok.ToString;
 //@formatter:off
 @Entity(name = DBNames.USER)
 @Table(name = DBNames.USER,
-  indexes = { 
-      @Index(name = DBNames.USER + "_IX1", columnList = DBNames.EMAIL, unique = true)
-  }, uniqueConstraints = {
+  uniqueConstraints = {
       @UniqueConstraint(name = DBNames.USER + "_UC1", columnNames = { DBNames.EMAIL }) 
   })
 //@formatter:on

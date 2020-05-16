@@ -1,6 +1,5 @@
 package com.linepro.modellbahn.entity;
 
-import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,9 +14,9 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Range;
 
 import com.linepro.modellbahn.entity.impl.ItemImpl;
+import com.linepro.modellbahn.model.WithAdress;
 import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.util.WithAdress;
 import com.linepro.modellbahn.validation.Adress;
 
 import lombok.EqualsAndHashCode;
@@ -37,9 +36,8 @@ import lombok.experimental.SuperBuilder;
 @Entity(name = DBNames.DECODER_TYP_ADRESS)
 @Table(name = DBNames.DECODER_TYP_ADRESS,
     indexes = { 
-        @Index(name = DBNames.DECODER_TYP_ADRESS + "_IX1", columnList = DBNames.DECODER_TYP_ID +", " + DBNames.INDEX, unique = true), 
-        @Index(name = DBNames.DECODER_TYP_ADRESS + "_IX2", columnList = DBNames.DECODER_TYP_ID), 
-        @Index(name = DBNames.DECODER_TYP_ADRESS + "_IX3", columnList = DBNames.INDEX)
+        @Index(name = DBNames.DECODER_TYP_ADRESS + "_IX1", columnList = DBNames.DECODER_TYP_ID), 
+        @Index(name = DBNames.DECODER_TYP_ADRESS + "_IX2", columnList = DBNames.INDEX)
     }, uniqueConstraints = {
         @UniqueConstraint(name = DBNames.DECODER_TYP_ADRESS + "_UC1", columnNames = { DBNames.DECODER_TYP_ID, DBNames.INDEX })
     })
@@ -51,7 +49,6 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@Cacheable
 public class DecoderTypAdress extends ItemImpl implements WithAdress {
 
     /** The decoder typ. */

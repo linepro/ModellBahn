@@ -10,10 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.controller.impl.FileService;
 import com.linepro.modellbahn.converter.entity.AufbauMutator;
 import com.linepro.modellbahn.converter.model.AufbauModelMutator;
 import com.linepro.modellbahn.entity.Aufbau;
+import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.AufbauModel;
 import com.linepro.modellbahn.repository.AufbauRepository;
 import com.linepro.modellbahn.service.ItemService;

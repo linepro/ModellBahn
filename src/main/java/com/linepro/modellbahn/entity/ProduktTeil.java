@@ -1,6 +1,5 @@
 package com.linepro.modellbahn.entity;
 
-import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,9 +33,8 @@ import lombok.experimental.SuperBuilder;
 @Entity(name = DBNames.PRODUKT_TEIL)
 @Table(name = DBNames.PRODUKT_TEIL,
     indexes = { 
-        @Index(name = DBNames.PRODUKT_TEIL + "_IX1", columnList = DBNames.PRODUKT_ID + "," + DBNames.TEIL_ID, unique = true),
-        @Index(name = DBNames.PRODUKT_TEIL + "_IX2", columnList = DBNames.PRODUKT_ID),
-        @Index(name = DBNames.PRODUKT_TEIL + "_IX3", columnList = DBNames.TEIL_ID)
+        @Index(name = DBNames.PRODUKT_TEIL + "_IX1", columnList = DBNames.PRODUKT_ID),
+        @Index(name = DBNames.PRODUKT_TEIL + "_IX2", columnList = DBNames.TEIL_ID)
     }, uniqueConstraints = {
         @UniqueConstraint(name = DBNames.PRODUKT_TEIL + "_UC1", columnNames = { DBNames.PRODUKT_ID, DBNames.TEIL_ID })
     })
@@ -47,7 +45,6 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@Cacheable
 public class ProduktTeil extends ItemImpl {
     
     /** The produkt. */

@@ -55,12 +55,12 @@ public abstract class ItemServiceImpl<M extends ItemModel, E extends Item> imple
     @Transactional
     protected Optional<M> get(Lookup<E> lookup) {
         return lookup.find()
-                     .map(e -> entityMutator.convert(e));
+                     .map(e -> entityMutator.convert(e, 1));
     }
 
     @Transactional
     public M add(M model) {
-        return entityMutator.convert(repository.saveAndFlush(modelMutator.convert(model)));
+        return entityMutator.convert(repository.saveAndFlush(modelMutator.convert(model)),1);
     }
 
     @Transactional

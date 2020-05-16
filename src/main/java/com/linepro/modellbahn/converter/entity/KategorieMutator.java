@@ -24,11 +24,15 @@ public class KategorieMutator extends MutatorImpl<Kategorie, KategorieModel> {
 
     public KategorieModel apply(Kategorie source, KategorieModel destination, int depth) {
         destination = super.apply(source, destination);
-        destination.setUnterKategorien(source.getUnterKategorien()
-                                             .stream()
-                                             .sorted()
-                                             .map(u -> unterKategorieMutator.convert(u))
-                                             .collect(Collectors.toList()));
+        
+        if (depth > 0) {
+            destination.setUnterKategorien(source.getUnterKategorien()
+                                                 .stream()
+                                                 .sorted()
+                                                 .map(u -> unterKategorieMutator.convert(u))
+                                                 .collect(Collectors.toList()));
+        }
+        
         return destination;
     }
 }

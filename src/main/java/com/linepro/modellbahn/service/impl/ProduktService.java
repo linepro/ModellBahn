@@ -10,12 +10,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.controller.impl.FileService;
 import com.linepro.modellbahn.converter.entity.ProduktMutator;
 import com.linepro.modellbahn.converter.entity.ProduktTeilMutator;
 import com.linepro.modellbahn.converter.model.ProduktModelMutator;
 import com.linepro.modellbahn.entity.Produkt;
 import com.linepro.modellbahn.entity.ProduktTeil;
+import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.ProduktModel;
 import com.linepro.modellbahn.model.ProduktTeilModel;
 import com.linepro.modellbahn.repository.ProduktRepository;

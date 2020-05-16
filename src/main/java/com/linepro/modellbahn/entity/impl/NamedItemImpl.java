@@ -33,7 +33,7 @@ public class NamedItemImpl extends ItemImpl implements NamedItem {
     /**
      * The name.
      */
-    @Column(name = DBNames.NAME, unique = true, length = 50, nullable = false)
+    @Column(name = DBNames.NAME, length = 50, nullable = false)
     @Pattern(regexp = "^[A-Z0-9\\-.]+$", message = "{com.linepro.modellbahn.validator.constraints.name.invalid}")
     @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.name.notempty}")
     private String name;

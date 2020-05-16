@@ -25,9 +25,7 @@ import lombok.experimental.SuperBuilder;
 //@formatter:off
 @Entity(name = DBNames.PROTOKOLL)
 @Table(name = DBNames.PROTOKOLL,
-    indexes = { 
-        @Index(name = DBNames.PROTOKOLL + "_IX1", columnList = DBNames.NAME, unique = true)
-    }, uniqueConstraints = {
+    uniqueConstraints = {
         @UniqueConstraint(name = DBNames.PROTOKOLL + "_UC1", columnNames = { DBNames.NAME })
     })
 //@formatter:on

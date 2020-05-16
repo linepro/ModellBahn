@@ -17,7 +17,7 @@ public interface DecoderAdressRepository extends ItemRepository<DecoderAdress> {
     @Query("SELECT a " + 
            "FROM   decoderAdress a " + 
            "WHERE  a.decoder.decoderId = :" + ApiNames.DECODER_ID + " " + 
-           "AND    a.index             = :" + ApiNames.INDEX)
+           "AND    a.typ.index         = :" + ApiNames.INDEX)
     //@formatter:on
     Optional<DecoderAdress> findByIndex(@Param(ApiNames.DECODER_ID) String decoderId, @Param(ApiNames.INDEX) Integer index);
 }

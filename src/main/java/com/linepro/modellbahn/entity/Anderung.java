@@ -2,7 +2,6 @@ package com.linepro.modellbahn.entity;
 
 import java.time.LocalDate;
 
-import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -52,7 +51,6 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@Cacheable
 public class Anderung extends ItemImpl {
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Artikel.class)

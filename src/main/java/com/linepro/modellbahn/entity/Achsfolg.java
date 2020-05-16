@@ -30,9 +30,7 @@ import lombok.experimental.SuperBuilder;
 //@formatter:off
 @Entity(name = DBNames.ACHSFOLG)
 @Table(name = DBNames.ACHSFOLG,
-    indexes = { 
-        @Index(name = DBNames.ACHSFOLG + "_IX1", columnList = DBNames.NAME, unique = true)
-    }, uniqueConstraints = {
+    uniqueConstraints = {
         @UniqueConstraint(name = DBNames.ACHSFOLG + "_UC1", columnNames = { DBNames.NAME }) 
     })
 //@formatter:on

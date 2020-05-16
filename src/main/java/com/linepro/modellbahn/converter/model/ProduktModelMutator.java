@@ -82,8 +82,10 @@ public class ProduktModelMutator implements Mutator<ProduktModel, Produkt> {
     private final ItemLookup lookup;
 
     public Produkt apply(ProduktModel source, Produkt destination, int depth) {
-        destination.setHersteller(lookup.find(source.getHersteller(), herstellerRepository));
-        destination.setBestellNr(source.getBestellNr());
+        if (depth > 0) {
+            destination.setHersteller(lookup.find(source.getHersteller(), herstellerRepository));
+            destination.setBestellNr(source.getBestellNr());
+        }
         destination.setBezeichnung(source.getBezeichnung());
         destination.setUnterKategorie(lookup.find(source.getUnterKategorie(), unterKategorieRepository));
         destination.setMassstab(lookup.find(source.getMassstab(), massstabRepository));
@@ -104,9 +106,9 @@ public class ProduktModelMutator implements Mutator<ProduktModel, Produkt> {
         destination.setDecoderTyp(decoderTypLookup.find(source.getDecoderTyp()));
         destination.setMotorTyp(lookup.find(source.getMotorTyp(),motorTypRepository));
         destination.setLange(source.getLange());
-        destination.setAnleitungen(source.getAnleitungen());
-        destination.setExplosionszeichnung(source.getExplosionszeichnung());
-        destination.setAbbildung(source.getAbbildung());
+        //destination.setAnleitungen(source.getAnleitungen());
+        //destination.setExplosionszeichnung(source.getExplosionszeichnung());
+        //destination.setAbbildung(source.getAbbildung());
         return destination;
     }
 
