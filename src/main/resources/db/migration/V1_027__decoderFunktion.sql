@@ -1,0 +1,16 @@
+INSERT INTO decoder_funktion (deleted, bezeichnung, decoder_id, funktion_id, id) VALUES (FALSE, 'Funktion 0', 1376, 766, 1400);
+INSERT INTO decoder_funktion (deleted, bezeichnung, decoder_id, funktion_id, id) VALUES (FALSE, 'Funktion 1', 1376, 767, 1401);
+INSERT INTO decoder_funktion (deleted, bezeichnung, decoder_id, funktion_id, id) VALUES (FALSE, 'Funktion 2', 1376, 768, 1402);
+INSERT INTO decoder_funktion (deleted, bezeichnung, decoder_id, funktion_id, id) VALUES (FALSE, 'Funktion 3', 1376, 769, 1403);
+INSERT INTO decoder_funktion (deleted, bezeichnung, decoder_id, funktion_id, id) VALUES (FALSE, 'Funktion 4', 1376, 770, 1404);
+INSERT INTO decoder_funktion (deleted, bezeichnung, decoder_id, funktion_id, id) VALUES (FALSE, 'Funktion 5', 1376, 771, 1405);
+INSERT INTO decoder_funktion (deleted, bezeichnung, decoder_id, funktion_id, id) VALUES (FALSE, 'Funktion 6', 1376, 772, 1406);
+INSERT INTO decoder_funktion (deleted, bezeichnung, decoder_id, funktion_id, id) VALUES (FALSE, 'Funktion 7', 1376, 773, 1407);
+INSERT INTO decoder_funktion (deleted, bezeichnung, decoder_id, funktion_id, id) VALUES (FALSE, 'Funktion 8', 1376, 774, 1408);
+INSERT INTO decoder_funktion (deleted, bezeichnung, decoder_id, funktion_id, id) VALUES (FALSE, 'Funktion 9', 1376, 775, 1409);
+INSERT INTO decoder_funktion (deleted, bezeichnung, decoder_id, funktion_id, id) VALUES (FALSE, 'Funktion 10', 1376, 776, 1410);
+INSERT INTO decoder_funktion (deleted, bezeichnung, decoder_id, funktion_id, id) VALUES (FALSE, 'Funktion 11', 1376, 777, 1411);
+INSERT INTO decoder_funktion (deleted, bezeichnung, decoder_id, funktion_id, id) VALUES (FALSE, 'Funktion 12', 1376, 778, 1412);
+INSERT INTO decoder_funktion (deleted, bezeichnung, decoder_id, funktion_id, id) VALUES (FALSE, 'Funktion 13', 1376, 779, 1413);
+INSERT INTO decoder_funktion (deleted, bezeichnung, decoder_id, funktion_id, id) VALUES (FALSE, 'Funktion 14', 1376, 780, 1414);
+INSERT INTO decoder_funktion (deleted, bezeichnung, decoder_id, funktion_id, id) VALUES (FALSE, 'Funktion 15', 1376, 781, 1415);

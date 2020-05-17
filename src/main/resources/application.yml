@@ -43,7 +43,7 @@ spring:
       clean-on-validation-error: false
       encoding: UTF-8
       installed-by: flyway
-      init-sql: classpath:db/scheme/create.sql
+      init-sql: classpath:db/schema/create.sql
       locations: classpath:db/migration
       mixed: false
       repeatable-sql-migration-prefix: R
@@ -56,7 +56,7 @@ spring:
    jpa:
       database-platform: org.hibernate.dialect.H2Dialect
       hibernate:
-         ddl-auto: verify
+         ddl-auto: none
       open-in-view: false
       properties:
          hibernate:

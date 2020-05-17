@@ -1,2 +1,0 @@
-CREATE SEQUENCE IF NOT EXIST hibernate_sequence START WITH 3000;
-ALTER SEQUENCE hibernate_sequence START WITH 3000;

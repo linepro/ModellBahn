@@ -61,7 +61,7 @@ public interface DBNames {
     String BAHNVERWALTUNG_ID = "bahnverwaltung_id";
     String BAUZEIT = "bauzeit";
     String BELADUNG = "beladung";
-    String BESTELL_NR = "bestellNr";
+    String BESTELL_NR = "bestell_nr";
     String BETREIBSNUMMER = "betreibsnummer";
     String BEZEICHNUNG = "bezeichnung";
     String CV = "cv";
@@ -71,11 +71,11 @@ public interface DBNames {
     String DECODER_TYP_ID = "decoder_typ_id";
     String DELETED = "deleted";
     String DIENSTGEWICHT = "dienstgewicht";
-    String DMLAUFRADHINTEN = "dmLaufradHinten";
-    String DMLAUFRADVORN = "dmLaufradVorn";
-    String DMTREIBRAD = "dmTreibrad";
-    String DMZYLINDER = "dmZylinder";
-    String DREHGESTELLBAUART = "drehgestellBauart";
+    String DMLAUFRADHINTEN = "dm_laufrad_hinten";
+    String DMLAUFRADVORN = "dm_laufrad_vorn";
+    String DMTREIBRAD = "dm_treibrad";
+    String DMZYLINDER = "dm_zylinder";
+    String DREHGESTELLBAUART = "drehgestell_bauart";
     String EPOCH_ID = "epoch_id";
     String EXPLOSIONSZEICHNUNG = "explosionszeichnung";
     String FAHRMOTOREN = "fahrmotoren";
@@ -87,7 +87,7 @@ public interface DBNames {
     String HERSTELLER_ID = "hersteller_id";
     String I_MAX = "i_max";
     String ID = "id";
-    String INDEX = "index";
+    String INDEX = "position";
     String KAPAZITAT = "kapazitat";
     String KATEGORIE_ID = "kategorie_id";
     String KAUFDATUM = "kaufdatum";
@@ -116,10 +116,10 @@ public interface DBNames {
     String REICHWEITE = "reichweite";
     String REIHE = "reihe";
     String ROSTFLACHE = "rostflache";
-    String SITZPLATZEKL1 = "sitzplatzeKL1";
-    String SITZPLATZEKL2 = "sitzplatzeKL2";
-    String SITZPLATZEKL3 = "sitzplatzeKL3";
-    String SITZPLATZEKL4 = "sitzplatzeKL4";
+    String SITZPLATZEKL1 = "sitzplatze_kL1";
+    String SITZPLATZEKL2 = "sitzplatze_kL2";
+    String SITZPLATZEKL3 = "sitzplatze_kL3";
+    String SITZPLATZEKL4 = "sitzplatze_kL4";
     String SONDERMODEL_ID = "sondermodel_id";
     String SOUND = "sound";
     String SPAN = "span";
@@ -142,10 +142,10 @@ public interface DBNames {
     String WERKSEINSTELLUNG = "werkseinstellung";
     String WERT = "wert";
     String ZUG_ID = "zug_id";
-    String ZUG_TYP_ID = "zugTyp_id";
+    String ZUG_TYP_ID = "zug_typ_id";
     String ZYLINDER = "zylinder";
 
-    String USER = "user";
+    String USER = "person";
     String EMAIL = "email";
     String PASSWORD = "password";
     String FIRST_NAME = "first_name";

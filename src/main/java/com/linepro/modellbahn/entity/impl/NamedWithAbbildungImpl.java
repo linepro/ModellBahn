@@ -5,9 +5,9 @@ package com.linepro.modellbahn.entity.impl;
 
 import java.nio.file.Path;
 
-import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.MappedSuperclass;
 
 import com.linepro.modellbahn.model.NamedWithAbbildung;
 import com.linepro.modellbahn.persistence.DBNames;
@@ -31,6 +31,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@MappedSuperclass
 public class NamedWithAbbildungImpl extends NamedItemImpl implements NamedWithAbbildung {
 
     /** The abbildung. */
