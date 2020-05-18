@@ -29,7 +29,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * Aspect that automagically wraps:
  *
  * - @Logged
- * - @RestController
+ * - @Controller
  * - @Service
  *
  * with business logger logging.
@@ -57,7 +57,7 @@ public class LoggedAspect {
     protected static final NameAbbreviator abbreviator = NameAbbreviator.getAbbreviator("2");
 
     /**
-     * Pointcut that matches any class or interface tagged by @Logged, any @Service or @RestController.
+     * Pointcut that matches any class or interface tagged by @Logged, any @Service or @Controller.
      */
     @Pointcut(CLASS_LEVEL_POINTCUT)
     public void classLevelPointcut() {

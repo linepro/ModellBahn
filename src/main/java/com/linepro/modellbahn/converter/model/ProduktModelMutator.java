@@ -16,7 +16,7 @@ import com.linepro.modellbahn.repository.KupplungRepository;
 import com.linepro.modellbahn.repository.LichtRepository;
 import com.linepro.modellbahn.repository.MassstabRepository;
 import com.linepro.modellbahn.repository.MotorTypRepository;
-import com.linepro.modellbahn.repository.SonderModelRepository;
+import com.linepro.modellbahn.repository.SondermodellRepository;
 import com.linepro.modellbahn.repository.SpurweiteRepository;
 import com.linepro.modellbahn.repository.SteuerungRepository;
 import com.linepro.modellbahn.repository.UnterKategorieRepository;
@@ -58,7 +58,7 @@ public class ProduktModelMutator implements Mutator<ProduktModel, Produkt> {
     private final VorbildLookup vorbildLookup;
 
     @Autowired
-    private final SonderModelRepository sonderModelRepository;
+    private final SondermodellRepository sondermodellRepository;
 
     @Autowired
     private final AufbauRepository aufbauRepository;
@@ -98,7 +98,7 @@ public class ProduktModelMutator implements Mutator<ProduktModel, Produkt> {
         destination.setAchsfolg(lookup.find(source.getAchsfolg(), achsfolgRepository));
         destination.setVorbild(vorbildLookup.find(source.getVorbild()));
         destination.setAnmerkung(source.getAnmerkung());
-        destination.setSonderModel(lookup.find(source.getSonderModel(), sonderModelRepository));
+        destination.setSondermodell(lookup.find(source.getSondermodell(), sondermodellRepository));
         destination.setAufbau(lookup.find(source.getAufbau(), aufbauRepository));
         destination.setLicht(lookup.find(source.getLicht(), lichtRepository));
         destination.setKupplung(lookup.find(source.getKupplung(), kupplungRepository));

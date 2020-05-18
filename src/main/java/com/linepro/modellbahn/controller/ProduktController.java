@@ -2,6 +2,8 @@ package com.linepro.modellbahn.controller;
 
 import static org.springframework.http.ResponseEntity.of;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
@@ -11,20 +13,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.controller.impl.AbstractItemController;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.model.ProduktModel;
 import com.linepro.modellbahn.model.ProduktTeilModel;
-import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.service.impl.ProduktService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -43,7 +42,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 @Tag(name = ApiNames.PRODUKT)
 @RestController
-@RequestMapping(ApiPaths.PRODUKT)
 @ExposesResourceFor(ProduktModel.class)
 public class ProduktController extends AbstractItemController<ProduktModel> {
 
@@ -66,8 +64,8 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         return new ProduktTeilModel();
     }
     
-    @GetMapping(ApiPaths.PRODUKT_PART)
-    @JsonView(Views.Public.class)
+    @GetMapping(ApiPaths.GET_PRODUKT)
+
     @Operation(summary = "Finds an Produkt by name", description = "Finds a product", operationId = "get", tags = { "Produkt" })
         @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
@@ -77,13 +75,13 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> get(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
+    public ResponseEntity<?> get(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
         return of(service.get(herstellerStr, bestellNr));
     }
 
     @Override
-    @GetMapping(ApiPaths.SEARCH)
-    @JsonView(Views.DropDown.class)
+    @GetMapping(ApiPaths.SEARCH_PRODUKT)
+
     @Operation(summary = "Finds Produkten by example", description = "Finds products", operationId = "find", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ProduktModel.class))) }),
@@ -93,13 +91,13 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "404", description = "Not found, content = @Content"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> search(@RequestBody ProduktModel model, @RequestParam(name = ApiNames.PAGE_NUMBER, required = false) Integer pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE, required = false) Integer pageSize) {
+    public ResponseEntity<?> search(@RequestBody Optional<ProduktModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
         return super.search(model, pageNumber, pageSize);
     }
 
     @Override
-    @PostMapping(ApiPaths.ADD)
-    @JsonView(Views.Public.class)
+    @PostMapping(ApiPaths.ADD_PRODUKT)
+
     @Operation(summary = "Add a new Produkt", description = "Add a new product", operationId = "add", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
@@ -114,8 +112,8 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         return super.add(model);
     }
 
-    @PutMapping(ApiPaths.PRODUKT_PART)
-    @JsonView(Views.Public.class)
+    @PutMapping(ApiPaths.UPDATE_PRODUKT)
+
     @Operation(summary = "Updates an Produkt by name", description = "Update an Product", operationId = "update", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
@@ -126,12 +124,12 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> update(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, ProduktModel model) {
+    public ResponseEntity<?> update(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, ProduktModel model) {
         return updated(service.update(herstellerStr, bestellNr, model));
     }
 
-    @DeleteMapping(ApiPaths.PRODUKT_PART)
-    @JsonView(Views.Public.class)
+    @DeleteMapping(ApiPaths.DELETE_PRODUKT)
+
     @Operation(summary = "Deletes an Produkt by name", description = "Delete an Product", operationId = "update", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -142,12 +140,12 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> delete(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) {
+    public ResponseEntity<?> delete(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
         return deleted(service.delete(herstellerStr, bestellNr));
     }
 
-    @PostMapping(ApiPaths.PRODUKT_TEIL_ROOT)
-    @JsonView(Views.Public.class)
+    @PostMapping(ApiPaths.ADD_PRODUKT_TEIL)
+
     @Operation(summary = "Adds a component of a Produkt", description = "", operationId = "", tags = { "ProduktTeil" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktTeilModel.class)) }),
@@ -158,12 +156,12 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
-    public ResponseEntity<?> addTeil(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, ProduktTeilModel teil) {
+    public ResponseEntity<?> addTeil(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, ProduktTeilModel teil) {
         return added(service.addTeil(herstellerStr, bestellNr, teil.getTeilHersteller(), teil.getTeilBestellNr(), teil.getAnzahl()));
     }
 
-    @PutMapping(ApiPaths.PRODUKT_TEIL_PATH)
-    @JsonView(Views.Public.class)
+    @PutMapping(ApiPaths.UPDATE_PRODUKT_TEIL)
+
     @Operation(summary = "Updates a component of a Produkt", description = "", operationId = "", tags = { "ProduktTeil" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktTeilModel.class)) }),
@@ -174,12 +172,12 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
-    public ResponseEntity<?> updateTeil(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathVariable(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr, @PathVariable(ApiPaths.TEIL_BESTELL_NR_PARAM_NAME) String teilBestellNr, Integer anzahl) {
+    public ResponseEntity<?> updateTeil(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.TEIL_HERSTELLER) String teilHerstellerStr, @PathVariable(ApiNames.TEIL_BESTELL_NR) String teilBestellNr, Integer anzahl) {
         return updated(service.updateTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, anzahl));
     }
 
-    @DeleteMapping(ApiPaths.PRODUKT_TEIL_PATH)
-    @JsonView(Views.Public.class)
+    @DeleteMapping(ApiPaths.DELETE_PRODUKT_TEIL)
+
     @Operation(summary = "Removes a component of a Produkt", description = "", operationId = "", tags = { "ProduktTeil" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -190,12 +188,12 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
-    public ResponseEntity<?> deleteTeil(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathVariable(ApiPaths.TEIL_HERSTELLER_PARAM_NAME) String teilHerstellerStr, @PathVariable(ApiPaths.TEIL_BESTELL_NR_PARAM_NAME) String teilBestellNr) {
+    public ResponseEntity<?> deleteTeil(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.TEIL_HERSTELLER) String teilHerstellerStr, @PathVariable(ApiNames.TEIL_BESTELL_NR) String teilBestellNr) {
         return deleted(service.deleteTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr));
     }
 
-    @PutMapping(ApiPaths.PRODUKT_ABBILDUNG)
-    @JsonView(Views.Public.class)
+    @PutMapping(ApiPaths.ADD_PRODUKT_ABBILDUNG)
+
     @Operation(summary = "Add an Produkt picture", description = "Adds or updates the picture of a named Produkt", operationId = "update", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
@@ -206,12 +204,12 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> updateAbbildung(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr, @PathVariable("file") MultipartFile multipart) throws Exception {
+    public ResponseEntity<?> updateAbbildung(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable("file") MultipartFile multipart) throws Exception {
         return updated(service.updateAbbildung(herstellerStr, bestellNr, multipart));
     }
 
-    @DeleteMapping(ApiPaths.PRODUKT_ABBILDUNG)
-    @JsonView(Views.Public.class)
+    @DeleteMapping(ApiPaths.DELETE_PRODUKT_ABBILDUNG)
+
     @Operation(summary = "Removes a picture from an Product", description = "", operationId = "", tags = { "" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -222,12 +220,12 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
-    public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) throws Exception {
+    public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) throws Exception {
         return updated(service.deleteAbbildung(herstellerStr, bestellNr));
     }
 
-    @PutMapping(ApiPaths.PRODUKT_ANLEITUNGEN)
-    @JsonView(Views.Public.class)
+    @PostMapping(ApiPaths.ADD_PRODUKT_ANLEITUNGEN)
+
     @Operation(summary = "Adds Produkt instructions", description = "Adds or updates the instructions for a named Produkt", operationId = "update", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
@@ -238,12 +236,12 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> updateAnleitungen(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
+    public ResponseEntity<?> updateAnleitungen(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr,
             @PathVariable("file") MultipartFile multipart) throws Exception {
         return updated(service.updateAnleitungen(herstellerStr, bestellNr, multipart));
     }
 
-    @DeleteMapping(ApiPaths.PRODUKT_ANLEITUNGEN)
+    @DeleteMapping(ApiPaths.DELETE_PRODUKT_ANLEITUNGEN)
     @Operation(summary = "Removes instructions from an Product", description = "", operationId = "", tags = { "" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -254,12 +252,12 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
-    public ResponseEntity<?> deleteAnleitungen(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) throws Exception {
+    public ResponseEntity<?> deleteAnleitungen(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) throws Exception {
         return updated(service.deleteAnleitungen(herstellerStr, bestellNr));
     }
 
-    @PutMapping(ApiPaths.PRODUKT_EXPLOSIONSZEICHNUNG)
-    @JsonView(Views.Public.class)
+    @PostMapping(ApiPaths.ADD_PRODUKT_EXPLOSIONSZEICHNUNG)
+
     @Operation(summary = "Adds Produkt parts diagram", description = "Adds or updates the picture of a named Produkt", operationId = "update", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
@@ -270,13 +268,13 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> updateExplosionszeichnung(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr,
+    public ResponseEntity<?> updateExplosionszeichnung(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr,
             @PathVariable("file") MultipartFile multipart) throws Exception {
         return updated(service.updateExplosionszeichnung(herstellerStr, bestellNr, multipart));
     }
 
-    @DeleteMapping(ApiPaths.PRODUKT_EXPLOSIONSZEICHNUNG)
-    @JsonView(Views.Public.class)
+    @DeleteMapping(ApiPaths.DELETE_PRODUKT_EXPLOSIONSZEICHNUNG)
+
     @Operation(summary = "Removes a Produkt parts diagram", description = "", operationId = "", tags = { "" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -287,7 +285,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
-    public ResponseEntity<?> deleteExplosionszeichnung(@PathVariable(ApiPaths.HERSTELLER_PARAM_NAME) String herstellerStr, @PathVariable(ApiPaths.BESTELL_NR_PARAM_NAME) String bestellNr) throws Exception {
+    public ResponseEntity<?> deleteExplosionszeichnung(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) throws Exception {
         return updated(service.deleteExplosionszeichnung(herstellerStr, bestellNr));
     }
 }

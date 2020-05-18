@@ -6,12 +6,10 @@ public class NamedTranscriber<S extends Named, D extends Named> extends SoftDele
 
     @Override
     public D apply(S source, D destination, int depth) {
-        destination = super.apply(source, destination);
+        destination = super.apply(source, destination, depth);
 
         if (source != null) {
-            if (depth > 0) {
-                destination.setName(source.getName());
-            }
+            destination.setName(source.getName());
             destination.setBezeichnung(source.getBezeichnung());
         }
         

@@ -43,7 +43,7 @@ public class ProduktMutator implements Mutator<Produkt,ProduktModel> {
     private final VorbildMutator vorbildMutator;
     
     @Autowired
-    private final SonderModelMutator sonderModelMutator;
+    private final SondermodellMutator sondermodellMutator;
     
     @Autowired
     private final AufbauMutator aufbauMutator;
@@ -81,7 +81,7 @@ public class ProduktMutator implements Mutator<Produkt,ProduktModel> {
         destination.setAchsfolg(achsfolgMutator.convert(source.getAchsfolg()));
         destination.setVorbild(vorbildMutator.convert(source.getVorbild()));
         destination.setAnmerkung(source.getAnmerkung());
-        destination.setSonderModel(sonderModelMutator.convert(source.getSonderModel()));
+        destination.setSondermodell(sondermodellMutator.convert(source.getSondermodell()));
         destination.setAufbau(aufbauMutator.convert(source.getAufbau()));
         destination.setLicht(lichtMutator.convert(source.getLicht()));
         destination.setKupplung(kupplungMutator.convert(source.getKupplung()));

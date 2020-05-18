@@ -53,7 +53,7 @@ import lombok.experimental.SuperBuilder;
         @Index(name = DBNames.PRODUKT + "_IX6", columnList = DBNames.MASSSTAB_ID),
         @Index(name = DBNames.PRODUKT + "_IX7", columnList = DBNames.SPURWEITE_ID),
         @Index(name = DBNames.PRODUKT + "_IX8", columnList = DBNames.UNTER_KATEGORIE_ID),
-        @Index(name = DBNames.PRODUKT + "_IX9", columnList = DBNames.SONDERMODEL_ID),
+        @Index(name = DBNames.PRODUKT + "_IX9", columnList = DBNames.SONDERMODELL_ID),
         @Index(name = DBNames.PRODUKT + "_IX10", columnList = DBNames.AUFBAU_ID),
         @Index(name = DBNames.PRODUKT + "_IX11", columnList = DBNames.LICHT_ID),
         @Index(name = DBNames.PRODUKT + "_IX12", columnList = DBNames.KUPPLUNG_ID),
@@ -124,10 +124,10 @@ public class Produkt extends ItemImpl {
     @JoinColumn(name = DBNames.ACHSFOLG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk4"))
     private Achsfolg achsfolg;
 
-    /** The Sondermodel. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = SonderModel.class)
-    @JoinColumn(name = DBNames.SONDERMODEL_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk8"))
-    private SonderModel sonderModel;
+    /** The Sondermodell. */
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Sondermodell.class)
+    @JoinColumn(name = DBNames.SONDERMODELL_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk8"))
+    private Sondermodell sondermodell;
 
     /** The aufbau. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Aufbau.class)

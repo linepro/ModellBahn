@@ -14,10 +14,11 @@ import com.linepro.modellbahn.repository.base.ItemRepository;
 public interface DecoderAdressRepository extends ItemRepository<DecoderAdress> {
 
     //@formatter:off
-    @Query("SELECT a " + 
-           "FROM   decoderAdress a " + 
-           "WHERE  a.decoder.decoderId = :" + ApiNames.DECODER_ID + " " + 
-           "AND    a.typ.index         = :" + ApiNames.INDEX)
+    @Query(value = "SELECT a " + 
+                   "FROM   decoder_adress a " + 
+                   "WHERE  a.decoder.decoder_id = :" + ApiNames.DECODER_ID + " " + 
+                   "AND    a.typ.position       = :" + ApiNames.INDEX,
+           nativeQuery = true)
     //@formatter:on
     Optional<DecoderAdress> findByIndex(@Param(ApiNames.DECODER_ID) String decoderId, @Param(ApiNames.INDEX) Integer index);
 }

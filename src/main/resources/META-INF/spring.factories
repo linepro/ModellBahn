@@ -1,1 +1,6 @@
-org.springframework.context.ApplicationListener=com.linepro.modellbahn.configuration.ApplicationReadyListener
+org.springframework.context.ApplicationListener=com.linepro.modellbahn.configuration.ApplicationReadyListener\
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.linepro.modellbahn.security.CorsConfig
+#  com.linepro.modellbahn.security.CustomAccessTokenConverter,\
+#  com.linepro.modellbahn.security.OAuth2ResourceServerConfig

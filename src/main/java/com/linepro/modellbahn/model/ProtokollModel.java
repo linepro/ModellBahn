@@ -6,9 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.rest.json.Views;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -38,17 +36,17 @@ public class ProtokollModel extends RepresentationModel<ProtokollModel> implemen
     private static final long serialVersionUID = 1L;
 
     @JsonProperty(ApiNames.NAMEN)
-    @JsonView(Views.DropDown.class)
+
     @Schema(name = "Protocoll code", example = "MFX", required = true)
     private String name;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @JsonView(Views.DropDown.class)
+
     @Schema(name = "Protocoll description", example = "mfx")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.DELETED)
-    @JsonView(Views.Public.class)
+
     @Schema(name = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 }

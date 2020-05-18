@@ -38,7 +38,7 @@ public abstract class AbstractItemController<M extends ItemModel> {
         return added(service.add(model));
     }
 
-    protected ResponseEntity<?> search(M model, Integer pageNumber, Integer pageSize) {
+    protected ResponseEntity<?> search(Optional<M> model, Optional<Integer> pageNumber, Optional<Integer> pageSize) {
         return found(service.search(model, pageNumber, pageSize));
     }
 
@@ -62,7 +62,7 @@ public abstract class AbstractItemController<M extends ItemModel> {
         return (found ? noContent() : notFound()).build();
     }
 
-    public <I extends ItemModel> ResponseEntity<?> found(Page<M> page) {
+    public <I extends ItemModel> ResponseEntity<?> found(Page<I> page) {
         return page.hasContent() ? ok(page) : notFound().build();
     }
 }

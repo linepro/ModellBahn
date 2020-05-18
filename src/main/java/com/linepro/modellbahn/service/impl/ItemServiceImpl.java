@@ -82,12 +82,12 @@ public abstract class ItemServiceImpl<M extends ItemModel, E extends Item> imple
     @Override
     @Transactional
     @SneakyThrows
-    public Page<M> search(M model, Integer pageNumber, Integer pageSize) {
-        return repository.findAll(
-                            Example.of(modelMutator.convert(model)), 
-                            PageRequest.of(
-                                Optional.ofNullable(pageNumber).orElse(FIRST_PAGE),
-                                Optional.ofNullable(pageSize).orElse(DEFAULT_PAGE_SIZE)))
-                        .map(e -> entityMutator.convert(e));
+    public Page<M> search(Optional<M> model, Optional<Integer> pageNumber, Optional<Integer> pageSize) {
+        Example<E> example = Example.of(model.map(m -> modelMutator.convert(m)).orElse(modelMutator.get()));
+        PageRequest pageRequest = PageRequest.of(pageNumber.orElse(FIRST_PAGE), pageSize.orElse(DEFAULT_PAGE_SIZE));
+        
+        final Page<E> data = repository.findAll(example, pageRequest);
+        final Page<M> page = data.map(e -> entityMutator.convert(e));
+        return page;
     }
 }

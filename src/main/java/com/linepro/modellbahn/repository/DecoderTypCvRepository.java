@@ -16,11 +16,12 @@ import com.linepro.modellbahn.repository.base.ItemRepository;
 public interface DecoderTypCvRepository extends ItemRepository<DecoderTypCv> {
 
     //@formatter:off
-    @Query("SELECT c " +
-           "FROM   decoderTypCv c " +
-           "WHERE  c.decoderTyp.hersteller.name = :" + ApiNames.HERSTELLER + " " + 
-           "AND    c.decoderTyp.bestellNr       = :" + ApiNames.BESTELL_NR + " " +
-           "AND    c.cv                         = :" + CV)
+    @Query(value = "SELECT c " +
+                    "FROM   decoder_typ_cv c " +
+                    "WHERE  c.decoder_typ.hersteller.name = :" + ApiNames.HERSTELLER + " " + 
+                    "AND    c.decoder_typ.bestell_nr      = :" + ApiNames.BESTELL_NR + " " +
+                    "AND    c.cv                          = :" + CV, 
+           nativeQuery = true)
     //@formatter:on
     Optional<DecoderTypCv> findByCv(@Param(ApiNames.HERSTELLER) String herstellerStr, @Param(ApiNames.BESTELL_NR) String bestellNr, @Param(ApiNames.CV) Integer cv);
 }

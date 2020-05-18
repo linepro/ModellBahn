@@ -14,10 +14,11 @@ import com.linepro.modellbahn.repository.base.NamedItemRepository;
 public interface UnterKategorieRepository extends NamedItemRepository<UnterKategorie> {
 
     //@formatter:off
-    @Query("SELECT u " + 
-           "FROM   unterKategorie u " +
-           "WHERE  u.kategorie.name = :" + ApiNames.KATEGORIE + " " +
-           "AND    u.name           = :" + ApiNames.UNTER_KATEGORIE)
+    @Query(value = "SELECT u " + 
+                   "FROM   unter_kategorie u " +
+                   "WHERE  u.kategorie.name = :" + ApiNames.KATEGORIE + " " +
+                   "AND    u.name           = :" + ApiNames.UNTER_KATEGORIE,
+           nativeQuery = true)
     //@formatter:on
     Optional<UnterKategorie> findByName(@Param(ApiNames.KATEGORIE) String kategorieStr, @Param(ApiNames.UNTER_KATEGORIE) String unterKategorieStr);
 }

@@ -4,6 +4,8 @@ server:
       whitelabel:
          enabled: false
    port: 8086
+   servlet:
+      context-path: /
 #   ssl:
 #      enabled: true
 #      key-store-type: PKCS12
@@ -14,11 +16,12 @@ server:
    tomcat:
       accesslog:
          enabled: true
-security:
-   oauth2:
-      client:
-         client-id: first-client
-         client-secret: noonewilleverguess
+      
+#security:
+#   oauth2:
+#      client:
+#         client-id: first-client
+#         client-secret: noonewilleverguess
 #   require-ssl: true
 
 spring:

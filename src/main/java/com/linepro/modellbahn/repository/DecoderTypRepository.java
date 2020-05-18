@@ -14,10 +14,11 @@ import com.linepro.modellbahn.repository.base.ItemRepository;
 public interface DecoderTypRepository extends ItemRepository<DecoderTyp> {
 
     //@formatter:off
-    @Query("SELECT t " + 
-           "FROM  decoderTyp t " + 
-           "WHERE t.hersteller.name = :" + ApiNames.HERSTELLER + " " +
-           "AND   t.bestellNr       = :" + ApiNames.BESTELL_NR)
+    @Query(value = "SELECT t " + 
+                   "FROM  decoder_typ t " + 
+                   "WHERE t.hersteller.name = :" + ApiNames.HERSTELLER + " " +
+                   "AND   t.bestell_nr      = :" + ApiNames.BESTELL_NR,
+           nativeQuery = true)
     //@formatter:on
     Optional<DecoderTyp> findByBestellNr(@Param(ApiNames.HERSTELLER) String herstellerStr, @Param(ApiNames.BESTELL_NR) String bestellNr);
 }

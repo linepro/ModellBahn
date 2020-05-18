@@ -24,7 +24,7 @@ import com.linepro.modellbahn.converter.model.MassstabModelMutator;
 import com.linepro.modellbahn.converter.model.MotorTypModelMutator;
 import com.linepro.modellbahn.converter.model.ProduktModelMutator;
 import com.linepro.modellbahn.converter.model.ProtokollModelMutator;
-import com.linepro.modellbahn.converter.model.SonderModelModelMutator;
+import com.linepro.modellbahn.converter.model.SondermodellModelMutator;
 import com.linepro.modellbahn.converter.model.SpurweiteModelMutator;
 import com.linepro.modellbahn.converter.model.SteuerungModelMutator;
 import com.linepro.modellbahn.converter.model.UnterKategorieModelMutator;
@@ -54,7 +54,7 @@ import com.linepro.modellbahn.converter.model.ZugTypModelMutator;
     MotorTypModelMutator.class, 
     ProduktModelMutator.class, 
     ProtokollModelMutator.class, 
-    SonderModelModelMutator.class, 
+    SondermodellModelMutator.class, 
     SpurweiteModelMutator.class, 
     SteuerungModelMutator.class, 
     UnterKategorieModelMutator.class, 

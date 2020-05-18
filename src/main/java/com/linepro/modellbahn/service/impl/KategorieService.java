@@ -86,12 +86,11 @@ public class KategorieService extends NamedItemServiceImpl<KategorieModel, Kateg
 
     @Transactional
     @SneakyThrows
-    public Page<UnterKategorieModel> searchUnterKategorie(List<String> kategorieen, UnterKategorieModel model, Integer pageNumber, Integer pageSize) {
-        return unterKategorieRepository.findAll(
-                            Example.of(unterKategorieModelMutator.convert(model)), 
-                            PageRequest.of(
-                                Optional.ofNullable(pageNumber).orElse(FIRST_PAGE),
-                                Optional.ofNullable(pageSize).orElse(DEFAULT_PAGE_SIZE)))
-                        .map(e -> unterKategorieMutator.convert(e));
+    public Page<UnterKategorieModel> searchUnterKategorie(Optional<List<String>> kategorieen, Optional<UnterKategorieModel> model, Optional<Integer> pageNumber, Optional<Integer> pageSize) {
+        Example<UnterKategorie> example = Example.of(unterKategorieModelMutator.convert(model.orElse(unterKategorieMutator.get())));
+        PageRequest pageRequest = PageRequest.of(pageNumber.orElse(FIRST_PAGE), pageSize.orElse(DEFAULT_PAGE_SIZE));
+        
+        return unterKategorieRepository.findAll(example, pageRequest)
+                                       .map(e -> unterKategorieMutator.convert(e));
     }
 }

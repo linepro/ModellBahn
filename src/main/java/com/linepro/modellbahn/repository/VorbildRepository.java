@@ -14,9 +14,10 @@ import com.linepro.modellbahn.repository.base.ItemRepository;
 public interface VorbildRepository extends ItemRepository<Vorbild> {
 
     //@formatter:off
-    @Query("SELECT v " +
-           "FROM   vorbild v " + 
-           "WHERE  v.gattung.name = :" + ApiNames.GATTUNG)
+    @Query(value = "SELECT v " +
+                   "FROM   vorbild v " + 
+                   "WHERE  v.gattung.name = :" + ApiNames.GATTUNG,
+           nativeQuery = true)
     //@formatter:on
     Optional<Vorbild> findByGattung(@Param(ApiNames.GATTUNG) String name);
 }

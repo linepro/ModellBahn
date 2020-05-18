@@ -16,16 +16,16 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
- * SonderModel. Special category for a product. E.g. MHI, Einmaligeserien
+ * Sondermodell. Special category for a product. E.g. MHI, Einmaligeserien
  * 
  * @author $Author:$
  * @version $Id:$
  */
 //@formatter:off
-@Entity(name = DBNames.SONDERMODEL)
-@Table(name = DBNames.SONDERMODEL,
+@Entity(name = DBNames.SONDERMODELL)
+@Table(name = DBNames.SONDERMODELL,
     uniqueConstraints = {
-        @UniqueConstraint(name = DBNames.SONDERMODEL + "_UC1", columnNames = { DBNames.NAME })
+        @UniqueConstraint(name = DBNames.SONDERMODELL + "_UC1", columnNames = { DBNames.NAME })
     })
 //@formatter:on
 @SuperBuilder
@@ -35,5 +35,5 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Cacheable
-public class SonderModel extends NamedItemImpl {
+public class Sondermodell extends NamedItemImpl {
 }

@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Import;
     ProduktModelProcessor.class, 
     ProduktTeilModelProcessor.class, 
     ProtokollModelProcessor.class, 
-    SonderModelModelProcessor.class, 
+    SondermodellModelProcessor.class, 
     SpurweiteModelProcessor.class, 
     SteuerungModelProcessor.class, 
     UnterKategorieModelProcessor.class, 

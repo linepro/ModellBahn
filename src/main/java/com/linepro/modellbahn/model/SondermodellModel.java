@@ -6,9 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.rest.json.Views;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -19,7 +17,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * SonderModel.
+ * Sondermodell.
  * @author   $Author$
  * @version  $Id$
  */
@@ -29,26 +27,26 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@JsonRootName(value = ApiNames.SONDERMODEL)
+@JsonRootName(value = ApiNames.SONDERMODELL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED })
-@Schema(name = ApiNames.SONDERMODEL, description = "Special model - e.g,. MHI &c.")
-public class SonderModelModel extends RepresentationModel<SonderModelModel> implements NamedItemModel {
+@Schema(name = ApiNames.SONDERMODELL, description = "Special model - e.g,. MHI &c.")
+public class SondermodellModel extends RepresentationModel<SondermodellModel> implements NamedItemModel {
 
     private static final long serialVersionUID = 5454366267511451526L;
 
     @JsonProperty(ApiNames.NAMEN)
-    @JsonView(Views.DropDown.class)
-    @Schema(name = "SonderModel code", example = "MHI", required = true)
+
+    @Schema(name = "Sondermodell code", example = "MHI", required = true)
     private String name;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @JsonView(Views.DropDown.class)
-    @Schema(name = "SonderModel description", example = "M�rklin Handler Initiative")
+
+    @Schema(name = "Sondermodell description", example = "Märklin Handler Initiative")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.DELETED)
-    @JsonView(Views.Public.class)
+
     @Schema(name = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 }

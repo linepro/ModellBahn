@@ -14,10 +14,11 @@ import com.linepro.modellbahn.repository.base.ItemRepository;
 public interface DecoderCvRepository extends ItemRepository<DecoderCv> {
 
     //@formatter:off
-    @Query("SELECT c " + 
-           "FROM   decoderCv c " + 
-           "WHERE  c.decoder.decoderId  = :" + ApiNames.DECODER_ID + " " +
-           "AND    c.cv.cv              = :" + ApiNames.CV) 
+    @Query(value = "SELECT c " + 
+                   "FROM   decoder_cv c " + 
+                   "WHERE  c.decoder.decoder_id = :" + ApiNames.DECODER_ID + " " +
+                   "AND    c.cv.cv              = :" + ApiNames.CV,
+           nativeQuery = true) 
     //@formatter:on
     Optional<DecoderCv>findByCv(@Param(ApiNames.DECODER_ID) String decoderId, @Param(ApiNames.CV) Integer cv);
 }

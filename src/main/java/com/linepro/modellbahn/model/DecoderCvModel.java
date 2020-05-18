@@ -6,9 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.rest.json.Views;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -38,37 +36,37 @@ public class DecoderCvModel extends RepresentationModel<DecoderCvModel> implemen
     private static final long serialVersionUID = 6780491207710890606L;
 
     @JsonProperty(ApiNames.CV)
-    @JsonView(Views.Public.class)
+
     @Schema(name = "CV number", example = "08", required = true)
     private Integer cv;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @JsonView(Views.DropDown.class)
-    @Schema(name = "CV usage", example = "Ger�uschlautst�rke", required = true)
+
+    @Schema(name = "CV usage", example = "Geräuschlautstärke", required = true)
     private String bezeichnung;
 
     @JsonProperty(ApiNames.MINIMAL)
-    @JsonView(Views.Public.class)
+
     @Schema(name = "Minimum value", example = "1")
     private Integer minimal;
 
     @JsonProperty(ApiNames.MAXIMAL)
-    @JsonView(Views.Public.class)
+
     @Schema(name = "Maximum value", example = "63")
     private Integer maximal;
 
     @JsonProperty(ApiNames.WERKSEINSTELLUNG)
-    @JsonView(Views.Public.class)
+
     @Schema(name = "Default value", example = "63", required = true)
     private Integer werkseinstellung;
 
     @JsonProperty(ApiNames.WERT)
-    @JsonView(Views.DropDown.class)
+
     @Schema(name = "Assigned value", required = true)
     private Integer wert;
 
     @JsonProperty(ApiNames.DELETED)
-    @JsonView(Views.Public.class)
+
     @Schema(name = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 }

@@ -19,9 +19,10 @@ public interface ArtikelRepository extends ItemRepository<Artikel> {
      * WHERE a.artikelId = :artikelId
      */
     //@formatter:off
-    @Query("SELECT a " + 
-           "FROM   artikel a " + 
-           "WHERE  a.artikelId = :" + ApiNames.ARTIKEL_ID)
+    @Query(value = "SELECT a " + 
+                   "FROM   artikel a " + 
+                   "WHERE  a.artikel_id = :" + ApiNames.ARTIKEL_ID,
+           nativeQuery = true)
     //@formatter:on
     Optional<Artikel> findByArtikelId(@Param(ApiNames.ARTIKEL_ID) String artikelId);
 }

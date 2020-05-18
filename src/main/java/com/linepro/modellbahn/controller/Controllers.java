@@ -24,7 +24,7 @@ import com.linepro.modellbahn.security.UserController;
     MotorTypController.class, 
     ProduktController.class, 
     ProtokollController.class, 
-    SonderModelController.class, 
+    SondermodellController.class, 
     SpurweiteController.class, 
     SteuerungController.class, 
     VorbildController.class, 

@@ -14,12 +14,13 @@ import com.linepro.modellbahn.repository.base.ItemRepository;
 public interface ProduktTeilRepository extends ItemRepository<ProduktTeil> {
 
     //@formatter:off
-    @Query("SELECT t " +
-           "FROM   produktTeil t " +
-           "WHERE  t.produkt.hersteller.name = :" + ApiNames.HERSTELLER + " " + 
-           "AND    t.produkt.bestellNr       = :" + ApiNames.BESTELL_NR + " " +
-           "AND    t.teil.hersteller.name    = :" + ApiNames.TEIL_HERSTELLER + " " + 
-           "AND    t.teil.bestellNr          = :" + ApiNames.TEIL_BESTELL_NR)
+    @Query(value = "SELECT t " +
+                   "FROM   produkt_teil t " +
+                   "WHERE  t.produkt.hersteller.name = :" + ApiNames.HERSTELLER + " " + 
+                   "AND    t.produkt.bestell_nr      = :" + ApiNames.BESTELL_NR + " " +
+                   "AND    t.teil.hersteller.name    = :" + ApiNames.TEIL_HERSTELLER + " " + 
+                   "AND    t.teil.bestell_nr         = :" + ApiNames.TEIL_BESTELL_NR,
+           nativeQuery = true)
     //@formatter:on
     Optional<ProduktTeil> findByTeil(@Param(ApiNames.HERSTELLER) String herstellerStr, @Param(ApiNames.BESTELL_NR) String bestellNr, 
             @Param(ApiNames.TEIL_HERSTELLER) String teilHerstellerStr, @Param(ApiNames.TEIL_BESTELL_NR) String teilBestellNr);

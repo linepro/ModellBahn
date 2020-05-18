@@ -8,9 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.rest.json.Views;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -42,12 +40,12 @@ public class ZugModel extends RepresentationModel<ZugModel> implements NamedItem
     private static final long serialVersionUID = -3702381278455257877L;
 
     @JsonProperty(ApiNames.NAMEN)
-    @JsonView(Views.DropDown.class)
+
     @Schema(name = "Train code", example = "BAVARIA", required = true)
     private String name;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @JsonView(Views.DropDown.class)
+
     @Schema(name = "Train description", example = "TEE „Bavaria“")
     private String bezeichnung;
     @JsonProperty(ApiNames.ZUG_TYP)
@@ -56,12 +54,12 @@ public class ZugModel extends RepresentationModel<ZugModel> implements NamedItem
     private ZugTypModel zugTyp;
 
     @JsonProperty(ApiNames.CONSIST)
-    @JsonView(Views.Public.class)
+
     @Schema(implementation = ZugConsistModel.class, name = "Train composition", accessMode = AccessMode.READ_ONLY)
     private List<ZugConsistModel> consist;
 
     @JsonProperty(ApiNames.DELETED)
-    @JsonView(Views.Public.class)
+
     @Schema(name = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 }

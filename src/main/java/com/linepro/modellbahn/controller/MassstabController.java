@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
@@ -9,18 +11,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.controller.impl.NamedItemController;
 import com.linepro.modellbahn.model.MassstabModel;
-import com.linepro.modellbahn.rest.json.Views;
 import com.linepro.modellbahn.service.impl.MassstabService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,7 +38,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 @Tag(name = ApiNames.MASSSTAB)
 @RestController
-@RequestMapping(ApiPaths.MASSSTAB)
 @ExposesResourceFor(MassstabModel.class)
 public class MassstabController extends NamedItemController<MassstabModel> {
 
@@ -54,8 +52,8 @@ public class MassstabController extends NamedItemController<MassstabModel> {
     }
     
     @Override
-    @GetMapping(ApiPaths.NAME_PART)
-    @JsonView(Views.Public.class)
+    @GetMapping(ApiPaths.GET_MASSSTAB)
+
     @Operation(summary = "Finds an Massstab by name", description = "Finds a scale", operationId = "get", tags = { "Massstab" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MassstabModel.class)) }),
@@ -65,13 +63,13 @@ public class MassstabController extends NamedItemController<MassstabModel> {
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> get(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name) {
+    public ResponseEntity<?> get(@PathVariable(ApiNames.NAMEN) String name) {
         return super.get(name);
     }
 
     @Override
-    @GetMapping(ApiPaths.SEARCH)
-    @JsonView(Views.DropDown.class)
+    @GetMapping(ApiPaths.SEARCH_MASSSTAB)
+
     @Operation(summary = "Finds Massstaben by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Massstab" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = MassstabModel.class))) }),
@@ -81,13 +79,13 @@ public class MassstabController extends NamedItemController<MassstabModel> {
         @ApiResponse(responseCode = "404", description = "Not found, content = @Content"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> search(@RequestBody MassstabModel model, @RequestParam(name = ApiNames.PAGE_NUMBER, required = false) Integer pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE, required = false) Integer pageSize) {
+    public ResponseEntity<?> search(@RequestBody Optional<MassstabModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
         return super.search(model, pageNumber, pageSize);
     }
 
     @Override
-    @PostMapping(ApiPaths.ADD)
-    @JsonView(Views.Public.class)
+    @PostMapping(ApiPaths.ADD_MASSSTAB)
+
     @Operation(summary = "Add a new Massstab", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Massstab" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MassstabModel.class)) }),
@@ -103,8 +101,8 @@ public class MassstabController extends NamedItemController<MassstabModel> {
     }
 
     @Override
-    @PutMapping(ApiPaths.NAME_PART)
-    @JsonView(Views.Public.class)
+    @PutMapping(ApiPaths.UPDATE_MASSSTAB)
+
     @Operation(summary = "Updates an Massstab by name", description = "Update a scale", operationId = "update", tags = { "Massstab" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MassstabModel.class)) }),
@@ -115,13 +113,13 @@ public class MassstabController extends NamedItemController<MassstabModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> update(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name, @RequestBody MassstabModel model) {
+    public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody MassstabModel model) {
         return super.update(name, model);
     }
 
     @Override
-    @DeleteMapping(ApiPaths.NAME_PART)
-    @JsonView(Views.Public.class)
+    @DeleteMapping(ApiPaths.DELETE_MASSSTAB)
+
     @Operation(summary = "Deletes an Massstab by name", description = "Delete a scale", operationId = "update", tags = { "Massstab" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -132,7 +130,7 @@ public class MassstabController extends NamedItemController<MassstabModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> delete(@PathVariable(ApiPaths.NAME_PARAM_NAME) String name) {
+    public ResponseEntity<?> delete(@PathVariable(ApiNames.NAMEN) String name) {
         return super.delete(name);
     }
 }

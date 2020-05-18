@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Import;
     MotorTypService.class,
     ProduktService.class,
     ProtokollService.class,
-    SonderModelService.class,
+    SondermodellService.class,
     SpurweiteService.class,
     SteuerungService.class,
     UserService.class,

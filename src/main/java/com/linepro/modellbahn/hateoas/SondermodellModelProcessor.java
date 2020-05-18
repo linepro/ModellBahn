@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.hateoas.impl.ModelProcessor;
 import com.linepro.modellbahn.hateoas.impl.NamedItemLinkBuilder;
-import com.linepro.modellbahn.model.SonderModelModel;
+import com.linepro.modellbahn.model.SondermodellModel;
 
 @Component
-public class SonderModelModelProcessor extends ModelProcessor<SonderModelModel> implements RepresentationModelProcessor<SonderModelModel> {
+public class SondermodellModelProcessor extends ModelProcessor<SondermodellModel> implements RepresentationModelProcessor<SondermodellModel> {
 
     @Autowired
-    public SonderModelModelProcessor(RepositoryRestConfiguration configuration) {
-        super(new NamedItemLinkBuilder<SonderModelModel>(configuration, ApiNames.SONDERMODEL));
+    public SondermodellModelProcessor(RepositoryRestConfiguration configuration) {
+        super(new NamedItemLinkBuilder<SondermodellModel>(configuration, ApiNames.SONDERMODELL));
     }
 }

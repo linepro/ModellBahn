@@ -27,7 +27,6 @@ import com.linepro.modellbahn.swagger.SwaggerConfig;
 @EnableHypermediaSupport(type = {HypermediaType.HAL})
 @EnableJpaRepositories("com.linepro.modellbahn.repository") 
 @EntityScan( basePackages = {"com.linepro.modellbahn.entity"} )
-//@ComponentScan
 @Import({
     Configuration.class,
     Security.class,

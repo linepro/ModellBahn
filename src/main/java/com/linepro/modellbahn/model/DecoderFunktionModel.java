@@ -6,9 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.rest.json.Views;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -38,27 +36,27 @@ public class DecoderFunktionModel extends RepresentationModel<DecoderFunktionMod
     private static final long serialVersionUID = -5315298133158215960L;
 
     @JsonProperty(ApiNames.REIHE)
-    @JsonView(Views.DropDown.class)
+
     @Schema(name = "Bank number (0-1) always 0 for single panel decoders", example = "0", required = true)
     private Integer reihe;
 
     @JsonProperty(ApiNames.FUNKTION)
-    @JsonView(Views.DropDown.class)
+
     @Schema(name = "Function Key", example = "F0", required = true)
     private String funktion;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @JsonView(Views.DropDown.class)
+
     @Schema(name = "Usage", example = "Strinbeleuchtung", required = true)
     private String bezeichnung;
 
     @JsonProperty(ApiNames.PROGRAMMABLE)
-    @JsonView(Views.Public.class)
+
     @Schema(name = "True if this function can be reassigned", example = "false", required = true)
     private Boolean programmable;
 
     @JsonProperty(ApiNames.DELETED)
-    @JsonView(Views.Public.class)
+
     @Schema(name = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 }

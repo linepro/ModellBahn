@@ -14,10 +14,11 @@ import com.linepro.modellbahn.repository.base.ItemRepository;
 public interface ProduktRepository extends ItemRepository<Produkt> {
 
     //@formatter:off
-    @Query("SELECT p " + 
-           "FROM   produkt p " + 
-           "WHERE  p.hersteller.name = :" + ApiNames.HERSTELLER + " " +
-           "AND    p.bestellNr       = :" + ApiNames.BESTELL_NR)
+    @Query(value = "SELECT p " + 
+                   "FROM   produkt p " + 
+                   "WHERE  p.hersteller.name = :" + ApiNames.HERSTELLER + " " +
+                   "AND    p.bestell_nr      = :" + ApiNames.BESTELL_NR,
+           nativeQuery = true)
     //@formatter:on
     Optional<Produkt> findByBestellNr(@Param(ApiNames.HERSTELLER) String herstellerStr, @Param(ApiNames.BESTELL_NR) String bestellNr);
 }

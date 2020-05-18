@@ -31,10 +31,10 @@
 
 	<appender name="logfile" class="ch.qos.logback.classic.AsyncAppender">
 		<appender name="logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-			<file>./logs/modellbahn.json</file>
+			<file>./logs/modellbahn.jsonl</file>
 
 			<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-				<fileNamePattern>./logs/modellbahn.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+				<fileNamePattern>./logs/modellbahn.%d{yyyy-MM-dd}.%i.jsonl.gz</fileNamePattern>
 				<!-- each archived file, size max 100MB -->
 				<maxFileSize>100MB</maxFileSize>
 				<!-- total size of all archive files, if total size > 1GB, it will delete old archived file -->
@@ -76,15 +76,15 @@
 		<appender-ref ref="console"/>
         <appender-ref ref="logfile"/>
 	</logger>
-	<logger additivity="false" level="WARN" name="org.hibernate">
+	<logger additivity="false" level="INFO" name="org.hibernate">
 		<appender-ref ref="console"/>
         <appender-ref ref="logfile"/>
 	</logger>
-	<logger additivity="false" level="WARN" name="org.springframework">
+	<logger additivity="false" level="INFO" name="org.springframework">
 		<appender-ref ref="console"/>
         <appender-ref ref="logfile"/>
 	</logger>
-	<logger additivity="false" level="INFO" name="com.linepro.modellbahn">
+	<logger additivity="false" level="DEBUG" name="com.linepro.modellbahn">
 		<appender-ref ref="console"/>
 		<appender-ref ref="logfile"/>
 	</logger>

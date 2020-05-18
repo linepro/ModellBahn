@@ -14,9 +14,10 @@ import com.linepro.modellbahn.repository.base.ItemRepository;
 public interface DecoderRepository extends ItemRepository<Decoder> {
 
     //@formatter:off
-    @Query("SELECT d " +
-           "FROM   decoder d " +
-           "WHERE  d.decoderId = :" + ApiNames.DECODER_ID)
+    @Query(value = "SELECT d " +
+                   "FROM   decoder d " +
+                   "WHERE  d.decoder_id = :" + ApiNames.DECODER_ID,
+           nativeQuery = true)
     //@formatter:on
     Optional<Decoder> findByDecoderId(@Param(ApiNames.DECODER_ID) String decoderId);
 }
