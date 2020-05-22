@@ -53,7 +53,6 @@ public class GattungController extends NamedItemController<GattungModel> {
 
     @Override
     @GetMapping(ApiPaths.GET_GATTUNG)
-
     @Operation(summary = "Finds an Gattung by name", description = "Finds a vehicle code", operationId = "get", tags = { "Gattung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = GattungModel.class)) }),
@@ -69,7 +68,6 @@ public class GattungController extends NamedItemController<GattungModel> {
 
     @Override
     @GetMapping(ApiPaths.SEARCH_GATTUNG)
-
     @Operation(summary = "Finds Gattungen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Gattung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = GattungModel.class))) }),
@@ -85,7 +83,6 @@ public class GattungController extends NamedItemController<GattungModel> {
 
     @Override
     @PostMapping(ApiPaths.ADD_GATTUNG)
-
     @Operation(summary = "Add a new Gattung", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Gattung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = GattungModel.class)) }),
@@ -102,7 +99,6 @@ public class GattungController extends NamedItemController<GattungModel> {
 
     @Override
     @PutMapping(ApiPaths.UPDATE_GATTUNG)
-
     @Operation(summary = "Updates an Gattung by name", description = "Update a vehicle code", operationId = "update", tags = { "Gattung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = GattungModel.class)) }),
@@ -119,7 +115,6 @@ public class GattungController extends NamedItemController<GattungModel> {
 
     @Override
     @DeleteMapping(ApiPaths.DELETE_GATTUNG)
-
     @Operation(summary = "Deletes an Gattung by name", description = "Delete a vehicle code", operationId = "update", tags = { "Gattung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

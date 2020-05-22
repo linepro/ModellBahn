@@ -50,7 +50,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     @Autowired
     public ArtikelController(ArtikelService service) {
         super(service);
-        
+
         this.service = service;
     }
 
@@ -65,7 +65,6 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     }
     
     @GetMapping(ApiPaths.GET_ARTIKEL)
-
     @Operation(summary = "Finds an Artikel by name", description = "Finds an article", operationId = "get", tags = { "Artikel" })
         @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArtikelModel.class)) }),
@@ -81,7 +80,6 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
 
     @Override
     @GetMapping(ApiPaths.SEARCH_ARTIKEL)
-
     @Operation(summary = "Finds Artikelen by example", description = "Finds articles", operationId = "find", tags = { "Artikel" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ArtikelModel.class))) }),
@@ -97,7 +95,6 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
 
     @Override
     @PostMapping(ApiPaths.ADD_ARTIKEL)
-
     @Operation(summary = "Add a new Artikel", description = "Add a new article", operationId = "add", tags = { "Artikel" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArtikelModel.class)) }),
@@ -113,7 +110,6 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     }
 
     @PutMapping(ApiPaths.UPDATE_ARTIKEL)
-
     @Operation(summary = "Updates an Artikel by name", description = "Update an article", operationId = "update", tags = { "Artikel" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArtikelModel.class)) }),
@@ -129,7 +125,6 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     }
 
     @DeleteMapping(ApiPaths.DELETE_ARTIKEL)
-
     @Operation(summary = "Deletes an Artikel by name", description = "Delete an article", operationId = "update", tags = { "Artikel" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -145,7 +140,6 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     }
 
     @PostMapping(ApiPaths.ADD_ARTIKEL_ABBILDUNG)
-
     @Operation(summary = "Add an Artikel picture", description = "Adds or updates the picture of a named Artikel", operationId = "update", tags = { "Artikel" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArtikelModel.class)) }),
@@ -161,7 +155,6 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     }
 
     @DeleteMapping(ApiPaths.DELETE_ARTIKEL_ABBILDUNG)
-
     @Operation(summary = "Delete an Artikel picture", description = "Deletes the picture of a named Artikel", operationId = "update", tags = { "Artikel" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -177,7 +170,6 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     }
 
     @PostMapping(ApiPaths.ADD_ANDERUNG)
-
     @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AnderungModel.class)) }),
@@ -193,7 +185,6 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     }
 
     @PutMapping(ApiPaths.UPDATE_ANDERUNG)
-
     @Operation(summary = "Updates a change to an Article", description = "", operationId = "", tags = { "" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AnderungModel.class)) }),
@@ -209,7 +200,6 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     }
 
     @DeleteMapping(ApiPaths.DELETE_ANDERUNG)
-
     @Operation(summary = "Removes a change from an article", description = "", operationId = "", tags = { "" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

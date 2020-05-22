@@ -13,7 +13,6 @@ import com.linepro.modellbahn.model.NamedWithAbbildung;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.PathConverter;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,7 +28,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @MappedSuperclass
 public class NamedWithAbbildungImpl extends NamedItemImpl implements NamedWithAbbildung {

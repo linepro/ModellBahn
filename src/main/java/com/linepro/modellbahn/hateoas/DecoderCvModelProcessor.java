@@ -1,20 +1,30 @@
 package com.linepro.modellbahn.hateoas;
 
+import java.util.HashMap;
+
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.hateoas.impl.ItemLinkBuilder;
-import com.linepro.modellbahn.hateoas.impl.ModelProcessor;
+import com.linepro.modellbahn.controller.impl.ApiPaths;
+import com.linepro.modellbahn.controller.impl.ApiRels;
+import com.linepro.modellbahn.hateoas.impl.LinkTemplateImpl;
+import com.linepro.modellbahn.hateoas.impl.ModelProcessorImpl;
 import com.linepro.modellbahn.model.DecoderCvModel;
 
+@Lazy
 @Component
-public class DecoderCvModelProcessor extends ModelProcessor<DecoderCvModel> implements RepresentationModelProcessor<DecoderCvModel> {
+public class DecoderCvModelProcessor extends ModelProcessorImpl<DecoderCvModel> implements RepresentationModelProcessor<DecoderCvModel> {
 
     @Autowired
-    public DecoderCvModelProcessor(RepositoryRestConfiguration configuration) {
-        super(new ItemLinkBuilder<DecoderCvModel>(configuration, ApiNames.DECODER));
+    public DecoderCvModelProcessor() {
+        super((m) -> MapUtils.putAll(new HashMap<String,Object>(), new String[][] { 
+            { "{" + ApiNames.DECODER_ID + "}", ((DecoderCvModel) m).getDecoderId() }, 
+            { "{" + ApiNames.CV + "}", String.valueOf(((DecoderCvModel) m).getCv()) } 
+            }),
+                        new LinkTemplateImpl(ApiRels.UPDATE, ApiPaths.UPDATE_DECODER_CV));
     }
 }

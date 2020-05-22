@@ -1,29 +1,20 @@
 package com.linepro.modellbahn.hateoas;
 
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.stereotype.Component;
 
-import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.hateoas.impl.ModelProcessor;
-import com.linepro.modellbahn.hateoas.impl.NamedItemLinkBuilder;
+import com.linepro.modellbahn.controller.impl.ApiPaths;
+import com.linepro.modellbahn.hateoas.impl.LinkTemplateImpl;
+import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.KupplungModel;
 
 @Component
-public class KupplungModelProcessor extends ModelProcessor<KupplungModel> implements RepresentationModelProcessor<KupplungModel> {
+public class KupplungModelProcessor extends NamedModelProcessor<KupplungModel> implements RepresentationModelProcessor<KupplungModel> {
 
     @Autowired
-    public KupplungModelProcessor(RepositoryRestConfiguration configuration) {
-        super(new NamedItemLinkBuilder<KupplungModel>(configuration, ApiNames.KUPPLUNG) {
-
-            @Override
-            public Set<Link> getLinks(KupplungModel model) {
-                // TODO Auto-generated method stub
-                return super.getLinks(model);
-            }});
+    public KupplungModelProcessor() {
+        super(ApiPaths.ADD_KUPPLUNG, ApiPaths.GET_KUPPLUNG, ApiPaths.UPDATE_KUPPLUNG, ApiPaths.DELETE_KUPPLUNG, ApiPaths.SEARCH_KUPPLUNG,
+              new LinkTemplateImpl("add image", ApiPaths.ADD_KUPPLUNG_ABBILDUNG), new LinkTemplateImpl("remove image", ApiPaths.DELETE_KUPPLUNG_ABBILDUNG));
     }
 }

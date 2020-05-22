@@ -3,7 +3,7 @@ package com.linepro.modellbahn.service.impl;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -22,8 +22,6 @@ import com.linepro.modellbahn.model.UnterKategorieModel;
 import com.linepro.modellbahn.repository.KategorieRepository;
 import com.linepro.modellbahn.repository.UnterKategorieRepository;
 import com.linepro.modellbahn.service.ItemService;
-
-import lombok.SneakyThrows;
 
 /**
  * KategorieService. CRUD service for Kategorie and UnterKategorie
@@ -84,8 +82,7 @@ public class KategorieService extends NamedItemServiceImpl<KategorieModel, Kateg
                                        .orElse(false);
     }
 
-    @Transactional
-    @SneakyThrows
+    @Transactional(readOnly = true)
     public Page<UnterKategorieModel> searchUnterKategorie(Optional<List<String>> kategorieen, Optional<UnterKategorieModel> model, Optional<Integer> pageNumber, Optional<Integer> pageSize) {
         Example<UnterKategorie> example = Example.of(unterKategorieModelMutator.convert(model.orElse(unterKategorieMutator.get())));
         PageRequest pageRequest = PageRequest.of(pageNumber.orElse(FIRST_PAGE), pageSize.orElse(DEFAULT_PAGE_SIZE));

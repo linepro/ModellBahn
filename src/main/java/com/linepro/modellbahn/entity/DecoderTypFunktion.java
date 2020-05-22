@@ -13,12 +13,14 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Range;
 
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -44,9 +46,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class DecoderTypFunktion extends ItemImpl {
+public class DecoderTypFunktion extends ItemImpl implements Comparable<DecoderTypFunktion> {
 
     /** The decoder typ. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
@@ -72,4 +73,39 @@ public class DecoderTypFunktion extends ItemImpl {
     @Column(name = DBNames.PROGRAMMABLE, nullable = false)
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.programmable.notnull}")
     private Boolean programmable;
+
+    @Override
+    public int compareTo(DecoderTypFunktion other) {
+        return new CompareToBuilder()
+            .append(getReihe(), other.getReihe())
+            .append(getFunktion(), other.getFunktion())
+            .toComparison();
+    }
+
+    @Override
+    public int hashCode() {
+      return new HashCodeBuilder()
+          .append(getDecoderTyp().hashCode())
+          .append(getReihe())
+          .append(getFunktion())
+          .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) {
+        return true;
+      }
+
+      if (!(obj instanceof DecoderTypFunktion)) {
+        return false;
+      }
+
+      DecoderTypFunktion other = (DecoderTypFunktion) obj;
+
+      return new EqualsBuilder()
+          .append(getDecoderTyp(), other.getDecoderTyp())
+          .append(getFunktion(), other.getFunktion())
+          .isEquals();
+    }
 }

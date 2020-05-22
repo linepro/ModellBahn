@@ -1,20 +1,20 @@
 package com.linepro.modellbahn.hateoas;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.stereotype.Component;
 
-import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.hateoas.impl.ModelProcessor;
-import com.linepro.modellbahn.hateoas.impl.NamedItemLinkBuilder;
+import com.linepro.modellbahn.controller.impl.ApiPaths;
+import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.GattungModel;
 
+@Lazy
 @Component
-public class GattungModelProcessor extends ModelProcessor<GattungModel> implements RepresentationModelProcessor<GattungModel> {
+public class GattungModelProcessor extends NamedModelProcessor<GattungModel> implements RepresentationModelProcessor<GattungModel> {
 
     @Autowired
-    public GattungModelProcessor(RepositoryRestConfiguration configuration) {
-        super(new NamedItemLinkBuilder<GattungModel>(configuration, ApiNames.GATTUNG));
+    public GattungModelProcessor() {
+        super(ApiPaths.ADD_GATTUNG, ApiPaths.GET_GATTUNG, ApiPaths.UPDATE_GATTUNG, ApiPaths.DELETE_GATTUNG, ApiPaths.SEARCH_GATTUNG);
     }
 }

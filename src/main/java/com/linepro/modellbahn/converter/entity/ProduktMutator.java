@@ -1,13 +1,15 @@
 package com.linepro.modellbahn.converter.entity;
 
-import java.util.stream.Collectors;
+import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 
+import org.hibernate.collection.internal.PersistentSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.entity.Produkt;
 import com.linepro.modellbahn.model.ProduktModel;
+import com.linepro.modellbahn.util.exceptions.ResultCollector;
 
 import lombok.RequiredArgsConstructor;
 
@@ -94,14 +96,14 @@ public class ProduktMutator implements Mutator<Produkt,ProduktModel> {
         destination.setAbbildung(source.getAbbildung());
         
         if (depth >= 0) {
-            final int layer = depth-1;
-
-            destination.setTeilen(source.getTeilen()
-                                        .stream()
-                                        .sorted()
-                                        .map(t -> teilMutator.convert(t, layer))
-                                        .filter(t -> t != null)
-                                        .collect(Collectors.toList()));
+            if (source.getTeilen() instanceof PersistentSet && ((PersistentSet) source.getTeilen()).wasInitialized()) {
+                destination.setTeilen(source.getTeilen()
+                                            .stream()
+                                            .sorted()
+                                            .map(t -> attempt(() -> teilMutator.convert(t)))
+                                            .collect(new ResultCollector<>())
+                                            .orElseThrow());
+            }
         }
         
         return destination;

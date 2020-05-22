@@ -53,7 +53,6 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
     
     @Override
     @GetMapping(ApiPaths.GET_PROTOKOLL)
-
     @Operation(summary = "Finds an Protokoll by name", description = "Finds a decoder protocol", operationId = "get", tags = { "Protokoll" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProtokollModel.class)) }),
@@ -69,7 +68,6 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
 
     @Override
     @GetMapping(ApiPaths.SEARCH_PROTOKOLL)
-
     @Operation(summary = "Finds Protokollen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Protokoll" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ProtokollModel.class))) }),
@@ -85,7 +83,6 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
 
     @Override
     @PostMapping(ApiPaths.ADD_PROTOKOLL)
-
     @Operation(summary = "Add a new Protokoll", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Protokoll" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProtokollModel.class)) }),
@@ -102,7 +99,6 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
 
     @Override
     @PutMapping(ApiPaths.UPDATE_PROTOKOLL)
-
     @Operation(summary = "Updates an Protokoll by name", description = "Update a decoder protocol", operationId = "update", tags = { "Protokoll" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProtokollModel.class)) }),
@@ -119,7 +115,6 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
 
     @Override
     @DeleteMapping(ApiPaths.DELETE_PROTOKOLL)
-
     @Operation(summary = "Deletes an Protokoll by name", description = "Delete a decoder protocol", operationId = "update", tags = { "Protokoll" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

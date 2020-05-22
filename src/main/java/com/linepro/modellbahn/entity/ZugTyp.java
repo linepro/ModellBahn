@@ -8,7 +8,6 @@ import javax.persistence.UniqueConstraint;
 import com.linepro.modellbahn.entity.impl.NamedItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,7 +31,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Cacheable
 public class ZugTyp extends NamedItemImpl {

@@ -60,7 +60,6 @@ public class AufbauController extends NamedItemController<AufbauModel> {
     
     @Override
     @GetMapping(ApiPaths.GET_AUFBAU)
-
     @Operation(summary = "Finds an Aufbau by name", description = "Finds a costruction style", operationId = "get", tags = { "Aufbau" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AufbauModel.class)) }),
@@ -76,7 +75,6 @@ public class AufbauController extends NamedItemController<AufbauModel> {
 
     @Override
     @GetMapping(ApiPaths.SEARCH_AUFBAU)
-
     @Operation(summary = "Finds Aufbauen by example", description = "Finds costruction styles", operationId = "get", tags = { "Aufbau" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AufbauModel.class))) }),
@@ -92,7 +90,6 @@ public class AufbauController extends NamedItemController<AufbauModel> {
 
     @Override
     @PostMapping(ApiPaths.ADD_AUFBAU)
-
     @Operation(summary = "Adds an Aufbau", description = "Update a costruction style", operationId = "update", tags = { "Aufbau" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AufbauModel.class)) }),
@@ -109,7 +106,6 @@ public class AufbauController extends NamedItemController<AufbauModel> {
 
     @Override
     @PutMapping(ApiPaths.UPDATE_AUFBAU)
-
     @Operation(summary = "Updates an Aufbau by name", description = "Update a costruction style", operationId = "update", tags = { "Aufbau" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AufbauModel.class)) }),
@@ -126,7 +122,6 @@ public class AufbauController extends NamedItemController<AufbauModel> {
 
     @Override
     @DeleteMapping(ApiPaths.DELETE_AUFBAU)
-
     @Operation(summary = "Deletes an Aufbau by name", description = "Delete a costruction style", operationId = "update", tags = { "Aufbau" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -142,7 +137,6 @@ public class AufbauController extends NamedItemController<AufbauModel> {
     }
 
     @PostMapping(ApiPaths.ADD_AUFBAU_ABBILDUNG)
-
     @Operation(summary = "Add an Aufbau picture", description = "Adds or updates the picture of a named Aufbau", operationId = "update", tags = { "Aufbau" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AufbauModel.class)) }),
@@ -158,7 +152,6 @@ public class AufbauController extends NamedItemController<AufbauModel> {
     }
 
     @DeleteMapping(ApiPaths.DELETE_AUFBAU_ABBILDUNG)
-
     @Operation(summary = "Delete an Aufbau picture", description = "Deletes the picture of a named Aufbau", operationId = "update", tags = { "Aufbau" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AufbauModel.class)) }),

@@ -10,6 +10,7 @@ import com.linepro.modellbahn.model.DecoderCvModel;
 public class DecoderCvMutator implements Mutator<DecoderCv, DecoderCvModel> {
 
     public DecoderCvModel apply(DecoderCv source, DecoderCvModel destination, int depth) {
+        destination.setDecoderId(source.getDecoder().getDecoderId());
         destination.setCv(source.getCv().getCv());
         destination.setBezeichnung(source.getCv().getBezeichnung());
         destination.setMinimal(source.getCv().getMinimal());

@@ -10,6 +10,7 @@ import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType;
 
 import com.linepro.modellbahn.configuration.Configuration;
+import com.linepro.modellbahn.configuration.OpenApiConfiguration;
 import com.linepro.modellbahn.controller.Controllers;
 import com.linepro.modellbahn.converter.EntityConverters;
 import com.linepro.modellbahn.converter.ModelConverters;
@@ -20,7 +21,6 @@ import com.linepro.modellbahn.logging.Logging;
 import com.linepro.modellbahn.repository.lookup.Lookups;
 import com.linepro.modellbahn.security.Security;
 import com.linepro.modellbahn.service.impl.Services;
-import com.linepro.modellbahn.swagger.SwaggerConfig;
 
 @SpringBootConfiguration
 @EnableAutoConfiguration
@@ -31,7 +31,7 @@ import com.linepro.modellbahn.swagger.SwaggerConfig;
     Configuration.class,
     Security.class,
     Logging.class,
-    SwaggerConfig.class,
+    OpenApiConfiguration.class,
 
     // Controllers
     Controllers.class,

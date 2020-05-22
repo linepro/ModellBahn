@@ -19,13 +19,17 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.model.enums.DecoderStatus;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.DecoderId;
 import com.linepro.modellbahn.validation.Fahrstufe;
 
-import lombok.EqualsAndHashCode;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -52,9 +56,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class Decoder extends ItemImpl {
+public class Decoder extends ItemImpl implements Comparable<Decoder> {
 
     @DecoderId
     @Column(name=DBNames.DECODER_ID, unique=true, length=6, nullable = false, updatable = false)
@@ -88,29 +91,36 @@ public class Decoder extends ItemImpl {
 
     /** The adressen. */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.DECODER, targetEntity = DecoderAdress.class, orphanRemoval = true)
-    private Set<DecoderAdress> adressen;
+    @Builder.Default
+    private Set<DecoderAdress> adressen = new HashSet<>();
 
     /** The cvs. */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.DECODER, targetEntity = DecoderCv.class, orphanRemoval = true)
-    private Set<DecoderCv> cvs;
+    @Builder.Default
+    private Set<DecoderCv> cvs = new HashSet<>();
 
     /** The funktionen. */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.DECODER, targetEntity = DecoderFunktion.class, orphanRemoval = true)
-    private Set<DecoderFunktion> funktionen;
+    @Builder.Default
+    private Set<DecoderFunktion> funktionen = new HashSet<>();
 
     public void addAdress(DecoderAdress adress) {
+        if (adressen == null) {
+            adressen = new HashSet<>();
+        }
         adress.setDecoder(this);
-        if (adressen == null) { adressen = new HashSet<>(); };
         adressen.add(adress);
     }
-    
+
     public void removeAdress(DecoderAdress adress) {
         adressen.remove(adress);
     }
 
     public void addCv(DecoderCv cv) {
+        if (cvs == null) {
+            cvs = new HashSet<>();
+        }
         cv.setDecoder(this);
-        if (cvs == null) { cvs = new HashSet<>(); };
         cvs.add(cv);
     }
 
@@ -119,14 +129,46 @@ public class Decoder extends ItemImpl {
     }
 
     public void addFunktion(DecoderFunktion funktion) {
+        if (funktionen == null) {
+            funktionen = new HashSet<>();
+        }
         funktion.setDecoder(this);
         funktion.setDeleted(false);
-        if (funktionen == null) { funktionen = new HashSet<>(); };
         funktionen.add(funktion);
     }
-
     
     public void removeFunktion(DecoderFunktion funktion) {
         funktionen.remove(funktion);
+    }
+    
+    @Override
+    public int compareTo(Decoder other) {
+        return new CompareToBuilder()
+            .append(getDecoderId(), other.getDecoderId())
+            .toComparison();
+    }
+
+    @Override
+    public int hashCode() {
+      return new HashCodeBuilder()
+          .append(getDecoderId())
+          .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) {
+        return true;
+      }
+
+      if (!(obj instanceof Decoder)) {
+        return false;
+      }
+
+      Decoder other = (Decoder) obj;
+
+      return new EqualsBuilder()
+          .append(getDecoderId(), other.getDecoderId())
+          .isEquals();
     }
 }

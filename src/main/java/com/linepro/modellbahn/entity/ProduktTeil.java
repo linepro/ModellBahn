@@ -12,10 +12,13 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -43,9 +46,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class ProduktTeil extends ItemImpl {
+public class ProduktTeil extends ItemImpl implements Comparable<ProduktTeil> {
     
     /** The produkt. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
@@ -63,4 +65,37 @@ public class ProduktTeil extends ItemImpl {
     @Column(name = DBNames.ANZAHL, nullable = false)
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.anzahl.positive}")
     private Integer anzahl;
+
+    @Override
+    public int compareTo(ProduktTeil other) {
+        return new CompareToBuilder()
+            .append(getTeil(), other.getTeil())
+            .toComparison();
+    }
+
+    @Override
+    public int hashCode() {
+      return new HashCodeBuilder()
+          .append(getProdukt().hashCode())
+          .append(getTeil().hashCode())
+          .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) {
+        return true;
+      }
+
+      if (!(obj instanceof ProduktTeil)) {
+        return false;
+      }
+
+      ProduktTeil other = (ProduktTeil) obj;
+
+      return new EqualsBuilder()
+          .append(getProdukt(), other.getProdukt())
+          .append(getTeil(), other.getTeil())
+          .isEquals();
+    }
 }

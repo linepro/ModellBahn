@@ -12,10 +12,13 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -42,9 +45,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class ZugConsist extends ItemImpl {
+public class ZugConsist extends ItemImpl implements Comparable<ZugConsist> {
 
     /** The zug. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Zug.class)
@@ -63,4 +65,37 @@ public class ZugConsist extends ItemImpl {
     @JoinColumn(name = DBNames.ARTIKEL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ZUG_CONSIST + "_fk2"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.artikel.notnull}")
     private Artikel artikel;
+
+    @Override
+    public int compareTo(ZugConsist other) {
+        return new CompareToBuilder()
+            .append(getZug().getName(), other.getZug().getName())
+            .append(getPosition(), other.getPosition())
+            .toComparison();
+    }
+
+    @Override
+    public int hashCode() {
+      return new HashCodeBuilder()
+          .append(getPosition())
+          .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) {
+        return true;
+      }
+
+      if (!(obj instanceof ZugConsist)) {
+        return false;
+      }
+
+      ZugConsist other = (ZugConsist) obj;
+
+      return new EqualsBuilder()
+          .append(getZug(), other.getZug())
+          .append(getPosition(), other.getPosition())
+          .isEquals();
+    }
 }

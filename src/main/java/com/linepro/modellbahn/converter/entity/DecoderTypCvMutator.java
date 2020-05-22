@@ -9,6 +9,8 @@ import com.linepro.modellbahn.model.DecoderTypCvModel;
 @Component
 public class DecoderTypCvMutator implements Mutator<DecoderTypCv,DecoderTypCvModel> {
     public DecoderTypCvModel apply(DecoderTypCv source, DecoderTypCvModel destination, int depth) {
+        destination.setHersteller(source.getDecoderTyp().getHersteller().getName());
+        destination.setBestellNr(source.getDecoderTyp().getBestellNr());
         destination.setCv(source.getCv());
         destination.setBezeichnung(source.getBezeichnung());
         destination.setMinimal(source.getMinimal());

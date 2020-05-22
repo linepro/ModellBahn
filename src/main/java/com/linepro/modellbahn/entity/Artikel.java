@@ -27,6 +27,10 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.persistence.DBNames;
@@ -34,7 +38,7 @@ import com.linepro.modellbahn.persistence.util.ArtikelId;
 import com.linepro.modellbahn.persistence.util.PathConverter;
 import com.linepro.modellbahn.validation.Currency;
 
-import lombok.EqualsAndHashCode;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -65,9 +69,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class Artikel extends ItemImpl {
+public class Artikel extends ItemImpl implements Comparable<Artikel> {
 
     /** The abbildung. */
     @ArtikelId
@@ -159,20 +162,54 @@ public class Artikel extends ItemImpl {
 
     /** The anderung. */
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = DBNames.ARTIKEL, targetEntity=Anderung.class, orphanRemoval = true)
-    private Set<Anderung> anderungen;
+    @Builder.Default
+    private Set<Anderung> anderungen = new HashSet<>();
 
     public void addAnderung(Anderung anderung) {
+        if (anderungen == null) {
+            anderungen = new HashSet<>();
+        }
         anderung.setArtikel(this);
         anderung.setAnderungId(anderungen.stream()
                                          .mapToInt(a -> a.getAnderungId())
                                          .max()
                                          .orElse(1));
         anderung.setDeleted(false);
-        if (anderungen == null) { anderungen = new HashSet<>(); }
         anderungen.add(anderung);
     }
     
     public void removeAnderung(Anderung anderung) {
         anderungen.remove(anderung);
+    }
+
+    @Override
+    public int compareTo(Artikel other) {
+        return new CompareToBuilder()
+            .append(getArtikelId(), other.getArtikelId())
+            .toComparison();
+    }
+
+    @Override
+    public int hashCode() {
+      return new HashCodeBuilder()
+          .append(getArtikelId())
+          .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) {
+        return true;
+      }
+
+      if (!(obj instanceof Artikel)) {
+        return false;
+      }
+
+      Artikel other = (Artikel) obj;
+
+      return new EqualsBuilder()
+          .append(getArtikelId(), other.getArtikelId())
+          .isEquals();
     }
 }

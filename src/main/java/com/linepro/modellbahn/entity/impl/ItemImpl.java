@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.entity.impl;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,7 +12,6 @@ import javax.validation.constraints.NotNull;
 import com.linepro.modellbahn.entity.Item;
 import com.linepro.modellbahn.persistence.DBNames;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,7 +28,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
 @ToString
 @MappedSuperclass
 public class ItemImpl implements Item {
@@ -43,4 +43,26 @@ public class ItemImpl implements Item {
     @Column(name=DBNames.DELETED, length=5, nullable = false)
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.deleted.notnull}")
 	private Boolean deleted;
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        ItemImpl other = (ItemImpl) obj;
+
+        return Objects.equals(id, other.id);
+    }
 }

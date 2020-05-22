@@ -10,6 +10,8 @@ import com.linepro.modellbahn.model.DecoderTypFunktionModel;
 public class DecoderTypFunktionMutator implements Mutator<DecoderTypFunktion,DecoderTypFunktionModel> {
 
     public DecoderTypFunktionModel apply(DecoderTypFunktion source, DecoderTypFunktionModel destination, int depth) {
+        destination.setHersteller(source.getDecoderTyp().getHersteller().getName());
+        destination.setBestellNr(source.getDecoderTyp().getBestellNr());
         destination.setReihe(source.getReihe());
         destination.setFunktion(source.getFunktion());
         destination.setBezeichnung(source.getBezeichnung());

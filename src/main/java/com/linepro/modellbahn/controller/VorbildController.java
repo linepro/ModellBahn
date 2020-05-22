@@ -60,7 +60,6 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
     }
 
     @GetMapping(ApiPaths.GET_VORBILD)
-
     @Operation(summary = "Finds an Vorbild by name", description = "Finds a prototype", operationId = "get", tags = { "Vorbild" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VorbildModel.class)) }),
@@ -76,7 +75,6 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
 
     @Override
     @GetMapping(ApiPaths.SEARCH_VORBILD)
-
     @Operation(summary = "Finds Vorbilder by example", description = "Finds prototypes", operationId = "find", tags = { "Vorbild" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ZugTypModel.class))) }),
@@ -92,7 +90,6 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
 
     @Override
     @PostMapping(ApiPaths.GET_VORBILD)
-
     @Operation(summary = "Add a new Vorbild", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Vorbild" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VorbildModel.class)) }),
@@ -108,7 +105,6 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
     }
 
     @PutMapping(ApiPaths.UPDATE_VORBILD)
-
     @Operation(summary = "Updates an Vorbild by name", description = "Update a prototyp", operationId = "update", tags = { "Vorbild" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VorbildModel.class)) }),
@@ -124,7 +120,6 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
     }
 
     @DeleteMapping(ApiPaths.DELETE_VORBILD)
-
     @Operation(summary = "Deletes an Vorbild by name", description = "Delete a prototyp", operationId = "update", tags = { "Vorbild" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -140,7 +135,6 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
     }
 
     @PostMapping(ApiPaths.ADD_VORBILD_ABBILDUNG)
-
     @Operation(summary = "Updates an Vorbild by name", description = "Update a prototype", operationId = "update", tags = { "Vorbild" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VorbildModel.class)) }),
@@ -156,7 +150,6 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
     }
 
     @DeleteMapping(ApiPaths.DELETE_VORBILD_ABBILDUNG)
-
     @Operation(summary = "Delete an Vorbild picture", description = "Deletes the picture of a named Vorbild", operationId = "update", tags = { "Vorbild" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VorbildModel.class)) }),

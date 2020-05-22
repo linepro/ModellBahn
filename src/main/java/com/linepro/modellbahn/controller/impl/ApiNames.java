@@ -122,21 +122,9 @@ public interface ApiNames {
     String ZUG_TYP = "zugTyp";
     String ZYLINDER = "zylinder";
 
+    String ENUMS = "enums";
+
     // Navigation names
     String PAGE_NUMBER = "pageNumber";
     String PAGE_SIZE = "pageSize";
-
-    String API = "api";
-    String HOME = "home";
-    String WADL = "wadl";
-
-    String PARENT = "parent";
-    String SELF = "self";
-    String ADD = "add";
-    String UPDATE = "update";
-    String DELETE = "delete";
-
-    String PREVIOUS = "previous";
-    String NEXT = "next";
-    String ENUMS = "enums";
 }

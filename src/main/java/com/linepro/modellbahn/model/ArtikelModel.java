@@ -5,11 +5,17 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -38,114 +44,127 @@ import lombok.ToString;
 @Setter
 @ToString
 @JsonRootName(value = ApiNames.ARTIKEL)
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown=true)
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.ARTIKEL_ID, ApiNames.BEZEICHNUNG, ApiNames.PRODUKT, ApiNames.KAUFDATUM,
         ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.STUCK, ApiNames.STEUERUNG, ApiNames.MOTOR_TYP, ApiNames.LICHT,
         ApiNames.KUPPLUNG, ApiNames.DECODER, ApiNames.ANMERKUNG, ApiNames.BELADUNG, ApiNames.ABBILDUNG, ApiNames.STATUS,
         ApiNames.DELETED})
 @Schema(name = ApiNames.ARTIKEL, description = "An article - may differ from product because of modificiations")
-public class ArtikelModel extends RepresentationModel<ArtikelModel> implements ItemModel {
+public class ArtikelModel extends RepresentationModel<ArtikelModel> implements ItemModel, Comparable<ArtikelModel> {
 
     private static final long serialVersionUID = 3146760791932382500L;
 
     @JsonProperty(ApiNames.ARTIKEL_ID)
-
     @Schema(name = "Artikel id", example = "00001", required = true)
     private String artikelId;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-
     @Schema(name = "Artikel description", example = "BR 89.0 Dampftenderlokomotive")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.HERSTELLER)
-
     @Schema(name = "Manufacturer", example = "Marklin", required = true)
     private HerstellerModel hersteller;
 
     @JsonProperty(ApiNames.BESTELL_NR)
-
     @Schema(name = "Product id", example = "3000", required = true)
     private String bestellNr;
 
     @JsonProperty(ApiNames.KAUFDATUM)
-
     @JsonFormat(shape = Shape.STRING, pattern = Formats.ISO8601_DATE)
     @Schema(implementation = LocalDate.class, name = "Purchase date", example = "1967-08-10")
     private LocalDate kaufdatum;
 
     @JsonProperty(ApiNames.WAHRUNG)
-
     @Schema(name = "Purchase currency, ISO 4217 code", example = "EUR")
     private String wahrung;
 
     @JsonProperty(ApiNames.PREIS)
-
     @Schema(name = "Purchase price", example = "115.95")
     private BigDecimal preis;
 
     @JsonProperty(ApiNames.STUCK)
-
     @Schema(name = "Purchase Quantity", example = "1", required = true)
     private Integer stuck;
 
     @JsonProperty(ApiNames.VERBLEIBENDE)
-
     @Schema(name = "Remaining Quantity", example = "1", required = true)
     private Integer verbleibende;
 
     @JsonProperty(ApiNames.STEUERUNG)
-
     @Schema(implementation = SteuerungModel.class, name = "Control method", example = "Digital")
     private SteuerungModel steuerung;
 
     @JsonProperty(ApiNames.MOTOR_TYP)
-
     @Schema(implementation = MotorTypModel.class, name = "Motor type", example = "5*")
     private MotorTypModel motorTyp;
 
     @JsonProperty(ApiNames.LICHT)
-
     @Schema(implementation = LichtModel.class, name = "Light Configuration", example = "")
     private LichtModel licht;
 
     @JsonProperty(ApiNames.KUPPLUNG)
-
     @Schema(implementation = KupplungModel.class, name = "Coupling configuration", example = "")
     private KupplungModel kupplung;
 
     @JsonProperty(ApiNames.DECODER)
-
     @Schema(implementation = DecoderModel.class, name = "Decoder", example = "")
     private DecoderModel decoder;
 
     @JsonProperty(ApiNames.ANMERKUNG)
-
     @Schema(name = "Remarks", example = "5* Motor and decoder")
     private String anmerkung;
 
     @JsonProperty(ApiNames.BELADUNG)
-
     @Schema(name = "Wagon load", example = "holz")
     private String beladung;
 
     @JsonProperty(ApiNames.STATUS)
-
     @Schema(name = "Status", example = "GEKAUFT", required = true)
     private Status status;
 
     @JsonProperty(ApiNames.ANDERUNGEN)
-
     @Schema(implementation = AnderungModel.class, name = "Modifications", accessMode = AccessMode.READ_ONLY)
     private List<AnderungModel> anderungen;
 
     @JsonProperty(ApiNames.ABBILDUNG)
-
     @Schema(implementation = String.class, name = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
     private Path abbildung;
 
     @JsonProperty(ApiNames.DELETED)
-
     @Schema(name = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
+
+    @Override
+    public int compareTo(ArtikelModel other) {
+        return new CompareToBuilder()
+            .append(artikelId, other.artikelId)
+            .toComparison();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+            .append(artikelId)
+            .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof ArtikelModel)) {
+            return false; 
+        }
+
+        ArtikelModel other = (ArtikelModel) obj;
+        
+        return new EqualsBuilder()
+                .append(artikelId, other.artikelId)
+                .isEquals();
+    }
 }

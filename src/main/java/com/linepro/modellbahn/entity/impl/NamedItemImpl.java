@@ -6,10 +6,13 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import com.linepro.modellbahn.entity.NamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,7 +20,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
- * AbstractNamedItem. Base class for items with a name (business key) and a description.
+ * NamedItem. Base class for items with a name (business key) and a description.
  * @author $Author$
  * @version $Id$
  */
@@ -25,10 +28,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @MappedSuperclass
-public class NamedItemImpl extends ItemImpl implements NamedItem {
+public class NamedItemImpl extends ItemImpl implements NamedItem, Comparable<NamedItem> {
 
     /**
      * The name.
@@ -44,4 +46,35 @@ public class NamedItemImpl extends ItemImpl implements NamedItem {
     @Column(name = DBNames.BEZEICHNUNG, length = 100)
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notnull}")
     private String bezeichnung;
+
+    @Override
+    public int compareTo(NamedItem other) {
+        return new CompareToBuilder()
+            .append(getName(), ((NamedItem) other).getName())
+            .toComparison();
+    }
+
+    @Override
+    public int hashCode() {
+      return new HashCodeBuilder()
+          .append(getName())
+          .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) {
+        return true;
+      }
+
+      if (!(obj instanceof NamedItem)) {
+        return false;
+      }
+
+      NamedItem other = (NamedItem) obj;
+
+      return new EqualsBuilder()
+          .append(getName(), other.getName())
+          .isEquals();
+    }
 }

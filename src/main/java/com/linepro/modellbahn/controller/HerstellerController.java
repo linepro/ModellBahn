@@ -53,7 +53,6 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
     
     @Override
     @GetMapping(ApiPaths.GET_HERSTELLER)
-
     @Operation(summary = "Finds an Hersteller by name", description = "Finds a manufacturer", operationId = "get", tags = { "Hersteller" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = HerstellerModel.class)) }),
@@ -69,7 +68,6 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
 
     @Override
     @GetMapping(ApiPaths.SEARCH_HERSTELLER)
-
     @Operation(summary = "Finds Herstelleren by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Hersteller" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = HerstellerModel.class))) }),
@@ -85,7 +83,6 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
 
     @Override
     @PostMapping(ApiPaths.ADD_HERSTELLER)
-
     @Operation(summary = "Add a new Hersteller", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Hersteller" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = HerstellerModel.class)) }),
@@ -102,7 +99,6 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
 
     @Override
     @PutMapping(ApiPaths.UPDATE_HERSTELLER)
-
     @Operation(summary = "Updates an Hersteller by name", description = "Update a manufacturer", operationId = "update", tags = { "Hersteller" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = HerstellerModel.class)) }),
@@ -119,7 +115,6 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
 
     @Override
     @DeleteMapping(ApiPaths.DELETE_HERSTELLER)
-
     @Operation(summary = "Deletes an Hersteller by name", description = "Delete a manufacturer", operationId = "update", tags = { "Hersteller" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

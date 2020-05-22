@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 import com.linepro.modellbahn.entity.impl.NamedItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 
-import lombok.EqualsAndHashCode;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -45,7 +45,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Cacheable
 public class Zug extends NamedItemImpl {
@@ -58,17 +57,20 @@ public class Zug extends NamedItemImpl {
 
     /** The consist. */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.ZUG, targetEntity = ZugConsist.class, orphanRemoval = true)
-    private Set<ZugConsist> consist;
+    @Builder.Default
+    private Set<ZugConsist> consist = new HashSet<>();
     
     public void addConsist(ZugConsist fahrzeug) {
-        // Add at end semantics
+        if (consist == null) { 
+            consist = new HashSet<>();
+        }
+
         fahrzeug.setZug(this);
         fahrzeug.setPosition(getConsist().stream()
                                          .mapToInt(c -> c.getPosition())
                                          .max()
                                          .orElse(1));
         fahrzeug.setDeleted(false);
-        if (consist == null) { consist = new HashSet<>(); }
         consist.add(fahrzeug);
     }
 

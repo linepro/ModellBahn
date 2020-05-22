@@ -18,11 +18,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.model.enums.AnderungsTyp;
 import com.linepro.modellbahn.persistence.DBNames;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -49,9 +52,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class Anderung extends ItemImpl {
+public class Anderung extends ItemImpl implements Comparable<Anderung> {
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Artikel.class)
     @JoinColumn(name = DBNames.ARTIKEL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ANDERUNG + "_fk1"))
@@ -81,4 +83,37 @@ public class Anderung extends ItemImpl {
 
     @Column(name = DBNames.ANMERKUNG)
     private String anmerkung;
+
+    @Override
+    public int compareTo(Anderung other) {
+        return new CompareToBuilder()
+            .append(getAnderungId(), other.getAnderungId())
+            .toComparison();
+    }
+
+    @Override
+    public int hashCode() {
+      return new HashCodeBuilder()
+          .append(getArtikel().hashCode())
+          .append(getAnderungId())
+          .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) {
+        return true;
+      }
+
+      if (!(obj instanceof Anderung)) {
+        return false;
+      }
+
+      Anderung other = (Anderung) obj;
+
+      return new EqualsBuilder()
+          .append(getArtikel(), other.getArtikel())
+          .append(getAnderungId(), other.getAnderungId())
+          .isEquals();
+    }
 }

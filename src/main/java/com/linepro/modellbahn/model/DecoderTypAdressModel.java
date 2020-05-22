@@ -1,11 +1,17 @@
 package com.linepro.modellbahn.model;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.model.enums.AdressTyp;
 
@@ -29,20 +35,28 @@ import lombok.ToString;
 @Setter
 @ToString
 @JsonRootName(value = ApiNames.ADRESS)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.INDEX,  ApiNames.ADRESS_TYP,  ApiNames.SPAN,  ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED})
 @Schema(name = ApiNames.ADRESS, description = "Decoder type address - template for Decoder.")
-public class DecoderTypAdressModel extends RepresentationModel<DecoderTypAdressModel> implements ItemModel {
+public class DecoderTypAdressModel extends RepresentationModel<DecoderTypAdressModel> implements ItemModel, Comparable<DecoderTypAdressModel> {
 
     private static final long serialVersionUID = 1826497356359114726L;
 
-    @JsonProperty(ApiNames.INDEX)
+    @JsonProperty(ApiNames.HERSTELLER)
+    @Schema(implementation = HerstellerModel.class, name = "Manufacturer", required = true)
+    private String hersteller;
 
+    @JsonProperty(ApiNames.BESTELL_NR)
+    @Schema(name = "Product numer", example = "62499", required = true)
+    private String bestellNr;
+
+    @JsonProperty(ApiNames.INDEX)
     @Schema(name = "0 based address index (always 0 for single address decoders)", example = "0", required = true)
     private Integer index;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-
     @Schema(name = "Description", example = "First Motorola Address")
     private String bezeichnung;
 
@@ -51,17 +65,51 @@ public class DecoderTypAdressModel extends RepresentationModel<DecoderTypAdressM
     private Integer span;
 
     @JsonProperty(ApiNames.ADRESS_TYP)
-
     @Schema(name = "Address type", required = true)
     private AdressTyp adressTyp;
 
     @JsonProperty(ApiNames.WERKSEINSTELLUNG)
-
     @Schema(name = "Default digital address", example = "80", required = true)
     private Integer werkeinstellung;
 
     @JsonProperty(ApiNames.DELETED)
-
     @Schema(name = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
+
+    @Override
+    public int compareTo(DecoderTypAdressModel other) {
+        return new CompareToBuilder()
+            .append(hersteller, other.hersteller)
+            .append(bestellNr, other.bestellNr)
+            .append(index, other.index)
+            .toComparison();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+            .append(hersteller)
+            .append(bestellNr)
+            .append(index)
+            .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof DecoderTypAdressModel)) {
+            return false; 
+        }
+
+        DecoderTypAdressModel other = (DecoderTypAdressModel) obj;
+        
+        return new EqualsBuilder()
+                .append(hersteller, other.hersteller)
+                .append(bestellNr, other.bestellNr)
+                .append(index, other.index)
+                .isEquals();
+    }
 }

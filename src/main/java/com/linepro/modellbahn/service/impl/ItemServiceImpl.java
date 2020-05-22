@@ -4,11 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.converter.Mutator;
@@ -17,8 +16,6 @@ import com.linepro.modellbahn.model.ItemModel;
 import com.linepro.modellbahn.repository.base.ItemRepository;
 import com.linepro.modellbahn.repository.lookup.Lookup;
 import com.linepro.modellbahn.service.ItemService;
-
-import lombok.SneakyThrows;
 
 /**
  * AbstractService.
@@ -52,7 +49,7 @@ public abstract class ItemServiceImpl<M extends ItemModel, E extends Item> imple
         this.entityMutator = entityMutator;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     protected Optional<M> get(Lookup<E> lookup) {
         return lookup.find()
                      .map(e -> entityMutator.convert(e, 1));
@@ -80,8 +77,7 @@ public abstract class ItemServiceImpl<M extends ItemModel, E extends Item> imple
     }
 
     @Override
-    @Transactional
-    @SneakyThrows
+    @Transactional(readOnly = true)
     public Page<M> search(Optional<M> model, Optional<Integer> pageNumber, Optional<Integer> pageSize) {
         Example<E> example = Example.of(model.map(m -> modelMutator.convert(m)).orElse(modelMutator.get()));
         PageRequest pageRequest = PageRequest.of(pageNumber.orElse(FIRST_PAGE), pageSize.orElse(DEFAULT_PAGE_SIZE));

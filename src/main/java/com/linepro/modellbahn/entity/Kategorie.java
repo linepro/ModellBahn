@@ -7,6 +7,10 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -14,7 +18,7 @@ import javax.persistence.UniqueConstraint;
 import com.linepro.modellbahn.entity.impl.NamedItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 
-import lombok.EqualsAndHashCode;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,23 +37,36 @@ import lombok.experimental.SuperBuilder;
     uniqueConstraints = {
         @UniqueConstraint(name = DBNames.KATEGORIE + "_UC1", columnNames = { DBNames.NAME })
     })
+@NamedEntityGraphs({
+    @NamedEntityGraph(name="withChildren", includeAllAttributes = true, subgraphs = {
+         @NamedSubgraph(name = "unterkategorien", attributeNodes = {
+             @NamedAttributeNode(DBNames.ID),
+             @NamedAttributeNode(DBNames.KATEGORIE_ID),
+             @NamedAttributeNode(DBNames.NAME),
+             @NamedAttributeNode(DBNames.BEZEICHNUNG),
+             @NamedAttributeNode(DBNames.DELETED)
+         })
+    })
+})
 //@formatter:on
 @SuperBuilder
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Cacheable
 public class Kategorie extends NamedItemImpl {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.KATEGORIE, targetEntity = UnterKategorie.class, orphanRemoval = true)
-    private Set<UnterKategorie> unterKategorien;
+    @Builder.Default
+    private Set<UnterKategorie> unterKategorien = new HashSet<>();
 
     public void addUnterKategorie(UnterKategorie unterKategorie) {
+        if (unterKategorien == null) {
+            unterKategorien = new HashSet<>();
+        }
         unterKategorie.setKategorie(this);
         unterKategorie.setDeleted(false);
-        if (unterKategorien == null) { unterKategorien = new HashSet<>(); }
         unterKategorien.add(unterKategorie);
     }
 
@@ -57,5 +74,4 @@ public class Kategorie extends NamedItemImpl {
     public void removeUnterKategorie(UnterKategorie unterKategorie) {
         unterKategorien.remove(unterKategorie);
     }
-
 }

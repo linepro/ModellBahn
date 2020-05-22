@@ -75,7 +75,6 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
     }
 
     @GetMapping(ApiPaths.GET_DECODER)
-
     @Operation(summary = "Finds an DecoderTyp by name", description = "Finds a train", operationId = "get", tags = { "DecoderTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderModel.class)) }),
@@ -91,7 +90,6 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
 
     @Override
     @GetMapping(ApiPaths.SEARCH_DECODER)
-
     @Operation(summary = "Finds Achsfolgen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Achsfolg" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = DecoderModel.class))) }),
@@ -106,7 +104,6 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
     }
 
     @PostMapping(ApiPaths.ADD_DECODER)
-
     @Operation(summary = "Adds an DecoderTyp", description = "Update a train", operationId = "update", tags = { "DecoderTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderModel.class)) }),
@@ -123,7 +120,6 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
     }
 
     @PutMapping(ApiPaths.UPDATE_DECODER)
-
     @Operation(summary = "Updates an DecoderTyp by name", description = "Update a train", operationId = "update", tags = { "DecoderTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderModel.class)) }),
@@ -139,7 +135,6 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
     }
 
     @DeleteMapping(ApiPaths.DELETE_DECODER)
-
     @Operation(summary = "Deletes an DecoderTyp by name", description = "Delete a train", operationId = "update", tags = { "DecoderTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -155,7 +150,6 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
     }
 
     @PutMapping(ApiPaths.UPDATE_DECODER_ADRESS)
-
     @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "UnterKategorie" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderAdressModel.class)) }),
@@ -172,7 +166,6 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
     }
 
     @PutMapping(ApiPaths.UPDATE_DECODER_CV)
-
     @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "UnterKategorie" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderCvModel.class)) }),
@@ -189,7 +182,6 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
     }
 
     @PutMapping(ApiPaths.UPDATE_DECODER_FUNKTION)
-
     @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "UnterKategorie" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderFunktionModel.class)) }),

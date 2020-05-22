@@ -78,7 +78,6 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     }
 
     @GetMapping(ApiPaths.GET_DECODER_TYP)
-
     @Operation(summary = "Finds an DecoderTyp by name", description = "Finds a train", operationId = "get", tags = { "DecoderTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypModel.class)) }),
@@ -94,7 +93,6 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
 
     @Override
     @GetMapping(ApiPaths.SEARCH_DECODER_TYP)
-
     @Operation(summary = "Finds DecoderTypen by example", description = "Finds train configurations", operationId = "find", tags = { "Achsfolg" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = DecoderTypModel.class))) }),
@@ -109,7 +107,6 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     }
 
     @PostMapping(ApiPaths.ADD_DECODER_TYP)
-
     @Operation(summary = "Adds an DecoderTyp", description = "Update a train", operationId = "update", tags = { "DecoderTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypModel.class)) }),
@@ -125,7 +122,6 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     }
 
     @PutMapping(ApiPaths.UPDATE_DECODER_TYP)
-
     @Operation(summary = "Updates an DecoderTyp by name", description = "Update a train", operationId = "update", tags = { "DecoderTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypModel.class)) }),
@@ -141,7 +137,6 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     }
 
     @DeleteMapping(ApiPaths.DELETE_DECODER_TYP)
-
     @Operation(summary = "Deletes an DecoderTyp by name", description = "Delete a train", operationId = "update", tags = { "DecoderTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -157,7 +152,6 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     }
 
     @PostMapping(ApiPaths.ADD_DECODER_TYP_ADRESS)
-
     @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "DecoderTypAdress" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypAdressModel.class)) }),
@@ -208,7 +202,6 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     }
 
     @PostMapping(ApiPaths.ADD_DECODER_TYP_CV)
-
     @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "DecoderTypCv" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypCvModel.class)) }),
@@ -261,7 +254,6 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     }
 
     @PostMapping(ApiPaths.ADD_DECODER_TYP_FUNKTION)
-
     @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "DecoderTypFunktion" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypFunktionModel.class)) }),

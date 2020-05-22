@@ -1,29 +1,20 @@
 package com.linepro.modellbahn.hateoas;
 
-import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
-import org.springframework.hateoas.Link;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.stereotype.Component;
 
-import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.hateoas.impl.ModelProcessor;
-import com.linepro.modellbahn.hateoas.impl.NamedItemLinkBuilder;
+import com.linepro.modellbahn.controller.impl.ApiPaths;
+import com.linepro.modellbahn.hateoas.impl.LinkTemplateImpl;
+import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.LichtModel;
 
+@Lazy
 @Component
-public class LichtModelProcessor extends ModelProcessor<LichtModel> implements RepresentationModelProcessor<LichtModel> {
+public class LichtModelProcessor extends NamedModelProcessor<LichtModel> implements RepresentationModelProcessor<LichtModel> {
 
-    @Autowired
-    public LichtModelProcessor(RepositoryRestConfiguration configuration) {
-        super(new NamedItemLinkBuilder<LichtModel>(configuration, ApiNames.LICHT) {
-
-            @Override
-            public Set<Link> getLinks(LichtModel model) {
-                // TODO Auto-generated method stub
-                return super.getLinks(model);
-            }});
+    public LichtModelProcessor() {
+        super(ApiPaths.ADD_LICHT, ApiPaths.GET_LICHT, ApiPaths.UPDATE_LICHT, ApiPaths.DELETE_LICHT, ApiPaths.SEARCH_LICHT,
+              new LinkTemplateImpl("add image", ApiPaths.ADD_LICHT_ABBILDUNG), new LinkTemplateImpl("remove image", ApiPaths.DELETE_LICHT_ABBILDUNG));
     }
 }

@@ -14,7 +14,6 @@ import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.URLConverter;
 import com.linepro.modellbahn.validation.Country;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,7 +37,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Cacheable
 public class Hersteller extends NamedItemImpl {

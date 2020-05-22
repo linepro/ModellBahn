@@ -65,7 +65,6 @@ public class KategorieController extends NamedItemController<KategorieModel> {
 
     @Override
     @GetMapping(ApiPaths.GET_KATEGORIE)
-
     @Operation(summary = "Finds an Kategorie by name", description = "Finds a category", operationId = "get", tags = { "Kategorie" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KategorieModel.class)) }),
@@ -81,7 +80,6 @@ public class KategorieController extends NamedItemController<KategorieModel> {
 
     @Override
     @GetMapping(ApiPaths.SEARCH_KATEGORIE)
-
     @Operation(summary = "Finds Kategorieen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Kategorie" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = KategorieModel.class))) }),
@@ -97,7 +95,6 @@ public class KategorieController extends NamedItemController<KategorieModel> {
 
     @Override
     @PostMapping(ApiPaths.ADD_KATEGORIE)
-
     @Operation(summary = "Add a new Kategorie", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Kategorie" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KategorieModel.class)) }),
@@ -114,7 +111,6 @@ public class KategorieController extends NamedItemController<KategorieModel> {
 
     @Override
     @PutMapping(ApiPaths.UPDATE_KATEGORIE)
-
     @Operation(summary = "Updates an Kategorie by name", description = "Update a category", operationId = "update", tags = { "Kategorie" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KategorieModel.class)) }),
@@ -131,7 +127,6 @@ public class KategorieController extends NamedItemController<KategorieModel> {
 
     @Override
     @DeleteMapping(ApiPaths.DELETE_KATEGORIE)
-
     @Operation(summary = "Deletes an Kategorie by name", description = "Delete a category", operationId = "update", tags = { "Kategorie" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -147,7 +142,6 @@ public class KategorieController extends NamedItemController<KategorieModel> {
     }
 
     @GetMapping(ApiPaths.SEARCH_UNTER_KATEGORIE)
-
     @Operation(summary = "Finds Kategorieen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "UnterKategorie" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = UnterKategorieModel.class))) }),
@@ -164,7 +158,6 @@ public class KategorieController extends NamedItemController<KategorieModel> {
     }
 
     @PostMapping(ApiPaths.ADD_UNTER_KATEGORIE)
-
     @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "UnterKategorie" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UnterKategorieModel.class)) }),
@@ -180,7 +173,6 @@ public class KategorieController extends NamedItemController<KategorieModel> {
     }
 
     @PutMapping(ApiPaths.UPDATE_UNTER_KATEGORIE)
-
     @Operation(summary = "Updates a change to an Article", description = "", operationId = "", tags = { "UnterKategorie" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UnterKategorieModel.class)) }),
@@ -197,7 +189,6 @@ public class KategorieController extends NamedItemController<KategorieModel> {
     }
 
     @DeleteMapping(ApiPaths.DELETE_UNTER_KATEGORIE)
-
     @Operation(summary = "Removes a change from an article", description = "", operationId = "", tags = { "UnterKategorie" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
 import com.linepro.modellbahn.entity.impl.NamedItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -43,13 +42,12 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Cacheable
 public class UnterKategorie extends NamedItemImpl {
 
     /** The kategorie. */
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Kategorie.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kategorie.class)
     @JoinColumn(name = DBNames.KATEGORIE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.UNTER_KATEGORIE + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.kategorie.notnull}")
     private Kategorie kategorie;

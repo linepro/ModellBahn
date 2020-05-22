@@ -65,7 +65,6 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
     
     @GetMapping(ApiPaths.GET_PRODUKT)
-
     @Operation(summary = "Finds an Produkt by name", description = "Finds a product", operationId = "get", tags = { "Produkt" })
         @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
@@ -81,7 +80,6 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
 
     @Override
     @GetMapping(ApiPaths.SEARCH_PRODUKT)
-
     @Operation(summary = "Finds Produkten by example", description = "Finds products", operationId = "find", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ProduktModel.class))) }),
@@ -97,7 +95,6 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
 
     @Override
     @PostMapping(ApiPaths.ADD_PRODUKT)
-
     @Operation(summary = "Add a new Produkt", description = "Add a new product", operationId = "add", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
@@ -113,7 +110,6 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @PutMapping(ApiPaths.UPDATE_PRODUKT)
-
     @Operation(summary = "Updates an Produkt by name", description = "Update an Product", operationId = "update", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
@@ -129,7 +125,6 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @DeleteMapping(ApiPaths.DELETE_PRODUKT)
-
     @Operation(summary = "Deletes an Produkt by name", description = "Delete an Product", operationId = "update", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -145,7 +140,6 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @PostMapping(ApiPaths.ADD_PRODUKT_TEIL)
-
     @Operation(summary = "Adds a component of a Produkt", description = "", operationId = "", tags = { "ProduktTeil" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktTeilModel.class)) }),
@@ -161,7 +155,6 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @PutMapping(ApiPaths.UPDATE_PRODUKT_TEIL)
-
     @Operation(summary = "Updates a component of a Produkt", description = "", operationId = "", tags = { "ProduktTeil" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktTeilModel.class)) }),
@@ -177,7 +170,6 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @DeleteMapping(ApiPaths.DELETE_PRODUKT_TEIL)
-
     @Operation(summary = "Removes a component of a Produkt", description = "", operationId = "", tags = { "ProduktTeil" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -193,7 +185,6 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @PutMapping(ApiPaths.ADD_PRODUKT_ABBILDUNG)
-
     @Operation(summary = "Add an Produkt picture", description = "Adds or updates the picture of a named Produkt", operationId = "update", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
@@ -209,7 +200,6 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @DeleteMapping(ApiPaths.DELETE_PRODUKT_ABBILDUNG)
-
     @Operation(summary = "Removes a picture from an Product", description = "", operationId = "", tags = { "" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -225,7 +215,6 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @PostMapping(ApiPaths.ADD_PRODUKT_ANLEITUNGEN)
-
     @Operation(summary = "Adds Produkt instructions", description = "Adds or updates the instructions for a named Produkt", operationId = "update", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
@@ -257,7 +246,6 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @PostMapping(ApiPaths.ADD_PRODUKT_EXPLOSIONSZEICHNUNG)
-
     @Operation(summary = "Adds Produkt parts diagram", description = "Adds or updates the picture of a named Produkt", operationId = "update", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
@@ -274,7 +262,6 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @DeleteMapping(ApiPaths.DELETE_PRODUKT_EXPLOSIONSZEICHNUNG)
-
     @Operation(summary = "Removes a Produkt parts diagram", description = "", operationId = "", tags = { "" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

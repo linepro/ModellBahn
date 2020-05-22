@@ -53,7 +53,6 @@ public class AntriebController extends NamedItemController<AntriebModel> {
     
     @Override
     @GetMapping(ApiPaths.GET_ANTRIEB)
-
     @Operation(summary = "Finds an Antrieb by name", description = "Finds an drive method", operationId = "get", tags = { "Antrieb" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AntriebModel.class)) }),
@@ -69,7 +68,6 @@ public class AntriebController extends NamedItemController<AntriebModel> {
 
     @Override
     @GetMapping(ApiPaths.SEARCH_ANTRIEB)
-
     @Operation(summary = "Finds Antrieben by example", description = "Finds drive methods", operationId = "find", tags = { "Antrieb" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AntriebModel.class))) }),
@@ -85,7 +83,6 @@ public class AntriebController extends NamedItemController<AntriebModel> {
 
     @Override
     @PostMapping(ApiPaths.ADD_ANTRIEB)
-
     @Operation(summary = "Add a new Antrieb", description = "Add a new drive method", operationId = "add", tags = { "Antrieb" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AntriebModel.class)) }),
@@ -102,7 +99,6 @@ public class AntriebController extends NamedItemController<AntriebModel> {
 
     @Override
     @PutMapping(ApiPaths.UPDATE_ANTRIEB)
-
     @Operation(summary = "Updates an Antrieb by name", description = "Update a drive method", operationId = "update", tags = { "Antrieb" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AntriebModel.class)) }),
@@ -119,7 +115,6 @@ public class AntriebController extends NamedItemController<AntriebModel> {
 
     @Override
     @DeleteMapping(ApiPaths.DELETE_ANTRIEB)
-
     @Operation(summary = "Deletes an Antrieb by name", description = "Delete a drive method", operationId = "update", tags = { "Antrieb" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

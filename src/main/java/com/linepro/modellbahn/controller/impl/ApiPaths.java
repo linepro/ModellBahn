@@ -100,9 +100,10 @@ public interface ApiPaths {
     String DELETE_KATEGORIE       = API_ROOT + ApiNames.KATEGORIE + "/{" + ApiNames.NAMEN + "}";
     String UPDATE_KATEGORIE       = API_ROOT + ApiNames.KATEGORIE + "/{" + ApiNames.NAMEN + "}";
     String ADD_UNTER_KATEGORIE    = API_ROOT + ApiNames.KATEGORIE + "/{" + ApiNames.NAMEN + "}/" + ApiNames.UNTER_KATEGORIEN;
+    String GET_UNTER_KATEGORIE    = API_ROOT + ApiNames.KATEGORIE + "/{" + ApiNames.KATEGORIE + "}/" + ApiNames.UNTER_KATEGORIEN + "/{" + ApiNames.UNTER_KATEGORIE + "}";
     String SEARCH_UNTER_KATEGORIE = API_ROOT + ApiNames.KATEGORIE + "/" + ApiNames.UNTER_KATEGORIEN;
-    String DELETE_UNTER_KATEGORIE = API_ROOT + ApiNames.KATEGORIE + "/{" + ApiNames.NAMEN + "}/" + ApiNames.UNTER_KATEGORIEN + "/{" + ApiNames.UNTER_KATEGORIE + "}";
-    String UPDATE_UNTER_KATEGORIE = API_ROOT + ApiNames.KATEGORIE + "/{" + ApiNames.NAMEN + "}/" + ApiNames.UNTER_KATEGORIEN + "/{" + ApiNames.UNTER_KATEGORIE + "}";
+    String DELETE_UNTER_KATEGORIE = API_ROOT + ApiNames.KATEGORIE + "/{" + ApiNames.KATEGORIE + "}/" + ApiNames.UNTER_KATEGORIEN + "/{" + ApiNames.UNTER_KATEGORIE + "}";
+    String UPDATE_UNTER_KATEGORIE = API_ROOT + ApiNames.KATEGORIE + "/{" + ApiNames.KATEGORIE + "}/" + ApiNames.UNTER_KATEGORIEN + "/{" + ApiNames.UNTER_KATEGORIE + "}";
 
     String ADD_KUPPLUNG              = API_ROOT + ApiNames.KUPPLUNG;
     String GET_KUPPLUNG              = API_ROOT + ApiNames.KUPPLUNG + "/{" + ApiNames.NAMEN + "}";
@@ -144,8 +145,8 @@ public interface ApiPaths {
     String ADD_PRODUKT_EXPLOSIONSZEICHNUNG    = API_ROOT + ApiNames.PRODUKT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.EXPLOSIONSZEICHNUNG;
     String DELETE_PRODUKT_EXPLOSIONSZEICHNUNG = API_ROOT + ApiNames.PRODUKT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.EXPLOSIONSZEICHNUNG;
     String ADD_PRODUKT_TEIL                   = API_ROOT + ApiNames.PRODUKT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.TEILEN;
-    String UPDATE_PRODUKT_TEIL                = API_ROOT + ApiNames.PRODUKT + "/{" + ApiNames.HERSTELLER + "}/" + ApiNames.TEILEN + "/{" + ApiNames.TEIL_HERSTELLER + "}/{" + ApiNames.TEIL_BESTELL_NR + "}";
-    String DELETE_PRODUKT_TEIL                = API_ROOT + ApiNames.PRODUKT + "/{" + ApiNames.HERSTELLER + "}/" + ApiNames.TEILEN + "/{" + ApiNames.TEIL_HERSTELLER + "}/{" + ApiNames.TEIL_BESTELL_NR + "}";
+    String UPDATE_PRODUKT_TEIL                = API_ROOT + ApiNames.PRODUKT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.TEILEN + "/{" + ApiNames.TEIL_HERSTELLER + "}/{" + ApiNames.TEIL_BESTELL_NR + "}";
+    String DELETE_PRODUKT_TEIL                = API_ROOT + ApiNames.PRODUKT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.TEILEN + "/{" + ApiNames.TEIL_HERSTELLER + "}/{" + ApiNames.TEIL_BESTELL_NR + "}";
 
     String ADD_PROTOKOLL    = API_ROOT + ApiNames.PROTOKOLL;
     String GET_PROTOKOLL    = API_ROOT + ApiNames.PROTOKOLL + "/{" + ApiNames.NAMEN + "}";
@@ -197,5 +198,4 @@ public interface ApiPaths {
     /* Multipart field names */
     String MULTIPART_FILE_DETAIL = "FileData";
     String MULTIPART_FILE_DATA = "FileData";
-
 }

@@ -1,20 +1,20 @@
 package com.linepro.modellbahn.hateoas;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.stereotype.Component;
 
-import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.hateoas.impl.ModelProcessor;
-import com.linepro.modellbahn.hateoas.impl.NamedItemLinkBuilder;
+import com.linepro.modellbahn.controller.impl.ApiPaths;
+import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.SondermodellModel;
 
+@Lazy
 @Component
-public class SondermodellModelProcessor extends ModelProcessor<SondermodellModel> implements RepresentationModelProcessor<SondermodellModel> {
+public class SondermodellModelProcessor extends NamedModelProcessor<SondermodellModel> implements RepresentationModelProcessor<SondermodellModel> {
 
     @Autowired
-    public SondermodellModelProcessor(RepositoryRestConfiguration configuration) {
-        super(new NamedItemLinkBuilder<SondermodellModel>(configuration, ApiNames.SONDERMODELL));
+    public SondermodellModelProcessor() {
+        super(ApiPaths.ADD_SONDERMODELL, ApiPaths.GET_SONDERMODELL, ApiPaths.UPDATE_SONDERMODELL, ApiPaths.DELETE_SONDERMODELL, ApiPaths.SEARCH_SONDERMODELL);
     }
 }

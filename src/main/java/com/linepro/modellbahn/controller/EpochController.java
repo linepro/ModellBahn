@@ -83,7 +83,6 @@ public class EpochController extends NamedItemController<EpochModel> {
 
     @Override
     @PostMapping(ApiPaths.ADD_EPOCH)
-
     @Operation(summary = "Add a new Epoch", description = "Add a new Epoch", operationId = "add", tags = { "Epoch" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = EpochModel.class)) }),

@@ -1,20 +1,19 @@
 package com.linepro.modellbahn.hateoas.impl;
 
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.RepresentationModelAssembler;
+import org.springframework.hateoas.server.RepresentationModelProcessor;
 
-import com.linepro.modellbahn.hateoas.LinkBuilder;
-
-public abstract class ModelProcessor<M extends RepresentationModel<M>> {
-
-    private final LinkBuilder<M> linkBuilder;
-
-    public ModelProcessor(LinkBuilder<M> linkBuilder) {
-        this.linkBuilder = linkBuilder;
+public interface ModelProcessor<M extends RepresentationModel<M>> extends  RepresentationModelProcessor<M>, RepresentationModelAssembler<M, M> {
+    @SuppressWarnings("unchecked")
+    default M process(Object model) {
+        return process((M) model);
     }
 
-    public M process(M model) {
-        model.add(linkBuilder.getLinks(model));
+    M process(M model);
 
-        return model;
+    @Override
+    default M toModel(M model) {
+        return process(model);
     }
 }

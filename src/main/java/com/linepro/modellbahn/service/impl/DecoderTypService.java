@@ -2,7 +2,7 @@ package com.linepro.modellbahn.service.impl;
 
 import java.util.Optional;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -84,7 +84,7 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTy
         return super.delete(() -> repository.findByBestellNr(herstellerStr, bestellNr));
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Optional<DecoderTypAdressModel> getAdress(String herstellerStr, String bestellNr, Integer index) {
         return adressRepository.findByIndex(herstellerStr, bestellNr, index)
                                .map(a -> adressMutator.convert(a));
@@ -117,7 +117,7 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTy
                               .orElse(false);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Optional<DecoderTypCvModel> getCV(String herstellerStr, String bestellNr, Integer cv) {
         return cvRepository.findByCv(herstellerStr, bestellNr, cv)
                            .map(c -> cvMutator.convert(c));
@@ -150,7 +150,7 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTy
                         .orElse(false);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Optional<DecoderTypFunktionModel> getFunktion(String herstellerStr, String bestellNr, Integer reihe, String funktion) {
         return funktionRepository.findByFunktion(herstellerStr, bestellNr, reihe, funktion)
                                  .map(f -> funktionMutator.convert(f));

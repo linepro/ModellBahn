@@ -6,14 +6,11 @@ import com.linepro.modellbahn.controller.impl.ApiNames;
 public interface DescribedEnum {
 
     @JsonProperty(ApiNames.NAMEN)
-
     String getName();
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-
     String getBezeichnung();
 
     @JsonProperty(ApiNames.TOOLTIP)
-
     String getTooltip();
 }

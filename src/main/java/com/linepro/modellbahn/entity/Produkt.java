@@ -24,11 +24,15 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.PathConverter;
 
-import lombok.EqualsAndHashCode;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -69,9 +73,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class Produkt extends ItemImpl {
+public class Produkt extends ItemImpl implements Comparable<Produkt> {
 
     /** The hersteller. */
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Hersteller.class)
@@ -199,17 +202,54 @@ public class Produkt extends ItemImpl {
 
     /** The teilen. */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.PRODUKT, targetEntity = ProduktTeil.class, orphanRemoval = true)
-    private Set<ProduktTeil> teilen;
+    @Builder.Default
+    private Set<ProduktTeil> teilen = new HashSet<>();
     
     public void addTeil(ProduktTeil teil) {
+        if (teilen == null) { 
+            teilen = new HashSet<>(); 
+        }
         teil.setProdukt(this);
         teil.setDeleted(false);
-        if (teilen == null) { teilen = new HashSet<>(); }
         teilen.add(teil);
     }
 
     
     public void removeTeil(ProduktTeil teil) {
         teilen.remove(teil);
+    }
+
+    @Override
+    public int compareTo(Produkt other) {
+        return new CompareToBuilder()
+            .append(getHersteller().getName(), other.getHersteller().getName())
+            .append(getBestellNr(), other.getBestellNr())
+            .toComparison();
+    }
+
+    @Override
+    public int hashCode() {
+      return new HashCodeBuilder()
+          .append(getHersteller().hashCode())
+          .append(getBestellNr())
+          .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) {
+        return true;
+      }
+
+      if (!(obj instanceof Produkt)) {
+        return false;
+      }
+
+      Produkt other = (Produkt) obj;
+
+      return new EqualsBuilder()
+          .append(getHersteller(), other.getHersteller())
+          .append(getBestellNr(), other.getBestellNr())
+          .isEquals();
     }
 }

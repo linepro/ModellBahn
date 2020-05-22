@@ -1,13 +1,15 @@
 package com.linepro.modellbahn.converter.entity;
 
-import java.util.stream.Collectors;
+import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 
+import org.hibernate.collection.internal.PersistentSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.entity.Zug;
 import com.linepro.modellbahn.model.ZugModel;
+import com.linepro.modellbahn.util.exceptions.ResultCollector;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,12 +28,15 @@ public class ZugMutator implements Mutator<Zug,ZugModel> {
         destination.setBezeichnung(source.getBezeichnung());
         destination.setZugTyp(zugTypMutator.convert(source.getZugTyp()));
         
-        if (depth > 0) {
-            destination.setConsist(source.getConsist()
-                                         .stream()
-                                         .sorted()
-                                         .map(c -> consistMutator.convert(c))
-                                         .collect(Collectors.toList()));
+        if (depth >= 0) {
+            if (source.getConsist() instanceof PersistentSet && ((PersistentSet) source.getConsist()).wasInitialized()) {
+                destination.setConsist(source.getConsist()
+                                             .stream()
+                                             .sorted()
+                                             .map(c -> attempt(() -> consistMutator.convert(c)))
+                                             .collect(new ResultCollector<>())
+                                             .orElseThrow());
+            }
         }
         return destination;
     }

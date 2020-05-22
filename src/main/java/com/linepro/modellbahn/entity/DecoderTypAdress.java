@@ -11,6 +11,9 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Range;
 
 import com.linepro.modellbahn.entity.impl.ItemImpl;
@@ -19,7 +22,6 @@ import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.validation.Adress;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -47,9 +49,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class DecoderTypAdress extends ItemImpl implements WithAdress {
+public class DecoderTypAdress extends ItemImpl implements WithAdress, Comparable<DecoderTypAdress> {
 
     /** The decoder typ. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
@@ -81,4 +82,37 @@ public class DecoderTypAdress extends ItemImpl implements WithAdress {
     /** The adress. */
     @Column(name = DBNames.WERKSEINSTELLUNG)
     private Integer adress;
+
+    @Override
+    public int compareTo(DecoderTypAdress other) {
+        return new CompareToBuilder()
+            .append(getAdress(), other.getAdress())
+            .toComparison();
+    }
+
+    @Override
+    public int hashCode() {
+      return new HashCodeBuilder()
+          .append(getDecoderTyp().hashCode())
+          .append(getAdress())
+          .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) {
+        return true;
+      }
+
+      if (!(obj instanceof DecoderTypAdress)) {
+        return false;
+      }
+
+      DecoderTypAdress other = (DecoderTypAdress) obj;
+
+      return new EqualsBuilder()
+          .append(getDecoderTyp(), other.getDecoderTyp())
+          .append(getAdress(), other.getAdress())
+          .isEquals();
+    }
 }

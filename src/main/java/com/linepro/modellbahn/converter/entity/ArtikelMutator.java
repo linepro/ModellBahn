@@ -1,13 +1,15 @@
 package com.linepro.modellbahn.converter.entity;
 
-import java.util.stream.Collectors;
+import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 
+import org.hibernate.collection.internal.PersistentSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.entity.Artikel;
 import com.linepro.modellbahn.model.ArtikelModel;
+import com.linepro.modellbahn.util.exceptions.ResultCollector;
 
 import lombok.RequiredArgsConstructor;
 
@@ -53,12 +55,15 @@ public class ArtikelMutator implements Mutator<Artikel, ArtikelModel> {
         destination.setStatus(source.getStatus());
         destination.setDeleted(source.getDeleted());
 
-        if (depth > 0) {
-            destination.setAnderungen(source.getAnderungen()
-                                            .stream()
-                                            .sorted()
-                                            .map(a -> anderungMutator.convert(a))
-                                            .collect(Collectors.toList()));
+        if (depth >= 0) {
+            if (source.getAnderungen() instanceof PersistentSet && ((PersistentSet) source.getAnderungen()).wasInitialized()) {
+               destination.setAnderungen(source.getAnderungen()
+                                                .stream()
+                                                .sorted()
+                                                .map(a -> attempt(() -> anderungMutator.convert(a)))
+                                                .collect(new ResultCollector<>())
+                                                .orElseThrow());
+            }
         }
         
         return destination;

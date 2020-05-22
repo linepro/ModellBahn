@@ -10,6 +10,7 @@ import com.linepro.modellbahn.model.DecoderFunktionModel;
 public class DecoderFunktionMutator implements Mutator<DecoderFunktion,DecoderFunktionModel> {
 
     public DecoderFunktionModel apply(DecoderFunktion source, DecoderFunktionModel destination, int depth) {
+        destination.setDecoderId(source.getDecoder().getDecoderId());
         destination.setReihe(source.getFunktion().getReihe());
         destination.setFunktion(source.getFunktion().getFunktion());
         destination.setBezeichnung(source.getBezeichnung());

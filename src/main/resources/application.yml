@@ -60,7 +60,7 @@ spring:
       database-platform: org.hibernate.dialect.H2Dialect
       hibernate:
          ddl-auto: none
-      open-in-view: false
+      open-in-view: true
       properties:
          hibernate:
             format_sql: true

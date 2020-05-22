@@ -26,7 +26,7 @@ public class DecoderTypModelMutator implements Mutator<DecoderTypModel, DecoderT
     private final ItemLookup lookup;
 
     public DecoderTyp apply(DecoderTypModel source, DecoderTyp destination, int depth) {
-        if (depth > 0) {
+        if (depth >= 0) {
             destination.setHersteller(lookup.find(source.getHersteller(), herstellerRepository));
             destination.setBestellNr(source.getBestellNr());
         }

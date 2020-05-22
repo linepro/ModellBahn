@@ -53,7 +53,6 @@ public class SpurweiteController extends NamedItemController<SpurweiteModel> {
     
     @Override
     @GetMapping(ApiPaths.GET_SPURWEITE)
-
     @Operation(summary = "Finds an Spurweite by name", description = "Finds a track guage", operationId = "get", tags = { "Spurweite" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SpurweiteModel.class)) }),
@@ -69,7 +68,6 @@ public class SpurweiteController extends NamedItemController<SpurweiteModel> {
 
     @Override
     @GetMapping(ApiPaths.SEARCH_SPURWEITE)
-
     @Operation(summary = "Finds Spurweiteen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Spurweite" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = SpurweiteModel.class))) }),
@@ -85,7 +83,6 @@ public class SpurweiteController extends NamedItemController<SpurweiteModel> {
 
     @Override
     @PostMapping(ApiPaths.ADD_SPURWEITE)
-
     @Operation(summary = "Add a new Spurweite", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Spurweite" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SpurweiteModel.class)) }),
@@ -102,7 +99,6 @@ public class SpurweiteController extends NamedItemController<SpurweiteModel> {
 
     @Override
     @PutMapping(ApiPaths.UPDATE_SPURWEITE)
-
     @Operation(summary = "Updates an Spurweite by name", description = "Update a track guage", operationId = "update", tags = { "Spurweite" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SpurweiteModel.class)) }),
@@ -119,7 +115,6 @@ public class SpurweiteController extends NamedItemController<SpurweiteModel> {
 
     @Override
     @DeleteMapping(ApiPaths.DELETE_SPURWEITE)
-
     @Operation(summary = "Deletes an Spurweite by name", description = "Delete a track guage", operationId = "update", tags = { "Spurweite" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

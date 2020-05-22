@@ -53,7 +53,6 @@ public class MassstabController extends NamedItemController<MassstabModel> {
     
     @Override
     @GetMapping(ApiPaths.GET_MASSSTAB)
-
     @Operation(summary = "Finds an Massstab by name", description = "Finds a scale", operationId = "get", tags = { "Massstab" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MassstabModel.class)) }),
@@ -69,7 +68,6 @@ public class MassstabController extends NamedItemController<MassstabModel> {
 
     @Override
     @GetMapping(ApiPaths.SEARCH_MASSSTAB)
-
     @Operation(summary = "Finds Massstaben by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Massstab" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = MassstabModel.class))) }),
@@ -85,7 +83,6 @@ public class MassstabController extends NamedItemController<MassstabModel> {
 
     @Override
     @PostMapping(ApiPaths.ADD_MASSSTAB)
-
     @Operation(summary = "Add a new Massstab", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Massstab" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MassstabModel.class)) }),
@@ -102,7 +99,6 @@ public class MassstabController extends NamedItemController<MassstabModel> {
 
     @Override
     @PutMapping(ApiPaths.UPDATE_MASSSTAB)
-
     @Operation(summary = "Updates an Massstab by name", description = "Update a scale", operationId = "update", tags = { "Massstab" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MassstabModel.class)) }),
@@ -119,7 +115,6 @@ public class MassstabController extends NamedItemController<MassstabModel> {
 
     @Override
     @DeleteMapping(ApiPaths.DELETE_MASSSTAB)
-
     @Operation(summary = "Deletes an Massstab by name", description = "Delete a scale", operationId = "update", tags = { "Massstab" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

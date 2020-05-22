@@ -82,7 +82,7 @@ public class ProduktModelMutator implements Mutator<ProduktModel, Produkt> {
     private final ItemLookup lookup;
 
     public Produkt apply(ProduktModel source, Produkt destination, int depth) {
-        if (depth > 0) {
+        if (depth >= 0) {
             destination.setHersteller(lookup.find(source.getHersteller(), herstellerRepository));
             destination.setBestellNr(source.getBestellNr());
         }

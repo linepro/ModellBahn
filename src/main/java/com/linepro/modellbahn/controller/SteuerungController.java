@@ -53,7 +53,6 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
     
     @Override
     @GetMapping(ApiPaths.GET_STEUERUNG)
-
     @Operation(summary = "Finds an Steuerung by name", description = "Finds a control method", operationId = "get", tags = { "Steuerung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SteuerungModel.class)) }),
@@ -69,7 +68,6 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
 
     @Override
     @GetMapping(ApiPaths.SEARCH_STEUERUNG)
-
     @Operation(summary = "Finds Steuerungen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Steuerung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = SteuerungModel.class))) }),
@@ -85,7 +83,6 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
 
     @Override
     @PostMapping(ApiPaths.ADD_STEUERUNG)
-
     @Operation(summary = "Add a new Steuerung", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Steuerung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SteuerungModel.class)) }),
@@ -102,7 +99,6 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
 
     @Override
     @PutMapping(ApiPaths.UPDATE_STEUERUNG)
-
     @Operation(summary = "Updates an Steuerung by name", description = "Update a control method", operationId = "update", tags = { "Steuerung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SteuerungModel.class)) }),
@@ -119,7 +115,6 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
 
     @Override
     @DeleteMapping(ApiPaths.DELETE_STEUERUNG)
-
     @Operation(summary = "Deletes an Steuerung by name", description = "Delete a control method", operationId = "update", tags = { "Steuerung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

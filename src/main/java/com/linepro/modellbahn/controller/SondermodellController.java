@@ -53,7 +53,6 @@ public class SondermodellController extends NamedItemController<SondermodellMode
     
     @Override
     @GetMapping(ApiPaths.GET_SONDERMODELL)
-
     @Operation(summary = "Finds an Sondermodelll by name", description = "Finds a special model", operationId = "get", tags = { "Sondermodelll" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SondermodellModel.class)) }),
@@ -69,7 +68,6 @@ public class SondermodellController extends NamedItemController<SondermodellMode
 
     @Override
     @GetMapping(ApiPaths.SEARCH_SONDERMODELL)
-
     @Operation(summary = "Finds Sondermodelln by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "SonderModell" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = SondermodellModel.class))) }),
@@ -85,7 +83,6 @@ public class SondermodellController extends NamedItemController<SondermodellMode
 
     @Override
     @PostMapping(ApiPaths.ADD_SONDERMODELL)
-
     @Operation(summary = "Add a new SonderModell", description = "Add a new UIC axle configuration", operationId = "add", tags = { "SonderModell" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SondermodellModel.class)) }),
@@ -102,7 +99,6 @@ public class SondermodellController extends NamedItemController<SondermodellMode
 
     @Override
     @PutMapping(ApiPaths.UPDATE_SONDERMODELL)
-
     @Operation(summary = "Updates an SonderModell by name", description = "Update a special model", operationId = "update", tags = { "SonderModell" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SondermodellModel.class)) }),
@@ -119,7 +115,6 @@ public class SondermodellController extends NamedItemController<SondermodellMode
 
     @Override
     @DeleteMapping(ApiPaths.DELETE_SONDERMODELL)
-
     @Operation(summary = "Deletes an SonderModell by name", description = "Delete a special model", operationId = "update", tags = { "SonderModell" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

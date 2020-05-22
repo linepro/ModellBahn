@@ -60,7 +60,6 @@ public class KupplungController extends NamedItemController<KupplungModel> {
     
     @Override
     @GetMapping(ApiPaths.GET_KUPPLUNG)
-
     @Operation(summary = "Finds an Kupplung by name", description = "Finds a coupling configuration", operationId = "get", tags = { "Kupplung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),
@@ -76,7 +75,6 @@ public class KupplungController extends NamedItemController<KupplungModel> {
 
     @Override
     @GetMapping(ApiPaths.SEARCH_KUPPLUNG)
-
     @Operation(summary = "Finds Kupplungen by example", description = "Finds coupling configurations", operationId = "get", tags = { "Kupplung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = KupplungModel.class))) }),
@@ -92,7 +90,6 @@ public class KupplungController extends NamedItemController<KupplungModel> {
 
     @Override
     @PostMapping(ApiPaths.ADD_KUPPLUNG)
-
     @Operation(summary = "Adds an Kupplung", description = "Update a coupling configuration", operationId = "update", tags = { "Kupplung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),
@@ -109,7 +106,6 @@ public class KupplungController extends NamedItemController<KupplungModel> {
 
     @Override
     @PutMapping(ApiPaths.UPDATE_KUPPLUNG)
-
     @Operation(summary = "Updates an Kupplung by name", description = "Update a coupling configuration", operationId = "update", tags = { "Kupplung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),
@@ -126,7 +122,6 @@ public class KupplungController extends NamedItemController<KupplungModel> {
 
     @Override
     @DeleteMapping(ApiPaths.DELETE_KUPPLUNG)
-
     @Operation(summary = "Deletes an Kupplung by name", description = "Delete a coupling configuration", operationId = "update", tags = { "Kupplung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -142,7 +137,6 @@ public class KupplungController extends NamedItemController<KupplungModel> {
     }
 
     @PostMapping(ApiPaths.ADD_KUPPLUNG_ABBILDUNG)
-
     @Operation(summary = "Add an Kupplung picture", description = "Adds or updates the picture of a named Kupplung", operationId = "update", tags = { "Kupplung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),
@@ -158,7 +152,6 @@ public class KupplungController extends NamedItemController<KupplungModel> {
     }
 
     @PutMapping(ApiPaths.ADD_KUPPLUNG_ABBILDUNG)
-
     @Operation(summary = "Delete an Kupplung picture", description = "Deletes the picture of a named Kupplung", operationId = "update", tags = { "Kupplung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),

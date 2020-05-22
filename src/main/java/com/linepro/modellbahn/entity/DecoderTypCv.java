@@ -12,13 +12,15 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Range;
 
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.validation.CVValue;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -45,9 +47,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class DecoderTypCv extends ItemImpl {
+public class DecoderTypCv extends ItemImpl implements Comparable<DecoderTypCv> {
 
     /** The decoder typ. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
@@ -80,4 +81,37 @@ public class DecoderTypCv extends ItemImpl {
     @Column(name = DBNames.WERKSEINSTELLUNG)
     @CVValue
     private Integer werkseinstellung;
+
+    @Override
+    public int compareTo(DecoderTypCv other) {
+        return new CompareToBuilder()
+            .append(getCv(), other.getCv())
+            .toComparison();
+    }
+
+    @Override
+    public int hashCode() {
+      return new HashCodeBuilder()
+          .append(getDecoderTyp().hashCode())
+          .append(getCv())
+          .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) {
+        return true;
+      }
+
+      if (!(obj instanceof DecoderTypCv)) {
+        return false;
+      }
+
+      DecoderTypCv other = (DecoderTypCv) obj;
+
+      return new EqualsBuilder()
+          .append(getDecoderTyp(), other.getDecoderTyp())
+          .append(getCv(), other.getCv())
+          .isEquals();
+    }
 }

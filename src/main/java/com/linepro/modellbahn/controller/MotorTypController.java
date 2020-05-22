@@ -53,7 +53,6 @@ public class MotorTypController extends NamedItemController<MotorTypModel> {
     
     @Override
     @GetMapping(ApiPaths.GET_MOTOR_TYP)
-
     @Operation(summary = "Finds an MotorTyp by name", description = "Finds a motor type", operationId = "get", tags = { "MotorTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MotorTypModel.class)) }),
@@ -69,7 +68,6 @@ public class MotorTypController extends NamedItemController<MotorTypModel> {
 
     @Override
     @GetMapping(ApiPaths.SEARCH_MOTOR_TYP)
-
     @Operation(summary = "Finds MotorTypen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "MotorTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = MotorTypModel.class))) }),
@@ -85,7 +83,6 @@ public class MotorTypController extends NamedItemController<MotorTypModel> {
 
     @Override
     @PostMapping(ApiPaths.ADD_MOTOR_TYP)
-
     @Operation(summary = "Add a new MotorTyp", description = "Add a new UIC axle configuration", operationId = "add", tags = { "MotorTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MotorTypModel.class)) }),
@@ -102,7 +99,6 @@ public class MotorTypController extends NamedItemController<MotorTypModel> {
 
     @Override
     @PutMapping(ApiPaths.UPDATE_MOTOR_TYP)
-
     @Operation(summary = "Updates an MotorTyp by name", description = "Update a motor type", operationId = "update", tags = { "MotorTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MotorTypModel.class)) }),
@@ -119,7 +115,6 @@ public class MotorTypController extends NamedItemController<MotorTypModel> {
 
     @Override
     @DeleteMapping(ApiPaths.DELETE_MOTOR_TYP)
-
     @Operation(summary = "Deletes an MotorTyp by name", description = "Delete a motor type", operationId = "update", tags = { "MotorTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

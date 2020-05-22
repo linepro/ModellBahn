@@ -24,6 +24,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Range;
 
 import com.linepro.modellbahn.entity.impl.ItemImpl;
@@ -33,7 +36,7 @@ import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.PathConverter;
 import com.linepro.modellbahn.validation.Fahrstufe;
 
-import lombok.EqualsAndHashCode;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -59,10 +62,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Cacheable
-public class DecoderTyp extends ItemImpl {
+public class DecoderTyp extends ItemImpl implements Comparable<DecoderTyp> {
 
     /** The hersteller. */
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Hersteller.class)
@@ -116,21 +118,26 @@ public class DecoderTyp extends ItemImpl {
 
     /** The adressen. */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "decoderTyp", targetEntity = DecoderTypAdress.class, orphanRemoval = true)
-    private Set<DecoderTypAdress> adressen;
+    @Builder.Default
+    private Set<DecoderTypAdress> adressen = new HashSet<>();
 
     /** The cvs. */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "decoderTyp", targetEntity = DecoderTypCv.class, orphanRemoval = true)
-    private Set<DecoderTypCv> cvs;
+    @Builder.Default
+    private Set<DecoderTypCv> cvs = new HashSet<>();
 
     /** The funktion. */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "decoderTyp", targetEntity = DecoderTypFunktion.class, orphanRemoval = true)
-    private Set<DecoderTypFunktion> funktionen;
+    @Builder.Default
+    private Set<DecoderTypFunktion> funktionen = new HashSet<>();
 
     public void addAdress(DecoderTypAdress adress) {
+        if (adressen == null) {
+            adressen = new HashSet<>();
+        }
         adress.setDecoderTyp(this);
         adress.setIndex(getAdressen().size() + 1);
         adress.setDeleted(false);
-        if (adressen == null) { adressen = new HashSet<>(); };
         adressen.add(adress);
     }
 
@@ -139,9 +146,11 @@ public class DecoderTyp extends ItemImpl {
     }
 
     public void addCv(DecoderTypCv cv) {
+        if (cvs == null) {
+            cvs = new HashSet<>();
+        }
         cv.setDecoderTyp(this);
         cv.setDeleted(false);
-        if (cvs == null) { cvs = new HashSet<>(); };
         cvs.add(cv);
     }
 
@@ -150,13 +159,48 @@ public class DecoderTyp extends ItemImpl {
     }
 
     public void addFunktion(DecoderTypFunktion funktion) {
+        if (funktionen == null) {
+            funktionen = new HashSet<>();
+        }
         funktion.setDecoderTyp(this);
         funktion.setDeleted(false);
-        if (funktionen == null) { funktionen = new HashSet<>(); };
         funktionen.add(funktion);
     }
 
     public void removeFunktion(DecoderTypFunktion funktion) {
         funktionen.remove(funktion);
+    }
+
+    @Override
+    public int compareTo(DecoderTyp other) {
+        return new CompareToBuilder()
+            .append(getHersteller().getName(), other.getHersteller().getName())
+            .append(getBestellNr(), other.getBestellNr())
+            .toComparison();
+    }
+
+    @Override
+    public int hashCode() {
+      return new HashCodeBuilder()
+          .append(getBestellNr())
+          .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) {
+        return true;
+      }
+
+      if (!(obj instanceof DecoderTyp)) {
+        return false;
+      }
+
+      DecoderTyp other = (DecoderTyp) obj;
+
+      return new EqualsBuilder()
+          .append(getHersteller(), other.getHersteller())
+          .append(getBestellNr(), other.getBestellNr())
+          .isEquals();
     }
 }
