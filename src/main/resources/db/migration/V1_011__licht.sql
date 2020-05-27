@@ -11,5 +11,5 @@ INSERT INTO licht (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Zw
 INSERT INTO licht (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Zweilicht-Spitzensignal und zwei rote Schlusslichter mit der Fahrtrichtung wechselnd', 'L2R2W', NULL, 393);
 INSERT INTO licht (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Dreilicht-Spitzensignal und ein rotes Schlusslicht mit der Fahrtrichtung wechselnd', 'L3R1W', NULL, 394);
 INSERT INTO licht (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Dreilicht-Spitzensignal und zwei rote Schlusslichter mit der Fahrtrichtung wechselnd', 'L3R2W', NULL, 395);
-INSERT INTO licht (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, STRINGDECODE('Dreilicht-Spitzensignal und ein wei\\u00dfes Schlusslicht mit der Fahrtrichtung wechselnd'), 'L3L1W', NULL, 396);
-INSERT INTO licht (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, STRINGDECODE('Dreilicht-Spitzensignal und zwei wei\\u00dfes Schlusslicht mit der Fahrtrichtung wechselnd'), 'L3L2W', NULL, 397);
+INSERT INTO licht (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Dreilicht-Spitzensignal und ein weißes Schlusslicht mit der Fahrtrichtung wechselnd', 'L3L1W', NULL, 396);
+INSERT INTO licht (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Dreilicht-Spitzensignal und zwei weißes Schlusslicht mit der Fahrtrichtung wechselnd', 'L3L2W', NULL, 397);

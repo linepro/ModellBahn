@@ -19,12 +19,16 @@ import com.linepro.modellbahn.model.DecoderFunktionModel;
 @Component
 public class DecoderFunktionModelProcessor extends ModelProcessorImpl<DecoderFunktionModel> implements RepresentationModelProcessor<DecoderFunktionModel> {
 
-    @Autowired
+    private static final String DECODER_ID = "{" + ApiNames.DECODER_ID + "}";
+    private static final String REIHE = "{" + ApiNames.REIHE + "}";
+    private static final String FUNKTION = "{" + ApiNames.FUNKTION + "}";
+
+   @Autowired
     public DecoderFunktionModelProcessor() {
         super((m) -> MapUtils.putAll(new HashMap<String,Object>(), new String[][] { 
-            { "{" + ApiNames.DECODER_ID + "}", ((DecoderFunktionModel) m).getDecoderId() }, 
-            { "{" + ApiNames.REIHE + "}", String.valueOf(((DecoderFunktionModel) m).getReihe()) }, 
-            { "{" + ApiNames.FUNKTION + "}", String.valueOf(((DecoderFunktionModel) m).getFunktion()) } 
+            { DECODER_ID, ((DecoderFunktionModel) m).getDecoderId() }, 
+            { REIHE, String.valueOf(((DecoderFunktionModel) m).getReihe()) }, 
+            { FUNKTION, String.valueOf(((DecoderFunktionModel) m).getFunktion()) } 
             }),
                         new LinkTemplateImpl(ApiRels.UPDATE, ApiPaths.UPDATE_DECODER_FUNKTION));
     }

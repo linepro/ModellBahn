@@ -1,8 +1,8 @@
 package com.linepro.modellbahn.converter.entity;
 
+import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 
-import org.hibernate.collection.internal.PersistentSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,13 +23,11 @@ public class ZugMutator implements Mutator<Zug,ZugModel> {
     @Autowired
     private ZugConsistMutator consistMutator;
 
-    public ZugModel apply(Zug source, ZugModel destination, int depth) {
-        destination.setName(source.getName());
-        destination.setBezeichnung(source.getBezeichnung());
-        destination.setZugTyp(zugTypMutator.convert(source.getZugTyp()));
-        
-        if (depth >= 0) {
-            if (source.getConsist() instanceof PersistentSet && ((PersistentSet) source.getConsist()).wasInitialized()) {
+    public ZugModel applyFields(Zug source, ZugModel destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
+            applySummary(source, destination);
+            
+            if (isAvailable(source.getConsist())) {
                 destination.setConsist(source.getConsist()
                                              .stream()
                                              .sorted()
@@ -38,6 +36,18 @@ public class ZugMutator implements Mutator<Zug,ZugModel> {
                                              .orElseThrow());
             }
         }
+        
+        return destination;
+    }
+
+    @Override
+    public ZugModel applySummary(Zug source, ZugModel destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
+            destination.setName(source.getName());
+            destination.setBezeichnung(source.getBezeichnung());
+            destination.setZugTyp(zugTypMutator.summarize(source.getZugTyp()));
+        }
+        
         return destination;
     }
 

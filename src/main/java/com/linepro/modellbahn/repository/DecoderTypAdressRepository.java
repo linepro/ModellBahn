@@ -15,11 +15,11 @@ public interface DecoderTypAdressRepository extends ItemRepository<DecoderTypAdr
 
     //@formatter:off
     @Query(value = "SELECT a " + 
-                    "FROM   decoder_typ_adress a " + 
-                    "WHERE  a.decoder_typ.hersteller.name = :" + ApiNames.HERSTELLER + " " +
-                    "AND    a.decoder_typ.bestell_nr      = :" + ApiNames.BESTELL_NR + " " +
-                    "AND    a.position                    = :" + ApiNames.INDEX,
-           nativeQuery = true)
+                    "FROM   decoderTypAdress a " + 
+                    "WHERE  a.decoderTyp.hersteller.name = :" + ApiNames.HERSTELLER + " " +
+                    "AND    a.decoderTyp.bestellNr       = :" + ApiNames.BESTELL_NR + " " +
+                    "AND    a.position                   = :" + ApiNames.INDEX,
+           nativeQuery = false)
     //@formatter:on
     Optional<DecoderTypAdress> findByIndex(@Param(ApiNames.HERSTELLER) String herstellerStr, @Param(ApiNames.BESTELL_NR) String bestellNr, @Param(ApiNames.INDEX) Integer index);
 }

@@ -17,11 +17,11 @@ public interface DecoderFunktionRepository extends ItemRepository<DecoderFunktio
 
     //@formatter:off
     @Query(value = "SELECT f " + 
-                   "FROM   decoder_funktion f " +
-                   "WHERE  f.decoder.decoder_id = :" + ApiNames.DECODER_ID + " " + 
-                   "AND    f.funktion.reihe     = :" + ApiNames.REIHE + " " + 
-                   "AND    f.funktion.funktion  = :" + FUNKTION,
-           nativeQuery = true)
+                   "FROM   decoderFunktion f " +
+                   "WHERE  f.decoder.decoderId = :" + ApiNames.DECODER_ID + " " + 
+                   "AND    f.funktion.reihe    = :" + ApiNames.REIHE + " " + 
+                   "AND    f.funktion.funktion = :" + FUNKTION,
+           nativeQuery = false)
     //@formatter:on
     Optional<DecoderFunktion> findByFunktion(@Param(ApiNames.DECODER_ID) String decoderId, @Param(ApiNames.REIHE) Integer reihe, @Param(ApiNames.FUNKTION) String funktion);
 }

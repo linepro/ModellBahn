@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.converter.model;
 
+import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
+
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.Mutator;
@@ -9,12 +11,25 @@ import com.linepro.modellbahn.model.AnderungModel;
 @Component
 public class AnderungModelMutator implements Mutator<AnderungModel, Anderung> {
 
-    public Anderung apply(AnderungModel source, Anderung destination, int depth) {
-        destination.setAnderungId(source.getAnderungId());
-        destination.setAnderungsDatum(source.getAnderungsDatum());
-        destination.setAnderungsTyp(source.getAnderungsTyp());
-        destination.setAnmerkung(source.getAnmerkung());
-        destination.setBezeichnung(source.getBezeichnung());
+    @Override
+    public Anderung apply(AnderungModel source, Anderung destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
+            destination.setAnderungId(source.getAnderungId());
+        }
+
+        return applyFields(source, destination);
+    }
+
+
+    @Override
+    public Anderung applyFields(AnderungModel source, Anderung destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
+            destination.setAnderungsDatum(source.getAnderungsDatum());
+            destination.setAnderungsTyp(source.getAnderungsTyp());
+            destination.setAnmerkung(source.getAnmerkung());
+            destination.setBezeichnung(source.getBezeichnung());
+        }
+
         return destination;
     }
 

@@ -46,7 +46,7 @@ public class EnumsController {
     @JsonSerialize(contentAs = DescribedEnum.class)
     @Operation(summary = "Gets all possible AdressTyp values")
     public ResponseEntity<?> getAdressTyp() {
-        return ok(service.getEnumValues(AdressTyp.class));
+        return ok(service.getEnumValues(AdressTyp.values()));
     }
 
     @GetMapping(ApiPaths.ENUMS_ANDERUNGS_TYP_PATH)
@@ -54,7 +54,7 @@ public class EnumsController {
     @JsonSerialize(contentAs = DescribedEnum.class)
     @Operation(summary = "Gets all possible AnderungTyp values")
     public ResponseEntity<?> getAnderungTyp() {
-        return ok(service.getEnumValues(AnderungsTyp.class));
+        return ok(service.getEnumValues(AnderungsTyp.values()));
     }
 
     @GetMapping(ApiPaths.ENUMS_STECKER_PATH)
@@ -62,7 +62,7 @@ public class EnumsController {
     @JsonSerialize(contentAs = DescribedEnum.class)
     @Operation(summary = "Gets all possible Stecker values")
     public ResponseEntity<?> getConnector() {
-        return ok(service.getEnumValues(Stecker.class));
+        return ok(service.getEnumValues(Stecker.values()));
     }
 
     @GetMapping(ApiPaths.ENUMS_KONFIGURATION_PATH)
@@ -70,7 +70,7 @@ public class EnumsController {
     @JsonSerialize(contentAs = DescribedEnum.class)
     @Operation(summary = "Gets all possible Konfiguration values")
     public ResponseEntity<?> getKonfiguration() {
-        return ok(service.getEnumValues(Konfiguration.class));
+        return ok(service.getEnumValues(Konfiguration.values()));
     }
 
     @GetMapping(ApiPaths.ENUMS_STATUS_PATH)
@@ -78,7 +78,7 @@ public class EnumsController {
     @JsonSerialize(contentAs = DescribedEnum.class)
     @Operation(summary = "Gets all possible Status values")
     public ResponseEntity<?> getStatus() {
-        return ok(service.getEnumValues(Status.class));
+        return ok(service.getEnumValues(Status.values()));
     }
 
     @GetMapping(ApiPaths.ENUMS_LEISTUNGS_UBERTRAGUNG_PATH)
@@ -86,6 +86,6 @@ public class EnumsController {
     @JsonSerialize(contentAs = DescribedEnum.class)
     @Operation(summary = "Gets all possible LeistungsUbertragung values")
     public ResponseEntity<?> getLeistungsUbertragung() {
-        return ok(service.getEnumValues(LeistungsUbertragung.class));
+        return ok(service.getEnumValues(LeistungsUbertragung.values()));
     }
 }

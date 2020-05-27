@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.converter.entity;
 
+import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
+
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.impl.MutatorImpl;
@@ -15,9 +17,11 @@ public class UnterKategorieMutator extends MutatorImpl<UnterKategorie, UnterKate
     }
 
     @Override
-    public UnterKategorieModel apply(UnterKategorie source, UnterKategorieModel destination, int depth) {
-        destination.setKategorie(source.getKategorie().getName());
-        return super.apply(source, destination, depth);
+    public UnterKategorieModel applyFields(UnterKategorie source, UnterKategorieModel destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
+            destination.setKategorie(source.getKategorie().getName());
+        }
+        
+        return super.applyFields(source, destination);
     }
-
 }

@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.converter.model;
 
+import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,19 +27,28 @@ public class DecoderTypModelMutator implements Mutator<DecoderTypModel, DecoderT
     @Autowired
     private final ItemLookup lookup;
 
-    public DecoderTyp apply(DecoderTypModel source, DecoderTyp destination, int depth) {
-        if (depth >= 0) {
-            destination.setHersteller(lookup.find(source.getHersteller(), herstellerRepository));
+    @Override
+    public DecoderTyp apply(DecoderTypModel source, DecoderTyp destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
             destination.setBestellNr(source.getBestellNr());
+            destination.setBezeichnung(source.getBezeichnung());
         }
-        destination.setBezeichnung(source.getBezeichnung());
-        destination.setIMax(source.getIMax());
-        destination.setProtokoll(lookup.find(source.getProtokoll(), protokollRepository));
-        destination.setFahrstufe(source.getFahrstufe());
-        destination.setSound(source.getSound());
-        destination.setKonfiguration(source.getKonfiguration());
-        destination.setStecker(source.getStecker());
-        // destination.setAnleitungen(source.getAnleitungen());
+
+        return applyFields(source, destination);
+    }
+
+    @Override
+    public DecoderTyp applyFields(DecoderTypModel source, DecoderTyp destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
+            destination.setHersteller(lookup.find(source.getHersteller(), herstellerRepository));
+            destination.setIMax(source.getIMax());
+            destination.setProtokoll(lookup.find(source.getProtokoll(), protokollRepository));
+            destination.setFahrstufe(source.getFahrstufe());
+            destination.setSound(source.getSound());
+            destination.setKonfiguration(source.getKonfiguration());
+            destination.setStecker(source.getStecker());
+        }
+        
         return destination;
     }
 

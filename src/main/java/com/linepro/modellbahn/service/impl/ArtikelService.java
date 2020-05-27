@@ -103,7 +103,7 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, Artikel> imple
     @Transactional
     public Optional<AnderungModel> updateAnderung(String artikelId, Integer anderungId, AnderungModel anderungModel) {
         return anderungRepository.findByAnderungId(artikelId, anderungId)
-                                 .map(a -> anderungMutator.convert(anderungRepository.saveAndFlush(anderungModelMutator.apply(anderungModel, a))));
+                                 .map(a -> anderungMutator.convert(anderungRepository.saveAndFlush(anderungModelMutator.applyFields(anderungModel, a))));
     }
 
     @Transactional

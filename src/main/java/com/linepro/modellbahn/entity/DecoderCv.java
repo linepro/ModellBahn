@@ -52,7 +52,7 @@ public class DecoderCv extends ItemImpl implements Comparable<DecoderCv>{
     private Decoder decoder;
 
     /** The cv. */
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = DecoderTypCv.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTypCv.class)
     @JoinColumn(name = DBNames.CV_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_CV + "_fk2"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.cv.notnull}")
     private DecoderTypCv cv;

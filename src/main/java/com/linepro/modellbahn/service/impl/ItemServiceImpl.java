@@ -52,18 +52,18 @@ public abstract class ItemServiceImpl<M extends ItemModel, E extends Item> imple
     @Transactional(readOnly = true)
     protected Optional<M> get(Lookup<E> lookup) {
         return lookup.find()
-                     .map(e -> entityMutator.convert(e, 1));
+                     .map(e -> entityMutator.convert(e));
     }
 
     @Transactional
     public M add(M model) {
-        return entityMutator.convert(repository.saveAndFlush(modelMutator.convert(model)),1);
+        return entityMutator.convert(repository.saveAndFlush(modelMutator.convert(model)));
     }
 
     @Transactional
     protected Optional<M> update(Lookup<E> lookup, M model) {
         return lookup.find()
-                     .map(e -> entityMutator.convert(repository.saveAndFlush(modelMutator.apply(model,e))));
+                     .map(e -> entityMutator.convert(repository.saveAndFlush(modelMutator.applyFields(model,e))));
     }
 
     @Transactional

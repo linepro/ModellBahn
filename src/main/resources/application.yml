@@ -44,9 +44,9 @@ spring:
       check-location: true
       clean-disabled: true
       clean-on-validation-error: false
+      enabled: true
       encoding: UTF-8
       installed-by: flyway
-      init-sql: classpath:db/schema/create.sql
       locations: classpath:db/migration
       mixed: false
       repeatable-sql-migration-prefix: R
@@ -60,7 +60,7 @@ spring:
       database-platform: org.hibernate.dialect.H2Dialect
       hibernate:
          ddl-auto: none
-      open-in-view: true
+      open-in-view: false
       properties:
          hibernate:
             format_sql: true

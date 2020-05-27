@@ -1,18 +1,28 @@
 package com.linepro.modellbahn.converter.impl;
 
+import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
+
 import com.linepro.modellbahn.model.Named;
 
 public class NamedTranscriber<S extends Named, D extends Named> extends SoftDeleteTranscriber<S, D> {
 
     @Override
-    public D apply(S source, D destination, int depth) {
-        destination = super.apply(source, destination, depth);
-
-        if (source != null) {
+    public D applySummary(S source, D destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
             destination.setName(source.getName());
             destination.setBezeichnung(source.getBezeichnung());
         }
         
-        return destination;
+        return super.applySummary(source, destination);
+    }
+
+    @Override
+    public D applyFields(S source, D destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
+            destination.setName(source.getName());
+            destination.setBezeichnung(source.getBezeichnung());
+        }
+        
+        return super.applyFields(source, destination);
     }
 }

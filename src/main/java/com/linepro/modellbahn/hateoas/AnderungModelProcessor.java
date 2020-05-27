@@ -14,18 +14,22 @@ import com.linepro.modellbahn.controller.impl.ApiRels;
 import com.linepro.modellbahn.hateoas.impl.LinkTemplateImpl;
 import com.linepro.modellbahn.hateoas.impl.ModelProcessorImpl;
 import com.linepro.modellbahn.model.AnderungModel;
+import com.linepro.modellbahn.model.WithAbbildung;
 
 @Lazy
 @Component
 public class AnderungModelProcessor extends ModelProcessorImpl<AnderungModel> implements RepresentationModelProcessor<AnderungModel> {
 
+    private static final String ARTIKEL_ID = "{" + ApiNames.ARTIKEL_ID + "}";
+    private static final String ANDERUNG_ID = "{" + ApiNames.ANDERUNG_ID + "}";
+
     @Autowired
     public AnderungModelProcessor() {
         super((m) -> MapUtils.putAll(new HashMap<String,Object>(), new String[][] { 
-            { "{" + ApiNames.ARTIKEL_ID + "}", ((AnderungModel) m).getArtikelId() }, 
-            { "{" + ApiNames.ANDERUNG_ID + "}", String.valueOf(((AnderungModel) m).getAnderungId()) } 
+            { ARTIKEL_ID, ((AnderungModel) m).getArtikelId() }, 
+            { ANDERUNG_ID, String.valueOf(((AnderungModel) m).getAnderungId()) } 
             }),
                         new LinkTemplateImpl(ApiRels.UPDATE, ApiPaths.UPDATE_ANDERUNG),
-                        new LinkTemplateImpl(ApiRels.DELETE, ApiPaths.DELETE_ANDERUNG));
+                        new LinkTemplateImpl(ApiRels.DELETE, ApiPaths.DELETE_ANDERUNG, (m) -> (((WithAbbildung) m).getAbbildung() != null)));
     }
 }

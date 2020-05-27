@@ -19,11 +19,14 @@ import com.linepro.modellbahn.model.DecoderCvModel;
 @Component
 public class DecoderCvModelProcessor extends ModelProcessorImpl<DecoderCvModel> implements RepresentationModelProcessor<DecoderCvModel> {
 
+    private static final String DECODER_ID = "{" + ApiNames.DECODER_ID + "}";
+    private static final String CV = "{" + ApiNames.CV + "}";
+
     @Autowired
     public DecoderCvModelProcessor() {
         super((m) -> MapUtils.putAll(new HashMap<String,Object>(), new String[][] { 
-            { "{" + ApiNames.DECODER_ID + "}", ((DecoderCvModel) m).getDecoderId() }, 
-            { "{" + ApiNames.CV + "}", String.valueOf(((DecoderCvModel) m).getCv()) } 
+            { DECODER_ID, ((DecoderCvModel) m).getDecoderId() }, 
+            { CV, String.valueOf(((DecoderCvModel) m).getCv()) } 
             }),
                         new LinkTemplateImpl(ApiRels.UPDATE, ApiPaths.UPDATE_DECODER_CV));
     }

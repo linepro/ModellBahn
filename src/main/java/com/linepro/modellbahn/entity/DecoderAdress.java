@@ -60,7 +60,7 @@ public class DecoderAdress extends ItemImpl implements WithAdress, Comparable<De
     private Decoder decoder;
 
     /** The adress. */
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = DecoderTypAdress.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTypAdress.class)
     @JoinColumn(name = DBNames.ADRESS_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_ADRESS + "_fk2"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.cv.notnull}")
     private DecoderTypAdress typ;

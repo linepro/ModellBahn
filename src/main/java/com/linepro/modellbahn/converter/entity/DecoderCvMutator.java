@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.converter.entity;
 
+import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
+
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.Mutator;
@@ -9,15 +11,18 @@ import com.linepro.modellbahn.model.DecoderCvModel;
 @Component
 public class DecoderCvMutator implements Mutator<DecoderCv, DecoderCvModel> {
 
-    public DecoderCvModel apply(DecoderCv source, DecoderCvModel destination, int depth) {
-        destination.setDecoderId(source.getDecoder().getDecoderId());
-        destination.setCv(source.getCv().getCv());
-        destination.setBezeichnung(source.getCv().getBezeichnung());
-        destination.setMinimal(source.getCv().getMinimal());
-        destination.setMaximal(source.getCv().getMaximal());
-        destination.setWerkseinstellung(source.getCv().getWerkseinstellung());
-        destination.setWert(source.getWert());
-        destination.setDeleted(source.getDeleted());
+    public DecoderCvModel applyFields(DecoderCv source, DecoderCvModel destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
+            destination.setDecoderId(source.getDecoder().getDecoderId());
+            destination.setCv(source.getCv().getCv());
+            destination.setBezeichnung(source.getCv().getBezeichnung());
+            destination.setMinimal(source.getCv().getMinimal());
+            destination.setMaximal(source.getCv().getMaximal());
+            destination.setWerkseinstellung(source.getCv().getWerkseinstellung());
+            destination.setWert(source.getWert());
+            destination.setDeleted(source.getDeleted());
+        }
+        
         return destination;
     }
 

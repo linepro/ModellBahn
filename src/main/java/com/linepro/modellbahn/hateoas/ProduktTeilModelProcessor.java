@@ -3,6 +3,7 @@ package com.linepro.modellbahn.hateoas;
 import java.util.HashMap;
 
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
@@ -14,20 +15,26 @@ import com.linepro.modellbahn.controller.impl.ApiRels;
 import com.linepro.modellbahn.hateoas.impl.LinkTemplateImpl;
 import com.linepro.modellbahn.hateoas.impl.ModelProcessorImpl;
 import com.linepro.modellbahn.model.ProduktTeilModel;
+import com.linepro.modellbahn.model.SoftDelete;
 
 @Lazy
 @Component
 public class ProduktTeilModelProcessor extends ModelProcessorImpl<ProduktTeilModel> implements RepresentationModelProcessor<ProduktTeilModel> {
 
+    private static final String HERSTELLER = "{" + ApiNames.HERSTELLER + "}";
+    private static final String BESTELL_NR = "{" + ApiNames.BESTELL_NR + "}";
+    private static final String TEIL_HERSTELLER = "{" + ApiNames.TEIL_HERSTELLER + "}";
+    private static final String TEIL_BESTELL_NR = "{" + ApiNames.TEIL_BESTELL_NR + "}";
+
     @Autowired
     public ProduktTeilModelProcessor() {
         super((m) -> MapUtils.putAll(new HashMap<String, Object>(), new String[][] {
-                        { "{" + ApiNames.HERSTELLER + "}", ((ProduktTeilModel) m).getHersteller() }, 
-                        { "{" + ApiNames.BESTELL_NR + "}", ((ProduktTeilModel) m).getBestellNr() }, 
-                        { "{" + ApiNames.TEIL_HERSTELLER + "}", ((ProduktTeilModel) m).getTeilHersteller() },
-                        { "{" + ApiNames.TEIL_BESTELL_NR + "}", ((ProduktTeilModel) m).getTeilBestellNr() }
+                        { HERSTELLER, ((ProduktTeilModel) m).getHersteller() }, 
+                        { BESTELL_NR, ((ProduktTeilModel) m).getBestellNr() }, 
+                        { TEIL_HERSTELLER, ((ProduktTeilModel) m).getTeilHersteller() },
+                        { TEIL_BESTELL_NR, ((ProduktTeilModel) m).getTeilBestellNr() }
                         }),
               new LinkTemplateImpl(ApiRels.UPDATE, ApiPaths.UPDATE_PRODUKT_TEIL),
-              new LinkTemplateImpl(ApiRels.DELETE, ApiPaths.DELETE_PRODUKT_TEIL));
+              new LinkTemplateImpl(ApiRels.DELETE, ApiPaths.DELETE_PRODUKT_TEIL, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted())));
     }
 }

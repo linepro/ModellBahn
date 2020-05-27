@@ -3,7 +3,7 @@ INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Beleuchtu
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Decoder', 'DECODER', 529);
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Ersatzteil', 'ERSATZTEIL', 532);
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Fahrzeug', 'FAHRZEUG', 582);
-INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, STRINGDECODE('Geba\\u00fcde'), 'GEBAUDE', 584);
+INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Gebaüde', 'GEBAUDE', 584);
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Gleismateriel', 'GLEISMATERIEL', 589);
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Landschaftsbau', 'LANDSCHAFTSBAU', 591);
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Lokomotiv', 'LOKOMOTIV', 593);
@@ -15,7 +15,7 @@ INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Steuerung
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Treibwagen', 'TREIBWAGEN', 611);
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Wagen', 'WAGEN', 616);
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Werkzeug', 'WERKZEUG', 665);
-INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, STRINGDECODE('Zubeh\\u00f6r'), 'ZUBEHOR', 670);
+INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Zubehör', 'ZUBEHOR', 670);
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Fred', 'FRED', 1426);
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'sdfsdaf', 'SADFSADF', 1428);
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'sfsadfsdafa', 'SDFDSFDAS', 1430);

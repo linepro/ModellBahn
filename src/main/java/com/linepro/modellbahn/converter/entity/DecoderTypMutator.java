@@ -1,8 +1,8 @@
 package com.linepro.modellbahn.converter.entity;
 
+import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 
-import org.hibernate.collection.internal.PersistentSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,21 +32,20 @@ public class DecoderTypMutator implements Mutator<DecoderTyp,DecoderTypModel> {
     @Autowired
     private final DecoderTypFunktionMutator funktionMutator;
 
-    public DecoderTypModel apply(DecoderTyp source, DecoderTypModel destination, int depth) {
-        destination.setHersteller(herstellerMutator.convert(source.getHersteller()));
-        destination.setBestellNr(source.getBestellNr());
-        destination.setBezeichnung(source.getBezeichnung());
-        destination.setIMax(source.getIMax());
-        destination.setProtokoll(protokollMutator.convert(source.getProtokoll()));
-        destination.setFahrstufe(source.getFahrstufe());
-        destination.setSound(source.getSound());
-        destination.setKonfiguration(source.getKonfiguration());
-        destination.setStecker(source.getStecker());
-        destination.setAnleitungen(source.getAnleitungen());
-        destination.setDeleted(source.getDeleted());
-        
-        if (depth >= 0) {
-            if (source.getAdressen() instanceof PersistentSet && ((PersistentSet) source.getAdressen()).wasInitialized()) {
+    @Override
+    public DecoderTypModel applyFields(DecoderTyp source, DecoderTypModel destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
+            applySummary(source, destination);
+            destination.setIMax(source.getIMax());
+            destination.setProtokoll(protokollMutator.summarize(source.getProtokoll()));
+            destination.setFahrstufe(source.getFahrstufe());
+            destination.setSound(source.getSound());
+            destination.setKonfiguration(source.getKonfiguration());
+            destination.setStecker(source.getStecker());
+            destination.setAnleitungen(source.getAnleitungen());
+            destination.setDeleted(source.getDeleted());
+            
+            if (isAvailable(source.getAdressen())) {
                 destination.setAdressen(source.getAdressen()
                                 .stream()
                                 .sorted()
@@ -54,7 +53,7 @@ public class DecoderTypMutator implements Mutator<DecoderTyp,DecoderTypModel> {
                                 .collect(new ResultCollector<>())
                                 .orElseThrow());
             }
-            if (source.getCvs() instanceof PersistentSet && ((PersistentSet) source.getCvs()).wasInitialized()) {
+            if (isAvailable(source.getCvs())) {
                 destination.setCvs(source.getCvs()
                                          .stream()
                                          .sorted()
@@ -62,7 +61,7 @@ public class DecoderTypMutator implements Mutator<DecoderTyp,DecoderTypModel> {
                                          .collect(new ResultCollector<>())
                                          .orElseThrow());
             }
-            if (source.getFunktionen() instanceof PersistentSet && ((PersistentSet) source.getFunktionen()).wasInitialized()) {
+            if (isAvailable(source.getFunktionen())) {
                 destination.setFunktionen(source.getFunktionen()
                                                 .stream()
                                                 .sorted()
@@ -71,6 +70,18 @@ public class DecoderTypMutator implements Mutator<DecoderTyp,DecoderTypModel> {
                                                 .orElseThrow());
             }
         }
+        
+        return destination;
+    }
+
+    @Override
+    public DecoderTypModel applySummary(DecoderTyp source, DecoderTypModel destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
+            destination.setHersteller(herstellerMutator.convert(source.getHersteller()));
+            destination.setBestellNr(source.getBestellNr());
+            destination.setBezeichnung(source.getBezeichnung());
+        }
+        
         return destination;
     }
 

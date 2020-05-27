@@ -151,8 +151,8 @@ public class KategorieController extends NamedItemController<KategorieModel> {
         @ApiResponse(responseCode = "404", description = "Not found, content = @Content"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> searchUnterKategorie(@RequestParam(ApiNames.KATEGORIEN) Optional<List<String>> kategorieen, @RequestBody Optional<UnterKategorieModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
-        Page<UnterKategorieModel> page = service.searchUnterKategorie(kategorieen, model, pageNumber, pageSize);
+    public ResponseEntity<?> searchUnterKategorie(@RequestParam(ApiNames.KATEGORIEN) Optional<List<String>> kategorieen, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
+        Page<UnterKategorieModel> page = service.searchUnterKategorie(kategorieen, pageNumber, pageSize);
 
         return found(page);
     }

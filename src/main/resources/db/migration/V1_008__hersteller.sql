@@ -2,7 +2,7 @@ INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FA
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, '4MFOR', '4MFOR', '+49 (0) 71 61 608-0', 'https://www.maerklin.de/', 314);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Artitec', 'ARTITEC', NULL, 'http://www.artitec.nl', 315);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Auhagen', 'AUHAGEN', NULL, 'https://auhagen.de/', 316);
-INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, STRINGDECODE('Bochmann und Kochend\\u00f6rfer'), 'BK', NULL, NULL, 317);
+INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Bochmann und Kochendörfer', 'BK', NULL, NULL, 317);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Brawa', 'BRAWA', NULL, 'https://www.brawa.de/', 318);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Busch Model', 'BUSCH', NULL, 'https://www.busch-model.info/', 319);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'DCC Supplies', 'DCC', NULL, 'https://www.dccsupplies.com/', 320);
@@ -16,7 +16,7 @@ INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FA
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Fairchild Semiconductors', 'FAIRCHILD', NULL, NULL, 328);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Faller', 'FALLER', NULL, 'https://www.faller.de/', 329);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Fleischmann', 'FLEISCHMANN', NULL, 'https://www.fleischmann.de/', 330);
-INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, STRINGDECODE('Ga\\u00dfner Beschriftungen'), 'GASSNER', NULL, 'https://www.gassner-beschriftungen.de/', 331);
+INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Gaßner Beschriftungen', 'GASSNER', NULL, 'https://www.gassner-beschriftungen.de/', 331);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Gauge Master', 'GAUGEMASTER', NULL, 'http://www.gaugemaster.com/index.html', 332);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Heico Modell', 'HEICO', NULL, 'http://www.heico-modell.de/', 333);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Herkat', 'HERKAT', NULL, 'http://www.herkat.de/', 334);
@@ -27,13 +27,13 @@ INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FA
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Kingbright', 'KINGBRIGHT', NULL, 'https://kingbright-europe.de/', 339);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'KK Produkcja', 'KKPMO', NULL, 'http://www.kkpmo.com/', 340);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'KNIPEX', 'KNIPEX', NULL, 'https://www.knipex.com/nc/en/home/', 341);
-INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, STRINGDECODE('K\\u00fchn Digital'), 'KUHN', NULL, 'http://www.kuehn-digital.de/', 342);
+INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Kühn Digital', 'KUHN', NULL, 'http://www.kuehn-digital.de/', 342);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Liliput', 'LILIPUT', NULL, 'http://liliput.de/', 343);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Lima', 'LIMA', NULL, 'https://www.hornby.com/', 344);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Littfinski Daten Technik', 'LDT', NULL, 'https://www.ldt-infocenter.com/', 345);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'LUX-Modellbau', 'LUX', NULL, 'https://www.lux-modellbau.de/', 346);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Maquett', 'MAQUETT', NULL, 'https://www.maquett.nl/', 347);
-INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, STRINGDECODE('M\\u00e4rklin'), 'MARKLIN', '+49 (0) 71 61 608-0', 'https://www.maerklin.de/', 348);
+INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Märklin', 'MARKLIN', '+49 (0) 71 61 608-0', 'https://www.maerklin.de/', 348);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Mehano', 'MEHANO', NULL, 'http://www.mehano.si/', 349);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Merten', 'MERTEN', NULL, 'https://www.preiser.de/', 350);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Noch', 'NOCH', NULL, 'https://www.noch.de/', 351);

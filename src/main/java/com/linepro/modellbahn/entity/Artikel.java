@@ -17,6 +17,10 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -64,6 +68,189 @@ import lombok.experimental.SuperBuilder;
     }, uniqueConstraints = {
         @UniqueConstraint(name = DBNames.ARTIKEL + "_UC1", columnNames = { DBNames.ARTIKEL_ID }) 
     })
+@NamedEntityGraphs({
+    @NamedEntityGraph(name="artikel.summary",
+        attributeNodes = {
+            @NamedAttributeNode(value = "id"),
+            @NamedAttributeNode(value = "artikelId"),
+            @NamedAttributeNode(value = "produkt", subgraph = "artikel.produkt"),
+            @NamedAttributeNode(value = "kaufdatum"), 
+            @NamedAttributeNode(value = "wahrung"),
+            @NamedAttributeNode(value = "steuerung", subgraph = "artikel.steuerung"),
+            @NamedAttributeNode(value = "motorTyp", subgraph = "artikel.motorTyp"),
+            @NamedAttributeNode(value = "licht", subgraph = "artikel.licht"),
+            @NamedAttributeNode(value = "kupplung", subgraph = "artikel.kupplung"),
+            @NamedAttributeNode(value = "decoder", subgraph = "artikel.decoder"),
+            @NamedAttributeNode(value = "bezeichnung"),
+            @NamedAttributeNode(value = "preis"),
+            @NamedAttributeNode(value = "stuck"),
+            @NamedAttributeNode(value = "verbleibende"),
+            @NamedAttributeNode(value = "anmerkung"),
+            @NamedAttributeNode(value = "beladung"),
+            @NamedAttributeNode(value = "abbildung"),
+            @NamedAttributeNode(value = "status")
+        },
+        subgraphs = {
+            @NamedSubgraph(name = "artikel.produkt",
+                attributeNodes = {
+                @NamedAttributeNode(value = "id"),
+                @NamedAttributeNode(value = "hersteller", subgraph = "artikel.hersteller"),
+                @NamedAttributeNode(value = "bestellNr"),
+                @NamedAttributeNode(value = "bezeichnung"),
+                @NamedAttributeNode(value = "unterKategorie")
+            }),
+            @NamedSubgraph(name = "artikel.hersteller",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "artikel.steuerung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "artikel.motorTyp",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "artikel.licht",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "artikel.kupplung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "artikel.decoder",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "decoderId"),
+                    @NamedAttributeNode(value = "bezeichnung"),
+                    @NamedAttributeNode(value = "decoderTyp", subgraph = "artikel.decoderTyp"),
+                    @NamedAttributeNode(value = "protokoll", subgraph = "artikel.protokoll"),
+                    @NamedAttributeNode(value = "fahrstufe"),
+                    @NamedAttributeNode(value = "status")
+                }),
+            @NamedSubgraph(name = "artikel.decoderTyp",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "hersteller", subgraph = "artikel.decoderHersteller"),
+                    @NamedAttributeNode(value = "bestellNr"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "artikel.protokoll",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "artikel.decoderHersteller",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+            })
+        }),
+    @NamedEntityGraph(name="artikel.detail",
+        includeAllAttributes = true,
+        attributeNodes = {
+            @NamedAttributeNode(value = "produkt", subgraph = "artikel.produkt"),
+            @NamedAttributeNode(value = "steuerung", subgraph = "artikel.steuerung"),
+            @NamedAttributeNode(value = "motorTyp", subgraph = "artikel.motorTyp"),
+            @NamedAttributeNode(value = "licht", subgraph = "artikel.licht"),
+            @NamedAttributeNode(value = "kupplung", subgraph = "artikel.kupplung"),
+            @NamedAttributeNode(value = "decoder", subgraph = "artikel.decoder"),
+            @NamedAttributeNode(value = "anderungen", subgraph = "artikel.anderungen")
+        },
+        subgraphs = {
+            @NamedSubgraph(name = "artikel.produkt",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "hersteller", subgraph = "artikel.hersteller"),
+                    @NamedAttributeNode(value = "bestellNr"),
+                    @NamedAttributeNode(value = "bezeichnung"),
+                    @NamedAttributeNode(value = "unterKategorie")
+                }),
+            @NamedSubgraph(name = "artikel.hersteller",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "artikel.steuerung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "artikel.motorTyp",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "artikel.licht",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "artikel.kupplung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "artikel.decoder",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "decoderId"),
+                    @NamedAttributeNode(value = "bezeichnung"),
+                    @NamedAttributeNode(value = "decoderTyp", subgraph = "artikel.decoderTyp"),
+                    @NamedAttributeNode(value = "protokoll", subgraph = "artikel.protokoll"),
+                    @NamedAttributeNode(value = "fahrstufe"),
+                    @NamedAttributeNode(value = "status")
+                }),
+            @NamedSubgraph(name = "artikel.decoderTyp",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "hersteller", subgraph = "artikel.decoderHersteller"),
+                    @NamedAttributeNode(value = "bestellNr"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "artikel.protokoll",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "artikel.decoderHersteller",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "artikel.anderungen",
+                 attributeNodes = {
+                     @NamedAttributeNode(value = "id"),
+                     @NamedAttributeNode(value = "anderungId"),
+                     @NamedAttributeNode(value = "anderungsDatum"),
+                     @NamedAttributeNode(value = "anderungsTyp"),
+                     @NamedAttributeNode(value = "bezeichnung"),
+                     @NamedAttributeNode(value = "stuck"),
+                     @NamedAttributeNode(value = "anmerkung"),
+                     @NamedAttributeNode(value = "deleted")
+                 })
+        })
+    })
 //@formatter:on
 @SuperBuilder
 @NoArgsConstructor
@@ -95,27 +282,27 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
     private String wahrung;
 
     /** The steuerung. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class, optional = true)
     @JoinColumn(name = DBNames.STEUERUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk3"))
     private Steuerung steuerung;
 
     /** The motor typ. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = MotorTyp.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = MotorTyp.class, optional = true)
     @JoinColumn(name = DBNames.MOTOR_TYP_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk4"))
     private MotorTyp motorTyp;
 
     /** The licht. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Licht.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Licht.class, optional = true)
     @JoinColumn(name = DBNames.LICHT_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk5"))
     private Licht licht;
 
     /** The kupplung. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kupplung.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kupplung.class, optional = true)
     @JoinColumn(name = DBNames.KUPPLUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk6"))
     private Kupplung kupplung;
 
     /** The decoder. */
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class, optional = true)
     @JoinColumn(name = DBNames.DECODER_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk7"))
     private Decoder decoder;
 
@@ -161,7 +348,7 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
     private Status status;
 
     /** The anderung. */
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = DBNames.ARTIKEL, targetEntity=Anderung.class, orphanRemoval = true)
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.ARTIKEL, targetEntity=Anderung.class, orphanRemoval = true)
     @Builder.Default
     private Set<Anderung> anderungen = new HashSet<>();
 

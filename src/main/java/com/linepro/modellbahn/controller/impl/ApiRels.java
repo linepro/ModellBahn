@@ -22,4 +22,5 @@ public interface ApiRels {
     String REMOVE_INSTRUCTIONS = "remove image";
     String ADD_PARTS_DIAGRAM = "add image";
     String REMOVE_PARTS_DIAGRAM = "remove image";
+    public String ADD_CONSIST = "add consist";
 }

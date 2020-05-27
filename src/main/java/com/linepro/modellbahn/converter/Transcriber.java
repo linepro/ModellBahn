@@ -2,8 +2,12 @@ package com.linepro.modellbahn.converter;
 
 public interface Transcriber<S,D> {
     default D apply(S source, D destination) {
-        return apply(source, destination, 0);
+        return applyFields(source, destination);
     }
 
-    D apply(S source, D destination, int depth);
+    D applyFields(S source, D destination);
+
+    default D applySummary(S source, D destination) {
+        return applyFields(source, destination);
+    }
 }

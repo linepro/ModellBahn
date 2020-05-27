@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.converter.model;
 
+import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,9 +26,22 @@ public class ZugModelMutator extends MutatorImpl<ZugModel, Zug> {
         this.lookup = lookup;
     }
 
-    public Zug apply(ZugModel source, Zug destination, int depth) {
-        destination = super.apply(source, destination, depth);
-        destination.setZugTyp(lookup.find(source.getZugTyp(), repository));
+    @Override
+    public Zug apply(ZugModel source, Zug destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
+            destination.setName(source.getName());
+        }
+
+        return applyFields(source, destination);
+    }
+
+    @Override
+    public Zug applyFields(ZugModel source, Zug destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
+            destination.setBezeichnung(source.getBezeichnung());
+            destination.setZugTyp(lookup.find(source.getZugTyp(), repository));
+        }
+        
         return destination;
     }
 }

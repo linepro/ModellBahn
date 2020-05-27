@@ -16,9 +16,9 @@ public interface AnderungRepository extends ItemRepository<Anderung> {
     //@formatter:off
     @Query(value = "SELECT a " + 
                    "FROM   anderung a " + 
-                   "WHERE  a.artikel.artikel_id = :" + ApiNames.ARTIKEL_ID + " " + 
-                   "AND    a.anderung_id        = :" + ApiNames.ANDERUNG_ID,
-           nativeQuery = true)
+                   "WHERE  a.artikel.artikelId = :" + ApiNames.ARTIKEL_ID + " " + 
+                   "AND    a.anderungId        = :" + ApiNames.ANDERUNG_ID,
+           nativeQuery = false)
     //@formatter:on
     Optional<Anderung> findByAnderungId(@Param(ApiNames.ARTIKEL_ID) String artikelId, @Param(ApiNames.ANDERUNG_ID) Integer anderungId);
 }

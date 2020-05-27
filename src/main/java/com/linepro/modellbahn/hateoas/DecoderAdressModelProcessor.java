@@ -19,11 +19,14 @@ import com.linepro.modellbahn.model.DecoderAdressModel;
 @Component
 public class DecoderAdressModelProcessor extends ModelProcessorImpl<DecoderAdressModel> implements RepresentationModelProcessor<DecoderAdressModel> {
 
+    private static final String DECODER_ID = "{" + ApiNames.DECODER_ID + "}";
+    private static final String INDEX = "{" + ApiNames.INDEX + "}";
+
     @Autowired
     public DecoderAdressModelProcessor() {
         super((m) -> MapUtils.putAll(new HashMap<String,Object>(), new String[][] { 
-            { "{" + ApiNames.DECODER_ID + "}", ((DecoderAdressModel) m).getDecoderId() }, 
-            { "{" + ApiNames.INDEX + "}", String.valueOf(((DecoderAdressModel) m).getIndex()) } 
+            { DECODER_ID, ((DecoderAdressModel) m).getDecoderId() }, 
+            { INDEX, String.valueOf(((DecoderAdressModel) m).getIndex()) } 
             }),
                         new LinkTemplateImpl(ApiRels.UPDATE, ApiPaths.UPDATE_DECODER_ADRESS));
     }

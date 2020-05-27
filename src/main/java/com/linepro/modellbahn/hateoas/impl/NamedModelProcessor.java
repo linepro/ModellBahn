@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.hateoas.impl;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.hateoas.RepresentationModel;
 
 import com.linepro.modellbahn.controller.impl.ApiRels;
@@ -13,7 +14,7 @@ public class NamedModelProcessor<M extends RepresentationModel<M>> extends Model
                 new LinkTemplateImpl(ApiRels.ADD, add),
                 new LinkTemplateImpl(ApiRels.SELF, self),
                 new LinkTemplateImpl(ApiRels.UPDATE, update),
-                new LinkTemplateImpl(ApiRels.DELETE, delete, (m) -> !((SoftDelete) m).getDeleted()),
+                new LinkTemplateImpl(ApiRels.DELETE, delete, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted())),
                 new LinkTemplateImpl(ApiRels.SEARCH, search)
             );
     }

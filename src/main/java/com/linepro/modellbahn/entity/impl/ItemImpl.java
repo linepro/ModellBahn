@@ -30,7 +30,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @ToString
 @MappedSuperclass
-public class ItemImpl implements Item {
+public abstract class ItemImpl implements Item {
 
     /** The primary key id. */
     @Id

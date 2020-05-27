@@ -13,6 +13,10 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -50,6 +54,113 @@ import lombok.experimental.SuperBuilder;
         @Index(name = DBNames.DECODER + "_IX2", columnList = DBNames.PROTOKOLL_ID)
     }, uniqueConstraints = {
         @UniqueConstraint(name = DBNames.DECODER + "_UC1", columnNames = { DBNames.DECODER_ID }) 
+    })
+@NamedEntityGraphs({
+    @NamedEntityGraph(name="decoder.summary",
+        attributeNodes = {
+            @NamedAttributeNode(value = "decoderId"),
+            @NamedAttributeNode(value = "bezeichnung"),
+            @NamedAttributeNode(value = "decoderTyp", subgraph = "decoder.decoderTyp"),
+            @NamedAttributeNode(value = "protokoll", subgraph = "decoder.protokoll"),
+            @NamedAttributeNode(value = "fahrstufe"),
+            @NamedAttributeNode(value = "status")
+        },
+        subgraphs = {
+            @NamedSubgraph(name = "decoder.decoderTyp",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "hersteller", subgraph = "decoder.hersteller"),
+                    @NamedAttributeNode(value = "bestellNr")
+                }),
+            @NamedSubgraph(name = "decoder.hersteller",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+            }),
+            @NamedSubgraph(name = "decoder.protokoll",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+            })
+        }),
+    @NamedEntityGraph(name="decoder.detail",
+        includeAllAttributes = true,
+        attributeNodes = {
+            @NamedAttributeNode(value = "decoderTyp", subgraph = "decoder.decoderTyp"),
+            @NamedAttributeNode(value = "protokoll", subgraph = "decoder.protokoll"),
+            @NamedAttributeNode(value = "adressen", subgraph = "decoder.adressen"),
+            @NamedAttributeNode(value = "cvs", subgraph = "decoder.cvs"),
+            @NamedAttributeNode(value = "funktionen", subgraph = "decoder.funktionen")
+        },
+        subgraphs = {
+            @NamedSubgraph(name = "decoder.decoderTyp",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "hersteller", subgraph = "decoder.hersteller"),
+                    @NamedAttributeNode(value = "bestellNr")
+                }),
+            @NamedSubgraph(name = "decoder.hersteller",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "decoder.protokoll",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "decoder.adressen",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "typ", subgraph = "decoder.adressTyp"),
+                    @NamedAttributeNode(value = "adress"),
+                    @NamedAttributeNode(value = "deleted")
+                }),
+            @NamedSubgraph(name = "decoder.cvs",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "cv", subgraph = "decoder.cv"),
+                    @NamedAttributeNode(value = "wert"),
+                    @NamedAttributeNode(value = "deleted")
+                }),
+            @NamedSubgraph(name = "decoder.funktionen",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "funktion", subgraph = "decoder.funktion"),
+                    @NamedAttributeNode(value = "bezeichnung"),
+                    @NamedAttributeNode(value = "deleted")
+                }),
+            @NamedSubgraph(name = "decoder.adressTyp",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "position"),
+                    @NamedAttributeNode(value = "bezeichnung"),
+                    @NamedAttributeNode(value = "adressTyp"),
+                    @NamedAttributeNode(value = "span"),
+                    @NamedAttributeNode(value = "adress")
+                }),
+            @NamedSubgraph(name = "decoder.cv",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "cv"),
+                    @NamedAttributeNode(value = "bezeichnung"),
+                    @NamedAttributeNode(value = "minimal"),
+                    @NamedAttributeNode(value = "maximal"),
+                    @NamedAttributeNode(value = "werkseinstellung"),
+                }),
+            @NamedSubgraph(name = "decoder.funktion",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "reihe"),
+                    @NamedAttributeNode(value = "funktion"),
+                    @NamedAttributeNode(value = "bezeichnung"),
+                    @NamedAttributeNode(value = "programmable")
+                })
+        })
     })
 //@formatter:on
 @SuperBuilder

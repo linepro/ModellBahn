@@ -197,19 +197,19 @@ public class VorbildModel extends RepresentationModel<VorbildModel> implements I
 
     @JsonProperty(ApiNames.SITZPLATZEKL1)
     @Schema(name = "First class seating", example = "20")
-    private Integer sitzPlatzeKL1;
+    private Integer sitzplatzeKL1;
 
     @JsonProperty(ApiNames.SITZPLATZEKL2)
     @Schema(name = "Second class seating", example = "80")
-    private Integer sitzPlatzeKL2;
+    private Integer sitzplatzeKL2;
 
     @JsonProperty(ApiNames.SITZPLATZEKL3)
     @Schema(name = "Third class seating", example = "90")
-    private Integer sitzPlatzeKL3;
+    private Integer sitzplatzeKL3;
 
     @JsonProperty(ApiNames.SITZPLATZEKL4)
     @Schema(name = "Fourth class seating", example = "150")
-    private Integer sitzPlatzeKL4;
+    private Integer sitzplatzeKL4;
 
     @JsonProperty(ApiNames.AUFBAU)
     @Schema(name = "Construction", example = "Holz")

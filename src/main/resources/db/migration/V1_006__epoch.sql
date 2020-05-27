@@ -14,8 +14,8 @@ INSERT INTO epoch (deleted, bezeichnung, name, id) VALUES (FALSE, 'IIc : 1937 - 
 INSERT INTO epoch (deleted, bezeichnung, name, id) VALUES (FALSE, 'IIIa : 1949 - 1956', 'IIIA', 207);
 INSERT INTO epoch (deleted, bezeichnung, name, id) VALUES (FALSE, 'IIIb : 1956 - 1970', 'IIIB', 208);
 INSERT INTO epoch (deleted, bezeichnung, name, id) VALUES (FALSE, 'IVa : 1965 - 1970', 'IVA', 209);
-INSERT INTO epoch (deleted, bezeichnung, name, id) VALUES (FALSE, STRINGDECODE('IVb : 1970 \\u2013 1980'), 'IVB', 210);
-INSERT INTO epoch (deleted, bezeichnung, name, id) VALUES (FALSE, STRINGDECODE('IVc : 1980 \\u2013 1990'), 'IVC', 211);
+INSERT INTO epoch (deleted, bezeichnung, name, id) VALUES (FALSE, 'IVb : 1970 – 1980', 'IVB', 210);
+INSERT INTO epoch (deleted, bezeichnung, name, id) VALUES (FALSE, 'IVc : 1980 – 1990', 'IVC', 211);
 INSERT INTO epoch (deleted, bezeichnung, name, id) VALUES (FALSE, 'Va : 1990 - 1994', 'VA', 212);
 INSERT INTO epoch (deleted, bezeichnung, name, id) VALUES (FALSE, 'Vb : 1994 - 2000', 'VB', 213);
 INSERT INTO epoch (deleted, bezeichnung, name, id) VALUES (FALSE, 'Vc : 2000 - 2006', 'VC', 214);

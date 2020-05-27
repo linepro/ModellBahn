@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.converter.model;
 
+import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -81,34 +83,41 @@ public class ProduktModelMutator implements Mutator<ProduktModel, Produkt> {
     @Autowired
     private final ItemLookup lookup;
 
-    public Produkt apply(ProduktModel source, Produkt destination, int depth) {
-        if (depth >= 0) {
+    @Override
+    public Produkt apply(ProduktModel source, Produkt destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
             destination.setHersteller(lookup.find(source.getHersteller(), herstellerRepository));
             destination.setBestellNr(source.getBestellNr());
         }
-        destination.setBezeichnung(source.getBezeichnung());
-        destination.setUnterKategorie(lookup.find(source.getUnterKategorie(), unterKategorieRepository));
-        destination.setMassstab(lookup.find(source.getMassstab(), massstabRepository));
-        destination.setSpurweite(lookup.find(source.getSpurweite(), spurweiteRepository));
-        destination.setBetreibsnummer(source.getBetreibsnummer());
-        destination.setEpoch(lookup.find(source.getEpoch(), epochRepository));
-        destination.setBahnverwaltung(lookup.find(source.getBahnverwaltung(), bahnverwaltungRepository));
-        destination.setGattung(lookup.find(source.getGattung(), gattungRepository));
-        destination.setBauzeit(source.getBauzeit());
-        destination.setAchsfolg(lookup.find(source.getAchsfolg(), achsfolgRepository));
-        destination.setVorbild(vorbildLookup.find(source.getVorbild()));
-        destination.setAnmerkung(source.getAnmerkung());
-        destination.setSondermodell(lookup.find(source.getSondermodell(), sondermodellRepository));
-        destination.setAufbau(lookup.find(source.getAufbau(), aufbauRepository));
-        destination.setLicht(lookup.find(source.getLicht(), lichtRepository));
-        destination.setKupplung(lookup.find(source.getKupplung(), kupplungRepository));
-        destination.setSteuerung(lookup.find(source.getSteuerung(), steuerungRepository));
-        destination.setDecoderTyp(decoderTypLookup.find(source.getDecoderTyp()));
-        destination.setMotorTyp(lookup.find(source.getMotorTyp(),motorTypRepository));
-        destination.setLange(source.getLange());
-        //destination.setAnleitungen(source.getAnleitungen());
-        //destination.setExplosionszeichnung(source.getExplosionszeichnung());
-        //destination.setAbbildung(source.getAbbildung());
+
+        return applyFields(source, destination);
+    }
+
+    @Override
+    public Produkt applyFields(ProduktModel source, Produkt destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
+            destination.setBezeichnung(source.getBezeichnung());
+            destination.setUnterKategorie(lookup.find(source.getUnterKategorie(), unterKategorieRepository));
+            destination.setMassstab(lookup.find(source.getMassstab(), massstabRepository));
+            destination.setSpurweite(lookup.find(source.getSpurweite(), spurweiteRepository));
+            destination.setBetreibsnummer(source.getBetreibsnummer());
+            destination.setEpoch(lookup.find(source.getEpoch(), epochRepository));
+            destination.setBahnverwaltung(lookup.find(source.getBahnverwaltung(), bahnverwaltungRepository));
+            destination.setGattung(lookup.find(source.getGattung(), gattungRepository));
+            destination.setBauzeit(source.getBauzeit());
+            destination.setAchsfolg(lookup.find(source.getAchsfolg(), achsfolgRepository));
+            destination.setVorbild(vorbildLookup.find(source.getVorbild()));
+            destination.setAnmerkung(source.getAnmerkung());
+            destination.setSondermodell(lookup.find(source.getSondermodell(), sondermodellRepository));
+            destination.setAufbau(lookup.find(source.getAufbau(), aufbauRepository));
+            destination.setLicht(lookup.find(source.getLicht(), lichtRepository));
+            destination.setKupplung(lookup.find(source.getKupplung(), kupplungRepository));
+            destination.setSteuerung(lookup.find(source.getSteuerung(), steuerungRepository));
+            destination.setDecoderTyp(decoderTypLookup.find(source.getDecoderTyp()));
+            destination.setMotorTyp(lookup.find(source.getMotorTyp(),motorTypRepository));
+            destination.setLange(source.getLange());
+        }
+        
         return destination;
     }
 

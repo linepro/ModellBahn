@@ -1,8 +1,8 @@
 package com.linepro.modellbahn.converter.entity;
 
+import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 
-import org.hibernate.collection.internal.PersistentSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,16 +32,14 @@ public class DecoderMutator implements Mutator<Decoder, DecoderModel> {
     @Autowired
     private final DecoderFunktionMutator funktionMutator;
 
-    public DecoderModel apply(Decoder source, DecoderModel destination, int depth) {
-        destination.setDecoderId(source.getDecoderId());
-        destination.setBezeichnung(source.getBezeichnung());
-        destination.setDecoderTyp(decoderTypMutator.convert(source.getDecoderTyp(), depth));
-        destination.setStatus(source.getStatus());
-        destination.setProtokoll(protokollMutator.convert(source.getProtokoll()));
-        destination.setFahrstufe(source.getFahrstufe());
-        
-        if (depth >= 0) {
-            if (source.getAdressen() instanceof PersistentSet && ((PersistentSet) source.getAdressen()).wasInitialized()) {
+    public DecoderModel applyFields(Decoder source, DecoderModel destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
+            applySummary(source, destination);
+            destination.setStatus(source.getStatus());
+            destination.setProtokoll(protokollMutator.summarize(source.getProtokoll()));
+            destination.setFahrstufe(source.getFahrstufe());
+            
+            if (isAvailable(source.getAdressen())) {
                 destination.setAdressen(source.getAdressen()
                                               .stream()
                                               .sorted()
@@ -49,7 +47,7 @@ public class DecoderMutator implements Mutator<Decoder, DecoderModel> {
                                               .collect(new ResultCollector<>())
                                               .orElseThrow());
             }
-            if (source.getCvs() instanceof PersistentSet && ((PersistentSet) source.getCvs()).wasInitialized()) {
+            if (isAvailable(source.getCvs())) {
                 destination.setCvs(source.getCvs()
                                          .stream()
                                          .sorted()
@@ -57,7 +55,7 @@ public class DecoderMutator implements Mutator<Decoder, DecoderModel> {
                                          .collect(new ResultCollector<>())
                                          .orElseThrow());
             }
-            if (source.getFunktionen() instanceof PersistentSet && ((PersistentSet) source.getFunktionen()).wasInitialized()) {
+            if (isAvailable(source.getFunktionen())) {
                 destination.setFunktionen(source.getFunktionen()
                                                 .stream()
                                                 .sorted()
@@ -66,6 +64,17 @@ public class DecoderMutator implements Mutator<Decoder, DecoderModel> {
                                                 .orElseThrow());
             }
             destination.setDeleted(source.getDeleted());
+        }
+        
+        return destination;
+    }
+
+    @Override
+    public DecoderModel applySummary(Decoder source, DecoderModel destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
+            destination.setDecoderId(source.getDecoderId());
+            destination.setBezeichnung(source.getBezeichnung());
+            destination.setDecoderTyp(decoderTypMutator.summarize(source.getDecoderTyp()));
         }
         
         return destination;

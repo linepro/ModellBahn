@@ -1,8 +1,8 @@
 package com.linepro.modellbahn.converter.entity;
 
+import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 
-import org.hibernate.collection.internal.PersistentSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -68,35 +68,33 @@ public class ProduktMutator implements Mutator<Produkt,ProduktModel> {
     @Autowired
     private final ProduktTeilMutator teilMutator;
     
-    public ProduktModel apply(Produkt source, ProduktModel destination, int depth) {
-        destination.setHersteller(herstellerMutator.convert(source.getHersteller()));
-        destination.setBestellNr(source.getBestellNr());
-        destination.setBezeichnung(source.getBezeichnung());
-        destination.setUnterKategorie(unterKategorieMutator.convert(source.getUnterKategorie()));
-        destination.setMassstab(massstabMutator.convert(source.getMassstab()));
-        destination.setSpurweite(spurweiteMutator.convert(source.getSpurweite()));
-        destination.setBetreibsnummer(source.getBetreibsnummer());
-        destination.setEpoch(epochMutator.convert(source.getEpoch()));
-        destination.setBahnverwaltung(bahnverwaltungMutator.convert(source.getBahnverwaltung()));
-        destination.setGattung(gattungMutator.convert(source.getGattung()));
-        destination.setBauzeit(source.getBauzeit());
-        destination.setAchsfolg(achsfolgMutator.convert(source.getAchsfolg()));
-        destination.setVorbild(vorbildMutator.convert(source.getVorbild()));
-        destination.setAnmerkung(source.getAnmerkung());
-        destination.setSondermodell(sondermodellMutator.convert(source.getSondermodell()));
-        destination.setAufbau(aufbauMutator.convert(source.getAufbau()));
-        destination.setLicht(lichtMutator.convert(source.getLicht()));
-        destination.setKupplung(kupplungMutator.convert(source.getKupplung()));
-        destination.setSteuerung(steuerungMutator.convert(source.getSteuerung()));
-        destination.setDecoderTyp(decoderTypMutator.convert(source.getDecoderTyp()));
-        destination.setMotorTyp(motorTypMutator.convert(source.getMotorTyp()));
-        destination.setLange(source.getLange());
-        destination.setAnleitungen(source.getAnleitungen());
-        destination.setExplosionszeichnung(source.getExplosionszeichnung());
-        destination.setAbbildung(source.getAbbildung());
-        
-        if (depth >= 0) {
-            if (source.getTeilen() instanceof PersistentSet && ((PersistentSet) source.getTeilen()).wasInitialized()) {
+    public ProduktModel applyFields(Produkt source, ProduktModel destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
+            applySummary(source, destination);
+            destination.setUnterKategorie(unterKategorieMutator.summarize(source.getUnterKategorie()));
+            destination.setMassstab(massstabMutator.summarize(source.getMassstab()));
+            destination.setSpurweite(spurweiteMutator.summarize(source.getSpurweite()));
+            destination.setBetreibsnummer(source.getBetreibsnummer());
+            destination.setEpoch(epochMutator.summarize(source.getEpoch()));
+            destination.setBahnverwaltung(bahnverwaltungMutator.summarize(source.getBahnverwaltung()));
+            destination.setGattung(gattungMutator.summarize(source.getGattung()));
+            destination.setBauzeit(source.getBauzeit());
+            destination.setAchsfolg(achsfolgMutator.summarize(source.getAchsfolg()));
+            destination.setVorbild(vorbildMutator.summarize(source.getVorbild()));
+            destination.setAnmerkung(source.getAnmerkung());
+            destination.setSondermodell(sondermodellMutator.summarize(source.getSondermodell()));
+            destination.setAufbau(aufbauMutator.summarize(source.getAufbau()));
+            destination.setLicht(lichtMutator.summarize(source.getLicht()));
+            destination.setKupplung(kupplungMutator.summarize(source.getKupplung()));
+            destination.setSteuerung(steuerungMutator.summarize(source.getSteuerung()));
+            destination.setDecoderTyp(decoderTypMutator.summarize(source.getDecoderTyp()));
+            destination.setMotorTyp(motorTypMutator.summarize(source.getMotorTyp()));
+            destination.setLange(source.getLange());
+            destination.setAnleitungen(source.getAnleitungen());
+            destination.setExplosionszeichnung(source.getExplosionszeichnung());
+            destination.setAbbildung(source.getAbbildung());
+            
+            if (isAvailable(source.getTeilen())) {
                 destination.setTeilen(source.getTeilen()
                                             .stream()
                                             .sorted()
@@ -104,6 +102,17 @@ public class ProduktMutator implements Mutator<Produkt,ProduktModel> {
                                             .collect(new ResultCollector<>())
                                             .orElseThrow());
             }
+        }
+        
+        return destination;
+    }
+
+    @Override
+    public ProduktModel applySummary(Produkt source, ProduktModel destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
+            destination.setHersteller(herstellerMutator.summarize(source.getHersteller()));
+            destination.setBestellNr(source.getBestellNr());
+            destination.setBezeichnung(source.getBezeichnung());
         }
         
         return destination;

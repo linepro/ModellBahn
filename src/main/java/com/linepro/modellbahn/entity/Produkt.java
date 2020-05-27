@@ -15,6 +15,10 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -68,6 +72,318 @@ import lombok.experimental.SuperBuilder;
     }, uniqueConstraints = {
         @UniqueConstraint(name = DBNames.PRODUKT + "_UC1", columnNames = { DBNames.HERSTELLER_ID, DBNames.BESTELL_NR })
     })
+@NamedEntityGraphs({
+    @NamedEntityGraph(name="produkt.summary",
+        attributeNodes = {
+            @NamedAttributeNode(value = "id"),
+            @NamedAttributeNode(value = "hersteller", subgraph = "produkt.hersteller"),
+            @NamedAttributeNode(value = "bestellNr"),
+            @NamedAttributeNode(value = "bezeichnung"),
+            @NamedAttributeNode(value = "unterKategorie", subgraph = "produkt.unterkategorie"),
+            @NamedAttributeNode(value = "massstab", subgraph = "produkt.massstab"),
+            @NamedAttributeNode(value = "spurweite", subgraph = "produkt.spurweite"),
+            @NamedAttributeNode(value = "bahnverwaltung", subgraph = "produkt.bahnverwaltung"),
+            @NamedAttributeNode(value = "gattung", subgraph = "produkt.gattung"),
+            @NamedAttributeNode(value = "epoch", subgraph = "produkt.epoch"),
+            @NamedAttributeNode(value = "achsfolg", subgraph = "produkt.achsfolg"),
+            @NamedAttributeNode(value = "sondermodell", subgraph = "produkt.sondermodell"),
+            @NamedAttributeNode(value = "aufbau", subgraph = "produkt.aufbau"),
+            @NamedAttributeNode(value = "licht", subgraph = "produkt.licht"),
+            @NamedAttributeNode(value = "kupplung", subgraph = "produkt.kupplung"),
+            @NamedAttributeNode(value = "vorbild", subgraph = "produkt.vorbild"),
+            @NamedAttributeNode(value = "steuerung", subgraph = "produkt.steuerung"),
+            @NamedAttributeNode(value = "decoderTyp", subgraph = "produkt.decoderTyp"),
+            @NamedAttributeNode(value = "motorTyp", subgraph = "produkt.motorTyp"),
+            @NamedAttributeNode(value = "anmerkung"),
+            @NamedAttributeNode(value = "betreibsnummer"),
+            @NamedAttributeNode(value = "bauzeit"),
+            @NamedAttributeNode(value = "anleitungen"),
+            @NamedAttributeNode(value = "explosionszeichnung"),
+            @NamedAttributeNode(value = "lange"),
+            @NamedAttributeNode(value = "abbildung")
+        },
+        subgraphs = {
+            @NamedSubgraph(name = "produkt.hersteller",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.unterkategorie",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "kategorie", subgraph = "produkt.kategorie"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.kategorie",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.massstab",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.spurweite",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.bahnverwaltung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.gattung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.epoch",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.achsfolg",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.sondermodell",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.aufbau",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.licht",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.kupplung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.vorbild",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "gattung"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.steuerung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.decoderTyp",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "hersteller", subgraph = "produkt.decoderHersteller"),
+                    @NamedAttributeNode(value = "bestellNr"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.decoderHersteller",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.motorTyp",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                })
+        }),
+    @NamedEntityGraph(name="produkt.detail",
+        includeAllAttributes = true, 
+        attributeNodes = {
+            @NamedAttributeNode(value = "hersteller", subgraph = "produkt.hersteller"),
+            @NamedAttributeNode(value = "unterKategorie", subgraph = "produkt.unterkategorie"),
+            @NamedAttributeNode(value = "massstab", subgraph = "produkt.massstab"),
+            @NamedAttributeNode(value = "spurweite", subgraph = "produkt.spurweite"),
+            @NamedAttributeNode(value = "bahnverwaltung", subgraph = "produkt.bahnverwaltung"),
+            @NamedAttributeNode(value = "gattung", subgraph = "produkt.gattung"),
+            @NamedAttributeNode(value = "epoch", subgraph = "produkt.epoch"),
+            @NamedAttributeNode(value = "achsfolg", subgraph = "produkt.achsfolg"),
+            @NamedAttributeNode(value = "sondermodell", subgraph = "produkt.sondermodell"),
+            @NamedAttributeNode(value = "aufbau", subgraph = "produkt.aufbau"),
+            @NamedAttributeNode(value = "licht", subgraph = "produkt.licht"),
+            @NamedAttributeNode(value = "kupplung", subgraph = "produkt.kupplung"),
+            @NamedAttributeNode(value = "vorbild", subgraph = "produkt.vorbild"),
+            @NamedAttributeNode(value = "steuerung", subgraph = "produkt.steuerung"),
+            @NamedAttributeNode(value = "decoderTyp", subgraph = "produkt.decoderTyp"),
+            @NamedAttributeNode(value = "motorTyp", subgraph = "produkt.motorTyp"),
+            @NamedAttributeNode(value = "teilen", subgraph = "produkt.teilen")
+        },
+        subgraphs = {
+            @NamedSubgraph(name = "produkt.hersteller",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.unterkategorie",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "kategorie", subgraph = "produkt.kategorie"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.kategorie",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.massstab",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.spurweite",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.bahnverwaltung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.gattung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.epoch",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.achsfolg",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.sondermodell",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.aufbau",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.licht",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.kupplung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.vorbild",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "gattung"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.steuerung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.decoderTyp",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "hersteller", subgraph = "produkt.decoderHersteller"),
+                    @NamedAttributeNode(value = "bestellNr"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.decoderHersteller",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.motorTyp",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.teilen", 
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "teil", subgraph = "produkt.teil"),
+                    @NamedAttributeNode(value = "anzahl"),
+                    @NamedAttributeNode(value = "deleted")
+                }),
+            @NamedSubgraph(name = "produkt.teil", 
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "hersteller", subgraph = "produkt.teilHersteller"),
+                    @NamedAttributeNode(value = "bestellNr"),
+                    @NamedAttributeNode(value = "bezeichnung"),
+                    @NamedAttributeNode(value = "unterKategorie", subgraph = "produkt.teilUnterkategorie"),
+                    @NamedAttributeNode(value = "deleted")
+                }),
+            @NamedSubgraph(name = "produkt.teilHersteller", 
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung"),
+                    @NamedAttributeNode(value = "deleted")
+                }),
+            @NamedSubgraph(name = "produkt.teilUnterkategorie",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "kategorie", subgraph = "produkt.teilKategorie"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "produkt.teilKategorie",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                })
+        })
+    })
 //@formatter:on
 @SuperBuilder
 @NoArgsConstructor
@@ -77,7 +393,7 @@ import lombok.experimental.SuperBuilder;
 public class Produkt extends ItemImpl implements Comparable<Produkt> {
 
     /** The hersteller. */
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Hersteller.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class)
     @JoinColumn(name = DBNames.HERSTELLER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk16"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.hersteller.notnull}")
     private Hersteller hersteller;
@@ -91,7 +407,7 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
     private String bezeichnung;
 
     /** The unter kategorie. */
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = UnterKategorie.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = UnterKategorie.class)
     @JoinColumn(name = DBNames.UNTER_KATEGORIE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk7"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.unterKategorie.notnull}")
     private UnterKategorie unterKategorie;
@@ -103,67 +419,67 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
     private Massstab massstab;
 
     /** The spurweite. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Spurweite.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Spurweite.class, optional = true)
     @JoinColumn(name = DBNames.SPURWEITE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk6"))
     private Spurweite spurweite;
 
     /** The bahnverwaltung. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Bahnverwaltung.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Bahnverwaltung.class, optional = true)
     @JoinColumn(name = DBNames.BAHNVERWALTUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk3"))
     private Bahnverwaltung bahnverwaltung;
 
     /** The gattung. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gattung.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gattung.class, optional = true)
     @JoinColumn(name = DBNames.GATTUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk2"))
     private Gattung gattung;
 
     /** The epoch. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Epoch.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Epoch.class, optional = true)
     @JoinColumn(name = DBNames.EPOCH_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk1"))
     private Epoch epoch;
 
     /** The achsfolg. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class, optional = true)
     @JoinColumn(name = DBNames.ACHSFOLG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk4"))
     private Achsfolg achsfolg;
 
     /** The Sondermodell. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Sondermodell.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Sondermodell.class, optional = true)
     @JoinColumn(name = DBNames.SONDERMODELL_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk8"))
     private Sondermodell sondermodell;
 
     /** The aufbau. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Aufbau.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Aufbau.class, optional = true)
     @JoinColumn(name = DBNames.AUFBAU_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk9"))
     private Aufbau aufbau;
 
     /** The licht. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Licht.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Licht.class, optional = true)
     @JoinColumn(name = DBNames.LICHT_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk10"))
     private Licht licht;
 
     /** The kupplung. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kupplung.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kupplung.class, optional = true)
     @JoinColumn(name = DBNames.KUPPLUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk11"))
     private Kupplung kupplung;
 
     /** The vorbild. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Vorbild.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Vorbild.class, optional = true)
     @JoinColumn(name = DBNames.VORBILD_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk12"))
     private Vorbild vorbild;
 
     /** The steuerung. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class, optional = true)
     @JoinColumn(name = DBNames.STEUERUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk13"))
     private Steuerung steuerung;
 
     /** The decoder typ. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class, optional = true)
     @JoinColumn(name = DBNames.DECODER_TYP_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk14"))
     private DecoderTyp decoderTyp;
 
     /** The motor typ. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = MotorTyp.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = MotorTyp.class, optional = true)
     @JoinColumn(name = DBNames.MOTOR_TYP_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk15"))
     private MotorTyp motorTyp;
 

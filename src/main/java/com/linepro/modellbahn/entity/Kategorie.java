@@ -38,16 +38,28 @@ import lombok.experimental.SuperBuilder;
         @UniqueConstraint(name = DBNames.KATEGORIE + "_UC1", columnNames = { DBNames.NAME })
     })
 @NamedEntityGraphs({
-    @NamedEntityGraph(name="withChildren", includeAllAttributes = true, subgraphs = {
-         @NamedSubgraph(name = "unterkategorien", attributeNodes = {
-             @NamedAttributeNode(DBNames.ID),
-             @NamedAttributeNode(DBNames.KATEGORIE_ID),
-             @NamedAttributeNode(DBNames.NAME),
-             @NamedAttributeNode(DBNames.BEZEICHNUNG),
-             @NamedAttributeNode(DBNames.DELETED)
-         })
+    @NamedEntityGraph(name="kategorie.summary",
+        attributeNodes = {
+            @NamedAttributeNode(value = "id"),
+            @NamedAttributeNode(value = "name"),
+            @NamedAttributeNode(value = "bezeichnung"),
+            @NamedAttributeNode(value = "deleted")
+        }),
+    @NamedEntityGraph(name="kategorie.detail",
+        includeAllAttributes = true,
+        attributeNodes = {
+            @NamedAttributeNode(value = "unterKategorien", subgraph = "kategorie.unterkategorien")
+        },
+        subgraphs = {
+             @NamedSubgraph(name = "kategorie.unterkategorien",
+                 attributeNodes = {
+                     @NamedAttributeNode(value = "id"),
+                     @NamedAttributeNode(value = "name"),
+                     @NamedAttributeNode(value = "bezeichnung"),
+                     @NamedAttributeNode(value = "deleted")
+             })
+        })
     })
-})
 //@formatter:on
 @SuperBuilder
 @NoArgsConstructor

@@ -14,6 +14,10 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -52,6 +56,91 @@ import lombok.experimental.SuperBuilder;
     }, uniqueConstraints = {
         @UniqueConstraint(name = DBNames.VORBILD + "_UC1", columnNames = { DBNames.GATTUNG_ID })
     })
+@NamedEntityGraphs({
+    @NamedEntityGraph(name="vorbild.summary",
+        includeAllAttributes = true,
+        attributeNodes = {
+            @NamedAttributeNode(value = "id"),
+            @NamedAttributeNode(value = "gattung", subgraph = "vorbild.gattung"),
+            @NamedAttributeNode(value = "unterKategorie", subgraph = "vorbild.unterKategorie"),
+            @NamedAttributeNode(value = "bahnverwaltung", subgraph = "vorbild.bahnverwaltung"),
+            @NamedAttributeNode(value = "antrieb", subgraph = "vorbild.antrieb")
+        },
+        subgraphs = {
+            @NamedSubgraph(name = "vorbild.gattung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "vorbild.unterKategorie",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "kategorie", subgraph = "vorbild.kategorie"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "vorbild.kategorie",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "vorbild.bahnverwaltung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "vorbild.antrieb",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+        }),
+    @NamedEntityGraph(name="vorbild.detail",
+        includeAllAttributes = true,
+        attributeNodes = {
+            @NamedAttributeNode(value = "gattung", subgraph = "vorbild.gattung"),
+            @NamedAttributeNode(value = "unterKategorie", subgraph = "vorbild.unterKategorie"),
+            @NamedAttributeNode(value = "bahnverwaltung", subgraph = "vorbild.bahnverwaltung"),
+            @NamedAttributeNode(value = "antrieb", subgraph = "vorbild.antrieb")
+        },
+        subgraphs = {
+            @NamedSubgraph(name = "vorbild.gattung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "vorbild.unterKategorie",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "kategorie", subgraph = "vorbild.kategorie"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "vorbild.kategorie",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+            }),
+            @NamedSubgraph(name = "vorbild.bahnverwaltung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                }),
+            @NamedSubgraph(name = "vorbild.antrieb",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+                })
+        })
+    })
 //@formatter:on
 @SuperBuilder
 @NoArgsConstructor
@@ -77,7 +166,7 @@ public class Vorbild extends ItemImpl implements Comparable<Vorbild> {
     private UnterKategorie unterKategorie;
 
     /** The bahnverwaltung */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Bahnverwaltung.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Bahnverwaltung.class, optional = true)
     @JoinColumn(name = DBNames.BAHNVERWALTUNG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk3"))
     private Bahnverwaltung bahnverwaltung;
     
@@ -99,13 +188,12 @@ public class Vorbild extends ItemImpl implements Comparable<Vorbild> {
     @Column(name = DBNames.BETREIBSNUMMER, length = 100)
     private String betreibsNummer;
 
-    /** The antrieb. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Antrieb.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Antrieb.class, optional = true)
     @JoinColumn(name = DBNames.ANTRIEB_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk4"))
     private Antrieb antrieb;
 
     /** The achsfolg. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class, optional = true)
     @JoinColumn(name = DBNames.ACHSFOLG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk5"))
     private Achsfolg achsfolg;
 
@@ -226,22 +314,22 @@ public class Vorbild extends ItemImpl implements Comparable<Vorbild> {
     /** The sitzplatze KL 1. */
     @Column(name = DBNames.SITZPLATZEKL1)
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.sitzplatzeKL1.positive}")
-    private Integer sitzPlatzeKL1;
+    private Integer sitzplatzeKL1;
 
     /** The sitzplatze KL 2. */
     @Column(name = DBNames.SITZPLATZEKL2)
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.sitzplatzeKL2.positive}")
-    private Integer sitzPlatzeKL2;
+    private Integer sitzplatzeKL2;
 
     /** The sitzplatze KL 3. */
     @Column(name = DBNames.SITZPLATZEKL3)
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.sitzplatzeKL3.positive}")
-    private Integer sitzPlatzeKL3;
+    private Integer sitzplatzeKL3;
 
     /** The sitzplatze KL 4. */
     @Column(name = DBNames.SITZPLATZEKL4)
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.sitzplatzeKL4.positive}")
-    private Integer sitzPlatzeKL4;
+    private Integer sitzplatzeKL4;
 
     /** The aufbauten. */
     @Column(name = DBNames.AUFBAU, length = 100)

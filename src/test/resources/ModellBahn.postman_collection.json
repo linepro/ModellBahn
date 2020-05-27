@@ -1,0 +1,4839 @@
+{
+	"info": {
+		"_postman_id": "d97294c6-b864-459c-b60a-96fb60bb29ff",
+		"name": "ModellBahn",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Achsfolg",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/achsfolg",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"achsfolg"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{achsfolgName}}\",\n\t\"bezeichnung\": \"{{achsfolgName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/achsfolg",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"achsfolg"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/achsfolg/{{achsfolgName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"achsfolg",
+								"{{achsfolgName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{achsfolgName}}\",\n\t\"bezeichnung\": \"{{achsfolgName}} Descritption\",\n\t\"deleted\": true\n}"
+						},
+						"url": {
+							"raw": "{{api}}/achsfolg/{{achsfolgName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"achsfolg",
+								"{{achsfolgName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/achsfolg/{{achsfolgName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"achsfolg",
+								"{{achsfolgName}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Antrieb",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/antrieb",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"antrieb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{antriebName}}\",\n\t\"bezeichnung\": \"{{antriebName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/antrieb",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"antrieb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/antrieb/{{antriebName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"antrieb",
+								"{{antriebName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{antriebName}}\",\n\t\"bezeichnung\": \"{{antriebName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/antrieb/{{antriebName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"antrieb",
+								"{{antriebName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/antrieb/{{antriebName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"antrieb",
+								"{{antriebName}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Artikel",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/artikel",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"artikel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"artikelId\": \"{{artikelId}}\",\n\t\"bezeichnung\": \"{{artikelId}} Descritption\",\n    \"kaufdatum\": \"1967-01-01\",\n    \"wahrung\": \"EUR\",\n    \"preis\": 100.00,\n    \"stuck\": 1,\n    \"verbleibende\": 1,\n    \"steuerung\": {\n        \"name\": \"FRU\"\n    },\n    \"motorTyp\": {\n        \"name\": \"SFCM\"\n    },\n    \"licht\": {\n        \"name\": \"L1V\"\n    },\n    \"kupplung\": {\n        \"name\": \"RELEX\"\n    },\n    \"status\": \"GEKAUFT\",\n    \"deleted\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/artikel",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"artikel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/artikel/{{artikelId}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"artikel",
+								"{{artikelId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"artikelId\": \"{{artikelId}}\",\n\t\"bezeichnung\": \"{{artikelId}} Descritption\",\n    \"kaufdatum\": \"1967-01-01\",\n    \"wahrung\": \"EUR\",\n    \"preis\": 100.00,\n    \"stuck\": 1,\n    \"verbleibende\": 1,\n    \"steuerung\": {\n        \"name\": \"FRU\"\n    },\n    \"motorTyp\": {\n        \"name\": \"SFCM\"\n    },\n    \"licht\": {\n        \"name\": \"L1V\"\n    },\n    \"kupplung\": {\n        \"name\": \"RELEX\"\n    },\n    \"status\": \"GEKAUFT\",\n    \"deleted\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/artikel/{{artikelId}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"artikel",
+								"{{artikelId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Abbildung",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/artikel/{{artikelId}}/abbildung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"artikel",
+								"{{artikelId}}",
+								"abbildung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Abbildung",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/artikel/{{artikelId}}/abbildung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"artikel",
+								"{{artikelId}}",
+								"abbildung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Anderung",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"artikelId\": \"{{artikelId}}\",\n\t\"anderungId\": \"{{anderungId}}\",\n\t\"bezeichnung\": \"{{anderungId}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/artikel/{{artikelId}}/anderung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"artikel",
+								"{{artikelId}}",
+								"anderung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Anderung",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"artikelId\": \"{{artikelId}}\",\n\t\"anderungId\": \"{{anderungId}}\",\n\t\"bezeichnung\": \"{{anderungId}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/artikel/{{artikelId}}/anderung/{{anderungId}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"artikel",
+								"{{artikelId}}",
+								"anderung",
+								"{{anderungId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Anderung",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/artikel/{{artikelId}}/anderung/{{anderungId}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"artikel",
+								"{{artikelId}}",
+								"anderung",
+								"{{anderungId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/artikel/{{artikelId}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"artikel",
+								"{{artikelId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Aufbau",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/aufbau",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"aufbau"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{aufbauName}}\",\n\t\"bezeichnung\": \"{{aufbauName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/aufbau",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"aufbau"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/aufbau/{{aufbauName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"aufbau",
+								"{{aufbauName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{aufbauName}}\",\n\t\"bezeichnung\": \"{{aufbauName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/aufbau/{{aufbauName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"aufbau",
+								"{{aufbauName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Abbildung",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/aufbau/{{aufbauName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"aufbau",
+								"{{aufbauName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Abbildung",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/aufbau/{{aufbauName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"aufbau",
+								"{{aufbauName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/aufbau/{{aufbauName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"aufbau",
+								"{{aufbauName}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Bahnverwaltung",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/bahnverwaltung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"bahnverwaltung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{bahnverwaltungName}}\",\n\t\"bezeichnung\": \"{{bahnverwaltungName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/bahnverwaltung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"bahnverwaltung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/bahnverwaltung/{{bahnverwaltungName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"bahnverwaltung",
+								"{{bahnverwaltungName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{bahnverwaltungName}}\",\n\t\"bezeichnung\": \"{{bahnverwaltungName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/bahnverwaltung/{{bahnverwaltungName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"bahnverwaltung",
+								"{{bahnverwaltungName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/bahnverwaltung/{{bahnverwaltungName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"bahnverwaltung",
+								"{{bahnverwaltungName}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Decoder",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/decoder",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/decoder/{{hersteller}}/{{bestellNr}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoder",
+								"{{hersteller}}",
+								"{{bestellNr}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/decoder/{{decoderId}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoder",
+								"{{decoderId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"decoderId\": \"{{decoderId}}\",\n    \"decoderTyp\": {\n        \"hersteller\": {\n            \"name\": \"ESU\"\n        },\n        \"bestellNr\": \"62400\"\n    },\n    \"protokoll\": {\n        \"name\": \"MFX\"\n    },\n    \"status\": \"INSTALIERT\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/decoder/{{decoderId}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoder",
+								"{{decoderId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Adress",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/decoder/{{decoderId}}/adress/{{index}}?adress={{adress}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoder",
+								"{{decoderId}}",
+								"adress",
+								"{{index}}"
+							],
+							"query": [
+								{
+									"key": "adress",
+									"value": "{{adress}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update CV",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/decoder/{{decoderId}}/cv/{{cv}}?wert={{wert}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoder",
+								"{{decoderId}}",
+								"cv",
+								"{{cv}}"
+							],
+							"query": [
+								{
+									"key": "wert",
+									"value": "{{wert}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Funktion",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/decoder/{{decoderId}}/funktion/{{funktion}}/{{reihe}}?bezeichnung={{bezeichnung}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoder",
+								"{{decoderId}}",
+								"funktion",
+								"{{funktion}}",
+								"{{reihe}}"
+							],
+							"query": [
+								{
+									"key": "bezeichnung",
+									"value": "{{bezeichnung}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/decoder/{{decoderId}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoder",
+								"{{decoderId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Decoder Typ",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/decoderTyp",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoderTyp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"hersteller\": {\n        \"name\": \"{{decoderHersteller}}\"\n    },\n\t\"bestellNr\": \"{{decoderBestellNr}}\",\n\t\"bezeichnung\": \"{{decoderTypName}} Descritption\",\n    \"protokoll\": {\n        \"name\": \"MFX\"\n    },\n    \"gerausch\": true,\n    \"konfiguration\": \"CV\",\n    \"stecker\": \"NEM652\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/decoderTyp",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoderTyp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoderTyp",
+								"{{decoderHersteller}}",
+								"{{decoderBestellNr}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"hersteller\": {\n        \"name\": \"{{decoderHersteller}}\"\n    },\n\t\"bestellNr\": \"{{decoderBestellNr}}\",\n\t\"bezeichnung\": \"{{decoderTypName}} Descritption\",\n    \"protokoll\": {\n        \"name\": \"MFX\"\n    },\n    \"gerausch\": true,\n    \"konfiguration\": \"CV\",\n    \"stecker\": \"NEM652\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoderTyp",
+								"{{decoderHersteller}}",
+								"{{decoderBestellNr}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Anleitungen",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/anleitungen",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoderTyp",
+								"{{decoderHersteller}}",
+								"{{decoderBestellNr}}",
+								"anleitungen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Anleitungen",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/anleitungen",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoderTyp",
+								"{{decoderHersteller}}",
+								"{{decoderBestellNr}}",
+								"anleitungen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Adress",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"hersteller\": \"{{decoderHersteller}}\",\n\t\"bestellNr\": \"{{decoderBestellNr}}\",\n    \"index\": 1,\n\t\"bezeichnung\": \"{{decoderTypName}} Descritption\",\n    \"adressTyp\": \"DIGITAL\",\n    \"span\": 1,\n    \"werkseinstellung\": 1,\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/adress",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoderTyp",
+								"{{decoderHersteller}}",
+								"{{decoderBestellNr}}",
+								"adress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Adress",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"hersteller\": \"{{decoderHersteller}}\",\n\t\"bestellNr\": \"{{decoderBestellNr}}\",\n    \"index\": 1,\n\t\"bezeichnung\": \"{{decoderTypName}} Descritption\",\n    \"adressTyp\": \"DIGITAL\",\n    \"span\": 1,\n    \"werkseinstellung\": 1,\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/adress/{{index}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoderTyp",
+								"{{decoderHersteller}}",
+								"{{decoderBestellNr}}",
+								"adress",
+								"{{index}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Adress",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/adress/{{index}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoderTyp",
+								"{{decoderHersteller}}",
+								"{{decoderBestellNr}}",
+								"adress",
+								"{{index}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add CV",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"hersteller\": \"{{decoderHersteller}}\",\n\t\"bestellNr\": \"{{decoderBestellNr}}\",\n    \"cv\": 79,\n\t\"bezeichnung\": \"{{decoderTypName}} Descritption\",\n    \"minimal\": 1,\n    \"maximal\": 63,\n    \"werkseinstellung\": 63,\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/cv",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoderTyp",
+								"{{decoderHersteller}}",
+								"{{decoderBestellNr}}",
+								"cv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update CV",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"hersteller\": \"{{decoderHersteller}}\",\n\t\"bestellNr\": \"{{decoderBestellNr}}\",\n    \"cv\": 79,\n\t\"bezeichnung\": \"{{decoderTypName}} Descritption\",\n    \"minimal\": 1,\n    \"maximal\": 63,\n    \"werkseinstellung\": 63,\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/cv/{{cv}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoderTyp",
+								"{{decoderHersteller}}",
+								"{{decoderBestellNr}}",
+								"cv",
+								"{{cv}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete CV",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/cv/{{cv}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoderTyp",
+								"{{decoderHersteller}}",
+								"{{decoderBestellNr}}",
+								"cv",
+								"{{cv}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Funktion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"hersteller\": \"{{decoderHersteller}}\",\n\t\"bestellNr\": \"{{decoderBestellNr}}\",\n    \"reihe\": 1,\n    \"funktion\": \"F11\",\n\t\"bezeichnung\": \"{{decoderTypName}} Descritption\",\n    \"programmable\": false,\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/funktion",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoderTyp",
+								"{{decoderHersteller}}",
+								"{{decoderBestellNr}}",
+								"funktion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Funktion",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"hersteller\": \"{{decoderHersteller}}\",\n\t\"bestellNr\": \"{{decoderBestellNr}}\",\n    \"reihe\": 1,\n    \"funktion\": \"F11\",\n\t\"bezeichnung\": \"{{decoderTypName}} Descritption\",\n    \"programmable\": false,\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/funktion/{{funktion}}/{{reihe}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoderTyp",
+								"{{decoderHersteller}}",
+								"{{decoderBestellNr}}",
+								"funktion",
+								"{{funktion}}",
+								"{{reihe}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Funktion",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/funktion/{{funktion}}/{{reihe}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoderTyp",
+								"{{decoderHersteller}}",
+								"{{decoderBestellNr}}",
+								"funktion",
+								"{{funktion}}",
+								"{{reihe}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"decoderTyp",
+								"{{decoderHersteller}}",
+								"{{decoderBestellNr}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Epoch",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/epoch",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"epoch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{epochName}}\",\n\t\"bezeichnung\": \"{{epochName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/epoch",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"epoch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/epoch/{{epochName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"epoch",
+								"{{epochName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{epochName}}\",\n\t\"bezeichnung\": \"{{epochName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/epoch/{{epochName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"epoch",
+								"{{epochName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/epoch/{{epochName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"epoch",
+								"{{epochName}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Enums",
+			"item": [
+				{
+					"name": "Adress Typ",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/enums/adressTyp",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"enums",
+								"adressTyp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Anderungs Typ",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/enums/anderungsTyp",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"enums",
+								"anderungsTyp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Konfiguration",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/enums/konfiguration",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"enums",
+								"konfiguration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/enums/status",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"enums",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Stecker",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/enums/stecker",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"enums",
+								"stecker"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Gattung",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/gattung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"gattung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{gattungName}}\",\n\t\"bezeichnung\": \"{{gattungName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/gattung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"gattung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/gattung/{{gattungName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"gattung",
+								"{{gattungName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{gattungName}}\",\n\t\"bezeichnung\": \"{{gattungName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/gattung/{{gattungName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"gattung",
+								"{{gattungName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/gattung/{{gattungName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"gattung",
+								"{{gattungName}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Hersteller",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/hersteller",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"hersteller"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{herstellerName}}\",\n\t\"bezeichnung\": \"{{herstellerName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/hersteller",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"hersteller"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/hersteller/{{herstellerName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"hersteller",
+								"{{herstellerName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{herstellerName}}\",\n\t\"bezeichnung\": \"{{herstellerName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/hersteller/{{herstellerName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"hersteller",
+								"{{herstellerName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/hersteller/{{herstellerName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"hersteller",
+								"{{herstellerName}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Kategorie",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/kategorie",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"kategorie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{kategorieName}}\",\n\t\"bezeichnung\": \"{{kategorieName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/kategorie",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"kategorie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/kategorie/{{kategorieName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"kategorie",
+								"{{kategorieName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{kategorieName}}\",\n\t\"bezeichnung\": \"{{kategorieName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/kategorie/{{kategorieName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"kategorie",
+								"{{kategorieName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Unter Kategorie",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/kategorie/unterkategorien?kategorie=AUSGESTALTUNG&kategorie=BELEUCHTUNG",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"kategorie",
+								"unterkategorien"
+							],
+							"query": [
+								{
+									"key": "kategorie",
+									"value": "AUSGESTALTUNG"
+								},
+								{
+									"key": "kategorie",
+									"value": "BELEUCHTUNG"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Unter Kategorie",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"kategorie\": \"{{kategorieName}}\",\n\t\"name\": \"{{unterkategorieName}}\",\n\t\"bezeichnung\": \"{{kategorieName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/kategorie/{{kategorieName}}/unterkategorien",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"kategorie",
+								"{{kategorieName}}",
+								"unterkategorien"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Unter Kategorie",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/kategorie/{{kategorieName}}/unterkategorien/{{unterkategorieName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"kategorie",
+								"{{kategorieName}}",
+								"unterkategorien",
+								"{{unterkategorieName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Unter Kategorie",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"kategorie\": \"{{kategorieName}}\",\n\t\"name\": \"{{unterkategorieName}}\",\n\t\"bezeichnung\": \"{{kategorieName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/kategorie/{{kategorieName}}/unterkategorien/{{unterkategorieName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"kategorie",
+								"{{kategorieName}}",
+								"unterkategorien",
+								"{{unterkategorieName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Unter Kategorie",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/kategorie/{{kategorieName}}/unterkategorien/{{unterkategorieName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"kategorie",
+								"{{kategorieName}}",
+								"unterkategorien",
+								"{{unterkategorieName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/kategorie/{{kategorieName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"kategorie",
+								"{{kategorieName}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Kupplung",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/kupplung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"kupplung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{kupplungName}}\",\n\t\"bezeichnung\": \"{{kupplungName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/kupplung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"kupplung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/kupplung/{{kupplungName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"kupplung",
+								"{{kupplungName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{kupplungName}}\",\n\t\"bezeichnung\": \"{{kupplungName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/kupplung/{{kupplungName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"kupplung",
+								"{{kupplungName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Abbildung",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/kupplung/{{kupplungName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"kupplung",
+								"{{kupplungName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Abbildung",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/kupplung/{{kupplungName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"kupplung",
+								"{{kupplungName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/kupplung/{{kupplungName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"kupplung",
+								"{{kupplungName}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Licht",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/licht",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"licht"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{lichtName}}\",\n\t\"bezeichnung\": \"{{lichtName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/licht",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"licht"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/licht/{{lichtName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"licht",
+								"{{lichtName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{lichtName}}\",\n\t\"bezeichnung\": \"{{lichtName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/licht/{{lichtName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"licht",
+								"{{lichtName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Abbildung",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/licht/{{lichtName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"licht",
+								"{{lichtName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Abbildung",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/licht/{{lichtName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"licht",
+								"{{lichtName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/licht/{{lichtName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"licht",
+								"{{lichtName}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Massstab",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/massstab",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"massstab"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{massstabName}}\",\n\t\"bezeichnung\": \"{{massstabName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/massstab",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"massstab"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/massstab/{{massstabName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"massstab",
+								"{{massstabName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{massstabName}}\",\n\t\"bezeichnung\": \"{{massstabName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/massstab/{{massstabName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"massstab",
+								"{{massstabName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/massstab/{{massstabName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"massstab",
+								"{{massstabName}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Motor Typ",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/motorTyp",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"motorTyp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{motorTypName}}\",\n\t\"bezeichnung\": \"{{motorTypName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/motorTyp",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"motorTyp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/motorTyp/{{motorTypName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"motorTyp",
+								"{{motorTypName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{motorTypName}}\",\n\t\"bezeichnung\": \"{{motorTypName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/motorTyp/{{motorTypName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"motorTyp",
+								"{{motorTypName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/motorTyp/{{motorTypName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"motorTyp",
+								"{{motorTypName}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Produkt",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/produkt",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"produkt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"hersteller\": {\n        \"name\": \"MARKLIN\"\n    },\n    \"bestellNr\": \"3000\",\n\t\"bezeichnung\": \"{{produktName}} Descritption\",\n    \"lange\": 11.00,\n    \"unterKategorie\": {\n        \"kategorie\": \"LOKOMOTIV\",\n        \"name\": \"DAMPF\"\n    },\n    \"massstab\": {\n        \"name\": \"H0\"\n    },\n    \"spurweite\": {\n        \"name\": \"H0\"\n    },\n    \"epoch\": {\n        \"name\": \"III\"\n    },\n    \"bahnverwaltung\": {\n        \"name\": \"DB\"\n    },\n    \"gattung\": {\n        \"name\": \"BR89.0\"\n\t},\n\t\"betreibsnummer\": \"89 028\",\n\t\"bauzeit\": \"1907-01-01\",\n\t\"vorbild\": {\n\t    \"gattung\": \"BR89.0\"\n    },\n    \"achsfolg\": {\n        \"name\": \"CH2T\"\n    },\n    \"aufbau\": {\n        \"name\": \"LK\"\n    },\n    \"licht\": {\n        \"name\": \"L1V\"\n    },\n    \"kupplung\": {\n        \"name\": \"RELEX\"\n    },\n    \"steuerung\": {\n        \"name\": \"FRU\"\n    },\n    \"motorTyp\": {\n        \"name\": \"SFCM\"\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/produkt",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"produkt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/produkt/{{hersteller}}/{{bestellNr}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"produkt",
+								"{{hersteller}}",
+								"{{bestellNr}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"hersteller\": {\n        \"name\": \"MARKLIN\"\n    },\n    \"bestellNr\": \"3000\",\n\t\"bezeichnung\": \"{{produktName}} Descritption\",\n    \"lange\": 11.00,\n    \"unterKategorie\": {\n        \"kategorie\": \"LOKOMOTIV\",\n        \"name\": \"DAMPF\"\n    },\n    \"massstab\": {\n        \"name\": \"H0\"\n    },\n    \"spurweite\": {\n        \"name\": \"H0\"\n    },\n    \"epoch\": {\n        \"name\": \"III\"\n    },\n    \"bahnverwaltung\": {\n        \"name\": \"DB\"\n    },\n    \"gattung\": {\n        \"name\": \"BR89.0\"\n\t},\n\t\"betreibsnummer\": \"89 028\",\n\t\"bauzeit\": \"1907-01-01\",\n\t\"vorbild\": {\n\t    \"gattung\": \"BR89.0\"\n    },\n    \"achsfolg\": {\n        \"name\": \"CH2T\"\n    },\n    \"aufbau\": {\n        \"name\": \"LK\"\n    },\n    \"licht\": {\n        \"name\": \"L1V\"\n    },\n    \"kupplung\": {\n        \"name\": \"RELEX\"\n    },\n    \"steuerung\": {\n        \"name\": \"FRU\"\n    },\n    \"motorTyp\": {\n        \"name\": \"SFCM\"\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"produkt",
+								"{{produktHersteller}}",
+								"{{produktBestellNr}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Abbildung",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}/abbildung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"produkt",
+								"{{produktHersteller}}",
+								"{{produktBestellNr}}",
+								"abbildung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Abbildung",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}/abbildung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"produkt",
+								"{{produktHersteller}}",
+								"{{produktBestellNr}}",
+								"abbildung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Anleitungen",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}/anleitungen",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"produkt",
+								"{{produktHersteller}}",
+								"{{produktBestellNr}}",
+								"anleitungen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Anleitungen",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}/anleitungen",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"produkt",
+								"{{produktHersteller}}",
+								"{{produktBestellNr}}",
+								"anleitungen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Explosionszeichnung",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}/explosionszeichnung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"produkt",
+								"{{produktHersteller}}",
+								"{{produktBestellNr}}",
+								"explosionszeichnung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Explosionszeichnung",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}/explosionszeichnung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"produkt",
+								"{{produktHersteller}}",
+								"{{produktBestellNr}}",
+								"explosionszeichnung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Teil",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{produktName}}\",\n\t\"bezeichnung\": \"{{produktName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}/teilen",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"produkt",
+								"{{produktHersteller}}",
+								"{{produktBestellNr}}",
+								"teilen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Teil",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}/teilen/{{teilHersteller}}/{{teilBestellNr}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"produkt",
+								"{{produktHersteller}}",
+								"{{produktBestellNr}}",
+								"teilen",
+								"{{teilHersteller}}",
+								"{{teilBestellNr}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Teil",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}/teilen/{{teilHersteller}}/{{teilBestellNr}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"produkt",
+								"{{produktHersteller}}",
+								"{{produktBestellNr}}",
+								"teilen",
+								"{{teilHersteller}}",
+								"{{teilBestellNr}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"produkt",
+								"{{produktHersteller}}",
+								"{{produktBestellNr}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Protokoll",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/protokoll",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"protokoll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{protokollName}}\",\n\t\"bezeichnung\": \"{{protokollName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/protokoll",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"protokoll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/protokoll/{{protokollName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"protokoll",
+								"{{protokollName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{protokollName}}\",\n\t\"bezeichnung\": \"{{protokollName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/protokoll/{{protokollName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"protokoll",
+								"{{protokollName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/protokoll/{{protokollName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"protokoll",
+								"{{protokollName}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Sondermodell",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/sondermodell",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"sondermodell"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{sondermodellName}}\",\n\t\"bezeichnung\": \"{{sondermodellName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/sondermodell",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"sondermodell"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/sondermodell/{{sondermodellName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"sondermodell",
+								"{{sondermodellName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{sondermodellName}}\",\n\t\"bezeichnung\": \"{{sondermodellName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/sondermodell/{{sondermodellName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"sondermodell",
+								"{{sondermodellName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/sondermodell/{{sondermodellName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"sondermodell",
+								"{{sondermodellName}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Spurweite",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/spurweite",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"spurweite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{spurweiteName}}\",\n\t\"bezeichnung\": \"{{spurweiteName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/spurweite",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"spurweite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/spurweite/{{spurweiteName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"spurweite",
+								"{{spurweiteName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{spurweiteName}}\",\n\t\"bezeichnung\": \"{{spurweiteName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/spurweite/{{spurweiteName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"spurweite",
+								"{{spurweiteName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/spurweite/{{spurweiteName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"spurweite",
+								"{{spurweiteName}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Steuerung",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/steuerung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"steuerung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{steuerungName}}\",\n\t\"bezeichnung\": \"{{steuerungName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/steuerung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"steuerung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/steuerung/{{steuerungName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"steuerung",
+								"{{steuerungName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{steuerungName}}\",\n\t\"bezeichnung\": \"{{steuerungName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/steuerung/{{steuerungName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"steuerung",
+								"{{steuerungName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/steuerung/{{steuerungName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"steuerung",
+								"{{steuerungName}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Vorbild",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/vorbild",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"vorbild"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"gattung\": \"BR89.0\",\n\t\"bezeichnung\": \"{{vorbildName}} Descritption\",\n    \"unterKategorie\": {\n        \"kategorie\": \"LOKOMOTIV\",\n        \"name\": \"DAMPF\"\n    },\n    \"bahnverwaltung\": {\n        \"name\": \"DB\"\n    },\n    \"hersteller\": \"Henschel\",\n    \"bauzeit\": \"1934-01-01\",\n    \"anzahl\": 10,\n    \"betreibsnummer\": \"89 006\",\n    \"antrieb\": {\n        \"name\": \"DAMPF\"\n    },\n    \"achsfolg\": {\n        \"name\": \"CH2T\"\n    },\n    \"leistung\": 385.00,\n    \"dienstgewicht\": 46.60,\n    \"geschwindigkeit\": 45,\n    \"lange\": 9.60,\n    \"ausserdienst\": \"1962-01-01\",\n    \"dmTreibrad\": 1.10,\n    \"zylinder\": 2,\n    \"dmZylinder\": 0.42,\n    \"kolbenhub\": 0.55,\n    \"kesseluberdruck\": 14.00,\n    \"rostflache\": 1.42,\n    \"uberhitzerflache\": 24.10,\n    \"wasservorrat\": 4.50,\n    \"verdampfung\": 69.86,\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/vorbild",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"vorbild"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/vorbild/{{gattung}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"vorbild",
+								"{{gattung}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"gattung\": \"BR89.0\",\n\t\"bezeichnung\": \"{{vorbildName}} Descritption\",\n    \"unterKategorie\": {\n        \"kategorie\": \"LOKOMOTIV\",\n        \"name\": \"DAMPF\"\n    },\n    \"bahnverwaltung\": {\n        \"name\": \"DB\"\n    },\n    \"hersteller\": \"Henschel\",\n    \"bauzeit\": \"1934-01-01\",\n    \"anzahl\": 10,\n    \"betreibsnummer\": \"89 006\",\n    \"antrieb\": {\n        \"name\": \"DAMPF\"\n    },\n    \"achsfolg\": {\n        \"name\": \"CH2T\"\n    },\n    \"leistung\": 385.00,\n    \"dienstgewicht\": 46.60,\n    \"geschwindigkeit\": 45,\n    \"lange\": 9.60,\n    \"ausserdienst\": \"1962-01-01\",\n    \"dmTreibrad\": 1.10,\n    \"zylinder\": 2,\n    \"dmZylinder\": 0.42,\n    \"kolbenhub\": 0.55,\n    \"kesseluberdruck\": 14.00,\n    \"rostflache\": 1.42,\n    \"uberhitzerflache\": 24.10,\n    \"wasservorrat\": 4.50,\n    \"verdampfung\": 69.86,\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/vorbild/{{gattung}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"vorbild",
+								"{{gattung}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Abbildung",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/vorbild/{{gattung}}/abbildung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"vorbild",
+								"{{gattung}}",
+								"abbildung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Abbildung",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/vorbild/{{gattung}}/abbildung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"vorbild",
+								"{{gattung}}",
+								"abbildung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/vorbild/{{gattung}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"vorbild",
+								"{{gattung}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Zug",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/zug",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"zug"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{zugName}}\",\n    \"zugTyp\": {\n        \"name\": \"TEE\"\n    },\n\t\"bezeichnung\": \"{{zugName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/zug",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"zug"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/zug/{{zugName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"zug",
+								"{{zugName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{zugName}}\",\n    \"zugTyp\": {\n        \"name\": \"TEE\"\n    },\n\t\"bezeichnung\": \"{{zugName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/zug/{{zugName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"zug",
+								"{{zugName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Consist",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{zugName}}\",\n\t\"bezeichnung\": \"{{zugName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/zug/{{zugName}}/consist/{{position}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"zug",
+								"{{zugName}}",
+								"consist",
+								"{{position}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Consist",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/zug/{{zugName}}/consist/{{position}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"zug",
+								"{{zugName}}",
+								"consist",
+								"{{position}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Consist",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/zug/{{zugName}}/consist/{{position}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"zug",
+								"{{zugName}}",
+								"consist",
+								"{{position}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/zug/{{zugName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"zug",
+								"{{zugName}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Zug Typ",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/zugTyp",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"zugTyp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{zugTypName}}\",\n\t\"bezeichnung\": \"{{zugTypName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/zugTyp",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"zugTyp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/zugTyp/{{zugTypName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"zugTyp",
+								"{{zugTypName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{zugTypName}}\",\n\t\"bezeichnung\": \"{{zugTypName}} Descritption\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/zugTyp/{{zugTypName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"zugTyp",
+								"{{zugTypName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/zugTyp/{{zugTypName}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"zugTyp",
+								"{{zugTypName}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Open Api",
+			"item": [
+				{
+					"name": "Get Docs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{root}}/v3/api-docs.json",
+							"host": [
+								"{{root}}"
+							],
+							"path": [
+								"v3",
+								"api-docs.json"
+							]
+						},
+						"description": "http://LINEPRO2.home:8086/ModellBahn/api/swagger/swagger."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "password",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "username",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "bc0ab994-18b8-4870-876b-1fa0f37b60ad",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "cf48d279-10ee-4308-a1a0-9968b4b6c86f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "104bb3b7-c160-4ce6-9e54-ba644aba754c",
+			"key": "host",
+			"value": "http://linepro2",
+			"type": "string"
+		},
+		{
+			"id": "c4a985bc-7bca-4ad8-a34d-180707b0be6d",
+			"key": "port",
+			"value": ":8086",
+			"type": "string"
+		},
+		{
+			"id": "f2d4e2c4-631d-4b05-9506-bc1b5d95bd31",
+			"key": "server",
+			"value": "{{host}}{{port}}",
+			"type": "string"
+		},
+		{
+			"id": "5c87640b-3b91-4c94-ab9e-0480bd6660c2",
+			"key": "root",
+			"value": "{{server}}/ModellBahn",
+			"type": "string"
+		},
+		{
+			"id": "d9524b63-898c-4a44-9c05-4ad6348523de",
+			"key": "api",
+			"value": "{{root}}/api",
+			"type": "string"
+		},
+		{
+			"id": "3bb1417c-ecf7-41cc-aeee-0d47b093ffbd",
+			"key": "achsfolgName",
+			"value": "1CD32T35",
+			"type": "string"
+		},
+		{
+			"id": "c696498d-dde2-4e3a-8c0f-0819c907e7d7",
+			"key": "antriebName",
+			"value": "AKKU",
+			"type": "string"
+		},
+		{
+			"id": "71e77b4f-91b0-4bf5-9562-d39b760b9978",
+			"key": "aufbauName",
+			"value": "LK",
+			"type": "string"
+		},
+		{
+			"id": "e1dd56a5-76d2-4d04-8ec5-69d0f801e426",
+			"key": "bahnverwaltungName",
+			"value": "DB",
+			"type": "string"
+		},
+		{
+			"id": "5fd8c931-86fc-46c5-8b1a-c9158b1e40f6",
+			"key": "epochName",
+			"value": "IV",
+			"type": "string"
+		},
+		{
+			"id": "c334f192-dfda-4b4b-9eea-3ad5f99eb8a7",
+			"key": "gattung",
+			"value": "BR89.0",
+			"type": "string"
+		},
+		{
+			"id": "aac00d9a-5f06-41a0-9d5a-c95e06ba0fab",
+			"key": "herstellerName",
+			"value": "MARKLIN",
+			"type": "string"
+		},
+		{
+			"id": "0f83daa6-b5b7-4cfc-8889-ae827b236698",
+			"key": "kategorieName",
+			"value": "AUSGESTALTUNG",
+			"type": "string"
+		},
+		{
+			"id": "12559361-bfda-46a8-8966-43de62ebc957",
+			"key": "kupplungName",
+			"value": "RELEX",
+			"type": "string"
+		},
+		{
+			"id": "53a92ae8-00ca-412b-9819-b14aa60bf8dd",
+			"key": "lichtName",
+			"value": "L1V",
+			"type": "string"
+		},
+		{
+			"id": "2b950e8a-916b-4f6e-b786-4b48f70331cc",
+			"key": "massstabName",
+			"value": "H0",
+			"type": "string"
+		},
+		{
+			"id": "34231d7a-93aa-4462-ab02-d09304ef44b9",
+			"key": "motorTypName",
+			"value": "CSINUS",
+			"type": "string"
+		},
+		{
+			"id": "761c162c-5c69-4b10-813f-412c825da189",
+			"key": "sondermodellName",
+			"value": "MM",
+			"type": "string"
+		},
+		{
+			"id": "9a9f62af-4418-4e24-aca4-463e55d75ad4",
+			"key": "spurweiteName",
+			"value": "H0",
+			"type": "string"
+		},
+		{
+			"id": "eed89d10-4465-495b-b0ea-ce2ce67102cb",
+			"key": "steuerungName",
+			"value": "DIGITAL",
+			"type": "string"
+		},
+		{
+			"id": "310103a3-6058-49b8-ab9c-c2b90b990e61",
+			"key": "unterkategorieName",
+			"value": "HECKEN",
+			"type": "string"
+		},
+		{
+			"id": "2c5cebd7-fd98-4556-9e1b-fff36fa81603",
+			"key": "zugName",
+			"value": "BAVARIA",
+			"type": "string"
+		},
+		{
+			"id": "e391113a-c740-424c-833f-abeaae72caa6",
+			"key": "zugTyp",
+			"value": "TEE",
+			"type": "string"
+		},
+		{
+			"id": "f45f42ef-19b8-433c-b92b-2f31fa5a8726",
+			"key": "protokollName",
+			"value": "MFX",
+			"type": "string"
+		},
+		{
+			"id": "5423a5f9-1edb-4578-a31e-ac699187f7bf",
+			"key": "hersteller",
+			"value": "MARKLIN",
+			"type": "string"
+		},
+		{
+			"id": "c6a413a3-89ab-470e-92a2-d2d6fcb1bcb6",
+			"key": "bestellNr",
+			"value": "3000",
+			"type": "string"
+		},
+		{
+			"id": "bbcfdf0d-4338-41cf-a11c-bcc6b97af0fc",
+			"key": "decoderHersteller",
+			"value": "ESU",
+			"type": "string"
+		},
+		{
+			"id": "7b960ac7-65b7-4637-ac9a-087b7a2aecb1",
+			"key": "decoderBestellNr",
+			"value": "62400",
+			"type": "string"
+		},
+		{
+			"id": "6a9e963b-18f4-4f0d-ab8f-f84ff6d316f6",
+			"key": "decoderId",
+			"value": "00001",
+			"type": "string"
+		},
+		{
+			"id": "25a09f54-638f-4b25-8c49-4d9dbcba74e0",
+			"key": "artikelId",
+			"value": "00001",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

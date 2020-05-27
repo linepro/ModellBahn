@@ -5,6 +5,7 @@ import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.controller.impl.ApiPaths;
+import com.linepro.modellbahn.controller.impl.ApiRels;
 import com.linepro.modellbahn.hateoas.impl.LinkTemplateImpl;
 import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.ZugModel;
@@ -15,6 +16,6 @@ public class ZugModelProcessor extends NamedModelProcessor<ZugModel> implements 
 
     public ZugModelProcessor() {
         super(ApiPaths.ADD_ZUG, ApiPaths.GET_ZUG, ApiPaths.UPDATE_ZUG, ApiPaths.DELETE_ZUG, ApiPaths.SEARCH_ZUG,
-                        new LinkTemplateImpl("add consist", ApiPaths.ADD_CONSIST));
+                        new LinkTemplateImpl(ApiRels.ADD_CONSIST, ApiPaths.ADD_CONSIST));
     }
 }

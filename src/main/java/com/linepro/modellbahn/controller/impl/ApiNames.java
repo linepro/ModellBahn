@@ -12,7 +12,7 @@ public interface ApiNames {
     String ANDERUNG_ID = "anderungId";
     String ADRESS = "adress";
     String ADRESSEN = "adressen";
-    String ADRESS_TYP = "adress_typ";
+    String ADRESS_TYP = "adressTyp";
     String ANFAHRZUGKRAFT = "anfahrzugkraft";
     String ANLEITUNGEN = "anleitungen";
     String ANMERKUNG = "anmerkung";

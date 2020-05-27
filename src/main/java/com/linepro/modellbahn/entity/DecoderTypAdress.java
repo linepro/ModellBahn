@@ -39,9 +39,9 @@ import lombok.experimental.SuperBuilder;
 @Table(name = DBNames.DECODER_TYP_ADRESS,
     indexes = { 
         @Index(name = DBNames.DECODER_TYP_ADRESS + "_IX1", columnList = DBNames.DECODER_TYP_ID), 
-        @Index(name = DBNames.DECODER_TYP_ADRESS + "_IX2", columnList = DBNames.INDEX)
+        @Index(name = DBNames.DECODER_TYP_ADRESS + "_IX2", columnList = DBNames.POSITION)
     }, uniqueConstraints = {
-        @UniqueConstraint(name = DBNames.DECODER_TYP_ADRESS + "_UC1", columnNames = { DBNames.DECODER_TYP_ID, DBNames.INDEX })
+        @UniqueConstraint(name = DBNames.DECODER_TYP_ADRESS + "_UC1", columnNames = { DBNames.DECODER_TYP_ID, DBNames.POSITION })
     })
 //@formatter:on
 @Adress
@@ -59,10 +59,10 @@ public class DecoderTypAdress extends ItemImpl implements WithAdress, Comparable
     private DecoderTyp decoderTyp;
 
     /** The index. */
-    @Column(name = DBNames.INDEX, nullable = false)
+    @Column(name = DBNames.POSITION, nullable = false)
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.index.notnull}")
     @Range(min=1, max=10, message = "{com.linepro.modellbahn.validator.constraints.index.range}")
-    private Integer index;
+    private Integer position;
 
     @Column(name = DBNames.BEZEICHNUNG, length = 100)
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notnull}")

@@ -6,24 +6,30 @@ import java.util.function.Predicate;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
-@AllArgsConstructor
 public class LinkTemplateImpl implements LinkTemplate {
 
     private final String rel;
     
     private final String path;
 
-    private Predicate<RepresentationModel<?>> predicate;
+    private final Predicate<RepresentationModel<?>> test;
+
+    public LinkTemplateImpl(String rel, String path) {
+        this(rel, path, null);
+    }
+
+    public LinkTemplateImpl(String rel, String path, Predicate<RepresentationModel<?>> test) {
+        this.rel = rel;
+        this.path = path.replaceAll(":[^}]+", "");
+        this.test = test;
+    }
 
     @Override
     public void apply(RepresentationModel<?> model, Map<String,Object> pathNames) {
-        if (predicate == null || predicate.test(model)) {
+        if (test == null || test.test(model)) {
             Link link = getLink(pathNames);
 
             if (link != null) {

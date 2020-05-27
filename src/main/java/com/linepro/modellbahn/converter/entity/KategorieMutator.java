@@ -1,8 +1,8 @@
 package com.linepro.modellbahn.converter.entity;
 
+import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 
-import org.hibernate.collection.internal.PersistentSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,11 +24,11 @@ public class KategorieMutator extends MutatorImpl<Kategorie, KategorieModel> {
         this.unterKategorieMutator = unterKategorieMutator;
     }
 
-    public KategorieModel apply(Kategorie source, KategorieModel destination, int depth) {
-        destination = super.apply(source, destination, depth);
-        
-        if (depth >= 0) {
-            if (source.getUnterKategorien() instanceof PersistentSet && ((PersistentSet) source.getUnterKategorien()).wasInitialized()) {
+    public KategorieModel apply(Kategorie source, KategorieModel destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
+            destination = super.apply(source, destination);
+            
+            if (isAvailable(source.getUnterKategorien())) {
                 destination.setUnterKategorien(source.getUnterKategorien()
                                                      .stream()
                                                      .sorted()
@@ -37,7 +37,7 @@ public class KategorieMutator extends MutatorImpl<Kategorie, KategorieModel> {
                                                      .orElseThrow());
             }
         }
-
+        
         return destination;
     }
 }

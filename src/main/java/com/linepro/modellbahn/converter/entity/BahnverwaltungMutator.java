@@ -15,9 +15,9 @@ public class BahnverwaltungMutator extends MutatorImpl<Bahnverwaltung, Bahnverwa
     }
 
     @Override
-    public BahnverwaltungModel apply(Bahnverwaltung source, BahnverwaltungModel destination, int depth) {
+    public BahnverwaltungModel apply(Bahnverwaltung source, BahnverwaltungModel destination) {
         destination.setLand(source.getLand());
-        return super.apply(source, destination, depth);
+        return super.apply(source, destination);
     }
 
 }

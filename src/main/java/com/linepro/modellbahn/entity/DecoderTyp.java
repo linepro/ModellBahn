@@ -17,6 +17,10 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -57,6 +61,86 @@ import lombok.experimental.SuperBuilder;
     }, uniqueConstraints = {
         @UniqueConstraint(name = DBNames.DECODER_TYP + "_UC1", columnNames = { DBNames.HERSTELLER_ID, DBNames.BESTELL_NR })
     })
+@NamedEntityGraphs({
+    @NamedEntityGraph(name="decoderTyp.summary",
+        attributeNodes = {
+            @NamedAttributeNode(value = "id"),
+            @NamedAttributeNode(value = "hersteller", subgraph = "decoderTyp.hersteller"),
+            @NamedAttributeNode(value = "bestellNr"),
+            @NamedAttributeNode(value = "bezeichnung"),
+            @NamedAttributeNode(value = "iMax"),
+            @NamedAttributeNode(value = "protokoll", subgraph = "decoderTyp.protokoll"),
+            @NamedAttributeNode(value = "fahrstufe"),
+            @NamedAttributeNode(value = "sound"),
+            @NamedAttributeNode(value = "konfiguration"),
+            @NamedAttributeNode(value = "stecker"),
+            @NamedAttributeNode(value = "anleitungen")
+        }, subgraphs = {
+            @NamedSubgraph(name = "decoderTyp.hersteller",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+            }),
+            @NamedSubgraph(name = "decoderTyp.protokoll",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+            })
+        }),
+    @NamedEntityGraph(name="decoderTyp.detail",
+        includeAllAttributes = true,
+        attributeNodes = {
+            @NamedAttributeNode(value = "hersteller", subgraph = "decoderTyp.hersteller"),
+            @NamedAttributeNode(value = "protokoll", subgraph = "decoderTyp.protokoll"),
+            @NamedAttributeNode(value = "adressen", subgraph = "decoderTyp.adressen"),
+            @NamedAttributeNode(value = "cvs", subgraph = "decoderTyp.cvs"),
+            @NamedAttributeNode(value = "funktionen", subgraph = "decoderTyp.funktionen")
+        }, subgraphs = {
+            @NamedSubgraph(name = "decoderTyp.hersteller",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+             }),
+             @NamedSubgraph(name = "decoderTyp.protokoll",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
+             }),
+             @NamedSubgraph(name = "decoderTyp.adressen",
+                 attributeNodes = {
+                     @NamedAttributeNode(value = "id"),
+                     @NamedAttributeNode(value = "position"),
+                     @NamedAttributeNode(value = "bezeichnung"),
+                     @NamedAttributeNode(value = "adressTyp"),
+                     @NamedAttributeNode(value = "span"),
+                     @NamedAttributeNode(value = "adress"),
+                     @NamedAttributeNode(value = "deleted")
+             }),
+             @NamedSubgraph(name = "decoderTyp.cvs",
+                 attributeNodes = {
+                     @NamedAttributeNode(value = "id"),
+                     @NamedAttributeNode(value = "cv"),
+                     @NamedAttributeNode(value = "bezeichnung"),
+                     @NamedAttributeNode(value = "minimal"),
+                     @NamedAttributeNode(value = "maximal"),
+                     @NamedAttributeNode(value = "werkseinstellung"),
+                     @NamedAttributeNode(value = "deleted")
+             }),
+             @NamedSubgraph(name = "decoderTyp.funktionen",
+                 attributeNodes = {
+                     @NamedAttributeNode(value = "id"),
+                     @NamedAttributeNode(value = "reihe"),
+                     @NamedAttributeNode(value = "funktion"),
+                     @NamedAttributeNode(value = "bezeichnung"),
+                     @NamedAttributeNode(value = "programmable"),
+                     @NamedAttributeNode(value = "deleted")
+             })
+        })
+    })
 //@formatter:on
 @SuperBuilder
 @NoArgsConstructor
@@ -67,7 +151,7 @@ import lombok.experimental.SuperBuilder;
 public class DecoderTyp extends ItemImpl implements Comparable<DecoderTyp> {
 
     /** The hersteller. */
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Hersteller.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class)
     @JoinColumn(name = DBNames.HERSTELLER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_TYP + "_fk2"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.hersteller.notnull}")
     private Hersteller hersteller;
@@ -136,7 +220,7 @@ public class DecoderTyp extends ItemImpl implements Comparable<DecoderTyp> {
             adressen = new HashSet<>();
         }
         adress.setDecoderTyp(this);
-        adress.setIndex(getAdressen().size() + 1);
+        adress.setPosition(getAdressen().size() + 1);
         adress.setDeleted(false);
         adressen.add(adress);
     }

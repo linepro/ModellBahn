@@ -50,7 +50,7 @@ public class DecoderFunktion extends ItemImpl implements Comparable<DecoderFunkt
     private Decoder decoder;
     
     /** The funktion. */
-    @ManyToOne(fetch=FetchType.EAGER, targetEntity=DecoderTypFunktion.class)
+    @ManyToOne(fetch=FetchType.LAZY, targetEntity=DecoderTypFunktion.class)
     @JoinColumn(name = DBNames.FUNKTION_ID, nullable = false, referencedColumnName=DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_FUNKTION + "_fk2"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.funktion.notnull}")
     private DecoderTypFunktion funktion;

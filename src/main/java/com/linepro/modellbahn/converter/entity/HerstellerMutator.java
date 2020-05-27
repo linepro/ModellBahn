@@ -15,12 +15,12 @@ public class HerstellerMutator extends MutatorImpl<Hersteller, HerstellerModel> 
     }
 
     @Override
-    public HerstellerModel apply(Hersteller source, HerstellerModel destination, int depth) {
+    public HerstellerModel apply(Hersteller source, HerstellerModel destination) {
         destination.setName(source.getName());
         destination.setLand(source.getLand());
         destination.setTelefon(source.getTelefon());
         destination.setUrl(source.getUrl());
-        return super.apply(source, destination, depth);
+        return super.apply(source, destination);
     }
 
 }

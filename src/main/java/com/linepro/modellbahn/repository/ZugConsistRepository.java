@@ -15,10 +15,10 @@ public interface ZugConsistRepository extends ItemRepository<ZugConsist> {
 
     //@formatter:off
     @Query(value = "SELECT c " +
-                   "FROM   zug_consist c " +
+                   "FROM   zugConsist c " +
                    "WHERE  c.zug.name = :" + ApiNames.ZUG + " " +
                    "AND    c.position = :" + ApiNames.POSITION,
-           nativeQuery = true)
+           nativeQuery = false)
     //@formatter:on
     Optional<ZugConsist> findByPosition(@Param(ApiNames.ZUG) String zugStr, @Param(ApiNames.POSITION) Integer position);
 }

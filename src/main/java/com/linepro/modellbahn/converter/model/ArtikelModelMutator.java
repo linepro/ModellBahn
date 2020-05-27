@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.converter.model;
 
+import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -41,22 +43,35 @@ public class ArtikelModelMutator implements Mutator<ArtikelModel,Artikel> {
     @Autowired
     private final ItemLookup lookup;
 
-    public Artikel apply(ArtikelModel source, Artikel destination, int depth) {
-        destination.setProdukt(produktLookup.find(source.getHersteller(), source.getBestellNr()));
-        destination.setKaufdatum(source.getKaufdatum());
-        destination.setWahrung(source.getWahrung());
-        destination.setSteuerung(lookup.find(source.getSteuerung(), steuerungRepository));
-        destination.setMotorTyp(lookup.find(source.getMotorTyp(), motorTypRepository));
-        destination.setLicht(lookup.find(source.getLicht(), lichtRepository));
-        destination.setKupplung(lookup.find(source.getKupplung(), kupplungRepository));
-        destination.setDecoder(decoderLookup.find(source.getDecoder()));
-        destination.setBezeichnung(source.getBezeichnung());
-        destination.setPreis(source.getPreis());
-        destination.setStuck(source.getStuck());
-        destination.setVerbleibende(source.getVerbleibende());
-        destination.setAnmerkung(source.getAnmerkung());
-        destination.setBeladung(source.getBeladung());
-        destination.setStatus(source.getStatus());
+    @Override
+    public Artikel apply(ArtikelModel source, Artikel destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
+            destination.setArtikelId(source.getArtikelId());
+        }
+        
+        return applyFields(source, destination);
+    }
+    
+    @Override
+    public Artikel applyFields(ArtikelModel source, Artikel destination) {
+        if (isAvailable(source) && isAvailable(destination)) {
+            destination.setProdukt(produktLookup.find(source.getHersteller(), source.getBestellNr()));
+            destination.setKaufdatum(source.getKaufdatum());
+            destination.setWahrung(source.getWahrung());
+            destination.setSteuerung(lookup.find(source.getSteuerung(), steuerungRepository));
+            destination.setMotorTyp(lookup.find(source.getMotorTyp(), motorTypRepository));
+            destination.setLicht(lookup.find(source.getLicht(), lichtRepository));
+            destination.setKupplung(lookup.find(source.getKupplung(), kupplungRepository));
+            destination.setDecoder(decoderLookup.find(source.getDecoder()));
+            destination.setBezeichnung(source.getBezeichnung());
+            destination.setPreis(source.getPreis());
+            destination.setStuck(source.getStuck());
+            destination.setVerbleibende(source.getVerbleibende());
+            destination.setAnmerkung(source.getAnmerkung());
+            destination.setBeladung(source.getBeladung());
+            destination.setStatus(source.getStatus());
+        }
+        
         return destination;
     }
     

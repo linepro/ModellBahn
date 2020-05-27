@@ -2,14 +2,14 @@ package com.linepro.modellbahn.service.impl;
 
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.transaction.annotation.Transactional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.linepro.modellbahn.converter.entity.KategorieMutator;
 import com.linepro.modellbahn.converter.entity.UnterKategorieMutator;
@@ -40,12 +40,15 @@ public class KategorieService extends NamedItemServiceImpl<KategorieModel, Kateg
     private final UnterKategorieMutator unterKategorieMutator;
 
     private final UnterKategorieModelMutator unterKategorieModelMutator;
+
+    private final KategorieMutator mutator;
     
     @Autowired
     public KategorieService(KategorieRepository repository, KategorieModelMutator modelMutator, KategorieMutator entityMutator, UnterKategorieRepository unterKategorieRepository, UnterKategorieMutator unterKategorieMutator, UnterKategorieModelMutator unterKategorieModelMutator) {
         super(repository, modelMutator, entityMutator);
 
         this.repository = repository;
+        this.mutator = entityMutator;
         this.unterKategorieRepository = unterKategorieRepository;
         this.unterKategorieMutator = unterKategorieMutator;
         this.unterKategorieModelMutator = unterKategorieModelMutator;
@@ -69,7 +72,7 @@ public class KategorieService extends NamedItemServiceImpl<KategorieModel, Kateg
     @Transactional
     public Optional<UnterKategorieModel> updateUnterKategorie(String kategorieStr, String unterKategorieStr, UnterKategorieModel model) {
         return unterKategorieRepository.findByName(kategorieStr, unterKategorieStr)
-                                       .map(u -> unterKategorieMutator.convert(unterKategorieRepository.saveAndFlush(u)));
+                                       .map(u -> unterKategorieMutator.convert(unterKategorieRepository.saveAndFlush(unterKategorieModelMutator.applyFields(model, u))));
     }
 
     @Transactional
@@ -83,11 +86,19 @@ public class KategorieService extends NamedItemServiceImpl<KategorieModel, Kateg
     }
 
     @Transactional(readOnly = true)
-    public Page<UnterKategorieModel> searchUnterKategorie(Optional<List<String>> kategorieen, Optional<UnterKategorieModel> model, Optional<Integer> pageNumber, Optional<Integer> pageSize) {
-        Example<UnterKategorie> example = Example.of(unterKategorieModelMutator.convert(model.orElse(unterKategorieMutator.get())));
+    public Page<UnterKategorieModel> searchUnterKategorie(Optional<List<String>> kategorieen, Optional<Integer> pageNumber, Optional<Integer> pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNumber.orElse(FIRST_PAGE), pageSize.orElse(DEFAULT_PAGE_SIZE));
         
-        return unterKategorieRepository.findAll(example, pageRequest)
-                                       .map(e -> unterKategorieMutator.convert(e));
+        final List<UnterKategorieModel> unterkategorien = repository.findKategorien(kategorieen)
+                                                                    .stream()
+                                                                    .map(e -> mutator.convert(e))
+                                                                    .map(k -> k.getUnterKategorien())
+                                                                    .flatMap(List::stream)
+                                                                    .collect(Collectors.toList());
+        
+        return new PageImpl<UnterKategorieModel>(unterkategorien,
+                                                    pageRequest,
+                                                    unterkategorien.size()
+                                                    );
     }
 }
