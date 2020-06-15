@@ -2,8 +2,6 @@ package com.linepro.modellbahn.security;
 
 import java.util.Arrays;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
@@ -18,6 +16,8 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.jwk.JwkTokenStore;
 import org.springframework.util.StringUtils;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Configures OAuth2 authentication for incoming requests using JWT Bearer tokens and validates the JWT signatures using
  * any JSON Web Key (jwk) Set specified by the jwkSetUris (See <a href="https://tools.ietf.org/html/rfc7517">https://tools.ietf.org/html/rfc7517</a>).
@@ -26,9 +26,8 @@ import org.springframework.util.StringUtils;
  * Default scopes are set on all end points, but can be overridden by specifying more specific ones by annotation or
  * additional configure(HttpSecurity http) bean instances.
  */
+@Slf4j
 public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter {
-
-    private static final Logger logger = LoggerFactory.getLogger(OAuth2ResourceServerConfig.class);
 
     public static final String WILDCARD_PATH = "/**";
 
@@ -105,7 +104,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
                 // We don't need CSRF for JWT based authentication
                 .csrf().disable();
         } else {
-            logger.warn("Security disabled: jwkSetUris not specified");
+            log.warn("Security disabled: jwkSetUris not specified");
 
             http
                 // Allow unsecured cors OPTION checks

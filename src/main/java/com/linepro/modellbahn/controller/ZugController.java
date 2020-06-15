@@ -2,9 +2,6 @@ package com.linepro.modellbahn.controller;
 
 import java.util.Optional;
 
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -170,7 +167,6 @@ public class ZugController extends NamedItemController<ZugModel> {
     }
 
     @DeleteMapping(ApiPaths.DELETE_CONSIST)
-    @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Removes a change from an article", description = "", operationId = "", tags = { "UnterKategorie" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

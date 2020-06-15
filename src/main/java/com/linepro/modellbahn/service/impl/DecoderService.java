@@ -2,10 +2,9 @@ package com.linepro.modellbahn.service.impl;
 
 import java.util.Optional;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.linepro.modellbahn.converter.entity.DecoderAdressMutator;
 import com.linepro.modellbahn.converter.entity.DecoderCvMutator;
@@ -87,21 +86,24 @@ public class DecoderService extends ItemServiceImpl<DecoderModel,Decoder> implem
             
             final Decoder decoder = repository.saveAndFlush(initial);
 
-            decoderTyp.getAdressen().forEach(a -> decoder.addAdress(
+            decoderTyp.getAdressen()
+                      .forEach(a -> decoder.addAdress(
                             DecoderAdress.builder()
                                          .typ(a)
                                          .adress(a.getAdress())
                                          .build())
                             );
   
-            decoderTyp.getCvs().forEach(c -> decoder.addCv(
+            decoderTyp.getCvs()
+                      .forEach(c -> decoder.addCv(
                             DecoderCv.builder()
                                      .cv(c)
                                      .wert(c.getWerkseinstellung())
                                      .build())
                             );
 
-            decoderTyp.getFunktionen().forEach(f -> decoder.addFunktion(
+            decoderTyp.getFunktionen()
+                      .forEach(f -> decoder.addFunktion(
                             DecoderFunktion.builder()
                                            .funktion(f)
                                            .build())
@@ -127,27 +129,27 @@ public class DecoderService extends ItemServiceImpl<DecoderModel,Decoder> implem
     @Transactional
     public Optional<DecoderAdressModel> updateAdress(String decoderId, Integer index, Integer adress) {
         return adressRepository.findByIndex(decoderId, index)
-                        .map(a -> {
-                            a.setAdress(adress);
-                            return adressMutator.convert(adressRepository.saveAndFlush(a));
-                        });
+                               .map(a -> {
+                                    a.setAdress(adress);
+                                    return adressMutator.convert(adressRepository.saveAndFlush(a));
+                               });
     }
 
     @Transactional
     public Optional<DecoderCvModel> updateCv(String decoderId, Integer cv, Integer wert) {
         return cvRepository.findByCv(decoderId, cv)
-                        .map(c -> {
-                            c.setWert(wert);
-                            return cvMutator.convert(cvRepository.saveAndFlush(c));
-                        });
+                           .map(c -> {
+                               c.setWert(wert);
+                               return cvMutator.convert(cvRepository.saveAndFlush(c));
+                           });
     }
 
     @Transactional
     public Optional<DecoderFunktionModel> updateFunktion(String decoderId, Integer reihe, String funktion, String bezeichnung) {
         return funktionRepository.findByFunktion(decoderId, reihe, funktion)
-                        .map(f -> {
-                            f.setBezeichnung(bezeichnung);
-                            return funktionMutator.convert(funktionRepository.saveAndFlush(f));
-                        });
+                                 .map(f -> {
+                                     f.setBezeichnung(bezeichnung);
+                                     return funktionMutator.convert(funktionRepository.saveAndFlush(f));
+                                 });
     }
 }

@@ -13,6 +13,10 @@ public class ResultCollector<V, E extends Throwable>
         implements Collector<Result<V, E>, Result<ArrayList<V>, E>, Result<ArrayList<V>, E>> {
     private Result<ArrayList<V>, E> finalListResult;
 
+    public static <R, E extends Throwable> ResultCollector<R,E> success() {
+        return new ResultCollector<R,E>();
+    }
+
     public ResultCollector() {
         finalListResult = Result.success(new ArrayList<>());
     }

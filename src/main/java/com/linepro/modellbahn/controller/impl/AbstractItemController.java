@@ -29,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public abstract class AbstractItemController<M extends ItemModel> {
 
-    protected final ItemService<M> service;;
+    protected final ItemService<M> service;
     
     protected ResponseEntity<?> add(M model) {
         return added(service.add(model));

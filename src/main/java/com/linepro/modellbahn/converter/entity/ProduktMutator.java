@@ -2,6 +2,7 @@ package com.linepro.modellbahn.converter.entity;
 
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
+import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Component;
 import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.entity.Produkt;
 import com.linepro.modellbahn.model.ProduktModel;
-import com.linepro.modellbahn.util.exceptions.ResultCollector;
 
 import lombok.RequiredArgsConstructor;
 
@@ -99,7 +99,7 @@ public class ProduktMutator implements Mutator<Produkt,ProduktModel> {
                                             .stream()
                                             .sorted()
                                             .map(t -> attempt(() -> teilMutator.convert(t)))
-                                            .collect(new ResultCollector<>())
+                                            .collect(success())
                                             .orElseThrow());
             }
         }

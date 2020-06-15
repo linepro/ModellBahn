@@ -195,6 +195,10 @@ public interface ApiPaths {
     String DELETE_ZUG_TYP = API_ROOT + ApiNames.ZUG_TYP + "/{" + ApiNames.NAMEN + "}";
     String UPDATE_ZUG_TYP = API_ROOT + ApiNames.ZUG_TYP + "/{" + ApiNames.NAMEN + "}";
 
+    String DATA   = API_ROOT + ApiNames.DATA;
+    String EXPORT = DATA + "/{" + ApiNames.DATA_TYPE + "}";
+    String IMPORT = DATA + "/{" + ApiNames.DATA_TYPE + "}";
+
     /* Multipart field names */
     String MULTIPART_FILE_DETAIL = "FileData";
     String MULTIPART_FILE_DATA = "FileData";

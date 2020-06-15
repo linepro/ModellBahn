@@ -2,6 +2,7 @@ package com.linepro.modellbahn.converter.entity;
 
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
+import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Component;
 import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.entity.DecoderTyp;
 import com.linepro.modellbahn.model.DecoderTypModel;
-import com.linepro.modellbahn.util.exceptions.ResultCollector;
 
 import lombok.RequiredArgsConstructor;
 
@@ -50,7 +50,7 @@ public class DecoderTypMutator implements Mutator<DecoderTyp,DecoderTypModel> {
                                 .stream()
                                 .sorted()
                                 .map(a -> attempt(() -> adressMutator.convert(a)))
-                                .collect(new ResultCollector<>())
+                                .collect(success())
                                 .orElseThrow());
             }
             if (isAvailable(source.getCvs())) {
@@ -58,7 +58,7 @@ public class DecoderTypMutator implements Mutator<DecoderTyp,DecoderTypModel> {
                                          .stream()
                                          .sorted()
                                          .map(c -> attempt(() -> cvMutator.convert(c)))
-                                         .collect(new ResultCollector<>())
+                                         .collect(success())
                                          .orElseThrow());
             }
             if (isAvailable(source.getFunktionen())) {
@@ -66,7 +66,7 @@ public class DecoderTypMutator implements Mutator<DecoderTyp,DecoderTypModel> {
                                                 .stream()
                                                 .sorted()
                                                 .map(f -> attempt(() -> funktionMutator.convert(f)))
-                                                .collect(new ResultCollector<>())
+                                                .collect(success())
                                                 .orElseThrow());
             }
         }

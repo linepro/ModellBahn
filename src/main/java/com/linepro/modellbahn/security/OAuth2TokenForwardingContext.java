@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.security;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
@@ -11,16 +9,15 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.util.StringUtils;
 
-import com.linepro.modellbahn.logging.Topics;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * OAuth2ClientContext that forwards token from  the SecurityContext if none is all ready set.
  */
+@Slf4j
 public class OAuth2TokenForwardingContext extends DefaultOAuth2ClientContext {
 
 	private static final long serialVersionUID = 2535021952088624127L;
-
-	private static final Logger logger = LoggerFactory.getLogger(Topics.SECURITY);
 
     /**
      * Gets the access token from the security context (if available); if no token is available OAuth2RestTemplate will
@@ -41,7 +38,7 @@ public class OAuth2TokenForwardingContext extends DefaultOAuth2ClientContext {
                     OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) oAuthAuthentication.getDetails();
 
                     if (StringUtils.hasText(details.getTokenValue())) {
-                        logger.info("Forwarding token from SecurityContext");
+                        log.info("Forwarding token from SecurityContext");
 
                         // Apply the security context token to the OAuth2 context rather than just return it because OAuth2 context decodes it.
                         setAccessToken(new DefaultOAuth2AccessToken(details.getTokenValue()));

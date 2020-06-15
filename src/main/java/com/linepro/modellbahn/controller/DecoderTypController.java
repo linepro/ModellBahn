@@ -4,9 +4,6 @@ import static org.springframework.http.ResponseEntity.of;
 
 import java.util.Optional;
 
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
@@ -235,7 +232,6 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     }
 
     @DeleteMapping(ApiPaths.DELETE_DECODER_TYP_CV)
-    @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Removes a change from an article", description = "", operationId = "", tags = { "DecoderTypCv" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

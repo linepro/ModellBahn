@@ -2,10 +2,9 @@ package com.linepro.modellbahn.service.impl;
 
 import java.util.Optional;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
@@ -111,7 +110,7 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implem
                         .map(a -> {
                             a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.PRODUKT, ApiNames.ABBILDUNG, hersteller, bestellNr));
                             return entityMutator.convert(a);
-                            });
+                        });
     }
 
     @Transactional
@@ -120,7 +119,8 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implem
                         .map(a -> {
                             a.setAbbildung(fileService.deleteFile(a.getAbbildung()));
                             return entityMutator.convert(a);
-                            });    }
+                        });
+    }
 
     @Transactional
     public Optional<ProduktModel> updateAnleitungen(String hersteller, String bestellNr, MultipartFile multipart) {
@@ -128,7 +128,7 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implem
                         .map(a -> {
                             a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.PRODUKT, ApiNames.ANDERUNGEN, hersteller, bestellNr));
                             return entityMutator.convert(a);
-                            });
+                        });
     }
 
     @Transactional
@@ -137,7 +137,8 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implem
                         .map(a -> {
                             a.setAbbildung(fileService.deleteFile(a.getAbbildung()));
                             return entityMutator.convert(a);
-                            });    }
+                        });
+    }
 
     @Transactional
     public Optional<ProduktModel> updateExplosionszeichnung(String hersteller, String bestellNr, MultipartFile multipart) {
@@ -145,7 +146,7 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implem
                         .map(a -> {
                             a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.PRODUKT, ApiNames.EXPLOSIONSZEICHNUNG, hersteller, bestellNr));
                             return entityMutator.convert(a);
-                            });
+                        });
     }
 
     @Transactional
@@ -154,5 +155,6 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implem
                         .map(a -> {
                             a.setAbbildung(fileService.deleteFile(a.getAbbildung()));
                             return entityMutator.convert(a);
-                            });    }
+                        });
+    }
 }

@@ -16,7 +16,6 @@ import com.linepro.modellbahn.hateoas.impl.LinkTemplateImpl;
 import com.linepro.modellbahn.hateoas.impl.ModelProcessorImpl;
 import com.linepro.modellbahn.model.DecoderTypModel;
 import com.linepro.modellbahn.model.SoftDelete;
-import com.linepro.modellbahn.model.WithAbbildung;
 
 @Lazy
 @Component

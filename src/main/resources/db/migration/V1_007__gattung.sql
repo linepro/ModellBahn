@@ -1,4 +1,4 @@
-INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'AB3YGE : AB3yg', 'AB3YGE', 215);
+INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'AB3yg', 'AB3YGE', 215);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'ADümh 101', 'ADUMH101', 216);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'ARDümz 106', 'ARDUMZ106', 217);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Apümh 121', 'APUMH121', 218);
@@ -57,10 +57,10 @@ INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Ichqrs 377'
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Kbs 443', 'KBS443', 271);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Kklm 505', 'KKLM505', 272);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Laae 540', 'LAAE540', 273);
-INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Mannschaftswagen 376', 'MANNSCHAFT376', 274);
+INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Mannschaftswagen 376', 'MANNSCHAFTSWAGEN376', 274);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'NS 6400', 'NS6400', 275);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'OOtz 50', 'OOTZ50', 276);
-INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Om „Breslau“', 'OM', 277);
+INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Om „Breslau“', 'OM(BRESLAU)', 277);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Om 12', 'OM12', 278);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Otmm 70', 'OTMM70', 279);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Pw 90 HzL', 'PW90HZL', 280);
@@ -75,7 +75,7 @@ INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Rlmms', 'RL
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Rlmmso 56', 'RLMMSO56', 289);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Rs 684', 'RS684', 290);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'SSH 71', 'SSH71', 291);
-INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'SSym „Köln“', 'SSYM', 292);
+INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'SSym „Köln“', 'SSYM(KOLN)', 292);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Samms 709', 'SAMMS709', 293);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Schotterwagen 166', 'SCHOTTERWAGEN166', 294);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Sm 24', 'SM24', 295);
@@ -88,11 +88,11 @@ INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'VS 98', 'VS
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'VT 75', 'VT75', 302);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'VT 95', 'VT95', 303);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'VT 98', 'VT98', 304);
-INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Viehtransport', 'VIEH', 305);
+INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Viehtransport', 'VIEHTRANSPORT', 305);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'WGmh 824', 'WGMH824', 306);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'WRmz 135', 'WRMZ135', 307);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'WRümh 131', 'WRUMH131', 308);
-INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'X05 „Erfurt“', 'X05', 309);
+INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'X05 „Erfurt“', 'X05(ERFURT)', 309);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Zces', 'ZCES', 310);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'üm 312', 'UM312', 311);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'üm 313', 'UM313', 312);

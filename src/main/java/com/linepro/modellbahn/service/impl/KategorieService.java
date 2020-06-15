@@ -81,7 +81,7 @@ public class KategorieService extends NamedItemServiceImpl<KategorieModel, Kateg
                                        .map(u -> {
                                            unterKategorieRepository.delete(u);
                                            return true;
-                                           })
+                                       })
                                        .orElse(false);
     }
 

@@ -2,6 +2,7 @@ package com.linepro.modellbahn.converter.entity;
 
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
+import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,6 @@ import com.linepro.modellbahn.converter.impl.MutatorImpl;
 import com.linepro.modellbahn.converter.impl.NamedTranscriber;
 import com.linepro.modellbahn.entity.Kategorie;
 import com.linepro.modellbahn.model.KategorieModel;
-import com.linepro.modellbahn.util.exceptions.ResultCollector;
 
 @Component
 public class KategorieMutator extends MutatorImpl<Kategorie, KategorieModel> {
@@ -33,7 +33,7 @@ public class KategorieMutator extends MutatorImpl<Kategorie, KategorieModel> {
                                                      .stream()
                                                      .sorted()
                                                      .map(u -> attempt(() -> unterKategorieMutator.convert(u)))
-                                                     .collect(new ResultCollector<>())
+                                                     .collect(success())
                                                      .orElseThrow());
             }
         }
