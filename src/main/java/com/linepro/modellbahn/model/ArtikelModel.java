@@ -1,17 +1,15 @@
 package com.linepro.modellbahn.model;
 
 import java.math.BigDecimal;
-import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.RepresentationModel;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,7 +19,6 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.model.enums.Status;
-import com.linepro.modellbahn.rest.json.Formats;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -60,20 +57,86 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
     @Schema(name = "Artikel id", example = "00001", required = true)
     private String artikelId;
 
-    @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Artikel description", example = "BR 89.0 Dampftenderlokomotive")
-    private String bezeichnung;
-
     @JsonProperty(ApiNames.HERSTELLER)
     @Schema(name = "Manufacturer", example = "Marklin", required = true)
-    private HerstellerModel hersteller;
+    private String hersteller;
 
     @JsonProperty(ApiNames.BESTELL_NR)
-    @Schema(name = "Product id", example = "3000", required = true)
+    @Schema(name = "Part number", example = "3000", required = true)
     private String bestellNr;
 
+    @JsonProperty(ApiNames.BEZEICHNUNG)
+    @Schema(name = "Description", example = "Dampftenderlok BR 89.0")
+    private String bezeichnung;
+
+    @JsonProperty(ApiNames.KATEGORIE)
+    private String kategorie;
+
+    @JsonProperty(ApiNames.UNTER_KATEGORIE)
+    private String unterKategorie;
+
+    @JsonProperty(ApiNames.LANGE)
+    @Schema(name = "Length over puffers in cm.", example = "11.00")
+    private BigDecimal lange;
+
+    @JsonProperty(ApiNames.MASSSTAB)
+    @Schema(implementation = MassstabModel.class, name = "Scale")
+    private String massstab;
+
+    @JsonProperty(ApiNames.SPURWEITE)
+    @Schema(implementation = SpurweiteModel.class, name = "Track gauge")
+    private String spurweite;
+
+    @JsonProperty(ApiNames.EPOCH)
+    @Schema(implementation = EpochModel.class, name = "ERA")
+    private String epoch;
+
+    @JsonProperty(ApiNames.BAHNVERWALTUNG)
+    @Schema(implementation = BahnverwaltungModel.class, name = "Railway company")
+    private String bahnverwaltung;
+
+    @JsonProperty(ApiNames.GATTUNG)
+    @Schema(implementation = GattungModel.class, name = "Vehicle class")
+    private String gattung;
+
+    @JsonProperty(ApiNames.BETREIBSNUMMER)
+    @Schema(name = "Service number", example = "89 006")
+    private String betreibsnummer;
+
+    @JsonProperty(ApiNames.ACHSFOLG)
+    @Schema(implementation = AchsfolgModel.class, name = "Axle configuration")
+    private String achsfolg;
+
+    @JsonProperty(ApiNames.SONDERMODELL)
+    @Schema(implementation = SondermodellModel.class, name = "Special model indicator")
+    private String sondermodell;
+
+    @JsonProperty(ApiNames.AUFBAU)
+    @Schema(implementation = AufbauModel.class, name = "Construction")
+    private String aufbau;
+
+    @JsonProperty(ApiNames.LICHT)
+    @Schema(implementation = LichtModel.class, name = "Light Configuration", example = "")
+    private String licht;
+
+    @JsonProperty(ApiNames.KUPPLUNG)
+    @Schema(implementation = KupplungModel.class, name = "Coupling configuration", example = "")
+    private String kupplung;
+
+    @JsonProperty(ApiNames.STEUERUNG)
+    @Schema(implementation = SteuerungModel.class, name = "Control method", example = "Digital")
+    private String steuerung;
+
+    @JsonProperty(ApiNames.DECODER)
+    @Schema(implementation = DecoderModel.class, name = "Decoder", example = "")
+    private String decoder;
+
+    @JsonProperty(ApiNames.MOTOR_TYP)
+    @Schema(implementation = MotorTypModel.class, name = "Motor type", example = "5*")
+    private String motorTyp;
+
     @JsonProperty(ApiNames.KAUFDATUM)
-    @JsonFormat(shape = Shape.STRING, pattern = Formats.ISO8601_DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Schema(implementation = LocalDate.class, name = "Purchase date", example = "1967-08-10")
     private LocalDate kaufdatum;
 
@@ -93,26 +156,6 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
     @Schema(name = "Remaining Quantity", example = "1", required = true)
     private Integer verbleibende;
 
-    @JsonProperty(ApiNames.STEUERUNG)
-    @Schema(implementation = SteuerungModel.class, name = "Control method", example = "Digital")
-    private SteuerungModel steuerung;
-
-    @JsonProperty(ApiNames.MOTOR_TYP)
-    @Schema(implementation = MotorTypModel.class, name = "Motor type", example = "5*")
-    private MotorTypModel motorTyp;
-
-    @JsonProperty(ApiNames.LICHT)
-    @Schema(implementation = LichtModel.class, name = "Light Configuration", example = "")
-    private LichtModel licht;
-
-    @JsonProperty(ApiNames.KUPPLUNG)
-    @Schema(implementation = KupplungModel.class, name = "Coupling configuration", example = "")
-    private KupplungModel kupplung;
-
-    @JsonProperty(ApiNames.DECODER)
-    @Schema(implementation = DecoderModel.class, name = "Decoder", example = "")
-    private DecoderModel decoder;
-
     @JsonProperty(ApiNames.ANMERKUNG)
     @Schema(name = "Remarks", example = "5* Motor and decoder")
     private String anmerkung;
@@ -131,7 +174,7 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
 
     @JsonProperty(ApiNames.ABBILDUNG)
     @Schema(implementation = String.class, name = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
-    private Path abbildung;
+    private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(name = "True if soft deleted", example = "false", required = true)

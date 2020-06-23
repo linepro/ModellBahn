@@ -11,7 +11,8 @@ import com.linepro.modellbahn.model.DecoderFunktionModel;
 @Component
 public class DecoderFunktionMutator implements Mutator<DecoderFunktion,DecoderFunktionModel> {
 
-    public DecoderFunktionModel applyFields(DecoderFunktion source, DecoderFunktionModel destination) {
+    @Override
+    public DecoderFunktionModel apply(DecoderFunktion source, DecoderFunktionModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setDecoderId(source.getDecoder().getDecoderId());
             destination.setReihe(source.getFunktion().getReihe());

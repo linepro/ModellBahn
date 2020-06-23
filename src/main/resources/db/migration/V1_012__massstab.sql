@@ -63,3 +63,4 @@ INSERT INTO massstab (deleted, bezeichnung, name, id) VALUES (FALSE, 'Xm : 1:5.5
 INSERT INTO massstab (deleted, bezeichnung, name, id) VALUES (FALSE, 'Xp : 1:5.5 63,5mm', 'XP', 460);
 INSERT INTO massstab (deleted, bezeichnung, name, id) VALUES (FALSE, 'Z : 1:220 6,5mm', 'Z', 461);
 INSERT INTO massstab (deleted, bezeichnung, name, id) VALUES (FALSE, 'Zm : 1:220 4,5mm', 'ZM', 462);
+ALTER TABLE massstab ALTER COLUMN id RESTART WITH 463;

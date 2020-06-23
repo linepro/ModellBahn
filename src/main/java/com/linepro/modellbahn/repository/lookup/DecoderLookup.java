@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.entity.Decoder;
-import com.linepro.modellbahn.model.DecoderModel;
 import com.linepro.modellbahn.repository.DecoderRepository;
 
 import lombok.AllArgsConstructor;
@@ -18,9 +17,9 @@ public class DecoderLookup {
     @Autowired
     private final DecoderRepository repository;
 
-    public Decoder find(DecoderModel decoder) {
-        return Optional.ofNullable(decoder)
-                       .map(m -> repository.findByDecoderId(m.getDecoderId())
+    public Decoder find(String decoderId) {
+        return Optional.ofNullable(decoderId)
+                       .map(m -> repository.findByDecoderId(m)
                                            .orElse(null))
                        .orElse(null);
     }

@@ -53,3 +53,4 @@ INSERT INTO decoder_typ_adress (deleted, bezeichnung, werkseinstellung, adress_t
 INSERT INTO decoder_typ_adress (deleted, bezeichnung, werkseinstellung, adress_typ, decoder_typ_id, position, span, id) VALUES (FALSE, 'Primary', 1, 4, 1302, 1, 1, 1306);
 INSERT INTO decoder_typ_adress (deleted, bezeichnung, werkseinstellung, adress_typ, decoder_typ_id, position, span, id) VALUES (FALSE, 'Primary', 1, 4, 1309, 1, 1, 1317);
 INSERT INTO decoder_typ_adress (deleted, bezeichnung, werkseinstellung, adress_typ, decoder_typ_id, position, span, id) VALUES (FALSE, 'Primary', 1, 5, 1318, 1, 1, 1320);
+ALTER TABLE decoder_typ_adress ALTER COLUMN id RESTART WITH 1321;

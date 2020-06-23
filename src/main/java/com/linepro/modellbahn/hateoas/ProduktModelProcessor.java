@@ -26,7 +26,7 @@ public class ProduktModelProcessor extends ModelProcessorImpl<ProduktModel> impl
     @Autowired
     public ProduktModelProcessor() {
         super((m) -> MapUtils.putAll(new HashMap<String,Object>(), new String[][] { 
-            { HERSTELLER, ((ProduktModel) m).getHersteller().getName() }, 
+            { HERSTELLER, ((ProduktModel) m).getHersteller() }, 
             { BESTELL_NR, ((ProduktModel) m).getBestellNr() }, 
             }),
                         new LinkTemplateImpl(ApiRels.ADD, ApiPaths.ADD_PRODUKT), 

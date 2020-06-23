@@ -252,3 +252,4 @@ INSERT INTO decoder_typ_funktion (deleted, bezeichnung, decoder_typ_id, funktion
 INSERT INTO decoder_typ_funktion (deleted, bezeichnung, decoder_typ_id, funktion, programmable, reihe, id) VALUES (FALSE, 'Anzeigen', 1295, 'F4', FALSE, 1, 1301);
 INSERT INTO decoder_typ_funktion (deleted, bezeichnung, decoder_typ_id, funktion, programmable, reihe, id) VALUES (FALSE, 'Strinbeleuchtung', 1302, 'F0', FALSE, 1, 1307);
 INSERT INTO decoder_typ_funktion (deleted, bezeichnung, decoder_typ_id, funktion, programmable, reihe, id) VALUES (FALSE, 'ABV', 1302, 'F4', FALSE, 1, 1308);
+ALTER TABLE decoder_typ_funktion ALTER COLUMN id RESTART WITH 1309;

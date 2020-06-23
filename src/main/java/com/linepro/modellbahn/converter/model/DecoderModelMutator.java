@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.entity.Decoder;
 import com.linepro.modellbahn.model.DecoderModel;
+import com.linepro.modellbahn.repository.ProtokollRepository;
+import com.linepro.modellbahn.repository.lookup.ItemLookup;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,23 +18,18 @@ import lombok.RequiredArgsConstructor;
 public class DecoderModelMutator implements Mutator<DecoderModel, Decoder> {
 
     @Autowired
-    private final ProtokollModelMutator protokollMutator;
-    
+    private final ProtokollRepository protokollRepository;
+
+    @Autowired
+    private final ItemLookup lookup;
+  
     @Override
     public Decoder apply(DecoderModel source, Decoder destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setDecoderId(source.getDecoderId());
-        }
-        
-        return applyFields(source, destination);
-    }
-    
-    @Override
-    public Decoder applyFields(DecoderModel source, Decoder destination) {
-        if (isAvailable(source) && isAvailable(destination)) {
             destination.setBezeichnung(source.getBezeichnung());
             destination.setStatus(source.getStatus());
-            destination.setProtokoll(protokollMutator.convert(source.getProtokoll()));
+            destination.setProtokoll(lookup.find(source.getProtokoll(), protokollRepository));
             destination.setFahrstufe(source.getFahrstufe());
         }
         

@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.model;
 
-import java.nio.file.Path;
-
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -42,7 +40,7 @@ import lombok.ToString;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED })
 @Schema(name = ApiNames.KUPPLUNG, description = "Coupling configuration - Märklin coding.")
-public class KupplungModel extends RepresentationModel<KupplungModel> implements NamedItemModel, NamedWithAbbildung, Comparable<KupplungModel> {
+public class KupplungModel extends RepresentationModel<KupplungModel> implements NamedWithAbbildungModel, Comparable<KupplungModel> {
 
     private static final long serialVersionUID = -4227031769285101775L;
 
@@ -56,7 +54,7 @@ public class KupplungModel extends RepresentationModel<KupplungModel> implements
 
     @JsonProperty(ApiNames.ABBILDUNG)
     @Schema(implementation = String.class, name = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
-    private Path abbildung;
+    private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(name = "True if soft deleted", example = "false", required = true)

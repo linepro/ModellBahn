@@ -35,8 +35,7 @@ public abstract class ItemImpl implements Item {
     /** The primary key id. */
     @Id
     @Column(name = DBNames.ID, nullable = false, updatable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.id.notnull}")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
 	/** The soft deleted state. */

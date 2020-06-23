@@ -21,7 +21,7 @@ public class MutatorImpl<S,D> implements Mutator<S, D> {
     }
 
     @Override
-    public D applyFields(S source, D destination) {
+    public D apply(S source, D destination) {
         return transcriber.apply(source, destination);
     }
 }

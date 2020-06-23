@@ -9,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
 
-import com.linepro.modellbahn.model.NamedWithAbbildung;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.PathConverter;
 
@@ -30,7 +29,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @ToString(callSuper = true)
 @MappedSuperclass
-public class NamedWithAbbildungImpl extends NamedItemImpl implements NamedWithAbbildung {
+public class NamedWithAbbildungImpl extends NamedItemImpl implements NamedWithAbbildungItem {
 
     /** The abbildung. */
     @Column(name = DBNames.ABBILDUNG)

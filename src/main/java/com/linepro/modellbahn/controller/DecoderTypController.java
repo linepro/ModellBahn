@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
@@ -25,6 +26,7 @@ import com.linepro.modellbahn.model.DecoderTypAdressModel;
 import com.linepro.modellbahn.model.DecoderTypCvModel;
 import com.linepro.modellbahn.model.DecoderTypFunktionModel;
 import com.linepro.modellbahn.model.DecoderTypModel;
+import com.linepro.modellbahn.model.ProduktModel;
 import com.linepro.modellbahn.service.impl.DecoderTypService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -299,4 +301,36 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
                     @PathVariable(ApiNames.FUNKTION) String funktion) {
         return deleted(service.deleteFunktion(herstellerStr, bestellNr, reihe, funktion));
     }
+    
+    @PostMapping(ApiPaths.ADD_DECODER_TYP_ANLEITUNGEN)
+    @Operation(summary = "Adds Decoder instructions", description = "Adds or updates the instructions for a named Decoder", operationId = "update", tags = { "Produkt" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
+    public ResponseEntity<?> updateAnleitungen(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr,
+            @RequestParam("anleitungen") MultipartFile multipart) throws Exception {
+        return updated(service.updateAnleitungen(herstellerStr, bestellNr, multipart));
+    }
+
+    @DeleteMapping(ApiPaths.DELETE_DECODER_TYP_ANLEITUNGEN)
+    @Operation(summary = "Removes instructions from an Product", description = "", operationId = "", tags = { "" })
+    @ApiResponses(value = {
+                    @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
+                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+                })
+    public ResponseEntity<?> deleteAnleitungen(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) throws Exception {
+        return updated(service.deleteAnleitungen(herstellerStr, bestellNr));
+    }
+
 }

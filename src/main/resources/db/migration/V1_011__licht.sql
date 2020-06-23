@@ -13,3 +13,4 @@ INSERT INTO licht (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Dr
 INSERT INTO licht (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Dreilicht-Spitzensignal und zwei rote Schlusslichter mit der Fahrtrichtung wechselnd', 'L3R2W', NULL, 395);
 INSERT INTO licht (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Dreilicht-Spitzensignal und ein weißes Schlusslicht mit der Fahrtrichtung wechselnd', 'L3L1W', NULL, 396);
 INSERT INTO licht (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Dreilicht-Spitzensignal und zwei weißes Schlusslicht mit der Fahrtrichtung wechselnd', 'L3L2W', NULL, 397);
+ALTER TABLE licht ALTER COLUMN id RESTART WITH 398;

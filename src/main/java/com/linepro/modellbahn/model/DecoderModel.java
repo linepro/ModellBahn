@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -16,6 +17,8 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.model.enums.DecoderStatus;
+import com.linepro.modellbahn.model.enums.Konfiguration;
+import com.linepro.modellbahn.model.enums.Stecker;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -27,7 +30,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * IDecoder.
+ * DecoderModel
  * @author $Author$
  * @version $Id$
  */
@@ -41,8 +44,9 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.DECODER_ID, ApiNames.DECODER_TYP, ApiNames.BEZEICHNUNG, ApiNames.PROTOKOLL,
-        ApiNames.FAHRSTUFE, ApiNames.DELETED, ApiNames.ADRESSEN, ApiNames.CVS, ApiNames.FUNKTIONEN})
+@JsonPropertyOrder({ApiNames.DECODER_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.PROTOKOLL,
+        ApiNames.FAHRSTUFE, ApiNames.GERAUSCH, ApiNames.I_MAX, ApiNames.KONFIGURATION, ApiNames.DELETED,
+        ApiNames.ADRESSEN, ApiNames.CVS, ApiNames.FUNKTIONEN})
 @Schema(name = ApiNames.DECODER, description = "Decoder - installed or spare.")
 public class DecoderModel extends RepresentationModel<DecoderModel> implements ItemModel, Comparable<DecoderModel> {
 
@@ -52,25 +56,49 @@ public class DecoderModel extends RepresentationModel<DecoderModel> implements I
     @Schema(name = "Decoder's id", example = "00001", accessMode = AccessMode.READ_ONLY, required = true)
     private String decoderId;
 
+    @JsonProperty(ApiNames.HERSTELLER)
+    @Schema(implementation = HerstellerModel.class, name = "Manufacturer", required = true)
+    private String hersteller;
+
+    @JsonProperty(ApiNames.BESTELL_NR)
+    @Schema(name = "Product numer", example = "62499", required = true)
+    private String bestellNr;
+
     @JsonProperty(ApiNames.BEZEICHNUNG)
     @Schema(name = "Decoder's description", example = "ESU Loksound")
     private String bezeichnung;
 
-    @JsonProperty(ApiNames.DECODER_TYP)
-    @Schema(implementation = DecoderTypModel.class, name = "Decoder's type", required = true)
-    private DecoderTypModel decoderTyp;
+    @JsonProperty(ApiNames.I_MAX)
+    @Schema(name = "Maximum current in mA", example = "1100")
+    private BigDecimal iMax;
+
+    @JsonProperty(ApiNames.PROTOKOLL)
+    @Schema(implementation = ProtokollModel.class, name = "Decoder protocol", required = true)
+    private String protokoll;
+
+    @JsonProperty(ApiNames.FAHRSTUFE)
+    @Schema(name = "Decoder speed steps", example = "27", required = true)
+    private Integer fahrstufe;
+
+    @JsonProperty(ApiNames.GERAUSCH)
+    @Schema(name = "True if decoder supports sound", example = "true", required = true)
+    private Boolean sound;
+
+    @JsonProperty(ApiNames.KONFIGURATION)
+    @Schema(name = "Configuration method", example = "CV", required = true)
+    private Konfiguration konfiguration;
+
+    @JsonProperty(ApiNames.STECKER)
+    @Schema(name = "Stecker", example = "NEM352")
+    private Stecker stecker;
 
     @JsonProperty(ApiNames.STATUS)
     @Schema(name = "Decoder status", example = "INSTALIERT", required = true)
     private DecoderStatus status;
 
-    @JsonProperty(ApiNames.PROTOKOLL)
-    @Schema(implementation = ProtokollModel.class, name = "Decoder protocol", required = true)
-    private ProtokollModel protokoll;
-
-    @JsonProperty(ApiNames.FAHRSTUFE)
-    @Schema(name = "Decoder speed steps", example = "27", required = true)
-    private Integer fahrstufe;
+    @JsonProperty(ApiNames.ANLEITUNGEN)
+    @Schema(implementation = String.class, name = "Instructions URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/betrieb_3000.pdf", accessMode = AccessMode.READ_ONLY)
+    private String anleitungen;
 
     @JsonProperty(ApiNames.ADRESSEN)
     @Schema(implementation = DecoderAdressModel.class, name = "Decoder addresses", accessMode = AccessMode.READ_ONLY, required = true)

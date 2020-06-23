@@ -32,14 +32,6 @@ public class DecoderTypModelMutator implements Mutator<DecoderTypModel, DecoderT
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setBestellNr(source.getBestellNr());
             destination.setBezeichnung(source.getBezeichnung());
-        }
-
-        return applyFields(source, destination);
-    }
-
-    @Override
-    public DecoderTyp applyFields(DecoderTypModel source, DecoderTyp destination) {
-        if (isAvailable(source) && isAvailable(destination)) {
             destination.setHersteller(lookup.find(source.getHersteller(), herstellerRepository));
             destination.setIMax(source.getIMax());
             destination.setProtokoll(lookup.find(source.getProtokoll(), protokollRepository));

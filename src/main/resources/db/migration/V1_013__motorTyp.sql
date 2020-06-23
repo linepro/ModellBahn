@@ -15,3 +15,4 @@ INSERT INTO motor_typ (deleted, bezeichnung, name, id) VALUES (FALSE, 'Scheibenk
 INSERT INTO motor_typ (deleted, bezeichnung, name, id) VALUES (FALSE, 'Scheibenkollektor (MS2-8z)', 'LFCMMS2-8', 477);
 INSERT INTO motor_typ (deleted, bezeichnung, name, id) VALUES (FALSE, 'SoftDriveSinus', 'SDSINUS', 478);
 INSERT INTO motor_typ (deleted, bezeichnung, name, id) VALUES (FALSE, 'Scheibenkollektor (klein)', 'SFCM', 479);
+ALTER TABLE motor_typ ALTER COLUMN id RESTART WITH 480;

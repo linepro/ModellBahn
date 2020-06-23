@@ -11,7 +11,8 @@ import com.linepro.modellbahn.model.DecoderTypAdressModel;
 @Component
 public class DecoderTypAdressMutator implements Mutator<DecoderTypAdress,DecoderTypAdressModel> {
     
-    public DecoderTypAdressModel applyFields(DecoderTypAdress source, DecoderTypAdressModel destination) {
+    @Override
+    public DecoderTypAdressModel apply(DecoderTypAdress source, DecoderTypAdressModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setHersteller(source.getDecoderTyp().getHersteller().getName());
             destination.setBestellNr(source.getDecoderTyp().getBestellNr());

@@ -12,17 +12,20 @@ import com.linepro.modellbahn.model.AnderungModel;
 public class AnderungModelMutator implements Mutator<AnderungModel, Anderung> {
 
     @Override
-    public Anderung apply(AnderungModel source, Anderung destination) {
-        if (isAvailable(source) && isAvailable(destination)) {
+    public Anderung convert(AnderungModel source) {
+        if (source != null) {
+            final Anderung destination = get();
+
             destination.setAnderungId(source.getAnderungId());
+
+            return apply(source, destination);
         }
 
-        return applyFields(source, destination);
+        return null;
     }
 
-
     @Override
-    public Anderung applyFields(AnderungModel source, Anderung destination) {
+    public Anderung apply(AnderungModel source, Anderung destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setAnderungsDatum(source.getAnderungsDatum());
             destination.setAnderungsTyp(source.getAnderungsTyp());

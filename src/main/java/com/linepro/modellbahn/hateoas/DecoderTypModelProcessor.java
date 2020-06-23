@@ -27,7 +27,7 @@ public class DecoderTypModelProcessor extends ModelProcessorImpl<DecoderTypModel
     @Autowired
     public DecoderTypModelProcessor() {
         super((m) -> MapUtils.putAll(new HashMap<String,Object>(), new String[][] { 
-            { HERSTELLER, ((DecoderTypModel) m).getHersteller().getName() }, 
+            { HERSTELLER, ((DecoderTypModel) m).getHersteller() }, 
             { BESTELL_NR, ((DecoderTypModel) m).getBestellNr() }, 
             }),
                         new LinkTemplateImpl(ApiRels.ADD, ApiPaths.ADD_DECODER_TYP), 

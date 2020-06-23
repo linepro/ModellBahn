@@ -34,7 +34,7 @@ public class ApplicationReadyListener implements ApplicationListener<Application
         ApplicationContext context = event.getApplicationContext();
 
         if (applicationContext.equals(context)) {
-            String application = context.getId();
+            String application = context.getApplicationName();
             
             List<String> contextBeanz = Stream.of(context.getBeanDefinitionNames())
                     .map(b -> {

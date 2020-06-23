@@ -96,3 +96,4 @@ INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'X05 „Erfu
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Zces', 'ZCES', 310);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'üm 312', 'UM312', 311);
 INSERT INTO gattung (deleted, bezeichnung, name, id) VALUES (FALSE, 'üm 313', 'UM313', 312);
+ALTER TABLE gattung ALTER COLUMN id RESTART WITH 313;

@@ -30,14 +30,6 @@ public class ZugModelMutator extends MutatorImpl<ZugModel, Zug> {
     public Zug apply(ZugModel source, Zug destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setName(source.getName());
-        }
-
-        return applyFields(source, destination);
-    }
-
-    @Override
-    public Zug applyFields(ZugModel source, Zug destination) {
-        if (isAvailable(source) && isAvailable(destination)) {
             destination.setBezeichnung(source.getBezeichnung());
             destination.setZugTyp(lookup.find(source.getZugTyp(), repository));
         }

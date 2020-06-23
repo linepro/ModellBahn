@@ -14,3 +14,4 @@ INSERT INTO decoder_funktion (deleted, bezeichnung, decoder_id, funktion_id, id)
 INSERT INTO decoder_funktion (deleted, bezeichnung, decoder_id, funktion_id, id) VALUES (FALSE, 'Funktion 13', 1376, 779, 1413);
 INSERT INTO decoder_funktion (deleted, bezeichnung, decoder_id, funktion_id, id) VALUES (FALSE, 'Funktion 14', 1376, 780, 1414);
 INSERT INTO decoder_funktion (deleted, bezeichnung, decoder_id, funktion_id, id) VALUES (FALSE, 'Funktion 15', 1376, 781, 1415);
+ALTER TABLE decoder_funktion ALTER COLUMN id RESTART WITH 1416;

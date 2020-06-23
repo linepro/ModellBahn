@@ -11,7 +11,8 @@ import com.linepro.modellbahn.model.DecoderCvModel;
 @Component
 public class DecoderCvMutator implements Mutator<DecoderCv, DecoderCvModel> {
 
-    public DecoderCvModel applyFields(DecoderCv source, DecoderCvModel destination) {
+    @Override
+    public DecoderCvModel apply(DecoderCv source, DecoderCvModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setDecoderId(source.getDecoder().getDecoderId());
             destination.setCv(source.getCv().getCv());

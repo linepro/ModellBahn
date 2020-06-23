@@ -5,10 +5,9 @@ import java.time.LocalDate;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.RepresentationModel;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,7 +17,6 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.model.enums.AnderungsTyp;
-import com.linepro.modellbahn.rest.json.Formats;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -58,7 +56,7 @@ public class AnderungModel extends RepresentationModel<AnderungModel> implements
     private Integer anderungId;
 
     @JsonProperty(ApiNames.ANDERUNGSDATUM)
-    @JsonFormat(shape=Shape.STRING, pattern= Formats.ISO8601_DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Schema(implementation = LocalDate.class, name = "Change date", example = "1967-08-10")
     private LocalDate anderungsDatum;
 

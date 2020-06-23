@@ -62,3 +62,4 @@ INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FA
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Wiking', 'WIKING', NULL, 'https://wiking.de/', 374);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Woodland Scenics', 'WOODLAND', NULL, 'https://woodlandscenics.woodlandscenics.com/', 375);
 INSERT INTO hersteller (deleted, bezeichnung, name, telefon, url, id) VALUES (FALSE, 'Zimo', 'ZIMO', NULL, 'http://www.zimo.at', 376);
+ALTER TABLE hersteller ALTER COLUMN id RESTART WITH 377;

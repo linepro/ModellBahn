@@ -16,14 +16,6 @@ public class DecoderTypFunktionModelMutator implements Mutator<DecoderTypFunktio
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setReihe(source.getReihe());
             destination.setFunktion(source.getFunktion());
-        }
-
-        return applyFields(source, destination);
-    }
-
-    @Override
-    public DecoderTypFunktion applyFields(DecoderTypFunktionModel source, DecoderTypFunktion destination) {
-        if (isAvailable(source) && isAvailable(destination)) {
             destination.setBezeichnung(source.getBezeichnung());
             destination.setProgrammable(source.getProgrammable());
             destination.setDeleted(source.getDeleted());

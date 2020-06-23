@@ -1,25 +1,24 @@
 package com.linepro.modellbahn.converter.impl;
 
-import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
+import com.linepro.modellbahn.converter.PathMutator;
+import com.linepro.modellbahn.entity.impl.NamedWithAbbildungItem;
+import com.linepro.modellbahn.model.NamedWithAbbildungModel;
 
-import com.linepro.modellbahn.model.NamedWithAbbildung;
+import lombok.RequiredArgsConstructor;
 
-public class NamedAbbildungTranscriber<S extends NamedWithAbbildung, D extends NamedWithAbbildung> extends NamedTranscriber<S, D> {
+@RequiredArgsConstructor
+public class NamedAbbildungTranscriber<E extends NamedWithAbbildungItem, M extends NamedWithAbbildungModel> extends NamedTranscriber<E, M> {
+    
+    private final PathMutator pathMutator;
+    
     @Override
-    public D applyFields(S source, D destination) {
-        if (isAvailable(source) && isAvailable(destination)) {
-            destination.setAbbildung(source.getAbbildung());
-        }
+    public M apply(E source, M destination) {
         
-        return super.applyFields(source, destination);
+        if (source != null && destination != null) {
+            destination.setAbbildung(pathMutator.convert(source.getAbbildung()));
+        }
+
+        return super.apply(source, destination);
     }
 
-    @Override
-    public D applySummary(S source, D destination) {
-        if (isAvailable(source) && isAvailable(destination)) {
-            destination.setAbbildung(source.getAbbildung());
-        }
-        
-        return super.applySummary(source, destination);
-    }
 }

@@ -88,14 +88,6 @@ public class ProduktModelMutator implements Mutator<ProduktModel, Produkt> {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setHersteller(lookup.find(source.getHersteller(), herstellerRepository));
             destination.setBestellNr(source.getBestellNr());
-        }
-
-        return applyFields(source, destination);
-    }
-
-    @Override
-    public Produkt applyFields(ProduktModel source, Produkt destination) {
-        if (isAvailable(source) && isAvailable(destination)) {
             destination.setBezeichnung(source.getBezeichnung());
             destination.setUnterKategorie(lookup.find(source.getUnterKategorie(), unterKategorieRepository));
             destination.setMassstab(lookup.find(source.getMassstab(), massstabRepository));
@@ -106,14 +98,14 @@ public class ProduktModelMutator implements Mutator<ProduktModel, Produkt> {
             destination.setGattung(lookup.find(source.getGattung(), gattungRepository));
             destination.setBauzeit(source.getBauzeit());
             destination.setAchsfolg(lookup.find(source.getAchsfolg(), achsfolgRepository));
-            destination.setVorbild(vorbildLookup.find(source.getVorbild()));
+            destination.setVorbild(vorbildLookup.find(source.getGattung()));
             destination.setAnmerkung(source.getAnmerkung());
             destination.setSondermodell(lookup.find(source.getSondermodell(), sondermodellRepository));
             destination.setAufbau(lookup.find(source.getAufbau(), aufbauRepository));
             destination.setLicht(lookup.find(source.getLicht(), lichtRepository));
             destination.setKupplung(lookup.find(source.getKupplung(), kupplungRepository));
             destination.setSteuerung(lookup.find(source.getSteuerung(), steuerungRepository));
-            destination.setDecoderTyp(decoderTypLookup.find(source.getDecoderTyp()));
+            destination.setDecoderTyp(decoderTypLookup.find(source.getDecoderTypHersteller(), source.getDecoderTypBestellNr()));
             destination.setMotorTyp(lookup.find(source.getMotorTyp(),motorTypRepository));
             destination.setLange(source.getLange());
         }

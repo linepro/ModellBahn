@@ -147,7 +147,7 @@ public class KupplungController extends NamedItemController<KupplungModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
         })
-    public ResponseEntity<?> updateAbbildung(@PathVariable(ApiNames.NAMEN) String name, @PathVariable("file") MultipartFile multipart) throws Exception {
+    public ResponseEntity<?> updateAbbildung(@PathVariable(ApiNames.NAMEN) String name, @RequestParam("abbildung") MultipartFile multipart) throws Exception {
         return of(service.updateAbbildung(name, multipart));
     }
 

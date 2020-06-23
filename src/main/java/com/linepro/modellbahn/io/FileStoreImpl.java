@@ -7,22 +7,25 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
+@Getter
 public class FileStoreImpl implements FileStore {
 
-    @Value("${filestore.root:./}")
+    @Value("${filestore.root:}")
     private String fileRoot;
 
-    @Value("${filestore.name:store}")
+    @Value("${filestore.name:static}")
     private String storeFolder;
 
     public FileStoreImpl() {
     }
 
-    protected Path fileStoreRoot() {
+    @Override
+    public Path fileStoreRoot() {
          return Paths.get(fileRoot, storeFolder);
     }
 

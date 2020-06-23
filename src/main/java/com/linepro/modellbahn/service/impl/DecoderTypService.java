@@ -5,7 +5,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
+import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.converter.entity.DecoderTypAdressMutator;
 import com.linepro.modellbahn.converter.entity.DecoderTypCvMutator;
 import com.linepro.modellbahn.converter.entity.DecoderTypFunktionMutator;
@@ -18,6 +21,7 @@ import com.linepro.modellbahn.entity.DecoderTyp;
 import com.linepro.modellbahn.entity.DecoderTypAdress;
 import com.linepro.modellbahn.entity.DecoderTypCv;
 import com.linepro.modellbahn.entity.DecoderTypFunktion;
+import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.DecoderTypAdressModel;
 import com.linepro.modellbahn.model.DecoderTypCvModel;
 import com.linepro.modellbahn.model.DecoderTypFunktionModel;
@@ -38,6 +42,8 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTy
 
     private final DecoderTypRepository repository;
     
+    private final FileService fileService;
+    
     private final DecoderTypAdressRepository adressRepository;
     private final DecoderTypAdressModelMutator adressModelMutator;
     private final DecoderTypAdressMutator adressMutator;
@@ -51,12 +57,14 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTy
     private final DecoderTypFunktionMutator funktionMutator;
 
     @Autowired
-    public DecoderTypService(DecoderTypRepository repository, DecoderTypModelMutator decoderTypModelMutator, DecoderTypMutator decoderTypMutator,
-                    DecoderTypAdressRepository adressRepository, DecoderTypAdressModelMutator adressModelMutator, DecoderTypAdressMutator adressMutator,
-                    DecoderTypCvRepository cvRepository, DecoderTypCvModelMutator cvModelMutator, DecoderTypCvMutator cvMutator,
+    public DecoderTypService(DecoderTypRepository repository, FileService fileService, DecoderTypModelMutator decoderTypModelMutator, 
+                    DecoderTypMutator decoderTypMutator, DecoderTypAdressRepository adressRepository, DecoderTypAdressModelMutator adressModelMutator, 
+                    DecoderTypAdressMutator adressMutator, DecoderTypCvRepository cvRepository, DecoderTypCvModelMutator cvModelMutator, DecoderTypCvMutator cvMutator,
                     DecoderTypFunktionRepository funktionRepository,  DecoderTypFunktionModelMutator funktionModelMutator, DecoderTypFunktionMutator funktionMutator) {
         super(repository, decoderTypModelMutator, decoderTypMutator);
         this.repository = repository;
+
+        this.fileService = fileService;
 
         this.adressRepository = adressRepository;
         this.adressModelMutator = adressModelMutator;
@@ -180,5 +188,23 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTy
                                      return true;
                                  })
                                  .orElse(false);
+    }
+
+    @Transactional
+    public Optional<DecoderTypModel> updateAnleitungen(String herstellerStr, String bestellNr, MultipartFile multipart) {
+        return  repository.findByBestellNr(herstellerStr, bestellNr)
+                        .map(a -> {
+                            a.setAnleitungen(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.DECODER_TYP, ApiNames.ANLEITUNGEN, herstellerStr, bestellNr));
+                            return entityMutator.convert(a);
+                        });
+    }
+
+    @Transactional
+    public Optional<DecoderTypModel> deleteAnleitungen(String herstellerStr, String bestellNr) {
+        return repository.findByBestellNr(herstellerStr, bestellNr)
+                        .map(a -> {
+                            a.setAnleitungen(fileService.deleteFile(a.getAnleitungen()));
+                            return entityMutator.convert(a);
+                        });
     }
 }

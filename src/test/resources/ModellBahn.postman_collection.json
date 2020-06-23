@@ -716,13 +716,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/aufbau/{{aufbauName}}",
+							"raw": "{{api}}/aufbau/{{aufbauName}}/abbildung",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"aufbau",
-								"{{aufbauName}}"
+								"{{aufbauName}}",
+								"abbildung"
 							]
 						}
 					},
@@ -2553,13 +2554,14 @@
 							]
 						},
 						"url": {
-							"raw": "{{api}}/kupplung/{{kupplungName}}",
+							"raw": "{{api}}/kupplung/{{kupplungName}}/abbildung",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"kupplung",
-								"{{kupplungName}}"
+								"{{kupplungName}}",
+								"abbildung"
 							]
 						}
 					},
@@ -2576,13 +2578,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/kupplung/{{kupplungName}}",
+							"raw": "{{api}}/kupplung/{{kupplungName}}/abbildung",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"kupplung",
-								"{{kupplungName}}"
+								"{{kupplungName}}",
+								"abbildung"
 							]
 						}
 					},
@@ -2746,13 +2749,14 @@
 							]
 						},
 						"url": {
-							"raw": "{{api}}/licht/{{lichtName}}",
+							"raw": "{{api}}/licht/{{lichtName}}/abbildung",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"licht",
-								"{{lichtName}}"
+								"{{lichtName}}",
+								"abbildung"
 							]
 						}
 					},
@@ -2769,13 +2773,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/licht/{{lichtName}}",
+							"raw": "{{api}}/licht/{{lichtName}}/abbildung",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"licht",
-								"{{lichtName}}"
+								"{{lichtName}}",
+								"abbildung"
 							]
 						}
 					},
@@ -4655,184 +4660,154 @@
 	],
 	"variable": [
 		{
-			"id": "104bb3b7-c160-4ce6-9e54-ba644aba754c",
+			"id": "a59456ca-761f-456c-adc1-5ba7be521d8c",
 			"key": "host",
-			"value": "http://linepro2",
-			"type": "string"
+			"value": "http://linepro2"
 		},
 		{
-			"id": "c4a985bc-7bca-4ad8-a34d-180707b0be6d",
+			"id": "61abdaec-e416-4692-a186-b860a3c22cfc",
 			"key": "port",
-			"value": ":8086",
-			"type": "string"
+			"value": ":8086"
 		},
 		{
-			"id": "f2d4e2c4-631d-4b05-9506-bc1b5d95bd31",
+			"id": "6f53251c-d264-4032-b199-498b5a18525e",
 			"key": "server",
-			"value": "{{host}}{{port}}",
-			"type": "string"
+			"value": "{{host}}{{port}}"
 		},
 		{
-			"id": "5c87640b-3b91-4c94-ab9e-0480bd6660c2",
+			"id": "9bf49dca-c339-4d9e-9fa0-17947afbfb26",
 			"key": "root",
-			"value": "{{server}}/ModellBahn",
-			"type": "string"
+			"value": "{{server}}/ModellBahn"
 		},
 		{
-			"id": "d9524b63-898c-4a44-9c05-4ad6348523de",
+			"id": "1b5d5dff-d835-490f-b9cc-f59ed41970cb",
 			"key": "api",
-			"value": "{{root}}/api",
-			"type": "string"
+			"value": "{{root}}/api"
 		},
 		{
-			"id": "3bb1417c-ecf7-41cc-aeee-0d47b093ffbd",
+			"id": "ce6875d9-fe14-4c1d-bf1a-02a98cfd5142",
 			"key": "achsfolgName",
-			"value": "1CD32T35",
-			"type": "string"
+			"value": "1CD32T35"
 		},
 		{
-			"id": "c696498d-dde2-4e3a-8c0f-0819c907e7d7",
+			"id": "f48be6ed-3158-4bfd-a656-da2303a53687",
 			"key": "antriebName",
-			"value": "AKKU",
-			"type": "string"
+			"value": "AKKU"
 		},
 		{
-			"id": "71e77b4f-91b0-4bf5-9562-d39b760b9978",
+			"id": "8227dce7-e0a7-4a3b-b531-e62546f04df5",
 			"key": "aufbauName",
-			"value": "LK",
-			"type": "string"
+			"value": "LK"
 		},
 		{
-			"id": "e1dd56a5-76d2-4d04-8ec5-69d0f801e426",
+			"id": "c6fc7f48-bbad-480b-8caf-f61c9ad7a427",
 			"key": "bahnverwaltungName",
-			"value": "DB",
-			"type": "string"
+			"value": "DB"
 		},
 		{
-			"id": "5fd8c931-86fc-46c5-8b1a-c9158b1e40f6",
+			"id": "adac7624-4d3e-4b2c-98f6-3ad128167c00",
 			"key": "epochName",
-			"value": "IV",
-			"type": "string"
+			"value": "IV"
 		},
 		{
-			"id": "c334f192-dfda-4b4b-9eea-3ad5f99eb8a7",
+			"id": "35d02f25-7a62-4b5d-b5e7-74b608cb6fb1",
 			"key": "gattung",
-			"value": "BR89.0",
-			"type": "string"
+			"value": "BR89.0"
 		},
 		{
-			"id": "aac00d9a-5f06-41a0-9d5a-c95e06ba0fab",
+			"id": "3a971a02-bca4-4871-80e5-47ac4964eb8b",
 			"key": "herstellerName",
-			"value": "MARKLIN",
-			"type": "string"
+			"value": "MARKLIN"
 		},
 		{
-			"id": "0f83daa6-b5b7-4cfc-8889-ae827b236698",
+			"id": "d536b722-ae5f-49a2-ab07-aeab6f1f1847",
 			"key": "kategorieName",
-			"value": "AUSGESTALTUNG",
-			"type": "string"
+			"value": "AUSGESTALTUNG"
 		},
 		{
-			"id": "12559361-bfda-46a8-8966-43de62ebc957",
+			"id": "618c835f-c8c7-42d5-a7a8-925110a3c285",
 			"key": "kupplungName",
-			"value": "RELEX",
-			"type": "string"
+			"value": "RELEX"
 		},
 		{
-			"id": "53a92ae8-00ca-412b-9819-b14aa60bf8dd",
+			"id": "1d8e4ad6-b0b5-4cf4-8824-0822aff4585d",
 			"key": "lichtName",
-			"value": "L1V",
-			"type": "string"
+			"value": "L1V"
 		},
 		{
-			"id": "2b950e8a-916b-4f6e-b786-4b48f70331cc",
+			"id": "bd55fcf6-bd2d-45cb-92a4-9c80b5e6d710",
 			"key": "massstabName",
-			"value": "H0",
-			"type": "string"
+			"value": "H0"
 		},
 		{
-			"id": "34231d7a-93aa-4462-ab02-d09304ef44b9",
+			"id": "7e6fa6c5-3145-48ab-9849-3631aa6fb199",
 			"key": "motorTypName",
-			"value": "CSINUS",
-			"type": "string"
+			"value": "CSINUS"
 		},
 		{
-			"id": "761c162c-5c69-4b10-813f-412c825da189",
+			"id": "f2a4bcd8-3ef6-4d16-9df0-b90a0cce856f",
 			"key": "sondermodellName",
-			"value": "MM",
-			"type": "string"
+			"value": "MM"
 		},
 		{
-			"id": "9a9f62af-4418-4e24-aca4-463e55d75ad4",
+			"id": "45c21506-6cc3-4eed-84a6-d24cef28b304",
 			"key": "spurweiteName",
-			"value": "H0",
-			"type": "string"
+			"value": "H0"
 		},
 		{
-			"id": "eed89d10-4465-495b-b0ea-ce2ce67102cb",
+			"id": "9d708c63-927e-4fc4-9bf6-0ca20d77cb73",
 			"key": "steuerungName",
-			"value": "DIGITAL",
-			"type": "string"
+			"value": "DIGITAL"
 		},
 		{
-			"id": "310103a3-6058-49b8-ab9c-c2b90b990e61",
+			"id": "8c008816-92d7-49f7-b59b-417080206e40",
 			"key": "unterkategorieName",
-			"value": "HECKEN",
-			"type": "string"
+			"value": "HECKEN"
 		},
 		{
-			"id": "2c5cebd7-fd98-4556-9e1b-fff36fa81603",
+			"id": "cc97d329-e74c-48c7-ab67-bc46ecfc4936",
 			"key": "zugName",
-			"value": "BAVARIA",
-			"type": "string"
+			"value": "BAVARIA"
 		},
 		{
-			"id": "e391113a-c740-424c-833f-abeaae72caa6",
+			"id": "31389be0-f4f1-4c86-988b-355699ef835b",
 			"key": "zugTyp",
-			"value": "TEE",
-			"type": "string"
+			"value": "TEE"
 		},
 		{
-			"id": "f45f42ef-19b8-433c-b92b-2f31fa5a8726",
+			"id": "3538b8fc-1fc7-459f-a018-1e5282599e02",
 			"key": "protokollName",
-			"value": "MFX",
-			"type": "string"
+			"value": "MFX"
 		},
 		{
-			"id": "5423a5f9-1edb-4578-a31e-ac699187f7bf",
+			"id": "486d1e07-d6f7-41cf-b373-36ad27f830bf",
 			"key": "hersteller",
-			"value": "MARKLIN",
-			"type": "string"
+			"value": "MARKLIN"
 		},
 		{
-			"id": "c6a413a3-89ab-470e-92a2-d2d6fcb1bcb6",
+			"id": "ebde4787-0c5c-4aca-9a50-2782a575d94b",
 			"key": "bestellNr",
-			"value": "3000",
-			"type": "string"
+			"value": "3000"
 		},
 		{
-			"id": "bbcfdf0d-4338-41cf-a11c-bcc6b97af0fc",
+			"id": "f93f57a5-d4fc-4da3-bd57-8a8161189a1e",
 			"key": "decoderHersteller",
-			"value": "ESU",
-			"type": "string"
+			"value": "ESU"
 		},
 		{
-			"id": "7b960ac7-65b7-4637-ac9a-087b7a2aecb1",
+			"id": "0c64b6d9-be6b-47b2-9357-05c21f05f2fb",
 			"key": "decoderBestellNr",
-			"value": "62400",
-			"type": "string"
+			"value": "62400"
 		},
 		{
-			"id": "6a9e963b-18f4-4f0d-ab8f-f84ff6d316f6",
+			"id": "f56a577f-55a2-4ee9-b9bc-96a08524f913",
 			"key": "decoderId",
-			"value": "00001",
-			"type": "string"
+			"value": "00001"
 		},
 		{
-			"id": "25a09f54-638f-4b25-8c49-4d9dbcba74e0",
+			"id": "a6590265-3705-4541-a994-476439802139",
 			"key": "artikelId",
-			"value": "00001",
-			"type": "string"
+			"value": "00001"
 		}
 	],
 	"protocolProfileBehavior": {}

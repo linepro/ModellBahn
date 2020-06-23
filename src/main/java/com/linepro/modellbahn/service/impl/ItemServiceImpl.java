@@ -63,7 +63,7 @@ public abstract class ItemServiceImpl<M extends ItemModel, E extends Item> imple
     @Transactional
     protected Optional<M> update(Lookup<E> lookup, M model) {
         return lookup.find()
-                     .map(e -> entityMutator.convert(repository.saveAndFlush(modelMutator.applyFields(model,e))));
+                     .map(e -> entityMutator.convert(repository.saveAndFlush(modelMutator.apply(model,e))));
     }
 
     @Transactional

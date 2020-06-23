@@ -17,11 +17,11 @@ public class UnterKategorieMutator extends MutatorImpl<UnterKategorie, UnterKate
     }
 
     @Override
-    public UnterKategorieModel applyFields(UnterKategorie source, UnterKategorieModel destination) {
+    public UnterKategorieModel apply(UnterKategorie source, UnterKategorieModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setKategorie(source.getKategorie().getName());
         }
         
-        return super.applyFields(source, destination);
+        return super.apply(source, destination);
     }
 }

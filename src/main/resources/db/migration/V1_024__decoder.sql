@@ -1,1 +1,2 @@
 INSERT INTO decoder (deleted, bezeichnung, decoder_id, decoder_typ_id, fahrstufe, protokoll_id, status, id) VALUES (FALSE, 'LokSound M4', '00001', 742, NULL, 482, 'INSTALIERT', 1376);
+ALTER TABLE decoder ALTER COLUMN id RESTART WITH 1377;

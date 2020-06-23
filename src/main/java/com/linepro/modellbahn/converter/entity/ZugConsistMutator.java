@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.entity.ZugConsist;
+import com.linepro.modellbahn.model.ArtikelModel;
 import com.linepro.modellbahn.model.ZugConsistModel;
 
 import lombok.RequiredArgsConstructor;
@@ -19,11 +20,21 @@ public class ZugConsistMutator implements Mutator<ZugConsist, ZugConsistModel> {
     private ArtikelMutator artikelConverter;
 
     @Override
-    public ZugConsistModel applyFields(ZugConsist source, ZugConsistModel destination) {
+    public ZugConsistModel apply(ZugConsist source, ZugConsistModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
+            final ArtikelModel artikel = artikelConverter.convert(source.getArtikel());
+
             destination.setZug(source.getZug().getName());
             destination.setPosition(source.getPosition());
-            destination.setArtikel(artikelConverter.summarize(source.getArtikel()));
+            destination.setArtikelId(artikel.getArtikelId());
+            destination.setHersteller(artikel.getHersteller());
+            destination.setBestellNr(artikel.getBestellNr());
+            destination.setBezeichnung(artikel.getBezeichnung());
+            destination.setLange(artikel.getLange());
+            destination.setBahnverwaltung(artikel.getBahnverwaltung());
+            destination.setGattung(artikel.getGattung());
+            destination.setBetreibsnummer(artikel.getBetreibsnummer());
+            destination.setAbbildung(artikel.getAbbildung());
             destination.setDeleted(source.getDeleted());
         }
         

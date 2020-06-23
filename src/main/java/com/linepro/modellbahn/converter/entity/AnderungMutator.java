@@ -15,7 +15,7 @@ public class AnderungMutator implements Mutator<Anderung, AnderungModel> {
     }
 
     @Override
-    public AnderungModel applyFields(Anderung source, AnderungModel destination) {
+    public AnderungModel apply(Anderung source, AnderungModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setArtikelId(source.getArtikel().getArtikelId());
             destination.setAnderungId(source.getAnderungId());

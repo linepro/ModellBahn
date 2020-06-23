@@ -1,18 +1,38 @@
 package com.linepro.modellbahn.io;
 
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.resource.EncodedResourceResolver;
-import org.springframework.web.servlet.resource.PathResourceResolver;
+
+import lombok.RequiredArgsConstructor;
+import net.logstash.logback.encoder.org.apache.commons.lang3.ArrayUtils;
 
 @Configuration
 @EnableWebMvc
+@RequiredArgsConstructor
 public class MvcConfig implements WebMvcConfigurer {
-    
+
+    @Autowired
+    private final FileStore fileStore;
+
+    @Value("${spring.mvc.resource.cache.timeout:3600}")
+    private int cacheTimeout;
+
+    public static final String[] RESOURCE_ENDPOINTS = {
+                    "/webapp/**", "/webjars/**", "/static/**", "/resources/**"
+    };
+
+    public static final String[] RESOURCE_LOCATIONS = {
+                    "file:webapp/", "file:webjars/", "file:static/", "file:resources/", "file:",
+                    "classpath:webapp/", "classpath:webjars/", "classpath:static/", "classpath:resources/"
+    };
+
     @Bean(name = "BaseURL")
     public String getBaseURL(RepositoryRestConfiguration configuration) {
         return configuration.getBasePath().toString();
@@ -20,12 +40,13 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry
-          .addResourceHandler("/webjars/**","/resources/**")
-          .addResourceLocations("/webjars/","/resources/","file:/opt/files/","classpath:/other-resources/")
-          .setCachePeriod(3600)
-          .resourceChain(true)
-          .addResolver(new EncodedResourceResolver())
-          .addResolver(new PathResourceResolver()); 
+        registry.addResourceHandler(RESOURCE_ENDPOINTS)
+                .addResourceLocations(getResourceLocations());
+    }
+
+    private String[] getResourceLocations() {
+        String fileStoreLoc = "file:" + FilenameUtils.separatorsToUnix(fileStore.fileStoreRoot().toString());
+
+        return ArrayUtils.toStringArray(RESOURCE_LOCATIONS, fileStoreLoc);
     }
 }

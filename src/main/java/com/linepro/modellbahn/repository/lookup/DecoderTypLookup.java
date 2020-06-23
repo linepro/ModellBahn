@@ -1,12 +1,10 @@
 package com.linepro.modellbahn.repository.lookup;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import com.linepro.modellbahn.entity.DecoderTyp;
-import com.linepro.modellbahn.model.DecoderTypModel;
 import com.linepro.modellbahn.repository.DecoderTypRepository;
 
 import lombok.AllArgsConstructor;
@@ -18,9 +16,12 @@ public class DecoderTypLookup {
     @Autowired
     private final DecoderTypRepository repository;
 
-    public DecoderTyp find(DecoderTypModel decoderTyp) {
-        return Optional.ofNullable(decoderTyp)
-                       .flatMap(t -> Optional.ofNullable(t.getHersteller()).map(h -> repository.findByBestellNr(h.getName(), t.getBestellNr())).orElse(null))
-                       .orElse(null);
+    public DecoderTyp find(String hersteller, String bestellNr) {
+        if (StringUtils.hasText(hersteller) && StringUtils.hasText(bestellNr)) {
+            return repository.findByBestellNr(hersteller, bestellNr)
+                             .orElse(null);
+        }
+        
+        return null;
     }
 }

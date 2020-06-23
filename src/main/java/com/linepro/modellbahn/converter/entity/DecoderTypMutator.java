@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.Mutator;
+import com.linepro.modellbahn.converter.PathMutator;
 import com.linepro.modellbahn.entity.DecoderTyp;
 import com.linepro.modellbahn.model.DecoderTypModel;
 
@@ -18,12 +19,6 @@ import lombok.RequiredArgsConstructor;
 public class DecoderTypMutator implements Mutator<DecoderTyp,DecoderTypModel> {
 
     @Autowired
-    private final HerstellerMutator herstellerMutator;
-
-    @Autowired
-    private final ProtokollMutator protokollMutator;
-
-    @Autowired
     private final DecoderTypAdressMutator adressMutator;
 
     @Autowired
@@ -32,17 +27,22 @@ public class DecoderTypMutator implements Mutator<DecoderTyp,DecoderTypModel> {
     @Autowired
     private final DecoderTypFunktionMutator funktionMutator;
 
+    @Autowired
+    private final PathMutator pathMutator;
+
     @Override
-    public DecoderTypModel applyFields(DecoderTyp source, DecoderTypModel destination) {
+    public DecoderTypModel apply(DecoderTyp source, DecoderTypModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
-            applySummary(source, destination);
+            destination.setHersteller(getCode(source.getHersteller()));
+            destination.setBestellNr(source.getBestellNr());
+            destination.setBezeichnung(source.getBezeichnung());
             destination.setIMax(source.getIMax());
-            destination.setProtokoll(protokollMutator.summarize(source.getProtokoll()));
             destination.setFahrstufe(source.getFahrstufe());
             destination.setSound(source.getSound());
             destination.setKonfiguration(source.getKonfiguration());
             destination.setStecker(source.getStecker());
-            destination.setAnleitungen(source.getAnleitungen());
+            destination.setAnleitungen(pathMutator.convert(source.getAnleitungen()));
+            destination.setProtokoll(getCode(source.getProtokoll()));
             destination.setDeleted(source.getDeleted());
             
             if (isAvailable(source.getAdressen())) {
@@ -69,17 +69,6 @@ public class DecoderTypMutator implements Mutator<DecoderTyp,DecoderTypModel> {
                                                 .collect(success())
                                                 .orElseThrow());
             }
-        }
-        
-        return destination;
-    }
-
-    @Override
-    public DecoderTypModel applySummary(DecoderTyp source, DecoderTypModel destination) {
-        if (isAvailable(source) && isAvailable(destination)) {
-            destination.setHersteller(herstellerMutator.convert(source.getHersteller()));
-            destination.setBestellNr(source.getBestellNr());
-            destination.setBezeichnung(source.getBezeichnung());
         }
         
         return destination;

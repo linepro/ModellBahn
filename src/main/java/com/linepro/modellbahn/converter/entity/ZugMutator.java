@@ -16,16 +16,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Component
 public class ZugMutator implements Mutator<Zug,ZugModel> {
-    
-    @Autowired
-    private ZugTypMutator zugTypMutator;
 
     @Autowired
     private ZugConsistMutator consistMutator;
 
-    public ZugModel applyFields(Zug source, ZugModel destination) {
+    @Override
+    public ZugModel apply(Zug source, ZugModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
-            applySummary(source, destination);
+            destination.setName(source.getName());
+            destination.setBezeichnung(source.getBezeichnung());
+            destination.setZugTyp(getCode(source.getZugTyp()));
             
             if (isAvailable(source.getConsist())) {
                 destination.setConsist(source.getConsist()
@@ -35,17 +35,6 @@ public class ZugMutator implements Mutator<Zug,ZugModel> {
                                              .collect(success())
                                              .orElseThrow());
             }
-        }
-        
-        return destination;
-    }
-
-    @Override
-    public ZugModel applySummary(Zug source, ZugModel destination) {
-        if (isAvailable(source) && isAvailable(destination)) {
-            destination.setName(source.getName());
-            destination.setBezeichnung(source.getBezeichnung());
-            destination.setZugTyp(zugTypMutator.summarize(source.getZugTyp()));
         }
         
         return destination;

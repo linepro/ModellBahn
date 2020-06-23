@@ -56,7 +56,7 @@ public class ZugModel extends RepresentationModel<ZugModel> implements NamedItem
     private String bezeichnung;
     @JsonProperty(ApiNames.ZUG_TYP)
     @Schema(implementation = ZugTypModel.class, name = "Train type", required = true)
-    private ZugTypModel zugTyp;
+    private String zugTyp;
 
     @JsonProperty(ApiNames.CONSIST)
     @Schema(implementation = ZugConsistModel.class, name = "Train composition", accessMode = AccessMode.READ_ONLY)

@@ -9,7 +9,10 @@ import com.linepro.modellbahn.entity.User;
 
 @Repository("userRepository")
 public interface UserRepository  extends CrudRepository<User, Long> {
+
     Optional<User> findByEmail(String email);
+
     Optional<User> findByConfirmationToken(String confirmationToken);
+
     Optional<User> findByResetToken(String resetToken);
 }

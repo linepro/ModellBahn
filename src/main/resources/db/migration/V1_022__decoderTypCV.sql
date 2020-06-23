@@ -274,3 +274,4 @@ INSERT INTO decoder_typ_cv (deleted, bezeichnung, cv, decoder_typ_id, maximal, m
 INSERT INTO decoder_typ_cv (deleted, bezeichnung, cv, decoder_typ_id, maximal, minimal, werkseinstellung, id) VALUES (FALSE, 'Rückstellen auf Serienwerte', 8, 1309, NULL, NULL, 8, 1315);
 INSERT INTO decoder_typ_cv (deleted, bezeichnung, cv, decoder_typ_id, maximal, minimal, werkseinstellung, id) VALUES (FALSE, 'Lautstärke', 63, 1309, 63, 1, NULL, 1316);
 INSERT INTO decoder_typ_cv (deleted, bezeichnung, cv, decoder_typ_id, maximal, minimal, werkseinstellung, id) VALUES (FALSE, 'Adresse', 1, 1318, 255, 1, NULL, 1319);
+ALTER TABLE decoder_typ_cv ALTER COLUMN id RESTART WITH 1320;

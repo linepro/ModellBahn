@@ -10,3 +10,4 @@ INSERT INTO spurweite (deleted, bezeichnung, name, id) VALUES (FALSE, 'III : 89m
 INSERT INTO spurweite (deleted, bezeichnung, name, id) VALUES (FALSE, 'V : 127mm', 'V', 504);
 INSERT INTO spurweite (deleted, bezeichnung, name, id) VALUES (FALSE, 'VII : 184mm', 'VII', 505);
 INSERT INTO spurweite (deleted, bezeichnung, name, id) VALUES (FALSE, 'X : 260mm', 'X', 506);
+ALTER TABLE spurweite ALTER COLUMN id RESTART WITH 507;

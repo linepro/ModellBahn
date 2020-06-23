@@ -68,6 +68,11 @@ spring:
             temp:
                use_jdbc_metadata_defaults: false
       show-sql: true
+   management:
+      endpoints:
+         web:
+            exposure:
+               include: "*"
    mail:
       host: smtp.mailhost.com
       username: mailUser
@@ -80,8 +85,13 @@ spring:
                starttls:
                   enable: true
    mvc:
+      resource:
+         cache:
+            timeout: 1
       servlet:
          path: /ModellBahn
+#   resources:
+#      static-locations: classpath:/files/,classpath:/static-files,file:./store
    thymeleaf:
       mode: LEGACYHTML5
       cache: false

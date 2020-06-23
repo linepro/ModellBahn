@@ -7,22 +7,12 @@ import com.linepro.modellbahn.model.Named;
 public class NamedTranscriber<S extends Named, D extends Named> extends SoftDeleteTranscriber<S, D> {
 
     @Override
-    public D applySummary(S source, D destination) {
+    public D apply(S source, D destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setName(source.getName());
             destination.setBezeichnung(source.getBezeichnung());
         }
         
-        return super.applySummary(source, destination);
-    }
-
-    @Override
-    public D applyFields(S source, D destination) {
-        if (isAvailable(source) && isAvailable(destination)) {
-            destination.setName(source.getName());
-            destination.setBezeichnung(source.getBezeichnung());
-        }
-        
-        return super.applyFields(source, destination);
+        return super.apply(source, destination);
     }
 }

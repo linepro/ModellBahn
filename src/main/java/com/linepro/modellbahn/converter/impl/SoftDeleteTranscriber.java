@@ -7,16 +7,11 @@ import com.linepro.modellbahn.model.SoftDelete;
 
 public class SoftDeleteTranscriber<S extends SoftDelete, D extends SoftDelete> implements Transcriber<S, D> {
     @Override
-    public D applyFields(S source, D destination) {
+    public D apply(S source, D destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setDeleted(source.getDeleted());
         }
         
-        return destination;
-    }
-
-    @Override
-    public D applySummary(S source, D destination) {
         return destination;
     }
 }

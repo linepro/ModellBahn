@@ -26,3 +26,4 @@ INSERT INTO achsfolg (deleted, bezeichnung, name, id) VALUES (FALSE, 'Co''Co'' w
 INSERT INTO achsfolg (deleted, bezeichnung, name, id) VALUES (FALSE, 'Co''Co''', 'COCO', 26);
 INSERT INTO achsfolg (deleted, bezeichnung, name, id) VALUES (FALSE, 'D h2t', 'DH2T', 27);
 INSERT INTO achsfolg (deleted, bezeichnung, name, id) VALUES (FALSE, 'D''D h4vt', 'DDH4VT', 28);
+ALTER TABLE achsfolg ALTER COLUMN id RESTART WITH 29;

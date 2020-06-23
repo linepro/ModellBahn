@@ -25,43 +25,49 @@ import com.linepro.modellbahn.service.impl.UserService;
 import com.nulabinc.zxcvbn.Strength;
 import com.nulabinc.zxcvbn.Zxcvbn;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
+@RequiredArgsConstructor
 public class UserController {
 
-    protected static final String CONFIRM = "confirm";
+    public static final String CONFIRM = "/confirm";
 
-    protected static final String PASSWORD = "password";
+    public static final String FORGOT = "/forgot";
 
-    protected static final String TOKEN = "token";
+    public static final String PASSWORD = "/password";
 
-    protected static final String USER = "user";
+    public static final String REGISTER = "/register";
 
-    protected static final String REGISTER = "register";
+    public static final String RESET = "/reset";
 
+    public static final String TOKEN = "/token";
+
+    public static final String USER = "/user";
+
+    public static final String[] USER_ENDPOINTS = {CONFIRM, FORGOT, PASSWORD, REGISTER, RESET, TOKEN, USER};
+    
+    @Autowired
     private final PasswordEncoder passwordEncoder;
 
+    @Autowired
     private final UserService userService;
 
+    @Autowired
     private final EmailService emailService;
 
-    @Autowired
-    public UserController(PasswordEncoder bCryptPasswordEncoder, UserService userService, EmailService emailService) {
-
-        this.passwordEncoder = bCryptPasswordEncoder;
-        this.userService = userService;
-        this.emailService = emailService;
-    }
-
     // Return registration form template
-    @GetMapping(value = "/register")
+    @GetMapping(value = REGISTER)
     public ModelAndView showRegistrationPage(ModelAndView modelAndView, User user) {
-        modelAndView.addObject(USER, user);
-        modelAndView.setViewName(REGISTER);
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("Register");
         return modelAndView;
     }
 
     // Process form input data
-    @PostMapping(value = "/register")
+    @PostMapping(value = REGISTER)
     public ModelAndView processRegistrationForm(ModelAndView modelAndView, @Valid User user,
             BindingResult bindingResult, HttpServletRequest request) {
 
@@ -71,12 +77,12 @@ public class UserController {
         if (userExists.isPresent()) {
             modelAndView.addObject("alreadyRegisteredMessage",
                     "Oops!  There is already a user registered with the email provided.");
-            modelAndView.setViewName(REGISTER);
+            modelAndView.setViewName("Register");
             bindingResult.reject("email");
         }
 
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName(REGISTER);
+            modelAndView.setViewName("Register");
         } else { // new user so we create user and send confirmation e-mail
 
             // Disable user until they click on confirmation link in email
@@ -99,14 +105,14 @@ public class UserController {
             emailService.sendEmail(registrationEmail);
 
             modelAndView.addObject("confirmationMessage", "A confirmation e-mail has been sent to " + user.getEmail());
-            modelAndView.setViewName(REGISTER);
+            modelAndView.setViewName("Register");
         }
 
         return modelAndView;
     }
 
     // Process confirmation link
-    @GetMapping(value = "/confirm")
+    @GetMapping(value = CONFIRM)
     public ModelAndView showConfirmationPage(ModelAndView modelAndView, @RequestParam(TOKEN) String token) {
 
         Optional<User> user = userService.findByConfirmationToken(token);
@@ -122,7 +128,7 @@ public class UserController {
     }
 
     // Process confirmation link
-    @PostMapping(value = "/confirm")
+    @PostMapping(value = CONFIRM)
     public ModelAndView processConfirmationForm(ModelAndView modelAndView, BindingResult bindingResult,
             @RequestParam Map<String, String> requestParams, RedirectAttributes redir) {
 
@@ -161,13 +167,13 @@ public class UserController {
     }
     
     // Display forgotPassword page
-    @GetMapping(value = "/forgot")
+    @GetMapping(value = FORGOT)
     public ModelAndView displayForgotPasswordPage() {
         return new ModelAndView("forgotPassword");
     }
     
     // Process form submission from forgotPassword page
-    @PostMapping(value = "/forgot")
+    @PostMapping(value = FORGOT)
     public ModelAndView processForgotPasswordForm(ModelAndView modelAndView, @RequestParam("email") String userEmail, HttpServletRequest request) {
 
         // Lookup user in database by e-mail
@@ -206,7 +212,7 @@ public class UserController {
     }
 
     // Display form to reset password
-    @GetMapping(value = "/reset")
+    @GetMapping(value = RESET)
     public ModelAndView displayResetPasswordPage(ModelAndView modelAndView, @RequestParam("token") String token) {
         
         Optional<User> user = userService.findByResetToken(token);
@@ -222,7 +228,7 @@ public class UserController {
     }
 
     // Process reset password form
-    @PostMapping(value = "/reset")
+    @PostMapping(value = RESET)
     public ModelAndView setNewPassword(ModelAndView modelAndView, @RequestParam Map<String, String> requestParams, RedirectAttributes redir) {
 
         // Find the user associated with the reset token

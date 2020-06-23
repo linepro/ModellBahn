@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.model;
 
+import java.math.BigDecimal;
+
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -52,9 +54,41 @@ public class ZugConsistModel extends RepresentationModel<ZugConsistModel> implem
     @Schema(name = "Contiguous 1 based position in the train (1 = head)", example = "1", accessMode = AccessMode.READ_ONLY, required = true)
     private Integer position;
 
-    @JsonProperty(ApiNames.ARTIKEL)
-    @Schema(implementation = ArtikelModel.class, name = "Rolling stock item", accessMode = AccessMode.READ_ONLY, required = true)
-    private ArtikelModel artikel;
+    @JsonProperty(ApiNames.ARTIKEL_ID)
+    @Schema(name = "Artikel id", example = "00001", required = true)
+    private String artikelId;
+
+    @JsonProperty(ApiNames.HERSTELLER)
+    @Schema(name = "Manufacturer", example = "Marklin", required = true)
+    private String hersteller;
+
+    @JsonProperty(ApiNames.BESTELL_NR)
+    @Schema(name = "Part number", example = "3000", required = true)
+    private String bestellNr;
+
+    @JsonProperty(ApiNames.BEZEICHNUNG)
+    @Schema(name = "Description", example = "Dampftenderlok BR 89.0")
+    private String bezeichnung;
+
+    @JsonProperty(ApiNames.LANGE)
+    @Schema(name = "Length over puffers in cm.", example = "11.00")
+    private BigDecimal lange;
+
+    @JsonProperty(ApiNames.BAHNVERWALTUNG)
+    @Schema(name = "Railway company")
+    private String bahnverwaltung;
+
+    @JsonProperty(ApiNames.GATTUNG)
+    @Schema(name = "Vehicle class")
+    private String gattung;
+
+    @JsonProperty(ApiNames.BETREIBSNUMMER)
+    @Schema(name = "Service number", example = "89 006")
+    private String betreibsnummer;
+
+    @JsonProperty(ApiNames.ABBILDUNG)
+    @Schema(implementation = String.class, name = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
+    private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(name = "True if soft deleted", example = "false", required = true)

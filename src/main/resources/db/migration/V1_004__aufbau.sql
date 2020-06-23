@@ -5,3 +5,4 @@ INSERT INTO aufbau (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'F
 INSERT INTO aufbau (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Überwiegender Teil des Wagenaufbaus aus Metall', 'WMK', NULL, 38);
 INSERT INTO aufbau (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Fahrgestell und Aufbau des Wagens aus Metall', 'WM', NULL, 39);
 INSERT INTO aufbau (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Überwiegender Teil des Lokaufbaues aus Metall', 'LKM', NULL, 40);
+ALTER TABLE aufbau ALTER COLUMN id RESTART WITH 41;

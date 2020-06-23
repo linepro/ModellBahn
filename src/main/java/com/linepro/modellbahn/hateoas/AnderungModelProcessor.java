@@ -14,7 +14,6 @@ import com.linepro.modellbahn.controller.impl.ApiRels;
 import com.linepro.modellbahn.hateoas.impl.LinkTemplateImpl;
 import com.linepro.modellbahn.hateoas.impl.ModelProcessorImpl;
 import com.linepro.modellbahn.model.AnderungModel;
-import com.linepro.modellbahn.model.WithAbbildung;
 
 @Lazy
 @Component
@@ -30,6 +29,6 @@ public class AnderungModelProcessor extends ModelProcessorImpl<AnderungModel> im
             { ANDERUNG_ID, String.valueOf(((AnderungModel) m).getAnderungId()) } 
             }),
                         new LinkTemplateImpl(ApiRels.UPDATE, ApiPaths.UPDATE_ANDERUNG),
-                        new LinkTemplateImpl(ApiRels.DELETE, ApiPaths.DELETE_ANDERUNG, (m) -> (((WithAbbildung) m).getAbbildung() != null)));
+                        new LinkTemplateImpl(ApiRels.DELETE, ApiPaths.DELETE_ANDERUNG, (m) -> !(((AnderungModel) m).getDeleted())));
     }
 }

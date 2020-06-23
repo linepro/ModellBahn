@@ -1,16 +1,14 @@
 package com.linepro.modellbahn.model;
 
 import java.math.BigDecimal;
-import java.nio.file.Path;
 import java.time.LocalDate;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.RepresentationModel;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,7 +18,6 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
-import com.linepro.modellbahn.rest.json.Formats;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -69,20 +66,24 @@ public class VorbildModel extends RepresentationModel<VorbildModel> implements I
     @Schema(name = "Description", example = "Dampftenderlok BR 89.0")
     private String bezeichnung;
 
+    @JsonProperty(ApiNames.KATEGORIE)
+    @Schema(implementation = UnterKategorieModel.class, name = "Category and subcategory", required = true)
+    private String kategorie;
+
     @JsonProperty(ApiNames.UNTER_KATEGORIE)
     @Schema(implementation = UnterKategorieModel.class, name = "Category and subcategory", required = true)
-    private UnterKategorieModel unterKategorie;
+    private String unterKategorie;
 
     @JsonProperty(ApiNames.BAHNVERWALTUNG)
     @Schema(implementation = BahnverwaltungModel.class, name = "Railway company", required = true)
-    private BahnverwaltungModel bahnverwaltung;
+    private String bahnverwaltung;
 
     @JsonProperty(ApiNames.HERSTELLER)
     @Schema(name = "Manunfacturer", example = "Henschel")
     private String hersteller;
 
     @JsonProperty(ApiNames.BAUZEIT)
-    @JsonFormat(shape = Shape.STRING, pattern = Formats.ISO8601_DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Schema(implementation = LocalDate.class, name = "Construction date", example = "1934-01-01")
     private LocalDate bauzeit;
 
@@ -96,11 +97,11 @@ public class VorbildModel extends RepresentationModel<VorbildModel> implements I
 
     @JsonProperty(ApiNames.ANTRIEB)
     @Schema(implementation = AntriebModel.class, name = "Drive method")
-    private AntriebModel antrieb;
+    private String antrieb;
 
     @JsonProperty(ApiNames.ACHSFOLG)
     @Schema(implementation = AchsfolgModel.class, name = "Axle configuration")
-    private AchsfolgModel achsfolg;
+    private String achsfolg;
 
     @JsonProperty(ApiNames.ANFAHRZUGKRAFT)
     @Schema(name = "Tractive Effort in kN", example = "300")
@@ -123,7 +124,7 @@ public class VorbildModel extends RepresentationModel<VorbildModel> implements I
     private BigDecimal lange;
 
     @JsonProperty(ApiNames.AUSSERDIENST)
-    @JsonFormat(shape = Shape.STRING, pattern = Formats.ISO8601_DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Schema(implementation = LocalDate.class, name = "Out of service date", example = "1962")
     private LocalDate ausserdienst;
 
@@ -229,7 +230,7 @@ public class VorbildModel extends RepresentationModel<VorbildModel> implements I
 
     @JsonProperty(ApiNames.ABBILDUNG)
     @Schema(implementation = String.class, name = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
-    private Path abbildung;
+    private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(name = "True if soft deleted", example = "false", required = true)

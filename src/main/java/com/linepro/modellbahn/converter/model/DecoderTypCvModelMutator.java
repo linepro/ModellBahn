@@ -15,14 +15,6 @@ public class DecoderTypCvModelMutator implements Mutator<DecoderTypCvModel,Decod
     public DecoderTypCv apply(DecoderTypCvModel source, DecoderTypCv destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setCv(source.getCv());
-        }
-
-        return applyFields(source, destination);
-    }
-
-    @Override
-    public DecoderTypCv applyFields(DecoderTypCvModel source, DecoderTypCv destination) {
-        if (isAvailable(source) && isAvailable(destination)) {
             destination.setBezeichnung(source.getBezeichnung());
             destination.setMinimal(source.getMinimal());
             destination.setMaximal(source.getMaximal());

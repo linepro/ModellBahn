@@ -5,6 +5,9 @@ import java.net.URL;
 
 import javax.persistence.AttributeConverter;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class URLConverter implements AttributeConverter<URL, String> {
 
     @Override
@@ -22,8 +25,7 @@ public class URLConverter implements AttributeConverter<URL, String> {
             try {
                 return new URL(dbData);
             } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                log.error("Cannont convert {} to url: []", dbData, e.getMessage());
             }
         }
 

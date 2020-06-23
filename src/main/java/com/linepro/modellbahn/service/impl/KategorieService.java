@@ -72,7 +72,7 @@ public class KategorieService extends NamedItemServiceImpl<KategorieModel, Kateg
     @Transactional
     public Optional<UnterKategorieModel> updateUnterKategorie(String kategorieStr, String unterKategorieStr, UnterKategorieModel model) {
         return unterKategorieRepository.findByName(kategorieStr, unterKategorieStr)
-                                       .map(u -> unterKategorieMutator.convert(unterKategorieRepository.saveAndFlush(unterKategorieModelMutator.applyFields(model, u))));
+                                       .map(u -> unterKategorieMutator.convert(unterKategorieRepository.saveAndFlush(unterKategorieModelMutator.apply(model, u))));
     }
 
     @Transactional

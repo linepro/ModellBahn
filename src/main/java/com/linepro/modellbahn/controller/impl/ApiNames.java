@@ -54,6 +54,8 @@ public interface ApiNames {
     String CVS = "cvs";
     String DEZIMAL = "dezimal";
     String DECODER_ID = "decoderId";
+    String DECODER_BESTELL_NR = "decoderBestellNr";
+    String DECODER_HERSTELLER = "decoderHersteller";
     String DELETED = "deleted";
     String DIENSTGEWICHT = "dienstgewicht";
     String DMLAUFRADHINTEN = "dmLaufradHinten";

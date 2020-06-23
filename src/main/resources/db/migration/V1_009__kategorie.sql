@@ -16,6 +16,4 @@ INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Treibwage
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Wagen', 'WAGEN', 616);
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Werkzeug', 'WERKZEUG', 665);
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Zubehör', 'ZUBEHOR', 670);
-INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Fred', 'FRED', 1426);
-INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'sdfsdaf', 'SADFSADF', 1428);
-INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'sfsadfsdafa', 'SDFDSFDAS', 1430);
+ALTER TABLE kategorie ALTER COLUMN id RESTART WITH 671;

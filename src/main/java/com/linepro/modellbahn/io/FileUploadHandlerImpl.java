@@ -5,6 +5,7 @@ package com.linepro.modellbahn.io;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Collection;
@@ -65,9 +66,9 @@ public class FileUploadHandlerImpl implements FileUploadHandler {
             fileName = fileName.substring(0, extensionStart);
         }
 
-        Path filePath = fileStore.getFilePath(extension, modelName, fieldName, identifiers);
+        Path filePath = fileStore.getFilePath(modelName, fieldName, extension, identifiers);
 
-        writeToFile(multipart);
+        writeToFile(filePath, multipart);
 
         log.info("File {} uploaded to {}", multipart.getOriginalFilename(), filePath);
 
@@ -76,22 +77,34 @@ public class FileUploadHandlerImpl implements FileUploadHandler {
 
     /**
      * Write to file.
+     * @param filePath 
      * @param fileName the file name
      * @param fileDetail the file detail
      * @param fileData the file data
      * @throws Exception the exception
      */
-    private void writeToFile(MultipartFile multipart) throws Exception {
-        int read;
-        byte[] buffer = new byte[1024];
+    private void writeToFile(Path filePath, MultipartFile multipart) throws Exception {
 
-        OutputStream out = new FileOutputStream(multipart.getOriginalFilename(), false);
+        String originalFilename = multipart.getOriginalFilename();
 
-        while ((read = multipart.getInputStream().read(buffer)) != -1) {
-            out.write(buffer, 0, read);
+        try (
+            OutputStream out = new FileOutputStream(filePath.toFile(), false);
+            InputStream inputStream = multipart.getInputStream()) {
+
+            int read = -1;
+            byte[] buffer = new byte[1024*8];
+
+            do {
+                read = inputStream.read(buffer);
+
+                if (read > 0) {
+                    out.write(buffer, 0, read);
+                }
+            } while (read > 0);
+    
+            out.flush();
+        } catch (Exception e) {
+            log.error("Error uploading {}: {}", originalFilename, e.getMessage());
         }
-
-        out.flush();
-        out.close();
     }
 }

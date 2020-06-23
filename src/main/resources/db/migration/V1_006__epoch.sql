@@ -19,3 +19,4 @@ INSERT INTO epoch (deleted, bezeichnung, name, id) VALUES (FALSE, 'IVc : 1980 â€
 INSERT INTO epoch (deleted, bezeichnung, name, id) VALUES (FALSE, 'Va : 1990 - 1994', 'VA', 212);
 INSERT INTO epoch (deleted, bezeichnung, name, id) VALUES (FALSE, 'Vb : 1994 - 2000', 'VB', 213);
 INSERT INTO epoch (deleted, bezeichnung, name, id) VALUES (FALSE, 'Vc : 2000 - 2006', 'VC', 214);
+ALTER TABLE epoch ALTER COLUMN id RESTART WITH 215;

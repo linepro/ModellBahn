@@ -20,6 +20,7 @@ public class HerstellerMutator extends MutatorImpl<Hersteller, HerstellerModel> 
         destination.setLand(source.getLand());
         destination.setTelefon(source.getTelefon());
         destination.setUrl(source.getUrl());
+
         return super.apply(source, destination);
     }
 

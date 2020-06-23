@@ -15,14 +15,6 @@ public class DecoderTypAdressModelMutator implements Mutator<DecoderTypAdressMod
     public DecoderTypAdress apply(DecoderTypAdressModel source, DecoderTypAdress destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setPosition(source.getIndex());
-        }
-
-        return applyFields(source, destination);
-    }
-
-    @Override
-    public DecoderTypAdress applyFields(DecoderTypAdressModel source, DecoderTypAdress destination) {
-        if (isAvailable(source) && isAvailable(destination)) {
             destination.setBezeichnung(source.getBezeichnung());
             destination.setSpan(source.getSpan());
             destination.setAdressTyp(source.getAdressTyp());

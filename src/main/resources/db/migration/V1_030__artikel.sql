@@ -1,1 +1,0 @@
-INSERT INTO artikel (deleted, abbildung, anmerkung, artikel_id, beladung, bezeichnung, decoder_id, kaufdatum, kupplung_id, licht_id, motor_typ_id, preis, produkt_id, status, steuerung_id, stuck, verbleibende, wahrung, id) VALUES (FALSE, NULL, NULL, '00001', NULL, '', NULL, DATE '1967-01-01', 377, 383, 479, 100.0, 1416, 'GEKAUFT', 508, 1, 1, 'EUR', 1417);

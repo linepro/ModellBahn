@@ -126,7 +126,7 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implem
     public Optional<ProduktModel> updateAnleitungen(String hersteller, String bestellNr, MultipartFile multipart) {
         return  repository.findByBestellNr(hersteller, bestellNr)
                         .map(a -> {
-                            a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.PRODUKT, ApiNames.ANDERUNGEN, hersteller, bestellNr));
+                            a.setAnleitungen(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.PRODUKT, ApiNames.ANLEITUNGEN, hersteller, bestellNr));
                             return entityMutator.convert(a);
                         });
     }
@@ -135,7 +135,7 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implem
     public Optional<ProduktModel> deleteAnleitungen(String hersteller, String bestellNr) {
         return repository.findByBestellNr(hersteller, bestellNr)
                         .map(a -> {
-                            a.setAbbildung(fileService.deleteFile(a.getAbbildung()));
+                            a.setAnleitungen(fileService.deleteFile(a.getAnleitungen()));
                             return entityMutator.convert(a);
                         });
     }
@@ -144,7 +144,7 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implem
     public Optional<ProduktModel> updateExplosionszeichnung(String hersteller, String bestellNr, MultipartFile multipart) {
         return  repository.findByBestellNr(hersteller, bestellNr)
                         .map(a -> {
-                            a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.PRODUKT, ApiNames.EXPLOSIONSZEICHNUNG, hersteller, bestellNr));
+                            a.setExplosionszeichnung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.PRODUKT, ApiNames.EXPLOSIONSZEICHNUNG, hersteller, bestellNr));
                             return entityMutator.convert(a);
                         });
     }
@@ -153,7 +153,7 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implem
     public Optional<ProduktModel> deleteExplosionszeichnung(String hersteller, String bestellNr) {
         return repository.findByBestellNr(hersteller, bestellNr)
                         .map(a -> {
-                            a.setAbbildung(fileService.deleteFile(a.getAbbildung()));
+                            a.setExplosionszeichnung(fileService.deleteFile(a.getExplosionszeichnung()));
                             return entityMutator.convert(a);
                         });
     }

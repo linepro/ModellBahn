@@ -49,7 +49,7 @@ public class DecoderCvModel extends RepresentationModel<DecoderCvModel> implemen
     private String decoderId;
 
     @JsonProperty(ApiNames.CV)
-    @Schema(name = "CV number", example = "08", required = true)
+    @Schema(name = "CV number", example = "63", required = true)
     private Integer cv;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)

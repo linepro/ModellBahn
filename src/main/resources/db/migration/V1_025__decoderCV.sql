@@ -19,3 +19,4 @@ INSERT INTO decoder_cv (deleted, cv_id, decoder_id, wert, id) VALUES (FALSE, 760
 INSERT INTO decoder_cv (deleted, cv_id, decoder_id, wert, id) VALUES (FALSE, 761, 1376, 4, 1395);
 INSERT INTO decoder_cv (deleted, cv_id, decoder_id, wert, id) VALUES (FALSE, 762, 1376, 25, 1396);
 INSERT INTO decoder_cv (deleted, cv_id, decoder_id, wert, id) VALUES (FALSE, 763, 1376, 63, 1397);
+ALTER TABLE decoder_cv ALTER COLUMN id RESTART WITH 1398;

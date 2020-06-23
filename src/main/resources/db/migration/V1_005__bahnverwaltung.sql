@@ -151,3 +151,4 @@ INSERT INTO bahnverwaltung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Wür
 INSERT INTO bahnverwaltung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Westfälische Landes-Eisenbahn GmbH (WLE)', 'WLE', 191);
 INSERT INTO bahnverwaltung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Western Pacific Railroad (WP)', 'WP', 192);
 INSERT INTO bahnverwaltung (deleted, bezeichnung, name, id) VALUES (FALSE, 'Wiebe Gleisbau GmbH (Wiebe)', 'WIEBE', 193);
+ALTER TABLE bahnverwaltung ALTER COLUMN id RESTART WITH 194;

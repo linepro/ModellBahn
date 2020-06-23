@@ -1,7 +1,6 @@
 package com.linepro.modellbahn.model;
 
 import java.math.BigDecimal;
-import java.nio.file.Path;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -30,7 +29,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * IDecoderTyp.
+ * DecoderTypModel
  * @author $Author$
  * @version $Id$
  */
@@ -54,7 +53,7 @@ public class DecoderTypModel extends RepresentationModel<DecoderTypModel> implem
 
     @JsonProperty(ApiNames.HERSTELLER)
     @Schema(implementation = HerstellerModel.class, name = "Manufacturer", required = true)
-    private HerstellerModel hersteller;
+    private String hersteller;
 
     @JsonProperty(ApiNames.BESTELL_NR)
     @Schema(name = "Product numer", example = "62499", required = true)
@@ -70,7 +69,7 @@ public class DecoderTypModel extends RepresentationModel<DecoderTypModel> implem
 
     @JsonProperty(ApiNames.PROTOKOLL)
     @Schema(implementation = ProtokollModel.class, name = "Default protocoll", required = true)
-    private ProtokollModel protokoll;
+    private String protokoll;
 
     @JsonProperty(ApiNames.FAHRSTUFE)
     @Schema(name = "Default speed steps", example = "127", required = true)
@@ -90,7 +89,7 @@ public class DecoderTypModel extends RepresentationModel<DecoderTypModel> implem
 
     @JsonProperty(ApiNames.ANLEITUNGEN)
     @Schema(implementation = String.class, name = "Instructions URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/betrieb_3000.pdf", accessMode = AccessMode.READ_ONLY)
-    private Path anleitungen;
+    private String anleitungen;
 
     @JsonProperty(ApiNames.ADRESSEN)
     @Schema(implementation = DecoderTypAdressModel.class, name = "Assignable adresses", accessMode = AccessMode.READ_ONLY, required = true)

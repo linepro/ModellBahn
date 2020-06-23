@@ -7,3 +7,4 @@ INSERT INTO sondermodell (deleted, bezeichnung, name, id) VALUES (FALSE, 'Einmal
 INSERT INTO sondermodell (deleted, bezeichnung, name, id) VALUES (FALSE, 'Museumswagen', 'MUSEUM', 492);
 INSERT INTO sondermodell (deleted, bezeichnung, name, id) VALUES (FALSE, 'Weihnachtswagen', 'WEIHNACHT', 493);
 INSERT INTO sondermodell (deleted, bezeichnung, name, id) VALUES (FALSE, 'Sonder Model', 'SONDER', 494);
+ALTER TABLE sondermodell ALTER COLUMN id RESTART WITH 495;

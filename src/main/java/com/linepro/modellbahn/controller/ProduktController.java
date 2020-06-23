@@ -195,7 +195,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> updateAbbildung(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable("file") MultipartFile multipart) throws Exception {
+    public ResponseEntity<?> updateAbbildung(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestParam("abbildung") MultipartFile multipart) throws Exception {
         return updated(service.updateAbbildung(herstellerStr, bestellNr, multipart));
     }
 
@@ -226,7 +226,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> updateAnleitungen(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr,
-            @PathVariable("file") MultipartFile multipart) throws Exception {
+            @RequestParam("anleitungen") MultipartFile multipart) throws Exception {
         return updated(service.updateAnleitungen(herstellerStr, bestellNr, multipart));
     }
 
@@ -257,7 +257,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> updateExplosionszeichnung(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr,
-            @PathVariable("file") MultipartFile multipart) throws Exception {
+            @RequestParam("explosionszeichnung") MultipartFile multipart) throws Exception {
         return updated(service.updateExplosionszeichnung(herstellerStr, bestellNr, multipart));
     }
 

@@ -1,0 +1,3 @@
+INSERT INTO person (id, name, password, email, first_name, last_name, enabled, expired, locked, credentials_expired, confirmation_token, reset_token) VALUES (1,  'admin', '$2y$10$GulJj02j0ljy1gY2HBL52esAloAqvLxKis0SYy8IGjmb7CQZwT70e', null, null, null, true, false, false, false, null, null);
+INSERT INTO person (id, name, password, email, first_name, last_name, enabled, expired, locked, credentials_expired, confirmation_token, reset_token) VALUES (2,  'johng', '$2y$10$GulJj02j0ljy1gY2HBL52esAloAqvLxKis0SYy8IGjmb7CQZwT70e', 'linepro@compuserve.com', 'John', 'Goff', true, false, false, false, null, null);
+ALTER TABLE person ALTER COLUMN id RESTART WITH 3;

@@ -202,4 +202,7 @@ public interface ApiPaths {
     /* Multipart field names */
     String MULTIPART_FILE_DETAIL = "FileData";
     String MULTIPART_FILE_DATA = "FileData";
+    
+    String[] API_ENDPOINTS = { API_ROOT + "/**" };
+
 }

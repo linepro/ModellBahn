@@ -49,36 +49,35 @@ public class User implements UserDetails {
     private static final long serialVersionUID = -3641616292070768935L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = DBNames.ID)
-    private int id;
+    private Long id;
     
-    @Column(name = DBNames.EMAIL, nullable = false)
+    @Column(name = DBNames.NAME, nullable = false)
     @Email(message = "{com.linepro.modellbahn.validator.user.email.valid}")
     @NotEmpty(message = "{com.linepro.modellbahn.validator.user.email.notempty}")
-    private String email;
+    private String name;
     
     @Column(name = DBNames.PASSWORD, nullable = false)
     @NotEmpty(message = "{com.linepro.modellbahn.validator.user.password.notempty}")
     @Transient
     private String password;
     
-    @Column(name = DBNames.FIRST_NAME, nullable = false)
+    @Column(name = DBNames.EMAIL)
+    @Email(message = "{com.linepro.modellbahn.validator.user.email.valid}")
+    @NotEmpty(message = "{com.linepro.modellbahn.validator.user.email.notempty}")
+    private String email;
+    
+    @Column(name = DBNames.FIRST_NAME)
     @NotEmpty(message = "{com.linepro.modellbahn.validator.user.firstname.notempty}")
     private String firstName;
     
-    @Column(name = DBNames.LAST_NAME, nullable = false)
+    @Column(name = DBNames.LAST_NAME)
     @NotEmpty(message = "{com.linepro.modellbahn.validator.user.lastname.notempty}")
     private String lastName;
     
     @Column(name = DBNames.ENABLED)
     private boolean enabled;
-    
-    @Column(name = DBNames.CONFIRMATION_TOKEN)
-    private String confirmationToken;
-
-    @Column(name = DBNames.RESET_TOKEN)
-    private String resetToken;
     
     @Column(name = DBNames.EXPIRED)
     private boolean expired;
@@ -88,6 +87,12 @@ public class User implements UserDetails {
 
     @Column(name = DBNames.CREDENTIALS_EXPIRED)
     private boolean credentialsExpired;
+    
+    @Column(name = DBNames.CONFIRMATION_TOKEN)
+    private String confirmationToken;
+
+    @Column(name = DBNames.RESET_TOKEN)
+    private String resetToken;
 
     @ElementCollection
     @Column(name = DBNames.ROLES)

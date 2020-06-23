@@ -11,7 +11,8 @@ import com.linepro.modellbahn.model.DecoderTypFunktionModel;
 @Component
 public class DecoderTypFunktionMutator implements Mutator<DecoderTypFunktion,DecoderTypFunktionModel> {
 
-    public DecoderTypFunktionModel applyFields(DecoderTypFunktion source, DecoderTypFunktionModel destination) {
+    @Override
+    public DecoderTypFunktionModel apply(DecoderTypFunktion source, DecoderTypFunktionModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setHersteller(source.getDecoderTyp().getHersteller().getName());
             destination.setBestellNr(source.getDecoderTyp().getBestellNr());

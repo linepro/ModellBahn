@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.Mutator;
+import com.linepro.modellbahn.converter.PathMutator;
 import com.linepro.modellbahn.entity.Vorbild;
 import com.linepro.modellbahn.model.VorbildModel;
 
@@ -16,28 +17,22 @@ import lombok.RequiredArgsConstructor;
 public class VorbildMutator implements Mutator<Vorbild,VorbildModel> {
     
     @Autowired
-    private final UnterKategorieMutator unterKategorieMutator;
-    
-    @Autowired
-    private final AntriebMutator antriebMutator;
-     
-    @Autowired
-    private final BahnverwaltungMutator bahnverwaltungMutator;
-    
-    @Autowired
-    private final AchsfolgMutator achsfolgMutator;
+    private PathMutator pathMutator;
 
-    public VorbildModel applyFields(Vorbild source, VorbildModel destination) {
+    @Override
+    public VorbildModel apply(Vorbild source, VorbildModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
-            applySummary(source, destination);
-            destination.setUnterKategorie(unterKategorieMutator.summarize(source.getUnterKategorie()));
-            destination.setBahnverwaltung(bahnverwaltungMutator.summarize(source.getBahnverwaltung()));
+            destination.setGattung(source.getGattung().getName());
+            destination.setBezeichnung(source.getBezeichnung());
+            destination.setKategorie(getCode(source.getUnterKategorie().getKategorie()));
+            destination.setUnterKategorie(getCode(source.getUnterKategorie()));
+            destination.setBahnverwaltung(getCode(source.getBahnverwaltung()));
             destination.setHersteller(source.getHersteller());
             destination.setBauzeit(source.getBauzeit());
             destination.setAnzahl(source.getAnzahl());
             destination.setBetreibsNummer(source.getBetreibsNummer());
-            destination.setAntrieb(antriebMutator.summarize(source.getAntrieb()));
-            destination.setAchsfolg(achsfolgMutator.summarize(source.getAchsfolg()));
+            destination.setAntrieb(getCode(source.getAntrieb()));
+            destination.setAchsfolg(getCode(source.getAchsfolg()));
             destination.setAnfahrzugkraft(source.getAnfahrzugkraft());
             destination.setLeistung(source.getLeistung());
             destination.setDienstgewicht(source.getDienstgewicht());
@@ -69,18 +64,8 @@ public class VorbildMutator implements Mutator<Vorbild,VorbildModel> {
             destination.setTriebkopf(source.getTriebkopf());
             destination.setMittelwagen(source.getMittelwagen());
             destination.setDrehgestellBauart(source.getDrehgestellBauart());
-            destination.setAbbildung(source.getAbbildung());
+            destination.setAbbildung(pathMutator.convert(source.getAbbildung()));
             destination.setDeleted(source.getDeleted());
-        }
-        
-        return destination;
-    }
-
-    @Override
-    public VorbildModel applySummary(Vorbild source, VorbildModel destination) {
-        if (isAvailable(source) && isAvailable(destination)) {
-            destination.setGattung(source.getGattung().getName());
-            destination.setBezeichnung(source.getBezeichnung());
         }
         
         return destination;

@@ -64,8 +64,11 @@ public class ProduktTeilModel extends RepresentationModel<ProduktTeilModel> impl
     @Schema(name = "Description", example = "Dampftenderlok BR 89.0", accessMode = AccessMode.READ_ONLY)
     private String bezeichnung;
 
+    @JsonProperty(ApiNames.KATEGORIE)
+    private String kategorie;
+
     @JsonProperty(ApiNames.UNTER_KATEGORIE)
-    private UnterKategorieModel unterKategorie;
+    private String unterKategorie;
 
     @JsonProperty(ApiNames.ANZAHL)
     @Schema(name = "Number included", example = "1", required = true)

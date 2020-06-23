@@ -2,6 +2,8 @@ package com.linepro.modellbahn.configuration;
 
 import javax.ws.rs.core.Link;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonGetter;
@@ -78,7 +80,7 @@ public class ErrorMessage {
 
     @Override
     public String toString() {
-        return new com.linepro.modellbahn.util.ToStringBuilder(this)
+        return new ToStringBuilder(this)
                 .append("errorCode", errorCode)
                 .append("userMessage", userMessage)
                 .append("developerMessage", developerMessage)

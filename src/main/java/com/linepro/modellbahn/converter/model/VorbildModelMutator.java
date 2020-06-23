@@ -44,14 +44,7 @@ public class VorbildModelMutator implements Mutator<VorbildModel, Vorbild> {
     public Vorbild apply(VorbildModel source, Vorbild destination) {
         if (isAvailable(source) && isAvailable(destination) && StringUtils.hasText(source.getGattung())) {
             gattungRepository.findByName(source.getGattung()).ifPresent(g -> destination.setGattung(g));
-        }
 
-        return applyFields(source, destination);
-    }
-
-    @Override
-    public Vorbild applyFields(VorbildModel source, Vorbild destination) {
-        if (isAvailable(source) && isAvailable(destination)) {
             destination.setUnterKategorie(lookup.find(source.getUnterKategorie(), unterKategorieRepository));
             destination.setBahnverwaltung(lookup.find(source.getBahnverwaltung(), bahnverwaltungRepository));
             destination.setHersteller(source.getHersteller());

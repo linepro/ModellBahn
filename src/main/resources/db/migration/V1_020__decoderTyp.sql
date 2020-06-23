@@ -47,3 +47,4 @@ INSERT INTO decoder_typ (deleted, anleitungen, bestell_nr, bezeichnung, fahrstuf
 INSERT INTO decoder_typ (deleted, anleitungen, bestell_nr, bezeichnung, fahrstufe, hersteller_id, i_max, konfiguration, protokoll_id, sound, stecker, id) VALUES (FALSE, NULL, '606896', '606896', NULL, 348, NULL, 'CV', 484, FALSE, 'EINGEBAUT', 1302);
 INSERT INTO decoder_typ (deleted, anleitungen, bestell_nr, bezeichnung, fahrstufe, hersteller_id, i_max, konfiguration, protokoll_id, sound, stecker, id) VALUES (FALSE, NULL, '608825', '608825', NULL, 348, NULL, 'CV', 484, FALSE, 'EINGEBAUT', 1309);
 INSERT INTO decoder_typ (deleted, anleitungen, bestell_nr, bezeichnung, fahrstufe, hersteller_id, i_max, konfiguration, protokoll_id, sound, stecker, id) VALUES (FALSE, NULL, '74460', 'Einbau-Digital-Decoder', NULL, 348, NULL, 'SWITCH', 485, FALSE, 'EINGEBAUT', 1318);
+ALTER TABLE decoder_typ ALTER COLUMN id RESTART WITH 1319;
