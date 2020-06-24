@@ -1,3 +1,4 @@
+
 <!-- HTML for static distribution bundle build -->
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +40,7 @@
     window.onload = function() {
       // Begin Swagger UI call region
       const ui = SwaggerUIBundle({
-        url: window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/ModellBahn/api/swagger/swagger.json",
+        url: "/ModellBahn/api/swagger/swagger.json",
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [

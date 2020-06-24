@@ -45,6 +45,8 @@ import io.swagger.jaxrs.listing.SwaggerSerializers;
 @ApplicationPath(ApiPaths.SEPARATOR)
 public class ModellBahnConfiguration extends ResourceConfig {
 
+    private static final String LICENSE_URL = "http://www.opensource.org/licenses/mit-license.php";
+
     private static final String JERSEY_SERVLET_CONTEXT_PATH = "";
 
     private static final String JSP_CLASSPATH_ATTRIBUTE = "org.apache.catalina.jsp_classpath";
@@ -146,14 +148,12 @@ public class ModellBahnConfiguration extends ResourceConfig {
         swaggerConfig.setHost(baseUri.getHost());
         swaggerConfig.setBasePath(ApiPaths.SWAGGER_ROOT);
         swaggerConfig.setResourcePackage(getPackages());
-        swaggerConfig.setLicenseUrl("https://github.com/linepro/ModellBahn/LICENSE");
+        swaggerConfig.setLicenseUrl(LICENSE_URL);
         swaggerConfig.setScan(true);
-        //swaggerConfig.setContact("https://hortonworks.com/contact-sales/");
         swaggerConfig.setPrettyPrint(true);
 
         SwaggerConfigLocator.getInstance().putConfig(SwaggerContextService.CONFIG_ID_DEFAULT, swaggerConfig);
 
-        //register(SwaggerListingResource.class);
         register(SwaggerSerializers.class);
     }
 
