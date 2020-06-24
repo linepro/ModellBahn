@@ -118,8 +118,9 @@
         <h2.version>1.4.197</h2.version>
         <hamcrest.version>2.1</hamcrest.version>
         <hibernate-core.version>5.4.0.Final</hibernate-core.version>
-        <hibernate-validator.version>6.0.13.Final</hibernate-validator.version>
-        <jackson.version>2.9.8</jackson.version>
+        <hibernate-validator.version>6.1.1.Final</hibernate-validator.version>
+        <jackson.version>[2.9.8,)</jackson.version>
+        <jackson.databind.versiion>[2.9.10.5,)</jackson.databind.versiion>
         <javax.el.version>3.0.1-b11</javax.el.version>
         <javax.el-api.version>3.0.1-b06</javax.el-api.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
@@ -525,6 +526,11 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-databind.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
