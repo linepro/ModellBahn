@@ -2,7 +2,10 @@ package com.linepro.modellbahn.configuration;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -14,14 +17,16 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import ch.qos.logback.classic.pattern.Abbreviator;
 import ch.qos.logback.classic.pattern.TargetLengthBasedClassNameAbbreviator;
 import lombok.extern.slf4j.Slf4j;
+import java.util.AbstractMap.SimpleImmutableEntry;
 
 @Slf4j
-@Component
+@Component("ApplicationReadyListener")
 public class ApplicationReadyListener implements ApplicationListener<ApplicationReadyEvent>, ApplicationContextAware {
 
     private final Abbreviator abbreviator = new TargetLengthBasedClassNameAbbreviator(30);
@@ -35,19 +40,11 @@ public class ApplicationReadyListener implements ApplicationListener<Application
 
         if (applicationContext.equals(context)) {
             String application = context.getApplicationName();
-            
             List<String> contextBeanz = Stream.of(context.getBeanDefinitionNames())
-                    .map(b -> {
-                        try {
-                            return AopUtils.getTargetClass(context.getBean(b)).getName();       
-                        } catch(Throwable e) {
-                            return "";
-                        }
-                    })
-                    .filter(b -> b.startsWith("com.linepro"))
-                    .map(b -> b.substring(0, b.indexOf('$') > 0 ? b.indexOf('$') : b.length()))
-                    .sorted()
-                    .map(n -> abbreviator.abbreviate(n))
+                    .map(this::beanEntry)
+                    .sorted(Comparator.comparing(Entry::getKey))
+                    .filter(e -> StringUtils.hasText(e.getValue()))
+                    .map(e -> String.join(": " , e.getKey(), e.getValue()))
                     .collect(Collectors.toList());
 
             if (CollectionUtils.isNotEmpty(contextBeanz) && !CollectionUtils.isEqualCollection(beanz, contextBeanz)) {
@@ -70,6 +67,24 @@ public class ApplicationReadyListener implements ApplicationListener<Application
         }
     }
 
+    private Entry<String,String> beanEntry(String beanName) {
+        return new SimpleImmutableEntry<String,String>(beanName, Optional.ofNullable(beanClassName(beanName)).orElse(""));
+    }
+
+    private String beanClassName(String beanName) {
+        try {
+            String className = AopUtils.getTargetClass(applicationContext.getBean(beanName)).getName();
+
+            if (className == null || !className.contains("com.linepro")) {
+                return null;
+            }
+
+            return abbreviator.abbreviate(className.substring(0, className.indexOf('$') > 0 ? className.indexOf('$') : className.length()));
+        } catch(Throwable e) {
+        }
+
+        return null;
+    }
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;

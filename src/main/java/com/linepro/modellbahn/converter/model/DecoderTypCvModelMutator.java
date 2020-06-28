@@ -8,7 +8,7 @@ import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.entity.DecoderTypCv;
 import com.linepro.modellbahn.model.DecoderTypCvModel;
 
-@Component
+@Component("DecoderTypCvModelMutator")
 public class DecoderTypCvModelMutator implements Mutator<DecoderTypCvModel,DecoderTypCv> {
     
     @Override

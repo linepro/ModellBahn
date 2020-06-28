@@ -11,7 +11,7 @@ import com.linepro.modellbahn.repository.VorbildRepository;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-@Component
+@Component("VorbildLookup")
 public class VorbildLookup {
     
     @Autowired

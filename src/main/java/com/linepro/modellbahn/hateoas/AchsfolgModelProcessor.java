@@ -10,11 +10,17 @@ import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.AchsfolgModel;
 
 @Lazy
-@Component
+@Component("AchsfolgModelProcessor")
 public class AchsfolgModelProcessor extends NamedModelProcessor<AchsfolgModel> implements RepresentationModelProcessor<AchsfolgModel> {
 
     @Autowired
     public AchsfolgModelProcessor() {
-        super(ApiPaths.ADD_ACHSFOLG, ApiPaths.GET_ACHSFOLG, ApiPaths.UPDATE_ACHSFOLG, ApiPaths.DELETE_ACHSFOLG, ApiPaths.SEARCH_ACHSFOLG);
+        super(
+            ApiPaths.ADD_ACHSFOLG,
+            ApiPaths.GET_ACHSFOLG,
+            ApiPaths.UPDATE_ACHSFOLG,
+            ApiPaths.DELETE_ACHSFOLG,
+            ApiPaths.SEARCH_ACHSFOLG
+            );
     }
 }

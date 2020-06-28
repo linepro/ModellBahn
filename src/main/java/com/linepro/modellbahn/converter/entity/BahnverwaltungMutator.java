@@ -7,7 +7,7 @@ import com.linepro.modellbahn.converter.impl.NamedTranscriber;
 import com.linepro.modellbahn.entity.Bahnverwaltung;
 import com.linepro.modellbahn.model.BahnverwaltungModel;
 
-@Component
+@Component("BahnverwaltungMutator")
 public class BahnverwaltungMutator extends MutatorImpl<Bahnverwaltung, BahnverwaltungModel> {
 
     public BahnverwaltungMutator() {

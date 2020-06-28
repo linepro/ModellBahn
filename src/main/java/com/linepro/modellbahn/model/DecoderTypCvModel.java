@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -37,14 +38,16 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.CV, ApiNames.BEZEICHNUNG, ApiNames.MINIMAL, ApiNames.MAXIMAL, ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED })
+@JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.CV, ApiNames.BEZEICHNUNG, ApiNames.MINIMAL, ApiNames.MAXIMAL,
+    ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED })
+@Relation(collectionRelation = ApiNames.CV, itemRelation = ApiNames.CV)
 @Schema(name = ApiNames.CV, description = "Decoder type CV - template for Decoder.")
 public class DecoderTypCvModel extends RepresentationModel<DecoderTypCvModel> implements ItemModel, Comparable<DecoderTypCvModel> {
 
     private static final long serialVersionUID = -8055283388490564394L;
 
     @JsonProperty(ApiNames.HERSTELLER)
-    @Schema(implementation = HerstellerModel.class, name = "Manufacturer", required = true)
+    @Schema(name = "Manufacturer", required = true)
     private String hersteller;
 
     @JsonProperty(ApiNames.BESTELL_NR)

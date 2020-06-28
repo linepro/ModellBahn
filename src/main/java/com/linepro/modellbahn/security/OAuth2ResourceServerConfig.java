@@ -132,8 +132,8 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
      *
      * @return the token services
      */
-    @Bean
     @Primary
+    @Bean("TokenServices")
     public DefaultTokenServices tokenServices() {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         defaultTokenServices.setTokenStore(tokenStore());
@@ -145,7 +145,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
      *
      * @return the token store
      */
-    @Bean
+    @Bean("TokenStore")
     public TokenStore tokenStore() {
         // Need to translate username into user_name because AWS does it weirdly.
         CustomAccessTokenConverter tokenConverter = new CustomAccessTokenConverter();

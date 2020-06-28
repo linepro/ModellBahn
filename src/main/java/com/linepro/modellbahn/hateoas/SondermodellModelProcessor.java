@@ -10,11 +10,17 @@ import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.SondermodellModel;
 
 @Lazy
-@Component
+@Component("SondermodellModelProcessor")
 public class SondermodellModelProcessor extends NamedModelProcessor<SondermodellModel> implements RepresentationModelProcessor<SondermodellModel> {
 
     @Autowired
     public SondermodellModelProcessor() {
-        super(ApiPaths.ADD_SONDERMODELL, ApiPaths.GET_SONDERMODELL, ApiPaths.UPDATE_SONDERMODELL, ApiPaths.DELETE_SONDERMODELL, ApiPaths.SEARCH_SONDERMODELL);
+        super(
+            ApiPaths.ADD_SONDERMODELL, 
+            ApiPaths.GET_SONDERMODELL, 
+            ApiPaths.UPDATE_SONDERMODELL, 
+            ApiPaths.DELETE_SONDERMODELL, 
+            ApiPaths.SEARCH_SONDERMODELL
+            );
     }
 }

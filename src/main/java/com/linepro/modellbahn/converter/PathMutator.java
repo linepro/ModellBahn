@@ -5,7 +5,6 @@ import java.nio.file.Path;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.linepro.modellbahn.io.FileStore;
 
@@ -26,15 +25,9 @@ public class PathMutator implements Mutator<Path, String> {
     @Override
     public String apply(Path source, String destination) {
         if (source != null) {
-            String path = FilenameUtils.separatorsToUnix(fileStore.fileStoreRoot().relativize(source).toString());
-
-            return ServletUriComponentsBuilder.fromCurrentContextPath()
-                            .pathSegment(path)
-                            .build()
-                            .toString();
+            return FilenameUtils.separatorsToUnix(fileStore.fileStoreRoot().relativize(source).toString());
         }
 
         return null;
     }
-
 }

@@ -7,7 +7,7 @@ import com.linepro.modellbahn.converter.impl.NamedTranscriber;
 import com.linepro.modellbahn.entity.ZugTyp;
 import com.linepro.modellbahn.model.ZugTypModel;
 
-@Component
+@Component("ZugTypMutator")
 public class ZugTypMutator extends MutatorImpl<ZugTyp, ZugTypModel> {
 
     public ZugTypMutator() {

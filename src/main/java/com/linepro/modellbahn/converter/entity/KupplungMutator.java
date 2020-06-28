@@ -9,7 +9,7 @@ import com.linepro.modellbahn.converter.impl.NamedAbbildungTranscriber;
 import com.linepro.modellbahn.entity.Kupplung;
 import com.linepro.modellbahn.model.KupplungModel;
 
-@Component
+@Component("KupplungMutator")
 public class KupplungMutator extends MutatorImpl<Kupplung, KupplungModel> {
 
     @Autowired

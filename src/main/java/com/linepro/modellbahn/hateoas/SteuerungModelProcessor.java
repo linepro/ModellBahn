@@ -10,11 +10,17 @@ import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.SteuerungModel;
 
 @Lazy
-@Component
+@Component("SteuerungModelProcessor")
 public class SteuerungModelProcessor extends NamedModelProcessor<SteuerungModel> implements RepresentationModelProcessor<SteuerungModel> {
 
     @Autowired
     public SteuerungModelProcessor() {
-        super(ApiPaths.ADD_STEUERUNG, ApiPaths.GET_STEUERUNG, ApiPaths.UPDATE_STEUERUNG, ApiPaths.DELETE_STEUERUNG, ApiPaths.SEARCH_STEUERUNG);
+        super(
+            ApiPaths.ADD_STEUERUNG, 
+            ApiPaths.GET_STEUERUNG, 
+            ApiPaths.UPDATE_STEUERUNG, 
+            ApiPaths.DELETE_STEUERUNG, 
+            ApiPaths.SEARCH_STEUERUNG
+            );
     }
 }

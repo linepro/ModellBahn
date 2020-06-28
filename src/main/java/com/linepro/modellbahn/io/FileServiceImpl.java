@@ -14,7 +14,7 @@ import com.linepro.modellbahn.i18n.MessageTranslator;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
+@Component("FileServiceImpl")
 public class FileServiceImpl implements FileService {
 
     private final FileStore fileStore;

@@ -4,6 +4,8 @@ import static org.springframework.http.ResponseEntity.of;
 
 import java.util.Optional;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +43,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @version $Id:$
  */
 @Tag(name = ApiNames.DECODER)
-@RestController
+@RestController("DecoderController")
 @ExposesResourceFor(DecoderModel.class)
 public class DecoderController extends AbstractItemController<DecoderModel> {
 
@@ -74,7 +76,7 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
         return new DecoderFunktionModel();
     }
 
-    @GetMapping(ApiPaths.GET_DECODER)
+    @GetMapping(path = ApiPaths.GET_DECODER, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an DecoderTyp by name", description = "Finds a train", operationId = "get", tags = { "DecoderTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderModel.class)) }),
@@ -89,7 +91,7 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
     }
 
     @Override
-    @GetMapping(ApiPaths.SEARCH_DECODER)
+    @GetMapping(path = ApiPaths.SEARCH_DECODER, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds Achsfolgen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Achsfolg" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = DecoderModel.class))) }),
@@ -103,7 +105,7 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
         return super.search(model, pageNumber, pageSize);
     }
 
-    @PostMapping(ApiPaths.ADD_DECODER)
+    @PostMapping(path = ApiPaths.ADD_DECODER, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds an DecoderTyp", description = "Update a train", operationId = "update", tags = { "DecoderTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderModel.class)) }),
@@ -114,12 +116,11 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> addDecoder(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
-                    @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
+    public ResponseEntity<?> addDecoder(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
         return added(service.add(herstellerStr, bestellNr));
     }
 
-    @PutMapping(ApiPaths.UPDATE_DECODER)
+    @PutMapping(path = ApiPaths.UPDATE_DECODER, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates an DecoderTyp by name", description = "Update a train", operationId = "update", tags = { "DecoderTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderModel.class)) }),
@@ -130,11 +131,11 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> update(@PathVariable(ApiNames.DECODER_ID) String decoderId, DecoderModel model) {
+    public ResponseEntity<?> update(@PathVariable(ApiNames.DECODER_ID) String decoderId, @RequestBody DecoderModel model) {
         return updated(service.update(decoderId, model));
     }
 
-    @DeleteMapping(ApiPaths.DELETE_DECODER)
+    @DeleteMapping(path = ApiPaths.DELETE_DECODER)
     @Operation(summary = "Deletes an DecoderTyp by name", description = "Delete a train", operationId = "update", tags = { "DecoderTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -149,7 +150,7 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
         return deleted(service.delete(decoderId));
     }
 
-    @PutMapping(ApiPaths.UPDATE_DECODER_ADRESS)
+    @PutMapping(path = ApiPaths.UPDATE_DECODER_ADRESS, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "UnterKategorie" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderAdressModel.class)) }),
@@ -160,12 +161,11 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
-    public ResponseEntity<?> updateAdress(@PathVariable(ApiNames.DECODER_ID) String decoderId,
-                    @PathVariable(ApiNames.INDEX) Integer index, @RequestParam(ApiNames.ADRESS) Integer adress) {
+    public ResponseEntity<?> updateAdress(@PathVariable(ApiNames.DECODER_ID) String decoderId, @PathVariable(ApiNames.INDEX) Integer index, @RequestParam(ApiNames.ADRESS) Integer adress) {
         return updated(service.updateAdress(decoderId, index, adress));
     }
 
-    @PutMapping(ApiPaths.UPDATE_DECODER_CV)
+    @PutMapping(path = ApiPaths.UPDATE_DECODER_CV, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "UnterKategorie" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderCvModel.class)) }),
@@ -176,12 +176,11 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
-    public ResponseEntity<?> updateCv(@PathVariable(ApiNames.DECODER_ID) String decoderId,
-                    @PathVariable(ApiNames.CV) Integer cv, @RequestParam(ApiNames.WERT) Integer wert) {
+    public ResponseEntity<?> updateCv(@PathVariable(ApiNames.DECODER_ID) String decoderId, @PathVariable(ApiNames.CV) Integer cv, @RequestParam(ApiNames.WERT) Integer wert) {
         return updated(service.updateCv(decoderId, cv, wert));
     }
 
-    @PutMapping(ApiPaths.UPDATE_DECODER_FUNKTION)
+    @PutMapping(path = ApiPaths.UPDATE_DECODER_FUNKTION, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "UnterKategorie" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderFunktionModel.class)) }),

@@ -9,6 +9,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -44,10 +45,12 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.ARTIKEL_ID, ApiNames.BEZEICHNUNG, ApiNames.PRODUKT, ApiNames.KAUFDATUM,
-        ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.STUCK, ApiNames.STEUERUNG, ApiNames.MOTOR_TYP, ApiNames.LICHT,
-        ApiNames.KUPPLUNG, ApiNames.DECODER, ApiNames.ANMERKUNG, ApiNames.BELADUNG, ApiNames.ABBILDUNG, ApiNames.STATUS,
-        ApiNames.DELETED})
+@JsonPropertyOrder({ApiNames.ARTIKEL_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.KATEGORIE, ApiNames.KAUFDATUM, 
+    ApiNames.UNTER_KATEGORIE, ApiNames.LANGE, ApiNames.MASSSTAB, ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG,
+    ApiNames.BETREIBSNUMMER, ApiNames.ACHSFOLG, ApiNames.SONDERMODELL, ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG,
+    ApiNames.DECODER, ApiNames.MOTOR_TYP, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.STUCK, ApiNames.VERBLEIBENDE, ApiNames.ANMERKUNG,
+    ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.ANDERUNGEN, ApiNames.ABBILDUNG, ApiNames.DELETED})
+@Relation(collectionRelation = ApiNames.ARTIKEL, itemRelation = ApiNames.ARTIKEL)
 @Schema(name = ApiNames.ARTIKEL, description = "An article - may differ from product because of modificiations")
 public class ArtikelModel extends RepresentationModel<ArtikelModel> implements ItemModel, Comparable<ArtikelModel> {
 
@@ -80,23 +83,23 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
     private BigDecimal lange;
 
     @JsonProperty(ApiNames.MASSSTAB)
-    @Schema(implementation = MassstabModel.class, name = "Scale")
+    @Schema(name = "Scale", example = "H0")
     private String massstab;
 
     @JsonProperty(ApiNames.SPURWEITE)
-    @Schema(implementation = SpurweiteModel.class, name = "Track gauge")
+    @Schema(name = "Track gauge", example = "H0")
     private String spurweite;
 
     @JsonProperty(ApiNames.EPOCH)
-    @Schema(implementation = EpochModel.class, name = "ERA")
+    @Schema(name = "ERA", example = "IV")
     private String epoch;
 
     @JsonProperty(ApiNames.BAHNVERWALTUNG)
-    @Schema(implementation = BahnverwaltungModel.class, name = "Railway company")
+    @Schema(name = "Railway company", example = "DB")
     private String bahnverwaltung;
 
     @JsonProperty(ApiNames.GATTUNG)
-    @Schema(implementation = GattungModel.class, name = "Vehicle class")
+    @Schema(name = "Vehicle class", example = "BR89.0")
     private String gattung;
 
     @JsonProperty(ApiNames.BETREIBSNUMMER)
@@ -104,35 +107,35 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
     private String betreibsnummer;
 
     @JsonProperty(ApiNames.ACHSFOLG)
-    @Schema(implementation = AchsfolgModel.class, name = "Axle configuration")
+    @Schema(name = "Axle configuration", example = "CH2T")
     private String achsfolg;
 
     @JsonProperty(ApiNames.SONDERMODELL)
-    @Schema(implementation = SondermodellModel.class, name = "Special model indicator")
+    @Schema(name = "Special model indicator", example = "MHI")
     private String sondermodell;
 
     @JsonProperty(ApiNames.AUFBAU)
-    @Schema(implementation = AufbauModel.class, name = "Construction")
+    @Schema(name = "Construction")
     private String aufbau;
 
     @JsonProperty(ApiNames.LICHT)
-    @Schema(implementation = LichtModel.class, name = "Light Configuration", example = "")
+    @Schema(name = "Light Configuration", example = "")
     private String licht;
 
     @JsonProperty(ApiNames.KUPPLUNG)
-    @Schema(implementation = KupplungModel.class, name = "Coupling configuration", example = "")
+    @Schema(name = "Coupling configuration", example = "")
     private String kupplung;
 
     @JsonProperty(ApiNames.STEUERUNG)
-    @Schema(implementation = SteuerungModel.class, name = "Control method", example = "Digital")
+    @Schema(name = "Control method", example = "Digital")
     private String steuerung;
 
     @JsonProperty(ApiNames.DECODER)
-    @Schema(implementation = DecoderModel.class, name = "Decoder", example = "")
+    @Schema(name = "Decoder", example = "1")
     private String decoder;
 
     @JsonProperty(ApiNames.MOTOR_TYP)
-    @Schema(implementation = MotorTypModel.class, name = "Motor type", example = "5*")
+    @Schema(name = "Motor type", example = "5*")
     private String motorTyp;
 
     @JsonProperty(ApiNames.KAUFDATUM)
@@ -173,7 +176,7 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
     private List<AnderungModel> anderungen;
 
     @JsonProperty(ApiNames.ABBILDUNG)
-    @Schema(implementation = String.class, name = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
+    @Schema(name = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
     private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)

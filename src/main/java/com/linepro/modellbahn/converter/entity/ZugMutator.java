@@ -14,7 +14,7 @@ import com.linepro.modellbahn.model.ZugModel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Component
+@Component("ZugMutator")
 public class ZugMutator implements Mutator<Zug,ZugModel> {
 
     @Autowired

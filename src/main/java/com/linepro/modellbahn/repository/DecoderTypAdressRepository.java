@@ -10,7 +10,7 @@ import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.entity.DecoderTypAdress;
 import com.linepro.modellbahn.repository.base.ItemRepository;
 
-@Repository
+@Repository("DecoderTypAdressRepository")
 public interface DecoderTypAdressRepository extends ItemRepository<DecoderTypAdress> {
 
     //@formatter:off

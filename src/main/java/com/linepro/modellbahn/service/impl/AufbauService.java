@@ -24,7 +24,7 @@ import com.linepro.modellbahn.service.ItemService;
  * @version $Id:$
  */
 
-@Service
+@Service("AufbauService")
 public class AufbauService extends NamedItemServiceImpl<AufbauModel,Aufbau> implements ItemService<AufbauModel> {
 
     private final AufbauRepository repository;

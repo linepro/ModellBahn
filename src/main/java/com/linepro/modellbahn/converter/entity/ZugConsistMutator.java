@@ -13,7 +13,7 @@ import com.linepro.modellbahn.model.ZugConsistModel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Component
+@Component("ZugConsistMutator")
 public class ZugConsistMutator implements Mutator<ZugConsist, ZugConsistModel> {
 
     @Autowired

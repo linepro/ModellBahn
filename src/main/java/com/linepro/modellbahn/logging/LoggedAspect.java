@@ -35,7 +35,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * with business logger logging.
  */
 @Aspect
-@Configuration
+@Configuration("LoggedAspect")
 public class LoggedAspect {
 
     protected static final String LOGGED_ANNOTATION = "com.linepro.modellbahn.logging.Logged";

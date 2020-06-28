@@ -7,7 +7,7 @@ import com.linepro.modellbahn.converter.impl.NamedTranscriber;
 import com.linepro.modellbahn.entity.Epoch;
 import com.linepro.modellbahn.model.EpochModel;
 
-@Component
+@Component("EpochModelMutator")
 public class EpochModelMutator extends MutatorImpl<EpochModel, Epoch> {
 
     public EpochModelMutator() {

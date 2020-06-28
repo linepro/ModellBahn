@@ -4,6 +4,8 @@ import static org.springframework.http.ResponseEntity.of;
 
 import java.util.Optional;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +42,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @version $Id:$
  */
 @Tag(name = ApiNames.KUPPLUNG)
-@RestController
+@RestController("KupplungController")
 @ExposesResourceFor(KupplungModel.class)
 public class KupplungController extends NamedItemController<KupplungModel> {
 
@@ -59,7 +61,7 @@ public class KupplungController extends NamedItemController<KupplungModel> {
     }
     
     @Override
-    @GetMapping(ApiPaths.GET_KUPPLUNG)
+    @GetMapping(path = ApiPaths.GET_KUPPLUNG, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an Kupplung by name", description = "Finds a coupling configuration", operationId = "get", tags = { "Kupplung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),
@@ -74,7 +76,7 @@ public class KupplungController extends NamedItemController<KupplungModel> {
     }
 
     @Override
-    @GetMapping(ApiPaths.SEARCH_KUPPLUNG)
+    @GetMapping(path = ApiPaths.SEARCH_KUPPLUNG, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds Kupplungen by example", description = "Finds coupling configurations", operationId = "get", tags = { "Kupplung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = KupplungModel.class))) }),
@@ -89,7 +91,7 @@ public class KupplungController extends NamedItemController<KupplungModel> {
     }
 
     @Override
-    @PostMapping(ApiPaths.ADD_KUPPLUNG)
+    @PostMapping(path = ApiPaths.ADD_KUPPLUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds an Kupplung", description = "Update a coupling configuration", operationId = "update", tags = { "Kupplung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),
@@ -105,7 +107,7 @@ public class KupplungController extends NamedItemController<KupplungModel> {
     }
 
     @Override
-    @PutMapping(ApiPaths.UPDATE_KUPPLUNG)
+    @PutMapping(path = ApiPaths.UPDATE_KUPPLUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates an Kupplung by name", description = "Update a coupling configuration", operationId = "update", tags = { "Kupplung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),
@@ -121,7 +123,7 @@ public class KupplungController extends NamedItemController<KupplungModel> {
     }
 
     @Override
-    @DeleteMapping(ApiPaths.DELETE_KUPPLUNG)
+    @DeleteMapping(path = ApiPaths.DELETE_KUPPLUNG)
     @Operation(summary = "Deletes an Kupplung by name", description = "Delete a coupling configuration", operationId = "update", tags = { "Kupplung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -136,7 +138,7 @@ public class KupplungController extends NamedItemController<KupplungModel> {
         return super.delete(name);
     }
 
-    @PostMapping(ApiPaths.ADD_KUPPLUNG_ABBILDUNG)
+    @PutMapping(path = ApiPaths.ADD_KUPPLUNG_ABBILDUNG, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Add an Kupplung picture", description = "Adds or updates the picture of a named Kupplung", operationId = "update", tags = { "Kupplung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),
@@ -151,7 +153,7 @@ public class KupplungController extends NamedItemController<KupplungModel> {
         return of(service.updateAbbildung(name, multipart));
     }
 
-    @PutMapping(ApiPaths.ADD_KUPPLUNG_ABBILDUNG)
+    @DeleteMapping(path = ApiPaths.DELETE_KUPPLUNG_ABBILDUNG, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Delete an Kupplung picture", description = "Deletes the picture of a named Kupplung", operationId = "update", tags = { "Kupplung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),

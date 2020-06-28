@@ -10,7 +10,7 @@ import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.entity.UnterKategorie;
 import com.linepro.modellbahn.repository.base.NamedItemRepository;
 
-@Repository
+@Repository("UnterKategorieRepository")
 public interface UnterKategorieRepository extends NamedItemRepository<UnterKategorie> {
 
     //@formatter:off

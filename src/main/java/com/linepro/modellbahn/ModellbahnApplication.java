@@ -21,6 +21,7 @@ import com.linepro.modellbahn.logging.Logging;
 import com.linepro.modellbahn.repository.lookup.Lookups;
 import com.linepro.modellbahn.security.Security;
 import com.linepro.modellbahn.service.impl.Services;
+import com.linepro.modellbahn.util.impexp.Data;
 
 @SpringBootConfiguration
 @EnableAutoConfiguration
@@ -47,6 +48,7 @@ import com.linepro.modellbahn.service.impl.Services;
     // Utils
     FileIo.class,
     Internationalization.class,
+    Data.class
 })
 public class ModellbahnApplication {
 

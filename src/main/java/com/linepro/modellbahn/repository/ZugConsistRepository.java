@@ -10,7 +10,7 @@ import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.entity.ZugConsist;
 import com.linepro.modellbahn.repository.base.ItemRepository;
 
-@Repository
+@Repository("ZugConsistRepository")
 public interface ZugConsistRepository extends ItemRepository<ZugConsist> {
 
     //@formatter:off

@@ -11,7 +11,7 @@ import com.linepro.modellbahn.model.ProduktTeilModel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Component
+@Component("ProduktTeilMutator")
 public class ProduktTeilMutator implements Mutator<ProduktTeil,ProduktTeilModel> {
 
     @Override

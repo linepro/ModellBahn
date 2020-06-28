@@ -10,7 +10,7 @@ import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.entity.Anderung;
 import com.linepro.modellbahn.repository.base.ItemRepository;
 
-@Repository
+@Repository("AnderungRepository")
 public interface AnderungRepository extends ItemRepository<Anderung> {
 
     //@formatter:off

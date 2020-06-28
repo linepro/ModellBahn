@@ -10,7 +10,7 @@ import com.linepro.modellbahn.repository.DecoderTypRepository;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-@Component
+@Component("DecoderTypLookup")
 public class DecoderTypLookup {
     
     @Autowired

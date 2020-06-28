@@ -15,7 +15,7 @@ import com.linepro.modellbahn.service.impl.UserService;
 
 import lombok.RequiredArgsConstructor;
 
-@Configuration
+@Configuration("WebSecurityConfig")
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {

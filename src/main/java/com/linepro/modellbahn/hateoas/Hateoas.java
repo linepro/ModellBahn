@@ -1,7 +1,10 @@
 package com.linepro.modellbahn.hateoas;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.hateoas.mediatype.hal.HalConfiguration;
+import org.springframework.hateoas.mediatype.hal.HalConfiguration.RenderSingleLinks;
 
 @Import({
     AchsfolgModelProcessor.class, 
@@ -38,6 +41,12 @@ import org.springframework.context.annotation.Import;
     ZugModelProcessor.class, 
     ZugTypModelProcessor.class
 })
-@Configuration
+@Configuration("Hateoas")
 public class Hateoas {
+    
+    @Bean("HalConfiguration")
+    public HalConfiguration globalPolicy() {
+      return new HalConfiguration() //
+          .withRenderSingleLinks(RenderSingleLinks.AS_ARRAY); 
+    }
 }

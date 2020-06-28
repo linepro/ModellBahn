@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.linepro.modellbahn.model.DescribedEnumModel;
 import com.linepro.modellbahn.model.enums.DescribedEnum;
 
-@Service
+@Service("EnumsService")
 public class EnumsService {
 
     public List<DescribedEnum> getEnumValues(DescribedEnum[] values) {

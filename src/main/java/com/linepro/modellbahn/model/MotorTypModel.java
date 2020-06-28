@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -38,6 +39,7 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED})
+@Relation(collectionRelation = ApiNames.MOTOR_TYP, itemRelation = ApiNames.MOTOR_TYP)
 @Schema(name = ApiNames.MOTOR_TYP, description = "Type of motor - Märklin coding.")
 public class MotorTypModel extends RepresentationModel<MotorTypModel> implements NamedItemModel, Comparable<MotorTypModel> {
 

@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * TODO: something less brutal (maybe add the location of the requester?). Could use @CrossOrigin and allow spring to dynamically create
  */
 @EnableWebMvc
-@Configuration
+@Configuration("CorsConfig")
 public class CorsConfig implements WebMvcConfigurer {
 
     private static final String ALLOWED_ORIGINS = "*";

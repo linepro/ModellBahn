@@ -2,6 +2,8 @@ package com.linepro.modellbahn.controller;
 
 import java.util.Optional;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +39,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @version $Id:$
  */
 @Tag(name = ApiNames.MASSSTAB)
-@RestController
+@RestController("MassstabController")
 @ExposesResourceFor(MassstabModel.class)
 public class MassstabController extends NamedItemController<MassstabModel> {
 
@@ -52,7 +54,7 @@ public class MassstabController extends NamedItemController<MassstabModel> {
     }
     
     @Override
-    @GetMapping(ApiPaths.GET_MASSSTAB)
+    @GetMapping(path = ApiPaths.GET_MASSSTAB, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an Massstab by name", description = "Finds a scale", operationId = "get", tags = { "Massstab" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MassstabModel.class)) }),
@@ -67,7 +69,7 @@ public class MassstabController extends NamedItemController<MassstabModel> {
     }
 
     @Override
-    @GetMapping(ApiPaths.SEARCH_MASSSTAB)
+    @GetMapping(path = ApiPaths.SEARCH_MASSSTAB, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds Massstaben by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Massstab" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = MassstabModel.class))) }),
@@ -82,7 +84,7 @@ public class MassstabController extends NamedItemController<MassstabModel> {
     }
 
     @Override
-    @PostMapping(ApiPaths.ADD_MASSSTAB)
+    @PostMapping(path = ApiPaths.ADD_MASSSTAB, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Add a new Massstab", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Massstab" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MassstabModel.class)) }),
@@ -98,7 +100,7 @@ public class MassstabController extends NamedItemController<MassstabModel> {
     }
 
     @Override
-    @PutMapping(ApiPaths.UPDATE_MASSSTAB)
+    @PutMapping(path = ApiPaths.UPDATE_MASSSTAB, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates an Massstab by name", description = "Update a scale", operationId = "update", tags = { "Massstab" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MassstabModel.class)) }),
@@ -114,7 +116,7 @@ public class MassstabController extends NamedItemController<MassstabModel> {
     }
 
     @Override
-    @DeleteMapping(ApiPaths.DELETE_MASSSTAB)
+    @DeleteMapping(path = ApiPaths.DELETE_MASSSTAB)
     @Operation(summary = "Deletes an Massstab by name", description = "Delete a scale", operationId = "update", tags = { "Massstab" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

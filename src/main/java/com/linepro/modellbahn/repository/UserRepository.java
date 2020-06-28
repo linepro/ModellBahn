@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.linepro.modellbahn.entity.User;
 
-@Repository("userRepository")
+@Repository("UserRepository")
 public interface UserRepository  extends CrudRepository<User, Long> {
 
     Optional<User> findByEmail(String email);

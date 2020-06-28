@@ -12,13 +12,14 @@ import org.springframework.stereotype.Component;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.controller.impl.ApiRels;
+import com.linepro.modellbahn.hateoas.impl.FieldsExtractor;
 import com.linepro.modellbahn.hateoas.impl.LinkTemplateImpl;
 import com.linepro.modellbahn.hateoas.impl.ModelProcessorImpl;
 import com.linepro.modellbahn.model.DecoderTypFunktionModel;
 import com.linepro.modellbahn.model.SoftDelete;
 
 @Lazy
-@Component
+@Component("DecoderTypFunktionModelProcessor")
 public class DecoderTypFunktionModelProcessor extends ModelProcessorImpl<DecoderTypFunktionModel> implements RepresentationModelProcessor<DecoderTypFunktionModel> {
 
     private static final String HERSTELLER = "{" + ApiNames.HERSTELLER + "}";
@@ -26,15 +27,19 @@ public class DecoderTypFunktionModelProcessor extends ModelProcessorImpl<Decoder
     private static final String REIHE = "{" + ApiNames.REIHE + "}";
     private static final String FUNKTION = "{" + ApiNames.FUNKTION + "}";
 
+    private static final FieldsExtractor EXTRACTOR =(m) -> MapUtils.putAll(new HashMap<String,Object>(), new String[][] { 
+        { HERSTELLER, ((DecoderTypFunktionModel) m).getHersteller() }, 
+        { BESTELL_NR, ((DecoderTypFunktionModel) m).getBestellNr() }, 
+        { REIHE, String.valueOf(((DecoderTypFunktionModel) m).getReihe()) }, 
+        { FUNKTION, ((DecoderTypFunktionModel) m).getFunktion() } 
+        });
+    
     @Autowired
     public DecoderTypFunktionModelProcessor() {
-        super((m) -> MapUtils.putAll(new HashMap<String,Object>(), new String[][] { 
-            { HERSTELLER, ((DecoderTypFunktionModel) m).getHersteller() }, 
-            { BESTELL_NR, ((DecoderTypFunktionModel) m).getBestellNr() }, 
-            { REIHE, String.valueOf(((DecoderTypFunktionModel) m).getReihe()) }, 
-            { FUNKTION, ((DecoderTypFunktionModel) m).getFunktion() } 
-            }),
-                        new LinkTemplateImpl(ApiRels.UPDATE, ApiPaths.UPDATE_DECODER_TYP_FUNKTION),
-                        new LinkTemplateImpl(ApiRels.DELETE, ApiPaths.DELETE_DECODER_TYP_FUNKTION, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted())));
+        super(
+            new LinkTemplateImpl(ApiRels.PARENT, ApiPaths.GET_DECODER_TYP, EXTRACTOR),
+            new LinkTemplateImpl(ApiRels.UPDATE, ApiPaths.UPDATE_DECODER_TYP_FUNKTION, EXTRACTOR),
+            new LinkTemplateImpl(ApiRels.DELETE, ApiPaths.DELETE_DECODER_TYP_FUNKTION, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted()))
+            );
     }
 }

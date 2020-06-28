@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import com.linepro.modellbahn.entity.NamedItem;
 import com.linepro.modellbahn.repository.base.NamedItemRepository;
 
-@Component
+@Component("ItemLookup")
 public class ItemLookup {
     
     public <E extends NamedItem> E find(String name, NamedItemRepository<E> repository) {

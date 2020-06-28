@@ -22,7 +22,7 @@ import com.linepro.modellbahn.service.ItemService;
  * @version $Id:$
  */
 
-@Service
+@Service("VorbildService")
 
 public class VorbildService extends ItemServiceImpl<VorbildModel, Vorbild> implements ItemService<VorbildModel> {
 

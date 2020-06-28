@@ -7,7 +7,7 @@ import com.linepro.modellbahn.converter.impl.NamedTranscriber;
 import com.linepro.modellbahn.entity.Spurweite;
 import com.linepro.modellbahn.model.SpurweiteModel;
 
-@Component
+@Component("SpurweiteMutator")
 public class SpurweiteMutator extends MutatorImpl<Spurweite, SpurweiteModel> {
 
     public SpurweiteMutator() {

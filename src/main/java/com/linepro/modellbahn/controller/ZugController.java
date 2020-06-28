@@ -2,6 +2,8 @@ package com.linepro.modellbahn.controller;
 
 import java.util.Optional;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,7 +38,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @version $Id:$
  */
 @Tag(name = ApiNames.ZUG)
-@RestController
+@RestController("ZugController")
 @ExposesResourceFor(ZugModel.class)
 public class ZugController extends NamedItemController<ZugModel> {
 
@@ -59,7 +61,7 @@ public class ZugController extends NamedItemController<ZugModel> {
     }
 
     @Override
-    @GetMapping(ApiPaths.GET_ZUG)
+    @GetMapping(path = ApiPaths.GET_ZUG, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an Zug by name", description = "Finds a train", operationId = "get", tags = { "Zug" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugModel.class)) }),
@@ -74,7 +76,7 @@ public class ZugController extends NamedItemController<ZugModel> {
     }
 
     @Override
-    @GetMapping(ApiPaths.SEARCH_ZUG)
+    @GetMapping(path = ApiPaths.SEARCH_ZUG, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds Zugen by example", description = "Finds train configurations", operationId = "find", tags = { "Achsfolg" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ZugModel.class))) }),
@@ -89,7 +91,7 @@ public class ZugController extends NamedItemController<ZugModel> {
     }
 
     @Override
-    @PostMapping(ApiPaths.ADD_ZUG)
+    @PostMapping(path = ApiPaths.ADD_ZUG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds an Zug", description = "Update a train", operationId = "update", tags = { "Zug" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugModel.class)) }),
@@ -105,7 +107,7 @@ public class ZugController extends NamedItemController<ZugModel> {
     }
 
     @Override
-    @PutMapping(ApiPaths.UPDATE_ZUG)
+    @PutMapping(path = ApiPaths.UPDATE_ZUG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates an Zug by name", description = "Update a train", operationId = "update", tags = { "Zug" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugModel.class)) }),
@@ -121,7 +123,7 @@ public class ZugController extends NamedItemController<ZugModel> {
     }
 
     @Override
-    @DeleteMapping(ApiPaths.DELETE_ZUG)
+    @DeleteMapping(path = ApiPaths.DELETE_ZUG)
     @Operation(summary = "Deletes an Zug by name", description = "Delete a train", operationId = "update", tags = { "Zug" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -136,7 +138,7 @@ public class ZugController extends NamedItemController<ZugModel> {
         return super.delete(name);
     }
 
-    @PostMapping(ApiPaths.ADD_CONSIST)
+    @PostMapping(path = ApiPaths.ADD_CONSIST, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "UnterKategorie" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugModel.class)) }),
@@ -151,7 +153,7 @@ public class ZugController extends NamedItemController<ZugModel> {
         return added(service.addConsist(zugStr, artikelId));
     }
 
-    @PutMapping(ApiPaths.UPDATE_CONSIST)
+    @PutMapping(path = ApiPaths.UPDATE_CONSIST, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates a change to an Article", description = "", operationId = "", tags = { "UnterKategorie" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugModel.class)) }),
@@ -166,7 +168,7 @@ public class ZugController extends NamedItemController<ZugModel> {
         return updated(service.updateConsist(zugStr, position, artikelId));
     }
 
-    @DeleteMapping(ApiPaths.DELETE_CONSIST)
+    @DeleteMapping(path = ApiPaths.DELETE_CONSIST)
     @Operation(summary = "Removes a change from an article", description = "", operationId = "", tags = { "UnterKategorie" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

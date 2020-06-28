@@ -8,7 +8,7 @@ import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.entity.Anderung;
 import com.linepro.modellbahn.model.AnderungModel;
 
-@Component
+@Component("AnderungMutator")
 public class AnderungMutator implements Mutator<Anderung, AnderungModel> {
 
     public AnderungMutator() {

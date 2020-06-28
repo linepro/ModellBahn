@@ -73,6 +73,6 @@ import com.linepro.modellbahn.converter.entity.ZugTypMutator;
     ZugTypMutator.class,
     PathMutator.class
     })
-@Configuration
+@Configuration("EntityConverters")
 public class EntityConverters {
 }

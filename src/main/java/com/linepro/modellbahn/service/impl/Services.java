@@ -30,6 +30,6 @@ import org.springframework.context.annotation.Import;
     ZugService.class,
     ZugTypService.class
 })
-@Configuration
+@Configuration("Services")
 public class Services {
 }

@@ -7,7 +7,7 @@ import com.linepro.modellbahn.converter.impl.NamedTranscriber;
 import com.linepro.modellbahn.entity.MotorTyp;
 import com.linepro.modellbahn.model.MotorTypModel;
 
-@Component
+@Component("MotorTypModelMutator")
 public class MotorTypModelMutator extends MutatorImpl<MotorTypModel, MotorTyp> {
 
     public MotorTypModelMutator() {

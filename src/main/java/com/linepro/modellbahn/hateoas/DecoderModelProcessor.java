@@ -11,24 +11,27 @@ import org.springframework.stereotype.Component;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.controller.impl.ApiRels;
+import com.linepro.modellbahn.hateoas.impl.FieldsExtractor;
 import com.linepro.modellbahn.hateoas.impl.LinkTemplateImpl;
 import com.linepro.modellbahn.hateoas.impl.ModelProcessorImpl;
 import com.linepro.modellbahn.model.DecoderModel;
 import com.linepro.modellbahn.model.SoftDelete;
 
 @Lazy
-@Component
+@Component("DecoderModelProcessor")
 public class DecoderModelProcessor extends ModelProcessorImpl<DecoderModel> implements RepresentationModelProcessor<DecoderModel> {
 
     private static final String DECODER_ID = "{" + ApiNames.DECODER_ID + "}";
+    
+    private static final FieldsExtractor EXTRACTOR = (m) -> Collections.singletonMap(DECODER_ID, ((DecoderModel) m).getDecoderId());
 
     @Autowired
     public DecoderModelProcessor() {
-        super((m) -> Collections.singletonMap(DECODER_ID, ((DecoderModel) m).getDecoderId()),
-                        new LinkTemplateImpl(ApiRels.ADD, ApiPaths.ADD_DECODER),
-                        new LinkTemplateImpl(ApiRels.SELF, ApiPaths.GET_DECODER),
-                        new LinkTemplateImpl(ApiRels.UPDATE, ApiPaths.UPDATE_DECODER),
-                        new LinkTemplateImpl(ApiRels.DELETE, ApiPaths.DELETE_DECODER, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted())),
-                        new LinkTemplateImpl(ApiRels.SEARCH, ApiPaths.SEARCH_DECODER));
+        super(
+            new LinkTemplateImpl(ApiRels.SELF, ApiPaths.GET_DECODER, EXTRACTOR),
+            new LinkTemplateImpl(ApiRels.UPDATE, ApiPaths.UPDATE_DECODER, EXTRACTOR),
+            new LinkTemplateImpl(ApiRels.DELETE, ApiPaths.DELETE_DECODER, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted())),
+            new LinkTemplateImpl(ApiRels.SEARCH, ApiPaths.SEARCH_DECODER, EXTRACTOR)
+            );
     }
 }

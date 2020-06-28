@@ -9,11 +9,11 @@ import com.linepro.modellbahn.util.impexp.DataType;
 import com.linepro.modellbahn.util.impexp.Importer;
 import com.linepro.modellbahn.util.impexp.ImporterFactory;
 
-@Configuration
+@Configuration("ImporterFactoryImpl")
 public class ImporterFactoryImpl implements ImporterFactory, BeanFactoryAware {
- 
+
     private BeanFactory beanFactory;
-    
+
     @Override
     public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
         this.beanFactory = beanFactory;
@@ -21,6 +21,6 @@ public class ImporterFactoryImpl implements ImporterFactory, BeanFactoryAware {
 
     @Override
     public Importer getImporter(DataType type) {
-        return (Importer) beanFactory.getBean(type.name()+"Importer");
+        return (Importer) beanFactory.getBean(type.getBeanPrefix() + "Importer");
     }
 }

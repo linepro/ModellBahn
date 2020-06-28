@@ -2,6 +2,8 @@ package com.linepro.modellbahn.controller;
 
 import java.util.Optional;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +39,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @version $Id:$
  */
 @Tag(name = ApiNames.ANTRIEB)
-@RestController
+@RestController("AntriebController")
 @ExposesResourceFor(AntriebModel.class)
 public class AntriebController extends NamedItemController<AntriebModel> {
 
@@ -52,7 +54,7 @@ public class AntriebController extends NamedItemController<AntriebModel> {
     }
     
     @Override
-    @GetMapping(ApiPaths.GET_ANTRIEB)
+    @GetMapping(path = ApiPaths.GET_ANTRIEB, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an Antrieb by name", description = "Finds an drive method", operationId = "get", tags = { "Antrieb" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AntriebModel.class)) }),
@@ -67,7 +69,7 @@ public class AntriebController extends NamedItemController<AntriebModel> {
     }
 
     @Override
-    @GetMapping(ApiPaths.SEARCH_ANTRIEB)
+    @GetMapping(path = ApiPaths.SEARCH_ANTRIEB, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds Antrieben by example", description = "Finds drive methods", operationId = "find", tags = { "Antrieb" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AntriebModel.class))) }),
@@ -82,7 +84,7 @@ public class AntriebController extends NamedItemController<AntriebModel> {
     }
 
     @Override
-    @PostMapping(ApiPaths.ADD_ANTRIEB)
+    @PostMapping(path = ApiPaths.ADD_ANTRIEB, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Add a new Antrieb", description = "Add a new drive method", operationId = "add", tags = { "Antrieb" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AntriebModel.class)) }),
@@ -98,7 +100,7 @@ public class AntriebController extends NamedItemController<AntriebModel> {
     }
 
     @Override
-    @PutMapping(ApiPaths.UPDATE_ANTRIEB)
+    @PutMapping(path = ApiPaths.UPDATE_ANTRIEB, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates an Antrieb by name", description = "Update a drive method", operationId = "update", tags = { "Antrieb" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AntriebModel.class)) }),
@@ -114,7 +116,7 @@ public class AntriebController extends NamedItemController<AntriebModel> {
     }
 
     @Override
-    @DeleteMapping(ApiPaths.DELETE_ANTRIEB)
+    @DeleteMapping(path = ApiPaths.DELETE_ANTRIEB)
     @Operation(summary = "Deletes an Antrieb by name", description = "Delete a drive method", operationId = "update", tags = { "Antrieb" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

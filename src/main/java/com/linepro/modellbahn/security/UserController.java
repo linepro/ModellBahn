@@ -26,11 +26,9 @@ import com.nulabinc.zxcvbn.Strength;
 import com.nulabinc.zxcvbn.Zxcvbn;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
-@Controller
 @RequiredArgsConstructor
+@Controller("UserController")
 public class UserController {
 
     public static final String CONFIRM = "/confirm";
@@ -67,7 +65,7 @@ public class UserController {
     }
 
     // Process form input data
-    @PostMapping(value = REGISTER)
+    @PostMapping(path = REGISTER)
     public ModelAndView processRegistrationForm(ModelAndView modelAndView, @Valid User user,
             BindingResult bindingResult, HttpServletRequest request) {
 
@@ -128,7 +126,7 @@ public class UserController {
     }
 
     // Process confirmation link
-    @PostMapping(value = CONFIRM)
+    @PostMapping(path = CONFIRM)
     public ModelAndView processConfirmationForm(ModelAndView modelAndView, BindingResult bindingResult,
             @RequestParam Map<String, String> requestParams, RedirectAttributes redir) {
 
@@ -173,7 +171,7 @@ public class UserController {
     }
     
     // Process form submission from forgotPassword page
-    @PostMapping(value = FORGOT)
+    @PostMapping(path = FORGOT)
     public ModelAndView processForgotPasswordForm(ModelAndView modelAndView, @RequestParam("email") String userEmail, HttpServletRequest request) {
 
         // Lookup user in database by e-mail
@@ -228,7 +226,7 @@ public class UserController {
     }
 
     // Process reset password form
-    @PostMapping(value = RESET)
+    @PostMapping(path = RESET)
     public ModelAndView setNewPassword(ModelAndView modelAndView, @RequestParam Map<String, String> requestParams, RedirectAttributes redir) {
 
         // Find the user associated with the reset token

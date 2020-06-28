@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.linepro.modellbahn.entity.Item;
+import com.linepro.modellbahn.util.impexp.impl.DataBeanProcessor;
 import com.linepro.modellbahn.util.impexp.impl.DataServiceImpl;
 import com.linepro.modellbahn.util.impexp.impl.ExporterFactoryImpl;
 import com.linepro.modellbahn.util.impexp.impl.ImporterFactoryImpl;
@@ -16,16 +17,17 @@ import com.linepro.modellbahn.util.impexp.impl.ImporterFactoryImpl;
     DataController.class,
     DataServiceImpl.class,
     ExporterFactoryImpl.class,
-    ImporterFactoryImpl.class
+    ImporterFactoryImpl.class,
+    DataBeanProcessor.class
 })
-@Configuration
+@Configuration("Data")
 public class Data {
 
     @JsonInclude(JsonInclude.Include.ALWAYS)
     class IncludeNulls {
     }
 
-    @Bean
+    @Bean("CsvMapper")
     public CsvMapper getCsvMapper() {
         return CsvMapper.builder()
                         .configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true)

@@ -15,7 +15,7 @@ import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.entity.Vorbild;
 import com.linepro.modellbahn.repository.base.ItemRepository;
 
-@Repository
+@Repository("VorbildRepository")
 public interface VorbildRepository extends ItemRepository<Vorbild> {
 
     //@formatter:off

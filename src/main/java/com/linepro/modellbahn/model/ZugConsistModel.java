@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -40,7 +41,10 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.POSITION, ApiNames.ARTIKEL, ApiNames.DELETED })
+@JsonPropertyOrder({ ApiNames.ZUG, ApiNames.POSITION, ApiNames.ARTIKEL_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR,
+    ApiNames.BEZEICHNUNG, ApiNames.LANGE, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER,
+    ApiNames.ABBILDUNG, ApiNames.DELETED })
+@Relation(collectionRelation = ApiNames.CONSIST, itemRelation = ApiNames.CONSIST)
 @Schema(name = ApiNames.CONSIST, description = "Rolling stock by poisition in a train.")
 public class ZugConsistModel extends RepresentationModel<ZugConsistModel> implements ItemModel, Comparable<ZugConsistModel> {
 
@@ -87,7 +91,7 @@ public class ZugConsistModel extends RepresentationModel<ZugConsistModel> implem
     private String betreibsnummer;
 
     @JsonProperty(ApiNames.ABBILDUNG)
-    @Schema(implementation = String.class, name = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
+    @Schema(name = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
     private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)

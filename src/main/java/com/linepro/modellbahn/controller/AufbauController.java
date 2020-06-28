@@ -4,6 +4,8 @@ import static org.springframework.http.ResponseEntity.of;
 
 import java.util.Optional;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +42,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @version $Id:$
  */
 @Tag(name = ApiNames.AUFBAU)
-@RestController
+@RestController("AufbauController")
 @ExposesResourceFor(AufbauModel.class)
 public class AufbauController extends NamedItemController<AufbauModel> {
 
@@ -59,7 +61,7 @@ public class AufbauController extends NamedItemController<AufbauModel> {
     }
     
     @Override
-    @GetMapping(ApiPaths.GET_AUFBAU)
+    @GetMapping(path = ApiPaths.GET_AUFBAU, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an Aufbau by name", description = "Finds a costruction style", operationId = "get", tags = { "Aufbau" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AufbauModel.class)) }),
@@ -74,7 +76,7 @@ public class AufbauController extends NamedItemController<AufbauModel> {
     }
 
     @Override
-    @GetMapping(ApiPaths.SEARCH_AUFBAU)
+    @GetMapping(path = ApiPaths.SEARCH_AUFBAU, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds Aufbauen by example", description = "Finds costruction styles", operationId = "get", tags = { "Aufbau" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AufbauModel.class))) }),
@@ -89,7 +91,7 @@ public class AufbauController extends NamedItemController<AufbauModel> {
     }
 
     @Override
-    @PostMapping(ApiPaths.ADD_AUFBAU)
+    @PostMapping(path = ApiPaths.ADD_AUFBAU, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds an Aufbau", description = "Update a costruction style", operationId = "update", tags = { "Aufbau" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AufbauModel.class)) }),
@@ -105,7 +107,7 @@ public class AufbauController extends NamedItemController<AufbauModel> {
     }
 
     @Override
-    @PutMapping(ApiPaths.UPDATE_AUFBAU)
+    @PutMapping(path = ApiPaths.UPDATE_AUFBAU, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates an Aufbau by name", description = "Update a costruction style", operationId = "update", tags = { "Aufbau" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AufbauModel.class)) }),
@@ -121,7 +123,7 @@ public class AufbauController extends NamedItemController<AufbauModel> {
     }
 
     @Override
-    @DeleteMapping(ApiPaths.DELETE_AUFBAU)
+    @DeleteMapping(path = ApiPaths.DELETE_AUFBAU)
     @Operation(summary = "Deletes an Aufbau by name", description = "Delete a costruction style", operationId = "update", tags = { "Aufbau" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -136,7 +138,7 @@ public class AufbauController extends NamedItemController<AufbauModel> {
         return super.delete(name);
     }
 
-    @PostMapping(ApiPaths.ADD_AUFBAU_ABBILDUNG)
+    @PutMapping(path = ApiPaths.ADD_AUFBAU_ABBILDUNG, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Add an Aufbau picture", description = "Adds or updates the picture of a named Aufbau", operationId = "update", tags = { "Aufbau" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AufbauModel.class)) }),
@@ -151,7 +153,7 @@ public class AufbauController extends NamedItemController<AufbauModel> {
         return of(service.updateAbbildung(name, multipart));
     }
 
-    @DeleteMapping(ApiPaths.DELETE_AUFBAU_ABBILDUNG)
+    @DeleteMapping(path = ApiPaths.DELETE_AUFBAU_ABBILDUNG, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Delete an Aufbau picture", description = "Deletes the picture of a named Aufbau", operationId = "update", tags = { "Aufbau" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AufbauModel.class)) }),

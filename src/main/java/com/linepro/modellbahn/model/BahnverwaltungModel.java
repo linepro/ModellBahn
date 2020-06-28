@@ -3,6 +3,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -36,7 +37,8 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED })
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.LAND, ApiNames.DELETED })
+@Relation(collectionRelation = ApiNames.BAHNVERWALTUNG, itemRelation = ApiNames.BAHNVERWALTUNG)
 @Schema(name = ApiNames.BAHNVERWALTUNG, description = "Railway company.")
 public class BahnverwaltungModel extends RepresentationModel<BahnverwaltungModel> implements NamedItemModel, Comparable<BahnverwaltungModel> {
 

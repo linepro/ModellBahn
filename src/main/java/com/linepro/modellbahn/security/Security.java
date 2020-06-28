@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
     UserController.class,
     WebSecurityConfig.class
 })
-@Component
+@Component("Security")
 public class Security {
     
-    @Bean
+    @Bean("PasswordEncoder")
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }

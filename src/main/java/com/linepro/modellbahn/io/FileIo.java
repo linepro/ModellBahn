@@ -9,6 +9,6 @@ import org.springframework.stereotype.Component;
     FileUploadHandlerImpl.class,
     MvcConfig.class
 })
-@Component
+@Component("FileIo")
 public class FileIo {
 }

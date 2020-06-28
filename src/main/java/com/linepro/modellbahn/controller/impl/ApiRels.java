@@ -16,11 +16,10 @@ public interface ApiRels {
     String PREVIOUS = "previous";
     String NEXT = "next";
     
-    String ADD_IMAGE = "add image";
-    String REMOVE_IMAGE = "remove image";
-    String ADD_INSTRUCTIONS = "add image";
-    String REMOVE_INSTRUCTIONS = "remove image";
-    String ADD_PARTS_DIAGRAM = "add image";
-    String REMOVE_PARTS_DIAGRAM = "remove image";
-    public String ADD_CONSIST = "add consist";
+    String IMAGE = "image";
+    String INSTRUCTIONS = "instructions";
+    String PARTS_DIAGRAM = "parts diagram";
+    String CONSIST = "add consist";
+    String PARTS = "parts";
+    String HISTORY = "history";
 }

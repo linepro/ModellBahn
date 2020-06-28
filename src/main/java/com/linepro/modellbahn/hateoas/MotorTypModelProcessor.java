@@ -10,11 +10,17 @@ import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.MotorTypModel;
 
 @Lazy
-@Component
+@Component("MotorTypModelProcessor")
 public class MotorTypModelProcessor extends NamedModelProcessor<MotorTypModel> implements RepresentationModelProcessor<MotorTypModel> {
 
     @Autowired
     public MotorTypModelProcessor() {
-        super(ApiPaths.ADD_MOTOR_TYP, ApiPaths.GET_MOTOR_TYP, ApiPaths.UPDATE_MOTOR_TYP, ApiPaths.DELETE_MOTOR_TYP, ApiPaths.SEARCH_MOTOR_TYP);
+        super(
+            ApiPaths.ADD_MOTOR_TYP, 
+            ApiPaths.GET_MOTOR_TYP, 
+            ApiPaths.UPDATE_MOTOR_TYP, 
+            ApiPaths.DELETE_MOTOR_TYP, 
+            ApiPaths.SEARCH_MOTOR_TYP
+            );
     }
 }

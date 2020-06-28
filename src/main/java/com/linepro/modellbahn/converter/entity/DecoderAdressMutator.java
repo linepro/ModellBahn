@@ -8,7 +8,7 @@ import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.entity.DecoderAdress;
 import com.linepro.modellbahn.model.DecoderAdressModel;
 
-@Component
+@Component("DecoderAdressMutator")
 public class DecoderAdressMutator implements Mutator<DecoderAdress,DecoderAdressModel> {
 
     @Override

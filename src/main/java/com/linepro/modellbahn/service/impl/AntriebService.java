@@ -15,7 +15,7 @@ import com.linepro.modellbahn.repository.AntriebRepository;
  * @author $Author:$
  * @version $Id:$
  */
-@Service
+@Service("AntriebService")
 public class AntriebService extends NamedItemServiceImpl<AntriebModel,Antrieb> {
 
     @Autowired

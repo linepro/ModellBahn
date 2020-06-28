@@ -10,11 +10,17 @@ import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.SpurweiteModel;
 
 @Lazy
-@Component
+@Component("SpurweiteModelProcessor")
 public class SpurweiteModelProcessor extends NamedModelProcessor<SpurweiteModel> implements RepresentationModelProcessor<SpurweiteModel> {
 
     @Autowired
     public SpurweiteModelProcessor() {
-        super(ApiPaths.ADD_SPURWEITE, ApiPaths.GET_SPURWEITE, ApiPaths.UPDATE_SPURWEITE, ApiPaths.DELETE_SPURWEITE, ApiPaths.SEARCH_SPURWEITE);
+        super(
+            ApiPaths.ADD_SPURWEITE, 
+            ApiPaths.GET_SPURWEITE, 
+            ApiPaths.UPDATE_SPURWEITE, 
+            ApiPaths.DELETE_SPURWEITE, 
+            ApiPaths.SEARCH_SPURWEITE
+            );
     }
 }

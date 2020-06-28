@@ -7,7 +7,7 @@ import com.linepro.modellbahn.converter.impl.NamedTranscriber;
 import com.linepro.modellbahn.entity.Massstab;
 import com.linepro.modellbahn.model.MassstabModel;
 
-@Component
+@Component("MassstabModelMutator")
 public class MassstabModelMutator extends MutatorImpl<MassstabModel, Massstab> {
 
     public MassstabModelMutator() {

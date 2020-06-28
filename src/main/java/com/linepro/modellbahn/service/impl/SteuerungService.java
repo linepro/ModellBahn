@@ -17,7 +17,7 @@ import com.linepro.modellbahn.service.ItemService;
  * @version $Id:$
  */
 
-@Service
+@Service("SteuerungService")
 public class SteuerungService extends NamedItemServiceImpl<SteuerungModel,Steuerung> implements ItemService<SteuerungModel> {
 
     @Autowired

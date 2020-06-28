@@ -9,7 +9,7 @@ import com.linepro.modellbahn.converter.impl.NamedTranscriber;
 import com.linepro.modellbahn.entity.UnterKategorie;
 import com.linepro.modellbahn.model.UnterKategorieModel;
 
-@Component
+@Component("UnterKategorieMutator")
 public class UnterKategorieMutator extends MutatorImpl<UnterKategorie, UnterKategorieModel> {
 
     public UnterKategorieMutator() {

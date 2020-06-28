@@ -4,6 +4,8 @@ import static org.springframework.http.ResponseEntity.of;
 
 import java.util.Optional;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +45,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @version $Id:$
  */
 @Tag(name = ApiNames.DECODER_TYP)
-@RestController
+@RestController("DecoderTypController")
 @ExposesResourceFor(DecoderTypModel.class)
 public class DecoderTypController extends AbstractItemController<DecoderTypModel> {
 
@@ -76,7 +78,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         return new DecoderTypFunktionModel();
     }
 
-    @GetMapping(ApiPaths.GET_DECODER_TYP)
+    @GetMapping(path = ApiPaths.GET_DECODER_TYP, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an DecoderTyp by name", description = "Finds a train", operationId = "get", tags = { "DecoderTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypModel.class)) }),
@@ -91,7 +93,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     }
 
     @Override
-    @GetMapping(ApiPaths.SEARCH_DECODER_TYP)
+    @GetMapping(path = ApiPaths.SEARCH_DECODER_TYP, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds DecoderTypen by example", description = "Finds train configurations", operationId = "find", tags = { "Achsfolg" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = DecoderTypModel.class))) }),
@@ -105,7 +107,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         return super.search(model, pageNumber, pageSize);
     }
 
-    @PostMapping(ApiPaths.ADD_DECODER_TYP)
+    @PostMapping(path = ApiPaths.ADD_DECODER_TYP, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds an DecoderTyp", description = "Update a train", operationId = "update", tags = { "DecoderTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypModel.class)) }),
@@ -120,7 +122,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         return super.add(model);
     }
 
-    @PutMapping(ApiPaths.UPDATE_DECODER_TYP)
+    @PutMapping(path = ApiPaths.UPDATE_DECODER_TYP, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates an DecoderTyp by name", description = "Update a train", operationId = "update", tags = { "DecoderTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypModel.class)) }),
@@ -135,7 +137,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         return updated(service.update(herstellerStr, bestellNr, model));
     }
 
-    @DeleteMapping(ApiPaths.DELETE_DECODER_TYP)
+    @DeleteMapping(path = ApiPaths.DELETE_DECODER_TYP)
     @Operation(summary = "Deletes an DecoderTyp by name", description = "Delete a train", operationId = "update", tags = { "DecoderTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -150,7 +152,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         return deleted(service.delete(herstellerStr, bestellNr));
     }
 
-    @PostMapping(ApiPaths.ADD_DECODER_TYP_ADRESS)
+    @PostMapping(path = ApiPaths.ADD_DECODER_TYP_ADRESS, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "DecoderTypAdress" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypAdressModel.class)) }),
@@ -167,7 +169,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
             return added(service.addAdress(herstellerStr, bestellNr, model));
     }
 
-    @PutMapping(ApiPaths.UPDATE_DECODER_TYP_ADRESS)
+    @PutMapping(path = ApiPaths.UPDATE_DECODER_TYP_ADRESS, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "DecoderTypAdress" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypAdressModel.class)) }),
@@ -184,7 +186,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         return updated(service.updateAdress(herstellerStr, bestellNr, index, model));
    }
 
-    @DeleteMapping(ApiPaths.DELETE_DECODER_TYP_ADRESS)
+    @DeleteMapping(path = ApiPaths.DELETE_DECODER_TYP_ADRESS)
     @Operation(summary = "Removes a change from an article", description = "", operationId = "", tags = { "DecoderTypAdress" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -200,7 +202,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         return deleted(service.deleteAdress(herstellerStr, bestellNr, index));
     }
 
-    @PostMapping(ApiPaths.ADD_DECODER_TYP_CV)
+    @PostMapping(path = ApiPaths.ADD_DECODER_TYP_CV, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "DecoderTypCv" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypCvModel.class)) }),
@@ -216,7 +218,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
             return added(service.addCv(herstellerStr, bestellNr, model));
      }
 
-    @PutMapping(ApiPaths.UPDATE_DECODER_TYP_CV)
+    @PutMapping(path = ApiPaths.UPDATE_DECODER_TYP_CV, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "DecoderTypCv" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypCvModel.class)) }),
@@ -233,7 +235,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         return updated(service.updateCv(herstellerStr, bestellNr, cv, model));
     }
 
-    @DeleteMapping(ApiPaths.DELETE_DECODER_TYP_CV)
+    @DeleteMapping(path = ApiPaths.DELETE_DECODER_TYP_CV)
     @Operation(summary = "Removes a change from an article", description = "", operationId = "", tags = { "DecoderTypCv" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -251,7 +253,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         return deleted(service.deleteCv(herstellerStr, bestellNr, cv));
     }
 
-    @PostMapping(ApiPaths.ADD_DECODER_TYP_FUNKTION)
+    @PostMapping(path = ApiPaths.ADD_DECODER_TYP_FUNKTION, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "DecoderTypFunktion" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypFunktionModel.class)) }),
@@ -267,7 +269,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         return added(service.addFunktion(herstellerStr, bestellNr, model));
     }
 
-    @PutMapping(ApiPaths.UPDATE_DECODER_TYP_FUNKTION)
+    @PutMapping(path = ApiPaths.UPDATE_DECODER_TYP_FUNKTION, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "DecoderTypFunktion" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = {
@@ -285,7 +287,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         return updated(service.updateFunktion(herstellerStr, bestellNr, reihe, funktion, model));
     }
 
-    @DeleteMapping(ApiPaths.DELETE_DECODER_TYP_FUNKTION)
+    @DeleteMapping(path = ApiPaths.DELETE_DECODER_TYP_FUNKTION)
     @Operation(summary = "Removes a change from an article", description = "", operationId = "", tags = { "DecoderTypFunktion" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -302,7 +304,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         return deleted(service.deleteFunktion(herstellerStr, bestellNr, reihe, funktion));
     }
     
-    @PostMapping(ApiPaths.ADD_DECODER_TYP_ANLEITUNGEN)
+    @PutMapping(path = ApiPaths.ADD_DECODER_TYP_ANLEITUNGEN, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds Decoder instructions", description = "Adds or updates the instructions for a named Decoder", operationId = "update", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
@@ -318,7 +320,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         return updated(service.updateAnleitungen(herstellerStr, bestellNr, multipart));
     }
 
-    @DeleteMapping(ApiPaths.DELETE_DECODER_TYP_ANLEITUNGEN)
+    @DeleteMapping(path = ApiPaths.DELETE_DECODER_TYP_ANLEITUNGEN, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Removes instructions from an Product", description = "", operationId = "", tags = { "" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

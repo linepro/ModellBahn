@@ -17,9 +17,6 @@ import com.linepro.modellbahn.entity.Item;
 import com.linepro.modellbahn.model.ItemModel;
 import com.linepro.modellbahn.util.impexp.Importer;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j  
 public class ImporterImpl<M extends ItemModel,E extends Item> implements Importer {
 
     private final JpaRepository<E,Long> repository;

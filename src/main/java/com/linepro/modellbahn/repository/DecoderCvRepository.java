@@ -10,7 +10,7 @@ import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.entity.DecoderCv;
 import com.linepro.modellbahn.repository.base.ItemRepository;
 
-@Repository
+@Repository("DecoderCvRepository")
 public interface DecoderCvRepository extends ItemRepository<DecoderCv> {
 
     //@formatter:off

@@ -17,7 +17,7 @@ import com.linepro.modellbahn.service.ItemService;
  * @version $Id:$
  */
 
-@Service
+@Service("SondermodellService")
 public class SondermodellService extends NamedItemServiceImpl<SondermodellModel,Sondermodell> implements ItemService<SondermodellModel> {
 
     @Autowired

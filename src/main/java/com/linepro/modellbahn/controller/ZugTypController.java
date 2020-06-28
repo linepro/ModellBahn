@@ -2,6 +2,8 @@ package com.linepro.modellbahn.controller;
 
 import java.util.Optional;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +39,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @version $Id:$
  */
 @Tag(name = ApiNames.ZUG_TYP)
-@RestController
+@RestController("ZugTypController")
 @ExposesResourceFor(ZugTypModel.class)
 public class ZugTypController extends NamedItemController<ZugTypModel> {
 
@@ -52,7 +54,7 @@ public class ZugTypController extends NamedItemController<ZugTypModel> {
     }
     
     @Override
-    @GetMapping(ApiPaths.GET_ZUG_TYP)
+    @GetMapping(path = ApiPaths.GET_ZUG_TYP, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an ZugTyp by name", description = "Finds a train type", operationId = "get", tags = { "ZugTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugTypModel.class)) }),
@@ -67,7 +69,7 @@ public class ZugTypController extends NamedItemController<ZugTypModel> {
     }
 
     @Override
-    @GetMapping(ApiPaths.SEARCH_ZUG_TYP)
+    @GetMapping(path = ApiPaths.SEARCH_ZUG_TYP, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds ZugTypen by example", description = "Finds train types", operationId = "get", tags = { "ZugTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ZugTypModel.class))) }),
@@ -82,7 +84,7 @@ public class ZugTypController extends NamedItemController<ZugTypModel> {
     }
 
     @Override
-    @PostMapping(ApiPaths.ADD_ZUG_TYP)
+    @PostMapping(path = ApiPaths.ADD_ZUG_TYP, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds an ZugTyp", description = "Update a train type", operationId = "update", tags = { "ZugTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugTypModel.class)) }),
@@ -98,7 +100,7 @@ public class ZugTypController extends NamedItemController<ZugTypModel> {
     }
 
     @Override
-    @PutMapping(ApiPaths.UPDATE_ZUG_TYP)
+    @PutMapping(path = ApiPaths.UPDATE_ZUG_TYP, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates an ZugTyp by name", description = "Update a train type", operationId = "update", tags = { "ZugTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugTypModel.class)) }),
@@ -114,7 +116,7 @@ public class ZugTypController extends NamedItemController<ZugTypModel> {
     }
 
     @Override
-    @DeleteMapping(ApiPaths.DELETE_ZUG_TYP)
+    @DeleteMapping(path = ApiPaths.DELETE_ZUG_TYP)
     @Operation(summary = "Deletes an ZugTyp by name", description = "Delete a train type", operationId = "update", tags = { "ZugTyp" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

@@ -17,7 +17,7 @@ import com.linepro.modellbahn.service.ItemService;
  * @version $Id:$
  */
 
-@Service
+@Service("BahnverwaltungService")
 public class BahnverwaltungService extends NamedItemServiceImpl<BahnverwaltungModel,Bahnverwaltung> implements ItemService<BahnverwaltungModel> {
 
     @Autowired

@@ -2,6 +2,8 @@ package com.linepro.modellbahn.controller;
 
 import java.util.Optional;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +39,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @version $Id:$
  */
 @Tag(name = ApiNames.GATTUNG)
-@RestController
+@RestController("GattungController")
 @ExposesResourceFor(GattungModel.class)
 public class GattungController extends NamedItemController<GattungModel> {
 
@@ -52,7 +54,7 @@ public class GattungController extends NamedItemController<GattungModel> {
     }
 
     @Override
-    @GetMapping(ApiPaths.GET_GATTUNG)
+    @GetMapping(path = ApiPaths.GET_GATTUNG, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an Gattung by name", description = "Finds a vehicle code", operationId = "get", tags = { "Gattung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = GattungModel.class)) }),
@@ -67,7 +69,7 @@ public class GattungController extends NamedItemController<GattungModel> {
     }
 
     @Override
-    @GetMapping(ApiPaths.SEARCH_GATTUNG)
+    @GetMapping(path = ApiPaths.SEARCH_GATTUNG, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds Gattungen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Gattung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = GattungModel.class))) }),
@@ -82,7 +84,7 @@ public class GattungController extends NamedItemController<GattungModel> {
     }
 
     @Override
-    @PostMapping(ApiPaths.ADD_GATTUNG)
+    @PostMapping(path = ApiPaths.ADD_GATTUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Add a new Gattung", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Gattung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = GattungModel.class)) }),
@@ -98,7 +100,7 @@ public class GattungController extends NamedItemController<GattungModel> {
     }
 
     @Override
-    @PutMapping(ApiPaths.UPDATE_GATTUNG)
+    @PutMapping(path = ApiPaths.UPDATE_GATTUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates an Gattung by name", description = "Update a vehicle code", operationId = "update", tags = { "Gattung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = GattungModel.class)) }),
@@ -114,7 +116,7 @@ public class GattungController extends NamedItemController<GattungModel> {
     }
 
     @Override
-    @DeleteMapping(ApiPaths.DELETE_GATTUNG)
+    @DeleteMapping(path = ApiPaths.DELETE_GATTUNG)
     @Operation(summary = "Deletes an Gattung by name", description = "Delete a vehicle code", operationId = "update", tags = { "Gattung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

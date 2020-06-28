@@ -7,7 +7,7 @@ import com.linepro.modellbahn.converter.impl.NamedTranscriber;
 import com.linepro.modellbahn.entity.Sondermodell;
 import com.linepro.modellbahn.model.SondermodellModel;
 
-@Component
+@Component("SondermodellModelMutator")
 public class SondermodellModelMutator extends MutatorImpl<SondermodellModel, Sondermodell> {
 
     public SondermodellModelMutator() {

@@ -16,7 +16,7 @@ import com.linepro.modellbahn.model.UnterKategorieModel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Component
+@Component("ProduktMutator")
 public class ProduktMutator implements Mutator<Produkt,ProduktModel> {
 
     @Autowired

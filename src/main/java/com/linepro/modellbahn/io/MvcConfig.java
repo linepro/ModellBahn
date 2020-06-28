@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import lombok.RequiredArgsConstructor;
 import net.logstash.logback.encoder.org.apache.commons.lang3.ArrayUtils;
 
-@Configuration
+@Configuration("MvcConfig")
 @EnableWebMvc
 @RequiredArgsConstructor
 public class MvcConfig implements WebMvcConfigurer {
@@ -33,7 +33,7 @@ public class MvcConfig implements WebMvcConfigurer {
                     "classpath:webapp/", "classpath:webjars/", "classpath:static/", "classpath:resources/"
     };
 
-    @Bean(name = "BaseURL")
+    @Bean("BaseURL")
     public String getBaseURL(RepositoryRestConfiguration configuration) {
         return configuration.getBasePath().toString();
     }

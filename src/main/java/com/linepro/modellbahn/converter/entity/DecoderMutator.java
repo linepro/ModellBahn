@@ -15,7 +15,7 @@ import com.linepro.modellbahn.util.exceptions.ResultCollector;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Component
+@Component("DecoderMutator")
 public class DecoderMutator implements Mutator<Decoder, DecoderModel> {
 
     @Autowired

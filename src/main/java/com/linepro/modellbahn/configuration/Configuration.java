@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
     ApplicationReadyListener.class,
     ErrorHandler.class
 })
-@Component
+@Component("Configuration")
 public class Configuration {
 
 }

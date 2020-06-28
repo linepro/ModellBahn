@@ -8,7 +8,9 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration("DataBeanProcessor")
 public class DataBeanProcessor implements BeanDefinitionRegistryPostProcessor {
 
     private static final List<String> EXPORTS = Arrays.asList("Achsfolg", "Anderung", "Antrieb", "Artikel", "Aufbau", "Bahnverwaltung",
@@ -28,16 +30,18 @@ public class DataBeanProcessor implements BeanDefinitionRegistryPostProcessor {
     protected void register(BeanDefinitionRegistry registry, String name) {
         registry.registerBeanDefinition(name + "Exporter",
                         BeanDefinitionBuilder.genericBeanDefinition(ExporterImpl.class)
+                                             .setLazyInit(true)
                                              .addConstructorArgReference(name + "Repository")
                                              .addConstructorArgReference(name + "Mutator")
-                                             .addConstructorArgReference("CSVMapper")
+                                             .addConstructorArgReference("CsvMapper")
                                              .getBeanDefinition());
 
         registry.registerBeanDefinition(name + "Importer",
                         BeanDefinitionBuilder.genericBeanDefinition(ExporterImpl.class)
+                                             .setLazyInit(true)
                                              .addConstructorArgReference(name + "Repository")
                                              .addConstructorArgReference(name + "ModelMutator")
-                                             .addConstructorArgReference("CSVMapper")
+                                             .addConstructorArgReference("CsvMapper")
                                              .getBeanDefinition());
     }
 }

@@ -4,6 +4,8 @@ import static org.springframework.http.ResponseEntity.of;
 
 import java.util.Optional;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +43,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @version $Id:$
  */
 @Tag(name = ApiNames.PRODUKT)
-@RestController
+@RestController("ProduktController")
 @ExposesResourceFor(ProduktModel.class)
 public class ProduktController extends AbstractItemController<ProduktModel> {
 
@@ -64,7 +66,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         return new ProduktTeilModel();
     }
     
-    @GetMapping(ApiPaths.GET_PRODUKT)
+    @GetMapping(path = ApiPaths.GET_PRODUKT, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an Produkt by name", description = "Finds a product", operationId = "get", tags = { "Produkt" })
         @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
@@ -79,7 +81,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @Override
-    @GetMapping(ApiPaths.SEARCH_PRODUKT)
+    @GetMapping(path = ApiPaths.SEARCH_PRODUKT, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds Produkten by example", description = "Finds products", operationId = "find", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ProduktModel.class))) }),
@@ -94,7 +96,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @Override
-    @PostMapping(ApiPaths.ADD_PRODUKT)
+    @PostMapping(path = ApiPaths.ADD_PRODUKT, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Add a new Produkt", description = "Add a new product", operationId = "add", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
@@ -109,7 +111,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         return super.add(model);
     }
 
-    @PutMapping(ApiPaths.UPDATE_PRODUKT)
+    @PutMapping(path = ApiPaths.UPDATE_PRODUKT, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates an Produkt by name", description = "Update an Product", operationId = "update", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
@@ -120,11 +122,11 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> update(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, ProduktModel model) {
+    public ResponseEntity<?> update(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody ProduktModel model) {
         return updated(service.update(herstellerStr, bestellNr, model));
     }
 
-    @DeleteMapping(ApiPaths.DELETE_PRODUKT)
+    @DeleteMapping(path = ApiPaths.DELETE_PRODUKT)
     @Operation(summary = "Deletes an Produkt by name", description = "Delete an Product", operationId = "update", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -139,7 +141,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         return deleted(service.delete(herstellerStr, bestellNr));
     }
 
-    @PostMapping(ApiPaths.ADD_PRODUKT_TEIL)
+    @PostMapping(path = ApiPaths.ADD_PRODUKT_TEIL, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds a component of a Produkt", description = "", operationId = "", tags = { "ProduktTeil" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktTeilModel.class)) }),
@@ -150,11 +152,11 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
-    public ResponseEntity<?> addTeil(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, ProduktTeilModel teil) {
+    public ResponseEntity<?> addTeil(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody ProduktTeilModel teil) {
         return added(service.addTeil(herstellerStr, bestellNr, teil.getTeilHersteller(), teil.getTeilBestellNr(), teil.getAnzahl()));
     }
 
-    @PutMapping(ApiPaths.UPDATE_PRODUKT_TEIL)
+    @PutMapping(path = ApiPaths.UPDATE_PRODUKT_TEIL, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates a component of a Produkt", description = "", operationId = "", tags = { "ProduktTeil" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktTeilModel.class)) }),
@@ -165,11 +167,11 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
-    public ResponseEntity<?> updateTeil(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.TEIL_HERSTELLER) String teilHerstellerStr, @PathVariable(ApiNames.TEIL_BESTELL_NR) String teilBestellNr, Integer anzahl) {
+    public ResponseEntity<?> updateTeil(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.TEIL_HERSTELLER) String teilHerstellerStr, @PathVariable(ApiNames.TEIL_BESTELL_NR) String teilBestellNr, @RequestParam(ApiNames.ANZAHL) Integer anzahl) {
         return updated(service.updateTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, anzahl));
     }
 
-    @DeleteMapping(ApiPaths.DELETE_PRODUKT_TEIL)
+    @DeleteMapping(path = ApiPaths.DELETE_PRODUKT_TEIL)
     @Operation(summary = "Removes a component of a Produkt", description = "", operationId = "", tags = { "ProduktTeil" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -184,7 +186,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         return deleted(service.deleteTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr));
     }
 
-    @PutMapping(ApiPaths.ADD_PRODUKT_ABBILDUNG)
+    @PutMapping(path = ApiPaths.ADD_PRODUKT_ABBILDUNG, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Add an Produkt picture", description = "Adds or updates the picture of a named Produkt", operationId = "update", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
@@ -199,7 +201,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         return updated(service.updateAbbildung(herstellerStr, bestellNr, multipart));
     }
 
-    @DeleteMapping(ApiPaths.DELETE_PRODUKT_ABBILDUNG)
+    @DeleteMapping(path = ApiPaths.DELETE_PRODUKT_ABBILDUNG, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Removes a picture from an Product", description = "", operationId = "", tags = { "" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -214,7 +216,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         return updated(service.deleteAbbildung(herstellerStr, bestellNr));
     }
 
-    @PostMapping(ApiPaths.ADD_PRODUKT_ANLEITUNGEN)
+    @PutMapping(path = ApiPaths.ADD_PRODUKT_ANLEITUNGEN, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds Produkt instructions", description = "Adds or updates the instructions for a named Produkt", operationId = "update", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
@@ -230,7 +232,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         return updated(service.updateAnleitungen(herstellerStr, bestellNr, multipart));
     }
 
-    @DeleteMapping(ApiPaths.DELETE_PRODUKT_ANLEITUNGEN)
+    @DeleteMapping(path = ApiPaths.DELETE_PRODUKT_ANLEITUNGEN, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Removes instructions from an Product", description = "", operationId = "", tags = { "" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -245,7 +247,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         return updated(service.deleteAnleitungen(herstellerStr, bestellNr));
     }
 
-    @PostMapping(ApiPaths.ADD_PRODUKT_EXPLOSIONSZEICHNUNG)
+    @PutMapping(path = ApiPaths.ADD_PRODUKT_EXPLOSIONSZEICHNUNG, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds Produkt parts diagram", description = "Adds or updates the picture of a named Produkt", operationId = "update", tags = { "Produkt" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
@@ -261,7 +263,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         return updated(service.updateExplosionszeichnung(herstellerStr, bestellNr, multipart));
     }
 
-    @DeleteMapping(ApiPaths.DELETE_PRODUKT_EXPLOSIONSZEICHNUNG)
+    @DeleteMapping(path = ApiPaths.DELETE_PRODUKT_EXPLOSIONSZEICHNUNG, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Removes a Produkt parts diagram", description = "", operationId = "", tags = { "" })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

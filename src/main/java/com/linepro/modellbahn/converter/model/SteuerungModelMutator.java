@@ -7,7 +7,7 @@ import com.linepro.modellbahn.converter.impl.NamedTranscriber;
 import com.linepro.modellbahn.entity.Steuerung;
 import com.linepro.modellbahn.model.SteuerungModel;
 
-@Component
+@Component("SteuerungModelMutator")
 public class SteuerungModelMutator extends MutatorImpl<SteuerungModel, Steuerung> {
 
     public SteuerungModelMutator() {

@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -40,8 +41,8 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.ZUG_TYP, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED,
-        ApiNames.CONSIST})
+@JsonPropertyOrder({ApiNames.ZUG_TYP, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.CONSIST, ApiNames.DELETED})
+@Relation(collectionRelation = ApiNames.ZUG, itemRelation = ApiNames.ZUG)
 @Schema(name = ApiNames.ZUG, description = "A running train configuration.")
 public class ZugModel extends RepresentationModel<ZugModel> implements NamedItemModel, Comparable<ZugModel> {
 
@@ -54,8 +55,9 @@ public class ZugModel extends RepresentationModel<ZugModel> implements NamedItem
     @JsonProperty(ApiNames.BEZEICHNUNG)
     @Schema(name = "Train description", example = "TEE „Bavaria“")
     private String bezeichnung;
+
     @JsonProperty(ApiNames.ZUG_TYP)
-    @Schema(implementation = ZugTypModel.class, name = "Train type", required = true)
+    @Schema(name = "Train type", required = true)
     private String zugTyp;
 
     @JsonProperty(ApiNames.CONSIST)

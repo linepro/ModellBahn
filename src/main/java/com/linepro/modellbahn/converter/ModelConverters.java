@@ -62,6 +62,6 @@ import com.linepro.modellbahn.converter.model.ZugTypModelMutator;
     ZugModelMutator.class, 
     ZugTypModelMutator.class 
 })
-@Configuration
+@Configuration("ModelConverters")
 public class ModelConverters {
 }

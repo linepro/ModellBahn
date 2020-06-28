@@ -15,7 +15,7 @@ import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.entity.Kategorie;
 import com.linepro.modellbahn.repository.base.NamedItemRepository;
 
-@Repository
+@Repository("KategorieRepository")
 public interface KategorieRepository extends NamedItemRepository<Kategorie> {
 
     @EntityGraph(value = "kategorie.detail", type = EntityGraphType.FETCH)

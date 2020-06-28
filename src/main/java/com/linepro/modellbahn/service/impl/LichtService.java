@@ -24,7 +24,7 @@ import com.linepro.modellbahn.service.ItemService;
  * @version $Id:$
  */
 
-@Service
+@Service("LichtService")
 public class LichtService extends NamedItemServiceImpl<LichtModel,Licht> implements ItemService<LichtModel> {
 
     private final LichtRepository repository;

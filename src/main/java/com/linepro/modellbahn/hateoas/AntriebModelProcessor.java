@@ -10,11 +10,17 @@ import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.AntriebModel;
 
 @Lazy
-@Component
+@Component("AntriebModelProcessor")
 public class AntriebModelProcessor extends NamedModelProcessor<AntriebModel> implements RepresentationModelProcessor<AntriebModel> {
 
     @Autowired
     public AntriebModelProcessor() {
-        super(ApiPaths.ADD_ANTRIEB, ApiPaths.GET_ANTRIEB, ApiPaths.UPDATE_ANTRIEB, ApiPaths.DELETE_ANTRIEB, ApiPaths.SEARCH_ANTRIEB);
+        super(
+            ApiPaths.ADD_ANTRIEB,
+            ApiPaths.GET_ANTRIEB,
+            ApiPaths.UPDATE_ANTRIEB,
+            ApiPaths.DELETE_ANTRIEB,
+            ApiPaths.SEARCH_ANTRIEB
+            );
     }
 }

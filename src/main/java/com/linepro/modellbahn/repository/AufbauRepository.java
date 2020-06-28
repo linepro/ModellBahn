@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.linepro.modellbahn.entity.Aufbau;
 import com.linepro.modellbahn.repository.base.NamedItemRepository;
 
-@Repository
+@Repository("AufbauRepository")
 public interface AufbauRepository extends NamedItemRepository<Aufbau> {
 }

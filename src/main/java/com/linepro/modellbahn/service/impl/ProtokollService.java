@@ -17,7 +17,7 @@ import com.linepro.modellbahn.service.ItemService;
  * @version $Id:$
  */
 
-@Service
+@Service("ProtokollService")
 public class ProtokollService extends NamedItemServiceImpl<ProtokollModel,Protokoll> implements ItemService<ProtokollModel> {
 
     @Autowired

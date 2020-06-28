@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -44,9 +45,10 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.DECODER_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.PROTOKOLL,
-        ApiNames.FAHRSTUFE, ApiNames.GERAUSCH, ApiNames.I_MAX, ApiNames.KONFIGURATION, ApiNames.DELETED,
-        ApiNames.ADRESSEN, ApiNames.CVS, ApiNames.FUNKTIONEN})
+@JsonPropertyOrder({ApiNames.DECODER_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.I_MAX,
+    ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.GERAUSCH, ApiNames.KONFIGURATION, ApiNames.STECKER, ApiNames.STATUS,
+    ApiNames.ANLEITUNGEN, ApiNames.ADRESSEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.DELETED})
+@Relation(collectionRelation = ApiNames.DECODER, itemRelation = ApiNames.DECODER)
 @Schema(name = ApiNames.DECODER, description = "Decoder - installed or spare.")
 public class DecoderModel extends RepresentationModel<DecoderModel> implements ItemModel, Comparable<DecoderModel> {
 
@@ -57,7 +59,7 @@ public class DecoderModel extends RepresentationModel<DecoderModel> implements I
     private String decoderId;
 
     @JsonProperty(ApiNames.HERSTELLER)
-    @Schema(implementation = HerstellerModel.class, name = "Manufacturer", required = true)
+    @Schema(name = "Manufacturer", required = true)
     private String hersteller;
 
     @JsonProperty(ApiNames.BESTELL_NR)
@@ -73,7 +75,7 @@ public class DecoderModel extends RepresentationModel<DecoderModel> implements I
     private BigDecimal iMax;
 
     @JsonProperty(ApiNames.PROTOKOLL)
-    @Schema(implementation = ProtokollModel.class, name = "Decoder protocol", required = true)
+    @Schema(name = "Decoder protocol", required = true)
     private String protokoll;
 
     @JsonProperty(ApiNames.FAHRSTUFE)
@@ -97,7 +99,7 @@ public class DecoderModel extends RepresentationModel<DecoderModel> implements I
     private DecoderStatus status;
 
     @JsonProperty(ApiNames.ANLEITUNGEN)
-    @Schema(implementation = String.class, name = "Instructions URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/betrieb_3000.pdf", accessMode = AccessMode.READ_ONLY)
+    @Schema(name = "Instructions URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/betrieb_3000.pdf", accessMode = AccessMode.READ_ONLY)
     private String anleitungen;
 
     @JsonProperty(ApiNames.ADRESSEN)

@@ -17,7 +17,7 @@ import com.linepro.modellbahn.service.ItemService;
  * @version $Id:$
  */
 
-@Service
+@Service("MassstabService")
 public class MassstabService extends NamedItemServiceImpl<MassstabModel,Massstab> implements ItemService<MassstabModel> {
 
     @Autowired

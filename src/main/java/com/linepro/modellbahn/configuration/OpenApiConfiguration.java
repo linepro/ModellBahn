@@ -14,7 +14,7 @@ import io.swagger.v3.oas.models.info.License;
 /**
  * Open Api Configuration.
  */
-@Configuration
+@Configuration("OpenApiConfiguration")
 public class OpenApiConfiguration {
 
     private static final String TITLE = "ModellBahn API";
@@ -23,7 +23,7 @@ public class OpenApiConfiguration {
 
     private static final String LICENSE = "MIT License";
 
-    private static final String LICENSE_URL = "https://github.com/linepro/ModellBahn/LICENSE";
+    private static final String LICENSE_URL = "http://www.opensource.org/licenses/mit-license.php";
 
     private static final String VERSION = "1.0.0";
 
@@ -33,15 +33,18 @@ public class OpenApiConfiguration {
      * Gets the Swagger Api docket.
      * @return the docket for the API
      */
-    @Bean
+    @Bean("OpenAPI")
     public OpenAPI publicApi() {
         return new OpenAPI()
-                        .info(new Info().title(TITLE)
-                        .description("Spring shop sample application")
-                        .version(VERSION)
-                        .license(new License().name(LICENSE).url(LICENSE_URL)))
-                        .externalDocs(new ExternalDocumentation()
-                        .description(DESCRIPTION)
-                        .url(DOCUMENTATION_URL));
+            .info(
+                 new Info().title(TITLE)
+                           .description(DESCRIPTION)
+                           .version(VERSION)
+                           .license(new License().name(LICENSE).url(LICENSE_URL))
+                 )
+            .externalDocs(new ExternalDocumentation()
+            .description(DESCRIPTION)
+            .url(DOCUMENTATION_URL)
+            );
         }
 }

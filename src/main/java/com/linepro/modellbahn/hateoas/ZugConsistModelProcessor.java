@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.hateoas;
 
+import java.util.Collections;
 import java.util.HashMap;
 
 import org.apache.commons.collections4.MapUtils;
@@ -12,25 +13,36 @@ import org.springframework.stereotype.Component;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.controller.impl.ApiRels;
+import com.linepro.modellbahn.hateoas.impl.FieldsExtractor;
 import com.linepro.modellbahn.hateoas.impl.LinkTemplateImpl;
 import com.linepro.modellbahn.hateoas.impl.ModelProcessorImpl;
 import com.linepro.modellbahn.model.SoftDelete;
 import com.linepro.modellbahn.model.ZugConsistModel;
 
 @Lazy
-@Component
+@Component("ZugConsistModelProcessor")
 public class ZugConsistModelProcessor extends ModelProcessorImpl<ZugConsistModel> implements RepresentationModelProcessor<ZugConsistModel> {
 
-    private static final String ZUG = "{" + ApiNames.ZUG + "}";
+    private static final String NAME = "{" + ApiNames.NAMEN + "}";
     private static final String POSITION = "{" + ApiNames.POSITION + "}";
+
+    private static final FieldsExtractor EXTRACTOR = (m) -> MapUtils.putAll(new HashMap<String,Object>(), new String[][] { 
+        { NAME, ((ZugConsistModel) m).getZug() }, 
+        { POSITION, String.valueOf(((ZugConsistModel) m).getPosition()) } 
+        });
 
     @Autowired
     public ZugConsistModelProcessor() {
-        super((m) -> MapUtils.putAll(new HashMap<String,Object>(), new String[][] { 
-            { ZUG, ((ZugConsistModel) m).getZug() }, 
-            { POSITION, String.valueOf(((ZugConsistModel) m).getPosition()) } 
-            }),
-                        new LinkTemplateImpl(ApiRels.UPDATE, ApiPaths.UPDATE_CONSIST),
-                        new LinkTemplateImpl(ApiRels.DELETE, ApiPaths.DELETE_CONSIST, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted())));
+        super(
+            new LinkTemplateImpl(ApiRels.PARENT, ApiPaths.GET_ZUG, EXTRACTOR),
+            new LinkTemplateImpl(ApiRels.UPDATE, ApiPaths.UPDATE_CONSIST, EXTRACTOR),
+            new LinkTemplateImpl(ApiRels.DELETE, ApiPaths.DELETE_CONSIST, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted())),
+            new LinkTemplateImpl(ApiNames.BAHNVERWALTUNG, ApiPaths.GET_BAHNVERWALTUNG, 
+                    (m) -> Collections.singletonMap(NAME, ((ZugConsistModel) m).getBahnverwaltung())),
+            new LinkTemplateImpl(ApiNames.GATTUNG, ApiPaths.GET_GATTUNG,  
+                    (m) -> Collections.singletonMap(NAME, ((ZugConsistModel) m).getGattung())),
+            new LinkTemplateImpl(ApiNames.ARTIKEL, ApiPaths.GET_ARTIKEL,  
+                            (m) -> Collections.singletonMap("{" + ApiNames.ARTIKEL_ID + "}", ((ZugConsistModel) m).getArtikelId()))
+            );
     }
 }

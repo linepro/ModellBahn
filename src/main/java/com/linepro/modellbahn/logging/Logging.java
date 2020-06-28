@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component;
     LoggedAspect.class,
     RequestLoggingConfiguration.class,
 })
-@Component
+@Component("Logging")
 public class Logging {
 }

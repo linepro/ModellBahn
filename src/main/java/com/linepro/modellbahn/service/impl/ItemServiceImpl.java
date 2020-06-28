@@ -57,7 +57,9 @@ public abstract class ItemServiceImpl<M extends ItemModel, E extends Item> imple
 
     @Transactional
     public M add(M model) {
-        return entityMutator.convert(repository.saveAndFlush(modelMutator.convert(model)));
+        E item = modelMutator.convert(model);
+        item.setDeleted(false);
+        return entityMutator.convert(repository.saveAndFlush(item));
     }
 
     @Transactional

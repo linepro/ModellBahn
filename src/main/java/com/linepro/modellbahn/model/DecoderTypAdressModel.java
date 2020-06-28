@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -38,17 +39,19 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.INDEX,  ApiNames.ADRESS_TYP,  ApiNames.SPAN,  ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED})
+@JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.INDEX,  ApiNames.BEZEICHNUNG, ApiNames.SPAN, ApiNames.ADRESS_TYP,
+    ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED})
+@Relation(collectionRelation = ApiNames.ADRESS, itemRelation = ApiNames.ADRESS)
 @Schema(name = ApiNames.ADRESS, description = "Decoder type address - template for Decoder.")
 public class DecoderTypAdressModel extends RepresentationModel<DecoderTypAdressModel> implements ItemModel, Comparable<DecoderTypAdressModel> {
 
     private static final long serialVersionUID = 1826497356359114726L;
 
     @JsonProperty(ApiNames.HERSTELLER)
-    @Schema(implementation = HerstellerModel.class, name = "Manufacturer", required = true)
+    @Schema(name = "Manufacturer", required = true)
     private String hersteller;
 
-    @JsonProperty(ApiNames.BESTELL_NR)
+    @JsonProperty()
     @Schema(name = "Product numer", example = "62499", required = true)
     private String bestellNr;
 

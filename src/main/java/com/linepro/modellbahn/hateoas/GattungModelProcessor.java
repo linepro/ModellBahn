@@ -10,11 +10,17 @@ import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.GattungModel;
 
 @Lazy
-@Component
+@Component("GattungModelProcessor")
 public class GattungModelProcessor extends NamedModelProcessor<GattungModel> implements RepresentationModelProcessor<GattungModel> {
 
     @Autowired
     public GattungModelProcessor() {
-        super(ApiPaths.ADD_GATTUNG, ApiPaths.GET_GATTUNG, ApiPaths.UPDATE_GATTUNG, ApiPaths.DELETE_GATTUNG, ApiPaths.SEARCH_GATTUNG);
+        super(
+            ApiPaths.ADD_GATTUNG, 
+            ApiPaths.GET_GATTUNG, 
+            ApiPaths.UPDATE_GATTUNG, 
+            ApiPaths.DELETE_GATTUNG, 
+            ApiPaths.SEARCH_GATTUNG
+            );
     }
 }

@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.linepro.modellbahn.entity.Steuerung;
 import com.linepro.modellbahn.repository.base.NamedItemRepository;
 
-@Repository
+@Repository("SteuerungRepository")
 public interface SteuerungRepository extends NamedItemRepository<Steuerung> {
 }

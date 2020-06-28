@@ -14,7 +14,7 @@ import com.linepro.modellbahn.repository.AchsfolgRepository;
  * @author $Author:$
  * @version $Id:$
  */
-@Service
+@Service("AchsfolgService")
 public class AchsfolgService extends NamedItemServiceImpl<AchsfolgModel,Achsfolg> {
 
     @Autowired

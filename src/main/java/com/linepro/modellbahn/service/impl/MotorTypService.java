@@ -17,7 +17,7 @@ import com.linepro.modellbahn.service.ItemService;
  * @version $Id:$
  */
 
-@Service
+@Service("MotorTypService")
 public class MotorTypService extends NamedItemServiceImpl<MotorTypModel,MotorTyp> implements ItemService<MotorTypModel> {
 
     @Autowired

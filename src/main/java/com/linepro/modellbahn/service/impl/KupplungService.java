@@ -24,7 +24,7 @@ import com.linepro.modellbahn.service.ItemService;
  * @version $Id:$
  */
 
-@Service
+@Service("KupplungService")
 public class KupplungService extends NamedItemServiceImpl<KupplungModel,Kupplung> implements ItemService<KupplungModel> {
 
     private final KupplungRepository repository;

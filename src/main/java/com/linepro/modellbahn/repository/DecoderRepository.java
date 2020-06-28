@@ -15,7 +15,7 @@ import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.entity.Decoder;
 import com.linepro.modellbahn.repository.base.ItemRepository;
 
-@Repository
+@Repository("DecoderRepository")
 public interface DecoderRepository extends ItemRepository<Decoder> {
 
     //@formatter:off

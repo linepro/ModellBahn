@@ -8,7 +8,7 @@ import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.entity.DecoderTypFunktion;
 import com.linepro.modellbahn.model.DecoderTypFunktionModel;
 
-@Component
+@Component("DecoderTypFunktionModelMutator")
 public class DecoderTypFunktionModelMutator implements Mutator<DecoderTypFunktionModel, DecoderTypFunktion> {
     
     @Override

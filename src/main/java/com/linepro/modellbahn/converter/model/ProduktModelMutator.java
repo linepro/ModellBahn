@@ -29,7 +29,7 @@ import com.linepro.modellbahn.repository.lookup.VorbildLookup;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Component
+@Component("ProduktModelMutator")
 public class ProduktModelMutator implements Mutator<ProduktModel, Produkt> {
 
     @Autowired

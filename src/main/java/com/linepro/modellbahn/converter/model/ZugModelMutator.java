@@ -12,7 +12,7 @@ import com.linepro.modellbahn.model.ZugModel;
 import com.linepro.modellbahn.repository.ZugTypRepository;
 import com.linepro.modellbahn.repository.lookup.ItemLookup;
 
-@Component
+@Component("ZugModelMutator")
 public class ZugModelMutator extends MutatorImpl<ZugModel, Zug> {
 
     private final ZugTypRepository repository;

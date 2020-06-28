@@ -10,11 +10,17 @@ import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.ZugTypModel;
 
 @Lazy
-@Component
+@Component("ZugTypModelProcessor")
 public class ZugTypModelProcessor extends NamedModelProcessor<ZugTypModel> implements RepresentationModelProcessor<ZugTypModel> {
 
     @Autowired
     public ZugTypModelProcessor() {
-        super(ApiPaths.ADD_ZUG_TYP, ApiPaths.GET_ZUG_TYP, ApiPaths.UPDATE_ZUG_TYP, ApiPaths.DELETE_ZUG_TYP, ApiPaths.SEARCH_ZUG_TYP);
+        super(
+            ApiPaths.ADD_ZUG_TYP, 
+            ApiPaths.GET_ZUG_TYP, 
+            ApiPaths.UPDATE_ZUG_TYP, 
+            ApiPaths.DELETE_ZUG_TYP, 
+            ApiPaths.SEARCH_ZUG_TYP
+            );
     }
 }

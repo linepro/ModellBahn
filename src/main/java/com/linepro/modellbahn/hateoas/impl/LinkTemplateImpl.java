@@ -14,35 +14,33 @@ public class LinkTemplateImpl implements LinkTemplate {
     private final String rel;
     
     private final String path;
+    
+    private final FieldsExtractor extractor;
 
     private final Predicate<RepresentationModel<?>> test;
 
-    public LinkTemplateImpl(String rel, String path) {
-        this(rel, path, null);
+    public LinkTemplateImpl(String rel, String path, FieldsExtractor extractor) {
+        this(rel, path, extractor, null);
     }
 
-    public LinkTemplateImpl(String rel, String path, Predicate<RepresentationModel<?>> test) {
+    public LinkTemplateImpl(String rel, String path, FieldsExtractor extractor, Predicate<RepresentationModel<?>> test) {
         this.rel = rel;
         this.path = path.replaceAll(":[^}]+", "");
+        this.extractor = extractor;
         this.test = test;
     }
 
     @Override
-    public void apply(RepresentationModel<?> model, Map<String,Object> pathNames) {
+    public void apply(RepresentationModel<?> model) {
         if (test == null || test.test(model)) {
-            Link link = getLink(pathNames);
+            Map<String,Object> names = extractor.pathNames(model);
+            String path = this.path;
 
-            if (link != null) {
-                model.add(link);
+            for (String name : names.keySet()) {
+                path = path.replace(name, String.valueOf(names.get(name)));
             }
-        }
-    }
 
-    protected Link getLink(Map<String,Object> pathNames) {
-        String path = getPath();
-        for (String name : pathNames.keySet()) {
-            path = path.replace(name, String.valueOf(pathNames.get(name)));
+            model.add(new Link(path, rel));
         }
-        return new Link(path, rel);
     }
 }

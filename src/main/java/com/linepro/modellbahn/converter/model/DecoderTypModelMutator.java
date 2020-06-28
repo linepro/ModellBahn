@@ -15,7 +15,7 @@ import com.linepro.modellbahn.repository.lookup.ItemLookup;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Component
+@Component("DecoderTypModelMutator")
 public class DecoderTypModelMutator implements Mutator<DecoderTypModel, DecoderTyp> {
 
     @Autowired

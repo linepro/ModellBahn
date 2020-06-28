@@ -10,11 +10,17 @@ import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.ProtokollModel;
 
 @Lazy
-@Component
+@Component("ProtokollModelProcessor")
 public class ProtokollModelProcessor extends NamedModelProcessor<ProtokollModel> implements RepresentationModelProcessor<ProtokollModel> {
 
     @Autowired
     public ProtokollModelProcessor() {
-        super(ApiPaths.ADD_PROTOKOLL, ApiPaths.GET_PROTOKOLL, ApiPaths.UPDATE_PROTOKOLL, ApiPaths.DELETE_PROTOKOLL, ApiPaths.SEARCH_PROTOKOLL);
+        super(
+            ApiPaths.ADD_PROTOKOLL, 
+            ApiPaths.GET_PROTOKOLL, 
+            ApiPaths.UPDATE_PROTOKOLL, 
+            ApiPaths.DELETE_PROTOKOLL, 
+            ApiPaths.SEARCH_PROTOKOLL
+            );
     }
 }

@@ -37,7 +37,7 @@ import com.linepro.modellbahn.service.ItemService;
  * @author $Author:$
  * @version $Id:$
  */
-@Service
+@Service("DecoderTypService")
 public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTyp> implements ItemService<DecoderTypModel> {
 
     private final DecoderTypRepository repository;

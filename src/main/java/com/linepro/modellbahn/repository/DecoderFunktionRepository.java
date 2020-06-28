@@ -12,7 +12,7 @@ import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.entity.DecoderFunktion;
 import com.linepro.modellbahn.repository.base.ItemRepository;
 
-@Repository
+@Repository("DecoderFunktionRepository")
 public interface DecoderFunktionRepository extends ItemRepository<DecoderFunktion> {
 
     //@formatter:off

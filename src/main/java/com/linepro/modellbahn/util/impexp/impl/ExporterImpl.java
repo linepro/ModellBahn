@@ -29,13 +29,10 @@ import com.linepro.modellbahn.entity.Item;
 import com.linepro.modellbahn.model.ItemModel;
 import com.linepro.modellbahn.util.impexp.Exporter;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * The Class Exporter.
  * @param <E> the element type
  */
-@Slf4j
 public class ExporterImpl<M extends ItemModel,E extends Item> implements Exporter {
 
     private static final List<String> EXCLUDED = Arrays.asList("serialVersionUID", "links");

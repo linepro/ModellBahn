@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component;
     MessageTranslatorImpl.class,
     RequestLocaleFilter.class
 })
-@Component
+@Component("Internationalization")
 public class Internationalization {
 }

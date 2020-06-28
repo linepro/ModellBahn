@@ -10,11 +10,17 @@ import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.MassstabModel;
 
 @Lazy
-@Component
+@Component("MassstabModelProcessor")
 public class MassstabModelProcessor extends NamedModelProcessor<MassstabModel> implements RepresentationModelProcessor<MassstabModel> {
 
     @Autowired
     public MassstabModelProcessor() {
-        super(ApiPaths.ADD_MASSSTAB, ApiPaths.GET_MASSSTAB, ApiPaths.UPDATE_MASSSTAB, ApiPaths.DELETE_MASSSTAB, ApiPaths.SEARCH_MASSSTAB);
+        super(
+            ApiPaths.ADD_MASSSTAB, 
+            ApiPaths.GET_MASSSTAB,
+            ApiPaths.UPDATE_MASSSTAB,
+            ApiPaths.DELETE_MASSSTAB,
+            ApiPaths.SEARCH_MASSSTAB
+            );
     }
 }

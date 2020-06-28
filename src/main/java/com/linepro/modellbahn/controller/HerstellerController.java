@@ -2,6 +2,8 @@ package com.linepro.modellbahn.controller;
 
 import java.util.Optional;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +39,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @version $Id:$
  */
 @Tag(name = ApiNames.HERSTELLER)
-@RestController
+@RestController("HerstellerController")
 @ExposesResourceFor(HerstellerModel.class)
 public class HerstellerController extends NamedItemController<HerstellerModel> {
 
@@ -52,7 +54,7 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
     }
     
     @Override
-    @GetMapping(ApiPaths.GET_HERSTELLER)
+    @GetMapping(path = ApiPaths.GET_HERSTELLER, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an Hersteller by name", description = "Finds a manufacturer", operationId = "get", tags = { "Hersteller" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = HerstellerModel.class)) }),
@@ -67,7 +69,7 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
     }
 
     @Override
-    @GetMapping(ApiPaths.SEARCH_HERSTELLER)
+    @GetMapping(path = ApiPaths.SEARCH_HERSTELLER, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds Herstelleren by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Hersteller" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = HerstellerModel.class))) }),
@@ -82,7 +84,7 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
     }
 
     @Override
-    @PostMapping(ApiPaths.ADD_HERSTELLER)
+    @PostMapping(path = ApiPaths.ADD_HERSTELLER, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Add a new Hersteller", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Hersteller" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = HerstellerModel.class)) }),
@@ -98,7 +100,7 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
     }
 
     @Override
-    @PutMapping(ApiPaths.UPDATE_HERSTELLER)
+    @PutMapping(path = ApiPaths.UPDATE_HERSTELLER, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates an Hersteller by name", description = "Update a manufacturer", operationId = "update", tags = { "Hersteller" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = HerstellerModel.class)) }),
@@ -114,7 +116,7 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
     }
 
     @Override
-    @DeleteMapping(ApiPaths.DELETE_HERSTELLER)
+    @DeleteMapping(path = ApiPaths.DELETE_HERSTELLER)
     @Operation(summary = "Deletes an Hersteller by name", description = "Delete a manufacturer", operationId = "update", tags = { "Hersteller" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

@@ -2,6 +2,8 @@ package com.linepro.modellbahn.controller;
 
 import java.util.Optional;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +39,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @version $Id:$
  */
 @Tag(name = ApiNames.PROTOKOLL)
-@RestController
+@RestController("ProtokollController")
 @ExposesResourceFor(ProtokollModel.class)
 public class ProtokollController extends NamedItemController<ProtokollModel> {
 
@@ -52,7 +54,7 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
     }
     
     @Override
-    @GetMapping(ApiPaths.GET_PROTOKOLL)
+    @GetMapping(path = ApiPaths.GET_PROTOKOLL, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an Protokoll by name", description = "Finds a decoder protocol", operationId = "get", tags = { "Protokoll" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProtokollModel.class)) }),
@@ -67,7 +69,7 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
     }
 
     @Override
-    @GetMapping(ApiPaths.SEARCH_PROTOKOLL)
+    @GetMapping(path = ApiPaths.SEARCH_PROTOKOLL, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds Protokollen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Protokoll" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ProtokollModel.class))) }),
@@ -82,7 +84,7 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
     }
 
     @Override
-    @PostMapping(ApiPaths.ADD_PROTOKOLL)
+    @PostMapping(path = ApiPaths.ADD_PROTOKOLL, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Add a new Protokoll", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Protokoll" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProtokollModel.class)) }),
@@ -98,7 +100,7 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
     }
 
     @Override
-    @PutMapping(ApiPaths.UPDATE_PROTOKOLL)
+    @PutMapping(path = ApiPaths.UPDATE_PROTOKOLL, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates an Protokoll by name", description = "Update a decoder protocol", operationId = "update", tags = { "Protokoll" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProtokollModel.class)) }),
@@ -114,7 +116,7 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
     }
 
     @Override
-    @DeleteMapping(ApiPaths.DELETE_PROTOKOLL)
+    @DeleteMapping(path = ApiPaths.DELETE_PROTOKOLL)
     @Operation(summary = "Deletes an Protokoll by name", description = "Delete a decoder protocol", operationId = "update", tags = { "Protokoll" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

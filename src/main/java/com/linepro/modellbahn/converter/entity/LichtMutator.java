@@ -8,7 +8,7 @@ import com.linepro.modellbahn.converter.impl.NamedAbbildungTranscriber;
 import com.linepro.modellbahn.entity.Licht;
 import com.linepro.modellbahn.model.LichtModel;
 
-@Component
+@Component("LichtMutator")
 public class LichtMutator extends MutatorImpl<Licht, LichtModel> {
 
     public LichtMutator(PathMutator pathMutator) {

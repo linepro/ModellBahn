@@ -17,7 +17,7 @@ import com.linepro.modellbahn.service.ItemService;
  * @version $Id:$
  */
 
-@Service
+@Service("SpurweiteService")
 public class SpurweiteService extends NamedItemServiceImpl<SpurweiteModel,Spurweite> implements ItemService<SpurweiteModel> {
 
     @Autowired

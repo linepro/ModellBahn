@@ -1,106 +1,102 @@
 package com.linepro.modellbahn.configuration;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceException;
-import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.Response.StatusType;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import lombok.extern.slf4j.Slf4j;
+import com.linepro.modellbahn.controller.impl.ApiPaths;
 
-@Slf4j
+import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
+
 @ControllerAdvice
 public class ErrorHandler extends ResponseEntityExceptionHandler {
-    
+
+    @Produces(MediaType.APPLICATION_JSON)
     @ExceptionHandler(value = { Exception.class})
-    protected ResponseEntity<?> handleConflict(Exception ex, WebRequest request) {
+    public ResponseEntity<Object> handle(Exception ex, WebRequest request) throws Exception {
+        String contextPath = getRequestPath(request);
+        if (StringUtils.isNotBlank(contextPath)) {
+            Throwable effective = getEffective(ex);
+            HttpStatus status = classify(effective);
 
-        String bodyOfResponse = "This should be application specific";
+            return ResponseEntity.status(status)
+                                 .body(
+                                     ErrorMessage.builder()
+                                                 .timestamp(System.currentTimeMillis())
+                                                 .status(status.value())
+                                                 .message(status.getReasonPhrase())
+                                                 .path(contextPath)
+                                                 .developerMessage(getDeveloperMessage(effective))
+                                                 .build()
+                                                 );
+                            
+        }
+        
+        return super.handleException(ex, request);
+    }
 
+    private String getRequestPath(WebRequest request) {
+        String requestPath = ServletUriComponentsBuilder.fromCurrentRequest().toUriString();
+        
+        if (StringUtils.contains(requestPath, ApiPaths.API_ROOT)) {
+            return requestPath.substring(requestPath.lastIndexOf(ApiPaths.API_ROOT));
+        }
+        
+        return null;
+    }
+
+    private Throwable getEffective(Exception ex) {
         if (ex instanceof PersistenceException) {
-            if (ex.getCause() instanceof ConstraintViolationException) {
-                return badRequest(((ConstraintViolationException) ex.getCause()).getConstraintViolations().stream()
-                            .map(ConstraintViolation::getMessage).collect(Collectors.joining(", ")));
-            }
-        } else if (ex instanceof EntityExistsException) {
-            return badRequest(ex.getMessage());
-        } else if (ex instanceof EntityNotFoundException) {
-            return badRequest(ex.getMessage());
-        } else if (ex instanceof NonUniqueResultException) {
-            return badRequest(ex.getMessage());
-        } else if (ex instanceof NoResultException) {
-            return badRequest(ex.getMessage());
+            return ex.getCause();
         }
 
-        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
-    }
-    
-    protected ResponseEntity<?> accepted(Object entity) {
-        return ResponseEntity.accepted().body(entity);
+        return ex;
     }
 
-    protected ResponseEntity<?> badRequest(final String userMessage) {
-        return ResponseEntity.badRequest().body(new ErrorMessage(Status.BAD_REQUEST.getStatusCode(), userMessage));
+    private HttpStatus classify(Throwable ex) {
+        if (ex instanceof ConstraintViolationException) {
+            return HttpStatus.BAD_REQUEST;
+        } else if (ex instanceof EntityExistsException) {
+            return HttpStatus.BAD_REQUEST;
+        } else if (ex instanceof EntityNotFoundException) {
+            return HttpStatus.NOT_FOUND;
+        } else if (ex instanceof IllegalArgumentException) {
+            return HttpStatus.BAD_REQUEST;
+        } else if (ex instanceof NonUniqueResultException) {
+            return HttpStatus.INTERNAL_SERVER_ERROR;
+        } else if (ex instanceof NoResultException) {
+            return HttpStatus.NO_CONTENT;
+        } else if (ex instanceof SecurityException) {
+            return HttpStatus.FORBIDDEN;
+        }
+
+        return HttpStatus.BAD_REQUEST;
     }
 
-    protected ResponseEntity<?> created(Object entity) {
-        return ResponseEntity.created(null).body(entity);
+    private String getDeveloperMessage(Throwable ex) {
+        return String.join(": ", 
+                        Optional.ofNullable(ex.getMessage()).orElse(ex.getClass().getSimpleName()), 
+                        Stream.of(ex.getStackTrace())
+                              .filter(t -> t.getClassName().contains("linepro"))
+                              .map(t -> t.toString())
+                              .collect(Collectors.joining("\n"))
+                        );
     }
-
-    protected ResponseEntity<?> noContent() {
-        return ResponseEntity.noContent().build();
-    }
-
-    protected ResponseEntity<?> notFound() {
-        return ResponseEntity.notFound().build();
-    }
-
-    protected ResponseEntity<?> notModified() {
-        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
-    }
-
-    protected ResponseEntity<?> ok() {
-        return ResponseEntity.ok().build();
-    }
-
-    protected ResponseEntity<?> ok(Object entity) {
-        return ResponseEntity.ok().body(entity);
-    }
-
-    protected ResponseEntity<?> serverError(Exception e) {
-        log.error(Status.INTERNAL_SERVER_ERROR.getReasonPhrase(), e);
-
-        return serverError(Status.INTERNAL_SERVER_ERROR, Status.INTERNAL_SERVER_ERROR.getReasonPhrase(),
-                e.getMessage());
-    }
-
-    protected ResponseEntity<?> serverError(final StatusType errorCode, final String userMessage) {
-        return serverError(errorCode, userMessage, null);
-    }
-
-    protected ResponseEntity<?> serverError(final StatusType errorCode, final String userMessage,
-            final String developerMessage) {
-        return ResponseEntity.status(errorCode.getStatusCode())
-                .body(new ErrorMessage(errorCode.getStatusCode(), userMessage, developerMessage));
-    }
-
-    protected ResponseEntity<?> getResponse(BodyBuilder builder) {
-        return builder.build();
-    }
-
 }

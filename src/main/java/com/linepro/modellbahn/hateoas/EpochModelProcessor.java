@@ -10,11 +10,17 @@ import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.EpochModel;
 
 @Lazy
-@Component
+@Component("EpochModelProcessor")
 public class EpochModelProcessor extends NamedModelProcessor<EpochModel> implements RepresentationModelProcessor<EpochModel> {
 
     @Autowired
     public EpochModelProcessor() {
-        super(ApiPaths.ADD_EPOCH, ApiPaths.GET_EPOCH, ApiPaths.UPDATE_EPOCH, ApiPaths.DELETE_EPOCH, ApiPaths.SEARCH_EPOCH);
+        super(
+            ApiPaths.ADD_EPOCH,
+            ApiPaths.GET_EPOCH, 
+            ApiPaths.UPDATE_EPOCH, 
+            ApiPaths.DELETE_EPOCH, 
+            ApiPaths.SEARCH_EPOCH
+            );
     }
 }

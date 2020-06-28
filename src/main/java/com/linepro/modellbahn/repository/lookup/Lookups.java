@@ -11,6 +11,6 @@ import org.springframework.stereotype.Component;
     ProduktLookup.class,
     VorbildLookup.class
 })
-@Component
+@Component("Lookups")
 public class Lookups {
 }

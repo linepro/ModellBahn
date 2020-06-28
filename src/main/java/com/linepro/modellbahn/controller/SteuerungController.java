@@ -2,6 +2,8 @@ package com.linepro.modellbahn.controller;
 
 import java.util.Optional;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +39,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @version $Id:$
  */
 @Tag(name = ApiNames.STEUERUNG)
-@RestController
+@RestController("SteuerungController")
 @ExposesResourceFor(SteuerungModel.class)
 public class SteuerungController extends NamedItemController<SteuerungModel> {
 
@@ -52,7 +54,7 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
     }
     
     @Override
-    @GetMapping(ApiPaths.GET_STEUERUNG)
+    @GetMapping(path = ApiPaths.GET_STEUERUNG)
     @Operation(summary = "Finds an Steuerung by name", description = "Finds a control method", operationId = "get", tags = { "Steuerung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SteuerungModel.class)) }),
@@ -67,7 +69,7 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
     }
 
     @Override
-    @GetMapping(ApiPaths.SEARCH_STEUERUNG)
+    @GetMapping(path = ApiPaths.SEARCH_STEUERUNG, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds Steuerungen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Steuerung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = SteuerungModel.class))) }),
@@ -82,7 +84,7 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
     }
 
     @Override
-    @PostMapping(ApiPaths.ADD_STEUERUNG)
+    @PostMapping(path = ApiPaths.ADD_STEUERUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Add a new Steuerung", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Steuerung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SteuerungModel.class)) }),
@@ -98,7 +100,7 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
     }
 
     @Override
-    @PutMapping(ApiPaths.UPDATE_STEUERUNG)
+    @PutMapping(path = ApiPaths.UPDATE_STEUERUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates an Steuerung by name", description = "Update a control method", operationId = "update", tags = { "Steuerung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SteuerungModel.class)) }),
@@ -114,7 +116,7 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
     }
 
     @Override
-    @DeleteMapping(ApiPaths.DELETE_STEUERUNG)
+    @DeleteMapping(path = ApiPaths.DELETE_STEUERUNG)
     @Operation(summary = "Deletes an Steuerung by name", description = "Delete a control method", operationId = "update", tags = { "Steuerung" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

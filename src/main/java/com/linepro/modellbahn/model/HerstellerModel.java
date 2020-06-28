@@ -1,11 +1,10 @@
 package com.linepro.modellbahn.model;
 
-import java.net.URL;
-
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -39,7 +38,8 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.TELEFON, ApiNames.URL, ApiNames.DELETED})
+@JsonPropertyOrder({ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.LAND, ApiNames.URL, ApiNames.TELEFON, ApiNames.DELETED})
+@Relation(collectionRelation = ApiNames.HERSTELLER, itemRelation = ApiNames.HERSTELLER)
 @Schema(name = ApiNames.HERSTELLER, description = "Manufacturer.")
 public class HerstellerModel extends RepresentationModel<HerstellerModel> implements NamedItemModel, Comparable<HerstellerModel> {
 
@@ -58,8 +58,8 @@ public class HerstellerModel extends RepresentationModel<HerstellerModel> implem
     private String land;
     
     @JsonProperty(ApiNames.URL)
-    @Schema(implementation = String.class, name = "Manufacturer's website", example = "https://www.maerklin.de")
-    private URL url;
+    @Schema(name = "Manufacturer's website", example = "https://www.maerklin.de")
+    private String url;
 
     @JsonProperty(ApiNames.TELEFON)
     @Schema(name = "Manufacturer's phone number", example = "+49 (0) 71 61 608-0")

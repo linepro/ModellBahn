@@ -10,7 +10,7 @@ import com.linepro.modellbahn.repository.ProduktRepository;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-@Component
+@Component("ProduktLookup")
 public class ProduktLookup {
     
     @Autowired

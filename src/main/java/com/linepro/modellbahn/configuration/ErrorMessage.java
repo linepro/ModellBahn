@@ -1,90 +1,59 @@
 package com.linepro.modellbahn.configuration;
 
-import javax.ws.rs.core.Link;
+import org.springframework.hateoas.server.core.Relation;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.linepro.modellbahn.controller.impl.ApiNames;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@JsonAutoDetect(fieldVisibility = Visibility.PUBLIC_ONLY)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown=true)
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+@JsonPropertyOrder({ "timestamp", "status", "error", "message", "path", "developerMessage", "moreInfo" })
+@Relation(collectionRelation = ApiNames.ACHSFOLG, itemRelation = ApiNames.ACHSFOLG)
+@Schema(name = ApiNames.ACHSFOLG, description = "Axle configuration - VDEV/VMEV/UIC-System")
 public class ErrorMessage {
 
-    private int errorCode;
+    @JsonProperty("timestamp")
+    @Schema(name = "Timestamp", example = "1593346288902", accessMode = AccessMode.READ_ONLY)
+    private long timestamp;
 
-    private String userMessage;
+    @JsonProperty("status")
+    @Schema(name = "Status", example = "403", accessMode = AccessMode.READ_ONLY)
+    private int status;
+    
+    @JsonProperty("error")
+    @Schema(name = "Error", example = "Forbidden", accessMode = AccessMode.READ_ONLY)
+    private String error;
 
+    @JsonProperty("message")
+    @Schema(name = "Message for user consumption", example = "Forbidden", accessMode = AccessMode.READ_ONLY)
+    private String message;
+
+    @JsonProperty("path")
+    @Schema(name = "Request path", example = "Forbidden", accessMode = AccessMode.READ_ONLY)
+    private String path;
+
+    @JsonProperty("developerMessage")
+    @Schema(name = "Extended message for debugging", example = "partial stack trace", accessMode = AccessMode.READ_ONLY)
     private String developerMessage;
 
-    private Link moreInfo;
-
-    public ErrorMessage() {
-    }
-
-    public ErrorMessage(final int errorCode, final String userMessage) {
-        this(errorCode, userMessage, null);
-    }
-
-    public ErrorMessage(final int errorCode, final String userMessage, final String developerMessage) {
-        this.errorCode = errorCode;
-        this.userMessage = userMessage;
-        this.developerMessage = developerMessage;
-    }
-
-    @JsonGetter("errorCode")
-    @Schema(name = "Error code", example = "500")
-    public int getErrorCode() {
-        return errorCode;
-    }
-
-    @JsonSetter("errorCode")
-    public void setErrorCode(int errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    @JsonGetter("userMessage")
-    @Schema(name = "Error message for user consumption", example = "Internal Server Error")
-    public String getUserMessage() {
-        return userMessage;
-    }
-
-    @JsonSetter("userMessage")
-    public void setUserMessage(String userMessage) {
-        this.userMessage = userMessage;
-    }
-
-    @JsonGetter("developerMessage")
-    @Schema(name = "Detailed error message for developer debugging", example = "NullPointerException")
-    public String getDeveloperMessage() {
-        return developerMessage;
-    }
-
-    @JsonSetter("developerMessage")
-    public void setDeveloperMessage(String developerMessage) {
-        this.developerMessage = developerMessage;
-    }
-
-    @JsonGetter("moreInfo")
-    public Link getMoreInfo() {
-        return moreInfo;
-    }
-
-    @JsonSetter("moreInfo")
-    public void setMoreInfo(Link moreInfo) {
-        this.moreInfo = moreInfo;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("errorCode", errorCode)
-                .append("userMessage", userMessage)
-                .append("developerMessage", developerMessage)
-                .append("moreInfo", moreInfo)
-                .toString();
-    }
+    @JsonProperty("moreInfo")
+    @Schema(name = "URL for extended information", accessMode = AccessMode.READ_ONLY)
+    private String moreInfo;
 }

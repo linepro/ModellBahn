@@ -32,6 +32,6 @@ import com.linepro.modellbahn.security.UserController;
     ZugTypController.class,
     UserController.class
 })
-@Configuration
+@Configuration("Controllers")
 public class Controllers {
 }

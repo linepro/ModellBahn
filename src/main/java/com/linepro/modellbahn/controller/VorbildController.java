@@ -4,6 +4,8 @@ import static org.springframework.http.ResponseEntity.of;
 
 import java.util.Optional;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +43,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @version $Id:$
  */
 @Tag(name = ApiNames.VORBILD)
-@RestController
+@RestController("VorbildController")
 @ExposesResourceFor(VorbildModel.class)
 public class VorbildController extends AbstractItemController<VorbildModel> {
 
@@ -59,7 +61,7 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
         return new VorbildModel();
     }
 
-    @GetMapping(ApiPaths.GET_VORBILD)
+    @GetMapping(path = ApiPaths.GET_VORBILD, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an Vorbild by name", description = "Finds a prototype", operationId = "get", tags = { "Vorbild" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VorbildModel.class)) }),
@@ -74,7 +76,7 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
     }
 
     @Override
-    @GetMapping(ApiPaths.SEARCH_VORBILD)
+    @GetMapping(path = ApiPaths.SEARCH_VORBILD, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds Vorbilder by example", description = "Finds prototypes", operationId = "find", tags = { "Vorbild" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ZugTypModel.class))) }),
@@ -89,7 +91,7 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
     }
 
     @Override
-    @PostMapping(ApiPaths.GET_VORBILD)
+    @PostMapping(path = ApiPaths.ADD_VORBILD, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Add a new Vorbild", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Vorbild" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VorbildModel.class)) }),
@@ -100,11 +102,11 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> add(VorbildModel model) {
+    public ResponseEntity<?> add(@RequestBody VorbildModel model) {
         return super.add(model);
     }
 
-    @PutMapping(ApiPaths.UPDATE_VORBILD)
+    @PutMapping(path = ApiPaths.UPDATE_VORBILD, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates an Vorbild by name", description = "Update a prototyp", operationId = "update", tags = { "Vorbild" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VorbildModel.class)) }),
@@ -115,11 +117,11 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> update(@PathVariable(ApiNames.GATTUNG) String gattung, VorbildModel model) {
+    public ResponseEntity<?> update(@PathVariable(ApiNames.GATTUNG) String gattung, @RequestBody VorbildModel model) {
         return updated(service.update(gattung, model));
     }
 
-    @DeleteMapping(ApiPaths.DELETE_VORBILD)
+    @DeleteMapping(path = ApiPaths.DELETE_VORBILD)
     @Operation(summary = "Deletes an Vorbild by name", description = "Delete a prototyp", operationId = "update", tags = { "Vorbild" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
@@ -134,7 +136,7 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
         return deleted(service.delete(gattung));
     }
 
-    @PostMapping(ApiPaths.ADD_VORBILD_ABBILDUNG)
+    @PutMapping(path = ApiPaths.ADD_VORBILD_ABBILDUNG, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates an Vorbild by name", description = "Update a prototype", operationId = "update", tags = { "Vorbild" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VorbildModel.class)) }),
@@ -149,7 +151,7 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
         return updated(service.updateAbbildung(gattung, multipart));
     }
 
-    @DeleteMapping(ApiPaths.DELETE_VORBILD_ABBILDUNG)
+    @DeleteMapping(path = ApiPaths.DELETE_VORBILD_ABBILDUNG, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Delete an Vorbild picture", description = "Deletes the picture of a named Vorbild", operationId = "update", tags = { "Vorbild" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VorbildModel.class)) }),

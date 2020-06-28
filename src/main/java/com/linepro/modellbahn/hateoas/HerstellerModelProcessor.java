@@ -10,11 +10,17 @@ import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.HerstellerModel;
 
 @Lazy
-@Component
+@Component("HerstellerModelProcessor")
 public class HerstellerModelProcessor extends NamedModelProcessor<HerstellerModel> implements RepresentationModelProcessor<HerstellerModel> {
 
     @Autowired
     public HerstellerModelProcessor() {
-        super(ApiPaths.ADD_HERSTELLER, ApiPaths.GET_HERSTELLER, ApiPaths.UPDATE_HERSTELLER, ApiPaths.DELETE_HERSTELLER, ApiPaths.SEARCH_HERSTELLER);
+        super(
+            ApiPaths.ADD_HERSTELLER, 
+            ApiPaths.GET_HERSTELLER, 
+            ApiPaths.UPDATE_HERSTELLER, 
+            ApiPaths.DELETE_HERSTELLER, 
+            ApiPaths.SEARCH_HERSTELLER
+            );
     }
 }

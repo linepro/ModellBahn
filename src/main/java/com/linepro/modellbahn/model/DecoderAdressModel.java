@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -39,7 +40,8 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.DECODER_ID, ApiNames.INDEX,  ApiNames.ADRESS_TYP,  ApiNames.SPAN,  ApiNames.WERKSEINSTELLUNG, ApiNames.ADRESS, ApiNames.DELETED })
+@JsonPropertyOrder({ ApiNames.DECODER_ID, ApiNames.INDEX,  ApiNames.BEZEICHNUNG,  ApiNames.SPAN, ApiNames.ADRESS_TYP,  ApiNames.WERKSEINSTELLUNG, ApiNames.ADRESS, ApiNames.DELETED })
+@Relation(collectionRelation = ApiNames.ADRESS, itemRelation = ApiNames.ADRESS)
 @Schema(name = ApiNames.ADRESS, description = "Decoder address setting.")
 public class DecoderAdressModel extends RepresentationModel<DecoderAdressModel> implements ItemModel, Comparable<DecoderAdressModel> {
 

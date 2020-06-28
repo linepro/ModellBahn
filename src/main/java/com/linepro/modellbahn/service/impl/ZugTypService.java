@@ -16,7 +16,7 @@ import com.linepro.modellbahn.service.ItemService;
  * @version $Id:$
  */
 
-@Service
+@Service("ZugTypService")
 public class ZugTypService extends NamedItemServiceImpl<ZugTypModel,ZugTyp> implements ItemService<ZugTypModel> {
 
     @Autowired

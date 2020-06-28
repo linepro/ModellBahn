@@ -24,7 +24,7 @@ import com.linepro.modellbahn.service.ItemService;
  * @author $Author:$
  * @version $Id:$
  */
-@Service
+@Service("ZugService")
 public class ZugService extends NamedItemServiceImpl<ZugModel,Zug> implements ItemService<ZugModel> {
 
     private final ZugRepository repository;

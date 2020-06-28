@@ -16,7 +16,7 @@ import com.linepro.modellbahn.service.ItemService;
  * @version $Id:$
  */
 
-@Service
+@Service("GattungService")
 public class GattungService extends NamedItemServiceImpl<GattungModel,Gattung> implements ItemService<GattungModel> {
 
     @Autowired

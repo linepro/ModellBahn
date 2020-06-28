@@ -8,6 +8,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -53,13 +54,14 @@ import lombok.ToString;
         ApiNames.KAPAZITAT, ApiNames.KLASSE, ApiNames.SITZPLATZEKL1, ApiNames.SITZPLATZEKL2, ApiNames.SITZPLATZEKL3,
         ApiNames.SITZPLATZEKL4, ApiNames.AUFBAU, ApiNames.TRIEBKOPF, ApiNames.MITTELWAGEN, ApiNames.DREHGESTELLBAUART,
         ApiNames.ABBILDUNG, ApiNames.DELETED})
+@Relation(collectionRelation = ApiNames.VORBILD, itemRelation = ApiNames.VORBILD)
 @Schema(name = ApiNames.VORBILD, description = "A real world prototype.")
 public class VorbildModel extends RepresentationModel<VorbildModel> implements ItemModel, Comparable<VorbildModel> {
 
     private static final long serialVersionUID = 4657238952018125793L;
 
     @JsonProperty(ApiNames.GATTUNG)
-    @Schema(implementation = GattungModel.class, name = "Rolling stock class", example = "BR 89.0", required = true)
+    @Schema(name = "Rolling stock class", example = "BR 89.0", required = true)
     private String gattung;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
@@ -67,15 +69,15 @@ public class VorbildModel extends RepresentationModel<VorbildModel> implements I
     private String bezeichnung;
 
     @JsonProperty(ApiNames.KATEGORIE)
-    @Schema(implementation = UnterKategorieModel.class, name = "Category and subcategory", required = true)
+    @Schema(name = "Category and subcategory", required = true)
     private String kategorie;
 
     @JsonProperty(ApiNames.UNTER_KATEGORIE)
-    @Schema(implementation = UnterKategorieModel.class, name = "Category and subcategory", required = true)
+    @Schema(name = "Category and subcategory", required = true)
     private String unterKategorie;
 
     @JsonProperty(ApiNames.BAHNVERWALTUNG)
-    @Schema(implementation = BahnverwaltungModel.class, name = "Railway company", required = true)
+    @Schema(name = "Railway company", required = true)
     private String bahnverwaltung;
 
     @JsonProperty(ApiNames.HERSTELLER)
@@ -96,11 +98,11 @@ public class VorbildModel extends RepresentationModel<VorbildModel> implements I
     private String betreibsNummer;
 
     @JsonProperty(ApiNames.ANTRIEB)
-    @Schema(implementation = AntriebModel.class, name = "Drive method")
+    @Schema(name = "Drive method")
     private String antrieb;
 
     @JsonProperty(ApiNames.ACHSFOLG)
-    @Schema(implementation = AchsfolgModel.class, name = "Axle configuration")
+    @Schema(name = "Axle configuration")
     private String achsfolg;
 
     @JsonProperty(ApiNames.ANFAHRZUGKRAFT)
@@ -229,7 +231,7 @@ public class VorbildModel extends RepresentationModel<VorbildModel> implements I
     private String drehgestellBauart;
 
     @JsonProperty(ApiNames.ABBILDUNG)
-    @Schema(implementation = String.class, name = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
+    @Schema(name = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
     private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)

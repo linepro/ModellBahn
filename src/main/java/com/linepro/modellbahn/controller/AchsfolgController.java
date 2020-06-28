@@ -39,7 +39,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @version $Id:$
  */
 @Tag(name = ApiNames.ACHSFOLG)
-@RestController
+@RestController("AchsfolgController")
 @ExposesResourceFor(AchsfolgModel.class)
 public class AchsfolgController extends NamedItemController<AchsfolgModel> {
 
@@ -116,7 +116,7 @@ public class AchsfolgController extends NamedItemController<AchsfolgModel> {
     }
 
     @Override
-    @DeleteMapping(ApiPaths.DELETE_ACHSFOLG)
+    @DeleteMapping(path = ApiPaths.DELETE_ACHSFOLG)
     @Operation(summary = "Deletes an Achsfolg by name", description = "Delete an UIC axle configuration", operationId = "update", tags = { "Achsfolg" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

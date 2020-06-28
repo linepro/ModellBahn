@@ -1,53 +1,72 @@
 package com.linepro.modellbahn.util.impexp;
 
+import java.util.stream.Stream;
+
+import org.thymeleaf.util.StringUtils;
+
+import com.linepro.modellbahn.controller.impl.ApiNames;
+
 public enum DataType {
     
-    ACHSFOLG("Achsfolg"),
-    ANDERUNG("Anderung"),
-    ANTRIEB("Antrieb"),
-    ARTIKEL("Artikel"),
-    AUFBAU("Aufbau"),
-    BAHNVERWALTUNG("Bahnverwaltung"),
-    CONSIST("Consist"),
-    DECODER("Decoder"),
-    DECODER_ADRESS("DecoderAdress"),
-    DECODER_CV("DecoderCV"),
-    DECODER_Funktion("Decoder_Funktion"),
-    DECODER_TYP("DecoderTyp"),
-    DECODER_TYP_ADRESS("DecoderTypAdress"),
-    DECODER_TYP_CV("DecoderTypCV"),
-    DECODER_TYP_Funktion("DecoderTypFunktion"),
-    EPOCH("Epoch"),
-    GATTUNG("Gattung"),
-    HERSTELLER("hersteller"),
-    KATEGORIE("Kategorie"),
-    UNTER_KATEGORIE("UnterKategorie"),
-    KUPPLUNG("Kupplung"),
-    LICHT("Licht"),
-    MASSSTAB("Massstab"),
-    MOTOR_TYP("MotorTyp"),
-    PRODUKT("Produkt"),
-    PROTOKOLL("Protokoll"),
-    SONDERMODELL("Sondermodell"),
-    SPURWEITE("Spurweite"),
-    TEIL("Teil"),
-    VORBILD("Vorbild"),
-    ZUG("Zug"),
-    ZUG_TYP("ZugTyp");
+    ACHSFOLG(ApiNames.ACHSFOLG),
+    ANDERUNG(ApiNames.ANDERUNG),
+    ANTRIEB(ApiNames.ANTRIEB),
+    ARTIKEL(ApiNames.ARTIKEL),
+    AUFBAU(ApiNames.AUFBAU),
+    BAHNVERWALTUNG(ApiNames.BAHNVERWALTUNG),
+    CONSIST(ApiNames.CONSIST),
+    DECODER(ApiNames.DECODER),
+    DECODER_ADRESS(ApiNames.DECODER + "_" + ApiNames.ADRESS),
+    DECODER_CV(ApiNames.DECODER + "_" + ApiNames.CV),
+    DECODER_Funktion(ApiNames.DECODER + "_" + ApiNames.FUNKTION),
+    DECODER_TYP(ApiNames.DECODER_TYP),
+    DECODER_TYP_ADRESS(ApiNames.DECODER_TYP + "_" + ApiNames.ADRESS),
+    DECODER_TYP_CV(ApiNames.DECODER_TYP + "_" + ApiNames.CV),
+    DECODER_TYP_Funktion(ApiNames.DECODER_TYP + "_" + ApiNames.FUNKTION),
+    EPOCH(ApiNames.EPOCH),
+    GATTUNG(ApiNames.GATTUNG),
+    HERSTELLER(ApiNames.HERSTELLER),
+    KATEGORIE(ApiNames.KATEGORIE),
+    UNTER_KATEGORIE(ApiNames.UNTER_KATEGORIE),
+    KUPPLUNG(ApiNames.KUPPLUNG),
+    LICHT(ApiNames.LICHT),
+    MASSSTAB(ApiNames.MASSSTAB),
+    MOTOR_TYP(ApiNames.MOTOR_TYP),
+    PRODUKT(ApiNames.PRODUKT),
+    PROTOKOLL(ApiNames.PROTOKOLL),
+    SONDERMODELL(ApiNames.SONDERMODELL),
+    SPURWEITE(ApiNames.SPURWEITE),
+    TEIL(ApiNames.TEIL),
+    VORBILD(ApiNames.VORBILD),
+    ZUG(ApiNames.ZUG),
+    ZUG_TYP(ApiNames.ZUG_TYP);
 
-    private final String description;
+    private final String typeName;
 
-    private DataType(String description) {
-        this.description = description;
+    private final String beanPrefix;
+
+    private DataType(String typeName) {
+        this.typeName = typeName;
+        this.beanPrefix = StringUtils.capitalizeWords(typeName, "_");   
     }
 
-    public String getDescription() {
-        return description;
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public String getBeanPrefix() {
+        return beanPrefix;
     }
 
     @Override
     public String toString() {
-        return getDescription();
+        return getTypeName();
     }
     
+    public static DataType fromTypeName(String typeName) {
+        return Stream.of(DataType.values())
+                     .filter(v -> v.typeName.equals(typeName))
+                     .findFirst()
+                     .orElse(null);
+    }
 }

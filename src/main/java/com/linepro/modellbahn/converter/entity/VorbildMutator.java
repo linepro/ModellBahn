@@ -13,7 +13,7 @@ import com.linepro.modellbahn.model.VorbildModel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Component
+@Component("VorbildMutator")
 public class VorbildMutator implements Mutator<Vorbild,VorbildModel> {
     
     @Autowired

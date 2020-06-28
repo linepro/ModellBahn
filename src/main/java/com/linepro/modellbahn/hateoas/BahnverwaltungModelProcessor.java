@@ -10,11 +10,17 @@ import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.BahnverwaltungModel;
 
 @Lazy
-@Component
+@Component("BahnverwaltungModelProcessor")
 public class BahnverwaltungModelProcessor extends NamedModelProcessor<BahnverwaltungModel> implements RepresentationModelProcessor<BahnverwaltungModel> {
 
     @Autowired
     public BahnverwaltungModelProcessor() {
-        super(ApiPaths.ADD_BAHNVERWALTUNG, ApiPaths.GET_BAHNVERWALTUNG, ApiPaths.UPDATE_BAHNVERWALTUNG, ApiPaths.DELETE_BAHNVERWALTUNG, ApiPaths.SEARCH_BAHNVERWALTUNG);
+        super(
+            ApiPaths.ADD_BAHNVERWALTUNG,
+            ApiPaths.GET_BAHNVERWALTUNG,
+            ApiPaths.UPDATE_BAHNVERWALTUNG,
+            ApiPaths.DELETE_BAHNVERWALTUNG,
+            ApiPaths.SEARCH_BAHNVERWALTUNG
+            );
     }
 }

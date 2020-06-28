@@ -7,7 +7,7 @@ import com.linepro.modellbahn.converter.impl.NamedTranscriber;
 import com.linepro.modellbahn.entity.Kupplung;
 import com.linepro.modellbahn.model.KupplungModel;
 
-@Component
+@Component("KupplungModelMutator")
 public class KupplungModelMutator extends MutatorImpl<KupplungModel, Kupplung> {
 
     public KupplungModelMutator() {

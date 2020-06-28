@@ -9,7 +9,7 @@ import com.linepro.modellbahn.converter.impl.NamedAbbildungTranscriber;
 import com.linepro.modellbahn.entity.Aufbau;
 import com.linepro.modellbahn.model.AufbauModel;
 
-@Component
+@Component("AufbauMutator")
 public class AufbauMutator extends MutatorImpl<Aufbau, AufbauModel> {
 
     @Autowired

@@ -7,7 +7,7 @@ import com.linepro.modellbahn.converter.impl.NamedTranscriber;
 import com.linepro.modellbahn.entity.Hersteller;
 import com.linepro.modellbahn.model.HerstellerModel;
 
-@Component
+@Component("HerstellerModelMutator")
 public class HerstellerModelMutator extends MutatorImpl<HerstellerModel, Hersteller> {
 
     public HerstellerModelMutator() {

@@ -15,7 +15,7 @@ import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.entity.Produkt;
 import com.linepro.modellbahn.repository.base.ItemRepository;
 
-@Repository
+@Repository("ProduktRepository")
 public interface ProduktRepository extends ItemRepository<Produkt> {
 
     //@formatter:off

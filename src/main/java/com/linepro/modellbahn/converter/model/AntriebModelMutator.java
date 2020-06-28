@@ -7,7 +7,7 @@ import com.linepro.modellbahn.converter.impl.NamedTranscriber;
 import com.linepro.modellbahn.entity.Antrieb;
 import com.linepro.modellbahn.model.AntriebModel;
 
-@Component
+@Component("AntriebModelMutator")
 public class AntriebModelMutator extends MutatorImpl<AntriebModel, Antrieb> {
 
     public AntriebModelMutator() {

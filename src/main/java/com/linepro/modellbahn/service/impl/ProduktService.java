@@ -27,7 +27,7 @@ import com.linepro.modellbahn.service.ItemService;
  * @author  $Author:$
  * @version $Id:$
  */
-@Service
+@Service("ProduktService")
 
 public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implements ItemService<ProduktModel> {
 

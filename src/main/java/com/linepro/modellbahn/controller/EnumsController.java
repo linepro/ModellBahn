@@ -2,6 +2,8 @@ package com.linepro.modellbahn.controller;
 
 import static org.springframework.http.ResponseEntity.ok;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +30,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @version $Id:$
  */
 @Tag(name = ApiNames.ENUMS)
-@RestController
+@RestController("EnumsController")
 public class EnumsController {
 
     private final EnumsService service;
@@ -38,42 +40,42 @@ public class EnumsController {
         this.service = service;
     }
 
-    @GetMapping(ApiPaths.ENUMS_ADRESS_TYP_PATH)
+    @GetMapping(path = ApiPaths.ENUMS_ADRESS_TYP_PATH, produces = MediaType.APPLICATION_JSON)
     @JsonSerialize(contentAs = DescribedEnum.class)
     @Operation(summary = "Gets all possible AdressTyp values")
     public ResponseEntity<?> getAdressTyp() {
         return ok(service.getEnumValues(AdressTyp.values()));
     }
 
-    @GetMapping(ApiPaths.ENUMS_ANDERUNGS_TYP_PATH)
+    @GetMapping(path = ApiPaths.ENUMS_ANDERUNGS_TYP_PATH, produces = MediaType.APPLICATION_JSON)
     @JsonSerialize(contentAs = DescribedEnum.class)
     @Operation(summary = "Gets all possible AnderungTyp values")
     public ResponseEntity<?> getAnderungTyp() {
         return ok(service.getEnumValues(AnderungsTyp.values()));
     }
 
-    @GetMapping(ApiPaths.ENUMS_STECKER_PATH)
+    @GetMapping(path = ApiPaths.ENUMS_STECKER_PATH, produces = MediaType.APPLICATION_JSON)
     @JsonSerialize(contentAs = DescribedEnum.class)
     @Operation(summary = "Gets all possible Stecker values")
     public ResponseEntity<?> getConnector() {
         return ok(service.getEnumValues(Stecker.values()));
     }
 
-    @GetMapping(ApiPaths.ENUMS_KONFIGURATION_PATH)
+    @GetMapping(path = ApiPaths.ENUMS_KONFIGURATION_PATH, produces = MediaType.APPLICATION_JSON)
     @JsonSerialize(contentAs = DescribedEnum.class)
     @Operation(summary = "Gets all possible Konfiguration values")
     public ResponseEntity<?> getKonfiguration() {
         return ok(service.getEnumValues(Konfiguration.values()));
     }
 
-    @GetMapping(ApiPaths.ENUMS_STATUS_PATH)
+    @GetMapping(path = ApiPaths.ENUMS_STATUS_PATH, produces = MediaType.APPLICATION_JSON)
     @JsonSerialize(contentAs = DescribedEnum.class)
     @Operation(summary = "Gets all possible Status values")
     public ResponseEntity<?> getStatus() {
         return ok(service.getEnumValues(Status.values()));
     }
 
-    @GetMapping(ApiPaths.ENUMS_LEISTUNGS_UBERTRAGUNG_PATH)
+    @GetMapping(path = ApiPaths.ENUMS_LEISTUNGS_UBERTRAGUNG_PATH, produces = MediaType.APPLICATION_JSON)
     @JsonSerialize(contentAs = DescribedEnum.class)
     @Operation(summary = "Gets all possible LeistungsUbertragung values")
     public ResponseEntity<?> getLeistungsUbertragung() {

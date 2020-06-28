@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 /**
  * Formalized business logging on a common root logger so that we can filter it to the composite log.
  */
-@Component
+@Component("BusinessLogger")
 public class BusinessLogger {
 
     /**

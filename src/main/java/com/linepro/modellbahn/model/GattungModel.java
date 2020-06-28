@@ -3,6 +3,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -37,6 +38,7 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED })
+@Relation(collectionRelation = ApiNames.GATTUNG, itemRelation = ApiNames.GATTUNG)
 @Schema(name = ApiNames.GATTUNG, description = "Rolling stock class (amalgamation of Baureihe and Gattung).")
 public class GattungModel extends RepresentationModel<GattungModel> implements NamedItemModel, Comparable<GattungModel> {
 

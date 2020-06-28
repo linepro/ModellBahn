@@ -1,10 +1,6 @@
 package com.linepro.modellbahn.util.impexp;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Tag(name = ApiNames.DATA)
 @RestController
 @RequiredArgsConstructor
@@ -35,8 +29,7 @@ public class DataController {
     @Autowired
     private final DataService service;
    
-    @GetMapping(ApiPaths.EXPORT)
-    @Produces(DataService.TEXT_CSV)
+    @GetMapping(path = ApiPaths.EXPORT, produces = DataService.TEXT_CSV)
     @Operation(summary = "Export data as CSV", description = "Finds an UIC axle configuration", operationId = "get", tags = { "Achsfolg" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", content = { @Content(mediaType = "text/csv") }),
@@ -46,16 +39,11 @@ public class DataController {
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public void exportCSV(@PathVariable(ApiNames.DATA_TYPE) DataType type, HttpServletResponse response) throws IOException {
-        try {
-            service.exportCSV(type, response);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
+    public void exportCSV(@PathVariable(ApiNames.DATA_TYPE) String type, HttpServletResponse response) throws Exception {
+        service.exportCSV(type, response);
     }
 
-    @PostMapping(ApiPaths.IMPORT)
-    @Consumes(DataService.TEXT_CSV)
+    @PostMapping(path = ApiPaths.IMPORT, consumes = DataService.TEXT_CSV)
     @Operation(summary = "Add an Aufbau picture", description = "Adds or updates the picture of a named Aufbau", operationId = "update", tags = { "Aufbau" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = @Content),
@@ -66,12 +54,8 @@ public class DataController {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> importCSV(@PathVariable(ApiNames.DATA_TYPE) DataType type, @RequestParam("file") MultipartFile multipart) {
-        try {
-            service.importCSV(type, multipart);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
+    public ResponseEntity<?> importCSV(@PathVariable(ApiNames.DATA_TYPE) String type, @RequestParam("file") MultipartFile multipart) throws Exception {
+        service.importCSV(type, multipart);
         
         return ResponseEntity.ok().build();
     }

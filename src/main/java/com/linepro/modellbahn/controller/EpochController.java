@@ -2,6 +2,8 @@ package com.linepro.modellbahn.controller;
 
 import java.util.Optional;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +39,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @version $Id:$
  */
 @Tag(name = ApiNames.EPOCH)
-@RestController
+@RestController("EpochController")
 @ExposesResourceFor(EpochModel.class)
 public class EpochController extends NamedItemController<EpochModel> {
 
@@ -52,7 +54,7 @@ public class EpochController extends NamedItemController<EpochModel> {
     }
     
     @Override
-    @GetMapping(ApiPaths.GET_EPOCH)
+    @GetMapping(path = ApiPaths.GET_EPOCH, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds a Epoch by name", description = "Finds an Epoch", operationId = "get", tags = { "Epoch" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = EpochModel.class)) }),
@@ -67,7 +69,7 @@ public class EpochController extends NamedItemController<EpochModel> {
     }
 
     @Override
-    @GetMapping(ApiPaths.SEARCH_EPOCH)
+    @GetMapping(path = ApiPaths.SEARCH_EPOCH, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds Epochen by example", description = "Finds Epochs", operationId = "find", tags = { "Epoch" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EpochModel.class))) }),
@@ -82,7 +84,7 @@ public class EpochController extends NamedItemController<EpochModel> {
     }
 
     @Override
-    @PostMapping(ApiPaths.ADD_EPOCH)
+    @PostMapping(path = ApiPaths.ADD_EPOCH, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Add a new Epoch", description = "Add a new Epoch", operationId = "add", tags = { "Epoch" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = EpochModel.class)) }),
@@ -98,7 +100,7 @@ public class EpochController extends NamedItemController<EpochModel> {
     }
 
     @Override
-    @PutMapping(ApiPaths.UPDATE_EPOCH)
+    @PutMapping(path = ApiPaths.UPDATE_EPOCH, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates an Epoch by name", description = "Update an Epoch", operationId = "update", tags = { "Epoch" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = EpochModel.class)) }),
@@ -114,7 +116,7 @@ public class EpochController extends NamedItemController<EpochModel> {
     }
 
     @Override
-    @DeleteMapping(ApiPaths.DELETE_EPOCH)
+    @DeleteMapping(path = ApiPaths.DELETE_EPOCH)
     @Operation(summary = "Deletes an Epoch by name", description = "Delete an Epoch", operationId = "update", tags = { "Epoch" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),

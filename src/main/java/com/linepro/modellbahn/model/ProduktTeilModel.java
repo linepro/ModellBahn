@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -38,14 +39,16 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.PRODUKT, ApiNames.TEIL, ApiNames.ANZAHL, ApiNames.DELETED})
+@JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.TEIL_HERSTELLER, ApiNames.TEIL_BESTELL_NR, ApiNames.BEZEICHNUNG,
+    ApiNames.KATEGORIE, ApiNames.UNTER_KATEGORIE, ApiNames.ANZAHL, ApiNames.DELETED})
+@Relation(collectionRelation = ApiNames.TEIL, itemRelation = ApiNames.TEIL)
 @Schema(name = ApiNames.TEIL, description = "Part of product (spares for rolling stock - contents for set &c).")
 public class ProduktTeilModel extends RepresentationModel<ProduktTeilModel> implements ItemModel, Comparable<ProduktTeilModel> {
 
     private static final long serialVersionUID = 1L;
 
     @JsonProperty(ApiNames.HERSTELLER)
-    @Schema(implementation = HerstellerModel.class, name = "Manufacturer", accessMode = AccessMode.READ_ONLY, required = true)
+    @Schema(name = "Manufacturer", accessMode = AccessMode.READ_ONLY, required = true)
     private String hersteller;
 
     @JsonProperty(ApiNames.BESTELL_NR)
@@ -53,7 +56,7 @@ public class ProduktTeilModel extends RepresentationModel<ProduktTeilModel> impl
     private String bestellNr;
 
     @JsonProperty(ApiNames.TEIL_HERSTELLER)
-    @Schema(implementation = ProduktModel.class, name = "Sub product Manufacturer", accessMode = AccessMode.READ_ONLY, required = true)
+    @Schema(name = "Sub product Manufacturer", accessMode = AccessMode.READ_ONLY, required = true)
     private String teilHersteller;
 
     @JsonProperty(ApiNames.TEIL_BESTELL_NR)

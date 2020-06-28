@@ -7,7 +7,7 @@ import com.linepro.modellbahn.converter.impl.NamedTranscriber;
 import com.linepro.modellbahn.entity.Hersteller;
 import com.linepro.modellbahn.model.HerstellerModel;
 
-@Component
+@Component("HerstellerMutator")
 public class HerstellerMutator extends MutatorImpl<Hersteller, HerstellerModel> {
 
     public HerstellerMutator() {
@@ -19,7 +19,7 @@ public class HerstellerMutator extends MutatorImpl<Hersteller, HerstellerModel> 
         destination.setName(source.getName());
         destination.setLand(source.getLand());
         destination.setTelefon(source.getTelefon());
-        destination.setUrl(source.getUrl());
+        destination.setUrl(source.getUrl() != null ? source.getUrl().toString() : null);
 
         return super.apply(source, destination);
     }
