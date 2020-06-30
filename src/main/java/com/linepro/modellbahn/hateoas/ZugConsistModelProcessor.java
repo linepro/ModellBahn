@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.hateoas;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -20,7 +22,7 @@ import com.linepro.modellbahn.model.SoftDelete;
 import com.linepro.modellbahn.model.ZugConsistModel;
 
 @Lazy
-@Component("ZugConsistModelProcessor")
+@Component(PREFIX + "ZugConsistModelProcessor")
 public class ZugConsistModelProcessor extends ModelProcessorImpl<ZugConsistModel> implements RepresentationModelProcessor<ZugConsistModel> {
 
     private static final String NAME = "{" + ApiNames.NAMEN + "}";

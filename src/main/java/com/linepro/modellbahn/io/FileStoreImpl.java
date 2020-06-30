@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.io;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -12,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Getter
-@Component("FileStoreImpl")
+@Component(PREFIX + "FileStoreImpl")
 public class FileStoreImpl implements FileStore {
 
     @Value("${filestore.root:}")

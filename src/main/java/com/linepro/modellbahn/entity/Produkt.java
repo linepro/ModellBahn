@@ -73,13 +73,35 @@ import lombok.experimental.SuperBuilder;
         @UniqueConstraint(name = DBNames.PRODUKT + "_UC1", columnNames = { DBNames.HERSTELLER_ID, DBNames.BESTELL_NR })
     })
 @NamedEntityGraphs({
-    @NamedEntityGraph(name="produkt.summary",
+    @NamedEntityGraph(name="produkt.lookup",
         attributeNodes = {
-            @NamedAttributeNode(value = "id"),
             @NamedAttributeNode(value = "hersteller", subgraph = "produkt.hersteller"),
             @NamedAttributeNode(value = "bestellNr"),
             @NamedAttributeNode(value = "bezeichnung"),
-            @NamedAttributeNode(value = "unterKategorie", subgraph = "produkt.unterkategorie"),
+            @NamedAttributeNode(value = "unterKategorie", subgraph = "produkt.unterKategorie"),
+            @NamedAttributeNode(value = "abbildung")
+        },
+        subgraphs = {
+            @NamedSubgraph(name = "produkt.hersteller",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "name")
+                }),
+            @NamedSubgraph(name = "produkt.unterkategorie",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "kategorie", subgraph = "produkt.kategorie"),
+                    @NamedAttributeNode(value = "name")
+                }),
+            @NamedSubgraph(name = "produkt.kategorie",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "name")
+                }),
+        }),
+    @NamedEntityGraph(name="produkt.noChildren",
+        attributeNodes = {
+            @NamedAttributeNode(value = "hersteller", subgraph = "produkt.hersteller"),
+            @NamedAttributeNode(value = "bestellNr"),
+            @NamedAttributeNode(value = "bezeichnung"),
+            @NamedAttributeNode(value = "unterKategorie", subgraph = "produkt.unterKategorie"),
             @NamedAttributeNode(value = "massstab", subgraph = "produkt.massstab"),
             @NamedAttributeNode(value = "spurweite", subgraph = "produkt.spurweite"),
             @NamedAttributeNode(value = "bahnverwaltung", subgraph = "produkt.bahnverwaltung"),
@@ -100,121 +122,87 @@ import lombok.experimental.SuperBuilder;
             @NamedAttributeNode(value = "anleitungen"),
             @NamedAttributeNode(value = "explosionszeichnung"),
             @NamedAttributeNode(value = "lange"),
-            @NamedAttributeNode(value = "abbildung")
+            @NamedAttributeNode(value = "abbildung"),
+            @NamedAttributeNode(value = "deleted")
         },
         subgraphs = {
             @NamedSubgraph(name = "produkt.hersteller",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.unterkategorie",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
                     @NamedAttributeNode(value = "kategorie", subgraph = "produkt.kategorie"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.kategorie",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.massstab",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.spurweite",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.bahnverwaltung",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.gattung",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.epoch",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.achsfolg",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.sondermodell",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.aufbau",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.licht",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.kupplung",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.vorbild",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "gattung"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "gattung")
                 }),
             @NamedSubgraph(name = "produkt.steuerung",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.decoderTyp",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
                     @NamedAttributeNode(value = "hersteller", subgraph = "produkt.decoderHersteller"),
                     @NamedAttributeNode(value = "bestellNr"),
                     @NamedAttributeNode(value = "bezeichnung")
                 }),
             @NamedSubgraph(name = "produkt.decoderHersteller",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.motorTyp",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 })
         }),
-    @NamedEntityGraph(name="produkt.detail",
+    @NamedEntityGraph(name="produkt.withChildren",
         includeAllAttributes = true, 
         attributeNodes = {
             @NamedAttributeNode(value = "hersteller", subgraph = "produkt.hersteller"),
@@ -238,113 +226,78 @@ import lombok.experimental.SuperBuilder;
         subgraphs = {
             @NamedSubgraph(name = "produkt.hersteller",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.unterkategorie",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
                     @NamedAttributeNode(value = "kategorie", subgraph = "produkt.kategorie"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.kategorie",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.massstab",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.spurweite",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.bahnverwaltung",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.gattung",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.epoch",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.achsfolg",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.sondermodell",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.aufbau",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.licht",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.kupplung",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.vorbild",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "gattung"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "gattung")
                 }),
             @NamedSubgraph(name = "produkt.steuerung",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.decoderTyp",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
                     @NamedAttributeNode(value = "hersteller", subgraph = "produkt.decoderHersteller"),
                     @NamedAttributeNode(value = "bestellNr"),
                     @NamedAttributeNode(value = "bezeichnung")
                 }),
             @NamedSubgraph(name = "produkt.decoderHersteller",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.motorTyp",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.teilen", 
                 attributeNodes = {
@@ -355,33 +308,25 @@ import lombok.experimental.SuperBuilder;
                 }),
             @NamedSubgraph(name = "produkt.teil", 
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
                     @NamedAttributeNode(value = "hersteller", subgraph = "produkt.teilHersteller"),
                     @NamedAttributeNode(value = "bestellNr"),
                     @NamedAttributeNode(value = "bezeichnung"),
                     @NamedAttributeNode(value = "unterKategorie", subgraph = "produkt.teilUnterkategorie"),
-                    @NamedAttributeNode(value = "deleted")
                 }),
             @NamedSubgraph(name = "produkt.teilHersteller", 
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
                     @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung"),
-                    @NamedAttributeNode(value = "deleted")
+                    @NamedAttributeNode(value = "bezeichnung")
                 }),
             @NamedSubgraph(name = "produkt.teilUnterkategorie",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
                     @NamedAttributeNode(value = "kategorie", subgraph = "produkt.teilKategorie"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "produkt.teilKategorie",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
-                })
+                    @NamedAttributeNode(value = "name")
+            })
         })
     })
 //@formatter:on

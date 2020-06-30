@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.util.impexp.impl;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,7 +12,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration("DataBeanProcessor")
+@Configuration(PREFIX + "DataBeanProcessor")
 public class DataBeanProcessor implements BeanDefinitionRegistryPostProcessor {
 
     private static final List<String> EXPORTS = Arrays.asList("Achsfolg", "Anderung", "Antrieb", "Artikel", "Aufbau", "Bahnverwaltung",
@@ -28,20 +30,19 @@ public class DataBeanProcessor implements BeanDefinitionRegistryPostProcessor {
     }
 
     protected void register(BeanDefinitionRegistry registry, String name) {
-        registry.registerBeanDefinition(name + "Exporter",
+        String prefix = PREFIX + name;
+        registry.registerBeanDefinition(prefix + "Exporter",
                         BeanDefinitionBuilder.genericBeanDefinition(ExporterImpl.class)
                                              .setLazyInit(true)
-                                             .addConstructorArgReference(name + "Repository")
-                                             .addConstructorArgReference(name + "Mutator")
-                                             .addConstructorArgReference("CsvMapper")
+                                             .addConstructorArgReference(prefix + "Repository")
+                                             .addConstructorArgReference(prefix + "Mutator")
                                              .getBeanDefinition());
 
-        registry.registerBeanDefinition(name + "Importer",
+        registry.registerBeanDefinition(prefix + "Importer",
                         BeanDefinitionBuilder.genericBeanDefinition(ExporterImpl.class)
                                              .setLazyInit(true)
-                                             .addConstructorArgReference(name + "Repository")
-                                             .addConstructorArgReference(name + "ModelMutator")
-                                             .addConstructorArgReference("CsvMapper")
+                                             .addConstructorArgReference(prefix + "Repository")
+                                             .addConstructorArgReference(prefix + "ModelMutator")
                                              .getBeanDefinition());
     }
 }

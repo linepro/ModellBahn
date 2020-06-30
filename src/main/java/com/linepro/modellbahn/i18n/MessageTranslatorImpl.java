@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.i18n;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component("MessageTranslatorImpl")
+@Component(PREFIX + "MessageTranslatorImpl")
 public class MessageTranslatorImpl implements MessageTranslator {
 
     @Override

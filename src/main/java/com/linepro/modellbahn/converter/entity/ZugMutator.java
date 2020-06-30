@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.converter.entity;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
@@ -14,7 +15,7 @@ import com.linepro.modellbahn.model.ZugModel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Component("ZugMutator")
+@Component(PREFIX + "ZugMutator")
 public class ZugMutator implements Mutator<Zug,ZugModel> {
 
     @Autowired
@@ -26,7 +27,8 @@ public class ZugMutator implements Mutator<Zug,ZugModel> {
             destination.setName(source.getName());
             destination.setBezeichnung(source.getBezeichnung());
             destination.setZugTyp(getCode(source.getZugTyp()));
-            
+            destination.setDeleted(source.getDeleted());
+
             if (isAvailable(source.getConsist())) {
                 destination.setConsist(source.getConsist()
                                              .stream()

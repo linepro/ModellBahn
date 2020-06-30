@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.io;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import lombok.RequiredArgsConstructor;
 import net.logstash.logback.encoder.org.apache.commons.lang3.ArrayUtils;
 
-@Configuration("MvcConfig")
+@Configuration(PREFIX + "MvcConfig")
 @EnableWebMvc
 @RequiredArgsConstructor
 public class MvcConfig implements WebMvcConfigurer {
@@ -33,7 +35,7 @@ public class MvcConfig implements WebMvcConfigurer {
                     "classpath:webapp/", "classpath:webjars/", "classpath:static/", "classpath:resources/"
     };
 
-    @Bean("BaseURL")
+    @Bean(PREFIX + "BaseURL")
     public String getBaseURL(RepositoryRestConfiguration configuration) {
         return configuration.getBasePath().toString();
     }

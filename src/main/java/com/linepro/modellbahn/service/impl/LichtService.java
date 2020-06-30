@@ -1,5 +1,14 @@
 package com.linepro.modellbahn.service.impl;
 
+/**
+ * LichtService. CRUD service for Licht
+ * 
+ * @author $Author:$
+ * @version $Id:$
+ */
+
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +26,7 @@ import com.linepro.modellbahn.model.LichtModel;
 import com.linepro.modellbahn.repository.LichtRepository;
 import com.linepro.modellbahn.service.ItemService;
 
-/**
- * LichtService. CRUD service for Licht
- * 
- * @author $Author:$
- * @version $Id:$
- */
-
-@Service("LichtService")
+@Service(PREFIX + "LichtService")
 public class LichtService extends NamedItemServiceImpl<LichtModel,Licht> implements ItemService<LichtModel> {
 
     private final LichtRepository repository;

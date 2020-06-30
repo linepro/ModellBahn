@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.hateoas;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.util.Collections;
 
 import org.apache.commons.lang3.BooleanUtils;
@@ -18,7 +20,7 @@ import com.linepro.modellbahn.model.DecoderModel;
 import com.linepro.modellbahn.model.SoftDelete;
 
 @Lazy
-@Component("DecoderModelProcessor")
+@Component(PREFIX + "DecoderModelProcessor")
 public class DecoderModelProcessor extends ModelProcessorImpl<DecoderModel> implements RepresentationModelProcessor<DecoderModel> {
 
     private static final String DECODER_ID = "{" + ApiNames.DECODER_ID + "}";

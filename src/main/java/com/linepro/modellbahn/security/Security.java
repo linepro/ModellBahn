@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.security;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,10 +18,10 @@ import org.springframework.stereotype.Component;
     UserController.class,
     WebSecurityConfig.class
 })
-@Component("Security")
+@Component(PREFIX + "Security")
 public class Security {
     
-    @Bean("PasswordEncoder")
+    @Bean(PREFIX + "PasswordEncoder")
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }

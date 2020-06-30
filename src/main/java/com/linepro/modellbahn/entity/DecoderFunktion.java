@@ -6,6 +6,10 @@ import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -34,6 +38,27 @@ import lombok.experimental.SuperBuilder;
 @Table(name = DBNames.DECODER_FUNKTION,
     uniqueConstraints = { 
         @UniqueConstraint(name = DBNames.DECODER_FUNKTION + "_UC1", columnNames = { DBNames.DECODER_ID, DBNames.FUNKTION_ID })
+    })
+@NamedEntityGraphs({
+    @NamedEntityGraph(name="decoderFunktion",
+        includeAllAttributes = true,
+        attributeNodes = {
+            @NamedAttributeNode(value = "decoder", subgraph = "decoderFunktion.decoder"),
+            @NamedAttributeNode(value = "funktion", subgraph = "decoderFunktion.funktion")
+        }, subgraphs = {
+            @NamedSubgraph(name = "decoderFunktion.decoder",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "decoderId")
+            }),
+            @NamedSubgraph(name = "decoderFunktion.funktion",
+            attributeNodes = {
+                @NamedAttributeNode(value = "reihe"),
+                @NamedAttributeNode(value = "funktion"),
+                @NamedAttributeNode(value = "bezeichnung"),
+                @NamedAttributeNode(value = "programmable")
+            })
+        })
     })
 //@formatter:on
 @SuperBuilder

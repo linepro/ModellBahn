@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.converter.entity;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
@@ -12,7 +13,7 @@ import com.linepro.modellbahn.converter.impl.NamedTranscriber;
 import com.linepro.modellbahn.entity.Kategorie;
 import com.linepro.modellbahn.model.KategorieModel;
 
-@Component("KategorieMutator")
+@Component(PREFIX + "KategorieMutator")
 public class KategorieMutator extends MutatorImpl<Kategorie, KategorieModel> {
 
     private UnterKategorieMutator unterKategorieMutator;

@@ -1,5 +1,14 @@
 package com.linepro.modellbahn.service.impl;
 
+/**
+ * BahnverwaltungService. CRUD service for Bahnverwaltung
+ * 
+ * @author $Author:$
+ * @version $Id:$
+ */
+
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +19,7 @@ import com.linepro.modellbahn.model.BahnverwaltungModel;
 import com.linepro.modellbahn.repository.BahnverwaltungRepository;
 import com.linepro.modellbahn.service.ItemService;
 
-/**
- * BahnverwaltungService. CRUD service for Bahnverwaltung
- * 
- * @author $Author:$
- * @version $Id:$
- */
-
-@Service("BahnverwaltungService")
+@Service(PREFIX + "BahnverwaltungService")
 public class BahnverwaltungService extends NamedItemServiceImpl<BahnverwaltungModel,Bahnverwaltung> implements ItemService<BahnverwaltungModel> {
 
     @Autowired

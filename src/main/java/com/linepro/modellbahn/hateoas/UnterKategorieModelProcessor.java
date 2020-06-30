@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.hateoas;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.util.HashMap;
 
 import org.apache.commons.collections4.MapUtils;
@@ -19,7 +21,7 @@ import com.linepro.modellbahn.model.SoftDelete;
 import com.linepro.modellbahn.model.UnterKategorieModel;
 
 @Lazy
-@Component("UnterKategorieModelProcessor")
+@Component(PREFIX + "UnterKategorieModelProcessor")
 public class UnterKategorieModelProcessor extends ModelProcessorImpl<UnterKategorieModel> implements RepresentationModelProcessor<UnterKategorieModel> {
 
     private static final String KATEGORIE = "{" + ApiNames.KATEGORIE + "}";

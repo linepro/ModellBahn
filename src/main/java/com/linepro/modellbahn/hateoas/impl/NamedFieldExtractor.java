@@ -13,7 +13,7 @@ public class NamedFieldExtractor implements FieldsExtractor {
     private final FieldExtractor extractor;
 
     public NamedFieldExtractor() {
-        this((m) -> ((NamedItemModel) m).getName());
+        this((m) -> (m instanceof NamedItemModel ? ((NamedItemModel) m).getName() : null));
     }
 
     public NamedFieldExtractor(FieldExtractor extractor) {

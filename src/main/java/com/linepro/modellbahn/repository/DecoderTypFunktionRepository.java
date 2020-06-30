@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.repository;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +12,7 @@ import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.entity.DecoderTypFunktion;
 import com.linepro.modellbahn.repository.base.ItemRepository;
 
-@Repository("DecoderTypFunktionRepository")
+@Repository(PREFIX + "DecoderTypFunktionRepository")
 public interface DecoderTypFunktionRepository extends ItemRepository<DecoderTypFunktion> {
 
     //@formatter:off

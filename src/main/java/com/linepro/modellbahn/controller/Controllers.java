@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.controller;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -32,6 +34,6 @@ import com.linepro.modellbahn.security.UserController;
     ZugTypController.class,
     UserController.class
 })
-@Configuration("Controllers")
+@Configuration(PREFIX + "Controllers")
 public class Controllers {
 }

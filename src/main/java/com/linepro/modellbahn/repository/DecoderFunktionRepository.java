@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.repository;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.DBNames.FUNKTION;
 
 import java.util.Optional;
@@ -12,7 +13,7 @@ import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.entity.DecoderFunktion;
 import com.linepro.modellbahn.repository.base.ItemRepository;
 
-@Repository("DecoderFunktionRepository")
+@Repository(PREFIX + "DecoderFunktionRepository")
 public interface DecoderFunktionRepository extends ItemRepository<DecoderFunktion> {
 
     //@formatter:off

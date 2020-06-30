@@ -7,6 +7,10 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -40,6 +44,46 @@ import lombok.experimental.SuperBuilder;
         @Index(name = DBNames.PRODUKT_TEIL + "_IX2", columnList = DBNames.TEIL_ID)
     }, uniqueConstraints = {
         @UniqueConstraint(name = DBNames.PRODUKT_TEIL + "_UC1", columnNames = { DBNames.PRODUKT_ID, DBNames.TEIL_ID })
+    })
+@NamedEntityGraphs({
+    @NamedEntityGraph(name="produktTeil",
+        includeAllAttributes = true,
+        attributeNodes = {
+            @NamedAttributeNode(value = "produkt", subgraph = "produktTeil.produkt"),
+            @NamedAttributeNode(value = "teil", subgraph = "produktTeil.teil")
+        }, subgraphs = {
+            @NamedSubgraph(name = "produktTeil.produkt",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "hersteller", subgraph = "produkt.hersteller"),
+                    @NamedAttributeNode(value = "bestellNr")
+            }),
+            @NamedSubgraph(name = "produkt.hersteller",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "name")
+            }),
+            @NamedSubgraph(name = "produktTeil.teil",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "hersteller", subgraph = "teil.hersteller"),
+                    @NamedAttributeNode(value = "bestellNr"),
+                    @NamedAttributeNode(value = "bezeichnung"),
+                    @NamedAttributeNode(value = "unterKategorie", subgraph = "teil.unterKategorie")
+            }),
+            @NamedSubgraph(name = "teil.hersteller",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "name")
+            }),
+            @NamedSubgraph(name = "teil.unterKategorie",
+                attributeNodes = {
+                        @NamedAttributeNode(value = "kategorie", subgraph = "teil.kategorie"),
+                        @NamedAttributeNode(value = "name")
+            }),
+            @NamedSubgraph(name = "teil.kategorie",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "name")
+            })
+        })
     })
 //@formatter:on
 @SuperBuilder

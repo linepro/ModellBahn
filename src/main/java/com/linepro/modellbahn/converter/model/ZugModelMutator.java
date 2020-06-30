@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.converter.model;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import com.linepro.modellbahn.model.ZugModel;
 import com.linepro.modellbahn.repository.ZugTypRepository;
 import com.linepro.modellbahn.repository.lookup.ItemLookup;
 
-@Component("ZugModelMutator")
+@Component(PREFIX + "ZugModelMutator")
 public class ZugModelMutator extends MutatorImpl<ZugModel, Zug> {
 
     private final ZugTypRepository repository;

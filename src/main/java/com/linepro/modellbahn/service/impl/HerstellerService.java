@@ -1,5 +1,14 @@
 package com.linepro.modellbahn.service.impl;
 
+/**
+ * HerstellerService. CRUD service for Hersteller
+ * 
+ * @author $Author:$
+ * @version $Id:$
+ */
+
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +19,7 @@ import com.linepro.modellbahn.model.HerstellerModel;
 import com.linepro.modellbahn.repository.HerstellerRepository;
 import com.linepro.modellbahn.service.ItemService;
 
-/**
- * HerstellerService. CRUD service for Hersteller
- * 
- * @author $Author:$
- * @version $Id:$
- */
-
-@Service("HerstellerService")
+@Service(PREFIX + "HerstellerService")
 public class HerstellerService extends NamedItemServiceImpl<HerstellerModel,Hersteller> implements ItemService<HerstellerModel> {
 
     @Autowired

@@ -1,5 +1,14 @@
 package com.linepro.modellbahn.service.impl;
 
+/**
+ * KupplungService. CRUD service for Kupplung
+ * 
+ * @author $Author:$
+ * @version $Id:$
+ */
+
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +26,7 @@ import com.linepro.modellbahn.model.KupplungModel;
 import com.linepro.modellbahn.repository.KupplungRepository;
 import com.linepro.modellbahn.service.ItemService;
 
-/**
- * KupplungService. CRUD service for Kupplung
- * 
- * @author $Author:$
- * @version $Id:$
- */
-
-@Service("KupplungService")
+@Service(PREFIX + "KupplungService")
 public class KupplungService extends NamedItemServiceImpl<KupplungModel,Kupplung> implements ItemService<KupplungModel> {
 
     private final KupplungRepository repository;

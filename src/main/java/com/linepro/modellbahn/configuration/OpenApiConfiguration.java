@@ -3,6 +3,11 @@
  */
 package com.linepro.modellbahn.configuration;
 
+/**
+ * Open Api Configuration.
+ */
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,10 +16,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 
-/**
- * Open Api Configuration.
- */
-@Configuration("OpenApiConfiguration")
+@Configuration(PREFIX + "OpenApiConfiguration")
 public class OpenApiConfiguration {
 
     private static final String TITLE = "ModellBahn API";
@@ -33,7 +35,7 @@ public class OpenApiConfiguration {
      * Gets the Swagger Api docket.
      * @return the docket for the API
      */
-    @Bean("OpenAPI")
+    @Bean(PREFIX + "OpenAPI")
     public OpenAPI publicApi() {
         return new OpenAPI()
             .info(

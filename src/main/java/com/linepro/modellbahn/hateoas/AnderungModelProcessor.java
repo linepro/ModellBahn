@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.hateoas;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.util.HashMap;
 
 import org.apache.commons.collections4.MapUtils;
@@ -17,7 +19,7 @@ import com.linepro.modellbahn.hateoas.impl.ModelProcessorImpl;
 import com.linepro.modellbahn.model.AnderungModel;
 
 @Lazy
-@Component("AnderungModelProcessor")
+@Component(PREFIX + "AnderungModelProcessor")
 public class AnderungModelProcessor extends ModelProcessorImpl<AnderungModel> implements RepresentationModelProcessor<AnderungModel> {
 
     private static final String ARTIKEL_ID = "{" + ApiNames.ARTIKEL_ID + "}";

@@ -1,6 +1,5 @@
 package com.linepro.modellbahn.converter;
 
-import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.springframework.core.convert.converter.Converter;
@@ -18,8 +17,6 @@ public interface Mutator<S,D> extends Converter<S,D>, Supplier<D>, Transcriber<S
     }
 
     default <M extends NamedItem> String getCode(M item) {
-        return Optional.ofNullable(item)
-                       .map(i -> i.getName())
-                       .orElse(null);
+        return item != null ? item.getName() : null;
     }
 }

@@ -1,5 +1,13 @@
 package com.linepro.modellbahn.service.impl;
 
+/**
+ * ArtikelService. CRUD service for Artikel
+ * @author $Author:$
+ * @version $Id:$
+ */
+
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +30,7 @@ import com.linepro.modellbahn.repository.AnderungRepository;
 import com.linepro.modellbahn.repository.ArtikelRepository;
 import com.linepro.modellbahn.service.ItemService;
 
-/**
- * ArtikelService. CRUD service for Artikel
- * @author $Author:$
- * @version $Id:$
- */
-
-@Service("ArtikelService")
+@Service(PREFIX + "ArtikelService")
 public class ArtikelService extends ItemServiceImpl<ArtikelModel, Artikel> implements ItemService<ArtikelModel> {
 
     private final ArtikelRepository repository;

@@ -11,6 +11,10 @@ import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -43,6 +47,28 @@ import lombok.experimental.SuperBuilder;
 @Table(name =  DBNames.DECODER_ADRESS,
     uniqueConstraints = { 
         @UniqueConstraint(name = DBNames.DECODER_ADRESS + "_UC1", columnNames = { DBNames.DECODER_ID, DBNames.ADRESS_ID })
+    })
+@NamedEntityGraphs({
+    @NamedEntityGraph(name="decoderAdress",
+        includeAllAttributes = true,
+        attributeNodes = {
+            @NamedAttributeNode(value = "decoder", subgraph = "decoderAdress.decoder"),
+            @NamedAttributeNode(value = "typ", subgraph = "decoderAdress.typ")
+        }, subgraphs = {
+            @NamedSubgraph(name = "decoderAdress.decoder",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "decoderId")
+            }),
+            @NamedSubgraph(name = "decoderAdress.typ",
+            attributeNodes = {
+                @NamedAttributeNode(value = "position"),
+                @NamedAttributeNode(value = "bezeichnung"),
+                @NamedAttributeNode(value = "span"),
+                @NamedAttributeNode(value = "adressTyp"),
+                @NamedAttributeNode(value = "adress")
+            })
+        })
     })
 //@formatter:on
 @Adress

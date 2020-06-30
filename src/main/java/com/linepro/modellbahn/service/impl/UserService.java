@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.service.impl;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Service;
 import com.linepro.modellbahn.entity.User;
 import com.linepro.modellbahn.repository.UserRepository;
 
-@Service("userService")
+@Service(PREFIX + "userService")
 public class UserService implements UserDetailsService {
 
     private UserRepository userRepository;

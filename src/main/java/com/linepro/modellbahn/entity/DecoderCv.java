@@ -6,6 +6,10 @@ import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -36,6 +40,28 @@ import lombok.experimental.SuperBuilder;
 @Table(name = DBNames.DECODER_CV, 
     uniqueConstraints = {
         @UniqueConstraint(name = DBNames.DECODER_CV + "_UC1", columnNames = { DBNames.DECODER_ID, DBNames.CV_ID }) 
+    })
+@NamedEntityGraphs({
+    @NamedEntityGraph(name="decoderCv",
+        includeAllAttributes = true,
+        attributeNodes = {
+            @NamedAttributeNode(value = "decoder", subgraph = "decoderCv.decoder"),
+            @NamedAttributeNode(value = "cv", subgraph = "decoderCv.cv")
+        }, subgraphs = {
+            @NamedSubgraph(name = "decoderCv.decoder",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "decoderId")
+            }),
+            @NamedSubgraph(name = "decoderCv.cv",
+            attributeNodes = {
+                @NamedAttributeNode(value = "cv"),
+                @NamedAttributeNode(value = "bezeichnung"),
+                @NamedAttributeNode(value = "minimal"),
+                @NamedAttributeNode(value = "maximal"),
+                @NamedAttributeNode(value = "werkseinstellung")
+            })
+        })
     })
 //@formatter:on
 @SuperBuilder

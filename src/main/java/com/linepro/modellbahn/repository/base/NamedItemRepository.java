@@ -7,8 +7,9 @@ import org.springframework.data.repository.NoRepositoryBean;
 import com.linepro.modellbahn.entity.NamedItem;
 
 @NoRepositoryBean
-public interface NamedItemRepository<T extends NamedItem> extends ItemRepository<T> {
-    
+public interface NamedItemRepository<T extends NamedItem> extends NamedItemRepositoryCustom<T>, ItemRepository<T> {
+
     Optional<T> findByName(String name);
+
     void deleteByName(String name);
 }

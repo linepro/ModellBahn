@@ -18,7 +18,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.converter.model.DecoderModelMutator;
 import com.linepro.modellbahn.entity.Decoder;
@@ -48,8 +47,6 @@ public class ImporterImplTest {
     private final CharArrayReader reader;
 
     private final Mutator<DecoderModel,Decoder> mutator;  
-
-    private final CsvMapper mapper;
   
     private Importer importer;
     
@@ -57,13 +54,12 @@ public class ImporterImplTest {
         this.repository = repository;
         this.reader = new CharArrayReader(CSV.toCharArray());
         this.mutator = mutator;
-        this.mapper = CsvMapper.csvBuilder().build();
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     @BeforeEach
     protected void setUp() throws Exception {
-        importer = new ImporterImpl(repository, mutator, mapper);
+        importer = new ImporterImpl(repository, mutator);
 
         doAnswer(i -> {
             PageRequest pageRequest = (PageRequest) i.getArgument(0);

@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.logging;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 
@@ -8,6 +10,6 @@ import org.springframework.stereotype.Component;
     LoggedAspect.class,
     RequestLoggingConfiguration.class,
 })
-@Component("Logging")
+@Component(PREFIX + "Logging")
 public class Logging {
 }

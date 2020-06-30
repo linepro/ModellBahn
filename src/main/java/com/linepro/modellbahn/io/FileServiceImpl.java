@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.io;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.nio.file.Path;
 import java.util.List;
 
@@ -14,7 +16,7 @@ import com.linepro.modellbahn.i18n.MessageTranslator;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component("FileServiceImpl")
+@Component(PREFIX + "FileServiceImpl")
 public class FileServiceImpl implements FileService {
 
     private final FileStore fileStore;

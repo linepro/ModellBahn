@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.repository.lookup;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -10,7 +12,8 @@ import com.linepro.modellbahn.repository.ProduktRepository;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-@Component("ProduktLookup")
+
+@Component(PREFIX + "ProduktLookup")
 public class ProduktLookup {
     
     @Autowired

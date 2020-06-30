@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.security;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -12,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * TODO: something less brutal (maybe add the location of the requester?). Could use @CrossOrigin and allow spring to dynamically create
  */
 @EnableWebMvc
-@Configuration("CorsConfig")
+@Configuration(PREFIX + "CorsConfig")
 public class CorsConfig implements WebMvcConfigurer {
 
     private static final String ALLOWED_ORIGINS = "*";

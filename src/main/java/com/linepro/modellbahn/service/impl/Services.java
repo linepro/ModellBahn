@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.service.impl;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -30,6 +32,6 @@ import org.springframework.context.annotation.Import;
     ZugService.class,
     ZugTypService.class
 })
-@Configuration("Services")
+@Configuration(PREFIX + "Services")
 public class Services {
 }

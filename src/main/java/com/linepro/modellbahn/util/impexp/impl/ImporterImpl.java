@@ -8,8 +8,10 @@ import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectReader;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.linepro.modellbahn.converter.Mutator;
@@ -19,21 +21,24 @@ import com.linepro.modellbahn.util.impexp.Importer;
 
 public class ImporterImpl<M extends ItemModel,E extends Item> implements Importer {
 
+    private static final CsvMapper MAPPER = CsvMapper.builder()
+                    .findAndAddModules()
+                    .configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true)
+                    .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+                    .build();
+
     private final JpaRepository<E,Long> repository;
 
     private final Mutator<M,E> mutator;
-
-    private final CsvMapper mapper;
 
     private final CsvSchema schema; 
 
     private final Class<M> modelClass;
     
     @SuppressWarnings("unchecked")
-    public ImporterImpl(JpaRepository<E,Long> repository, Mutator<M,E> mutator, CsvMapper mapper) {
+    public ImporterImpl(JpaRepository<E,Long> repository, Mutator<M,E> mutator) {
         this.repository = repository;
         this.mutator = mutator;
-        this.mapper = mapper;
         
         modelClass = (Class<M>) ((ParameterizedType) getClass().getGenericSuperclass())
                                                                .getActualTypeArguments()[0];
@@ -43,7 +48,7 @@ public class ImporterImpl<M extends ItemModel,E extends Item> implements Importe
     @Override
     @Transactional
     public void read(Reader in) throws IOException {
-        ObjectReader reader = mapper.readerFor(modelClass).with(schema);
+        ObjectReader reader = MAPPER.readerFor(modelClass).with(schema);
 
         MappingIterator<M> mi = reader.readValues(in);
 

@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.security;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -133,7 +135,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
      * @return the token services
      */
     @Primary
-    @Bean("TokenServices")
+    @Bean(PREFIX + "TokenServices")
     public DefaultTokenServices tokenServices() {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         defaultTokenServices.setTokenStore(tokenStore());
@@ -145,7 +147,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
      *
      * @return the token store
      */
-    @Bean("TokenStore")
+    @Bean(PREFIX + "TokenStore")
     public TokenStore tokenStore() {
         // Need to translate username into user_name because AWS does it weirdly.
         CustomAccessTokenConverter tokenConverter = new CustomAccessTokenConverter();

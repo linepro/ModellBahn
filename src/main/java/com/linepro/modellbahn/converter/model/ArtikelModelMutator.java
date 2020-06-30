@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.converter.model;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import com.linepro.modellbahn.repository.lookup.ProduktLookup;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Component("ArtikelModelMutator")
+@Component(PREFIX + "ArtikelModelMutator")
 public class ArtikelModelMutator implements Mutator<ArtikelModel,Artikel> {
 
     @Autowired

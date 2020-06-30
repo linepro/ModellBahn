@@ -1,5 +1,13 @@
 package com.linepro.modellbahn.service.impl;
 
+/**
+ * DecoderService. CRUD service for Decoder
+ * @author $Author:$
+ * @version $Id:$
+ */
+
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +36,7 @@ import com.linepro.modellbahn.repository.DecoderRepository;
 import com.linepro.modellbahn.repository.DecoderTypRepository;
 import com.linepro.modellbahn.service.ItemService;
 
-/**
- * DecoderService. CRUD service for Decoder
- * @author $Author:$
- * @version $Id:$
- */
-
-@Service("DecoderService")
+@Service(PREFIX + "DecoderService")
 public class DecoderService extends ItemServiceImpl<DecoderModel,Decoder> implements ItemService<DecoderModel> {
 
     private final DecoderRepository repository;

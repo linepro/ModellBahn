@@ -1,5 +1,14 @@
 package com.linepro.modellbahn.service.impl;
 
+/**
+ * SpurweiteService. CRUD service for Spurweite
+ * 
+ * @author $Author:$
+ * @version $Id:$
+ */
+
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +19,7 @@ import com.linepro.modellbahn.model.SpurweiteModel;
 import com.linepro.modellbahn.repository.SpurweiteRepository;
 import com.linepro.modellbahn.service.ItemService;
 
-/**
- * SpurweiteService. CRUD service for Spurweite
- * 
- * @author $Author:$
- * @version $Id:$
- */
-
-@Service("SpurweiteService")
+@Service(PREFIX + "SpurweiteService")
 public class SpurweiteService extends NamedItemServiceImpl<SpurweiteModel,Spurweite> implements ItemService<SpurweiteModel> {
 
     @Autowired

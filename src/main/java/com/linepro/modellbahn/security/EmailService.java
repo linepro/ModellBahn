@@ -1,12 +1,14 @@
 package com.linepro.modellbahn.security;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-@Service("EmailService")
+@Service(PREFIX + "EmailService")
 public class EmailService {
 
   private JavaMailSender mailSender;

@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.Produces;
@@ -26,11 +25,13 @@ import com.linepro.modellbahn.controller.impl.ApiPaths;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 
 @ControllerAdvice
-public class ErrorHandler extends ResponseEntityExceptionHandler {
+public class ErrorHandler {
+
+    private ResponseEntityExceptionHandler delegate = new ResponseEntityExceptionHandler() {};
 
     @Produces(MediaType.APPLICATION_JSON)
-    @ExceptionHandler(value = { Exception.class})
-    public ResponseEntity<Object> handle(Exception ex, WebRequest request) throws Exception {
+    @ExceptionHandler({ Exception.class })
+    public ResponseEntity<Object> handleException(Exception ex, WebRequest request) throws Exception {
         String contextPath = getRequestPath(request);
         if (StringUtils.isNotBlank(contextPath)) {
             Throwable effective = getEffective(ex);
@@ -49,7 +50,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
                             
         }
         
-        return super.handleException(ex, request);
+        return delegate.handleException(ex, request);
     }
 
     private String getRequestPath(WebRequest request) {
@@ -64,7 +65,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
 
     private Throwable getEffective(Exception ex) {
         if (ex instanceof PersistenceException) {
-            return ex.getCause();
+            return ex.getCause();   
         }
 
         return ex;
@@ -79,15 +80,13 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
             return HttpStatus.NOT_FOUND;
         } else if (ex instanceof IllegalArgumentException) {
             return HttpStatus.BAD_REQUEST;
-        } else if (ex instanceof NonUniqueResultException) {
-            return HttpStatus.INTERNAL_SERVER_ERROR;
         } else if (ex instanceof NoResultException) {
             return HttpStatus.NO_CONTENT;
         } else if (ex instanceof SecurityException) {
             return HttpStatus.FORBIDDEN;
         }
 
-        return HttpStatus.BAD_REQUEST;
+        return HttpStatus.INTERNAL_SERVER_ERROR;
     }
 
     private String getDeveloperMessage(Throwable ex) {

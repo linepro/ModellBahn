@@ -7,6 +7,10 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Min;
@@ -40,6 +44,51 @@ import lombok.experimental.SuperBuilder;
     }, uniqueConstraints = {
         @UniqueConstraint(name = DBNames.ZUG_CONSIST + "_UC1", columnNames = { DBNames.ZUG_ID, DBNames.POSITION })
         })
+@NamedEntityGraphs({
+    @NamedEntityGraph(name="zugConsist",
+        includeAllAttributes = true,
+        attributeNodes = {
+            @NamedAttributeNode(value = "zug", subgraph = "zugConsist.zug"),
+            @NamedAttributeNode(value = "artikel", subgraph = "zugConsist.artikel")
+        }, subgraphs = {
+            @NamedSubgraph(name = "zugConsist.zug",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name")
+            }),
+            @NamedSubgraph(name = "zugConsist.artikel",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "artikelId"),
+                    @NamedAttributeNode(value = "bezeichnung"),
+                    @NamedAttributeNode(value = "produkt", subgraph = "zugConsist.produkt"),
+                    @NamedAttributeNode(value = "abbildung")
+            }),
+            @NamedSubgraph(name = "zugConsist.produkt",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "hersteller", subgraph = "zugConsist.hersteller"),
+                    @NamedAttributeNode(value = "bestellNr"),
+                    @NamedAttributeNode(value = "bezeichnung"),
+                    @NamedAttributeNode(value = "lange"),
+                    @NamedAttributeNode(value = "bahnverwaltung", subgraph = "zugConsist.bahnverwaltung"),
+                    @NamedAttributeNode(value = "gattung", subgraph = "zugConsist.gattung"),
+                    @NamedAttributeNode(value = "betreibsnummer"),
+                    @NamedAttributeNode(value = "abbildung")
+            }),
+            @NamedSubgraph(name = "zugConsist.hersteller",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "name")
+            }),
+            @NamedSubgraph(name = "zugConsist.bahnverwaltung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "name")
+            }),
+            @NamedSubgraph(name = "zugConsist.gattung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "name")
+            })
+        })
+    })
 //@formatter:on
 @SuperBuilder
 @NoArgsConstructor

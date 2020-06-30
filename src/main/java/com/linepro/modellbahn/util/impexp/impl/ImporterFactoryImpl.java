@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.util.impexp.impl;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -9,7 +11,7 @@ import com.linepro.modellbahn.util.impexp.DataType;
 import com.linepro.modellbahn.util.impexp.Importer;
 import com.linepro.modellbahn.util.impexp.ImporterFactory;
 
-@Configuration("ImporterFactoryImpl")
+@Configuration(PREFIX + "ImporterFactoryImpl")
 public class ImporterFactoryImpl implements ImporterFactory, BeanFactoryAware {
 
     private BeanFactory beanFactory;
@@ -21,6 +23,6 @@ public class ImporterFactoryImpl implements ImporterFactory, BeanFactoryAware {
 
     @Override
     public Importer getImporter(DataType type) {
-        return (Importer) beanFactory.getBean(type.getBeanPrefix() + "Importer");
+        return (Importer) beanFactory.getBean(PREFIX + type.getBeanPrefix() + "Importer");
     }
 }

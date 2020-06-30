@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.io;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +11,6 @@ import org.springframework.stereotype.Component;
     FileUploadHandlerImpl.class,
     MvcConfig.class
 })
-@Component("FileIo")
+@Component(PREFIX + "FileIo")
 public class FileIo {
 }

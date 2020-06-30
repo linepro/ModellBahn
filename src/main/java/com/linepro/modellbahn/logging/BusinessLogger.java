@@ -1,5 +1,10 @@
 package com.linepro.modellbahn.logging;
 
+/**
+ * Formalized business logging on a common root logger so that we can filter it to the composite log.
+ */
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -8,10 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
 import org.springframework.stereotype.Component;
 
-/**
- * Formalized business logging on a common root logger so that we can filter it to the composite log.
- */
-@Component("BusinessLogger")
+@Component(PREFIX + "BusinessLogger")
 public class BusinessLogger {
 
     /**

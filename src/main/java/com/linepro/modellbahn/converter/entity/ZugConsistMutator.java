@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.converter.entity;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import com.linepro.modellbahn.model.ZugConsistModel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Component("ZugConsistMutator")
+@Component(PREFIX + "ZugConsistMutator")
 public class ZugConsistMutator implements Mutator<ZugConsist, ZugConsistModel> {
 
     @Autowired

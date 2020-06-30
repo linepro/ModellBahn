@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.converter.entity;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
 import org.springframework.stereotype.Component;
@@ -11,7 +12,7 @@ import com.linepro.modellbahn.model.ProduktTeilModel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Component("ProduktTeilMutator")
+@Component(PREFIX + "ProduktTeilMutator")
 public class ProduktTeilMutator implements Mutator<ProduktTeil,ProduktTeilModel> {
 
     @Override
@@ -19,7 +20,7 @@ public class ProduktTeilMutator implements Mutator<ProduktTeil,ProduktTeilModel>
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setHersteller(source.getProdukt().getHersteller().getName());
             destination.setBestellNr(source.getProdukt().getBestellNr());
-            destination.setTeilHersteller(source.getTeil().getBestellNr());
+            destination.setTeilHersteller(source.getTeil().getHersteller().getName());
             destination.setTeilBestellNr(source.getTeil().getBestellNr());
             destination.setBezeichnung(source.getTeil().getBezeichnung());
             destination.setKategorie(getCode(source.getTeil().getUnterKategorie().getKategorie()));

@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.hateoas;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.util.HashMap;
 
 import org.apache.commons.collections4.MapUtils;
@@ -19,7 +21,7 @@ import com.linepro.modellbahn.model.DecoderTypFunktionModel;
 import com.linepro.modellbahn.model.SoftDelete;
 
 @Lazy
-@Component("DecoderTypFunktionModelProcessor")
+@Component(PREFIX + "DecoderTypFunktionModelProcessor")
 public class DecoderTypFunktionModelProcessor extends ModelProcessorImpl<DecoderTypFunktionModel> implements RepresentationModelProcessor<DecoderTypFunktionModel> {
 
     private static final String HERSTELLER = "{" + ApiNames.HERSTELLER + "}";

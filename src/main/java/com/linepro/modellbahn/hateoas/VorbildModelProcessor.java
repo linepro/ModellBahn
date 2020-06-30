@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.hateoas;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.util.Collections;
 
 import org.apache.commons.lang3.BooleanUtils;
@@ -17,7 +19,7 @@ import com.linepro.modellbahn.hateoas.impl.ModelProcessorImpl;
 import com.linepro.modellbahn.model.VorbildModel;
 
 @Lazy
-@Component("VorbildModelProcessor")
+@Component(PREFIX + "VorbildModelProcessor")
 public class VorbildModelProcessor extends ModelProcessorImpl<VorbildModel> implements RepresentationModelProcessor<VorbildModel> {
 
     private static final String GATTUNG = "{" + ApiNames.GATTUNG + "}";

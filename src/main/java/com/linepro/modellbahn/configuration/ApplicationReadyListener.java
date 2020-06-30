@@ -1,5 +1,8 @@
 package com.linepro.modellbahn.configuration;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
+import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -23,10 +26,9 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import ch.qos.logback.classic.pattern.Abbreviator;
 import ch.qos.logback.classic.pattern.TargetLengthBasedClassNameAbbreviator;
 import lombok.extern.slf4j.Slf4j;
-import java.util.AbstractMap.SimpleImmutableEntry;
 
 @Slf4j
-@Component("ApplicationReadyListener")
+@Component(PREFIX + "ApplicationReadyListener")
 public class ApplicationReadyListener implements ApplicationListener<ApplicationReadyEvent>, ApplicationContextAware {
 
     private final Abbreviator abbreviator = new TargetLengthBasedClassNameAbbreviator(30);

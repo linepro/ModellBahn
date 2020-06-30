@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.converter;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -62,6 +64,6 @@ import com.linepro.modellbahn.converter.model.ZugTypModelMutator;
     ZugModelMutator.class, 
     ZugTypModelMutator.class 
 })
-@Configuration("ModelConverters")
+@Configuration(PREFIX + "ModelConverters")
 public class ModelConverters {
 }

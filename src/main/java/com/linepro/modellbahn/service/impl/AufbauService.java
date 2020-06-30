@@ -1,5 +1,14 @@
 package com.linepro.modellbahn.service.impl;
 
+/**
+ * AufbauService. CRUD service for Aufbau
+ * 
+ * @author $Author:$
+ * @version $Id:$
+ */
+
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +26,7 @@ import com.linepro.modellbahn.model.AufbauModel;
 import com.linepro.modellbahn.repository.AufbauRepository;
 import com.linepro.modellbahn.service.ItemService;
 
-/**
- * AufbauService. CRUD service for Aufbau
- * 
- * @author $Author:$
- * @version $Id:$
- */
-
-@Service("AufbauService")
+@Service(PREFIX + "AufbauService")
 public class AufbauService extends NamedItemServiceImpl<AufbauModel,Aufbau> implements ItemService<AufbauModel> {
 
     private final AufbauRepository repository;

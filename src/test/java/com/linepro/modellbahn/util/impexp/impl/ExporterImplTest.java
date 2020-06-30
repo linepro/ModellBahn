@@ -20,7 +20,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.entity.Decoder;
 import com.linepro.modellbahn.model.DecoderModel;
@@ -80,15 +79,12 @@ public class ExporterImplTest {
 
     private final Mutator<Decoder,DecoderModel> mutator;  
 
-    private final CsvMapper mapper;
-    
     private Exporter exporter;
 
     public ExporterImplTest(@Mock JpaRepository<Decoder,Long> repository, @Mock Mutator<Decoder,DecoderModel> mutator) { 
         this.repository = repository;
         this.mutator = mutator;
-        this.writer = new CharArrayWriter();
-        this.mapper = CsvMapper.csvBuilder().build();
+        this.writer = new CharArrayWriter();;
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
@@ -104,7 +100,7 @@ public class ExporterImplTest {
         when(mutator.convert(any())).thenReturn(MODEL);
         when(mutator.get()).thenReturn(MODEL);
 
-        exporter = new ExporterImpl(repository, mutator, mapper);
+        exporter = new ExporterImpl(repository, mutator);
     }
 
     @Test

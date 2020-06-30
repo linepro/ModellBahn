@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.repository.lookup;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +13,6 @@ import org.springframework.stereotype.Component;
     ProduktLookup.class,
     VorbildLookup.class
 })
-@Component("Lookups")
+@Component(PREFIX + "Lookups")
 public class Lookups {
 }

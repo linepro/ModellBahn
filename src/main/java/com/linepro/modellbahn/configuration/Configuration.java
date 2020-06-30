@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.configuration;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 
@@ -7,7 +9,7 @@ import org.springframework.stereotype.Component;
     ApplicationReadyListener.class,
     ErrorHandler.class
 })
-@Component("Configuration")
+@Component(PREFIX + "Configuration")
 public class Configuration {
 
 }

@@ -11,6 +11,10 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Min;
@@ -46,6 +50,19 @@ import lombok.experimental.SuperBuilder;
         @Index(name = DBNames.ANDERUNG + "_IX2", columnList = DBNames.ANDERUNG_ID)
     },uniqueConstraints = {
         @UniqueConstraint(name = DBNames.ANDERUNG + "_UC1", columnNames = {DBNames.ARTIKEL_ID, DBNames.ANDERUNG_ID})
+    })
+@NamedEntityGraphs({
+    @NamedEntityGraph(name="anderung",
+        includeAllAttributes = true,
+        attributeNodes = {
+            @NamedAttributeNode(value = "artikel", subgraph = "anderung.artikel")
+        }, subgraphs = {
+            @NamedSubgraph(name = "anderung.artikel",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "artikelId")
+            })
+        })
     })
 //@formatter:on
 @SuperBuilder

@@ -46,8 +46,8 @@ public enum DataType {
     private final String beanPrefix;
 
     private DataType(String typeName) {
-        this.typeName = typeName;
-        this.beanPrefix = StringUtils.capitalizeWords(typeName, "_");   
+        this.beanPrefix = StringUtils.capitalizeWords(typeName, "_").replaceAll("_", ""); 
+        this.typeName = StringUtils.unCapitalize(beanPrefix);
     }
 
     public String getTypeName() {

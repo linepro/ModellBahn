@@ -1,5 +1,12 @@
 package com.linepro.modellbahn.service.impl;
 
+/**
+ * ZugService. CRUD service for Zug
+ * @author $Author:$
+ * @version $Id:$
+ */
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +26,7 @@ import com.linepro.modellbahn.repository.ZugConsistRepository;
 import com.linepro.modellbahn.repository.ZugRepository;
 import com.linepro.modellbahn.service.ItemService;
 
-/**
- * ZugService. CRUD service for Zug
- * @author $Author:$
- * @version $Id:$
- */
-@Service("ZugService")
+@Service(PREFIX + "ZugService")
 public class ZugService extends NamedItemServiceImpl<ZugModel,Zug> implements ItemService<ZugModel> {
 
     private final ZugRepository repository;

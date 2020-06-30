@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.converter.model;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
 import org.springframework.stereotype.Component;
@@ -8,7 +9,7 @@ import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.entity.DecoderTypCv;
 import com.linepro.modellbahn.model.DecoderTypCvModel;
 
-@Component("DecoderTypCvModelMutator")
+@Component(PREFIX + "DecoderTypCvModelMutator")
 public class DecoderTypCvModelMutator implements Mutator<DecoderTypCvModel,DecoderTypCv> {
     
     @Override

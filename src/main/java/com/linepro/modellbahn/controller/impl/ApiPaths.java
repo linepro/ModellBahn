@@ -59,15 +59,15 @@ public interface ApiPaths {
     String UPDATE_DECODER_TYP             = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}";
     String ADD_DECODER_TYP_ANLEITUNGEN    = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.ANLEITUNGEN;
     String DELETE_DECODER_TYP_ANLEITUNGEN = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.ANLEITUNGEN;
-    String ADD_DECODER_TYP_ADRESS         = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.DECODER_ID + "}/" + ApiNames.ADRESS;
-    String UPDATE_DECODER_TYP_ADRESS      = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.DECODER_ID + "}/" + ApiNames.ADRESS + "/{" + ApiNames.INDEX + "}";
-    String DELETE_DECODER_TYP_ADRESS      = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.DECODER_ID + "}/" + ApiNames.ADRESS + "/{" + ApiNames.INDEX + "}";
-    String ADD_DECODER_TYP_CV             = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.DECODER_ID + "}/"  + ApiNames.CV;
-    String UPDATE_DECODER_TYP_CV          = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.DECODER_ID + "}/"  + ApiNames.CV + "/{" + ApiNames.CV + "}";
-    String DELETE_DECODER_TYP_CV          = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.DECODER_ID + "}/"  + ApiNames.CV + "/{" + ApiNames.CV + "}";
-    String ADD_DECODER_TYP_FUNKTION       = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.DECODER_ID + "}/" + ApiNames.FUNKTION;
-    String UPDATE_DECODER_TYP_FUNKTION    = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.DECODER_ID + "}/" + ApiNames.FUNKTION + "/{" + ApiNames.FUNKTION + "}/{" + ApiNames.REIHE + "}";
-    String DELETE_DECODER_TYP_FUNKTION    = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.DECODER_ID + "}/" + ApiNames.FUNKTION + "/{" + ApiNames.FUNKTION + "}/{" + ApiNames.REIHE + "}";
+    String ADD_DECODER_TYP_ADRESS         = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.ADRESS;
+    String UPDATE_DECODER_TYP_ADRESS      = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.ADRESS + "/{" + ApiNames.INDEX + "}";
+    String DELETE_DECODER_TYP_ADRESS      = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.ADRESS + "/{" + ApiNames.INDEX + "}";
+    String ADD_DECODER_TYP_CV             = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.CV;
+    String UPDATE_DECODER_TYP_CV          = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.CV + "/{" + ApiNames.CV + "}";
+    String DELETE_DECODER_TYP_CV          = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.CV + "/{" + ApiNames.CV + "}";
+    String ADD_DECODER_TYP_FUNKTION       = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.FUNKTION;
+    String UPDATE_DECODER_TYP_FUNKTION    = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.FUNKTION + "/{" + ApiNames.FUNKTION + "}/{" + ApiNames.REIHE + "}";
+    String DELETE_DECODER_TYP_FUNKTION    = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.FUNKTION + "/{" + ApiNames.FUNKTION + "}/{" + ApiNames.REIHE + "}";
 
     String ADD_EPOCH    = API_ROOT + ApiNames.EPOCH;
     String GET_EPOCH    = API_ROOT + ApiNames.EPOCH + "/{" + ApiNames.NAMEN + "}";

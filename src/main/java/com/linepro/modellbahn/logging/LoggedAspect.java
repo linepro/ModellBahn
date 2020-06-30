@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.logging;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -35,7 +37,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * with business logger logging.
  */
 @Aspect
-@Configuration("LoggedAspect")
+@Configuration(PREFIX + "LoggedAspect")
 public class LoggedAspect {
 
     protected static final String LOGGED_ANNOTATION = "com.linepro.modellbahn.logging.Logged";

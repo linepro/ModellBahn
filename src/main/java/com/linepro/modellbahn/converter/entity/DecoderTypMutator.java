@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.converter.entity;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
@@ -15,7 +16,7 @@ import com.linepro.modellbahn.model.DecoderTypModel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Component("DecoderTypMutator")
+@Component(PREFIX + "DecoderTypMutator")
 public class DecoderTypMutator implements Mutator<DecoderTyp,DecoderTypModel> {
 
     @Autowired

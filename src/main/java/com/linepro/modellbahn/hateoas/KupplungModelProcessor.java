@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.hateoas;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.stereotype.Component;
@@ -10,7 +12,7 @@ import com.linepro.modellbahn.hateoas.impl.LinkTemplateImpl;
 import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.KupplungModel;
 
-@Component("KupplungModelProcessor")
+@Component(PREFIX + "KupplungModelProcessor")
 public class KupplungModelProcessor extends NamedModelProcessor<KupplungModel> implements RepresentationModelProcessor<KupplungModel> {
 
     @Autowired

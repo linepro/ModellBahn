@@ -1,8 +1,12 @@
 package com.linepro.modellbahn.hateoas;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.hateoas.config.EnableHypermediaSupport;
+import org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType;
 import org.springframework.hateoas.mediatype.hal.HalConfiguration;
 import org.springframework.hateoas.mediatype.hal.HalConfiguration.RenderSingleLinks;
 
@@ -41,10 +45,11 @@ import org.springframework.hateoas.mediatype.hal.HalConfiguration.RenderSingleLi
     ZugModelProcessor.class, 
     ZugTypModelProcessor.class
 })
-@Configuration("Hateoas")
+@EnableHypermediaSupport(type = {HypermediaType.HAL})
+@Configuration(PREFIX + "Hateoas")
 public class Hateoas {
     
-    @Bean("HalConfiguration")
+    @Bean(PREFIX + "HalConfiguration")
     public HalConfiguration globalPolicy() {
       return new HalConfiguration() //
           .withRenderSingleLinks(RenderSingleLinks.AS_ARRAY); 

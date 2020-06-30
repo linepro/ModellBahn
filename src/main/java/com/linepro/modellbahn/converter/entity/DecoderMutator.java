@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.converter.entity;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 
@@ -15,7 +16,7 @@ import com.linepro.modellbahn.util.exceptions.ResultCollector;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Component("DecoderMutator")
+@Component(PREFIX + "DecoderMutator")
 public class DecoderMutator implements Mutator<Decoder, DecoderModel> {
 
     @Autowired
@@ -47,6 +48,7 @@ public class DecoderMutator implements Mutator<Decoder, DecoderModel> {
             destination.setStatus(source.getStatus());
             destination.setProtokoll(getCode(source.getProtokoll()));
             destination.setFahrstufe(source.getFahrstufe());
+            destination.setDeleted(source.getDeleted());
 
             if (isAvailable(source.getAdressen())) {
                 destination.setAdressen(source.getAdressen()

@@ -1,5 +1,13 @@
 package com.linepro.modellbahn.service.impl;
 
+/**
+ * VorbildService. CRUD service for Vorbild
+ * @author $Author:$
+ * @version $Id:$
+ */
+
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +24,7 @@ import com.linepro.modellbahn.model.VorbildModel;
 import com.linepro.modellbahn.repository.VorbildRepository;
 import com.linepro.modellbahn.service.ItemService;
 
-/**
- * VorbildService. CRUD service for Vorbild
- * @author $Author:$
- * @version $Id:$
- */
-
-@Service("VorbildService")
+@Service(PREFIX + "VorbildService")
 
 public class VorbildService extends ItemServiceImpl<VorbildModel, Vorbild> implements ItemService<VorbildModel> {
 

@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.hateoas;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
@@ -10,7 +12,7 @@ import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.MotorTypModel;
 
 @Lazy
-@Component("MotorTypModelProcessor")
+@Component(PREFIX + "MotorTypModelProcessor")
 public class MotorTypModelProcessor extends NamedModelProcessor<MotorTypModel> implements RepresentationModelProcessor<MotorTypModel> {
 
     @Autowired

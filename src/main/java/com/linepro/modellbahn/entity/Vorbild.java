@@ -57,47 +57,70 @@ import lombok.experimental.SuperBuilder;
         @UniqueConstraint(name = DBNames.VORBILD + "_UC1", columnNames = { DBNames.GATTUNG_ID })
     })
 @NamedEntityGraphs({
-    @NamedEntityGraph(name="vorbild.summary",
-        includeAllAttributes = true,
+    @NamedEntityGraph(name="vorbild.lookup",
         attributeNodes = {
-            @NamedAttributeNode(value = "id"),
             @NamedAttributeNode(value = "gattung", subgraph = "vorbild.gattung"),
+            @NamedAttributeNode(value = "bezeichnung"),
             @NamedAttributeNode(value = "unterKategorie", subgraph = "vorbild.unterKategorie"),
             @NamedAttributeNode(value = "bahnverwaltung", subgraph = "vorbild.bahnverwaltung"),
-            @NamedAttributeNode(value = "antrieb", subgraph = "vorbild.antrieb")
+            @NamedAttributeNode(value = "betreibsNummer"),
+            @NamedAttributeNode(value = "abbildung")
         },
         subgraphs = {
             @NamedSubgraph(name = "vorbild.gattung",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "vorbild.unterKategorie",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
                     @NamedAttributeNode(value = "kategorie", subgraph = "vorbild.kategorie"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "vorbild.kategorie",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
+                }),
+            }),
+    @NamedEntityGraph(name="vorbild.summary",
+        attributeNodes = {
+            @NamedAttributeNode(value = "gattung", subgraph = "vorbild.gattung"),
+            @NamedAttributeNode(value = "bezeichnung"),
+            @NamedAttributeNode(value = "unterKategorie", subgraph = "vorbild.unterKategorie"),
+            @NamedAttributeNode(value = "bahnverwaltung", subgraph = "vorbild.bahnverwaltung"),
+            @NamedAttributeNode(value = "bauzeit"),
+            @NamedAttributeNode(value = "betreibsNummer"),
+            @NamedAttributeNode(value = "antrieb", subgraph = "vorbild.antrieb"),
+            @NamedAttributeNode(value = "achsfolg", subgraph = "vorbild.achsfolg"),
+            @NamedAttributeNode(value = "ausserdienst"),
+            @NamedAttributeNode(value = "abbildung"),
+            @NamedAttributeNode(value = "deleted")
+        },
+        subgraphs = {
+            @NamedSubgraph(name = "vorbild.gattung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "name")
+                }),
+            @NamedSubgraph(name = "vorbild.unterKategorie",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "kategorie", subgraph = "vorbild.kategorie"),
+                    @NamedAttributeNode(value = "name")
+                }),
+            @NamedSubgraph(name = "vorbild.kategorie",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "vorbild.bahnverwaltung",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "vorbild.antrieb",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
+            @NamedSubgraph(name = "vorbild.achsfolg",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "name")
+                })
         }),
     @NamedEntityGraph(name="vorbild.detail",
         includeAllAttributes = true,
@@ -105,39 +128,34 @@ import lombok.experimental.SuperBuilder;
             @NamedAttributeNode(value = "gattung", subgraph = "vorbild.gattung"),
             @NamedAttributeNode(value = "unterKategorie", subgraph = "vorbild.unterKategorie"),
             @NamedAttributeNode(value = "bahnverwaltung", subgraph = "vorbild.bahnverwaltung"),
-            @NamedAttributeNode(value = "antrieb", subgraph = "vorbild.antrieb")
+            @NamedAttributeNode(value = "antrieb", subgraph = "vorbild.antrieb"),
+            @NamedAttributeNode(value = "achsfolg", subgraph = "vorbild.achsfolg")
         },
         subgraphs = {
             @NamedSubgraph(name = "vorbild.gattung",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "vorbild.unterKategorie",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
                     @NamedAttributeNode(value = "kategorie", subgraph = "vorbild.kategorie"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "vorbild.kategorie",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
             }),
             @NamedSubgraph(name = "vorbild.bahnverwaltung",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
                 }),
             @NamedSubgraph(name = "vorbild.antrieb",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "name")
+                }),
+            @NamedSubgraph(name = "vorbild.achsfolg",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "name")
                 })
         })
     })

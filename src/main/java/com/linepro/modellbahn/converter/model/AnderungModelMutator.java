@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.converter.model;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
 import org.springframework.stereotype.Component;
@@ -8,7 +9,7 @@ import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.entity.Anderung;
 import com.linepro.modellbahn.model.AnderungModel;
 
-@Component("AnderungModelMutator")
+@Component(PREFIX + "AnderungModelMutator")
 public class AnderungModelMutator implements Mutator<AnderungModel, Anderung> {
 
     @Override

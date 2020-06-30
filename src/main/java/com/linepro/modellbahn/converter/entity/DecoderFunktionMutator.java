@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.converter.entity;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
 import org.springframework.stereotype.Component;
@@ -8,7 +9,7 @@ import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.entity.DecoderFunktion;
 import com.linepro.modellbahn.model.DecoderFunktionModel;
 
-@Component("DecoderFunktionMutator")
+@Component(PREFIX + "DecoderFunktionMutator")
 public class DecoderFunktionMutator implements Mutator<DecoderFunktion,DecoderFunktionModel> {
 
     @Override

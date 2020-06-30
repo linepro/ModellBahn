@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.hateoas;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.util.HashMap;
 
 import org.apache.commons.collections4.MapUtils;
@@ -19,7 +21,7 @@ import com.linepro.modellbahn.model.ProduktTeilModel;
 import com.linepro.modellbahn.model.SoftDelete;
 
 @Lazy
-@Component("ProduktTeilModelProcessor")
+@Component(PREFIX + "ProduktTeilModelProcessor")
 public class ProduktTeilModelProcessor extends ModelProcessorImpl<ProduktTeilModel> implements RepresentationModelProcessor<ProduktTeilModel> {
 
     private static final String HERSTELLER = "{" + ApiNames.HERSTELLER + "}";

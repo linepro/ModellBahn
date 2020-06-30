@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.converter.model;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import com.linepro.modellbahn.repository.lookup.ItemLookup;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Component("DecoderTypModelMutator")
+@Component(PREFIX + "DecoderTypModelMutator")
 public class DecoderTypModelMutator implements Mutator<DecoderTypModel, DecoderTyp> {
 
     @Autowired

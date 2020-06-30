@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.security;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.API_ENDPOINTS;
 import static com.linepro.modellbahn.io.MvcConfig.RESOURCE_ENDPOINTS;
 import static com.linepro.modellbahn.security.UserController.USER_ENDPOINTS;
@@ -15,7 +16,7 @@ import com.linepro.modellbahn.service.impl.UserService;
 
 import lombok.RequiredArgsConstructor;
 
-@Configuration("WebSecurityConfig")
+@Configuration(PREFIX + "WebSecurityConfig")
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {

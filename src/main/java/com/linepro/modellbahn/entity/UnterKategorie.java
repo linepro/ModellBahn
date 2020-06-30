@@ -9,6 +9,10 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -36,7 +40,19 @@ import lombok.experimental.SuperBuilder;
     }, uniqueConstraints = {
         @UniqueConstraint(name = DBNames.UNTER_KATEGORIE + "_UC1", columnNames = { DBNames.KATEGORIE_ID, DBNames.NAME })
     })
-@AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, length = 50))
+@NamedEntityGraphs({
+    @NamedEntityGraph(name="unterKategorie",
+        includeAllAttributes = true,
+        attributeNodes = {
+            @NamedAttributeNode(value = "kategorie", subgraph = "unterKategorie.kategorie")
+        }, subgraphs = {
+            @NamedSubgraph(name = "unterKategorie.kategorie",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name")
+            })
+        })
+    })
 //@formatter:on
 @SuperBuilder
 @NoArgsConstructor
@@ -44,6 +60,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @ToString(callSuper = true)
 @Cacheable
+@AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, length = 50))
 public class UnterKategorie extends NamedItemImpl {
 
     /** The kategorie. */

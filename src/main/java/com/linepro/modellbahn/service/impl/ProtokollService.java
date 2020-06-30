@@ -1,5 +1,14 @@
 package com.linepro.modellbahn.service.impl;
 
+/**
+ * ProtokollService. CRUD service for Protokoll
+ * 
+ * @author $Author:$
+ * @version $Id:$
+ */
+
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +19,7 @@ import com.linepro.modellbahn.model.ProtokollModel;
 import com.linepro.modellbahn.repository.ProtokollRepository;
 import com.linepro.modellbahn.service.ItemService;
 
-/**
- * ProtokollService. CRUD service for Protokoll
- * 
- * @author $Author:$
- * @version $Id:$
- */
-
-@Service("ProtokollService")
+@Service(PREFIX + "ProtokollService")
 public class ProtokollService extends NamedItemServiceImpl<ProtokollModel,Protokoll> implements ItemService<ProtokollModel> {
 
     @Autowired

@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.converter.entity;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
@@ -19,7 +20,7 @@ import com.linepro.modellbahn.model.ProduktModel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Component("ArtikelMutator")
+@Component(PREFIX + "ArtikelMutator")
 public class ArtikelMutator implements Mutator<Artikel, ArtikelModel> {
 
     @Autowired
@@ -67,6 +68,7 @@ public class ArtikelMutator implements Mutator<Artikel, ArtikelModel> {
             destination.setVerbleibende(source.getVerbleibende());
             destination.setAnmerkung(source.getAnmerkung());
             destination.setBeladung(source.getBeladung());
+            destination.setDeleted(source.getDeleted());
             
             if (isAvailable(source.getAnderungen())) {
                destination.setAnderungen(source.getAnderungen()

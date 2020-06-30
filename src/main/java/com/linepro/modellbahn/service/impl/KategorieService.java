@@ -1,5 +1,14 @@
 package com.linepro.modellbahn.service.impl;
 
+/**
+ * KategorieService. CRUD service for Kategorie and UnterKategorie
+ * Transpires that two way ManyToOne are best updated from the parent end
+ * @author $Author:$
+ * @version $Id:$
+ */
+
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,14 +32,7 @@ import com.linepro.modellbahn.repository.KategorieRepository;
 import com.linepro.modellbahn.repository.UnterKategorieRepository;
 import com.linepro.modellbahn.service.ItemService;
 
-/**
- * KategorieService. CRUD service for Kategorie and UnterKategorie
- * Transpires that two way ManyToOne are best updated from the parent end
- * @author $Author:$
- * @version $Id:$
- */
-
-@Service("KategorieService")
+@Service(PREFIX + "KategorieService")
 public class KategorieService extends NamedItemServiceImpl<KategorieModel, Kategorie> implements ItemService<KategorieModel> {
 
     private final KategorieRepository repository;

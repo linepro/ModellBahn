@@ -6,8 +6,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.hateoas.config.EnableHypermediaSupport;
-import org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType;
 
 import com.linepro.modellbahn.configuration.Configuration;
 import com.linepro.modellbahn.configuration.OpenApiConfiguration;
@@ -25,8 +23,7 @@ import com.linepro.modellbahn.util.impexp.Data;
 
 @SpringBootConfiguration
 @EnableAutoConfiguration
-@EnableHypermediaSupport(type = {HypermediaType.HAL})
-@EnableJpaRepositories("com.linepro.modellbahn.repository") 
+@EnableJpaRepositories(basePackages = "com.linepro.modellbahn.repository", repositoryImplementationPostfix = "CustomImpl") 
 @EntityScan( basePackages = {"com.linepro.modellbahn.entity"} )
 @Import({
     Configuration.class,
@@ -51,6 +48,8 @@ import com.linepro.modellbahn.util.impexp.Data;
     Data.class
 })
 public class ModellbahnApplication {
+    
+    public static final String PREFIX = "modellBahn.";
 
 	public static void main(String[] args) {
 		SpringApplication.run(ModellbahnApplication.class, args);

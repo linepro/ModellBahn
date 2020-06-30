@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.converter.entity;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
@@ -16,7 +17,7 @@ import com.linepro.modellbahn.model.UnterKategorieModel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Component("ProduktMutator")
+@Component(PREFIX + "ProduktMutator")
 public class ProduktMutator implements Mutator<Produkt,ProduktModel> {
 
     @Autowired
@@ -61,6 +62,7 @@ public class ProduktMutator implements Mutator<Produkt,ProduktModel> {
             destination.setMotorTyp(getCode(source.getMotorTyp()));
             destination.setAnleitungen(pathMutator.convert(source.getAnleitungen()));
             destination.setExplosionszeichnung(pathMutator.convert(source.getExplosionszeichnung()));
+            destination.setDeleted(source.getDeleted());
             
             if (isAvailable(source.getTeilen())) {
                 destination.setTeilen(source.getTeilen()

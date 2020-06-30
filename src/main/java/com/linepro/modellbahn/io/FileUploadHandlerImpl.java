@@ -3,6 +3,8 @@
  */
 package com.linepro.modellbahn.io;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -21,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
  * The Class FileUpload
  */
 @Slf4j
-@Component("FileUploadHandlerImpl")
+@Component(PREFIX + "FileUploadHandlerImpl")
 public class FileUploadHandlerImpl implements FileUploadHandler {
 
     /** The file store. */
