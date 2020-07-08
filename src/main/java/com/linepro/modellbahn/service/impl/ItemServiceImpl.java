@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.service.impl;
 
+import org.springframework.data.domain.Pageable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -81,11 +82,26 @@ public abstract class ItemServiceImpl<M extends ItemModel, E extends Item> imple
     @Override
     @Transactional(readOnly = true)
     public Page<M> search(Optional<M> model, Optional<Integer> pageNumber, Optional<Integer> pageSize) {
+        Pageable pageRequest = getPageRequest(pageNumber, pageSize);
+
+        final Page<E> data = findAll(model, pageRequest);
+
+        return getModelPage(data);
+    }
+
+    protected Pageable getPageRequest(Optional<Integer> pageNumber, Optional<Integer> pageSize) {
+        if (!pageNumber.isPresent() && !pageSize.isPresent()) return Pageable.unpaged();
+
+        return PageRequest.of(pageNumber.orElse(FIRST_PAGE), pageSize.orElse(DEFAULT_PAGE_SIZE));
+    }
+
+    protected Page<E> findAll(Optional<M> model, Pageable pageRequest) {
         Example<E> example = Example.of(model.map(m -> modelMutator.convert(m)).orElse(modelMutator.get()));
-        PageRequest pageRequest = PageRequest.of(pageNumber.orElse(FIRST_PAGE), pageSize.orElse(DEFAULT_PAGE_SIZE));
-        
         final Page<E> data = repository.findAll(example, pageRequest);
-        final Page<M> page = data.map(e -> entityMutator.convert(e));
-        return page;
+        return data;
+    }
+
+    protected Page<M> getModelPage(Page<E> data) {
+        return data.map(e -> entityMutator.convert(e));
     }
 }

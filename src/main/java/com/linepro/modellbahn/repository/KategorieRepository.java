@@ -15,8 +15,16 @@ import com.linepro.modellbahn.entity.Kategorie;
 import com.linepro.modellbahn.repository.base.NamedItemRepository;
 
 @Repository(PREFIX + "KategorieRepository")
-public interface KategorieRepository extends KategorieRepositoryCustom, NamedItemRepository<Kategorie> {
+public interface KategorieRepository extends NamedItemRepository<Kategorie> {
 
     @EntityGraph(value = "kategorie.withChildren", type = EntityGraphType.FETCH)
     Optional<Kategorie> findByName(String name);
+
+    @Override
+    @EntityGraph(value = "kategorie.noChildren", type = EntityGraphType.FETCH)
+    <S extends Kategorie> Page<S> findAll(Example<S> example, Pageable pageable);
+
+    @Override
+    @EntityGraph(value = "kategorie.noChildren", type = EntityGraphType.FETCH)
+    Page<Kategorie> findAll(Pageable pageable);
 }

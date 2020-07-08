@@ -11,6 +11,8 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +37,7 @@ import com.linepro.modellbahn.repository.DecoderFunktionRepository;
 import com.linepro.modellbahn.repository.DecoderRepository;
 import com.linepro.modellbahn.repository.DecoderTypRepository;
 import com.linepro.modellbahn.service.ItemService;
+import com.linepro.modellbahn.service.criterion.DecoderCriterion;
 
 @Service(PREFIX + "DecoderService")
 public class DecoderService extends ItemServiceImpl<DecoderModel,Decoder> implements ItemService<DecoderModel> {
@@ -114,6 +117,11 @@ public class DecoderService extends ItemServiceImpl<DecoderModel,Decoder> implem
         }
 
         return Optional.empty();
+    }
+
+    @Override
+    protected Page<Decoder> findAll(Optional<DecoderModel> model, Pageable pageRequest) {
+        return repository.findAll(new DecoderCriterion(model), pageRequest);
     }
 
     public Optional<DecoderModel> get(String decoderId) {

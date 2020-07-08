@@ -11,11 +11,9 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,26 +29,24 @@ import com.linepro.modellbahn.model.UnterKategorieModel;
 import com.linepro.modellbahn.repository.KategorieRepository;
 import com.linepro.modellbahn.repository.UnterKategorieRepository;
 import com.linepro.modellbahn.service.ItemService;
+import com.linepro.modellbahn.service.criterion.KategorieenCriteria;
 
 @Service(PREFIX + "KategorieService")
 public class KategorieService extends NamedItemServiceImpl<KategorieModel, Kategorie> implements ItemService<KategorieModel> {
 
     private final KategorieRepository repository;
-    
+
     private final UnterKategorieRepository unterKategorieRepository;
-    
+
     private final UnterKategorieMutator unterKategorieMutator;
 
     private final UnterKategorieModelMutator unterKategorieModelMutator;
 
-    private final KategorieMutator mutator;
-    
     @Autowired
     public KategorieService(KategorieRepository repository, KategorieModelMutator modelMutator, KategorieMutator entityMutator, UnterKategorieRepository unterKategorieRepository, UnterKategorieMutator unterKategorieMutator, UnterKategorieModelMutator unterKategorieModelMutator) {
         super(repository, modelMutator, entityMutator);
 
         this.repository = repository;
-        this.mutator = entityMutator;
         this.unterKategorieRepository = unterKategorieRepository;
         this.unterKategorieMutator = unterKategorieMutator;
         this.unterKategorieModelMutator = unterKategorieModelMutator;
@@ -88,19 +84,11 @@ public class KategorieService extends NamedItemServiceImpl<KategorieModel, Kateg
     }
 
     @Transactional(readOnly = true)
-    public Page<UnterKategorieModel> searchUnterKategorie(Optional<List<String>> kategorieen, Optional<Integer> pageNumber, Optional<Integer> pageSize) {
+    public Page<KategorieModel> searchUnterKategorie(Optional<List<String>> kategorieen, Optional<Integer> pageNumber, Optional<Integer> pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNumber.orElse(FIRST_PAGE), pageSize.orElse(DEFAULT_PAGE_SIZE));
-        
-        final List<UnterKategorieModel> unterkategorien = repository.findKategorien(kategorieen)
-                                                                    .stream()
-                                                                    .map(e -> mutator.convert(e))
-                                                                    .map(k -> k.getUnterKategorien())
-                                                                    .flatMap(List::stream)
-                                                                    .collect(Collectors.toList());
-        
-        return new PageImpl<UnterKategorieModel>(unterkategorien,
-                                                    pageRequest,
-                                                    unterkategorien.size()
-                                                    );
+
+        final Page<Kategorie> data = repository.findAll(new KategorieenCriteria(kategorieen), pageRequest);
+
+        return getModelPage(data);
     }
 }

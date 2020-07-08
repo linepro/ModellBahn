@@ -10,6 +10,8 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,6 +40,7 @@ import com.linepro.modellbahn.repository.DecoderTypCvRepository;
 import com.linepro.modellbahn.repository.DecoderTypFunktionRepository;
 import com.linepro.modellbahn.repository.DecoderTypRepository;
 import com.linepro.modellbahn.service.ItemService;
+import com.linepro.modellbahn.service.criterion.DecoderTypCriterion;
 
 @Service(PREFIX + "DecoderTypService")
 public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTyp> implements ItemService<DecoderTypModel> {
@@ -79,6 +82,11 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTy
         this.funktionRepository = funktionRepository;
         this.funktionModelMutator= funktionModelMutator;
         this.funktionMutator = funktionMutator;
+    }
+
+    @Override
+    protected Page<DecoderTyp> findAll(Optional<DecoderTypModel> model, Pageable pageRequest) {
+        return repository.findAll(new DecoderTypCriterion(model), pageRequest);
     }
 
     public Optional<DecoderTypModel> get(String herstellerStr, String bestellNr) {

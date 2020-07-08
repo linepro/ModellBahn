@@ -10,6 +10,8 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +27,7 @@ import com.linepro.modellbahn.repository.ArtikelRepository;
 import com.linepro.modellbahn.repository.ZugConsistRepository;
 import com.linepro.modellbahn.repository.ZugRepository;
 import com.linepro.modellbahn.service.ItemService;
+import com.linepro.modellbahn.service.criterion.ZugCriterion;
 
 @Service(PREFIX + "ZugService")
 public class ZugService extends NamedItemServiceImpl<ZugModel,Zug> implements ItemService<ZugModel> {
@@ -45,6 +48,11 @@ public class ZugService extends NamedItemServiceImpl<ZugModel,Zug> implements It
         this.artikelRepository = artikelRepository;
         this.consistRepository = consistRepository;
         this.consistMutator = consistMutator;
+    }
+
+    @Override
+    protected Page<Zug> findAll(Optional<ZugModel> model, Pageable pageRequest) {
+        return repository.findAll(new ZugCriterion(model), pageRequest);
     }
 
     @Transactional

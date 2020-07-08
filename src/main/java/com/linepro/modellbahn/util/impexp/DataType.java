@@ -14,7 +14,7 @@ public enum DataType {
     ARTIKEL(ApiNames.ARTIKEL),
     AUFBAU(ApiNames.AUFBAU),
     BAHNVERWALTUNG(ApiNames.BAHNVERWALTUNG),
-    CONSIST(ApiNames.CONSIST),
+    CONSIST(ApiNames.CONSIST, "ZugConsist"),
     DECODER(ApiNames.DECODER),
     DECODER_ADRESS(ApiNames.DECODER + "_" + ApiNames.ADRESS),
     DECODER_CV(ApiNames.DECODER + "_" + ApiNames.CV),
@@ -39,15 +39,19 @@ public enum DataType {
     TEIL(ApiNames.TEIL),
     VORBILD(ApiNames.VORBILD),
     ZUG(ApiNames.ZUG),
-    ZUG_TYP(ApiNames.ZUG_TYP);
+    ZUG_TYP(ApiNames.ZUG_TYP, "ZugTyp");
 
     private final String typeName;
 
     private final String beanPrefix;
 
     private DataType(String typeName) {
-        this.beanPrefix = StringUtils.capitalizeWords(typeName, "_").replaceAll("_", ""); 
-        this.typeName = StringUtils.unCapitalize(beanPrefix);
+        this(StringUtils.capitalizeWords(typeName, "_").replaceAll("_", ""), StringUtils.capitalizeWords(typeName, "_").replaceAll("_", ""));
+    }
+    
+    private DataType(String typeName, String beanPrefix) {
+        this.typeName = StringUtils.unCapitalize(typeName);
+        this.beanPrefix = beanPrefix; 
     }
 
     public String getTypeName() {

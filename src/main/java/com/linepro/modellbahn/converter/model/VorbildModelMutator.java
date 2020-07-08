@@ -14,8 +14,8 @@ import com.linepro.modellbahn.repository.AchsfolgRepository;
 import com.linepro.modellbahn.repository.AntriebRepository;
 import com.linepro.modellbahn.repository.BahnverwaltungRepository;
 import com.linepro.modellbahn.repository.GattungRepository;
-import com.linepro.modellbahn.repository.UnterKategorieRepository;
 import com.linepro.modellbahn.repository.lookup.ItemLookup;
+import com.linepro.modellbahn.repository.lookup.UnterKategorieLookup;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,7 +27,7 @@ public class VorbildModelMutator implements Mutator<VorbildModel, Vorbild> {
     private final GattungRepository gattungRepository;
 
     @Autowired
-    private final UnterKategorieRepository unterKategorieRepository;
+    private final UnterKategorieLookup unterKategorieLookup;
 
     @Autowired
     private final AntriebRepository antriebRepository;
@@ -46,7 +46,7 @@ public class VorbildModelMutator implements Mutator<VorbildModel, Vorbild> {
         if (isAvailable(source) && isAvailable(destination) && StringUtils.hasText(source.getGattung())) {
             gattungRepository.findByName(source.getGattung()).ifPresent(g -> destination.setGattung(g));
 
-            destination.setUnterKategorie(lookup.find(source.getUnterKategorie(), unterKategorieRepository));
+            destination.setUnterKategorie(unterKategorieLookup.find(source.getKategorie(), source.getUnterKategorie()));
             destination.setBahnverwaltung(lookup.find(source.getBahnverwaltung(), bahnverwaltungRepository));
             destination.setHersteller(source.getHersteller());
             destination.setBauzeit(source.getBauzeit());

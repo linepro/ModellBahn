@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
     DecoderTypLookup.class,
     ItemLookup.class,
     ProduktLookup.class,
+    UnterKategorieLookup.class,
     VorbildLookup.class
 })
 @Component(PREFIX + "Lookups")

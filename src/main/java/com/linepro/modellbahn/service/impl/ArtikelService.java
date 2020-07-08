@@ -11,6 +11,8 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +31,7 @@ import com.linepro.modellbahn.model.ArtikelModel;
 import com.linepro.modellbahn.repository.AnderungRepository;
 import com.linepro.modellbahn.repository.ArtikelRepository;
 import com.linepro.modellbahn.service.ItemService;
+import com.linepro.modellbahn.service.criterion.ArtikelCriterion;
 
 @Service(PREFIX + "ArtikelService")
 public class ArtikelService extends ItemServiceImpl<ArtikelModel, Artikel> implements ItemService<ArtikelModel> {
@@ -58,6 +61,11 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, Artikel> imple
 
     public Optional<ArtikelModel> get(String artikelId) {
         return super.get(() -> repository.findByArtikelId(artikelId));
+    }
+
+    @Override
+    protected Page<Artikel> findAll(Optional<ArtikelModel> model, Pageable pageRequest) {
+        return repository.findAll(new ArtikelCriterion(model), pageRequest);
     }
 
     public Optional<ArtikelModel> update(String artikelId, ArtikelModel artikelModel) {

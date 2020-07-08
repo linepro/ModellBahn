@@ -6,5 +6,5 @@ import org.springframework.data.repository.NoRepositoryBean;
 import com.linepro.modellbahn.entity.Item;
 
 @NoRepositoryBean
-public interface ItemRepository<T extends Item> extends JpaRepository<T, Long> {
+public interface ItemRepository<E extends Item> extends JpaRepository<E, Long>, RepositorySearch<E> {
 }

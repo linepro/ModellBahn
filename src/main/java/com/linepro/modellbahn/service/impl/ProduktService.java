@@ -11,6 +11,8 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +30,7 @@ import com.linepro.modellbahn.model.ProduktTeilModel;
 import com.linepro.modellbahn.repository.ProduktRepository;
 import com.linepro.modellbahn.repository.ProduktTeilRepository;
 import com.linepro.modellbahn.service.ItemService;
+import com.linepro.modellbahn.service.criterion.ProduktCriterion;
 
 @Service(PREFIX + "ProduktService")
 
@@ -50,6 +53,11 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implem
 
         this.teilRepository = teilRepository;
         this.teilMutator = teilMutator;
+    }
+
+    @Override
+    protected Page<Produkt> findAll(Optional<ProduktModel> model, Pageable pageRequest) {
+        return repository.findAll(new ProduktCriterion(model), pageRequest);
     }
 
     public Optional<ProduktModel> get(String hersteller, String bestellNr) {

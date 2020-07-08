@@ -22,9 +22,9 @@ import com.linepro.modellbahn.repository.MotorTypRepository;
 import com.linepro.modellbahn.repository.SondermodellRepository;
 import com.linepro.modellbahn.repository.SpurweiteRepository;
 import com.linepro.modellbahn.repository.SteuerungRepository;
-import com.linepro.modellbahn.repository.UnterKategorieRepository;
 import com.linepro.modellbahn.repository.lookup.DecoderTypLookup;
 import com.linepro.modellbahn.repository.lookup.ItemLookup;
+import com.linepro.modellbahn.repository.lookup.UnterKategorieLookup;
 import com.linepro.modellbahn.repository.lookup.VorbildLookup;
 
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ public class ProduktModelMutator implements Mutator<ProduktModel, Produkt> {
     private final HerstellerRepository herstellerRepository;
 
     @Autowired
-    private final UnterKategorieRepository unterKategorieRepository;
+    private final UnterKategorieLookup unterKategorieLookup;
 
     @Autowired
     private final MassstabRepository massstabRepository;
@@ -90,7 +90,7 @@ public class ProduktModelMutator implements Mutator<ProduktModel, Produkt> {
             destination.setHersteller(lookup.find(source.getHersteller(), herstellerRepository));
             destination.setBestellNr(source.getBestellNr());
             destination.setBezeichnung(source.getBezeichnung());
-            destination.setUnterKategorie(lookup.find(source.getUnterKategorie(), unterKategorieRepository));
+            destination.setUnterKategorie(unterKategorieLookup.find(source.getKategorie(), source.getUnterKategorie()));
             destination.setMassstab(lookup.find(source.getMassstab(), massstabRepository));
             destination.setSpurweite(lookup.find(source.getSpurweite(), spurweiteRepository));
             destination.setBetreibsnummer(source.getBetreibsnummer());

@@ -11,6 +11,8 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,6 +25,7 @@ import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.VorbildModel;
 import com.linepro.modellbahn.repository.VorbildRepository;
 import com.linepro.modellbahn.service.ItemService;
+import com.linepro.modellbahn.service.criterion.VorbildCriterion;
 
 @Service(PREFIX + "VorbildService")
 
@@ -37,6 +40,11 @@ public class VorbildService extends ItemServiceImpl<VorbildModel, Vorbild> imple
         super(repository, vorbildModelMutator, vorbildMutator);
         this.repository = repository;
         this.fileService = fileService;
+    }
+
+    @Override
+    protected Page<Vorbild> findAll(Optional<VorbildModel> model, Pageable pageRequest) {
+        return repository.findAll(new VorbildCriterion(model), pageRequest);
     }
 
     public Optional<VorbildModel> get(String gattung) {
