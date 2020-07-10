@@ -204,7 +204,7 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTy
     public Optional<DecoderTypModel> updateAnleitungen(String herstellerStr, String bestellNr, MultipartFile multipart) {
         return  repository.findByBestellNr(herstellerStr, bestellNr)
                         .map(a -> {
-                            a.setAnleitungen(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.DECODER_TYP, ApiNames.ANLEITUNGEN, herstellerStr, bestellNr));
+                            a.setAnleitungen(fileService.updateFile(AcceptableMediaTypes.DOCUMENT_TYPES, multipart, ApiNames.DECODER_TYP, ApiNames.ANLEITUNGEN, herstellerStr, bestellNr));
                             return entityMutator.convert(a);
                         });
     }

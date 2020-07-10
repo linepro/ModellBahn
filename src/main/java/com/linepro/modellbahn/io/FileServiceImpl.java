@@ -34,14 +34,14 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public Path updateFile(List<MediaType> mediaTypes, MultipartFile multipart, String modelType, String fieldName, String...identifiers) {
-        try {
-            if (!handler.isAcceptable(multipart, mediaTypes)) {
-                throw new IllegalArgumentException(messageTranslator.getMessage(ApiMessages.INVALID_FILE, multipart.getOriginalFilename()));
-            }
+        if (!handler.isAcceptable(multipart, mediaTypes)) {
+            throw new IllegalArgumentException(messageTranslator.getMessage(ApiMessages.INVALID_FILE, multipart.getOriginalFilename()));
+        }
 
+        try {
             return handler.upload(multipart, modelType, fieldName, identifiers);
         } catch (Exception e) {
-            log.error(messageTranslator.getMessage(ApiMessages.INVALID_FILE, multipart.getOriginalFilename()));
+            log.error("Failed uploading '" + multipart.getOriginalFilename() + "': " + e.getMessage());
         }
 
         return null;
