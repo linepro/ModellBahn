@@ -10,6 +10,7 @@ import javax.persistence.criteria.Predicate;
 import org.springframework.util.StringUtils;
 
 import com.linepro.modellbahn.entity.Item;
+import com.linepro.modellbahn.persistence.DBNames;
 
 public abstract class AbstractCriterion<E extends Item> {
 
@@ -67,7 +68,7 @@ public abstract class AbstractCriterion<E extends Item> {
 
     protected List<Predicate> addJoinCondition(CriteriaBuilder criteriaBuilder, From<?,?> root, List<Predicate> where, String columnName, String name) {
         if (StringUtils.hasText(name)) {
-            addCondition(criteriaBuilder, root.join(columnName), where, columnName, name);
+            addCondition(criteriaBuilder, root.join(columnName), where, DBNames.NAME, name);
         }
 
         return where;
