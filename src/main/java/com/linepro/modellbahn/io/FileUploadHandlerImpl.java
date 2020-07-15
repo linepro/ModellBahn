@@ -7,6 +7,7 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Path;
@@ -51,9 +52,10 @@ public class FileUploadHandlerImpl implements FileUploadHandler {
      * @param fileDetail the file detail
      * @param fileData the file data
      * @return the path
+     * @throws IOException 
      */
     @Override
-    public Path upload(MultipartFile multipart, String modelName, String fieldName, String...identifiers) throws Exception {
+    public Path upload(MultipartFile multipart, String modelName, String fieldName, String...identifiers) throws IOException {
         String pathname = fileStore.getItemPath(modelName, identifiers).toString();
 
         new File(pathname).mkdirs();
@@ -83,11 +85,10 @@ public class FileUploadHandlerImpl implements FileUploadHandler {
      * @param fileName the file name
      * @param fileDetail the file detail
      * @param fileData the file data
+     * @throws IOException 
      * @throws Exception the exception
      */
-    private void writeToFile(Path filePath, MultipartFile multipart) throws Exception {
-
-        String originalFilename = multipart.getOriginalFilename();
+    private void writeToFile(Path filePath, MultipartFile multipart) throws IOException {
 
         try (
             OutputStream out = new FileOutputStream(filePath.toFile(), false);
@@ -105,8 +106,7 @@ public class FileUploadHandlerImpl implements FileUploadHandler {
             } while (read > 0);
     
             out.flush();
-        } catch (Exception e) {
-            log.error("Error uploading {}: {}", originalFilename, e.getMessage());
+        } finally {
         }
     }
 }

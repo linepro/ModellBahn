@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d9a67d24-a80e-4a44-9ea9-7ae8d31bf925",
+		"_postman_id": "b0624b35-3ef1-477f-8ea8-02ea1b07b55a",
 		"name": "ModellBahn",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -104,7 +104,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"{{achsfolgName}}\",\n\t\"bezeichnung\": \"{{achsfolgName}} Description\",\n\t\"deleted\": true\n}"
+							"raw": "{\n\t\"name\": \"{{achsfolgName}}\",\n\t\"bezeichnung\": \"{{achsfolgName}} Description\",\n\t\"deleted\": true\n}",
+							"options": {
+								"raw": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/achsfolg/{{achsfolgName}}",
@@ -321,7 +324,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"artikelId\": \"{{artikelId}}\",\n\t\"bezeichnung\": \"{{artikelId}} Description\",\n    \"kaufdatum\": \"1967-01-01\",\n    \"wahrung\": \"EUR\",\n    \"preis\": 100.00,\n    \"stuck\": 1,\n    \"verbleibende\": 1,\n    \"steuerung\": {\n        \"name\": \"FRU\"\n    },\n    \"motorTyp\": {\n        \"name\": \"SFCM\"\n    },\n    \"licht\": {\n        \"name\": \"L1V\"\n    },\n    \"kupplung\": {\n        \"name\": \"RELEX\"\n    },\n    \"status\": \"GEKAUFT\",\n    \"deleted\": false\n}",
+							"raw": "{\n\t\"artikelId\": \"{{artikelId}}\",\n    \"hersteller\": \"{{herstellerName}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n\t\"bezeichnung\": \"{{artikelId}} Description\",\n    \"kategorie\": \"LOKOMOTIV\",\n    \"unterKategorie\": \"DAMPF\",\n    \"lange\": 8.9,\n    \"massstab\": \"H0\",\n    \"spurweite\": \"H0\",\n    \"epoch\": \"III\",\n    \"bahnverwaltung\": \"DB\",\n    \"gattung\": \"89.0\",\n    \"betreibsnummer\": \"89 006\",\n    \"achsfolg\": \"\",\n    \"sondermodell\": \"\",\n    \"aufbau\": \"\",\n    \"licht\": \"L1V\",\n    \"kupplung\": \"RELEX\",\n    \"steuerung\": \"FRU\",\n    \"decoder\": \"00001\",\n    \"motorTyp\": \"SFCM\",\n    \"kaufdatum\": \"1967-01-01\",\n    \"wahrung\": \"EUR\",\n    \"preis\": 100.00,\n    \"stuck\": 1,\n    \"verbleibende\": 1,\n    \"anmerkung\": \"\",\n    \"beladung\": \"\",\n    \"status\": \"GEKAUFT\",\n    \"deleted\": false\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -379,7 +382,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"artikelId\": \"{{artikelId}}\",\n\t\"bezeichnung\": \"{{artikelId}} Description\",\n    \"kaufdatum\": \"1967-01-01\",\n    \"wahrung\": \"EUR\",\n    \"preis\": 100.00,\n    \"stuck\": 1,\n    \"verbleibende\": 1,\n    \"steuerung\": {\n        \"name\": \"FRU\"\n    },\n    \"motorTyp\": {\n        \"name\": \"SFCM\"\n    },\n    \"licht\": {\n        \"name\": \"L1V\"\n    },\n    \"kupplung\": {\n        \"name\": \"RELEX\"\n    },\n    \"status\": \"GEKAUFT\",\n    \"deleted\": false\n}",
+							"raw": "{\n\t\"artikelId\": \"{{artikelId}}\",\n    \"hersteller\": \"{{herstellerName}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n\t\"bezeichnung\": \"{{artikelId}} Description\",\n    \"kategorie\": \"LOKOMOTIV\",\n    \"unterKategorie\": \"DAMPF\",\n    \"lange\": 8.9,\n    \"massstab\": \"H0\",\n    \"spurweite\": \"H0\",\n    \"epoch\": \"III\",\n    \"bahnverwaltung\": \"DB\",\n    \"gattung\": \"89.0\",\n    \"betreibsnummer\": \"89 006\",\n    \"achsfolg\": \"\",\n    \"sondermodell\": \"\",\n    \"aufbau\": \"\",\n    \"licht\": \"L1V\",\n    \"kupplung\": \"RELEX\",\n    \"steuerung\": \"FRU\",\n    \"decoder\": \"00001\",\n    \"motorTyp\": \"SFCM\",\n    \"kaufdatum\": \"1967-01-01\",\n    \"wahrung\": \"EUR\",\n    \"preis\": 100.00,\n    \"stuck\": 1,\n    \"verbleibende\": 1,\n    \"anmerkung\": \"\",\n    \"beladung\": \"\",\n    \"status\": \"GEKAUFT\",\n    \"deleted\": false\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -412,7 +415,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/artikel/{{artikelId}}/abbildung",
@@ -704,7 +710,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/aufbau/{{aufbauName}}/abbildung",
@@ -713,7 +722,8 @@
 							],
 							"path": [
 								"aufbau",
-								"{{aufbauName}}"
+								"{{aufbauName}}",
+								"abbildung"
 							]
 						}
 					},
@@ -991,7 +1001,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"decoderId\": \"{{decoderId}}\",\n    \"decoderTyp\": {\n        \"hersteller\": {\n            \"name\": \"ESU\"\n        },\n        \"bestellNr\": \"62400\"\n    },\n    \"protokoll\": {\n        \"name\": \"MFX\"\n    },\n    \"status\": \"INSTALIERT\",\n\t\"deleted\": true\n}",
+							"raw": "{\n\t\"decoderId\": \"{{decoderId}}\",\n    \"hersteller\": \"{{decoderHersteller}}\",\n    \"bestellNr\": \"{{decoderBestellNr}}\",\n    \"protokoll\": \"MFX\",\n    \"status\": \"INSTALIERT\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1179,7 +1189,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"hersteller\": {\n        \"name\": \"{{decoderHersteller}}\"\n    },\n\t\"bestellNr\": \"{{decoderBestellNr}}\",\n\t\"bezeichnung\": \"{{decoderTypName}} Description\",\n    \"protokoll\": {\n        \"name\": \"MFX\"\n    },\n    \"gerausch\": true,\n    \"konfiguration\": \"CV\",\n    \"stecker\": \"NEM652\",\n\t\"deleted\": true\n}",
+							"raw": "{\n    \"hersteller\": \"{{decoderHersteller}}\",\n\t\"bestellNr\": \"{{decoderBestellNr}}\",\n\t\"bezeichnung\": \"{{decoderTypName}} Description\",\n    \"protokoll\": \"MFX\",\n    \"gerausch\": true,\n    \"konfiguration\": \"CV\",\n    \"stecker\": \"NEM652\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1238,7 +1248,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"hersteller\": {\n        \"name\": \"{{decoderHersteller}}\"\n    },\n\t\"bestellNr\": \"{{decoderBestellNr}}\",\n\t\"bezeichnung\": \"{{decoderTypName}} Description\",\n    \"protokoll\": {\n        \"name\": \"MFX\"\n    },\n    \"gerausch\": true,\n    \"konfiguration\": \"CV\",\n    \"stecker\": \"NEM652\",\n\t\"deleted\": true\n}",
+							"raw": "{\n    \"hersteller\": \"{{decoderHersteller}}\",\n\t\"bestellNr\": \"{{decoderBestellNr}}\",\n\t\"bezeichnung\": \"{{decoderTypName}} Description\",\n    \"protokoll\": \"MFX\",\n    \"gerausch\": true,\n    \"konfiguration\": \"CV\",\n    \"stecker\": \"NEM652\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1272,7 +1282,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/anleitungen",
@@ -1325,7 +1338,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"hersteller\": \"{{decoderHersteller}}\",\n\t\"bestellNr\": \"{{decoderBestellNr}}\",\n    \"index\": 1,\n\t\"bezeichnung\": \"{{decoderTypName}} Description\",\n    \"adressTyp\": \"DIGITAL\",\n    \"span\": 1,\n    \"werkseinstellung\": 1,\n\t\"deleted\": true\n}",
+							"raw": "{\n    \"index\": 1,\n\t\"bezeichnung\": \"{{decoderTypName}} Description\",\n    \"adressTyp\": \"DIGITAL\",\n    \"span\": 1,\n    \"werkseinstellung\": 1,\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1363,7 +1376,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"hersteller\": \"{{decoderHersteller}}\",\n\t\"bestellNr\": \"{{decoderBestellNr}}\",\n    \"index\": 1,\n\t\"bezeichnung\": \"{{decoderTypName}} Description\",\n    \"adressTyp\": \"DIGITAL\",\n    \"span\": 1,\n    \"werkseinstellung\": 1,\n\t\"deleted\": true\n}",
+							"raw": "{\n    \"index\": 1,\n\t\"bezeichnung\": \"{{decoderTypName}} Description\",\n    \"adressTyp\": \"DIGITAL\",\n    \"span\": 1,\n    \"werkseinstellung\": 1,\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2298,22 +2311,18 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/kategorie/unterkategorien?kategorie=AUSGESTALTUNG&kategorie=BELEUCHTUNG",
+							"raw": "{{api}}/kategorie/unterKategorien?kategorien=AUSGESTALTUNG,BELEUCHTUNG",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"kategorie",
-								"unterkategorien"
+								"unterKategorien"
 							],
 							"query": [
 								{
-									"key": "kategorie",
-									"value": "AUSGESTALTUNG"
-								},
-								{
-									"key": "kategorie",
-									"value": "BELEUCHTUNG"
+									"key": "kategorien",
+									"value": "AUSGESTALTUNG,BELEUCHTUNG"
 								}
 							]
 						}
@@ -2336,7 +2345,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"kategorie\": \"{{kategorieName}}\",\n\t\"name\": \"{{unterkategorieName}}\",\n\t\"bezeichnung\": \"{{kategorieName}} Description\",\n\t\"deleted\": true\n}",
+							"raw": "{\n\t\"kategorie\": \"{{kategorieName}}\",\n\t\"name\": \"{{unterkategorieName}}\",\n\t\"bezeichnung\": \"{{unterkategorieName}} Description\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2344,14 +2353,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{api}}/kategorie/{{kategorieName}}/unterkategorien",
+							"raw": "{{api}}/kategorie/{{kategorieName}}/unterKategorien",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"kategorie",
 								"{{kategorieName}}",
-								"unterkategorien"
+								"unterKategorien"
 							]
 						}
 					},
@@ -2593,7 +2602,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/kupplung/{{kupplungName}}/abbildung",
@@ -2781,7 +2793,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/licht/{{lichtName}}/abbildung",
@@ -3158,7 +3173,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"hersteller\": {\n        \"name\": \"MARKLIN\"\n    },\n    \"bestellNr\": \"3000\",\n\t\"bezeichnung\": \"{{produktName}} Description\",\n    \"lange\": 11.00,\n    \"unterKategorie\": {\n        \"kategorie\": \"LOKOMOTIV\",\n        \"name\": \"DAMPF\"\n    },\n    \"massstab\": {\n        \"name\": \"H0\"\n    },\n    \"spurweite\": {\n        \"name\": \"H0\"\n    },\n    \"epoch\": {\n        \"name\": \"III\"\n    },\n    \"bahnverwaltung\": {\n        \"name\": \"DB\"\n    },\n    \"gattung\": {\n        \"name\": \"BR89.0\"\n\t},\n\t\"betreibsnummer\": \"89 028\",\n\t\"bauzeit\": \"1907-01-01\",\n\t\"vorbild\": {\n\t    \"gattung\": \"BR89.0\"\n    },\n    \"achsfolg\": {\n        \"name\": \"CH2T\"\n    },\n    \"aufbau\": {\n        \"name\": \"LK\"\n    },\n    \"licht\": {\n        \"name\": \"L1V\"\n    },\n    \"kupplung\": {\n        \"name\": \"RELEX\"\n    },\n    \"steuerung\": {\n        \"name\": \"FRU\"\n    },\n    \"motorTyp\": {\n        \"name\": \"SFCM\"\n\t}\n}",
+							"raw": "{\n    \"hersteller\": \"{{hersteller}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n\t\"bezeichnung\": \"{{produktName}} Description\",\n    \"lange\": 11.00,\n    \"kategorie\": \"LOKOMOTIV\",\n    \"unterKategorie\": \"DAMPF\",\n    \"massstab\": \"H0\",\n    \"spurweite\":\"H0\",\n    \"epoch\": \"III\" ,\n    \"bahnverwaltung\": \"DB\" ,\n    \"gattung\": \"BR89.0\" ,\n\t\"betreibsnummer\": \"89 028\",\n\t\"bauzeit\": \"1907-01-01\",\n\t\"vorbild\": \"BR89.0\" ,\n    \"achsfolg\": \"CH2T\" ,\n    \"aufbau\":  \"LK\",\n    \"licht\": \"L1V\",\n    \"kupplung\": \"RELEX\",\n    \"steuerung\": \"FRU\",\n    \"motorTyp\": \"SFCM\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3217,7 +3232,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"hersteller\": {\n        \"name\": \"MARKLIN\"\n    },\n    \"bestellNr\": \"3000\",\n\t\"bezeichnung\": \"{{produktName}} Description\",\n    \"lange\": 11.00,\n    \"unterKategorie\": {\n        \"kategorie\": \"LOKOMOTIV\",\n        \"name\": \"DAMPF\"\n    },\n    \"massstab\": {\n        \"name\": \"H0\"\n    },\n    \"spurweite\": {\n        \"name\": \"H0\"\n    },\n    \"epoch\": {\n        \"name\": \"III\"\n    },\n    \"bahnverwaltung\": {\n        \"name\": \"DB\"\n    },\n    \"gattung\": {\n        \"name\": \"BR89.0\"\n\t},\n\t\"betreibsnummer\": \"89 028\",\n\t\"bauzeit\": \"1907-01-01\",\n\t\"vorbild\": {\n\t    \"gattung\": \"BR89.0\"\n    },\n    \"achsfolg\": {\n        \"name\": \"CH2T\"\n    },\n    \"aufbau\": {\n        \"name\": \"LK\"\n    },\n    \"licht\": {\n        \"name\": \"L1V\"\n    },\n    \"kupplung\": {\n        \"name\": \"RELEX\"\n    },\n    \"steuerung\": {\n        \"name\": \"FRU\"\n    },\n    \"motorTyp\": {\n        \"name\": \"SFCM\"\n\t}\n}",
+							"raw": "{\n    \"hersteller\": \"{{hersteller}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n\t\"bezeichnung\": \"{{produktName}} Description\",\n    \"lange\": 11.00,\n    \"kategorie\": \"LOKOMOTIV\",\n    \"unterKategorie\": \"DAMPF\",\n    \"massstab\": \"H0\",\n    \"spurweite\":\"H0\",\n    \"epoch\": \"III\" ,\n    \"bahnverwaltung\": \"DB\" ,\n    \"gattung\": \"BR89.0\" ,\n\t\"betreibsnummer\": \"89 028\",\n\t\"bauzeit\": \"1907-01-01\",\n\t\"vorbild\": \"BR89.0\" ,\n    \"achsfolg\": \"CH2T\" ,\n    \"aufbau\":  \"LK\",\n    \"licht\": \"L1V\",\n    \"kupplung\": \"RELEX\",\n    \"steuerung\": \"FRU\",\n    \"motorTyp\": \"SFCM\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3225,14 +3240,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}",
+							"raw": "{{api}}/produkt/{{hersteller}}/{{bestellNr}}",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"produkt",
-								"{{produktHersteller}}",
-								"{{produktBestellNr}}"
+								"{{hersteller}}",
+								"{{bestellNr}}"
 							]
 						}
 					},
@@ -3251,17 +3266,20 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
-							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}/abbildung",
+							"raw": "{{api}}/produkt/{{hersteller}}/{{bestellNr}}/abbildung",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"produkt",
-								"{{produktHersteller}}",
-								"{{produktBestellNr}}",
+								"{{hersteller}}",
+								"{{bestellNr}}",
 								"abbildung"
 							]
 						}
@@ -3274,14 +3292,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}/abbildung",
+							"raw": "{{api}}/produkt/{{hersteller}}/{{bestellNr}}/abbildung",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"produkt",
-								"{{produktHersteller}}",
-								"{{produktBestellNr}}",
+								"{{hersteller}}",
+								"{{bestellNr}}",
 								"abbildung"
 							]
 						}
@@ -3301,17 +3319,20 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
-							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}/anleitungen",
+							"raw": "{{api}}/produkt/{{hersteller}}/{{bestellNr}}/anleitungen",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"produkt",
-								"{{produktHersteller}}",
-								"{{produktBestellNr}}",
+								"{{hersteller}}",
+								"{{bestellNr}}",
 								"anleitungen"
 							]
 						}
@@ -3324,14 +3345,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}/anleitungen",
+							"raw": "{{api}}/produkt/{{hersteller}}/{{bestellNr}}/anleitungen",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"produkt",
-								"{{produktHersteller}}",
-								"{{produktBestellNr}}",
+								"{{hersteller}}",
+								"{{bestellNr}}",
 								"anleitungen"
 							]
 						}
@@ -3351,17 +3372,20 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
-							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}/explosionszeichnung",
+							"raw": "{{api}}/produkt/{{hersteller}}/{{bestellNr}}/explosionszeichnung",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"produkt",
-								"{{produktHersteller}}",
-								"{{produktBestellNr}}",
+								"{{hersteller}}",
+								"{{bestellNr}}",
 								"explosionszeichnung"
 							]
 						}
@@ -3374,14 +3398,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}/explosionszeichnung",
+							"raw": "{{api}}/produkt/{{hersteller}}/{{bestellNr}}/explosionszeichnung",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"produkt",
-								"{{produktHersteller}}",
-								"{{produktBestellNr}}",
+								"{{hersteller}}",
+								"{{bestellNr}}",
 								"explosionszeichnung"
 							]
 						}
@@ -3404,7 +3428,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"{{produktName}}\",\n\t\"bezeichnung\": \"{{produktName}} Description\",\n\t\"deleted\": true\n}",
+							"raw": "{\n    \"teilHersteller\": \"{{teilHersteller}}\",\n    \"teilBestellNr\": \"{{teilBestellNr}}\",\n    \"anzahl\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3412,14 +3436,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}/teilen",
+							"raw": "{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"produkt",
-								"{{produktHersteller}}",
-								"{{produktBestellNr}}",
+								"{{hersteller}}",
+								"{{bestellNr}}",
 								"teilen"
 							]
 						}
@@ -3441,17 +3465,23 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}/teilen/{{teilHersteller}}/{{teilBestellNr}}",
+							"raw": "{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen/{{teilHersteller}}/{{teilBestellNr}}?anzahl=2",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"produkt",
-								"{{produktHersteller}}",
-								"{{produktBestellNr}}",
+								"{{hersteller}}",
+								"{{bestellNr}}",
 								"teilen",
 								"{{teilHersteller}}",
 								"{{teilBestellNr}}"
+							],
+							"query": [
+								{
+									"key": "anzahl",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -3463,14 +3493,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}/teilen/{{teilHersteller}}/{{teilBestellNr}}",
+							"raw": "{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen/{{teilHersteller}}/{{teilBestellNr}}",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"produkt",
-								"{{produktHersteller}}",
-								"{{produktBestellNr}}",
+								"{{hersteller}}",
+								"{{bestellNr}}",
 								"teilen",
 								"{{teilHersteller}}",
 								"{{teilBestellNr}}"
@@ -3485,14 +3515,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{api}}/produkt/{{produktHersteller}}/{{produktBestellNr}}",
+							"raw": "{{api}}/produkt/{{hersteller}}/{{bestellNr}}",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"produkt",
-								"{{produktHersteller}}",
-								"{{produktBestellNr}}"
+								"{{hersteller}}",
+								"{{bestellNr}}"
 							]
 						}
 					},
@@ -4102,7 +4132,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"gattung\": \"BR89.0\",\n\t\"bezeichnung\": \"{{vorbildName}} Description\",\n    \"unterKategorie\": {\n        \"kategorie\": \"LOKOMOTIV\",\n        \"name\": \"DAMPF\"\n    },\n    \"bahnverwaltung\": {\n        \"name\": \"DB\"\n    },\n    \"hersteller\": \"Henschel\",\n    \"bauzeit\": \"1934-01-01\",\n    \"anzahl\": 10,\n    \"betreibsnummer\": \"89 006\",\n    \"antrieb\": {\n        \"name\": \"DAMPF\"\n    },\n    \"achsfolg\": {\n        \"name\": \"CH2T\"\n    },\n    \"leistung\": 385.00,\n    \"dienstgewicht\": 46.60,\n    \"geschwindigkeit\": 45,\n    \"lange\": 9.60,\n    \"ausserdienst\": \"1962-01-01\",\n    \"dmTreibrad\": 1.10,\n    \"zylinder\": 2,\n    \"dmZylinder\": 0.42,\n    \"kolbenhub\": 0.55,\n    \"kesseluberdruck\": 14.00,\n    \"rostflache\": 1.42,\n    \"uberhitzerflache\": 24.10,\n    \"wasservorrat\": 4.50,\n    \"verdampfung\": 69.86,\n\t\"deleted\": true\n}",
+							"raw": "{\n    \"gattung\": \"BR89.0\",\n\t\"bezeichnung\": \"{{vorbildName}} Description\",\n    \"kategorie\": \"LOKOMOTIV\",\n    \"unterKategorie\": \"DAMPF\",\n    \"bahnverwaltung\": \"DB\",\n    \"hersteller\": \"Henschel\",\n    \"bauzeit\": \"1934-01-01\",\n    \"anzahl\": 10,\n    \"betreibsnummer\": \"89 006\",\n    \"antrieb\":\"DAMPF\",\n    \"achsfolg\":\"CH2T\",\n    \"leistung\": 385.00,\n    \"dienstgewicht\": 46.60,\n    \"geschwindigkeit\": 45,\n    \"lange\": 9.60,\n    \"ausserdienst\": \"1962-01-01\",\n    \"dmTreibrad\": 1.10,\n    \"zylinder\": 2,\n    \"dmZylinder\": 0.42,\n    \"kolbenhub\": 0.55,\n    \"kesseluberdruck\": 14.00,\n    \"rostflache\": 1.42,\n    \"uberhitzerflache\": 24.10,\n    \"wasservorrat\": 4.50,\n    \"verdampfung\": 69.86,\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4160,7 +4190,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"gattung\": \"BR89.0\",\n\t\"bezeichnung\": \"{{vorbildName}} Description\",\n    \"unterKategorie\": {\n        \"kategorie\": \"LOKOMOTIV\",\n        \"name\": \"DAMPF\"\n    },\n    \"bahnverwaltung\": {\n        \"name\": \"DB\"\n    },\n    \"hersteller\": \"Henschel\",\n    \"bauzeit\": \"1934-01-01\",\n    \"anzahl\": 10,\n    \"betreibsnummer\": \"89 006\",\n    \"antrieb\": {\n        \"name\": \"DAMPF\"\n    },\n    \"achsfolg\": {\n        \"name\": \"CH2T\"\n    },\n    \"leistung\": 385.00,\n    \"dienstgewicht\": 46.60,\n    \"geschwindigkeit\": 45,\n    \"lange\": 9.60,\n    \"ausserdienst\": \"1962-01-01\",\n    \"dmTreibrad\": 1.10,\n    \"zylinder\": 2,\n    \"dmZylinder\": 0.42,\n    \"kolbenhub\": 0.55,\n    \"kesseluberdruck\": 14.00,\n    \"rostflache\": 1.42,\n    \"uberhitzerflache\": 24.10,\n    \"wasservorrat\": 4.50,\n    \"verdampfung\": 69.86,\n\t\"deleted\": true\n}",
+							"raw": "{\n    \"gattung\": \"BR89.0\",\n\t\"bezeichnung\": \"{{vorbildName}} Description\",\n    \"kategorie\": \"LOKOMOTIV\",\n    \"unterKategorie\": \"DAMPF\" ,\n    \"bahnverwaltung\": \"DB\", \n    \"hersteller\": \"Henschel\",\n    \"bauzeit\": \"1934-01-01\",\n    \"anzahl\": 10,\n    \"betreibsnummer\": \"89 006\",\n    \"antrieb\": \"DAMPF\",\n    \"achsfolg\": \"CH2T\",\n    \"leistung\": 385.00,\n    \"dienstgewicht\": 46.60,\n    \"geschwindigkeit\": 45,\n    \"lange\": 9.60,\n    \"ausserdienst\": \"1962-01-01\",\n    \"dmTreibrad\": 1.10,\n    \"zylinder\": 2,\n    \"dmZylinder\": 0.42,\n    \"kolbenhub\": 0.55,\n    \"kesseluberdruck\": 14.00,\n    \"rostflache\": 1.42,\n    \"uberhitzerflache\": 24.10,\n    \"wasservorrat\": 4.50,\n    \"verdampfung\": 69.86,\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4193,7 +4223,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/vorbild/{{gattung}}/abbildung",
@@ -4290,7 +4323,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"{{zugName}}\",\n    \"zugTyp\": {\n        \"name\": \"TEE\"\n    },\n\t\"bezeichnung\": \"{{zugName}} Description\",\n\t\"deleted\": true\n}",
+							"raw": "{\n\t\"name\": \"{{zugName}}\",\n    \"zugTyp\": \"TEE\",\n\t\"bezeichnung\": \"{{zugName}} Description\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4348,7 +4381,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"{{zugName}}\",\n    \"zugTyp\": {\n        \"name\": \"TEE\"\n    },\n\t\"bezeichnung\": \"{{zugName}} Description\",\n\t\"deleted\": true\n}",
+							"raw": "{\n\t\"name\": \"{{zugName}}\",\n    \"zugTyp\": \"TEE\",\n\t\"bezeichnung\": \"{{zugName}} Description\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5427,7 +5460,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/achsfolg",
@@ -5455,7 +5491,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/anderung",
@@ -5483,7 +5522,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/antrieb",
@@ -5511,7 +5553,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/artikel",
@@ -5539,7 +5584,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/aufbau",
@@ -5567,7 +5615,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/bahnverwaltung",
@@ -5595,7 +5646,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/decoderAdress",
@@ -5623,7 +5677,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/decoderCv",
@@ -5651,7 +5708,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/decoderFunktion",
@@ -5679,7 +5739,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/decoder",
@@ -5707,7 +5770,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/decoderTypAdress",
@@ -5735,7 +5801,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/decoderTypCv",
@@ -5763,7 +5832,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/decoderTypFunktion",
@@ -5791,7 +5863,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/decoderTyp",
@@ -5819,7 +5894,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/epoch",
@@ -5847,7 +5925,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/gattung",
@@ -5875,7 +5956,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/hersteller",
@@ -5903,7 +5987,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/kategorie",
@@ -5931,7 +6018,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/kupplung",
@@ -5959,7 +6049,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/licht",
@@ -5987,7 +6080,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/massstab",
@@ -6015,7 +6111,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/motorTyp",
@@ -6043,7 +6142,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/produkt",
@@ -6071,7 +6173,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/produktTeil",
@@ -6099,7 +6204,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/protokoll",
@@ -6127,7 +6235,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/sondermodell",
@@ -6155,7 +6266,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/spurweite",
@@ -6183,7 +6297,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/steuerung",
@@ -6211,7 +6328,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/unterKategorie",
@@ -6239,7 +6359,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/vorbild",
@@ -6267,7 +6390,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/zugConsist",
@@ -6295,7 +6421,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/zug",
@@ -6323,7 +6452,10 @@
 									"type": "file",
 									"src": []
 								}
-							]
+							],
+							"options": {
+								"formdata": {}
+							}
 						},
 						"url": {
 							"raw": "{{api}}/data/zugTyp",
@@ -6361,7 +6493,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "37586b96-cebf-4dd0-9ea5-1d0c7858dd46",
+				"id": "80f2c2c4-94d1-4cf3-82c6-3901d14e95a8",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -6371,164 +6503,12 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "c51ea5cf-82e6-4a4b-a532-08ce3cb0dd05",
+				"id": "4f2205a3-4aad-4c68-9d1f-45e434f579d4",
 				"type": "text/javascript",
 				"exec": [
 					""
 				]
 			}
-		}
-	],
-	"variable": [
-		{
-			"id": "8342520f-5b4f-4c3f-b107-927559a84811",
-			"key": "host",
-			"value": "http://127.0.0.1"
-		},
-		{
-			"id": "f5e4bae7-cf97-4538-8b7f-b92f48eb6ebe",
-			"key": "port",
-			"value": ":8086"
-		},
-		{
-			"id": "b135ed62-711a-4360-a27d-b55ff96d3b64",
-			"key": "server",
-			"value": "{{host}}{{port}}"
-		},
-		{
-			"id": "f4cca85d-c978-4927-8bbe-8cf08cb8760f",
-			"key": "root",
-			"value": "{{server}}/ModellBahn"
-		},
-		{
-			"id": "24bf200a-1ffe-4b21-81f9-b071654f6303",
-			"key": "api",
-			"value": "{{root}}/api"
-		},
-		{
-			"id": "74ec2ac2-228d-4849-b726-881b68355336",
-			"key": "achsfolgName",
-			"value": "1CD32T35"
-		},
-		{
-			"id": "4eb2138d-9b8c-48f3-9cf9-bc9ca6489411",
-			"key": "antriebName",
-			"value": "AKKU"
-		},
-		{
-			"id": "d4657716-caea-4b89-991c-e2a5b1f32c51",
-			"key": "aufbauName",
-			"value": "LK"
-		},
-		{
-			"id": "aae24ce0-53b3-4e3c-b052-1623676a49b9",
-			"key": "bahnverwaltungName",
-			"value": "DB"
-		},
-		{
-			"id": "0c518cca-497b-484a-8f71-be93c298b2ec",
-			"key": "epochName",
-			"value": "IV"
-		},
-		{
-			"id": "905a4328-33cb-4eb8-a735-aae3d2a5982f",
-			"key": "gattung",
-			"value": "BR89.0"
-		},
-		{
-			"id": "ead46a10-ac00-4072-8c08-c72340ef9b40",
-			"key": "herstellerName",
-			"value": "MARKLIN"
-		},
-		{
-			"id": "0c36bee7-287a-4522-94a9-1301874858a9",
-			"key": "kategorieName",
-			"value": "AUSGESTALTUNG"
-		},
-		{
-			"id": "2017a08a-2409-42a6-93ac-e31517763765",
-			"key": "kupplungName",
-			"value": "RELEX"
-		},
-		{
-			"id": "9921e31c-0283-40af-8ab9-532059a7f165",
-			"key": "lichtName",
-			"value": "L1V"
-		},
-		{
-			"id": "e9615cad-c1ba-4bf6-b45a-44767eb7aebf",
-			"key": "massstabName",
-			"value": "H0"
-		},
-		{
-			"id": "507d7e64-dddb-4d5c-a2cd-f55e48c2c219",
-			"key": "motorTypName",
-			"value": "CSINUS"
-		},
-		{
-			"id": "ab9834cc-fbec-44d3-8e37-cf362523e988",
-			"key": "sondermodellName",
-			"value": "MM"
-		},
-		{
-			"id": "31aebb1a-da39-41f6-8eca-f5eaadf9f61f",
-			"key": "spurweiteName",
-			"value": "H0"
-		},
-		{
-			"id": "4d1aa3ac-a452-4864-b440-a4c6ec2eb2c9",
-			"key": "steuerungName",
-			"value": "DIGITAL"
-		},
-		{
-			"id": "fb4b5770-9a36-4453-a014-43fcce054822",
-			"key": "unterkategorieName",
-			"value": "HECKEN"
-		},
-		{
-			"id": "f6c9b4fa-cd62-43c8-b601-e181564ae3aa",
-			"key": "zugName",
-			"value": "BAVARIA"
-		},
-		{
-			"id": "61be9fb3-f064-405d-8ec6-6819a377371b",
-			"key": "zugTyp",
-			"value": "TEE"
-		},
-		{
-			"id": "07742ff7-31d4-46a7-92d0-8c7b93a17868",
-			"key": "protokollName",
-			"value": "MFX"
-		},
-		{
-			"id": "597e15c4-1e0d-4754-95e0-419f90335f02",
-			"key": "hersteller",
-			"value": "MARKLIN"
-		},
-		{
-			"id": "b0a942c2-3329-4bbf-8f1d-11844493832a",
-			"key": "bestellNr",
-			"value": "3000"
-		},
-		{
-			"id": "1f57fa37-453d-4465-9678-e367c073adce",
-			"key": "decoderHersteller",
-			"value": "ESU"
-		},
-		{
-			"id": "2fe68cc5-59d4-48a9-bbd9-797647694432",
-			"key": "decoderBestellNr",
-			"value": "62400"
-		},
-		{
-			"id": "918a15ed-10b1-4354-a78e-2cbfa8c4ece8",
-			"key": "decoderId",
-			"value": "00001"
-		},
-		{
-			"id": "3fef81eb-780a-4d2b-ab90-33d76705f546",
-			"key": "artikelId",
-			"value": "00001"
 		}
 	],
 	"protocolProfileBehavior": {}
