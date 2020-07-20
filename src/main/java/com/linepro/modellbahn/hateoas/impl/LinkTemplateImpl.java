@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import lombok.Data;
 
@@ -34,11 +35,8 @@ public class LinkTemplateImpl implements LinkTemplate {
     public void apply(RepresentationModel<?> model) {
         if (test == null || test.test(model)) {
             Map<String,Object> names = extractor.pathNames(model);
-            String path = this.path;
 
-            for (String name : names.keySet()) {
-                path = path.replace(name, String.valueOf(names.get(name)));
-            }
+            String path = ServletUriComponentsBuilder.fromCurrentServletMapping().path(this.path).buildAndExpand(names).toString();
 
             model.add(new Link(path, rel));
         }

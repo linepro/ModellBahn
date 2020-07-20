@@ -12,6 +12,7 @@ import javax.validation.ConstraintViolationException;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -64,8 +65,8 @@ public class ErrorHandler {
     }
 
     private Throwable getEffective(Exception ex) {
-        if (ex instanceof PersistenceException) {
-            return ex.getCause();   
+        if (ex.getCause() != null) {
+            return ex;   
         }
 
         return ex;
@@ -74,11 +75,15 @@ public class ErrorHandler {
     private HttpStatus classify(Throwable ex) {
         if (ex instanceof ConstraintViolationException) {
             return HttpStatus.BAD_REQUEST;
+        } else if (ex instanceof DataIntegrityViolationException) {
+            return HttpStatus.BAD_REQUEST;
         } else if (ex instanceof EntityExistsException) {
             return HttpStatus.BAD_REQUEST;
         } else if (ex instanceof EntityNotFoundException) {
             return HttpStatus.NOT_FOUND;
         } else if (ex instanceof IllegalArgumentException) {
+            return HttpStatus.BAD_REQUEST;
+        } else if (ex instanceof IllegalStateException) {
             return HttpStatus.BAD_REQUEST;
         } else if (ex instanceof NoResultException) {
             return HttpStatus.NO_CONTENT;

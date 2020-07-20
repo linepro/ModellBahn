@@ -1,13 +1,17 @@
 package com.linepro.modellbahn.hateoas;
 
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_HERSTELLER;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_HERSTELLER;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_HERSTELLER;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.SEARCH_HERSTELLER;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_HERSTELLER;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.stereotype.Component;
 
-import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.HerstellerModel;
 
@@ -18,11 +22,11 @@ public class HerstellerModelProcessor extends NamedModelProcessor<HerstellerMode
     @Autowired
     public HerstellerModelProcessor() {
         super(
-            ApiPaths.ADD_HERSTELLER, 
-            ApiPaths.GET_HERSTELLER, 
-            ApiPaths.UPDATE_HERSTELLER, 
-            ApiPaths.DELETE_HERSTELLER, 
-            ApiPaths.SEARCH_HERSTELLER
+            ADD_HERSTELLER, 
+            GET_HERSTELLER, 
+            UPDATE_HERSTELLER, 
+            DELETE_HERSTELLER, 
+            SEARCH_HERSTELLER
             );
     }
 }

@@ -1,14 +1,13 @@
 package com.linepro.modellbahn.hateoas.impl;
 
+import static com.linepro.modellbahn.controller.impl.ApiNames.NAMEN;
+
 import java.util.Collections;
 import java.util.Map;
 
-import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.model.NamedItemModel;
 
 public class NamedFieldExtractor implements FieldsExtractor {
-
-    public static final String NAME = "{" + ApiNames.NAMEN + "}";
 
     private final FieldExtractor extractor;
 
@@ -25,7 +24,7 @@ public class NamedFieldExtractor implements FieldsExtractor {
         Object value = extractor.get(model);
 
         if (value != null) {
-            return Collections.singletonMap(NAME, value);
+            return Collections.singletonMap(NAMEN, value);
         }
 
         return Collections.emptyMap();

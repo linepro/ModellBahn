@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "eaa4e27c-f7e6-4434-8c23-65d17dfbd78d",
+		"_postman_id": "8a75b094-8bfe-4bc9-9687-152be99b54d7",
 		"name": "ModellBahn",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,7 +14,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "8ac57d0a-77a8-49c4-8a1c-308c0ee20eaf",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -25,14 +25,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "424b8dae-6600-4d41-aa68-29c48fdbfe4d",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"console.log(pm.request.url);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -86,13 +85,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "edbd6404-82ee-4241-931c-90f1e453319a",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -134,7 +133,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "dd93781a-dca3-430e-ba23-551fea84337b",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -144,13 +143,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c62aa246-6ed8-426e-970a-a9a531779dc5",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -203,10 +202,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6002f131-0d47-48af-ad02-b297cb1d79d0",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -256,7 +255,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ab933e90-eda3-4cdd-a63e-95cea4f34b12",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -292,7 +291,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "2bb782c3-15b7-4611-8d4c-2bc36dcca387",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -303,13 +302,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "37ab38d9-b4e6-42aa-b9eb-88bbc4c43d6e",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -363,13 +362,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "05ed7316-06a5-4ab0-a535-e47e93f4ec4e",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -411,7 +410,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "049303a1-88dd-4654-a1d5-4912869fd708",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -421,13 +420,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fa4d19c8-b048-42ab-ada0-0c9327cb11a2",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -482,10 +481,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8ee4ad79-fb08-4c6e-b410-da0c122d373c",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -535,7 +534,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "03047ad9-1552-497d-8afe-fc1cc08950ec",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -571,7 +570,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "9b04ef4f-4b86-4d40-b3dc-b0a49f57ded9",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -582,13 +581,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bc4ef269-6ed7-4cd5-9274-04c87bbfeb3d",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -642,13 +641,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0b84c1ca-2881-472e-8f50-a73b652a4f52",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -690,7 +689,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "2fb72069-2bd2-4bc5-8825-c5bd3ca05900",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -700,13 +699,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "965a48d3-6a50-41f4-84d8-f5f1d66235a8",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -868,10 +867,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2a2fbf75-c76a-425c-84d0-b8c67f9a1673",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -969,7 +968,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d1339bee-bf0c-429a-b3bf-9e24065568b2",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -1005,7 +1004,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "ffd89d11-5aec-4e17-951e-530d94b0e72d",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -1016,13 +1015,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "012c24a8-cb34-46ea-9a14-f0ada679e937",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -1076,13 +1075,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9afe3303-c73e-470c-bb15-024147ade79a",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -1124,7 +1123,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "62be28b0-7577-4f70-908d-d9245b4f8c93",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -1134,13 +1133,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e3fade65-6d88-4ce7-bdf6-fd6c0cda47ca",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -1227,10 +1226,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "83ae0b01-dbce-4d6b-8937-4e121659eaf6",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -1299,7 +1298,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dc457fcc-d0c0-4d2c-9b78-f5070465b122",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -1335,7 +1334,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "0edfec6d-bea2-4ba5-9b96-af51db7c7f66",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -1346,13 +1345,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1865906c-9c36-4595-b971-f052618f72b3",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -1406,13 +1405,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "680874c3-1364-49ef-b1d6-d08edc9e87ec",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -1454,7 +1453,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "2ea02142-4f60-4600-ab38-61b368f42ecc",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -1464,13 +1463,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "05a92e3a-a321-4c87-b6d1-da253eea63ab",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -1525,10 +1524,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b6e791e8-e780-4285-977e-383753458da0",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -1578,7 +1577,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6aa018b3-8b2d-4edd-b4ff-3822df78a10b",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -1614,7 +1613,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "f2287638-c6ef-4232-92be-e8264339917c",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -1625,13 +1624,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b820f93b-3037-45e4-a839-850b7330e3ec",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -1678,13 +1677,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "858378fa-e72e-4549-a9d0-4c3ba81707c8",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -1726,7 +1725,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b10a79cf-efcf-44e7-acce-5f372fc4fe0d",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -1736,13 +1735,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6831ab73-9724-43b3-906f-bd264b4e4a65",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -1903,10 +1902,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "119b6ea4-e0bc-4a0f-8fae-577d42e9e21b",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -1956,7 +1955,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "205a268b-9aa4-40e4-a02c-d31c746f292a",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -1992,7 +1991,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "5ee112a7-18ac-4853-8c4f-6d7b1222503e",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -2003,13 +2002,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bfe92d45-50c0-4833-aca4-c193e7148929",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -2063,13 +2062,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "328c55b4-acd0-4726-8d3b-5742616f0722",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -2112,7 +2111,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "a9dbb324-d266-479c-8b1d-be3f12e09baa",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -2122,13 +2121,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "52cb9591-4247-4c8d-b90d-ce78a9d0030a",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -2449,10 +2448,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "647669a3-2b03-431a-8019-1687864a16dd",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -2586,7 +2585,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "434d188a-9474-4a4e-a7f9-92ee866040d2",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -2623,7 +2622,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "c227c318-695e-45eb-9045-32337ff6f3a9",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -2634,13 +2633,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a749cf20-8dd9-4ff5-9747-f00b20ad8cfc",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -2694,13 +2693,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "69eb4e2e-cffe-4161-a045-502c588dbdf5",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -2742,7 +2741,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "6b183d6a-05b4-489f-8ccf-cf80ae7ff54b",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -2752,13 +2751,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f6d54199-5e1a-4486-858d-ad542f342496",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -2813,10 +2812,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "616ef784-a7a0-4bbe-bc9a-59394b53a93a",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -2866,7 +2865,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "114f8253-1203-4ed3-b5c1-e9be2b1c466a",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -3023,7 +3022,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "e1d93cc5-f0a4-420d-8d80-60638f17960a",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -3034,13 +3033,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "37b889da-bc2a-4e29-ad45-2c6363bba347",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -3094,13 +3093,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "54dd5b23-4386-4217-aca0-bd17cedafcf9",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -3142,7 +3141,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "0c4bf8da-8777-488f-bbdc-90080c040e84",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -3152,13 +3151,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "abc7256e-a409-4124-acd5-0e268d731daf",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -3213,10 +3212,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7a806577-0266-4a6a-aa9f-1ac1bb0ec9e1",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -3266,7 +3265,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6951bd26-4284-431a-ae9f-45c9928bfe64",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -3302,7 +3301,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "427e66ef-1a99-45c0-bb75-411606c03091",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -3313,13 +3312,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9339ff81-3265-4dff-8c18-c88cbc4267af",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -3373,13 +3372,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9448a8a0-ed20-4aed-a6ec-fce4725f771d",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -3421,7 +3420,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "2ef19bec-a4b7-47ab-b9f4-d7966de4d455",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -3431,13 +3430,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c84eb53a-265c-4d79-a227-b84ce2e9e8b2",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -3492,10 +3491,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "46a1e3d8-9560-47e8-b472-327e7c55a032",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -3545,7 +3544,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fa2afc36-6eaa-4b55-a675-f0bd90cb61a1",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -3581,7 +3580,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "46deaeb7-318d-4c45-bc20-19bb363bd946",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -3592,13 +3591,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "18c60b6f-a438-46b4-8307-9f6aeb445ad5",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -3652,13 +3651,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5ea92615-3a1e-490e-8d18-7681db319cde",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -3700,7 +3699,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "8f69893c-994b-40ee-9009-59c3d3fa06fd",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -3710,13 +3709,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7edbf039-08bf-4ad9-920c-6559cd08b099",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -3900,10 +3899,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ccc7e98b-bb4f-472f-b543-99f67dd3f894",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -3973,7 +3972,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6dadbe-0764-491c-8d65-05cad968f920",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -4009,7 +4008,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b29bbb8c-4698-469a-97fb-90eda3eee43d",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -4020,13 +4019,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "027b7274-31bd-4b0d-9d8d-b74cba6b12b9",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -4080,13 +4079,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5b7f32bb-7cc3-448d-ab32-5375d7694207",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -4128,7 +4127,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "288a2495-598b-4037-99b9-a754af3b2e0a",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -4138,13 +4137,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7907ea52-22e4-426c-9e03-d71d611c3c38",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -4199,10 +4198,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8eb1e843-5000-4962-a31a-948be85aa70c",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -4303,7 +4302,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ec26fbf5-4fc9-4b44-8e99-9e2ae61740ce",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -4339,7 +4338,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "206e3973-2649-4d55-9c7f-9d7957be4e75",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -4350,13 +4349,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1651c833-2959-40dc-aef3-4b46e222c673",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -4410,13 +4409,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "16decfb6-30a5-45ed-9277-1882a8be0e54",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -4458,7 +4457,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "a4a66531-525b-4072-a8c4-2ceddd4e0097",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -4468,13 +4467,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "51a5bb98-4bc7-40cf-b884-07d06ebca2bc",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -4561,10 +4560,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e15d269a-40d0-41c6-a2b5-d0a6e7ee12df",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -4633,7 +4632,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "aa8d42fc-11f3-4920-8c47-2c26ebe97e0e",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -4669,7 +4668,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "6d157b2c-1e0e-40df-88fb-602a689ea308",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -4680,13 +4679,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b7f8c5c1-5c98-42cb-9b39-6947215c4a40",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -4740,13 +4739,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "182445e5-537e-4adc-85bd-441bf5b7cff3",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -4788,7 +4787,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "96392a94-333d-422b-bee0-e3f2582b6722",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -4798,13 +4797,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "76cec94f-b7db-40ab-8fe1-d16294385b7b",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -4859,10 +4858,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0a7fe367-6d18-47b5-aab1-090f98d2090f",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -4912,7 +4911,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9d7efe85-ea90-4417-af64-a40998269573",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -4948,7 +4947,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "5a83b405-9e82-4f45-95cd-bb6eca1b8995",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -4959,13 +4958,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ebd4472d-eb60-4b68-99df-b5f263b670fc",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -5019,13 +5018,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d2cc672d-f316-459f-9e55-8700ca53cbc1",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -5067,7 +5066,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "01f48983-d30e-4b0e-84f7-2dca353aeb0d",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -5077,13 +5076,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a6410aa9-dba4-4618-bb9a-fab0e4c910a5",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -5138,10 +5137,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5810666d-1208-4a4a-a585-b8949a78f441",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -5191,7 +5190,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e8143fec-c967-4ee5-a7fe-5977500f330a",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -5227,7 +5226,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "d5de4a72-95d2-408d-9841-daf77c1cfbcd",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -5238,13 +5237,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ded37c6d-0805-4112-9158-3f01031a6970",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -5298,13 +5297,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bd4ca4e8-332a-43c6-bd55-fe4c7fe0815b",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -5347,7 +5346,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "de7355f3-b860-4e42-bc55-ee6be97baefc",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -5357,13 +5356,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f021f873-468f-4e72-93fa-11ae03451375",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -5593,10 +5592,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4d973f25-bb37-45a6-8959-c1e8fd5573d9",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -5728,7 +5727,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ac1f8721-97c0-4510-9cd1-6189ec330986",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -5765,7 +5764,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "833d16d7-eb0d-4966-94dc-cd3acb49c6db",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -5776,13 +5775,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7bfb541a-3670-45ca-90a8-cda67e1cebd9",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -5836,13 +5835,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8d2b1767-9823-4a3a-88bd-3388bbfae866",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -5884,7 +5883,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "bbf1c7d3-3e6e-49d9-9a1c-e86fe184bdb1",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -5894,13 +5893,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b1093fe9-ffaf-460d-bac8-f34dde3540a8",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -5955,10 +5954,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2de9b555-7123-4470-849f-948aa07915ed",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -6008,7 +6007,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9f43677a-8273-4158-9792-b677dd2fb643",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -6044,7 +6043,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "7b5073a3-db2b-4f24-a7bb-13eb5c1c45df",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -6055,13 +6054,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2236ef8d-990b-41b6-bb6d-e5505cd801ca",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -6115,13 +6114,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "00d915be-8b87-4d66-99dc-2e016778c089",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -6163,7 +6162,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b09a7861-6412-4d09-b200-3cac8ee58b2c",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -6173,13 +6172,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "aa62d3e5-c3eb-4bdd-b70b-2eb104ff4c12",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -6234,10 +6233,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "946b37cc-a7b6-457b-b5b5-59f43eb8f429",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -6287,7 +6286,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8c85a9f3-1768-4706-b863-9dc95de45dcb",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -6323,7 +6322,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "0771f575-7c30-4f23-8a38-b62a57e779e6",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -6334,13 +6333,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3c42690f-6615-4ec1-88e6-6fa8d2dc7232",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -6394,13 +6393,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6a9ec653-c67c-4472-9694-578ff20c88f0",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -6442,7 +6441,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "1d9f30e2-10ca-43e9-92e6-6c5afac6e3d2",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -6452,13 +6451,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "05f32314-c8d2-4e97-bb22-e2238b7d2a44",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -6513,10 +6512,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "51437589-01b3-418d-afe4-fda96885398b",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -6566,7 +6565,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b7af07e4-4961-41d2-b0bb-3a43cf41a8c5",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -6602,7 +6601,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "a6e66308-75aa-4b80-9b9f-bd83285be47e",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -6613,13 +6612,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2fb4c9dd-58b4-4c53-aa53-a61280d35c7d",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -6673,13 +6672,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "54c6a23e-e5d9-458f-8c84-935a0d764e6a",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -6721,7 +6720,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "d4754f19-4c50-4a58-9bec-b3643fdaed93",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -6731,13 +6730,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0a4639f9-dbc9-4ed4-8052-68ca76c03f47",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -6792,10 +6791,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e0856214-dedc-41cc-b840-9fbac733b5c1",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -6845,7 +6844,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "88af1d21-4133-48d7-9e52-d89f4c99fad2",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -6881,7 +6880,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "097a3e99-c2b9-4bb9-8f17-bb9452f63e88",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -6892,13 +6891,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8810fe90-9161-4722-a846-86903c348950",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -6952,13 +6951,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "42b7cd70-13da-42a6-84ba-bc204bd22e4b",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -7000,7 +6999,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "e197504a-ae6b-40d4-aebd-4897ddab2501",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -7010,13 +7009,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ede5433d-ee79-4252-825f-9055bb983ecf",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -7103,10 +7102,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c7d1e438-326a-48f6-bc34-cdde8e6ea1da",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -7175,7 +7174,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e4fba986-d309-4783-99f8-958369e0c96c",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -7211,7 +7210,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "2a97fbb6-efa9-4188-b7cd-60bca30a344c",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -7222,13 +7221,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8814d6fc-cf0b-464d-9b24-fa1e8cd9512b",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -7282,13 +7281,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dc7ba8f2-2dd2-4c91-adfa-ac5c1b0d01ab",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -7330,7 +7329,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "15a01d5f-9345-4b73-8f16-3acf82ff5c0d",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -7340,13 +7339,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a32ba5ad-9b3a-4f31-86ea-e2875d244caa",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -7468,10 +7467,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "306ffaf3-7adc-4063-b62f-aca5fdebeab4",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -7541,7 +7540,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "feb266b1-0ce3-4e23-91b0-9656f8af6a47",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -7577,7 +7576,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b9b959d4-7dd0-41b6-a5bd-81b8757b2571",
+								"id": "68c75d92-f9ad-4b3c-9c47-82ed8c9f3321",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -7588,13 +7587,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "66ad51d1-8ec0-4e74-b1bf-23a5b5308730",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -7648,13 +7647,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "eed5b8f6-9991-4f58-ad1a-604bff36417a",
+								"id": "b1375c3c-3936-4646-be1a-be3cf1c105b9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -7696,7 +7695,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "980ff77c-b4bb-41ee-b58f-0c47d47725d6",
+								"id": "447c8afa-ddb3-41f6-8498-c7f7338b3e9b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", \"$randomProductName\");"
 								],
@@ -7706,13 +7705,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4d9779ed-f7c2-420b-b403-199049bc26ef",
+								"id": "a8b32137-3915-4721-945c-cdee2c130f27",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var name = pm.variables.replaceIn(\"{{name}}\");\r",
 									"var bezeichnung = pm.variables.replaceIn(\"{{bezeichnung}}\");\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var self = root + \"/\" + name;\r",
 									"pm.expect(jsonData.name).to.eql(name);\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(bezeichnung);\r",
@@ -7767,10 +7766,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8cd05cff-d924-423c-9e71-5d0f21a5c381",
+								"id": "761d18ff-b003-474c-bd73-a1de67965675",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
-									"var root = pm.variables.replaceIn(\"{{server}}\") + pm.request.url.getPath();\r",
+									"var root = pm.variables.replaceIn(\"{{api\"}}) + pm.request.url.getPath();\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
@@ -7820,7 +7819,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8a9989a4-ee06-4b05-b7a8-6e4d6a69d1e8",
+								"id": "abc7829c-aa2f-4b5b-91af-3372f075f3bf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -9691,7 +9690,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "c2083cfb-8ae4-444e-8007-b126a6cf21d8",
+				"id": "310a9c62-33a3-4e22-b1a1-01526e42d94a",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -9701,7 +9700,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "b2300513-d158-4f0d-8c66-4d946d2e89a8",
+				"id": "27da39cb-f8bd-466a-b50e-78664cd77f94",
 				"type": "text/javascript",
 				"exec": [
 					""

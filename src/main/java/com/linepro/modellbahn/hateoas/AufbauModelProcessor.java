@@ -1,13 +1,18 @@
 package com.linepro.modellbahn.hateoas;
 
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_AUFBAU;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_AUFBAU_ABBILDUNG;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_AUFBAU;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_AUFBAU;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.SEARCH_AUFBAU;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_AUFBAU;
+import static com.linepro.modellbahn.controller.impl.ApiRels.IMAGE;
 
 import org.springframework.context.annotation.Lazy;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.stereotype.Component;
 
-import com.linepro.modellbahn.controller.impl.ApiPaths;
-import com.linepro.modellbahn.controller.impl.ApiRels;
 import com.linepro.modellbahn.hateoas.impl.LinkTemplateImpl;
 import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.AufbauModel;
@@ -18,12 +23,12 @@ public class AufbauModelProcessor extends NamedModelProcessor<AufbauModel> imple
 
     public AufbauModelProcessor() {
         super(
-            ApiPaths.ADD_AUFBAU,
-            ApiPaths.GET_AUFBAU,
-            ApiPaths.UPDATE_AUFBAU,
-            ApiPaths.DELETE_AUFBAU,
-            ApiPaths.SEARCH_AUFBAU,
-            new LinkTemplateImpl(ApiRels.IMAGE, ApiPaths.ADD_AUFBAU_ABBILDUNG, EXTRACTOR)
+            ADD_AUFBAU,
+            GET_AUFBAU,
+            UPDATE_AUFBAU,
+            DELETE_AUFBAU,
+            SEARCH_AUFBAU,
+            new LinkTemplateImpl(IMAGE, ADD_AUFBAU_ABBILDUNG, EXTRACTOR)
             );
     }
 }
