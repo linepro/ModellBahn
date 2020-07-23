@@ -35,6 +35,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.PathConverter;
+import com.linepro.modellbahn.validation.Unique;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -335,6 +336,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @ToString(callSuper = true)
+@Unique
 public class Produkt extends ItemImpl implements Comparable<Produkt> {
 
     /** The hersteller. */

@@ -33,6 +33,7 @@ import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.PathConverter;
+import com.linepro.modellbahn.validation.Unique;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -165,6 +166,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @ToString(callSuper = true)
+@Unique
 public class Vorbild extends ItemImpl implements Comparable<Vorbild> {
 
     /** The gattung. */

@@ -9,7 +9,8 @@ public class SoftDeleteTranscriber<S extends SoftDelete, D extends SoftDelete> i
     @Override
     public D apply(S source, D destination) {
         if (isAvailable(source) && isAvailable(destination)) {
-            destination.setDeleted(source.getDeleted());
+            // You can only delete by calling a DELETE; this is read only
+            // destination.setDeleted(source.getDeleted());
         }
         
         return destination;

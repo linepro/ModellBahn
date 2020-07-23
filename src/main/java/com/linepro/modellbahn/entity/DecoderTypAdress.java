@@ -25,6 +25,7 @@ import com.linepro.modellbahn.model.WithAdress;
 import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.validation.Adress;
+import com.linepro.modellbahn.validation.Unique;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -71,6 +72,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @ToString(callSuper = true)
+@Unique
 public class DecoderTypAdress extends ItemImpl implements WithAdress, Comparable<DecoderTypAdress> {
 
     /** The decoder typ. */

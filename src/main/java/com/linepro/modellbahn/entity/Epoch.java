@@ -7,6 +7,7 @@ import javax.persistence.UniqueConstraint;
 
 import com.linepro.modellbahn.entity.impl.NamedItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.validation.Unique;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,5 +34,6 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @ToString(callSuper = true)
 @Cacheable
+@Unique
 public class Epoch extends NamedItemImpl {
 }

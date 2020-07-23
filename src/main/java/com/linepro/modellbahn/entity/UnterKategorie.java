@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 
 import com.linepro.modellbahn.entity.impl.NamedItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.validation.Unique;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -61,6 +62,7 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 @Cacheable
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, length = 50))
+@Unique
 public class UnterKategorie extends NamedItemImpl {
 
     /** The kategorie. */

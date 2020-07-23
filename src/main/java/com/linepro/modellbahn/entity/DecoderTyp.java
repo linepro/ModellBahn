@@ -39,6 +39,7 @@ import com.linepro.modellbahn.model.enums.Stecker;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.PathConverter;
 import com.linepro.modellbahn.validation.Fahrstufe;
+import com.linepro.modellbahn.validation.Unique;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -153,6 +154,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @ToString(callSuper = true)
 @Cacheable
+@Unique
 public class DecoderTyp extends ItemImpl implements Comparable<DecoderTyp> {
 
     /** The hersteller. */

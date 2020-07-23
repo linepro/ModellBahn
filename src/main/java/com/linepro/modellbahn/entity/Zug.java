@@ -22,6 +22,7 @@ import javax.validation.constraints.NotNull;
 
 import com.linepro.modellbahn.entity.impl.NamedItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.validation.Unique;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -113,6 +114,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @ToString(callSuper = true)
 @Cacheable
+@Unique
 public class Zug extends NamedItemImpl {
 
     /** The zugTyp. */

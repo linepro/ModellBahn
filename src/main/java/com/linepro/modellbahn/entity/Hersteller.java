@@ -13,6 +13,7 @@ import com.linepro.modellbahn.entity.impl.NamedItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.URLConverter;
 import com.linepro.modellbahn.validation.Country;
+import com.linepro.modellbahn.validation.Unique;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,6 +40,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @ToString(callSuper = true)
 @Cacheable
+@Unique
 public class Hersteller extends NamedItemImpl {
 
     /** The url. */
