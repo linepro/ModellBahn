@@ -37,6 +37,7 @@ docs/
 logs/
 /modellbahn.*.db
 /src/main/resources/webapp/store
+/static/**/*
 /webapp
 *.log
 
