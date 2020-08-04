@@ -62,7 +62,7 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 @Cacheable
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, length = 50))
-@Unique
+@Unique(message = "{com.linepro.modellbahn.validator.constraints.unterKategorie.notunique}")
 public class UnterKategorie extends NamedItemImpl {
 
     /** The kategorie. */

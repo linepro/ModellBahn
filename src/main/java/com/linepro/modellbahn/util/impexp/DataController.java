@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @Tag(name = ApiNames.DATA)
-@RestController
+@RestController("DataController")
 @RequiredArgsConstructor
 public class DataController {
 

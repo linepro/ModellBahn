@@ -70,7 +70,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @ToString(callSuper = true)
-@Unique
+@Unique(message = "{com.linepro.modellbahn.validator.constraints.decoderTypCv.notunique}")
 public class DecoderTypCv extends ItemImpl implements Comparable<DecoderTypCv> {
 
     /** The decoder typ. */

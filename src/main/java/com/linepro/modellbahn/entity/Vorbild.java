@@ -166,7 +166,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @ToString(callSuper = true)
-@Unique
+@Unique(message = "{com.linepro.modellbahn.validator.constraints.vorbild.notunique}")
 public class Vorbild extends ItemImpl implements Comparable<Vorbild> {
 
     /** The gattung. */

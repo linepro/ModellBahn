@@ -60,7 +60,7 @@ public abstract class AbstractCriterion<E extends Item> {
 
     protected List<Predicate> addCondition(CriteriaBuilder criteriaBuilder, From<?,?> root, List<Predicate> where, String columnName, Enum<?> value) {
         if (value != null) {
-            addCondition(criteriaBuilder, root.join(columnName), where, columnName, value);
+            where.add(criteriaBuilder.equal(root.get(columnName), value));
         }
 
         return where;

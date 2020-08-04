@@ -114,7 +114,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @ToString(callSuper = true)
 @Cacheable
-@Unique
+@Unique(message = "{com.linepro.modellbahn.validator.constraints.zug.notunique}")
 public class Zug extends NamedItemImpl {
 
     /** The zugTyp. */

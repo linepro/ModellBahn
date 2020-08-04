@@ -154,7 +154,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @ToString(callSuper = true)
 @Cacheable
-@Unique
+@Unique(message = "{com.linepro.modellbahn.validator.constraints.decodertyp.notunique}")
 public class DecoderTyp extends ItemImpl implements Comparable<DecoderTyp> {
 
     /** The hersteller. */

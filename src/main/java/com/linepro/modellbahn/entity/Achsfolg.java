@@ -39,6 +39,6 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @ToString(callSuper = true)
 @Cacheable
-@Unique
+@Unique(message = "{com.linepro.modellbahn.validator.constraints.achsfolg.notunique}")
 public class Achsfolg extends NamedItemImpl {
 }

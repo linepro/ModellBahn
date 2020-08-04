@@ -36,7 +36,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @ToString(callSuper = true)
 @Cacheable
-@Unique
+@Unique(message = "{com.linepro.modellbahn.validator.constraints.bahnverwaltung.notunique}")
 public class Bahnverwaltung extends NamedItemImpl {
 
     @Column(name = DBNames.LAND, length = 2)

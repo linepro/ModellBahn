@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -36,17 +35,17 @@ public class ErrorHandler {
         String contextPath = getRequestPath(request);
         if (StringUtils.isNotBlank(contextPath)) {
             Throwable effective = getEffective(ex);
-            HttpStatus status = classify(effective);
 
+            HttpStatus status = classify(effective);
             return ResponseEntity.status(status)
                                  .body(
                                      ErrorMessage.builder()
                                                  .timestamp(System.currentTimeMillis())
                                                  .status(status.value())
                                                  .error(status.getReasonPhrase())
-                                                 .message(effective.getMessage())
+                                                 .message(message(effective))
                                                  .path(contextPath)
-                                                 .developerMessage(getDeveloperMessage(effective))
+                                                 .developerMessage(developerMessage(effective))
                                                  .build()
                                                  );
                             
@@ -95,7 +94,15 @@ public class ErrorHandler {
         return HttpStatus.INTERNAL_SERVER_ERROR;
     }
 
-    private String getDeveloperMessage(Throwable ex) {
+    private String message(Throwable ex) {
+        if (ex instanceof ConstraintViolationException) {
+            return ((ConstraintViolationException) ex).getConstraintViolations().stream().map(v -> v.getMessage()).collect(Collectors.joining(",\n"));
+        } 
+        
+        return ex.getMessage();
+    }
+
+    private String developerMessage(Throwable ex) {
         return String.join(": ", 
                         Optional.ofNullable(ex.getMessage()).orElse(ex.getClass().getSimpleName()), 
                         Stream.of(ex.getStackTrace())

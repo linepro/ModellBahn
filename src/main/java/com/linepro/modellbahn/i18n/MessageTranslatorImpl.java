@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,6 @@ public class MessageTranslatorImpl implements MessageTranslator {
     }
 
     Locale getLocale() {
-      return ThreadLocale.get();
+      return LocaleContextHolder.getLocale();
     }
 }

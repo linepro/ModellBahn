@@ -34,6 +34,6 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @ToString(callSuper = true)
 @Cacheable
-@Unique
+@Unique(message = "{com.linepro.modellbahn.validator.constraints.sondermodell.notunique}")
 public class Sondermodell extends NamedItemImpl {
 }

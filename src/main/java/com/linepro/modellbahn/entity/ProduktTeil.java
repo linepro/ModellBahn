@@ -22,7 +22,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.validation.Unique;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -92,7 +91,6 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @ToString(callSuper = true)
-@Unique
 public class ProduktTeil extends ItemImpl implements Comparable<ProduktTeil> {
     
     /** The produkt. */

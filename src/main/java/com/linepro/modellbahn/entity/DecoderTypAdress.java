@@ -72,7 +72,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @ToString(callSuper = true)
-@Unique
+@Unique(message = "{com.linepro.modellbahn.validator.constraints.decoderTypAdress.notunique}")
 public class DecoderTypAdress extends ItemImpl implements WithAdress, Comparable<DecoderTypAdress> {
 
     /** The decoder typ. */

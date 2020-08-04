@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.converter;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.nio.file.Path;
 
 import org.apache.commons.io.FilenameUtils;
@@ -11,7 +13,7 @@ import com.linepro.modellbahn.io.FileStore;
 
 import lombok.RequiredArgsConstructor;
 
-@Component
+@Component(PREFIX + "PathMutator")
 @RequiredArgsConstructor
 public class PathMutator implements Mutator<Path, String> {
 

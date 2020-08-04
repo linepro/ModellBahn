@@ -336,7 +336,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @ToString(callSuper = true)
-@Unique
+@Unique(message = "{com.linepro.modellbahn.validator.constraints.produkt.notunique}")
 public class Produkt extends ItemImpl implements Comparable<Produkt> {
 
     /** The hersteller. */

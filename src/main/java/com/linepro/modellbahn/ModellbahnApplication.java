@@ -19,6 +19,7 @@ import com.linepro.modellbahn.repository.lookup.Lookups;
 import com.linepro.modellbahn.security.Security;
 import com.linepro.modellbahn.service.impl.Services;
 import com.linepro.modellbahn.util.impexp.Data;
+import com.linepro.modellbahn.validation.ValidationConfiguration;
 
 @SpringBootConfiguration
 @EnableAutoConfiguration
@@ -30,6 +31,7 @@ import com.linepro.modellbahn.util.impexp.Data;
 
     // Persistence
     Persistence.class,
+    ValidationConfiguration.class,
     // Controllers
     Controllers.class,
     // Services
