@@ -7,6 +7,7 @@ import java.lang.reflect.ParameterizedType;
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.HttpStatus;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.MappingIterator;
@@ -17,6 +18,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.entity.Item;
 import com.linepro.modellbahn.model.ItemModel;
+import com.linepro.modellbahn.util.exceptions.ModellBahnException;
 import com.linepro.modellbahn.util.impexp.Importer;
 
 public class ImporterImpl<M extends ItemModel,E extends Item> implements Importer {
@@ -47,13 +49,20 @@ public class ImporterImpl<M extends ItemModel,E extends Item> implements Importe
     
     @Override
     @Transactional
-    public void read(Reader in) throws IOException {
-        ObjectReader reader = MAPPER.readerFor(modelClass).with(schema);
+    public void read(Reader in) {
+        MappingIterator<M> mi;
+        try {
+            ObjectReader reader = MAPPER.readerFor(modelClass).with(schema);
 
-        MappingIterator<M> mi = reader.readValues(in);
+            mi = reader.readValues(in);
 
-        while (mi.hasNext()) {
-            repository.save(mutator.convert(mi.next()));
+            while (mi.hasNext()) {
+                repository.save(mutator.convert(mi.next()));
+            }
+        } catch (IOException e) {
+            throw ModellBahnException.raise("{}", e).setStatus(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            throw ModellBahnException.raise("{}", e);
         }
     }
 }

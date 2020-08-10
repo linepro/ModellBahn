@@ -9,9 +9,12 @@ import java.nio.charset.StandardCharsets;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.linepro.modellbahn.controller.impl.ApiMessages;
+import com.linepro.modellbahn.util.exceptions.ModellBahnException;
 import com.linepro.modellbahn.util.impexp.DataService;
 import com.linepro.modellbahn.util.impexp.DataType;
 import com.linepro.modellbahn.util.impexp.Exporter;
@@ -32,34 +35,52 @@ public class DataServiceImpl implements DataService {
     private final ImporterFactory importerFactory;
     
     @Override
-    public void exportCSV(String type, HttpServletResponse response) throws Exception {
-        response.setContentType(TEXT_CSV);
-        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-        response.setHeader("Content-Disposition", String.format("attachment; filename=\"{}.csv\"", type));
+    public void exportCSV(String type, HttpServletResponse response) {
+        try {
+            response.setContentType(TEXT_CSV);
+            response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+            response.setHeader("Content-Disposition", String.format("attachment; filename=\"{}.csv\"", type));
+    
+            DataType dataType = DataType.fromTypeName(type);
 
-        DataType dataType = DataType.fromTypeName(type);
-
-        if (dataType == null) {
-            throw new IllegalArgumentException("Export of '" + type + "'is not supported");
+            if (dataType == null) {
+                throw ModellBahnException.raise(ApiMessages.EXPORT_NOT_SUPPORTED)
+                                         .addValue(type)
+                                         .setStatus(HttpStatus.BAD_REQUEST);
+            }
+    
+            Exporter exporter = exporterFactory.getExporter(dataType);
+    
+            exporter.write(response.getWriter());
+        } catch (ModellBahnException e) {
+            throw e;
+        } catch (Exception e) {
+            throw ModellBahnException.raise("{}")
+                                     .addValue(type);
         }
-
-        Exporter exporter = exporterFactory.getExporter(dataType);
-
-        exporter.write(response.getWriter());
     }
 
     @Override
-    public void importCSV(String type, MultipartFile multipart) throws Exception {
-        DataType dataType = DataType.fromTypeName(type);
+    public void importCSV(String type, MultipartFile multipart) {
+        try {
+            DataType dataType = DataType.fromTypeName(type);
+    
+            if (dataType == null) {
+                throw ModellBahnException.raise(ApiMessages.IMPORT_NOT_SUPPORTED)
+                                         .addValue(type)
+                                         .setStatus(HttpStatus.BAD_REQUEST);
+            }
+    
+            Importer importer = importerFactory.getImporter(dataType);
+    
+            Reader in = new InputStreamReader(multipart.getInputStream());
 
-        if (dataType == null) {
-            throw new IllegalArgumentException("Import of '" + type + "'is not supported");
+            importer.read(in);
+        } catch (ModellBahnException e) {
+            throw e;
+        } catch (Exception e) {
+            throw ModellBahnException.raise("{}")
+                                     .addValue(type);
         }
-
-        Importer importer = importerFactory.getImporter(dataType);
-
-        Reader in = new InputStreamReader(multipart.getInputStream());
-
-        importer.read(in);
     }
 }

@@ -316,7 +316,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> updateAnleitungen(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr,
-            @RequestParam("anleitungen") MultipartFile multipart) throws Exception {
+            @RequestParam("anleitungen") MultipartFile multipart) {
         return updated(service.updateAnleitungen(herstellerStr, bestellNr, multipart));
     }
 
@@ -331,7 +331,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
-    public ResponseEntity<?> deleteAnleitungen(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) throws Exception {
+    public ResponseEntity<?> deleteAnleitungen(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
         return updated(service.deleteAnleitungen(herstellerStr, bestellNr));
     }
 

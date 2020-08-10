@@ -152,7 +152,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> updateAbbildung(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId, @RequestParam("abbildung") MultipartFile multipart) throws Exception {
+    public ResponseEntity<?> updateAbbildung(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId, @RequestParam("abbildung") MultipartFile multipart) {
         return updated(service.updateAbbildung(artikelId, multipart));
     }
 
@@ -167,7 +167,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId) throws Exception {
+    public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId) {
         return updated(service.deleteAbbildung(artikelId));
     }
 

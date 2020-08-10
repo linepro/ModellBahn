@@ -8,7 +8,7 @@ public interface DataService {
 
     String TEXT_CSV = "text/csv";
 
-    void exportCSV(String type, HttpServletResponse response) throws Exception;
+    void exportCSV(String type, HttpServletResponse response);
 
-    void importCSV(String type, MultipartFile multipart) throws Exception;
+    void importCSV(String type, MultipartFile multipart);
 }

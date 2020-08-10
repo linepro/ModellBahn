@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.ApiMessages;
 import com.linepro.modellbahn.i18n.MessageTranslator;
+import com.linepro.modellbahn.util.exceptions.ModellBahnException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,7 +36,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public Path updateFile(List<MediaType> mediaTypes, MultipartFile multipart, String modelType, String fieldName, String...identifiers) {
         if (!handler.isAcceptable(multipart, mediaTypes)) {
-            throw new IllegalArgumentException(messageTranslator.getMessage(ApiMessages.INVALID_FILE, multipart.getOriginalFilename()));
+            throw new ModellBahnException(ApiMessages.INVALID_FILE).addValue(multipart.getOriginalFilename());
         }
 
         try {

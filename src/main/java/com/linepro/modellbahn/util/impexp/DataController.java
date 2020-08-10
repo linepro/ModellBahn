@@ -39,7 +39,7 @@ public class DataController {
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public void exportCSV(@PathVariable(ApiNames.DATA_TYPE) String type, HttpServletResponse response) throws Exception {
+    public void exportCSV(@PathVariable(ApiNames.DATA_TYPE) String type, HttpServletResponse response) {
         service.exportCSV(type, response);
     }
 
@@ -54,7 +54,7 @@ public class DataController {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> importCSV(@PathVariable(ApiNames.DATA_TYPE) String type, @RequestParam("file") MultipartFile multipart) throws Exception {
+    public ResponseEntity<?> importCSV(@PathVariable(ApiNames.DATA_TYPE) String type, @RequestParam("file") MultipartFile multipart) {
         service.importCSV(type, multipart);
         
         return ResponseEntity.ok().build();

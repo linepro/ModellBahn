@@ -5,6 +5,7 @@ server:
          enabled: false
    port: 8086
    servlet:
+      application-display-name: ModellBahn
       context-path: /
 #   ssl:
 #      enabled: true
@@ -54,6 +55,10 @@ spring:
       sql-migration-separator: __
       sql-migration-suffixes: .sql   
       validate-on-migrate: true
+   h2:
+      console:
+         settings:
+            web-allow-others: true
    jmx:
       enabled: false
    jpa:
@@ -84,12 +89,24 @@ spring:
                auth: true
                starttls:
                   enable: true
+   messages:
+      basename: ValidationMessages
+      cache-duration: 3600
+      use-code-as-default-message: true
    mvc:
+      locale: de
+      locale-resolver: accept-header
       resource:
          cache:
             timeout: 1
       servlet:
          path: /ModellBahn
+         multipart:
+            enabled: true
+            max-file-size: 5MB
+   quartz:
+      auto-startup: false
+            
 #   resources:
 #      static-locations: classpath:/files/,classpath:/static-files,file:./store
    thymeleaf:

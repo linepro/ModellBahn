@@ -147,7 +147,7 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
         })
-    public ResponseEntity<?> updateAbbildung(@PathVariable(ApiNames.GATTUNG) String gattung, @RequestParam("abbildung") MultipartFile multipart) throws Exception {
+    public ResponseEntity<?> updateAbbildung(@PathVariable(ApiNames.GATTUNG) String gattung, @RequestParam("abbildung") MultipartFile multipart) {
         return updated(service.updateAbbildung(gattung, multipart));
     }
 
@@ -162,7 +162,7 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
         })
-    public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiNames.GATTUNG) String gattung) throws Exception {
+    public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiNames.GATTUNG) String gattung) {
         return updated(service.deleteAbbildung(gattung));
     }
 }

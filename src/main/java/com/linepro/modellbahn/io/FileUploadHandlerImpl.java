@@ -7,7 +7,6 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Path;
@@ -17,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.linepro.modellbahn.util.exceptions.ModellBahnException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,10 +53,9 @@ public class FileUploadHandlerImpl implements FileUploadHandler {
      * @param fileDetail the file detail
      * @param fileData the file data
      * @return the path
-     * @throws IOException 
      */
     @Override
-    public Path upload(MultipartFile multipart, String modelName, String fieldName, String...identifiers) throws IOException {
+    public Path upload(MultipartFile multipart, String modelName, String fieldName, String...identifiers) {
         String pathname = fileStore.getItemPath(modelName, identifiers).toString();
 
         new File(pathname).mkdirs();
@@ -85,10 +85,8 @@ public class FileUploadHandlerImpl implements FileUploadHandler {
      * @param fileName the file name
      * @param fileDetail the file detail
      * @param fileData the file data
-     * @throws IOException 
-     * @throws Exception the exception
      */
-    private void writeToFile(Path filePath, MultipartFile multipart) throws IOException {
+    private void writeToFile(Path filePath, MultipartFile multipart) {
 
         try (
             OutputStream out = new FileOutputStream(filePath.toFile(), false);
@@ -106,7 +104,8 @@ public class FileUploadHandlerImpl implements FileUploadHandler {
             } while (read > 0);
     
             out.flush();
-        } finally {
+        } catch (Exception e) {
+            throw ModellBahnException.raise("{}", e);
         }
     }
 }

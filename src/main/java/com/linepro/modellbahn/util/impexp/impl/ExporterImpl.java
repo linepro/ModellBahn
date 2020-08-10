@@ -19,6 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.http.HttpStatus;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -31,6 +32,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema.ColumnType;
 import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.entity.Item;
 import com.linepro.modellbahn.model.ItemModel;
+import com.linepro.modellbahn.util.exceptions.ModellBahnException;
 import com.linepro.modellbahn.util.impexp.Exporter;
 
 /**
@@ -63,7 +65,7 @@ public class ExporterImpl<M extends ItemModel,E extends Item> implements Exporte
 
     @Override
     @Transactional
-    public void write(Writer out) throws IOException {
+    public void write(Writer out) {
         try (SequenceWriter writer = MAPPER.writerFor(modelClass)
                                       .with(getSchema())
                                       .writeValues(out)) {
@@ -85,8 +87,10 @@ public class ExporterImpl<M extends ItemModel,E extends Item> implements Exporte
                     break;
                 }
             }
-        } catch(Exception e) {
-            throw e;
+        } catch (IOException e) {
+            throw ModellBahnException.raise("{}", e).setStatus(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            throw ModellBahnException.raise("{}", e);
         }
     }
     

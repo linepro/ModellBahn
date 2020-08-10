@@ -21,13 +21,19 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.linepro.modellbahn.controller.impl.ApiPaths;
+import com.linepro.modellbahn.i18n.MessageTranslator;
+import com.linepro.modellbahn.util.exceptions.ModellBahnException;
 
+import lombok.RequiredArgsConstructor;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 
 @ControllerAdvice
+@RequiredArgsConstructor
 public class ErrorHandler {
 
     private ResponseEntityExceptionHandler delegate = new ResponseEntityExceptionHandler() {};
+
+    private final MessageTranslator messageTranslator;
 
     @Produces(MediaType.APPLICATION_JSON)
     @ExceptionHandler({ Exception.class })
@@ -75,6 +81,8 @@ public class ErrorHandler {
     private HttpStatus classify(Throwable ex) {
         if (ex instanceof ConstraintViolationException) {
             return HttpStatus.BAD_REQUEST;
+        } else if (ex instanceof ModellBahnException) {
+            return ((ModellBahnException) ex).getStatus();
         } else if (ex instanceof DataIntegrityViolationException) {
             return HttpStatus.BAD_REQUEST;
         } else if (ex instanceof EntityExistsException) {
@@ -97,6 +105,8 @@ public class ErrorHandler {
     private String message(Throwable ex) {
         if (ex instanceof ConstraintViolationException) {
             return ((ConstraintViolationException) ex).getConstraintViolations().stream().map(v -> v.getMessage()).collect(Collectors.joining(",\n"));
+        } else if (ex instanceof ModellBahnException) {
+            return messageTranslator.getMessage(ex.getMessage(), ((ModellBahnException) ex).getValues());
         } 
         
         return ex.getMessage();

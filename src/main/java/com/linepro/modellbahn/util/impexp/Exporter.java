@@ -4,5 +4,5 @@ import java.io.Writer;
 
 public interface Exporter {
 
-    void write(Writer out) throws Exception;
+    void write(Writer out);
 }

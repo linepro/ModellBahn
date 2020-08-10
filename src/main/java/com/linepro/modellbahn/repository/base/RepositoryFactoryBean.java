@@ -14,9 +14,6 @@ import org.springframework.data.repository.core.support.RepositoryFactorySupport
 
 import com.linepro.modellbahn.entity.NamedItem;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 public class RepositoryFactoryBean<R extends JpaRepository<T, I>, T, I extends Serializable> extends JpaRepositoryFactoryBean<R, T, I> {
 
     private static class RepositoryFactory<T, I extends Serializable> extends JpaRepositoryFactory {

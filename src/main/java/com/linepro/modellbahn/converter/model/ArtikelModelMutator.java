@@ -45,21 +45,9 @@ public class ArtikelModelMutator implements Mutator<ArtikelModel,Artikel> {
     private final ItemLookup lookup;
 
     @Override
-    public Artikel convert(ArtikelModel source) {
-        if (source != null) {
-            final Artikel destination = get();
-
-            destination.setArtikelId(source.getArtikelId());
-
-            return apply(source, destination);
-        }
-
-        return null;
-    }
-
-    @Override
     public Artikel apply(ArtikelModel source, Artikel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
+            destination.setArtikelId(source.getArtikelId());
             destination.setProdukt(produktLookup.find(source.getHersteller(), source.getBestellNr()));
             destination.setKaufdatum(source.getKaufdatum());
             destination.setWahrung(source.getWahrung());

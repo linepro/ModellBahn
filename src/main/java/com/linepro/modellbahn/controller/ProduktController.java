@@ -197,7 +197,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> updateAbbildung(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestParam("abbildung") MultipartFile multipart) throws Exception {
+    public ResponseEntity<?> updateAbbildung(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestParam("abbildung") MultipartFile multipart) {
         return updated(service.updateAbbildung(herstellerStr, bestellNr, multipart));
     }
 
@@ -212,7 +212,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
-    public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) throws Exception {
+    public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
         return updated(service.deleteAbbildung(herstellerStr, bestellNr));
     }
 
@@ -228,7 +228,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> updateAnleitungen(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr,
-            @RequestParam("anleitungen") MultipartFile multipart) throws Exception {
+            @RequestParam("anleitungen") MultipartFile multipart) {
         return updated(service.updateAnleitungen(herstellerStr, bestellNr, multipart));
     }
 
@@ -243,7 +243,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
-    public ResponseEntity<?> deleteAnleitungen(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) throws Exception {
+    public ResponseEntity<?> deleteAnleitungen(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
         return updated(service.deleteAnleitungen(herstellerStr, bestellNr));
     }
 
@@ -259,7 +259,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> updateExplosionszeichnung(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr,
-            @RequestParam("explosionszeichnung") MultipartFile multipart) throws Exception {
+            @RequestParam("explosionszeichnung") MultipartFile multipart) {
         return updated(service.updateExplosionszeichnung(herstellerStr, bestellNr, multipart));
     }
 
@@ -274,7 +274,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
-    public ResponseEntity<?> deleteExplosionszeichnung(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) throws Exception {
+    public ResponseEntity<?> deleteExplosionszeichnung(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
         return updated(service.deleteExplosionszeichnung(herstellerStr, bestellNr));
     }
 }

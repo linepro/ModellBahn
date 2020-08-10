@@ -4,5 +4,5 @@ import java.io.Reader;
 
 public interface Importer {
 
-    void read(Reader in) throws Exception;
+    void read(Reader in);
 }
