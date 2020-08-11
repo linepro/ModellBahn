@@ -5,7 +5,7 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.impl.MutatorImpl;
-import com.linepro.modellbahn.converter.impl.NamedTranscriber;
+import com.linepro.modellbahn.converter.impl.NamedModelTranscriber;
 import com.linepro.modellbahn.entity.Sondermodell;
 import com.linepro.modellbahn.model.SondermodellModel;
 
@@ -13,7 +13,7 @@ import com.linepro.modellbahn.model.SondermodellModel;
 public class SondermodellModelMutator extends MutatorImpl<SondermodellModel, Sondermodell> {
 
     public SondermodellModelMutator() {
-        super(() -> new Sondermodell(), new NamedTranscriber<SondermodellModel, Sondermodell>());
+        super(() -> new Sondermodell(), new NamedModelTranscriber<SondermodellModel, Sondermodell>());
     }
 
 }

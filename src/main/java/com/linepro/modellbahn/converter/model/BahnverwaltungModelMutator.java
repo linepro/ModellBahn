@@ -13,7 +13,14 @@ import com.linepro.modellbahn.model.BahnverwaltungModel;
 public class BahnverwaltungModelMutator extends MutatorImpl<BahnverwaltungModel, Bahnverwaltung> {
 
     public BahnverwaltungModelMutator() {
-        super(() -> new Bahnverwaltung(), new NamedTranscriber<BahnverwaltungModel, Bahnverwaltung>());
+        super(() -> new Bahnverwaltung(), new NamedTranscriber<BahnverwaltungModel, Bahnverwaltung>() {
+                @Override
+                public Bahnverwaltung apply(BahnverwaltungModel source, Bahnverwaltung destination) {
+                    destination.setLand(source.getLand());
+        
+                    return super.apply(source, destination);
+                }
+            });
     }
 
 }

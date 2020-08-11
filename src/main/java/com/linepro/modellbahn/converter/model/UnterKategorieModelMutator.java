@@ -5,7 +5,7 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.impl.MutatorImpl;
-import com.linepro.modellbahn.converter.impl.NamedTranscriber;
+import com.linepro.modellbahn.converter.impl.NamedModelTranscriber;
 import com.linepro.modellbahn.entity.UnterKategorie;
 import com.linepro.modellbahn.model.UnterKategorieModel;
 
@@ -13,7 +13,7 @@ import com.linepro.modellbahn.model.UnterKategorieModel;
 public class UnterKategorieModelMutator extends MutatorImpl<UnterKategorieModel, UnterKategorie> {
 
     public UnterKategorieModelMutator() {
-        super(() -> new UnterKategorie(), new NamedTranscriber<UnterKategorieModel, UnterKategorie>());
+        super(() -> new UnterKategorie(), new NamedModelTranscriber<UnterKategorieModel, UnterKategorie>());
     }
 
 }

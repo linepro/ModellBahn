@@ -19,7 +19,6 @@ public class DecoderTypFunktionModelMutator implements Mutator<DecoderTypFunktio
             destination.setFunktion(source.getFunktion());
             destination.setBezeichnung(source.getBezeichnung());
             destination.setProgrammable(source.getProgrammable());
-            destination.setDeleted(source.getDeleted());
         }
 
         return destination;

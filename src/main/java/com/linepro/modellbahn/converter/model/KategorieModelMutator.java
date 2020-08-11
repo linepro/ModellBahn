@@ -5,7 +5,7 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.impl.MutatorImpl;
-import com.linepro.modellbahn.converter.impl.NamedTranscriber;
+import com.linepro.modellbahn.converter.impl.NamedModelTranscriber;
 import com.linepro.modellbahn.entity.Kategorie;
 import com.linepro.modellbahn.model.KategorieModel;
 
@@ -13,6 +13,6 @@ import com.linepro.modellbahn.model.KategorieModel;
 public class KategorieModelMutator extends MutatorImpl<KategorieModel, Kategorie> {
 
     public KategorieModelMutator() {
-        super(() -> new Kategorie(), new NamedTranscriber<KategorieModel, Kategorie>());
+        super(() -> new Kategorie(), new NamedModelTranscriber<KategorieModel, Kategorie>());
     }
 }

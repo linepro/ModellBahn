@@ -16,7 +16,7 @@ public class NamedItemController<M extends NamedItemModel> extends AbstractItemC
     }
 
     protected ResponseEntity<?> get(String name) {
-        return added(service.get(name));
+        return found(service.get(name));
     }
 
     protected ResponseEntity<?> update(String name, M model) {

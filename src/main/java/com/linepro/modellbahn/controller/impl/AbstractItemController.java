@@ -39,6 +39,10 @@ public abstract class AbstractItemController<M extends ItemModel> {
         return found(service.search(model, pageNumber, pageSize));
     }
 
+    public <I extends ItemModel> ResponseEntity<?> found(Optional<I> body) {
+        return body.map(b -> ok(b)).orElse(notFound().build());
+    }
+
     public <I extends ItemModel> ResponseEntity<?> added(I body) {
         return status(CREATED).body(body);
     }
