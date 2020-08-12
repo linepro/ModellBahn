@@ -43,15 +43,15 @@ public class ZugTypModel extends RepresentationModel<ZugTypModel> implements Nam
     private static final long serialVersionUID = 4015651013461558863L;
 
     @JsonProperty(ApiNames.NAMEN)
-    @Schema(name = "Train code", example = "BAVARIA", required = true)
+    @Schema(description = "Train code", example = "BAVARIA", required = true)
     private String name;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Train description", example = "TEE äBavariaä")
+    @Schema(description = "Train description", example = "TEE äBavariaä")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

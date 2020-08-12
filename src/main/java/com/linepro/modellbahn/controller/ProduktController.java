@@ -67,9 +67,9 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
     
     @GetMapping(path = ApiPaths.GET_PRODUKT, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds an Produkt by name", description = "Finds a product", operationId = "get", tags = { "Produkt" })
+    @Operation(summary = "Finds an Produkt by name", description = "Finds a product", operationId = "get", tags = { ApiNames.PRODUKT })
         @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
+        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -82,7 +82,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
 
     @Override
     @GetMapping(path = ApiPaths.SEARCH_PRODUKT, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Produkten by example", description = "Finds products", operationId = "find", tags = { "Produkt" })
+    @Operation(summary = "Finds Produkten by example", description = "Finds products", operationId = "find", tags = { ApiNames.PRODUKT })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ProduktModel.class))) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -97,13 +97,12 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
 
     @Override
     @PostMapping(path = ApiPaths.ADD_PRODUKT, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Add a new Produkt", description = "Add a new product", operationId = "add", tags = { "Produkt" })
+    @Operation(summary = "Add a new Produkt", description = "Add a new product", operationId = "add", tags = { ApiNames.PRODUKT })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -112,13 +111,13 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @PutMapping(path = ApiPaths.UPDATE_PRODUKT, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an Produkt by name", description = "Update an Product", operationId = "update", tags = { "Produkt" })
+    @Operation(summary = "Updates an Produkt by name", description = "Update an Product", operationId = "update", tags = { ApiNames.PRODUKT })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -127,13 +126,13 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_PRODUKT)
-    @Operation(summary = "Deletes an Produkt by name", description = "Delete an Product", operationId = "update", tags = { "Produkt" })
+    @Operation(summary = "Deletes an Produkt by name", description = "Delete an Product", operationId = "update", tags = { ApiNames.PRODUKT })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -142,13 +141,13 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @PostMapping(path = ApiPaths.ADD_PRODUKT_TEIL, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Adds a component of a Produkt", description = "", operationId = "", tags = { "ProduktTeil" })
+    @Operation(summary = "Adds a component of a Produkt", description = "", operationId = "add", tags = { ApiNames.TEIL })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktTeilModel.class)) }),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
@@ -157,13 +156,13 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @PutMapping(path = ApiPaths.UPDATE_PRODUKT_TEIL, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates a component of a Produkt", description = "", operationId = "", tags = { "ProduktTeil" })
+    @Operation(summary = "Updates a component of a Produkt", description = "", operationId = "update", tags = { ApiNames.TEIL })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktTeilModel.class)) }),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
@@ -172,13 +171,13 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_PRODUKT_TEIL)
-    @Operation(summary = "Removes a component of a Produkt", description = "", operationId = "", tags = { "ProduktTeil" })
+    @Operation(summary = "Removes a component of a Produkt", description = "", operationId = "delete", tags = { ApiNames.TEIL })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
@@ -187,13 +186,13 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @PutMapping(path = ApiPaths.ADD_PRODUKT_ABBILDUNG, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Add an Produkt picture", description = "Adds or updates the picture of a named Produkt", operationId = "update", tags = { "Produkt" })
+    @Operation(summary = "Add an Produkt picture", description = "Adds or updates the picture of a named Produkt", operationId = "update", tags = { ApiNames.PRODUKT })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -202,13 +201,13 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_PRODUKT_ABBILDUNG, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Removes a picture from an Product", description = "", operationId = "", tags = { "" })
+    @Operation(summary = "Removes a picture from an Product", description = "", operationId = "delete", tags = { ApiNames.PRODUKT })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
@@ -217,13 +216,13 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @PutMapping(path = ApiPaths.ADD_PRODUKT_ANLEITUNGEN, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Adds Produkt instructions", description = "Adds or updates the instructions for a named Produkt", operationId = "update", tags = { "Produkt" })
+    @Operation(summary = "Adds Produkt instructions", description = "Adds or updates the instructions for a named Produkt", operationId = "update", tags = { ApiNames.PRODUKT })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -233,13 +232,13 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_PRODUKT_ANLEITUNGEN, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Removes instructions from an Product", description = "", operationId = "", tags = { "" })
+    @Operation(summary = "Removes instructions from an Product", description = "", operationId = "delete", tags = { ApiNames.PRODUKT })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
@@ -248,13 +247,13 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @PutMapping(path = ApiPaths.ADD_PRODUKT_EXPLOSIONSZEICHNUNG, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Adds Produkt parts diagram", description = "Adds or updates the picture of a named Produkt", operationId = "update", tags = { "Produkt" })
+    @Operation(summary = "Adds Produkt parts diagram", description = "Adds or updates the picture of a named Produkt", operationId = "update", tags = { ApiNames.PRODUKT })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -264,13 +263,13 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_PRODUKT_EXPLOSIONSZEICHNUNG, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Removes a Produkt parts diagram", description = "", operationId = "", tags = { "" })
+    @Operation(summary = "Removes a Produkt parts diagram", description = "", operationId = "delete", tags = { ApiNames.PRODUKT })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })

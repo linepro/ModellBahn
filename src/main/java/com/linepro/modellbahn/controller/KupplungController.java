@@ -62,9 +62,9 @@ public class KupplungController extends NamedItemController<KupplungModel> {
     
     @Override
     @GetMapping(path = ApiPaths.GET_KUPPLUNG, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds an Kupplung by name", description = "Finds a coupling configuration", operationId = "get", tags = { "Kupplung" })
+    @Operation(summary = "Finds an Kupplung by name", description = "Finds a coupling configuration", operationId = "get", tags = { ApiNames.KUPPLUNG })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),
+        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -77,7 +77,7 @@ public class KupplungController extends NamedItemController<KupplungModel> {
 
     @Override
     @GetMapping(path = ApiPaths.SEARCH_KUPPLUNG, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Kupplungen by example", description = "Finds coupling configurations", operationId = "get", tags = { "Kupplung" })
+    @Operation(summary = "Finds Kupplungen by example", description = "Finds coupling configurations", operationId = "get", tags = { ApiNames.KUPPLUNG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = KupplungModel.class))) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -92,13 +92,12 @@ public class KupplungController extends NamedItemController<KupplungModel> {
 
     @Override
     @PostMapping(path = ApiPaths.ADD_KUPPLUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Adds an Kupplung", description = "Update a coupling configuration", operationId = "update", tags = { "Kupplung" })
+    @Operation(summary = "Adds an Kupplung", description = "Update a coupling configuration", operationId = "update", tags = { ApiNames.KUPPLUNG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Kupplung not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -108,7 +107,7 @@ public class KupplungController extends NamedItemController<KupplungModel> {
 
     @Override
     @PutMapping(path = ApiPaths.UPDATE_KUPPLUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an Kupplung by name", description = "Update a coupling configuration", operationId = "update", tags = { "Kupplung" })
+    @Operation(summary = "Updates an Kupplung by name", description = "Update a coupling configuration", operationId = "update", tags = { ApiNames.KUPPLUNG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -124,7 +123,7 @@ public class KupplungController extends NamedItemController<KupplungModel> {
 
     @Override
     @DeleteMapping(path = ApiPaths.DELETE_KUPPLUNG)
-    @Operation(summary = "Deletes an Kupplung by name", description = "Delete a coupling configuration", operationId = "update", tags = { "Kupplung" })
+    @Operation(summary = "Deletes an Kupplung by name", description = "Delete a coupling configuration", operationId = "delete", tags = { ApiNames.KUPPLUNG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -139,7 +138,7 @@ public class KupplungController extends NamedItemController<KupplungModel> {
     }
 
     @PutMapping(path = ApiPaths.ADD_KUPPLUNG_ABBILDUNG, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Add an Kupplung picture", description = "Adds or updates the picture of a named Kupplung", operationId = "update", tags = { "Kupplung" })
+    @Operation(summary = "Add an Kupplung picture", description = "Adds or updates the picture of a named Kupplung", operationId = "update", tags = { ApiNames.KUPPLUNG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -154,7 +153,7 @@ public class KupplungController extends NamedItemController<KupplungModel> {
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_KUPPLUNG_ABBILDUNG, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Delete an Kupplung picture", description = "Deletes the picture of a named Kupplung", operationId = "update", tags = { "Kupplung" })
+    @Operation(summary = "Delete an Kupplung picture", description = "Deletes the picture of a named Kupplung", operationId = "update", tags = { ApiNames.KUPPLUNG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KupplungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),

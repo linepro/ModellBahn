@@ -62,9 +62,9 @@ public class ZugController extends NamedItemController<ZugModel> {
 
     @Override
     @GetMapping(path = ApiPaths.GET_ZUG, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds an Zug by name", description = "Finds a train", operationId = "get", tags = { "Zug" })
+    @Operation(summary = "Finds an Zug by name", description = "Finds a train", operationId = "get", tags = { ApiNames.ZUG })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugModel.class)) }),
+        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -77,7 +77,7 @@ public class ZugController extends NamedItemController<ZugModel> {
 
     @Override
     @GetMapping(path = ApiPaths.SEARCH_ZUG, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Zugen by example", description = "Finds train configurations", operationId = "find", tags = { "Achsfolg" })
+    @Operation(summary = "Finds Zugen by example", description = "Finds train configurations", operationId = "find", tags = { ApiNames.ZUG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ZugModel.class))) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -92,13 +92,12 @@ public class ZugController extends NamedItemController<ZugModel> {
 
     @Override
     @PostMapping(path = ApiPaths.ADD_ZUG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Adds an Zug", description = "Update a train", operationId = "update", tags = { "Zug" })
+    @Operation(summary = "Adds an Zug", description = "Update a train", operationId = "update", tags = { ApiNames.ZUG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -108,13 +107,13 @@ public class ZugController extends NamedItemController<ZugModel> {
 
     @Override
     @PutMapping(path = ApiPaths.UPDATE_ZUG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an Zug by name", description = "Update a train", operationId = "update", tags = { "Zug" })
+    @Operation(summary = "Updates an Zug by name", description = "Update a train", operationId = "update", tags = { ApiNames.ZUG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -124,13 +123,13 @@ public class ZugController extends NamedItemController<ZugModel> {
 
     @Override
     @DeleteMapping(path = ApiPaths.DELETE_ZUG)
-    @Operation(summary = "Deletes an Zug by name", description = "Delete a train", operationId = "update", tags = { "Zug" })
+    @Operation(summary = "Deletes an Zug by name", description = "Delete a train", operationId = "delete", tags = { ApiNames.ZUG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -139,13 +138,13 @@ public class ZugController extends NamedItemController<ZugModel> {
     }
 
     @PostMapping(path = ApiPaths.ADD_CONSIST, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "UnterKategorie" })
+    @Operation(summary = "Adds a vehicle to a train", description = "", operationId = "add", tags = { ApiNames.ZUG })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugModel.class)) }),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
@@ -154,13 +153,13 @@ public class ZugController extends NamedItemController<ZugModel> {
     }
 
     @PutMapping(path = ApiPaths.UPDATE_CONSIST, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates a change to an Article", description = "", operationId = "", tags = { "UnterKategorie" })
+    @Operation(summary = "Updates a vehicle in a train", description = "", operationId = "updates", tags = { ApiNames.ZUG })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugModel.class)) }),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
@@ -169,13 +168,13 @@ public class ZugController extends NamedItemController<ZugModel> {
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_CONSIST)
-    @Operation(summary = "Removes a change from an article", description = "", operationId = "", tags = { "UnterKategorie" })
+    @Operation(summary = "Removes a vehicle from a train", description = "", operationId = "delete", tags = { ApiNames.ZUG })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })

@@ -37,19 +37,19 @@ public enum Konfiguration implements DescribedEnum {
     }
 
     @Override
-    @Schema(name = "Konfiguration name", example = "CV", required = true)
+    @Schema(description = "Konfiguration name", example = "CV", required = true)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @Schema(name = "Konfiguration description", example = "The Decoder can be configured by CV values.", required = true)
+    @Schema(description = "Konfiguration description", example = "The Decoder can be configured by CV values.", required = true)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @Schema(name = "AdressTyp tooltip", example = "0 - 10239.")
+    @Schema(description = "AdressTyp tooltip", example = "0 - 10239.")
     public String getTooltip() {
         return tooltip;
     }

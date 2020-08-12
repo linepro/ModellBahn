@@ -55,9 +55,9 @@ public class MassstabController extends NamedItemController<MassstabModel> {
     
     @Override
     @GetMapping(path = ApiPaths.GET_MASSSTAB, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds an Massstab by name", description = "Finds a scale", operationId = "get", tags = { "Massstab" })
+    @Operation(summary = "Finds an Massstab by name", description = "Finds a scale", operationId = "get", tags = { ApiNames.MASSSTAB })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MassstabModel.class)) }),
+        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MassstabModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -70,7 +70,7 @@ public class MassstabController extends NamedItemController<MassstabModel> {
 
     @Override
     @GetMapping(path = ApiPaths.SEARCH_MASSSTAB, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Massstaben by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Massstab" })
+    @Operation(summary = "Finds Massstaben by example", description = "Finds UIC axle configurations", operationId = "find", tags = { ApiNames.MASSSTAB })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = MassstabModel.class))) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -85,13 +85,12 @@ public class MassstabController extends NamedItemController<MassstabModel> {
 
     @Override
     @PostMapping(path = ApiPaths.ADD_MASSSTAB, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Add a new Massstab", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Massstab" })
+    @Operation(summary = "Add a new Massstab", description = "Add a new UIC axle configuration", operationId = "add", tags = { ApiNames.MASSSTAB })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MassstabModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -101,13 +100,13 @@ public class MassstabController extends NamedItemController<MassstabModel> {
 
     @Override
     @PutMapping(path = ApiPaths.UPDATE_MASSSTAB, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an Massstab by name", description = "Update a scale", operationId = "update", tags = { "Massstab" })
+    @Operation(summary = "Updates an Massstab by name", description = "Update a scale", operationId = "update", tags = { ApiNames.MASSSTAB })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MassstabModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -117,13 +116,13 @@ public class MassstabController extends NamedItemController<MassstabModel> {
 
     @Override
     @DeleteMapping(path = ApiPaths.DELETE_MASSSTAB)
-    @Operation(summary = "Deletes an Massstab by name", description = "Delete a scale", operationId = "update", tags = { "Massstab" })
+    @Operation(summary = "Deletes an Massstab by name", description = "Delete a scale", operationId = "delete", tags = { ApiNames.MASSSTAB })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })

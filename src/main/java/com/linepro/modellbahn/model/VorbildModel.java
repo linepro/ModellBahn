@@ -61,27 +61,27 @@ public class VorbildModel extends RepresentationModel<VorbildModel> implements I
     private static final long serialVersionUID = 4657238952018125793L;
 
     @JsonProperty(ApiNames.GATTUNG)
-    @Schema(name = "Rolling stock class", example = "BR 89.0", required = true)
+    @Schema(description = "Rolling stock class", example = "BR 89.0", required = true)
     private String gattung;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Description", example = "Dampftenderlok BR 89.0")
+    @Schema(description = "Description", example = "Dampftenderlok BR 89.0")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.KATEGORIE)
-    @Schema(name = "Category and subcategory", required = true)
+    @Schema(description = "Category and subcategory", required = true)
     private String kategorie;
 
     @JsonProperty(ApiNames.UNTER_KATEGORIE)
-    @Schema(name = "Category and subcategory", required = true)
+    @Schema(description = "Category and subcategory", required = true)
     private String unterKategorie;
 
     @JsonProperty(ApiNames.BAHNVERWALTUNG)
-    @Schema(name = "Railway company", required = true)
+    @Schema(description = "Railway company", required = true)
     private String bahnverwaltung;
 
     @JsonProperty(ApiNames.HERSTELLER)
-    @Schema(name = "Manunfacturer", example = "Henschel")
+    @Schema(description = "Manunfacturer", example = "Henschel")
     private String hersteller;
 
     @JsonProperty(ApiNames.BAUZEIT)
@@ -90,39 +90,39 @@ public class VorbildModel extends RepresentationModel<VorbildModel> implements I
     private LocalDate bauzeit;
 
     @JsonProperty(ApiNames.ANZAHL)
-    @Schema(name = "Number built", example = "10")
+    @Schema(description = "Number built", example = "10")
     private Integer Anzahl;
 
     @JsonProperty(ApiNames.BETREIBSNUMMER)
-    @Schema(name = "Service number", example = "89 006")
+    @Schema(description = "Service number", example = "89 006")
     private String betreibsNummer;
 
     @JsonProperty(ApiNames.ANTRIEB)
-    @Schema(name = "Drive method")
+    @Schema(description = "Drive method")
     private String antrieb;
 
     @JsonProperty(ApiNames.ACHSFOLG)
-    @Schema(name = "Axle configuration")
+    @Schema(description = "Axle configuration")
     private String achsfolg;
 
     @JsonProperty(ApiNames.ANFAHRZUGKRAFT)
-    @Schema(name = "Tractive Effort in kN", example = "300")
+    @Schema(description = "Tractive Effort in kN", example = "300")
     private BigDecimal anfahrzugkraft;
 
     @JsonProperty(ApiNames.LEISTUNG)
-    @Schema(name = "Power in kW", example = "385")
+    @Schema(description = "Power in kW", example = "385")
     private BigDecimal leistung;
 
     @JsonProperty(ApiNames.DIENSTGEWICHT)
-    @Schema(name = "Service weight in metric tons", example = "46")
+    @Schema(description = "Service weight in metric tons", example = "46")
     private BigDecimal dienstgewicht;
 
     @JsonProperty(ApiNames.GESCHWINDIGKEIT)
-    @Schema(name = "Maximum speed in km/h", example = "45")
+    @Schema(description = "Maximum speed in km/h", example = "45")
     private Integer geschwindigkeit;
 
     @JsonProperty(ApiNames.LANGE)
-    @Schema(name = "Length over puffers in mm", example = "9600")
+    @Schema(description = "Length over puffers in mm", example = "9600")
     private BigDecimal lange;
 
     @JsonProperty(ApiNames.AUSSERDIENST)
@@ -131,111 +131,111 @@ public class VorbildModel extends RepresentationModel<VorbildModel> implements I
     private LocalDate ausserdienst;
 
     @JsonProperty(ApiNames.DMTREIBRAD)
-    @Schema(name = "Drive wheel diamerter in mm", example = "1100")
+    @Schema(description = "Drive wheel diamerter in mm", example = "1100")
     private BigDecimal dmTreibrad;
 
     @JsonProperty(ApiNames.DMLAUFRADVORN)
-    @Schema(name = "Running wheel diameter front", example = "0")
+    @Schema(description = "Running wheel diameter front", example = "0")
     private BigDecimal dmLaufradVorn;
 
     @JsonProperty(ApiNames.DMLAUFRADHINTEN)
-    @Schema(name = "Running wheel diameter rear", example = "0")
+    @Schema(description = "Running wheel diameter rear", example = "0")
     private BigDecimal dmLaufradHinten;
 
     @JsonProperty(ApiNames.ZYLINDER)
-    @Schema(name = "Number of cylinders", example = "2")
+    @Schema(description = "Number of cylinders", example = "2")
     private Integer Zylinder;
 
     @JsonProperty(ApiNames.DMZYLINDER)
-    @Schema(name = "Cylinder diameter", example = "500")
+    @Schema(description = "Cylinder diameter", example = "500")
     private BigDecimal dmZylinder;
 
     @JsonProperty(ApiNames.KOLBENHUB)
-    @Schema(name = "Cylinder stroke", example = "550")
+    @Schema(description = "Cylinder stroke", example = "550")
     private BigDecimal kolbenhub;
 
     @JsonProperty(ApiNames.KESSELUBERDRUCK)
-    @Schema(name = "Boiler pressure in bar", example = "14")
+    @Schema(description = "Boiler pressure in bar", example = "14")
     private BigDecimal kesseluberdruck;
 
     @JsonProperty(ApiNames.ROSTFLACHE)
-    @Schema(name = "Grate area in m²", example = "1.42")
+    @Schema(description = "Grate area in m²", example = "1.42")
     private BigDecimal rostflache;
 
     @JsonProperty(ApiNames.UBERHITZERFLACHE)
-    @Schema(name = "Super heater area in m²", example = "11.9")
+    @Schema(description = "Super heater area in m²", example = "11.9")
     private BigDecimal uberhitzerflache;
 
     @JsonProperty(ApiNames.WASSERVORRAT)
-    @Schema(name = "Water capactity in m³", example = "5.5")
+    @Schema(description = "Water capactity in m³", example = "5.5")
     private BigDecimal wasservorrat;
 
     @JsonProperty(ApiNames.VERDAMPFUNG)
-    @Schema(name = "Evaporative heater area in m²", example = "118.4")
+    @Schema(description = "Evaporative heater area in m²", example = "118.4")
     private BigDecimal verdampfung;
 
     @JsonProperty(ApiNames.FAHRMOTOREN)
-    @Schema(name = "Number of drive motors", example = "1")
+    @Schema(description = "Number of drive motors", example = "1")
     private Integer fahrmotoren;
 
     @JsonProperty(ApiNames.MOTORBAUART)
-    @Schema(name = "Engine manufacturer and model (IC engines)", example = "Henschel 12V1516A")
+    @Schema(description = "Engine manufacturer and model (IC engines)", example = "Henschel 12V1516A")
     private String motorbauart;
 
     @JsonProperty(ApiNames.LEISTUNGSUBERTRAGUNG)
-    @Schema(name = "Power transfer method (IC engines)", example = "MECHANISH")
+    @Schema(description = "Power transfer method (IC engines)", example = "MECHANISH")
     private LeistungsUbertragung leistungsUbertragung;
 
     @JsonProperty(ApiNames.REICHWEITE)
-    @Schema(name = "Range (fueled vehicles) km", example = "500")
+    @Schema(description = "Range (fueled vehicles) km", example = "500")
     private BigDecimal reichweite;
 
     @JsonProperty(ApiNames.KAPAZITAT)
-    @Schema(name = "Battery capacity in kwH", example = "190")
+    @Schema(description = "Battery capacity in kwH", example = "190")
     private BigDecimal kapazitat;
 
     @JsonProperty(ApiNames.KLASSE)
-    @Schema(name = "Number of classes (passenger wagens / multiple units)", example = "2")
+    @Schema(description = "Number of classes (passenger wagens / multiple units)", example = "2")
     private Integer klasse;
 
     @JsonProperty(ApiNames.SITZPLATZEKL1)
-    @Schema(name = "First class seating", example = "20")
+    @Schema(description = "First class seating", example = "20")
     private Integer sitzplatzeKL1;
 
     @JsonProperty(ApiNames.SITZPLATZEKL2)
-    @Schema(name = "Second class seating", example = "80")
+    @Schema(description = "Second class seating", example = "80")
     private Integer sitzplatzeKL2;
 
     @JsonProperty(ApiNames.SITZPLATZEKL3)
-    @Schema(name = "Third class seating", example = "90")
+    @Schema(description = "Third class seating", example = "90")
     private Integer sitzplatzeKL3;
 
     @JsonProperty(ApiNames.SITZPLATZEKL4)
-    @Schema(name = "Fourth class seating", example = "150")
+    @Schema(description = "Fourth class seating", example = "150")
     private Integer sitzplatzeKL4;
 
     @JsonProperty(ApiNames.AUFBAU)
-    @Schema(name = "Construction", example = "Holz")
+    @Schema(description = "Construction", example = "Holz")
     private String aufbau;
 
     @JsonProperty(ApiNames.TRIEBKOPF)
-    @Schema(name = "Number of drive wagons (multiple units)", example = "2")
+    @Schema(description = "Number of drive wagons (multiple units)", example = "2")
     private Integer triebkopf;
 
     @JsonProperty(ApiNames.MITTELWAGEN)
-    @Schema(name = "Number of middle wagons (multiple units)", example = "6")
+    @Schema(description = "Number of middle wagons (multiple units)", example = "6")
     private Integer mittelwagen;
 
     @JsonProperty(ApiNames.DREHGESTELLBAUART)
-    @Schema(name = "Bogie Manufacturer and type", example = "Y 25")
+    @Schema(description = "Bogie Manufacturer and type", example = "Y 25")
     private String drehgestellBauart;
 
     @JsonProperty(ApiNames.ABBILDUNG)
-    @Schema(name = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
     private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

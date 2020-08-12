@@ -55,9 +55,9 @@ public class BahnverwaltungController extends NamedItemController<Bahnverwaltung
     
     @Override
     @GetMapping(path = ApiPaths.GET_BAHNVERWALTUNG, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds an Bahnverwaltung by name", description = "Finds an UIC axle configuration", operationId = "get",  tags = { "Bahnverwaltung" })
+    @Operation(summary = "Finds an Bahnverwaltung by name", description = "Finds an UIC axle configuration", operationId = "get",  tags = { ApiNames.BAHNVERWALTUNG })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BahnverwaltungModel.class)) }),
+        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BahnverwaltungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -70,7 +70,7 @@ public class BahnverwaltungController extends NamedItemController<Bahnverwaltung
 
     @Override
     @GetMapping(path = ApiPaths.SEARCH_BAHNVERWALTUNG, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Bahnverwaltungen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Bahnverwaltung" })
+    @Operation(summary = "Finds Bahnverwaltungen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { ApiNames.BAHNVERWALTUNG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = BahnverwaltungModel.class))) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -85,13 +85,12 @@ public class BahnverwaltungController extends NamedItemController<Bahnverwaltung
 
     @Override
     @PostMapping(path = ApiPaths.ADD_BAHNVERWALTUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Adds an Bahnverwaltung", description = "Update a railway company", operationId = "update", tags = { "Bahnverwaltung" })
+    @Operation(summary = "Adds an Bahnverwaltung", description = "Update a railway company", operationId = "update", tags = { ApiNames.BAHNVERWALTUNG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BahnverwaltungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -101,13 +100,13 @@ public class BahnverwaltungController extends NamedItemController<Bahnverwaltung
 
     @Override
     @PutMapping(path = ApiPaths.UPDATE_BAHNVERWALTUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an Bahnverwaltung by name", description = "Update a railway company", operationId = "update", tags = { "Bahnverwaltung" })
+    @Operation(summary = "Updates an Bahnverwaltung by name", description = "Update a railway company", operationId = "update", tags = { ApiNames.BAHNVERWALTUNG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BahnverwaltungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -117,13 +116,13 @@ public class BahnverwaltungController extends NamedItemController<Bahnverwaltung
 
     @Override
     @DeleteMapping(path = ApiPaths.DELETE_BAHNVERWALTUNG)
-    @Operation(summary = "Deletes an Bahnverwaltung by name", description = "Delete a railway company", operationId = "update", tags = { "Bahnverwaltung" })
+    @Operation(summary = "Deletes an Bahnverwaltung by name", description = "Delete a railway company", operationId = "delete", tags = { ApiNames.BAHNVERWALTUNG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })

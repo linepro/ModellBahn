@@ -46,27 +46,27 @@ public class HerstellerModel extends RepresentationModel<HerstellerModel> implem
     private static final long serialVersionUID = 2975751105718552754L;
 
     @JsonProperty(ApiNames.NAMEN)
-    @Schema(name = "Hersteller coding", example = "MARKLIN", required = true)
+    @Schema(description = "Hersteller coding", example = "MARKLIN", required = true)
     private String name;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Hersteller description", example = "Märklin")
+    @Schema(description = "Hersteller description", example = "Märklin")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.LAND)
-    @Schema(name = "Country ISO 3166 Code", example = "DE")
+    @Schema(description = "Country ISO 3166 Code", example = "DE")
     private String land;
     
     @JsonProperty(ApiNames.URL)
-    @Schema(name = "Manufacturer's website", example = "https://www.maerklin.de")
+    @Schema(description = "Manufacturer's website", example = "https://www.maerklin.de")
     private String url;
 
     @JsonProperty(ApiNames.TELEFON)
-    @Schema(name = "Manufacturer's phone number", example = "+49 (0) 71 61 608-0")
+    @Schema(description = "Manufacturer's phone number", example = "+49 (0) 71 61 608-0")
     private String telefon;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

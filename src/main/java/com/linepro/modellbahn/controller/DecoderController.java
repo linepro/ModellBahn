@@ -77,9 +77,9 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
     }
 
     @GetMapping(path = ApiPaths.GET_DECODER, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds an DecoderTyp by name", description = "Finds a train", operationId = "get", tags = { "DecoderTyp" })
+    @Operation(summary = "Finds an Decoder by id", description = "Finds a decoder", operationId = "get", tags = { ApiNames.DECODER })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderModel.class)) }),
+        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -92,7 +92,7 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
 
     @Override
     @GetMapping(path = ApiPaths.SEARCH_DECODER, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Achsfolgen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Achsfolg" })
+    @Operation(summary = "Finds Decoders by example", description = "Finds decoders", operationId = "find", tags = { ApiNames.DECODER })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = DecoderModel.class))) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -106,13 +106,12 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
     }
 
     @PostMapping(path = ApiPaths.ADD_DECODER, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Adds an DecoderTyp", description = "Update a train", operationId = "update", tags = { "DecoderTyp" })
+    @Operation(summary = "Adds an Decoder by Typ", description = "Add a decoder", operationId = "add", tags = { ApiNames.DECODER })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -121,13 +120,13 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
     }
 
     @PutMapping(path = ApiPaths.UPDATE_DECODER, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an DecoderTyp by name", description = "Update a train", operationId = "update", tags = { "DecoderTyp" })
+    @Operation(summary = "Updates an Decoder by id", description = "Update a decoder", operationId = "update", tags = { ApiNames.DECODER })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -136,13 +135,13 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_DECODER)
-    @Operation(summary = "Deletes an DecoderTyp by name", description = "Delete a train", operationId = "update", tags = { "DecoderTyp" })
+    @Operation(summary = "Deletes an Decoder by id", description = "Delete a decoder", operationId = "delete", tags = { ApiNames.DECODER })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -151,13 +150,13 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
     }
 
     @PutMapping(path = ApiPaths.UPDATE_DECODER_ADRESS, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "UnterKategorie" })
+    @Operation(summary = "Updates a decoder address", description = "", operationId = "update", tags = { ApiNames.DECODER })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderAdressModel.class)) }),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
@@ -166,13 +165,13 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
     }
 
     @PutMapping(path = ApiPaths.UPDATE_DECODER_CV, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "UnterKategorie" })
+    @Operation(summary = "Updates a decoder cv", description = "", operationId = "update", tags = { ApiNames.DECODER })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderCvModel.class)) }),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
@@ -181,13 +180,13 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
     }
 
     @PutMapping(path = ApiPaths.UPDATE_DECODER_FUNKTION, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "UnterKategorie" })
+    @Operation(summary = "Updates a decoder function", description = "", operationId = "update", tags = { ApiNames.DECODER })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderFunktionModel.class)) }),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })

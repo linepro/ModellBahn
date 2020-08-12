@@ -54,43 +54,43 @@ public class DecoderTypModel extends RepresentationModel<DecoderTypModel> implem
     private static final long serialVersionUID = 8572025031906541322L;
 
     @JsonProperty(ApiNames.HERSTELLER)
-    @Schema(name = "Manufacturer", required = true)
+    @Schema(description = "Manufacturer", required = true)
     private String hersteller;
 
     @JsonProperty(ApiNames.BESTELL_NR)
-    @Schema(name = "Product numer", example = "62499", required = true)
+    @Schema(description = "Product numer", example = "62499", required = true)
     private String bestellNr;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Description", example = "LokSound M4")
+    @Schema(description = "Description", example = "LokSound M4")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.I_MAX)
-    @Schema(name = "Maximum current in mA", example = "1100")
+    @Schema(description = "Maximum current in mA", example = "1100")
     private BigDecimal iMax;
 
     @JsonProperty(ApiNames.PROTOKOLL)
-    @Schema(name = "Default protocoll", required = true)
+    @Schema(description = "Default protocoll", required = true)
     private String protokoll;
 
     @JsonProperty(ApiNames.FAHRSTUFE)
-    @Schema(name = "Default speed steps", example = "127", required = true)
+    @Schema(description = "Default speed steps", example = "127", required = true)
     private Integer fahrstufe;
 
     @JsonProperty(ApiNames.GERAUSCH)
-    @Schema(name = "True if decoder supports sound", example = "true", required = true)
+    @Schema(description = "True if decoder supports sound", example = "true", required = true)
     private Boolean sound;
 
     @JsonProperty(ApiNames.KONFIGURATION)
-    @Schema(name = "Configuration method", example = "CV", required = true)
+    @Schema(description = "Configuration method", example = "CV", required = true)
     private Konfiguration konfiguration;
 
     @JsonProperty(ApiNames.STECKER)
-    @Schema(name = "Stecker", example = "NEM352")
+    @Schema(description = "Stecker", example = "NEM352")
     private Stecker stecker;
 
     @JsonProperty(ApiNames.ANLEITUNGEN)
-    @Schema(name = "Instructions URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/betrieb_3000.pdf", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Instructions URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/betrieb_3000.pdf", accessMode = AccessMode.READ_ONLY)
     private String anleitungen;
 
     @JsonProperty(ApiNames.ADRESSEN)
@@ -106,7 +106,7 @@ public class DecoderTypModel extends RepresentationModel<DecoderTypModel> implem
     private List<DecoderTypFunktionModel> funktionen;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

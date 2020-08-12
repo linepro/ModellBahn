@@ -46,15 +46,15 @@ public class MassstabModel extends RepresentationModel<MassstabModel> implements
     private static final long serialVersionUID = -6720172088556006572L;
 
     @JsonProperty(ApiNames.NAMEN)
-    @Schema(name = "Scale code", example = "H0", required = true)
+    @Schema(description = "Scale code", example = "H0", required = true)
     private String name;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Scale description", example = "H0 : 1:87 16,5mm")
+    @Schema(description = "Scale description", example = "H0 : 1:87 16,5mm")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

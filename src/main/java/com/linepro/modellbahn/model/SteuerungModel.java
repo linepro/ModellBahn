@@ -46,15 +46,15 @@ public class SteuerungModel extends RepresentationModel<SteuerungModel> implemen
     private static final long serialVersionUID = -1496531786377395645L;
 
     @JsonProperty(ApiNames.NAMEN)
-    @Schema(name = "Steuerung code", example = "FRU", required = true)
+    @Schema(description = "Steuerung code", example = "FRU", required = true)
     private String name;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Steuerung description", example = "Fahrrichtungsumschalter")
+    @Schema(description = "Steuerung description", example = "Fahrrichtungsumschalter")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

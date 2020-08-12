@@ -55,9 +55,9 @@ public class AntriebController extends NamedItemController<AntriebModel> {
     
     @Override
     @GetMapping(path = ApiPaths.GET_ANTRIEB, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds an Antrieb by name", description = "Finds an drive method", operationId = "get", tags = { "Antrieb" })
+    @Operation(summary = "Finds an Antrieb by name", description = "Finds an drive method", operationId = "get", tags = { ApiNames.ANTRIEB })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AntriebModel.class)) }),
+        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AntriebModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -70,13 +70,12 @@ public class AntriebController extends NamedItemController<AntriebModel> {
 
     @Override
     @GetMapping(path = ApiPaths.SEARCH_ANTRIEB, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Antrieben by example", description = "Finds drive methods", operationId = "find", tags = { "Antrieb" })
+    @Operation(summary = "Finds Antrieben by example", description = "Finds drive methods", operationId = "find", tags = { ApiNames.ANTRIEB })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AntriebModel.class))) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Not found, content = @Content"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> search(@RequestBody Optional<AntriebModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
@@ -85,13 +84,12 @@ public class AntriebController extends NamedItemController<AntriebModel> {
 
     @Override
     @PostMapping(path = ApiPaths.ADD_ANTRIEB, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Add a new Antrieb", description = "Add a new drive method", operationId = "add", tags = { "Antrieb" })
+    @Operation(summary = "Add a new Antrieb", description = "Add a new drive method", operationId = "add", tags = { ApiNames.ANTRIEB })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AntriebModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -101,13 +99,13 @@ public class AntriebController extends NamedItemController<AntriebModel> {
 
     @Override
     @PutMapping(path = ApiPaths.UPDATE_ANTRIEB, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an Antrieb by name", description = "Update a drive method", operationId = "update", tags = { "Antrieb" })
+    @Operation(summary = "Updates an Antrieb by name", description = "Update a drive method", operationId = "update", tags = { ApiNames.ANTRIEB })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AntriebModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -117,13 +115,13 @@ public class AntriebController extends NamedItemController<AntriebModel> {
 
     @Override
     @DeleteMapping(path = ApiPaths.DELETE_ANTRIEB)
-    @Operation(summary = "Deletes an Antrieb by name", description = "Delete a drive method", operationId = "update", tags = { "Antrieb" })
+    @Operation(summary = "Deletes an Antrieb by name", description = "Delete a drive method", operationId = "delete", tags = { ApiNames.ANTRIEB })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })

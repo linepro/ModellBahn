@@ -39,19 +39,19 @@ public enum LeistungsUbertragung implements DescribedEnum {
     }
 
     @Override
-    @Schema(name = "LeistungsUbertragung name", example = "ELEKTRISH", required = true)
+    @Schema(description = "LeistungsUbertragung name", example = "ELEKTRISH", required = true)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @Schema(name = "LeistungsUbertragung description", example = "Elektrish", required = true)
+    @Schema(description = "LeistungsUbertragung description", example = "Elektrish", required = true)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @Schema(name = "AdressTyp tooltip", example = "0 - 10239.")
+    @Schema(description = "AdressTyp tooltip", example = "0 - 10239.")
     public String getTooltip() {
         return tooltip;
     }

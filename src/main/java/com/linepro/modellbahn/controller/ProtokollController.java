@@ -55,9 +55,9 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
     
     @Override
     @GetMapping(path = ApiPaths.GET_PROTOKOLL, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds an Protokoll by name", description = "Finds a decoder protocol", operationId = "get", tags = { "Protokoll" })
+    @Operation(summary = "Finds an Protokoll by name", description = "Finds a decoder protocol", operationId = "get", tags = { ApiNames.PROTOKOLL })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProtokollModel.class)) }),
+        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProtokollModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -70,7 +70,7 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
 
     @Override
     @GetMapping(path = ApiPaths.SEARCH_PROTOKOLL, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Protokollen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Protokoll" })
+    @Operation(summary = "Finds Protokollen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { ApiNames.PROTOKOLL })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ProtokollModel.class))) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -85,13 +85,12 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
 
     @Override
     @PostMapping(path = ApiPaths.ADD_PROTOKOLL, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Add a new Protokoll", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Protokoll" })
+    @Operation(summary = "Add a new Protokoll", description = "Add a new UIC axle configuration", operationId = "add", tags = { ApiNames.PROTOKOLL })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProtokollModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -101,13 +100,13 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
 
     @Override
     @PutMapping(path = ApiPaths.UPDATE_PROTOKOLL, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an Protokoll by name", description = "Update a decoder protocol", operationId = "update", tags = { "Protokoll" })
+    @Operation(summary = "Updates an Protokoll by name", description = "Update a decoder protocol", operationId = "update", tags = { ApiNames.PROTOKOLL })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProtokollModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -117,13 +116,13 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
 
     @Override
     @DeleteMapping(path = ApiPaths.DELETE_PROTOKOLL)
-    @Operation(summary = "Deletes an Protokoll by name", description = "Delete a decoder protocol", operationId = "update", tags = { "Protokoll" })
+    @Operation(summary = "Deletes an Protokoll by name", description = "Delete a decoder protocol", operationId = "delete", tags = { ApiNames.PROTOKOLL })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })

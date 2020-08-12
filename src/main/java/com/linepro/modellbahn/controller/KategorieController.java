@@ -67,9 +67,9 @@ public class KategorieController extends NamedItemController<KategorieModel> {
 
     @Override
     @GetMapping(path = ApiPaths.GET_KATEGORIE, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds an Kategorie by name", description = "Finds a category", operationId = "get", tags = { "Kategorie" })
+    @Operation(summary = "Finds an Kategorie by name", description = "Finds a category", operationId = "get", tags = { ApiNames.KATEGORIE })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KategorieModel.class)) }),
+        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KategorieModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -82,7 +82,7 @@ public class KategorieController extends NamedItemController<KategorieModel> {
 
     @Override
     @GetMapping(path = ApiPaths.SEARCH_KATEGORIE, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Kategorieen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Kategorie" })
+    @Operation(summary = "Finds Kategorieen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { ApiNames.KATEGORIE })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = KategorieModel.class))) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -97,13 +97,12 @@ public class KategorieController extends NamedItemController<KategorieModel> {
 
     @Override
     @PostMapping(path = ApiPaths.ADD_KATEGORIE, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Add a new Kategorie", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Kategorie" })
+    @Operation(summary = "Add a new Kategorie", description = "Add a new UIC axle configuration", operationId = "add", tags = { ApiNames.KATEGORIE })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KategorieModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -113,13 +112,13 @@ public class KategorieController extends NamedItemController<KategorieModel> {
 
     @Override
     @PutMapping(path = ApiPaths.UPDATE_KATEGORIE, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an Kategorie by name", description = "Update a category", operationId = "update", tags = { "Kategorie" })
+    @Operation(summary = "Updates an Kategorie by name", description = "Update a category", operationId = "update", tags = { ApiNames.KATEGORIE })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = KategorieModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -129,13 +128,13 @@ public class KategorieController extends NamedItemController<KategorieModel> {
 
     @Override
     @DeleteMapping(path = ApiPaths.DELETE_KATEGORIE)
-    @Operation(summary = "Deletes an Kategorie by name", description = "Delete a category", operationId = "update", tags = { "Kategorie" })
+    @Operation(summary = "Deletes an Kategorie by name", description = "Delete a category", operationId = "update", tags = { ApiNames.KATEGORIE })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -144,7 +143,7 @@ public class KategorieController extends NamedItemController<KategorieModel> {
     }
 
     @GetMapping(path = ApiPaths.SEARCH_UNTER_KATEGORIE, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Kategorieen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "UnterKategorie" })
+    @Operation(summary = "Finds Kategorieen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { ApiNames.UNTER_KATEGORIE })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = UnterKategorieModel.class))) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -160,13 +159,13 @@ public class KategorieController extends NamedItemController<KategorieModel> {
     }
 
     @PostMapping(path = ApiPaths.ADD_UNTER_KATEGORIE, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "UnterKategorie" })
+    @Operation(summary = "Adds an UnterKategorie to a Kategorie", description = "", operationId = "add", tags = { ApiNames.UNTER_KATEGORIE })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UnterKategorieModel.class)) }),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
@@ -175,13 +174,13 @@ public class KategorieController extends NamedItemController<KategorieModel> {
     }
 
     @PutMapping(path = ApiPaths.UPDATE_UNTER_KATEGORIE, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates a change to an Article", description = "", operationId = "", tags = { "UnterKategorie" })
+    @Operation(summary = "Updates an UnterKategorie to a Kategorie", description = "", operationId = "update", tags = { ApiNames.UNTER_KATEGORIE })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UnterKategorieModel.class)) }),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
@@ -191,13 +190,13 @@ public class KategorieController extends NamedItemController<KategorieModel> {
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_UNTER_KATEGORIE)
-    @Operation(summary = "Removes a change from an article", description = "", operationId = "", tags = { "UnterKategorie" })
+    @Operation(summary = "Removes an UnterKategorie from a Kategorie", description = "", operationId = "delete", tags = { ApiNames.UNTER_KATEGORIE })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })

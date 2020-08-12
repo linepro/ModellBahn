@@ -47,15 +47,15 @@ public class AchsfolgModel extends RepresentationModel<AchsfolgModel> implements
     private static final long serialVersionUID = 1860366231843697997L;
 
     @JsonProperty(ApiNames.NAMEN)
-    @Schema(name = "UIC Code", example = "1E1H3T", required = true)
+    @Schema(description = "UIC Code", example = "1E1H3T", required = true)
     private String name;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Description", example = "1′E1′ h3t")
+    @Schema(description = "Description", example = "1′E1′ h3t")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

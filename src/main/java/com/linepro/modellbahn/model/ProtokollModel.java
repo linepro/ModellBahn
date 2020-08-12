@@ -46,15 +46,15 @@ public class ProtokollModel extends RepresentationModel<ProtokollModel> implemen
     private static final long serialVersionUID = 1L;
 
     @JsonProperty(ApiNames.NAMEN)
-    @Schema(name = "Protocoll code", example = "MFX", required = true)
+    @Schema(description = "Protocoll code", example = "MFX", required = true)
     private String name;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Protocoll description", example = "mfx")
+    @Schema(description = "Protocoll description", example = "mfx")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

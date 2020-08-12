@@ -55,9 +55,9 @@ public class GattungController extends NamedItemController<GattungModel> {
 
     @Override
     @GetMapping(path = ApiPaths.GET_GATTUNG, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds an Gattung by name", description = "Finds a vehicle code", operationId = "get", tags = { "Gattung" })
+    @Operation(summary = "Finds an Gattung by name", description = "Finds a vehicle code", operationId = "get", tags = { ApiNames.GATTUNG })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = GattungModel.class)) }),
+        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = GattungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -70,7 +70,7 @@ public class GattungController extends NamedItemController<GattungModel> {
 
     @Override
     @GetMapping(path = ApiPaths.SEARCH_GATTUNG, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Gattungen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Gattung" })
+    @Operation(summary = "Finds Gattungen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { ApiNames.GATTUNG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = GattungModel.class))) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -85,13 +85,12 @@ public class GattungController extends NamedItemController<GattungModel> {
 
     @Override
     @PostMapping(path = ApiPaths.ADD_GATTUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Add a new Gattung", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Gattung" })
+    @Operation(summary = "Add a new Gattung", description = "Add a new UIC axle configuration", operationId = "add", tags = { ApiNames.GATTUNG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = GattungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -101,13 +100,13 @@ public class GattungController extends NamedItemController<GattungModel> {
 
     @Override
     @PutMapping(path = ApiPaths.UPDATE_GATTUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an Gattung by name", description = "Update a vehicle code", operationId = "update", tags = { "Gattung" })
+    @Operation(summary = "Updates an Gattung by name", description = "Update a vehicle code", operationId = "update", tags = { ApiNames.GATTUNG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = GattungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -117,13 +116,13 @@ public class GattungController extends NamedItemController<GattungModel> {
 
     @Override
     @DeleteMapping(path = ApiPaths.DELETE_GATTUNG)
-    @Operation(summary = "Deletes an Gattung by name", description = "Delete a vehicle code", operationId = "update", tags = { "Gattung" })
+    @Operation(summary = "Deletes an Gattung by name", description = "Delete a vehicle code", operationId = "delete", tags = { ApiNames.GATTUNG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })

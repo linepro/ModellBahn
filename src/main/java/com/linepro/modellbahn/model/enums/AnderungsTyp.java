@@ -43,19 +43,19 @@ public enum AnderungsTyp implements DescribedEnum {
     }
 
     @Override
-    @Schema(name = "Change type", example = "UMGEBAUT", required = true)
+    @Schema(description = "Change type", example = "UMGEBAUT", required = true)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @Schema(name = "Change type description", example = "umgebaut", required = true)
+    @Schema(description = "Change type description", example = "umgebaut", required = true)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @Schema(name = "Change type tooltip")
+    @Schema(description = "Change type tooltip")
     public String getTooltip() {
         return tooltip;
     }

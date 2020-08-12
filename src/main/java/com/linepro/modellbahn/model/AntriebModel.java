@@ -46,15 +46,15 @@ public class AntriebModel extends RepresentationModel<AntriebModel> implements N
     private static final long serialVersionUID = 5645402222171634730L;
 
     @JsonProperty(ApiNames.NAMEN)
-    @Schema(name = "Drive code", example = "DAMPF", required = true)
+    @Schema(description = "Drive code", example = "DAMPF", required = true)
     private String name;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Drive description", example = "Dampf")
+    @Schema(description = "Drive description", example = "Dampf")
     public String bezeichnung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

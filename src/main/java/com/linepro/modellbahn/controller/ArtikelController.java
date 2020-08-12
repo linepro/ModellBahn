@@ -67,9 +67,9 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     }
     
     @GetMapping(path = ApiPaths.GET_ARTIKEL, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds an Artikel by name", description = "Finds an article", operationId = "get", tags = { "Artikel" })
+    @Operation(summary = "Finds an Artikel by name", description = "Finds an article", operationId = "get", tags = { ApiNames.ARTIKEL })
         @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArtikelModel.class)) }),
+        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArtikelModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -82,13 +82,12 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
 
     @Override
     @GetMapping(path = ApiPaths.SEARCH_ARTIKEL, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Artikelen by example", description = "Finds articles", operationId = "find", tags = { "Artikel" })
+    @Operation(summary = "Finds Artikelen by example", description = "Finds articles", operationId = "find", tags = { ApiNames.ARTIKEL })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ArtikelModel.class))) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Not found, content = @Content"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> search(@RequestBody Optional<ArtikelModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
@@ -97,13 +96,12 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
 
     @Override
     @PostMapping(path = ApiPaths.ADD_ARTIKEL, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Add a new Artikel", description = "Add a new article", operationId = "add", tags = { "Artikel" })
+    @Operation(summary = "Add a new Artikel", description = "Add a new article", operationId = "add", tags = { ApiNames.ARTIKEL })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArtikelModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -112,13 +110,13 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     }
 
     @PutMapping(path = ApiPaths.UPDATE_ARTIKEL, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an Artikel by name", description = "Update an article", operationId = "update", tags = { "Artikel" })
+    @Operation(summary = "Updates an Artikel by name", description = "Update an article", operationId = "update", tags = { ApiNames.ARTIKEL })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArtikelModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -127,13 +125,13 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_ARTIKEL)
-    @Operation(summary = "Deletes an Artikel by name", description = "Delete an article", operationId = "update", tags = { "Artikel" })
+    @Operation(summary = "Deletes an Artikel by name", description = "Delete an article", operationId = "delete", tags = { ApiNames.ARTIKEL })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -142,13 +140,13 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     }
 
     @PutMapping(path = ApiPaths.ADD_ARTIKEL_ABBILDUNG, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Add an Artikel picture", description = "Adds or updates the picture of a named Artikel", operationId = "update", tags = { "Artikel" })
+    @Operation(summary = "Add an Artikel picture", description = "Adds or updates the picture of a named Artikel", operationId = "update", tags = { ApiNames.ARTIKEL })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArtikelModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -157,13 +155,13 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_ARTIKEL_ABBILDUNG, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Delete an Artikel picture", description = "Deletes the picture of a named Artikel", operationId = "update", tags = { "Artikel" })
+    @Operation(summary = "Delete an Artikel picture", description = "Deletes the picture of a named Artikel", operationId = "update", tags = { ApiNames.ARTIKEL })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -172,13 +170,13 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     }
 
     @PostMapping(path = ApiPaths.ADD_ANDERUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Adds a new change to an article", description = "", operationId = "", tags = { "" })
+    @Operation(summary = "Record a change to an article", description = "Adds a change record", operationId = "add", tags = { ApiNames.ANDERUNG })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AnderungModel.class)) }),
+                    @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AnderungModel.class)) }),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
@@ -187,13 +185,13 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     }
 
     @PutMapping(path = ApiPaths.UPDATE_ANDERUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates a change to an Article", description = "", operationId = "", tags = { "" })
+    @Operation(summary = "Updates a change to an Article", description = "Updates a change record", operationId = "update", tags = { ApiNames.ANDERUNG })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AnderungModel.class)) }),
+                    @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AnderungModel.class)) }),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
@@ -202,13 +200,13 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_ANDERUNG)
-    @Operation(summary = "Removes a change from an article", description = "", operationId = "", tags = { "" })
+    @Operation(summary = "Removes a change from an article", description = "Remove a change record", operationId = "delete", tags = { ApiNames.ANDERUNG })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })

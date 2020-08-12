@@ -46,19 +46,19 @@ public class UnterKategorieModel extends RepresentationModel<UnterKategorieModel
     private static final long serialVersionUID = -6922373932038545571L;
 
     @JsonProperty(ApiNames.KATEGORIE)
-    @Schema(name = "Category coding", example = "LOKOMOTIV", required = true)
+    @Schema(description = "Category coding", example = "LOKOMOTIV", required = true)
     private String kategorie;
 
     @JsonProperty(ApiNames.NAMEN)
-    @Schema(name = "Sub category coding", example = "ELEKTRO", required = true)
+    @Schema(description = "Sub category coding", example = "ELEKTRO", required = true)
     private String name;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Sub category description", example = "Elektro")
+    @Schema(description = "Sub category description", example = "Elektro")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

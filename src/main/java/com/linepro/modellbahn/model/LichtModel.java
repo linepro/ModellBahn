@@ -47,19 +47,19 @@ public class LichtModel extends RepresentationModel<LichtModel> implements Named
     private static final long serialVersionUID = -8159511842362226637L;
 
     @JsonProperty(ApiNames.NAMEN)
-    @Schema(name = "Light code", example = "L1V", required = true)
+    @Schema(description = "Light code", example = "L1V", required = true)
     private String name;
     
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Light description", example = "Einfach-Spitzensignal vorne")
+    @Schema(description = "Light description", example = "Einfach-Spitzensignal vorne")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.ABBILDUNG)
-    @Schema(name = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
     private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

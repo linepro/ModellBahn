@@ -62,9 +62,9 @@ public class AufbauController extends NamedItemController<AufbauModel> {
     
     @Override
     @GetMapping(path = ApiPaths.GET_AUFBAU, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds an Aufbau by name", description = "Finds a costruction style", operationId = "get", tags = { "Aufbau" })
+    @Operation(summary = "Finds an Aufbau by name", description = "Finds a costruction style", operationId = "get", tags = { ApiNames.AUFBAU })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AufbauModel.class)) }),
+        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AufbauModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -77,7 +77,7 @@ public class AufbauController extends NamedItemController<AufbauModel> {
 
     @Override
     @GetMapping(path = ApiPaths.SEARCH_AUFBAU, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Aufbauen by example", description = "Finds costruction styles", operationId = "get", tags = { "Aufbau" })
+    @Operation(summary = "Finds Aufbauen by example", description = "Finds costruction styles", operationId = "get", tags = { ApiNames.AUFBAU })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AufbauModel.class))) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -92,13 +92,12 @@ public class AufbauController extends NamedItemController<AufbauModel> {
 
     @Override
     @PostMapping(path = ApiPaths.ADD_AUFBAU, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Adds an Aufbau", description = "Update a costruction style", operationId = "update", tags = { "Aufbau" })
+    @Operation(summary = "Adds an Aufbau", description = "Update a costruction style", operationId = "update", tags = { ApiNames.AUFBAU })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AufbauModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Aufbau not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -108,7 +107,7 @@ public class AufbauController extends NamedItemController<AufbauModel> {
 
     @Override
     @PutMapping(path = ApiPaths.UPDATE_AUFBAU, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an Aufbau by name", description = "Update a costruction style", operationId = "update", tags = { "Aufbau" })
+    @Operation(summary = "Updates an Aufbau by name", description = "Update a costruction style", operationId = "update", tags = { ApiNames.AUFBAU })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AufbauModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -124,7 +123,7 @@ public class AufbauController extends NamedItemController<AufbauModel> {
 
     @Override
     @DeleteMapping(path = ApiPaths.DELETE_AUFBAU)
-    @Operation(summary = "Deletes an Aufbau by name", description = "Delete a costruction style", operationId = "update", tags = { "Aufbau" })
+    @Operation(summary = "Deletes an Aufbau by name", description = "Delete a costruction style", operationId = "delete", tags = { ApiNames.AUFBAU })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -139,7 +138,7 @@ public class AufbauController extends NamedItemController<AufbauModel> {
     }
 
     @PutMapping(path = ApiPaths.ADD_AUFBAU_ABBILDUNG, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Add an Aufbau picture", description = "Adds or updates the picture of a named Aufbau", operationId = "update", tags = { "Aufbau" })
+    @Operation(summary = "Add an Aufbau picture", description = "Adds or updates the picture of a named Aufbau", operationId = "update", tags = { ApiNames.AUFBAU })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AufbauModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -154,7 +153,7 @@ public class AufbauController extends NamedItemController<AufbauModel> {
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_AUFBAU_ABBILDUNG, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Delete an Aufbau picture", description = "Deletes the picture of a named Aufbau", operationId = "update", tags = { "Aufbau" })
+    @Operation(summary = "Delete an Aufbau picture", description = "Deletes the picture of a named Aufbau", operationId = "update", tags = { ApiNames.AUFBAU })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AufbauModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),

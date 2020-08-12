@@ -47,19 +47,19 @@ public class KupplungModel extends RepresentationModel<KupplungModel> implements
     private static final long serialVersionUID = -4227031769285101775L;
 
     @JsonProperty(ApiNames.NAMEN)
-    @Schema(name = "Kupplung code", example = "RELEX", required = true)
+    @Schema(description = "Kupplung code", example = "RELEX", required = true)
     private String name;
     
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Kupplung description", example = "Relex")
+    @Schema(description = "Kupplung description", example = "Relex")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.ABBILDUNG)
-    @Schema(name = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
     private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

@@ -55,9 +55,9 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
     
     @Override
     @GetMapping(path = ApiPaths.GET_HERSTELLER, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds an Hersteller by name", description = "Finds a manufacturer", operationId = "get", tags = { "Hersteller" })
+    @Operation(summary = "Finds an Hersteller by name", description = "Finds a manufacturer", operationId = "get", tags = { ApiNames.HERSTELLER })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = HerstellerModel.class)) }),
+        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = HerstellerModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -70,7 +70,7 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
 
     @Override
     @GetMapping(path = ApiPaths.SEARCH_HERSTELLER, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Herstelleren by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Hersteller" })
+    @Operation(summary = "Finds Herstelleren by example", description = "Finds UIC axle configurations", operationId = "find", tags = { ApiNames.HERSTELLER })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = HerstellerModel.class))) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -85,13 +85,12 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
 
     @Override
     @PostMapping(path = ApiPaths.ADD_HERSTELLER, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Add a new Hersteller", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Hersteller" })
+    @Operation(summary = "Add a new Hersteller", description = "Add a new UIC axle configuration", operationId = "add", tags = { ApiNames.HERSTELLER })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = HerstellerModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -101,13 +100,13 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
 
     @Override
     @PutMapping(path = ApiPaths.UPDATE_HERSTELLER, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an Hersteller by name", description = "Update a manufacturer", operationId = "update", tags = { "Hersteller" })
+    @Operation(summary = "Updates an Hersteller by name", description = "Update a manufacturer", operationId = "update", tags = { ApiNames.HERSTELLER })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = HerstellerModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -117,13 +116,13 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
 
     @Override
     @DeleteMapping(path = ApiPaths.DELETE_HERSTELLER)
-    @Operation(summary = "Deletes an Hersteller by name", description = "Delete a manufacturer", operationId = "update", tags = { "Hersteller" })
+    @Operation(summary = "Deletes an Hersteller by name", description = "Delete a manufacturer", operationId = "delete", tags = { ApiNames.HERSTELLER })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })

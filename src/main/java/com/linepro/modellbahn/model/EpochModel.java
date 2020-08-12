@@ -45,15 +45,15 @@ public class EpochModel extends RepresentationModel<EpochModel> implements Named
     private static final long serialVersionUID = 2877272020386187147L;
 
     @JsonProperty(ApiNames.NAMEN)
-    @Schema(name = "ERA", example = "III", required = true)
+    @Schema(description = "ERA", example = "III", required = true)
     private String name;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "ERA description", example = "III : 1949 - 1970")
+    @Schema(description = "ERA description", example = "III : 1949 - 1970")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

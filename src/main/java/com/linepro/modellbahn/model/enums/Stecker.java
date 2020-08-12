@@ -49,19 +49,19 @@ public enum Stecker implements DescribedEnum {
     }
 
     @Override
-    @Schema(name = "Stecker type name", example = "EINGEBAUT", required = true)
+    @Schema(description = "Stecker type name", example = "EINGEBAUT", required = true)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @Schema(name = "Stecker type description", example = "Builin / Hardwired.", required = true)
+    @Schema(description = "Stecker type description", example = "Builin / Hardwired.", required = true)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @Schema(name = "AdressTyp tooltip", example = "0 - 10239.")
+    @Schema(description = "AdressTyp tooltip", example = "0 - 10239.")
     public String getTooltip() {
         return tooltip;
     }

@@ -55,15 +55,15 @@ public class ProduktModel extends RepresentationModel<ProduktModel> implements I
     private static final long serialVersionUID = 2584784787206478907L;
 
     @JsonProperty(ApiNames.HERSTELLER)
-    @Schema(name = "Manufacturer", example = "Marklin", required = true)
+    @Schema(description = "Manufacturer", example = "Marklin", required = true)
     private String hersteller;
 
     @JsonProperty(ApiNames.BESTELL_NR)
-    @Schema(name = "Part number", example = "3000", required = true)
+    @Schema(description = "Part number", example = "3000", required = true)
     private String bestellNr;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Description", example = "Dampftenderlok BR 89.0")
+    @Schema(description = "Description", example = "Dampftenderlok BR 89.0")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.KATEGORIE)
@@ -73,31 +73,31 @@ public class ProduktModel extends RepresentationModel<ProduktModel> implements I
     private String unterKategorie;
 
     @JsonProperty(ApiNames.LANGE)
-    @Schema(name = "Length over puffers in cm.", example = "11.00")
+    @Schema(description = "Length over puffers in cm.", example = "11.00")
     private BigDecimal lange;
 
     @JsonProperty(ApiNames.MASSSTAB)
-    @Schema(name = "Scale")
+    @Schema(description = "Scale")
     private String massstab;
 
     @JsonProperty(ApiNames.SPURWEITE)
-    @Schema(name = "Track gauge")
+    @Schema(description = "Track gauge")
     private String spurweite;
 
     @JsonProperty(ApiNames.EPOCH)
-    @Schema(name = "ERA")
+    @Schema(description = "ERA")
     private String epoch;
 
     @JsonProperty(ApiNames.BAHNVERWALTUNG)
-    @Schema(name = "Railway company")
+    @Schema(description = "Railway company")
     private String bahnverwaltung;
 
     @JsonProperty(ApiNames.GATTUNG)
-    @Schema(name = "Vehicle class")
+    @Schema(description = "Vehicle class")
     private String gattung;
 
     @JsonProperty(ApiNames.BETREIBSNUMMER)
-    @Schema(name = "Service number", example = "89 006")
+    @Schema(description = "Service number", example = "89 006")
     private String betreibsnummer;
 
     @JsonProperty(ApiNames.BAUZEIT)
@@ -106,51 +106,51 @@ public class ProduktModel extends RepresentationModel<ProduktModel> implements I
     private LocalDate bauzeit;
 
     @JsonProperty(ApiNames.ACHSFOLG)
-    @Schema(name = "Axle configuration")
+    @Schema(description = "Axle configuration")
     private String achsfolg;
 
     @JsonProperty(ApiNames.SONDERMODELL)
-    @Schema(name = "Special model indicator")
+    @Schema(description = "Special model indicator")
     private String sondermodell;
 
     @JsonProperty(ApiNames.AUFBAU)
-    @Schema(name = "Construction")
+    @Schema(description = "Construction")
     private String aufbau;
 
     @JsonProperty(ApiNames.LICHT)
-    @Schema(name = "Light configuration")
+    @Schema(description = "Light configuration")
     private String licht;
 
     @JsonProperty(ApiNames.KUPPLUNG)
-    @Schema(name = "Coupling configuration")
+    @Schema(description = "Coupling configuration")
     private String kupplung;
 
     @JsonProperty(ApiNames.STEUERUNG)
-    @Schema(name = "Control method")
+    @Schema(description = "Control method")
     private String steuerung;
 
     @JsonProperty(ApiNames.DECODER_HERSTELLER)
-    @Schema(name = "Decoder type")
+    @Schema(description = "Decoder type")
     private String decoderTypHersteller;
 
     @JsonProperty(ApiNames.DECODER_BESTELL_NR)
-    @Schema(name = "Decoder type")
+    @Schema(description = "Decoder type")
     private String decoderTypBestellNr;
 
     @JsonProperty(ApiNames.MOTOR_TYP)
-    @Schema(name = "Motor type")
+    @Schema(description = "Motor type")
     private String motorTyp;
 
     @JsonProperty(ApiNames.ANMERKUNG)
-    @Schema(name = "Remarks", example = "Ex set")
+    @Schema(description = "Remarks", example = "Ex set")
     private String anmerkung;
 
     @JsonProperty(ApiNames.ANLEITUNGEN)
-    @Schema(name = "Instructions URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/betrieb_3000.pdf", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Instructions URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/betrieb_3000.pdf", accessMode = AccessMode.READ_ONLY)
     private String anleitungen;
 
     @JsonProperty(ApiNames.EXPLOSIONSZEICHNUNG)
-    @Schema(name = "Parts diagram URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/explo_3000.pdf", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Parts diagram URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/explo_3000.pdf", accessMode = AccessMode.READ_ONLY)
     private String explosionszeichnung;
 
     @JsonProperty(ApiNames.TEILEN)
@@ -158,11 +158,11 @@ public class ProduktModel extends RepresentationModel<ProduktModel> implements I
     private List<ProduktTeilModel> teilen;
 
     @JsonProperty(ApiNames.ABBILDUNG)
-    @Schema(name = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
     private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

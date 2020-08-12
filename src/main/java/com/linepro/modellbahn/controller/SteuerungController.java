@@ -55,9 +55,9 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
     
     @Override
     @GetMapping(path = ApiPaths.GET_STEUERUNG)
-    @Operation(summary = "Finds an Steuerung by name", description = "Finds a control method", operationId = "get", tags = { "Steuerung" })
+    @Operation(summary = "Finds an Steuerung by name", description = "Finds a control method", operationId = "get", tags = { ApiNames.STEUERUNG })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SteuerungModel.class)) }),
+        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SteuerungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -70,7 +70,7 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
 
     @Override
     @GetMapping(path = ApiPaths.SEARCH_STEUERUNG, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Steuerungen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Steuerung" })
+    @Operation(summary = "Finds Steuerungen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { ApiNames.STEUERUNG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = SteuerungModel.class))) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -85,13 +85,12 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
 
     @Override
     @PostMapping(path = ApiPaths.ADD_STEUERUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Add a new Steuerung", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Steuerung" })
+    @Operation(summary = "Add a new Steuerung", description = "Add a new UIC axle configuration", operationId = "add", tags = { ApiNames.STEUERUNG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SteuerungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -101,13 +100,13 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
 
     @Override
     @PutMapping(path = ApiPaths.UPDATE_STEUERUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an Steuerung by name", description = "Update a control method", operationId = "update", tags = { "Steuerung" })
+    @Operation(summary = "Updates an Steuerung by name", description = "Update a control method", operationId = "update", tags = { ApiNames.STEUERUNG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SteuerungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -117,13 +116,13 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
 
     @Override
     @DeleteMapping(path = ApiPaths.DELETE_STEUERUNG)
-    @Operation(summary = "Deletes an Steuerung by name", description = "Delete a control method", operationId = "update", tags = { "Steuerung" })
+    @Operation(summary = "Deletes an Steuerung by name", description = "Delete a control method", operationId = "delete", tags = { ApiNames.STEUERUNG })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })

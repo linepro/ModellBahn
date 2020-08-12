@@ -30,7 +30,7 @@ public class DataController {
     private final DataService service;
    
     @GetMapping(path = ApiPaths.EXPORT, produces = DataService.TEXT_CSV)
-    @Operation(summary = "Export data as CSV", description = "Finds an UIC axle configuration", operationId = "get", tags = { "Achsfolg" })
+    @Operation(summary = "Export data as CSV", description = "Finds an UIC axle configuration", operationId = "get", tags = { ApiNames.DATA })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", content = { @Content(mediaType = "text/csv") }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -44,13 +44,13 @@ public class DataController {
     }
 
     @PostMapping(path = ApiPaths.IMPORT, consumes = DataService.TEXT_CSV)
-    @Operation(summary = "Add an Aufbau picture", description = "Adds or updates the picture of a named Aufbau", operationId = "update", tags = { "Aufbau" })
+    @Operation(summary = "Add an Aufbau picture", description = "Adds or updates the picture of a named Aufbau", operationId = "update", tags = { ApiNames.DATA })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Aufbau not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })

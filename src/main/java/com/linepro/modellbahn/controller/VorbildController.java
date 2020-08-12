@@ -62,9 +62,9 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
     }
 
     @GetMapping(path = ApiPaths.GET_VORBILD, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds an Vorbild by name", description = "Finds a prototype", operationId = "get", tags = { "Vorbild" })
+    @Operation(summary = "Finds an Vorbild by name", description = "Finds a prototype", operationId = "get", tags = { ApiNames.VORBILD })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VorbildModel.class)) }),
+        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VorbildModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -77,7 +77,7 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
 
     @Override
     @GetMapping(path = ApiPaths.SEARCH_VORBILD, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Vorbilder by example", description = "Finds prototypes", operationId = "find", tags = { "Vorbild" })
+    @Operation(summary = "Finds Vorbilder by example", description = "Finds prototypes", operationId = "find", tags = { ApiNames.VORBILD })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ZugTypModel.class))) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -92,13 +92,13 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
 
     @Override
     @PostMapping(path = ApiPaths.ADD_VORBILD, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Add a new Vorbild", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Vorbild" })
+    @Operation(summary = "Add a new Vorbild", description = "Add a new UIC axle configuration", operationId = "add", tags = { ApiNames.VORBILD })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VorbildModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -107,7 +107,7 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
     }
 
     @PutMapping(path = ApiPaths.UPDATE_VORBILD, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an Vorbild by name", description = "Update a prototyp", operationId = "update", tags = { "Vorbild" })
+    @Operation(summary = "Updates an Vorbild by name", description = "Update a prototyp", operationId = "update", tags = { ApiNames.VORBILD })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VorbildModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -122,7 +122,7 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_VORBILD)
-    @Operation(summary = "Deletes an Vorbild by name", description = "Delete a prototyp", operationId = "update", tags = { "Vorbild" })
+    @Operation(summary = "Deletes an Vorbild by name", description = "Delete a prototyp", operationId = "delete", tags = { ApiNames.VORBILD })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -137,7 +137,7 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
     }
 
     @PutMapping(path = ApiPaths.ADD_VORBILD_ABBILDUNG, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an Vorbild by name", description = "Update a prototype", operationId = "update", tags = { "Vorbild" })
+    @Operation(summary = "Updates an Vorbild by name", description = "Update a prototype", operationId = "update", tags = { ApiNames.VORBILD })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VorbildModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -152,7 +152,7 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_VORBILD_ABBILDUNG, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Delete an Vorbild picture", description = "Deletes the picture of a named Vorbild", operationId = "update", tags = { "Vorbild" })
+    @Operation(summary = "Delete an Vorbild picture", description = "Deletes the picture of a named Vorbild", operationId = "delete", tags = { ApiNames.VORBILD })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VorbildModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),

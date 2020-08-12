@@ -48,23 +48,23 @@ public class ProduktTeilModel extends RepresentationModel<ProduktTeilModel> impl
     private static final long serialVersionUID = 1L;
 
     @JsonProperty(ApiNames.HERSTELLER)
-    @Schema(name = "Manufacturer", accessMode = AccessMode.READ_ONLY, required = true)
+    @Schema(description = "Manufacturer", accessMode = AccessMode.READ_ONLY, required = true)
     private String hersteller;
 
     @JsonProperty(ApiNames.BESTELL_NR)
-    @Schema(name = "Part number", example = "3000", accessMode = AccessMode.READ_ONLY, required = true)
+    @Schema(description = "Part number", example = "3000", accessMode = AccessMode.READ_ONLY, required = true)
     private String bestellNr;
 
     @JsonProperty(ApiNames.TEIL_HERSTELLER)
-    @Schema(name = "Sub product Manufacturer", accessMode = AccessMode.READ_ONLY, required = true)
+    @Schema(description = "Sub product Manufacturer", accessMode = AccessMode.READ_ONLY, required = true)
     private String teilHersteller;
 
     @JsonProperty(ApiNames.TEIL_BESTELL_NR)
-    @Schema(name = "Sub product Part number", example = "3000", accessMode = AccessMode.READ_ONLY, required = true)
+    @Schema(description = "Sub product Part number", example = "3000", accessMode = AccessMode.READ_ONLY, required = true)
     private String teilBestellNr;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Description", example = "Dampftenderlok BR 89.0", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Description", example = "Dampftenderlok BR 89.0", accessMode = AccessMode.READ_ONLY)
     private String bezeichnung;
 
     @JsonProperty(ApiNames.KATEGORIE)
@@ -74,11 +74,11 @@ public class ProduktTeilModel extends RepresentationModel<ProduktTeilModel> impl
     private String unterKategorie;
 
     @JsonProperty(ApiNames.ANZAHL)
-    @Schema(name = "Number included", example = "1", required = true)
+    @Schema(description = "Number included", example = "1", required = true)
     private Integer anzahl;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

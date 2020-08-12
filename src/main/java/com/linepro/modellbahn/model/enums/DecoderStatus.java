@@ -35,19 +35,19 @@ public enum DecoderStatus implements DescribedEnum {
     }
 
     @Override
-    @Schema(name = "Decoder status name", example = "INSTALIERT", required = true)
+    @Schema(description = "Decoder status name", example = "INSTALIERT", required = true)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @Schema(name = "Decoder status description", example = "Instaliert.", required = true)
+    @Schema(description = "Decoder status description", example = "Instaliert.", required = true)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @Schema(name = "AdressTyp tooltip", example = "0 - 10239.")
+    @Schema(description = "AdressTyp tooltip", example = "0 - 10239.")
     public String getTooltip() {
         return tooltip;
     }

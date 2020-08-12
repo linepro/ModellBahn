@@ -50,11 +50,11 @@ public class AnderungModel extends RepresentationModel<AnderungModel> implements
     private static final long serialVersionUID = 7089488648732721954L;
 
     @JsonProperty(ApiNames.ARTIKEL_ID)
-    @Schema(name = "Artikel id", example = "00001", required = true)
+    @Schema(description = "Artikel id", example = "00001", required = true)
     private String artikelId;
 
     @JsonProperty(ApiNames.ANDERUNG_ID)
-    @Schema(name = "Change number", example = "00001", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Change number", example = "00001", accessMode = AccessMode.READ_ONLY)
     private Integer anderungId;
 
     @JsonProperty(ApiNames.ANDERUNGSDATUM)
@@ -63,23 +63,23 @@ public class AnderungModel extends RepresentationModel<AnderungModel> implements
     private LocalDate anderungsDatum;
 
     @JsonProperty(ApiNames.ANDERUNGS_TYP)
-    @Schema(name = "Change type", example = "UMGEBAUT", required = true)
+    @Schema(description = "Change type", example = "UMGEBAUT", required = true)
     private AnderungsTyp anderungsTyp;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Change description", example = "New 5* motor and decoder", required = true)
+    @Schema(description = "Change description", example = "New 5* motor and decoder", required = true)
     private String bezeichnung;
     
     @JsonProperty(ApiNames.STUCK)
-    @Schema(name = "Changed Quantity", example = "1")
+    @Schema(description = "Changed Quantity", example = "1")
     private Integer stuck;
 
     @JsonProperty(ApiNames.ANMERKUNG)
-    @Schema(name = "Remarks", example = "5* Motor and decoder")
+    @Schema(description = "Remarks", example = "5* Motor and decoder")
     private String anmerkung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

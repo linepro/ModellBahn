@@ -60,9 +60,9 @@ public class LichtController extends NamedItemController<LichtModel> {
     
     @Override
     @GetMapping(path = ApiPaths.GET_LICHT, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds an Licht by name", description = "Finds a light configuration", operationId = "get", tags = { "Licht" })
+    @Operation(summary = "Finds an Licht by name", description = "Finds a light configuration", operationId = "get", tags = { ApiNames.LICHT })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LichtModel.class)) }),
+        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LichtModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -75,7 +75,7 @@ public class LichtController extends NamedItemController<LichtModel> {
 
     @Override
     @GetMapping(path = ApiPaths.SEARCH_LICHT, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Lichten by example", description = "Finds light configurations", operationId = "get", tags = { "Licht" })
+    @Operation(summary = "Finds Lichten by example", description = "Finds light configurations", operationId = "get", tags = { ApiNames.LICHT })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = LichtModel.class))) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -90,13 +90,12 @@ public class LichtController extends NamedItemController<LichtModel> {
 
     @Override
     @PostMapping(path = ApiPaths.ADD_LICHT, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Adds an Licht", description = "Update a light configuration", operationId = "update", tags = { "Licht" })
+    @Operation(summary = "Adds an Licht", description = "Update a light configuration", operationId = "update", tags = { ApiNames.LICHT })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LichtModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Licht not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -106,7 +105,7 @@ public class LichtController extends NamedItemController<LichtModel> {
 
     @Override
     @PutMapping(path = ApiPaths.UPDATE_LICHT, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an Licht by name", description = "Update a light configuration", operationId = "update", tags = { "Licht" })
+    @Operation(summary = "Updates an Licht by name", description = "Update a light configuration", operationId = "update", tags = { ApiNames.LICHT })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LichtModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -122,7 +121,7 @@ public class LichtController extends NamedItemController<LichtModel> {
 
     @Override
     @DeleteMapping(path = ApiPaths.DELETE_LICHT)
-    @Operation(summary = "Deletes an Licht by name", description = "Delete a light configuration", operationId = "update", tags = { "Licht" })
+    @Operation(summary = "Deletes an Licht by name", description = "Delete a light configuration", operationId = "delete", tags = { ApiNames.LICHT })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -137,7 +136,7 @@ public class LichtController extends NamedItemController<LichtModel> {
     }
 
     @PutMapping(path = ApiPaths.ADD_LICHT_ABBILDUNG, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Add an Licht picture", description = "Adds or updates the picture of a named Licht", operationId = "update", tags = { "Licht" })
+    @Operation(summary = "Add an Licht picture", description = "Adds or updates the picture of a named Licht", operationId = "update", tags = { ApiNames.LICHT })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LichtModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -152,7 +151,7 @@ public class LichtController extends NamedItemController<LichtModel> {
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_LICHT_ABBILDUNG, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Delete an Licht picture", description = "Deletes the picture of a named Licht", operationId = "update", tags = { "Licht" })
+    @Operation(summary = "Delete an Licht picture", description = "Deletes the picture of a named Licht", operationId = "update", tags = { ApiNames.LICHT })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LichtModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),

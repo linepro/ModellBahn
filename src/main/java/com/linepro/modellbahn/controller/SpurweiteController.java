@@ -55,9 +55,9 @@ public class SpurweiteController extends NamedItemController<SpurweiteModel> {
     
     @Override
     @GetMapping(path = ApiPaths.GET_SPURWEITE)
-    @Operation(summary = "Finds an Spurweite by name", description = "Finds a track guage", operationId = "get", tags = { "Spurweite" })
+    @Operation(summary = "Finds an Spurweite by name", description = "Finds a track guage", operationId = "get", tags = { ApiNames.SPURWEITE })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SpurweiteModel.class)) }),
+        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SpurweiteModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -70,7 +70,7 @@ public class SpurweiteController extends NamedItemController<SpurweiteModel> {
 
     @Override
     @GetMapping(path = ApiPaths.SEARCH_SPURWEITE, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Spurweiteen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "Spurweite" })
+    @Operation(summary = "Finds Spurweiteen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { ApiNames.SPURWEITE })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = SpurweiteModel.class))) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -85,13 +85,12 @@ public class SpurweiteController extends NamedItemController<SpurweiteModel> {
 
     @Override
     @PostMapping(path = ApiPaths.ADD_SPURWEITE, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Add a new Spurweite", description = "Add a new UIC axle configuration", operationId = "add", tags = { "Spurweite" })
+    @Operation(summary = "Add a new Spurweite", description = "Add a new UIC axle configuration", operationId = "add", tags = { ApiNames.SPURWEITE })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SpurweiteModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -101,13 +100,13 @@ public class SpurweiteController extends NamedItemController<SpurweiteModel> {
 
     @Override
     @PutMapping(path = ApiPaths.UPDATE_SPURWEITE, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an Spurweite by name", description = "Update a track guage", operationId = "update", tags = { "Spurweite" })
+    @Operation(summary = "Updates an Spurweite by name", description = "Update a track guage", operationId = "update", tags = { ApiNames.SPURWEITE })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SpurweiteModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -117,13 +116,13 @@ public class SpurweiteController extends NamedItemController<SpurweiteModel> {
 
     @Override
     @DeleteMapping(path = ApiPaths.DELETE_SPURWEITE)
-    @Operation(summary = "Deletes an Spurweite by name", description = "Delete a track guage", operationId = "update", tags = { "Spurweite" })
+    @Operation(summary = "Deletes an Spurweite by name", description = "Delete a track guage", operationId = "delete", tags = { ApiNames.SPURWEITE })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })

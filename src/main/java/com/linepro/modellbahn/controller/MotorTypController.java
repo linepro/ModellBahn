@@ -55,9 +55,9 @@ public class MotorTypController extends NamedItemController<MotorTypModel> {
     
     @Override
     @GetMapping(path = ApiPaths.GET_MOTOR_TYP, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds an MotorTyp by name", description = "Finds a motor type", operationId = "get", tags = { "MotorTyp" })
+    @Operation(summary = "Finds an MotorTyp by name", description = "Finds a motor type", operationId = "get", tags = { ApiNames.MOTOR_TYP })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MotorTypModel.class)) }),
+        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MotorTypModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -70,7 +70,7 @@ public class MotorTypController extends NamedItemController<MotorTypModel> {
 
     @Override
     @GetMapping(path = ApiPaths.SEARCH_MOTOR_TYP, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds MotorTypen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "MotorTyp" })
+    @Operation(summary = "Finds MotorTypen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { ApiNames.MOTOR_TYP })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = MotorTypModel.class))) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -85,13 +85,12 @@ public class MotorTypController extends NamedItemController<MotorTypModel> {
 
     @Override
     @PostMapping(path = ApiPaths.ADD_MOTOR_TYP, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Add a new MotorTyp", description = "Add a new UIC axle configuration", operationId = "add", tags = { "MotorTyp" })
+    @Operation(summary = "Add a new MotorTyp", description = "Add a new UIC axle configuration", operationId = "add", tags = { ApiNames.MOTOR_TYP })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MotorTypModel.class)) }),
+        @ApiResponse(responseCode = "200", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MotorTypModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -101,13 +100,13 @@ public class MotorTypController extends NamedItemController<MotorTypModel> {
 
     @Override
     @PutMapping(path = ApiPaths.UPDATE_MOTOR_TYP, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an MotorTyp by name", description = "Update a motor type", operationId = "update", tags = { "MotorTyp" })
+    @Operation(summary = "Updates an MotorTyp by name", description = "Update a motor type", operationId = "update", tags = { ApiNames.MOTOR_TYP })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MotorTypModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -117,13 +116,13 @@ public class MotorTypController extends NamedItemController<MotorTypModel> {
 
     @Override
     @DeleteMapping(path = ApiPaths.DELETE_MOTOR_TYP)
-    @Operation(summary = "Deletes an MotorTyp by name", description = "Delete a motor type", operationId = "update", tags = { "MotorTyp" })
+    @Operation(summary = "Deletes an MotorTyp by name", description = "Delete a motor type", operationId = "delete", tags = { ApiNames.MOTOR_TYP })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })

@@ -25,35 +25,34 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ "timestamp", "status", "error", "message", "path", "developerMessage", "moreInfo" })
-@Relation(collectionRelation = ApiNames.ACHSFOLG, itemRelation = ApiNames.ACHSFOLG)
-@Schema(name = ApiNames.ACHSFOLG, description = "Axle configuration - VDEV/VMEV/UIC-System")
+@Schema(description = "Error Messages")
 public class ErrorMessage {
 
     @JsonProperty("timestamp")
-    @Schema(name = "Timestamp", example = "1593346288902", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Timestamp", example = "1593346288902", accessMode = AccessMode.READ_ONLY)
     private long timestamp;
 
     @JsonProperty("status")
-    @Schema(name = "Status", example = "403", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Status", example = "403", accessMode = AccessMode.READ_ONLY)
     private int status;
     
     @JsonProperty("error")
-    @Schema(name = "Error", example = "Forbidden", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Error", example = "Forbidden", accessMode = AccessMode.READ_ONLY)
     private String error;
 
     @JsonProperty("message")
-    @Schema(name = "Message for user consumption", example = "Forbidden", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Message for user consumption", example = "Forbidden", accessMode = AccessMode.READ_ONLY)
     private String message;
 
     @JsonProperty("path")
-    @Schema(name = "Request path", example = "Forbidden", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Request path", example = "Forbidden", accessMode = AccessMode.READ_ONLY)
     private String path;
 
     @JsonProperty("developerMessage")
-    @Schema(name = "Extended message for debugging", example = "partial stack trace", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Extended message for debugging", example = "partial stack trace", accessMode = AccessMode.READ_ONLY)
     private String developerMessage;
 
     @JsonProperty("moreInfo")
-    @Schema(name = "URL for extended information", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "URL for extended information", accessMode = AccessMode.READ_ONLY)
     private String moreInfo;
 }

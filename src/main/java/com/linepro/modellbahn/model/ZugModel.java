@@ -49,15 +49,15 @@ public class ZugModel extends RepresentationModel<ZugModel> implements NamedItem
     private static final long serialVersionUID = -3702381278455257877L;
 
     @JsonProperty(ApiNames.NAMEN)
-    @Schema(name = "Train code", example = "BAVARIA", required = true)
+    @Schema(description = "Train code", example = "BAVARIA", required = true)
     private String name;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Train description", example = "TEE „Bavaria“")
+    @Schema(description = "Train description", example = "TEE „Bavaria“")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.ZUG_TYP)
-    @Schema(name = "Train type", required = true)
+    @Schema(description = "Train type", required = true)
     private String zugTyp;
 
     @JsonProperty(ApiNames.CONSIST)
@@ -65,7 +65,7 @@ public class ZugModel extends RepresentationModel<ZugModel> implements NamedItem
     private List<ZugConsistModel> consist;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

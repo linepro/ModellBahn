@@ -45,15 +45,15 @@ public class GattungModel extends RepresentationModel<GattungModel> implements N
     private static final long serialVersionUID = 6469845818541632226L;
 
     @JsonProperty(ApiNames.NAMEN)
-    @Schema(name = "Gattung code", example = "BR89.0", required = true)
+    @Schema(description = "Gattung code", example = "BR89.0", required = true)
     private String name;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Gattung description", example = "BR 89.0")
+    @Schema(description = "Gattung description", example = "BR 89.0")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

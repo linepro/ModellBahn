@@ -37,19 +37,19 @@ public enum Status implements DescribedEnum {
     }
 
     @Override
-    @Schema(name = "Article status name", example = "GEKAUFT", required = true)
+    @Schema(description = "Article status name", example = "GEKAUFT", required = true)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @Schema(name = "Article status description", example = "Purchased.", required = true)
+    @Schema(description = "Article status description", example = "Purchased.", required = true)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @Schema(name = "AdressTyp tooltip", example = "0 - 10239.")
+    @Schema(description = "AdressTyp tooltip", example = "0 - 10239.")
     public String getTooltip() {
         return tooltip;
     }

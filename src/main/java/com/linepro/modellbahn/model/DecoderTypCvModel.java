@@ -47,35 +47,35 @@ public class DecoderTypCvModel extends RepresentationModel<DecoderTypCvModel> im
     private static final long serialVersionUID = -8055283388490564394L;
 
     @JsonProperty(ApiNames.HERSTELLER)
-    @Schema(name = "Manufacturer", required = true)
+    @Schema(description = "Manufacturer", required = true)
     private String hersteller;
 
     @JsonProperty(ApiNames.BESTELL_NR)
-    @Schema(name = "Product numer", example = "62499", required = true)
+    @Schema(description = "Product numer", example = "62499", required = true)
     private String bestellNr;
 
     @JsonProperty(ApiNames.CV)
-    @Schema(name = "CV number", example = "63", required = true)
+    @Schema(description = "CV number", example = "63", required = true)
     private Integer cv;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "CV usage", example = "Geräuschlautstärke", required = true)
+    @Schema(description = "CV usage", example = "Geräuschlautstärke", required = true)
     private String bezeichnung;
 
     @JsonProperty(ApiNames.MINIMAL)
-    @Schema(name = "Minimum value", example = "1")
+    @Schema(description = "Minimum value", example = "1")
     private Integer minimal;
 
     @JsonProperty(ApiNames.MAXIMAL)
-    @Schema(name = "Maximum value", example = "63")
+    @Schema(description = "Maximum value", example = "63")
     private Integer maximal;
 
     @JsonProperty(ApiNames.WERKSEINSTELLUNG)
-    @Schema(name = "Default value", example = "63", required = true)
+    @Schema(description = "Default value", example = "63", required = true)
     private Integer werkseinstellung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

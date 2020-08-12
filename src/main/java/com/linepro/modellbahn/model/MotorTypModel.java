@@ -46,15 +46,15 @@ public class MotorTypModel extends RepresentationModel<MotorTypModel> implements
     private static final long serialVersionUID = -3424740287690628265L;
 
     @JsonProperty(ApiNames.NAMEN)
-    @Schema(name = "Motor Type Code", example = "SFCM", required = true)
+    @Schema(description = "Motor Type Code", example = "SFCM", required = true)
     private String name;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Motor Type description", example = "Scheibenkollektor (klein)")
+    @Schema(description = "Motor Type description", example = "Scheibenkollektor (klein)")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

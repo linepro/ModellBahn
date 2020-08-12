@@ -48,35 +48,35 @@ public class DecoderAdressModel extends RepresentationModel<DecoderAdressModel> 
     private static final long serialVersionUID = 5617027998164314206L;
 
     @JsonProperty(ApiNames.DECODER_ID)
-    @Schema(name = "Decoder's id", example = "00001", accessMode = AccessMode.READ_ONLY, required = true)
+    @Schema(description = "Decoder's id", example = "00001", accessMode = AccessMode.READ_ONLY, required = true)
     private String decoderId;
 
     @JsonProperty(ApiNames.INDEX)
-    @Schema(name = "0 based address index (always 0 for single address decoders)", example = "0", required = true)
+    @Schema(description = "0 based address index (always 0 for single address decoders)", example = "0", required = true)
     private Integer index;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Description", example = "First Motorola Address")
+    @Schema(description = "Description", example = "First Motorola Address")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.SPAN)
-    @Schema(name = "Number of addresses consumed (1-16)", example = "1", required = true)
+    @Schema(description = "Number of addresses consumed (1-16)", example = "1", required = true)
     private Integer span;
 
     @JsonProperty(ApiNames.ADRESS_TYP)
-    @Schema(name = "Address type", required = true)
+    @Schema(description = "Address type", required = true)
     private AdressTyp adressTyp;
 
     @JsonProperty(ApiNames.WERKSEINSTELLUNG)
-    @Schema(name = "Default digital address", example = "80", required = true)
+    @Schema(description = "Default digital address", example = "80", required = true)
     private Integer werkeinstellung;
 
     @JsonProperty(ApiNames.ADRESS)
-    @Schema(name = "Digital address", example = "80", required = true)
+    @Schema(description = "Digital address", example = "80", required = true)
     private Integer adress;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

@@ -46,15 +46,15 @@ public class SondermodellModel extends RepresentationModel<SondermodellModel> im
     private static final long serialVersionUID = 5454366267511451526L;
 
     @JsonProperty(ApiNames.NAMEN)
-    @Schema(name = "Sondermodell code", example = "MHI", required = true)
+    @Schema(description = "Sondermodell code", example = "MHI", required = true)
     private String name;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Sondermodell description", example = "Märklin Handler Initiative")
+    @Schema(description = "Sondermodell description", example = "Märklin Handler Initiative")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

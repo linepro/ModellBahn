@@ -47,31 +47,31 @@ public class DecoderTypFunktionModel extends RepresentationModel<DecoderTypFunkt
     private static final long serialVersionUID = -4632521396017459814L;
 
     @JsonProperty(ApiNames.HERSTELLER)
-    @Schema(name = "Manufacturer", required = true)
+    @Schema(description = "Manufacturer", required = true)
     private String hersteller;
 
     @JsonProperty(ApiNames.BESTELL_NR)
-    @Schema(name = "Product numer", example = "62499", required = true)
+    @Schema(description = "Product numer", example = "62499", required = true)
     private String bestellNr;
 
     @JsonProperty(ApiNames.REIHE)
-    @Schema(name = "Bank number (0-1) always 0 for single panel decoders", example = "0", required = true)
+    @Schema(description = "Bank number (0-1) always 0 for single panel decoders", example = "0", required = true)
     private Integer reihe;
 
     @JsonProperty(ApiNames.FUNKTION)
-    @Schema(name = "Function Key", example = "F0", required = true)
+    @Schema(description = "Function Key", example = "F0", required = true)
     private String funktion;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(name = "Usage", example = "Strinbeleuchtung", required = true)
+    @Schema(description = "Usage", example = "Strinbeleuchtung", required = true)
     private String bezeichnung;
 
     @JsonProperty(ApiNames.PROGRAMMABLE)
-    @Schema(name = "True if this function can be reassigned", example = "false", required = true)
+    @Schema(description = "True if this function can be reassigned", example = "false", required = true)
     private Boolean programmable;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(name = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", required = true)
     private Boolean deleted;
 
     @Override

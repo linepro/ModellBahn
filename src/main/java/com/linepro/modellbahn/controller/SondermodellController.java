@@ -55,9 +55,9 @@ public class SondermodellController extends NamedItemController<SondermodellMode
     
     @Override
     @GetMapping(path = ApiPaths.GET_SONDERMODELL, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds an Sondermodelll by name", description = "Finds a special model", operationId = "get", tags = { "Sondermodelll" })
+    @Operation(summary = "Finds an Sondermodelll by name", description = "Finds a special model", operationId = "get", tags = { ApiNames.SONDERMODELL })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SondermodellModel.class)) }),
+        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SondermodellModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -70,7 +70,7 @@ public class SondermodellController extends NamedItemController<SondermodellMode
 
     @Override
     @GetMapping(path = ApiPaths.SEARCH_SONDERMODELL, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Sondermodelln by example", description = "Finds UIC axle configurations", operationId = "find", tags = { "SonderModell" })
+    @Operation(summary = "Finds Sondermodelln by example", description = "Finds UIC axle configurations", operationId = "find", tags = { ApiNames.SONDERMODELL })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = SondermodellModel.class))) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -85,13 +85,12 @@ public class SondermodellController extends NamedItemController<SondermodellMode
 
     @Override
     @PostMapping(path = ApiPaths.ADD_SONDERMODELL, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Add a new SonderModell", description = "Add a new UIC axle configuration", operationId = "add", tags = { "SonderModell" })
+    @Operation(summary = "Add a new SonderModell", description = "Add a new UIC axle configuration", operationId = "add", tags = { ApiNames.SONDERMODELL })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SondermodellModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -101,13 +100,13 @@ public class SondermodellController extends NamedItemController<SondermodellMode
 
     @Override
     @PutMapping(path = ApiPaths.UPDATE_SONDERMODELL, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an SonderModell by name", description = "Update a special model", operationId = "update", tags = { "SonderModell" })
+    @Operation(summary = "Updates an SonderModell by name", description = "Update a special model", operationId = "update", tags = { ApiNames.SONDERMODELL })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SondermodellModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
@@ -117,13 +116,13 @@ public class SondermodellController extends NamedItemController<SondermodellMode
 
     @Override
     @DeleteMapping(path = ApiPaths.DELETE_SONDERMODELL)
-    @Operation(summary = "Deletes an SonderModell by name", description = "Delete a special model", operationId = "update", tags = { "SonderModell" })
+    @Operation(summary = "Deletes an SonderModell by name", description = "Delete a special model", operationId = "delete", tags = { ApiNames.SONDERMODELL })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-        @ApiResponse(responseCode = "404", description = "Pet not found", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })

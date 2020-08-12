@@ -41,19 +41,19 @@ public enum AdressTyp implements DescribedEnum {
     }
 
     @Override
-    @Schema(name = "AdressTyp name", example = "DCC", required = true)
+    @Schema(description = "AdressTyp name", example = "DCC", required = true)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @Schema(name = "AdressTyp description", example = "DCC lang.", required = true)
+    @Schema(description = "AdressTyp description", example = "DCC lang.", required = true)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @Schema(name = "AdressTyp tooltip", example = "0 - 10239.", required = true)
+    @Schema(description = "AdressTyp tooltip", example = "0 - 10239.", required = true)
     public String getTooltip() {
         return tooltip;
     }
