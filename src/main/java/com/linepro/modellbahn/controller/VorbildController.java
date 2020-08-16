@@ -154,7 +154,7 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
     @DeleteMapping(path = ApiPaths.DELETE_VORBILD_ABBILDUNG, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Delete an Vorbild picture", description = "Deletes the picture of a named Vorbild", operationId = "delete", tags = { ApiNames.VORBILD })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VorbildModel.class)) }),
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VorbildModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),

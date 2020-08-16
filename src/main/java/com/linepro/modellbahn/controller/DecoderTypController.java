@@ -155,7 +155,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     @PostMapping(path = ApiPaths.ADD_DECODER_TYP_ADRESS, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds an Adress to a DecoderTyp", description = "", operationId = "add", tags = { ApiNames.DECODER_TYP })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypAdressModel.class)) }),
+                    @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypAdressModel.class)) }),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -170,7 +170,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     }
 
     @PutMapping(path = ApiPaths.UPDATE_DECODER_TYP_ADRESS, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Adds an Adress to a DecoderTyp", description = "", operationId = "update", tags = { ApiNames.DECODER_TYP })
+    @Operation(summary = "Update an Adress of a DecoderTyp", description = "", operationId = "update", tags = { ApiNames.DECODER_TYP })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypAdressModel.class)) }),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -205,7 +205,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     @PostMapping(path = ApiPaths.ADD_DECODER_TYP_CV, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds a CV to a DecoderTyp", description = "", operationId = "add", tags = { ApiNames.DECODER_TYP })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypCvModel.class)) }),
+                    @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypCvModel.class)) }),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -219,7 +219,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
      }
 
     @PutMapping(path = ApiPaths.UPDATE_DECODER_TYP_CV, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Adds a CV to a DecoderTyp", description = "", operationId = "update", tags = { ApiNames.DECODER_TYP })
+    @Operation(summary = "Updates a CV of a DecoderTyp", description = "", operationId = "update", tags = { ApiNames.DECODER_TYP })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypCvModel.class)) }),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
@@ -256,7 +256,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     @PostMapping(path = ApiPaths.ADD_DECODER_TYP_FUNKTION, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds a Funktion to a DecoderTyp", description = "", operationId = "add", tags = { ApiNames.DECODER_TYP })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypFunktionModel.class)) }),
+                    @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypFunktionModel.class)) }),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -270,7 +270,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     }
 
     @PutMapping(path = ApiPaths.UPDATE_DECODER_TYP_FUNKTION, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Adds a Funktion to a DecoderTyp", description = "", operationId = "update", tags = { ApiNames.DECODER_TYP })
+    @Operation(summary = "Update a Funktion of a DecoderTyp", description = "", operationId = "update", tags = { ApiNames.DECODER_TYP })
     @ApiResponses(value = {
                     @ApiResponse(responseCode = "202", description = "Successful operation", content = {
                                     @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypFunktionModel.class)) }),
@@ -323,7 +323,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     @DeleteMapping(path = ApiPaths.DELETE_DECODER_TYP_ANLEITUNGEN, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Removes instructions from a DecoderTyp", description = "", operationId = "delete", tags = { ApiNames.DECODER_TYP })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
+                    @ApiResponse(responseCode = "202", description = "Successful operation", content = @Content),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),

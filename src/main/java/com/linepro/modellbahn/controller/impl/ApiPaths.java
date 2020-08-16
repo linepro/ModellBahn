@@ -101,7 +101,7 @@ public interface ApiPaths {
     String UPDATE_KATEGORIE       = API_ROOT + ApiNames.KATEGORIE + "/{" + ApiNames.NAMEN + "}";
     String ADD_UNTER_KATEGORIE    = API_ROOT + ApiNames.KATEGORIE + "/{" + ApiNames.KATEGORIE + "}/" + ApiNames.UNTER_KATEGORIEN;
     String GET_UNTER_KATEGORIE    = API_ROOT + ApiNames.KATEGORIE + "/{" + ApiNames.KATEGORIE + "}/" + ApiNames.UNTER_KATEGORIEN + "/{" + ApiNames.UNTER_KATEGORIE + "}";
-    String SEARCH_UNTER_KATEGORIE = API_ROOT + ApiNames.KATEGORIE + "/" + ApiNames.UNTER_KATEGORIEN;
+    String SEARCH_UNTER_KATEGORIE = API_ROOT + ApiNames.UNTER_KATEGORIEN;
     String DELETE_UNTER_KATEGORIE = API_ROOT + ApiNames.KATEGORIE + "/{" + ApiNames.KATEGORIE + "}/" + ApiNames.UNTER_KATEGORIEN + "/{" + ApiNames.UNTER_KATEGORIE + "}";
     String UPDATE_UNTER_KATEGORIE = API_ROOT + ApiNames.KATEGORIE + "/{" + ApiNames.KATEGORIE + "}/" + ApiNames.UNTER_KATEGORIEN + "/{" + ApiNames.UNTER_KATEGORIE + "}";
 
