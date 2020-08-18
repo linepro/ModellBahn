@@ -1,39 +1,18 @@
 package com.linepro.modellbahn.converter.entity;
 
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
-import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
 import org.springframework.stereotype.Component;
 
-import com.linepro.modellbahn.converter.Mutator;
+import com.linepro.modellbahn.converter.entity.transcriber.ProduktTeilTranscriber;
+import com.linepro.modellbahn.converter.impl.MutatorImpl;
 import com.linepro.modellbahn.entity.ProduktTeil;
 import com.linepro.modellbahn.model.ProduktTeilModel;
 
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor
 @Component(PREFIX + "ProduktTeilMutator")
-public class ProduktTeilMutator implements Mutator<ProduktTeil,ProduktTeilModel> {
+public class ProduktTeilMutator extends MutatorImpl<ProduktTeil, ProduktTeilModel> {
 
-    @Override
-    public ProduktTeilModel apply(ProduktTeil source, ProduktTeilModel destination) {
-        if (isAvailable(source) && isAvailable(destination)) {
-            destination.setHersteller(source.getProdukt().getHersteller().getName());
-            destination.setBestellNr(source.getProdukt().getBestellNr());
-            destination.setTeilHersteller(source.getTeil().getHersteller().getName());
-            destination.setTeilBestellNr(source.getTeil().getBestellNr());
-            destination.setBezeichnung(source.getTeil().getBezeichnung());
-            destination.setKategorie(getCode(source.getTeil().getUnterKategorie().getKategorie()));
-            destination.setUnterKategorie(getCode(source.getTeil().getUnterKategorie()));
-            destination.setAnzahl(source.getAnzahl());
-            destination.setDeleted(source.getDeleted());
-        }
-        
-        return destination;
-    }
-
-    @Override
-    public ProduktTeilModel get() {
-        return new ProduktTeilModel();
+    public ProduktTeilMutator() {
+        super(() -> new ProduktTeilModel(), new ProduktTeilTranscriber());
     }
 }

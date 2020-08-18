@@ -118,7 +118,7 @@ import lombok.experimental.SuperBuilder;
 public class Zug extends NamedItemImpl {
 
     /** The zugTyp. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = ZugTyp.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = ZugTyp.class)
     @JoinColumn(name = DBNames.ZUG_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ZUG + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.zugTyp.notnull}")
     private ZugTyp zugTyp;

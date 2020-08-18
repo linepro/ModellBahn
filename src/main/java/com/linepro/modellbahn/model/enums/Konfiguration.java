@@ -19,21 +19,21 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = ApiNames.KONFIGURATION, description = "Configuration methods")
 public enum Konfiguration implements DescribedEnum {
 
-    NONE("Kein", "The Decoder cannot be configured."),
+    KEIN("kein"),
 
-    LINK("Lötbrücke", "The Decoder can be configured by link (solder or jumper)."),
+    STECKER("stecker"),
 
-    SWITCH("Schalter", "The Decoder can be configured by switches."),
+    SCHALTER("schalter"),
 
-    CV("CV", "The Decoder can be configured by CV values.");
+    CV("cv");
 
     private final String description;
 
     private final String tooltip;
 
-    Konfiguration(String description, String tooltip) {
-        this.description = description;
-        this.tooltip = tooltip;
+    Konfiguration(String description) {
+        this.description = "${com.linepro.modellbahn.konfiguration." + description + ".bezeichnung}";
+        this.tooltip = "${com.linepro.modellbahn.konfiguration." + description + ".tooltip}";
     }
 
     @Override

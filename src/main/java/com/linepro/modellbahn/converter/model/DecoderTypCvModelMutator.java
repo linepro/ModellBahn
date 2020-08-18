@@ -1,32 +1,18 @@
 package com.linepro.modellbahn.converter.model;
 
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
-import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
 import org.springframework.stereotype.Component;
 
-import com.linepro.modellbahn.converter.Mutator;
+import com.linepro.modellbahn.converter.impl.MutatorImpl;
+import com.linepro.modellbahn.converter.model.transcriber.DecoderTypCvModelTranscriber;
 import com.linepro.modellbahn.entity.DecoderTypCv;
 import com.linepro.modellbahn.model.DecoderTypCvModel;
 
 @Component(PREFIX + "DecoderTypCvModelMutator")
-public class DecoderTypCvModelMutator implements Mutator<DecoderTypCvModel,DecoderTypCv> {
-    
-    @Override
-    public DecoderTypCv apply(DecoderTypCvModel source, DecoderTypCv destination) {
-        if (isAvailable(source) && isAvailable(destination)) {
-            destination.setCv(source.getCv());
-            destination.setBezeichnung(source.getBezeichnung());
-            destination.setMinimal(source.getMinimal());
-            destination.setMaximal(source.getMaximal());
-            destination.setWerkseinstellung(source.getWerkseinstellung());
-        }
-        
-        return destination;
-    }
+public class DecoderTypCvModelMutator extends MutatorImpl<DecoderTypCvModel, DecoderTypCv> {
 
-    @Override
-    public DecoderTypCv get() {
-        return new DecoderTypCv();
+    public DecoderTypCvModelMutator() {
+        super(() -> new DecoderTypCv(), new DecoderTypCvModelTranscriber());
     }
 }

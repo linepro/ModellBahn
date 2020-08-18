@@ -19,21 +19,21 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = ApiNames.STATUS, description = "Article status")
 public enum Status implements DescribedEnum {
 	
-    WUNSCHMODEL("Wunschmodel", ""),
+    WUNSCHMODEL("wunschmodel"),
 	
-    GEKAUFT("Gekauft", ""),
+    GEKAUFT("gekauft"),
 
-    BASTLER("Bastler", ""),
+    BASTELN("basteln"),
 	
-    VERKAUFT("Verkauft", "");
+    VERKAUFT("verkauft");
 
     private final String description;
 
     private final String tooltip;
 
-    Status(String description, String tooltip) {
-        this.description = description;
-        this.tooltip = tooltip;
+    Status(String description) {
+        this.description = "${com.linepro.modellbahn.status." + description + ".bezeichnung}";
+        this.tooltip = "${com.linepro.modellbahn.status." + description + ".tooltip}";
     }
 
     @Override

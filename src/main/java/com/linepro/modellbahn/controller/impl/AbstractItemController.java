@@ -10,6 +10,7 @@ import static org.springframework.http.ResponseEntity.status;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 public abstract class AbstractItemController<M extends ItemModel> {
 
     protected final ItemService<M> service;
-    
+
     protected ResponseEntity<?> add(M model) {
         return added(service.add(model));
     }
@@ -67,7 +68,14 @@ public abstract class AbstractItemController<M extends ItemModel> {
         if (page.hasContent()) {
             PagedResourcesAssembler<I> assembler = new PagedResourcesAssembler<I>(null, null);
 
-            return ok(assembler.toModel(page, it -> (RepresentationModel<?>) it));
+            return ok(
+                assembler.toModel(
+                    page.getPageable().isUnpaged() && page.hasContent() ?
+                        new PageImpl<>(page.getContent(), page.getPageable(), page.getContent().size()) :
+                        page,
+                    it -> (RepresentationModel<?>) it
+                )
+            );
         }
 
         return notFound().build();

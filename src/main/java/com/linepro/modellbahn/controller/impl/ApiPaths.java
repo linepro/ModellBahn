@@ -77,10 +77,11 @@ public interface ApiPaths {
 
     String ENUMS_ADRESS_TYP_PATH            = API_ROOT + ApiNames.ENUMS + "/" + ApiNames.ADRESS_TYP;
     String ENUMS_ANDERUNGS_TYP_PATH         = API_ROOT + ApiNames.ENUMS + "/" + ApiNames.ANDERUNGS_TYP;
-    String ENUMS_STECKER_PATH               = API_ROOT + ApiNames.ENUMS + "/" + ApiNames.STECKER;
+    String ENUMS_DECODER_STATUS_PATH        = API_ROOT + ApiNames.ENUMS + "/" + ApiNames.DECODER;
     String ENUMS_KONFIGURATION_PATH         = API_ROOT + ApiNames.ENUMS + "/" + ApiNames.KONFIGURATION;
-    String ENUMS_STATUS_PATH                = API_ROOT + ApiNames.ENUMS + "/" + ApiNames.STATUS;
     String ENUMS_LEISTUNGS_UBERTRAGUNG_PATH = API_ROOT + ApiNames.ENUMS + "/" + ApiNames.LEISTUNGSUBERTRAGUNG;
+    String ENUMS_STATUS_PATH                = API_ROOT + ApiNames.ENUMS + "/" + ApiNames.STATUS;
+    String ENUMS_STECKER_PATH               = API_ROOT + ApiNames.ENUMS + "/" + ApiNames.STECKER;
 
     String ADD_GATTUNG    = API_ROOT + ApiNames.GATTUNG;
     String GET_GATTUNG    = API_ROOT + ApiNames.GATTUNG + "/{" + ApiNames.NAMEN + "}";

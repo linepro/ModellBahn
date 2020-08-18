@@ -6,11 +6,11 @@ import javax.validation.ConstraintValidatorContext;
 import com.linepro.modellbahn.model.WithAdress;
 import com.linepro.modellbahn.model.enums.AdressTyp;
 
-public class WeicheAdressValidator implements ConstraintValidator<WeicheAdress, WithAdress> {
+public class MagnetartikelValidator implements ConstraintValidator<Magnetartikel, WithAdress> {
 
     @Override
     public boolean isValid(WithAdress value, ConstraintValidatorContext context) {
-        if (value == null || AdressTyp.WEICHE != value.getAdressTyp()) {
+        if (value == null || AdressTyp.MAGNETARTIKEL != value.getAdressTyp()) {
             return true;
         }
 

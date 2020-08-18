@@ -1,12 +1,9 @@
 package com.linepro.modellbahn.converter.model;
 
-import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
-import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import com.linepro.modellbahn.converter.Mutator;
+import com.linepro.modellbahn.converter.impl.MutatorImpl;
+import com.linepro.modellbahn.converter.model.transcriber.ProduktModelTranscriber;
 import com.linepro.modellbahn.entity.Produkt;
 import com.linepro.modellbahn.model.ProduktModel;
 import com.linepro.modellbahn.repository.AchsfolgRepository;
@@ -27,95 +24,17 @@ import com.linepro.modellbahn.repository.lookup.ItemLookup;
 import com.linepro.modellbahn.repository.lookup.UnterKategorieLookup;
 import com.linepro.modellbahn.repository.lookup.VorbildLookup;
 
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor
-@Component(PREFIX + "ProduktModelMutator")
-public class ProduktModelMutator implements Mutator<ProduktModel, Produkt> {
+public class ProduktModelMutator extends MutatorImpl<ProduktModel, Produkt> {
 
     @Autowired
-    private final HerstellerRepository herstellerRepository;
-
-    @Autowired
-    private final UnterKategorieLookup unterKategorieLookup;
-
-    @Autowired
-    private final MassstabRepository massstabRepository;
-
-    @Autowired
-    private final SpurweiteRepository spurweiteRepository;
-
-    @Autowired
-    private final EpochRepository epochRepository;
-
-    @Autowired
-    private final BahnverwaltungRepository bahnverwaltungRepository;
-
-    @Autowired
-    private final GattungRepository gattungRepository;
-
-    @Autowired
-    private final AchsfolgRepository achsfolgRepository;
-
-    @Autowired
-    private final VorbildLookup vorbildLookup;
-
-    @Autowired
-    private final SondermodellRepository sondermodellRepository;
-
-    @Autowired
-    private final AufbauRepository aufbauRepository;
-
-    @Autowired
-    private final LichtRepository lichtRepository;
-
-    @Autowired
-    private final KupplungRepository kupplungRepository;
-
-    @Autowired
-    private final SteuerungRepository steuerungRepository;
-
-    @Autowired
-    private final DecoderTypLookup decoderTypLookup;
-
-    @Autowired
-    private final MotorTypRepository motorTypRepository;
-
-    @Autowired
-    private final ItemLookup lookup;
-
-    @Override
-    public Produkt apply(ProduktModel source, Produkt destination) {
-        if (isAvailable(source) && isAvailable(destination)) {
-            destination.setHersteller(lookup.find(source.getHersteller(), herstellerRepository));
-            destination.setBestellNr(source.getBestellNr());
-            destination.setBezeichnung(source.getBezeichnung());
-            destination.setUnterKategorie(unterKategorieLookup.find(source.getKategorie(), source.getUnterKategorie()));
-            destination.setMassstab(lookup.find(source.getMassstab(), massstabRepository));
-            destination.setSpurweite(lookup.find(source.getSpurweite(), spurweiteRepository));
-            destination.setBetreibsnummer(source.getBetreibsnummer());
-            destination.setEpoch(lookup.find(source.getEpoch(), epochRepository));
-            destination.setBahnverwaltung(lookup.find(source.getBahnverwaltung(), bahnverwaltungRepository));
-            destination.setGattung(lookup.find(source.getGattung(), gattungRepository));
-            destination.setBauzeit(source.getBauzeit());
-            destination.setAchsfolg(lookup.find(source.getAchsfolg(), achsfolgRepository));
-            destination.setVorbild(vorbildLookup.find(source.getGattung()));
-            destination.setAnmerkung(source.getAnmerkung());
-            destination.setSondermodell(lookup.find(source.getSondermodell(), sondermodellRepository));
-            destination.setAufbau(lookup.find(source.getAufbau(), aufbauRepository));
-            destination.setLicht(lookup.find(source.getLicht(), lichtRepository));
-            destination.setKupplung(lookup.find(source.getKupplung(), kupplungRepository));
-            destination.setSteuerung(lookup.find(source.getSteuerung(), steuerungRepository));
-            destination.setDecoderTyp(decoderTypLookup.find(source.getDecoderTypHersteller(), source.getDecoderTypBestellNr()));
-            destination.setMotorTyp(lookup.find(source.getMotorTyp(),motorTypRepository));
-            destination.setLange(source.getLange());
-        }
-        
-        return destination;
-    }
-
-    @Override
-    public Produkt get() {
-        return new Produkt();
+    public ProduktModelMutator(HerstellerRepository herstellerRepository, UnterKategorieLookup unterKategorieLookup,
+                    MassstabRepository massstabRepository, SpurweiteRepository spurweiteRepository, EpochRepository epochRepository,
+                    BahnverwaltungRepository bahnverwaltungRepository, GattungRepository gattungRepository, AchsfolgRepository achsfolgRepository,
+                    VorbildLookup vorbildLookup, SondermodellRepository sondermodellRepository, AufbauRepository aufbauRepository,
+                    LichtRepository lichtRepository, KupplungRepository kupplungRepository, SteuerungRepository steuerungRepository,
+                    DecoderTypLookup decoderTypLookup, MotorTypRepository motorTypRepository, ItemLookup lookup) {
+        super(() -> new Produkt(), new ProduktModelTranscriber(herstellerRepository, unterKategorieLookup, massstabRepository, spurweiteRepository,
+                        epochRepository, bahnverwaltungRepository, gattungRepository, achsfolgRepository, vorbildLookup, sondermodellRepository,
+                        aufbauRepository, lichtRepository, kupplungRepository, steuerungRepository, decoderTypLookup, motorTypRepository, lookup));
     }
 }

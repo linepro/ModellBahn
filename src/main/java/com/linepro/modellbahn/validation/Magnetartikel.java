@@ -14,8 +14,8 @@ import javax.validation.Payload;
 @Documented
 @Retention(RUNTIME)
 @Target( {TYPE, ANNOTATION_TYPE})
-@Constraint(validatedBy = {WeicheAdressValidator.class})
-public @interface WeicheAdress {
+@Constraint(validatedBy = {MagnetartikelValidator.class})
+public @interface Magnetartikel {
 
     String message() default "{com.linepro.modellbahn.validator.constraints.weiche.invalid}";
 

@@ -40,7 +40,7 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED })
-@Relation(collectionRelation = "achsfolgen", itemRelation = "achsfolg")
+@Relation(collectionRelation = ApiNames.LICHT, itemRelation = ApiNames.LICHT)
 @Schema(name = ApiNames.LICHT, description = "Light configuration - Märklin coding.")
 public class LichtModel extends RepresentationModel<LichtModel> implements NamedWithAbbildungModel, Comparable<LichtModel> {
 

@@ -103,7 +103,7 @@ public class UniqueValidator implements ConstraintValidator<Unique, Item>, Appli
             try {
                 Long actual = (Long) typedQuery.getSingleResult();
 
-                return (item.getId() != null && item.getId() == actual);
+                return (item.getId() != null && item.getId().equals(actual));
             } catch (NoResultException e) {
                 return true;
             } catch (NonUniqueResultException e) {

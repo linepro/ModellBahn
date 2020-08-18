@@ -2,6 +2,6 @@ INSERT INTO protokoll (deleted, bezeichnung, name, id) VALUES (FALSE, 'Märklin 
 INSERT INTO protokoll (deleted, bezeichnung, name, id) VALUES (FALSE, 'Märklin fx', 'FX', 481);
 INSERT INTO protokoll (deleted, bezeichnung, name, id) VALUES (FALSE, 'Märklin mfx', 'MFX', 482);
 INSERT INTO protokoll (deleted, bezeichnung, name, id) VALUES (FALSE, 'DCC', 'DCC', 483);
-INSERT INTO protokoll (deleted, bezeichnung, name, id) VALUES (FALSE, 'Märklin Motorola', 'MM', 484);
-INSERT INTO protokoll (deleted, bezeichnung, name, id) VALUES (FALSE, 'Märklin Motorola Weiche', 'WEICHE', 485);
+INSERT INTO protokoll (deleted, bezeichnung, name, id) VALUES (FALSE, 'Märklin Motorola', 'MOTOROLA', 484);
+INSERT INTO protokoll (deleted, bezeichnung, name, id) VALUES (FALSE, 'Märklin Motorola Weiche', 'MAGNETARTIKEL', 485);
 ALTER TABLE protokoll ALTER COLUMN id RESTART WITH 486;

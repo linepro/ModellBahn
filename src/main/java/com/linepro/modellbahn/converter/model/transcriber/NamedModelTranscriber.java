@@ -1,7 +1,8 @@
-package com.linepro.modellbahn.converter.impl;
+package com.linepro.modellbahn.converter.model.transcriber;
 
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
+import com.linepro.modellbahn.converter.impl.SoftDeleteTranscriber;
 import com.linepro.modellbahn.model.Named;
 
 public class NamedModelTranscriber<S extends Named, D extends Named> extends SoftDeleteTranscriber<S, D> {

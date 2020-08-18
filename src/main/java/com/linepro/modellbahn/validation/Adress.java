@@ -23,7 +23,7 @@ import org.hibernate.validator.constraints.ConstraintComposition;
 @DigitalAdress
 @DCCAdress
 @DCCLongAdress
-@WeicheAdress
+@Magnetartikel
 @ReportAsSingleViolation
 @Target({ TYPE, ANNOTATION_TYPE })
 @Retention(RUNTIME)

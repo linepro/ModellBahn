@@ -1,39 +1,18 @@
 package com.linepro.modellbahn.converter.entity;
 
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
-import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
 import org.springframework.stereotype.Component;
 
-import com.linepro.modellbahn.converter.Mutator;
+import com.linepro.modellbahn.converter.entity.transcriber.AnderungTranscriber;
+import com.linepro.modellbahn.converter.impl.MutatorImpl;
 import com.linepro.modellbahn.entity.Anderung;
 import com.linepro.modellbahn.model.AnderungModel;
 
 @Component(PREFIX + "AnderungMutator")
-public class AnderungMutator implements Mutator<Anderung, AnderungModel> {
+public class AnderungMutator extends MutatorImpl<Anderung, AnderungModel> {
 
     public AnderungMutator() {
+        super(() -> new AnderungModel(), new AnderungTranscriber());
     }
-
-    @Override
-    public AnderungModel apply(Anderung source, AnderungModel destination) {
-        if (isAvailable(source) && isAvailable(destination)) {
-            destination.setArtikelId(source.getArtikel().getArtikelId());
-            destination.setAnderungId(source.getAnderungId());
-            destination.setAnderungsDatum(source.getAnderungsDatum());
-            destination.setAnderungsTyp(source.getAnderungsTyp());
-            destination.setAnmerkung(source.getAnmerkung());
-            destination.setBezeichnung(source.getBezeichnung());
-            destination.setStuck(source.getStuck());
-            destination.setDeleted(source.getDeleted());
-        }
-        
-        return destination;
-    }
-
-    @Override
-    public AnderungModel get() {
-        return new AnderungModel();
-    }
-
 }

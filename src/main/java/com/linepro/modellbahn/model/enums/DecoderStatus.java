@@ -19,19 +19,19 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = ApiNames.STECKER, description = "Decoder statues")
 public enum DecoderStatus implements DescribedEnum {
 
-    INSTALIERT("Instaliert.",""),
+    INSTALIERT("instaliert"),
 
-    FREI("Frei.", ""),
+    FREI("frei"),
 
-    BASTLER("Bastler.", "");
+    BASTLER("bastler");
 
     private final String description;
 
     private final String tooltip;
 
-    DecoderStatus(String description, String tooltip) {
-        this.description = description;
-        this.tooltip = tooltip;
+    DecoderStatus(String description) {
+        this.description = "${com.linepro.modellbahn.decoder." + description + ".bezeichnung}";
+        this.tooltip = "${com.linepro.modellbahn.decoder." + description + ".tooltip}";
     }
 
     @Override

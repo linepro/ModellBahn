@@ -19,23 +19,23 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = ApiNames.LEISTUNGSUBERTRAGUNG, description = "Drive mechanisms")
 public enum LeistungsUbertragung implements DescribedEnum {
 
-    NONE("", ""),
+    KEIN("kein"),
     
-    ELEKTRISH("Elektrish", ""),
+    ELEKTRISH("elektrish"),
 
-    HYDRAULISH("Hydraulish", ""),
+    HYDRAULISH("hydraulish"),
 
-    MECHANISH("Mechanish", ""),
+    MECHANISH("mechanish"),
 
-    PRESSLUFT("Pressluft", "");
+    PRESSLUFT("pressluft");
 
     private final String description;
 
     private final String tooltip;
 
-    LeistungsUbertragung(String description, String tooltip) {
-        this.description = description;
-        this.tooltip = tooltip;
+    LeistungsUbertragung(String description) {
+        this.description = "${com.linepro.modellbahn.leistungsUbertragung." + description + ".bezeichnung}";
+        this.tooltip = "${com.linepro.modellbahn.leistungsUbertragung." + description + ".tooltip}";
     }
 
     @Override

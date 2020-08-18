@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.impl.MutatorImpl;
-import com.linepro.modellbahn.converter.impl.NamedModelTranscriber;
+import com.linepro.modellbahn.converter.model.transcriber.NamedModelTranscriber;
 import com.linepro.modellbahn.entity.Aufbau;
 import com.linepro.modellbahn.model.AufbauModel;
 

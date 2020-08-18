@@ -19,25 +19,25 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = ApiNames.ADRESS_TYP, description = "Adress types")
 public enum AdressTyp implements DescribedEnum {
 
-    DCC("DCC lang", "0 - 10239."),
+    DCC("dcc"),
     
-    DCC_SHORT("DCC kurz", "1 - 27."),
+    DCC_SHORT("kurz"),
     
-    DELTA("Märklin DELTA", "(2,6,8,18,20,24,26,54,56,60,62,72,74,78,80."),
+    DELTA("delta"),
     
-    MM("Märklin Motorola", "1 - 80."),
+    MOTOROLA("motorola"),
     
-    DIGITAL("Märklin Digital", "(fx/mfx) 1 - 255."),
+    DIGITAL("digital"),
     
-    WEICHE("Märklin Magnetartikel", "1 - 256.");
+    MAGNETARTIKEL("magnetartikel");
 
     private final String description;
 
     private final String tooltip;
 
-    AdressTyp(String description, String tooltip) {
-        this.description = description;
-        this.tooltip = tooltip;
+    AdressTyp(String description) {
+        this.description = "${com.linepro.modellbahn.adressTyp." + description + ".bezeichnung}";
+        this.tooltip = "${com.linepro.modellbahn.adressTyp." + description + ".tooltip}";
     }
 
     @Override

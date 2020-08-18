@@ -22,7 +22,7 @@ public class KategorieenCriteria implements Criterion {
     public Predicate[] getCriteria(CriteriaBuilder criteriaBuilder, Root<?> kategorie) {
         List<Predicate> where = new ArrayList<>();
         if (kategorieen.isPresent()) {
-            kategorie.get(DBNames.NAME).in(kategorieen.get());
+            where.add(criteriaBuilder.in(kategorie.get(DBNames.NAME)).value(kategorieen.get()));
         }
         return where.toArray(new Predicate[0]);
     }

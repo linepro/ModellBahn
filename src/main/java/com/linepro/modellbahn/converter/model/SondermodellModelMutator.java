@@ -5,7 +5,7 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.impl.MutatorImpl;
-import com.linepro.modellbahn.converter.impl.NamedModelTranscriber;
+import com.linepro.modellbahn.converter.model.transcriber.NamedModelTranscriber;
 import com.linepro.modellbahn.entity.Sondermodell;
 import com.linepro.modellbahn.model.SondermodellModel;
 

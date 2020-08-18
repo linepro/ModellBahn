@@ -14,6 +14,7 @@ import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.model.enums.AnderungsTyp;
+import com.linepro.modellbahn.model.enums.DecoderStatus;
 import com.linepro.modellbahn.model.enums.DescribedEnum;
 import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
@@ -52,6 +53,13 @@ public class EnumsController {
     @Operation(summary = "Gets all possible AnderungTyp values")
     public ResponseEntity<?> getAnderungTyp() {
         return ok(service.getEnumValues(AnderungsTyp.values()));
+    }
+
+    @GetMapping(path = ApiPaths.ENUMS_DECODER_STATUS_PATH, produces = MediaType.APPLICATION_JSON)
+    @JsonSerialize(contentAs = DescribedEnum.class)
+    @Operation(summary = "Gets all possible DecoderStatus values")
+    public ResponseEntity<?> getDecoderStatus() {
+        return ok(service.getEnumValues(DecoderStatus.values()));
     }
 
     @GetMapping(path = ApiPaths.ENUMS_STECKER_PATH, produces = MediaType.APPLICATION_JSON)
