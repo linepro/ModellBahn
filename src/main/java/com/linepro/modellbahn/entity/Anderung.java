@@ -29,11 +29,11 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.model.enums.AnderungsTyp;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -69,10 +69,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 public class Anderung extends ItemImpl implements Comparable<Anderung> {
 
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Artikel.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Artikel.class, optional = false)
     @JoinColumn(name = DBNames.ARTIKEL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ANDERUNG + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.artikel.notnull}")
     private Artikel artikel;
@@ -132,5 +131,19 @@ public class Anderung extends ItemImpl implements Comparable<Anderung> {
           .append(getArtikel(), other.getArtikel())
           .append(getAnderungId(), other.getAnderungId())
           .isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("artikel", artikel)
+            .append("anderungId", anderungId)
+            .append("anderungsDatum", anderungsDatum)
+            .append("anderungsTyp",  anderungsTyp)
+            .append("bezeichnung",  bezeichnung)
+            .append("stuck",  stuck)
+            .append("anmerkung",  anmerkung)
+            .toString();
     }
 }

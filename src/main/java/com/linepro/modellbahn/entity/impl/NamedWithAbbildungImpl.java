@@ -11,11 +11,11 @@ import javax.persistence.MappedSuperclass;
 
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.PathConverter;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -27,7 +27,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 @MappedSuperclass
 public class NamedWithAbbildungImpl extends NamedItemImpl implements NamedWithAbbildungItem {
 
@@ -35,4 +34,12 @@ public class NamedWithAbbildungImpl extends NamedItemImpl implements NamedWithAb
     @Column(name = DBNames.ABBILDUNG)
     @Convert(converter = PathConverter.class)
     private Path abbildung;
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("abbildung", abbildung)
+            .toString();
+    }
 }

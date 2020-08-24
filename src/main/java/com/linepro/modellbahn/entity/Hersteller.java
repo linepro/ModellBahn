@@ -1,24 +1,23 @@
 package com.linepro.modellbahn.entity;
 
-import java.net.URL;
-
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.validator.constraints.URL;
+
 import com.linepro.modellbahn.entity.impl.NamedItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.persistence.util.URLConverter;
+import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.validation.Country;
+import com.linepro.modellbahn.validation.Telefon;
 import com.linepro.modellbahn.validation.Unique;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -38,23 +37,31 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.hersteller.notunique}")
-public class Hersteller extends NamedItemImpl {
+@Telefon(message = "{com.linepro.modellbahn.validator.constraints.telephone.invalid}")
+public class Hersteller extends NamedItemImpl implements HasTelefon {
 
     /** The url. */
-    //@org.hibernate.validator.constraints.URL
+    @URL(message = "{com.linepro.modellbahn.validator.constraints.url.invalid}")
     @Column(name = DBNames.URL)
-    @Convert(converter = URLConverter.class)
-    private URL url;
+    private String url;
 
     /** The Telefon. */
-    //@Telephone(message = "{com.linepro.modellbahn.validator.constraints.land.invalid}")
     @Column(name = DBNames.TELEFON, length = 20)
-    private String Telefon;
+    private String telefon;
 
     @Column(name = DBNames.LAND, length = 2)
     @Country(message = "{com.linepro.modellbahn.validator.constraints.land.invalid}")
     private String land;
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .appendSuper(super.toString())
+                .append("url", url)
+                .append("telefon", telefon)
+                .append("land", land)
+                .toString();
+    }
 }

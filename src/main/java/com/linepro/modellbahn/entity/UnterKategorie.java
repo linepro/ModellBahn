@@ -19,12 +19,12 @@ import javax.validation.constraints.NotNull;
 
 import com.linepro.modellbahn.entity.impl.NamedItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.validation.Unique;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -59,15 +59,22 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 @Cacheable
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, length = 50))
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.unterKategorie.notunique}")
 public class UnterKategorie extends NamedItemImpl {
 
     /** The kategorie. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kategorie.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kategorie.class, optional = false)
     @JoinColumn(name = DBNames.KATEGORIE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.UNTER_KATEGORIE + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.kategorie.notnull}")
     private Kategorie kategorie;
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("kategorie", kategorie.getName())
+            .toString();
+    }
 }

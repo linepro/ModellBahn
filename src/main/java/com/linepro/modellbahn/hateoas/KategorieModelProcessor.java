@@ -8,6 +8,7 @@ import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_KATEGORIE;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.SEARCH_KATEGORIE;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_KATEGORIE;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,9 @@ import com.linepro.modellbahn.model.KategorieModel;
 @Component(PREFIX + "KategorieModelProcessor")
 public class KategorieModelProcessor extends NamedModelProcessor<KategorieModel> implements RepresentationModelProcessor<KategorieModel> {
 
-    public KategorieModelProcessor() {
+    private final UnterKategorieModelProcessor unterKategorieProcessor;
+
+    public KategorieModelProcessor(UnterKategorieModelProcessor unterKategorieProcessor) {
         super(
             ADD_KATEGORIE, 
             GET_KATEGORIE, 
@@ -30,5 +33,17 @@ public class KategorieModelProcessor extends NamedModelProcessor<KategorieModel>
             SEARCH_KATEGORIE,
             new LinkTemplateImpl(ApiRels.ADD, ADD_UNTER_KATEGORIE, EXTRACTOR)
             );
+        
+        this.unterKategorieProcessor = unterKategorieProcessor;
+    }
+
+    @Override
+    public KategorieModel process(KategorieModel model) {
+        if (!CollectionUtils.isEmpty(model.getUnterKategorien())) {
+            model.getUnterKategorien()
+                 .forEach(u -> unterKategorieProcessor.process(u));
+        }
+
+        return super.process(model);
     }
 }

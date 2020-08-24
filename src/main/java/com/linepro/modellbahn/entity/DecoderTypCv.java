@@ -23,13 +23,13 @@ import org.hibernate.validator.constraints.Range;
 
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.validation.CVValue;
 import com.linepro.modellbahn.validation.Unique;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -69,12 +69,11 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.decoderTypCv.notunique}")
 public class DecoderTypCv extends ItemImpl implements Comparable<DecoderTypCv> {
 
     /** The decoder typ. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class, optional = false)
     @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_TYP_CV + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoderTyp.notnull}")
     private DecoderTyp decoderTyp;
@@ -136,5 +135,18 @@ public class DecoderTypCv extends ItemImpl implements Comparable<DecoderTypCv> {
           .append(getDecoderTyp(), other.getDecoderTyp())
           .append(getCv(), other.getCv())
           .isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("decoderTyp", decoderTyp)
+            .append("cv", cv)
+            .append("bezeichnung", bezeichnung)
+            .append("minimal", minimal)
+            .append("maximal", maximal)
+            .append("werkseinstellung", werkseinstellung)
+            .toString();
     }
 }

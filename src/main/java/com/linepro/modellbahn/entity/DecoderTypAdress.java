@@ -24,13 +24,13 @@ import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.model.WithAdress;
 import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.validation.Adress;
 import com.linepro.modellbahn.validation.Unique;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -71,12 +71,11 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.decoderTypAdress.notunique}")
 public class DecoderTypAdress extends ItemImpl implements WithAdress, Comparable<DecoderTypAdress> {
 
     /** The decoder typ. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class, optional = false)
     @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_TYP_ADRESS + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoderTyp.notnull}")
     private DecoderTyp decoderTyp;
@@ -137,5 +136,18 @@ public class DecoderTypAdress extends ItemImpl implements WithAdress, Comparable
           .append(getDecoderTyp(), other.getDecoderTyp())
           .append(getAdress(), other.getAdress())
           .isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("decoderTyp", decoderTyp)
+            .append("position", position)
+            .append("bezeichnung", bezeichnung)
+            .append("adressTyp", adressTyp)
+            .append("span", span)
+            .append("adress", adress)
+            .toString();
     }
 }

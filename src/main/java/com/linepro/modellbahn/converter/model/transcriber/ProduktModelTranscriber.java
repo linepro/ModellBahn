@@ -18,10 +18,10 @@ import com.linepro.modellbahn.repository.MotorTypRepository;
 import com.linepro.modellbahn.repository.SondermodellRepository;
 import com.linepro.modellbahn.repository.SpurweiteRepository;
 import com.linepro.modellbahn.repository.SteuerungRepository;
+import com.linepro.modellbahn.repository.VorbildRepository;
 import com.linepro.modellbahn.repository.lookup.DecoderTypLookup;
 import com.linepro.modellbahn.repository.lookup.ItemLookup;
 import com.linepro.modellbahn.repository.lookup.UnterKategorieLookup;
-import com.linepro.modellbahn.repository.lookup.VorbildLookup;
 
 import lombok.RequiredArgsConstructor;
 
@@ -44,7 +44,7 @@ public class ProduktModelTranscriber implements Transcriber<ProduktModel, Produk
 
     private final AchsfolgRepository achsfolgRepository;
 
-    private final VorbildLookup vorbildLookup;
+    private final VorbildRepository vorbildRepository;
 
     private final SondermodellRepository sondermodellRepository;
 
@@ -77,7 +77,7 @@ public class ProduktModelTranscriber implements Transcriber<ProduktModel, Produk
             destination.setGattung(lookup.find(source.getGattung(), gattungRepository));
             destination.setBauzeit(source.getBauzeit());
             destination.setAchsfolg(lookup.find(source.getAchsfolg(), achsfolgRepository));
-            destination.setVorbild(vorbildLookup.find(source.getGattung()));
+            destination.setVorbild(lookup.find(source.getGattung(), vorbildRepository));
             destination.setAnmerkung(source.getAnmerkung());
             destination.setSondermodell(lookup.find(source.getSondermodell(), sondermodellRepository));
             destination.setAufbau(lookup.find(source.getAufbau(), aufbauRepository));

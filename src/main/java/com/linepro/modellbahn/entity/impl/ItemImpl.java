@@ -11,11 +11,11 @@ import javax.validation.constraints.NotNull;
 
 import com.linepro.modellbahn.entity.Item;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -28,7 +28,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @MappedSuperclass
 public abstract class ItemImpl implements Item {
 
@@ -63,5 +62,12 @@ public abstract class ItemImpl implements Item {
         ItemImpl other = (ItemImpl) obj;
 
         return Objects.equals(id, other.id);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .append("id", id)
+            .toString();
     }
 }

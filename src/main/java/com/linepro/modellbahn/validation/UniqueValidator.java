@@ -27,7 +27,6 @@ import com.linepro.modellbahn.entity.Item;
 import com.linepro.modellbahn.entity.NamedItem;
 import com.linepro.modellbahn.entity.Produkt;
 import com.linepro.modellbahn.entity.UnterKategorie;
-import com.linepro.modellbahn.entity.Vorbild;
 import com.linepro.modellbahn.persistence.DBNames;
 
 import lombok.NoArgsConstructor;
@@ -91,8 +90,6 @@ public class UniqueValidator implements ConstraintValidator<Unique, Item>, Appli
                                 criteriaBuilder.equal(root.get(DBNames.HERSTELLER), ((Produkt) item).getHersteller()),
                                 criteriaBuilder.equal(root.get(DBNames.BESTELL_NR), ((Produkt) item).getBestellNr())
                                 });
-            } else if (item instanceof Vorbild) {
-                criteriaQuery = criteriaQuery.where(criteriaBuilder.equal(root.get(DBNames.GATTUNG), ((Vorbild) item).getGattung()));
             } else if (item instanceof NamedItem) {
                 criteriaQuery = criteriaQuery.where(criteriaBuilder.equal(root.get(DBNames.NAME), ((NamedItem) item).getName()));
             }

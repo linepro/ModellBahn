@@ -174,12 +174,12 @@ public interface ApiPaths {
     String UPDATE_STEUERUNG = API_ROOT + ApiNames.STEUERUNG + "/{" + ApiNames.NAMEN + "}";
 
     String ADD_VORBILD              = API_ROOT + ApiNames.VORBILD;
-    String GET_VORBILD              = API_ROOT + ApiNames.VORBILD + "/{" + ApiNames.GATTUNG + ":[A-Za-z0-9 \\.]+}";
+    String GET_VORBILD              = API_ROOT + ApiNames.VORBILD + "/{" + ApiNames.NAMEN + ":[A-Za-z0-9 \\.]+}";
     String SEARCH_VORBILD           = API_ROOT + ApiNames.VORBILD;
-    String DELETE_VORBILD           = API_ROOT + ApiNames.VORBILD + "/{" + ApiNames.GATTUNG + ":[A-Za-z0-9 \\\\.]+}";
-    String UPDATE_VORBILD           = API_ROOT + ApiNames.VORBILD + "/{" + ApiNames.GATTUNG + ":[A-Za-z0-9 \\\\.]+}";
-    String ADD_VORBILD_ABBILDUNG    = API_ROOT + ApiNames.VORBILD + "/{" + ApiNames.GATTUNG + ":[A-Za-z0-9 \\\\.]+}/" + ApiNames.ABBILDUNG;
-    String DELETE_VORBILD_ABBILDUNG = API_ROOT + ApiNames.VORBILD + "/{" + ApiNames.GATTUNG + ":[A-Za-z0-9 \\\\.]+}/" + ApiNames.ABBILDUNG;
+    String DELETE_VORBILD           = API_ROOT + ApiNames.VORBILD + "/{" + ApiNames.NAMEN + ":[A-Za-z0-9 \\\\.]+}";
+    String UPDATE_VORBILD           = API_ROOT + ApiNames.VORBILD + "/{" + ApiNames.NAMEN + ":[A-Za-z0-9 \\\\.]+}";
+    String ADD_VORBILD_ABBILDUNG    = API_ROOT + ApiNames.VORBILD + "/{" + ApiNames.NAMEN + ":[A-Za-z0-9 \\\\.]+}/" + ApiNames.ABBILDUNG;
+    String DELETE_VORBILD_ABBILDUNG = API_ROOT + ApiNames.VORBILD + "/{" + ApiNames.NAMEN + ":[A-Za-z0-9 \\\\.]+}/" + ApiNames.ABBILDUNG;
 
     String ADD_ZUG        = API_ROOT + ApiNames.ZUG;
     String GET_ZUG        = API_ROOT + ApiNames.ZUG + "/{" + ApiNames.NAMEN + "}";

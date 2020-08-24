@@ -22,11 +22,11 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -94,11 +94,10 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 public class ZugConsist extends ItemImpl implements Comparable<ZugConsist> {
 
     /** The zug. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Zug.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Zug.class, optional = false)
     @JoinColumn(name = DBNames.ZUG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ZUG_CONSIST + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.zug.notnull}")
     private Zug zug;
@@ -110,7 +109,7 @@ public class ZugConsist extends ItemImpl implements Comparable<ZugConsist> {
     private Integer position;
 
     /** The artikel. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Artikel.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Artikel.class, optional = false)
     @JoinColumn(name = DBNames.ARTIKEL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ZUG_CONSIST + "_fk2"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.artikel.notnull}")
     private Artikel artikel;
@@ -146,5 +145,15 @@ public class ZugConsist extends ItemImpl implements Comparable<ZugConsist> {
           .append(getZug(), other.getZug())
           .append(getPosition(), other.getPosition())
           .isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("zug", zug)
+            .append("artikel", artikel)
+            .append("position", position)
+            .toString();
     }
 }

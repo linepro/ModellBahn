@@ -46,8 +46,8 @@ public enum Stecker implements DescribedEnum {
     private final String tooltip;
 
     Stecker(String description) {
-        this.description = "${com.linepro.modellbahn.stecker." + description + ".bezeichnung}";
-        this.tooltip = "${com.linepro.modellbahn.stecker." + description + ".tooltip}";
+        this.description = "{com.linepro.modellbahn.stecker." + description + ".bezeichnung}";
+        this.tooltip = "{com.linepro.modellbahn.stecker." + description + ".tooltip}";
     }
 
     @Override

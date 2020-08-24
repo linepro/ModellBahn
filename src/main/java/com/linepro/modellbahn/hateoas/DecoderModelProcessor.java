@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import com.linepro.modellbahn.hateoas.impl.FieldsExtractor;
 import com.linepro.modellbahn.hateoas.impl.LinkTemplateImpl;
@@ -31,13 +32,46 @@ public class DecoderModelProcessor extends ModelProcessorImpl<DecoderModel> impl
     
     private static final FieldsExtractor EXTRACTOR = (m) -> Collections.singletonMap(DECODER_ID, ((DecoderModel) m).getDecoderId());
 
+    private final DecoderAdressModelProcessor adressProcessor;
+
+    private final DecoderCvModelProcessor cvProcessor;
+
+    private final DecoderFunktionModelProcessor funktionProcessor;
+
     @Autowired
-    public DecoderModelProcessor() {
+    public DecoderModelProcessor(DecoderAdressModelProcessor adressProcessor, DecoderCvModelProcessor cvProcessor,
+                    DecoderFunktionModelProcessor funktionProcessor) {
         super(
             new LinkTemplateImpl(SELF, GET_DECODER, EXTRACTOR),
             new LinkTemplateImpl(UPDATE, UPDATE_DECODER, EXTRACTOR),
             new LinkTemplateImpl(DELETE, DELETE_DECODER, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted())),
             new LinkTemplateImpl(SEARCH, SEARCH_DECODER, EXTRACTOR)
             );
+
+        this.adressProcessor = adressProcessor;
+
+        this.cvProcessor = cvProcessor;
+
+        this.funktionProcessor = funktionProcessor;
+    }
+
+    @Override
+    public DecoderModel process(DecoderModel model) {
+        if (!CollectionUtils.isEmpty(model.getAdressen())) {
+            model.getAdressen()
+                 .forEach(a -> adressProcessor.process(a));
+        }
+
+        if (!CollectionUtils.isEmpty(model.getCvs())) {
+            model.getCvs()
+                 .forEach(c -> cvProcessor.process(c));
+        }
+
+        if (!CollectionUtils.isEmpty(model.getFunktionen())) {
+            model.getFunktionen()
+                 .forEach(f -> funktionProcessor.process(f));
+        }
+
+        return super.process(model);
     }
 }

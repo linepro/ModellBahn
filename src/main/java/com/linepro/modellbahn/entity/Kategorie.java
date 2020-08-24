@@ -17,13 +17,13 @@ import javax.persistence.UniqueConstraint;
 
 import com.linepro.modellbahn.entity.impl.NamedItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.validation.Unique;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -65,7 +65,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.kategorie.notunique}")
 public class Kategorie extends NamedItemImpl {
@@ -86,5 +85,13 @@ public class Kategorie extends NamedItemImpl {
     
     public void removeUnterKategorie(UnterKategorie unterKategorie) {
         unterKategorien.remove(unterKategorie);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("unterKategorien", unterKategorien)
+            .toString();
     }
 }

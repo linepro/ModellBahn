@@ -40,13 +40,13 @@ import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.ArtikelId;
 import com.linepro.modellbahn.persistence.util.PathConverter;
+import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.validation.Currency;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -355,7 +355,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 public class Artikel extends ItemImpl implements Comparable<Artikel> {
 
     /** The abbildung. */
@@ -365,7 +364,7 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
     private String artikelId;
 
     /** The produkt. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class, optional = false)
     @JoinColumn(name = DBNames.PRODUKT_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.produkt.notnull}")
     private Produkt produkt;
@@ -381,27 +380,27 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
     private String wahrung;
 
     /** The steuerung. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class)
     @JoinColumn(name = DBNames.STEUERUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk3"))
     private Steuerung steuerung;
 
     /** The motor typ. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = MotorTyp.class, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = MotorTyp.class)
     @JoinColumn(name = DBNames.MOTOR_TYP_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk4"))
     private MotorTyp motorTyp;
 
     /** The licht. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Licht.class, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Licht.class)
     @JoinColumn(name = DBNames.LICHT_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk5"))
     private Licht licht;
 
     /** The kupplung. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kupplung.class, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kupplung.class)
     @JoinColumn(name = DBNames.KUPPLUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk6"))
     private Kupplung kupplung;
 
     /** The decoder. */
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class, optional = true)
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
     @JoinColumn(name = DBNames.DECODER_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk7"))
     private Decoder decoder;
 
@@ -497,5 +496,30 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
       return new EqualsBuilder()
           .append(getArtikelId(), other.getArtikelId())
           .isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("artikelId", artikelId)
+            .append("produkt", produkt)
+            .append("kaufdatum", kaufdatum)
+            .append("wahrung", wahrung)
+            .append("steuerung", steuerung)
+            .append("motorTyp", motorTyp)
+            .append("licht", licht)
+            .append("kupplung", kupplung)
+            .append("decoder", decoder)
+            .append("bezeichnung", bezeichnung)
+            .append("preis", preis)
+            .append("stuck", stuck)
+            .append("verbleibende", verbleibende)
+            .append("anmerkung", anmerkung)
+            .append("beladung", beladung)
+            .append("abbildung", abbildung)
+            .append("status", status)
+            .append("anderungen", anderungen)
+            .toString();
     }
 }

@@ -24,12 +24,12 @@ import org.hibernate.validator.constraints.Range;
 
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.validation.Unique;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -42,7 +42,8 @@ import lombok.experimental.SuperBuilder;
 @Entity(name = DBNames.DECODER_TYP_FUNKTION)
 @Table(name = DBNames.DECODER_TYP_FUNKTION,
     indexes = { 
-        @Index(name = DBNames.DECODER_TYP_FUNKTION + "_IX1", columnList = DBNames.DECODER_TYP_ID)
+        @Index(name = DBNames.DECODER_TYP_FUNKTION + "_IX1", columnList = DBNames.DECODER_TYP_ID),
+        @Index(name = DBNames.DECODER_TYP_FUNKTION + "_IX2", columnList = DBNames.FUNKTION)
     }, uniqueConstraints = {
         @UniqueConstraint(name = DBNames.DECODER_TYP_FUNKTION + "_UC1", columnNames = { DBNames.DECODER_TYP_ID, DBNames.REIHE, DBNames.FUNKTION })
     })
@@ -68,12 +69,11 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.decoderTypFunktion.notunique}")
 public class DecoderTypFunktion extends ItemImpl implements Comparable<DecoderTypFunktion> {
 
     /** The decoder typ. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class, optional = false)
     @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_TYP_FUNKTION + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoderTyp.notnull}")
     private DecoderTyp decoderTyp;
@@ -130,5 +130,17 @@ public class DecoderTypFunktion extends ItemImpl implements Comparable<DecoderTy
           .append(getDecoderTyp(), other.getDecoderTyp())
           .append(getFunktion(), other.getFunktion())
           .isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("decoderTyp", decoderTyp)
+            .append("reihe", reihe)
+            .append("funktion", funktion)
+            .append("bezeichnung", bezeichnung)
+            .append("programmable", programmable)
+            .toString();
     }
 }

@@ -17,7 +17,6 @@ import com.linepro.modellbahn.validation.Unique;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -37,7 +36,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.achsfolg.notunique}")
 public class Achsfolg extends NamedItemImpl {

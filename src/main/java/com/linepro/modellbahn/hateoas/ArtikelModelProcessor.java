@@ -56,6 +56,7 @@ import static com.linepro.modellbahn.controller.impl.ApiRels.UPDATE;
 import java.util.Collections;
 import java.util.HashMap;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,9 +74,11 @@ import com.linepro.modellbahn.model.ArtikelModel;
 public class ArtikelModelProcessor extends ModelProcessorImpl<ArtikelModel> implements RepresentationModelProcessor<ArtikelModel> {
 
     private static final FieldsExtractor EXTRACTOR = (m) -> Collections.singletonMap(ARTIKEL_ID, ((ArtikelModel) m).getArtikelId());
-    
+
+    private final AnderungModelProcessor anderungProcessor;
+
     @Autowired
-    public ArtikelModelProcessor() {
+    public ArtikelModelProcessor(AnderungModelProcessor anderungProcessor) {
         super(
             new LinkTemplateImpl(ADD, ADD_ARTIKEL, EXTRACTOR),
             new LinkTemplateImpl(SELF, GET_ARTIKEL, EXTRACTOR),
@@ -97,7 +100,7 @@ public class ArtikelModelProcessor extends ModelProcessorImpl<ArtikelModel> impl
                             (m) -> Collections.singletonMap(NAMEN, ((ArtikelModel) m).getMassstab()),
                             (m) -> ((ArtikelModel) m).getMassstab() != null
                             ),
-            new LinkTemplateImpl(SPURWEITE, GET_SPURWEITE,  
+            new LinkTemplateImpl(SPURWEITE, GET_SPURWEITE,
                             (m) -> Collections.singletonMap(NAMEN, ((ArtikelModel) m).getSpurweite()),
                             (m) -> ((ArtikelModel) m).getSpurweite() != null
                             ),
@@ -146,5 +149,17 @@ public class ArtikelModelProcessor extends ModelProcessorImpl<ArtikelModel> impl
                             (m) -> ((ArtikelModel) m).getMotorTyp() != null
                             )
             );
+
+        this.anderungProcessor = anderungProcessor;
+    }
+
+    @Override
+    public ArtikelModel process(ArtikelModel model) {
+        if (!CollectionUtils.isEmpty(model.getAnderungen())) {
+            model.getAnderungen()
+                 .forEach(u -> anderungProcessor.process(u));
+        }
+
+        return super.process(model);
     }
 }

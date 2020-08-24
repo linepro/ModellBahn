@@ -28,12 +28,12 @@ import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.model.WithAdress;
 import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.validation.Adress;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -76,17 +76,16 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 public class DecoderAdress extends ItemImpl implements WithAdress, Comparable<DecoderAdress> {
 
     /** The decoder. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class, optional = false)
     @JoinColumn(name = DBNames.DECODER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name =  DBNames.DECODER_ADRESS + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoder.notnull}")
     private Decoder decoder;
 
     /** The adress. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTypAdress.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTypAdress.class, optional = false)
     @JoinColumn(name = DBNames.ADRESS_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_ADRESS + "_fk2"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.cv.notnull}")
     private DecoderTypAdress typ;
@@ -131,5 +130,15 @@ public class DecoderAdress extends ItemImpl implements WithAdress, Comparable<De
           .append(getDecoder(), other.getDecoder())
           .append(getTyp(), other.getTyp())
           .isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("decoder", decoder)
+            .append("typ", typ)
+            .append("adress",  adress)
+            .toString();
     }
 }

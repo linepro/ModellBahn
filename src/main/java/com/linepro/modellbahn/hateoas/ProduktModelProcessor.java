@@ -24,6 +24,7 @@ import static com.linepro.modellbahn.controller.impl.ApiRels.UPDATE;
 
 import java.util.HashMap;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +46,10 @@ public class ProduktModelProcessor extends ModelProcessorImpl<ProduktModel> impl
         { BESTELL_NR, ((ProduktModel) m).getBestellNr() }, 
         });
 
+    private final  ProduktTeilModelProcessor teilProcessor;
+
     @Autowired
-    public ProduktModelProcessor() {
+    public ProduktModelProcessor(ProduktTeilModelProcessor teilProcessor) {
         super(
             new LinkTemplateImpl(ADD, ADD_PRODUKT, EXTRACTOR), 
             new LinkTemplateImpl(SELF, GET_PRODUKT, EXTRACTOR),
@@ -58,5 +61,17 @@ public class ProduktModelProcessor extends ModelProcessorImpl<ProduktModel> impl
             new LinkTemplateImpl(PARTS_DIAGRAM, ADD_PRODUKT_EXPLOSIONSZEICHNUNG, EXTRACTOR),
             new LinkTemplateImpl(PARTS, ADD_PRODUKT_TEIL, EXTRACTOR)
             );
+
+        this.teilProcessor = teilProcessor;
+    }
+
+    @Override
+    public ProduktModel process(ProduktModel model) {
+        if (!CollectionUtils.isEmpty(model.getTeilen())) {
+            model.getTeilen()
+                 .forEach(t -> teilProcessor.process(t));
+        }
+
+        return super.process(model);
     }
 }

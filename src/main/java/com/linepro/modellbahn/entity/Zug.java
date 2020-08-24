@@ -22,13 +22,13 @@ import javax.validation.constraints.NotNull;
 
 import com.linepro.modellbahn.entity.impl.NamedItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.validation.Unique;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -112,13 +112,12 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.zug.notunique}")
 public class Zug extends NamedItemImpl {
 
     /** The zugTyp. */
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = ZugTyp.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = ZugTyp.class, optional = false)
     @JoinColumn(name = DBNames.ZUG_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ZUG + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.zugTyp.notnull}")
     private ZugTyp zugTyp;
@@ -144,5 +143,14 @@ public class Zug extends NamedItemImpl {
 
     public void removeConsist(ZugConsist farhzeug) {
         consist.remove(farhzeug);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("zugTyp", zugTyp)
+            .append("consist", consist)
+            .toString();
     }
 }

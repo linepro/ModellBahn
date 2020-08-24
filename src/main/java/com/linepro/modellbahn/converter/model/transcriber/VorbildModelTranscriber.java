@@ -2,9 +2,6 @@ package com.linepro.modellbahn.converter.model.transcriber;
 
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
-import org.springframework.util.StringUtils;
-
-import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.entity.Vorbild;
 import com.linepro.modellbahn.model.VorbildModel;
 import com.linepro.modellbahn.repository.AchsfolgRepository;
@@ -17,7 +14,7 @@ import com.linepro.modellbahn.repository.lookup.UnterKategorieLookup;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class VorbildModelTranscriber implements Transcriber<VorbildModel, Vorbild> {
+public class VorbildModelTranscriber extends NamedModelTranscriber<VorbildModel, Vorbild> {
 
         private final GattungRepository gattungRepository;
 
@@ -32,9 +29,8 @@ public class VorbildModelTranscriber implements Transcriber<VorbildModel, Vorbil
         private final ItemLookup lookup;
         
         public Vorbild apply(VorbildModel source, Vorbild destination) {
-            if (isAvailable(source) && isAvailable(destination) && StringUtils.hasText(source.getGattung())) {
-                gattungRepository.findByName(source.getGattung()).ifPresent(g -> destination.setGattung(g));
-
+            if (isAvailable(source) && isAvailable(destination)) {
+                destination.setGattung(lookup.find(source.getGattung(), gattungRepository));
                 destination.setUnterKategorie(unterKategorieLookup.find(source.getKategorie(), source.getUnterKategorie()));
                 destination.setBahnverwaltung(lookup.find(source.getBahnverwaltung(), bahnverwaltungRepository));
                 destination.setHersteller(source.getHersteller());
@@ -75,6 +71,7 @@ public class VorbildModelTranscriber implements Transcriber<VorbildModel, Vorbil
                 destination.setMittelwagen(source.getMittelwagen());
                 destination.setDrehgestellBauart(source.getDrehgestellBauart());
             }
-            return destination;
+
+            return super.apply(source, destination);
         }
 }

@@ -12,11 +12,11 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.linepro.modellbahn.entity.NamedItem;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -28,7 +28,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 @MappedSuperclass
 public class NamedItemImpl extends ItemImpl implements NamedItem, Comparable<NamedItem> {
 
@@ -76,5 +75,14 @@ public class NamedItemImpl extends ItemImpl implements NamedItem, Comparable<Nam
       return new EqualsBuilder()
           .append(getName(), other.getName())
           .isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("name", name)
+            .append("bezeichnung", bezeichnung)
+            .toString();
     }
 }

@@ -34,8 +34,8 @@ public enum LeistungsUbertragung implements DescribedEnum {
     private final String tooltip;
 
     LeistungsUbertragung(String description) {
-        this.description = "${com.linepro.modellbahn.leistungsUbertragung." + description + ".bezeichnung}";
-        this.tooltip = "${com.linepro.modellbahn.leistungsUbertragung." + description + ".tooltip}";
+        this.description = "com.linepro.modellbahn.leistungsUbertragung." + description + ".bezeichnung";
+        this.tooltip = "com.linepro.modellbahn.leistungsUbertragung." + description + ".tooltip";
     }
 
     @Override

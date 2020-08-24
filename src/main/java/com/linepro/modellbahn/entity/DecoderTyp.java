@@ -38,6 +38,7 @@ import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.model.enums.Stecker;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.PathConverter;
+import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.validation.Fahrstufe;
 import com.linepro.modellbahn.validation.Unique;
 
@@ -45,7 +46,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -152,13 +152,12 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.decodertyp.notunique}")
 public class DecoderTyp extends ItemImpl implements Comparable<DecoderTyp> {
 
     /** The hersteller. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class, optional = false)
     @JoinColumn(name = DBNames.HERSTELLER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_TYP + "_fk2"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.hersteller.notnull}")
     private Hersteller hersteller;
@@ -177,7 +176,7 @@ public class DecoderTyp extends ItemImpl implements Comparable<DecoderTyp> {
     private BigDecimal iMax;
 
     /** The protokoll. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Protokoll.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Protokoll.class, optional = false)
     @JoinColumn(name = DBNames.PROTOKOLL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_TYP + "_fk3"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.protokoll.notnull}")
     private Protokoll protokoll;
@@ -293,5 +292,25 @@ public class DecoderTyp extends ItemImpl implements Comparable<DecoderTyp> {
           .append(getHersteller(), other.getHersteller())
           .append(getBestellNr(), other.getBestellNr())
           .isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("hersteller", hersteller)
+            .append("bestellNr", bestellNr)
+            .append("bezeichnung",  bezeichnung)
+            .append("iMax",  iMax)
+            .append("protokoll",  protokoll)
+            .append("fahrstufe",  fahrstufe)
+            .append("sound",  sound)
+            .append("konfiguration",  konfiguration)
+            .append("stecker",  stecker)
+            .append("anleitungen",  anleitungen)
+            .append("adressen", adressen)
+            .append("cvs", cvs)
+            .append("funktionen", funktionen)
+            .toString();
     }
 }

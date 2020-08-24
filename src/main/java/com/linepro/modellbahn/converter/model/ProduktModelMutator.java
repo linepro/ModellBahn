@@ -19,10 +19,10 @@ import com.linepro.modellbahn.repository.MotorTypRepository;
 import com.linepro.modellbahn.repository.SondermodellRepository;
 import com.linepro.modellbahn.repository.SpurweiteRepository;
 import com.linepro.modellbahn.repository.SteuerungRepository;
+import com.linepro.modellbahn.repository.VorbildRepository;
 import com.linepro.modellbahn.repository.lookup.DecoderTypLookup;
 import com.linepro.modellbahn.repository.lookup.ItemLookup;
 import com.linepro.modellbahn.repository.lookup.UnterKategorieLookup;
-import com.linepro.modellbahn.repository.lookup.VorbildLookup;
 
 public class ProduktModelMutator extends MutatorImpl<ProduktModel, Produkt> {
 
@@ -30,11 +30,11 @@ public class ProduktModelMutator extends MutatorImpl<ProduktModel, Produkt> {
     public ProduktModelMutator(HerstellerRepository herstellerRepository, UnterKategorieLookup unterKategorieLookup,
                     MassstabRepository massstabRepository, SpurweiteRepository spurweiteRepository, EpochRepository epochRepository,
                     BahnverwaltungRepository bahnverwaltungRepository, GattungRepository gattungRepository, AchsfolgRepository achsfolgRepository,
-                    VorbildLookup vorbildLookup, SondermodellRepository sondermodellRepository, AufbauRepository aufbauRepository,
+                    VorbildRepository vorbildRepository, SondermodellRepository sondermodellRepository, AufbauRepository aufbauRepository,
                     LichtRepository lichtRepository, KupplungRepository kupplungRepository, SteuerungRepository steuerungRepository,
                     DecoderTypLookup decoderTypLookup, MotorTypRepository motorTypRepository, ItemLookup lookup) {
         super(() -> new Produkt(), new ProduktModelTranscriber(herstellerRepository, unterKategorieLookup, massstabRepository, spurweiteRepository,
-                        epochRepository, bahnverwaltungRepository, gattungRepository, achsfolgRepository, vorbildLookup, sondermodellRepository,
+                        epochRepository, bahnverwaltungRepository, gattungRepository, achsfolgRepository, vorbildRepository, sondermodellRepository,
                         aufbauRepository, lichtRepository, kupplungRepository, steuerungRepository, decoderTypLookup, motorTypRepository, lookup));
     }
 }

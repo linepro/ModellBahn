@@ -35,13 +35,13 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.PathConverter;
+import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.validation.Unique;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -335,12 +335,11 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.produkt.notunique}")
 public class Produkt extends ItemImpl implements Comparable<Produkt> {
 
     /** The hersteller. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class, optional = false)
     @JoinColumn(name = DBNames.HERSTELLER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk16"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.hersteller.notnull}")
     private Hersteller hersteller;
@@ -354,7 +353,7 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
     private String bezeichnung;
 
     /** The unter kategorie. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = UnterKategorie.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = UnterKategorie.class, optional = false)
     @JoinColumn(name = DBNames.UNTER_KATEGORIE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk7"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.unterKategorie.notnull}")
     private UnterKategorie unterKategorie;
@@ -366,67 +365,67 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
     private Massstab massstab;
 
     /** The spurweite. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Spurweite.class, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Spurweite.class)
     @JoinColumn(name = DBNames.SPURWEITE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk6"))
     private Spurweite spurweite;
 
     /** The bahnverwaltung. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Bahnverwaltung.class, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Bahnverwaltung.class)
     @JoinColumn(name = DBNames.BAHNVERWALTUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk3"))
     private Bahnverwaltung bahnverwaltung;
 
     /** The gattung. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gattung.class, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gattung.class)
     @JoinColumn(name = DBNames.GATTUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk2"))
     private Gattung gattung;
 
     /** The epoch. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Epoch.class, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Epoch.class)
     @JoinColumn(name = DBNames.EPOCH_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk1"))
     private Epoch epoch;
 
     /** The achsfolg. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class)
     @JoinColumn(name = DBNames.ACHSFOLG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk4"))
     private Achsfolg achsfolg;
 
     /** The Sondermodell. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Sondermodell.class, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Sondermodell.class)
     @JoinColumn(name = DBNames.SONDERMODELL_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk8"))
     private Sondermodell sondermodell;
 
     /** The aufbau. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Aufbau.class, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Aufbau.class)
     @JoinColumn(name = DBNames.AUFBAU_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk9"))
     private Aufbau aufbau;
 
     /** The licht. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Licht.class, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Licht.class)
     @JoinColumn(name = DBNames.LICHT_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk10"))
     private Licht licht;
 
     /** The kupplung. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kupplung.class, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kupplung.class)
     @JoinColumn(name = DBNames.KUPPLUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk11"))
     private Kupplung kupplung;
 
     /** The vorbild. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Vorbild.class, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Vorbild.class)
     @JoinColumn(name = DBNames.VORBILD_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk12"))
     private Vorbild vorbild;
 
     /** The steuerung. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Steuerung.class)
     @JoinColumn(name = DBNames.STEUERUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk13"))
     private Steuerung steuerung;
 
     /** The decoder typ. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
     @JoinColumn(name = DBNames.DECODER_TYP_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk14"))
     private DecoderTyp decoderTyp;
 
     /** The motor typ. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = MotorTyp.class, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = MotorTyp.class)
     @JoinColumn(name = DBNames.MOTOR_TYP_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk15"))
     private MotorTyp motorTyp;
 
@@ -514,5 +513,37 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
           .append(getHersteller(), other.getHersteller())
           .append(getBestellNr(), other.getBestellNr())
           .isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("hersteller", hersteller)
+            .append("bestellNr", bestellNr)
+            .append("bezeichnung", bezeichnung)
+            .append("unterKategorie", unterKategorie)
+            .append("massstab", massstab)
+            .append("spurweite", spurweite)
+            .append("bahnverwaltung", bahnverwaltung)
+            .append("gattung", gattung)
+            .append("epoch", epoch)
+            .append("achsfolg", achsfolg)
+            .append("sondermodell", sondermodell)
+            .append("aufbau", aufbau)
+            .append("licht", licht)
+            .append("kupplung", kupplung)
+            .append("vorbild", vorbild)
+            .append("steuerung", steuerung)
+            .append("decoderTyp", decoderTyp)
+            .append("motorTyp", motorTyp)
+            .append("anmerkung", anmerkung)
+            .append("betreibsnummer", betreibsnummer)
+            .append("bauzeit", bauzeit)
+            .append("anleitungen", anleitungen)
+            .append("explosionszeichnung", explosionszeichnung)
+            .append("lange", lange)
+            .append("abbildung", abbildung)
+            .toString();
     }
 }

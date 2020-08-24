@@ -32,8 +32,8 @@ public enum Status implements DescribedEnum {
     private final String tooltip;
 
     Status(String description) {
-        this.description = "${com.linepro.modellbahn.status." + description + ".bezeichnung}";
-        this.tooltip = "${com.linepro.modellbahn.status." + description + ".tooltip}";
+        this.description = "{com.linepro.modellbahn.status." + description + ".bezeichnung}";
+        this.tooltip = "{com.linepro.modellbahn.status." + description + ".tooltip}";
     }
 
     @Override

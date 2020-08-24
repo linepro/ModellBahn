@@ -22,11 +22,11 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -90,17 +90,16 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 public class ProduktTeil extends ItemImpl implements Comparable<ProduktTeil> {
     
     /** The produkt. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class, optional = false)
     @JoinColumn(name = DBNames.PRODUKT_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT_TEIL + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.produkt.notnull}")
     private Produkt produkt;
 
     /** The component produkt */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class, optional = false)
     @JoinColumn(name = DBNames.TEIL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT_TEIL + "_fk2"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.teil.notnull}")
     private Produkt teil;
@@ -141,5 +140,15 @@ public class ProduktTeil extends ItemImpl implements Comparable<ProduktTeil> {
           .append(getProdukt(), other.getProdukt())
           .append(getTeil(), other.getTeil())
           .isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("produkt", produkt)
+            .append("teil", teil)
+            .append("anzahl", anzahl)
+            .toString();
     }
 }

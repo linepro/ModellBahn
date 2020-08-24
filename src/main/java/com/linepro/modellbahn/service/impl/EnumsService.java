@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.linepro.modellbahn.i18n.MessageTranslator;
 import com.linepro.modellbahn.model.DescribedEnumModel;
@@ -31,8 +32,16 @@ public class EnumsService {
     protected DescribedEnumModel getModel(DescribedEnum e) {
         return DescribedEnumModel.builder()
                         .name(e.getName())
-                        .bezeichnung(messageTranslator.getMessage(e.getBezeichnung()))
-                        .tooltip(messageTranslator.getMessage(e.getTooltip()))
+                        .bezeichnung(translate(e.getBezeichnung()))
+                        .tooltip(translate(e.getTooltip()))
                         .build();
+    }
+
+    private String translate(String e) {
+        if (StringUtils.hasText(e)) {
+            return messageTranslator.getMessage(e);
+        }
+
+        return e;
     }
 }

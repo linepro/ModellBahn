@@ -20,12 +20,12 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.validation.CVValue;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -68,17 +68,16 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 public class DecoderCv extends ItemImpl implements Comparable<DecoderCv>{
 
     /** The decoder. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class, optional = false)
     @JoinColumn(name = DBNames.DECODER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name =  DBNames.DECODER_CV + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoder.notnull}")
     private Decoder decoder;
 
     /** The cv. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTypCv.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTypCv.class, optional = false)
     @JoinColumn(name = DBNames.CV_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_CV + "_fk2"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.cv.notnull}")
     private DecoderTypCv cv;
@@ -119,5 +118,15 @@ public class DecoderCv extends ItemImpl implements Comparable<DecoderCv>{
           .append(getDecoder(), other.getDecoder())
           .append(getCv(), other.getCv())
           .isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("decoder", decoder)
+            .append("cv", cv)
+            .append("wert",  wert)
+            .toString();
     }
 }

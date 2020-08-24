@@ -44,7 +44,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.GATTUNG, ApiNames.BEZEICHNUNG, ApiNames.UNTER_KATEGORIE,
+@JsonPropertyOrder({ApiNames.NAMEN, ApiNames.GATTUNG, ApiNames.BEZEICHNUNG, ApiNames.UNTER_KATEGORIE,
         ApiNames.BAHNVERWALTUNG, ApiNames.HERSTELLER, ApiNames.BAUZEIT, ApiNames.ANZAHL, ApiNames.BETREIBSNUMMER,
         ApiNames.ANTRIEB, ApiNames.ACHSFOLG, ApiNames.ANFAHRZUGKRAFT, ApiNames.LEISTUNG, ApiNames.DIENSTGEWICHT,
         ApiNames.GESCHWINDIGKEIT, ApiNames.LANGE, ApiNames.AUSSERDIENST, ApiNames.DMTREIBRAD, ApiNames.DMLAUFRADVORN,
@@ -56,9 +56,13 @@ import lombok.ToString;
         ApiNames.ABBILDUNG, ApiNames.DELETED})
 @Relation(collectionRelation = ApiNames.VORBILD, itemRelation = ApiNames.VORBILD)
 @Schema(name = ApiNames.VORBILD, description = "A real world prototype.")
-public class VorbildModel extends RepresentationModel<VorbildModel> implements ItemModel, Comparable<VorbildModel> {
+public class VorbildModel extends RepresentationModel<VorbildModel> implements NamedItemModel, Comparable<VorbildModel> {
 
     private static final long serialVersionUID = 4657238952018125793L;
+
+    @JsonProperty(ApiNames.NAMEN)
+    @Schema(description = "Unique name, use gattung, bauhreihe or betreibsnummer as appropriate", example = "BR 89.0", required = true)
+    private String name;
 
     @JsonProperty(ApiNames.GATTUNG)
     @Schema(description = "Rolling stock class", example = "BR 89.0", required = true)

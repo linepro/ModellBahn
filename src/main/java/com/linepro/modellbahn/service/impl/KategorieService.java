@@ -14,7 +14,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -85,7 +85,7 @@ public class KategorieService extends NamedItemServiceImpl<KategorieModel, Kateg
 
     @Transactional(readOnly = true)
     public Page<KategorieModel> searchUnterKategorie(Optional<List<String>> kategorieen, Optional<Integer> pageNumber, Optional<Integer> pageSize) {
-        PageRequest pageRequest = PageRequest.of(pageNumber.orElse(FIRST_PAGE), pageSize.orElse(DEFAULT_PAGE_SIZE));
+        Pageable pageRequest = getPageRequest(pageNumber, pageSize);
 
         final Page<Kategorie> data = repository.findAll(new KategorieenCriteria(kategorieen), pageRequest);
 

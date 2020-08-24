@@ -20,11 +20,11 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -65,17 +65,16 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 public class DecoderFunktion extends ItemImpl implements Comparable<DecoderFunktion> {
 
     /** The decoder. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class, optional = false)
     @JoinColumn(name = DBNames.DECODER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name =  DBNames.DECODER_FUNKTION + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoder.notnull}")
     private Decoder decoder;
     
     /** The funktion. */
-    @ManyToOne(fetch=FetchType.LAZY, targetEntity=DecoderTypFunktion.class)
+    @ManyToOne(fetch=FetchType.LAZY, targetEntity=DecoderTypFunktion.class, optional = false)
     @JoinColumn(name = DBNames.FUNKTION_ID, nullable = false, referencedColumnName=DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER_FUNKTION + "_fk2"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.funktion.notnull}")
     private DecoderTypFunktion funktion;
@@ -116,5 +115,15 @@ public class DecoderFunktion extends ItemImpl implements Comparable<DecoderFunkt
           .append(getDecoder(), other.getDecoder())
           .append(getFunktion(), other.getFunktion())
           .isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("decoder", decoder)
+            .append("funktion", funktion)
+            .append("bezeichnung",  bezeichnung)
+            .toString();
     }
 }

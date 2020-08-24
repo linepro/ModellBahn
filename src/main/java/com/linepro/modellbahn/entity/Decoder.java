@@ -31,13 +31,13 @@ import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.model.enums.DecoderStatus;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.DecoderId;
+import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.validation.Fahrstufe;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -183,7 +183,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
 public class Decoder extends ItemImpl implements Comparable<Decoder> {
 
     @DecoderId
@@ -196,13 +195,13 @@ public class Decoder extends ItemImpl implements Comparable<Decoder> {
     private String bezeichnung;
 
     /** The typ. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class, optional = false)
     @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoderTyp.notnull}")
     private DecoderTyp decoderTyp;
 
     /** The protokoll. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Protokoll.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Protokoll.class, optional = false)
     @JoinColumn(name = DBNames.PROTOKOLL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER + "_fk2"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.protokoll.notnull}")
     private Protokoll protokoll;
@@ -297,5 +296,21 @@ public class Decoder extends ItemImpl implements Comparable<Decoder> {
       return new EqualsBuilder()
           .append(getDecoderId(), other.getDecoderId())
           .isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("decoderId", decoderId)
+            .append("bezeichnung",  bezeichnung)
+            .append("decoderTyp",  decoderTyp)
+            .append("protokoll",  protokoll)
+            .append("fahrstufe",  fahrstufe)
+            .append("status",  status)
+            .append("adressen", adressen)
+            .append("cvs", cvs)
+            .append("funktionen", funktionen)
+            .toString();
     }
 }

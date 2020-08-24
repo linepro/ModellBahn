@@ -2,10 +2,12 @@ package com.linepro.modellbahn.hateoas;
 
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.controller.impl.ApiNames.KATEGORIE;
+import static com.linepro.modellbahn.controller.impl.ApiNames.NAMEN;
 import static com.linepro.modellbahn.controller.impl.ApiNames.UNTER_KATEGORIE;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_UNTER_KATEGORIE;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_KATEGORIE;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_UNTER_KATEGORIE;
+import static com.linepro.modellbahn.controller.impl.ApiRels.ADD;
 import static com.linepro.modellbahn.controller.impl.ApiRels.DELETE;
 import static com.linepro.modellbahn.controller.impl.ApiRels.PARENT;
 import static com.linepro.modellbahn.controller.impl.ApiRels.UPDATE;
@@ -30,6 +32,7 @@ import com.linepro.modellbahn.model.UnterKategorieModel;
 public class UnterKategorieModelProcessor extends ModelProcessorImpl<UnterKategorieModel> implements RepresentationModelProcessor<UnterKategorieModel> {
 
     private static final FieldsExtractor EXTRACTOR = (m) -> MapUtils.putAll(new HashMap<String,Object>(), new String[][] { 
+        { NAMEN, ((UnterKategorieModel) m).getKategorie() }, 
         { KATEGORIE, ((UnterKategorieModel) m).getKategorie() }, 
         { UNTER_KATEGORIE, ((UnterKategorieModel) m).getName() } 
         });
@@ -37,6 +40,7 @@ public class UnterKategorieModelProcessor extends ModelProcessorImpl<UnterKatego
     @Autowired
     public UnterKategorieModelProcessor() {
         super(
+            new LinkTemplateImpl(ADD, GET_KATEGORIE, EXTRACTOR),
             new LinkTemplateImpl(UPDATE, UPDATE_UNTER_KATEGORIE, EXTRACTOR),
             new LinkTemplateImpl(DELETE, DELETE_UNTER_KATEGORIE, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted())),
             new LinkTemplateImpl(PARENT, GET_KATEGORIE, EXTRACTOR));

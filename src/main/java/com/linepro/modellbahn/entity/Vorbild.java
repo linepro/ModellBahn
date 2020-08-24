@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.time.LocalDate;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -18,27 +19,22 @@ import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
 import javax.persistence.NamedSubgraph;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
 
-import org.apache.commons.lang3.builder.CompareToBuilder;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
-import com.linepro.modellbahn.entity.impl.ItemImpl;
+import com.linepro.modellbahn.entity.impl.NamedItemImpl;
 import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.PathConverter;
+import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.validation.Unique;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -50,48 +46,27 @@ import lombok.experimental.SuperBuilder;
 //@formatter:off
 @Entity(name = DBNames.VORBILD)
 @Table(name = DBNames.VORBILD,
-    indexes = { 
-        @Index(name = DBNames.VORBILD + "_IX1", columnList = DBNames.UNTER_KATEGORIE_ID),
-        @Index(name = DBNames.VORBILD + "_IX2", columnList = DBNames.ANTRIEB_ID),
-        @Index(name = DBNames.VORBILD + "_IX3", columnList = DBNames.ACHSFOLG_ID)
+    indexes = {
+        @Index(name = DBNames.VORBILD + "_IX1", columnList = DBNames.GATTUNG_ID),
+        @Index(name = DBNames.VORBILD + "_IX2", columnList = DBNames.UNTER_KATEGORIE_ID),
+        @Index(name = DBNames.VORBILD + "_IX3", columnList = DBNames.BAHNVERWALTUNG_ID),
+        @Index(name = DBNames.VORBILD + "_IX4", columnList = DBNames.ANTRIEB_ID),
+        @Index(name = DBNames.VORBILD + "_IX5", columnList = DBNames.ACHSFOLG_ID)
     }, uniqueConstraints = {
-        @UniqueConstraint(name = DBNames.VORBILD + "_UC1", columnNames = { DBNames.GATTUNG_ID })
+        @UniqueConstraint(name = DBNames.VORBILD + "_UC1", columnNames = { DBNames.NAME })
     })
 @NamedEntityGraphs({
-    @NamedEntityGraph(name="vorbild.lookup",
-        attributeNodes = {
-            @NamedAttributeNode(value = "gattung", subgraph = "vorbild.gattung"),
-            @NamedAttributeNode(value = "bezeichnung"),
-            @NamedAttributeNode(value = "unterKategorie", subgraph = "vorbild.unterKategorie"),
-            @NamedAttributeNode(value = "bahnverwaltung", subgraph = "vorbild.bahnverwaltung"),
-            @NamedAttributeNode(value = "betreibsNummer"),
-            @NamedAttributeNode(value = "abbildung")
-        },
-        subgraphs = {
-            @NamedSubgraph(name = "vorbild.gattung",
-                attributeNodes = {
-                    @NamedAttributeNode(value = "name")
-                }),
-            @NamedSubgraph(name = "vorbild.unterKategorie",
-                attributeNodes = {
-                    @NamedAttributeNode(value = "kategorie", subgraph = "vorbild.kategorie"),
-                    @NamedAttributeNode(value = "name")
-                }),
-            @NamedSubgraph(name = "vorbild.kategorie",
-                attributeNodes = {
-                    @NamedAttributeNode(value = "name")
-                }),
-            }),
     @NamedEntityGraph(name="vorbild.summary",
         attributeNodes = {
-            @NamedAttributeNode(value = "gattung", subgraph = "vorbild.gattung"),
+            @NamedAttributeNode(value = "name"),
             @NamedAttributeNode(value = "bezeichnung"),
+            @NamedAttributeNode(value = "gattung", subgraph = "vorbild.gattung"),
             @NamedAttributeNode(value = "unterKategorie", subgraph = "vorbild.unterKategorie"),
             @NamedAttributeNode(value = "bahnverwaltung", subgraph = "vorbild.bahnverwaltung"),
-            @NamedAttributeNode(value = "bauzeit"),
-            @NamedAttributeNode(value = "betreibsNummer"),
             @NamedAttributeNode(value = "antrieb", subgraph = "vorbild.antrieb"),
             @NamedAttributeNode(value = "achsfolg", subgraph = "vorbild.achsfolg"),
+            @NamedAttributeNode(value = "bauzeit"),
+            @NamedAttributeNode(value = "betreibsNummer"),
             @NamedAttributeNode(value = "ausserdienst"),
             @NamedAttributeNode(value = "abbildung"),
             @NamedAttributeNode(value = "deleted")
@@ -165,29 +140,25 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
+@Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.vorbild.notunique}")
-public class Vorbild extends ItemImpl implements Comparable<Vorbild> {
+public class Vorbild extends NamedItemImpl {
 
     /** The gattung. */
-    @OneToOne(fetch = FetchType.EAGER, targetEntity = Gattung.class)
-    @JoinColumn(name = DBNames.GATTUNG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk1"))
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gattung.class)
+    @JoinColumn(name = DBNames.GATTUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.gattung.notnull}")
     private Gattung gattung;
-    
-    /** The bezeichnung. */
-    @Column(name = DBNames.BEZEICHNUNG, length = 100)
-    private String bezeichnung;
 
     /** The unter kategorie. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = UnterKategorie.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = UnterKategorie.class, optional = false)
     @JoinColumn(name = DBNames.UNTER_KATEGORIE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk2"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.unterKategorie.notnull}")
     private UnterKategorie unterKategorie;
 
     /** The bahnverwaltung */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Bahnverwaltung.class, optional = true)
-    @JoinColumn(name = DBNames.BAHNVERWALTUNG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk3"))
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Bahnverwaltung.class)
+    @JoinColumn(name = DBNames.BAHNVERWALTUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk3"))
     private Bahnverwaltung bahnverwaltung;
     
     /** The hersteller. */
@@ -208,13 +179,13 @@ public class Vorbild extends ItemImpl implements Comparable<Vorbild> {
     @Column(name = DBNames.BETREIBSNUMMER, length = 100)
     private String betreibsNummer;
 
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Antrieb.class, optional = true)
-    @JoinColumn(name = DBNames.ANTRIEB_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk4"))
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Antrieb.class)
+    @JoinColumn(name = DBNames.ANTRIEB_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk4"))
     private Antrieb antrieb;
 
     /** The achsfolg. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class, optional = true)
-    @JoinColumn(name = DBNames.ACHSFOLG_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk5"))
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Achsfolg.class)
+    @JoinColumn(name = DBNames.ACHSFOLG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk5"))
     private Achsfolg achsfolg;
 
     /** The anfahrzugkraft. */
@@ -375,33 +346,50 @@ public class Vorbild extends ItemImpl implements Comparable<Vorbild> {
     private Path abbildung;
 
     @Override
-    public int compareTo(Vorbild other) {
-        return new CompareToBuilder()
-            .append(getGattung().getName(), other.getGattung().getName())
-            .toComparison();
-    }
-
-    @Override
-    public int hashCode() {
-      return new HashCodeBuilder()
-          .append(getGattung().hashCode())
-          .hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-      if (this == obj) {
-        return true;
-      }
-
-      if (!(obj instanceof Vorbild)) {
-        return false;
-      }
-
-      Vorbild other = (Vorbild) obj;
-
-      return new EqualsBuilder()
-          .append(getGattung(), other.getGattung())
-          .isEquals();
-    }
+    public String toString() {
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("gattung", gattung)
+            .append("unterKategorie", unterKategorie)
+            .append("bahnverwaltung", bahnverwaltung)
+            .append("antrieb", antrieb)
+            .append("achsfolg", achsfolg)
+            .append("hersteller", hersteller)
+            .append("bauzeit", bauzeit)
+            .append("anzahl", anzahl)
+            .append("betreibsNummer", betreibsNummer)
+            .append("anfahrzugkraft", anfahrzugkraft)
+            .append("leistung", leistung)
+            .append("dienstgewicht", dienstgewicht)
+            .append("geschwindigkeit", geschwindigkeit)
+            .append("lange", lange)
+            .append("ausserdienst", ausserdienst)
+            .append("dmTreibrad", dmTreibrad)
+            .append("dmLaufradVorn", dmLaufradVorn)
+            .append("dmLaufradHinten", dmLaufradHinten)
+            .append("zylinder", zylinder)
+            .append("dmZylinder", dmZylinder)
+            .append("kolbenhub", kolbenhub)
+            .append("kesseluberdruck", kesseluberdruck)
+            .append("rostflache", rostflache)
+            .append("uberhitzerflache", uberhitzerflache)
+            .append("wasservorrat", wasservorrat)
+            .append("verdampfung", verdampfung)
+            .append("fahrmotoren", fahrmotoren)
+            .append("motorbauart", motorbauart)
+            .append("leistungsUbertragung", leistungsUbertragung)
+            .append("reichweite", reichweite)
+            .append("kapazitat", kapazitat)
+            .append("klasse", klasse)
+            .append("sitzplatzeKL1", sitzplatzeKL1)
+            .append("sitzplatzeKL2", sitzplatzeKL2)
+            .append("sitzplatzeKL3", sitzplatzeKL3)
+            .append("sitzplatzeKL4", sitzplatzeKL4)
+            .append("aufbau", aufbau)
+            .append("triebkopf", triebkopf)
+            .append("mittelwagen", mittelwagen)
+            .append("drehgestellBauart", drehgestellBauart)
+            .append("abbildung", abbildung)
+            .toString();
+}
 }
