@@ -176,7 +176,7 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
     private List<AnderungModel> anderungen;
 
     @JsonProperty(ApiNames.ABBILDUNG)
-    @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/artikel/00001/abbildung.jpg", accessMode = AccessMode.READ_ONLY)
     private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)

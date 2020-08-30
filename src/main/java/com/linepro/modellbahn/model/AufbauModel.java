@@ -53,7 +53,7 @@ public class AufbauModel extends RepresentationModel<AufbauModel> implements Nam
     private String bezeichnung;
 
     @JsonProperty(ApiNames.ABBILDUNG)
-    @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/aufbau/LK/abbildung.jpg", accessMode = AccessMode.READ_ONLY)
     private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)

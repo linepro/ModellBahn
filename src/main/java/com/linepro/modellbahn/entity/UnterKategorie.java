@@ -65,7 +65,7 @@ import lombok.experimental.SuperBuilder;
 public class UnterKategorie extends NamedItemImpl {
 
     /** The kategorie. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Kategorie.class, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Kategorie.class, optional = false)
     @JoinColumn(name = DBNames.KATEGORIE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.UNTER_KATEGORIE + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.kategorie.notnull}")
     private Kategorie kategorie;

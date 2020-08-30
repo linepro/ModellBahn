@@ -99,7 +99,7 @@ public class DecoderModel extends RepresentationModel<DecoderModel> implements I
     private DecoderStatus status;
 
     @JsonProperty(ApiNames.ANLEITUNGEN)
-    @Schema(description = "Instructions URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/betrieb_3000.pdf", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Instructions URL", example = "http://localhost/Modelbahn/decoderTyp/ESU/62400/anleitungen.pdf", accessMode = AccessMode.READ_ONLY)
     private String anleitungen;
 
     @JsonProperty(ApiNames.ADRESSEN)

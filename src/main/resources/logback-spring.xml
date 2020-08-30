@@ -80,6 +80,10 @@
 		<appender-ref ref="console"/>
         <appender-ref ref="logfile"/>
 	</logger>
+	<logger additivity="false" level="INFO" name="org.hibernate.type.descriptor.sql">
+		<appender-ref ref="console"/>
+        <appender-ref ref="logfile"/>
+	</logger>
 	<logger additivity="false" level="INFO" name="org.springframework">
 		<appender-ref ref="console"/>
         <appender-ref ref="logfile"/>

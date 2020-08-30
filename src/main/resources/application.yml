@@ -53,7 +53,7 @@ spring:
       repeatable-sql-migration-prefix: R
       sql-migration-prefix: V
       sql-migration-separator: __
-      sql-migration-suffixes: .sql   
+      sql-migration-suffixes: .sql
       validate-on-migrate: true
    h2:
       console:
@@ -68,7 +68,7 @@ spring:
       open-in-view: false
       properties:
          hibernate:
-            format_sql: true
+            format_sql: false
             generate_statistics: false
             temp:
                use_jdbc_metadata_defaults: false

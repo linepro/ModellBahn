@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "db16553a-ae13-448c-9536-5712faa59a72",
+		"_postman_id": "0c35f344-9cbf-440f-8361-8798066090e3",
 		"name": "ModellBahn",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,7 +14,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0d9df5a8-708f-435a-953d-a6ce20727912",
+								"id": "fae1469f-9af1-48c1-8833-8f34cdbf2f3b",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();"
@@ -50,7 +50,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4468fc9d-8553-4193-8c4a-5ca61b55e418",
+								"id": "4e80b3dc-797b-4db8-9372-25ce1e9936b1",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();"
@@ -86,7 +86,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d1e8de46-0351-4292-8848-5f1a0a07f133",
+								"id": "c1ffa2db-f684-447d-a598-d1ccb6436eed",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();"
@@ -122,7 +122,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ff2bbeea-3724-4119-8008-7664b3ff8273",
+								"id": "8721fedf-b39d-47e7-b52c-bd681fedb7ef",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();"
@@ -153,12 +153,12 @@
 					"response": []
 				},
 				{
-					"name": "Leistungsubertragung",
+					"name": "leistungsubertragung",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "7ca0a43c-2a37-40fe-bf01-efdf8dd6b612",
+								"id": "cbf1734d-e271-4ea4-9328-b8b793e13283",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();"
@@ -194,7 +194,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dc30ac06-ee27-4474-b96e-79eca6394cfc",
+								"id": "c0426678-d841-4b1d-b593-98d2940a852f",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();"
@@ -230,7 +230,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ff466d71-1925-46b3-9b4a-7737d5eb9b68",
+								"id": "d92f3683-2856-44e1-93b1-4dc6bca6fcc3",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();"
@@ -272,7 +272,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ee2ab6a7-09e7-4645-a22d-cdcdaf464b1f",
+								"id": "f7551ca9-cf76-4a67-82f8-bfb5d39ed39c",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/achsfolg\");\r",
@@ -329,10 +329,10 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "9dd8d119-10fa-4fcb-b2e4-5d925f3ea240",
+								"id": "868a3490-30c5-41e7-ae9f-1250d5e0b645",
 								"exec": [
-									"pm.collectionVariables.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -340,7 +340,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f0b1a5a3-a3c8-48e8-967d-a0544814048d",
+								"id": "3e86a77a-736c-4cc6-96c7-63e6d13de297",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -403,9 +403,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "da06fd6d-637d-4b34-8801-17120a238c89",
+								"id": "4737e6c0-e443-4d66-971b-9e6deb850f3c",
 								"exec": [
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -413,7 +413,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "93c02acf-4ed2-4fa6-a597-828822c4f5d6",
+								"id": "7a1b6b94-912a-4d0c-b652-28c3ba0ad94f",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -479,7 +479,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c14e6599-cb4f-4299-a903-08c27d8ecfbc",
+								"id": "77d90f92-41c7-4771-aa78-13520f0a02cf",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -531,7 +531,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4f1424d9-f3fe-4de8-81b1-399f07fd948b",
+								"id": "124eb6e0-3d50-42e0-ad7b-25ba44a1616a",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -573,7 +573,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7914cebf-af3c-424a-81d1-f8c39e672f1b",
+								"id": "ccc575e5-bfdc-40cd-99bd-7cdd39abe12b",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/antrieb\");\r",
@@ -626,10 +626,10 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "ab11dd28-a4f1-422e-a68c-53cf015aedab",
+								"id": "a93a5759-2889-4355-a514-3d8835381b26",
 								"exec": [
-									"pm.collectionVariables.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -637,7 +637,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e7e0e73a-f409-4f6a-8e74-789f12f2dfe5",
+								"id": "dd7da091-5815-41a6-afd3-a23b1713588f",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -701,9 +701,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "e772be63-dd52-4a60-bd6c-e6ccdf221431",
+								"id": "bb1b9300-3888-48c1-87c5-0167da568aa1",
 								"exec": [
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -711,7 +711,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1f3751a2-d153-4f9a-96bf-c1a3f8265251",
+								"id": "a6b298b1-019b-4d2f-9832-4a67c1f3c7d0",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -776,7 +776,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0e7f2810-f92b-4416-904d-b8e49b78062a",
+								"id": "a15f424b-1179-4677-b5bc-2d718cca2bf4",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -823,7 +823,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cdbd4389-9b0a-4e47-a24c-876a8dbf5fd9",
+								"id": "1d188622-3b55-48a8-a996-29ac12f951f8",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -865,7 +865,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2bda3fd1-06a4-45cc-a349-c6fa575e55d5",
+								"id": "9cd9b9c8-8214-44f6-aa4e-94352a77ae23",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/aufbau\");\r",
@@ -918,10 +918,10 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "c2f4d842-bcb1-46b7-8617-099d1438b2c2",
+								"id": "75f8a2b0-ff8d-4832-bf48-eeb4192f65c8",
 								"exec": [
-									"pm.collectionVariables.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -929,7 +929,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e91842bf-fca0-4b19-809c-22cd5bf17e67",
+								"id": "15a7f126-2f3d-4084-a029-708a655e5ccb",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -993,7 +993,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3a21aca5-a00d-46ff-8f90-2d1cf5cd9d19",
+								"id": "2d91b029-ace1-40cf-b351-df13066a48d2",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -1057,9 +1057,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "5d1ec165-3416-4e7d-a5e7-691594ca26e6",
+								"id": "1b603365-b859-4ed3-b658-0fdb612075c9",
 								"exec": [
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -1067,7 +1067,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7b61ad17-f4aa-4f11-a299-60ccc6a42017",
+								"id": "202569e9-3ed8-4f75-8878-3f9491b59c3a",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -1134,7 +1134,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6b3d24ad-0ae9-4ea1-a039-2b7d51a82c96",
+								"id": "ebb72e29-8fc2-4f9b-bfdc-1134903704d9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -1183,7 +1183,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "346391ad-57cb-4383-815e-7edb4db1305c",
+								"id": "765fc480-73d0-4c17-b6ac-0a0ecdaa94f7",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -1235,7 +1235,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7f989d78-fa40-42eb-87a7-a7dc7dfcf75a",
+								"id": "7a8ecfbc-0070-4786-bd97-dba30a653f0a",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -1277,7 +1277,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d86bc256-0dd8-47f1-a5bc-80588561036a",
+								"id": "e03aeeeb-153f-41d3-948c-64751c1234b7",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/bahnverwaltung\");\r",
@@ -1330,11 +1330,11 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "0154176a-ab27-4042-aa26-36163f0eb23e",
+								"id": "27a85a34-32ef-4d7d-85b5-f4e276136326",
 								"exec": [
-									"pm.collectionVariables.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"land\", pm.variables.replaceIn(\"{{$randomCountryCode}}\"));"
+									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"land\", pm.variables.replaceIn(\"{{$randomCountryCode}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -1342,7 +1342,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bf882fd8-4748-479c-9f59-5fde33df071d",
+								"id": "adef91d4-cae6-437f-8b0a-b882a17a4152",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -1407,10 +1407,10 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "9aeaa867-8e34-4d78-a1ea-bba860ffb378",
+								"id": "592a5f90-adfc-4b65-a8a0-1825b22c7c56",
 								"exec": [
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"land\", pm.variables.replaceIn(\"{{$randomCountryCode}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"land\", pm.variables.replaceIn(\"{{$randomCountryCode}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -1418,7 +1418,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "89a6ddfb-2b57-400c-9dc3-ba7c63c0eb76",
+								"id": "546c27d3-d1e7-49ae-ba26-23447f598952",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -1484,7 +1484,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4dfdb73d-8947-487d-9489-80ca67b0b089",
+								"id": "c8a4bee3-fae3-46ce-b39c-5a5f0440e8a5",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -1532,7 +1532,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "df25c3f7-a473-432c-840e-36012a882ea4",
+								"id": "47331d50-79a9-4c59-91d4-aac79dd8cd4e",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -1574,7 +1574,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "11433caa-f6d1-4197-8e44-5c66c1358f11",
+								"id": "02ffae85-5370-4c0d-baa4-f3949b0084dc",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/epoch\");\r",
@@ -1627,10 +1627,10 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "5fbafb67-edb7-4d24-95a6-1c5014c2272e",
+								"id": "23824055-72d2-46e9-a81a-db2e4a1c2a59",
 								"exec": [
-									"pm.collectionVariables.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -1638,7 +1638,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f2375015-56a5-422e-8878-8e6f0dae0129",
+								"id": "4b8cb4e0-862c-4067-801b-4564610296c9",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -1702,9 +1702,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "60341c29-cb18-4677-9e08-003e45c3ff42",
+								"id": "379b757f-4fa1-45d6-a15a-f1e4753a347f",
 								"exec": [
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -1712,7 +1712,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "78cacc54-ca4f-4efa-b787-2fd74ed2563a",
+								"id": "c1719137-67e2-4b72-814f-e735ccc72c67",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -1777,7 +1777,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1f35d7ea-8422-40cb-a139-4918474c7f39",
+								"id": "f4f3fa25-8f31-4cca-b95c-51224cffb9ed",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -1824,7 +1824,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "58af3583-7ce3-487e-9788-9f7c8ce2d17f",
+								"id": "7e56dfa3-5dd0-4188-857c-ab1bbd912b6e",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -1866,7 +1866,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9051ef4c-93ad-4ddb-8f3e-350971ecd418",
+								"id": "2f8dca82-230d-4c21-ab16-326549907f0c",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/gattung\");\r",
@@ -1919,10 +1919,10 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "a11f93a2-439d-497b-a6ca-80f2a8d52adc",
+								"id": "09c50a3e-e351-472e-992f-53257fcbb3af",
 								"exec": [
-									"pm.collectionVariables.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -1930,7 +1930,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2f74155c-69a0-474a-9fe6-549a93910a3c",
+								"id": "7f577c2a-15af-45fe-99b1-32a0dc83b1de",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -1994,9 +1994,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "19c03aa4-6ee6-4ca7-a133-5953de65d378",
+								"id": "8041c2e2-4cce-4724-b225-318ba903ce1e",
 								"exec": [
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -2004,7 +2004,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a7be7db4-aa5d-483d-bc6b-816a5d516159",
+								"id": "039f9c8a-18be-40ad-9506-46000b58c51d",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -2069,7 +2069,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1be79f61-8e2e-4d7b-940a-c2c383647fa9",
+								"id": "61e6d880-9d72-48a0-97d4-5ee8f184d869",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -2116,7 +2116,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8d955456-bfa9-4ef6-a53d-8d3c88f3d8d6",
+								"id": "d26a1512-b1bb-4768-95fb-06864be56029",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -2158,7 +2158,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4d0d10ae-210a-4cb7-9d38-cde6aa08b93e",
+								"id": "c2de9641-e763-4638-9fa7-ccb7dd185b71",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/hersteller\");\r",
@@ -2211,13 +2211,13 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "e761ea81-1701-4776-8ff0-f8bf1b1acfe2",
+								"id": "6aef0a45-4239-4648-86df-7d7e27a5d79e",
 								"exec": [
-									"pm.collectionVariables.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"url\", pm.variables.replaceIn(\"{{$randomUrl}}\"));\r",
-									"pm.collectionVariables.set(\"telefon\", pm.variables.replaceIn(\"+1{{$$randomPhoneNumber}}\").replaceAll(/-/,\"\"));\r",
-									"pm.collectionVariables.set(\"land\", pm.variables.replaceIn(\"{{$randomCountryCode}}\"));"
+									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"url\", pm.variables.replaceIn(\"{{$randomUrl}}\"));\r",
+									"pm.environment.set(\"telefon\", pm.variables.replaceIn(\"+1{{$$randomPhoneNumber}}\").replaceAll(/-/,\"\"));\r",
+									"pm.environment.set(\"land\", pm.variables.replaceIn(\"{{$randomCountryCode}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -2225,7 +2225,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c38e571c-f0e3-4f7b-882f-e357e475b2e1",
+								"id": "d404ba6a-3b54-42ff-9952-d3ac533fe6ad",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -2292,12 +2292,12 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "008bbebb-ba80-4ed2-806b-48067915106b",
+								"id": "457a8915-f1f7-49ec-8393-8306f57edc6f",
 								"exec": [
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"url\", pm.variables.replaceIn(\"{{$randomUrl}}\"));\r",
-									"pm.collectionVariables.set(\"telefon\", pm.variables.replaceIn(\"+1{{$$randomPhoneNumber}}\").replaceAll(/-/,\"\"));\r",
-									"pm.collectionVariables.set(\"land\", pm.variables.replaceIn(\"{{$randomCountryCode}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"url\", pm.variables.replaceIn(\"{{$randomUrl}}\"));\r",
+									"pm.environment.set(\"telefon\", pm.variables.replaceIn(\"+1{{$$randomPhoneNumber}}\").replaceAll(/-/,\"\"));\r",
+									"pm.environment.set(\"land\", pm.variables.replaceIn(\"{{$randomCountryCode}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -2305,7 +2305,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1cb26cc9-cffc-4106-aad4-0fa22fd85cc6",
+								"id": "ac843a8c-45a2-41f7-8f58-34776be452fb",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -2373,7 +2373,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f69482b2-f71e-4244-9a95-02c7a5cb294d",
+								"id": "10f15b9d-146a-4c4e-871c-7aa9eda0eb24",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -2423,7 +2423,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8b66ceb1-0832-4351-8635-d50813069e42",
+								"id": "871bbe55-8662-4131-8658-d57008f1c4a2",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -2465,7 +2465,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4dd32064-2db7-4e14-9a92-ef20542591ec",
+								"id": "fe0c8896-dc05-4fcb-88bf-d8eda6c54070",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kupplung\");\r",
@@ -2518,10 +2518,10 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "c56c49fd-c15d-42f8-a4fe-4e269b85f83d",
+								"id": "566af1e1-3c33-4e43-8423-f438bec684ef",
 								"exec": [
-									"pm.collectionVariables.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -2529,7 +2529,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "25a1315a-ebca-4450-b334-f773d2ea779d",
+								"id": "b7bd4ef1-22f4-4387-802c-b67236a65e19",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -2593,7 +2593,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d5bdb70c-b974-48e0-a9dc-7b58a7e1b531",
+								"id": "39003ace-60eb-4902-89e1-864d0b5a546a",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -2657,9 +2657,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "2f8011f4-7edc-404e-91fc-ba9af89acdf5",
+								"id": "b4cb54ac-f38d-40d9-912d-1c77a0213507",
 								"exec": [
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -2667,7 +2667,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cf83259e-3e98-4fd9-99a0-36822a3530a5",
+								"id": "7696761e-e90f-4f4a-b05d-4da391a4cb96",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -2734,7 +2734,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ce67ad34-9419-4834-9158-29d76d67b1da",
+								"id": "99abf996-a823-4cf2-8098-9bbbb27b69c6",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -2783,7 +2783,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c4c0116b-1af3-4a2d-acfc-05c130072b4b",
+								"id": "74c4ffac-1427-449f-881f-de87d48a9d18",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -2835,7 +2835,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "049bd522-3755-46e1-acbb-6b7153145f0a",
+								"id": "77519928-208d-4d6c-b94f-c280f7d46d05",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -2877,7 +2877,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5a6a5cb8-0506-4e39-a6a3-31281761cedb",
+								"id": "6c6f494b-79ec-45a3-8f89-e0c1bb86bb23",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/licht\");\r",
@@ -2930,10 +2930,10 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "c4ae3ad9-61e1-4f1e-9718-17b374842666",
+								"id": "056b392a-db3c-4108-85d4-a54de5f5f4f5",
 								"exec": [
-									"pm.collectionVariables.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -2941,7 +2941,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "53c11e78-4d2e-49b0-a747-1ee8a624936d",
+								"id": "76a7c697-5f74-46e0-a579-7b55a2c8ec4d",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -3005,7 +3005,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "95772dfd-e5b4-4a46-b1b1-6d482e05c32b",
+								"id": "6be52d0f-1d97-4132-8c77-a619d4a75a0f",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -3069,9 +3069,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "57ba5342-59fa-44fd-902a-78b00c107ddd",
+								"id": "2af11bc5-39a9-4cd8-a030-33d9b8a29bed",
 								"exec": [
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -3079,7 +3079,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "50fc5b4c-36fa-4f5d-9866-614e4fa8321d",
+								"id": "5aaf7d19-7150-4a67-a61f-011f650017e0",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -3146,7 +3146,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "eaf676c5-0e28-4090-8622-c3b4d0091835",
+								"id": "6322ba0d-1814-4fd3-ad5a-aad1fb62cd73",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -3195,7 +3195,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "47656efb-5cf9-4168-a744-a3ff07227e6c",
+								"id": "7adbb3c3-7849-49af-b0af-4692ffee3711",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -3247,7 +3247,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "30efb1a3-c65b-468f-a0e1-b976941c2319",
+								"id": "db1350ad-0161-4ae0-b81f-4a9c07286128",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -3289,7 +3289,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "565c0dbe-7401-4ef4-a8e9-3aa724821109",
+								"id": "82c35dbc-99e8-4236-8b87-e34144f42291",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/massstab\");\r",
@@ -3342,10 +3342,10 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "9bbf1045-05bb-4f92-a17b-6b2c48b6d6e9",
+								"id": "6be9575b-c588-40ea-b875-6f3f9d981218",
 								"exec": [
-									"pm.collectionVariables.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -3353,7 +3353,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e5aec71a-1c11-4aba-a24f-9e0e40ed38b4",
+								"id": "2c23d3ec-360f-4a55-93ed-33cc548223e4",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -3417,9 +3417,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b8c017de-5f67-4bb7-ab99-0c064a21f1f3",
+								"id": "4e91444c-8628-48a7-93de-15348fafef78",
 								"exec": [
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -3427,7 +3427,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "299bcb96-c9ca-474a-a37f-3dce96cf9994",
+								"id": "304a0fdb-f3e4-4e45-af21-d2c48fb46d4f",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -3492,7 +3492,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bd5025d7-0c04-41ee-96a2-bcc22992a515",
+								"id": "2e810361-967f-4b29-b32b-865807d16bbf",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -3539,7 +3539,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4054ba4f-31e2-4c9e-af34-3642a28456ab",
+								"id": "f91b741e-778f-4692-9706-8a9626fae7a3",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -3581,7 +3581,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dfa24e7b-fbac-4d47-ad48-ef72ecf0cdb8",
+								"id": "6ccbd753-304d-44d7-89c5-40ce58cc024b",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/motorTyp\");\r",
@@ -3634,10 +3634,10 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "19557918-a414-4dda-9bfd-76c977bea425",
+								"id": "4a76b868-03d4-4f23-9376-bd96cd405285",
 								"exec": [
-									"pm.collectionVariables.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -3645,7 +3645,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7d04ecb6-3b0d-496f-932d-e18b6468dfe6",
+								"id": "42bd76bc-6b88-46db-9373-d535ea9cbacf",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -3709,9 +3709,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "8b08ea5d-c454-461a-8887-f6e7119580dc",
+								"id": "584d6c36-f372-4842-bd0c-8e77ff7a0b81",
 								"exec": [
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -3719,7 +3719,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2d36bf21-1995-4ff7-a36a-262e100f0cc8",
+								"id": "ecb6c3d2-059d-4fa4-8bb4-03c52daa937e",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -3784,7 +3784,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3ba5415d-f943-488a-83ed-051032084968",
+								"id": "51c13887-f27e-4058-9a8b-06b2681aca1f",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -3831,7 +3831,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1cc05d52-dfa9-41d9-8816-f97208b79949",
+								"id": "4c37dc40-0e97-46e0-b747-db92b7d7f4cf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -3873,7 +3873,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a456a964-2137-4570-b785-7f6795b20c48",
+								"id": "a25f4cde-3da4-4a06-b073-b9bd80e957ee",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/protokoll\");\r",
@@ -3926,10 +3926,10 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "28198e37-c0e6-4c73-8a9a-eb2a7abae7ab",
+								"id": "46ccc99c-ac1f-425c-abbd-2abc63bd189e",
 								"exec": [
-									"pm.collectionVariables.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -3937,7 +3937,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ab690c87-e423-4eff-a561-dfd6463dcb46",
+								"id": "db08cf68-222d-49cf-bd7c-91d1c638fc37",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -4001,9 +4001,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "8a29b68c-a1f8-4367-b202-408d27a37fcc",
+								"id": "3330267c-e5bf-403f-a66a-4434d6c9bd98",
 								"exec": [
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -4011,7 +4011,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "87bceece-809d-4afc-bbb1-f6b0fb17fbcd",
+								"id": "a30ae42e-16a6-4848-a8cb-97338c70de64",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -4076,7 +4076,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6494b5c6-0f8d-4bcd-9430-39953265321c",
+								"id": "d8f15e74-0bd5-4e9b-bd9e-a5939e30a817",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -4123,7 +4123,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "95369c64-d2fb-4d66-ba41-6e338ba1df4e",
+								"id": "2075088e-b09c-45d8-a423-133114b46630",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -4165,7 +4165,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e3eaf1b8-4f55-4c46-a60e-d9ff03d451be",
+								"id": "8722170b-8e33-4935-a3b6-9b6c13dfeaa0",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/sondermodell\");\r",
@@ -4218,10 +4218,10 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "5587700d-36f9-4dc6-a22a-876b437c17e3",
+								"id": "f1159509-772c-486b-bdb0-586fadcf86f4",
 								"exec": [
-									"pm.collectionVariables.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -4229,7 +4229,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "155c4fa7-9a13-4c22-a4d4-6279880030dc",
+								"id": "6e9662c3-32d9-47bf-ae9f-6d0cdd670813",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -4293,9 +4293,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "e6c29b04-d0e0-419d-b95d-53878a02a0e0",
+								"id": "e0aa819d-f787-4f27-83d6-8ebb559e7d91",
 								"exec": [
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -4303,7 +4303,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c3016feb-63e8-4ddf-82da-0c7f5467e33c",
+								"id": "a48676a1-e3b4-4ff6-998c-5ce20401c081",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -4368,7 +4368,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "af968449-4b09-4f17-a8f6-be0a82bd67ec",
+								"id": "e78d4b82-8aad-4705-b90b-2154992c7dc9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -4415,7 +4415,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a318a80f-2dca-4f6e-a8bd-b1985c4186c6",
+								"id": "606da661-a6e2-4036-b321-68711f5339c9",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -4457,7 +4457,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3aba3c44-996b-4110-8379-553fb0addf7c",
+								"id": "090ef30f-4e4d-4356-9ea5-89999df96f67",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/spurweite\");\r",
@@ -4510,10 +4510,10 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "4d12f6ed-1cd6-4204-a3f5-37a8550c8957",
+								"id": "25997051-6750-417c-9116-64b6bbb56b09",
 								"exec": [
-									"pm.collectionVariables.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -4521,7 +4521,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f5da479f-1366-4047-a0d7-064361a62eed",
+								"id": "25799783-6ec2-4073-8d79-1f3ff3515bdd",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -4585,9 +4585,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "d2bc3678-46bd-4ad1-bec7-000988e845aa",
+								"id": "09bffbb9-8042-4584-b712-a9c8948b8761",
 								"exec": [
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -4595,7 +4595,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fcb52eee-342c-4f1d-b5fb-db907d31ce63",
+								"id": "deef98ea-5623-48d4-908c-2a05864a3c28",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -4660,7 +4660,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ecfd7ffd-434b-4ed9-83bb-98f4a596901f",
+								"id": "d9f1b29f-5fa6-4a09-b289-4bcd8c639474",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -4707,7 +4707,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c09c536d-d43c-416e-939c-8ab6f4346a57",
+								"id": "9a7563b1-6c2f-43ba-8dbd-d35c8d53db76",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -4749,7 +4749,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3e1bdb4a-8f4c-41e9-8d6c-6856b678060d",
+								"id": "ffdefadd-419b-485a-a022-22b7a72527f4",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/steuerung\");\r",
@@ -4802,10 +4802,10 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "ea349262-2007-459c-9a83-f94341b2e50f",
+								"id": "6c5bcb2d-16e7-4438-9cc2-1e68a1fdf6c7",
 								"exec": [
-									"pm.collectionVariables.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -4813,7 +4813,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9afc6c00-c791-40b9-9f3c-66daaf4b938a",
+								"id": "8856926b-538e-4606-82e0-66cd5ad5d1da",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -4877,9 +4877,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "eea595ea-b6eb-40a8-a07c-9fef0c689439",
+								"id": "50f9271d-189a-4e3b-959a-404ae08264e4",
 								"exec": [
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -4887,7 +4887,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e783885a-4b35-4246-8092-4b3dd4ab022e",
+								"id": "7baea752-5198-47ca-852e-d13a56c89e49",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -4952,7 +4952,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3ac73b70-ea43-461d-b30c-0bc93049b9c5",
+								"id": "b27e9a7d-62a2-4ee1-bcd0-153f137274e4",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -4999,7 +4999,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e21a2d8b-71bf-43e2-8150-6d54196088dd",
+								"id": "f402291f-b132-4a29-9447-d12ddf2df978",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -5041,7 +5041,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7a9632d9-a4cf-4e2c-89b1-2e36d9a6cc14",
+								"id": "f975f138-611d-4b1f-8547-fed5c74a6095",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zugTyp\");\r",
@@ -5094,10 +5094,10 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b651a9d1-a89e-4de6-bd53-94b2c8f70b75",
+								"id": "c8f1f1cf-416f-4cfa-833f-38ec70bf2e50",
 								"exec": [
-									"pm.collectionVariables.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -5105,7 +5105,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fabb5bfd-1674-468f-9b78-ca5d934d6674",
+								"id": "9294591e-c77f-4fa8-85f4-0997b2196e83",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -5169,9 +5169,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "a46e7c0d-ec0b-4608-86f9-439ceffecbd3",
+								"id": "e33844fd-e0bf-4296-ade0-a88b8c2f1b51",
 								"exec": [
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -5179,7 +5179,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "df211a94-1558-4f7e-b147-993a6f4b18e8",
+								"id": "59b788a5-19db-442c-8ad6-3c8846f9c1fb",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -5244,7 +5244,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c3b403f4-a324-483c-9d01-87ed5b292407",
+								"id": "f572fd0c-6320-4fd2-9280-620011d26beb",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -5291,7 +5291,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "acfb247a-0363-40fe-a2e1-cd7d184ee6a4",
+								"id": "5edc1c4b-0935-4743-914a-f4486405a6ac",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -5333,7 +5333,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "910e4ead-0fd9-4e8e-992c-7ef863af9e0a",
+								"id": "71410dac-3b1d-40f0-805b-12686cea08e7",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kategorie\");\r",
@@ -5386,7 +5386,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9b1eb534-61e2-4de5-a778-65c4c3b1f506",
+								"id": "bd38e0fd-ca8e-47a9-bb5d-574b63de165b",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kategorie\");\r",
@@ -5451,10 +5451,10 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "55d2d912-fd42-4158-bdfa-441c916d56e5",
+								"id": "b524dc7c-b031-460e-b572-8ab48f5264f8",
 								"exec": [
-									"pm.collectionVariables.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -5462,7 +5462,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e4220380-9a61-4e2d-88f7-f698c3932c19",
+								"id": "911abb3d-8db1-4bb6-98a0-7cf6cc06d232",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -5527,10 +5527,10 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "48bfbc2e-3ecc-4b67-90a1-3c62b114af4f",
+								"id": "135ce5d4-84a8-4199-b648-bfecb06b45cc",
 								"exec": [
-									"pm.collectionVariables.set(\"unterAdd\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.collectionVariables.set(\"unterBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"unterAdd\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
+									"pm.environment.set(\"unterBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -5538,7 +5538,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c6d1dc7e-77fb-4609-86e7-84131b70a775",
+								"id": "78f52d4b-eea1-46cb-aa1b-b06198eae7cf",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -5604,9 +5604,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "f55092a4-a16e-4141-9e8e-4f8229d367df",
+								"id": "6d2f3cc1-5071-40ef-8b09-d911c4ad03ef",
 								"exec": [
-									"pm.collectionVariables.set(\"unterBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"unterBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -5614,7 +5614,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1dfa4dff-210f-4414-8312-b0bbb29fa2fe",
+								"id": "19b0cda6-5867-443b-9a9e-8ddf9c0b69f4",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -5681,9 +5681,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "8a577ff3-b30c-4e61-983c-93461b886c6b",
+								"id": "723a7ec0-c027-4737-8186-4f05ae044173",
 								"exec": [
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -5691,7 +5691,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8095ee25-4f0a-4613-a26c-6759c9e6ca40",
+								"id": "66057ea4-e0b6-4e8b-9154-031244e203b1",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -5766,7 +5766,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b2b8230e-1cce-45a0-9638-28d1bc2f8fdc",
+								"id": "e769f6d3-d04e-403c-8145-bd6d4609fee4",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -5823,7 +5823,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d8f35541-ea52-47cb-9429-10ed5134d58e",
+								"id": "8221362c-6002-48c0-b16a-e0de282e90aa",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -5861,7 +5861,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0689b65e-3572-47d5-8f2c-7eea38890489",
+								"id": "d8aba647-6f81-44fc-b366-ebbd9a062858",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -5903,13 +5903,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8d41bde9-8f4e-44cd-9d4e-0840532772cd",
+								"id": "0fbfc862-a6bb-4ff3-bac4-4cd21f7b52e0",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/vorbild\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.vorbild.forEach(function(a) { \r",
-									"    var self = root + \"/\" + a.gattung;\r",
+									"    var self = root + \"/\" + a.name;\r",
 									"    pm.expect(a.gattung).to.exist;\r",
 									"    pm.expect(a.bezeichnung).to.exist;\r",
 									"    pm.expect(a.deleted).to.be.false;\r",
@@ -5956,51 +5956,51 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "7ef78628-095e-4d66-99cc-3af983d90523",
+								"id": "7782d7c2-c3c7-4f60-9e28-88aeaedd798d",
 								"exec": [
-									"pm.collectionVariables.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}{{$randomInt}}.{{$randomInt}}\"));\r",
-									"pm.collectionVariables.set(\"gattung\", pm.variables.replaceIn(\"{{gattungAdd}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"kategorie\", pm.variables.replaceIn(\"{{kategorieAdd}}\"));\r",
-									"pm.collectionVariables.set(\"unterKategorie\", pm.variables.replaceIn(\"{{unterKategorieAdd}}\"));\r",
-									"pm.collectionVariables.set(\"bahnverwaltung\", pm.variables.replaceIn(\"{{bahnverwaltungAdd}}\"));\r",
-									"pm.collectionVariables.set(\"hersteller\", pm.variables.replaceIn(\"{{$randomCompanyName}}\"));\r",
-									"pm.collectionVariables.set(\"bauzeit\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
-									"pm.collectionVariables.set(\"anzahl\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));\r",
-									"pm.collectionVariables.set(\"antrieb\", pm.variables.replaceIn(\"{{antriebAdd}}\"));\r",
-									"pm.collectionVariables.set(\"achsfolg\", pm.variables.replaceIn(\"{{achsfolgAdd}}\"));\r",
-									"pm.collectionVariables.set(\"anfahrzugkraft\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"leistung\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"dienstgewicht\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"geschwindigkeit\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"lange\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"ausserdienst\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
-									"pm.collectionVariables.set(\"dmTreibrad\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"dmLaufradVorn\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"dmLaufradHinten\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"zylinder\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"dmZylinder\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"kolbenhub\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"kesseluberdruck\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"rostflache\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"uberhitzerflache\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"wasservorrat\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"verdampfung\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"fahrmotoren\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"motorbauart\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"leistungsUbertragung\", pm.variables.replaceIn(\"{{leistungsUbertragungAdd}}\"));\r",
-									"pm.collectionVariables.set(\"reichweite\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"kapazitat\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"klasse\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"sitzplatzeKL1\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"sitzplatzeKL2\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"sitzplatzeKL3\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"sitzplatzeKL4\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"aufbau\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"triebkopf\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"mittelwagen\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"drehgestellBauart\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}{{$randomInt}}.{{$randomInt}}\"));\r",
+									"pm.environment.set(\"gattung\", pm.variables.replaceIn(\"{{gattungAdd}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"kategorie\", pm.variables.replaceIn(\"{{kategorieAdd}}\"));\r",
+									"pm.environment.set(\"unterKategorie\", pm.variables.replaceIn(\"{{unterKategorieAdd}}\"));\r",
+									"pm.environment.set(\"bahnverwaltung\", pm.variables.replaceIn(\"{{bahnverwaltungAdd}}\"));\r",
+									"pm.environment.set(\"hersteller\", pm.variables.replaceIn(\"{{$randomCompanyName}}\"));\r",
+									"pm.environment.set(\"bauzeit\", new Date(pm.variables.replaceIn(\"{{$randomDatePast}}\")).toISOString().substring(0, 10));\r",
+									"pm.environment.set(\"anzahl\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));\r",
+									"pm.environment.set(\"antrieb\", pm.variables.replaceIn(\"{{antriebAdd}}\"));\r",
+									"pm.environment.set(\"achsfolg\", pm.variables.replaceIn(\"{{achsfolgAdd}}\"));\r",
+									"pm.environment.set(\"anfahrzugkraft\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"leistung\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"dienstgewicht\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"geschwindigkeit\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"lange\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"ausserdienst\", new Date(pm.variables.replaceIn(\"{{$randomDatePast}}\")).toISOString().substring(0, 10));\r",
+									"pm.environment.set(\"dmTreibrad\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"dmLaufradVorn\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"dmLaufradHinten\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"zylinder\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"dmZylinder\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"kolbenhub\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"kesseluberdruck\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"rostflache\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"uberhitzerflache\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"wasservorrat\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"verdampfung\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"fahrmotoren\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"motorbauart\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"leistungsubertragung\", pm.variables.replaceIn(\"{{leistungsubertragungAdd}}\"));\r",
+									"pm.environment.set(\"reichweite\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"kapazitat\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"klasse\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"sitzplatzeKL1\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"sitzplatzeKL2\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"sitzplatzeKL3\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"sitzplatzeKL4\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"aufbau\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"triebkopf\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"mittelwagen\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"drehgestellBauart\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -6008,11 +6008,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d44fbd3c-f438-469d-bb0b-fca0a413ae4d",
+								"id": "67d0eaaa-feaa-4db5-bcb2-30f60c4fb378",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var gattung = pm.variables.get(\"gattung\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/vorbild\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/vorbild/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -6043,7 +6042,7 @@
 									"pm.expect(jsonData.verdampfung).to.eql(pm.variables.get(\"verdampfung\"));\r",
 									"pm.expect(jsonData.fahrmotoren).to.eql(pm.variables.get(\"fahrmotoren\"));\r",
 									"pm.expect(jsonData.motorbauart).to.eql(pm.variables.get(\"motorbauart\"));\r",
-									"pm.expect(jsonData.leistungsUbertragung).to.eql(pm.variables.get(\"leistungsUbertragung\"));\r",
+									"pm.expect(jsonData.leistungsubertragung).to.eql(pm.variables.get(\"leistungsubertragung\"));\r",
 									"pm.expect(jsonData.reichweite).to.eql(pm.variables.get(\"reichweite\"));\r",
 									"pm.expect(jsonData.kapazitat).to.eql(pm.variables.get(\"kapazitat\"));\r",
 									"pm.expect(jsonData.klasse).to.eql(pm.variables.get(\"klasse\"));\r",
@@ -6086,7 +6085,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{name}}\",\n    \"gattung\": \"{{gattung}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"hersteller\": \"{{hersteller}}\",\n    \"bauzeit\": \"{{bauzeit}}\",\n    \"anzahl\": {{anzahl}},\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"antrieb\":\"{{antrieb}}\",\n    \"achsfolg\":\"{{achsfolg}}\",\n    \"leistung\": {{leistung}},\n    \"dienstgewicht\": {{dienstgewicht}},\n    \"geschwindigkeit\": {{geschwindigkeit}},\n    \"lange\": {{lange}},\n    \"ausserdienst\": \"{{ausserdienst}}\",\n    \"dmTreibrad\": {{dmTreibrad}},\n    \"zylinder\": {{zylinder}},\n    \"dmZylinder\": {{dmZylinder}},\n    \"kolbenhub\": {{kolbenhub}},\n    \"kesseluberdruck\": {{kesseluberdruck}},\n    \"rostflache\": {{rostflache}},\n    \"uberhitzerflache\": {{uberhitzerflache}},\n    \"wasservorrat\": {{wasservorrat}},\n    \"verdampfung\": {{verdampfung}},\n    \"fahrmotoren\": {{fahrmotoren}},\n    \"motorbauart\": \"{{motorbauart}}\",\n    \"leistungsUbertragung\": \"{{leistungsUbertragung}}\",\n    \"reichweite\": {{reichweite}},\n    \"kapazitat\": {{kapazitat}},\n    \"klasse\": {{klasse}},\n    \"sitzplatzeKL1\": {{sitzplatzeKL1}},\n    \"sitzplatzeKL2\": {{sitzplatzeKL2}},\n    \"sitzplatzeKL3\": {{sitzplatzeKL3}},\n    \"sitzplatzeKL4\": {{sitzplatzeKL4}},\n    \"aufbau\": \"{{aufbau}}\",\n    \"triebkopf\": {{triebkopf}},\n    \"mittelwagen\": {{mittelwagen}},\n    \"drehgestellBauart\": \"{{drehgestellBauart}}\",\n\t\"deleted\": true\n}",
+							"raw": "{\n    \"name\": \"{{name}}\",\n    \"gattung\": \"{{gattung}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"hersteller\": \"{{hersteller}}\",\n    \"bauzeit\": \"{{bauzeit}}\",\n    \"anzahl\": {{anzahl}},\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"antrieb\":\"{{antrieb}}\",\n    \"achsfolg\":\"{{achsfolg}}\",\n    \"leistung\": {{leistung}},\n    \"dienstgewicht\": {{dienstgewicht}},\n    \"geschwindigkeit\": {{geschwindigkeit}},\n    \"lange\": {{lange}},\n    \"ausserdienst\": \"{{ausserdienst}}\",\n    \"dmTreibrad\": {{dmTreibrad}},\n    \"zylinder\": {{zylinder}},\n    \"dmZylinder\": {{dmZylinder}},\n    \"kolbenhub\": {{kolbenhub}},\n    \"kesseluberdruck\": {{kesseluberdruck}},\n    \"rostflache\": {{rostflache}},\n    \"uberhitzerflache\": {{uberhitzerflache}},\n    \"wasservorrat\": {{wasservorrat}},\n    \"verdampfung\": {{verdampfung}},\n    \"fahrmotoren\": {{fahrmotoren}},\n    \"motorbauart\": \"{{motorbauart}}\",\n    \"leistungsubertragung\": \"{{leistungsubertragung}}\",\n    \"reichweite\": {{reichweite}},\n    \"kapazitat\": {{kapazitat}},\n    \"klasse\": {{klasse}},\n    \"sitzplatzeKL1\": {{sitzplatzeKL1}},\n    \"sitzplatzeKL2\": {{sitzplatzeKL2}},\n    \"sitzplatzeKL3\": {{sitzplatzeKL3}},\n    \"sitzplatzeKL4\": {{sitzplatzeKL4}},\n    \"aufbau\": \"{{aufbau}}\",\n    \"triebkopf\": {{triebkopf}},\n    \"mittelwagen\": {{mittelwagen}},\n    \"drehgestellBauart\": \"{{drehgestellBauart}}\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -6111,11 +6110,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e1d43054-652c-471d-9979-ceeebb41d68f",
+								"id": "491b3a1c-8043-45e9-bf44-2d91e962d28d",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/vorbild\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/vorbild/{{name}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/vorbild/{{name}}/abbildung.jpg\");\r",
@@ -6147,7 +6145,7 @@
 									"pm.expect(jsonData.verdampfung).to.eql(pm.variables.get(\"verdampfung\"));\r",
 									"pm.expect(jsonData.fahrmotoren).to.eql(pm.variables.get(\"fahrmotoren\"));\r",
 									"pm.expect(jsonData.motorbauart).to.eql(pm.variables.get(\"motorbauart\"));\r",
-									"pm.expect(jsonData.leistungsUbertragung).to.eql(pm.variables.get(\"leistungsUbertragung\"));\r",
+									"pm.expect(jsonData.leistungsubertragung).to.eql(pm.variables.get(\"leistungsubertragung\"));\r",
 									"pm.expect(jsonData.reichweite).to.eql(pm.variables.get(\"reichweite\"));\r",
 									"pm.expect(jsonData.kapazitat).to.eql(pm.variables.get(\"kapazitat\"));\r",
 									"pm.expect(jsonData.klasse).to.eql(pm.variables.get(\"klasse\"));\r",
@@ -6194,13 +6192,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{api}}/vorbild/{{gattung}}/abbildung",
+							"raw": "{{api}}/vorbild/{{name}}/abbildung",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"vorbild",
-								"{{gattung}}",
+								"{{name}}",
 								"abbildung"
 							]
 						}
@@ -6213,11 +6211,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "49ed0e81-2765-4b48-acde-76247aa6bcde",
+								"id": "02d31487-cae5-4f7c-a67f-448969385e48",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/vorbild\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/vorbild/{{name}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/vorbild/{{name}}/abbildung.jpg\");\r",
@@ -6249,7 +6246,7 @@
 									"pm.expect(jsonData.verdampfung).to.eql(pm.variables.get(\"verdampfung\"));\r",
 									"pm.expect(jsonData.fahrmotoren).to.eql(pm.variables.get(\"fahrmotoren\"));\r",
 									"pm.expect(jsonData.motorbauart).to.eql(pm.variables.get(\"motorbauart\"));\r",
-									"pm.expect(jsonData.leistungsUbertragung).to.eql(pm.variables.get(\"leistungsUbertragung\"));\r",
+									"pm.expect(jsonData.leistungsubertragung).to.eql(pm.variables.get(\"leistungsubertragung\"));\r",
 									"pm.expect(jsonData.reichweite).to.eql(pm.variables.get(\"reichweite\"));\r",
 									"pm.expect(jsonData.kapazitat).to.eql(pm.variables.get(\"kapazitat\"));\r",
 									"pm.expect(jsonData.klasse).to.eql(pm.variables.get(\"klasse\"));\r",
@@ -6275,51 +6272,50 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "4b4e9084-5cb8-4e72-bd9e-419aeb45fdd4",
+								"id": "f7985df1-f3bd-470d-9fbf-a72c42a6e2ff",
 								"exec": [
-									"pm.collectionVariables.set(\"gattung\", \"BR103\");\r",
-									"pm.collectionVariables.set(\"gattung\", pm.variables.replaceIn(\"{{gattungUpdate}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"kategorie\", pm.variables.replaceIn(\"{{kategorieUpdate}}\"));\r",
-									"pm.collectionVariables.set(\"unterKategorie\", pm.variables.replaceIn(\"{{unterKategorieUpdate}}\"));\r",
-									"pm.collectionVariables.set(\"bahnverwaltung\", pm.variables.replaceIn(\"{{bahnverwaltungUpdate}}\"));\r",
-									"pm.collectionVariables.set(\"hersteller\", pm.variables.replaceIn(\"{{$randomCompanyName}}\"));\r",
-									"pm.collectionVariables.set(\"bauzeit\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
-									"pm.collectionVariables.set(\"anzahl\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));\r",
-									"pm.collectionVariables.set(\"antrieb\", pm.variables.replaceIn(\"{{antriebUpdate}}\"));\r",
-									"pm.collectionVariables.set(\"achsfolg\", pm.variables.replaceIn(\"{{achsfolgUpdate}}\"));\r",
-									"pm.collectionVariables.set(\"anfahrzugkraft\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"leistung\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"dienstgewicht\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"geschwindigkeit\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"lange\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"ausserdienst\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
-									"pm.collectionVariables.set(\"dmTreibrad\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"dmLaufradVorn\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"dmLaufradHinten\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"zylinder\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"dmZylinder\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"kolbenhub\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"kesseluberdruck\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"rostflache\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"uberhitzerflache\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"wasservorrat\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"verdampfung\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"fahrmotoren\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"motorbauart\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"leistungsUbertragung\", pm.variables.replaceIn(\"{{leistungsUbertragungUpdate}}\"));\r",
-									"pm.collectionVariables.set(\"reichweite\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"kapazitat\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"klasse\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"sitzplatzeKL1\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"sitzplatzeKL2\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"sitzplatzeKL3\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"sitzplatzeKL4\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"aufbau\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"triebkopf\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"mittelwagen\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"drehgestellBauart\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"gattung\", pm.variables.replaceIn(\"{{gattungUpdate}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"kategorie\", pm.variables.replaceIn(\"{{kategorieUpdate}}\"));\r",
+									"pm.environment.set(\"unterKategorie\", pm.variables.replaceIn(\"{{unterKategorieUpdate}}\"));\r",
+									"pm.environment.set(\"bahnverwaltung\", pm.variables.replaceIn(\"{{bahnverwaltungUpdate}}\"));\r",
+									"pm.environment.set(\"hersteller\", pm.variables.replaceIn(\"{{$randomCompanyName}}\"));\r",
+									"pm.environment.set(\"bauzeit\", new Date(pm.variables.replaceIn(\"{{$randomDatePast}}\")).toISOString().substring(0,10));\r",
+									"pm.environment.set(\"anzahl\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));\r",
+									"pm.environment.set(\"antrieb\", pm.variables.replaceIn(\"{{antriebUpdate}}\"));\r",
+									"pm.environment.set(\"achsfolg\", pm.variables.replaceIn(\"{{achsfolgUpdate}}\"));\r",
+									"pm.environment.set(\"anfahrzugkraft\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"leistung\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"dienstgewicht\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"geschwindigkeit\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"lange\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"ausserdienst\", new Date(pm.variables.replaceIn(\"{{$randomDatePast}}\")).toISOString().substring(0,10));\r",
+									"pm.environment.set(\"dmTreibrad\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"dmLaufradVorn\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"dmLaufradHinten\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"zylinder\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"dmZylinder\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"kolbenhub\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"kesseluberdruck\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"rostflache\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"uberhitzerflache\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"wasservorrat\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"verdampfung\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"fahrmotoren\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"motorbauart\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"leistungsubertragung\", pm.variables.replaceIn(\"{{leistungsubertragungUpdate}}\"));\r",
+									"pm.environment.set(\"reichweite\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"kapazitat\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"klasse\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"sitzplatzeKL1\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"sitzplatzeKL2\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"sitzplatzeKL3\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"sitzplatzeKL4\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"aufbau\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"triebkopf\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"mittelwagen\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"drehgestellBauart\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -6344,7 +6340,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{name}}\",\n    \"gattung\": \"{{gattung}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"hersteller\": \"{{hersteller}}\",\n    \"bauzeit\": \"{{bauzeit}}\",\n    \"anzahl\": {{anzahl}},\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"antrieb\":\"{{antrieb}}\",\n    \"achsfolg\":\"{{achsfolg}}\",\n    \"leistung\": {{leistung}},\n    \"dienstgewicht\": {{dienstgewicht}},\n    \"geschwindigkeit\": {{geschwindigkeit}},\n    \"lange\": {{lange}},\n    \"ausserdienst\": \"{{ausserdienst}}\",\n    \"dmTreibrad\": {{dmTreibrad}},\n    \"zylinder\": {{zylinder}},\n    \"dmZylinder\": {{dmZylinder}},\n    \"kolbenhub\": {{kolbenhub}},\n    \"kesseluberdruck\": {{kesseluberdruck}},\n    \"rostflache\": {{rostflache}},\n    \"uberhitzerflache\": {{uberhitzerflache}},\n    \"wasservorrat\": {{wasservorrat}},\n    \"verdampfung\": {{verdampfung}},\n    \"fahrmotoren\": {{fahrmotoren}},\n    \"motorbauart\": \"{{motorbauart}}\",\n    \"leistungsUbertragung\": \"{{leistungsUbertragung}}\",\n    \"reichweite\": {{reichweite}},\n    \"kapazitat\": {{kapazitat}},\n    \"klasse\": {{klasse}},\n    \"sitzplatzeKL1\": {{sitzplatzeKL1}},\n    \"sitzplatzeKL2\": {{sitzplatzeKL2}},\n    \"sitzplatzeKL3\": {{sitzplatzeKL3}},\n    \"sitzplatzeKL4\": {{sitzplatzeKL4}},\n    \"aufbau\": \"{{aufbau}}\",\n    \"triebkopf\": {{triebkopf}},\n    \"mittelwagen\": {{mittelwagen}},\n    \"drehgestellBauart\": \"{{drehgestellBauart}}\",\n\t\"deleted\": true\n}",
+							"raw": "{\n    \"name\": \"{{name}}\",\n    \"gattung\": \"{{gattung}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"hersteller\": \"{{hersteller}}\",\n    \"bauzeit\": \"{{bauzeit}}\",\n    \"anzahl\": {{anzahl}},\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"antrieb\":\"{{antrieb}}\",\n    \"achsfolg\":\"{{achsfolg}}\",\n    \"leistung\": {{leistung}},\n    \"dienstgewicht\": {{dienstgewicht}},\n    \"geschwindigkeit\": {{geschwindigkeit}},\n    \"lange\": {{lange}},\n    \"ausserdienst\": \"{{ausserdienst}}\",\n    \"dmTreibrad\": {{dmTreibrad}},\n    \"zylinder\": {{zylinder}},\n    \"dmZylinder\": {{dmZylinder}},\n    \"kolbenhub\": {{kolbenhub}},\n    \"kesseluberdruck\": {{kesseluberdruck}},\n    \"rostflache\": {{rostflache}},\n    \"uberhitzerflache\": {{uberhitzerflache}},\n    \"wasservorrat\": {{wasservorrat}},\n    \"verdampfung\": {{verdampfung}},\n    \"fahrmotoren\": {{fahrmotoren}},\n    \"motorbauart\": \"{{motorbauart}}\",\n    \"leistungsubertragung\": \"{{leistungsubertragung}}\",\n    \"reichweite\": {{reichweite}},\n    \"kapazitat\": {{kapazitat}},\n    \"klasse\": {{klasse}},\n    \"sitzplatzeKL1\": {{sitzplatzeKL1}},\n    \"sitzplatzeKL2\": {{sitzplatzeKL2}},\n    \"sitzplatzeKL3\": {{sitzplatzeKL3}},\n    \"sitzplatzeKL4\": {{sitzplatzeKL4}},\n    \"aufbau\": \"{{aufbau}}\",\n    \"triebkopf\": {{triebkopf}},\n    \"mittelwagen\": {{mittelwagen}},\n    \"drehgestellBauart\": \"{{drehgestellBauart}}\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -6352,13 +6348,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{api}}/vorbild/{{gattung}",
+							"raw": "{{api}}/vorbild/{{name}}",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"vorbild",
-								"{{gattung}"
+								"{{name}}"
 							]
 						}
 					},
@@ -6370,11 +6366,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "85e01a52-1ef8-46f8-aa7c-25e68a70a001",
+								"id": "8e96d603-973f-4478-8bba-5b3d711d27c8",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var gattung = pm.variables.get(\"gattung\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/vorbild\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/vorbild/{{name}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/vorbild/{{name}}/abbildung.jpg\");\r",
@@ -6406,7 +6401,7 @@
 									"pm.expect(jsonData.verdampfung).to.eql(pm.variables.get(\"verdampfung\"));\r",
 									"pm.expect(jsonData.fahrmotoren).to.eql(pm.variables.get(\"fahrmotoren\"));\r",
 									"pm.expect(jsonData.motorbauart).to.eql(pm.variables.get(\"motorbauart\"));\r",
-									"pm.expect(jsonData.leistungsUbertragung).to.eql(pm.variables.get(\"leistungsUbertragung\"));\r",
+									"pm.expect(jsonData.leistungsubertragung).to.eql(pm.variables.get(\"leistungsubertragung\"));\r",
 									"pm.expect(jsonData.reichweite).to.eql(pm.variables.get(\"reichweite\"));\r",
 									"pm.expect(jsonData.kapazitat).to.eql(pm.variables.get(\"kapazitat\"));\r",
 									"pm.expect(jsonData.klasse).to.eql(pm.variables.get(\"klasse\"));\r",
@@ -6439,13 +6434,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/vorbild/{{gattung}}",
+							"raw": "{{api}}/vorbild/{{name}}",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"vorbild",
-								"{{gattung}}"
+								"{{name}}"
 							]
 						}
 					},
@@ -6457,11 +6452,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "848f6e2c-64ff-401e-bb58-ad600ae8633d",
+								"id": "d784f107-0ed7-4448-933a-80a9990894e7",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/vorbild\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/vorbild/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -6492,7 +6486,7 @@
 									"pm.expect(jsonData.verdampfung).to.eql(pm.variables.get(\"verdampfung\"));\r",
 									"pm.expect(jsonData.fahrmotoren).to.eql(pm.variables.get(\"fahrmotoren\"));\r",
 									"pm.expect(jsonData.motorbauart).to.eql(pm.variables.get(\"motorbauart\"));\r",
-									"pm.expect(jsonData.leistungsUbertragung).to.eql(pm.variables.get(\"leistungsUbertragung\"));\r",
+									"pm.expect(jsonData.leistungsubertragung).to.eql(pm.variables.get(\"leistungsubertragung\"));\r",
 									"pm.expect(jsonData.reichweite).to.eql(pm.variables.get(\"reichweite\"));\r",
 									"pm.expect(jsonData.kapazitat).to.eql(pm.variables.get(\"kapazitat\"));\r",
 									"pm.expect(jsonData.klasse).to.eql(pm.variables.get(\"klasse\"));\r",
@@ -6526,13 +6520,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/vorbild/{{gattung}}/abbildung",
+							"raw": "{{api}}/vorbild/{{name}}/abbildung",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"vorbild",
-								"{{gattung}}",
+								"{{name}}",
 								"abbildung"
 							]
 						}
@@ -6545,7 +6539,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3d44f66f-d6f1-4603-9d7e-a5259269fb29",
+								"id": "a6bdf2eb-32ee-4cf6-a037-1d52842a1233",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -6563,13 +6557,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/vorbild/{{gattung}}",
+							"raw": "{{api}}/vorbild/{{name}}",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"vorbild",
-								"{{gattung}}"
+								"{{name}}"
 							]
 						}
 					},
@@ -6587,7 +6581,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3e46b5a3-0adb-46f8-95a9-a7b7770fb298",
+								"id": "1efb7964-8080-4bfd-a306-6e91a02f5349",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp\");\r",
@@ -6640,17 +6634,17 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "c0865e2c-e05e-46c4-9067-cf566c77edd3",
+								"id": "1bb4fd28-0301-47f8-85c0-9aeccef7b3c7",
 								"exec": [
-									"pm.collectionVariables.set(\"hersteller\", pm.variables.get(\"decoderHerstellerAdd\"));\r",
-									"pm.collectionVariables.set(\"bestellNr\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"iMax\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"protokoll\", pm.variables.get(\"protokollAdd\"));\r",
-									"pm.collectionVariables.set(\"fahrstufe\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"gerausch\", new Boolean(true));\r",
-									"pm.collectionVariables.set(\"konfiguration\", pm.variables.get(\"konfigurationAdd\"));\r",
-									"pm.collectionVariables.set(\"stecker\", pm.variables.get(\"steckerAdd\"));"
+									"pm.environment.set(\"hersteller\", pm.variables.get(\"decoderHerstellerAdd\"));\r",
+									"pm.environment.set(\"bestellNr\", pm.variables.replaceIn(\"decoderBestellAdd\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"iMax\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"protokoll\", pm.variables.get(\"protokollAdd\"));\r",
+									"pm.environment.set(\"fahrstufe\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"gerausch\", new Boolean(true));\r",
+									"pm.environment.set(\"konfiguration\", pm.variables.get(\"konfigurationAdd\"));\r",
+									"pm.environment.set(\"stecker\", pm.variables.get(\"steckerAdd\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -6658,7 +6652,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f9e7520e-8f5c-4af0-9e91-7886b9db166a",
+								"id": "493e9604-5e52-4f04-9750-606935c21777",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -6732,7 +6726,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1b1ce677-611b-40c7-a0c4-9459b03b6f29",
+								"id": "3b378e62-a3d7-4f7f-9e29-9ae8d6c3194a",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -6806,13 +6800,13 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "9193f5df-9cd6-4993-9387-e1737f461ed5",
+								"id": "1ab79091-31eb-4f16-bce7-27b466b37d74",
 								"exec": [
-									"pm.collectionVariables.set(\"index\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"adressAdd\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"adressTyp\", \"MFX\");\r",
-									"pm.collectionVariables.set(\"span\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"adress\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
+									"pm.environment.set(\"index\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"adressAdd\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"adressTyp\", \"MFX\");\r",
+									"pm.environment.set(\"span\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"adress\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
 								],
 								"type": "text/javascript"
 							}
@@ -6820,7 +6814,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ca29246c-21f2-496a-9844-ffa059d23c32",
+								"id": "e93cbba5-10f2-4cc9-ac89-baba1daa11f0",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -6891,13 +6885,13 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "16a94cc0-8065-4371-a5f4-8ab78e714a70",
+								"id": "2c2815b7-1479-4829-a49d-c308ec078956",
 								"exec": [
-									"pm.collectionVariables.set(\"index\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"adressAdd\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"adressTyp\", \"DELTA\");\r",
-									"pm.collectionVariables.set(\"span\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"adress\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
+									"pm.environment.set(\"index\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"adressAdd\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"adressTyp\", \"DELTA\");\r",
+									"pm.environment.set(\"span\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"adress\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
 								],
 								"type": "text/javascript"
 							}
@@ -6905,7 +6899,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1df50aa3-f8a8-404f-91f1-7cc6bc1a1f79",
+								"id": "6e159af6-0c15-4dcb-8712-312e3574e75a",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -6977,13 +6971,13 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "705a0f73-704e-4bbe-9195-e6e1b10e46e3",
+								"id": "4f50862f-a909-4bf2-b2b1-baf11b8e7c75",
 								"exec": [
-									"pm.collectionVariables.set(\"cv\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"cvAdd\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"minimal\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"maximal\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"cvValue\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
+									"pm.environment.set(\"cv\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"cvAdd\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"minimal\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"maximal\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"cvValue\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
 								],
 								"type": "text/javascript"
 							}
@@ -6991,7 +6985,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b8d997e3-33a8-4c86-94b0-8997a516b04c",
+								"id": "c1b4704a-a5e9-4478-aa30-af84104802f6",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -7062,13 +7056,13 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "d936a8cb-c846-4bef-8b69-180d14a757ce",
+								"id": "da8b8801-8903-4415-83c9-8d6da7ff17f2",
 								"exec": [
-									"pm.collectionVariables.set(\"index\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"adressAdd\", pm.variables.replaceIn(\"{{$randomProductName}}\")));\r",
-									"pm.collectionVariables.set(\"adressTyp\", \"adressTyp\");\r",
-									"pm.collectionVariables.set(\"span\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"adress\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
+									"pm.environment.set(\"index\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"adressAdd\", pm.variables.replaceIn(\"{{$randomProductName}}\")));\r",
+									"pm.environment.set(\"adressTyp\", \"adressTyp\");\r",
+									"pm.environment.set(\"span\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"adress\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
 								],
 								"type": "text/javascript"
 							}
@@ -7076,7 +7070,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d92c81df-2922-4c7e-9d21-e28337c7882b",
+								"id": "921d5a5d-9088-4e6e-940f-83476ce0823b",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -7148,13 +7142,13 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "a49345b5-ac41-43c0-b064-02b6011550ee",
+								"id": "5da90da9-dff1-4744-9540-5461c45f015e",
 								"exec": [
-									"pm.collectionVariables.set(\"index\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"adressAdd\", pm.variables.replaceIn(\"{{$randomProductName}}\")));\r",
-									"pm.collectionVariables.set(\"adressTyp\", \"adressTyp\");\r",
-									"pm.collectionVariables.set(\"span\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"adress\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
+									"pm.environment.set(\"index\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"adressAdd\", pm.variables.replaceIn(\"{{$randomProductName}}\")));\r",
+									"pm.environment.set(\"adressTyp\", \"adressTyp\");\r",
+									"pm.environment.set(\"span\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"adress\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
 								],
 								"type": "text/javascript"
 							}
@@ -7162,7 +7156,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7bb27b7b-211d-462e-ae84-716a93400a53",
+								"id": "01722195-9197-4ba9-baf2-a916dc492798",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -7233,13 +7227,13 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b87021ea-28a0-4bfd-a3c1-ed6d31150d13",
+								"id": "148f63a3-ef8b-4d94-9375-92a9b8e38ada",
 								"exec": [
-									"pm.collectionVariables.set(\"index\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"adressAdd\", pm.variables.replaceIn(\"{{$randomProductName}}\")));\r",
-									"pm.collectionVariables.set(\"adressTyp\", \"adressTyp\");\r",
-									"pm.collectionVariables.set(\"span\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"adress\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
+									"pm.environment.set(\"index\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"adressAdd\", pm.variables.replaceIn(\"{{$randomProductName}}\")));\r",
+									"pm.environment.set(\"adressTyp\", \"adressTyp\");\r",
+									"pm.environment.set(\"span\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"adress\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
 								],
 								"type": "text/javascript"
 							}
@@ -7247,7 +7241,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7662562c-f424-49b8-ab41-14acd1b9ef0e",
+								"id": "f64a9dbf-cdf5-41ed-963c-7286c1753c97",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -7320,15 +7314,15 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "9a6f4812-edfd-44f9-9c87-a36480759fe5",
+								"id": "a5764ea3-66fc-45d2-9930-04cd3964fdc0",
 								"exec": [
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"iMax\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"protokoll\", pm.variables.get(\"protokollUpdate\"));\r",
-									"pm.collectionVariables.set(\"fahrstufe\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"gerausch\", new Boolean(false));\r",
-									"pm.collectionVariables.set(\"konfiguration\", pm.variables.get(\"konfigurationUpdate\"));\r",
-									"pm.collectionVariables.set(\"stecker\", pm.variables.get(\"steckerUpdate\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"iMax\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"protokoll\", pm.variables.get(\"protokollUpdate\"));\r",
+									"pm.environment.set(\"fahrstufe\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"gerausch\", new Boolean(false));\r",
+									"pm.environment.set(\"konfiguration\", pm.variables.get(\"konfigurationUpdate\"));\r",
+									"pm.environment.set(\"stecker\", pm.variables.get(\"steckerUpdate\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -7336,7 +7330,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c3b42cd1-660c-445f-a390-459da8e67c5e",
+								"id": "709ef2e8-8549-4861-b2c1-222d5dcea9b3",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -7414,7 +7408,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "df383d52-5b39-4de3-b103-29253a54b922",
+								"id": "f8361469-4494-4960-986b-a21a532169e2",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -7474,7 +7468,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "73a5cb1e-0cbc-49f2-93dd-1043077b27c9",
+								"id": "81bef65a-08af-4cd8-9d34-28f6c92607ab",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -7512,7 +7506,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5559baa9-6b37-469e-a678-c04f171d8f2f",
+								"id": "a597e777-8983-42ae-b15c-d2dd104274c6",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -7551,7 +7545,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d9930364-3fec-4240-bb72-b023701e6a30",
+								"id": "959e73e9-e0cb-4d4a-8dd9-75cf8ec2a7bd",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -7590,7 +7584,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "160e6b91-fcfa-4929-854d-62593869acf7",
+								"id": "2183baef-6d50-4f88-8a19-76e4e3a94048",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -7630,7 +7624,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a2724c71-43a3-4cc8-b826-8c1a198bc5c4",
+								"id": "9c0346b0-7beb-45ab-8401-6a162419b1b8",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -7673,7 +7667,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8a684ba3-aa00-4358-82b0-e5cfe3e32992",
+								"id": "afbac6ac-e860-4539-bd2f-1881eaf3514c",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
@@ -7726,31 +7720,31 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "0f602a06-5cc8-42ef-8782-ddab25d71b3a",
+								"id": "0a4ef8e1-f189-4827-87c5-1b228439c37d",
 								"exec": [
-									"pm.collectionVariables.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
-									"pm.collectionVariables.set(\"bestellNr\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"kategorie\", pm.variables.get(\"kategorieAdd\"));\r",
-									"pm.collectionVariables.set(\"unterKategorie\", pm.variables.get(\"unterKategorieAdd\"));\r",
-									"pm.collectionVariables.set(\"lange\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"massstab\", pm.variables.get(\"massstabAdd\"));\r",
-									"pm.collectionVariables.set(\"spurweite\", pm.variables.get(\"spurweiteAdd\"));\r",
-									"pm.collectionVariables.set(\"epoch\", pm.variables.get(\"epochAdd\"));\r",
-									"pm.collectionVariables.set(\"bahnverwaltung\", pm.variables.get(\"bahnverwaltungAdd\"));\r",
-									"pm.collectionVariables.set(\"gattung\", pm.variables.get(\"gattung\"));\r",
-									"pm.collectionVariables.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));\r",
-									"pm.collectionVariables.set(\"bauzeit\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
-									"pm.collectionVariables.set(\"achsfolg\", pm.variables.get(\"achsfolgAdd\"));\r",
-									"pm.collectionVariables.set(\"sondermodell\", pm.variables.get(\"sondermodellAdd\"));\r",
-									"pm.collectionVariables.set(\"aufbau\", pm.variables.get(\"aufbauAdd\"));\r",
-									"pm.collectionVariables.set(\"licht\", pm.variables.get(\"lichtAdd\"));\r",
-									"pm.collectionVariables.set(\"kupplung\", pm.variables.get(\"kupplungAdd\"));\r",
-									"pm.collectionVariables.set(\"steuerung\", pm.variables.get(\"steuerungAdd\"));\r",
-									"pm.collectionVariables.set(\"decoderHersteller\", pm.variables.get(\"decoderTypHersteller\"));\r",
-									"pm.collectionVariables.set(\"decoderBestellNr\", pm.variables.get(\"decoderTypBestellNr\"));\r",
-									"pm.collectionVariables.set(\"motorTyp\", pm.variables.get(\"motorTypAdd\"));\r",
-									"pm.collectionVariables.set(\"anmerkung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
+									"pm.environment.set(\"bestellNr\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"kategorie\", pm.variables.get(\"kategorieAdd\"));\r",
+									"pm.environment.set(\"unterKategorie\", pm.variables.get(\"unterKategorieAdd\"));\r",
+									"pm.environment.set(\"lange\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"massstab\", pm.variables.get(\"massstabAdd\"));\r",
+									"pm.environment.set(\"spurweite\", pm.variables.get(\"spurweiteAdd\"));\r",
+									"pm.environment.set(\"epoch\", pm.variables.get(\"epochAdd\"));\r",
+									"pm.environment.set(\"bahnverwaltung\", pm.variables.get(\"bahnverwaltungAdd\"));\r",
+									"pm.environment.set(\"gattung\", pm.variables.get(\"gattung\"));\r",
+									"pm.environment.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));\r",
+									"pm.environment.set(\"bauzeit\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
+									"pm.environment.set(\"achsfolg\", pm.variables.get(\"achsfolgAdd\"));\r",
+									"pm.environment.set(\"sondermodell\", pm.variables.get(\"sondermodellAdd\"));\r",
+									"pm.environment.set(\"aufbau\", pm.variables.get(\"aufbauAdd\"));\r",
+									"pm.environment.set(\"licht\", pm.variables.get(\"lichtAdd\"));\r",
+									"pm.environment.set(\"kupplung\", pm.variables.get(\"kupplungAdd\"));\r",
+									"pm.environment.set(\"steuerung\", pm.variables.get(\"steuerungAdd\"));\r",
+									"pm.environment.set(\"decoderHersteller\", pm.variables.get(\"decoderTypHersteller\"));\r",
+									"pm.environment.set(\"decoderBestellNr\", pm.variables.get(\"decoderTypBestellNr\"));\r",
+									"pm.environment.set(\"motorTyp\", pm.variables.get(\"motorTypAdd\"));\r",
+									"pm.environment.set(\"anmerkung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -7758,7 +7752,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "55d660f6-ff71-4786-a22f-8f7646556f1e",
+								"id": "e4d05c43-1749-43ee-a06c-a219eb088027",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -7847,7 +7841,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0de7671a-0a1c-43c5-a129-f4f647e43998",
+								"id": "66f2b05a-a554-4044-8723-1dc2e0b574f5",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -7936,7 +7930,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0b8cdf7e-3378-4060-b264-c3f45d77369f",
+								"id": "ec2e22d7-4346-4a1a-bea3-781c89af72de",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -8026,7 +8020,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "285ef929-0870-4710-8a23-4205c7778414",
+								"id": "739ecb8e-94ad-47e0-a1b4-2dc09e13b02f",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -8117,12 +8111,12 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "c0e8bf4d-4bc8-4da4-a828-b6417361fada",
+								"id": "c37e7784-2c6c-4acf-a6eb-793fa54b43be",
 								"exec": [
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"kategorie\", pm.variables.get(\"kategorieAdd\"));\r",
-									"pm.collectionVariables.set(\"unterKategorie\", pm.variables.get(\"unterKategorieAdd\"));\r",
-									"pm.collectionVariables.set(\"anzahl\", pm.variables.replaceIn(\"{{$randomInt}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"kategorie\", pm.variables.get(\"kategorieAdd\"));\r",
+									"pm.environment.set(\"unterKategorie\", pm.variables.get(\"unterKategorieAdd\"));\r",
+									"pm.environment.set(\"anzahl\", pm.variables.replaceIn(\"{{$randomInt}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -8130,7 +8124,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9a120f4b-7c3b-4c9b-ae8e-11f09d6c379a",
+								"id": "676948db-0aff-4479-8d1c-76c69721bb7e",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -8198,9 +8192,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "cd95b2ac-3938-4c6f-9d78-52a3559d0c36",
+								"id": "b30c95b0-65f4-4902-b8af-9daecb8680e2",
 								"exec": [
-									"pm.collectionVariables.set(\"anzahl\", pm.variables.replaceIn(\"{{$randomInt}}\"));"
+									"pm.environment.set(\"anzahl\", pm.variables.replaceIn(\"{{$randomInt}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -8208,7 +8202,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "98893b39-f431-42d2-b245-5bfe30eb31e2",
+								"id": "55b42c7e-0d33-4d57-b567-662ffa2dea98",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -8275,31 +8269,31 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "5b065fc6-64f1-4dbb-85b1-0036bf92c5a9",
+								"id": "e5f4a642-ce45-4a93-9446-407009824868",
 								"exec": [
-									"pm.collectionVariables.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
-									"pm.collectionVariables.set(\"bestellNr\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"kategorie\", pm.variables.get(\"kategorieAdd\"));\r",
-									"pm.collectionVariables.set(\"unterKategorie\", pm.variables.get(\"unterKategorieAdd\"));\r",
-									"pm.collectionVariables.set(\"lange\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"massstab\", pm.variables.get(\"massstabAdd\"));\r",
-									"pm.collectionVariables.set(\"spurweite\", pm.variables.get(\"spurweiteAdd\"));\r",
-									"pm.collectionVariables.set(\"epoch\", pm.variables.get(\"epochAdd\"));\r",
-									"pm.collectionVariables.set(\"bahnverwaltung\", pm.variables.get(\"bahnverwaltungAdd\"));\r",
-									"pm.collectionVariables.set(\"gattung\", pm.variables.get(\"gattung\"));\r",
-									"pm.collectionVariables.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));\r",
-									"pm.collectionVariables.set(\"bauzeit\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
-									"pm.collectionVariables.set(\"achsfolg\", pm.variables.get(\"achsfolgAdd\"));\r",
-									"pm.collectionVariables.set(\"sondermodell\", pm.variables.get(\"sondermodellAdd\"));\r",
-									"pm.collectionVariables.set(\"aufbau\", pm.variables.get(\"aufbauAdd\"));\r",
-									"pm.collectionVariables.set(\"licht\", pm.variables.get(\"lichtAdd\"));\r",
-									"pm.collectionVariables.set(\"kupplung\", pm.variables.get(\"kupplungAdd\"));\r",
-									"pm.collectionVariables.set(\"steuerung\", pm.variables.get(\"steuerungAdd\"));\r",
-									"pm.collectionVariables.set(\"decoderTypHersteller\", pm.variables.get(\"decoderTypHersteller\"));\r",
-									"pm.collectionVariables.set(\"decoderTypBestellNr\", pm.variables.get(\"decoderTypBestellNr\"));\r",
-									"pm.collectionVariables.set(\"motorTyp\", pm.variables.get(\"motorTypAdd\"));\r",
-									"pm.collectionVariables.set(\"anmerkung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
+									"pm.environment.set(\"bestellNr\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"kategorie\", pm.variables.get(\"kategorieAdd\"));\r",
+									"pm.environment.set(\"unterKategorie\", pm.variables.get(\"unterKategorieAdd\"));\r",
+									"pm.environment.set(\"lange\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"massstab\", pm.variables.get(\"massstabAdd\"));\r",
+									"pm.environment.set(\"spurweite\", pm.variables.get(\"spurweiteAdd\"));\r",
+									"pm.environment.set(\"epoch\", pm.variables.get(\"epochAdd\"));\r",
+									"pm.environment.set(\"bahnverwaltung\", pm.variables.get(\"bahnverwaltungAdd\"));\r",
+									"pm.environment.set(\"gattung\", pm.variables.get(\"gattung\"));\r",
+									"pm.environment.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));\r",
+									"pm.environment.set(\"bauzeit\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
+									"pm.environment.set(\"achsfolg\", pm.variables.get(\"achsfolgAdd\"));\r",
+									"pm.environment.set(\"sondermodell\", pm.variables.get(\"sondermodellAdd\"));\r",
+									"pm.environment.set(\"aufbau\", pm.variables.get(\"aufbauAdd\"));\r",
+									"pm.environment.set(\"licht\", pm.variables.get(\"lichtAdd\"));\r",
+									"pm.environment.set(\"kupplung\", pm.variables.get(\"kupplungAdd\"));\r",
+									"pm.environment.set(\"steuerung\", pm.variables.get(\"steuerungAdd\"));\r",
+									"pm.environment.set(\"decoderTypHersteller\", pm.variables.get(\"decoderTypHersteller\"));\r",
+									"pm.environment.set(\"decoderTypBestellNr\", pm.variables.get(\"decoderTypBestellNr\"));\r",
+									"pm.environment.set(\"motorTyp\", pm.variables.get(\"motorTypAdd\"));\r",
+									"pm.environment.set(\"anmerkung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -8307,7 +8301,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "87a414f7-b1bf-42a7-908b-482bf5e860e5",
+								"id": "31727e7f-2413-4a95-ba87-8afad1e29276",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -8398,7 +8392,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cd18e232-7fcc-4c51-841e-0e661cc41e1a",
+								"id": "8b231f84-6315-460f-8d7d-a3862301e901",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -8474,7 +8468,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c5495eb8-ee02-4811-8ada-c0f0ba46d779",
+								"id": "1b6273f3-e383-415e-899c-f18f7ef7e592",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -8551,7 +8545,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a0e2ba1d-fe72-4a5a-bfec-054c74b11b1b",
+								"id": "87a8c94c-5921-4a1e-a851-15c1d1ab1310",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -8627,7 +8621,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5821ffe3-14c8-4d3f-a900-758d3e579494",
+								"id": "f650b022-759d-43aa-9841-8e5096c86f1c",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -8702,7 +8696,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "44b40b0b-4bc3-497b-90e5-3745b817fce3",
+								"id": "5d22e5ff-ab0c-45f7-8f3d-c0c5955a436c",
 								"exec": [
 									"pm.response.to.have.status(204);\r",
 									""
@@ -8743,7 +8737,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "84c34d34-0ee3-4db1-9213-01d2240fbd1b",
+								"id": "c8bd2689-5e8d-4ee3-837b-d5c09f7ae284",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -8786,7 +8780,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4e778097-2688-45e3-aa94-44a753f57327",
+								"id": "e9e10778-8704-4803-90e1-be80ead94166",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoder\");\r",
@@ -8839,24 +8833,24 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "2f759b03-dc88-4025-86eb-315cc5a0fd80",
+								"id": "a1dee96f-cb97-4878-b18e-80a320595eee",
 								"exec": [
-									"pm.collectionVariables.set(\"decoderId\", pm.variables.get(\"decoderId\"));\r",
-									"pm.collectionVariables.set(\"hersteller\", pm.variables.get(\"hersteller\"));\r",
-									"pm.collectionVariables.set(\"bestellNr\", pm.variables.get(\"bestellNr\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.get(\"bezeichnung\"));\r",
-									"pm.collectionVariables.set(\"iMax\", pm.variables.get(\"iMax\"));\r",
-									"pm.collectionVariables.set(\"protokoll\", pm.variables.get(\"protokoll\"));\r",
-									"pm.collectionVariables.set(\"fahrstufe\", pm.variables.get(\"fahrstufe\"));\r",
-									"pm.collectionVariables.set(\"sound\", pm.variables.get(\"sound\"));\r",
-									"pm.collectionVariables.set(\"konfiguration\", pm.variables.get(\"konfiguration\"));\r",
-									"pm.collectionVariables.set(\"stecker\", pm.variables.get(\"stecker\"));\r",
-									"pm.collectionVariables.set(\"status\", pm.variables.get(\"status\"));\r",
-									"pm.collectionVariables.set(\"anleitungen\", pm.variables.get(\"anleitungen\"));\r",
-									"pm.collectionVariables.set(\"adressen\", pm.variables.get(\"adressen\"));\r",
-									"pm.collectionVariables.set(\"cvs\", pm.variables.get(\"cvs\"));\r",
-									"pm.collectionVariables.set(\"funktionen\", pm.variables.get(\"funktionen\"));\r",
-									"pm.collectionVariables.set(\"deleted\", pm.variables.get(\"deleted\"));"
+									"pm.environment.set(\"decoderId\", pm.variables.get(\"decoderId\"));\r",
+									"pm.environment.set(\"hersteller\", pm.variables.get(\"hersteller\"));\r",
+									"pm.environment.set(\"bestellNr\", pm.variables.get(\"bestellNr\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.get(\"bezeichnung\"));\r",
+									"pm.environment.set(\"iMax\", pm.variables.get(\"iMax\"));\r",
+									"pm.environment.set(\"protokoll\", pm.variables.get(\"protokoll\"));\r",
+									"pm.environment.set(\"fahrstufe\", pm.variables.get(\"fahrstufe\"));\r",
+									"pm.environment.set(\"sound\", pm.variables.get(\"sound\"));\r",
+									"pm.environment.set(\"konfiguration\", pm.variables.get(\"konfiguration\"));\r",
+									"pm.environment.set(\"stecker\", pm.variables.get(\"stecker\"));\r",
+									"pm.environment.set(\"status\", pm.variables.get(\"status\"));\r",
+									"pm.environment.set(\"anleitungen\", pm.variables.get(\"anleitungen\"));\r",
+									"pm.environment.set(\"adressen\", pm.variables.get(\"adressen\"));\r",
+									"pm.environment.set(\"cvs\", pm.variables.get(\"cvs\"));\r",
+									"pm.environment.set(\"funktionen\", pm.variables.get(\"funktionen\"));\r",
+									"pm.environment.set(\"deleted\", pm.variables.get(\"deleted\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -8864,7 +8858,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7da17bdf-2056-4c79-b5e1-effe9e960991",
+								"id": "e5b60d71-a3d2-48bc-9aa3-1af6bde337f6",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -9054,9 +9048,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "3b307358-b7f1-4819-a6a1-108e656d48c4",
+								"id": "62dfc753-1bfb-4984-95af-9ba8e86b30b2",
 								"exec": [
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -9064,7 +9058,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d46b5ff7-06ae-4545-874d-6462f6c0ca7a",
+								"id": "c7280e4e-ebcb-4bf9-b0a0-4994c8f7c3df",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -9129,7 +9123,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0d3fc61c-7455-4e58-a2bd-a26f7c969f5a",
+								"id": "46dbaeba-ad09-4782-908a-89cefd792162",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -9176,7 +9170,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ec135d2f-0559-41ce-85b8-82dfa44b58f8",
+								"id": "c53a4741-73b4-4e3b-8dc3-5744a88f9d89",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -9218,7 +9212,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f3ecf3c6-50c1-4ea4-8f2f-bb3337049899",
+								"id": "c1a7a77a-1e45-4e52-aa1a-9b3d037a336b",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/artikel\");\r",
@@ -9271,36 +9265,36 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "27df081d-1663-43fd-9e7e-10ce23bb71a9",
+								"id": "6bd71ee7-8635-4190-ac7b-787fe4d3c298",
 								"exec": [
-									"pm.collectionVariables.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
-									"pm.collectionVariables.set(\"bestellNr\", pm.variables.get(\"bestellNr\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"kategorie\", pm.variables.get(\"kategorieAdd\"));\r",
-									"pm.collectionVariables.set(\"unterKategorie\", pm.variables.get(\"unterKategorieAdd\"));\r",
-									"pm.collectionVariables.set(\"lange\", Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"massstab\", pm.variables.get(\"massstabAdd\"));\r",
-									"pm.collectionVariables.set(\"spurweite\", pm.variables.get(\"spurweiteAdd\"));\r",
-									"pm.collectionVariables.set(\"epoch\", pm.variables.get(\"epochAdd\"));\r",
-									"pm.collectionVariables.set(\"bahnverwaltung\", pm.variables.get(\"bahnverwaltungAdd\"));\r",
-									"pm.collectionVariables.set(\"gattung\", pm.variables.get(\"gattungAdd\"));\r",
-									"pm.collectionVariables.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));\r",
-									"pm.collectionVariables.set(\"achsfolg\", pm.variables.get(\"achsfolgAdd\"));\r",
-									"pm.collectionVariables.set(\"sondermodell\", pm.variables.get(\"sondermodellAdd\"));\r",
-									"pm.collectionVariables.set(\"aufbau\", pm.variables.get(\"aufbauAdd\"));\r",
-									"pm.collectionVariables.set(\"licht\", pm.variables.get(\"lichtAdd\"));\r",
-									"pm.collectionVariables.set(\"kupplung\", pm.variables.get(\"kupplungAdd\"));\r",
-									"pm.collectionVariables.set(\"steuerung\", pm.variables.get(\"steuerungAdd\"));\r",
-									"pm.collectionVariables.set(\"decoder\", pm.variables.get(\"decoderAdd\"));\r",
-									"pm.collectionVariables.set(\"motorTyp\", pm.variables.get(\"motorTypAdd\"));\r",
-									"pm.collectionVariables.set(\"kaufdatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
-									"pm.collectionVariables.set(\"wahrung\", pm.variables.replaceIn(\"{{$randomCurrencyCode}}\"));\r",
-									"pm.collectionVariables.set(\"preis\", Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"stuck\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"verbleibende\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"anmerkung\", pm.variables.replaceIn(\"{{$randomCatchPhrase}}\"));\r",
-									"pm.collectionVariables.set(\"beladung\", pm.variables.replaceIn(\"{{$randomProductMaterial}}\"));\r",
-									"pm.collectionVariables.set(\"status\", \"GEKAUFT\");"
+									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
+									"pm.environment.set(\"bestellNr\", pm.variables.get(\"bestellNr\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"kategorie\", pm.variables.get(\"kategorieAdd\"));\r",
+									"pm.environment.set(\"unterKategorie\", pm.variables.get(\"unterKategorieAdd\"));\r",
+									"pm.environment.set(\"lange\", Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"massstab\", pm.variables.get(\"massstabAdd\"));\r",
+									"pm.environment.set(\"spurweite\", pm.variables.get(\"spurweiteAdd\"));\r",
+									"pm.environment.set(\"epoch\", pm.variables.get(\"epochAdd\"));\r",
+									"pm.environment.set(\"bahnverwaltung\", pm.variables.get(\"bahnverwaltungAdd\"));\r",
+									"pm.environment.set(\"gattung\", pm.variables.get(\"gattungAdd\"));\r",
+									"pm.environment.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));\r",
+									"pm.environment.set(\"achsfolg\", pm.variables.get(\"achsfolgAdd\"));\r",
+									"pm.environment.set(\"sondermodell\", pm.variables.get(\"sondermodellAdd\"));\r",
+									"pm.environment.set(\"aufbau\", pm.variables.get(\"aufbauAdd\"));\r",
+									"pm.environment.set(\"licht\", pm.variables.get(\"lichtAdd\"));\r",
+									"pm.environment.set(\"kupplung\", pm.variables.get(\"kupplungAdd\"));\r",
+									"pm.environment.set(\"steuerung\", pm.variables.get(\"steuerungAdd\"));\r",
+									"pm.environment.set(\"decoder\", pm.variables.get(\"decoderAdd\"));\r",
+									"pm.environment.set(\"motorTyp\", pm.variables.get(\"motorTypAdd\"));\r",
+									"pm.environment.set(\"kaufdatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
+									"pm.environment.set(\"wahrung\", pm.variables.replaceIn(\"{{$randomCurrencyCode}}\"));\r",
+									"pm.environment.set(\"preis\", Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"stuck\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"verbleibende\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"anmerkung\", pm.variables.replaceIn(\"{{$randomCatchPhrase}}\"));\r",
+									"pm.environment.set(\"beladung\", pm.variables.replaceIn(\"{{$randomProductMaterial}}\"));\r",
+									"pm.environment.set(\"status\", \"GEKAUFT\");"
 								],
 								"type": "text/javascript"
 							}
@@ -9308,12 +9302,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5fb3d59f-163c-4b3b-8b33-5d69259546b5",
+								"id": "dfa3a6f3-4d88-4241-8cc9-761f58384c5b",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
 									"var artikelId = jsonData.artikelId;\r",
-									"pm.collectionVariables.set(\"artikelId\", artikelId);\r",
+									"pm.environment.set(\"artikelId\", artikelId);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/artikel\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/artikel/{{artikelId}}\");\r",
 									"pm.expect(jsonData.artikelId).to.eql(pm.variables.get(\"artikelId\"));\r",
@@ -9402,12 +9396,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4b0a1a36-810d-427d-8734-aeb670e970a7",
+								"id": "8cb32f30-f8e2-43a9-9504-a0a454d8c126",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var artikelId = jsonData.artikelId;\r",
-									"pm.collectionVariables.set(\"artikelId\", artikelId);\r",
+									"pm.environment.set(\"artikelId\", artikelId);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/artikel\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/artikel/{{artikelId}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{root}}/artikel/{{artikelId}}/abbildung.jpg\");\r",
@@ -9495,14 +9489,14 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "f4174c36-75f4-4d0a-a3c6-1020a6a58db7",
+								"id": "2257a653-dda6-45ba-8fad-54692fdb4bf2",
 								"exec": [
-									"pm.collectionVariables.set(\"anderungId\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"anderungsDatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
-									"pm.collectionVariables.set(\"anderungsTyp\", \"UMGEBAUT\");\r",
-									"pm.collectionVariables.set(\"anderungStuck\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"anderung\", pm.variables.replaceIn(\"{{$randomLoremParagraph}}\"));\r",
-									"pm.collectionVariables.set(\"status\", \"GEKAUFT\");"
+									"pm.environment.set(\"anderungId\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"anderungsDatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
+									"pm.environment.set(\"anderungsTyp\", \"UMGEBAUT\");\r",
+									"pm.environment.set(\"anderungStuck\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"anderung\", pm.variables.replaceIn(\"{{$randomLoremParagraph}}\"));\r",
+									"pm.environment.set(\"status\", \"GEKAUFT\");"
 								],
 								"type": "text/javascript"
 							}
@@ -9510,7 +9504,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d1494ddc-5b6c-4e05-8bfe-64207617b6a1",
+								"id": "e5d92515-aeab-468e-8316-4f1f30b9ac11",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -9578,12 +9572,12 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "ead26fc7-806b-48ae-a943-c0d3be86bd28",
+								"id": "e789bb7f-13df-4d8b-90bc-4b9145c38d30",
 								"exec": [
-									"pm.collectionVariables.set(\"anderungsDatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
-									"pm.collectionVariables.set(\"anderungsTyp\", \"REPARIERT\");\r",
-									"pm.collectionVariables.set(\"anderungStuck\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"anderung\", pm.variables.replaceIn(\"{{$randomLoremParagraph}}\"));"
+									"pm.environment.set(\"anderungsDatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
+									"pm.environment.set(\"anderungsTyp\", \"REPARIERT\");\r",
+									"pm.environment.set(\"anderungStuck\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"anderung\", pm.variables.replaceIn(\"{{$randomLoremParagraph}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -9591,7 +9585,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a16cdce8-2a9a-43fa-a923-9a51d5f758f8",
+								"id": "223275af-6eb6-4efb-8a4b-d5c2b9c1c99e",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -9660,36 +9654,36 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "f8270e33-ef91-4526-860d-d34cc07a3f53",
+								"id": "c100ae69-62bf-4db5-933a-26e18ec02f80",
 								"exec": [
-									"pm.collectionVariables.set(\"hersteller\", pm.variables.get(\"herstellerUpdate\"));\r",
-									"pm.collectionVariables.set(\"bestellNr\", pm.variables.get(\"bestellNr\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"kategorie\", pm.variables.get(\"kategorieUpdate\"));\r",
-									"pm.collectionVariables.set(\"unterKategorie\", pm.variables.get(\"unterKategorieUpdate\"));\r",
-									"pm.collectionVariables.set(\"lange\", Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"massstab\", pm.variables.get(\"massstabUpdate\"));\r",
-									"pm.collectionVariables.set(\"spurweite\", pm.variables.get(\"spurweiteUpdate\"));\r",
-									"pm.collectionVariables.set(\"epoch\", pm.variables.get(\"epochUpdate\"));\r",
-									"pm.collectionVariables.set(\"bahnverwaltung\", pm.variables.get(\"bahnverwaltungUpdate\"));\r",
-									"pm.collectionVariables.set(\"gattung\", pm.variables.get(\"gattungUpdate\"));\r",
-									"pm.collectionVariables.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));\r",
-									"pm.collectionVariables.set(\"achsfolg\", pm.variables.get(\"achsfolgUpdate\"));\r",
-									"pm.collectionVariables.set(\"sondermodell\", pm.variables.get(\"sondermodellUpdate\"));\r",
-									"pm.collectionVariables.set(\"aufbau\", pm.variables.get(\"aufbauUpdate\"));\r",
-									"pm.collectionVariables.set(\"licht\", pm.variables.get(\"lichtUpdate\"));\r",
-									"pm.collectionVariables.set(\"kupplung\", pm.variables.get(\"kupplungUpdate\"));\r",
-									"pm.collectionVariables.set(\"steuerung\", pm.variables.get(\"steuerungUpdate\"));\r",
-									"pm.collectionVariables.set(\"decoder\", pm.variables.get(\"decoderUpdate\"));\r",
-									"pm.collectionVariables.set(\"motorTyp\", pm.variables.get(\"motorTypUpdate\"));\r",
-									"pm.collectionVariables.set(\"kaufdatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
-									"pm.collectionVariables.set(\"wahrung\", pm.variables.replaceIn(\"{{$randomCurrencyCode}}\"));\r",
-									"pm.collectionVariables.set(\"preis\", Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"stuck\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"verbleibende\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.collectionVariables.set(\"anmerkung\", pm.variables.replaceIn(\"{{$randomCatchPhrase}}\"));\r",
-									"pm.collectionVariables.set(\"beladung\", pm.variables.replaceIn(\"{{$randomProductMaterial}}\"));\r",
-									"pm.collectionVariables.set(\"status\", \"BASTLER\");"
+									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerUpdate\"));\r",
+									"pm.environment.set(\"bestellNr\", pm.variables.get(\"bestellNr\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"kategorie\", pm.variables.get(\"kategorieUpdate\"));\r",
+									"pm.environment.set(\"unterKategorie\", pm.variables.get(\"unterKategorieUpdate\"));\r",
+									"pm.environment.set(\"lange\", Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"massstab\", pm.variables.get(\"massstabUpdate\"));\r",
+									"pm.environment.set(\"spurweite\", pm.variables.get(\"spurweiteUpdate\"));\r",
+									"pm.environment.set(\"epoch\", pm.variables.get(\"epochUpdate\"));\r",
+									"pm.environment.set(\"bahnverwaltung\", pm.variables.get(\"bahnverwaltungUpdate\"));\r",
+									"pm.environment.set(\"gattung\", pm.variables.get(\"gattungUpdate\"));\r",
+									"pm.environment.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));\r",
+									"pm.environment.set(\"achsfolg\", pm.variables.get(\"achsfolgUpdate\"));\r",
+									"pm.environment.set(\"sondermodell\", pm.variables.get(\"sondermodellUpdate\"));\r",
+									"pm.environment.set(\"aufbau\", pm.variables.get(\"aufbauUpdate\"));\r",
+									"pm.environment.set(\"licht\", pm.variables.get(\"lichtUpdate\"));\r",
+									"pm.environment.set(\"kupplung\", pm.variables.get(\"kupplungUpdate\"));\r",
+									"pm.environment.set(\"steuerung\", pm.variables.get(\"steuerungUpdate\"));\r",
+									"pm.environment.set(\"decoder\", pm.variables.get(\"decoderUpdate\"));\r",
+									"pm.environment.set(\"motorTyp\", pm.variables.get(\"motorTypUpdate\"));\r",
+									"pm.environment.set(\"kaufdatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
+									"pm.environment.set(\"wahrung\", pm.variables.replaceIn(\"{{$randomCurrencyCode}}\"));\r",
+									"pm.environment.set(\"preis\", Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"stuck\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"verbleibende\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"anmerkung\", pm.variables.replaceIn(\"{{$randomCatchPhrase}}\"));\r",
+									"pm.environment.set(\"beladung\", pm.variables.replaceIn(\"{{$randomProductMaterial}}\"));\r",
+									"pm.environment.set(\"status\", \"BASTLER\");"
 								],
 								"type": "text/javascript"
 							}
@@ -9697,7 +9691,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6c927ca5-50cd-4a31-ad48-3a3aa05ec01e",
+								"id": "fdfaf21a-8a9b-4aab-82db-0ff9b8e1e944",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -9799,7 +9793,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b952f52b-d617-49ac-b17d-5c992e47eb27",
+								"id": "e5ded952-b415-4f42-b17e-5403b87ff2c0",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -9882,7 +9876,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "01db733f-13cb-45cc-80ed-4774963510eb",
+								"id": "dd3cce7a-161e-41a3-9164-ac3a0859a122",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -9966,7 +9960,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "31ebfe10-3339-4829-8368-a020cc4c0882",
+								"id": "35515faf-40cd-46cc-b581-68d8169afeda",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -10052,7 +10046,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c07407d2-e1a8-48ec-b2c8-22f3fff51f98",
+								"id": "41017d87-0f7a-4f65-be97-433d0923821b",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -10094,7 +10088,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3d3d7e6e-3555-4aee-be56-65589f7d332b",
+								"id": "aebd3c82-dcea-460e-b566-73206cc5cc68",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
@@ -10147,11 +10141,11 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "d7a8891d-4b15-48f9-9b7b-97501e7ec7db",
+								"id": "39e5dc89-13bd-46d4-9b71-fd5aad9a6ab7",
 								"exec": [
-									"pm.collectionVariables.set(\"zug\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.collectionVariables.set(\"zugTyp\", pm.variables.get(\"zugTypAdd\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"zug\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
+									"pm.environment.set(\"zugTyp\", pm.variables.get(\"zugTypAdd\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -10159,7 +10153,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bc4e258b-5c72-472a-8366-226989f2a1d2",
+								"id": "a217ba5f-a22c-4ae4-ae3c-07edf99c2e5d",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -10224,17 +10218,17 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "e460f2ff-a7f2-42f8-bab3-1d1a52c9efe9",
+								"id": "900602da-c0f0-4576-9b97-891006c913bc",
 								"exec": [
-									"pm.collectionVariables.set(\"position\", pm.variables.replaceIn(\"{{$randomInt}}\"));\r",
-									"pm.collectionVariables.set(\"artikelId\", pm.variables.get(\"artikelAdd\"));\r",
-									"pm.collectionVariables.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
-									"pm.collectionVariables.set(\"bestellNr\", pm.variables.get(\"bestellNr\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"lange\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"bahnverwaltung\", pm.variables.get(\"bahnverwaltungAdd\"));\r",
-									"pm.collectionVariables.set(\"gattung\", pm.variables.get(\"gattungAdd\"));\r",
-									"pm.collectionVariables.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));"
+									"pm.environment.set(\"position\", pm.variables.replaceIn(\"{{$randomInt}}\"));\r",
+									"pm.environment.set(\"artikelId\", pm.variables.get(\"artikelAdd\"));\r",
+									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
+									"pm.environment.set(\"bestellNr\", pm.variables.get(\"bestellNr\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"lange\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"bahnverwaltung\", pm.variables.get(\"bahnverwaltungAdd\"));\r",
+									"pm.environment.set(\"gattung\", pm.variables.get(\"gattungAdd\"));\r",
+									"pm.environment.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -10242,7 +10236,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "976e61c4-e2c8-42dc-ba59-7078cab2bd23",
+								"id": "265532d9-86cd-4d21-9e28-64a7ef8f7719",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -10318,17 +10312,17 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "7be232be-c974-42a8-b5ba-2f9423e0ba2b",
+								"id": "8336ea5c-8d21-4991-a48b-17d51d4a2d2a",
 								"exec": [
-									"pm.collectionVariables.set(\"position\", pm.variables.replaceIn(\"{{$randomInt}}\"));\r",
-									"pm.collectionVariables.set(\"artikelId\", pm.variables.get(\"artikelAdd\"));\r",
-									"pm.collectionVariables.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
-									"pm.collectionVariables.set(\"bestellNr\", pm.variables.get(\"bestellNr\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.collectionVariables.set(\"lange\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.collectionVariables.set(\"bahnverwaltung\", pm.variables.get(\"bahnverwaltungAdd\"));\r",
-									"pm.collectionVariables.set(\"gattung\", pm.variables.get(\"gattungAdd\"));\r",
-									"pm.collectionVariables.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));"
+									"pm.environment.set(\"position\", pm.variables.replaceIn(\"{{$randomInt}}\"));\r",
+									"pm.environment.set(\"artikelId\", pm.variables.get(\"artikelAdd\"));\r",
+									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
+									"pm.environment.set(\"bestellNr\", pm.variables.get(\"bestellNr\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"lange\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"bahnverwaltung\", pm.variables.get(\"bahnverwaltungAdd\"));\r",
+									"pm.environment.set(\"gattung\", pm.variables.get(\"gattungAdd\"));\r",
+									"pm.environment.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -10336,7 +10330,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b15d7828-8357-4ead-b530-261f1f91a4f2",
+								"id": "d38ab6a8-bd75-4144-9fa1-bfe0deb22a74",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -10407,10 +10401,10 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "559ae598-e8b6-420c-abe9-f40c05a79a38",
+								"id": "cafda6c7-568a-4523-abaa-a407fc5d6a67",
 								"exec": [
-									"pm.collectionVariables.set(\"zugTyp\", pm.variables.get(\"zugTypUpdate\"));\r",
-									"pm.collectionVariables.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"zugTyp\", pm.variables.get(\"zugTypUpdate\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -10418,7 +10412,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1cc26f80-83d7-4259-a65c-5170535522a0",
+								"id": "538914f4-0f90-41ad-827f-2e7161e50581",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -10484,7 +10478,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "57573cc1-c2c9-46d7-96eb-7cac4599b410",
+								"id": "c4e51594-5f79-4115-9a17-dc3788be7954",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -10532,7 +10526,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9033685e-92ce-4ccb-b7d2-94f606b7b324",
+								"id": "6aaaa2d2-689b-4a6f-b8b7-0b10591e310d",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -10570,7 +10564,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "da4194c4-651c-4786-8ca2-dc18df8f5e0b",
+								"id": "1be89f55-8404-4e18-9fed-dc80cc64dcfc",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -12645,7 +12639,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "fb3af6e0-b53d-45b1-8d9a-0b70908a95dd",
+				"id": "133cdb36-f86f-47d2-aad6-bd12f7a7b5e3",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -12655,7 +12649,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "7c4eb1e5-a9f5-4284-83c7-10be48eaa91b",
+				"id": "f0fc221a-507b-443e-8597-07a9ad5c8112",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -12665,347 +12659,347 @@
 	],
 	"variable": [
 		{
-			"id": "36ec238f-4699-4564-99e6-ced9106378f0",
+			"id": "4f5e6b57-82eb-4ab0-901c-b8571da044ce",
 			"key": "host",
 			"value": "127.0.0.1"
 		},
 		{
-			"id": "0489f91a-3273-4b0c-9dca-b21edf9c459c",
+			"id": "bc210fa7-93fb-4f38-aa31-7b34acd1ce70",
 			"key": "port",
 			"value": ":8086"
 		},
 		{
-			"id": "b297cc76-fdbe-4338-8865-f6f0793cc929",
+			"id": "fd88ecbd-a17e-4926-860f-e7238c587dcc",
 			"key": "server",
 			"value": "http://{{host}}{{port}}"
 		},
 		{
-			"id": "1f1d12f8-2ffa-497e-9ac9-29ae7de88889",
+			"id": "02b69d81-68ba-4643-938d-147cabeaac82",
 			"key": "root",
 			"value": "{{server}}/ModellBahn"
 		},
 		{
-			"id": "15824af4-eb38-4089-a9e7-5fd254fb8da9",
+			"id": "51215f99-1c5c-4a5d-a864-8dadef79f8a4",
 			"key": "api",
 			"value": "{{root}}/api"
 		},
 		{
-			"id": "3a29103e-9ace-4cb0-b1b0-0a2f014ffe20",
+			"id": "9fd9f73e-a56e-4950-9144-f1434018f839",
 			"key": "language",
 			"value": "de"
 		},
 		{
-			"id": "7b489155-d4c4-4d40-b983-9d74750b8377",
+			"id": "c8f830d5-1aca-4e4b-8ddc-43cc90569c99",
 			"key": "achsfolgAdd",
 			"value": "1C1H2T"
 		},
 		{
-			"id": "3c4fbedb-e1b1-4ef5-b7c6-9afc5d3af9f8",
+			"id": "71f6b177-7409-46a3-a333-343ca84b25a2",
 			"key": "achsfolgUpdate",
 			"value": "COCO"
 		},
 		{
-			"id": "1b5d4ee7-07e9-47df-9d65-335ad81ecdb7",
+			"id": "dc366459-837f-47c4-a890-0539518dc99d",
 			"key": "adressTypAdd",
 			"value": "MFX"
 		},
 		{
-			"id": "ba8bfb41-0e1f-4630-a683-1870218b6255",
+			"id": "0ad42941-e723-4229-9a46-6579877b6c5f",
 			"key": "adressTypUpdate",
 			"value": "DELTA"
 		},
 		{
-			"id": "0cc279ac-ed0b-4fa3-975b-cb0d5f83cb34",
+			"id": "3a8177cb-40e1-4692-9609-bce55cc28bb6",
 			"key": "anderungAdd",
 			"value": "1"
 		},
 		{
-			"id": "2cea76c3-56d5-4f97-a3b6-b2dd26f9389c",
+			"id": "69c81f17-a23a-48e1-a367-36a0261c0de9",
 			"key": "anderungUpdate",
 			"value": "1"
 		},
 		{
-			"id": "c1a83d58-3a32-4591-9e00-2ee23e48cb53",
+			"id": "121f874c-c713-47cf-a639-e93293d95c36",
 			"key": "antriebAdd",
 			"value": "DAMPF"
 		},
 		{
-			"id": "22ef947c-e782-43ee-95ab-90d7a0d1f3fe",
+			"id": "89a70706-327b-44d1-ae4b-c13822936a3e",
 			"key": "antriebUpdate",
 			"value": "ELEKTRO"
 		},
 		{
-			"id": "6f45ce09-5afc-496b-b78d-5242cb03196e",
+			"id": "7ff75d7d-7e6a-441e-b95c-16c6dec0aa2c",
 			"key": "artikelAdd",
 			"value": "00001"
 		},
 		{
-			"id": "dc083871-0eeb-4080-99e9-3f235f8a3a04",
+			"id": "73f5b7bd-7dcc-4341-880e-0faf0df22a46",
 			"key": "artikelUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "9ae478c9-a033-4dde-8eb4-955cce7bfeaa",
+			"id": "db4e86f0-7618-4abf-b18c-30361fabc829",
 			"key": "aufbauAdd",
 			"value": "LK"
 		},
 		{
-			"id": "2c510583-b949-49cc-8c64-13564349e97b",
+			"id": "7f0055d2-ffb9-493f-a2a2-dce081de4574",
 			"key": "aufbauUpdate",
 			"value": "LK"
 		},
 		{
-			"id": "51cc4d29-8739-4eb2-9197-7895f4b79943",
+			"id": "050832fe-dea5-4468-a41a-c623bab7180e",
 			"key": "bestellNrAdd",
 			"value": "3000"
 		},
 		{
-			"id": "46e9c1e4-5988-44c8-9e5e-1fffeaccdb68",
+			"id": "f91128a5-1ef0-4c8e-9e65-82667db660dc",
 			"key": "bestellNrUpdate",
 			"value": "3003"
 		},
 		{
-			"id": "63162595-db84-4fa7-9089-e4aef61a6785",
+			"id": "ef395813-6b77-4db7-a363-ad616d586486",
 			"key": "bahnverwaltungAdd",
 			"value": "DB"
 		},
 		{
-			"id": "069318e5-6816-444b-8e12-0307e68bfd7e",
+			"id": "d0f048a7-c9e4-4705-b24c-f023f8b2b592",
 			"key": "bahnverwaltungUpdate",
 			"value": "DBAG"
 		},
 		{
-			"id": "a01626b2-2c60-40dc-b6fe-d9414bfa2723",
+			"id": "1f78470e-4511-4b7f-b20c-27588015621b",
 			"key": "decoderAdd",
 			"value": "00001"
 		},
 		{
-			"id": "20d4e3bf-6041-4497-81e4-834c835c1251",
+			"id": "5c74f06d-0413-4c78-bf9c-2a810ceb04e9",
 			"key": "decoderUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "f5ab6505-4be0-4460-86e4-eeb6629b6e1c",
+			"id": "0084af02-e4ba-4316-8be7-d3ad75654222",
 			"key": "decoderHerstellerAdd",
 			"value": "ESU"
 		},
 		{
-			"id": "e87e2788-d918-4005-b568-922eeee8d215",
+			"id": "15da1bc7-6335-4083-8c88-b3c4dadeafa7",
 			"key": "decoderHerstellerUpdate",
 			"value": "ESU"
 		},
 		{
-			"id": "6f5f46ea-523c-4b6c-9a3e-daaf4a7b139a",
+			"id": "e32a0d1b-5c97-4c0f-96e7-f05c98f5b909",
 			"key": "decoderBestellAdd",
 			"value": "62400"
 		},
 		{
-			"id": "8364c043-d7b2-4018-a282-acb6ebadafdb",
+			"id": "1946a5ce-986f-4bfb-94e1-2a3822d19682",
 			"key": "decoderBestellUpdate",
 			"value": "62400"
 		},
 		{
-			"id": "bfd09bb7-e8c4-4867-a3ab-b38760b90d92",
+			"id": "d823d538-4582-44ed-8549-f42e5b04edab",
 			"key": "epochAdd",
 			"value": "IV"
 		},
 		{
-			"id": "36d3c137-28f1-45ae-86f0-f8874f21d9db",
+			"id": "215c58b7-5eda-4281-a5fc-62139f4b72be",
 			"key": "epochUpdate",
 			"value": "IV"
 		},
 		{
-			"id": "e61becc4-b02e-4637-96fb-5df1bb8910c8",
+			"id": "61ff8652-79e5-4476-bf0c-a6fd7cbace43",
 			"key": "gattungAdd",
 			"value": "BR89.0"
 		},
 		{
-			"id": "54cc902d-3913-4ed4-8cf7-a9332f952ba3",
+			"id": "77d74e23-a694-408a-b4d7-0c76418bf12a",
 			"key": "gattungUpdate",
 			"value": "BR89.0"
 		},
 		{
-			"id": "265e4527-f2ac-493d-86b6-80506507c5f3",
+			"id": "1b607096-6aa6-4a05-b660-095d5b729164",
 			"key": "herstellerAdd",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "aef2cc26-c6f6-473f-a887-b098f81c2ca3",
+			"id": "746e5c52-2487-4084-8c59-ce5f647b361d",
 			"key": "herstellerUpdate",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "e8f93859-7b0b-4f1e-9b89-66c45973f3f1",
+			"id": "61feaf6c-c7d7-42eb-a9ea-1287e6492d90",
 			"key": "kategorieAdd",
-			"value": "LOKOMTIV"
+			"value": "LOKOMOTIV"
 		},
 		{
-			"id": "1ffafdb2-6fb7-4115-9a60-065f9f43f1d9",
+			"id": "26fa73e4-4277-4faa-b3e2-b7cff9c5ff7c",
 			"key": "kategorieUpdate",
 			"value": "AUSGESTALTUNG"
 		},
 		{
-			"id": "4f9aed6d-dc08-460e-a1d8-84d34d3badc2",
+			"id": "e78eb768-f0a5-4cba-ba90-ed6b6718fd33",
 			"key": "kupplungAdd",
 			"value": "RELEX"
 		},
 		{
-			"id": "8865c984-b735-441f-a013-2ab353d69ac7",
+			"id": "5a84127f-f1e7-4678-8891-acdd7398dec0",
 			"key": "kupplungUpdate",
 			"value": "RELEX"
 		},
 		{
-			"id": "8f1bc041-76c3-4ffe-ac97-19ebf09494f3",
+			"id": "785c6ee7-8227-4989-a6e8-a93784d1057e",
 			"key": "konfigurationAdd",
 			"value": "CV"
 		},
 		{
-			"id": "e154becd-9d41-415b-9216-44a8cc0de18a",
+			"id": "34f14707-fc08-4f7e-888a-c305236d3458",
 			"key": "konfigurationUpdate",
 			"value": "STECKER"
 		},
 		{
-			"id": "468ec533-8322-4bea-b458-43d35dc7caed",
-			"key": "leistungsUbertragungAdd",
+			"id": "2923b94c-27ff-48b8-bae0-1403e5e9ab14",
+			"key": "leistungsubertragungAdd",
 			"value": "MECHANISH"
 		},
 		{
-			"id": "2d3e5376-fe5e-4c99-8709-c8b4bdb1e68d",
-			"key": "leistungsUbertragungUpdate",
+			"id": "0ae99106-f35c-4089-b66f-eb1b0cafa549",
+			"key": "leistungsubertragungUpdate",
 			"value": "ELEKTRISH"
 		},
 		{
-			"id": "98762af3-9c4a-46ac-8567-eac701cabf3f",
+			"id": "185aa994-5872-49be-87f7-5f5a7caf1187",
 			"key": "lichtAdd",
 			"value": "L1V"
 		},
 		{
-			"id": "405b929c-f0b5-4774-bc97-e78fe3849eaa",
+			"id": "d7ec7e64-3d1b-43b9-b3fd-3957107b1175",
 			"key": "lichtUpdate",
 			"value": "L1V"
 		},
 		{
-			"id": "72c8276e-9428-4e11-be3d-3378519e74f8",
+			"id": "3d1e5586-6a43-4f89-901d-83f8d3cb594a",
 			"key": "massstabAdd",
 			"value": "H0"
 		},
 		{
-			"id": "2165211d-1d80-41b2-8f6e-bfef2c210e71",
+			"id": "fe3a60ad-0a0b-4018-8642-37ac36bba642",
 			"key": "massstabUpdate",
 			"value": "H0"
 		},
 		{
-			"id": "628b25e4-a615-4ce6-acc5-83d01ed5a38a",
+			"id": "c6cb3cdb-ceb1-4d05-b26f-fd66f25e5e25",
 			"key": "motorTypAdd",
 			"value": "CSINUS"
 		},
 		{
-			"id": "58f011cd-72df-4a88-bd6d-16ecf1ffac15",
+			"id": "2508f7e7-9a1a-428d-83ef-6ae1cf19656c",
 			"key": "motorTypUpdate",
 			"value": "CSINUS"
 		},
 		{
-			"id": "014ac67d-57ed-4b21-8128-ca670c543ca4",
+			"id": "ba3b49ba-96d9-4ceb-8c19-4f5d5f8916ba",
 			"key": "protokollAdd",
 			"value": "MFX"
 		},
 		{
-			"id": "ef300e32-691c-45a3-b0e2-e2e56902035f",
+			"id": "ececb2e6-219b-476d-b0a8-c089a9b4dab1",
 			"key": "protokollUpdate",
 			"value": "DELTA"
 		},
 		{
-			"id": "6a65dd21-b96a-4bc3-b37b-e09a8b69f7e7",
+			"id": "96863c3e-a57d-469d-a2b1-df06db4312a3",
 			"key": "sondermodellAdd",
 			"value": "MM"
 		},
 		{
-			"id": "34787059-6b0c-4531-b701-8c9a89660a3c",
+			"id": "beeecf5f-9e4c-4cee-91f7-d4193e9b6b2c",
 			"key": "sondermodellUpdate",
 			"value": "MM"
 		},
 		{
-			"id": "bef72932-3221-493e-b8a3-b90f41883a81",
+			"id": "86125d23-e065-49f7-935d-fe86cbd12c67",
 			"key": "spurweiteAdd",
 			"value": "H0"
 		},
 		{
-			"id": "2ecf549a-09fc-4940-9a01-55c06f28c389",
+			"id": "e300692f-5461-44a7-9ca4-c637a5b51bf1",
 			"key": "spurweiteUpdate",
 			"value": "H0"
 		},
 		{
-			"id": "7e4ca967-a77e-4649-adaf-f4a8eac33e9f",
+			"id": "4b6dc460-71a7-43c9-8e29-014d5fd3aa03",
 			"key": "steckerAdd",
 			"value": "NEM651"
 		},
 		{
-			"id": "207899c0-80c5-4e7c-a078-d16163e0ba4a",
+			"id": "d2de30a2-65e7-4e32-91e1-c9c9d9c494b8",
 			"key": "steckerUpdate",
 			"value": "NEM652"
 		},
 		{
-			"id": "b4c13380-8337-4d84-8da6-19c4ddffebbc",
+			"id": "f40d4116-ca00-4d91-b0be-807d76aa103a",
 			"key": "steuerungAdd",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "9369f562-2d3f-477b-a1bd-9195806ab573",
+			"id": "b75a72b9-1729-4a9a-b313-8dc8161da4ce",
 			"key": "steuerungUpdate",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "74898764-3907-4d97-828d-b47da66ed4e2",
+			"id": "2fa01a41-3e46-4a6c-8a9b-c7d0b85721f2",
 			"key": "unterKategorieAdd",
 			"value": "DAMPF"
 		},
 		{
-			"id": "b7ddbe61-f981-4b9d-baef-5e5c017abe47",
+			"id": "1d19e292-f615-4a33-ae62-ffa0d033cda2",
 			"key": "unterKategorieUpdate",
 			"value": "HECKEN"
 		},
 		{
-			"id": "d97ca964-f0e0-4824-9e85-057e58829d0d",
+			"id": "7c1f7b60-0d59-45db-b5ef-f82a273cf9c9",
 			"key": "vorbildAdd",
 			"value": "HECKEN"
 		},
 		{
-			"id": "4c9882e6-6861-4032-bfb4-864f51e82fe8",
+			"id": "e625d57b-577c-4af2-9493-75583c88b1c8",
 			"key": "vorbildUpdate",
 			"value": "HECKEN"
 		},
 		{
-			"id": "ffb8b04b-1e1e-49df-93e1-d01f4a18dacb",
+			"id": "85ac32ba-cdb1-498d-ac52-311085001909",
 			"key": "zugAdd",
 			"value": "BAVARIA"
 		},
 		{
-			"id": "a8cb581d-63ac-4336-adf3-93740a22c335",
+			"id": "c9cde096-58dc-4c4c-93d6-ee08c554c14b",
 			"key": "zugUpdate",
 			"value": "BAVARIA"
 		},
 		{
-			"id": "458beb21-7803-4e9b-a25e-c8898219e51a",
+			"id": "a40a41d5-ff66-4f1f-b518-c374e8de2f91",
 			"key": "zugTypAdd",
 			"value": "TEE"
 		},
 		{
-			"id": "e13c5c73-bece-446d-a7f0-311e489c1d8b",
+			"id": "bee36110-3ce8-4b47-ae35-04f3a2d5d8d4",
 			"key": "zugTypUpdate",
 			"value": "TEE"
 		},
 		{
-			"id": "78f93059-7273-4c47-8e71-28cbdb994e42",
+			"id": "9737a93d-ef16-4455-8a62-24ac0e67d00e",
 			"key": "imageFile",
 			"value": "3000.jpg"
 		},
 		{
-			"id": "758c1d1d-6ddc-4a48-8fae-27b04de8d2be",
+			"id": "e0a116ac-d03e-4e01-93bb-9ea7ac8a2e79",
 			"key": "anleitungFile",
 			"value": "3000_betrieb.pdf"
 		},
 		{
-			"id": "42369fac-64e8-4bc8-a1af-6085e6b49797",
+			"id": "0bc2f56e-cd71-4ccf-af0d-70f589cfa85b",
 			"key": "explosionszeichnungFile",
 			"value": "3000_explo.pdf"
 		}

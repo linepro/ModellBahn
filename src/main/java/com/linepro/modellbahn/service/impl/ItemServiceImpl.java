@@ -66,7 +66,8 @@ public abstract class ItemServiceImpl<M extends ItemModel, E extends Item> imple
     @Transactional
     protected Optional<M> update(Lookup<E> lookup, M model) {
         return lookup.find()
-                     .map(e -> entityMutator.convert(repository.saveAndFlush(modelMutator.apply(model,e))));
+                     .map(e -> repository.saveAndFlush(modelMutator.apply(model,e)))
+                     .flatMap(e -> this.get(lookup)); // Fetch again to populate entity graphs
     }
 
     @Transactional

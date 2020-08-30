@@ -95,6 +95,9 @@
 
         <net.sourceforge.nekohtml.nekohtml.version>1.9.22</net.sourceforge.nekohtml.nekohtml.version>
 
+		<spring-test-dbunit.version>1.3.0</spring-test-dbunit.version>
+		<dbunit.version>2.6.0</dbunit.version>
+
         <!-- javascript serving -->
         <org.webjars.webjars-locator-core.version>0.45</org.webjars.webjars-locator-core.version>
         <org.webjars.jquery.version>3.5.0</org.webjars.jquery.version>
@@ -440,9 +443,23 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-            <!-- <exclusions> <exclusion> <groupId>org.junit.vintage</groupId> <artifactId>junit-vintage-engine</artifactId> 
-                </exclusion> <exclusion> <groupId>junit</groupId> <artifactId>junit</artifactId> 
-                </exclusion> </exclusions> -->
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.springtestdbunit</groupId>
+            <artifactId>spring-test-dbunit</artifactId>
+            <version>${spring-test-dbunit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.dbunit</groupId>
+            <artifactId>dbunit</artifactId>
+			<version>${dbunit.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>

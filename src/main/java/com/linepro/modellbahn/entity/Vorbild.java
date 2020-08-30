@@ -1,12 +1,10 @@
 package com.linepro.modellbahn.entity;
 
 import java.math.BigDecimal;
-import java.nio.file.Path;
 import java.time.LocalDate;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -25,10 +23,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
 
-import com.linepro.modellbahn.entity.impl.NamedItemImpl;
+import com.linepro.modellbahn.entity.impl.NamedWithAbbildungImpl;
 import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.persistence.util.PathConverter;
 import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.validation.Unique;
 
@@ -142,7 +139,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.vorbild.notunique}")
-public class Vorbild extends NamedItemImpl {
+public class Vorbild extends NamedWithAbbildungImpl {
 
     /** The gattung. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gattung.class)
@@ -340,11 +337,6 @@ public class Vorbild extends NamedItemImpl {
     @Column(name = DBNames.DREHGESTELLBAUART, length = 100)
     private String drehgestellBauart;
 
-    /** The abbildung. */
-    @Column(name = DBNames.ABBILDUNG)
-    @Convert(converter = PathConverter.class)
-    private Path abbildung;
-
     @Override
     public String toString() {
         return new ToStringBuilder(this)
@@ -389,7 +381,6 @@ public class Vorbild extends NamedItemImpl {
             .append("triebkopf", triebkopf)
             .append("mittelwagen", mittelwagen)
             .append("drehgestellBauart", drehgestellBauart)
-            .append("abbildung", abbildung)
             .toString();
-}
+    }
 }

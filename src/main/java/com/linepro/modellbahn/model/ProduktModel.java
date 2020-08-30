@@ -146,11 +146,11 @@ public class ProduktModel extends RepresentationModel<ProduktModel> implements I
     private String anmerkung;
 
     @JsonProperty(ApiNames.ANLEITUNGEN)
-    @Schema(description = "Instructions URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/betrieb_3000.pdf", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Instructions URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/anleitungen.pdf", accessMode = AccessMode.READ_ONLY)
     private String anleitungen;
 
     @JsonProperty(ApiNames.EXPLOSIONSZEICHNUNG)
-    @Schema(description = "Parts diagram URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/explo_3000.pdf", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Parts diagram URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/explosionszeichnung.pdf", accessMode = AccessMode.READ_ONLY)
     private String explosionszeichnung;
 
     @JsonProperty(ApiNames.TEILEN)
@@ -158,7 +158,7 @@ public class ProduktModel extends RepresentationModel<ProduktModel> implements I
     private List<ProduktTeilModel> teilen;
 
     @JsonProperty(ApiNames.ABBILDUNG)
-    @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/produkt/MARKLIN/3000/abbildung.jpg", accessMode = AccessMode.READ_ONLY)
     private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)

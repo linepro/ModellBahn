@@ -55,7 +55,7 @@ public class LichtModel extends RepresentationModel<LichtModel> implements Named
     private String bezeichnung;
 
     @JsonProperty(ApiNames.ABBILDUNG)
-    @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/store/produkt/MARKLIN/3000/3000.jpg", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/licht/L1V/abbildung.jpg", accessMode = AccessMode.READ_ONLY)
     private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)

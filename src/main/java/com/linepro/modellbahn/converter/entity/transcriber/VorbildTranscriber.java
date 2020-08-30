@@ -2,17 +2,15 @@ package com.linepro.modellbahn.converter.entity.transcriber;
 
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
-import com.linepro.modellbahn.converter.PathMutator;
-import com.linepro.modellbahn.converter.impl.NamedTranscriber;
+import com.linepro.modellbahn.converter.impl.NamedAbbildungTranscriber;
 import com.linepro.modellbahn.entity.Vorbild;
 import com.linepro.modellbahn.model.VorbildModel;
 
-import lombok.RequiredArgsConstructor;
+public class VorbildTranscriber extends NamedAbbildungTranscriber<Vorbild, VorbildModel> {
 
-@RequiredArgsConstructor
-public class VorbildTranscriber extends NamedTranscriber<Vorbild, VorbildModel> {
-
-    private final PathMutator pathMutator;
+    public VorbildTranscriber(com.linepro.modellbahn.converter.PathMutator PathMutator) {
+        super(PathMutator);
+    }
 
     @Override
     public VorbildModel apply(Vorbild source, VorbildModel destination) {
@@ -58,7 +56,6 @@ public class VorbildTranscriber extends NamedTranscriber<Vorbild, VorbildModel> 
             destination.setTriebkopf(source.getTriebkopf());
             destination.setMittelwagen(source.getMittelwagen());
             destination.setDrehgestellBauart(source.getDrehgestellBauart());
-            destination.setAbbildung(pathMutator.convert(source.getAbbildung()));
         }
 
         return super.apply(source, destination);

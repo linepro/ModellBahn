@@ -56,7 +56,7 @@ import lombok.ToString;
         ApiNames.ABBILDUNG, ApiNames.DELETED})
 @Relation(collectionRelation = ApiNames.VORBILD, itemRelation = ApiNames.VORBILD)
 @Schema(name = ApiNames.VORBILD, description = "A real world prototype.")
-public class VorbildModel extends RepresentationModel<VorbildModel> implements NamedItemModel, Comparable<VorbildModel> {
+public class VorbildModel extends RepresentationModel<VorbildModel> implements NamedWithAbbildungModel, Comparable<VorbildModel> {
 
     private static final long serialVersionUID = 4657238952018125793L;
 
