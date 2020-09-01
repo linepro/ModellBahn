@@ -7,12 +7,14 @@ import static com.linepro.modellbahn.controller.impl.ApiNames.BAHNVERWALTUNG;
 import static com.linepro.modellbahn.controller.impl.ApiNames.GATTUNG;
 import static com.linepro.modellbahn.controller.impl.ApiNames.NAMEN;
 import static com.linepro.modellbahn.controller.impl.ApiNames.POSITION;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_CONSIST;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_CONSIST;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_ARTIKEL;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_BAHNVERWALTUNG;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_GATTUNG;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_ZUG;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_CONSIST;
+import static com.linepro.modellbahn.controller.impl.ApiRels.ADD;
 import static com.linepro.modellbahn.controller.impl.ApiRels.DELETE;
 import static com.linepro.modellbahn.controller.impl.ApiRels.PARENT;
 import static com.linepro.modellbahn.controller.impl.ApiRels.UPDATE;
@@ -46,6 +48,7 @@ public class ZugConsistModelProcessor extends ModelProcessorImpl<ZugConsistModel
     public ZugConsistModelProcessor() {
         super(
             new LinkTemplateImpl(PARENT, GET_ZUG, EXTRACTOR),
+            new LinkTemplateImpl(ADD, ADD_CONSIST, EXTRACTOR),
             new LinkTemplateImpl(UPDATE, UPDATE_CONSIST, EXTRACTOR),
             new LinkTemplateImpl(DELETE, DELETE_CONSIST, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted())),
             new LinkTemplateImpl(BAHNVERWALTUNG, GET_BAHNVERWALTUNG, 

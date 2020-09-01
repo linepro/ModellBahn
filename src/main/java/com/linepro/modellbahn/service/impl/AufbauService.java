@@ -46,8 +46,9 @@ public class AufbauService extends NamedItemServiceImpl<AufbauModel,Aufbau> impl
         return repository.findByName(name)
                         .map(a -> {
                             a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.AUFBAU, ApiNames.ABBILDUNG, name));
-                            return entityMutator.convert(a);
-                            });
+                            return repository.saveAndFlush(a);
+                        })
+                        .flatMap(e -> this.get(name));
     }
 
     @Transactional
@@ -55,7 +56,8 @@ public class AufbauService extends NamedItemServiceImpl<AufbauModel,Aufbau> impl
         return repository.findByName(name)
                         .map(a -> {
                             a.setAbbildung(fileService.deleteFile(a.getAbbildung()));
-                            return entityMutator.convert(a);
-                            });
+                            return repository.saveAndFlush(a);
+                        })
+                        .flatMap(e -> this.get(name));
     }
 }

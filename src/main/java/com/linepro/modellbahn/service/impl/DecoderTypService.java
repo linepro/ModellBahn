@@ -89,27 +89,27 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTy
         return repository.findAll(new DecoderTypCriterion(model), pageRequest);
     }
 
-    public Optional<DecoderTypModel> get(String herstellerStr, String bestellNr) {
-        return super.get(() -> repository.findByBestellNr(herstellerStr, bestellNr));
+    public Optional<DecoderTypModel> get(String hersteller, String bestellNr) {
+        return super.get(() -> repository.findByBestellNr(hersteller, bestellNr));
     }
 
-    public Optional<DecoderTypModel> update(String herstellerStr, String bestellNr, DecoderTypModel model) {
-        return super.update(() -> repository.findByBestellNr(herstellerStr, bestellNr), model);
+    public Optional<DecoderTypModel> update(String hersteller, String bestellNr, DecoderTypModel model) {
+        return super.update(() -> repository.findByBestellNr(hersteller, bestellNr), model);
     }
 
-    public boolean delete(String herstellerStr, String bestellNr) {
-        return super.delete(() -> repository.findByBestellNr(herstellerStr, bestellNr));
+    public boolean delete(String hersteller, String bestellNr) {
+        return super.delete(() -> repository.findByBestellNr(hersteller, bestellNr));
     }
 
     @Transactional(readOnly = true)
-    public Optional<DecoderTypAdressModel> getAdress(String herstellerStr, String bestellNr, Integer index) {
-        return adressRepository.findByIndex(herstellerStr, bestellNr, index)
+    public Optional<DecoderTypAdressModel> getAdress(String hersteller, String bestellNr, Integer index) {
+        return adressRepository.findByIndex(hersteller, bestellNr, index)
                                .map(a -> adressMutator.convert(a));
     }
 
     @Transactional
-    public Optional<DecoderTypAdressModel> addAdress(String herstellerStr, String bestellNr, DecoderTypAdressModel model) {
-        return repository.findByBestellNr(herstellerStr, bestellNr)
+    public Optional<DecoderTypAdressModel> addAdress(String hersteller, String bestellNr, DecoderTypAdressModel model) {
+        return repository.findByBestellNr(hersteller, bestellNr)
                          .map(d -> {
                              DecoderTypAdress adress = adressModelMutator.convert(model);
                              d.addAdress(adress);
@@ -119,14 +119,14 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTy
     }
 
     @Transactional
-    public Optional<DecoderTypAdressModel> updateAdress(String herstellerStr, String bestellNr, Integer index, DecoderTypAdressModel model) {
-        return adressRepository.findByIndex(herstellerStr, bestellNr, index)
-                               .map(a -> adressMutator.convert(adressRepository.saveAndFlush(adressModelMutator.convert(model))));
+    public Optional<DecoderTypAdressModel> updateAdress(String hersteller, String bestellNr, Integer index, DecoderTypAdressModel model) {
+        return adressRepository.findByIndex(hersteller, bestellNr, index)
+                               .map(a -> adressMutator.convert(adressRepository.saveAndFlush(adressModelMutator.apply(model, a))));
     }
 
     @Transactional
-    public boolean deleteAdress(String herstellerStr, String bestellNr, Integer index) {
-       return adressRepository.findByIndex(herstellerStr, bestellNr, index)
+    public boolean deleteAdress(String hersteller, String bestellNr, Integer index) {
+       return adressRepository.findByIndex(hersteller, bestellNr, index)
                                .map(a -> {
                                    adressRepository.delete(a);
                                    return true;
@@ -135,14 +135,14 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTy
     }
 
     @Transactional(readOnly = true)
-    public Optional<DecoderTypCvModel> getCV(String herstellerStr, String bestellNr, Integer cv) {
-        return cvRepository.findByCv(herstellerStr, bestellNr, cv)
+    public Optional<DecoderTypCvModel> getCV(String hersteller, String bestellNr, Integer cv) {
+        return cvRepository.findByCv(hersteller, bestellNr, cv)
                            .map(c -> cvMutator.convert(c));
     }
 
     @Transactional
-    public Optional<DecoderTypCvModel> addCv(String herstellerStr, String bestellNr, DecoderTypCvModel model) {
-        return repository.findByBestellNr(herstellerStr, bestellNr)
+    public Optional<DecoderTypCvModel> addCv(String hersteller, String bestellNr, DecoderTypCvModel model) {
+        return repository.findByBestellNr(hersteller, bestellNr)
                          .map(d -> {
                              DecoderTypCv cv = cvModelMutator.convert(model);
                              d.addCv(cv);
@@ -152,14 +152,14 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTy
     }
 
     @Transactional
-    public Optional<DecoderTypCvModel> updateCv(String herstellerStr, String bestellNr, Integer cv, DecoderTypCvModel model) {
-        return cvRepository.findByCv(herstellerStr, bestellNr, cv)
-                           .map(a -> cvMutator.convert(cvRepository.saveAndFlush(cvModelMutator.convert(model))));
+    public Optional<DecoderTypCvModel> updateCv(String hersteller, String bestellNr, Integer cv, DecoderTypCvModel model) {
+        return cvRepository.findByCv(hersteller, bestellNr, cv)
+                           .map(c -> cvMutator.convert(cvRepository.saveAndFlush(cvModelMutator.apply(model, c))));
     }
 
     @Transactional
-    public boolean deleteCv(String herstellerStr, String bestellNr, Integer cv) {
-        return cvRepository.findByCv(herstellerStr, bestellNr, cv)
+    public boolean deleteCv(String hersteller, String bestellNr, Integer cv) {
+        return cvRepository.findByCv(hersteller, bestellNr, cv)
                            .map(c -> {
                                cvRepository.delete(c);
                                return true;
@@ -168,14 +168,14 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTy
     }
 
     @Transactional(readOnly = true)
-    public Optional<DecoderTypFunktionModel> getFunktion(String herstellerStr, String bestellNr, Integer reihe, String funktion) {
-        return funktionRepository.findByFunktion(herstellerStr, bestellNr, reihe, funktion)
+    public Optional<DecoderTypFunktionModel> getFunktion(String hersteller, String bestellNr, Integer reihe, String funktion) {
+        return funktionRepository.findByFunktion(hersteller, bestellNr, reihe, funktion)
                                  .map(f -> funktionMutator.convert(f));
     }
 
     @Transactional
-    public Optional<DecoderTypFunktionModel> addFunktion(String herstellerStr, String bestellNr, DecoderTypFunktionModel model) {
-        return repository.findByBestellNr(herstellerStr, bestellNr)
+    public Optional<DecoderTypFunktionModel> addFunktion(String hersteller, String bestellNr, DecoderTypFunktionModel model) {
+        return repository.findByBestellNr(hersteller, bestellNr)
                          .map(d -> {
                              DecoderTypFunktion funktion = funktionModelMutator.convert(model);
                              d.addFunktion(funktion);
@@ -185,14 +185,14 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTy
     }
 
     @Transactional
-    public Optional<DecoderTypFunktionModel> updateFunktion(String herstellerStr, String bestellNr, Integer reihe, String funktion, DecoderTypFunktionModel model) {
-        return funktionRepository.findByFunktion(herstellerStr, bestellNr, reihe, funktion)
-                                 .map(a -> funktionMutator.convert(funktionRepository.saveAndFlush(funktionModelMutator.convert(model))));
+    public Optional<DecoderTypFunktionModel> updateFunktion(String hersteller, String bestellNr, Integer reihe, String funktion, DecoderTypFunktionModel model) {
+        return funktionRepository.findByFunktion(hersteller, bestellNr, reihe, funktion)
+                                 .map(f -> funktionMutator.convert(funktionRepository.saveAndFlush(funktionModelMutator.apply(model, f))));
     }
 
     @Transactional
-    public boolean deleteFunktion(String herstellerStr, String bestellNr, Integer reihe, String funktion) {
-        return funktionRepository.findByFunktion(herstellerStr, bestellNr, reihe, funktion)
+    public boolean deleteFunktion(String hersteller, String bestellNr, Integer reihe, String funktion) {
+        return funktionRepository.findByFunktion(hersteller, bestellNr, reihe, funktion)
                                  .map(f -> {
                                      funktionRepository.delete(f);
                                      return true;
@@ -201,20 +201,22 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTy
     }
 
     @Transactional
-    public Optional<DecoderTypModel> updateAnleitungen(String herstellerStr, String bestellNr, MultipartFile multipart) {
-        return  repository.findByBestellNr(herstellerStr, bestellNr)
+    public Optional<DecoderTypModel> updateAnleitungen(String hersteller, String bestellNr, MultipartFile multipart) {
+        return  repository.findByBestellNr(hersteller, bestellNr)
                         .map(a -> {
-                            a.setAnleitungen(fileService.updateFile(AcceptableMediaTypes.DOCUMENT_TYPES, multipart, ApiNames.DECODER_TYP, ApiNames.ANLEITUNGEN, herstellerStr, bestellNr));
-                            return entityMutator.convert(a);
-                        });
+                            a.setAnleitungen(fileService.updateFile(AcceptableMediaTypes.DOCUMENT_TYPES, multipart, ApiNames.DECODER_TYP, ApiNames.ANLEITUNGEN, hersteller, bestellNr));
+                            return repository.saveAndFlush(a);
+                        })
+                        .flatMap(e -> this.get(hersteller, bestellNr));
     }
 
     @Transactional
-    public Optional<DecoderTypModel> deleteAnleitungen(String herstellerStr, String bestellNr) {
-        return repository.findByBestellNr(herstellerStr, bestellNr)
+    public Optional<DecoderTypModel> deleteAnleitungen(String hersteller, String bestellNr) {
+        return repository.findByBestellNr(hersteller, bestellNr)
                         .map(a -> {
                             a.setAnleitungen(fileService.deleteFile(a.getAnleitungen()));
-                            return entityMutator.convert(a);
-                        });
+                            return repository.saveAndFlush(a);
+                        })
+                        .flatMap(e -> this.get(hersteller, bestellNr));
     }
 }

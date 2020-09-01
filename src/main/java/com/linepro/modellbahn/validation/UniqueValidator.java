@@ -19,6 +19,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 
+import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.entity.DecoderTyp;
 import com.linepro.modellbahn.entity.DecoderTypAdress;
 import com.linepro.modellbahn.entity.DecoderTypCv;
@@ -27,7 +28,6 @@ import com.linepro.modellbahn.entity.Item;
 import com.linepro.modellbahn.entity.NamedItem;
 import com.linepro.modellbahn.entity.Produkt;
 import com.linepro.modellbahn.entity.UnterKategorie;
-import com.linepro.modellbahn.persistence.DBNames;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,39 +62,40 @@ public class UniqueValidator implements ConstraintValidator<Unique, Item>, Appli
 
             if (item instanceof UnterKategorie) {
                 criteriaQuery = criteriaQuery.where(new Predicate[] { 
-                                criteriaBuilder.equal(root.get(DBNames.KATEGORIE), ((UnterKategorie) item).getKategorie()),
-                                criteriaBuilder.equal(root.get(DBNames.NAME), ((UnterKategorie) item).getName())
+                                criteriaBuilder.equal(root.get(ApiNames.KATEGORIE), ((UnterKategorie) item).getKategorie()),
+                                criteriaBuilder.equal(root.get(ApiNames.NAMEN), ((UnterKategorie) item).getName())
                                 });
             } else if (item instanceof DecoderTyp) {
                 criteriaQuery = criteriaQuery.where(new Predicate[] { 
-                                criteriaBuilder.equal(root.get(DBNames.HERSTELLER), ((DecoderTyp) item).getHersteller()),
-                                criteriaBuilder.equal(root.get(DBNames.BESTELL_NR), ((DecoderTyp) item).getBestellNr()) 
+                                criteriaBuilder.equal(root.get(ApiNames.HERSTELLER), ((DecoderTyp) item).getHersteller()),
+                                criteriaBuilder.equal(root.get(ApiNames.BESTELL_NR), ((DecoderTyp) item).getBestellNr()) 
                                 });
             } else if (item instanceof DecoderTypAdress) {
                 criteriaQuery = criteriaQuery.where(new Predicate[] { 
-                                criteriaBuilder.equal(root.get(DBNames.DECODER_TYP), ((DecoderTypAdress) item).getDecoderTyp()),
-                                criteriaBuilder.equal(root.get(DBNames.POSITION), ((DecoderTypAdress) item).getPosition())
+                                criteriaBuilder.equal(root.get(ApiNames.DECODER_TYP), ((DecoderTypAdress) item).getDecoderTyp()),
+                                criteriaBuilder.equal(root.get(ApiNames.POSITION), ((DecoderTypAdress) item).getPosition())
                                 });
             } else if (item instanceof DecoderTypCv) {
                 criteriaQuery = criteriaQuery.where(new Predicate[] { 
-                                criteriaBuilder.equal(root.get(DBNames.DECODER_TYP), ((DecoderTypCv) item).getDecoderTyp()),
-                                criteriaBuilder.equal(root.get(DBNames.CV), ((DecoderTypCv) item).getCv())
+                                criteriaBuilder.equal(root.get(ApiNames.DECODER_TYP), ((DecoderTypCv) item).getDecoderTyp()),
+                                criteriaBuilder.equal(root.get(ApiNames.CV), ((DecoderTypCv) item).getCv())
                                 });
             } else if (item instanceof DecoderTypFunktion) {
                 criteriaQuery = criteriaQuery.where(new Predicate[] { 
-                                criteriaBuilder.equal(root.get(DBNames.DECODER_TYP), ((DecoderTypFunktion) item).getDecoderTyp()),
-                                criteriaBuilder.equal(root.get(DBNames.POSITION), ((DecoderTypFunktion) item).getFunktion())
+                                criteriaBuilder.equal(root.get(ApiNames.DECODER_TYP), ((DecoderTypFunktion) item).getDecoderTyp()),
+                                criteriaBuilder.equal(root.get(ApiNames.REIHE), ((DecoderTypFunktion) item).getReihe()),
+                                criteriaBuilder.equal(root.get(ApiNames.FUNKTION), ((DecoderTypFunktion) item).getFunktion())
                                 });
             } else if (item instanceof Produkt) {
                 criteriaQuery = criteriaQuery.where(new Predicate[] { 
-                                criteriaBuilder.equal(root.get(DBNames.HERSTELLER), ((Produkt) item).getHersteller()),
-                                criteriaBuilder.equal(root.get(DBNames.BESTELL_NR), ((Produkt) item).getBestellNr())
+                                criteriaBuilder.equal(root.get(ApiNames.HERSTELLER), ((Produkt) item).getHersteller()),
+                                criteriaBuilder.equal(root.get(ApiNames.BESTELL_NR), ((Produkt) item).getBestellNr())
                                 });
             } else if (item instanceof NamedItem) {
-                criteriaQuery = criteriaQuery.where(criteriaBuilder.equal(root.get(DBNames.NAME), ((NamedItem) item).getName()));
+                criteriaQuery = criteriaQuery.where(criteriaBuilder.equal(root.get(ApiNames.NAMEN), ((NamedItem) item).getName()));
             }
 
-            criteriaQuery.select(root.get(DBNames.ID));
+            criteriaQuery.select(root.get(ApiNames.ID));
             TypedQuery<?> typedQuery = session.createQuery(criteriaQuery);
 
             try {

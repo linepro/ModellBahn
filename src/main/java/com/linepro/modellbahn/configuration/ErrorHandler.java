@@ -14,12 +14,14 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.i18n.MessageTranslator;
 import com.linepro.modellbahn.util.exceptions.ModellBahnException;
@@ -97,6 +99,10 @@ public class ErrorHandler {
             return HttpStatus.NO_CONTENT;
         } else if (ex instanceof SecurityException) {
             return HttpStatus.FORBIDDEN;
+        } else if (ex instanceof JsonParseException) {
+            return HttpStatus.BAD_REQUEST;
+        } else if (ex instanceof HttpMessageNotReadableException) {
+            return HttpStatus.BAD_REQUEST;
         }
 
         return HttpStatus.INTERNAL_SERVER_ERROR;
@@ -108,8 +114,15 @@ public class ErrorHandler {
         } else if (ex instanceof ModellBahnException) {
             return messageTranslator.getMessage(ex.getMessage(), ((ModellBahnException) ex).getValues());
         } 
+
+        String message = ex.getMessage();
+        int nested = message.indexOf("nested exception");
         
-        return ex.getMessage();
+        if (nested > 0) {
+            return message.substring(0, nested).trim();
+        }
+
+        return message;
     }
 
     private String developerMessage(Throwable ex) {

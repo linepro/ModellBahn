@@ -51,7 +51,7 @@ public class DecoderTypAdressModel extends RepresentationModel<DecoderTypAdressM
     @Schema(description = "Manufacturer", required = true)
     private String hersteller;
 
-    @JsonProperty()
+    @JsonProperty(ApiNames.BESTELL_NR)
     @Schema(description = "Product numer", example = "62499", required = true)
     private String bestellNr;
 

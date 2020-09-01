@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0c35f344-9cbf-440f-8361-8798066090e3",
+		"_postman_id": "1bb32682-7430-4c6e-8107-c1c377ddb578",
 		"name": "ModellBahn",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,7 +14,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fae1469f-9af1-48c1-8833-8f34cdbf2f3b",
+								"id": "a4ec04fc-49fa-43e2-a5d1-d5dc068e05ec",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();"
@@ -50,7 +50,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4e80b3dc-797b-4db8-9372-25ce1e9936b1",
+								"id": "8767488e-b8aa-47d9-b2ba-0433b23caa7e",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();"
@@ -86,7 +86,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c1ffa2db-f684-447d-a598-d1ccb6436eed",
+								"id": "c36286c5-5301-4555-b378-68d064db0718",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();"
@@ -122,7 +122,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8721fedf-b39d-47e7-b52c-bd681fedb7ef",
+								"id": "c176f318-db9a-424e-8aef-9a6d7270c492",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();"
@@ -158,7 +158,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cbf1734d-e271-4ea4-9328-b8b793e13283",
+								"id": "56a07ba1-9f52-43be-afcf-34e8b6c26206",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();"
@@ -194,7 +194,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c0426678-d841-4b1d-b593-98d2940a852f",
+								"id": "5ddba2d9-d64c-4bd9-8783-4dce6a907c70",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();"
@@ -230,7 +230,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d92f3683-2856-44e1-93b1-4dc6bca6fcc3",
+								"id": "b7521a9b-ccd2-4766-bd6d-7601af56e63d",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();"
@@ -272,7 +272,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f7551ca9-cf76-4a67-82f8-bfb5d39ed39c",
+								"id": "71407bd7-84c0-4c85-8508-d60cd7f73431",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/achsfolg\");\r",
@@ -329,7 +329,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "868a3490-30c5-41e7-ae9f-1250d5e0b645",
+								"id": "e638206f-07a4-41f3-8c97-25e56a892883",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -340,7 +340,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3e86a77a-736c-4cc6-96c7-63e6d13de297",
+								"id": "ec5896bd-76b8-4678-a5e6-be0b175621d8",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -403,7 +403,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "4737e6c0-e443-4d66-971b-9e6deb850f3c",
+								"id": "e17be1e7-2234-462c-b2a9-55047f5ec990",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -413,11 +413,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7a1b6b94-912a-4d0c-b652-28c3ba0ad94f",
+								"id": "65236daf-c077-49d1-ae46-7ccbc049f984",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/achsfolg\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/achsfolg/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -479,11 +478,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "77d90f92-41c7-4771-aa78-13520f0a02cf",
+								"id": "a22115cf-9d6c-486c-9817-c7ef9294e6ae",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/achsfolg\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/achsfolg/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -531,7 +529,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "124eb6e0-3d50-42e0-ad7b-25ba44a1616a",
+								"id": "6bcea229-3146-4dea-a077-7c9648723663",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -573,7 +571,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ccc575e5-bfdc-40cd-99bd-7cdd39abe12b",
+								"id": "4ae45516-4d47-499c-be35-a7323ba1dae3",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/antrieb\");\r",
@@ -626,7 +624,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "a93a5759-2889-4355-a514-3d8835381b26",
+								"id": "2a721b83-633b-469d-8d10-3ae5d8990c41",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -637,11 +635,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dd7da091-5815-41a6-afd3-a23b1713588f",
+								"id": "a4739df6-552e-4b04-b832-886f0c06a6b2",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/antrieb\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/antrieb/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -701,7 +698,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "bb1b9300-3888-48c1-87c5-0167da568aa1",
+								"id": "5e196032-329e-47ba-a6c4-5168364af280",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -711,11 +708,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a6b298b1-019b-4d2f-9832-4a67c1f3c7d0",
+								"id": "84e3f626-e2c9-442e-862b-e973bd0af7ea",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/antrieb\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/antrieb/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -776,11 +772,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a15f424b-1179-4677-b5bc-2d718cca2bf4",
+								"id": "473824c8-4298-4044-abc2-fb1f363baf9e",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/antrieb\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/antrieb/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -823,7 +818,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1d188622-3b55-48a8-a996-29ac12f951f8",
+								"id": "3cd3c810-7fe4-4516-9de4-9fddd0e76445",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -865,7 +860,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9cd9b9c8-8214-44f6-aa4e-94352a77ae23",
+								"id": "4e7098da-c280-42a6-9168-df196b7c4b32",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/aufbau\");\r",
@@ -918,7 +913,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "75f8a2b0-ff8d-4832-bf48-eeb4192f65c8",
+								"id": "8409fd51-c0e9-4efa-9fde-88e39b90f09c",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -929,11 +924,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "15a7f126-2f3d-4084-a029-708a655e5ccb",
+								"id": "29b52908-0ee7-4f09-9e24-147a4b50b22a",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/aufbau\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/aufbau/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -993,11 +987,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2d91b029-ace1-40cf-b351-df13066a48d2",
+								"id": "68c5e112-ed88-4a49-92b7-a065dce8058b",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/aufbau\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/aufbau/{{name}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/aufbau/{{name}}/abbildung.jpg\");\r",
@@ -1057,7 +1050,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "1b603365-b859-4ed3-b658-0fdb612075c9",
+								"id": "db14fc12-a768-4f58-8a3d-b8bb235a74af",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -1067,11 +1060,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "202569e9-3ed8-4f75-8878-3f9491b59c3a",
+								"id": "8caece6e-4330-4368-8f26-a694b52f67f7",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/aufbau\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/aufbau/{{name}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/aufbau/{{name}}/abbildung.jpg\");\r",
@@ -1134,11 +1126,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ebb72e29-8fc2-4f9b-bfdc-1134903704d9",
+								"id": "e59c12c4-d580-412b-b391-3fbce93700a9",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/aufbau\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/aufbau/{{name}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/aufbau/{{name}}/abbildung.jpg\");\r",
@@ -1183,11 +1174,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "765fc480-73d0-4c17-b6ac-0a0ecdaa94f7",
+								"id": "17ceb269-8f1c-43eb-84a9-234412aedc74",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/aufbau\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/aufbau/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -1235,7 +1225,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7a8ecfbc-0070-4786-bd97-dba30a653f0a",
+								"id": "46197986-e035-4e79-9036-1e51becdbe6e",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -1277,7 +1267,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e03aeeeb-153f-41d3-948c-64751c1234b7",
+								"id": "673f6465-4996-4370-b7bb-aaac9ceb1c54",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/bahnverwaltung\");\r",
@@ -1330,7 +1320,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "27a85a34-32ef-4d7d-85b5-f4e276136326",
+								"id": "1382a1b8-7509-41dd-a435-75fa7faa2d16",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
@@ -1342,11 +1332,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "adef91d4-cae6-437f-8b0a-b882a17a4152",
+								"id": "bcee0296-670d-46c9-83cf-8bbceb0107d8",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/bahnverwaltung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/bahnverwaltung/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -1407,7 +1396,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "592a5f90-adfc-4b65-a8a0-1825b22c7c56",
+								"id": "b7a1e675-b5c7-46cf-81d5-803b0af456cf",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"land\", pm.variables.replaceIn(\"{{$randomCountryCode}}\"));"
@@ -1418,11 +1407,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "546c27d3-d1e7-49ae-ba26-23447f598952",
+								"id": "e92992a2-246f-4a63-bbdc-130fb6be2f03",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/bahnverwaltung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/bahnverwaltung/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -1484,11 +1472,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c8a4bee3-fae3-46ce-b39c-5a5f0440e8a5",
+								"id": "8b113c13-8a1a-447a-a9a7-89c657c56ff7",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/bahnverwaltung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/bahnverwaltung/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -1532,7 +1519,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "47331d50-79a9-4c59-91d4-aac79dd8cd4e",
+								"id": "2fd319ce-8262-48fd-8543-dd57a1c0fd11",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -1574,7 +1561,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "02ffae85-5370-4c0d-baa4-f3949b0084dc",
+								"id": "47a8c309-ff70-4b0d-a245-631b5fd2cb5e",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/epoch\");\r",
@@ -1627,7 +1614,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "23824055-72d2-46e9-a81a-db2e4a1c2a59",
+								"id": "2341855a-93b8-4d32-abd6-e0d2516c2e3a",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -1638,11 +1625,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4b8cb4e0-862c-4067-801b-4564610296c9",
+								"id": "f26884aa-1fcc-4f94-afbe-8fb00a69449f",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/epoch\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/epoch/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -1702,7 +1688,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "379b757f-4fa1-45d6-a15a-f1e4753a347f",
+								"id": "3fd796c9-af23-40b2-b36b-00dbb3fc4267",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -1712,11 +1698,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c1719137-67e2-4b72-814f-e735ccc72c67",
+								"id": "95e7ac72-7ca5-4e37-8713-185bdc57a924",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/epoch\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/epoch/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -1777,11 +1762,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f4f3fa25-8f31-4cca-b95c-51224cffb9ed",
+								"id": "b06aa5cf-ed6a-4ccc-9b99-fad6a7ff247e",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/epoch\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/epoch/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -1824,7 +1808,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7e56dfa3-5dd0-4188-857c-ab1bbd912b6e",
+								"id": "3984c1b4-7d78-4850-87ce-ae414696d2db",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -1866,7 +1850,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2f8dca82-230d-4c21-ab16-326549907f0c",
+								"id": "3c7232a5-7803-42fa-b234-bf44c82af290",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/gattung\");\r",
@@ -1919,7 +1903,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "09c50a3e-e351-472e-992f-53257fcbb3af",
+								"id": "87f84249-c503-4177-96e9-4a78d06b451c",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -1930,11 +1914,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7f577c2a-15af-45fe-99b1-32a0dc83b1de",
+								"id": "0e1b6f12-6c41-4922-9678-5152c8f536b1",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/gattung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/gattung/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -1994,7 +1977,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "8041c2e2-4cce-4724-b225-318ba903ce1e",
+								"id": "91b5cea1-7499-4ae5-8e9b-cd094cfbac94",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -2004,11 +1987,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "039f9c8a-18be-40ad-9506-46000b58c51d",
+								"id": "4248ddbb-cabd-439e-a3f0-f5bd25f42b2d",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/gattung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/gattung/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -2069,11 +2051,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "61e6d880-9d72-48a0-97d4-5ee8f184d869",
+								"id": "267de160-04fd-42da-8e01-a27ac68fcc5a",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/gattung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/gattung/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -2116,7 +2097,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d26a1512-b1bb-4768-95fb-06864be56029",
+								"id": "5105ba72-c131-4337-96a8-787decbc7c69",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -2158,7 +2139,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c2de9641-e763-4638-9fa7-ccb7dd185b71",
+								"id": "49932535-3e89-4a12-82d7-a6c3deb7ae72",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/hersteller\");\r",
@@ -2211,7 +2192,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "6aef0a45-4239-4648-86df-7d7e27a5d79e",
+								"id": "895f61b7-6d0b-4ff7-9cb1-26225f58d85a",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
@@ -2225,11 +2206,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d404ba6a-3b54-42ff-9952-d3ac533fe6ad",
+								"id": "46ee2b48-aa34-471e-ba9f-ac5646194d16",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/hersteller\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/hersteller/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -2292,7 +2272,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "457a8915-f1f7-49ec-8393-8306f57edc6f",
+								"id": "40eadf13-2393-41c2-b0ce-d49739d2f11c",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"url\", pm.variables.replaceIn(\"{{$randomUrl}}\"));\r",
@@ -2305,11 +2285,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ac843a8c-45a2-41f7-8f58-34776be452fb",
+								"id": "97385684-a021-4c06-a5b6-1ed7aeba8d65",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/hersteller\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/hersteller/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -2373,11 +2352,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "10f15b9d-146a-4c4e-871c-7aa9eda0eb24",
+								"id": "e6745212-ded5-4708-9300-65e60386e74d",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/hersteller\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/hersteller/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -2423,7 +2401,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "871bbe55-8662-4131-8658-d57008f1c4a2",
+								"id": "d4f34d0f-0bb7-42ce-b5e6-1cce065ebfe0",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -2465,7 +2443,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fe0c8896-dc05-4fcb-88bf-d8eda6c54070",
+								"id": "afcc0dcc-9891-4790-89a5-8f88b5ab9f8f",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kupplung\");\r",
@@ -2518,7 +2496,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "566af1e1-3c33-4e43-8423-f438bec684ef",
+								"id": "86083557-c390-4b52-8016-95c38e72758b",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -2529,11 +2507,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b7bd4ef1-22f4-4387-802c-b67236a65e19",
+								"id": "67c7039a-5744-42a0-bb3c-6d87cb8345ca",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kupplung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kupplung/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -2593,11 +2570,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "39003ace-60eb-4902-89e1-864d0b5a546a",
+								"id": "a032a42a-3c16-4771-96e4-3855f1de5de2",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kupplung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kupplung/{{name}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/kupplung/{{name}}/abbildung.jpg\");\r",
@@ -2657,7 +2633,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b4cb54ac-f38d-40d9-912d-1c77a0213507",
+								"id": "6a7c2b0f-f5ac-481d-88af-a2da3d254b11",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -2667,11 +2643,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7696761e-e90f-4f4a-b05d-4da391a4cb96",
+								"id": "f26f7e6f-d28c-46e8-a99d-c521d0b4e0cc",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kupplung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kupplung/{{name}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/kupplung/{{name}}/abbildung.jpg\");\r",
@@ -2734,11 +2709,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "99abf996-a823-4cf2-8098-9bbbb27b69c6",
+								"id": "b3496f8f-ccdb-4ba3-9ead-a8e3358871c8",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kupplung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kupplung/{{name}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/kupplung/{{name}}/abbildung.jpg\");\r",
@@ -2783,11 +2757,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "74c4ffac-1427-449f-881f-de87d48a9d18",
+								"id": "62e4d1a9-2c39-4843-aaef-027efee29526",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kupplung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kupplung/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -2835,7 +2808,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "77519928-208d-4d6c-b94f-c280f7d46d05",
+								"id": "237c3801-4e2c-4093-8ff9-8f3a88cd6c33",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -2877,7 +2850,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6c6f494b-79ec-45a3-8f89-e0c1bb86bb23",
+								"id": "48a83025-15d1-4007-9146-268ab64b1bb4",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/licht\");\r",
@@ -2930,7 +2903,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "056b392a-db3c-4108-85d4-a54de5f5f4f5",
+								"id": "2e4ac0e6-a84f-41f6-92e2-6621e184fd82",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -2941,11 +2914,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "76a7c697-5f74-46e0-a579-7b55a2c8ec4d",
+								"id": "a3b5f1d8-00a9-481e-994a-0bbb90b619a1",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/licht\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/licht/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -3005,11 +2977,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6be52d0f-1d97-4132-8c77-a619d4a75a0f",
+								"id": "740ab9e5-bcf7-465a-8957-e6294d17f663",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/licht\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/licht/{{name}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/licht/{{name}}/abbildung.jpg\");\r",
@@ -3069,7 +3040,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "2af11bc5-39a9-4cd8-a030-33d9b8a29bed",
+								"id": "e89f86b1-c7cc-43c9-98f3-4ee801e7ca75",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -3079,11 +3050,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5aaf7d19-7150-4a67-a61f-011f650017e0",
+								"id": "18bc73a6-dfcd-4d28-85f9-1be99190b7ff",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/licht\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/licht/{{name}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/licht/{{name}}/abbildung.jpg\");\r",
@@ -3146,11 +3116,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6322ba0d-1814-4fd3-ad5a-aad1fb62cd73",
+								"id": "995e69bb-5405-4bd5-99f9-a18e1932cae1",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/licht\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/licht/{{name}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/licht/{{name}}/abbildung.jpg\");\r",
@@ -3195,11 +3164,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7adbb3c3-7849-49af-b0af-4692ffee3711",
+								"id": "25d5ffe8-49fc-4d99-9f4a-e612a91a0aa5",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/licht\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/licht/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -3247,7 +3215,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "db1350ad-0161-4ae0-b81f-4a9c07286128",
+								"id": "5f79aec9-b917-4a34-85c0-8109c0fd4798",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -3289,7 +3257,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "82c35dbc-99e8-4236-8b87-e34144f42291",
+								"id": "b6b99254-1960-4cac-abe7-035ed0d73432",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/massstab\");\r",
@@ -3342,7 +3310,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "6be9575b-c588-40ea-b875-6f3f9d981218",
+								"id": "b6ab687a-1588-4337-882c-1622b7ae76e1",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -3353,11 +3321,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2c23d3ec-360f-4a55-93ed-33cc548223e4",
+								"id": "76e328d0-4dad-46ed-885c-8ce500a563bd",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/massstab\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/massstab/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -3417,7 +3384,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "4e91444c-8628-48a7-93de-15348fafef78",
+								"id": "b0a9f5b4-6745-4a3f-aa1d-153829b6793f",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -3427,11 +3394,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "304a0fdb-f3e4-4e45-af21-d2c48fb46d4f",
+								"id": "1290a7e9-4b97-4263-9c90-a856621c6c2d",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/massstab\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/massstab/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -3492,11 +3458,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2e810361-967f-4b29-b32b-865807d16bbf",
+								"id": "2d6d3fb6-a320-45b0-9153-848a9ed17444",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/massstab\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/massstab/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -3539,7 +3504,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f91b741e-778f-4692-9706-8a9626fae7a3",
+								"id": "c1b1634d-89dc-42ac-b6ff-0637f24af8d6",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -3581,7 +3546,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6ccbd753-304d-44d7-89c5-40ce58cc024b",
+								"id": "cf95e1e2-7c0f-42ce-9a1b-d3ed9d5912bd",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/motorTyp\");\r",
@@ -3634,7 +3599,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "4a76b868-03d4-4f23-9376-bd96cd405285",
+								"id": "bdf78a7f-4533-49ac-93b6-a420752ea47e",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -3645,11 +3610,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "42bd76bc-6b88-46db-9373-d535ea9cbacf",
+								"id": "04bec834-94be-4446-ad21-b97d570c0c41",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/motorTyp\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/motorTyp/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -3709,7 +3673,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "584d6c36-f372-4842-bd0c-8e77ff7a0b81",
+								"id": "1394e19e-b283-45f5-b8a7-65f4d53b5225",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -3719,11 +3683,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ecb6c3d2-059d-4fa4-8bb4-03c52daa937e",
+								"id": "b5c0a2a8-623d-463b-83b4-43300a2ada53",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/motorTyp\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/motorTyp/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -3784,11 +3747,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "51c13887-f27e-4058-9a8b-06b2681aca1f",
+								"id": "3376dfcf-9240-4bbf-8c5a-f91e532461e5",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/motorTyp\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/motorTyp/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -3831,7 +3793,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4c37dc40-0e97-46e0-b747-db92b7d7f4cf",
+								"id": "e0f7a76d-90bf-484a-8952-85febf7c360b",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -3873,7 +3835,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a25f4cde-3da4-4a06-b073-b9bd80e957ee",
+								"id": "36d08571-382f-4c5c-913d-7f48690b1074",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/protokoll\");\r",
@@ -3926,7 +3888,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "46ccc99c-ac1f-425c-abbd-2abc63bd189e",
+								"id": "db605b9c-ce89-400f-b339-c2a3e4d3e6e3",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -3937,11 +3899,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "db08cf68-222d-49cf-bd7c-91d1c638fc37",
+								"id": "911d8d90-1007-4879-988f-4db1373b1afa",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/protokoll\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/protokoll/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -4001,7 +3962,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "3330267c-e5bf-403f-a66a-4434d6c9bd98",
+								"id": "dcbe73c0-fe2b-456f-a466-b6e168231c94",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -4011,11 +3972,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a30ae42e-16a6-4848-a8cb-97338c70de64",
+								"id": "0021e144-fc66-4919-9f1d-29016c2eab73",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/protokoll\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/protokoll/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -4076,11 +4036,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d8f15e74-0bd5-4e9b-bd9e-a5939e30a817",
+								"id": "c7113657-06fa-4d46-8025-e6d440fff794",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/protokoll\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/protokoll/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -4123,7 +4082,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2075088e-b09c-45d8-a423-133114b46630",
+								"id": "dbd71e17-b0d5-4511-8f3f-8ce6b5cbcea9",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -4165,7 +4124,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8722170b-8e33-4935-a3b6-9b6c13dfeaa0",
+								"id": "25ece562-d714-4f9c-88f9-9e5b213403a1",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/sondermodell\");\r",
@@ -4218,7 +4177,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "f1159509-772c-486b-bdb0-586fadcf86f4",
+								"id": "74593159-5a44-4e9b-a5d4-d7aa9af015d3",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -4229,11 +4188,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6e9662c3-32d9-47bf-ae9f-6d0cdd670813",
+								"id": "e2619e19-a253-4293-84cf-453667f3ae5e",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/sondermodell\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/sondermodell/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -4293,7 +4251,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "e0aa819d-f787-4f27-83d6-8ebb559e7d91",
+								"id": "fedb2122-69a1-4edb-8132-f43a93d50a10",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -4303,11 +4261,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a48676a1-e3b4-4ff6-998c-5ce20401c081",
+								"id": "012326aa-3b05-40d2-9753-25165aef48de",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/sondermodell\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/sondermodell/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -4368,11 +4325,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e78d4b82-8aad-4705-b90b-2154992c7dc9",
+								"id": "d9c053ac-180e-47be-9188-33427ab5e17e",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/sondermodell\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/sondermodell/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -4415,7 +4371,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "606da661-a6e2-4036-b321-68711f5339c9",
+								"id": "2d567248-f662-4531-98e3-099ffec98bdf",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -4457,7 +4413,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "090ef30f-4e4d-4356-9ea5-89999df96f67",
+								"id": "8f297a77-1ac1-4d74-8103-c8229d6def9a",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/spurweite\");\r",
@@ -4510,7 +4466,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "25997051-6750-417c-9116-64b6bbb56b09",
+								"id": "095cbf7d-1366-4aeb-bb4a-77da2430e100",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -4521,11 +4477,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "25799783-6ec2-4073-8d79-1f3ff3515bdd",
+								"id": "c2a1abd8-f15d-439d-9678-246a1b2ee8ed",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/spurweite\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/spurweite/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -4585,7 +4540,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "09bffbb9-8042-4584-b712-a9c8948b8761",
+								"id": "3a5ac109-5b10-4403-a7e0-cec34309e7ad",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -4595,11 +4550,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "deef98ea-5623-48d4-908c-2a05864a3c28",
+								"id": "48abf657-1c01-4634-90b2-4340cfce534f",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/spurweite\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/spurweite/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -4660,11 +4614,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d9f1b29f-5fa6-4a09-b289-4bcd8c639474",
+								"id": "81174bae-c9cb-4da9-b118-d79f949e2466",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/spurweite\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/spurweite/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -4707,7 +4660,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9a7563b1-6c2f-43ba-8dbd-d35c8d53db76",
+								"id": "270a9ef1-ff09-4f22-9691-dd56c4eb14c4",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -4749,7 +4702,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ffdefadd-419b-485a-a022-22b7a72527f4",
+								"id": "970ffb76-9878-4abc-bad3-9bcca155532b",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/steuerung\");\r",
@@ -4802,7 +4755,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "6c5bcb2d-16e7-4438-9cc2-1e68a1fdf6c7",
+								"id": "3c2fe340-653c-4a14-9ddb-82d2ce356e2d",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -4813,11 +4766,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8856926b-538e-4606-82e0-66cd5ad5d1da",
+								"id": "bdfcc9f8-561d-45b8-bf3b-5ec07abf6aee",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/steuerung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/steuerung/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -4877,7 +4829,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "50f9271d-189a-4e3b-959a-404ae08264e4",
+								"id": "bae442fd-cbc4-4491-907f-ed11f9d169ac",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -4887,11 +4839,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7baea752-5198-47ca-852e-d13a56c89e49",
+								"id": "2fb6728f-d232-425f-808b-4ea9130c576c",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/steuerung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/steuerung/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -4952,11 +4903,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b27e9a7d-62a2-4ee1-bcd0-153f137274e4",
+								"id": "d96b1c6f-b6a2-4546-a733-591807587084",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/steuerung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/steuerung/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -4999,7 +4949,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f402291f-b132-4a29-9447-d12ddf2df978",
+								"id": "dcb1749f-9712-40fa-9f61-ec5f345aef80",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -5041,7 +4991,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f975f138-611d-4b1f-8547-fed5c74a6095",
+								"id": "e29b4f00-d198-4b0f-86f5-29cd79529f09",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zugTyp\");\r",
@@ -5094,7 +5044,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "c8f1f1cf-416f-4cfa-833f-38ec70bf2e50",
+								"id": "0dc00d07-5d08-4392-bdeb-dc452df68c08",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -5105,11 +5055,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9294591e-c77f-4fa8-85f4-0997b2196e83",
+								"id": "f3133708-a2cb-4a89-8dce-6fb8113f0848",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zugTyp\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/zugTyp/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -5169,7 +5118,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "e33844fd-e0bf-4296-ade0-a88b8c2f1b51",
+								"id": "9a5f5986-ff9c-4d18-a424-a7903ab85669",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -5179,11 +5128,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "59b788a5-19db-442c-8ad6-3c8846f9c1fb",
+								"id": "096c5bac-803c-4041-bac0-a3ad35940778",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zugTyp\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/zugTyp/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -5244,11 +5192,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f572fd0c-6320-4fd2-9280-620011d26beb",
+								"id": "7b4cfe61-a037-4466-966e-1cfc3b49da94",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zugTyp\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/zugTyp/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -5291,7 +5238,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5edc1c4b-0935-4743-914a-f4486405a6ac",
+								"id": "2c3f122e-5a1e-4a73-9733-85d5d474ca69",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -5333,7 +5280,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "71410dac-3b1d-40f0-805b-12686cea08e7",
+								"id": "5985733f-5861-4056-b24d-62df8310253e",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kategorie\");\r",
@@ -5386,7 +5333,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bd38e0fd-ca8e-47a9-bb5d-574b63de165b",
+								"id": "7cb9952c-7c0f-4c4d-b375-189d9ed5643b",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kategorie\");\r",
@@ -5451,7 +5398,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b524dc7c-b031-460e-b572-8ab48f5264f8",
+								"id": "2521785c-ef76-4ca8-a2ce-a0720f3afd8f",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -5462,11 +5409,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "911abb3d-8db1-4bb6-98a0-7cf6cc06d232",
+								"id": "3b8f7aec-a553-4dc8-a561-89ed7041492e",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kategorie\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kategorie/{{name}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -5527,7 +5473,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "135ce5d4-84a8-4199-b648-bfecb06b45cc",
+								"id": "731e20a0-5d8b-4ac5-99ea-7835d6ee850d",
 								"exec": [
 									"pm.environment.set(\"unterAdd\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"unterBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -5538,11 +5484,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "78f52d4b-eea1-46cb-aa1b-b06198eae7cf",
+								"id": "b760ade0-2f1d-469d-b9d4-d4d6cf94fc7e",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kategorie/{{name}}\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kategorie/{{name}}/unterKategorien/{{unterAdd}}\");\r",
 									"pm.expect(jsonData.kategorie).to.eql(pm.variables.get(\"name\"));\r",
@@ -5604,7 +5549,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "6d2f3cc1-5071-40ef-8b09-d911c4ad03ef",
+								"id": "54e2f16b-a35a-468b-927f-b5273ab74e5a",
 								"exec": [
 									"pm.environment.set(\"unterBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -5614,11 +5559,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "19b0cda6-5867-443b-9a9e-8ddf9c0b69f4",
+								"id": "df1d3196-3f11-4555-b3e3-7ccef815dccf",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kategorie/{{name}}\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kategorie/{{name}}/unterKategorien/{{unterAdd}}\");\r",
 									"pm.expect(jsonData.kategorie).to.eql(pm.variables.get(\"name\"));\r",
@@ -5681,7 +5625,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "723a7ec0-c027-4737-8186-4f05ae044173",
+								"id": "499b29f7-aaf3-4189-9405-9721a479d995",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -5691,11 +5635,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "66057ea4-e0b6-4e8b-9154-031244e203b1",
+								"id": "9c99c87e-7447-4f59-b7be-cf0e4ebd8bcd",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kategorie\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kategorie/{{name}}\");\r",
 									"var child = pm.variables.replaceIn(\"{{api}}/kategorie/{{name}}/unterKategorien/{{unterAdd}}\");\r",
@@ -5766,11 +5709,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e769f6d3-d04e-403c-8145-bd6d4609fee4",
+								"id": "bf4de237-9f0c-444e-aa9f-bd690a245ab0",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kategorie\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kategorie/{{name}}\");\r",
 									"var child = pm.variables.replaceIn(\"{{api}}/kategorie/{{name}}/unterKategorien/{{unterAdd}}\");\r",
@@ -5823,7 +5765,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8221362c-6002-48c0-b16a-e0de282e90aa",
+								"id": "10c1c1c9-ac77-456f-a9f7-a9e43d6b57c3",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -5861,7 +5803,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d8aba647-6f81-44fc-b366-ebbd9a062858",
+								"id": "3878a140-59e4-40f7-96ab-a22f59951dd4",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -5903,7 +5845,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0fbfc862-a6bb-4ff3-bac4-4cd21f7b52e0",
+								"id": "515cd841-282a-4bf9-8c2a-592f432474bf",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/vorbild\");\r",
@@ -5956,7 +5898,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "7782d7c2-c3c7-4f60-9e28-88aeaedd798d",
+								"id": "96266b55-46e8-433c-b54e-966d152527c1",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}{{$randomInt}}.{{$randomInt}}\"));\r",
 									"pm.environment.set(\"gattung\", pm.variables.replaceIn(\"{{gattungAdd}}\"));\r",
@@ -6008,7 +5950,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "67d0eaaa-feaa-4db5-bcb2-30f60c4fb378",
+								"id": "6ab6e976-b300-4ca5-a0f7-de03f08439a8",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -6110,7 +6052,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "491b3a1c-8043-45e9-bf44-2d91e962d28d",
+								"id": "fbc8ac25-80de-4cc3-baf1-e3732e4bd930",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -6211,7 +6153,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "02d31487-cae5-4f7c-a67f-448969385e48",
+								"id": "e0aa3484-57d5-4aa3-9a7c-f9652102c371",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -6272,7 +6214,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "f7985df1-f3bd-470d-9fbf-a72c42a6e2ff",
+								"id": "f3e4e657-354c-4b7b-b8ed-88ddd7ccfbbd",
 								"exec": [
 									"pm.environment.set(\"gattung\", pm.variables.replaceIn(\"{{gattungUpdate}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
@@ -6366,7 +6308,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8e96d603-973f-4478-8bba-5b3d711d27c8",
+								"id": "9f3718e3-037c-4979-96ca-dd540741683e",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -6452,7 +6394,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d784f107-0ed7-4448-933a-80a9990894e7",
+								"id": "96aa4789-139c-40a2-8cee-32cb4cca6550",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -6498,7 +6440,7 @@
 									"pm.expect(jsonData.triebkopf).to.eql(pm.variables.get(\"triebkopf\"));\r",
 									"pm.expect(jsonData.mittelwagen).to.eql(pm.variables.get(\"mittelwagen\"));\r",
 									"pm.expect(jsonData.drehgestellBauart).to.eql(pm.variables.get(\"drehgestellBauart\"));\r",
-									"pm.expect(jsonData.abbildung).to.be(undefined);\r",
+									"pm.expect(jsonData.abbildung).to.eql(undefined);\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
@@ -6539,7 +6481,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a6bdf2eb-32ee-4cf6-a037-1d52842a1233",
+								"id": "7c008636-982e-4fe1-a2c0-fe367eca4703",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -6581,15 +6523,20 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1efb7964-8080-4bfd-a306-6e91a02f5349",
+								"id": "0dd85d1a-28be-401c-9099-d34ba76b4c17",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.decoderTyp.forEach(function(a) { \r",
-									"    var self = root + \"/\" + a.name;\r",
-									"    pm.expect(a.name).to.exist;\r",
+									"    var self = root + \"/\" + a.hersteller + \"/\" + a.bestellNr;\r",
+									"    pm.expect(a.hersteller).to.exist;\r",
+									"    pm.expect(a.bestellNr).to.exist;\r",
 									"    pm.expect(a.bezeichnung).to.exist;\r",
+									"    pm.expect(a.protokoll).to.exist;\r",
+									"    pm.expect(a.gerausch).to.exist;\r",
+									"    pm.expect(a.konfiguration).to.exist;\r",
+									"    pm.expect(a.stecker).to.exist;\r",
 									"    pm.expect(a.deleted).to.be.false;\r",
 									"    pm.expect(a._links.add[0].href).to.eql(root);\r",
 									"    pm.expect(a._links.self[0].href).to.eql(self);\r",
@@ -6634,14 +6581,14 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "1bb4fd28-0301-47f8-85c0-9aeccef7b3c7",
+								"id": "04bf8ef5-e3e2-4a84-8449-5302aba7d242",
 								"exec": [
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"decoderHerstellerAdd\"));\r",
-									"pm.environment.set(\"bestellNr\", pm.variables.replaceIn(\"decoderBestellAdd\"));\r",
+									"pm.environment.set(\"bestellNr\", pm.variables.get(\"decoderBestellAdd\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.environment.set(\"iMax\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"iMax\", new Number(pm.variables.get(\"iMaxAdd\")));\r",
 									"pm.environment.set(\"protokoll\", pm.variables.get(\"protokollAdd\"));\r",
-									"pm.environment.set(\"fahrstufe\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"fahrstufe\", new Number(pm.variables.get(\"fahrstufeAdd\")));\r",
 									"pm.environment.set(\"gerausch\", new Boolean(true));\r",
 									"pm.environment.set(\"konfiguration\", pm.variables.get(\"konfigurationAdd\"));\r",
 									"pm.environment.set(\"stecker\", pm.variables.get(\"steckerAdd\"));"
@@ -6652,7 +6599,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "493e9604-5e52-4f04-9750-606935c21777",
+								"id": "046ce113-d851-4717-bab6-44c87b78010b",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -6668,9 +6615,9 @@
 									"pm.expect(jsonData.konfiguration).to.eql(pm.variables.get(\"konfiguration\"));\r",
 									"pm.expect(jsonData.stecker).to.eql(pm.variables.get(\"stecker\"));\r",
 									"pm.expect(jsonData.anleitungen).to.eql(undefined);\r",
-									"pm.expect(jsonData.adressen).to.eql(undefined);\r",
-									"pm.expect(jsonData.cvs).to.eql(undefined);\r",
-									"pm.expect(jsonData.funktionen).to.eql(undefined);\r",
+									"pm.expect(jsonData.adressen).to.be.empty;\r",
+									"pm.expect(jsonData.cvs).to.be.empty;\r",
+									"pm.expect(jsonData.funktionen).to.be.empty;\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
@@ -6701,7 +6648,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"hersteller\": \"{{hersteller}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n    \"iMax\": {{iMax}},\n    \"protokoll\": \"{{protokoll}}\",\n    \"fahrstufe\": {{fahrstufe}},\n    \"gerausch\": false,\n    \"konfiguration\": \"{{konfiguration}}\",\n    \"stecker\": \"{{stecker}}\",\n\t\"deleted\": true\n}",
+							"raw": "{\n\t\"hersteller\": \"{{hersteller}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n    \"iMax\": {{iMax}},\n    \"protokoll\": \"{{protokoll}}\",\n    \"fahrstufe\": {{fahrstufe}},\n    \"gerausch\": {{gerausch}},\n    \"konfiguration\": \"{{konfiguration}}\",\n    \"stecker\": \"{{stecker}}\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -6726,13 +6673,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3b378e62-a3d7-4f7f-9e29-9ae8d6c3194a",
+								"id": "caf810ce-d4d2-499e-81f5-49b96ace23eb",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
-									"var anleitungen = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/anleitungen.pdf\");\r",
+									"var anleitungen = pm.variables.replaceIn(\"{{server}}/decoderTyp/{{hersteller}}/{{bestellNr}}/anleitungen.pdf\");\r",
 									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
 									"pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\"));\r",
@@ -6743,9 +6690,9 @@
 									"pm.expect(jsonData.konfiguration).to.eql(pm.variables.get(\"konfiguration\"));\r",
 									"pm.expect(jsonData.stecker).to.eql(pm.variables.get(\"stecker\"));\r",
 									"pm.expect(jsonData.anleitungen).to.eql(anleitungen);\r",
-									"pm.expect(jsonData.adressen).to.eql(undefined);\r",
-									"pm.expect(jsonData.cvs).to.eql(undefined);\r",
-									"pm.expect(jsonData.funktionen).to.eql(undefined);\r",
+									"pm.expect(jsonData.adressen).to.be.empty;\r",
+									"pm.expect(jsonData.cvs).to.be.empty;\r",
+									"pm.expect(jsonData.funktionen).to.be.empty;\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
@@ -6772,7 +6719,7 @@
 								{
 									"key": "anleitungen",
 									"type": "file",
-									"src": "{{pdfFile}}"
+									"src": "{{anleitungFile}}"
 								}
 							],
 							"options": {
@@ -6780,14 +6727,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/anleitungen",
+							"raw": "{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/anleitungen",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"decoderTyp",
-								"{{decoderHersteller}}",
-								"{{decoderBestellNr}}",
+								"{{hersteller}}",
+								"{{bestellNr}}",
 								"anleitungen"
 							]
 						}
@@ -6800,13 +6747,13 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "1ab79091-31eb-4f16-bce7-27b466b37d74",
+								"id": "c851550b-b985-4eaf-b5fe-7ef2b2fcc424",
 								"exec": [
-									"pm.environment.set(\"index\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.environment.set(\"adressAdd\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.environment.set(\"adressTyp\", \"MFX\");\r",
-									"pm.environment.set(\"span\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.environment.set(\"adress\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
+									"pm.environment.set(\"adIndex\", new Number(pm.variables.get(\"adIndexAdd\")));\r",
+									"pm.environment.set(\"adBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"adTyp\", pm.variables.get(\"adTypAdd\"));\r",
+									"pm.environment.set(\"adSpan\", new Number(pm.variables.get(\"adSpanAdd\")));\r",
+									"pm.environment.set(\"adress\", new Number(pm.variables.get(\"adAdd\")));"
 								],
 								"type": "text/javascript"
 							}
@@ -6814,25 +6761,25 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e93cbba5-10f2-4cc9-ac89-baba1daa11f0",
+								"id": "a69914bb-c062-40f9-860c-3d1c643144d7",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp\");\r",
-									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress/{{index}}\");\r",
+									"var parent = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress/{{adIndex}}\");\r",
 									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
 									"pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
-									"pm.expect(jsonData.index).to.eql(pm.variables.get(\"index\"));\r",
-									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"adressAdd\"));\r",
-									"pm.expect(jsonData.adressTyp).to.eql(pm.variables.get(\"adressTyp\"));\r",
-									"pm.expect(jsonData.span).to.eql(pm.variables.get(\"span\"));\r",
+									"pm.expect(jsonData.index).to.eql(pm.variables.get(\"adIndex\"));\r",
+									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"adBezeichnung\"));\r",
+									"pm.expect(jsonData.adressTyp).to.eql(pm.variables.get(\"adTyp\"));\r",
+									"pm.expect(jsonData.span).to.eql(pm.variables.get(\"adSpan\"));\r",
 									"pm.expect(jsonData.werkseinstellung).to.eql(pm.variables.get(\"adress\"));\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
+									"pm.expect(jsonData._links.parent[0].href).to.eql(parent);\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.delete[0].href).to.eql(self);"
 								],
 								"type": "text/javascript"
 							}
@@ -6857,7 +6804,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"hersteller\": \"{{decoderHersteller}}\",\n\t\"bestellNr\": \"{{bestellNr}}\",\n    \"index\": {{index}},\n\t\"bezeichnung\": \"{{adressAdd}}\",\n    \"adressTyp\": \"{{adressTyp}}\",\n    \"span\": {{span}},\n    \"werkseinstellung\": {{adress}},\n\t\"deleted\": true\n}",
+							"raw": "{\n\t\"hersteller\": \"{{hersteller}}\",\n\t\"bestellNr\": \"{{bestellNr}}\",\n    \"index\": {{adIndex}},\n\t\"bezeichnung\": \"{{adBezeichnung}}\",\n    \"adressTyp\": \"{{adTyp}}\",\n    \"span\": {{adSpan}},\n    \"werkseinstellung\": {{adress}},\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -6865,14 +6812,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/adress",
+							"raw": "{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"decoderTyp",
-								"{{decoderHersteller}}",
-								"{{decoderBestellNr}}",
+								"{{hersteller}}",
+								"{{bestellNr}}",
 								"adress"
 							]
 						}
@@ -6885,13 +6832,12 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "2c2815b7-1479-4829-a49d-c308ec078956",
+								"id": "5e028752-28fc-4384-9d13-41f22b237ad9",
 								"exec": [
-									"pm.environment.set(\"index\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.environment.set(\"adressAdd\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.environment.set(\"adressTyp\", \"DELTA\");\r",
-									"pm.environment.set(\"span\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.environment.set(\"adress\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
+									"pm.environment.set(\"adBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"adTyp\", pm.variables.get(\"adTypUpdate\"));\r",
+									"pm.environment.set(\"adSpan\", new Number(pm.variables.get(\"adSpanUpdate\")));\r",
+									"pm.environment.set(\"adress\", new Number(pm.variables.get(\"adUpdate\")));"
 								],
 								"type": "text/javascript"
 							}
@@ -6899,25 +6845,25 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6e159af6-0c15-4dcb-8712-312e3574e75a",
+								"id": "ea3f1a46-14bd-4d81-991e-a817e5960b73",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp\");\r",
-									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress/{{index}}\");\r",
+									"var parent = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress/{{adIndex}}\");\r",
 									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
 									"pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
-									"pm.expect(jsonData.index).to.eql(pm.variables.get(\"index\"));\r",
-									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"adressAdd\"));\r",
-									"pm.expect(jsonData.adressTyp).to.eql(pm.variables.get(\"adressTyp\"));\r",
-									"pm.expect(jsonData.span).to.eql(pm.variables.get(\"span\"));\r",
+									"pm.expect(jsonData.index).to.eql(pm.variables.get(\"adIndex\"));\r",
+									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"adBezeichnung\"));\r",
+									"pm.expect(jsonData.adressTyp).to.eql(pm.variables.get(\"adTyp\"));\r",
+									"pm.expect(jsonData.span).to.eql(pm.variables.get(\"adSpan\"));\r",
 									"pm.expect(jsonData.werkseinstellung).to.eql(pm.variables.get(\"adress\"));\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
+									"pm.expect(jsonData._links.parent[0].href).to.eql(parent);\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.delete[0].href).to.eql(self);"
 								],
 								"type": "text/javascript"
 							}
@@ -6942,7 +6888,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"hersteller\": \"{{decoderHersteller}}\",\n\t\"bestellNr\": \"{{decoderBestellNr}}\",\n    \"index\": 1,\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n    \"adressTyp\": \"{{adressTyp}}\",\n    \"span\": 1,\n    \"werkseinstellung\": 1,\n\t\"deleted\": true\n}",
+							"raw": "{\n\t\"hersteller\": \"{{hersteller}}\",\n\t\"bestellNr\": \"{{bestellNr}}\",\n    \"index\": {{adIndex}},\n\t\"bezeichnung\": \"{{adBezeichnung}}\",\n    \"adressTyp\": \"{{adTyp}}\",\n    \"span\": {{adSpan}},\n    \"werkseinstellung\": {{adress}},\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -6950,16 +6896,16 @@
 							}
 						},
 						"url": {
-							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/adress/{{index}}",
+							"raw": "{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress/{{adIndex}}",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"decoderTyp",
-								"{{decoderHersteller}}",
-								"{{decoderBestellNr}}",
+								"{{hersteller}}",
+								"{{bestellNr}}",
 								"adress",
-								"{{index}}"
+								"{{adIndex}}"
 							]
 						}
 					},
@@ -6971,13 +6917,13 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "4f50862f-a909-4bf2-b2b1-baf11b8e7c75",
+								"id": "81407570-e2f3-41b7-8299-e099f73ba502",
 								"exec": [
-									"pm.environment.set(\"cv\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.environment.set(\"cvAdd\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.environment.set(\"minimal\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.environment.set(\"maximal\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.environment.set(\"cvValue\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
+									"pm.environment.set(\"cv\", new Number(pm.variables.get(\"cvAdd\")));\r",
+									"pm.environment.set(\"cvBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"cvMinimal\", new Number(pm.variables.get(\"cvMinAdd\")));\r",
+									"pm.environment.set(\"cvMaximal\", new Number(pm.variables.get(\"cvMaxAdd\")));\r",
+									"pm.environment.set(\"cvValue\", new Number(pm.variables.get(\"cvValueAdd\")));"
 								],
 								"type": "text/javascript"
 							}
@@ -6985,25 +6931,25 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c1b4704a-a5e9-4478-aa30-af84104802f6",
+								"id": "2ab48333-ff5d-48c9-b4ab-96dba99e9956",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp\");\r",
-									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress/{{index}}\");\r",
+									"var parent = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/cv\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/cv/{{cv}}\");\r",
 									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
 									"pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
-									"pm.expect(jsonData.index).to.eql(pm.variables.get(\"index\"));\r",
-									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"adressAdd\"));\r",
-									"pm.expect(jsonData.adressTyp).to.eql(pm.variables.get(\"adressTyp\"));\r",
-									"pm.expect(jsonData.span).to.eql(pm.variables.get(\"span\"));\r",
-									"pm.expect(jsonData.werkseinstellung).to.eql(pm.variables.get(\"adress\"));\r",
+									"pm.expect(jsonData.cv).to.eql(pm.variables.get(\"cv\"));\r",
+									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"cvBezeichnung\"));\r",
+									"pm.expect(jsonData.minimal).to.eql(pm.variables.get(\"cvMinimal\"));\r",
+									"pm.expect(jsonData.maximal).to.eql(pm.variables.get(\"cvMaximal\"));\r",
+									"pm.expect(jsonData.werkseinstellung).to.eql(pm.variables.get(\"cvValue\"));\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
+									"pm.expect(jsonData._links.parent[0].href).to.eql(parent);\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.delete[0].href).to.eql(self);"
 								],
 								"type": "text/javascript"
 							}
@@ -7028,7 +6974,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"hersteller\": \"{{decoderHersteller}}\",\n\t\"bestellNr\": \"{{bestellNr}}\",\n    \"cv\": {{cv}},\n\t\"bezeichnung\": \"{{cvAdd}}\",\n    \"minimal\": {{minimal}},\n    \"maximal\": {{maximal}},\n    \"werkseinstellung\": {{cvValue}},\n\t\"deleted\": true\n}",
+							"raw": "{\n\t\"hersteller\": \"{{hersteller}}\",\n\t\"bestellNr\": \"{{bestellNr}}\",\n    \"cv\": {{cv}},\n\t\"bezeichnung\": \"{{cvBezeichnung}}\",\n    \"minimal\": {{cvMinimal}},\n    \"maximal\": {{cvMaximal}},\n    \"werkseinstellung\": {{cvValue}},\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -7036,14 +6982,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/cv",
+							"raw": "{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/cv",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"decoderTyp",
-								"{{decoderHersteller}}",
-								"{{decoderBestellNr}}",
+								"{{hersteller}}",
+								"{{bestellNr}}",
 								"cv"
 							]
 						}
@@ -7056,13 +7002,12 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "da8b8801-8903-4415-83c9-8d6da7ff17f2",
+								"id": "e993df42-b13f-4fac-8ade-e413e6592e6d",
 								"exec": [
-									"pm.environment.set(\"index\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.environment.set(\"adressAdd\", pm.variables.replaceIn(\"{{$randomProductName}}\")));\r",
-									"pm.environment.set(\"adressTyp\", \"adressTyp\");\r",
-									"pm.environment.set(\"span\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.environment.set(\"adress\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
+									"pm.environment.set(\"cvBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"cvMinimal\", new Number(pm.variables.get(\"cvMinUpdate\")));\r",
+									"pm.environment.set(\"cvMaximal\", new Number(pm.variables.get(\"cvMaxUpdate\")));\r",
+									"pm.environment.set(\"cvValue\", new Number(pm.variables.get(\"cvValueUpdate\")));"
 								],
 								"type": "text/javascript"
 							}
@@ -7070,25 +7015,25 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "921d5a5d-9088-4e6e-940f-83476ce0823b",
+								"id": "8e7e4ab7-1ad4-4968-a6ff-0050b18e8da0",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp\");\r",
-									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress/{{index}}\");\r",
+									"var parent = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/cv\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/cv/{{cv}}\");\r",
 									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
 									"pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
-									"pm.expect(jsonData.index).to.eql(pm.variables.get(\"index\"));\r",
-									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"adressAdd\"));\r",
-									"pm.expect(jsonData.adressTyp).to.eql(pm.variables.get(\"adressTyp\"));\r",
-									"pm.expect(jsonData.span).to.eql(pm.variables.get(\"span\"));\r",
-									"pm.expect(jsonData.werkseinstellung).to.eql(pm.variables.get(\"adress\"));\r",
+									"pm.expect(jsonData.cv).to.eql(pm.variables.get(\"cv\"));\r",
+									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"cvBezeichnung\"));\r",
+									"pm.expect(jsonData.minimal).to.eql(pm.variables.get(\"cvMinimal\"));\r",
+									"pm.expect(jsonData.maximal).to.eql(pm.variables.get(\"cvMaximal\"));\r",
+									"pm.expect(jsonData.werkseinstellung).to.eql(pm.variables.get(\"cvValue\"));\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
+									"pm.expect(jsonData._links.parent[0].href).to.eql(parent);\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.delete[0].href).to.eql(self);"
 								],
 								"type": "text/javascript"
 							}
@@ -7113,7 +7058,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"hersteller\": \"{{decoderHersteller}}\",\n\t\"bestellNr\": \"{{bestellNr}}\",\n    \"cv\": {{cv}},\n\t\"bezeichnung\": \"{{cvAdd}}\",\n    \"minimal\": {{minimal}},\n    \"maximal\": {{maximal}},\n    \"werkseinstellung\": {{cvValue}},\n\t\"deleted\": true\n}",
+							"raw": "{\n\t\"hersteller\": \"{{hersteller}}\",\n\t\"bestellNr\": \"{{bestellNr}}\",\n    \"cv\": {{cv}},\n\t\"bezeichnung\": \"{{cvBezeichnung}}\",\n    \"minimal\": {{cvMinimal}},\n    \"maximal\": {{cvMaximal}},\n    \"werkseinstellung\": {{cvValue}},\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -7121,14 +7066,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/cv/{{cv}}",
+							"raw": "{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/cv/{{cv}}",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"decoderTyp",
-								"{{decoderHersteller}}",
-								"{{decoderBestellNr}}",
+								"{{hersteller}}",
+								"{{bestellNr}}",
 								"cv",
 								"{{cv}}"
 							]
@@ -7142,13 +7087,12 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "5da90da9-dff1-4744-9540-5461c45f015e",
+								"id": "27533d99-53c2-42ec-975a-c89e45598442",
 								"exec": [
-									"pm.environment.set(\"index\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.environment.set(\"adressAdd\", pm.variables.replaceIn(\"{{$randomProductName}}\")));\r",
-									"pm.environment.set(\"adressTyp\", \"adressTyp\");\r",
-									"pm.environment.set(\"span\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.environment.set(\"adress\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
+									"pm.environment.set(\"fnReihe\", new Number(pm.variables.get(\"fnReiheAdd\")));\r",
+									"pm.environment.set(\"fnFunktion\", pm.variables.get(\"fnFuntionAdd\"));\r",
+									"pm.environment.set(\"fnBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"fnProgrammable\", new Boolean(true));"
 								],
 								"type": "text/javascript"
 							}
@@ -7156,25 +7100,24 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "01722195-9197-4ba9-baf2-a916dc492798",
+								"id": "9ee9f6dd-e5ee-403d-998d-01bb0b5569fb",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp\");\r",
-									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress/{{index}}\");\r",
+									"var parent = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/funktion\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/funktion/{{fnReihe}}/{{fnFunktion}}\");\r",
 									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
 									"pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
-									"pm.expect(jsonData.index).to.eql(pm.variables.get(\"index\"));\r",
-									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"adressAdd\"));\r",
-									"pm.expect(jsonData.adressTyp).to.eql(pm.variables.get(\"adressTyp\"));\r",
-									"pm.expect(jsonData.span).to.eql(pm.variables.get(\"span\"));\r",
-									"pm.expect(jsonData.werkseinstellung).to.eql(pm.variables.get(\"adress\"));\r",
+									"pm.expect(jsonData.reihe).to.eql(pm.variables.get(\"fnReihe\"));\r",
+									"pm.expect(jsonData.funktion).to.eql(pm.variables.get(\"fnFunktion\"));\r",
+									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"fnBezeichnung\"));\r",
+									"pm.expect(jsonData.programmable).to.eql(pm.variables.get(\"fnProgrammable\"));\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
+									"pm.expect(jsonData._links.parent[0].href).to.eql(parent);\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.delete[0].href).to.eql(self);"
 								],
 								"type": "text/javascript"
 							}
@@ -7199,7 +7142,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"hersteller\": \"{{decoderHersteller}}\",\n\t\"bestellNr\": \"{{bestellNr}}\",\n    \"reihe\": {{reihe}},\n    \"funktion\": \"{{funktion}}\",\n\t\"bezeichnung\": \"{{funktionAdd}}\",\n\t\"programmable\": {{programmable}},\n\t\"deleted\": true\n}",
+							"raw": "{\n\t\"hersteller\": \"{{hersteller}}\",\n\t\"bestellNr\": \"{{bestellNr}}\",\n    \"reihe\": {{fnReihe}},\n    \"funktion\": \"{{fnFunktion}}\",\n\t\"bezeichnung\": \"{{fnBezeichnung}}\",\n\t\"programmable\": {{fnProgrammable}},\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -7207,14 +7150,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/funktion",
+							"raw": "{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/funktion",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"decoderTyp",
-								"{{decoderHersteller}}",
-								"{{decoderBestellNr}}",
+								"{{hersteller}}",
+								"{{bestellNr}}",
 								"funktion"
 							]
 						}
@@ -7227,13 +7170,12 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "148f63a3-ef8b-4d94-9375-92a9b8e38ada",
+								"id": "cb660c4a-2a08-4402-81a5-062d250c2851",
 								"exec": [
-									"pm.environment.set(\"index\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.environment.set(\"adressAdd\", pm.variables.replaceIn(\"{{$randomProductName}}\")));\r",
-									"pm.environment.set(\"adressTyp\", \"adressTyp\");\r",
-									"pm.environment.set(\"span\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
-									"pm.environment.set(\"adress\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
+									"pm.environment.set(\"fnReihe\", new Number(pm.variables.get(\"fnReiheUpdate\")));\r",
+									"pm.environment.set(\"fnFunktion\", pm.variables.get(\"fnFuntionUpdate\"));\r",
+									"pm.environment.set(\"fnBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"fnProgrammable\", new Boolean(false));"
 								],
 								"type": "text/javascript"
 							}
@@ -7241,25 +7183,24 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f64a9dbf-cdf5-41ed-963c-7286c1753c97",
+								"id": "0003726b-c22b-46e2-8879-5d5b1e7890c4",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp\");\r",
-									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress/{{index}}\");\r",
+									"var parent = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/funktion\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/funktion/{{fnReihe}}/{{fnFunktion}}\");\r",
 									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
 									"pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
-									"pm.expect(jsonData.index).to.eql(pm.variables.get(\"index\"));\r",
-									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"adressAdd\"));\r",
-									"pm.expect(jsonData.adressTyp).to.eql(pm.variables.get(\"adressTyp\"));\r",
-									"pm.expect(jsonData.span).to.eql(pm.variables.get(\"span\"));\r",
-									"pm.expect(jsonData.werkseinstellung).to.eql(pm.variables.get(\"adress\"));\r",
+									"pm.expect(jsonData.reihe).to.eql(pm.variables.get(\"fnReihe\"));\r",
+									"pm.expect(jsonData.funktion).to.eql(pm.variables.get(\"fnFunktion\"));\r",
+									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"fnBezeichnung\"));\r",
+									"pm.expect(jsonData.programmable).to.eql(pm.variables.get(\"fnProgrammable\"));\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
+									"pm.expect(jsonData._links.parent[0].href).to.eql(parent);\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.delete[0].href).to.eql(self);"
 								],
 								"type": "text/javascript"
 							}
@@ -7284,7 +7225,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"hersteller\": \"{{decoderHersteller}}\",\n\t\"bestellNr\": \"{{bestellNr}}\",\n    \"reihe\": {{reihe}},\n    \"funktion\": \"{{funktion}}\",\n\t\"bezeichnung\": \"{{funktionAdd}}\",\n\t\"programmable\": {{programmable}},\n\t\"deleted\": true\n}",
+							"raw": "{\n\t\"hersteller\": \"{{hersteller}}\",\n\t\"bestellNr\": \"{{bestellNr}}\",\n    \"reihe\": {{fnReihe}},\n    \"funktion\": \"{{fnFunktion}}\",\n\t\"bezeichnung\": \"{{fnBezeichnung}}\",\n\t\"programmable\": {{fnProgrammable}},\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -7292,17 +7233,17 @@
 							}
 						},
 						"url": {
-							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/funktion/{{funktion}}/{{reihe}}",
+							"raw": "{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/funktion/{{fnReihe}}/{{fnFunktion}}",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"decoderTyp",
-								"{{decoderHersteller}}",
-								"{{decoderBestellNr}}",
+								"{{hersteller}}",
+								"{{bestellNr}}",
 								"funktion",
-								"{{funktion}}",
-								"{{reihe}}"
+								"{{fnReihe}}",
+								"{{fnFunktion}}"
 							]
 						}
 					},
@@ -7314,12 +7255,12 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "a5764ea3-66fc-45d2-9930-04cd3964fdc0",
+								"id": "58c4c727-5782-4615-9373-5089b1696761",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.environment.set(\"iMax\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"iMax\", new Number(pm.variables.get(\"iMaxUpdate\")));\r",
 									"pm.environment.set(\"protokoll\", pm.variables.get(\"protokollUpdate\"));\r",
-									"pm.environment.set(\"fahrstufe\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"fahrstufe\", new Number(pm.variables.get(\"fahrstufeUpdate\")));\r",
 									"pm.environment.set(\"gerausch\", new Boolean(false));\r",
 									"pm.environment.set(\"konfiguration\", pm.variables.get(\"konfigurationUpdate\"));\r",
 									"pm.environment.set(\"stecker\", pm.variables.get(\"steckerUpdate\"));"
@@ -7330,14 +7271,19 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "709ef2e8-8549-4861-b2c1-222d5dcea9b3",
+								"id": "afea9481-bfc5-4b17-80fc-41c3375b853a",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
-									"var anleitungen = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/anleitungen.pdf\");\r",
+									"var anleitungen = pm.variables.replaceIn(\"{{server}}/decoderTyp/{{hersteller}}/{{bestellNr}}/anleitungen.pdf\");\r",
+									"var adressRoot = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress\");\r",
+									"var adressUrl = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress/{{adIndex}}\");\r",
+									"var cvRoot = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/cv\");\r",
+									"var cvUrl = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/cv/{{cv}}\");\r",
+									"var funktionRoot = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/funktion\");\r",
+									"var funktionUrl = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/funktion/{{fnReihe}}/{{fnFunktion}}\");\r",
 									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
 									"pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\"));\r",
@@ -7348,9 +7294,44 @@
 									"pm.expect(jsonData.konfiguration).to.eql(pm.variables.get(\"konfiguration\"));\r",
 									"pm.expect(jsonData.stecker).to.eql(pm.variables.get(\"stecker\"));\r",
 									"pm.expect(jsonData.anleitungen).to.eql(anleitungen);\r",
-									"pm.expect(jsonData.adressen).to.eql(undefined);\r",
-									"pm.expect(jsonData.cvs).to.eql(undefined);\r",
-									"pm.expect(jsonData.funktionen).to.eql(undefined);\r",
+									"pm.expect(jsonData.adressen.length).to.eql(1);\r",
+									"pm.expect(jsonData.adressen[0].hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
+									"pm.expect(jsonData.adressen[0].bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
+									"pm.expect(jsonData.adressen[0].index).to.eql(pm.variables.get(\"adIndex\"));\r",
+									"pm.expect(jsonData.adressen[0].bezeichnung).to.eql(pm.variables.get(\"adBezeichnung\"));\r",
+									"pm.expect(jsonData.adressen[0].adressTyp).to.eql(pm.variables.get(\"adTyp\"));\r",
+									"pm.expect(jsonData.adressen[0].span).to.eql(pm.variables.get(\"adSpan\"));\r",
+									"pm.expect(jsonData.adressen[0].werkseinstellung).to.eql(pm.variables.get(\"adress\"));\r",
+									"pm.expect(jsonData.adressen[0].deleted).to.be.false;\r",
+									"pm.expect(jsonData.adressen[0]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.adressen[0]._links.add[0].href).to.eql(adressRoot);\r",
+									"pm.expect(jsonData.adressen[0]._links.update[0].href).to.eql(adressUrl);\r",
+									"pm.expect(jsonData.adressen[0]._links.delete[0].href).to.eql(adressUrl);\r",
+									"pm.expect(jsonData.cvs.length).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[0].hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
+									"pm.expect(jsonData.cvs[0].bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
+									"pm.expect(jsonData.cvs[0].cv).to.eql(pm.variables.get(\"cv\"));\r",
+									"pm.expect(jsonData.cvs[0].bezeichnung).to.eql(pm.variables.get(\"cvBezeichnung\"));\r",
+									"pm.expect(jsonData.cvs[0].minimal).to.eql(pm.variables.get(\"cvMinimal\"));\r",
+									"pm.expect(jsonData.cvs[0].maximal).to.eql(pm.variables.get(\"cvMaximal\"));\r",
+									"pm.expect(jsonData.cvs[0].werkseinstellung).to.eql(pm.variables.get(\"cvValue\"));\r",
+									"pm.expect(jsonData.cvs[0].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[0]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[0]._links.add[0].href).to.eql(cvRoot);\r",
+									"pm.expect(jsonData.cvs[0]._links.update[0].href).to.eql(cvUrl);\r",
+									"pm.expect(jsonData.cvs[0]._links.delete[0].href).to.eql(cvUrl);\r",
+									"pm.expect(jsonData.funktionen.length).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[0].hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
+									"pm.expect(jsonData.funktionen[0].bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
+									"pm.expect(jsonData.funktionen[0].reihe).to.eql(pm.variables.get(\"fnReihe\"));\r",
+									"pm.expect(jsonData.funktionen[0].funktion).to.eql(pm.variables.get(\"fnFunktion\"));\r",
+									"pm.expect(jsonData.funktionen[0].bezeichnung).to.eql(pm.variables.get(\"fnBezeichnung\"));\r",
+									"pm.expect(jsonData.funktionen[0].programmable).to.eql(pm.variables.get(\"fnProgrammable\"));\r",
+									"pm.expect(jsonData.funktionen[0].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[0]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[0]._links.add[0].href).to.eql(funktionRoot);\r",
+									"pm.expect(jsonData.funktionen[0]._links.update[0].href).to.eql(funktionUrl);\r",
+									"pm.expect(jsonData.funktionen[0]._links.delete[0].href).to.eql(funktionUrl);\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
@@ -7389,14 +7370,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}",
+							"raw": "{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"decoderTyp",
-								"{{decoderHersteller}}",
-								"{{decoderBestellNr}}"
+								"{{hersteller}}",
+								"{{bestellNr}}"
 							]
 						}
 					},
@@ -7408,14 +7389,19 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f8361469-4494-4960-986b-a21a532169e2",
+								"id": "c8afac14-03f4-494f-8881-08d00ceb751c",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
-									"var anleitungen = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/anleitungen.pdf\");\r",
+									"var anleitungen = pm.variables.replaceIn(\"{{server}}/decoderTyp/{{hersteller}}/{{bestellNr}}/anleitungen.pdf\");\r",
+									"var adressRoot = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress\");\r",
+									"var adressUrl = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress/{{adIndex}}\");\r",
+									"var cvRoot = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/cv\");\r",
+									"var cvUrl = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/cv/{{cv}}\");\r",
+									"var funktionRoot = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/funktion\");\r",
+									"var funktionUrl = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/funktion/{{fnReihe}}/{{fnFunktion}}\");\r",
 									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
 									"pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\"));\r",
@@ -7426,9 +7412,44 @@
 									"pm.expect(jsonData.konfiguration).to.eql(pm.variables.get(\"konfiguration\"));\r",
 									"pm.expect(jsonData.stecker).to.eql(pm.variables.get(\"stecker\"));\r",
 									"pm.expect(jsonData.anleitungen).to.eql(anleitungen);\r",
-									"pm.expect(jsonData.adressen).to.eql(undefined);\r",
-									"pm.expect(jsonData.cvs).to.eql(undefined);\r",
-									"pm.expect(jsonData.funktionen).to.eql(undefined);\r",
+									"pm.expect(jsonData.adressen.length).to.eql(1);\r",
+									"pm.expect(jsonData.adressen[0].hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
+									"pm.expect(jsonData.adressen[0].bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
+									"pm.expect(jsonData.adressen[0].index).to.eql(pm.variables.get(\"adIndex\"));\r",
+									"pm.expect(jsonData.adressen[0].bezeichnung).to.eql(pm.variables.get(\"adBezeichnung\"));\r",
+									"pm.expect(jsonData.adressen[0].adressTyp).to.eql(pm.variables.get(\"adTyp\"));\r",
+									"pm.expect(jsonData.adressen[0].span).to.eql(pm.variables.get(\"adSpan\"));\r",
+									"pm.expect(jsonData.adressen[0].werkseinstellung).to.eql(pm.variables.get(\"adress\"));\r",
+									"pm.expect(jsonData.adressen[0].deleted).to.be.false;\r",
+									"pm.expect(jsonData.adressen[0]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.adressen[0]._links.add[0].href).to.eql(adressRoot);\r",
+									"pm.expect(jsonData.adressen[0]._links.update[0].href).to.eql(adressUrl);\r",
+									"pm.expect(jsonData.adressen[0]._links.delete[0].href).to.eql(adressUrl);\r",
+									"pm.expect(jsonData.cvs.length).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[0].hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
+									"pm.expect(jsonData.cvs[0].bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
+									"pm.expect(jsonData.cvs[0].cv).to.eql(pm.variables.get(\"cv\"));\r",
+									"pm.expect(jsonData.cvs[0].bezeichnung).to.eql(pm.variables.get(\"cvBezeichnung\"));\r",
+									"pm.expect(jsonData.cvs[0].minimal).to.eql(pm.variables.get(\"cvMinimal\"));\r",
+									"pm.expect(jsonData.cvs[0].maximal).to.eql(pm.variables.get(\"cvMaximal\"));\r",
+									"pm.expect(jsonData.cvs[0].werkseinstellung).to.eql(pm.variables.get(\"cvValue\"));\r",
+									"pm.expect(jsonData.cvs[0].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[0]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[0]._links.add[0].href).to.eql(cvRoot);\r",
+									"pm.expect(jsonData.cvs[0]._links.update[0].href).to.eql(cvUrl);\r",
+									"pm.expect(jsonData.cvs[0]._links.delete[0].href).to.eql(cvUrl);\r",
+									"pm.expect(jsonData.funktionen.length).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[0].hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
+									"pm.expect(jsonData.funktionen[0].bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
+									"pm.expect(jsonData.funktionen[0].reihe).to.eql(pm.variables.get(\"fnReihe\"));\r",
+									"pm.expect(jsonData.funktionen[0].funktion).to.eql(pm.variables.get(\"fnFunktion\"));\r",
+									"pm.expect(jsonData.funktionen[0].bezeichnung).to.eql(pm.variables.get(\"fnBezeichnung\"));\r",
+									"pm.expect(jsonData.funktionen[0].programmable).to.eql(pm.variables.get(\"fnProgrammable\"));\r",
+									"pm.expect(jsonData.funktionen[0].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[0]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[0]._links.add[0].href).to.eql(funktionRoot);\r",
+									"pm.expect(jsonData.funktionen[0]._links.update[0].href).to.eql(funktionUrl);\r",
+									"pm.expect(jsonData.funktionen[0]._links.delete[0].href).to.eql(funktionUrl);\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
@@ -7449,14 +7470,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}",
+							"raw": "{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"decoderTyp",
-								"{{decoderHersteller}}",
-								"{{decoderBestellNr}}"
+								"{{hersteller}}",
+								"{{bestellNr}}"
 							]
 						}
 					},
@@ -7468,9 +7489,73 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "81bef65a-08af-4cd8-9d34-28f6c92607ab",
+								"id": "2300cb97-3bf1-429e-afe1-52eb7a5d81c0",
 								"exec": [
-									"pm.response.to.have.status(204);"
+									"pm.response.to.have.status(202);\r",
+									"var jsonData = pm.response.json();\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
+									"var anleitungen = pm.variables.replaceIn(\"{{server}}/decoderTyp/{{hersteller}}/{{bestellNr}}/anleitungen.pdf\");\r",
+									"var adressRoot = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress\");\r",
+									"var adressUrl = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress/{{adIndex}}\");\r",
+									"var cvRoot = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/cv\");\r",
+									"var cvUrl = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/cv/{{cv}}\");\r",
+									"var funktionRoot = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/funktion\");\r",
+									"var funktionUrl = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/funktion/{{fnReihe}}/{{fnFunktion}}\");\r",
+									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
+									"pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
+									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\"));\r",
+									"pm.expect(jsonData.iMax).to.eql(pm.variables.get(\"iMax\"));\r",
+									"pm.expect(jsonData.protokoll).to.eql(pm.variables.get(\"protokoll\"));\r",
+									"pm.expect(jsonData.fahrstufe).to.eql(pm.variables.get(\"fahrstufe\"));\r",
+									"pm.expect(jsonData.gerausch).to.eql(pm.variables.get(\"gerausch\"));\r",
+									"pm.expect(jsonData.konfiguration).to.eql(pm.variables.get(\"konfiguration\"));\r",
+									"pm.expect(jsonData.stecker).to.eql(pm.variables.get(\"stecker\"));\r",
+									"pm.expect(jsonData.anleitungen).to.eql(undefined);\r",
+									"pm.expect(jsonData.adressen.length).to.eql(1);\r",
+									"pm.expect(jsonData.adressen[0].hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
+									"pm.expect(jsonData.adressen[0].bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
+									"pm.expect(jsonData.adressen[0].index).to.eql(pm.variables.get(\"adIndex\"));\r",
+									"pm.expect(jsonData.adressen[0].bezeichnung).to.eql(pm.variables.get(\"adBezeichnung\"));\r",
+									"pm.expect(jsonData.adressen[0].adressTyp).to.eql(pm.variables.get(\"adTyp\"));\r",
+									"pm.expect(jsonData.adressen[0].span).to.eql(pm.variables.get(\"adSpan\"));\r",
+									"pm.expect(jsonData.adressen[0].werkseinstellung).to.eql(pm.variables.get(\"adress\"));\r",
+									"pm.expect(jsonData.adressen[0].deleted).to.be.false;\r",
+									"pm.expect(jsonData.adressen[0]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.adressen[0]._links.add[0].href).to.eql(adressRoot);\r",
+									"pm.expect(jsonData.adressen[0]._links.update[0].href).to.eql(adressUrl);\r",
+									"pm.expect(jsonData.adressen[0]._links.delete[0].href).to.eql(adressUrl);\r",
+									"pm.expect(jsonData.cvs.length).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[0].hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
+									"pm.expect(jsonData.cvs[0].bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
+									"pm.expect(jsonData.cvs[0].cv).to.eql(pm.variables.get(\"cv\"));\r",
+									"pm.expect(jsonData.cvs[0].bezeichnung).to.eql(pm.variables.get(\"cvBezeichnung\"));\r",
+									"pm.expect(jsonData.cvs[0].minimal).to.eql(pm.variables.get(\"cvMinimal\"));\r",
+									"pm.expect(jsonData.cvs[0].maximal).to.eql(pm.variables.get(\"cvMaximal\"));\r",
+									"pm.expect(jsonData.cvs[0].werkseinstellung).to.eql(pm.variables.get(\"cvValue\"));\r",
+									"pm.expect(jsonData.cvs[0].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[0]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[0]._links.add[0].href).to.eql(cvRoot);\r",
+									"pm.expect(jsonData.cvs[0]._links.update[0].href).to.eql(cvUrl);\r",
+									"pm.expect(jsonData.cvs[0]._links.delete[0].href).to.eql(cvUrl);\r",
+									"pm.expect(jsonData.funktionen.length).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[0].hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
+									"pm.expect(jsonData.funktionen[0].bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
+									"pm.expect(jsonData.funktionen[0].reihe).to.eql(pm.variables.get(\"fnReihe\"));\r",
+									"pm.expect(jsonData.funktionen[0].funktion).to.eql(pm.variables.get(\"fnFunktion\"));\r",
+									"pm.expect(jsonData.funktionen[0].bezeichnung).to.eql(pm.variables.get(\"fnBezeichnung\"));\r",
+									"pm.expect(jsonData.funktionen[0].programmable).to.eql(pm.variables.get(\"fnProgrammable\"));\r",
+									"pm.expect(jsonData.funktionen[0].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[0]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[0]._links.add[0].href).to.eql(funktionRoot);\r",
+									"pm.expect(jsonData.funktionen[0]._links.update[0].href).to.eql(funktionUrl);\r",
+									"pm.expect(jsonData.funktionen[0]._links.delete[0].href).to.eql(funktionUrl);\r",
+									"pm.expect(jsonData.deleted).to.be.false;\r",
+									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
+									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
+									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
 								],
 								"type": "text/javascript"
 							}
@@ -7486,14 +7571,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/anleitungen",
+							"raw": "{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/anleitungen",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"decoderTyp",
-								"{{decoderHersteller}}",
-								"{{decoderBestellNr}}",
+								"{{hersteller}}",
+								"{{bestellNr}}",
 								"anleitungen"
 							]
 						}
@@ -7506,7 +7591,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a597e777-8983-42ae-b15c-d2dd104274c6",
+								"id": "40b0d961-7c3a-42aa-aea6-d1d9fbe60685",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -7524,16 +7609,16 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/adress/{{index}}",
+							"raw": "{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress/{{adIndex}}",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"decoderTyp",
-								"{{decoderHersteller}}",
-								"{{decoderBestellNr}}",
+								"{{hersteller}}",
+								"{{bestellNr}}",
 								"adress",
-								"{{index}}"
+								"{{adIndex}}"
 							]
 						}
 					},
@@ -7545,7 +7630,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "959e73e9-e0cb-4d4a-8dd9-75cf8ec2a7bd",
+								"id": "4ac25060-a5e5-46e6-8518-1c74c8686e98",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -7563,14 +7648,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/cv/{{cv}}",
+							"raw": "{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/cv/{{cv}}",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"decoderTyp",
-								"{{decoderHersteller}}",
-								"{{decoderBestellNr}}",
+								"{{hersteller}}",
+								"{{bestellNr}}",
 								"cv",
 								"{{cv}}"
 							]
@@ -7584,7 +7669,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2183baef-6d50-4f88-8a19-76e4e3a94048",
+								"id": "31ec22d3-ac0e-4634-88eb-18b10cd0d657",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -7602,17 +7687,17 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}/funktion/{{funktion}}/{{reihe}}",
+							"raw": "{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/funktion/{{fnReihe}}/{{fnFunktion}}",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"decoderTyp",
-								"{{decoderHersteller}}",
-								"{{decoderBestellNr}}",
+								"{{hersteller}}",
+								"{{bestellNr}}",
 								"funktion",
-								"{{funktion}}",
-								"{{reihe}}"
+								"{{fnReihe}}",
+								"{{fnFunktion}}"
 							]
 						}
 					},
@@ -7624,7 +7709,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9c0346b0-7beb-45ab-8401-6a162419b1b8",
+								"id": "6cf0a14b-a555-4c80-bba3-bad964d2ce1a",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -7642,14 +7727,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/decoderTyp/{{decoderHersteller}}/{{decoderBestellNr}}",
+							"raw": "{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"decoderTyp",
-								"{{decoderHersteller}}",
-								"{{decoderBestellNr}}"
+								"{{hersteller}}",
+								"{{bestellNr}}"
 							]
 						}
 					},
@@ -7667,7 +7752,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "afbac6ac-e860-4539-bd2f-1881eaf3514c",
+								"id": "b06453f0-2ee6-49d8-a3c9-24f59e6b9861",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
@@ -7720,7 +7805,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "0a4ef8e1-f189-4827-87c5-1b228439c37d",
+								"id": "f8840ad4-c976-4afd-98de-af6033c92d5e",
 								"exec": [
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
 									"pm.environment.set(\"bestellNr\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}\"));\r",
@@ -7752,11 +7837,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e4d05c43-1749-43ee-a06c-a219eb088027",
+								"id": "20f8e6f8-50af-40bb-9787-6a319b22ed7c",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
 									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
@@ -7841,11 +7925,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "66f2b05a-a554-4044-8723-1dc2e0b574f5",
+								"id": "69e700a0-c5df-473e-9de9-e34846342032",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/abbildung.jpg\");\r",
@@ -7930,11 +8013,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ec2e22d7-4346-4a1a-bea3-781c89af72de",
+								"id": "220d528c-abfb-47b6-9f04-172e9dff97bd",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/abbildung.jpg\");\r",
@@ -7992,7 +8074,7 @@
 								{
 									"key": "anleitungen",
 									"type": "file",
-									"src": "{{pdfFile}}"
+									"src": "{{anleitungFile}}"
 								}
 							],
 							"options": {
@@ -8020,11 +8102,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "739ecb8e-94ad-47e0-a1b4-2dc09e13b02f",
+								"id": "bc0521a6-ee73-45c8-bae2-e1e23da69f89",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/abbildung.jpg\");\r",
@@ -8083,7 +8164,7 @@
 								{
 									"key": "explosionszeichnung",
 									"type": "file",
-									"src": "{{pdfFile}}"
+									"src": "{{explosionszeichnungFile}}"
 								}
 							],
 							"options": {
@@ -8111,7 +8192,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "c37e7784-2c6c-4acf-a6eb-793fa54b43be",
+								"id": "ec52a7a9-6ce6-4c72-aae0-fe40f2dcf47a",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"kategorie\", pm.variables.get(\"kategorieAdd\"));\r",
@@ -8124,11 +8205,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "676948db-0aff-4479-8d1c-76c69721bb7e",
+								"id": "28014a2c-60f9-4897-a59e-2770c6e98079",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen/{{hersteller}}/{{bestellNr}}\");\r",
 									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
@@ -8192,7 +8272,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b30c95b0-65f4-4902-b8af-9daecb8680e2",
+								"id": "238a1bec-cd64-4690-94b6-1ffda706db28",
 								"exec": [
 									"pm.environment.set(\"anzahl\", pm.variables.replaceIn(\"{{$randomInt}}\"));"
 								],
@@ -8202,11 +8282,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "55b42c7e-0d33-4d57-b567-662ffa2dea98",
+								"id": "a476d3e2-0445-4f2b-9078-dca2c2e329b9",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen/{{hersteller}}/{{bestellNr}}\");\r",
 									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
@@ -8269,7 +8348,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "e5f4a642-ce45-4a93-9446-407009824868",
+								"id": "db4b9aed-a85e-4690-a285-b92c0a9666b3",
 								"exec": [
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
 									"pm.environment.set(\"bestellNr\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}\"));\r",
@@ -8301,11 +8380,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "31727e7f-2413-4a95-ba87-8afad1e29276",
+								"id": "474e8d1b-b3dc-463e-ad9b-a3bc60cf960f",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
 									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
@@ -8392,11 +8470,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8b231f84-6315-460f-8d7d-a3862301e901",
+								"id": "8729a3b8-585d-4719-9a57-46dd1cf320cc",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/abbildung.jpg\");\r",
@@ -8468,11 +8545,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1b6273f3-e383-415e-899c-f18f7ef7e592",
+								"id": "1015c1b6-e53d-4464-8402-0d851c518465",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
 									"var anleitungen = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/anleitungen.pdf\");\r",
@@ -8545,11 +8621,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "87a8c94c-5921-4a1e-a851-15c1d1ab1310",
+								"id": "2455494a-5bb4-4ef4-a393-a0c38ded6846",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
 									"var explosionszeichnung = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/explosionszeichnung.pdf\");\r",
@@ -8621,11 +8696,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f650b022-759d-43aa-9841-8e5096c86f1c",
+								"id": "1e56a81c-92e8-4440-8d00-8d1106629ab0",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
 									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
@@ -8696,7 +8770,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5d22e5ff-ab0c-45f7-8f3d-c0c5955a436c",
+								"id": "99fa9afb-5f22-4b8c-b5ae-7251774b42c7",
 								"exec": [
 									"pm.response.to.have.status(204);\r",
 									""
@@ -8737,7 +8811,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c8bd2689-5e8d-4ee3-837b-d5c09f7ae284",
+								"id": "d63dab04-bc1a-4b5e-877c-125ffd97dba7",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -8780,7 +8854,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e9e10778-8704-4803-90e1-be80ead94166",
+								"id": "62d5d70b-cb5f-4f90-b607-40c708c93e64",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoder\");\r",
@@ -8833,7 +8907,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "a1dee96f-cb97-4878-b18e-80a320595eee",
+								"id": "fbc8825c-39f7-40a6-861b-b055749fb3e9",
 								"exec": [
 									"pm.environment.set(\"decoderId\", pm.variables.get(\"decoderId\"));\r",
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"hersteller\"));\r",
@@ -8858,7 +8932,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e5b60d71-a3d2-48bc-9aa3-1af6bde337f6",
+								"id": "a0442aab-3412-46da-a4be-540b02da9b8f",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -9048,7 +9122,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "62dfc753-1bfb-4984-95af-9ba8e86b30b2",
+								"id": "9e5a6784-5f60-468d-8a05-535bcb4e5076",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -9058,11 +9132,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c7280e4e-ebcb-4bf9-b0a0-4994c8f7c3df",
+								"id": "653d79ba-8c92-416c-bc1d-011a92daeaa8",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoder\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/decoder/{{decoderId}}\");\r",
 									"pm.expect(jsonData.decoderId).to.eql(pm.variables.get(\"decoderId\"));\r",
@@ -9123,11 +9196,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "46dbaeba-ad09-4782-908a-89cefd792162",
+								"id": "a51ceb13-13b7-4f41-8496-41e4f15a59bb",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
-									"var name = pm.variables.get(\"name\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoder\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/decoder/{{decoderId}}\");\r",
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
@@ -9170,7 +9242,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c53a4741-73b4-4e3b-8dc3-5744a88f9d89",
+								"id": "ce0996e5-65c5-4ef3-b45d-ef42f209796f",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -9212,7 +9284,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c1a7a77a-1e45-4e52-aa1a-9b3d037a336b",
+								"id": "43f88378-8868-45bf-94ad-69b87f7b5670",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/artikel\");\r",
@@ -9265,7 +9337,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "6bd71ee7-8635-4190-ac7b-787fe4d3c298",
+								"id": "02fcffc1-8883-4dd6-969b-5938d817cc80",
 								"exec": [
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
 									"pm.environment.set(\"bestellNr\", pm.variables.get(\"bestellNr\"));\r",
@@ -9302,7 +9374,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dfa3a6f3-4d88-4241-8cc9-761f58384c5b",
+								"id": "2ca36f67-1fda-4fc4-bcf2-5d034db13e49",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -9396,7 +9468,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8cb32f30-f8e2-43a9-9504-a0a454d8c126",
+								"id": "1549dec4-4974-4532-812c-ab3765d70b1b",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -9489,7 +9561,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "2257a653-dda6-45ba-8fad-54692fdb4bf2",
+								"id": "40b14215-fa67-4d41-b357-116b3de4ed51",
 								"exec": [
 									"pm.environment.set(\"anderungId\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
 									"pm.environment.set(\"anderungsDatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
@@ -9504,7 +9576,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e5d92515-aeab-468e-8316-4f1f30b9ac11",
+								"id": "4acab674-f268-49e0-842e-f32db271d8da",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -9572,7 +9644,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "e789bb7f-13df-4d8b-90bc-4b9145c38d30",
+								"id": "8199f5d3-67c4-415d-b404-46545dac9ec7",
 								"exec": [
 									"pm.environment.set(\"anderungsDatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
 									"pm.environment.set(\"anderungsTyp\", \"REPARIERT\");\r",
@@ -9585,7 +9657,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "223275af-6eb6-4efb-8a4b-d5c2b9c1c99e",
+								"id": "e10a1417-b2e8-4541-a28d-e63d17d9c1de",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -9654,7 +9726,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "c100ae69-62bf-4db5-933a-26e18ec02f80",
+								"id": "e77b5fd2-c225-4fb2-a06b-84455f05fbaf",
 								"exec": [
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerUpdate\"));\r",
 									"pm.environment.set(\"bestellNr\", pm.variables.get(\"bestellNr\"));\r",
@@ -9691,7 +9763,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fdfaf21a-8a9b-4aab-82db-0ff9b8e1e944",
+								"id": "d92b8f17-ef5b-4009-a654-cb0fcd4e141a",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -9793,7 +9865,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e5ded952-b415-4f42-b17e-5403b87ff2c0",
+								"id": "545eb3d7-4259-44f1-8a00-908ae6f927fc",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -9876,7 +9948,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dd3cce7a-161e-41a3-9164-ac3a0859a122",
+								"id": "0b71f478-d75f-4a65-8b46-440d8076f43f",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -9960,7 +10032,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "35515faf-40cd-46cc-b581-68d8169afeda",
+								"id": "1f87ae85-409d-4f1d-bd3e-cabc2e880501",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -10046,7 +10118,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "41017d87-0f7a-4f65-be97-433d0923821b",
+								"id": "0984f2f6-c71c-4e84-8f12-ac0bc699a71f",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -10088,7 +10160,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "aebd3c82-dcea-460e-b566-73206cc5cc68",
+								"id": "a98b6b09-75c7-4eec-b7e2-5e2c409d8cab",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
@@ -10141,7 +10213,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "39e5dc89-13bd-46d4-9b71-fd5aad9a6ab7",
+								"id": "a1fb5816-a528-40bc-8fc4-f713e202660f",
 								"exec": [
 									"pm.environment.set(\"zug\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"zugTyp\", pm.variables.get(\"zugTypAdd\"));\r",
@@ -10153,7 +10225,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a217ba5f-a22c-4ae4-ae3c-07edf99c2e5d",
+								"id": "7eae9c02-1704-47f4-ba82-42194a64616b",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -10218,7 +10290,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "900602da-c0f0-4576-9b97-891006c913bc",
+								"id": "3411eacc-7103-4c1e-b265-d60191a278e7",
 								"exec": [
 									"pm.environment.set(\"position\", pm.variables.replaceIn(\"{{$randomInt}}\"));\r",
 									"pm.environment.set(\"artikelId\", pm.variables.get(\"artikelAdd\"));\r",
@@ -10236,7 +10308,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "265532d9-86cd-4d21-9e28-64a7ef8f7719",
+								"id": "14cee2c1-ec85-437d-9a07-c92bcb0b5832",
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
@@ -10312,7 +10384,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "8336ea5c-8d21-4991-a48b-17d51d4a2d2a",
+								"id": "e72bb0a0-1fc2-400e-90bc-2a62c11aa56a",
 								"exec": [
 									"pm.environment.set(\"position\", pm.variables.replaceIn(\"{{$randomInt}}\"));\r",
 									"pm.environment.set(\"artikelId\", pm.variables.get(\"artikelAdd\"));\r",
@@ -10330,7 +10402,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d38ab6a8-bd75-4144-9fa1-bfe0deb22a74",
+								"id": "79d9892f-c4a9-4f84-9e0b-1e354254e377",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -10401,7 +10473,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "cafda6c7-568a-4523-abaa-a407fc5d6a67",
+								"id": "2d5b1361-36cc-420e-9372-3c7fa0da3a1d",
 								"exec": [
 									"pm.environment.set(\"zugTyp\", pm.variables.get(\"zugTypUpdate\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -10412,7 +10484,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "538914f4-0f90-41ad-827f-2e7161e50581",
+								"id": "3ceb5a99-e5ed-4998-9020-11ff53abe9e5",
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
@@ -10478,7 +10550,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c4e51594-5f79-4115-9a17-dc3788be7954",
+								"id": "fc80318b-3790-497f-9558-ffb875054004",
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
@@ -10526,7 +10598,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6aaaa2d2-689b-4a6f-b8b7-0b10591e310d",
+								"id": "872dc5b2-2391-46b2-8429-282d7950f72a",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -10564,7 +10636,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1be89f55-8404-4e18-9fed-dc80cc64dcfc",
+								"id": "8cecf5b6-70a7-4578-8fe7-2e263b9640b3",
 								"exec": [
 									"pm.response.to.have.status(204);"
 								],
@@ -12639,7 +12711,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "133cdb36-f86f-47d2-aad6-bd12f7a7b5e3",
+				"id": "15047749-47ff-4777-a067-f7f5ebb30273",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -12649,7 +12721,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "f0fc221a-507b-443e-8597-07a9ad5c8112",
+				"id": "dce55e36-a031-4d30-9b16-1039dd59c0a4",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -12659,347 +12731,467 @@
 	],
 	"variable": [
 		{
-			"id": "4f5e6b57-82eb-4ab0-901c-b8571da044ce",
+			"id": "baeaf9e3-58c2-4c3c-836b-abc9e2afec2a",
 			"key": "host",
 			"value": "127.0.0.1"
 		},
 		{
-			"id": "bc210fa7-93fb-4f38-aa31-7b34acd1ce70",
+			"id": "58f989c0-5f40-4fe3-912a-8f1902760993",
 			"key": "port",
 			"value": ":8086"
 		},
 		{
-			"id": "fd88ecbd-a17e-4926-860f-e7238c587dcc",
+			"id": "a0b1064e-26a4-4713-8b4b-d0602cc0dd94",
 			"key": "server",
 			"value": "http://{{host}}{{port}}"
 		},
 		{
-			"id": "02b69d81-68ba-4643-938d-147cabeaac82",
+			"id": "4b54e647-6bdd-49ac-aa98-4157ab70ec03",
 			"key": "root",
 			"value": "{{server}}/ModellBahn"
 		},
 		{
-			"id": "51215f99-1c5c-4a5d-a864-8dadef79f8a4",
+			"id": "7c83cf67-eced-4dc5-8117-52d46b7fe88e",
 			"key": "api",
 			"value": "{{root}}/api"
 		},
 		{
-			"id": "9fd9f73e-a56e-4950-9144-f1434018f839",
+			"id": "d796bcf7-6b90-4a18-84e0-76b67d22c2a5",
 			"key": "language",
 			"value": "de"
 		},
 		{
-			"id": "c8f830d5-1aca-4e4b-8ddc-43cc90569c99",
+			"id": "cab4f634-8e7c-423f-8bb8-aa317311a163",
 			"key": "achsfolgAdd",
 			"value": "1C1H2T"
 		},
 		{
-			"id": "71f6b177-7409-46a3-a333-343ca84b25a2",
+			"id": "f129dd3b-5855-44fb-bd39-a88085a30a6f",
 			"key": "achsfolgUpdate",
 			"value": "COCO"
 		},
 		{
-			"id": "dc366459-837f-47c4-a890-0539518dc99d",
-			"key": "adressTypAdd",
-			"value": "MFX"
+			"id": "a73d1a10-aa68-4af2-8da3-4f3ac02db1ed",
+			"key": "adIndexAdd",
+			"value": "1"
 		},
 		{
-			"id": "0ad42941-e723-4229-9a46-6579877b6c5f",
-			"key": "adressTypUpdate",
+			"id": "9fb0a2e6-c2be-4158-9e44-d85e76f5160c",
+			"key": "adIndexUpdate",
+			"value": "1"
+		},
+		{
+			"id": "308ab948-345f-483d-af4b-1c0eaa160f85",
+			"key": "adSpanAdd",
+			"value": "2"
+		},
+		{
+			"id": "9a9a7d87-d3aa-408a-9daa-3a0c9cbbaa48",
+			"key": "adSpanUpdate",
+			"value": "16"
+		},
+		{
+			"id": "f49bbf9c-0018-4cf5-a0fb-dc7a14081d56",
+			"key": "adTypAdd",
+			"value": "DIGITAL"
+		},
+		{
+			"id": "5edd349d-bb2d-4f92-9191-29068217399b",
+			"key": "adTypUpdate",
 			"value": "DELTA"
 		},
 		{
-			"id": "3a8177cb-40e1-4692-9609-bce55cc28bb6",
+			"id": "f3296347-6225-4467-abdc-75c8d72d5dcf",
+			"key": "adAdd",
+			"value": "10"
+		},
+		{
+			"id": "2fea31c7-077b-4738-99df-f9c2f669e9c6",
+			"key": "adUpdate",
+			"value": "80"
+		},
+		{
+			"id": "02b60329-69d0-4494-b9ff-c1c8b199602f",
 			"key": "anderungAdd",
 			"value": "1"
 		},
 		{
-			"id": "69c81f17-a23a-48e1-a367-36a0261c0de9",
+			"id": "d913ed28-35d4-4df6-b987-062f0557ddae",
 			"key": "anderungUpdate",
 			"value": "1"
 		},
 		{
-			"id": "121f874c-c713-47cf-a639-e93293d95c36",
+			"id": "489a8d7b-202a-4cf0-8d2c-3d58ef290628",
 			"key": "antriebAdd",
 			"value": "DAMPF"
 		},
 		{
-			"id": "89a70706-327b-44d1-ae4b-c13822936a3e",
+			"id": "101bcbba-7832-4410-af77-d78ba95a4b46",
 			"key": "antriebUpdate",
 			"value": "ELEKTRO"
 		},
 		{
-			"id": "7ff75d7d-7e6a-441e-b95c-16c6dec0aa2c",
+			"id": "ed419f15-d25b-4d43-ba93-441ec6ed3f79",
 			"key": "artikelAdd",
 			"value": "00001"
 		},
 		{
-			"id": "73f5b7bd-7dcc-4341-880e-0faf0df22a46",
+			"id": "579fc78f-f9a3-48a8-a2a1-0f0ed3018823",
 			"key": "artikelUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "db4e86f0-7618-4abf-b18c-30361fabc829",
+			"id": "3f84a3e0-f1bf-468b-af18-1fa6a7877ba3",
 			"key": "aufbauAdd",
 			"value": "LK"
 		},
 		{
-			"id": "7f0055d2-ffb9-493f-a2a2-dce081de4574",
+			"id": "ba46ff3e-cd62-4804-b981-ba5e446be626",
 			"key": "aufbauUpdate",
 			"value": "LK"
 		},
 		{
-			"id": "050832fe-dea5-4468-a41a-c623bab7180e",
+			"id": "81b19386-eb14-46d0-adfa-8a5e507e778d",
 			"key": "bestellNrAdd",
 			"value": "3000"
 		},
 		{
-			"id": "f91128a5-1ef0-4c8e-9e65-82667db660dc",
+			"id": "811c530d-f5a9-4d40-8486-81b49202440c",
 			"key": "bestellNrUpdate",
 			"value": "3003"
 		},
 		{
-			"id": "ef395813-6b77-4db7-a363-ad616d586486",
+			"id": "fdb918e1-f5b3-4643-b256-ffa5ec6ae8d7",
 			"key": "bahnverwaltungAdd",
 			"value": "DB"
 		},
 		{
-			"id": "d0f048a7-c9e4-4705-b24c-f023f8b2b592",
+			"id": "326cfeaf-cc74-4286-bbd8-2bf644ad5d9b",
 			"key": "bahnverwaltungUpdate",
 			"value": "DBAG"
 		},
 		{
-			"id": "1f78470e-4511-4b7f-b20c-27588015621b",
+			"id": "6405c19b-f3bc-44ed-a510-d0de7f8ad76f",
+			"key": "cvAdd",
+			"value": "8"
+		},
+		{
+			"id": "31b8b848-2f71-4cb0-833d-1fedf75c0d2e",
+			"key": "cvUpdate",
+			"value": "120"
+		},
+		{
+			"id": "0b107b07-ddc9-48fa-b3b0-00d3e462c10b",
+			"key": "cvMaxAdd",
+			"value": "63"
+		},
+		{
+			"id": "ac052477-0f4f-44ca-9137-def7832eb525",
+			"key": "cvMaxUpdate",
+			"value": "80"
+		},
+		{
+			"id": "e189cc2a-2eb7-4f5b-9698-90493ef0122b",
+			"key": "cvMinAdd",
+			"value": "0"
+		},
+		{
+			"id": "c2578839-19f1-45b5-b221-823bc1225df9",
+			"key": "cvMinUpdate",
+			"value": "1"
+		},
+		{
+			"id": "b6020652-26bc-4f52-84a1-e3568f783663",
+			"key": "cvValueAdd",
+			"value": "30"
+		},
+		{
+			"id": "ea29b469-82f6-46c7-9588-7c248d321477",
+			"key": "cvValueUpdate",
+			"value": "50"
+		},
+		{
+			"id": "b2235691-f051-432e-b79d-7752821b8007",
 			"key": "decoderAdd",
 			"value": "00001"
 		},
 		{
-			"id": "5c74f06d-0413-4c78-bf9c-2a810ceb04e9",
+			"id": "0b67f445-fdfe-4b5c-8df6-f212ade84223",
 			"key": "decoderUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "0084af02-e4ba-4316-8be7-d3ad75654222",
+			"id": "04923ed9-207a-4657-a7e2-41853eeedc55",
+			"key": "decoderAdd",
+			"value": "00001"
+		},
+		{
+			"id": "b07748af-c912-420c-b247-5d593d6857d0",
+			"key": "decoderUpdate",
+			"value": "00001"
+		},
+		{
+			"id": "2096beb7-a4b5-4ccd-ada0-ba4746bde6e0",
 			"key": "decoderHerstellerAdd",
 			"value": "ESU"
 		},
 		{
-			"id": "15da1bc7-6335-4083-8c88-b3c4dadeafa7",
+			"id": "25e8a0ef-ea15-46b3-ab37-332ae1cb1744",
 			"key": "decoderHerstellerUpdate",
 			"value": "ESU"
 		},
 		{
-			"id": "e32a0d1b-5c97-4c0f-96e7-f05c98f5b909",
+			"id": "7fb3ffdd-0ce3-4a46-acaa-e264c465a2e7",
 			"key": "decoderBestellAdd",
-			"value": "62400"
+			"value": "62498"
 		},
 		{
-			"id": "1946a5ce-986f-4bfb-94e1-2a3822d19682",
+			"id": "10a5e30b-b908-452c-b296-07b9a4a3ce2b",
 			"key": "decoderBestellUpdate",
-			"value": "62400"
+			"value": "62498"
 		},
 		{
-			"id": "d823d538-4582-44ed-8549-f42e5b04edab",
+			"id": "08f6689d-c509-42f8-8be5-a3dadb156fbe",
 			"key": "epochAdd",
 			"value": "IV"
 		},
 		{
-			"id": "215c58b7-5eda-4281-a5fc-62139f4b72be",
+			"id": "bac89a67-7125-411e-8ffb-c4e493d9847d",
 			"key": "epochUpdate",
 			"value": "IV"
 		},
 		{
-			"id": "61ff8652-79e5-4476-bf0c-a6fd7cbace43",
+			"id": "0333fb4b-a2d7-4312-9766-9962b5826b12",
+			"key": "fahrstufeAdd",
+			"value": "27"
+		},
+		{
+			"id": "7e0eeada-a6cd-4f15-9a32-7998d42d7aa3",
+			"key": "fahrstufeUpdate",
+			"value": "128"
+		},
+		{
+			"id": "fe9af2dd-0e9b-4dae-880b-a124b56dce69",
+			"key": "fnFuntionAdd",
+			"value": "F0"
+		},
+		{
+			"id": "2626d6b2-5cd4-424c-abe8-44e312706997",
+			"key": "fnFuntionUpdate",
+			"value": "F0"
+		},
+		{
+			"id": "0a9204e8-137e-473e-98aa-408bfd5a2c2a",
+			"key": "fnReiheAdd",
+			"value": "1"
+		},
+		{
+			"id": "2626d6b2-5cd4-424c-abe8-44e312706997",
+			"key": "fnReiheUpdate",
+			"value": "1"
+		},
+		{
+			"id": "bf5009ba-a309-4f1c-a4c5-6d3ebeeb8c05",
 			"key": "gattungAdd",
 			"value": "BR89.0"
 		},
 		{
-			"id": "77d74e23-a694-408a-b4d7-0c76418bf12a",
+			"id": "c5ee3b4b-2043-4039-be63-49b511bd48c2",
 			"key": "gattungUpdate",
 			"value": "BR89.0"
 		},
 		{
-			"id": "1b607096-6aa6-4a05-b660-095d5b729164",
+			"id": "077ac5f5-84ce-4ebb-946d-2f0d5d12c9d8",
 			"key": "herstellerAdd",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "746e5c52-2487-4084-8c59-ce5f647b361d",
+			"id": "6484ccb4-3ce5-4ded-9084-4702876d96a4",
 			"key": "herstellerUpdate",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "61feaf6c-c7d7-42eb-a9ea-1287e6492d90",
+			"id": "3473e407-8b82-46f2-8cee-aea2732ef317",
+			"key": "iMaxAdd",
+			"value": "1.5"
+		},
+		{
+			"id": "44d6bfd8-5f7f-45f4-ac05-738cfc150c0b",
+			"key": "iMaxUpdate",
+			"value": "2.0"
+		},
+		{
+			"id": "3bc70318-1ed3-45ac-bf03-e732921d6c45",
 			"key": "kategorieAdd",
 			"value": "LOKOMOTIV"
 		},
 		{
-			"id": "26fa73e4-4277-4faa-b3e2-b7cff9c5ff7c",
+			"id": "8de1c9f6-08b9-414a-9880-97f36fe78cd1",
 			"key": "kategorieUpdate",
 			"value": "AUSGESTALTUNG"
 		},
 		{
-			"id": "e78eb768-f0a5-4cba-ba90-ed6b6718fd33",
+			"id": "501cedf9-06f0-433d-9cca-967e51b149ad",
 			"key": "kupplungAdd",
 			"value": "RELEX"
 		},
 		{
-			"id": "5a84127f-f1e7-4678-8891-acdd7398dec0",
+			"id": "9246a7d1-9e05-4c41-89e3-48a6876c0f24",
 			"key": "kupplungUpdate",
 			"value": "RELEX"
 		},
 		{
-			"id": "785c6ee7-8227-4989-a6e8-a93784d1057e",
+			"id": "1e5a55fe-1e5f-433b-859f-6188a5a21631",
 			"key": "konfigurationAdd",
 			"value": "CV"
 		},
 		{
-			"id": "34f14707-fc08-4f7e-888a-c305236d3458",
+			"id": "da9c336d-a375-4f58-b381-ea9a215f3aaf",
 			"key": "konfigurationUpdate",
 			"value": "STECKER"
 		},
 		{
-			"id": "2923b94c-27ff-48b8-bae0-1403e5e9ab14",
+			"id": "731380ca-712c-4abc-8a42-87927d4dcf35",
 			"key": "leistungsubertragungAdd",
 			"value": "MECHANISH"
 		},
 		{
-			"id": "0ae99106-f35c-4089-b66f-eb1b0cafa549",
+			"id": "467297d1-fc6b-4e69-8dd4-14a6da5e5df3",
 			"key": "leistungsubertragungUpdate",
 			"value": "ELEKTRISH"
 		},
 		{
-			"id": "185aa994-5872-49be-87f7-5f5a7caf1187",
+			"id": "96bf0961-872f-43ec-b033-baf4d42f3d48",
 			"key": "lichtAdd",
 			"value": "L1V"
 		},
 		{
-			"id": "d7ec7e64-3d1b-43b9-b3fd-3957107b1175",
+			"id": "d1c522fc-fe7c-4383-8f78-88f4e8255811",
 			"key": "lichtUpdate",
 			"value": "L1V"
 		},
 		{
-			"id": "3d1e5586-6a43-4f89-901d-83f8d3cb594a",
+			"id": "ff4bfaba-b10f-4de5-82d0-9a2dcec3e0ae",
 			"key": "massstabAdd",
 			"value": "H0"
 		},
 		{
-			"id": "fe3a60ad-0a0b-4018-8642-37ac36bba642",
+			"id": "df9e55d8-36d7-4cfe-9afe-4eed127d3f77",
 			"key": "massstabUpdate",
 			"value": "H0"
 		},
 		{
-			"id": "c6cb3cdb-ceb1-4d05-b26f-fd66f25e5e25",
+			"id": "a1f5d0fc-6aa5-4121-b033-8bfaf6008ebf",
 			"key": "motorTypAdd",
 			"value": "CSINUS"
 		},
 		{
-			"id": "2508f7e7-9a1a-428d-83ef-6ae1cf19656c",
+			"id": "597d8d64-5d80-407b-a6b5-bda8d6dfcaaa",
 			"key": "motorTypUpdate",
 			"value": "CSINUS"
 		},
 		{
-			"id": "ba3b49ba-96d9-4ceb-8c19-4f5d5f8916ba",
+			"id": "c3256322-5d58-424c-9227-9d58be6a9055",
 			"key": "protokollAdd",
 			"value": "MFX"
 		},
 		{
-			"id": "ececb2e6-219b-476d-b0a8-c089a9b4dab1",
+			"id": "ad6f5cba-230c-48ca-b653-1a75324814bc",
 			"key": "protokollUpdate",
 			"value": "DELTA"
 		},
 		{
-			"id": "96863c3e-a57d-469d-a2b1-df06db4312a3",
+			"id": "db4df3b8-a85a-4dc0-8d90-ffd2f09fc9ae",
 			"key": "sondermodellAdd",
 			"value": "MM"
 		},
 		{
-			"id": "beeecf5f-9e4c-4cee-91f7-d4193e9b6b2c",
+			"id": "872a4d08-f6a5-426b-9f24-5a3107356e4b",
 			"key": "sondermodellUpdate",
 			"value": "MM"
 		},
 		{
-			"id": "86125d23-e065-49f7-935d-fe86cbd12c67",
+			"id": "07058d7e-57c8-481a-af56-416f1807eff1",
 			"key": "spurweiteAdd",
 			"value": "H0"
 		},
 		{
-			"id": "e300692f-5461-44a7-9ca4-c637a5b51bf1",
+			"id": "f7e113c0-b62e-4efb-97b6-bdd636d76041",
 			"key": "spurweiteUpdate",
 			"value": "H0"
 		},
 		{
-			"id": "4b6dc460-71a7-43c9-8e29-014d5fd3aa03",
+			"id": "018fcf01-afaa-40ce-aec0-94afdf743dce",
 			"key": "steckerAdd",
 			"value": "NEM651"
 		},
 		{
-			"id": "d2de30a2-65e7-4e32-91e1-c9c9d9c494b8",
+			"id": "dcb1e8ae-30c2-4f3f-a3f4-d0ef73f4349c",
 			"key": "steckerUpdate",
 			"value": "NEM652"
 		},
 		{
-			"id": "f40d4116-ca00-4d91-b0be-807d76aa103a",
+			"id": "99cd9137-9332-456b-8c7b-b1f12870c5a2",
 			"key": "steuerungAdd",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "b75a72b9-1729-4a9a-b313-8dc8161da4ce",
+			"id": "0e51dfa5-afc3-4287-9c06-1e34151d13bd",
 			"key": "steuerungUpdate",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "2fa01a41-3e46-4a6c-8a9b-c7d0b85721f2",
+			"id": "19460319-2c91-4674-9ca6-605ebc5b705c",
 			"key": "unterKategorieAdd",
 			"value": "DAMPF"
 		},
 		{
-			"id": "1d19e292-f615-4a33-ae62-ffa0d033cda2",
+			"id": "cf99a082-143f-444b-96d5-93cfea9295a2",
 			"key": "unterKategorieUpdate",
 			"value": "HECKEN"
 		},
 		{
-			"id": "7c1f7b60-0d59-45db-b5ef-f82a273cf9c9",
+			"id": "794b6ce0-2c36-46f2-bee3-9028062445cb",
 			"key": "vorbildAdd",
 			"value": "HECKEN"
 		},
 		{
-			"id": "e625d57b-577c-4af2-9493-75583c88b1c8",
+			"id": "b7fa93b4-9cb6-4c16-a5b1-0f8aa5aae8ba",
 			"key": "vorbildUpdate",
 			"value": "HECKEN"
 		},
 		{
-			"id": "85ac32ba-cdb1-498d-ac52-311085001909",
+			"id": "4ef36f04-998e-4018-a492-6cc4bf53c64a",
 			"key": "zugAdd",
 			"value": "BAVARIA"
 		},
 		{
-			"id": "c9cde096-58dc-4c4c-93d6-ee08c554c14b",
+			"id": "ba1d5c2a-a8dd-4b4c-95bc-e35acdcbbf16",
 			"key": "zugUpdate",
 			"value": "BAVARIA"
 		},
 		{
-			"id": "a40a41d5-ff66-4f1f-b518-c374e8de2f91",
+			"id": "ec7dff0d-cb40-442c-ac66-a4377710d60c",
 			"key": "zugTypAdd",
 			"value": "TEE"
 		},
 		{
-			"id": "bee36110-3ce8-4b47-ae35-04f3a2d5d8d4",
+			"id": "d34bf720-bad9-4807-b84f-42667feaf048",
 			"key": "zugTypUpdate",
 			"value": "TEE"
 		},
 		{
-			"id": "9737a93d-ef16-4455-8a62-24ac0e67d00e",
+			"id": "d5f39c41-4f04-4cb8-b500-fc46bc9bc5f6",
 			"key": "imageFile",
 			"value": "3000.jpg"
 		},
 		{
-			"id": "e0a116ac-d03e-4e01-93bb-9ea7ac8a2e79",
+			"id": "1371f8fe-514e-4268-83d5-86fc67b0301c",
 			"key": "anleitungFile",
 			"value": "3000_betrieb.pdf"
 		},
 		{
-			"id": "0bc2f56e-cd71-4ccf-af0d-70f589cfa85b",
+			"id": "acf20367-a70c-46e5-8547-e17620cc1f44",
 			"key": "explosionszeichnungFile",
 			"value": "3000_explo.pdf"
 		}

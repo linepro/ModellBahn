@@ -199,6 +199,7 @@ public class DecoderTyp extends ItemImpl implements Comparable<DecoderTyp> {
 
     @Enumerated(EnumType.STRING)
     @Column(name = DBNames.STECKER, nullable = false, length = 10)
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.stecker.notnull}")
     private Stecker stecker;
 
     /** The anleitungen. */

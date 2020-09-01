@@ -5,9 +5,13 @@ import static com.linepro.modellbahn.controller.impl.ApiNames.BESTELL_NR;
 import static com.linepro.modellbahn.controller.impl.ApiNames.HERSTELLER;
 import static com.linepro.modellbahn.controller.impl.ApiNames.TEIL_BESTELL_NR;
 import static com.linepro.modellbahn.controller.impl.ApiNames.TEIL_HERSTELLER;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_PRODUKT_TEIL;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_PRODUKT_TEIL;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_DECODER_TYP;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_PRODUKT_TEIL;
+import static com.linepro.modellbahn.controller.impl.ApiRels.ADD;
 import static com.linepro.modellbahn.controller.impl.ApiRels.DELETE;
+import static com.linepro.modellbahn.controller.impl.ApiRels.PARENT;
 import static com.linepro.modellbahn.controller.impl.ApiRels.UPDATE;
 
 import java.util.HashMap;
@@ -39,6 +43,8 @@ public class ProduktTeilModelProcessor extends ModelProcessorImpl<ProduktTeilMod
     @Autowired
     public ProduktTeilModelProcessor() {
         super(
+              new LinkTemplateImpl(PARENT, GET_DECODER_TYP, EXTRACTOR),
+              new LinkTemplateImpl(ADD, ADD_PRODUKT_TEIL, EXTRACTOR),
               new LinkTemplateImpl(UPDATE, UPDATE_PRODUKT_TEIL, EXTRACTOR),
               new LinkTemplateImpl(DELETE, DELETE_PRODUKT_TEIL, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted()))
               );
