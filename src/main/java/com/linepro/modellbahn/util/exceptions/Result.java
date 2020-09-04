@@ -70,18 +70,6 @@ public class Result<V, E extends Throwable> {
         return Result.of(getValue().<Object>map(mapper).orElse(error));
     }
 
-    /**
-     * Convenience wrapper for flatMap that performs a flatMap by attempting the given checked function.
-     * @param cf The checked function to attempt
-     * @param <T> The output type of the checked function, and value type of the returned Result.
-     * @return A containing either a value of type T or an exception.
-     * @deprecated Use {@code}flatMap(Result.from(cf)){@code} instead.
-     */
-    public <T> Result<T, E> flatMapAttempt(CheckedFunction<? super V, ? extends T, ? super E> cf) {
-        return flatMap(v -> Result.attempt(() -> cf.apply(v)));
-    }
-
-
     public <T> Result<T, E> flatMap(Function<? super V, ? extends Result<? extends T, ? super E>> mapper) {
         return getValue()
                 .map((v) -> {

@@ -4,18 +4,23 @@ import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
 
+import java.util.ArrayList;
+
 import com.linepro.modellbahn.converter.PathMutator;
 import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.converter.entity.ProduktTeilMutator;
 import com.linepro.modellbahn.converter.entity.UnterKategorieMutator;
 import com.linepro.modellbahn.entity.Produkt;
 import com.linepro.modellbahn.model.ProduktModel;
+import com.linepro.modellbahn.model.ProduktTeilModel;
 import com.linepro.modellbahn.model.UnterKategorieModel;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class ProduktTranscriber implements Transcriber<Produkt, ProduktModel> {
+
+    private static final ArrayList<ProduktTeilModel> KEIN_TEILEN = new ArrayList<>();
 
     private final UnterKategorieMutator unterKategorieMutator;
 
@@ -59,8 +64,13 @@ public class ProduktTranscriber implements Transcriber<Produkt, ProduktModel> {
             destination.setDeleted(source.getDeleted());
 
             if (isAvailable(source.getTeilen())) {
-                destination.setTeilen(source.getTeilen().stream().sorted().map(t -> attempt(() -> teilMutator.convert(t))).collect(success())
-                                .orElseThrow());
+                destination.setTeilen(source.getTeilen()
+                                            .stream()
+                                            .sorted()
+                                            .map(t -> attempt(() -> teilMutator.convert(t)))
+                                            .collect(success())
+                                            .getValue()
+                                            .orElse(KEIN_TEILEN));
             }
         }
 

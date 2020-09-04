@@ -4,6 +4,7 @@ import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.util.StringUtils;
@@ -13,6 +14,7 @@ import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.converter.entity.AnderungMutator;
 import com.linepro.modellbahn.converter.entity.ProduktMutator;
 import com.linepro.modellbahn.entity.Artikel;
+import com.linepro.modellbahn.model.AnderungModel;
 import com.linepro.modellbahn.model.ArtikelModel;
 import com.linepro.modellbahn.model.ProduktModel;
 
@@ -20,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class ArtikelTranscriber implements Transcriber<Artikel, ArtikelModel> {
+
+    private static final ArrayList<AnderungModel> KEIN_ANDERUNGEN = new ArrayList<>();
 
     private final AnderungMutator anderungMutator;
 
@@ -70,7 +74,8 @@ public class ArtikelTranscriber implements Transcriber<Artikel, ArtikelModel> {
                                                 .sorted()
                                                 .map(a -> attempt(() -> anderungMutator.convert(a)))
                                                 .collect(success())
-                                                .orElseThrow());
+                                                .getValue()
+                                                .orElse(KEIN_ANDERUNGEN));
             }
         }
         

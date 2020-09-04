@@ -83,7 +83,7 @@
         <springdoc-openapi.version>1.3.9</springdoc-openapi.version>
         <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
         <zxcvbn.version>1.3.0</zxcvbn.version>
-		<libphonenumber.version>8.12.8</libphonenumber.version>
+        <libphonenumber.version>8.12.8</libphonenumber.version>
 
         <org.flywaydb.flyway-core.version>6.4.1</org.flywaydb.flyway-core.version>
         <org.hsqldb.hsqldb.version>2.5.0</org.hsqldb.hsqldb.version>
@@ -95,8 +95,8 @@
 
         <net.sourceforge.nekohtml.nekohtml.version>1.9.22</net.sourceforge.nekohtml.nekohtml.version>
 
-		<spring-test-dbunit.version>1.3.0</spring-test-dbunit.version>
-		<dbunit.version>2.6.0</dbunit.version>
+        <spring-test-dbunit.version>1.3.0</spring-test-dbunit.version>
+        <dbunit.version>2.6.0</dbunit.version>
 
         <!-- javascript serving -->
         <org.webjars.webjars-locator-core.version>0.45</org.webjars.webjars-locator-core.version>
@@ -342,9 +342,9 @@
         </dependency>
 
         <dependency>
-		  <groupId>com.googlecode.libphonenumber</groupId>
-		  <artifactId>libphonenumber</artifactId>
-		  <version>${libphonenumber.version}</version>
+          <groupId>com.googlecode.libphonenumber</groupId>
+          <artifactId>libphonenumber</artifactId>
+          <version>${libphonenumber.version}</version>
         </dependency>
 
         <!-- javascript serving -->
@@ -458,13 +458,19 @@
         <dependency>
             <groupId>org.dbunit</groupId>
             <artifactId>dbunit</artifactId>
-			<version>${dbunit.version}</version>
+            <version>${dbunit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.interceptor</groupId>
+            <artifactId>javax.interceptor-api</artifactId>
+            <version>1.2</version>
         </dependency>
     </dependencies>
 
@@ -482,8 +488,12 @@
 
     <build>
         <resources>
-            <!-- <resource> <directory>db/migration</directory> <includes> <include>**/*.sql</include> 
-                </includes> </resource> -->
+            <resource>
+                <directory>db/migration</directory>
+                <includes>
+                    <include>**/*.sql</include>
+                </includes>
+            </resource>
         </resources>
 
         <plugins>
@@ -496,12 +506,40 @@
                         <goals>
                             <goal>start</goal>
                         </goals>
+                        <configuration>
+                            <skip>${maven.test.skip.exec}</skip>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>post-integration-test</id>
                         <goals>
                             <goal>stop</goal>
                         </goals>
+                        <configuration>
+                            <skip>${maven.test.skip.exec}</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>integration-tests</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <skip>${maven.test.skip.exec}</skip>
+                            <executable>
+                                newman
+                            </executable>
+                            <commandlineArgs>
+                                run ModellBahn.postman_collection.json --environment ModellBahn.postman_environment.json --timeout-request 1000
+                            </commandlineArgs>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -517,6 +555,16 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <!-- <version>3.0.0</version> -->
+                <configuration>
+                    <!-- Silence error javax.interceptor.InterceptorBinding not found -->
+                    <failOnError>false</failOnError>
+                    <additionalparam>-Xdoclint:none</additionalparam>
+                </configuration>
             </plugin>
         </plugins>
     </build>

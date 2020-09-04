@@ -4,15 +4,20 @@ import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
 
+import java.util.ArrayList;
+
 import com.linepro.modellbahn.converter.entity.UnterKategorieMutator;
 import com.linepro.modellbahn.converter.impl.NamedTranscriber;
 import com.linepro.modellbahn.entity.Kategorie;
 import com.linepro.modellbahn.model.KategorieModel;
+import com.linepro.modellbahn.model.UnterKategorieModel;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class KategorieTranscriber extends NamedTranscriber<Kategorie, KategorieModel> {
+
+    private static final ArrayList<UnterKategorieModel> KEIN_UNTER_KATEGORIE = new ArrayList<>();
 
     private final UnterKategorieMutator unterKategorieMutator;
 
@@ -27,7 +32,8 @@ public class KategorieTranscriber extends NamedTranscriber<Kategorie, KategorieM
                                                      .sorted()
                                                      .map(u -> attempt(() -> unterKategorieMutator.convert(u)))
                                                      .collect(success())
-                                                     .orElseThrow());
+                                                     .getValue()
+                                                     .orElse(KEIN_UNTER_KATEGORIE));
             }
         }
         

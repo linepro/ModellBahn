@@ -4,6 +4,7 @@
 eclipse/
 .checkstyle
 .classpath
+.factorypath
 .project
 
 # Intellij artefacts
