@@ -49,9 +49,9 @@ public class ProduktTranscriber implements Transcriber<Produkt, ProduktModel> {
             destination.setLicht(getCode(source.getLicht()));
             destination.setKupplung(getCode(source.getKupplung()));
             destination.setSteuerung(getCode(source.getSteuerung()));
-            if (source.getDecoderTyp() != null) {
+            if (isAvailable(source.getDecoderTyp())) {
                 destination.setDecoderTypHersteller(getCode(source.getDecoderTyp().getHersteller()));
-                destination.setDecoderTypHersteller(source.getDecoderTyp().getBestellNr());
+                destination.setDecoderTypBestellNr(source.getDecoderTyp().getBestellNr());
             }
             destination.setMotorTyp(getCode(source.getMotorTyp()));
             destination.setAnleitungen(PathMutator.convert(source.getAnleitungen()));

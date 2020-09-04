@@ -149,13 +149,13 @@ public class AufbauController extends NamedItemController<AufbauModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> updateAbbildung(@PathVariable(ApiNames.NAMEN) String name, @RequestParam("abbildung") MultipartFile multipart) {
-        return of(service.updateAbbildung(name, multipart));
+        return updated(service.updateAbbildung(name, multipart));
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_AUFBAU_ABBILDUNG, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Delete an Aufbau picture", description = "Deletes the picture of a named Aufbau", operationId = "update", tags = { ApiNames.AUFBAU })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AufbauModel.class)) }),
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AufbauModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
@@ -164,6 +164,6 @@ public class AufbauController extends NamedItemController<AufbauModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiNames.NAMEN) String name) {
-        return of(service.deleteAbbildung(name));
+        return updated(service.deleteAbbildung(name));
     }
 }

@@ -143,4 +143,6 @@ INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUE
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Farbe', 'FARBE', 665, 669);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Zubehör', 'ZUBEHOR', 670, 671);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Beschriftigung', 'BESCHRIFTIGUNG', 670, 672);
-ALTER TABLE unter_kategorie ALTER COLUMN id RESTART WITH 673;
+INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Bürsten', 'BURSTEN', 532, 673);
+
+ALTER TABLE unter_kategorie ALTER COLUMN id RESTART WITH 674;

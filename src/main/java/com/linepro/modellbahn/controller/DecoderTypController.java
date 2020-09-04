@@ -307,7 +307,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     @PutMapping(path = ApiPaths.ADD_DECODER_TYP_ANLEITUNGEN, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds DecoderTyp instructions", description = "Adds or updates the instructions for a DecoderTyp", operationId = "update", tags = { ApiNames.DECODER_TYP })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),

@@ -989,7 +989,7 @@
 							"script": {
 								"id": "68c5e112-ed88-4a49-92b7-a065dce8058b",
 								"exec": [
-									"pm.response.to.have.status(200);\r",
+									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/aufbau\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/aufbau/{{name}}\");\r",
@@ -1176,7 +1176,7 @@
 							"script": {
 								"id": "17ceb269-8f1c-43eb-84a9-234412aedc74",
 								"exec": [
-									"pm.response.to.have.status(200);\r",
+									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/aufbau\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/aufbau/{{name}}\");\r",
@@ -1188,9 +1188,7 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"\r",
-									""
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
 								],
 								"type": "text/javascript"
 							}
@@ -2572,7 +2570,7 @@
 							"script": {
 								"id": "a032a42a-3c16-4771-96e4-3855f1de5de2",
 								"exec": [
-									"pm.response.to.have.status(200);\r",
+									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kupplung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kupplung/{{name}}\");\r",
@@ -2759,7 +2757,7 @@
 							"script": {
 								"id": "62e4d1a9-2c39-4843-aaef-027efee29526",
 								"exec": [
-									"pm.response.to.have.status(200);\r",
+									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kupplung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kupplung/{{name}}\");\r",
@@ -5852,7 +5850,10 @@
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.vorbild.forEach(function(a) { \r",
 									"    var self = root + \"/\" + a.name;\r",
+									"    pm.expect(a.name).to.exist;\r",
 									"    pm.expect(a.gattung).to.exist;\r",
+									"    pm.expect(a.kategorie).to.exist;\r",
+									"    pm.expect(a.unterKategorie).to.exist;\r",
 									"    pm.expect(a.bezeichnung).to.exist;\r",
 									"    pm.expect(a.deleted).to.be.false;\r",
 									"    pm.expect(a._links.add[0].href).to.eql(root);\r",
@@ -7758,8 +7759,11 @@
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.produkt.forEach(function(a) { \r",
-									"    var self = root + \"/\" + a.name;\r",
-									"    pm.expect(a.name).to.exist;\r",
+									"    var self = root + \"/\" + a.hersteller + \"/\" + a.bestellNr;\r",
+									"    pm.expect(a.hersteller).to.exist;\r",
+									"    pm.expect(a.bestellNr).to.exist;\r",
+									"    pm.expect(a.kategorie).to.exist;\r",
+									"    pm.expect(a.unterKategorie).to.exist;\r",
 									"    pm.expect(a.bezeichnung).to.exist;\r",
 									"    pm.expect(a.deleted).to.be.false;\r",
 									"    pm.expect(a._links.add[0].href).to.eql(root);\r",
@@ -7808,7 +7812,7 @@
 								"id": "f8840ad4-c976-4afd-98de-af6033c92d5e",
 								"exec": [
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
-									"pm.environment.set(\"bestellNr\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}\"));\r",
+									"pm.environment.set(\"bestellNr\", pm.variables.replaceIn(\"{{$randomAbbreviation}}{{$randomInt}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"kategorie\", pm.variables.get(\"kategorieAdd\"));\r",
 									"pm.environment.set(\"unterKategorie\", pm.variables.get(\"unterKategorieAdd\"));\r",
@@ -7817,17 +7821,17 @@
 									"pm.environment.set(\"spurweite\", pm.variables.get(\"spurweiteAdd\"));\r",
 									"pm.environment.set(\"epoch\", pm.variables.get(\"epochAdd\"));\r",
 									"pm.environment.set(\"bahnverwaltung\", pm.variables.get(\"bahnverwaltungAdd\"));\r",
-									"pm.environment.set(\"gattung\", pm.variables.get(\"gattung\"));\r",
+									"pm.environment.set(\"gattung\", pm.variables.get(\"gattungAdd\"));\r",
 									"pm.environment.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));\r",
-									"pm.environment.set(\"bauzeit\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
+									"pm.environment.set(\"bauzeit\", new Date(pm.variables.replaceIn(\"{{$randomDatePast}}\")).toISOString().substring(0,10));\r",
 									"pm.environment.set(\"achsfolg\", pm.variables.get(\"achsfolgAdd\"));\r",
 									"pm.environment.set(\"sondermodell\", pm.variables.get(\"sondermodellAdd\"));\r",
 									"pm.environment.set(\"aufbau\", pm.variables.get(\"aufbauAdd\"));\r",
 									"pm.environment.set(\"licht\", pm.variables.get(\"lichtAdd\"));\r",
 									"pm.environment.set(\"kupplung\", pm.variables.get(\"kupplungAdd\"));\r",
 									"pm.environment.set(\"steuerung\", pm.variables.get(\"steuerungAdd\"));\r",
-									"pm.environment.set(\"decoderHersteller\", pm.variables.get(\"decoderTypHersteller\"));\r",
-									"pm.environment.set(\"decoderBestellNr\", pm.variables.get(\"decoderTypBestellNr\"));\r",
+									"pm.environment.set(\"decoderHersteller\", pm.variables.get(\"decoderHerstellerAdd\"));\r",
+									"pm.environment.set(\"decoderBestellNr\", pm.variables.get(\"decoderBestellNrAdd\"));\r",
 									"pm.environment.set(\"motorTyp\", pm.variables.get(\"motorTypAdd\"));\r",
 									"pm.environment.set(\"anmerkung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -7862,13 +7866,13 @@
 									"pm.expect(jsonData.licht).to.eql(pm.variables.get(\"licht\"));\r",
 									"pm.expect(jsonData.kupplung).to.eql(pm.variables.get(\"kupplung\"));\r",
 									"pm.expect(jsonData.steuerung).to.eql(pm.variables.get(\"steuerung\"));\r",
-									"pm.expect(jsonData.decoderTypHersteller).to.eql(pm.variables.get(\"decoderpHersteller\"));\r",
-									"pm.expect(jsonData.decoderTypBestellNr).to.eql(pm.variables.get(\"decoderBestellNr\"));\r",
+									"pm.expect(jsonData.decoderHersteller).to.eql(pm.variables.get(\"decoderHersteller\"));\r",
+									"pm.expect(jsonData.decoderBestellNr).to.eql(pm.variables.get(\"decoderBestellNr\"));\r",
 									"pm.expect(jsonData.motorTyp).to.eql(pm.variables.get(\"motorTyp\"));\r",
 									"pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\"));\r",
 									"pm.expect(jsonData.anleitungen).to.eql(undefined);\r",
 									"pm.expect(jsonData.explosionszeichnung).to.eql(undefined);\r",
-									"pm.expect(jsonData.teilen).to.eql(undefined);\r",
+									"pm.expect(jsonData.teilen.length).to.eql(0);\r",
 									"pm.expect(jsonData.abbildung).to.eql(undefined);\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
@@ -7900,7 +7904,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"hersteller\": \"{{hersteller}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n    \"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"lange\": \"{{lange}}\",\n    \"massstab\": \"{{massstab}}\",\n    \"spurweite\": \"{{spurweite}}\",\n    \"epoch\": \"{{epoch}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"gattung\": \"{{gattung}}\",\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"bauzeit\": \"{{bauzeit}}\",\n    \"achsfolg\": \"{{achsfolg}}\",\n    \"sondermodell\": \"{{sondermodell}}\",\n    \"aufbau\": \"{{aufbau}}\",\n    \"licht\": \"{{licht}}\",\n    \"kupplung\": \"{{kupplung}}\",\n    \"steuerung\": \"{{steuerung}}\",\n    \"decoderTypHersteller\": \"{{decoderHersteller}}\",\n    \"decoderTypBestellNr\": \"{{decoderBestellNr}}\",\n    \"motorTyp\": \"{{motorTyp}}\",\n    \"anmerkung\": \"{{anmerkung}}\",\n    \"anleitungen\": \"{{anleitungen}}\",\n    \"explosionszeichnung\": \"{{explosionszeichnung}}\",\n    \"teilen\": \"{{teilen}}\",\n    \"abbildung\": \"{{abbildung}}\",\n    \"deleted\": \"{{deleted}}\"\n}",
+							"raw": "{\n    \"hersteller\": \"{{hersteller}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n    \"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"lange\": \"{{lange}}\",\n    \"massstab\": \"{{massstab}}\",\n    \"spurweite\": \"{{spurweite}}\",\n    \"epoch\": \"{{epoch}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"gattung\": \"{{gattung}}\",\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"bauzeit\": \"{{bauzeit}}\",\n    \"achsfolg\": \"{{achsfolg}}\",\n    \"sondermodell\": \"{{sondermodell}}\",\n    \"aufbau\": \"{{aufbau}}\",\n    \"licht\": \"{{licht}}\",\n    \"kupplung\": \"{{kupplung}}\",\n    \"steuerung\": \"{{steuerung}}\",\n    \"decoderHersteller\": \"{{decoderHersteller}}\",\n    \"decoderBestellNr\": \"{{decoderBestellNr}}\",\n    \"motorTyp\": \"{{motorTyp}}\",\n    \"anmerkung\": \"{{anmerkung}}\",\n    \"anleitungen\": \"{{anleitungen}}\",\n    \"explosionszeichnung\": \"{{explosionszeichnung}}\",\n    \"teilen\": [],\n    \"abbildung\": \"{{abbildung}}\",\n    \"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -7951,13 +7955,13 @@
 									"pm.expect(jsonData.licht).to.eql(pm.variables.get(\"licht\"));\r",
 									"pm.expect(jsonData.kupplung).to.eql(pm.variables.get(\"kupplung\"));\r",
 									"pm.expect(jsonData.steuerung).to.eql(pm.variables.get(\"steuerung\"));\r",
-									"pm.expect(jsonData.decoderTypHersteller).to.eql(pm.variables.get(\"decoderTypHersteller\"));\r",
-									"pm.expect(jsonData.decoderTypBestellNr).to.eql(pm.variables.get(\"decoderTypBestellNr\"));\r",
+									"pm.expect(jsonData.decoderHersteller).to.eql(pm.variables.get(\"decoderHersteller\"));\r",
+									"pm.expect(jsonData.decoderBestellNr).to.eql(pm.variables.get(\"decoderBestellNr\"));\r",
 									"pm.expect(jsonData.motorTyp).to.eql(pm.variables.get(\"motorTyp\"));\r",
 									"pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\"));\r",
 									"pm.expect(jsonData.anleitungen).to.eql(undefined);\r",
 									"pm.expect(jsonData.explosionszeichnung).to.eql(undefined);\r",
-									"pm.expect(jsonData.teilen).to.eql(undefined);\r",
+									"pm.expect(jsonData.teilen.length).to.eql(0);\r",
 									"pm.expect(jsonData.abbildung).to.eql(abbildung);\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
@@ -8046,7 +8050,7 @@
 									"pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\"));\r",
 									"pm.expect(jsonData.anleitungen).to.eql(anleitungen);\r",
 									"pm.expect(jsonData.explosionszeichnung).to.eql(undefined);\r",
-									"pm.expect(jsonData.teilen).to.eql(undefined);\r",
+									"pm.expect(jsonData.teilen.length).to.eql(0);\r",
 									"pm.expect(jsonData.abbildung).to.eql(abbildung);\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
@@ -8136,7 +8140,7 @@
 									"pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\"));\r",
 									"pm.expect(jsonData.anleitungen).to.eql(anleitungen);\r",
 									"pm.expect(jsonData.explosionszeichnung).to.eql(explosionszeichnung);\r",
-									"pm.expect(jsonData.teilen).to.eql(undefined);\r",
+									"pm.expect(jsonData.teilen.length).to.eql(0);\r",
 									"pm.expect(jsonData.abbildung).to.eql(abbildung);\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
@@ -8194,10 +8198,12 @@
 							"script": {
 								"id": "ec52a7a9-6ce6-4c72-aae0-fe40f2dcf47a",
 								"exec": [
-									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.environment.set(\"kategorie\", pm.variables.get(\"kategorieAdd\"));\r",
-									"pm.environment.set(\"unterKategorie\", pm.variables.get(\"unterKategorieAdd\"));\r",
-									"pm.environment.set(\"anzahl\", pm.variables.replaceIn(\"{{$randomInt}}\"));"
+									"pm.environment.set(\"teilHersteller\", pm.variables.get(\"teilHerstellerAdd\"));\r",
+									"pm.environment.set(\"teilBestellNr\", pm.variables.get(\"teilBestellNrAdd\"));\r",
+									"pm.environment.set(\"teilBezeichnung\", pm.variables.get(\"teilBezeichnungAdd\"));\r",
+									"pm.environment.set(\"teilKategorie\", pm.variables.get(\"teilKategorieAdd\"));\r",
+									"pm.environment.set(\"teilUnterKategorie\", pm.variables.get(\"teilUnterKategorieAdd\"));\r",
+									"pm.environment.set(\"teilAnzahl\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
 								],
 								"type": "text/javascript"
 							}
@@ -8209,17 +8215,22 @@
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
+									"var parent = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen\");\r",
-									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen/{{hersteller}}/{{bestellNr}}\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen/{{teilHersteller}}/{{teilBestellNr}}\");\r",
 									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
 									"pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
 									"pm.expect(jsonData.teilHersteller).to.eql(pm.variables.get(\"teilHersteller\"));\r",
 									"pm.expect(jsonData.teilBestellNr).to.eql(pm.variables.get(\"teilBestellNr\"));\r",
-									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\"));\r",
-									"pm.expect(jsonData.kategorie).to.eql(pm.variables.get(\"kategorie\"));\r",
-									"pm.expect(jsonData.unterKategorie).to.eql(pm.variables.get(\"unterKategorie\"));\r",
-									"pm.expect(jsonData.anzahl).to.eql(pm.variables.get(\"anzahl\"));\r",
-									"pm.expect(jsonData.deleted).to.be.false;"
+									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"teilBezeichnung\"));\r",
+									"pm.expect(jsonData.kategorie).to.eql(pm.variables.get(\"teilKategorie\"));\r",
+									"pm.expect(jsonData.unterKategorie).to.eql(pm.variables.get(\"teilUnterKategorie\"));\r",
+									"pm.expect(jsonData.anzahl).to.eql(pm.variables.get(\"teilAnzahl\"));\r",
+									"pm.expect(jsonData.deleted).to.be.false;\r",
+									"pm.expect(jsonData._links.parent[0].href).to.eql(parent);\r",
+									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
+									"pm.expect(jsonData._links.delete[0].href).to.eql(self);"
 								],
 								"type": "text/javascript"
 							}
@@ -8244,7 +8255,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"hersteller\": \"{{hersteller}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n    \"teilHersteller\": \"{{teilHersteller}}\",\n    \"teilBestellNr\": \"{{teilBestellNr}}\",\n    \"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"anzahl\": {{anzahl}},\n    \"deleted\": \"{{deleted}}\"\n}",
+							"raw": "{\n    \"hersteller\": \"{{hersteller}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n    \"teilHersteller\": \"{{teilHersteller}}\",\n    \"teilBestellNr\": \"{{teilBestellNr}}\",\n    \"bezeichnung\": \"{{teilBezeichnung}}\",\n    \"kategorie\": \"{{teilKategorie}}\",\n    \"unterKategorie\": \"{{teilUnterKategorie}}\",\n    \"anzahl\": {{teilAnzahl}},\n    \"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -8274,7 +8285,7 @@
 							"script": {
 								"id": "238a1bec-cd64-4690-94b6-1ffda706db28",
 								"exec": [
-									"pm.environment.set(\"anzahl\", pm.variables.replaceIn(\"{{$randomInt}}\"));"
+									"pm.environment.set(\"teilAnzahl\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
 								],
 								"type": "text/javascript"
 							}
@@ -8286,17 +8297,22 @@
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
+									"var parent = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen\");\r",
-									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen/{{hersteller}}/{{bestellNr}}\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen/{{teilHersteller}}/{{teilBestellNr}}\");\r",
 									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
 									"pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
 									"pm.expect(jsonData.teilHersteller).to.eql(pm.variables.get(\"teilHersteller\"));\r",
 									"pm.expect(jsonData.teilBestellNr).to.eql(pm.variables.get(\"teilBestellNr\"));\r",
-									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\"));\r",
-									"pm.expect(jsonData.kategorie).to.eql(pm.variables.get(\"kategorie\"));\r",
-									"pm.expect(jsonData.unterKategorie).to.eql(pm.variables.get(\"unterKategorie\"));\r",
-									"pm.expect(jsonData.anzahl).to.eql(pm.variables.get(\"anzahl\"));\r",
-									"pm.expect(jsonData.deleted).to.be.false;"
+									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"teilBezeichnung\"));\r",
+									"pm.expect(jsonData.kategorie).to.eql(pm.variables.get(\"teilKategorie\"));\r",
+									"pm.expect(jsonData.unterKategorie).to.eql(pm.variables.get(\"teilUnterKategorie\"));\r",
+									"pm.expect(jsonData.anzahl).to.eql(pm.variables.get(\"teilAnzahl\"));\r",
+									"pm.expect(jsonData.deleted).to.be.false;\r",
+									"pm.expect(jsonData._links.parent[0].href).to.eql(parent);\r",
+									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
+									"pm.expect(jsonData._links.delete[0].href).to.eql(self);"
 								],
 								"type": "text/javascript"
 							}
@@ -8320,7 +8336,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen/{{teilHersteller}}/{{teilBestellNr}}?anzahl={{anzahl}}",
+							"raw": "{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen/{{teilHersteller}}/{{teilBestellNr}}?anzahl={{teilAnzahl}}",
 							"host": [
 								"{{api}}"
 							],
@@ -8335,7 +8351,7 @@
 							"query": [
 								{
 									"key": "anzahl",
-									"value": "{{anzahl}}"
+									"value": "{{teilAnzahl}}"
 								}
 							]
 						}
@@ -8350,28 +8366,26 @@
 							"script": {
 								"id": "db4b9aed-a85e-4690-a285-b92c0a9666b3",
 								"exec": [
-									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
-									"pm.environment.set(\"bestellNr\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.environment.set(\"kategorie\", pm.variables.get(\"kategorieAdd\"));\r",
-									"pm.environment.set(\"unterKategorie\", pm.variables.get(\"unterKategorieAdd\"));\r",
+									"pm.environment.set(\"kategorie\", pm.variables.get(\"kategorieUpdate\"));\r",
+									"pm.environment.set(\"unterKategorie\", pm.variables.get(\"unterKategorieUpdate\"));\r",
 									"pm.environment.set(\"lange\", new Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.environment.set(\"massstab\", pm.variables.get(\"massstabAdd\"));\r",
-									"pm.environment.set(\"spurweite\", pm.variables.get(\"spurweiteAdd\"));\r",
-									"pm.environment.set(\"epoch\", pm.variables.get(\"epochAdd\"));\r",
-									"pm.environment.set(\"bahnverwaltung\", pm.variables.get(\"bahnverwaltungAdd\"));\r",
-									"pm.environment.set(\"gattung\", pm.variables.get(\"gattung\"));\r",
+									"pm.environment.set(\"massstab\", pm.variables.get(\"massstabUpdate\"));\r",
+									"pm.environment.set(\"spurweite\", pm.variables.get(\"spurweiteUpdate\"));\r",
+									"pm.environment.set(\"epoch\", pm.variables.get(\"epochUpdate\"));\r",
+									"pm.environment.set(\"bahnverwaltung\", pm.variables.get(\"bahnverwaltungUpdate\"));\r",
+									"pm.environment.set(\"gattung\", pm.variables.get(\"gattungUpdate\"));\r",
 									"pm.environment.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));\r",
-									"pm.environment.set(\"bauzeit\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
-									"pm.environment.set(\"achsfolg\", pm.variables.get(\"achsfolgAdd\"));\r",
-									"pm.environment.set(\"sondermodell\", pm.variables.get(\"sondermodellAdd\"));\r",
-									"pm.environment.set(\"aufbau\", pm.variables.get(\"aufbauAdd\"));\r",
-									"pm.environment.set(\"licht\", pm.variables.get(\"lichtAdd\"));\r",
-									"pm.environment.set(\"kupplung\", pm.variables.get(\"kupplungAdd\"));\r",
-									"pm.environment.set(\"steuerung\", pm.variables.get(\"steuerungAdd\"));\r",
-									"pm.environment.set(\"decoderTypHersteller\", pm.variables.get(\"decoderTypHersteller\"));\r",
-									"pm.environment.set(\"decoderTypBestellNr\", pm.variables.get(\"decoderTypBestellNr\"));\r",
-									"pm.environment.set(\"motorTyp\", pm.variables.get(\"motorTypAdd\"));\r",
+									"pm.environment.set(\"bauzeit\", new Date(pm.variables.replaceIn(\"{{$randomDatePast}}\")).toISOString().substring(0,10));\r",
+									"pm.environment.set(\"achsfolg\", pm.variables.get(\"achsfolgUpdate\"));\r",
+									"pm.environment.set(\"sondermodell\", pm.variables.get(\"sondermodellUpdate\"));\r",
+									"pm.environment.set(\"aufbau\", pm.variables.get(\"aufbauUpdate\"));\r",
+									"pm.environment.set(\"licht\", pm.variables.get(\"lichtUpdate\"));\r",
+									"pm.environment.set(\"kupplung\", pm.variables.get(\"kupplungUpdate\"));\r",
+									"pm.environment.set(\"steuerung\", pm.variables.get(\"steuerungUpdate\"));\r",
+									"pm.environment.set(\"decoderHersteller\", pm.variables.get(\"decoderHerstellerUpdate\"));\r",
+									"pm.environment.set(\"decoderBestellNr\", pm.variables.get(\"decoderBestellNrUpdate\"));\r",
+									"pm.environment.set(\"motorTyp\", pm.variables.get(\"motorTypUpdate\"));\r",
 									"pm.environment.set(\"anmerkung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
@@ -8386,6 +8400,11 @@
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
+									"var abbildung = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/abbildung.jpg\");\r",
+									"var anleitungen = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/anleitungen.pdf\");\r",
+									"var explosionszeichnung = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/explosionszeichnung.pdf\");\r",
+									"var teilRoot = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen\");\r",
+									"var teilUrl = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen/{{teilHersteller}}/{{teilBestellNr}}\");\r",
 									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
 									"pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\"));\r",
@@ -8409,10 +8428,23 @@
 									"pm.expect(jsonData.decoderTypBestellNr).to.eql(pm.variables.get(\"decoderTypBestellNr\"));\r",
 									"pm.expect(jsonData.motorTyp).to.eql(pm.variables.get(\"motorTyp\"));\r",
 									"pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\"));\r",
-									"pm.expect(jsonData.anleitungen).to.eql(pm.variables.get(\"anleitungen\"));\r",
-									"pm.expect(jsonData.explosionszeichnung).to.eql(pm.variables.get(\"explosionszeichnung\"));\r",
-									"pm.expect(jsonData.teilen).to.eql(pm.variables.get(\"teilen\"));\r",
-									"pm.expect(jsonData.abbildung).to.eql(undefined);\r",
+									"pm.expect(jsonData.anleitungen).to.eql(anleitungen);\r",
+									"pm.expect(jsonData.explosionszeichnung).to.eql(explosionszeichnung);\r",
+									"pm.expect(jsonData.teilen.length).to.eql(1);\r",
+									"pm.expect(jsonData.teilen[0].hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
+									"pm.expect(jsonData.teilen[0].bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
+									"pm.expect(jsonData.teilen[0].teilHersteller).to.eql(pm.variables.get(\"teilHersteller\"));\r",
+									"pm.expect(jsonData.teilen[0].teilBestellNr).to.eql(pm.variables.get(\"teilBestellNr\"));\r",
+									"pm.expect(jsonData.teilen[0].bezeichnung).to.eql(pm.variables.get(\"teilBezeichnung\"));\r",
+									"pm.expect(jsonData.teilen[0].kategorie).to.eql(pm.variables.get(\"teilKategorie\"));\r",
+									"pm.expect(jsonData.teilen[0].unterKategorie).to.eql(pm.variables.get(\"teilUnterKategorie\"));\r",
+									"pm.expect(jsonData.teilen[0].anzahl).to.eql(pm.variables.get(\"teilAnzahl\"));\r",
+									"pm.expect(jsonData.teilen[0].deleted).to.be.false;\r",
+									"pm.expect(jsonData.teilen[0]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.teilen[0]._links.add[0].href).to.eql(teilRoot);\r",
+									"pm.expect(jsonData.teilen[0]._links.update[0].href).to.eql(teilUrl);\r",
+									"pm.expect(jsonData.teilen[0]._links.delete[0].href).to.eql(teilUrl);\r",
+									"pm.expect(jsonData.abbildung).to.eql(abbildung);\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
@@ -8443,7 +8475,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"hersteller\": \"{{hersteller}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n    \"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"lange\": \"{{lange}}\",\n    \"massstab\": \"{{massstab}}\",\n    \"spurweite\": \"{{spurweite}}\",\n    \"epoch\": \"{{epoch}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"gattung\": \"{{gattung}}\",\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"bauzeit\": \"{{bauzeit}}\",\n    \"achsfolg\": \"{{achsfolg}}\",\n    \"sondermodell\": \"{{sondermodell}}\",\n    \"aufbau\": \"{{aufbau}}\",\n    \"licht\": \"{{licht}}\",\n    \"kupplung\": \"{{kupplung}}\",\n    \"steuerung\": \"{{steuerung}}\",\n    \"decoderTypHersteller\": \"{{decoderHersteller}}\",\n    \"decoderTypBestellNr\": \"{{decoderBestellNr}}\",\n    \"motorTyp\": \"{{motorTyp}}\",\n    \"anmerkung\": \"{{anmerkung}}\",\n    \"anleitungen\": \"{{anleitungen}}\",\n    \"explosionszeichnung\": \"{{explosionszeichnung}}\",\n    \"teilen\": \"{{teilen}}\",\n    \"abbildung\": \"{{abbildung}}\",\n    \"deleted\": \"{{deleted}}\"\n}",
+							"raw": "{\n    \"hersteller\": \"{{hersteller}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n    \"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"lange\": \"{{lange}}\",\n    \"massstab\": \"{{massstab}}\",\n    \"spurweite\": \"{{spurweite}}\",\n    \"epoch\": \"{{epoch}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"gattung\": \"{{gattung}}\",\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"bauzeit\": \"{{bauzeit}}\",\n    \"achsfolg\": \"{{achsfolg}}\",\n    \"sondermodell\": \"{{sondermodell}}\",\n    \"aufbau\": \"{{aufbau}}\",\n    \"licht\": \"{{licht}}\",\n    \"kupplung\": \"{{kupplung}}\",\n    \"steuerung\": \"{{steuerung}}\",\n    \"decoderTypHersteller\": \"{{decoderHersteller}}\",\n    \"decoderTypBestellNr\": \"{{decoderBestellNr}}\",\n    \"motorTyp\": \"{{motorTyp}}\",\n    \"anmerkung\": \"{{anmerkung}}\",\n    \"anleitungen\": \"{{anleitungen}}\",\n    \"explosionszeichnung\": \"{{explosionszeichnung}}\",\n    \"teilen\": [],\n    \"abbildung\": \"{{abbildung}}\",\n    \"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -8479,6 +8511,8 @@
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/abbildung.jpg\");\r",
 									"var anleitungen = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/anleitungen.pdf\");\r",
 									"var explosionszeichnung = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/explosionszeichnung.pdf\");\r",
+									"var teilRoot = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen\");\r",
+									"var teilUrl = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen/{{teilHersteller}}/{{teilBestellNr}}\");\r",
 									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
 									"pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\"));\r",
@@ -8504,7 +8538,20 @@
 									"pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\"));\r",
 									"pm.expect(jsonData.anleitungen).to.eql(anleitungen);\r",
 									"pm.expect(jsonData.explosionszeichnung).to.eql(explosionszeichnung);\r",
-									"pm.expect(jsonData.teilen).to.eql(undefined);\r",
+									"pm.expect(jsonData.teilen.length).to.eql(1);\r",
+									"pm.expect(jsonData.teilen[0].hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
+									"pm.expect(jsonData.teilen[0].bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
+									"pm.expect(jsonData.teilen[0].teilHersteller).to.eql(pm.variables.get(\"teilHersteller\"));\r",
+									"pm.expect(jsonData.teilen[0].teilBestellNr).to.eql(pm.variables.get(\"teilBestellNr\"));\r",
+									"pm.expect(jsonData.teilen[0].bezeichnung).to.eql(pm.variables.get(\"teilBezeichnung\"));\r",
+									"pm.expect(jsonData.teilen[0].kategorie).to.eql(pm.variables.get(\"teilKategorie\"));\r",
+									"pm.expect(jsonData.teilen[0].unterKategorie).to.eql(pm.variables.get(\"teilUnterKategorie\"));\r",
+									"pm.expect(jsonData.teilen[0].anzahl).to.eql(pm.variables.get(\"teilAnzahl\"));\r",
+									"pm.expect(jsonData.teilen[0].deleted).to.be.false;\r",
+									"pm.expect(jsonData.teilen[0]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.teilen[0]._links.add[0].href).to.eql(teilRoot);\r",
+									"pm.expect(jsonData.teilen[0]._links.update[0].href).to.eql(teilUrl);\r",
+									"pm.expect(jsonData.teilen[0]._links.delete[0].href).to.eql(teilUrl);\r",
 									"pm.expect(jsonData.abbildung).to.eql(abbildung);\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
@@ -8534,6 +8581,47 @@
 								"produkt",
 								"{{hersteller}}",
 								"{{bestellNr}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Teil",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "99fa9afb-5f22-4b8c-b5ae-7251774b42c7",
+								"exec": [
+									"pm.response.to.have.status(204);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen/{{teilHersteller}}/{{teilBestellNr}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"produkt",
+								"{{hersteller}}",
+								"{{bestellNr}}",
+								"teilen",
+								"{{teilHersteller}}",
+								"{{teilBestellNr}}"
 							]
 						}
 					},
@@ -8578,7 +8666,7 @@
 									"pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\"));\r",
 									"pm.expect(jsonData.anleitungen).to.eql(anleitungen);\r",
 									"pm.expect(jsonData.explosionszeichnung).to.eql(explosionszeichnung);\r",
-									"pm.expect(jsonData.teilen).to.eql(undefined);\r",
+									"pm.expect(jsonData.teilen.length).to.eql(0);\r",
 									"pm.expect(jsonData.abbildung).to.eql(undefined);\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
@@ -8653,7 +8741,7 @@
 									"pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\"));\r",
 									"pm.expect(jsonData.anleitungen).to.eql(undefined);\r",
 									"pm.expect(jsonData.explosionszeichnung).to.eql(explosionszeichnung);\r",
-									"pm.expect(jsonData.teilen).to.eql(undefined);\r",
+									"pm.expect(jsonData.teilen.length).to.eql(0);\r",
 									"pm.expect(jsonData.abbildung).to.eql(undefined);\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
@@ -8727,7 +8815,7 @@
 									"pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\"));\r",
 									"pm.expect(jsonData.anleitungen).to.eql(undefined);\r",
 									"pm.expect(jsonData.explosionszeichnung).to.eql(undefined);\r",
-									"pm.expect(jsonData.teilen).to.eql(undefined);\r",
+									"pm.expect(jsonData.teilen.length).to.eql(0);\r",
 									"pm.expect(jsonData.abbildung).to.eql(undefined);\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
@@ -8759,47 +8847,6 @@
 								"{{hersteller}}",
 								"{{bestellNr}}",
 								"explosionszeichnung"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Teil",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "99fa9afb-5f22-4b8c-b5ae-7251774b42c7",
-								"exec": [
-									"pm.response.to.have.status(204);\r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Accept-Language",
-								"value": "{{language}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen/{{teilHersteller}}/{{teilBestellNr}}",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"produkt",
-								"{{hersteller}}",
-								"{{bestellNr}}",
-								"teilen",
-								"{{teilHersteller}}",
-								"{{teilBestellNr}}"
 							]
 						}
 					},
@@ -8860,11 +8907,20 @@
 									"var root = pm.variables.replaceIn(\"{{api}}/decoder\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.decoder.forEach(function(a) { \r",
-									"    var self = root + \"/\" + a.name;\r",
+									"    var self = root + \"/\" + a.decoderId;\r",
+									"    var add = root + \"/\" + a.hersteller + \"/\" + a.bestellNr;\r",
 									"    pm.expect(a.decoderId).to.exist;\r",
+									"    pm.expect(a.hersteller).to.exist;\r",
+									"    pm.expect(a.bestellNr).to.exist;\r",
+									"    pm.expect(a.bezeichnung).to.exist;\r",
+									"    pm.expect(a.protokoll).to.exist;\r",
+									"    pm.expect(a.gerausch).to.exist;\r",
+									"    pm.expect(a.konfiguration).to.exist;\r",
+									"    pm.expect(a.stecker).to.exist;\r",
+									"    pm.expect(a.status).to.exist;\r",
 									"    pm.expect(a.bezeichnung).to.exist;\r",
 									"    pm.expect(a.deleted).to.be.false;\r",
-									"    pm.expect(a._links.add[0].href).to.eql(root);\r",
+									"    pm.expect(a._links.add[0].href).to.eql(add);\r",
 									"    pm.expect(a._links.self[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.update[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.delete[0].href).to.eql(self);\r",
@@ -12731,469 +12787,499 @@
 	],
 	"variable": [
 		{
-			"id": "baeaf9e3-58c2-4c3c-836b-abc9e2afec2a",
+			"id": "9172bb74-2180-4aa6-a8d1-42b377d6f14f",
 			"key": "host",
 			"value": "127.0.0.1"
 		},
 		{
-			"id": "58f989c0-5f40-4fe3-912a-8f1902760993",
+			"id": "9cd2448e-95cc-47cc-ba79-8f0344e8bee2",
 			"key": "port",
 			"value": ":8086"
 		},
 		{
-			"id": "a0b1064e-26a4-4713-8b4b-d0602cc0dd94",
+			"id": "d4971053-9427-4a69-94c1-930828807bf9",
 			"key": "server",
 			"value": "http://{{host}}{{port}}"
 		},
 		{
-			"id": "4b54e647-6bdd-49ac-aa98-4157ab70ec03",
+			"id": "1d025cf1-450f-4bd5-b80c-e0fa19545848",
 			"key": "root",
 			"value": "{{server}}/ModellBahn"
 		},
 		{
-			"id": "7c83cf67-eced-4dc5-8117-52d46b7fe88e",
+			"id": "4ca76650-5502-45f7-9931-18807a127043",
 			"key": "api",
 			"value": "{{root}}/api"
 		},
 		{
-			"id": "d796bcf7-6b90-4a18-84e0-76b67d22c2a5",
+			"id": "ceac164c-86ff-459e-bb99-056c17ae662c",
 			"key": "language",
 			"value": "de"
 		},
 		{
-			"id": "cab4f634-8e7c-423f-8bb8-aa317311a163",
+			"id": "c860033f-a7a4-433d-8221-b821d31ca6ef",
 			"key": "achsfolgAdd",
 			"value": "1C1H2T"
 		},
 		{
-			"id": "f129dd3b-5855-44fb-bd39-a88085a30a6f",
+			"id": "8f55b838-38da-42e0-9dc1-8783f27204b0",
 			"key": "achsfolgUpdate",
 			"value": "COCO"
 		},
 		{
-			"id": "a73d1a10-aa68-4af2-8da3-4f3ac02db1ed",
+			"id": "0fab0fbf-0aa8-4eb7-b634-0863a57b2d93",
 			"key": "adIndexAdd",
 			"value": "1"
 		},
 		{
-			"id": "9fb0a2e6-c2be-4158-9e44-d85e76f5160c",
+			"id": "fe0f06b0-1086-4c45-acd1-86720d00468e",
 			"key": "adIndexUpdate",
 			"value": "1"
 		},
 		{
-			"id": "308ab948-345f-483d-af4b-1c0eaa160f85",
+			"id": "5fb4b67f-2826-4924-aad2-9998b58fa611",
 			"key": "adSpanAdd",
 			"value": "2"
 		},
 		{
-			"id": "9a9a7d87-d3aa-408a-9daa-3a0c9cbbaa48",
+			"id": "c47e046b-f72e-492b-a164-4cf2c7b55316",
 			"key": "adSpanUpdate",
 			"value": "16"
 		},
 		{
-			"id": "f49bbf9c-0018-4cf5-a0fb-dc7a14081d56",
+			"id": "43717b22-e176-4551-ba18-82fc9df75b91",
 			"key": "adTypAdd",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "5edd349d-bb2d-4f92-9191-29068217399b",
+			"id": "b1c2ecff-730f-451e-af60-ddc026941bdc",
 			"key": "adTypUpdate",
 			"value": "DELTA"
 		},
 		{
-			"id": "f3296347-6225-4467-abdc-75c8d72d5dcf",
+			"id": "53f9c64f-ad07-4cb0-96f4-5c6f2cae260d",
 			"key": "adAdd",
 			"value": "10"
 		},
 		{
-			"id": "2fea31c7-077b-4738-99df-f9c2f669e9c6",
+			"id": "3028cb8b-999b-43f3-984d-ed6004854853",
 			"key": "adUpdate",
 			"value": "80"
 		},
 		{
-			"id": "02b60329-69d0-4494-b9ff-c1c8b199602f",
+			"id": "7d6c4aad-2e8a-47ca-89df-50ff0333b541",
 			"key": "anderungAdd",
 			"value": "1"
 		},
 		{
-			"id": "d913ed28-35d4-4df6-b987-062f0557ddae",
+			"id": "7103b6b5-9197-4402-bbf5-b508f82a30f5",
 			"key": "anderungUpdate",
 			"value": "1"
 		},
 		{
-			"id": "489a8d7b-202a-4cf0-8d2c-3d58ef290628",
+			"id": "73ad7aef-dec0-4d0b-90c4-45d916bf9fa6",
 			"key": "antriebAdd",
 			"value": "DAMPF"
 		},
 		{
-			"id": "101bcbba-7832-4410-af77-d78ba95a4b46",
+			"id": "11feec37-6358-448a-94e3-1c8d0a14bf2e",
 			"key": "antriebUpdate",
 			"value": "ELEKTRO"
 		},
 		{
-			"id": "ed419f15-d25b-4d43-ba93-441ec6ed3f79",
+			"id": "0daad1cc-d6cf-47f1-a1c9-a1b0e30df8ae",
 			"key": "artikelAdd",
 			"value": "00001"
 		},
 		{
-			"id": "579fc78f-f9a3-48a8-a2a1-0f0ed3018823",
+			"id": "88e2d161-407c-48a2-b0b6-a54dad821846",
 			"key": "artikelUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "3f84a3e0-f1bf-468b-af18-1fa6a7877ba3",
+			"id": "e9847bc8-2b20-4a99-8e40-361562537b9d",
 			"key": "aufbauAdd",
 			"value": "LK"
 		},
 		{
-			"id": "ba46ff3e-cd62-4804-b981-ba5e446be626",
+			"id": "530486a1-3a62-42e5-8ce8-924a031a63ed",
 			"key": "aufbauUpdate",
 			"value": "LK"
 		},
 		{
-			"id": "81b19386-eb14-46d0-adfa-8a5e507e778d",
+			"id": "e1cc2300-8ae3-4b21-9c7e-e3301ea48e3f",
 			"key": "bestellNrAdd",
 			"value": "3000"
 		},
 		{
-			"id": "811c530d-f5a9-4d40-8486-81b49202440c",
+			"id": "b192f961-ab05-4880-acca-954907fa1f49",
 			"key": "bestellNrUpdate",
 			"value": "3003"
 		},
 		{
-			"id": "fdb918e1-f5b3-4643-b256-ffa5ec6ae8d7",
+			"id": "dbbb5aab-cabc-44e4-832b-9d2ade1cbdfc",
 			"key": "bahnverwaltungAdd",
 			"value": "DB"
 		},
 		{
-			"id": "326cfeaf-cc74-4286-bbd8-2bf644ad5d9b",
+			"id": "3fed2ec5-299f-45a7-84f4-eabbaf79e805",
 			"key": "bahnverwaltungUpdate",
 			"value": "DBAG"
 		},
 		{
-			"id": "6405c19b-f3bc-44ed-a510-d0de7f8ad76f",
+			"id": "7a69e739-8d58-49e4-b386-20a88697c70f",
 			"key": "cvAdd",
 			"value": "8"
 		},
 		{
-			"id": "31b8b848-2f71-4cb0-833d-1fedf75c0d2e",
+			"id": "8b741a32-b2cf-4091-9291-3c90e475e8d6",
 			"key": "cvUpdate",
 			"value": "120"
 		},
 		{
-			"id": "0b107b07-ddc9-48fa-b3b0-00d3e462c10b",
+			"id": "7e2019fe-95c3-46e8-ba54-b7ec65c49d6d",
 			"key": "cvMaxAdd",
 			"value": "63"
 		},
 		{
-			"id": "ac052477-0f4f-44ca-9137-def7832eb525",
+			"id": "8c295e48-c502-41c6-a67a-9edcb98d88a8",
 			"key": "cvMaxUpdate",
 			"value": "80"
 		},
 		{
-			"id": "e189cc2a-2eb7-4f5b-9698-90493ef0122b",
+			"id": "235c1b03-b580-4beb-98dd-21d6ccc21d6c",
 			"key": "cvMinAdd",
 			"value": "0"
 		},
 		{
-			"id": "c2578839-19f1-45b5-b221-823bc1225df9",
+			"id": "760c4cb6-9ea5-4014-a56b-14b37608b45e",
 			"key": "cvMinUpdate",
 			"value": "1"
 		},
 		{
-			"id": "b6020652-26bc-4f52-84a1-e3568f783663",
+			"id": "b50008c0-4408-4a0c-a078-0a2ec0f11be9",
 			"key": "cvValueAdd",
 			"value": "30"
 		},
 		{
-			"id": "ea29b469-82f6-46c7-9588-7c248d321477",
+			"id": "f44f6ef9-212b-422c-8464-df9e464ee9b9",
 			"key": "cvValueUpdate",
 			"value": "50"
 		},
 		{
-			"id": "b2235691-f051-432e-b79d-7752821b8007",
+			"id": "4e85ff13-d518-4e1d-803e-f7632d62c06a",
 			"key": "decoderAdd",
 			"value": "00001"
 		},
 		{
-			"id": "0b67f445-fdfe-4b5c-8df6-f212ade84223",
+			"id": "af937061-1134-4356-b094-e673b44c0b16",
 			"key": "decoderUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "04923ed9-207a-4657-a7e2-41853eeedc55",
+			"id": "18f43641-545e-46c6-b979-a3266c3d3399",
 			"key": "decoderAdd",
 			"value": "00001"
 		},
 		{
-			"id": "b07748af-c912-420c-b247-5d593d6857d0",
+			"id": "c271e442-21bc-415b-a636-6560d609465c",
 			"key": "decoderUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "2096beb7-a4b5-4ccd-ada0-ba4746bde6e0",
+			"id": "1b8028cc-c4d0-4ec2-9541-1c51489c4ceb",
 			"key": "decoderHerstellerAdd",
 			"value": "ESU"
 		},
 		{
-			"id": "25e8a0ef-ea15-46b3-ab37-332ae1cb1744",
+			"id": "1855c522-fcca-49fc-8042-6ba1d4137031",
 			"key": "decoderHerstellerUpdate",
 			"value": "ESU"
 		},
 		{
-			"id": "7fb3ffdd-0ce3-4a46-acaa-e264c465a2e7",
-			"key": "decoderBestellAdd",
-			"value": "62498"
+			"id": "c4ba188d-ad27-466f-9ffb-66fc2f69a9ac",
+			"key": "decoderBestellNrAdd",
+			"value": "62400"
 		},
 		{
-			"id": "10a5e30b-b908-452c-b296-07b9a4a3ce2b",
-			"key": "decoderBestellUpdate",
-			"value": "62498"
+			"id": "376ff59d-4332-4879-a4a6-e55281cd8c04",
+			"key": "decoderBestellNrUpdate",
+			"value": "62499"
 		},
 		{
-			"id": "08f6689d-c509-42f8-8be5-a3dadb156fbe",
+			"id": "32a89470-3a42-41df-979e-c08c68d6f950",
 			"key": "epochAdd",
 			"value": "IV"
 		},
 		{
-			"id": "bac89a67-7125-411e-8ffb-c4e493d9847d",
+			"id": "a746c7e5-4077-48de-84cc-775bdf89bd57",
 			"key": "epochUpdate",
 			"value": "IV"
 		},
 		{
-			"id": "0333fb4b-a2d7-4312-9766-9962b5826b12",
+			"id": "68908e00-6965-4d97-ba50-b6fee83cc8a9",
 			"key": "fahrstufeAdd",
 			"value": "27"
 		},
 		{
-			"id": "7e0eeada-a6cd-4f15-9a32-7998d42d7aa3",
+			"id": "8b7cd3cd-40be-4ef1-b8d9-3ce11e3d6224",
 			"key": "fahrstufeUpdate",
 			"value": "128"
 		},
 		{
-			"id": "fe9af2dd-0e9b-4dae-880b-a124b56dce69",
+			"id": "42ce1128-62d8-4463-8c28-080c0dd2c7ad",
 			"key": "fnFuntionAdd",
 			"value": "F0"
 		},
 		{
-			"id": "2626d6b2-5cd4-424c-abe8-44e312706997",
+			"id": "905964a8-2e7a-4525-9395-b3458bffdf5b",
 			"key": "fnFuntionUpdate",
 			"value": "F0"
 		},
 		{
-			"id": "0a9204e8-137e-473e-98aa-408bfd5a2c2a",
+			"id": "1297d7ef-eb98-4c44-a7a7-c1d3503188ea",
 			"key": "fnReiheAdd",
 			"value": "1"
 		},
 		{
-			"id": "2626d6b2-5cd4-424c-abe8-44e312706997",
+			"id": "416f3c9a-0958-4e99-a338-9b08279378d9",
 			"key": "fnReiheUpdate",
 			"value": "1"
 		},
 		{
-			"id": "bf5009ba-a309-4f1c-a4c5-6d3ebeeb8c05",
+			"id": "fbf07986-b7fc-44fd-be63-b6afc362cb93",
 			"key": "gattungAdd",
 			"value": "BR89.0"
 		},
 		{
-			"id": "c5ee3b4b-2043-4039-be63-49b511bd48c2",
+			"id": "72c67793-120c-4e09-9d6f-18e85731f762",
 			"key": "gattungUpdate",
 			"value": "BR89.0"
 		},
 		{
-			"id": "077ac5f5-84ce-4ebb-946d-2f0d5d12c9d8",
+			"id": "91b58ba0-4eb0-432d-b0fb-8df53dfb43cf",
 			"key": "herstellerAdd",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "6484ccb4-3ce5-4ded-9084-4702876d96a4",
+			"id": "73874a17-1961-4e24-9565-4889825346b7",
 			"key": "herstellerUpdate",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "3473e407-8b82-46f2-8cee-aea2732ef317",
+			"id": "e5d091f5-aa67-4d76-8194-f29a7bdbe4a9",
 			"key": "iMaxAdd",
 			"value": "1.5"
 		},
 		{
-			"id": "44d6bfd8-5f7f-45f4-ac05-738cfc150c0b",
+			"id": "fccb460a-82fa-4710-a331-83c5c11f364b",
 			"key": "iMaxUpdate",
 			"value": "2.0"
 		},
 		{
-			"id": "3bc70318-1ed3-45ac-bf03-e732921d6c45",
+			"id": "572b87d0-6041-4fc2-868a-95a1fc4dc655",
 			"key": "kategorieAdd",
 			"value": "LOKOMOTIV"
 		},
 		{
-			"id": "8de1c9f6-08b9-414a-9880-97f36fe78cd1",
+			"id": "77399e22-ddea-4046-add7-ce71dea6e6c3",
 			"key": "kategorieUpdate",
 			"value": "AUSGESTALTUNG"
 		},
 		{
-			"id": "501cedf9-06f0-433d-9cca-967e51b149ad",
+			"id": "eb975e72-11f3-4b5f-9d13-04c1030f5d4f",
 			"key": "kupplungAdd",
 			"value": "RELEX"
 		},
 		{
-			"id": "9246a7d1-9e05-4c41-89e3-48a6876c0f24",
+			"id": "33098027-ad3d-44f4-99ef-ea98141abc8a",
 			"key": "kupplungUpdate",
 			"value": "RELEX"
 		},
 		{
-			"id": "1e5a55fe-1e5f-433b-859f-6188a5a21631",
+			"id": "ec4ddbed-33be-469f-a053-2c2118e96ae7",
 			"key": "konfigurationAdd",
 			"value": "CV"
 		},
 		{
-			"id": "da9c336d-a375-4f58-b381-ea9a215f3aaf",
+			"id": "b502b31f-75b9-40b6-a39b-858e70e341c6",
 			"key": "konfigurationUpdate",
 			"value": "STECKER"
 		},
 		{
-			"id": "731380ca-712c-4abc-8a42-87927d4dcf35",
+			"id": "cf47dd45-ea97-4093-9516-99ca1a82d158",
 			"key": "leistungsubertragungAdd",
 			"value": "MECHANISH"
 		},
 		{
-			"id": "467297d1-fc6b-4e69-8dd4-14a6da5e5df3",
+			"id": "5474eed1-b3ad-43bb-babe-13df711bef69",
 			"key": "leistungsubertragungUpdate",
 			"value": "ELEKTRISH"
 		},
 		{
-			"id": "96bf0961-872f-43ec-b033-baf4d42f3d48",
+			"id": "a047a43c-48ad-4b7c-a41d-c62aebf4a5f7",
 			"key": "lichtAdd",
 			"value": "L1V"
 		},
 		{
-			"id": "d1c522fc-fe7c-4383-8f78-88f4e8255811",
+			"id": "c1bef0c1-21ca-44a6-a405-dc8dcc84bded",
 			"key": "lichtUpdate",
 			"value": "L1V"
 		},
 		{
-			"id": "ff4bfaba-b10f-4de5-82d0-9a2dcec3e0ae",
+			"id": "752ec655-6624-48b4-9839-0b38756253f5",
 			"key": "massstabAdd",
 			"value": "H0"
 		},
 		{
-			"id": "df9e55d8-36d7-4cfe-9afe-4eed127d3f77",
+			"id": "abc2d56d-af83-4e05-8bda-f417f1882163",
 			"key": "massstabUpdate",
 			"value": "H0"
 		},
 		{
-			"id": "a1f5d0fc-6aa5-4121-b033-8bfaf6008ebf",
+			"id": "e20881ff-0209-4c23-8492-526c384f0f5e",
 			"key": "motorTypAdd",
 			"value": "CSINUS"
 		},
 		{
-			"id": "597d8d64-5d80-407b-a6b5-bda8d6dfcaaa",
+			"id": "3c15fbdb-4958-406e-9c0d-2b400507d783",
 			"key": "motorTypUpdate",
 			"value": "CSINUS"
 		},
 		{
-			"id": "c3256322-5d58-424c-9227-9d58be6a9055",
+			"id": "b361f57f-5da6-4e31-8e22-d6c6f6d1c032",
 			"key": "protokollAdd",
 			"value": "MFX"
 		},
 		{
-			"id": "ad6f5cba-230c-48ca-b653-1a75324814bc",
+			"id": "b67229f9-2841-48d4-be42-c4fbdfdc951c",
 			"key": "protokollUpdate",
 			"value": "DELTA"
 		},
 		{
-			"id": "db4df3b8-a85a-4dc0-8d90-ffd2f09fc9ae",
+			"id": "71c3e118-2ff5-4023-a3aa-7ad217ad541b",
 			"key": "sondermodellAdd",
 			"value": "MM"
 		},
 		{
-			"id": "872a4d08-f6a5-426b-9f24-5a3107356e4b",
+			"id": "c53be734-33ca-4d50-ac9d-eaad4aba0046",
 			"key": "sondermodellUpdate",
 			"value": "MM"
 		},
 		{
-			"id": "07058d7e-57c8-481a-af56-416f1807eff1",
+			"id": "798ad8bc-6ae3-4b87-baee-41f5cc48f508",
 			"key": "spurweiteAdd",
 			"value": "H0"
 		},
 		{
-			"id": "f7e113c0-b62e-4efb-97b6-bdd636d76041",
+			"id": "c45575a8-7d13-4d22-bbe7-7946ad739cf7",
 			"key": "spurweiteUpdate",
 			"value": "H0"
 		},
 		{
-			"id": "018fcf01-afaa-40ce-aec0-94afdf743dce",
+			"id": "ffe8cec1-f71c-49df-805f-4068f567ebce",
 			"key": "steckerAdd",
 			"value": "NEM651"
 		},
 		{
-			"id": "dcb1e8ae-30c2-4f3f-a3f4-d0ef73f4349c",
+			"id": "2d6740d4-2c54-454e-a2b8-7c206b97904e",
 			"key": "steckerUpdate",
 			"value": "NEM652"
 		},
 		{
-			"id": "99cd9137-9332-456b-8c7b-b1f12870c5a2",
+			"id": "f785f2d5-6669-4983-8c0b-198961292888",
 			"key": "steuerungAdd",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "0e51dfa5-afc3-4287-9c06-1e34151d13bd",
+			"id": "f6e166f1-de0c-4ec9-87b1-f73bbfbec5d9",
 			"key": "steuerungUpdate",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "19460319-2c91-4674-9ca6-605ebc5b705c",
+			"id": "47618bb3-d664-4a0a-a763-1a7c513b664c",
+			"key": "teilHerstellerAdd",
+			"value": "MARKLIN"
+		},
+		{
+			"id": "93ed4f9e-be08-4edc-85c6-9fd76ee178da",
+			"key": "teilBestellNrAdd",
+			"value": "600300"
+		},
+		{
+			"id": "4e29c12e-ee88-4075-9bc5-f584258f2ac6",
+			"key": "teilKategorieAdd",
+			"value": "ERSATZTEIL"
+		},
+		{
+			"id": "b59ec304-0238-4f0d-a8ee-abafd62434fb",
+			"key": "teilUnterKategorieAdd",
+			"value": "BURSTEN"
+		},
+		{
+			"id": "fc8d59f4-b088-4f31-9ad4-d9db7afb3db1",
 			"key": "unterKategorieAdd",
 			"value": "DAMPF"
 		},
 		{
-			"id": "cf99a082-143f-444b-96d5-93cfea9295a2",
+			"id": "3a5e0d34-2868-4815-acd1-1c406260501c",
 			"key": "unterKategorieUpdate",
 			"value": "HECKEN"
 		},
 		{
-			"id": "794b6ce0-2c36-46f2-bee3-9028062445cb",
+			"id": "95c7977f-8ab2-4e8e-ad52-cb5f3b813f91",
+			"key": "teilBezeichnungAdd",
+			"value": "Bürsten"
+		},
+		{
+			"id": "b0258e41-8598-4f15-acb5-6cdd915beb77",
 			"key": "vorbildAdd",
 			"value": "HECKEN"
 		},
 		{
-			"id": "b7fa93b4-9cb6-4c16-a5b1-0f8aa5aae8ba",
+			"id": "df1baae5-08ea-4d30-8818-3353283b4b0e",
 			"key": "vorbildUpdate",
 			"value": "HECKEN"
 		},
 		{
-			"id": "4ef36f04-998e-4018-a492-6cc4bf53c64a",
+			"id": "39763a6e-0d92-41fa-aaa1-f356fc065067",
 			"key": "zugAdd",
 			"value": "BAVARIA"
 		},
 		{
-			"id": "ba1d5c2a-a8dd-4b4c-95bc-e35acdcbbf16",
+			"id": "97688eec-c8f3-4d19-b11f-6dbc5103998a",
 			"key": "zugUpdate",
 			"value": "BAVARIA"
 		},
 		{
-			"id": "ec7dff0d-cb40-442c-ac66-a4377710d60c",
+			"id": "37fc3657-4ea9-430d-ba1a-d24b0cd6ec70",
 			"key": "zugTypAdd",
 			"value": "TEE"
 		},
 		{
-			"id": "d34bf720-bad9-4807-b84f-42667feaf048",
+			"id": "eff4c0a4-72ec-46e4-861b-b4ef6eef562f",
 			"key": "zugTypUpdate",
 			"value": "TEE"
 		},
 		{
-			"id": "d5f39c41-4f04-4cb8-b500-fc46bc9bc5f6",
+			"id": "c582dd80-9619-4c0a-b74a-4f54d2a1ead5",
 			"key": "imageFile",
 			"value": "3000.jpg"
 		},
 		{
-			"id": "1371f8fe-514e-4268-83d5-86fc67b0301c",
+			"id": "69f939f6-71be-43a7-93c5-f78d5970df31",
 			"key": "anleitungFile",
 			"value": "3000_betrieb.pdf"
 		},
 		{
-			"id": "acf20367-a70c-46e5-8547-e17620cc1f44",
+			"id": "996759e7-b1ba-4eeb-8ec2-a9dd12d7d281",
 			"key": "explosionszeichnungFile",
 			"value": "3000_explo.pdf"
+		},
+		{
+			"id": "1327d1a1-039c-4120-9587-dd8213e1a5f0",
+			"key": "xlFile",
+			"value": "3000.jpg"
 		}
 	],
 	"protocolProfileBehavior": {}
