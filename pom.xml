@@ -64,6 +64,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <app.main.class>com.linepro.modellbahn.ModellbahnApplication</app.main.class>
+        <start-class>${app.main.class}</start-class>
 
         <javac.version>1.8</javac.version>
         <maven.compile.source>${javac.version}</maven.compile.source>
@@ -466,12 +467,13 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
-
+        <!--
         <dependency>
             <groupId>javax.interceptor</groupId>
             <artifactId>javax.interceptor-api</artifactId>
             <version>1.2</version>
         </dependency>
+        -->
     </dependencies>
 
     <dependencyManagement>
@@ -489,9 +491,17 @@
     <build>
         <resources>
             <resource>
-                <directory>db/migration</directory>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>**/*.sql</exclude>
+                </excludes>
+            </resource>
+
+            <resource>
+                <directory>src/main/resources/db/migration</directory>
+                <targetPath>db/migration</targetPath>
                 <includes>
-                    <include>**/*.sql</include>
+                    <include>*.sql</include>
                 </includes>
             </resource>
         </resources>
@@ -553,6 +563,9 @@
                         <goals>
                             <goal>generate</goal>
                         </goals>
+                        <configuration>
+                            <skip>${maven.test.skip.exec}</skip>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -584,6 +597,7 @@
             </snapshots>
         </repository>
     </repositories>
+
     <pluginRepositories>
         <pluginRepository>
             <id>spring-milestones</id>

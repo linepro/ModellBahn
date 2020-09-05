@@ -30,7 +30,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.model.enums.DecoderStatus;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.persistence.util.DecoderId;
 import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.validation.Fahrstufe;
 
@@ -185,7 +184,6 @@ import lombok.experimental.SuperBuilder;
 @Setter
 public class Decoder extends ItemImpl implements Comparable<Decoder> {
 
-    @DecoderId
     @Column(name=DBNames.DECODER_ID, unique=true, length=6, nullable = false, updatable = false)
     @Pattern(regexp = "^[A-Z0-9]+$", message = "{com.linepro.modellbahn.validator.constraints.decoderId.invalid}")
     private String decoderId;

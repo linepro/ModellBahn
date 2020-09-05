@@ -39,7 +39,6 @@ public class UniqueValidator implements ConstraintValidator<Unique, Item>, Appli
 
     private static ApplicationContext applicationContext;
 
-
     @Override
     public void setApplicationContext(ApplicationContext ac) throws BeansException {
         applicationContext = ac;

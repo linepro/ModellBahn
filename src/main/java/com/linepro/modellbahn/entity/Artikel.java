@@ -38,7 +38,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.persistence.util.ArtikelId;
 import com.linepro.modellbahn.persistence.util.PathConverter;
 import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.validation.Currency;
@@ -358,7 +357,6 @@ import lombok.experimental.SuperBuilder;
 public class Artikel extends ItemImpl implements Comparable<Artikel> {
 
     /** The abbildung. */
-    @ArtikelId
     @Column(name = DBNames.ARTIKEL_ID, length = 6, nullable = false, updatable = false)
     @Pattern(regexp = "^[A-Z0-9]+$", message = "{com.linepro.modellbahn.validator.constraints.artikelId.invalid}")
     private String artikelId;

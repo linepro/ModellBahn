@@ -7,12 +7,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import com.linepro.modellbahn.persistence.util.AssetIdGenerator;
 import com.linepro.modellbahn.repository.base.RepositoryFactoryBean;
 import com.linepro.modellbahn.validation.UniqueValidator;
 
 @EnableJpaRepositories(basePackages = "com.linepro.modellbahn.repository", repositoryImplementationPostfix = "Impl", repositoryFactoryBeanClass = RepositoryFactoryBean.class) 
 @EntityScan( basePackages = {"com.linepro.modellbahn.entity"} )
 @Configuration(PREFIX + "Persistence")
-@Import({UniqueValidator.class})
+@Import({
+    AssetIdGenerator.class,
+    UniqueValidator.class})
 public class Persistence {
 }

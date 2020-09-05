@@ -31,6 +31,7 @@ import com.linepro.modellbahn.model.DecoderCvModel;
 import com.linepro.modellbahn.model.DecoderFunktionModel;
 import com.linepro.modellbahn.model.DecoderModel;
 import com.linepro.modellbahn.model.enums.DecoderStatus;
+import com.linepro.modellbahn.persistence.util.AssetIdGenerator;
 import com.linepro.modellbahn.repository.DecoderAdressRepository;
 import com.linepro.modellbahn.repository.DecoderCvRepository;
 import com.linepro.modellbahn.repository.DecoderFunktionRepository;
@@ -55,10 +56,12 @@ public class DecoderService extends ItemServiceImpl<DecoderModel,Decoder> implem
     private final DecoderFunktionRepository funktionRepository;
     private final DecoderFunktionMutator funktionMutator;
 
+    private final AssetIdGenerator assetIdGenerator;
+
     @Autowired
     public DecoderService(DecoderRepository repository, DecoderTypRepository typRepository, DecoderModelMutator decoderModelMutator, DecoderMutator decoderMutator,
                     DecoderAdressRepository adressRepository, DecoderAdressMutator adressMutator, DecoderCvRepository cvRepository, DecoderCvMutator cvMutator,
-                    DecoderFunktionRepository funktionRepository, DecoderFunktionMutator funktionMutator) {
+                    DecoderFunktionRepository funktionRepository, DecoderFunktionMutator funktionMutator, AssetIdGenerator assetIdGenerator) {
         super(repository, decoderModelMutator, decoderMutator);
         this.repository = repository;
 
@@ -72,6 +75,8 @@ public class DecoderService extends ItemServiceImpl<DecoderModel,Decoder> implem
 
         this.funktionRepository = funktionRepository;
         this.funktionMutator = funktionMutator;
+
+        this.assetIdGenerator = assetIdGenerator;
     }
 
     @Transactional
@@ -82,13 +87,14 @@ public class DecoderService extends ItemServiceImpl<DecoderModel,Decoder> implem
             DecoderTyp decoderTyp = found.get();
 
             Decoder initial = new Decoder();
+            initial.setDecoderId(assetIdGenerator.getNextAssetId());
             initial.setDecoderTyp(decoderTyp);
             initial.setBezeichnung(decoderTyp.getBezeichnung());
             initial.setFahrstufe(decoderTyp.getFahrstufe());
             initial.setProtokoll(decoderTyp.getProtokoll());
             initial.setStatus(DecoderStatus.FREI);
             initial.setDeleted(false);
-            
+
             final Decoder decoder = repository.saveAndFlush(initial);
 
             decoderTyp.getAdressen()
@@ -96,6 +102,7 @@ public class DecoderService extends ItemServiceImpl<DecoderModel,Decoder> implem
                             DecoderAdress.builder()
                                          .typ(a)
                                          .adress(a.getAdress())
+                                         .deleted(false)
                                          .build())
                             );
   
@@ -104,6 +111,7 @@ public class DecoderService extends ItemServiceImpl<DecoderModel,Decoder> implem
                             DecoderCv.builder()
                                      .cv(c)
                                      .wert(c.getWerkseinstellung())
+                                     .deleted(false)
                                      .build())
                             );
 
@@ -111,9 +119,12 @@ public class DecoderService extends ItemServiceImpl<DecoderModel,Decoder> implem
                       .forEach(f -> decoder.addFunktion(
                             DecoderFunktion.builder()
                                            .funktion(f)
+                                           .bezeichnung(f.getBezeichnung())
+                                           .deleted(false)
                                            .build())
                             );
-            
+
+            return Optional.of(entityMutator.convert(repository.saveAndFlush(decoder)));
         }
 
         return Optional.empty();

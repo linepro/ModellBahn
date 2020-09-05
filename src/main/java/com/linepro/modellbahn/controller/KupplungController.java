@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.controller;
 
-import static org.springframework.http.ResponseEntity.of;
-
 import java.util.Optional;
 
 import javax.ws.rs.core.MediaType;

@@ -28,6 +28,7 @@ import com.linepro.modellbahn.entity.Artikel;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.AnderungModel;
 import com.linepro.modellbahn.model.ArtikelModel;
+import com.linepro.modellbahn.persistence.util.AssetIdGenerator;
 import com.linepro.modellbahn.repository.AnderungRepository;
 import com.linepro.modellbahn.repository.ArtikelRepository;
 import com.linepro.modellbahn.service.ItemService;
@@ -46,9 +47,11 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, Artikel> imple
     
     private final AnderungModelMutator anderungModelMutator;
 
+    private final AssetIdGenerator assetIdGenerator;
+
     @Autowired
     public ArtikelService(ArtikelRepository repository, ArtikelModelMutator modelMutator, ArtikelMutator entityMutator, FileService fileService,
-                    AnderungRepository anderungRepository, AnderungMutator anderungMutator, AnderungModelMutator anderungModelMutator) {
+                    AnderungRepository anderungRepository, AnderungMutator anderungMutator, AnderungModelMutator anderungModelMutator, AssetIdGenerator assetIdGenerator) {
         super(repository, modelMutator, entityMutator);
         
         this.repository = repository;
@@ -57,6 +60,8 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, Artikel> imple
         this.anderungRepository = anderungRepository;
         this.anderungMutator = anderungMutator;
         this.anderungModelMutator = anderungModelMutator;
+
+        this.assetIdGenerator = assetIdGenerator;
     }
 
     public Optional<ArtikelModel> get(String artikelId) {
@@ -66,6 +71,14 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, Artikel> imple
     @Override
     protected Page<Artikel> findAll(Optional<ArtikelModel> model, Pageable pageRequest) {
         return repository.findAll(new ArtikelCriterion(model), pageRequest);
+    }
+
+    @Override
+    public ArtikelModel add(ArtikelModel model) {
+        Artikel artikel = modelMutator.convert(model);
+        artikel.setArtikelId(assetIdGenerator.getNextAssetId());
+        artikel.setDeleted(false);
+        return entityMutator.convert(repository.saveAndFlush(artikel));
     }
 
     public Optional<ArtikelModel> update(String artikelId, ArtikelModel artikelModel) {
