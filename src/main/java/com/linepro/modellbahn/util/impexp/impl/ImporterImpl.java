@@ -4,10 +4,9 @@ import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.ParameterizedType;
 
-import javax.transaction.Transactional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.MappingIterator;
