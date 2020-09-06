@@ -5,11 +5,9 @@ import static com.linepro.modellbahn.controller.impl.ApiNames.BESTELL_NR;
 import static com.linepro.modellbahn.controller.impl.ApiNames.FUNKTION;
 import static com.linepro.modellbahn.controller.impl.ApiNames.HERSTELLER;
 import static com.linepro.modellbahn.controller.impl.ApiNames.REIHE;
-import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_DECODER_TYP_FUNKTION;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_DECODER_TYP_FUNKTION;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_DECODER_TYP;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_DECODER_TYP_FUNKTION;
-import static com.linepro.modellbahn.controller.impl.ApiRels.ADD;
 import static com.linepro.modellbahn.controller.impl.ApiRels.DELETE;
 import static com.linepro.modellbahn.controller.impl.ApiRels.PARENT;
 import static com.linepro.modellbahn.controller.impl.ApiRels.UPDATE;
@@ -44,7 +42,6 @@ public class DecoderTypFunktionModelProcessor extends ModelProcessorImpl<Decoder
     public DecoderTypFunktionModelProcessor() {
         super(
             new LinkTemplateImpl(PARENT, GET_DECODER_TYP, EXTRACTOR),
-            new LinkTemplateImpl(ADD, ADD_DECODER_TYP_FUNKTION, EXTRACTOR),
             new LinkTemplateImpl(UPDATE, UPDATE_DECODER_TYP_FUNKTION, EXTRACTOR),
             new LinkTemplateImpl(DELETE, DELETE_DECODER_TYP_FUNKTION, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted()))
             );

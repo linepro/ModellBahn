@@ -27,7 +27,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 
@@ -369,7 +369,7 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
 
     /** The Kaufdatum. */
     @Column(name = DBNames.KAUFDATUM)
-    @Past(message = "{com.linepro.modellbahn.validator.constraints.kaufdatum.past}")
+    @PastOrPresent(message = "{com.linepro.modellbahn.validator.constraints.kaufdatum.past}")
     private LocalDate kaufdatum;
 
     /** The wahrung. */

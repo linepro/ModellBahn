@@ -1,25 +1,15 @@
 package com.linepro.modellbahn.hateoas;
 
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
-import static com.linepro.modellbahn.controller.impl.ApiNames.ARTIKEL;
-import static com.linepro.modellbahn.controller.impl.ApiNames.ARTIKEL_ID;
-import static com.linepro.modellbahn.controller.impl.ApiNames.BAHNVERWALTUNG;
-import static com.linepro.modellbahn.controller.impl.ApiNames.GATTUNG;
 import static com.linepro.modellbahn.controller.impl.ApiNames.NAMEN;
 import static com.linepro.modellbahn.controller.impl.ApiNames.POSITION;
-import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_CONSIST;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_CONSIST;
-import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_ARTIKEL;
-import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_BAHNVERWALTUNG;
-import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_GATTUNG;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_ZUG;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_CONSIST;
-import static com.linepro.modellbahn.controller.impl.ApiRels.ADD;
 import static com.linepro.modellbahn.controller.impl.ApiRels.DELETE;
 import static com.linepro.modellbahn.controller.impl.ApiRels.PARENT;
 import static com.linepro.modellbahn.controller.impl.ApiRels.UPDATE;
 
-import java.util.Collections;
 import java.util.HashMap;
 
 import org.apache.commons.collections4.MapUtils;
@@ -48,15 +38,8 @@ public class ZugConsistModelProcessor extends ModelProcessorImpl<ZugConsistModel
     public ZugConsistModelProcessor() {
         super(
             new LinkTemplateImpl(PARENT, GET_ZUG, EXTRACTOR),
-            new LinkTemplateImpl(ADD, ADD_CONSIST, EXTRACTOR),
             new LinkTemplateImpl(UPDATE, UPDATE_CONSIST, EXTRACTOR),
-            new LinkTemplateImpl(DELETE, DELETE_CONSIST, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted())),
-            new LinkTemplateImpl(BAHNVERWALTUNG, GET_BAHNVERWALTUNG, 
-                    (m) -> Collections.singletonMap(NAMEN, ((ZugConsistModel) m).getBahnverwaltung())),
-            new LinkTemplateImpl(GATTUNG, GET_GATTUNG,  
-                    (m) -> Collections.singletonMap(NAMEN, ((ZugConsistModel) m).getGattung())),
-            new LinkTemplateImpl(ARTIKEL, GET_ARTIKEL,  
-                            (m) -> Collections.singletonMap(ARTIKEL_ID, ((ZugConsistModel) m).getArtikelId()))
+            new LinkTemplateImpl(DELETE, DELETE_CONSIST, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted()))
             );
     }
 }

@@ -164,7 +164,7 @@ public class Vorbild extends NamedWithAbbildungImpl {
 
     /** The bauzeit. */
     @Column(name = DBNames.BAUZEIT)
-    @Past(message = "{com.linepro.modellbahn.validator.constraints.kaufdatum.past}")
+    @Past(message = "{com.linepro.modellbahn.validator.constraints.bauzeit.past}")
     private LocalDate bauzeit;
 
     /** The anzahl. */

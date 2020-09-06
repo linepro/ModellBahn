@@ -875,7 +875,7 @@
 									"    pm.expect(a._links.update[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.delete[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.search[0].href).to.eql(root);\r",
-									"    pm.expect(a._links.image[0].href).to.eql(self+\"/abbildung\");\r",
+									"    pm.expect(a._links.abbildung[0].href).to.eql(self+\"/abbildung\");\r",
 									"});\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(root);\r",
 									"pm.expect(jsonData.page.size).to.eql(jsonData._embedded.aufbau.length);\r",
@@ -939,7 +939,7 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -1005,7 +1005,7 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -1079,7 +1079,7 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -1146,7 +1146,7 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -1194,7 +1194,7 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -2462,7 +2462,7 @@
 									"    pm.expect(a._links.update[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.delete[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.search[0].href).to.eql(root);\r",
-									"    pm.expect(a._links.image[0].href).to.eql(self+\"/abbildung\");\r",
+									"    pm.expect(a._links.abbildung[0].href).to.eql(self+\"/abbildung\");\r",
 									"});\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(root);\r",
 									"pm.expect(jsonData.page.size).to.eql(jsonData._embedded.kupplung.length);\r",
@@ -2526,7 +2526,7 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -2592,7 +2592,7 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -2666,7 +2666,7 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -2733,7 +2733,7 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -2781,7 +2781,7 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -2873,7 +2873,7 @@
 									"    pm.expect(a._links.update[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.delete[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.search[0].href).to.eql(root);\r",
-									"    pm.expect(a._links.image[0].href).to.eql(self+\"/abbildung\");\r",
+									"    pm.expect(a._links.abbildung[0].href).to.eql(self+\"/abbildung\");\r",
 									"});\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(root);\r",
 									"pm.expect(jsonData.page.size).to.eql(jsonData._embedded.licht.length);\r",
@@ -2937,7 +2937,7 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -3003,7 +3003,7 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -3077,7 +3077,7 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -3144,7 +3144,7 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -3192,7 +3192,7 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -5304,11 +5304,11 @@
 									"    pm.expect(a.unterKategorien).to.eql(undefined);\r",
 									"    pm.expect(a.deleted).to.be.false;\r",
 									"    pm.expect(a._links.add[0].href).to.eql(root);\r",
-									"    pm.expect(a._links.add[1].href).to.eql(self+\"/unterKategorien\");\r",
 									"    pm.expect(a._links.self[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.update[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.delete[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.search[0].href).to.eql(root);\r",
+									"    pm.expect(a._links.unterKategorie[0].href).to.eql(self+\"/unterKategorien\");\r",
 									"});\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(root);\r",
 									"pm.expect(jsonData.page.size).to.eql(jsonData._embedded.kategorie.length);\r",
@@ -5361,17 +5361,17 @@
 									"        pm.expect(u.name).to.exist;\r",
 									"        pm.expect(u.bezeichnung).to.exist;\r",
 									"        pm.expect(u.deleted).to.be.false;\r",
-									"        pm.expect(u._links.add[0].href).to.eql(self+\"/unterKategorien\");\r",
+									"        pm.expect(u._links.parent[0].href).to.eql(self);\r",
 									"        pm.expect(u._links.update[0].href).to.eql(self+\"/unterKategorien/\"+u.name);\r",
 									"        pm.expect(u._links.delete[0].href).to.eql(self+\"/unterKategorien/\"+u.name);\r",
 									"    });\r",
 									"    pm.expect(k.deleted).to.be.false;\r",
 									"    pm.expect(k._links.add[0].href).to.eql(root);\r",
-									"    pm.expect(k._links.add[1].href).to.eql(self+\"/unterKategorien\");\r",
 									"    pm.expect(k._links.self[0].href).to.eql(self);\r",
 									"    pm.expect(k._links.update[0].href).to.eql(self);\r",
 									"    pm.expect(k._links.delete[0].href).to.eql(self);\r",
 									"    pm.expect(k._links.search[0].href).to.eql(root);\r",
+									"    pm.expect(k._links.unterKategorie[0].href).to.eql(self+\"/unterKategorien\");\r",
 									"});\r",
 									"root = pm.variables.replaceIn(\"{{api}}/unterKategorien?kategorien=AUSGESTALTUNG,BELEUCHTUNG\");\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(root);\r",
@@ -5438,11 +5438,11 @@
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData.unterKategorie).to.eql(undefined);\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.add[1].href).to.eql(self+\"/unterKategorien\");\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.unterKategorie[0].href).to.eql(self+\"/unterKategorien\");"
 								],
 								"type": "text/javascript"
 							}
@@ -5513,7 +5513,6 @@
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"unterAdd\"));\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"unterBezeichnung\"));\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
-									"pm.expect(jsonData._links.add[0].href).to.eql(root+\"/unterKategorien\");\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.parent[0].href).to.eql(root);"
@@ -5588,7 +5587,6 @@
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"unterAdd\"));\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"unterBezeichnung\"));\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
-									"pm.expect(jsonData._links.add[0].href).to.eql(root+\"/unterKategorien\");\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.parent[0].href).to.eql(root);"
@@ -5669,16 +5667,15 @@
 									"pm.expect(jsonData.unterKategorien[0].name).to.eql(pm.variables.get(\"unterAdd\"));\r",
 									"pm.expect(jsonData.unterKategorien[0].bezeichnung).to.eql(pm.variables.get(\"unterBezeichnung\"));\r",
 									"pm.expect(jsonData.unterKategorien[0].deleted).to.be.false;\r",
-									"pm.expect(jsonData.unterKategorien[0]._links.add[0].href).to.eql(self+\"/unterKategorien\");\r",
 									"pm.expect(jsonData.unterKategorien[0]._links.update[0].href).to.eql(child);\r",
 									"pm.expect(jsonData.unterKategorien[0]._links.delete[0].href).to.eql(child);\r",
 									"pm.expect(jsonData.unterKategorien[0]._links.parent[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.add[1].href).to.eql(self+\"/unterKategorien\");\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.unterKategorie[0].href).to.eql(self+\"/unterKategorien\");"
 								],
 								"type": "text/javascript"
 							}
@@ -5744,16 +5741,15 @@
 									"pm.expect(jsonData.unterKategorien[0].name).to.eql(pm.variables.get(\"unterAdd\"));\r",
 									"pm.expect(jsonData.unterKategorien[0].bezeichnung).to.eql(pm.variables.get(\"unterBezeichnung\"));\r",
 									"pm.expect(jsonData.unterKategorien[0].deleted).to.be.false;\r",
-									"pm.expect(jsonData.unterKategorien[0]._links.add[0].href).to.eql(self+\"/unterKategorien\");\r",
 									"pm.expect(jsonData.unterKategorien[0]._links.update[0].href).to.eql(child);\r",
 									"pm.expect(jsonData.unterKategorien[0]._links.delete[0].href).to.eql(child);\r",
 									"pm.expect(jsonData.unterKategorien[0]._links.parent[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.add[1].href).to.eql(self+\"/unterKategorien\");\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.unterKategorie[0].href).to.eql(self+\"/unterKategorien\");"
 								],
 								"type": "text/javascript"
 							}
@@ -6563,14 +6559,14 @@
 									"    pm.expect(a.stecker).to.exist;\r",
 									"    pm.expect(a.deleted).to.be.false;\r",
 									"    pm.expect(a._links.add[0].href).to.eql(root);\r",
-									"    pm.expect(a._links.add[1].href).to.eql(self+\"/adress\");\r",
-									"    pm.expect(a._links.add[2].href).to.eql(self+\"/cv\");\r",
-									"    pm.expect(a._links.add[3].href).to.eql(self+\"/funktion\");\r",
 									"    pm.expect(a._links.self[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.update[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.delete[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.search[0].href).to.eql(root);\r",
-									"    pm.expect(a._links.instructions[0].href).to.eql(self+\"/anleitungen\");\r",
+									"    pm.expect(a._links.anleitung[0].href).to.eql(self+\"/anleitungen\");\r",
+									"    pm.expect(a._links.adress[0].href).to.eql(self+\"/adress\");\r",
+									"    pm.expect(a._links.cv[0].href).to.eql(self+\"/cv\");\r",
+									"    pm.expect(a._links.funktion[0].href).to.eql(self+\"/funktion\");\r",
 									"});\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(root);\r",
 									"pm.expect(jsonData.page.size).to.eql(jsonData._embedded.decoderTyp.length);\r",
@@ -6648,14 +6644,14 @@
 									"pm.expect(jsonData.funktionen).to.be.empty;\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.add[1].href).to.eql(self+\"/adress\");\r",
-									"pm.expect(jsonData._links.add[2].href).to.eql(self+\"/cv\");\r",
-									"pm.expect(jsonData._links.add[3].href).to.eql(self+\"/funktion\");\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.instructions[0].href).to.eql(self+\"/anleitungen\");"
+									"pm.expect(jsonData._links.anleitung[0].href).to.eql(self+\"/anleitungen\");\r",
+									"pm.expect(jsonData._links.adress[0].href).to.eql(self+\"/adress\");\r",
+									"pm.expect(jsonData._links.cv[0].href).to.eql(self+\"/cv\");\r",
+									"pm.expect(jsonData._links.funktion[0].href).to.eql(self+\"/funktion\");"
 								],
 								"type": "text/javascript"
 							}
@@ -6727,14 +6723,14 @@
 									"pm.expect(jsonData.funktionen).to.be.empty;\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.add[1].href).to.eql(self+\"/adress\");\r",
-									"pm.expect(jsonData._links.add[2].href).to.eql(self+\"/cv\");\r",
-									"pm.expect(jsonData._links.add[3].href).to.eql(self+\"/funktion\");\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.instructions[0].href).to.eql(self+\"/anleitungen\");"
+									"pm.expect(jsonData._links.anleitung[0].href).to.eql(self+\"/anleitungen\");\r",
+									"pm.expect(jsonData._links.adress[0].href).to.eql(self+\"/adress\");\r",
+									"pm.expect(jsonData._links.cv[0].href).to.eql(self+\"/cv\");\r",
+									"pm.expect(jsonData._links.funktion[0].href).to.eql(self+\"/funktion\");"
 								],
 								"type": "text/javascript"
 							}
@@ -6813,7 +6809,6 @@
 									"pm.expect(jsonData.werkseinstellung).to.eql(pm.variables.get(\"adress\"));\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.parent[0].href).to.eql(parent);\r",
-									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);"
 								],
@@ -6897,7 +6892,6 @@
 									"pm.expect(jsonData.werkseinstellung).to.eql(pm.variables.get(\"adress\"));\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.parent[0].href).to.eql(parent);\r",
-									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);"
 								],
@@ -6983,7 +6977,6 @@
 									"pm.expect(jsonData.werkseinstellung).to.eql(pm.variables.get(\"cvValue\"));\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.parent[0].href).to.eql(parent);\r",
-									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);"
 								],
@@ -7067,7 +7060,6 @@
 									"pm.expect(jsonData.werkseinstellung).to.eql(pm.variables.get(\"cvValue\"));\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.parent[0].href).to.eql(parent);\r",
-									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);"
 								],
@@ -7151,7 +7143,6 @@
 									"pm.expect(jsonData.programmable).to.eql(pm.variables.get(\"fnProgrammable\"));\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.parent[0].href).to.eql(parent);\r",
-									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);"
 								],
@@ -7234,7 +7225,6 @@
 									"pm.expect(jsonData.programmable).to.eql(pm.variables.get(\"fnProgrammable\"));\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.parent[0].href).to.eql(parent);\r",
-									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);"
 								],
@@ -7340,7 +7330,6 @@
 									"pm.expect(jsonData.adressen[0].werkseinstellung).to.eql(pm.variables.get(\"adress\"));\r",
 									"pm.expect(jsonData.adressen[0].deleted).to.be.false;\r",
 									"pm.expect(jsonData.adressen[0]._links.parent[0].href).to.eql(self);\r",
-									"pm.expect(jsonData.adressen[0]._links.add[0].href).to.eql(adressRoot);\r",
 									"pm.expect(jsonData.adressen[0]._links.update[0].href).to.eql(adressUrl);\r",
 									"pm.expect(jsonData.adressen[0]._links.delete[0].href).to.eql(adressUrl);\r",
 									"pm.expect(jsonData.cvs.length).to.eql(1);\r",
@@ -7353,7 +7342,6 @@
 									"pm.expect(jsonData.cvs[0].werkseinstellung).to.eql(pm.variables.get(\"cvValue\"));\r",
 									"pm.expect(jsonData.cvs[0].deleted).to.be.false;\r",
 									"pm.expect(jsonData.cvs[0]._links.parent[0].href).to.eql(self);\r",
-									"pm.expect(jsonData.cvs[0]._links.add[0].href).to.eql(cvRoot);\r",
 									"pm.expect(jsonData.cvs[0]._links.update[0].href).to.eql(cvUrl);\r",
 									"pm.expect(jsonData.cvs[0]._links.delete[0].href).to.eql(cvUrl);\r",
 									"pm.expect(jsonData.funktionen.length).to.eql(1);\r",
@@ -7365,19 +7353,18 @@
 									"pm.expect(jsonData.funktionen[0].programmable).to.eql(pm.variables.get(\"fnProgrammable\"));\r",
 									"pm.expect(jsonData.funktionen[0].deleted).to.be.false;\r",
 									"pm.expect(jsonData.funktionen[0]._links.parent[0].href).to.eql(self);\r",
-									"pm.expect(jsonData.funktionen[0]._links.add[0].href).to.eql(funktionRoot);\r",
 									"pm.expect(jsonData.funktionen[0]._links.update[0].href).to.eql(funktionUrl);\r",
 									"pm.expect(jsonData.funktionen[0]._links.delete[0].href).to.eql(funktionUrl);\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.add[1].href).to.eql(self+\"/adress\");\r",
-									"pm.expect(jsonData._links.add[2].href).to.eql(self+\"/cv\");\r",
-									"pm.expect(jsonData._links.add[3].href).to.eql(self+\"/funktion\");\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.instructions[0].href).to.eql(self+\"/anleitungen\");"
+									"pm.expect(jsonData._links.anleitung[0].href).to.eql(self+\"/anleitungen\");\r",
+									"pm.expect(jsonData._links.adress[0].href).to.eql(self+\"/adress\");\r",
+									"pm.expect(jsonData._links.cv[0].href).to.eql(self+\"/cv\");\r",
+									"pm.expect(jsonData._links.funktion[0].href).to.eql(self+\"/funktion\");"
 								],
 								"type": "text/javascript"
 							}
@@ -7462,7 +7449,6 @@
 									"pm.expect(jsonData.adressen[0].werkseinstellung).to.eql(pm.variables.get(\"adress\"));\r",
 									"pm.expect(jsonData.adressen[0].deleted).to.be.false;\r",
 									"pm.expect(jsonData.adressen[0]._links.parent[0].href).to.eql(self);\r",
-									"pm.expect(jsonData.adressen[0]._links.add[0].href).to.eql(adressRoot);\r",
 									"pm.expect(jsonData.adressen[0]._links.update[0].href).to.eql(adressUrl);\r",
 									"pm.expect(jsonData.adressen[0]._links.delete[0].href).to.eql(adressUrl);\r",
 									"pm.expect(jsonData.cvs.length).to.eql(1);\r",
@@ -7475,7 +7461,6 @@
 									"pm.expect(jsonData.cvs[0].werkseinstellung).to.eql(pm.variables.get(\"cvValue\"));\r",
 									"pm.expect(jsonData.cvs[0].deleted).to.be.false;\r",
 									"pm.expect(jsonData.cvs[0]._links.parent[0].href).to.eql(self);\r",
-									"pm.expect(jsonData.cvs[0]._links.add[0].href).to.eql(cvRoot);\r",
 									"pm.expect(jsonData.cvs[0]._links.update[0].href).to.eql(cvUrl);\r",
 									"pm.expect(jsonData.cvs[0]._links.delete[0].href).to.eql(cvUrl);\r",
 									"pm.expect(jsonData.funktionen.length).to.eql(1);\r",
@@ -7487,19 +7472,18 @@
 									"pm.expect(jsonData.funktionen[0].programmable).to.eql(pm.variables.get(\"fnProgrammable\"));\r",
 									"pm.expect(jsonData.funktionen[0].deleted).to.be.false;\r",
 									"pm.expect(jsonData.funktionen[0]._links.parent[0].href).to.eql(self);\r",
-									"pm.expect(jsonData.funktionen[0]._links.add[0].href).to.eql(funktionRoot);\r",
 									"pm.expect(jsonData.funktionen[0]._links.update[0].href).to.eql(funktionUrl);\r",
 									"pm.expect(jsonData.funktionen[0]._links.delete[0].href).to.eql(funktionUrl);\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.add[1].href).to.eql(self+\"/adress\");\r",
-									"pm.expect(jsonData._links.add[2].href).to.eql(self+\"/cv\");\r",
-									"pm.expect(jsonData._links.add[3].href).to.eql(self+\"/funktion\");\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.instructions[0].href).to.eql(self+\"/anleitungen\");"
+									"pm.expect(jsonData._links.anleitung[0].href).to.eql(self+\"/anleitungen\");\r",
+									"pm.expect(jsonData._links.adress[0].href).to.eql(self+\"/adress\");\r",
+									"pm.expect(jsonData._links.cv[0].href).to.eql(self+\"/cv\");\r",
+									"pm.expect(jsonData._links.funktion[0].href).to.eql(self+\"/funktion\");"
 								],
 								"type": "text/javascript"
 							}
@@ -7566,7 +7550,6 @@
 									"pm.expect(jsonData.adressen[0].werkseinstellung).to.eql(pm.variables.get(\"adress\"));\r",
 									"pm.expect(jsonData.adressen[0].deleted).to.be.false;\r",
 									"pm.expect(jsonData.adressen[0]._links.parent[0].href).to.eql(self);\r",
-									"pm.expect(jsonData.adressen[0]._links.add[0].href).to.eql(adressRoot);\r",
 									"pm.expect(jsonData.adressen[0]._links.update[0].href).to.eql(adressUrl);\r",
 									"pm.expect(jsonData.adressen[0]._links.delete[0].href).to.eql(adressUrl);\r",
 									"pm.expect(jsonData.cvs.length).to.eql(1);\r",
@@ -7579,7 +7562,6 @@
 									"pm.expect(jsonData.cvs[0].werkseinstellung).to.eql(pm.variables.get(\"cvValue\"));\r",
 									"pm.expect(jsonData.cvs[0].deleted).to.be.false;\r",
 									"pm.expect(jsonData.cvs[0]._links.parent[0].href).to.eql(self);\r",
-									"pm.expect(jsonData.cvs[0]._links.add[0].href).to.eql(cvRoot);\r",
 									"pm.expect(jsonData.cvs[0]._links.update[0].href).to.eql(cvUrl);\r",
 									"pm.expect(jsonData.cvs[0]._links.delete[0].href).to.eql(cvUrl);\r",
 									"pm.expect(jsonData.funktionen.length).to.eql(1);\r",
@@ -7591,19 +7573,18 @@
 									"pm.expect(jsonData.funktionen[0].programmable).to.eql(pm.variables.get(\"fnProgrammable\"));\r",
 									"pm.expect(jsonData.funktionen[0].deleted).to.be.false;\r",
 									"pm.expect(jsonData.funktionen[0]._links.parent[0].href).to.eql(self);\r",
-									"pm.expect(jsonData.funktionen[0]._links.add[0].href).to.eql(funktionRoot);\r",
 									"pm.expect(jsonData.funktionen[0]._links.update[0].href).to.eql(funktionUrl);\r",
 									"pm.expect(jsonData.funktionen[0]._links.delete[0].href).to.eql(funktionUrl);\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.add[1].href).to.eql(self+\"/adress\");\r",
-									"pm.expect(jsonData._links.add[2].href).to.eql(self+\"/cv\");\r",
-									"pm.expect(jsonData._links.add[3].href).to.eql(self+\"/funktion\");\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.instructions[0].href).to.eql(self+\"/anleitungen\");"
+									"pm.expect(jsonData._links.anleitung[0].href).to.eql(self+\"/anleitungen\");\r",
+									"pm.expect(jsonData._links.adress[0].href).to.eql(self+\"/adress\");\r",
+									"pm.expect(jsonData._links.cv[0].href).to.eql(self+\"/cv\");\r",
+									"pm.expect(jsonData._links.funktion[0].href).to.eql(self+\"/funktion\");"
 								],
 								"type": "text/javascript"
 							}
@@ -7818,10 +7799,10 @@
 									"    pm.expect(a._links.update[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.delete[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.search[0].href).to.eql(root);\r",
-									"    pm.expect(a._links.image[0].href).to.eql(self + \"/abbildung\");\r",
-									"    pm.expect(a._links.instructions[0].href).to.eql(self + \"/anleitungen\");\r",
-									"    pm.expect(a._links.diagaram[0].href).to.eql(self + \"/explosionszeichnung\");\r",
-									"    pm.expect(a._links.parts[0].href).to.eql(self + \"/teilen\");\r",
+									"    pm.expect(a._links.abbildung[0].href).to.eql(self + \"/abbildung\");\r",
+									"    pm.expect(a._links.anleitung[0].href).to.eql(self + \"/anleitungen\");\r",
+									"    pm.expect(a._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\");\r",
+									"    pm.expect(a._links.teil[0].href).to.eql(self + \"/teilen\");\r",
 									"});\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(root);\r",
 									"pm.expect(jsonData.page.size).to.eql(jsonData._embedded.produkt.length);\r",
@@ -7931,10 +7912,10 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
-									"pm.expect(jsonData._links.instructions[0].href).to.eql(self + \"/anleitungen\");\r",
-									"pm.expect(jsonData._links.diagaram[0].href).to.eql(self + \"/explosionszeichnung\");\r",
-									"pm.expect(jsonData._links.parts[0].href).to.eql(self + \"/teilen\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.anleitung[0].href).to.eql(self + \"/anleitungen\");\r",
+									"pm.expect(jsonData._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\");\r",
+									"pm.expect(jsonData._links.teil[0].href).to.eql(self + \"/teilen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -8024,10 +8005,10 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
-									"pm.expect(jsonData._links.instructions[0].href).to.eql(self + \"/anleitungen\");\r",
-									"pm.expect(jsonData._links.diagaram[0].href).to.eql(self + \"/explosionszeichnung\");\r",
-									"pm.expect(jsonData._links.parts[0].href).to.eql(self + \"/teilen\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.anleitung[0].href).to.eql(self + \"/anleitungen\");\r",
+									"pm.expect(jsonData._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\");\r",
+									"pm.expect(jsonData._links.teil[0].href).to.eql(self + \"/teilen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -8117,10 +8098,10 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
-									"pm.expect(jsonData._links.instructions[0].href).to.eql(self + \"/anleitungen\");\r",
-									"pm.expect(jsonData._links.diagaram[0].href).to.eql(self + \"/explosionszeichnung\");\r",
-									"pm.expect(jsonData._links.parts[0].href).to.eql(self + \"/teilen\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.anleitung[0].href).to.eql(self + \"/anleitungen\");\r",
+									"pm.expect(jsonData._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\");\r",
+									"pm.expect(jsonData._links.teil[0].href).to.eql(self + \"/teilen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -8211,10 +8192,10 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
-									"pm.expect(jsonData._links.instructions[0].href).to.eql(self + \"/anleitungen\");\r",
-									"pm.expect(jsonData._links.diagaram[0].href).to.eql(self + \"/explosionszeichnung\");\r",
-									"pm.expect(jsonData._links.parts[0].href).to.eql(self + \"/teilen\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.anleitung[0].href).to.eql(self + \"/anleitungen\");\r",
+									"pm.expect(jsonData._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\");\r",
+									"pm.expect(jsonData._links.teil[0].href).to.eql(self + \"/teilen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -8295,7 +8276,6 @@
 									"pm.expect(jsonData.anzahl).to.eql(pm.variables.get(\"teilAnzahl\"));\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.parent[0].href).to.eql(parent);\r",
-									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);"
 								],
@@ -8377,7 +8357,6 @@
 									"pm.expect(jsonData.anzahl).to.eql(pm.variables.get(\"teilAnzahl\"));\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.parent[0].href).to.eql(parent);\r",
-									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);"
 								],
@@ -8508,7 +8487,6 @@
 									"pm.expect(jsonData.teilen[0].anzahl).to.eql(pm.variables.get(\"teilAnzahl\"));\r",
 									"pm.expect(jsonData.teilen[0].deleted).to.be.false;\r",
 									"pm.expect(jsonData.teilen[0]._links.parent[0].href).to.eql(self);\r",
-									"pm.expect(jsonData.teilen[0]._links.add[0].href).to.eql(teilRoot);\r",
 									"pm.expect(jsonData.teilen[0]._links.update[0].href).to.eql(teilUrl);\r",
 									"pm.expect(jsonData.teilen[0]._links.delete[0].href).to.eql(teilUrl);\r",
 									"pm.expect(jsonData.abbildung).to.eql(abbildung);\r",
@@ -8518,10 +8496,10 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
-									"pm.expect(jsonData._links.instructions[0].href).to.eql(self + \"/anleitungen\");\r",
-									"pm.expect(jsonData._links.diagaram[0].href).to.eql(self + \"/explosionszeichnung\");\r",
-									"pm.expect(jsonData._links.parts[0].href).to.eql(self + \"/teilen\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.anleitung[0].href).to.eql(self + \"/anleitungen\");\r",
+									"pm.expect(jsonData._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\");\r",
+									"pm.expect(jsonData._links.teil[0].href).to.eql(self + \"/teilen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -8620,7 +8598,6 @@
 									"pm.expect(jsonData.teilen[0].anzahl).to.eql(pm.variables.get(\"teilAnzahl\"));\r",
 									"pm.expect(jsonData.teilen[0].deleted).to.be.false;\r",
 									"pm.expect(jsonData.teilen[0]._links.parent[0].href).to.eql(self);\r",
-									"pm.expect(jsonData.teilen[0]._links.add[0].href).to.eql(teilRoot);\r",
 									"pm.expect(jsonData.teilen[0]._links.update[0].href).to.eql(teilUrl);\r",
 									"pm.expect(jsonData.teilen[0]._links.delete[0].href).to.eql(teilUrl);\r",
 									"pm.expect(jsonData.abbildung).to.eql(abbildung);\r",
@@ -8630,10 +8607,10 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
-									"pm.expect(jsonData._links.instructions[0].href).to.eql(self + \"/anleitungen\");\r",
-									"pm.expect(jsonData._links.diagaram[0].href).to.eql(self + \"/explosionszeichnung\");\r",
-									"pm.expect(jsonData._links.parts[0].href).to.eql(self + \"/teilen\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.anleitung[0].href).to.eql(self + \"/anleitungen\");\r",
+									"pm.expect(jsonData._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\");\r",
+									"pm.expect(jsonData._links.teil[0].href).to.eql(self + \"/teilen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -8749,10 +8726,10 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
-									"pm.expect(jsonData._links.instructions[0].href).to.eql(self + \"/anleitungen\");\r",
-									"pm.expect(jsonData._links.diagaram[0].href).to.eql(self + \"/explosionszeichnung\");\r",
-									"pm.expect(jsonData._links.parts[0].href).to.eql(self + \"/teilen\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.anleitung[0].href).to.eql(self + \"/anleitungen\");\r",
+									"pm.expect(jsonData._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\");\r",
+									"pm.expect(jsonData._links.teil[0].href).to.eql(self + \"/teilen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -8828,10 +8805,10 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
-									"pm.expect(jsonData._links.instructions[0].href).to.eql(self + \"/anleitungen\");\r",
-									"pm.expect(jsonData._links.diagaram[0].href).to.eql(self + \"/explosionszeichnung\");\r",
-									"pm.expect(jsonData._links.parts[0].href).to.eql(self + \"/teilen\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.anleitung[0].href).to.eql(self + \"/anleitungen\");\r",
+									"pm.expect(jsonData._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\");\r",
+									"pm.expect(jsonData._links.teil[0].href).to.eql(self + \"/teilen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -8906,10 +8883,10 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
-									"pm.expect(jsonData._links.instructions[0].href).to.eql(self + \"/anleitungen\");\r",
-									"pm.expect(jsonData._links.diagaram[0].href).to.eql(self + \"/explosionszeichnung\");\r",
-									"pm.expect(jsonData._links.parts[0].href).to.eql(self + \"/teilen\");"
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.anleitung[0].href).to.eql(self + \"/anleitungen\");\r",
+									"pm.expect(jsonData._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\");\r",
+									"pm.expect(jsonData._links.teil[0].href).to.eql(self + \"/teilen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -10609,12 +10586,17 @@
 									"    var self = root + \"/\" + a.artikelId;\r",
 									"    pm.expect(a.artikelId).to.exist;\r",
 									"    pm.expect(a.bezeichnung).to.exist;\r",
+									"    pm.expect(a.kategorie).to.exist;\r",
+									"    pm.expect(a.unterKategorie).to.exist;\r",
+									"    pm.expect(a.anderungen).to.eql(undefined);\r",
 									"    pm.expect(a.deleted).to.be.false;\r",
 									"    pm.expect(a._links.add[0].href).to.eql(root);\r",
 									"    pm.expect(a._links.self[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.update[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.delete[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.search[0].href).to.eql(root);\r",
+									"    pm.expect(a._links.abbildung[0].href).to.eql(self + \"/abbildung\");\r",
+									"    pm.expect(a._links.anderung[0].href).to.eql(self + \"/anderungen\");\r",
 									"});\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(root);\r",
 									"pm.expect(jsonData.page.size).to.eql(jsonData._embedded.artikel.length);\r",
@@ -10656,7 +10638,7 @@
 								"id": "02fcffc1-8883-4dd6-969b-5938d817cc80",
 								"exec": [
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
-									"pm.environment.set(\"bestellNr\", pm.variables.get(\"bestellNr\"));\r",
+									"pm.environment.set(\"bestellNr\", pm.variables.get(\"bestellNrAdd\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"kategorie\", pm.variables.get(\"kategorieAdd\"));\r",
 									"pm.environment.set(\"unterKategorie\", pm.variables.get(\"unterKategorieAdd\"));\r",
@@ -10733,7 +10715,9 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.anderung[0].href).to.eql(self + \"/anderungen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -10828,7 +10812,9 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.anderung[0].href).to.eql(self + \"/anderungen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -11129,7 +11115,9 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.anderung[0].href).to.eql(self + \"/anderungen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -11230,7 +11218,9 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.anderung[0].href).to.eql(self + \"/anderungen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -11304,7 +11294,7 @@
 									"pm.expect(jsonData.anderung[0].anderungId).to.eql(pm.variables.get(\"anderungId\"));\r",
 									"pm.expect(jsonData.anderung[0].anderungsDatum).to.eql(pm.variables.get(\"anderungsDatum\"));\r",
 									"pm.expect(jsonData.anderung[0].anderungsTyp).to.eql(pm.variables.get(\"anderungsTyp\"));\r",
-									"pm.expect(jsonData.anderung[0].bezeichnung).to.eql(pm.variables.get(\"anderung\"));\r",
+									"pm.expect(jsonData.anderung[0].bezeichnung).to.eql(undefined);\r",
 									"pm.expect(jsonData.anderung[0].stuck).to.eql(pm.variables.get(\"anderungStuck\"));\r",
 									"pm.expect(jsonData.anderung[0].anmerkung).to.eql(pm.variables.get(\"anmerkung\"));\r",
 									"pm.expect(jsonData.anderung[0].deleted).to.be.false;\r",
@@ -11312,7 +11302,9 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.anderung[0].href).to.eql(self + \"/anderungen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -14046,502 +14038,502 @@
 	],
 	"variable": [
 		{
-			"id": "1154a544-eaf1-4aa2-a46e-8311080953fc",
+			"id": "6839aff4-7fbe-4fe5-b53a-0a948cebf7c1",
 			"key": "host",
 			"value": "127.0.0.1"
 		},
 		{
-			"id": "63de2e36-9227-4bd5-85f3-626f3cc1ce30",
+			"id": "2ec1b6a6-5ab2-434c-9e14-ec159fa397c2",
 			"key": "port",
 			"value": ":8086"
 		},
 		{
-			"id": "466b33c8-81e4-4859-81e6-23ce5b8d2043",
+			"id": "19102220-c1bd-4cb1-8eaa-1dd1496cea45",
 			"key": "server",
 			"value": "http://{{host}}{{port}}"
 		},
 		{
-			"id": "b7416dd4-7811-4b37-bca8-d6468c30075a",
+			"id": "7f337358-6476-4df3-93e5-bc855ab52151",
 			"key": "root",
 			"value": "{{server}}/ModellBahn"
 		},
 		{
-			"id": "b850b178-e5ee-4806-9ee5-d504e686221d",
+			"id": "0d9ee835-4b2a-4827-bcb8-63ec7aa9517c",
 			"key": "api",
 			"value": "{{root}}/api"
 		},
 		{
-			"id": "70c4937f-d552-4ff3-91ab-a1758a07030e",
+			"id": "b4a803da-6154-4b1c-8c47-78449bc29630",
 			"key": "language",
 			"value": "de"
 		},
 		{
-			"id": "463b7794-9703-494e-a252-cdbca37a4e6e",
+			"id": "daf9824f-3ee4-45bc-a728-6bee42f4f181",
 			"key": "achsfolgAdd",
 			"value": "1C1H2T"
 		},
 		{
-			"id": "a4f584a0-a713-494c-9125-48809d1083a8",
+			"id": "27d2d91d-9b4d-43b7-8267-c67c4c4e51c5",
 			"key": "achsfolgUpdate",
 			"value": "COCO"
 		},
 		{
-			"id": "33f32270-4fc4-4c93-b4bf-62b3ddee7852",
+			"id": "a85b3de8-f759-4ab3-accd-a15bb1687da9",
 			"key": "adIndexAdd",
 			"value": "1"
 		},
 		{
-			"id": "804cd6f8-13be-4d34-9da6-24ee177cbb68",
+			"id": "48d52416-1b2a-4b7a-9d43-28a34022dca1",
 			"key": "adIndexUpdate",
 			"value": "1"
 		},
 		{
-			"id": "c598b68e-b3cc-4684-a050-ea9851c88638",
+			"id": "6d0a9b8c-7ece-4e47-b475-1748db88dd82",
 			"key": "adSpanAdd",
 			"value": "2"
 		},
 		{
-			"id": "a7fbe982-043d-4465-bf8f-1702573ac8bd",
+			"id": "1ffe8b55-32fd-4b4e-bf1d-cf1c2e23f139",
 			"key": "adSpanUpdate",
 			"value": "16"
 		},
 		{
-			"id": "68d146ff-59f4-4776-9138-2244179815b0",
+			"id": "0f46b4ef-26bc-440e-8555-c77d59483693",
 			"key": "adTypAdd",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "5cd801dd-98ab-4c6f-8de5-ab73a4f640be",
+			"id": "4026950d-9ad2-47b9-9f5d-d60bd1dd7cca",
 			"key": "adTypUpdate",
 			"value": "DELTA"
 		},
 		{
-			"id": "ac3e9768-d71c-4e7b-a6b5-90f23f30e812",
+			"id": "535b5a30-8c73-4728-82f9-136ab99ba6cc",
 			"key": "adAdd",
 			"value": "10"
 		},
 		{
-			"id": "a74d6592-de3a-412a-86da-4e6921777ad4",
+			"id": "538acae3-ae87-4d04-8683-77d6cee4cdf0",
 			"key": "adUpdate",
 			"value": "80"
 		},
 		{
-			"id": "692cdae7-aaa9-434e-a477-2d57804c465c",
+			"id": "aa894132-0f66-4f36-bde7-dd70edefa885",
 			"key": "anderungAdd",
 			"value": "1"
 		},
 		{
-			"id": "0f66f94e-5176-4f0a-b338-b991c76ed4c4",
+			"id": "38f32c9c-2bad-4c45-8b1d-d4c465392c29",
 			"key": "anderungUpdate",
 			"value": "1"
 		},
 		{
-			"id": "04463b31-7d63-404b-b49b-7ec4426e3da5",
+			"id": "7112e973-abaa-4e78-aae2-c8cca8127e81",
 			"key": "antriebAdd",
 			"value": "DAMPF"
 		},
 		{
-			"id": "c42ece48-7276-4f2c-987f-f13b30f01b39",
+			"id": "a3e85093-8a2c-4054-b8f8-77aa3c6b8675",
 			"key": "antriebUpdate",
 			"value": "ELEKTRO"
 		},
 		{
-			"id": "0def45db-22a4-4088-8a11-06e8e61d65d7",
+			"id": "9bab60e4-2213-40e1-8313-dd01775f7089",
 			"key": "artikelAdd",
 			"value": "00001"
 		},
 		{
-			"id": "d924cb26-af01-43ba-9f61-ea8d79343936",
+			"id": "ffcfbd19-6bc5-454f-bf98-2e177e684fa2",
 			"key": "artikelUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "9e36c225-aef9-49b3-bba0-8462a6567972",
+			"id": "62d88ac0-df76-46b8-970d-b3a31cd37103",
 			"key": "aufbauAdd",
 			"value": "LK"
 		},
 		{
-			"id": "2b68eae8-0593-4fc1-af35-053cb5b230ee",
+			"id": "4cf04e6a-1201-42bb-bb38-09c2685d7416",
 			"key": "aufbauUpdate",
 			"value": "LK"
 		},
 		{
-			"id": "6f138f10-fa7d-469b-9852-83e49010c0db",
+			"id": "1f5e21e6-d806-43be-b7e9-19f96ab74846",
 			"key": "bestellNrAdd",
 			"value": "3000"
 		},
 		{
-			"id": "f23815fd-5908-4a05-8f53-8784f1269f3a",
+			"id": "79aaca65-0607-4036-8732-a35276dd18e4",
 			"key": "bestellNrUpdate",
 			"value": "3003"
 		},
 		{
-			"id": "354b4a2e-5108-42cf-8612-5c7ffc6bb010",
+			"id": "bc972c30-1057-4502-a722-3441214bda63",
 			"key": "bahnverwaltungAdd",
 			"value": "DB"
 		},
 		{
-			"id": "1bdacca6-6b42-4d18-bfe6-4377443b6f57",
+			"id": "15000a53-9bb8-473d-a6f3-331153d41692",
 			"key": "bahnverwaltungUpdate",
 			"value": "DBAG"
 		},
 		{
-			"id": "d74752a4-2ea2-474e-b6de-d5fb9dd7c3b7",
+			"id": "c98b678e-4949-410a-a2e9-295bf5c3387c",
 			"key": "cvAdd",
 			"value": "8"
 		},
 		{
-			"id": "33adf0b2-7c60-4a2d-9980-79c5122e924a",
+			"id": "bdf84999-5585-4cc7-86c1-754b5c295e90",
 			"key": "cvUpdate",
 			"value": "120"
 		},
 		{
-			"id": "bf8d3727-5b17-42a6-9614-df89e8e0a392",
+			"id": "828df82c-b156-4ea9-bcfd-6d897a131af6",
 			"key": "cvMaxAdd",
 			"value": "63"
 		},
 		{
-			"id": "3b3bbfcb-85a7-49e0-9369-c492dce338d6",
+			"id": "af7210f9-87c6-4aa6-a016-8982c96d030b",
 			"key": "cvMaxUpdate",
 			"value": "80"
 		},
 		{
-			"id": "5b936bb2-fcd3-4a91-a4ba-d4273983c5f2",
+			"id": "a80fdfad-66c5-4e76-9211-8eb828c6404b",
 			"key": "cvMinAdd",
 			"value": "0"
 		},
 		{
-			"id": "f5276983-1ecd-496f-84f0-89c7f317a2a6",
+			"id": "dec3291b-8aa8-48bc-a278-4eb058d03cdb",
 			"key": "cvMinUpdate",
 			"value": "1"
 		},
 		{
-			"id": "972e4525-b550-4032-a7f2-5f0b68a8ab7e",
+			"id": "1e9e09df-7b39-40f8-b41d-10940038cbb6",
 			"key": "cvValueAdd",
 			"value": "30"
 		},
 		{
-			"id": "f6ade056-225f-4d85-9f94-405029ff5c2a",
+			"id": "d20f7e14-0054-4321-869f-b22356222c84",
 			"key": "cvValueUpdate",
 			"value": "50"
 		},
 		{
-			"id": "a7b7f0e7-0255-488a-94c8-c5aca8df5e36",
+			"id": "3b25fe40-d3e8-4fd5-8577-1623aa1e48cf",
 			"key": "decoderAdd",
 			"value": "00001"
 		},
 		{
-			"id": "a3624f6a-457c-4802-9859-417e50d4e17d",
+			"id": "a0642ea4-5c2c-4f22-abf7-9e7453aef43a",
 			"key": "decoderUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "d1322899-2017-490a-8c8a-da097cc0643c",
+			"id": "c7d4320b-41f2-45a1-8b24-22e1c39518fa",
 			"key": "decoderAdd",
 			"value": "00001"
 		},
 		{
-			"id": "af4b9bf7-0185-46b5-bf4c-a48df9920a64",
+			"id": "d39fd092-34cc-4c25-a17a-95bed1d32d1d",
 			"key": "decoderUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "8b1efdb3-fcfb-40b4-a2c1-99a966f05404",
+			"id": "c1deb392-ecfa-4fbe-aa93-4a0495ce7d1f",
 			"key": "decoderHerstellerAdd",
 			"value": "ESU"
 		},
 		{
-			"id": "9a78614e-b04a-4c48-80f5-c16e480eeef9",
+			"id": "063127cf-5868-4044-bc2b-2b9040ac0091",
 			"key": "decoderHerstellerUpdate",
 			"value": "ESU"
 		},
 		{
-			"id": "794c325b-1a45-4d05-9d00-1288e70488c5",
+			"id": "9a1bfce3-a060-457d-a925-88c94933a308",
 			"key": "decoderBestellNrAdd",
 			"value": "62400"
 		},
 		{
-			"id": "737919c4-ba90-436f-9c54-ac988b47572d",
+			"id": "0415c96f-0a08-4525-99f3-2472fa15fbce",
 			"key": "decoderBestellNrUpdate",
 			"value": "62499"
 		},
 		{
-			"id": "c4f23837-791a-484d-b32f-25fe80ea6302",
+			"id": "b7ae5d80-df15-43d6-86c4-97b324631fea",
 			"key": "decoderBezeichnungAdd",
 			"value": "LokSound M4"
 		},
 		{
-			"id": "1d6e077b-40f7-45f4-808b-cc05ed49af0c",
+			"id": "76d1af96-a8de-4b07-bb61-555c540c1604",
 			"key": "epochAdd",
 			"value": "IV"
 		},
 		{
-			"id": "d145a67e-855a-455f-80e6-fabd8ad32521",
+			"id": "a429fc52-d811-43b1-8f53-007ab6ed7870",
 			"key": "epochUpdate",
 			"value": "IV"
 		},
 		{
-			"id": "6009ff20-22c5-4066-b653-3df2b86281ad",
+			"id": "540ac60c-61cd-4d13-9a49-5570778c7997",
 			"key": "fahrstufeAdd",
 			"value": "27"
 		},
 		{
-			"id": "35b9e989-f312-4e71-9458-22646e6bfa9b",
+			"id": "24743835-9ba2-4d3b-9918-693f30a84de0",
 			"key": "fahrstufeUpdate",
 			"value": "128"
 		},
 		{
-			"id": "7b4596ca-9e16-4ad2-a108-4162545b438d",
+			"id": "220cfdc1-5008-448f-8d1b-9bbcc8de9f8c",
 			"key": "fnFuntionAdd",
 			"value": "F0"
 		},
 		{
-			"id": "beee826f-cd07-4de7-9e9b-6a8b845f8678",
+			"id": "c61bf540-116f-45ff-ad2a-7e41d7aa3ecd",
 			"key": "fnFuntionUpdate",
 			"value": "F0"
 		},
 		{
-			"id": "e722ea37-b63a-443b-885f-2e3c4dfcb46f",
+			"id": "d90465e6-d186-465a-89e5-41db20643d31",
 			"key": "fnReiheAdd",
 			"value": "1"
 		},
 		{
-			"id": "6016f882-ecd4-4d24-9a7f-9281a982f238",
+			"id": "ef6f6250-aa51-47ef-974e-120f1aa3114a",
 			"key": "fnReiheUpdate",
 			"value": "1"
 		},
 		{
-			"id": "9ddf441c-fc9a-4f6e-9f05-b1b54da37673",
+			"id": "eac94328-e5ea-42bb-9f2d-d7427fceab7a",
 			"key": "gattungAdd",
 			"value": "BR89.0"
 		},
 		{
-			"id": "9a4bc5d2-5933-4195-9b07-ab8f5164a31f",
+			"id": "aaa4c3ff-9a7b-454b-a27d-ad8ec59226b7",
 			"key": "gattungUpdate",
 			"value": "BR89.0"
 		},
 		{
-			"id": "37cfde38-e842-42d6-a5f9-516e80c2332c",
+			"id": "793ace8d-4c8c-4702-a868-8361c745df06",
 			"key": "herstellerAdd",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "d9873aed-d3af-4193-9131-9ecc0241401c",
+			"id": "485dea3b-0fdd-411f-be0f-9224ecfe9841",
 			"key": "herstellerUpdate",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "dfc6bf4b-a222-4f44-b5ff-88a09595a4f4",
+			"id": "34af452b-47b2-4c2d-8cf8-e97eb2c31772",
 			"key": "iMaxAdd",
 			"value": "1.5"
 		},
 		{
-			"id": "2d46bb20-d33f-4616-bec6-2e7c4b95f1ed",
+			"id": "46e2fc0a-a04f-4779-9b3c-11641c6a1dc0",
 			"key": "iMaxUpdate",
 			"value": "2.0"
 		},
 		{
-			"id": "9a830111-7e0e-4efa-a041-9a1dc1c490ea",
+			"id": "7545a3a6-a086-4a7b-a4a7-966f34a24171",
 			"key": "kategorieAdd",
 			"value": "LOKOMOTIV"
 		},
 		{
-			"id": "dfc7c2b3-71f0-48b8-af26-922f9a7f4df2",
+			"id": "9cb494f3-4184-480e-b69e-de85b4ada76d",
 			"key": "kategorieUpdate",
 			"value": "AUSGESTALTUNG"
 		},
 		{
-			"id": "f4a5d467-a13d-4e7a-a0e2-119b0e9efb37",
+			"id": "0b216472-f60c-4207-9173-78ed826d6f83",
 			"key": "kupplungAdd",
 			"value": "RELEX"
 		},
 		{
-			"id": "ead75578-99f2-4d7d-a671-5e2eb15a1a63",
+			"id": "390793ef-5992-43f1-bb41-b718c9a8ec00",
 			"key": "kupplungUpdate",
 			"value": "RELEX"
 		},
 		{
-			"id": "c2d1f0e2-3c7e-40a3-84f6-3611c8588c2f",
+			"id": "32d3533c-cbdd-48e0-8f5a-177f6217a0e7",
 			"key": "konfigurationAdd",
 			"value": "CV"
 		},
 		{
-			"id": "8dd86bc9-8496-4c36-b289-616ac833c59a",
+			"id": "e8e81ff9-1739-4aca-b48b-ca782b15b694",
 			"key": "konfigurationUpdate",
 			"value": "STECKER"
 		},
 		{
-			"id": "cb4fa74b-42e8-42cb-bbab-dde3c083f600",
+			"id": "a30636ad-df64-4580-b5c9-b2bed683dfe0",
 			"key": "leistungsubertragungAdd",
 			"value": "MECHANISH"
 		},
 		{
-			"id": "bf4fa375-3328-4c3c-8e0d-0a7094faad6b",
+			"id": "19a7e64f-329d-4e70-b5ae-9372872d853e",
 			"key": "leistungsubertragungUpdate",
 			"value": "ELEKTRISH"
 		},
 		{
-			"id": "2d9de69e-f2bc-4dd7-8402-53768c52aa57",
+			"id": "c444e52c-e8af-4699-be92-5842503f9f1b",
 			"key": "lichtAdd",
 			"value": "L1V"
 		},
 		{
-			"id": "ff9b763c-da7c-44a2-ad24-b2bf418c003b",
+			"id": "f392f8fb-280d-4461-b8e3-6128ff7d86cf",
 			"key": "lichtUpdate",
 			"value": "L1V"
 		},
 		{
-			"id": "d282ae2a-e140-4502-9531-f6d7ce3daccd",
+			"id": "61391bbb-afa9-4402-a53c-c3d7e89921ac",
 			"key": "massstabAdd",
 			"value": "H0"
 		},
 		{
-			"id": "baf700f2-f341-44db-8ce3-ed909a0014b4",
+			"id": "fd8d3497-906e-45ef-a60a-19972885ae8a",
 			"key": "massstabUpdate",
 			"value": "H0"
 		},
 		{
-			"id": "1b45dccc-3130-4d04-bd56-ae86c1b7e149",
+			"id": "a6838a1c-cead-4ced-a07e-09523c37bf1b",
 			"key": "motorTypAdd",
 			"value": "CSINUS"
 		},
 		{
-			"id": "adfbc03a-2d8c-4b7d-8ee8-9635e317b179",
+			"id": "d76b8132-766d-4ca7-b06a-a9d6c0933653",
 			"key": "motorTypUpdate",
 			"value": "CSINUS"
 		},
 		{
-			"id": "54629005-1c10-40d5-8057-a71248bce93f",
+			"id": "16e626dd-25e1-4a78-bdd9-c02114502125",
 			"key": "protokollAdd",
 			"value": "MFX"
 		},
 		{
-			"id": "d69cbe92-e3f9-42f5-b5a0-708384210fb1",
+			"id": "6442aa0c-a60b-492d-ad8a-930daa8a512a",
 			"key": "protokollUpdate",
 			"value": "DELTA"
 		},
 		{
-			"id": "1f85d339-981e-447d-b49d-2f0ada830cc1",
+			"id": "67b4870b-1b40-44cd-a27a-205877517944",
 			"key": "sondermodellAdd",
 			"value": "MM"
 		},
 		{
-			"id": "05063e0b-f8b5-432c-9013-37a3af5be78f",
+			"id": "eb266040-5998-438f-8752-6658e6fd7806",
 			"key": "sondermodellUpdate",
 			"value": "MM"
 		},
 		{
-			"id": "b9822b2a-2bd9-40ed-bd18-af095b6668d8",
+			"id": "4e1db009-7661-4946-bc7a-7b23cc7a3ad8",
 			"key": "spurweiteAdd",
 			"value": "H0"
 		},
 		{
-			"id": "80afe6f9-c9bc-4366-9adf-9bb1b71cd25f",
+			"id": "023dd97d-1c63-4ff0-abfe-5381d960c97f",
 			"key": "spurweiteUpdate",
 			"value": "H0"
 		},
 		{
-			"id": "5f35672b-14ec-41e7-acb3-6ad1a02963f6",
+			"id": "1a3f6200-b833-4d9f-9b70-ffb455b4312d",
 			"key": "steckerAdd",
 			"value": "NEM651"
 		},
 		{
-			"id": "533ae4e9-b82b-4bfa-914b-a1b5b4aa7478",
+			"id": "2e165a1e-cc87-4f71-9ac8-8f3fbcdb43bd",
 			"key": "steckerUpdate",
 			"value": "NEM652"
 		},
 		{
-			"id": "e872efb7-8e77-486b-929d-421ec4bf9d92",
+			"id": "7ec17bec-9bb0-45b8-a89e-f1b21e0d68af",
 			"key": "steuerungAdd",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "2eb9df1c-381a-4251-a4f6-2c7208d5e0e9",
+			"id": "640fb501-5174-4f5b-85cf-707940d26f42",
 			"key": "steuerungUpdate",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "70b42895-f4da-4872-aa29-ad76b4a5929a",
+			"id": "85fea5a0-95ee-449e-af50-d07f8cc4724d",
 			"key": "teilHerstellerAdd",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "c97427eb-3600-47ea-86bf-00a09c66f597",
+			"id": "9d5e84b6-d4b1-470f-abb8-4c1c6d3602ad",
 			"key": "teilBestellNrAdd",
 			"value": "600300"
 		},
 		{
-			"id": "4a784fa4-760d-4fa6-8eef-609dbd99bbd5",
+			"id": "0670c161-e03d-49c1-9748-2ec784470b96",
 			"key": "teilKategorieAdd",
 			"value": "ERSATZTEIL"
 		},
 		{
-			"id": "487c27c7-9f3c-4069-a1fe-d0c9c6b7f6b3",
+			"id": "3317d599-f6f8-4925-b322-52c6e79d2617",
 			"key": "teilUnterKategorieAdd",
 			"value": "BURSTEN"
 		},
 		{
-			"id": "b2dad8e9-7787-4a76-8776-41db7b4f723b",
+			"id": "2bc7bc20-704e-4f25-bab8-da1c0ddd33f9",
 			"key": "unterKategorieAdd",
 			"value": "DAMPF"
 		},
 		{
-			"id": "a56dc93f-b412-402d-8285-a62d3fe22135",
+			"id": "03c67924-0636-4ce0-9bfb-af6a45bbec6d",
 			"key": "unterKategorieUpdate",
 			"value": "HECKEN"
 		},
 		{
-			"id": "0e35eb05-a238-4dff-b0db-dd8f48d843a9",
+			"id": "99396d42-6a3b-4a09-aa33-fe83133c6d55",
 			"key": "teilBezeichnungAdd",
 			"value": "Bürsten"
 		},
 		{
-			"id": "2fb9c45b-94a9-4162-9e11-f0e6d34165b7",
+			"id": "7599f477-c78d-493f-9b3d-333f30b00f4e",
 			"key": "vorbildAdd",
 			"value": "HECKEN"
 		},
 		{
-			"id": "ff319886-8342-482c-b92e-098ac923c110",
+			"id": "2f57b7b7-4a26-46a9-960a-92c30b646161",
 			"key": "vorbildUpdate",
 			"value": "HECKEN"
 		},
 		{
-			"id": "04e7aa32-625e-4368-98a8-4b0563cbf531",
+			"id": "e1e6f4d1-d8a1-4cf4-ba58-149d737468fc",
 			"key": "zugAdd",
 			"value": "BAVARIA"
 		},
 		{
-			"id": "5894d300-ddce-4385-845e-fcf5dd01c212",
+			"id": "3768457f-aab9-444d-aa13-446ba1541ad8",
 			"key": "zugUpdate",
 			"value": "BAVARIA"
 		},
 		{
-			"id": "0ff4c813-2187-496d-b4e9-c5bce2b65c98",
+			"id": "30156ea6-383f-4766-acc7-e5dc6fbaf633",
 			"key": "zugTypAdd",
 			"value": "TEE"
 		},
 		{
-			"id": "8cb069d8-9a52-45cf-9260-e2856ffd5a0e",
+			"id": "fb516e26-61e8-42b5-9f12-39bc47f7a35d",
 			"key": "zugTypUpdate",
 			"value": "TEE"
 		},
 		{
-			"id": "bfb8eba3-1e78-455e-bb6c-4ac27f6125e1",
+			"id": "d5bd37ab-8b7b-4a7b-8ad6-3bba17ccc28f",
 			"key": "imageFile",
 			"value": "3000.jpg"
 		},
 		{
-			"id": "df0af72f-3e41-4ebc-ab83-b75da818100b",
+			"id": "57b2a347-548a-45f1-b46d-20d608e5edef",
 			"key": "anleitungFile",
 			"value": "3000_betrieb.pdf"
 		},
 		{
-			"id": "71df1436-6afa-4734-ac85-8c478a48b329",
+			"id": "cb2750b4-5faf-41a1-9a35-a4e7ac23cf70",
 			"key": "explosionszeichnungFile",
 			"value": "3000_explo.pdf"
 		},
 		{
-			"id": "c2ea5579-3787-4ddf-9c15-25976814df8c",
+			"id": "b5e355e1-a293-4399-bab9-197f6205311f",
 			"key": "xlFile",
 			"value": "3000.jpg"
 		}

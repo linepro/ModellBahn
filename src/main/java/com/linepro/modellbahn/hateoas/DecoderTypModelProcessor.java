@@ -18,6 +18,9 @@ import static com.linepro.modellbahn.controller.impl.ApiRels.INSTRUCTIONS;
 import static com.linepro.modellbahn.controller.impl.ApiRels.SEARCH;
 import static com.linepro.modellbahn.controller.impl.ApiRels.SELF;
 import static com.linepro.modellbahn.controller.impl.ApiRels.UPDATE;
+import static com.linepro.modellbahn.controller.impl.ApiRels.ADRESS;
+import static com.linepro.modellbahn.controller.impl.ApiRels.CV;
+import static com.linepro.modellbahn.controller.impl.ApiRels.FUNKTION;
 
 import java.util.HashMap;
 
@@ -40,12 +43,9 @@ import com.linepro.modellbahn.model.SoftDelete;
 public class DecoderTypModelProcessor extends ModelProcessorImpl<DecoderTypModel> implements RepresentationModelProcessor<DecoderTypModel> {
 
     private static final FieldsExtractor EXTRACTOR = (m) -> MapUtils.putAll(new HashMap<String, Object>(), new String[][] {
-                    {
-                                    HERSTELLER, ((DecoderTypModel) m).getHersteller()
-                    }, {
-                                    BESTELL_NR, ((DecoderTypModel) m).getBestellNr()
-                    },
-    });
+                    { HERSTELLER, ((DecoderTypModel) m).getHersteller() },
+                    { BESTELL_NR, ((DecoderTypModel) m).getBestellNr() },
+                    });
 
     private final DecoderTypAdressModelProcessor adressProcessor;
 
@@ -62,9 +62,9 @@ public class DecoderTypModelProcessor extends ModelProcessorImpl<DecoderTypModel
               new LinkTemplateImpl(DELETE, DELETE_DECODER_TYP, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted())),
               new LinkTemplateImpl(UPDATE, UPDATE_DECODER_TYP, EXTRACTOR),
               new LinkTemplateImpl(INSTRUCTIONS, ADD_DECODER_TYP_ANLEITUNGEN, EXTRACTOR),
-              new LinkTemplateImpl(ADD, ADD_DECODER_TYP_ADRESS, EXTRACTOR),
-              new LinkTemplateImpl(ADD, ADD_DECODER_TYP_CV, EXTRACTOR),
-              new LinkTemplateImpl(ADD, ADD_DECODER_TYP_FUNKTION, EXTRACTOR));
+              new LinkTemplateImpl(ADRESS, ADD_DECODER_TYP_ADRESS, EXTRACTOR),
+              new LinkTemplateImpl(CV, ADD_DECODER_TYP_CV, EXTRACTOR),
+              new LinkTemplateImpl(FUNKTION, ADD_DECODER_TYP_FUNKTION, EXTRACTOR));
 
         this.adressProcessor = adressProcessor;
 
