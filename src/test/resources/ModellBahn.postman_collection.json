@@ -875,6 +875,7 @@
 									"    pm.expect(a._links.update[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.delete[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.search[0].href).to.eql(root);\r",
+									"    pm.expect(a._links.image[0].href).to.eql(self+\"/abbildung\");\r",
 									"});\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(root);\r",
 									"pm.expect(jsonData.page.size).to.eql(jsonData._embedded.aufbau.length);\r",
@@ -937,7 +938,8 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -1002,7 +1004,8 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -1075,7 +1078,8 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -1141,7 +1145,8 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -1188,7 +1193,8 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -2456,6 +2462,7 @@
 									"    pm.expect(a._links.update[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.delete[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.search[0].href).to.eql(root);\r",
+									"    pm.expect(a._links.image[0].href).to.eql(self+\"/abbildung\");\r",
 									"});\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(root);\r",
 									"pm.expect(jsonData.page.size).to.eql(jsonData._embedded.kupplung.length);\r",
@@ -2518,7 +2525,8 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -2583,7 +2591,8 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -2656,7 +2665,8 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -2722,7 +2732,8 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -2770,8 +2781,7 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"\r",
-									""
+									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -2863,6 +2873,7 @@
 									"    pm.expect(a._links.update[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.delete[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.search[0].href).to.eql(root);\r",
+									"    pm.expect(a._links.image[0].href).to.eql(self+\"/abbildung\");\r",
 									"});\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(root);\r",
 									"pm.expect(jsonData.page.size).to.eql(jsonData._embedded.licht.length);\r",
@@ -2925,7 +2936,8 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -2990,7 +3002,8 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -3063,7 +3076,8 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -3129,7 +3143,8 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -3177,8 +3192,7 @@
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
-									"\r",
-									""
+									"pm.expect(jsonData._links.image[0].href).to.eql(self+\"/abbildung\");"
 								],
 								"type": "text/javascript"
 							}
@@ -5287,8 +5301,10 @@
 									"    var self = root + \"/\" + a.name;\r",
 									"    pm.expect(a.name).to.exist;\r",
 									"    pm.expect(a.bezeichnung).to.exist;\r",
+									"    pm.expect(a.unterKategorien).to.eql(undefined);\r",
 									"    pm.expect(a.deleted).to.be.false;\r",
 									"    pm.expect(a._links.add[0].href).to.eql(root);\r",
+									"    pm.expect(a._links.add[1].href).to.eql(self+\"/unterKategorien\");\r",
 									"    pm.expect(a._links.self[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.update[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.delete[0].href).to.eql(self);\r",
@@ -5345,9 +5361,13 @@
 									"        pm.expect(u.name).to.exist;\r",
 									"        pm.expect(u.bezeichnung).to.exist;\r",
 									"        pm.expect(u.deleted).to.be.false;\r",
+									"        pm.expect(u._links.add[0].href).to.eql(self+\"/unterKategorien\");\r",
+									"        pm.expect(u._links.update[0].href).to.eql(self+\"/unterKategorien/\"+u.name);\r",
+									"        pm.expect(u._links.delete[0].href).to.eql(self+\"/unterKategorien/\"+u.name);\r",
 									"    });\r",
 									"    pm.expect(k.deleted).to.be.false;\r",
 									"    pm.expect(k._links.add[0].href).to.eql(root);\r",
+									"    pm.expect(k._links.add[1].href).to.eql(self+\"/unterKategorien\");\r",
 									"    pm.expect(k._links.self[0].href).to.eql(self);\r",
 									"    pm.expect(k._links.update[0].href).to.eql(self);\r",
 									"    pm.expect(k._links.delete[0].href).to.eql(self);\r",
@@ -5418,6 +5438,7 @@
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData.unterKategorie).to.eql(undefined);\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.add[1].href).to.eql(self+\"/unterKategorien\");\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
@@ -5492,7 +5513,7 @@
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"unterAdd\"));\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"unterBezeichnung\"));\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
-									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.add[0].href).to.eql(root+\"/unterKategorien\");\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.parent[0].href).to.eql(root);"
@@ -5567,7 +5588,7 @@
 									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"unterAdd\"));\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"unterBezeichnung\"));\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
-									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.add[0].href).to.eql(root+\"/unterKategorien\");\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.parent[0].href).to.eql(root);"
@@ -5648,11 +5669,12 @@
 									"pm.expect(jsonData.unterKategorien[0].name).to.eql(pm.variables.get(\"unterAdd\"));\r",
 									"pm.expect(jsonData.unterKategorien[0].bezeichnung).to.eql(pm.variables.get(\"unterBezeichnung\"));\r",
 									"pm.expect(jsonData.unterKategorien[0].deleted).to.be.false;\r",
-									"pm.expect(jsonData.unterKategorien[0]._links.add[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.unterKategorien[0]._links.add[0].href).to.eql(self+\"/unterKategorien\");\r",
 									"pm.expect(jsonData.unterKategorien[0]._links.update[0].href).to.eql(child);\r",
 									"pm.expect(jsonData.unterKategorien[0]._links.delete[0].href).to.eql(child);\r",
 									"pm.expect(jsonData.unterKategorien[0]._links.parent[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.add[1].href).to.eql(self+\"/unterKategorien\");\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
@@ -5722,11 +5744,12 @@
 									"pm.expect(jsonData.unterKategorien[0].name).to.eql(pm.variables.get(\"unterAdd\"));\r",
 									"pm.expect(jsonData.unterKategorien[0].bezeichnung).to.eql(pm.variables.get(\"unterBezeichnung\"));\r",
 									"pm.expect(jsonData.unterKategorien[0].deleted).to.be.false;\r",
-									"pm.expect(jsonData.unterKategorien[0]._links.add[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.unterKategorien[0]._links.add[0].href).to.eql(self+\"/unterKategorien\");\r",
 									"pm.expect(jsonData.unterKategorien[0]._links.update[0].href).to.eql(child);\r",
 									"pm.expect(jsonData.unterKategorien[0]._links.delete[0].href).to.eql(child);\r",
 									"pm.expect(jsonData.unterKategorien[0]._links.parent[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.add[1].href).to.eql(self+\"/unterKategorien\");\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
@@ -6540,10 +6563,14 @@
 									"    pm.expect(a.stecker).to.exist;\r",
 									"    pm.expect(a.deleted).to.be.false;\r",
 									"    pm.expect(a._links.add[0].href).to.eql(root);\r",
+									"    pm.expect(a._links.add[1].href).to.eql(self+\"/adress\");\r",
+									"    pm.expect(a._links.add[2].href).to.eql(self+\"/cv\");\r",
+									"    pm.expect(a._links.add[3].href).to.eql(self+\"/funktion\");\r",
 									"    pm.expect(a._links.self[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.update[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.delete[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.search[0].href).to.eql(root);\r",
+									"    pm.expect(a._links.instructions[0].href).to.eql(self+\"/anleitungen\");\r",
 									"});\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(root);\r",
 									"pm.expect(jsonData.page.size).to.eql(jsonData._embedded.decoderTyp.length);\r",
@@ -6585,7 +6612,7 @@
 								"id": "04bf8ef5-e3e2-4a84-8449-5302aba7d242",
 								"exec": [
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"decoderHerstellerAdd\"));\r",
-									"pm.environment.set(\"bestellNr\", pm.variables.get(\"decoderBestellAdd\"));\r",
+									"pm.environment.set(\"bestellNr\", pm.variables.replaceIn(\"{{$randomInt}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"iMax\", new Number(pm.variables.get(\"iMaxAdd\")));\r",
 									"pm.environment.set(\"protokoll\", pm.variables.get(\"protokollAdd\"));\r",
@@ -6621,10 +6648,14 @@
 									"pm.expect(jsonData.funktionen).to.be.empty;\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.add[1].href).to.eql(self+\"/adress\");\r",
+									"pm.expect(jsonData._links.add[2].href).to.eql(self+\"/cv\");\r",
+									"pm.expect(jsonData._links.add[3].href).to.eql(self+\"/funktion\");\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.instructions[0].href).to.eql(self+\"/anleitungen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -6696,10 +6727,14 @@
 									"pm.expect(jsonData.funktionen).to.be.empty;\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.add[1].href).to.eql(self+\"/adress\");\r",
+									"pm.expect(jsonData._links.add[2].href).to.eql(self+\"/cv\");\r",
+									"pm.expect(jsonData._links.add[3].href).to.eql(self+\"/funktion\");\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.instructions[0].href).to.eql(self+\"/anleitungen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -7335,10 +7370,14 @@
 									"pm.expect(jsonData.funktionen[0]._links.delete[0].href).to.eql(funktionUrl);\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.add[1].href).to.eql(self+\"/adress\");\r",
+									"pm.expect(jsonData._links.add[2].href).to.eql(self+\"/cv\");\r",
+									"pm.expect(jsonData._links.add[3].href).to.eql(self+\"/funktion\");\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.instructions[0].href).to.eql(self+\"/anleitungen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -7453,10 +7492,14 @@
 									"pm.expect(jsonData.funktionen[0]._links.delete[0].href).to.eql(funktionUrl);\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.add[1].href).to.eql(self+\"/adress\");\r",
+									"pm.expect(jsonData._links.add[2].href).to.eql(self+\"/cv\");\r",
+									"pm.expect(jsonData._links.add[3].href).to.eql(self+\"/funktion\");\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.instructions[0].href).to.eql(self+\"/anleitungen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -7553,10 +7596,14 @@
 									"pm.expect(jsonData.funktionen[0]._links.delete[0].href).to.eql(funktionUrl);\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.add[1].href).to.eql(self+\"/adress\");\r",
+									"pm.expect(jsonData._links.add[2].href).to.eql(self+\"/cv\");\r",
+									"pm.expect(jsonData._links.add[3].href).to.eql(self+\"/funktion\");\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.instructions[0].href).to.eql(self+\"/anleitungen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -7771,6 +7818,10 @@
 									"    pm.expect(a._links.update[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.delete[0].href).to.eql(self);\r",
 									"    pm.expect(a._links.search[0].href).to.eql(root);\r",
+									"    pm.expect(a._links.image[0].href).to.eql(self + \"/abbildung\");\r",
+									"    pm.expect(a._links.instructions[0].href).to.eql(self + \"/anleitungen\");\r",
+									"    pm.expect(a._links.diagaram[0].href).to.eql(self + \"/explosionszeichnung\");\r",
+									"    pm.expect(a._links.parts[0].href).to.eql(self + \"/teilen\");\r",
 									"});\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(root);\r",
 									"pm.expect(jsonData.page.size).to.eql(jsonData._embedded.produkt.length);\r",
@@ -7879,7 +7930,11 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.instructions[0].href).to.eql(self + \"/anleitungen\");\r",
+									"pm.expect(jsonData._links.diagaram[0].href).to.eql(self + \"/explosionszeichnung\");\r",
+									"pm.expect(jsonData._links.parts[0].href).to.eql(self + \"/teilen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -7904,7 +7959,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"hersteller\": \"{{hersteller}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n    \"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"lange\": \"{{lange}}\",\n    \"massstab\": \"{{massstab}}\",\n    \"spurweite\": \"{{spurweite}}\",\n    \"epoch\": \"{{epoch}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"gattung\": \"{{gattung}}\",\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"bauzeit\": \"{{bauzeit}}\",\n    \"achsfolg\": \"{{achsfolg}}\",\n    \"sondermodell\": \"{{sondermodell}}\",\n    \"aufbau\": \"{{aufbau}}\",\n    \"licht\": \"{{licht}}\",\n    \"kupplung\": \"{{kupplung}}\",\n    \"steuerung\": \"{{steuerung}}\",\n    \"decoderHersteller\": \"{{decoderHersteller}}\",\n    \"decoderBestellNr\": \"{{decoderBestellNr}}\",\n    \"motorTyp\": \"{{motorTyp}}\",\n    \"anmerkung\": \"{{anmerkung}}\",\n    \"anleitungen\": \"{{anleitungen}}\",\n    \"explosionszeichnung\": \"{{explosionszeichnung}}\",\n    \"teilen\": [],\n    \"abbildung\": \"{{abbildung}}\",\n    \"deleted\": true\n}",
+							"raw": "{\n    \"hersteller\": \"{{hersteller}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n    \"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"lange\": \"{{lange}}\",\n    \"massstab\": \"{{massstab}}\",\n    \"spurweite\": \"{{spurweite}}\",\n    \"epoch\": \"{{epoch}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"gattung\": \"{{gattung}}\",\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"bauzeit\": \"{{bauzeit}}\",\n    \"achsfolg\": \"{{achsfolg}}\",\n    \"sondermodell\": \"{{sondermodell}}\",\n    \"aufbau\": \"{{aufbau}}\",\n    \"licht\": \"{{licht}}\",\n    \"kupplung\": \"{{kupplung}}\",\n    \"steuerung\": \"{{steuerung}}\",\n    \"decoderHersteller\": \"{{decoderHersteller}}\",\n    \"decoderBestellNr\": \"{{decoderBestellNr}}\",\n    \"motorTyp\": \"{{motorTyp}}\",\n    \"anmerkung\": \"{{anmerkung}}\",\n    \"teilen\": [],\n    \"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -7968,7 +8023,11 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.instructions[0].href).to.eql(self + \"/anleitungen\");\r",
+									"pm.expect(jsonData._links.diagaram[0].href).to.eql(self + \"/explosionszeichnung\");\r",
+									"pm.expect(jsonData._links.parts[0].href).to.eql(self + \"/teilen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -8057,7 +8116,11 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.instructions[0].href).to.eql(self + \"/anleitungen\");\r",
+									"pm.expect(jsonData._links.diagaram[0].href).to.eql(self + \"/explosionszeichnung\");\r",
+									"pm.expect(jsonData._links.parts[0].href).to.eql(self + \"/teilen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -8147,7 +8210,11 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.instructions[0].href).to.eql(self + \"/anleitungen\");\r",
+									"pm.expect(jsonData._links.diagaram[0].href).to.eql(self + \"/explosionszeichnung\");\r",
+									"pm.expect(jsonData._links.parts[0].href).to.eql(self + \"/teilen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -8450,7 +8517,11 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.instructions[0].href).to.eql(self + \"/anleitungen\");\r",
+									"pm.expect(jsonData._links.diagaram[0].href).to.eql(self + \"/explosionszeichnung\");\r",
+									"pm.expect(jsonData._links.parts[0].href).to.eql(self + \"/teilen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -8475,7 +8546,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"hersteller\": \"{{hersteller}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n    \"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"lange\": \"{{lange}}\",\n    \"massstab\": \"{{massstab}}\",\n    \"spurweite\": \"{{spurweite}}\",\n    \"epoch\": \"{{epoch}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"gattung\": \"{{gattung}}\",\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"bauzeit\": \"{{bauzeit}}\",\n    \"achsfolg\": \"{{achsfolg}}\",\n    \"sondermodell\": \"{{sondermodell}}\",\n    \"aufbau\": \"{{aufbau}}\",\n    \"licht\": \"{{licht}}\",\n    \"kupplung\": \"{{kupplung}}\",\n    \"steuerung\": \"{{steuerung}}\",\n    \"decoderTypHersteller\": \"{{decoderHersteller}}\",\n    \"decoderTypBestellNr\": \"{{decoderBestellNr}}\",\n    \"motorTyp\": \"{{motorTyp}}\",\n    \"anmerkung\": \"{{anmerkung}}\",\n    \"anleitungen\": \"{{anleitungen}}\",\n    \"explosionszeichnung\": \"{{explosionszeichnung}}\",\n    \"teilen\": [],\n    \"abbildung\": \"{{abbildung}}\",\n    \"deleted\": true\n}",
+							"raw": "{\n    \"hersteller\": \"{{hersteller}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n    \"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"lange\": \"{{lange}}\",\n    \"massstab\": \"{{massstab}}\",\n    \"spurweite\": \"{{spurweite}}\",\n    \"epoch\": \"{{epoch}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"gattung\": \"{{gattung}}\",\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"bauzeit\": \"{{bauzeit}}\",\n    \"achsfolg\": \"{{achsfolg}}\",\n    \"sondermodell\": \"{{sondermodell}}\",\n    \"aufbau\": \"{{aufbau}}\",\n    \"licht\": \"{{licht}}\",\n    \"kupplung\": \"{{kupplung}}\",\n    \"steuerung\": \"{{steuerung}}\",\n    \"decoderTypHersteller\": \"{{decoderHersteller}}\",\n    \"decoderTypBestellNr\": \"{{decoderBestellNr}}\",\n    \"motorTyp\": \"{{motorTyp}}\",\n    \"anmerkung\": \"{{anmerkung}}\",\n    \"teilen\": [],\n    \"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -8558,7 +8629,11 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.instructions[0].href).to.eql(self + \"/anleitungen\");\r",
+									"pm.expect(jsonData._links.diagaram[0].href).to.eql(self + \"/explosionszeichnung\");\r",
+									"pm.expect(jsonData._links.parts[0].href).to.eql(self + \"/teilen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -8673,7 +8748,11 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.instructions[0].href).to.eql(self + \"/anleitungen\");\r",
+									"pm.expect(jsonData._links.diagaram[0].href).to.eql(self + \"/explosionszeichnung\");\r",
+									"pm.expect(jsonData._links.parts[0].href).to.eql(self + \"/teilen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -8748,7 +8827,11 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.instructions[0].href).to.eql(self + \"/anleitungen\");\r",
+									"pm.expect(jsonData._links.diagaram[0].href).to.eql(self + \"/explosionszeichnung\");\r",
+									"pm.expect(jsonData._links.parts[0].href).to.eql(self + \"/teilen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -8822,7 +8905,11 @@
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.image[0].href).to.eql(self + \"/abbildung\");\r",
+									"pm.expect(jsonData._links.instructions[0].href).to.eql(self + \"/anleitungen\");\r",
+									"pm.expect(jsonData._links.diagaram[0].href).to.eql(self + \"/explosionszeichnung\");\r",
+									"pm.expect(jsonData._links.parts[0].href).to.eql(self + \"/teilen\");"
 								],
 								"type": "text/javascript"
 							}
@@ -8965,16 +9052,16 @@
 							"script": {
 								"id": "fbc8825c-39f7-40a6-861b-b055749fb3e9",
 								"exec": [
-									"pm.environment.set(\"hersteller\", pm.variables.get(\"decoderHerstellerAdd\"));\r",
-									"pm.environment.set(\"bestellNr\", pm.variables.get(\"decoderBestellNrAdd\"));\r",
-									"pm.environment.set(\"bezeichnung\", pm.variables.get(\"decoderBezeichnungAdd\"));\r",
-									"pm.environment.set(\"iMax\", new Number(pm.variables.get(\"iMaxAdd\")));\r",
-									"pm.environment.set(\"protokoll\", pm.variables.get(\"protokollAdd\"));\r",
-									"pm.environment.set(\"fahrstufe\", new Number(pm.variables.get(\"fahrstufeAdd\")));\r",
+									"pm.environment.set(\"hersteller\", \"ESU\");\r",
+									"pm.environment.set(\"bestellNr\", \"62400\");\r",
+									"pm.environment.set(\"bezeichnung\", \"LokSound M4\");\r",
+									"//pm.environment.set(\"iMax\", new Number(pm.variables.get(\"iMaxAdd\")));\r",
+									"pm.environment.set(\"protokoll\", \"MFX\");\r",
+									"//pm.environment.set(\"fahrstufe\", new Number(pm.variables.get(\"fahrstufeAdd\")));\r",
 									"pm.environment.set(\"sound\", new Boolean(\"true\"));\r",
-									"pm.environment.set(\"konfiguration\", pm.variables.get(\"konfigurationAdd\"));\r",
-									"pm.environment.set(\"stecker\", pm.variables.get(\"steckerAdd\"));\r",
-									"pm.environment.set(\"status\", pm.variables.get(\"statusAdd\"));"
+									"pm.environment.set(\"konfiguration\", \"CV\");\r",
+									"pm.environment.set(\"stecker\", \"NEM652\");\r",
+									"pm.environment.set(\"status\",\"FREI\");"
 								],
 								"type": "text/javascript"
 							}
@@ -8986,29 +9073,374 @@
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
+									"pm.environment.set(\"decoderId\", jsonData.decoderId);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoder\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/decoder/{{decoderId}}\");\r",
-									"pm.expect(jsonData.decoderId).to.eql(pm.variables.get(\"decoderId\"));\r",
+									"pm.expect(jsonData.decoderId).to.eql(jsonData.decoderId);\r",
 									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
 									"pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\"));\r",
-									"pm.expect(jsonData.iMax).to.eql(pm.variables.get(\"iMax\"));\r",
+									"pm.expect(jsonData.iMax).to.eql(undefined);\r",
 									"pm.expect(jsonData.protokoll).to.eql(pm.variables.get(\"protokoll\"));\r",
-									"pm.expect(jsonData.fahrstufe).to.eql(pm.variables.get(\"fahrstufe\"));\r",
-									"pm.expect(jsonData.sound).to.eql(pm.variables.get(\"sound\"));\r",
+									"pm.expect(jsonData.fahrstufe).to.eql(undefined);\r",
+									"pm.expect(jsonData.gerausch).to.be.true;\r",
 									"pm.expect(jsonData.konfiguration).to.eql(pm.variables.get(\"konfiguration\"));\r",
 									"pm.expect(jsonData.stecker).to.eql(pm.variables.get(\"stecker\"));\r",
 									"pm.expect(jsonData.status).to.eql(pm.variables.get(\"status\"));\r",
-									"pm.expect(jsonData.anleitungen).to.eql(pm.variables.get(\"anleitungen\"));\r",
-									"pm.expect(jsonData.adressen).to.eql(pm.variables.get(\"adressen\"));\r",
-									"pm.expect(jsonData.cvs).to.eql(pm.variables.get(\"cvs\"));\r",
-									"pm.expect(jsonData.funktionen).to.eql(pm.variables.get(\"funktionen\"));\r",
+									"pm.expect(jsonData.anleitungen).to.eql(undefined);\r",
+									"pm.expect(jsonData.adressen.length).to.eql(1);\r",
+									"pm.expect(jsonData.adressen[0].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.adressen[0].index).to.eql(1);\r",
+									"pm.expect(jsonData.adressen[0].bezeichnung).to.eql(\"Primary\");\r",
+									"pm.expect(jsonData.adressen[0].span).to.eql(1);\r",
+									"pm.expect(jsonData.adressen[0].adressTyp).to.eql(\"DIGITAL\");\r",
+									"pm.expect(jsonData.adressen[0].werkseinstellung).to.eql(1);\r",
+									"pm.expect(jsonData.adressen[0].adress).to.eql(1);\r",
+									"pm.expect(jsonData.adressen[0].deleted).to.be.false;\r",
+									"pm.expect(jsonData.adressen[0]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.adressen[0]._links.update[0].href).to.eql(self + \"/adress/1\");\r",
+									"pm.expect(jsonData.cvs.length).to.eql(21);\r",
+									"pm.expect(jsonData.cvs[0].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[0].cv).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[0].bezeichnung).to.eql(\"Adresse\");\r",
+									"pm.expect(jsonData.cvs[0].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[0].maximal).to.eql(80);\r",
+									"pm.expect(jsonData.cvs[0].werkseinstellung).to.eql(3);\r",
+									"pm.expect(jsonData.cvs[0].wert).to.eql(3);\r",
+									"pm.expect(jsonData.cvs[0].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[0]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[0]._links.update[0].href).to.eql(self + \"/cv/1\");\r",
+									"pm.expect(jsonData.cvs[1].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[1].cv).to.eql(2);\r",
+									"pm.expect(jsonData.cvs[1].bezeichnung).to.eql(\"Anfahrverzögerung\");\r",
+									"pm.expect(jsonData.cvs[1].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[1].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[1].werkseinstellung).to.eql(3);\r",
+									"pm.expect(jsonData.cvs[1].wert).to.eql(3);\r",
+									"pm.expect(jsonData.cvs[1].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[1]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[1]._links.update[0].href).to.eql(self + \"/cv/2\");\r",
+									"pm.expect(jsonData.cvs[2].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[2].cv).to.eql(3);\r",
+									"pm.expect(jsonData.cvs[2].bezeichnung).to.eql(\"Beschleunigungszeit\");\r",
+									"pm.expect(jsonData.cvs[2].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[2].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[2].werkseinstellung).to.eql(16);\r",
+									"pm.expect(jsonData.cvs[2].wert).to.eql(16);\r",
+									"pm.expect(jsonData.cvs[2].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[2]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[2]._links.update[0].href).to.eql(self + \"/cv/3\");\r",
+									"pm.expect(jsonData.cvs[3].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[3].cv).to.eql(4);\r",
+									"pm.expect(jsonData.cvs[3].bezeichnung).to.eql(\"Bremsverzögerung\");\r",
+									"pm.expect(jsonData.cvs[3].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[3].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[3].werkseinstellung).to.eql(12);\r",
+									"pm.expect(jsonData.cvs[3].wert).to.eql(12);\r",
+									"pm.expect(jsonData.cvs[3].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[3]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[3]._links.update[0].href).to.eql(self + \"/cv/4\");\r",
+									"pm.expect(jsonData.cvs[4].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[4].cv).to.eql(5);\r",
+									"pm.expect(jsonData.cvs[4].bezeichnung).to.eql(\"Höchstgeschwindigkeit\");\r",
+									"pm.expect(jsonData.cvs[4].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[4].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[4].werkseinstellung).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[4].wert).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[4].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[4]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[4]._links.update[0].href).to.eql(self + \"/cv/5\");\r",
+									"pm.expect(jsonData.cvs[5].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[5].cv).to.eql(8);\r",
+									"pm.expect(jsonData.cvs[5].bezeichnung).to.eql(\"Rückstellen auf Serienwerte\");\r",
+									"pm.expect(jsonData.cvs[5].werkseinstellung).to.eql(8);\r",
+									"pm.expect(jsonData.cvs[5].wert).to.eql(8);\r",
+									"pm.expect(jsonData.cvs[5].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[5]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[5]._links.update[0].href).to.eql(self + \"/cv/8\");\r",
+									"pm.expect(jsonData.cvs[6].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[6].cv).to.eql(53);\r",
+									"pm.expect(jsonData.cvs[6].bezeichnung).to.eql(\"Regelungsreferenz\");\r",
+									"pm.expect(jsonData.cvs[6].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[6].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[6].werkseinstellung).to.eql(56);\r",
+									"pm.expect(jsonData.cvs[6].wert).to.eql(56);\r",
+									"pm.expect(jsonData.cvs[6].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[6]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[6]._links.update[0].href).to.eql(self + \"/cv/53\");\r",
+									"pm.expect(jsonData.cvs[7].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[7].cv).to.eql(54);\r",
+									"pm.expect(jsonData.cvs[7].bezeichnung).to.eql(\"Lastregelung Param. K\");\r",
+									"pm.expect(jsonData.cvs[7].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[7].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[7].werkseinstellung).to.eql(32);\r",
+									"pm.expect(jsonData.cvs[7].wert).to.eql(32);\r",
+									"pm.expect(jsonData.cvs[7].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[7]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[7]._links.update[0].href).to.eql(self + \"/cv/54\");\r",
+									"pm.expect(jsonData.cvs[8].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[8].cv).to.eql(55);\r",
+									"pm.expect(jsonData.cvs[8].bezeichnung).to.eql(\"Lastregelung Param. L\");\r",
+									"pm.expect(jsonData.cvs[8].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[8].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[8].werkseinstellung).to.eql(24);\r",
+									"pm.expect(jsonData.cvs[8].wert).to.eql(24);\r",
+									"pm.expect(jsonData.cvs[8].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[8]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[8]._links.update[0].href).to.eql(self + \"/cv/55\");\r",
+									"pm.expect(jsonData.cvs[9].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[9].cv).to.eql(56);\r",
+									"pm.expect(jsonData.cvs[9].bezeichnung).to.eql(\"Regelungseinfluss\");\r",
+									"pm.expect(jsonData.cvs[9].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[9].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[9].werkseinstellung).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[9].wert).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[9].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[9]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[9]._links.update[0].href).to.eql(self + \"/cv/56\");\r",
+									"pm.expect(jsonData.cvs[10].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[10].cv).to.eql(57);\r",
+									"pm.expect(jsonData.cvs[10].bezeichnung).to.eql(\"Geräuschmodus 1\");\r",
+									"pm.expect(jsonData.cvs[10].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[10].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[10].werkseinstellung).to.eql(10);\r",
+									"pm.expect(jsonData.cvs[10].wert).to.eql(10);\r",
+									"pm.expect(jsonData.cvs[10].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[10]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[10]._links.update[0].href).to.eql(self + \"/cv/57\");\r",
+									"pm.expect(jsonData.cvs[11].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[11].cv).to.eql(58);\r",
+									"pm.expect(jsonData.cvs[11].bezeichnung).to.eql(\"Geräuschmodus 2\");\r",
+									"pm.expect(jsonData.cvs[11].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[11].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[11].werkseinstellung).to.eql(58);\r",
+									"pm.expect(jsonData.cvs[11].wert).to.eql(58);\r",
+									"pm.expect(jsonData.cvs[11].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[11]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[11]._links.update[0].href).to.eql(self + \"/cv/58\");\r",
+									"pm.expect(jsonData.cvs[12].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[12].cv).to.eql(59);\r",
+									"pm.expect(jsonData.cvs[12].bezeichnung).to.eql(\"Fahrgeräusch\");\r",
+									"pm.expect(jsonData.cvs[12].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[12].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[12].werkseinstellung).to.eql(32);\r",
+									"pm.expect(jsonData.cvs[12].wert).to.eql(32);\r",
+									"pm.expect(jsonData.cvs[12].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[12]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[12]._links.update[0].href).to.eql(self + \"/cv/59\");\r",
+									"pm.expect(jsonData.cvs[13].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[13].cv).to.eql(60);\r",
+									"pm.expect(jsonData.cvs[13].bezeichnung).to.eql(\"Fahrgeräusch\");\r",
+									"pm.expect(jsonData.cvs[13].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[13].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[13].werkseinstellung).to.eql(55);\r",
+									"pm.expect(jsonData.cvs[13].wert).to.eql(55);\r",
+									"pm.expect(jsonData.cvs[13].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[13]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[13]._links.update[0].href).to.eql(self + \"/cv/60\");\r",
+									"pm.expect(jsonData.cvs[14].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[14].cv).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[14].bezeichnung).to.eql(\"Geräuschlautstärke\");\r",
+									"pm.expect(jsonData.cvs[14].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[14].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[14].werkseinstellung).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[14].wert).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[14].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[14]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[14]._links.update[0].href).to.eql(self + \"/cv/63\");\r",
+									"pm.expect(jsonData.cvs[15].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[15].cv).to.eql(64);\r",
+									"pm.expect(jsonData.cvs[15].bezeichnung).to.eql(\"Bremssoundschwelle\");\r",
+									"pm.expect(jsonData.cvs[15].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[15].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[15].werkseinstellung).to.eql(7);\r",
+									"pm.expect(jsonData.cvs[15].wert).to.eql(7);\r",
+									"pm.expect(jsonData.cvs[15].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[15]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[15]._links.update[0].href).to.eql(self + \"/cv/64\");\r",
+									"pm.expect(jsonData.cvs[16].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[16].cv).to.eql(73);\r",
+									"pm.expect(jsonData.cvs[16].bezeichnung).to.eql(\"Speicheroptionen\");\r",
+									"pm.expect(jsonData.cvs[16].minimal).to.eql(0);\r",
+									"pm.expect(jsonData.cvs[16].maximal).to.eql(7);\r",
+									"pm.expect(jsonData.cvs[16].werkseinstellung).to.eql(3);\r",
+									"pm.expect(jsonData.cvs[16].wert).to.eql(3);\r",
+									"pm.expect(jsonData.cvs[16].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[16]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[16]._links.update[0].href).to.eql(self + \"/cv/73\");\r",
+									"pm.expect(jsonData.cvs[17].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[17].cv).to.eql(74);\r",
+									"pm.expect(jsonData.cvs[17].bezeichnung).to.eql(\"Märklin Addresse 2\");\r",
+									"pm.expect(jsonData.cvs[17].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[17].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[17].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[17]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[17]._links.update[0].href).to.eql(self + \"/cv/74\");\r",
+									"pm.expect(jsonData.cvs[18].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[18].cv).to.eql(75);\r",
+									"pm.expect(jsonData.cvs[18].bezeichnung).to.eql(\"Märklin Addresse 2\");\r",
+									"pm.expect(jsonData.cvs[18].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[18].maximal).to.eql(80);\r",
+									"pm.expect(jsonData.cvs[18].werkseinstellung).to.eql(4);\r",
+									"pm.expect(jsonData.cvs[18].wert).to.eql(4);\r",
+									"pm.expect(jsonData.cvs[18].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[18]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[18]._links.update[0].href).to.eql(self + \"/cv/75\");\r",
+									"pm.expect(jsonData.cvs[19].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[19].cv).to.eql(78);\r",
+									"pm.expect(jsonData.cvs[19].bezeichnung).to.eql(\"Anfahrspannung Analog AC\");\r",
+									"pm.expect(jsonData.cvs[19].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[19].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[19].werkseinstellung).to.eql(25);\r",
+									"pm.expect(jsonData.cvs[19].wert).to.eql(25);\r",
+									"pm.expect(jsonData.cvs[19].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[19]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[19]._links.update[0].href).to.eql(self + \"/cv/78\");\r",
+									"pm.expect(jsonData.cvs[20].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[20].cv).to.eql(79);\r",
+									"pm.expect(jsonData.cvs[20].bezeichnung).to.eql(\"Höchstgeschwindigkeit Analog AC\");\r",
+									"pm.expect(jsonData.cvs[20].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[20].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[20].werkseinstellung).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[20].wert).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[20].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[20]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[20]._links.update[0].href).to.eql(self + \"/cv/79\");\r",
+									"pm.expect(jsonData.funktionen.length).to.eql(16);\r",
+									"pm.expect(jsonData.funktionen[0].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[0].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[0].funktion).to.eql(\"F0\");\r",
+									"pm.expect(jsonData.funktionen[0].bezeichnung).to.eql(\"Funktion 0\");\r",
+									"pm.expect(jsonData.funktionen[0].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[0].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[0]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[0]._links.update[0].href).to.eql(self + \"/funktion/1/F0\");\r",
+									"pm.expect(jsonData.funktionen[1].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[1].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[1].funktion).to.eql(\"F1\");\r",
+									"pm.expect(jsonData.funktionen[1].bezeichnung).to.eql(\"Funktion 1\");\r",
+									"pm.expect(jsonData.funktionen[1].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[1].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[1]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[1]._links.update[0].href).to.eql(self + \"/funktion/1/F1\");\r",
+									"pm.expect(jsonData.funktionen[2].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[2].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[2].funktion).to.eql(\"F10\");\r",
+									"pm.expect(jsonData.funktionen[2].bezeichnung).to.eql(\"Funktion 10\");\r",
+									"pm.expect(jsonData.funktionen[2].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[2].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[2]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[2]._links.update[0].href).to.eql(self + \"/funktion/1/F10\");\r",
+									"pm.expect(jsonData.funktionen[3].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[3].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[3].funktion).to.eql(\"F11\");\r",
+									"pm.expect(jsonData.funktionen[3].bezeichnung).to.eql(\"Funktion 11\");\r",
+									"pm.expect(jsonData.funktionen[3].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[3].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[3]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[3]._links.update[0].href).to.eql(self + \"/funktion/1/F11\");\r",
+									"pm.expect(jsonData.funktionen[4].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[4].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[4].funktion).to.eql(\"F12\");\r",
+									"pm.expect(jsonData.funktionen[4].bezeichnung).to.eql(\"Funktion 12\");\r",
+									"pm.expect(jsonData.funktionen[4].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[4].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[4]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[4]._links.update[0].href).to.eql(self + \"/funktion/1/F12\");\r",
+									"pm.expect(jsonData.funktionen[5].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[5].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[5].funktion).to.eql(\"F13\");\r",
+									"pm.expect(jsonData.funktionen[5].bezeichnung).to.eql(\"Funktion 13\");\r",
+									"pm.expect(jsonData.funktionen[5].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[5].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[5]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[5]._links.update[0].href).to.eql(self + \"/funktion/1/F13\");\r",
+									"pm.expect(jsonData.funktionen[6].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[6].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[6].funktion).to.eql(\"F14\");\r",
+									"pm.expect(jsonData.funktionen[6].bezeichnung).to.eql(\"Funktion 14\");\r",
+									"pm.expect(jsonData.funktionen[6].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[6].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[6]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[6]._links.update[0].href).to.eql(self + \"/funktion/1/F14\");\r",
+									"pm.expect(jsonData.funktionen[7].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[7].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[7].funktion).to.eql(\"F15\");\r",
+									"pm.expect(jsonData.funktionen[7].bezeichnung).to.eql(\"Funktion 15\");\r",
+									"pm.expect(jsonData.funktionen[7].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[7].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[7]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[7]._links.update[0].href).to.eql(self + \"/funktion/1/F15\");\r",
+									"pm.expect(jsonData.funktionen[8].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[8].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[8].funktion).to.eql(\"F2\");\r",
+									"pm.expect(jsonData.funktionen[8].bezeichnung).to.eql(\"Funktion 2\");\r",
+									"pm.expect(jsonData.funktionen[8].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[8].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[8]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[8]._links.update[0].href).to.eql(self + \"/funktion/1/F2\");\r",
+									"pm.expect(jsonData.funktionen[9].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[9].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[9].funktion).to.eql(\"F3\");\r",
+									"pm.expect(jsonData.funktionen[9].bezeichnung).to.eql(\"Funktion 3\");\r",
+									"pm.expect(jsonData.funktionen[9].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[9].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[9]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[9]._links.update[0].href).to.eql(self + \"/funktion/1/F3\");\r",
+									"pm.expect(jsonData.funktionen[10].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[10].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[10].funktion).to.eql(\"F4\");\r",
+									"pm.expect(jsonData.funktionen[10].bezeichnung).to.eql(\"Funktion 4\");\r",
+									"pm.expect(jsonData.funktionen[10].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[10].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[10]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[10]._links.update[0].href).to.eql(self + \"/funktion/1/F4\");\r",
+									"pm.expect(jsonData.funktionen[11].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[11].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[11].funktion).to.eql(\"F5\");\r",
+									"pm.expect(jsonData.funktionen[11].bezeichnung).to.eql(\"Funktion 5\");\r",
+									"pm.expect(jsonData.funktionen[11].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[11].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[11]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[11]._links.update[0].href).to.eql(self + \"/funktion/1/F5\");\r",
+									"pm.expect(jsonData.funktionen[12].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[12].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[12].funktion).to.eql(\"F6\");\r",
+									"pm.expect(jsonData.funktionen[12].bezeichnung).to.eql(\"Funktion 6\");\r",
+									"pm.expect(jsonData.funktionen[12].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[12].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[12]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[12]._links.update[0].href).to.eql(self + \"/funktion/1/F6\");\r",
+									"pm.expect(jsonData.funktionen[13].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[13].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[13].funktion).to.eql(\"F7\");\r",
+									"pm.expect(jsonData.funktionen[13].bezeichnung).to.eql(\"Funktion 7\");\r",
+									"pm.expect(jsonData.funktionen[13].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[13].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[13]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[13]._links.update[0].href).to.eql(self + \"/funktion/1/F7\");\r",
+									"pm.expect(jsonData.funktionen[14].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[14].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[14].funktion).to.eql(\"F8\");\r",
+									"pm.expect(jsonData.funktionen[14].bezeichnung).to.eql(\"Funktion 8\");\r",
+									"pm.expect(jsonData.funktionen[14].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[14].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[14]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[14]._links.update[0].href).to.eql(self + \"/funktion/1/F8\");\r",
+									"pm.expect(jsonData.funktionen[15].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[15].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[15].funktion).to.eql(\"F9\");\r",
+									"pm.expect(jsonData.funktionen[15].bezeichnung).to.eql(\"Funktion 9\");\r",
+									"pm.expect(jsonData.funktionen[15].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[15].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[15]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[15]._links.update[0].href).to.eql(self + \"/funktion/1/F9\");\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
-									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.add[0].href).to.eql(pm.variables.replaceIn(\"{{api}}/decoder/{{hersteller}}/{{bestellNr}}\"));\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.delete[0].href).to.eql(self);"
 								],
 								"type": "text/javascript"
 							}
@@ -9047,6 +9479,46 @@
 				},
 				{
 					"name": "Update Adress",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d4bc7654-ebe5-4e25-90d5-b865c45d31b5",
+								"exec": [
+									"pm.environment.set(\"adIndex\", 1);\r",
+									"pm.environment.set(\"adBezeichnung\", \"Primary\");\r",
+									"pm.environment.set(\"adSpan\", 1);\r",
+									"pm.environment.set(\"adAdressTyp\", \"DIGITAL\");\r",
+									"pm.environment.set(\"adWerkseinstellung\", 1);\r",
+									"pm.environment.set(\"adAdress\", 30);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "44dc2117-bffa-4523-b762-f148f1c474a6",
+								"exec": [
+									"pm.response.to.have.status(202);\r",
+									"var jsonData = pm.response.json();\r",
+									"var parent = pm.variables.replaceIn(\"{{api}}/decoder/{{decoderId}}\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/decoder/{{decoderId}}/adress/{{adIndex}}\");\r",
+									"pm.expect(jsonData.decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.index).to.eql(pm.variables.get(\"adIndex\"));\r",
+									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"adBezeichnung\"));\r",
+									"pm.expect(jsonData.span).to.eql(pm.variables.get(\"adSpan\"));\r",
+									"pm.expect(jsonData.adressTyp).to.eql(pm.variables.get(\"adAdressTyp\"));\r",
+									"pm.expect(jsonData.werkseinstellung).to.eql(pm.variables.get(\"adWerkseinstellung\"));\r",
+									"pm.expect(jsonData.adress).to.eql(pm.variables.get(\"adAdress\"));\r",
+									"pm.expect(jsonData.deleted).to.be.false;\r",
+									"pm.expect(jsonData._links.parent[0].href).to.eql(parent);\r",
+									"pm.expect(jsonData._links.update[0].href).to.eql(self);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -9065,7 +9537,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/decoder/{{decoderId}}/adress/{{index}}?adress={{adress}}",
+							"raw": "{{api}}/decoder/{{decoderId}}/adress/{{adIndex}}?adress={{adAdress}}",
 							"host": [
 								"{{api}}"
 							],
@@ -9073,12 +9545,12 @@
 								"decoder",
 								"{{decoderId}}",
 								"adress",
-								"{{index}}"
+								"{{adIndex}}"
 							],
 							"query": [
 								{
 									"key": "adress",
-									"value": "{{adress}}"
+									"value": "{{adAdress}}"
 								}
 							]
 						}
@@ -9087,6 +9559,46 @@
 				},
 				{
 					"name": "Update CV",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "9bb26f0a-58a0-4525-9e20-86b05505a140",
+								"exec": [
+									"pm.environment.set(\"cvCv\", 1);\r",
+									"pm.environment.set(\"cvBezeichnung\", \"Adresse\");\r",
+									"pm.environment.set(\"cvMinimal\", 1);\r",
+									"pm.environment.set(\"cvMaximal\", 80);\r",
+									"pm.environment.set(\"cvWerkseinstellung\", 3);\r",
+									"pm.environment.set(\"cvWert\", 45);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e347c7b0-fd8b-4e0c-a4a4-844e99d29978",
+								"exec": [
+									"pm.response.to.have.status(202);\r",
+									"var jsonData = pm.response.json();\r",
+									"var parent = pm.variables.replaceIn(\"{{api}}/decoder/{{decoderId}}\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/decoder/{{decoderId}}/cv/{{cvCv}}\");\r",
+									"pm.expect(jsonData.decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cv).to.eql(pm.variables.get(\"cvCv\"));\r",
+									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"cvBezeichnung\"));\r",
+									"pm.expect(jsonData.minimal).to.eql(pm.variables.get(\"cvMinimal\"));\r",
+									"pm.expect(jsonData.maximal).to.eql(pm.variables.get(\"cvMaximal\"));\r",
+									"pm.expect(jsonData.werkseinstellung).to.eql(pm.variables.get(\"cvWerkseinstellung\"));\r",
+									"pm.expect(jsonData.wert).to.eql(pm.variables.get(\"cvWert\"));\r",
+									"pm.expect(jsonData.deleted).to.be.false;\r",
+									"pm.expect(jsonData._links.parent[0].href).to.eql(parent);\r",
+									"pm.expect(jsonData._links.update[0].href).to.eql(self);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -9105,7 +9617,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/decoder/{{decoderId}}/cv/{{cv}}?wert={{wert}}",
+							"raw": "{{api}}/decoder/{{decoderId}}/cv/{{cvCv}}?wert={{cvWert}}",
 							"host": [
 								"{{api}}"
 							],
@@ -9113,12 +9625,12 @@
 								"decoder",
 								"{{decoderId}}",
 								"cv",
-								"{{cv}}"
+								"{{cvCv}}"
 							],
 							"query": [
 								{
 									"key": "wert",
-									"value": "{{wert}}"
+									"value": "{{cvWert}}"
 								}
 							]
 						}
@@ -9127,6 +9639,41 @@
 				},
 				{
 					"name": "Update Funktion",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "67ae43d8-bb39-48ca-b7eb-d4a8ae40ab8c",
+								"exec": [
+									"pm.environment.set(\"fnReihe\", 1);\r",
+									"pm.environment.set(\"fnFunktion\", \"F0\");\r",
+									"pm.environment.set(\"fnBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d17d647c-0efc-43de-b6ea-6f8ef06264df",
+								"exec": [
+									"pm.response.to.have.status(202);\r",
+									"var jsonData = pm.response.json();\r",
+									"var parent = pm.variables.replaceIn(\"{{api}}/decoder/{{decoderId}}\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/decoder/{{decoderId}}/funktion/{{fnReihe}}/{{fnFunktion}}\");\r",
+									"pm.expect(jsonData.decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.reihe).to.eql(pm.variables.get(\"fnReihe\"));\r",
+									"pm.expect(jsonData.funktion).to.eql(pm.variables.get(\"fnFunktion\"));\r",
+									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"fnBezeichnung\"));\r",
+									"pm.expect(jsonData.programmable).to.eql(false);\r",
+									"pm.expect(jsonData.deleted).to.be.false;\r",
+									"pm.expect(jsonData._links.parent[0].href).to.eql(parent);\r",
+									"pm.expect(jsonData._links.update[0].href).to.eql(self);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -9145,7 +9692,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/decoder/{{decoderId}}/funktion/{{funktion}}/{{reihe}}?bezeichnung={{bezeichnung}}",
+							"raw": "{{api}}/decoder/{{decoderId}}/funktion/{{fnReihe}}/{{fnFunktion}}?bezeichnung={{fnBezeichnung}}",
 							"host": [
 								"{{api}}"
 							],
@@ -9153,13 +9700,13 @@
 								"decoder",
 								"{{decoderId}}",
 								"funktion",
-								"{{funktion}}",
-								"{{reihe}}"
+								"{{fnReihe}}",
+								"{{fnFunktion}}"
 							],
 							"query": [
 								{
 									"key": "bezeichnung",
-									"value": "{{bezeichnung}}"
+									"value": "{{fnBezeichnung}}"
 								}
 							]
 						}
@@ -9174,7 +9721,10 @@
 							"script": {
 								"id": "9e5a6784-5f60-468d-8a05-535bcb4e5076",
 								"exec": [
-									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"protokoll\", \"DCC\");\r",
+									"pm.environment.set(\"fahrstufe\", 28);\r",
+									"pm.environment.set(\"status\", \"BASTLER\");"
 								],
 								"type": "text/javascript"
 							}
@@ -9186,16 +9736,374 @@
 								"exec": [
 									"pm.response.to.have.status(202);\r",
 									"var jsonData = pm.response.json();\r",
+									"pm.variables.set(\"decoderId\", jsonData.decoderId);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoder\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/decoder/{{decoderId}}\");\r",
-									"pm.expect(jsonData.decoderId).to.eql(pm.variables.get(\"decoderId\"));\r",
+									"pm.expect(jsonData.decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
+									"pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\"));\r",
+									"pm.expect(jsonData.iMax).to.eql(undefined);\r",
+									"pm.expect(jsonData.protokoll).to.eql(pm.variables.get(\"protokoll\"));\r",
+									"pm.expect(jsonData.fahrstufe).to.eql(pm.variables.get(\"fahrstufe\"));\r",
+									"pm.expect(jsonData.gerausch).to.be.true;\r",
+									"pm.expect(jsonData.konfiguration).to.eql(pm.variables.get(\"konfiguration\"));\r",
+									"pm.expect(jsonData.stecker).to.eql(pm.variables.get(\"stecker\"));\r",
+									"pm.expect(jsonData.status).to.eql(pm.variables.get(\"status\"));\r",
+									"pm.expect(jsonData.anleitungen).to.eql(undefined);\r",
+									"pm.expect(jsonData.adressen.length).to.eql(1);\r",
+									"pm.expect(jsonData.adressen[0].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.adressen[0].index).to.eql(pm.variables.get(\"adIndex\"));\r",
+									"pm.expect(jsonData.adressen[0].bezeichnung).to.eql(pm.variables.get(\"adBezeichnung\"));\r",
+									"pm.expect(jsonData.adressen[0].span).to.eql(pm.variables.get(\"adSpan\"));\r",
+									"pm.expect(jsonData.adressen[0].adressTyp).to.eql(pm.variables.get(\"adAdressTyp\"));\r",
+									"pm.expect(jsonData.adressen[0].werkseinstellung).to.eql(pm.variables.get(\"adWerkseinstellung\"));\r",
+									"pm.expect(jsonData.adressen[0].adress).to.eql(pm.variables.get(\"adAdress\"));\r",
+									"pm.expect(jsonData.adressen[0].deleted).to.be.false;\r",
+									"pm.expect(jsonData.adressen[0]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.adressen[0]._links.update[0].href).to.eql(self + \"/adress/1\");\r",
+									"pm.expect(jsonData.cvs.length).to.eql(21);\r",
+									"pm.expect(jsonData.cvs[0].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[0].cv).to.eql(pm.variables.get(\"cvCv\"));\r",
+									"pm.expect(jsonData.cvs[0].bezeichnung).to.eql(pm.variables.get(\"cvBezeichnung\"));\r",
+									"pm.expect(jsonData.cvs[0].minimal).to.eql(pm.variables.get(\"cvMinimal\"));\r",
+									"pm.expect(jsonData.cvs[0].maximal).to.eql(pm.variables.get(\"cvMaximal\"));\r",
+									"pm.expect(jsonData.cvs[0].werkseinstellung).to.eql(pm.variables.get(\"cvWerkseinstellung\"));\r",
+									"pm.expect(jsonData.cvs[0].wert).to.eql(pm.variables.get(\"cvWert\"));\r",
+									"pm.expect(jsonData.cvs[0].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[0]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[0]._links.update[0].href).to.eql(self + \"/cv/1\");\r",
+									"pm.expect(jsonData.cvs[1].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[1].cv).to.eql(2);\r",
+									"pm.expect(jsonData.cvs[1].bezeichnung).to.eql(\"Anfahrverzögerung\");\r",
+									"pm.expect(jsonData.cvs[1].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[1].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[1].werkseinstellung).to.eql(3);\r",
+									"pm.expect(jsonData.cvs[1].wert).to.eql(3);\r",
+									"pm.expect(jsonData.cvs[1].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[1]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[1]._links.update[0].href).to.eql(self + \"/cv/2\");\r",
+									"pm.expect(jsonData.cvs[2].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[2].cv).to.eql(3);\r",
+									"pm.expect(jsonData.cvs[2].bezeichnung).to.eql(\"Beschleunigungszeit\");\r",
+									"pm.expect(jsonData.cvs[2].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[2].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[2].werkseinstellung).to.eql(16);\r",
+									"pm.expect(jsonData.cvs[2].wert).to.eql(16);\r",
+									"pm.expect(jsonData.cvs[2].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[2]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[2]._links.update[0].href).to.eql(self + \"/cv/3\");\r",
+									"pm.expect(jsonData.cvs[3].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[3].cv).to.eql(4);\r",
+									"pm.expect(jsonData.cvs[3].bezeichnung).to.eql(\"Bremsverzögerung\");\r",
+									"pm.expect(jsonData.cvs[3].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[3].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[3].werkseinstellung).to.eql(12);\r",
+									"pm.expect(jsonData.cvs[3].wert).to.eql(12);\r",
+									"pm.expect(jsonData.cvs[3].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[3]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[3]._links.update[0].href).to.eql(self + \"/cv/4\");\r",
+									"pm.expect(jsonData.cvs[4].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[4].cv).to.eql(5);\r",
+									"pm.expect(jsonData.cvs[4].bezeichnung).to.eql(\"Höchstgeschwindigkeit\");\r",
+									"pm.expect(jsonData.cvs[4].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[4].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[4].werkseinstellung).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[4].wert).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[4].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[4]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[4]._links.update[0].href).to.eql(self + \"/cv/5\");\r",
+									"pm.expect(jsonData.cvs[5].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[5].cv).to.eql(8);\r",
+									"pm.expect(jsonData.cvs[5].bezeichnung).to.eql(\"Rückstellen auf Serienwerte\");\r",
+									"pm.expect(jsonData.cvs[5].werkseinstellung).to.eql(8);\r",
+									"pm.expect(jsonData.cvs[5].wert).to.eql(8);\r",
+									"pm.expect(jsonData.cvs[5].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[5]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[5]._links.update[0].href).to.eql(self + \"/cv/8\");\r",
+									"pm.expect(jsonData.cvs[6].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[6].cv).to.eql(53);\r",
+									"pm.expect(jsonData.cvs[6].bezeichnung).to.eql(\"Regelungsreferenz\");\r",
+									"pm.expect(jsonData.cvs[6].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[6].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[6].werkseinstellung).to.eql(56);\r",
+									"pm.expect(jsonData.cvs[6].wert).to.eql(56);\r",
+									"pm.expect(jsonData.cvs[6].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[6]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[6]._links.update[0].href).to.eql(self + \"/cv/53\");\r",
+									"pm.expect(jsonData.cvs[7].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[7].cv).to.eql(54);\r",
+									"pm.expect(jsonData.cvs[7].bezeichnung).to.eql(\"Lastregelung Param. K\");\r",
+									"pm.expect(jsonData.cvs[7].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[7].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[7].werkseinstellung).to.eql(32);\r",
+									"pm.expect(jsonData.cvs[7].wert).to.eql(32);\r",
+									"pm.expect(jsonData.cvs[7].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[7]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[7]._links.update[0].href).to.eql(self + \"/cv/54\");\r",
+									"pm.expect(jsonData.cvs[8].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[8].cv).to.eql(55);\r",
+									"pm.expect(jsonData.cvs[8].bezeichnung).to.eql(\"Lastregelung Param. L\");\r",
+									"pm.expect(jsonData.cvs[8].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[8].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[8].werkseinstellung).to.eql(24);\r",
+									"pm.expect(jsonData.cvs[8].wert).to.eql(24);\r",
+									"pm.expect(jsonData.cvs[8].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[8]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[8]._links.update[0].href).to.eql(self + \"/cv/55\");\r",
+									"pm.expect(jsonData.cvs[9].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[9].cv).to.eql(56);\r",
+									"pm.expect(jsonData.cvs[9].bezeichnung).to.eql(\"Regelungseinfluss\");\r",
+									"pm.expect(jsonData.cvs[9].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[9].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[9].werkseinstellung).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[9].wert).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[9].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[9]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[9]._links.update[0].href).to.eql(self + \"/cv/56\");\r",
+									"pm.expect(jsonData.cvs[10].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[10].cv).to.eql(57);\r",
+									"pm.expect(jsonData.cvs[10].bezeichnung).to.eql(\"Geräuschmodus 1\");\r",
+									"pm.expect(jsonData.cvs[10].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[10].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[10].werkseinstellung).to.eql(10);\r",
+									"pm.expect(jsonData.cvs[10].wert).to.eql(10);\r",
+									"pm.expect(jsonData.cvs[10].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[10]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[10]._links.update[0].href).to.eql(self + \"/cv/57\");\r",
+									"pm.expect(jsonData.cvs[11].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[11].cv).to.eql(58);\r",
+									"pm.expect(jsonData.cvs[11].bezeichnung).to.eql(\"Geräuschmodus 2\");\r",
+									"pm.expect(jsonData.cvs[11].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[11].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[11].werkseinstellung).to.eql(58);\r",
+									"pm.expect(jsonData.cvs[11].wert).to.eql(58);\r",
+									"pm.expect(jsonData.cvs[11].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[11]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[11]._links.update[0].href).to.eql(self + \"/cv/58\");\r",
+									"pm.expect(jsonData.cvs[12].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[12].cv).to.eql(59);\r",
+									"pm.expect(jsonData.cvs[12].bezeichnung).to.eql(\"Fahrgeräusch\");\r",
+									"pm.expect(jsonData.cvs[12].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[12].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[12].werkseinstellung).to.eql(32);\r",
+									"pm.expect(jsonData.cvs[12].wert).to.eql(32);\r",
+									"pm.expect(jsonData.cvs[12].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[12]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[12]._links.update[0].href).to.eql(self + \"/cv/59\");\r",
+									"pm.expect(jsonData.cvs[13].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[13].cv).to.eql(60);\r",
+									"pm.expect(jsonData.cvs[13].bezeichnung).to.eql(\"Fahrgeräusch\");\r",
+									"pm.expect(jsonData.cvs[13].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[13].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[13].werkseinstellung).to.eql(55);\r",
+									"pm.expect(jsonData.cvs[13].wert).to.eql(55);\r",
+									"pm.expect(jsonData.cvs[13].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[13]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[13]._links.update[0].href).to.eql(self + \"/cv/60\");\r",
+									"pm.expect(jsonData.cvs[14].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[14].cv).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[14].bezeichnung).to.eql(\"Geräuschlautstärke\");\r",
+									"pm.expect(jsonData.cvs[14].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[14].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[14].werkseinstellung).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[14].wert).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[14].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[14]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[14]._links.update[0].href).to.eql(self + \"/cv/63\");\r",
+									"pm.expect(jsonData.cvs[15].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[15].cv).to.eql(64);\r",
+									"pm.expect(jsonData.cvs[15].bezeichnung).to.eql(\"Bremssoundschwelle\");\r",
+									"pm.expect(jsonData.cvs[15].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[15].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[15].werkseinstellung).to.eql(7);\r",
+									"pm.expect(jsonData.cvs[15].wert).to.eql(7);\r",
+									"pm.expect(jsonData.cvs[15].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[15]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[15]._links.update[0].href).to.eql(self + \"/cv/64\");\r",
+									"pm.expect(jsonData.cvs[16].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[16].cv).to.eql(73);\r",
+									"pm.expect(jsonData.cvs[16].bezeichnung).to.eql(\"Speicheroptionen\");\r",
+									"pm.expect(jsonData.cvs[16].minimal).to.eql(0);\r",
+									"pm.expect(jsonData.cvs[16].maximal).to.eql(7);\r",
+									"pm.expect(jsonData.cvs[16].werkseinstellung).to.eql(3);\r",
+									"pm.expect(jsonData.cvs[16].wert).to.eql(3);\r",
+									"pm.expect(jsonData.cvs[16].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[16]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[16]._links.update[0].href).to.eql(self + \"/cv/73\");\r",
+									"pm.expect(jsonData.cvs[17].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[17].cv).to.eql(74);\r",
+									"pm.expect(jsonData.cvs[17].bezeichnung).to.eql(\"Märklin Addresse 2\");\r",
+									"pm.expect(jsonData.cvs[17].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[17].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[17].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[17]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[17]._links.update[0].href).to.eql(self + \"/cv/74\");\r",
+									"pm.expect(jsonData.cvs[18].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[18].cv).to.eql(75);\r",
+									"pm.expect(jsonData.cvs[18].bezeichnung).to.eql(\"Märklin Addresse 2\");\r",
+									"pm.expect(jsonData.cvs[18].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[18].maximal).to.eql(80);\r",
+									"pm.expect(jsonData.cvs[18].werkseinstellung).to.eql(4);\r",
+									"pm.expect(jsonData.cvs[18].wert).to.eql(4);\r",
+									"pm.expect(jsonData.cvs[18].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[18]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[18]._links.update[0].href).to.eql(self + \"/cv/75\");\r",
+									"pm.expect(jsonData.cvs[19].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[19].cv).to.eql(78);\r",
+									"pm.expect(jsonData.cvs[19].bezeichnung).to.eql(\"Anfahrspannung Analog AC\");\r",
+									"pm.expect(jsonData.cvs[19].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[19].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[19].werkseinstellung).to.eql(25);\r",
+									"pm.expect(jsonData.cvs[19].wert).to.eql(25);\r",
+									"pm.expect(jsonData.cvs[19].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[19]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[19]._links.update[0].href).to.eql(self + \"/cv/78\");\r",
+									"pm.expect(jsonData.cvs[20].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[20].cv).to.eql(79);\r",
+									"pm.expect(jsonData.cvs[20].bezeichnung).to.eql(\"Höchstgeschwindigkeit Analog AC\");\r",
+									"pm.expect(jsonData.cvs[20].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[20].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[20].werkseinstellung).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[20].wert).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[20].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[20]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[20]._links.update[0].href).to.eql(self + \"/cv/79\");\r",
+									"pm.expect(jsonData.funktionen.length).to.eql(16);\r",
+									"pm.expect(jsonData.funktionen[0].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[0].reihe).to.eql(pm.variables.get(\"fnReihe\"));\r",
+									"pm.expect(jsonData.funktionen[0].funktion).to.eql(pm.variables.get(\"fnFunktion\"));\r",
+									"pm.expect(jsonData.funktionen[0].bezeichnung).to.eql(pm.variables.get(\"fnBezeichnung\"));\r",
+									"pm.expect(jsonData.funktionen[0].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[0].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[0]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[0]._links.update[0].href).to.eql(self + \"/funktion/1/F0\");\r",
+									"pm.expect(jsonData.funktionen[1].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[1].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[1].funktion).to.eql(\"F1\");\r",
+									"pm.expect(jsonData.funktionen[1].bezeichnung).to.eql(\"Funktion 1\");\r",
+									"pm.expect(jsonData.funktionen[1].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[1].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[1]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[1]._links.update[0].href).to.eql(self + \"/funktion/1/F1\");\r",
+									"pm.expect(jsonData.funktionen[2].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[2].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[2].funktion).to.eql(\"F10\");\r",
+									"pm.expect(jsonData.funktionen[2].bezeichnung).to.eql(\"Funktion 10\");\r",
+									"pm.expect(jsonData.funktionen[2].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[2].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[2]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[2]._links.update[0].href).to.eql(self + \"/funktion/1/F10\");\r",
+									"pm.expect(jsonData.funktionen[3].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[3].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[3].funktion).to.eql(\"F11\");\r",
+									"pm.expect(jsonData.funktionen[3].bezeichnung).to.eql(\"Funktion 11\");\r",
+									"pm.expect(jsonData.funktionen[3].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[3].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[3]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[3]._links.update[0].href).to.eql(self + \"/funktion/1/F11\");\r",
+									"pm.expect(jsonData.funktionen[4].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[4].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[4].funktion).to.eql(\"F12\");\r",
+									"pm.expect(jsonData.funktionen[4].bezeichnung).to.eql(\"Funktion 12\");\r",
+									"pm.expect(jsonData.funktionen[4].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[4].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[4]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[4]._links.update[0].href).to.eql(self + \"/funktion/1/F12\");\r",
+									"pm.expect(jsonData.funktionen[5].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[5].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[5].funktion).to.eql(\"F13\");\r",
+									"pm.expect(jsonData.funktionen[5].bezeichnung).to.eql(\"Funktion 13\");\r",
+									"pm.expect(jsonData.funktionen[5].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[5].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[5]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[5]._links.update[0].href).to.eql(self + \"/funktion/1/F13\");\r",
+									"pm.expect(jsonData.funktionen[6].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[6].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[6].funktion).to.eql(\"F14\");\r",
+									"pm.expect(jsonData.funktionen[6].bezeichnung).to.eql(\"Funktion 14\");\r",
+									"pm.expect(jsonData.funktionen[6].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[6].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[6]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[6]._links.update[0].href).to.eql(self + \"/funktion/1/F14\");\r",
+									"pm.expect(jsonData.funktionen[7].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[7].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[7].funktion).to.eql(\"F15\");\r",
+									"pm.expect(jsonData.funktionen[7].bezeichnung).to.eql(\"Funktion 15\");\r",
+									"pm.expect(jsonData.funktionen[7].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[7].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[7]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[7]._links.update[0].href).to.eql(self + \"/funktion/1/F15\");\r",
+									"pm.expect(jsonData.funktionen[8].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[8].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[8].funktion).to.eql(\"F2\");\r",
+									"pm.expect(jsonData.funktionen[8].bezeichnung).to.eql(\"Funktion 2\");\r",
+									"pm.expect(jsonData.funktionen[8].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[8].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[8]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[8]._links.update[0].href).to.eql(self + \"/funktion/1/F2\");\r",
+									"pm.expect(jsonData.funktionen[9].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[9].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[9].funktion).to.eql(\"F3\");\r",
+									"pm.expect(jsonData.funktionen[9].bezeichnung).to.eql(\"Funktion 3\");\r",
+									"pm.expect(jsonData.funktionen[9].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[9].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[9]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[9]._links.update[0].href).to.eql(self + \"/funktion/1/F3\");\r",
+									"pm.expect(jsonData.funktionen[10].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[10].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[10].funktion).to.eql(\"F4\");\r",
+									"pm.expect(jsonData.funktionen[10].bezeichnung).to.eql(\"Funktion 4\");\r",
+									"pm.expect(jsonData.funktionen[10].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[10].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[10]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[10]._links.update[0].href).to.eql(self + \"/funktion/1/F4\");\r",
+									"pm.expect(jsonData.funktionen[11].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[11].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[11].funktion).to.eql(\"F5\");\r",
+									"pm.expect(jsonData.funktionen[11].bezeichnung).to.eql(\"Funktion 5\");\r",
+									"pm.expect(jsonData.funktionen[11].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[11].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[11]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[11]._links.update[0].href).to.eql(self + \"/funktion/1/F5\");\r",
+									"pm.expect(jsonData.funktionen[12].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[12].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[12].funktion).to.eql(\"F6\");\r",
+									"pm.expect(jsonData.funktionen[12].bezeichnung).to.eql(\"Funktion 6\");\r",
+									"pm.expect(jsonData.funktionen[12].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[12].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[12]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[12]._links.update[0].href).to.eql(self + \"/funktion/1/F6\");\r",
+									"pm.expect(jsonData.funktionen[13].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[13].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[13].funktion).to.eql(\"F7\");\r",
+									"pm.expect(jsonData.funktionen[13].bezeichnung).to.eql(\"Funktion 7\");\r",
+									"pm.expect(jsonData.funktionen[13].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[13].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[13]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[13]._links.update[0].href).to.eql(self + \"/funktion/1/F7\");\r",
+									"pm.expect(jsonData.funktionen[14].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[14].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[14].funktion).to.eql(\"F8\");\r",
+									"pm.expect(jsonData.funktionen[14].bezeichnung).to.eql(\"Funktion 8\");\r",
+									"pm.expect(jsonData.funktionen[14].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[14].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[14]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[14]._links.update[0].href).to.eql(self + \"/funktion/1/F8\");\r",
+									"pm.expect(jsonData.funktionen[15].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[15].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[15].funktion).to.eql(\"F9\");\r",
+									"pm.expect(jsonData.funktionen[15].bezeichnung).to.eql(\"Funktion 9\");\r",
+									"pm.expect(jsonData.funktionen[15].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[15].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[15]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[15]._links.update[0].href).to.eql(self + \"/funktion/1/F9\");\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
-									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.add[0].href).to.eql(pm.variables.replaceIn(\"{{api}}/decoder/{{hersteller}}/{{bestellNr}}\"));\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.delete[0].href).to.eql(self);"
 								],
 								"type": "text/javascript"
 							}
@@ -9220,7 +10128,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"decoderId\": \"{{decoderId}}\",\n    \"hersteller\": \"{{decoderHersteller}}\",\n    \"bestellNr\": \"{{decoderBestellNr}}\",\n    \"protokoll\": \"MFX\",\n    \"status\": \"INSTALIERT\",\n\t\"deleted\": true\n}",
+							"raw": "{\n\t\"decoderId\": \"{{decoderId}}\",\n    \"hersteller\": \"{{decoderHersteller}}\",\n    \"bestellNr\": \"{{decoderBestellNr}}\",\n    \"bezeichnung\": \"{{bezeichnung}}\",\n    \"protokoll\": \"{{protokoll}}\",\n    \"fahrstufe\": \"{{fahrstufe}}\",\n    \"status\": \"{{status}}\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -9250,16 +10158,374 @@
 								"exec": [
 									"pm.response.to.have.status(200);\r",
 									"var jsonData = pm.response.json();\r",
+									"pm.variables.set(\"decoderId\", jsonData.decoderId);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoder\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/decoder/{{decoderId}}\");\r",
-									"pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\"));\r",
+									"pm.expect(jsonData.decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\"));\r",
+									"pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\"));\r",
 									"pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\"));\r",
+									"pm.expect(jsonData.iMax).to.eql(undefined);\r",
+									"pm.expect(jsonData.protokoll).to.eql(pm.variables.get(\"protokoll\"));\r",
+									"pm.expect(jsonData.fahrstufe).to.eql(pm.variables.get(\"fahrstufe\"));\r",
+									"pm.expect(jsonData.gerausch).to.be.true;\r",
+									"pm.expect(jsonData.konfiguration).to.eql(pm.variables.get(\"konfiguration\"));\r",
+									"pm.expect(jsonData.stecker).to.eql(pm.variables.get(\"stecker\"));\r",
+									"pm.expect(jsonData.status).to.eql(pm.variables.get(\"status\"));\r",
+									"pm.expect(jsonData.anleitungen).to.eql(undefined);\r",
+									"pm.expect(jsonData.adressen.length).to.eql(1);\r",
+									"pm.expect(jsonData.adressen[0].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.adressen[0].index).to.eql(pm.variables.get(\"adIndex\"));\r",
+									"pm.expect(jsonData.adressen[0].bezeichnung).to.eql(pm.variables.get(\"adBezeichnung\"));\r",
+									"pm.expect(jsonData.adressen[0].span).to.eql(pm.variables.get(\"adSpan\"));\r",
+									"pm.expect(jsonData.adressen[0].adressTyp).to.eql(pm.variables.get(\"adAdressTyp\"));\r",
+									"pm.expect(jsonData.adressen[0].werkseinstellung).to.eql(pm.variables.get(\"adWerkseinstellung\"));\r",
+									"pm.expect(jsonData.adressen[0].adress).to.eql(pm.variables.get(\"adAdress\"));\r",
+									"pm.expect(jsonData.adressen[0].deleted).to.be.false;\r",
+									"pm.expect(jsonData.adressen[0]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.adressen[0]._links.update[0].href).to.eql(self + \"/adress/1\");\r",
+									"pm.expect(jsonData.cvs.length).to.eql(21);\r",
+									"pm.expect(jsonData.cvs[0].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[0].cv).to.eql(pm.variables.get(\"cvCv\"));\r",
+									"pm.expect(jsonData.cvs[0].bezeichnung).to.eql(pm.variables.get(\"cvBezeichnung\"));\r",
+									"pm.expect(jsonData.cvs[0].minimal).to.eql(pm.variables.get(\"cvMinimal\"));\r",
+									"pm.expect(jsonData.cvs[0].maximal).to.eql(pm.variables.get(\"cvMaximal\"));\r",
+									"pm.expect(jsonData.cvs[0].werkseinstellung).to.eql(pm.variables.get(\"cvWerkseinstellung\"));\r",
+									"pm.expect(jsonData.cvs[0].wert).to.eql(pm.variables.get(\"cvWert\"));\r",
+									"pm.expect(jsonData.cvs[0].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[0]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[0]._links.update[0].href).to.eql(self + \"/cv/1\");\r",
+									"pm.expect(jsonData.cvs[1].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[1].cv).to.eql(2);\r",
+									"pm.expect(jsonData.cvs[1].bezeichnung).to.eql(\"Anfahrverzögerung\");\r",
+									"pm.expect(jsonData.cvs[1].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[1].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[1].werkseinstellung).to.eql(3);\r",
+									"pm.expect(jsonData.cvs[1].wert).to.eql(3);\r",
+									"pm.expect(jsonData.cvs[1].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[1]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[1]._links.update[0].href).to.eql(self + \"/cv/2\");\r",
+									"pm.expect(jsonData.cvs[2].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[2].cv).to.eql(3);\r",
+									"pm.expect(jsonData.cvs[2].bezeichnung).to.eql(\"Beschleunigungszeit\");\r",
+									"pm.expect(jsonData.cvs[2].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[2].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[2].werkseinstellung).to.eql(16);\r",
+									"pm.expect(jsonData.cvs[2].wert).to.eql(16);\r",
+									"pm.expect(jsonData.cvs[2].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[2]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[2]._links.update[0].href).to.eql(self + \"/cv/3\");\r",
+									"pm.expect(jsonData.cvs[3].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[3].cv).to.eql(4);\r",
+									"pm.expect(jsonData.cvs[3].bezeichnung).to.eql(\"Bremsverzögerung\");\r",
+									"pm.expect(jsonData.cvs[3].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[3].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[3].werkseinstellung).to.eql(12);\r",
+									"pm.expect(jsonData.cvs[3].wert).to.eql(12);\r",
+									"pm.expect(jsonData.cvs[3].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[3]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[3]._links.update[0].href).to.eql(self + \"/cv/4\");\r",
+									"pm.expect(jsonData.cvs[4].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[4].cv).to.eql(5);\r",
+									"pm.expect(jsonData.cvs[4].bezeichnung).to.eql(\"Höchstgeschwindigkeit\");\r",
+									"pm.expect(jsonData.cvs[4].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[4].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[4].werkseinstellung).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[4].wert).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[4].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[4]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[4]._links.update[0].href).to.eql(self + \"/cv/5\");\r",
+									"pm.expect(jsonData.cvs[5].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[5].cv).to.eql(8);\r",
+									"pm.expect(jsonData.cvs[5].bezeichnung).to.eql(\"Rückstellen auf Serienwerte\");\r",
+									"pm.expect(jsonData.cvs[5].werkseinstellung).to.eql(8);\r",
+									"pm.expect(jsonData.cvs[5].wert).to.eql(8);\r",
+									"pm.expect(jsonData.cvs[5].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[5]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[5]._links.update[0].href).to.eql(self + \"/cv/8\");\r",
+									"pm.expect(jsonData.cvs[6].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[6].cv).to.eql(53);\r",
+									"pm.expect(jsonData.cvs[6].bezeichnung).to.eql(\"Regelungsreferenz\");\r",
+									"pm.expect(jsonData.cvs[6].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[6].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[6].werkseinstellung).to.eql(56);\r",
+									"pm.expect(jsonData.cvs[6].wert).to.eql(56);\r",
+									"pm.expect(jsonData.cvs[6].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[6]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[6]._links.update[0].href).to.eql(self + \"/cv/53\");\r",
+									"pm.expect(jsonData.cvs[7].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[7].cv).to.eql(54);\r",
+									"pm.expect(jsonData.cvs[7].bezeichnung).to.eql(\"Lastregelung Param. K\");\r",
+									"pm.expect(jsonData.cvs[7].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[7].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[7].werkseinstellung).to.eql(32);\r",
+									"pm.expect(jsonData.cvs[7].wert).to.eql(32);\r",
+									"pm.expect(jsonData.cvs[7].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[7]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[7]._links.update[0].href).to.eql(self + \"/cv/54\");\r",
+									"pm.expect(jsonData.cvs[8].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[8].cv).to.eql(55);\r",
+									"pm.expect(jsonData.cvs[8].bezeichnung).to.eql(\"Lastregelung Param. L\");\r",
+									"pm.expect(jsonData.cvs[8].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[8].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[8].werkseinstellung).to.eql(24);\r",
+									"pm.expect(jsonData.cvs[8].wert).to.eql(24);\r",
+									"pm.expect(jsonData.cvs[8].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[8]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[8]._links.update[0].href).to.eql(self + \"/cv/55\");\r",
+									"pm.expect(jsonData.cvs[9].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[9].cv).to.eql(56);\r",
+									"pm.expect(jsonData.cvs[9].bezeichnung).to.eql(\"Regelungseinfluss\");\r",
+									"pm.expect(jsonData.cvs[9].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[9].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[9].werkseinstellung).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[9].wert).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[9].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[9]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[9]._links.update[0].href).to.eql(self + \"/cv/56\");\r",
+									"pm.expect(jsonData.cvs[10].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[10].cv).to.eql(57);\r",
+									"pm.expect(jsonData.cvs[10].bezeichnung).to.eql(\"Geräuschmodus 1\");\r",
+									"pm.expect(jsonData.cvs[10].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[10].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[10].werkseinstellung).to.eql(10);\r",
+									"pm.expect(jsonData.cvs[10].wert).to.eql(10);\r",
+									"pm.expect(jsonData.cvs[10].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[10]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[10]._links.update[0].href).to.eql(self + \"/cv/57\");\r",
+									"pm.expect(jsonData.cvs[11].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[11].cv).to.eql(58);\r",
+									"pm.expect(jsonData.cvs[11].bezeichnung).to.eql(\"Geräuschmodus 2\");\r",
+									"pm.expect(jsonData.cvs[11].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[11].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[11].werkseinstellung).to.eql(58);\r",
+									"pm.expect(jsonData.cvs[11].wert).to.eql(58);\r",
+									"pm.expect(jsonData.cvs[11].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[11]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[11]._links.update[0].href).to.eql(self + \"/cv/58\");\r",
+									"pm.expect(jsonData.cvs[12].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[12].cv).to.eql(59);\r",
+									"pm.expect(jsonData.cvs[12].bezeichnung).to.eql(\"Fahrgeräusch\");\r",
+									"pm.expect(jsonData.cvs[12].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[12].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[12].werkseinstellung).to.eql(32);\r",
+									"pm.expect(jsonData.cvs[12].wert).to.eql(32);\r",
+									"pm.expect(jsonData.cvs[12].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[12]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[12]._links.update[0].href).to.eql(self + \"/cv/59\");\r",
+									"pm.expect(jsonData.cvs[13].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[13].cv).to.eql(60);\r",
+									"pm.expect(jsonData.cvs[13].bezeichnung).to.eql(\"Fahrgeräusch\");\r",
+									"pm.expect(jsonData.cvs[13].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[13].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[13].werkseinstellung).to.eql(55);\r",
+									"pm.expect(jsonData.cvs[13].wert).to.eql(55);\r",
+									"pm.expect(jsonData.cvs[13].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[13]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[13]._links.update[0].href).to.eql(self + \"/cv/60\");\r",
+									"pm.expect(jsonData.cvs[14].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[14].cv).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[14].bezeichnung).to.eql(\"Geräuschlautstärke\");\r",
+									"pm.expect(jsonData.cvs[14].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[14].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[14].werkseinstellung).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[14].wert).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[14].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[14]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[14]._links.update[0].href).to.eql(self + \"/cv/63\");\r",
+									"pm.expect(jsonData.cvs[15].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[15].cv).to.eql(64);\r",
+									"pm.expect(jsonData.cvs[15].bezeichnung).to.eql(\"Bremssoundschwelle\");\r",
+									"pm.expect(jsonData.cvs[15].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[15].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[15].werkseinstellung).to.eql(7);\r",
+									"pm.expect(jsonData.cvs[15].wert).to.eql(7);\r",
+									"pm.expect(jsonData.cvs[15].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[15]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[15]._links.update[0].href).to.eql(self + \"/cv/64\");\r",
+									"pm.expect(jsonData.cvs[16].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[16].cv).to.eql(73);\r",
+									"pm.expect(jsonData.cvs[16].bezeichnung).to.eql(\"Speicheroptionen\");\r",
+									"pm.expect(jsonData.cvs[16].minimal).to.eql(0);\r",
+									"pm.expect(jsonData.cvs[16].maximal).to.eql(7);\r",
+									"pm.expect(jsonData.cvs[16].werkseinstellung).to.eql(3);\r",
+									"pm.expect(jsonData.cvs[16].wert).to.eql(3);\r",
+									"pm.expect(jsonData.cvs[16].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[16]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[16]._links.update[0].href).to.eql(self + \"/cv/73\");\r",
+									"pm.expect(jsonData.cvs[17].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[17].cv).to.eql(74);\r",
+									"pm.expect(jsonData.cvs[17].bezeichnung).to.eql(\"Märklin Addresse 2\");\r",
+									"pm.expect(jsonData.cvs[17].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[17].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[17].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[17]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[17]._links.update[0].href).to.eql(self + \"/cv/74\");\r",
+									"pm.expect(jsonData.cvs[18].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[18].cv).to.eql(75);\r",
+									"pm.expect(jsonData.cvs[18].bezeichnung).to.eql(\"Märklin Addresse 2\");\r",
+									"pm.expect(jsonData.cvs[18].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[18].maximal).to.eql(80);\r",
+									"pm.expect(jsonData.cvs[18].werkseinstellung).to.eql(4);\r",
+									"pm.expect(jsonData.cvs[18].wert).to.eql(4);\r",
+									"pm.expect(jsonData.cvs[18].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[18]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[18]._links.update[0].href).to.eql(self + \"/cv/75\");\r",
+									"pm.expect(jsonData.cvs[19].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[19].cv).to.eql(78);\r",
+									"pm.expect(jsonData.cvs[19].bezeichnung).to.eql(\"Anfahrspannung Analog AC\");\r",
+									"pm.expect(jsonData.cvs[19].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[19].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[19].werkseinstellung).to.eql(25);\r",
+									"pm.expect(jsonData.cvs[19].wert).to.eql(25);\r",
+									"pm.expect(jsonData.cvs[19].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[19]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[19]._links.update[0].href).to.eql(self + \"/cv/78\");\r",
+									"pm.expect(jsonData.cvs[20].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.cvs[20].cv).to.eql(79);\r",
+									"pm.expect(jsonData.cvs[20].bezeichnung).to.eql(\"Höchstgeschwindigkeit Analog AC\");\r",
+									"pm.expect(jsonData.cvs[20].minimal).to.eql(1);\r",
+									"pm.expect(jsonData.cvs[20].maximal).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[20].werkseinstellung).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[20].wert).to.eql(63);\r",
+									"pm.expect(jsonData.cvs[20].deleted).to.be.false;\r",
+									"pm.expect(jsonData.cvs[20]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.cvs[20]._links.update[0].href).to.eql(self + \"/cv/79\");\r",
+									"pm.expect(jsonData.funktionen.length).to.eql(16);\r",
+									"pm.expect(jsonData.funktionen[0].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[0].reihe).to.eql(pm.variables.get(\"fnReihe\"));\r",
+									"pm.expect(jsonData.funktionen[0].funktion).to.eql(pm.variables.get(\"fnFunktion\"));\r",
+									"pm.expect(jsonData.funktionen[0].bezeichnung).to.eql(pm.variables.get(\"fnBezeichnung\"));\r",
+									"pm.expect(jsonData.funktionen[0].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[0].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[0]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[0]._links.update[0].href).to.eql(self + \"/funktion/1/F0\");\r",
+									"pm.expect(jsonData.funktionen[1].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[1].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[1].funktion).to.eql(\"F1\");\r",
+									"pm.expect(jsonData.funktionen[1].bezeichnung).to.eql(\"Funktion 1\");\r",
+									"pm.expect(jsonData.funktionen[1].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[1].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[1]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[1]._links.update[0].href).to.eql(self + \"/funktion/1/F1\");\r",
+									"pm.expect(jsonData.funktionen[2].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[2].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[2].funktion).to.eql(\"F10\");\r",
+									"pm.expect(jsonData.funktionen[2].bezeichnung).to.eql(\"Funktion 10\");\r",
+									"pm.expect(jsonData.funktionen[2].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[2].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[2]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[2]._links.update[0].href).to.eql(self + \"/funktion/1/F10\");\r",
+									"pm.expect(jsonData.funktionen[3].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[3].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[3].funktion).to.eql(\"F11\");\r",
+									"pm.expect(jsonData.funktionen[3].bezeichnung).to.eql(\"Funktion 11\");\r",
+									"pm.expect(jsonData.funktionen[3].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[3].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[3]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[3]._links.update[0].href).to.eql(self + \"/funktion/1/F11\");\r",
+									"pm.expect(jsonData.funktionen[4].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[4].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[4].funktion).to.eql(\"F12\");\r",
+									"pm.expect(jsonData.funktionen[4].bezeichnung).to.eql(\"Funktion 12\");\r",
+									"pm.expect(jsonData.funktionen[4].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[4].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[4]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[4]._links.update[0].href).to.eql(self + \"/funktion/1/F12\");\r",
+									"pm.expect(jsonData.funktionen[5].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[5].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[5].funktion).to.eql(\"F13\");\r",
+									"pm.expect(jsonData.funktionen[5].bezeichnung).to.eql(\"Funktion 13\");\r",
+									"pm.expect(jsonData.funktionen[5].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[5].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[5]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[5]._links.update[0].href).to.eql(self + \"/funktion/1/F13\");\r",
+									"pm.expect(jsonData.funktionen[6].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[6].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[6].funktion).to.eql(\"F14\");\r",
+									"pm.expect(jsonData.funktionen[6].bezeichnung).to.eql(\"Funktion 14\");\r",
+									"pm.expect(jsonData.funktionen[6].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[6].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[6]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[6]._links.update[0].href).to.eql(self + \"/funktion/1/F14\");\r",
+									"pm.expect(jsonData.funktionen[7].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[7].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[7].funktion).to.eql(\"F15\");\r",
+									"pm.expect(jsonData.funktionen[7].bezeichnung).to.eql(\"Funktion 15\");\r",
+									"pm.expect(jsonData.funktionen[7].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[7].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[7]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[7]._links.update[0].href).to.eql(self + \"/funktion/1/F15\");\r",
+									"pm.expect(jsonData.funktionen[8].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[8].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[8].funktion).to.eql(\"F2\");\r",
+									"pm.expect(jsonData.funktionen[8].bezeichnung).to.eql(\"Funktion 2\");\r",
+									"pm.expect(jsonData.funktionen[8].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[8].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[8]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[8]._links.update[0].href).to.eql(self + \"/funktion/1/F2\");\r",
+									"pm.expect(jsonData.funktionen[9].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[9].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[9].funktion).to.eql(\"F3\");\r",
+									"pm.expect(jsonData.funktionen[9].bezeichnung).to.eql(\"Funktion 3\");\r",
+									"pm.expect(jsonData.funktionen[9].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[9].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[9]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[9]._links.update[0].href).to.eql(self + \"/funktion/1/F3\");\r",
+									"pm.expect(jsonData.funktionen[10].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[10].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[10].funktion).to.eql(\"F4\");\r",
+									"pm.expect(jsonData.funktionen[10].bezeichnung).to.eql(\"Funktion 4\");\r",
+									"pm.expect(jsonData.funktionen[10].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[10].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[10]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[10]._links.update[0].href).to.eql(self + \"/funktion/1/F4\");\r",
+									"pm.expect(jsonData.funktionen[11].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[11].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[11].funktion).to.eql(\"F5\");\r",
+									"pm.expect(jsonData.funktionen[11].bezeichnung).to.eql(\"Funktion 5\");\r",
+									"pm.expect(jsonData.funktionen[11].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[11].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[11]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[11]._links.update[0].href).to.eql(self + \"/funktion/1/F5\");\r",
+									"pm.expect(jsonData.funktionen[12].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[12].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[12].funktion).to.eql(\"F6\");\r",
+									"pm.expect(jsonData.funktionen[12].bezeichnung).to.eql(\"Funktion 6\");\r",
+									"pm.expect(jsonData.funktionen[12].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[12].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[12]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[12]._links.update[0].href).to.eql(self + \"/funktion/1/F6\");\r",
+									"pm.expect(jsonData.funktionen[13].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[13].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[13].funktion).to.eql(\"F7\");\r",
+									"pm.expect(jsonData.funktionen[13].bezeichnung).to.eql(\"Funktion 7\");\r",
+									"pm.expect(jsonData.funktionen[13].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[13].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[13]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[13]._links.update[0].href).to.eql(self + \"/funktion/1/F7\");\r",
+									"pm.expect(jsonData.funktionen[14].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[14].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[14].funktion).to.eql(\"F8\");\r",
+									"pm.expect(jsonData.funktionen[14].bezeichnung).to.eql(\"Funktion 8\");\r",
+									"pm.expect(jsonData.funktionen[14].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[14].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[14]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[14]._links.update[0].href).to.eql(self + \"/funktion/1/F8\");\r",
+									"pm.expect(jsonData.funktionen[15].decoderId).to.eql(jsonData.decoderId);\r",
+									"pm.expect(jsonData.funktionen[15].reihe).to.eql(1);\r",
+									"pm.expect(jsonData.funktionen[15].funktion).to.eql(\"F9\");\r",
+									"pm.expect(jsonData.funktionen[15].bezeichnung).to.eql(\"Funktion 9\");\r",
+									"pm.expect(jsonData.funktionen[15].programmable).to.eql(false);\r",
+									"pm.expect(jsonData.funktionen[15].deleted).to.be.false;\r",
+									"pm.expect(jsonData.funktionen[15]._links.parent[0].href).to.eql(self);\r",
+									"pm.expect(jsonData.funktionen[15]._links.update[0].href).to.eql(self + \"/funktion/1/F9\");\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
-									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.search[0].href).to.eql(root);\r",
+									"pm.expect(jsonData._links.add[0].href).to.eql(pm.variables.replaceIn(\"{{api}}/decoder/{{hersteller}}/{{bestellNr}}\"));\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.delete[0].href).to.eql(self);\r",
-									"pm.expect(jsonData._links.search[0].href).to.eql(root);"
+									"pm.expect(jsonData._links.delete[0].href).to.eql(self);"
 								],
 								"type": "text/javascript"
 							}
@@ -9428,8 +10694,7 @@
 								"exec": [
 									"pm.response.to.have.status(201);\r",
 									"var jsonData = pm.response.json();\r",
-									"var artikelId = jsonData.artikelId;\r",
-									"pm.environment.set(\"artikelId\", artikelId);\r",
+									"pm.environment.set(\"artikelId\", jsonData.artikelId);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/artikel\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/artikel/{{artikelId}}\");\r",
 									"pm.expect(jsonData.artikelId).to.eql(pm.variables.get(\"artikelId\"));\r",
@@ -9463,7 +10728,7 @@
 									"pm.expect(jsonData.status).to.eql(pm.variables.get(\"status\"));\r",
 									"pm.expect(jsonData.abbildung).to.eql(undefined);\r",
 									"pm.expect(jsonData.deleted).to.be.false;\r",
-									"pm.expect(jsonData.anderung).to.eql(undefined);\r",
+									"pm.expect(jsonData.anderung.length).to.eql(0);\r",
 									"pm.expect(jsonData._links.add[0].href).to.eql(root);\r",
 									"pm.expect(jsonData._links.self[0].href).to.eql(self);\r",
 									"pm.expect(jsonData._links.update[0].href).to.eql(self);\r",
@@ -12781,502 +14046,502 @@
 	],
 	"variable": [
 		{
-			"id": "f05b153d-52c4-432c-83ba-7cae3491d416",
+			"id": "1154a544-eaf1-4aa2-a46e-8311080953fc",
 			"key": "host",
 			"value": "127.0.0.1"
 		},
 		{
-			"id": "e781cdc6-5cda-4f50-8aab-1418c0a90c9d",
+			"id": "63de2e36-9227-4bd5-85f3-626f3cc1ce30",
 			"key": "port",
 			"value": ":8086"
 		},
 		{
-			"id": "2082291b-4577-4f2b-91c6-8ee2bb3c3862",
+			"id": "466b33c8-81e4-4859-81e6-23ce5b8d2043",
 			"key": "server",
 			"value": "http://{{host}}{{port}}"
 		},
 		{
-			"id": "90ce3ac1-bf83-4fe9-9dc3-f8f290ad7564",
+			"id": "b7416dd4-7811-4b37-bca8-d6468c30075a",
 			"key": "root",
 			"value": "{{server}}/ModellBahn"
 		},
 		{
-			"id": "e0aff7fd-0267-4ddd-942e-7f0b03019d53",
+			"id": "b850b178-e5ee-4806-9ee5-d504e686221d",
 			"key": "api",
 			"value": "{{root}}/api"
 		},
 		{
-			"id": "3e517cc6-ef31-4155-b910-e64e0401a169",
+			"id": "70c4937f-d552-4ff3-91ab-a1758a07030e",
 			"key": "language",
 			"value": "de"
 		},
 		{
-			"id": "14d1603a-1e3b-46c2-8d83-33120e639821",
+			"id": "463b7794-9703-494e-a252-cdbca37a4e6e",
 			"key": "achsfolgAdd",
 			"value": "1C1H2T"
 		},
 		{
-			"id": "9a8c2863-3f48-4bd4-a0cf-587f5ee6ebda",
+			"id": "a4f584a0-a713-494c-9125-48809d1083a8",
 			"key": "achsfolgUpdate",
 			"value": "COCO"
 		},
 		{
-			"id": "9e340c8d-0e02-4daa-8e7b-90e28aadc0cd",
+			"id": "33f32270-4fc4-4c93-b4bf-62b3ddee7852",
 			"key": "adIndexAdd",
 			"value": "1"
 		},
 		{
-			"id": "571ddef0-ba97-4060-babd-d9a05a7349f8",
+			"id": "804cd6f8-13be-4d34-9da6-24ee177cbb68",
 			"key": "adIndexUpdate",
 			"value": "1"
 		},
 		{
-			"id": "413fab63-3c1e-4665-9232-0c9ed496e6b7",
+			"id": "c598b68e-b3cc-4684-a050-ea9851c88638",
 			"key": "adSpanAdd",
 			"value": "2"
 		},
 		{
-			"id": "7472ec63-f03b-4fc6-a5b3-475bb62afb99",
+			"id": "a7fbe982-043d-4465-bf8f-1702573ac8bd",
 			"key": "adSpanUpdate",
 			"value": "16"
 		},
 		{
-			"id": "5601d659-66bf-4467-88d3-940993a9f65b",
+			"id": "68d146ff-59f4-4776-9138-2244179815b0",
 			"key": "adTypAdd",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "4a1f8f43-7435-4055-ab08-5e68e3a373df",
+			"id": "5cd801dd-98ab-4c6f-8de5-ab73a4f640be",
 			"key": "adTypUpdate",
 			"value": "DELTA"
 		},
 		{
-			"id": "fe0a544e-fc9c-464d-8fee-8fc4574ee7a3",
+			"id": "ac3e9768-d71c-4e7b-a6b5-90f23f30e812",
 			"key": "adAdd",
 			"value": "10"
 		},
 		{
-			"id": "ffb03364-4436-48d7-aff0-d164e2a88c96",
+			"id": "a74d6592-de3a-412a-86da-4e6921777ad4",
 			"key": "adUpdate",
 			"value": "80"
 		},
 		{
-			"id": "cce9b714-4d57-4237-a52b-961fad2a26f6",
+			"id": "692cdae7-aaa9-434e-a477-2d57804c465c",
 			"key": "anderungAdd",
 			"value": "1"
 		},
 		{
-			"id": "3d5f4bc7-2b6b-4066-8a00-c60799345abf",
+			"id": "0f66f94e-5176-4f0a-b338-b991c76ed4c4",
 			"key": "anderungUpdate",
 			"value": "1"
 		},
 		{
-			"id": "45bd6443-27ac-4b53-90b0-508982b367d3",
+			"id": "04463b31-7d63-404b-b49b-7ec4426e3da5",
 			"key": "antriebAdd",
 			"value": "DAMPF"
 		},
 		{
-			"id": "40fe6240-aa7c-4b8b-8919-ffa2e72ea3e7",
+			"id": "c42ece48-7276-4f2c-987f-f13b30f01b39",
 			"key": "antriebUpdate",
 			"value": "ELEKTRO"
 		},
 		{
-			"id": "5ad01164-a05d-4839-8804-f22774a888e7",
+			"id": "0def45db-22a4-4088-8a11-06e8e61d65d7",
 			"key": "artikelAdd",
 			"value": "00001"
 		},
 		{
-			"id": "3d0eb226-b7ea-4283-a309-266c622c563e",
+			"id": "d924cb26-af01-43ba-9f61-ea8d79343936",
 			"key": "artikelUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "b198e2cc-7753-49da-934a-b23471486c0e",
+			"id": "9e36c225-aef9-49b3-bba0-8462a6567972",
 			"key": "aufbauAdd",
 			"value": "LK"
 		},
 		{
-			"id": "edc94f5f-5bbe-4736-9e0b-23313c88b21d",
+			"id": "2b68eae8-0593-4fc1-af35-053cb5b230ee",
 			"key": "aufbauUpdate",
 			"value": "LK"
 		},
 		{
-			"id": "5415379b-8e58-4dcd-b1b4-f250ed4e4e90",
+			"id": "6f138f10-fa7d-469b-9852-83e49010c0db",
 			"key": "bestellNrAdd",
 			"value": "3000"
 		},
 		{
-			"id": "f8a3ba11-b865-44b9-9566-32e5ac8c5ef3",
+			"id": "f23815fd-5908-4a05-8f53-8784f1269f3a",
 			"key": "bestellNrUpdate",
 			"value": "3003"
 		},
 		{
-			"id": "aeabe8d7-b479-4935-9c08-833ac06753a5",
+			"id": "354b4a2e-5108-42cf-8612-5c7ffc6bb010",
 			"key": "bahnverwaltungAdd",
 			"value": "DB"
 		},
 		{
-			"id": "86f63e42-f093-4320-9d4c-f008d7b8a241",
+			"id": "1bdacca6-6b42-4d18-bfe6-4377443b6f57",
 			"key": "bahnverwaltungUpdate",
 			"value": "DBAG"
 		},
 		{
-			"id": "d1627b14-1fc9-41a0-83ef-71772d4aa44d",
+			"id": "d74752a4-2ea2-474e-b6de-d5fb9dd7c3b7",
 			"key": "cvAdd",
 			"value": "8"
 		},
 		{
-			"id": "a4fe7eff-9e86-4b13-9c4d-7f9a3156ade1",
+			"id": "33adf0b2-7c60-4a2d-9980-79c5122e924a",
 			"key": "cvUpdate",
 			"value": "120"
 		},
 		{
-			"id": "b0e34f5e-18ff-44c6-9da9-012212bcc1b7",
+			"id": "bf8d3727-5b17-42a6-9614-df89e8e0a392",
 			"key": "cvMaxAdd",
 			"value": "63"
 		},
 		{
-			"id": "816b270a-9e28-4b96-b015-dd55b4d456ac",
+			"id": "3b3bbfcb-85a7-49e0-9369-c492dce338d6",
 			"key": "cvMaxUpdate",
 			"value": "80"
 		},
 		{
-			"id": "43b69b50-d856-422b-b190-e8e72ca5d33e",
+			"id": "5b936bb2-fcd3-4a91-a4ba-d4273983c5f2",
 			"key": "cvMinAdd",
 			"value": "0"
 		},
 		{
-			"id": "1d86fbfa-3f63-410e-9aac-da88e4f8920f",
+			"id": "f5276983-1ecd-496f-84f0-89c7f317a2a6",
 			"key": "cvMinUpdate",
 			"value": "1"
 		},
 		{
-			"id": "9ee17bce-e125-486a-8359-66bd968f4359",
+			"id": "972e4525-b550-4032-a7f2-5f0b68a8ab7e",
 			"key": "cvValueAdd",
 			"value": "30"
 		},
 		{
-			"id": "afc03636-38c8-41a3-9625-e8b64e53c037",
+			"id": "f6ade056-225f-4d85-9f94-405029ff5c2a",
 			"key": "cvValueUpdate",
 			"value": "50"
 		},
 		{
-			"id": "aace0579-33f7-4be3-a6dd-7d5ebeced4aa",
+			"id": "a7b7f0e7-0255-488a-94c8-c5aca8df5e36",
 			"key": "decoderAdd",
 			"value": "00001"
 		},
 		{
-			"id": "065c40a9-9ad6-437b-90d6-5d25267f8e6a",
+			"id": "a3624f6a-457c-4802-9859-417e50d4e17d",
 			"key": "decoderUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "f69564f9-615d-4fed-87e4-21cd91225c24",
+			"id": "d1322899-2017-490a-8c8a-da097cc0643c",
 			"key": "decoderAdd",
 			"value": "00001"
 		},
 		{
-			"id": "83d7872b-3ecb-4499-910e-cb02340a65fe",
+			"id": "af4b9bf7-0185-46b5-bf4c-a48df9920a64",
 			"key": "decoderUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "f728ff75-3093-4209-a391-b7385370415c",
+			"id": "8b1efdb3-fcfb-40b4-a2c1-99a966f05404",
 			"key": "decoderHerstellerAdd",
 			"value": "ESU"
 		},
 		{
-			"id": "8e5302a9-e0f2-4a30-aa42-a6797feae660",
+			"id": "9a78614e-b04a-4c48-80f5-c16e480eeef9",
 			"key": "decoderHerstellerUpdate",
 			"value": "ESU"
 		},
 		{
-			"id": "a138d4e0-8ab7-4e4d-beb1-f3a67813c4e4",
+			"id": "794c325b-1a45-4d05-9d00-1288e70488c5",
 			"key": "decoderBestellNrAdd",
 			"value": "62400"
 		},
 		{
-			"id": "f501583e-0a97-472c-8312-64acbe19d1d7",
+			"id": "737919c4-ba90-436f-9c54-ac988b47572d",
 			"key": "decoderBestellNrUpdate",
 			"value": "62499"
 		},
 		{
-			"id": "a7563ecf-79c8-4df7-afaf-dadd2632a697",
+			"id": "c4f23837-791a-484d-b32f-25fe80ea6302",
 			"key": "decoderBezeichnungAdd",
 			"value": "LokSound M4"
 		},
 		{
-			"id": "be099f85-9946-4d25-858f-8a47284b7bc5",
+			"id": "1d6e077b-40f7-45f4-808b-cc05ed49af0c",
 			"key": "epochAdd",
 			"value": "IV"
 		},
 		{
-			"id": "bb3d3fae-9085-4a98-982a-b7a48c504a45",
+			"id": "d145a67e-855a-455f-80e6-fabd8ad32521",
 			"key": "epochUpdate",
 			"value": "IV"
 		},
 		{
-			"id": "25ea8799-802d-4e23-9396-98b3fb4f30b6",
+			"id": "6009ff20-22c5-4066-b653-3df2b86281ad",
 			"key": "fahrstufeAdd",
 			"value": "27"
 		},
 		{
-			"id": "4773e250-84ae-459f-b5e6-d9a39be91150",
+			"id": "35b9e989-f312-4e71-9458-22646e6bfa9b",
 			"key": "fahrstufeUpdate",
 			"value": "128"
 		},
 		{
-			"id": "4bd3f5e5-5aac-4862-bcd4-a8083a2f9ea5",
+			"id": "7b4596ca-9e16-4ad2-a108-4162545b438d",
 			"key": "fnFuntionAdd",
 			"value": "F0"
 		},
 		{
-			"id": "eef0297c-c06c-450d-ae0c-e769c3de3549",
+			"id": "beee826f-cd07-4de7-9e9b-6a8b845f8678",
 			"key": "fnFuntionUpdate",
 			"value": "F0"
 		},
 		{
-			"id": "60d9ae59-306e-44d5-8b9d-0541ffdaf75c",
+			"id": "e722ea37-b63a-443b-885f-2e3c4dfcb46f",
 			"key": "fnReiheAdd",
 			"value": "1"
 		},
 		{
-			"id": "0ce6920e-c5f9-4ef9-ae2f-e61943990575",
+			"id": "6016f882-ecd4-4d24-9a7f-9281a982f238",
 			"key": "fnReiheUpdate",
 			"value": "1"
 		},
 		{
-			"id": "c3433ddf-2fff-49f8-91d0-06d2f3ccec8f",
+			"id": "9ddf441c-fc9a-4f6e-9f05-b1b54da37673",
 			"key": "gattungAdd",
 			"value": "BR89.0"
 		},
 		{
-			"id": "0446b579-3637-4766-a1c5-653697d155b4",
+			"id": "9a4bc5d2-5933-4195-9b07-ab8f5164a31f",
 			"key": "gattungUpdate",
 			"value": "BR89.0"
 		},
 		{
-			"id": "ceb22530-53bc-4567-bd39-5baedfdda645",
+			"id": "37cfde38-e842-42d6-a5f9-516e80c2332c",
 			"key": "herstellerAdd",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "4ed97e53-b18d-4efb-9d29-36208e6fbdf8",
+			"id": "d9873aed-d3af-4193-9131-9ecc0241401c",
 			"key": "herstellerUpdate",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "ce4c6abb-75c5-45b1-9d22-69c464693d02",
+			"id": "dfc6bf4b-a222-4f44-b5ff-88a09595a4f4",
 			"key": "iMaxAdd",
 			"value": "1.5"
 		},
 		{
-			"id": "37a29c04-f713-4777-a062-0c89ebbbdb68",
+			"id": "2d46bb20-d33f-4616-bec6-2e7c4b95f1ed",
 			"key": "iMaxUpdate",
 			"value": "2.0"
 		},
 		{
-			"id": "f783fbfb-cd88-471e-b905-bbc63c006780",
+			"id": "9a830111-7e0e-4efa-a041-9a1dc1c490ea",
 			"key": "kategorieAdd",
 			"value": "LOKOMOTIV"
 		},
 		{
-			"id": "5993f119-dc70-46f6-b27e-647f4b87f881",
+			"id": "dfc7c2b3-71f0-48b8-af26-922f9a7f4df2",
 			"key": "kategorieUpdate",
 			"value": "AUSGESTALTUNG"
 		},
 		{
-			"id": "087d50b5-082a-483d-a543-43b2b6e2b0fa",
+			"id": "f4a5d467-a13d-4e7a-a0e2-119b0e9efb37",
 			"key": "kupplungAdd",
 			"value": "RELEX"
 		},
 		{
-			"id": "d9d97a3b-0014-4eb7-adc0-32dc48105832",
+			"id": "ead75578-99f2-4d7d-a671-5e2eb15a1a63",
 			"key": "kupplungUpdate",
 			"value": "RELEX"
 		},
 		{
-			"id": "34806bc3-a371-41e3-9759-d31a2aa6c0a9",
+			"id": "c2d1f0e2-3c7e-40a3-84f6-3611c8588c2f",
 			"key": "konfigurationAdd",
 			"value": "CV"
 		},
 		{
-			"id": "f67b4969-2feb-4d44-acac-4251ddc0a4dd",
+			"id": "8dd86bc9-8496-4c36-b289-616ac833c59a",
 			"key": "konfigurationUpdate",
 			"value": "STECKER"
 		},
 		{
-			"id": "468be7a1-fabd-41ca-b0bd-4afb6d310c79",
+			"id": "cb4fa74b-42e8-42cb-bbab-dde3c083f600",
 			"key": "leistungsubertragungAdd",
 			"value": "MECHANISH"
 		},
 		{
-			"id": "bf91c644-014d-4b2a-9a7f-58e8a5b2c0d2",
+			"id": "bf4fa375-3328-4c3c-8e0d-0a7094faad6b",
 			"key": "leistungsubertragungUpdate",
 			"value": "ELEKTRISH"
 		},
 		{
-			"id": "3686c900-06e3-4d5c-a3d8-37b909a9deac",
+			"id": "2d9de69e-f2bc-4dd7-8402-53768c52aa57",
 			"key": "lichtAdd",
 			"value": "L1V"
 		},
 		{
-			"id": "1d602508-d417-471a-bdf5-f98d853c8d58",
+			"id": "ff9b763c-da7c-44a2-ad24-b2bf418c003b",
 			"key": "lichtUpdate",
 			"value": "L1V"
 		},
 		{
-			"id": "1bfa3d43-4c8a-49eb-94ae-f5bdb437d257",
+			"id": "d282ae2a-e140-4502-9531-f6d7ce3daccd",
 			"key": "massstabAdd",
 			"value": "H0"
 		},
 		{
-			"id": "fdb97b4b-5844-47b9-9b3f-1c6d9784327f",
+			"id": "baf700f2-f341-44db-8ce3-ed909a0014b4",
 			"key": "massstabUpdate",
 			"value": "H0"
 		},
 		{
-			"id": "4ae17061-d24c-4d66-8a34-fe28f9c75e8a",
+			"id": "1b45dccc-3130-4d04-bd56-ae86c1b7e149",
 			"key": "motorTypAdd",
 			"value": "CSINUS"
 		},
 		{
-			"id": "35a873c9-9c50-43e5-a5f5-afb90383dfc1",
+			"id": "adfbc03a-2d8c-4b7d-8ee8-9635e317b179",
 			"key": "motorTypUpdate",
 			"value": "CSINUS"
 		},
 		{
-			"id": "68821444-bd93-4027-93f2-675abeebe10f",
+			"id": "54629005-1c10-40d5-8057-a71248bce93f",
 			"key": "protokollAdd",
 			"value": "MFX"
 		},
 		{
-			"id": "6f3052d9-34a1-4211-b365-f8d397379188",
+			"id": "d69cbe92-e3f9-42f5-b5a0-708384210fb1",
 			"key": "protokollUpdate",
 			"value": "DELTA"
 		},
 		{
-			"id": "3feca2f9-0f59-4fa7-8145-d598b71c53c5",
+			"id": "1f85d339-981e-447d-b49d-2f0ada830cc1",
 			"key": "sondermodellAdd",
 			"value": "MM"
 		},
 		{
-			"id": "347a3dac-fc3c-4157-ae85-664d17a9ac6c",
+			"id": "05063e0b-f8b5-432c-9013-37a3af5be78f",
 			"key": "sondermodellUpdate",
 			"value": "MM"
 		},
 		{
-			"id": "a9dcdad0-7246-47d3-8e54-04fceda26532",
+			"id": "b9822b2a-2bd9-40ed-bd18-af095b6668d8",
 			"key": "spurweiteAdd",
 			"value": "H0"
 		},
 		{
-			"id": "bf51e6f2-6c51-405d-95f4-c096b716a7b2",
+			"id": "80afe6f9-c9bc-4366-9adf-9bb1b71cd25f",
 			"key": "spurweiteUpdate",
 			"value": "H0"
 		},
 		{
-			"id": "5d75c86c-22ca-40c4-9631-5769ceb91441",
+			"id": "5f35672b-14ec-41e7-acb3-6ad1a02963f6",
 			"key": "steckerAdd",
 			"value": "NEM651"
 		},
 		{
-			"id": "3f182263-94db-43f4-9be3-9a3d8cc9a524",
+			"id": "533ae4e9-b82b-4bfa-914b-a1b5b4aa7478",
 			"key": "steckerUpdate",
 			"value": "NEM652"
 		},
 		{
-			"id": "fae0a228-3d78-4caa-9913-f4e54f8751ed",
+			"id": "e872efb7-8e77-486b-929d-421ec4bf9d92",
 			"key": "steuerungAdd",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "22e1e9ea-94ca-444a-b21b-7f69d46295ef",
+			"id": "2eb9df1c-381a-4251-a4f6-2c7208d5e0e9",
 			"key": "steuerungUpdate",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "0722dfc1-5f60-4a44-aaec-32e6711cb832",
+			"id": "70b42895-f4da-4872-aa29-ad76b4a5929a",
 			"key": "teilHerstellerAdd",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "a8a8e637-9102-4fce-9e42-2528390030d9",
+			"id": "c97427eb-3600-47ea-86bf-00a09c66f597",
 			"key": "teilBestellNrAdd",
 			"value": "600300"
 		},
 		{
-			"id": "8bbf9318-b6ba-45c5-a355-00a7983ad778",
+			"id": "4a784fa4-760d-4fa6-8eef-609dbd99bbd5",
 			"key": "teilKategorieAdd",
 			"value": "ERSATZTEIL"
 		},
 		{
-			"id": "a07759e7-957a-4554-8726-46621a138798",
+			"id": "487c27c7-9f3c-4069-a1fe-d0c9c6b7f6b3",
 			"key": "teilUnterKategorieAdd",
 			"value": "BURSTEN"
 		},
 		{
-			"id": "e76f17a5-960c-42f7-aa1f-ae14f21d0292",
+			"id": "b2dad8e9-7787-4a76-8776-41db7b4f723b",
 			"key": "unterKategorieAdd",
 			"value": "DAMPF"
 		},
 		{
-			"id": "d924d1a5-07b7-44cb-b6d0-8291f6c27c4b",
+			"id": "a56dc93f-b412-402d-8285-a62d3fe22135",
 			"key": "unterKategorieUpdate",
 			"value": "HECKEN"
 		},
 		{
-			"id": "93159ea4-4437-4558-a7b4-28a4d80d74e8",
+			"id": "0e35eb05-a238-4dff-b0db-dd8f48d843a9",
 			"key": "teilBezeichnungAdd",
 			"value": "Bürsten"
 		},
 		{
-			"id": "e8fadcde-95ea-45a4-b0c3-5a0cd01397d9",
+			"id": "2fb9c45b-94a9-4162-9e11-f0e6d34165b7",
 			"key": "vorbildAdd",
 			"value": "HECKEN"
 		},
 		{
-			"id": "1cca112f-14a0-4637-8f9e-4badd2343ed9",
+			"id": "ff319886-8342-482c-b92e-098ac923c110",
 			"key": "vorbildUpdate",
 			"value": "HECKEN"
 		},
 		{
-			"id": "a28b2ed1-15c0-4f1e-b579-d21c406bae13",
+			"id": "04e7aa32-625e-4368-98a8-4b0563cbf531",
 			"key": "zugAdd",
 			"value": "BAVARIA"
 		},
 		{
-			"id": "0ce3ad13-d5bf-4102-b488-fac4a1abdca9",
+			"id": "5894d300-ddce-4385-845e-fcf5dd01c212",
 			"key": "zugUpdate",
 			"value": "BAVARIA"
 		},
 		{
-			"id": "5d48d77a-f416-4865-9e7f-5f28123686a3",
+			"id": "0ff4c813-2187-496d-b4e9-c5bce2b65c98",
 			"key": "zugTypAdd",
 			"value": "TEE"
 		},
 		{
-			"id": "48de6dcc-31c5-4d6b-b78c-f86fd8fc711e",
+			"id": "8cb069d8-9a52-45cf-9260-e2856ffd5a0e",
 			"key": "zugTypUpdate",
 			"value": "TEE"
 		},
 		{
-			"id": "139d2d3c-9c39-4d06-a0dc-509d0d89c91e",
+			"id": "bfb8eba3-1e78-455e-bb6c-4ac27f6125e1",
 			"key": "imageFile",
 			"value": "3000.jpg"
 		},
 		{
-			"id": "6816e6cb-d1cf-495f-8edf-64639573e1ae",
+			"id": "df0af72f-3e41-4ebc-ab83-b75da818100b",
 			"key": "anleitungFile",
 			"value": "3000_betrieb.pdf"
 		},
 		{
-			"id": "5d383f84-f00e-4d41-ace4-b393b5eeba35",
+			"id": "71df1436-6afa-4734-ac85-8c478a48b329",
 			"key": "explosionszeichnungFile",
 			"value": "3000_explo.pdf"
 		},
 		{
-			"id": "5a739195-81dc-43d5-9f9a-652f0b4e2983",
+			"id": "c2ea5579-3787-4ddf-9c15-25976814df8c",
 			"key": "xlFile",
 			"value": "3000.jpg"
 		}

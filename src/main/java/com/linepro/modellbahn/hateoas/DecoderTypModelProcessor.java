@@ -56,13 +56,15 @@ public class DecoderTypModelProcessor extends ModelProcessorImpl<DecoderTypModel
     @Autowired
     public DecoderTypModelProcessor(DecoderTypAdressModelProcessor adressProcessor, DecoderTypCvModelProcessor cvProcessor,
                     DecoderTypFunktionModelProcessor funktionProcessor) {
-        super(new LinkTemplateImpl(ADD, ADD_DECODER_TYP, EXTRACTOR), new LinkTemplateImpl(SELF, GET_DECODER_TYP, EXTRACTOR),
-                        new LinkTemplateImpl(SEARCH, SEARCH_DECODER_TYP, EXTRACTOR),
-                        new LinkTemplateImpl(DELETE, DELETE_DECODER_TYP, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted())),
-                        new LinkTemplateImpl(UPDATE, UPDATE_DECODER_TYP, EXTRACTOR),
-                        new LinkTemplateImpl(INSTRUCTIONS, ADD_DECODER_TYP_ANLEITUNGEN, EXTRACTOR),
-                        new LinkTemplateImpl(ADD, ADD_DECODER_TYP_ADRESS, EXTRACTOR), new LinkTemplateImpl(ADD, ADD_DECODER_TYP_CV, EXTRACTOR),
-                        new LinkTemplateImpl(ADD, ADD_DECODER_TYP_FUNKTION, EXTRACTOR));
+        super(new LinkTemplateImpl(ADD, ADD_DECODER_TYP, EXTRACTOR),
+              new LinkTemplateImpl(SELF, GET_DECODER_TYP, EXTRACTOR),
+              new LinkTemplateImpl(SEARCH, SEARCH_DECODER_TYP, EXTRACTOR),
+              new LinkTemplateImpl(DELETE, DELETE_DECODER_TYP, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted())),
+              new LinkTemplateImpl(UPDATE, UPDATE_DECODER_TYP, EXTRACTOR),
+              new LinkTemplateImpl(INSTRUCTIONS, ADD_DECODER_TYP_ANLEITUNGEN, EXTRACTOR),
+              new LinkTemplateImpl(ADD, ADD_DECODER_TYP_ADRESS, EXTRACTOR),
+              new LinkTemplateImpl(ADD, ADD_DECODER_TYP_CV, EXTRACTOR),
+              new LinkTemplateImpl(ADD, ADD_DECODER_TYP_FUNKTION, EXTRACTOR));
 
         this.adressProcessor = adressProcessor;
 

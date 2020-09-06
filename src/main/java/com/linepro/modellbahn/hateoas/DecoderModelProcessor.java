@@ -5,6 +5,9 @@ import static com.linepro.modellbahn.controller.impl.ApiNames.BESTELL_NR;
 import static com.linepro.modellbahn.controller.impl.ApiNames.DECODER_ID;
 import static com.linepro.modellbahn.controller.impl.ApiNames.HERSTELLER;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_DECODER;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_DECODER_ADRESS;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_DECODER_CV;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_DECODER_FUNKTION;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_DECODER;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_DECODER;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.SEARCH_DECODER;
@@ -56,7 +59,10 @@ public class DecoderModelProcessor extends ModelProcessorImpl<DecoderModel> impl
             new LinkTemplateImpl(SELF, GET_DECODER, EXTRACTOR),
             new LinkTemplateImpl(UPDATE, UPDATE_DECODER, EXTRACTOR),
             new LinkTemplateImpl(DELETE, DELETE_DECODER, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted())),
-            new LinkTemplateImpl(SEARCH, SEARCH_DECODER, EXTRACTOR)
+            new LinkTemplateImpl(SEARCH, SEARCH_DECODER, EXTRACTOR),
+            new LinkTemplateImpl(UPDATE, UPDATE_DECODER_ADRESS, EXTRACTOR),
+            new LinkTemplateImpl(UPDATE, UPDATE_DECODER_CV, EXTRACTOR),
+            new LinkTemplateImpl(UPDATE, UPDATE_DECODER_FUNKTION, EXTRACTOR)
             );
 
         this.adressProcessor = adressProcessor;

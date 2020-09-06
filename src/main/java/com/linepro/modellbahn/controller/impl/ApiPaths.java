@@ -50,7 +50,7 @@ public interface ApiPaths {
     String UPDATE_DECODER          = API_ROOT + ApiNames.DECODER + "/{" + ApiNames.DECODER_ID + "}";
     String UPDATE_DECODER_ADRESS   = API_ROOT + ApiNames.DECODER + "/{" + ApiNames.DECODER_ID + "}/" + ApiNames.ADRESS + "/{" + ApiNames.INDEX + "}";
     String UPDATE_DECODER_CV       = API_ROOT + ApiNames.DECODER + "/{" + ApiNames.DECODER_ID + "}/"  + ApiNames.CV + "/{" + ApiNames.CV + "}";
-    String UPDATE_DECODER_FUNKTION = API_ROOT + ApiNames.DECODER + "/{" + ApiNames.DECODER_ID + "}/" + ApiNames.FUNKTION + "/{" + ApiNames.FUNKTION + "}/{" + ApiNames.REIHE + "}";
+    String UPDATE_DECODER_FUNKTION = API_ROOT + ApiNames.DECODER + "/{" + ApiNames.DECODER_ID + "}/" + ApiNames.FUNKTION + "/{" + ApiNames.REIHE + "}/{" + ApiNames.FUNKTION + "}";
 
     String ADD_DECODER_TYP                = API_ROOT + ApiNames.DECODER_TYP;
     String GET_DECODER_TYP                = API_ROOT + ApiNames.DECODER_TYP + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}";

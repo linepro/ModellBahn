@@ -15,11 +15,17 @@ public interface ApiRels {
 
     String PREVIOUS = "previous";
     String NEXT = "next";
-    
-    String IMAGE = "image";
-    String INSTRUCTIONS = "instructions";
-    String PARTS_DIAGRAM = "parts diagram";
-    String CONSIST = "add consist";
-    String PARTS = "parts";
-    String HISTORY = "history";
+
+    String IMAGE = "abbildung";
+    String INSTRUCTIONS = "anleitung";
+    String PARTS_DIAGRAM = "explosionszeichnung";
+    String CONSIST = "consist";
+    String PARTS = "teil";
+    String HISTORY = "anderung";
+
+    String ADRESS = "adress";
+    String CV = "cv";
+    String FUNKTION = "funktion";
+
+    String UNTER_KATEGORIE = "unterKategorie";
 }

@@ -54,15 +54,15 @@ public class KategorieService extends NamedItemServiceImpl<KategorieModel, Kateg
 
     @Transactional
     public Optional<UnterKategorieModel> addUnterKategorie(String kategorieStr, UnterKategorieModel model) {
+        UnterKategorie unterKategorie = unterKategorieModelMutator.convert(model);
+        unterKategorie.setDeleted(false);
+
         return repository.findByName(kategorieStr)
                          .map(k -> {
-                             UnterKategorie unterKategorie = unterKategorieModelMutator.convert(model);
-                             unterKategorie.setDeleted(false);
-                             
                              k.addUnterKategorie(unterKategorie);
-                             
+
                              repository.saveAndFlush(k);
-                                
+
                              return (unterKategorieMutator.convert(unterKategorie));
                              });
     }

@@ -17,11 +17,13 @@ public class NamedModelProcessor<M extends RepresentationModel<M>> extends Model
 
     public NamedModelProcessor(String add, String self, String update, String delete, String search, LinkTemplate...additional) {
         super(
+                new LinkTemplateImpl(SEARCH, search, EXTRACTOR),
                 new LinkTemplateImpl(ADD, add, EXTRACTOR),
                 new LinkTemplateImpl(SELF, self, EXTRACTOR),
                 new LinkTemplateImpl(UPDATE, update, EXTRACTOR),
-                new LinkTemplateImpl(DELETE, delete, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted())),
-                new LinkTemplateImpl(SEARCH, search, EXTRACTOR)
+                new LinkTemplateImpl(DELETE, delete, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted()))
             );
+
+        addLinks(additional);
     }
 }
