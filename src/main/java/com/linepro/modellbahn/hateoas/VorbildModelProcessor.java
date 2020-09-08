@@ -7,7 +7,7 @@ import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_VORBILD;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_VORBILD;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.SEARCH_VORBILD;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_VORBILD;
-import static com.linepro.modellbahn.controller.impl.ApiRels.IMAGE;
+import static com.linepro.modellbahn.controller.impl.ApiRels.ABBILDUNG;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -30,7 +30,7 @@ public class VorbildModelProcessor extends NamedModelProcessor<VorbildModel> imp
             UPDATE_VORBILD,
             DELETE_VORBILD,
             SEARCH_VORBILD,
-            new LinkTemplateImpl(IMAGE, ADD_VORBILD_ABBILDUNG, EXTRACTOR)
+            new LinkTemplateImpl(ABBILDUNG, ADD_VORBILD_ABBILDUNG, EXTRACTOR)
             );
     }
 }

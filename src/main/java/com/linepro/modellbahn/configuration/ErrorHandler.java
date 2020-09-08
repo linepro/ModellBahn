@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.i18n.MessageTranslator;
 import com.linepro.modellbahn.util.exceptions.ModellBahnException;
@@ -99,6 +100,8 @@ public class ErrorHandler {
             return HttpStatus.NO_CONTENT;
         } else if (ex instanceof SecurityException) {
             return HttpStatus.FORBIDDEN;
+        } else if (ex instanceof JsonMappingException) {
+            return HttpStatus.BAD_REQUEST;
         } else if (ex instanceof JsonParseException) {
             return HttpStatus.BAD_REQUEST;
         } else if (ex instanceof HttpMessageNotReadableException) {

@@ -12,14 +12,14 @@ import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_PRODUKT;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_PRODUKT;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.SEARCH_PRODUKT;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_PRODUKT;
+import static com.linepro.modellbahn.controller.impl.ApiRels.ABBILDUNG;
 import static com.linepro.modellbahn.controller.impl.ApiRels.ADD;
+import static com.linepro.modellbahn.controller.impl.ApiRels.ANLEITUNG;
 import static com.linepro.modellbahn.controller.impl.ApiRels.DELETE;
-import static com.linepro.modellbahn.controller.impl.ApiRels.IMAGE;
-import static com.linepro.modellbahn.controller.impl.ApiRels.INSTRUCTIONS;
-import static com.linepro.modellbahn.controller.impl.ApiRels.PARTS;
-import static com.linepro.modellbahn.controller.impl.ApiRels.PARTS_DIAGRAM;
+import static com.linepro.modellbahn.controller.impl.ApiRels.EXPLOSIONSZEICHNUNG;
 import static com.linepro.modellbahn.controller.impl.ApiRels.SEARCH;
 import static com.linepro.modellbahn.controller.impl.ApiRels.SELF;
+import static com.linepro.modellbahn.controller.impl.ApiRels.TEIL;
 import static com.linepro.modellbahn.controller.impl.ApiRels.UPDATE;
 
 import java.util.HashMap;
@@ -56,10 +56,10 @@ public class ProduktModelProcessor extends ModelProcessorImpl<ProduktModel> impl
             new LinkTemplateImpl(SEARCH, SEARCH_PRODUKT, EXTRACTOR), 
             new LinkTemplateImpl(DELETE, DELETE_PRODUKT, EXTRACTOR, (m) -> BooleanUtils.isFalse(((ProduktModel) m).getDeleted())),
             new LinkTemplateImpl(UPDATE, UPDATE_PRODUKT, EXTRACTOR),
-            new LinkTemplateImpl(IMAGE, ADD_PRODUKT_ABBILDUNG, EXTRACTOR),
-            new LinkTemplateImpl(INSTRUCTIONS, ADD_PRODUKT_ANLEITUNGEN, EXTRACTOR),
-            new LinkTemplateImpl(PARTS_DIAGRAM, ADD_PRODUKT_EXPLOSIONSZEICHNUNG, EXTRACTOR),
-            new LinkTemplateImpl(PARTS, ADD_PRODUKT_TEIL, EXTRACTOR)
+            new LinkTemplateImpl(ABBILDUNG, ADD_PRODUKT_ABBILDUNG, EXTRACTOR),
+            new LinkTemplateImpl(ANLEITUNG, ADD_PRODUKT_ANLEITUNGEN, EXTRACTOR),
+            new LinkTemplateImpl(EXPLOSIONSZEICHNUNG, ADD_PRODUKT_EXPLOSIONSZEICHNUNG, EXTRACTOR),
+            new LinkTemplateImpl(TEIL, ADD_PRODUKT_TEIL, EXTRACTOR)
             );
 
         this.teilProcessor = teilProcessor;

@@ -16,6 +16,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -89,6 +90,7 @@ public class DecoderTypFunktion extends ItemImpl implements Comparable<DecoderTy
     private String funktion;
 
     @Column(name = DBNames.BEZEICHNUNG, length = 100)
+    @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
     @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notempty}")
     private String bezeichnung;
     

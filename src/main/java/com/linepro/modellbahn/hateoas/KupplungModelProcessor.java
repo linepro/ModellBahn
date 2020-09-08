@@ -28,7 +28,7 @@ public class KupplungModelProcessor extends NamedModelProcessor<KupplungModel> i
             UPDATE_KUPPLUNG,
             DELETE_KUPPLUNG,
             SEARCH_KUPPLUNG,
-            new LinkTemplateImpl(ApiRels.IMAGE, ADD_KUPPLUNG_ABBILDUNG, EXTRACTOR)
+            new LinkTemplateImpl(ApiRels.ABBILDUNG, ADD_KUPPLUNG_ABBILDUNG, EXTRACTOR)
             );
     }
 }

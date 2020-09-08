@@ -4,8 +4,8 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 
 import org.springframework.stereotype.Component;
 
+import com.linepro.modellbahn.converter.entity.transcriber.HerstellerTranscriber;
 import com.linepro.modellbahn.converter.impl.MutatorImpl;
-import com.linepro.modellbahn.converter.impl.NamedTranscriber;
 import com.linepro.modellbahn.entity.Hersteller;
 import com.linepro.modellbahn.model.HerstellerModel;
 
@@ -13,17 +13,6 @@ import com.linepro.modellbahn.model.HerstellerModel;
 public class HerstellerMutator extends MutatorImpl<Hersteller, HerstellerModel> {
 
     public HerstellerMutator() {
-        super(() -> new HerstellerModel(), new NamedTranscriber<Hersteller, HerstellerModel>());
+        super(() -> new HerstellerModel(), new HerstellerTranscriber());
     }
-
-    @Override
-    public HerstellerModel apply(Hersteller source, HerstellerModel destination) {
-        destination.setName(source.getName());
-        destination.setLand(source.getLand());
-        destination.setTelefon(source.getTelefon());
-        destination.setUrl(source.getUrl() != null ? source.getUrl().toString() : null);
-
-        return super.apply(source, destination);
-    }
-
 }

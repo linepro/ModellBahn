@@ -16,7 +16,7 @@ import javax.validation.Payload;
 @Target( {FIELD, ANNOTATION_TYPE})
 @Constraint(validatedBy = {CurrencyValidator.class})
 public @interface Currency {
-    String message() default "{com.linepro.modellbahn.validator.constraints.currency.invalid}";
+    String message() default "{com.linepro.modellbahn.validator.constraints.wahrung.invalid}";
 
     Class<?>[] groups() default { };
 

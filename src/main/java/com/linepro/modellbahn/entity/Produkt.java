@@ -27,6 +27,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -345,10 +346,12 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
     private Hersteller hersteller;
 
     @Column(name = DBNames.BESTELL_NR, length = 50)
+    @Size(max = 50, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
     @Pattern(regexp = "^[A-Z0-9\\-.]+$", message = "{com.linepro.modellbahn.validator.constraints.bestellNr.invalid}")
     private String bestellNr;
 
     @Column(name = DBNames.BEZEICHNUNG, length = 100)
+    @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
     @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notempty}")
     private String bezeichnung;
 
@@ -431,10 +434,12 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
 
     /** The anmerkung. */
     @Column(name = DBNames.ANMERKUNG, length = 100)
+    @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
     private String anmerkung;
 
     /** The betreibsnummer. */
     @Column(name = DBNames.BETREIBSNUMMER, length = 100)
+    @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
     private String betreibsnummer;
 
     /** The bauzeit. */
@@ -458,7 +463,7 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
     private BigDecimal lange;
 
     /** The abbildung. */
-    @Column(name = DBNames.ABBILDUNG)
+    @Column(name = DBNames.ABBILDUNG, length = 512)
     @Convert(converter = PathConverter.class)
     private Path abbildung;
 

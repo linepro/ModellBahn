@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -86,6 +87,7 @@ public class DecoderTypCv extends ItemImpl implements Comparable<DecoderTypCv> {
 
     /** The bezeichnung. */
     @Column(name = DBNames.BEZEICHNUNG, length = 100)
+    @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
     @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notempty}")
     private String bezeichnung;
 

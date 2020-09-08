@@ -16,16 +16,18 @@ public interface ApiRels {
     String PREVIOUS = "previous";
     String NEXT = "next";
 
-    String IMAGE = "abbildung";
-    String INSTRUCTIONS = "anleitung";
-    String PARTS_DIAGRAM = "explosionszeichnung";
-    String CONSIST = "consist";
-    String PARTS = "teil";
-    String HISTORY = "anderung";
-
+    String ABBILDUNG = "abbildung";
     String ADRESS = "adress";
+    String ANDERUNG = "anderung";
+    String ANLEITUNG = "anleitung";
+    String ARTIKEL = "artikel";
+    String CONSIST = "consist";
     String CV = "cv";
+    String DECODER = "decoder";
+    String DECODER_TYP = "typ";
+    String EXPLOSIONSZEICHNUNG = "explosionszeichnung";
     String FUNKTION = "funktion";
-
+    String PRODUKT = "produkt";
+    String TEIL = "teil";
     String UNTER_KATEGORIE = "unterKategorie";
 }

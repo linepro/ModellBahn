@@ -28,7 +28,7 @@ public class LichtModelProcessor extends NamedModelProcessor<LichtModel> impleme
             UPDATE_LICHT,
             DELETE_LICHT,
             SEARCH_LICHT,
-            new LinkTemplateImpl(ApiRels.IMAGE, ADD_LICHT_ABBILDUNG, EXTRACTOR)
+            new LinkTemplateImpl(ApiRels.ABBILDUNG, ADD_LICHT_ABBILDUNG, EXTRACTOR)
             );
     }
 }

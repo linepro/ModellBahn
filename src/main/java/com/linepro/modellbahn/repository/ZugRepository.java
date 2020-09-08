@@ -26,7 +26,7 @@ public interface ZugRepository extends NamedItemRepository<Zug> {
            nativeQuery = false)
     //@formatter:on
     @EntityGraph(value = "zug.withChildren", type = EntityGraphType.FETCH)
-    Optional<Zug> findByName(String name);
+    Optional<Zug> findZug(String name);
 
     @EntityGraph(value = "zug.noChildren", type = EntityGraphType.FETCH)
     <S extends Zug> Page<S> findAll(Example<S> example, Pageable pageable);

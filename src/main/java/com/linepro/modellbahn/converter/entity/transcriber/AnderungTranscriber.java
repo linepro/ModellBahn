@@ -14,9 +14,9 @@ public class AnderungTranscriber implements Transcriber<Anderung, AnderungModel>
             destination.setAnderungId(source.getAnderungId());
             destination.setAnderungsDatum(source.getAnderungsDatum());
             destination.setAnderungsTyp(source.getAnderungsTyp());
-            destination.setAnmerkung(source.getAnmerkung());
             destination.setBezeichnung(source.getBezeichnung());
             destination.setStuck(source.getStuck());
+            destination.setAnmerkung(source.getAnmerkung());
             destination.setDeleted(source.getDeleted());
         }
         

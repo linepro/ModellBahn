@@ -30,6 +30,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -404,6 +405,7 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
 
     /** The bezeichnung. */
     @Column(name = DBNames.BEZEICHNUNG, length = 100)
+    @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notnull}")
     private String bezeichnung;
 
@@ -426,20 +428,22 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
 
     /** The anmerkung. */
     @Column(name = DBNames.ANMERKUNG, length = 100)
+    @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
     private String anmerkung;
 
     /** The beladung. */
     @Column(name = DBNames.BELADUNG, length = 100)
+    @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
     private String beladung;
 
     /** The abbildung. */
-    @Column(name = DBNames.ABBILDUNG)
+    @Column(name = DBNames.ABBILDUNG, length = 512)
     @Convert(converter = PathConverter.class)
     private Path abbildung;
 
     /** The status. */
-    @Column(name = DBNames.STATUS, nullable = false)
     @Enumerated(EnumType.STRING)
+    @Column(name = DBNames.STATUS, nullable = false, length = 12)
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.status.notnull}")
     private Status status;
 

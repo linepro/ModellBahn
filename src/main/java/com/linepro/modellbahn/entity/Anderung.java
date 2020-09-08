@@ -19,8 +19,9 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -82,22 +83,24 @@ public class Anderung extends ItemImpl implements Comparable<Anderung> {
     private Integer anderungId;
 
     @Column(name = DBNames.ANDERUNGSDATUM)
-    @Past(message = "{com.linepro.modellbahn.validator.constraints.anderungsDatum.past}")
+    @PastOrPresent(message = "{com.linepro.modellbahn.validator.constraints.anderungsDatum.past}")
     private LocalDate anderungsDatum;
 
-    @Column(name = DBNames.ANDERUNGS_TYP, nullable = false)
     @Enumerated(EnumType.STRING)
+    @Column(name = DBNames.ANDERUNGS_TYP, nullable = false, length = 14)
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.anderungsTyp.notnull}")
     private AnderungsTyp anderungsTyp;
 
     @Column(name = DBNames.BEZEICHNUNG, length = 100)
+    @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
     private String bezeichnung;
 
     @Column(name = DBNames.STUCK)
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.stuck.positive}")
     private Integer stuck;
 
-    @Column(name = DBNames.ANMERKUNG)
+    @Column(name = DBNames.ANMERKUNG, length = 255)
+    @Size(max = 255, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
     private String anmerkung;
 
     @Override

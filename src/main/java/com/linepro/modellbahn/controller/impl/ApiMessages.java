@@ -1,11 +1,11 @@
 package com.linepro.modellbahn.controller.impl;
 
 public interface ApiMessages {
-    String INVALID_FILE = "{com.linepro.modellbahn.validation.invalidFile}";
-    String EXPORT_NOT_SUPPORTED = "{com.linepro.modellbahn.validation.exportNotSupported}";
-    String IMPORT_NOT_SUPPORTED = "{com.linepro.modellbahn.validation.importNotSupported}";
+    String INVALID_FILE = "{com.linepro.modellbahn.validation.INVALID_FILE}";
+    String EXPORT_NOT_SUPPORTED = "{com.linepro.modellbahn.validation.EXPORT_NOT_SUPPORTED}";
+    String IMPORT_NOT_SUPPORTED = "{com.linepro.modellbahn.validation.IMPORT_NOT_SUPPORTED}";
 
-    String DOES_NOT_EXIST = "{com.linepro.modellbahn.validation.does_not_exist}";
+    String DOES_NOT_EXIST = "{com.linepro.modellbahn.validation.DOES_NOT_EXIST}";
     String NOT_SUPPORTED = "{com.linepro.modellbahn.validation.NOT_SUPPORTED}";
 
     String ANDERUNG_DOES_NOT_EXIST = "{com.linepro.modellbahn.validation.ANDERUNG_DOES_NOT_EXIST}";

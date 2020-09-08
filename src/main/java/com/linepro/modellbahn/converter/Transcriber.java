@@ -8,6 +8,6 @@ public interface Transcriber<S,D> {
     D apply(S source, D destination);
 
     default <M extends NamedItem> String getCode(M item) {
-        return item != null && isAvailable(item.getName()) ? item.getName() : null;
+        return isAvailable(item) && isAvailable(item.getName()) ? item.getName() : null;
     }
 }

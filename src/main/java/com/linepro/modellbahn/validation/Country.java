@@ -16,7 +16,7 @@ import javax.validation.Payload;
 @Target( {FIELD, ANNOTATION_TYPE})
 @Constraint(validatedBy = {CountryValidator.class})
 public @interface Country {
-    String message() default "{com.linepro.modellbahn.validator.constraints.country.invalid}";
+    String message() default "{com.linepro.modellbahn.validator.constraints.land.invalid}";
 
     Class<?>[] groups() default { };
 

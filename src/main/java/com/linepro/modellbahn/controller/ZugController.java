@@ -148,7 +148,7 @@ public class ZugController extends NamedItemController<ZugModel> {
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
-    public ResponseEntity<?> addConsist(@PathVariable(ApiNames.ZUG) String zugStr, @RequestParam(ApiNames.ARTIKEL_ID) String artikelId) {
+    public ResponseEntity<?> addConsist(@PathVariable(ApiNames.NAMEN) String zugStr, @RequestParam(ApiNames.ARTIKEL_ID) String artikelId) {
         return added(service.addConsist(zugStr, artikelId));
     }
 
@@ -163,7 +163,7 @@ public class ZugController extends NamedItemController<ZugModel> {
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
-    public ResponseEntity<?> updateConsist(@PathVariable(ApiNames.ZUG) String zugStr, @PathVariable(ApiNames.POSITION) Integer position, @RequestParam(ApiNames.ARTIKEL_ID) String artikelId) {
+    public ResponseEntity<?> updateConsist(@PathVariable(ApiNames.NAMEN) String zugStr, @PathVariable(ApiNames.POSITION) Integer position, @RequestParam(ApiNames.ARTIKEL_ID) String artikelId) {
         return updated(service.updateConsist(zugStr, position, artikelId));
     }
 
@@ -178,7 +178,7 @@ public class ZugController extends NamedItemController<ZugModel> {
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
-    public ResponseEntity<?> deleteConsist(@PathVariable(ApiNames.ZUG) String zugStr, @PathVariable(ApiNames.POSITION) Integer position) {
+    public ResponseEntity<?> deleteConsist(@PathVariable(ApiNames.NAMEN) String zugStr, @PathVariable(ApiNames.POSITION) Integer position) {
         return deleted(service.deleteConsist(zugStr, position));
     }
 }

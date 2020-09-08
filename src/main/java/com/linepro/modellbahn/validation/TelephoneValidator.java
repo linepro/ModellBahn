@@ -6,21 +6,24 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.util.StringUtils;
 
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
-import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 import com.linepro.modellbahn.entity.HasTelefon;
 
 public class TelephoneValidator implements ConstraintValidator<Telefon, HasTelefon> {
 
     @Override
     public boolean isValid(HasTelefon value, ConstraintValidatorContext context) {
-        if (StringUtils.isEmpty(value)) {
+        if (StringUtils.isEmpty(value.getTelefon())) {
             return true;
         }
 
         final PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
 
         try {
-                PhoneNumber telefon = phoneUtil.parseAndKeepRawInput(value.getTelefon(), value.getLand());
+            String sanitized = value.getTelefon()
+                                    .replaceAll("[ -\\(\\)]","")
+                                    .replaceAll("^00", "+");
+                                    
+                phoneUtil.parseAndKeepRawInput(sanitized, value.getLand());
 
                 return true;
         } catch (Exception e) {

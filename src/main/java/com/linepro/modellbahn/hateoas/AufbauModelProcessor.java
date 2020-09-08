@@ -7,7 +7,7 @@ import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_AUFBAU;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_AUFBAU;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.SEARCH_AUFBAU;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_AUFBAU;
-import static com.linepro.modellbahn.controller.impl.ApiRels.IMAGE;
+import static com.linepro.modellbahn.controller.impl.ApiRels.ABBILDUNG;
 
 import org.springframework.context.annotation.Lazy;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
@@ -28,7 +28,7 @@ public class AufbauModelProcessor extends NamedModelProcessor<AufbauModel> imple
             UPDATE_AUFBAU,
             DELETE_AUFBAU,
             SEARCH_AUFBAU,
-            new LinkTemplateImpl(IMAGE, ADD_AUFBAU_ABBILDUNG, EXTRACTOR)
+            new LinkTemplateImpl(ABBILDUNG, ADD_AUFBAU_ABBILDUNG, EXTRACTOR)
             );
     }
 }

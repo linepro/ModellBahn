@@ -2,6 +2,8 @@ package com.linepro.modellbahn.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.Index;
@@ -14,6 +16,7 @@ import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -87,11 +90,13 @@ public class DecoderTypAdress extends ItemImpl implements WithAdress, Comparable
     private Integer position;
 
     @Column(name = DBNames.BEZEICHNUNG, length = 100)
+    @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notnull}")
     private String bezeichnung;
 
     /** The adressTyp. */
-    @Column(name = DBNames.ADRESS_TYP, length = 100)
+    @Enumerated(EnumType.STRING)
+    @Column(name = DBNames.ADRESS_TYP, nullable = false, length = 14)
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoderTyp.notnull}")
     private AdressTyp adressTyp;
 

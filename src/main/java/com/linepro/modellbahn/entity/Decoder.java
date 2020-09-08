@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -189,6 +190,7 @@ public class Decoder extends ItemImpl implements Comparable<Decoder> {
     private String decoderId;
 
     @Column(name = DBNames.BEZEICHNUNG, length = 100)
+    @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notnull}")
     private String bezeichnung;
 
@@ -209,8 +211,8 @@ public class Decoder extends ItemImpl implements Comparable<Decoder> {
     @Fahrstufe
     private Integer fahrstufe;
 
-    @Column(name = DBNames.STATUS)
     @Enumerated(EnumType.STRING)
+    @Column(name = DBNames.STATUS, nullable = false, length = 11)
     private DecoderStatus status;
 
     /** The adressen. */

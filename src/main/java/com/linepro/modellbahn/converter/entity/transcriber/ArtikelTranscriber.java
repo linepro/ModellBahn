@@ -54,11 +54,11 @@ public class ArtikelTranscriber implements Transcriber<Artikel, ArtikelModel> {
             destination.setAbbildung(source.getAbbildung() != null ? pathMutator.convert(source.getAbbildung()) : produkt.getAbbildung());
             destination.setStatus(source.getStatus());
             destination.setDeleted(source.getDeleted());
-            destination.setLicht(getCode(source.getLicht()));
-            destination.setKupplung(getCode(source.getKupplung()));
-            destination.setSteuerung(getCode(source.getSteuerung()));
+            destination.setLicht(source.getLicht() != null ? getCode(source.getLicht()) : produkt.getLicht());
+            destination.setKupplung(source.getKupplung() != null ? getCode(source.getKupplung()) : produkt.getKupplung());
+            destination.setSteuerung(source.getSteuerung() != null ? getCode(source.getSteuerung()) : produkt.getSteuerung());
             destination.setDecoder(Optional.ofNullable(source.getDecoder()).map(d -> d.getDecoderId()).orElse(null));
-            destination.setMotorTyp(getCode(source.getMotorTyp()));
+            destination.setMotorTyp(source.getMotorTyp() != null ? getCode(source.getMotorTyp()) : produkt.getMotorTyp());
             destination.setKaufdatum(source.getKaufdatum());
             destination.setWahrung(source.getWahrung());
             destination.setPreis(source.getPreis());

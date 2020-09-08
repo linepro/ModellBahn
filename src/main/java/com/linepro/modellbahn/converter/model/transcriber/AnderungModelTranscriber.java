@@ -11,11 +11,11 @@ public class AnderungModelTranscriber implements Transcriber<AnderungModel, Ande
     @Override
     public Anderung apply(AnderungModel source, Anderung destination) {
         if (isAvailable(source) && isAvailable(destination)) {
-            destination.setAnderungId(source.getAnderungId());
             destination.setAnderungsDatum(source.getAnderungsDatum());
             destination.setAnderungsTyp(source.getAnderungsTyp());
-            destination.setAnmerkung(source.getAnmerkung());
             destination.setBezeichnung(source.getBezeichnung());
+            destination.setStuck(source.getStuck());
+            destination.setAnmerkung(source.getAnmerkung());
         }
 
         return destination;

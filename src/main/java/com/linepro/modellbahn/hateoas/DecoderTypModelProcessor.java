@@ -14,7 +14,7 @@ import static com.linepro.modellbahn.controller.impl.ApiPaths.SEARCH_DECODER_TYP
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_DECODER_TYP;
 import static com.linepro.modellbahn.controller.impl.ApiRels.ADD;
 import static com.linepro.modellbahn.controller.impl.ApiRels.DELETE;
-import static com.linepro.modellbahn.controller.impl.ApiRels.INSTRUCTIONS;
+import static com.linepro.modellbahn.controller.impl.ApiRels.ANLEITUNG;
 import static com.linepro.modellbahn.controller.impl.ApiRels.SEARCH;
 import static com.linepro.modellbahn.controller.impl.ApiRels.SELF;
 import static com.linepro.modellbahn.controller.impl.ApiRels.UPDATE;
@@ -61,7 +61,7 @@ public class DecoderTypModelProcessor extends ModelProcessorImpl<DecoderTypModel
               new LinkTemplateImpl(SEARCH, SEARCH_DECODER_TYP, EXTRACTOR),
               new LinkTemplateImpl(DELETE, DELETE_DECODER_TYP, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted())),
               new LinkTemplateImpl(UPDATE, UPDATE_DECODER_TYP, EXTRACTOR),
-              new LinkTemplateImpl(INSTRUCTIONS, ADD_DECODER_TYP_ANLEITUNGEN, EXTRACTOR),
+              new LinkTemplateImpl(ANLEITUNG, ADD_DECODER_TYP_ANLEITUNGEN, EXTRACTOR),
               new LinkTemplateImpl(ADRESS, ADD_DECODER_TYP_ADRESS, EXTRACTOR),
               new LinkTemplateImpl(CV, ADD_DECODER_TYP_CV, EXTRACTOR),
               new LinkTemplateImpl(FUNKTION, ADD_DECODER_TYP_FUNKTION, EXTRACTOR));

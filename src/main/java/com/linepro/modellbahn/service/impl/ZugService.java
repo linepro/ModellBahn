@@ -8,6 +8,7 @@ package com.linepro.modellbahn.service.impl;
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.linepro.modellbahn.converter.entity.ZugConsistMutator;
 import com.linepro.modellbahn.converter.entity.ZugMutator;
 import com.linepro.modellbahn.converter.model.ZugModelMutator;
-import com.linepro.modellbahn.entity.Artikel;
 import com.linepro.modellbahn.entity.Zug;
 import com.linepro.modellbahn.entity.ZugConsist;
 import com.linepro.modellbahn.model.ZugConsistModel;
@@ -51,52 +51,79 @@ public class ZugService extends NamedItemServiceImpl<ZugModel,Zug> implements It
     }
 
     @Override
+    public Optional<ZugModel> get(String name) {
+        return repository.findZug(name)
+                         .map(e -> entityMutator.convert(e));
+    }
+
+    @Override
     protected Page<Zug> findAll(Optional<ZugModel> model, Pageable pageRequest) {
         return repository.findAll(new ZugCriterion(model), pageRequest);
     }
 
     @Transactional
-    public Optional<ZugConsistModel> addConsist(String name, String artikelId) {
-        Optional<Zug> zug = repository.findByName(name);
-        Optional<Artikel> artikel = artikelRepository.findByArtikelId(artikelId);
-        
-        if (zug.isPresent() && artikel.isPresent()) {
-            ZugConsist consist = new ZugConsist();
+    @Override
+    public Optional<ZugModel> update(String name, ZugModel model) {
+        return repository.findZug(name)
+                         .map(e -> repository.saveAndFlush(modelMutator.apply(model,e)))
+                         .flatMap(e -> get(name)); // Fetch again to populate entity graphs
+    }
 
-            consist.setZug(zug.get());
-            consist.setPosition(zug.get().getConsist().size()+1);
-            consist.setArtikel(artikel.get());
-            consist.setDeleted(false);
-            
-            return Optional.of(consistMutator.convert(consistRepository.saveAndFlush(consist)));
-        }
-        
-        return Optional.empty();
+    @Transactional
+    public Optional<ZugConsistModel> addConsist(String name, String artikelId) {
+        return repository.findZug(name)
+                         .map(z -> {
+                             ZugConsist fahrzeug = new ZugConsist();
+                             fahrzeug.setArtikel(artikelRepository.findByArtikelId(artikelId).orElse(null));
+                             fahrzeug.setDeleted(false);
+
+                             z.addConsist(fahrzeug);
+
+                             consistRepository.saveAndFlush(fahrzeug);
+
+                             return consistMutator.convert(fahrzeug);
+                         });
     }
 
     @Transactional
     public Optional<ZugConsistModel> updateConsist(String zugStr, Integer position, String artikelId) {
-        Optional<ZugConsist> found = consistRepository.findByPosition(zugStr, position);
-        Optional<Artikel> artikel = artikelRepository.findByArtikelId(artikelId);
-        
-        if (found.isPresent() && artikel.isPresent()) {
-            ZugConsist consist = found.get();
-            consist.setArtikel(artikel.get());
-            
-            return Optional.of(consistMutator.convert(consistRepository.saveAndFlush(consist)));
-        }
-        
-        return Optional.empty();
+        return consistRepository.findByPosition(zugStr, position)
+                                .map(c -> {
+                                    c.setArtikel(artikelRepository.findByArtikelId(artikelId).orElse(null));
+
+                                    return consistMutator.convert(consistRepository.saveAndFlush(c));
+                                });
     }
 
     @Transactional
     public boolean deleteConsist(String zugStr, Integer position) {
         return consistRepository.findByPosition(zugStr, position)
                                 .map(c -> {
-                                    consistRepository.delete(c);
-                                    return true;    
+                                    AtomicInteger index = new AtomicInteger(1);
+
+                                    Zug zug = c.getZug();
+
+                                    zug.getConsist().remove(c);
+
+                                    // Remove
+                                    zug = repository.saveAndFlush(zug);
+
+                                    // Renumber remaining
+                                    zug.getConsist()
+                                       .stream()
+                                       .sorted()
+                                       .forEach(p -> {
+                                           int pos = index.getAndIncrement();
+                                           
+                                           if (p.getPosition() >= position) {
+                                               p.setPosition(pos);
+
+                                               consistRepository.saveAndFlush(p);
+                                           }
+                                       });
+
+                                    return true;
                                 })
                                 .orElse(false);
-
     }
 }

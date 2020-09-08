@@ -22,6 +22,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 import com.linepro.modellbahn.entity.impl.NamedWithAbbildungImpl;
 import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
@@ -160,6 +161,7 @@ public class Vorbild extends NamedWithAbbildungImpl {
     
     /** The hersteller. */
     @Column(name = DBNames.HERSTELLER, length = 100)
+    @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
     private String hersteller;
 
     /** The bauzeit. */
@@ -174,6 +176,7 @@ public class Vorbild extends NamedWithAbbildungImpl {
 
     /** The betreibs nummer. */
     @Column(name = DBNames.BETREIBSNUMMER, length = 100)
+    @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
     private String betreibsNummer;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Antrieb.class)
@@ -277,11 +280,12 @@ public class Vorbild extends NamedWithAbbildungImpl {
 
     /** The motorbauart. */
     @Column(name = DBNames.MOTORBAUART, length = 100)
+    @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
     private String motorbauart;
 
     /** The leistungsubertragung. */
-    @Column(name = DBNames.LEISTUNGSUBERTRAGUNG)
     @Enumerated(EnumType.STRING)
+    @Column(name = DBNames.LEISTUNGSUBERTRAGUNG, nullable = false, length = 11)
     private LeistungsUbertragung leistungsUbertragung;
 
     /** The reichweite. */
@@ -321,6 +325,7 @@ public class Vorbild extends NamedWithAbbildungImpl {
 
     /** The aufbauten. */
     @Column(name = DBNames.AUFBAU, length = 100)
+    @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
     private String aufbau;
 
     /** The triebkopf. */
@@ -335,6 +340,7 @@ public class Vorbild extends NamedWithAbbildungImpl {
 
     /** The drehgestell bauart. */
     @Column(name = DBNames.DREHGESTELLBAUART, length = 100)
+    @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
     private String drehgestellBauart;
 
     @Override
