@@ -13,14 +13,14 @@ import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_DECODER_TYP;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.SEARCH_DECODER_TYP;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_DECODER_TYP;
 import static com.linepro.modellbahn.controller.impl.ApiRels.ADD;
-import static com.linepro.modellbahn.controller.impl.ApiRels.DELETE;
+import static com.linepro.modellbahn.controller.impl.ApiRels.ADRESS;
 import static com.linepro.modellbahn.controller.impl.ApiRels.ANLEITUNG;
+import static com.linepro.modellbahn.controller.impl.ApiRels.CV;
+import static com.linepro.modellbahn.controller.impl.ApiRels.DELETE;
+import static com.linepro.modellbahn.controller.impl.ApiRels.FUNKTION;
 import static com.linepro.modellbahn.controller.impl.ApiRels.SEARCH;
 import static com.linepro.modellbahn.controller.impl.ApiRels.SELF;
 import static com.linepro.modellbahn.controller.impl.ApiRels.UPDATE;
-import static com.linepro.modellbahn.controller.impl.ApiRels.ADRESS;
-import static com.linepro.modellbahn.controller.impl.ApiRels.CV;
-import static com.linepro.modellbahn.controller.impl.ApiRels.FUNKTION;
 
 import java.util.HashMap;
 

@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -47,7 +48,7 @@ public class AchsfolgModel extends RepresentationModel<AchsfolgModel> implements
     private static final long serialVersionUID = 1860366231843697997L;
 
     @JsonProperty(ApiNames.NAMEN)
-    @Schema(description = "UIC Code", example = "1E1H3T", required = true)
+    @Schema(description = "UIC Code", example = "1E1H3T", accessMode = AccessMode.READ_ONLY)
     private String name;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
@@ -55,7 +56,7 @@ public class AchsfolgModel extends RepresentationModel<AchsfolgModel> implements
     private String bezeichnung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(description = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
     private Boolean deleted;
 
     @Override

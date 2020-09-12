@@ -55,7 +55,7 @@ public class DataServiceImpl implements DataService {
         } catch (ModellBahnException e) {
             throw e;
         } catch (Exception e) {
-            throw ModellBahnException.raise("{}")
+            throw ModellBahnException.raise(ApiMessages.IMPORT_ERROR)
                                      .addValue(type);
         }
     }
@@ -79,7 +79,7 @@ public class DataServiceImpl implements DataService {
         } catch (ModellBahnException e) {
             throw e;
         } catch (Exception e) {
-            throw ModellBahnException.raise("{}")
+            throw ModellBahnException.raise(ApiMessages.EXPORT_ERROR)
                                      .addValue(type);
         }
     }

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5c8d760c-926b-4f1e-96fc-048f6cbad4f9",
+		"_postman_id": "cae02108-4ce2-4081-9902-9862e3c61dc8",
 		"name": "ModellBahn",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,7 +14,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "eff9980b-dbc7-4f61-a1f7-580ec3617638",
+								"id": "d09a62a7-966c-4f34-8f5a-eea36e9b9397",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();"
@@ -50,7 +50,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5323014d-1d98-4674-ab70-439b40a8c7e6",
+								"id": "20fea0ff-17ef-4ae5-af26-bdfe7f76ddcd",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();"
@@ -86,7 +86,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e8df91f6-522f-4aee-b6e2-4babc9c9db0c",
+								"id": "bf090dfe-7d1a-4d0d-885f-2a050ca8d2d5",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();"
@@ -122,7 +122,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fae18660-9b1e-408d-b0f4-9e0db86777ac",
+								"id": "1262c255-9145-448d-a33a-c09d0a77e537",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();"
@@ -158,7 +158,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c5bca17e-1808-4514-8337-d8c6ca39c94e",
+								"id": "0fa36ad5-dd6c-4b12-99e8-d23d2f25c95e",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();"
@@ -194,7 +194,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3d3d7ec9-21f0-4078-a576-2bb3d96334f9",
+								"id": "5b1995b2-909e-4838-9b25-8ef926080e9f",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();"
@@ -230,7 +230,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "188dcbd1-90f8-4363-9d46-451d33c2518a",
+								"id": "16833522-e54e-43d5-a822-f46c0d1fc015",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();"
@@ -272,7 +272,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b77f3b71-d651-488c-b237-313af6480bdf",
+								"id": "07fa779d-62c2-4cd5-844b-a42d27be078e",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/achsfolg\");\r",
@@ -329,7 +329,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "69a45f8e-6153-4a00-9134-43ca5f3cf747",
+								"id": "e07776e2-5e40-4e41-b45a-9fb5100c9d30",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -340,7 +340,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9d8a85ff-6c4c-4dad-9e64-9fa88826a03c",
+								"id": "4b7b5a32-4de6-4084-94a6-8ee2fd18cdef",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -403,7 +403,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "aeba1a9f-1804-432a-90e6-fb58a52c5616",
+								"id": "55ea4080-9d65-4a6d-bdd7-87bef03981d0",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -413,7 +413,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5063f447-c675-4ee5-bd61-235939ed79ae",
+								"id": "9c2a0300-7cff-4395-8f1a-c5d2a93bd7ac",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -478,7 +478,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a855c89a-b55e-4aac-a57d-26b978cd988a",
+								"id": "1750c989-afe4-4ba3-96aa-652deb2138b6",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -529,7 +529,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2dda4346-5dd5-4a2f-a74f-5a800e8b97f8",
+								"id": "f7c6576e-b189-4083-8c0d-d92900431c63",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -571,7 +571,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "40ee5a40-a1f6-426e-8848-3015930f4140",
+								"id": "3f5fb714-e0ed-4be4-9bef-47dd659ea768",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/antrieb\");\r",
@@ -624,7 +624,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "1928ffa8-779c-43b1-8baf-976b5434e283",
+								"id": "97a1c87e-8d8e-430c-84dd-81df1bc3474e",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -635,7 +635,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "03ba07c7-b3f6-4475-a725-f3ca28349565",
+								"id": "2067f7f8-72bf-4545-8267-b195ea5a9e8c",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -698,7 +698,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "e3b750fa-2545-43c6-b2be-c1a474bea2ca",
+								"id": "96ef493d-d331-4c50-a97b-c27214c0f410",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -708,7 +708,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bb51bf78-d9d4-4c44-8c83-930352bee544",
+								"id": "69f154bf-1382-413e-b21f-a2474721747d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -772,7 +772,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "46d8c344-0c4a-4219-a410-d51e6eabeb7f",
+								"id": "df069a68-75b6-4e20-b873-ab148c539bf7",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -818,7 +818,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "91cd9056-fad1-404e-b3c6-08748f6f3ad5",
+								"id": "81ecfaac-8572-4a09-95a0-4ca8655ab694",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -860,7 +860,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e4931c46-9790-4cf7-8fd0-9b463b411122",
+								"id": "82912630-501c-4300-bf5e-d319447717e1",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/aufbau\");\r",
@@ -914,7 +914,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "0268ef85-745a-451d-8e3c-4b4dd4672743",
+								"id": "4d286beb-c746-42e9-a7dc-8869141059a1",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -925,7 +925,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "51636196-e4da-418f-9de6-48a44ecc18ba",
+								"id": "a867605f-2f06-4b7c-832b-e44c052d52de",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -989,7 +989,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b4370c6b-e9fb-4f89-b1d7-75b7de803e90",
+								"id": "9630657a-d4a4-4b20-82f8-dde4f6e21126",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1053,7 +1053,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "3db42b22-02f4-4e54-b884-fb832805a769",
+								"id": "80834bc1-1508-471b-a7f9-d9725c53dc2c",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -1063,7 +1063,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5bbafe4b-6bbb-44ba-b332-c53386b94564",
+								"id": "279f9c82-45d7-4252-bee9-a28c42ed49d1",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1130,7 +1130,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7842fc4a-a617-4806-8522-f785ccfdc4ea",
+								"id": "014b0d25-8deb-467e-9fa1-71657deb166c",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1179,7 +1179,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2c79289f-22f9-424e-8748-69a30da7faa9",
+								"id": "0549d632-4557-4035-9d58-e9085ba327e7",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1229,7 +1229,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6e03ac0d-4d44-4053-ad67-d38198a81ecb",
+								"id": "5c11ccb2-6897-4cc6-98ed-3a7237f556c4",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -1271,7 +1271,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "933f0c86-bbd9-48d6-ad1d-d63f7fed897f",
+								"id": "4e5c5b90-9211-4fe7-a931-3a012da1c62f",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/bahnverwaltung\");\r",
@@ -1324,7 +1324,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "d96a78d8-9c21-475d-96e8-ac1edb476a96",
+								"id": "818e1383-c4b9-45da-83e1-a82f08087dc3",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
@@ -1336,7 +1336,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4099fad4-24fd-4587-bec6-c79d09c6cc2d",
+								"id": "32bdf354-1c1d-435f-a469-5065ad233a50",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1400,7 +1400,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "f6e7ceaa-8792-44b3-9603-ce016728a1dd",
+								"id": "cfaa007f-2d2b-4463-b481-dd7a8263203c",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"land\", pm.variables.replaceIn(\"{{$randomCountryCode}}\"));"
@@ -1411,7 +1411,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d9081773-24fd-42c0-a3c6-2013519d19c7",
+								"id": "46c1bd50-7943-4ce6-8896-940dac95888b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1476,7 +1476,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d5bcd609-17ef-4fe8-b6f9-f42ddaab87e1",
+								"id": "dc93beb3-6959-46e0-a5ca-ad46020ae3c1",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1523,7 +1523,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2978a762-4231-4a1c-83d1-e84afc6a87ed",
+								"id": "631a52a8-95a5-4a3a-89c8-14c4daebe862",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -1565,7 +1565,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "19fc2198-7377-4887-8fdd-72eb6de70e2e",
+								"id": "e9f6b0e2-b678-4c0b-a183-eabbc6efc71f",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/epoch\");\r",
@@ -1618,7 +1618,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "f835854c-6a04-4686-b152-e8481f69a703",
+								"id": "2ea6442e-c026-4363-85da-7de125c265b5",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -1629,7 +1629,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8b812ca2-8f48-4655-b7ed-d4d27e26c3cd",
+								"id": "b30070db-cd48-47c4-87ac-9e92d61f332d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1692,7 +1692,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "accc2e78-60a8-49c2-8c32-0940b7b95604",
+								"id": "6be3fdf1-f6e9-44cf-bca7-f98e7c3cedd0",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -1702,7 +1702,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2c5eb032-05cd-45ee-ab2a-25bef7ed6dd6",
+								"id": "8b89d67a-b6da-4ced-82ab-70731985a8be",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1766,7 +1766,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "59e3abd1-d9f5-4103-9d1e-070430f99cc4",
+								"id": "4913a175-a258-459e-9dd3-7cf1b4f31e66",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1812,7 +1812,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dcc770fb-06a9-4845-a575-65a1f303e62c",
+								"id": "06d47ba0-3ed0-4f12-a77d-4ee0bad3b660",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -1854,7 +1854,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ba18d2e2-7037-4f04-8853-ba2f3fd9f32c",
+								"id": "1757ad27-d85c-4738-9c7a-7be946a678dc",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/gattung\");\r",
@@ -1907,7 +1907,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "166f8857-ad35-4f51-813f-3b4b38b6b157",
+								"id": "e722aa72-10de-40db-a2b3-9f6def5024b5",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -1918,7 +1918,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "04e7630b-ce0a-429b-9011-70aa255f0927",
+								"id": "3bb1c88f-1372-4218-b2a2-d5fc8236ed41",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1981,7 +1981,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b445a0a9-e9c3-4884-bc62-9a9fcfc0ae74",
+								"id": "cc1b19f1-1b0d-4236-b890-8be43bf0ad11",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -1991,7 +1991,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "873d4567-22a4-4661-8a74-6288789479cf",
+								"id": "f89776ef-2429-4fec-bffe-7b1dd66a5253",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2055,7 +2055,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c88e1291-1e93-47b1-9ce4-4a516ec684fc",
+								"id": "12a634d6-b4e8-4a2a-aceb-0c5663c7700a",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2101,7 +2101,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1c81a19a-da90-40c9-9535-772b8967f07d",
+								"id": "5fba5d39-1d78-493c-a1f3-2f6373705819",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -2143,7 +2143,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1f1c602a-7768-43e7-8965-6ada551cd500",
+								"id": "cc43ef01-e836-437e-a8c8-f57f0fcfc5bd",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/hersteller\");\r",
@@ -2196,7 +2196,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "a122c8ce-f9c4-451e-9cf6-c3cf40414eea",
+								"id": "92c32139-a18d-4041-a4b1-c968077f7201",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
@@ -2210,7 +2210,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5ca3ee56-a373-4edf-9206-0007f20579ff",
+								"id": "d67e0d82-696d-4282-9892-92f04a8d84c3",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2276,7 +2276,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "fa8f066a-d0a0-4aac-956c-cd95e474e532",
+								"id": "f808f922-833a-48f5-81bd-22d9619b9060",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"url\", pm.variables.replaceIn(\"{{$randomUrl}}\"));\r",
@@ -2289,7 +2289,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "312aaf9f-5bbf-4946-9005-a3c618f6f9a5",
+								"id": "3ab0dc58-9d32-49ad-84a2-d12f85ae3422",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2356,7 +2356,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "135398dc-06bd-4cb1-96cb-ea60d6dd16e8",
+								"id": "fa248dc0-4f7c-480d-8b3e-5f863705d9fb",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2405,7 +2405,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "33661daa-5bef-49b8-b090-3479bd6228f1",
+								"id": "38921a8a-2c55-4e47-8132-10bdcc5ea3a2",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -2447,7 +2447,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "160ed09b-e932-439c-8a8e-0248d2187486",
+								"id": "be00ad18-7018-4ac4-bc74-8c5cf8ba38d8",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kupplung\");\r",
@@ -2501,7 +2501,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "43056a0d-1c7c-410e-b888-e7fa934e0dfd",
+								"id": "7298754f-bde0-4d91-bd82-5a8dd9bbdf07",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -2512,7 +2512,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bdb23335-9847-4921-a0fc-566d5318e4bf",
+								"id": "35432ea6-b843-4b72-9834-cd1550b37437",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2576,7 +2576,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8aef820b-1120-49fe-a3ab-af9362cbe048",
+								"id": "47b3f8cf-daf9-4d9a-a1f1-e2b1fddbe081",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2640,7 +2640,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "620bb8a7-2aea-49c5-92d3-73a1daf56d81",
+								"id": "dab1d909-351c-44e1-9ef8-ee2fe3cc3abf",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -2650,7 +2650,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d89d8a96-3cb7-448a-b8a8-6d63fd4c495e",
+								"id": "4eb3401e-289a-4c4e-aa22-d2acd80a4651",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2717,7 +2717,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d6e89aa7-7fab-42cd-9f7b-b78af5a16b1d",
+								"id": "7066aad5-415d-42d9-a723-80c233ac986e",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2766,7 +2766,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5c5414e4-d18e-4e9e-9702-079ea8a2be4d",
+								"id": "1bb10a5d-f765-4293-8bfb-eb08e74c0ddd",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2816,7 +2816,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fcf76753-f513-4297-a8de-2e2d6cb8241d",
+								"id": "e0a6e8b4-e737-4ad8-b94f-2b94c6c16cbd",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -2858,7 +2858,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5f6eef02-e3b0-41b7-9cfb-1e6b59ba3fb8",
+								"id": "3f221759-8d76-43d1-a538-612d97ffcc2b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/licht\");\r",
@@ -2912,7 +2912,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "3cb402ec-41c9-465e-8f4e-049f10a1c173",
+								"id": "3cc80d09-11c8-475b-9425-2d02a2023144",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -2923,7 +2923,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "909e8ae5-a2ec-4c1f-9572-0f999de295bd",
+								"id": "643607b6-e920-4691-975d-0896f9273c64",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2987,7 +2987,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d0ad16dd-13a3-4698-8afe-4c02a27adb19",
+								"id": "8bf7949a-f703-4fcf-8c3d-d13ba1066e3c",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3051,7 +3051,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b10a7799-63c4-4b4c-8592-9460909971a7",
+								"id": "4d1c4692-3042-4a4f-a11e-5aff493c7182",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -3061,7 +3061,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "acf605c2-f149-489f-b514-1eeed501ec61",
+								"id": "aac2d98f-67ae-4caa-8a6b-5198ab0979ca",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3128,7 +3128,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8408c504-5d10-466e-89c6-0bd0d7a666b1",
+								"id": "bab153d9-e45e-4405-9b47-506d8be50091",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3177,7 +3177,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6f11e902-799a-4f01-a087-58d6c554ad87",
+								"id": "14a885a9-6af0-444e-9345-a3ccef9b1cd7",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3227,7 +3227,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "eab19bfe-0785-45c0-ae18-f244c4271319",
+								"id": "0cb7e7c3-e3cc-4b30-9efc-2500a7c83606",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -3269,7 +3269,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6bed0dbd-1d98-4923-8fe7-d7ff00310881",
+								"id": "e0df0bbe-9774-4311-8402-9f1c5d5ed7b7",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/massstab\");\r",
@@ -3322,7 +3322,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "75818194-6e1c-4792-b377-bc700d33f039",
+								"id": "c26449e2-6b14-4ea7-92b4-38e6dd770cf5",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -3333,7 +3333,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c7e2cb4d-6c17-427f-9e0e-cc24c8657409",
+								"id": "d299c0ed-64f4-495a-9590-8c98ed9e07ce",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3396,7 +3396,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "e983af6d-86ab-48c7-b526-68d4e67da2dc",
+								"id": "a9374950-834a-44c0-81ff-9545deaec6e2",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -3406,7 +3406,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5b2b2fb4-1f68-48e8-8a77-fc18e1006ae7",
+								"id": "6601beb1-320d-4b97-900b-0214ad3d09df",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3470,7 +3470,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ec2ff6b6-aaf2-40e3-9633-bef175c6c076",
+								"id": "b825d2c2-8a6f-4ff2-8b24-39d9f0358561",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3516,7 +3516,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e3642353-3e60-4faf-af8c-eca0b3bfc7af",
+								"id": "1d3a0237-8bc3-4959-ae50-52dd359fd15c",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -3558,7 +3558,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7bd2e948-db47-4562-ae14-e69f0f2daff4",
+								"id": "bdd48c58-3ebe-44d8-8b26-c3d634358e81",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/motorTyp\");\r",
@@ -3611,7 +3611,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "631261f3-2e86-4c31-9cc8-c57084a3edfb",
+								"id": "10d3b066-f40f-4fa6-afba-5d46c8acfcb4",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -3622,7 +3622,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e183a2d6-6f0f-45a7-ad40-7646ea4ccd04",
+								"id": "fc69af87-1e15-4829-9612-597a0e93b27e",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3685,7 +3685,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "2c0ce263-07d3-4541-868c-547a70d269b5",
+								"id": "4cb4f034-bf38-4a3c-8f28-8d41524ec7a7",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -3695,7 +3695,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7e0b490d-da93-4ba1-8073-4fa42806ac1f",
+								"id": "f5f3cbd5-0e9a-4c21-a672-ef527f9228aa",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3759,7 +3759,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4461262a-51dc-42c7-99c2-8d7a24ab1850",
+								"id": "36024c41-8b48-4534-adb9-15470ce2e8c8",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3805,7 +3805,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e31da343-63cf-43b6-bec1-084c3c037f01",
+								"id": "bda0b752-69ec-462f-96dd-0197c687add2",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -3847,7 +3847,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4adb2e2e-88f5-4b64-9413-cba18ff71f2e",
+								"id": "656f4289-b371-4ba8-8300-1ce882a9bbc0",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/protokoll\");\r",
@@ -3900,7 +3900,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "d90a98ba-3222-4967-8f6b-9cd0a7d42d41",
+								"id": "1ad60d3b-5c22-4353-a900-67555525024d",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -3911,7 +3911,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "60ae83e6-e766-4e68-b7ad-38f781c9d043",
+								"id": "59b0f3d8-eda8-45ad-b3a9-5d5ea86f5f0b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3974,7 +3974,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "ce1d341c-df5a-49e2-a807-32907da1b2e6",
+								"id": "c44d41fc-3525-435f-9329-b78188cc49fd",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -3984,7 +3984,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d5658cd0-0377-4dee-b18a-12db3796fb18",
+								"id": "68fcdb1f-5748-4372-8fb7-87e78333f0fc",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4048,7 +4048,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b1d1777e-6573-48de-8ebb-f5fa4799b12b",
+								"id": "115f5588-273a-4f38-bf1b-a084adcd6d37",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4094,7 +4094,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4533e6a2-158a-4f03-9b10-a3865e49f41b",
+								"id": "d81d384f-eb13-4f82-909e-f9fcb1e5bdef",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -4136,7 +4136,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e99d4751-3796-4462-946a-6af4c4465b4e",
+								"id": "9713cac2-4784-4713-a556-336f0c84cd71",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/sondermodell\");\r",
@@ -4189,7 +4189,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b688230b-ffb5-4f79-8f86-64f8134540ff",
+								"id": "209485c9-c024-431e-9cdc-44c97cbfb8db",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -4200,7 +4200,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "be28aa08-7c04-422c-b4d2-3e2127a8543b",
+								"id": "db60a738-0ed3-4d18-8a57-737e7dbde350",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4263,7 +4263,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "23296c0d-eb36-40d7-9862-fc25efb13f11",
+								"id": "16b64491-6334-440e-bd90-8f07f06512a0",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -4273,7 +4273,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "445e5360-b7f1-4cbe-b0b1-2161c9e4dbf3",
+								"id": "329a19d9-0f67-4eef-8938-f7351e9c6f25",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4337,7 +4337,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f797b2b1-ced0-4949-a4f8-2a401887091b",
+								"id": "e1de0254-e4e7-4014-9b3d-743fa6a69cbe",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4383,7 +4383,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c19829f7-7e30-4fc1-b56c-e524338e1ba1",
+								"id": "b87445dc-ac3e-43a3-bef4-62764287db64",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -4425,7 +4425,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "00237c4f-5cb9-4bd1-9ad9-13da43c0fb22",
+								"id": "4b55fee4-fa2b-4abb-824f-51415fc93930",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/spurweite\");\r",
@@ -4478,7 +4478,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "ae5e0f2b-0d4b-4dcb-91e6-a198054e5fd8",
+								"id": "e2cbea82-0768-4abb-a789-f9a5dd890b71",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -4489,7 +4489,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "de81a548-1841-4cdf-82fa-9208f69922a3",
+								"id": "a0f197d9-19a1-4be8-a8a8-c4f431e0d7a7",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4552,7 +4552,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "2ee7d3c6-64e8-435c-8bf9-454b9056f10c",
+								"id": "6f19f169-9ac6-40ca-92d5-467452d29638",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -4562,7 +4562,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5f3215cd-3897-4b36-911e-685e603a2773",
+								"id": "c6e283a1-8528-4e3c-a5f2-8e201a34992a",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4626,7 +4626,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9a65363e-ed8e-43a0-a5ca-fca4004e8554",
+								"id": "33b222bf-da05-438f-969b-5f137d3bf495",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4672,7 +4672,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1809acf0-432f-4475-857a-fc5b75b13f73",
+								"id": "dae8a916-57a3-4a32-b673-ccec90042995",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -4714,7 +4714,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "11d87a08-72a6-4771-a01a-adaa15f7e78d",
+								"id": "175f940a-37a0-4de8-bd63-576030bf0916",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/steuerung\");\r",
@@ -4767,7 +4767,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "fbf5daed-087d-4e98-a31e-e24dc669b819",
+								"id": "2c23fafd-93b3-4615-a734-0a2516a79b67",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -4778,7 +4778,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f78684a5-de52-43a8-af9e-3543125bda16",
+								"id": "d238129e-3c96-42fd-8073-896a9d7a2beb",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4841,7 +4841,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "73bfd723-ce3e-4d2f-9896-7e5f40a633f7",
+								"id": "6d5d1178-c59e-40dc-8a66-af7d3d394b37",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -4851,7 +4851,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "34e11127-aa97-4f12-85d6-f076ee314aca",
+								"id": "549a001a-950e-4edf-abdf-3beb8bcf99aa",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4915,7 +4915,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a7460d7e-23ab-4485-bde9-f21ab18afbc4",
+								"id": "7be98bd6-0bb2-495c-928c-61722c720211",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4961,7 +4961,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "60a1ca35-cc02-4b70-95c1-52761652cb3e",
+								"id": "94800e42-4b20-4477-84c9-33400c0485c0",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -5003,7 +5003,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bd7a62d2-2365-476d-829a-07f68feb421d",
+								"id": "cb9fee73-2965-440d-b326-cde1ee699ef7",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zugTyp\");\r",
@@ -5056,7 +5056,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "959f9153-ad33-4178-9a49-f8aeebd387b5",
+								"id": "be0cb381-7557-4de6-948b-0a7bd922a996",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -5067,7 +5067,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4dc1e866-eb24-4851-ae5b-8e514e835668",
+								"id": "b4ddf1ca-bf40-4902-869a-3af54c5df0ab",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -5130,7 +5130,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "723343a5-7f05-43e3-b2a3-ef7fab4ac04e",
+								"id": "e8bd1f17-c4cb-42a6-a065-7cb239bc86d6",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -5140,7 +5140,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4c6d28b0-11da-4847-b453-654c955761a7",
+								"id": "631d1f6c-0f02-41f5-9d2f-008aee8c3bf3",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -5204,7 +5204,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b2ec426e-2c75-4b62-b5c6-29dded85f485",
+								"id": "7153f535-cf52-46e1-b052-bbcaf6da6ea1",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -5250,7 +5250,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a020bf14-7143-4711-8457-b3721230a93f",
+								"id": "615d2af9-ff24-4c40-9fa1-bc5b466baf07",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -5292,7 +5292,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1f9d5c6d-33aa-4762-babd-6ef3e38dbe77",
+								"id": "c150b055-60ce-41eb-8d07-2ad7e431ec2d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kategorie\");\r",
@@ -5347,7 +5347,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "818198f5-c9bc-4bb0-a2d1-918f8b0052f5",
+								"id": "a76f7f4e-0ef3-4d8d-bb90-8a255d25371a",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kategorie\");\r",
@@ -5416,7 +5416,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "f12d676f-824e-409a-9164-dcbd9eccccda",
+								"id": "4c627586-930d-4b1d-8cc2-fd3d04f88914",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -5427,7 +5427,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f5289c74-108d-4924-a02e-ca827e61f4b9",
+								"id": "f3e9b5c7-e2f8-429b-a3b4-9b5b685435fc",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -5492,7 +5492,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "77a8e86b-8438-41a8-ae0c-377bfe78f375",
+								"id": "c6875f21-7561-4b23-bbea-4f110a1c6b2c",
 								"exec": [
 									"pm.environment.set(\"unterAdd\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"unterBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -5503,7 +5503,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d962ff56-fd87-4ac7-b2f5-bb81ea5d5930",
+								"id": "3c726164-96f8-49b9-9f6c-fb4b8a7ed72d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -5567,7 +5567,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "dda6bb66-56ec-4cb6-b521-54edeb411398",
+								"id": "99cb5dcf-2078-47af-9ae5-524cc0268681",
 								"exec": [
 									"pm.environment.set(\"unterBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -5577,7 +5577,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fac5a4ab-c461-4c78-9359-1a7bb2bb4c6c",
+								"id": "d125cf26-4de8-4747-93b9-4d819833d27e",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -5642,7 +5642,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "0620f6ad-65e2-4146-8bcb-73b5c418ee26",
+								"id": "cdb9579e-ab97-4ac7-8f2b-c2608c432eb9",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -5652,7 +5652,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "46263083-2bf4-40b6-a94d-d4ef27bdbeb3",
+								"id": "079d3d1e-2966-4f4b-93af-935ea128c139",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -5726,7 +5726,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e6d0db83-bf7a-4cc4-84b9-ebea9c3af5c3",
+								"id": "25f567a6-3174-40c8-b25b-08dd0907c7cf",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -5782,7 +5782,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c1620891-c038-4b86-967e-79617d9f257a",
+								"id": "a64b7ac5-7e30-489d-8b70-3a28020bae72",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -5820,7 +5820,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6550cfae-cdcd-4978-8feb-07088a4ecf9d",
+								"id": "8fe62b24-4213-4ca7-a6c6-947a7c6c8945",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -5862,7 +5862,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f510f67d-ea59-40a9-9fb0-969ddb8980e1",
+								"id": "7dd299c2-38ef-49b5-bf6a-956e7a58e43c",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/vorbild\");\r",
@@ -5918,7 +5918,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "7d9e0d23-20a3-4b48-a000-0f15566565b5",
+								"id": "c292649c-870a-45b1-a84a-697b0ad6491b",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}{{$randomInt}}.{{$randomInt}}\"));\r",
 									"pm.environment.set(\"gattung\", pm.variables.replaceIn(\"{{gattungAdd}}\"));\r",
@@ -5970,7 +5970,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cb743a69-a774-4a47-b7ba-9ea678fa35a3",
+								"id": "397046b0-5a4e-4747-a83f-0fbd946af6bf",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -6072,7 +6072,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a700aa08-2b98-4d5a-9ced-1b3c1d290009",
+								"id": "ff05c751-43d2-4f06-9e89-c722a4f67860",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -6173,7 +6173,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8629889b-975d-4575-8de6-26fd65a2c96d",
+								"id": "2b00c6fb-04bf-4cee-88a8-b01b8ba1992d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -6234,7 +6234,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "2ba5d1eb-7b4f-4c1e-b15b-a9ca40f3a839",
+								"id": "e61d1a4c-7b52-45be-a1da-b80758a83e04",
 								"exec": [
 									"pm.environment.set(\"gattung\", pm.variables.replaceIn(\"{{gattungUpdate}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
@@ -6328,7 +6328,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c1571372-f1ae-49bb-b07a-d09f5a9aa2b4",
+								"id": "cfc5fc39-802a-4c2c-b945-13dedad23328",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -6414,7 +6414,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "feda2619-b847-4e06-83d1-12bb46012732",
+								"id": "06cb4c27-6b0b-4066-8683-87132a3bf666",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -6501,7 +6501,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1785b6d1-3339-4cf1-a6de-9d6e7e84cd11",
+								"id": "0fd13074-1ec0-4172-87e4-3675be34670d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -6543,7 +6543,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bee2f696-e1aa-4cf6-a083-b90b951a8744",
+								"id": "a1615f32-222f-4e50-9809-fda035deddcb",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp\");\r",
@@ -6605,7 +6605,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "f8f5762e-5837-4584-bd1c-050da1e9aec5",
+								"id": "f3e4acc0-8c60-47e8-aa20-7d531db48024",
 								"exec": [
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"decoderHerstellerAdd\"));\r",
 									"pm.environment.set(\"bestellNr\", pm.variables.replaceIn(\"{{$randomInt}}\"));\r",
@@ -6623,7 +6623,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "97202f8b-778a-41a1-bd8a-eb9f764213c5",
+								"id": "14731c4f-5f5a-47ea-869d-f15aab35957f",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -6701,7 +6701,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ed253bfb-e348-4cc8-a54d-056a351a77ec",
+								"id": "16569e43-6c99-4664-b2eb-5bd102a3f691",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -6779,7 +6779,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "189421d3-2e0f-41cc-8a90-f211f95182c3",
+								"id": "814e5cdc-e520-43a0-b5f3-eff37a32e231",
 								"exec": [
 									"pm.environment.set(\"adIndex\", new Number(pm.variables.get(\"adIndexAdd\")));\r",
 									"pm.environment.set(\"adBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
@@ -6793,7 +6793,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c9caaedb-f794-4eeb-96b0-aaa2a4888104",
+								"id": "6f630bde-bd55-49a0-b17c-f8ca08485c20",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -6863,7 +6863,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "00d4c25c-7550-4705-be3d-b3e34c90c751",
+								"id": "34ce3533-9d58-4c27-8058-b19de0674f8c",
 								"exec": [
 									"pm.environment.set(\"adBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"adTyp\", pm.variables.get(\"adTypUpdate\"));\r",
@@ -6876,7 +6876,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9da9eb38-2154-4fef-af48-9f11273c56b6",
+								"id": "ee37be54-d871-4558-96c5-b13a64a0967d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -6947,7 +6947,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "cff7462c-f392-4b6c-9eac-cc0724ea6402",
+								"id": "f1676140-ba4a-4172-bea2-1bb7c9ed5850",
 								"exec": [
 									"pm.environment.set(\"cv\", new Number(pm.variables.get(\"cvAdd\")));\r",
 									"pm.environment.set(\"cvBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
@@ -6961,7 +6961,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "194291e4-0618-4c82-bd62-f2e450a52665",
+								"id": "93c822fa-5e21-4804-86e7-240515b77b4a",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -7031,7 +7031,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "64145569-5226-42c1-9335-1e2b6bb9269c",
+								"id": "f9e52084-9b2b-47cd-9f12-82ed0b188dc4",
 								"exec": [
 									"pm.environment.set(\"cvBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"cvMinimal\", new Number(pm.variables.get(\"cvMinUpdate\")));\r",
@@ -7044,7 +7044,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cfe2ca9b-712a-4545-a3a1-d44c5a952dc6",
+								"id": "e9603931-e4db-4489-b7db-44dc7c5b6602",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -7115,7 +7115,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "5d62f28a-9bde-4f6c-85bf-4d524eb335b2",
+								"id": "c5972207-abca-4937-b858-d5334e6a0a8c",
 								"exec": [
 									"pm.environment.set(\"fnReihe\", new Number(pm.variables.get(\"fnReiheAdd\")));\r",
 									"pm.environment.set(\"fnFunktion\", pm.variables.get(\"fnFuntionAdd\"));\r",
@@ -7128,7 +7128,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "57679485-57ae-41d0-b516-56f73de1ffed",
+								"id": "2672e057-cf05-413a-abdb-fd1ad89e2a05",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -7197,7 +7197,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "bbc8366c-b3cc-407f-9a8f-c95679625f7d",
+								"id": "c2dda2f9-01a7-40f8-a00f-c54648271236",
 								"exec": [
 									"pm.environment.set(\"fnReihe\", new Number(pm.variables.get(\"fnReiheUpdate\")));\r",
 									"pm.environment.set(\"fnFunktion\", pm.variables.get(\"fnFuntionUpdate\"));\r",
@@ -7210,7 +7210,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d012ef91-76ca-4a48-ba35-784493232b0f",
+								"id": "bccbb68c-3441-4b6f-8e3a-d48ebbdf57f9",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -7281,7 +7281,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "7b5e1f3b-8208-4e3f-8816-ba0c2c7b9b17",
+								"id": "2cdc6a8d-96b7-427c-9435-e163708a2032",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"iMax\", new Number(pm.variables.get(\"iMaxUpdate\")));\r",
@@ -7297,7 +7297,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5c4dc7ae-4b6a-43ee-9444-aecace73f073",
+								"id": "3f366ad6-9308-4752-a57a-a0fb682fe110",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -7416,7 +7416,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "338f86a2-5098-49b3-a04a-d2a387b393e2",
+								"id": "5d723a3f-d13d-4537-aeb3-03dc9065d1f6",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -7517,7 +7517,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "371620c9-a7e4-41b3-a620-be6564f7f3b7",
+								"id": "8c4fa847-0070-4896-aeed-e9e0c6675a38",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -7620,7 +7620,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b8ba8088-6f35-45de-98f0-bdea432650af",
+								"id": "637d97d6-ad06-42c8-8fb4-8a13d893c1af",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -7659,7 +7659,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9227a6ee-a95e-49aa-8a02-57aa41728185",
+								"id": "2b8defed-63fe-4068-bd9d-3711e3bbff37",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -7698,7 +7698,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d4bf9413-a3ed-4b79-b5f3-f1644be384c6",
+								"id": "073ea064-8c91-4f13-bdae-77f32a71562b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -7738,7 +7738,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bd21a43b-c298-44fd-813c-5e2ca5daf824",
+								"id": "3207b7f2-33c7-4e93-b60a-f15caf7e0c6f",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -7781,7 +7781,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ae4b5a57-3620-4149-a659-6d8f556a9d0b",
+								"id": "855017b4-1d05-4c9e-be01-7ecaea909603",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
@@ -7841,7 +7841,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b3fe9e4e-a0cb-42e7-ae29-8591c6467157",
+								"id": "63e4b5ca-ba4d-4519-ab4e-c82e632d2c5d",
 								"exec": [
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
 									"pm.environment.set(\"bestellNr\", pm.variables.replaceIn(\"{{$randomAbbreviation}}{{$randomInt}}\"));\r",
@@ -7873,7 +7873,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8ae809e2-7c23-409a-9af3-b4d55d17ad79",
+								"id": "cc93f96f-8ee6-41ec-8ee1-c7db1132277d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -7965,7 +7965,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "da4aa23d-a1e0-4061-b80b-62c49469adcb",
+								"id": "f39c3f0f-3252-49d8-a1c6-4adb6535d2aa",
 								"exec": [
 									"pm.test(\"response\", () => pm.test(\"response\", () => pm.response.to.have.status(202)));\r",
 									"var jsonData = pm.response.json();\r",
@@ -8057,7 +8057,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3cd655c9-daa3-42e5-986e-5d5870af972f",
+								"id": "e0b4d1af-40d0-4707-a56d-48ab387d8f2c",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -8150,7 +8150,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a4f588d0-08fa-4b60-9bb0-bba1b36f4caf",
+								"id": "28cac10c-65ce-4385-9ad4-2b4839981fe6",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -8244,7 +8244,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "47db0a57-1ff1-4a74-8a91-b471c1065d75",
+								"id": "2005676b-6c4e-4400-bcd1-0eb4429a5329",
 								"exec": [
 									"pm.environment.set(\"teilHersteller\", pm.variables.get(\"teilHerstellerAdd\"));\r",
 									"pm.environment.set(\"teilBestellNr\", pm.variables.get(\"teilBestellNrAdd\"));\r",
@@ -8259,7 +8259,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c426f667-ba07-4fa3-bea2-4bebc1ac3b34",
+								"id": "f39e11d0-22e8-4a7c-8b20-b030091e9569",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -8330,7 +8330,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "8e51a52e-a82f-497f-b9e5-8d9d904864c1",
+								"id": "3d445b09-fecc-4036-b977-c3da0b72b7eb",
 								"exec": [
 									"pm.environment.set(\"teilAnzahl\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
 								],
@@ -8340,7 +8340,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fa15265c-ef52-49a0-8a55-7fbee7dfa68e",
+								"id": "e9ca476a-706d-4e7f-98e7-422a5275a4e2",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -8410,7 +8410,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "17057768-95bd-4c21-88a7-788acb549e57",
+								"id": "c016403a-6cba-484a-941e-6e16dd9f7bff",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"kategorie\", pm.variables.get(\"kategorieUpdate\"));\r",
@@ -8440,7 +8440,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c0ebeaf7-50bc-4e0e-a392-b3f3af9d67fb",
+								"id": "98c83f29-0b13-42db-840b-8e5417f0493a",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -8551,7 +8551,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cc7ab9c4-b2f8-4b73-9f37-7829257e034a",
+								"id": "43335fe0-699f-492a-958e-d148ce6290c7",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -8644,7 +8644,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0f4c61b1-1932-47fd-9ce2-f7bdafd0361b",
+								"id": "0646f0c2-2ade-4e32-966a-02de6395d3c5",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));\r",
 									""
@@ -8685,7 +8685,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d8060d1a-a9ff-4b1e-895e-520eb78d1764",
+								"id": "4dcef1c3-3980-4080-bc90-cbc035f81bae",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -8765,7 +8765,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9e1e594a-4d57-4946-9b6b-5832da5ecfc8",
+								"id": "605cdcb4-93e0-40c8-ae23-44e3da19dd98",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -8844,7 +8844,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3ccf20c9-52be-42de-80ee-9679abf6b3f0",
+								"id": "be49f399-b6fb-418c-9480-e1472061e1c3",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -8922,7 +8922,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "27bc473d-5c59-4c62-ab89-1060aa2ac9a7",
+								"id": "878bee9d-f736-4124-b092-55c6d1687001",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -8965,7 +8965,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bda7670e-f32b-4f54-904e-af69af489801",
+								"id": "457ed1f4-d395-414e-aeda-1510f07d30b6",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoder\");\r",
@@ -9027,7 +9027,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "31239a30-6759-4f4a-8547-7d97b99c34bb",
+								"id": "1ab49874-6755-4079-b6de-c9363de257a5",
 								"exec": [
 									"pm.environment.set(\"hersteller\", \"ESU\");\r",
 									"pm.environment.set(\"bestellNr\", \"62400\");\r",
@@ -9046,7 +9046,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "29fd825d-1db3-4cf3-a116-3653633381d1",
+								"id": "2f48080d-f0af-4c6b-97df-9b5fe538f831",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -9460,7 +9460,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "0163d616-0625-4aba-914c-61e6290dfaf2",
+								"id": "cfcf9a4f-0e20-4fc5-842e-00da522b0688",
 								"exec": [
 									"pm.environment.set(\"adIndex\", 1);\r",
 									"pm.environment.set(\"adBezeichnung\", \"Primary\");\r",
@@ -9475,7 +9475,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "eb846c74-ede6-4e2a-a8eb-a416f656da6c",
+								"id": "55615fbf-a97a-4550-9224-5a0257ab9145",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -9540,7 +9540,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "02a8f628-3ef7-432b-9285-aa1fd9ea9af2",
+								"id": "d84982b0-563d-4fa3-8870-5b8184bbb02a",
 								"exec": [
 									"pm.environment.set(\"cvCv\", 1);\r",
 									"pm.environment.set(\"cvBezeichnung\", \"Adresse\");\r",
@@ -9555,7 +9555,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dede22cc-a3e9-4978-a2cd-7616b897025b",
+								"id": "d378d777-62fd-4e58-af67-5c314010103b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -9620,7 +9620,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "158010d8-e828-4e3b-ad12-40eb50943a5b",
+								"id": "3e96d46e-6491-4aac-b0d6-f4ef533a1137",
 								"exec": [
 									"pm.environment.set(\"fnReihe\", 1);\r",
 									"pm.environment.set(\"fnFunktion\", \"F0\");\r",
@@ -9632,7 +9632,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e9c1dc78-ed98-4e32-8752-a54fa46b7e64",
+								"id": "00ec8272-c5f0-4401-8451-43a08b20ff1e",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -9696,7 +9696,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "3ea0c51a-5d41-483c-8b48-39bb4bd82047",
+								"id": "15523279-a3be-44d9-88b3-9ad85e77cb28",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"protokoll\", \"DCC\");\r",
@@ -9709,7 +9709,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b0870e3d-8d8d-445a-aa84-d1e5348953ce",
+								"id": "9beeb73e-4264-4e74-9330-f9c12993f0f3",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -10131,7 +10131,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "90d2d993-c7f0-49a4-884f-1e7086204d77",
+								"id": "464a6951-47a0-43b3-881a-690df7f1958d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -10535,7 +10535,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3876a0f7-77ed-4c7c-b2f9-254750836b5a",
+								"id": "c9ef25b9-5155-42cc-888b-c64edad76478",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -10577,7 +10577,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e3dc26f3-495f-4bec-ac9b-8889e28a3878",
+								"id": "b0ddf87b-dedf-4d12-afcc-91b2f090cfa8",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/artikel\");\r",
@@ -10635,7 +10635,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "147866ee-048b-49e0-97a5-94ee01e527f6",
+								"id": "6a81a768-188f-4879-9423-067ef1be5b3b",
 								"exec": [
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
 									"pm.environment.set(\"bestellNr\", pm.variables.get(\"bestellNrAdd\"));\r",
@@ -10671,7 +10671,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5a63c057-d205-4dcc-b192-ef80d06f8f52",
+								"id": "46f08def-f5d7-4217-bf4e-536f516d2fbb",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -10766,7 +10766,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8099b657-71ed-44e7-be98-d29bb8fa9c42",
+								"id": "6fc5d392-6b5d-4b67-9bd6-2b783ecf9032",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -10859,7 +10859,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "1ab78c9e-0354-48f2-ba53-cbd0bd6dfc94",
+								"id": "35696ec0-6a82-417a-a7d7-c07da44cfdbf",
 								"exec": [
 									"pm.environment.set(\"anDatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
 									"pm.environment.set(\"anTyp\", \"UMGEBAUT\");\r",
@@ -10874,7 +10874,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7d438fb3-479f-43f7-a918-d911c3931eef",
+								"id": "09c8d412-4940-4fdc-bf41-e2bd7e3b52b1",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -10943,7 +10943,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "d7416f5c-2b68-4c8d-90eb-8922e2f9af03",
+								"id": "35e37ec9-d011-4199-9816-0fe692d218d3",
 								"exec": [
 									"pm.environment.set(\"anDatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
 									"pm.environment.set(\"anTyp\", \"REPARIERT\");\r",
@@ -10957,7 +10957,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "90fb265b-4852-41d2-bc75-c71addd64f09",
+								"id": "afbced6c-f71a-4143-a9de-1c35a776f2b9",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -11026,7 +11026,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "9529a682-7d1e-4efc-bd20-975b523d45b9",
+								"id": "ec30aa29-f669-4e72-903e-4ddae7936ae4",
 								"exec": [
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerUpdate\"));\r",
 									"pm.environment.set(\"bestellNr\", pm.variables.get(\"bestellNr\"));\r",
@@ -11063,7 +11063,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "32cb5605-bd95-483d-91ab-93bc30f717eb",
+								"id": "66285c7d-1ff8-490c-81f0-201061c83186",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -11171,7 +11171,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "62b7054d-37a3-4522-acac-7ba24c31cfa6",
+								"id": "d8ff09a4-88ac-4118-bd80-a100eed562e2",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -11261,7 +11261,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d788e4ac-6639-4142-9f4c-7bcf70bb9efe",
+								"id": "8e54579e-5575-4cc4-8557-28ed216a2f0a",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -11352,7 +11352,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "38c83361-5f08-4682-ae9c-b4f0a17d4c71",
+								"id": "ae170458-4ec1-40fb-ac88-be6072827e8d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -11398,7 +11398,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "129251ec-9642-452f-9b7c-9e07450ef027",
+								"id": "6aec5c85-9790-444c-8fe5-2324ec12e539",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -11440,7 +11440,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c38eaaaa-8c60-4c54-8361-926c76fdbc53",
+								"id": "6ae5829c-06b7-4596-9cca-52332f42a5e8",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
@@ -11494,7 +11494,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "a3142e2a-2f6c-4487-b5e0-00740feb0079",
+								"id": "fa04e425-ebf2-46e2-8afa-bcc1cf13478e",
 								"exec": [
 									"pm.environment.set(\"zug\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"zugTyp\", pm.variables.get(\"zugTypAdd\"));\r",
@@ -11506,7 +11506,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "679751e1-f529-4960-8746-1a7f0059b5c0",
+								"id": "5f6e6f5f-339d-43ae-89fa-8dc79a440b30",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -11572,7 +11572,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "a1a287b8-1f6d-4089-b590-48cef931e5b8",
+								"id": "a639e128-24b6-486b-bcbf-7d0419f17dee",
 								"exec": [
 									"pm.environment.set(\"cnArtikelId\", \"00001\");\r",
 									"pm.environment.set(\"cnPosition\", 1);\r",
@@ -11593,7 +11593,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7b1df63a-1522-4a58-86a4-5ed3802b6e93",
+								"id": "0e9dd52d-d539-400f-8cc2-90c030918850",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -11663,7 +11663,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "a45e4fcb-dfc1-4e9f-813c-11cd34466443",
+								"id": "89fc2b3a-591e-405b-95ef-a1a349a319ff",
 								"exec": [
 									"pm.environment.set(\"cnArtikelId\", \"00002\");\r",
 									"pm.environment.set(\"cnHersteller\", \"MARKLIN\");\r",
@@ -11681,7 +11681,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "80e2ee65-9170-44e0-b2d2-64e06e775798",
+								"id": "d3bd22f8-6575-42cc-864d-88e2ed4dc9de",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -11751,7 +11751,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "24878891-b0f4-423d-a60c-202daa614738",
+								"id": "eea5a90c-29bd-4b20-a8b4-e03ec148d576",
 								"exec": [
 									"pm.environment.set(\"zugTyp\", pm.variables.get(\"zugTypUpdate\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -11762,7 +11762,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9bd372c0-73fc-4e38-a38f-7412c0e27c3d",
+								"id": "720d9011-7e91-4f62-8c25-c02616a22608",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -11844,7 +11844,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "122c0792-4c34-41da-95a0-4af906e5a618",
+								"id": "d598da92-e734-4102-8fff-8b088866afc0",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -11908,7 +11908,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3f8b27f1-357b-4ded-a337-f1ffb8d87330",
+								"id": "1feda4dc-072b-472e-8e68-00712f214d78",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -11946,7 +11946,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "81876ef3-c919-4d5a-9322-05349c91f3e1",
+								"id": "e42820b1-d877-49ae-8028-d11e9eaff4a9",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -11984,6 +11984,119 @@
 			"item": [
 				{
 					"name": "Get Docs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "658aa646-6fca-4d1b-9a4c-6292933b9cde",
+								"exec": [
+									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"openapi\", () => pm.expect(jsonData.openapi).to.eql( \"3.0.1\"));\r",
+									"pm.test(\"info\", () => {\r",
+									"    pm.expect(jsonData.info.title).to.eql(\"ModellBahn API\");\r",
+									"\tpm.expect(jsonData.info.description).to.eql(\"ModellBahn datastore\");\r",
+									"\tpm.expect(jsonData.info.license.name).to.eql(\"MIT License\");\r",
+									"\tpm.expect(jsonData.info.license.url).to.eql(\"http://www.opensource.org/licenses/mit-license.php\");\r",
+									"\tpm.expect(jsonData.info.version).to.eql(\"1.0.0\");\r",
+									"\t});\r",
+									"pm.test(\"externalDocs\", () => {\r",
+									"\tpm.expect(jsonData.externalDocs.description).to.eql(\"ModellBahn datastore\");\r",
+									"\tpm.expect(jsonData.externalDocs.url).to.eql(\"https://github.com/linepro/ModellBahn/docs\");\r",
+									"    });\r",
+									"pm.test(\"servers\", () => {\r",
+									"\tpm.expect(jsonData.servers[0].url).to.eql(\"http://127.0.0.1:8086/ModellBahn/v3/a\");\r",
+									"\tpm.expect(jsonData.servers[0].description).to.eql(\"Generated server url\");\r",
+									"\t});\r",
+									"pm.test(\"paths\", () => {\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/achsfolg\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/achsfolg/{name}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/antrieb\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/antrieb/{name}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/artikel\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/artikel/{artikelId}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/artikel/{artikelId}/abbildung\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/artikel/{artikelId}/anderungen\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/artikel/{artikelId}/anderungen/{anderungId}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/aufbau\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/aufbau/{name}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/aufbau/{name}/abbildung\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/bahnverwaltung\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/bahnverwaltung/{name}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/decoder/{decoderId}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/decoder\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/decoder/{decoderId}/funktion/{reihe}/{funktion}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/decoder/{decoderId}/adress/{index}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/decoder/{hersteller}/{bestellNr}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/decoder/{decoderId}/cv/{cv}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/decoderTyp\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/decoderTyp/{hersteller}/{bestellNr}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/decoderTyp/{hersteller}/{bestellNr}/anleitungen\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/decoderTyp/{hersteller}/{bestellNr}/cv/{cv}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/decoderTyp/{hersteller}/{bestellNr}/funktion/{reihe}/{funktion}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/decoderTyp/{hersteller}/{bestellNr}/adress\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/decoderTyp/{hersteller}/{bestellNr}/cv\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/decoderTyp/{hersteller}/{bestellNr}/funktion\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/decoderTyp/{hersteller}/{bestellNr}/adress/{index}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/enums/status\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/enums/leistungsubertragung\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/enums/adressTyp\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/enums/decoder\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/enums/konfiguration\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/enums/anderungsTyp\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/enums/stecker\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/epoch\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/epoch/{name}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/gattung\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/gattung/{name}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/hersteller\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/hersteller/{name}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/kategorie\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/kategorie/{name}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/unterKategorien\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/kategorie/{kategorie}/unterKategorien/{unterKategorie}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/kategorie/{kategorie}/unterKategorien\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/kupplung\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/kupplung/{name}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/kupplung/{name}/abbildung\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/licht\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/licht/{name}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/licht/{name}/abbildung\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/massstab\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/massstab/{name}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/motorTyp\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/motorTyp/{name}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/produkt\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/produkt/{hersteller}/{bestellNr}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/produkt/{hersteller}/{bestellNr}/anleitungen\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/produkt/{hersteller}/{bestellNr}/explosionszeichnung\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/produkt/{hersteller}/{bestellNr}/abbildung\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/produkt/{hersteller}/{bestellNr}/teilen\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/produkt/{hersteller}/{bestellNr}/teilen/{teilHersteller}/{teilBestellNr}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/protokoll\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/protokoll/{name}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/sondermodell\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/sondermodell/{name}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/spurweite\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/spurweite/{name}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/steuerung\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/steuerung/{name}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/vorbild\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/vorbild/{name}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/vorbild/{name}/abbildung\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/zug\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/zug/{name}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/zug/{name}/consist\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/zug/{name}/consist/{position}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/zugTyp\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/zugTyp/{name}\")).to.be.true;\r",
+									"\tpm.expect(jsonData.paths.hasOwnProperty(\"/api/data/{dataType}\")).to.be.true;\r",
+									"    });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12014,6 +12127,22 @@
 			"item": [
 				{
 					"name": "Achsfolg",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ebdca4b1-fb2e-4518-b289-34a4140574df",
+								"exec": [
+									"pm.test(\"Achsfolg\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){2}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12036,30 +12165,23 @@
 					"response": []
 				},
 				{
-					"name": "Anderung",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
-							}
-						],
-						"url": {
-							"raw": "{{api}}/data/anderung",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"anderung"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Antrieb",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eb135f02-d4b5-46a9-9e94-9dd02e30ccaa",
+								"exec": [
+									"pm.test(\"Antrieb\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){2}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12082,30 +12204,23 @@
 					"response": []
 				},
 				{
-					"name": "Artikel",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
-							}
-						],
-						"url": {
-							"raw": "{{api}}/data/artikel",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"artikel"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Aufbau",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "02939d5e-a3fd-4ec4-8d50-2ab500ccbde6",
+								"exec": [
+									"pm.test(\"Aufbau\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,abbildung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){3}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12129,6 +12244,22 @@
 				},
 				{
 					"name": "Bahnverwaltung",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "88adb9cc-07a7-4d44-9b6a-036290d9d967",
+								"exec": [
+									"pm.test(\"Bahnverwaltung\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,land,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){3}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12151,191 +12282,23 @@
 					"response": []
 				},
 				{
-					"name": "DecoderAdress",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
-							}
-						],
-						"url": {
-							"raw": "{{api}}/data/decoderAdress",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"decoderAdress"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DecoderCv",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
-							}
-						],
-						"url": {
-							"raw": "{{api}}/data/decoderCv",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"decoderCv"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DecoderFunktion",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
-							}
-						],
-						"url": {
-							"raw": "{{api}}/data/decoderFunktion",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"decoderFunktion"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Decoder",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
-							}
-						],
-						"url": {
-							"raw": "{{api}}/data/decoder",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"decoder"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DecoderTypAdress",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
-							}
-						],
-						"url": {
-							"raw": "{{api}}/data/decoderTypAdress",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"decoderTypAdress"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DecoderTypCv",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
-							}
-						],
-						"url": {
-							"raw": "{{api}}/data/decoderTypCv",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"decoderTypCv"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DecoderTypFunktion",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
-							}
-						],
-						"url": {
-							"raw": "{{api}}/data/decoderTypFunktion",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"decoderTypFunktion"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DecoderTyp",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
-							}
-						],
-						"url": {
-							"raw": "{{api}}/data/decoderTyp",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"decoderTyp"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Epoch",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7a2fd778-14d5-48c3-bf17-9e0f5c2b37a8",
+								"exec": [
+									"pm.test(\"Epoch\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){2}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12359,6 +12322,22 @@
 				},
 				{
 					"name": "Gattung",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "728e2832-99ac-49d3-b469-19e7afd1237c",
+								"exec": [
+									"pm.test(\"Gattung\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){2}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12382,6 +12361,22 @@
 				},
 				{
 					"name": "Hersteller",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9d58fb4f-13df-4695-813a-947a98e2cd0f",
+								"exec": [
+									"pm.test(\"Hersteller\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,land,url,telefon,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){5}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12405,6 +12400,22 @@
 				},
 				{
 					"name": "Kategorie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9140fea1-df89-4449-8ff6-b0b6e63f89fe",
+								"exec": [
+									"pm.test(\"Kategorie\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){2}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12428,6 +12439,22 @@
 				},
 				{
 					"name": "Kupplung",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "736d81a9-88b5-43df-a395-39517e231275",
+								"exec": [
+									"pm.test(\"Kupplung\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,abbildung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){3}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12451,6 +12478,22 @@
 				},
 				{
 					"name": "Licht",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a7097b78-c06d-4ef1-be13-6670ad909691",
+								"exec": [
+									"pm.test(\"Licht\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,abbildung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){3}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12474,6 +12517,22 @@
 				},
 				{
 					"name": "Massstab",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7041e061-791d-4549-a66d-d471c1cd9cc2",
+								"exec": [
+									"pm.test(\"Massstab\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){2}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12496,7 +12555,23 @@
 					"response": []
 				},
 				{
-					"name": "MotorTyp",
+					"name": "Motor Typ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b82f8b4b-dbe8-462c-8347-4c4753e567bd",
+								"exec": [
+									"pm.test(\"Motor Typ\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){2}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12519,53 +12594,23 @@
 					"response": []
 				},
 				{
-					"name": "Produkt",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
-							}
-						],
-						"url": {
-							"raw": "{{api}}/data/produkt",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"produkt"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Produkt Teil",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
-							}
-						],
-						"url": {
-							"raw": "{{api}}/data/produktTeil",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"produktTeil"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Protokoll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3caf2a5f-1200-482f-ba2f-574b791c6e7d",
+								"exec": [
+									"pm.test(\"Protokoll\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){2}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12589,6 +12634,22 @@
 				},
 				{
 					"name": "Sondermodell",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "80773936-ae4b-4895-9839-5a46e9263dae",
+								"exec": [
+									"pm.test(\"Sondermodell\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){2}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12612,6 +12673,22 @@
 				},
 				{
 					"name": "Spurweite",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bd25f992-b9f4-40f5-af0d-aa44bc7ace4f",
+								"exec": [
+									"pm.test(\"Spurweite\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){2}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12635,6 +12712,22 @@
 				},
 				{
 					"name": "Steuerung",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9b30e682-07b5-4679-bf31-a5c3fe294e03",
+								"exec": [
+									"pm.test(\"Steuerung\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){2}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12657,7 +12750,62 @@
 					"response": []
 				},
 				{
-					"name": "UnterKategorie",
+					"name": "Zug Typ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "23b05d97-ca98-45d2-89bd-752e7617994e",
+								"exec": [
+									"pm.test(\"Zug Typ\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){2}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/data/zugTyp",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"zugTyp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unter Kategorie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "815bba5a-9909-4de4-a42f-9697ac604a04",
+								"exec": [
+									"pm.test(\"Unter Kategorie\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"kategorie,name,bezeichnung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){3}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12681,6 +12829,22 @@
 				},
 				{
 					"name": "Vorbild",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ca7036d9-f84a-451b-9016-ab609db9e3ed",
+								"exec": [
+									"pm.test(\"Vorbild\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,gattung,bezeichnung,kategorie,unterKategorie,bahnverwaltung,hersteller,bauzeit,anzahl,betreibsnummer,antrieb,achsfolg,anfahrzugkraft,leistung,dienstgewicht,geschwindigkeit,lange,ausserdienst,dmTreibrad,dmLaufradVorn,dmLaufradHinten,zylinder,dmZylinder,kolbenhub,kesseluberdruck,rostflache,uberhitzerflache,wasservorrat,verdampfung,fahrmotoren,motorbauart,leistungsubertragung,reichweite,kapazitat,klasse,sitzplatzeKL1,sitzplatzeKL2,sitzplatzeKL3,sitzplatzeKL4,aufbau,triebkopf,mittelwagen,drehgestellBauart,abbildung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){44}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12703,7 +12867,23 @@
 					"response": []
 				},
 				{
-					"name": "Zug Consist",
+					"name": "Decoder Typ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ab500508-d27a-491e-9c9a-89e8d227a341",
+								"exec": [
+									"pm.test(\"Decoder Typ\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,bezeichnung,iMax,protokoll,fahrstufe,gerausch,konfiguration,stecker,anleitungen,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){10}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12713,13 +12893,442 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/data/zugConsist",
+							"raw": "{{api}}/data/decoderTyp",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"data",
-								"zugConsist"
+								"decoderTyp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder Typ Adress",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8c51071c-a584-4277-b1d7-cb9633cdb44c",
+								"exec": [
+									"pm.test(\"Decoder Typ Adress\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,index,bezeichnung,span,adressTyp,werkseinstellung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){7}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/data/decoderTypAdress",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoderTypAdress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder Typ Cv",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b22ef115-30d8-4d85-9c0c-4dd086a066eb",
+								"exec": [
+									"pm.test(\"Decoder Typ Cv\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,cv,bezeichnung,minimal,maximal,werkseinstellung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){7}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/data/decoderTypCv",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoderTypCv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder Typ Funktion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ee679581-1a58-4b00-ba9d-85ec9445d525",
+								"exec": [
+									"pm.test(\"Decoder Typ Funktion\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,reihe,funktion,bezeichnung,programmable,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){6}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/data/decoderTypFunktion",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoderTypFunktion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Produkt",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d1e7a5b2-e491-47dd-a64b-2337f0e96507",
+								"exec": [
+									"pm.test(\"Produkt\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,bezeichnung,kategorie,unterKategorie,lange,massstab,spurweite,epoch,bahnverwaltung,gattung,betreibsnummer,bauzeit,achsfolg,sondermodell,aufbau,licht,kupplung,steuerung,decoderHersteller,decoderBestellNr,motorTyp,anmerkung,anleitungen,explosionszeichnung,abbildung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){26}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/data/produkt",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"produkt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Produkt Teil",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f03d3ebd-ad48-4f63-818f-e1a1f99a8528",
+								"exec": [
+									"pm.test(\"Produkt Teil\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,teilHersteller,teilBestellNr,bezeichnung,kategorie,unterKategorie,anzahl,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){8}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/data/teil",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"teil"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3b547341-5824-4386-afcc-dd4c726a51b4",
+								"exec": [
+									"pm.test(\"Decoder\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"decoderId,hersteller,bestellNr,bezeichnung,iMax,protokoll,fahrstufe,gerausch,konfiguration,stecker,status,anleitungen,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){12}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/data/decoder",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder Adress",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5c156ef2-d141-45ce-a707-425c1a3ffec4",
+								"exec": [
+									"pm.test(\"Decoder Adress\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"decoderId,index,bezeichnung,span,adressTyp,werkseinstellung,adress,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){7}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/data/decoderAdress",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoderAdress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder Cv",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "10bd7b56-89a0-42e7-87fa-c420efc02cc4",
+								"exec": [
+									"pm.test(\"Decoder Cv\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"decoderId,cv,bezeichnung,minimal,maximal,werkseinstellung,wert,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){7}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/data/decoderCv",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoderCv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder Funktion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0e3eb9d8-eef1-4f4a-b967-88dd59b502e4",
+								"exec": [
+									"pm.test(\"Decoder Funktion\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"decoderId,reihe,funktion,bezeichnung,programmable,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){5}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/data/decoderFunktion",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoderFunktion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Artikel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a27ebef9-3465-443c-a460-8be72c26259a",
+								"exec": [
+									"pm.test(\"Artikel\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"artikelId,hersteller,bestellNr,bezeichnung,kategorie,unterKategorie,lange,massstab,spurweite,epoch,bahnverwaltung,gattung,betreibsnummer,achsfolg,sondermodell,aufbau,licht,kupplung,steuerung,decoder,motorTyp,kaufdatum,wahrung,preis,stuck,verbleibende,anmerkung,beladung,status,abbildung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){30}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/data/artikel",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"artikel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Anderung",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "008989a9-b268-4a0d-997e-f466c0a4aeb2",
+								"exec": [
+									"pm.test(\"Anderung\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"artikelId,anderungId,anderungsDatum,anderungsTyp,bezeichnung,stuck,anmerkung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){7}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/csv, application/json, text/html, application/xhtml+xml, application/xml"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/data/anderung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"anderung"
 							]
 						}
 					},
@@ -12727,6 +13336,22 @@
 				},
 				{
 					"name": "Zug",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "98d83b3b-728a-4884-b733-9d5f0f099b29",
+								"exec": [
+									"pm.test(\"Zug\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,zugTyp,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){3}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12749,7 +13374,23 @@
 					"response": []
 				},
 				{
-					"name": "ZugTyp",
+					"name": "Zug Consist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0cf668ca-3ce4-4d4d-b9cc-586f5c059733",
+								"exec": [
+									"pm.test(\"Zug Consist\", () => pm.response.to.have.status(200));\r",
+									"var csv = pm.response.text().split(/\\r?\\n/);\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"zug,position,artikelId,hersteller,bestellNr,bezeichnung,lange,bahnverwaltung,gattung,betreibsnummer,abbildung,deleted\"));\r",
+									"var data = csv.slice(1,csv.length-1);\r",
+									"pm.test(\"Data\", () => data.forEach(r => pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){11}(true|false)$/).length).to.eql(3)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -12759,13 +13400,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/data/zugTyp",
+							"raw": "{{api}}/data/consist",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"data",
-								"zugTyp"
+								"consist"
 							]
 						}
 					},
@@ -12779,6 +13420,18 @@
 			"item": [
 				{
 					"name": "Achsfolg",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "470d426f-b896-4973-9367-14a6d34db633",
+								"exec": [
+									"pm.test(\"Achsfolg\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -12792,9 +13445,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "data",
 									"type": "file",
-									"src": []
+									"src": "{{namedCsv}}"
 								}
 							],
 							"options": {
@@ -12815,44 +13468,19 @@
 					"response": []
 				},
 				{
-					"name": "Anderung",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept-Language",
-								"value": "{{language}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "",
-									"type": "file",
-									"src": []
-								}
-							],
-							"options": {
-								"formdata": {}
-							}
-						},
-						"url": {
-							"raw": "{{api}}/data/anderung",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"anderung"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Antrieb",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6f21990d-a5e5-490a-be50-bfc33351902b",
+								"exec": [
+									"pm.test(\"Antrieb\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -12866,9 +13494,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "data",
 									"type": "file",
-									"src": []
+									"src": "{{namedCsv}}"
 								}
 							],
 							"options": {
@@ -12889,44 +13517,19 @@
 					"response": []
 				},
 				{
-					"name": "Artikel",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept-Language",
-								"value": "{{language}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "",
-									"type": "file",
-									"src": []
-								}
-							],
-							"options": {
-								"formdata": {}
-							}
-						},
-						"url": {
-							"raw": "{{api}}/data/artikel",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"artikel"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Aufbau",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2d9175ba-a96d-476b-83f7-63ab767ef576",
+								"exec": [
+									"pm.test(\"Aufbau\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -12940,9 +13543,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "data",
 									"type": "file",
-									"src": []
+									"src": "{{abbildungCsv}}"
 								}
 							],
 							"options": {
@@ -12964,6 +13567,18 @@
 				},
 				{
 					"name": "Bahnverwaltung",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "719ada41-7b7a-4456-9436-9719c95eeef9",
+								"exec": [
+									"pm.test(\"Bahnverwaltung\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -12977,9 +13592,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "data",
 									"type": "file",
-									"src": []
+									"src": "{{bahnverwaltungCsv}}"
 								}
 							],
 							"options": {
@@ -13000,303 +13615,19 @@
 					"response": []
 				},
 				{
-					"name": "DecoderAdress",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept-Language",
-								"value": "{{language}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "",
-									"type": "file",
-									"src": []
-								}
-							],
-							"options": {
-								"formdata": {}
-							}
-						},
-						"url": {
-							"raw": "{{api}}/data/decoderAdress",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"decoderAdress"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DecoderCv",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept-Language",
-								"value": "{{language}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "",
-									"type": "file",
-									"src": []
-								}
-							],
-							"options": {
-								"formdata": {}
-							}
-						},
-						"url": {
-							"raw": "{{api}}/data/decoderCv",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"decoderCv"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DecoderFunktion",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept-Language",
-								"value": "{{language}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "",
-									"type": "file",
-									"src": []
-								}
-							],
-							"options": {
-								"formdata": {}
-							}
-						},
-						"url": {
-							"raw": "{{api}}/data/decoderFunktion",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"decoderFunktion"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Decoder",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept-Language",
-								"value": "{{language}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "",
-									"type": "file",
-									"src": []
-								}
-							],
-							"options": {
-								"formdata": {}
-							}
-						},
-						"url": {
-							"raw": "{{api}}/data/decoder",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"decoder"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DecoderTypAdress",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept-Language",
-								"value": "{{language}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "",
-									"type": "file",
-									"src": []
-								}
-							],
-							"options": {
-								"formdata": {}
-							}
-						},
-						"url": {
-							"raw": "{{api}}/data/decoderTypAdress",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"decoderTypAdress"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DecoderTypCv",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept-Language",
-								"value": "{{language}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "",
-									"type": "file",
-									"src": []
-								}
-							],
-							"options": {
-								"formdata": {}
-							}
-						},
-						"url": {
-							"raw": "{{api}}/data/decoderTypCv",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"decoderTypCv"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DecoderTypFunktion",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept-Language",
-								"value": "{{language}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "",
-									"type": "file",
-									"src": []
-								}
-							],
-							"options": {
-								"formdata": {}
-							}
-						},
-						"url": {
-							"raw": "{{api}}/data/decoderTypFunktion",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"decoderTypFunktion"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DecoderTyp",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept-Language",
-								"value": "{{language}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "",
-									"type": "file",
-									"src": []
-								}
-							],
-							"options": {
-								"formdata": {}
-							}
-						},
-						"url": {
-							"raw": "{{api}}/data/decoderTyp",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"decoderTyp"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Epoch",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2e6a89c1-c32d-453f-89e2-247a5ce03c0f",
+								"exec": [
+									"pm.test(\"Epoch\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -13310,9 +13641,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "data",
 									"type": "file",
-									"src": []
+									"src": "{{namedCsv}}"
 								}
 							],
 							"options": {
@@ -13334,6 +13665,18 @@
 				},
 				{
 					"name": "Gattung",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b89c0619-0b69-4358-93fc-902ec25f9c09",
+								"exec": [
+									"pm.test(\"Gattung\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -13347,9 +13690,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "data",
 									"type": "file",
-									"src": []
+									"src": "{{namedCsv}}"
 								}
 							],
 							"options": {
@@ -13371,6 +13714,18 @@
 				},
 				{
 					"name": "Hersteller",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "76628eca-b080-48d0-a38e-a303fd10d7a1",
+								"exec": [
+									"pm.test(\"Hersteller\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -13384,9 +13739,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "data",
 									"type": "file",
-									"src": []
+									"src": "{{herstellerCsv}}"
 								}
 							],
 							"options": {
@@ -13407,44 +13762,19 @@
 					"response": []
 				},
 				{
-					"name": "Kategorie",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept-Language",
-								"value": "{{language}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "",
-									"type": "file",
-									"src": []
-								}
-							],
-							"options": {
-								"formdata": {}
-							}
-						},
-						"url": {
-							"raw": "{{api}}/data/kategorie",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"kategorie"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Kupplung",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9dfb8f2a-464f-490f-ada9-2380cd9cdb7b",
+								"exec": [
+									"pm.test(\"Kupplung\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -13458,9 +13788,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "data",
 									"type": "file",
-									"src": []
+									"src": "{{abbildungCsv}}"
 								}
 							],
 							"options": {
@@ -13482,6 +13812,18 @@
 				},
 				{
 					"name": "Licht",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "168a1609-8584-4eb9-9286-56d38d8ac514",
+								"exec": [
+									"pm.test(\"Licht\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -13495,9 +13837,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "data",
 									"type": "file",
-									"src": []
+									"src": "{{abbildungCsv}}"
 								}
 							],
 							"options": {
@@ -13518,7 +13860,19 @@
 					"response": []
 				},
 				{
-					"name": "Massstab",
+					"name": "Kategorie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "69427b75-e392-4384-95a6-2c3af1e328e0",
+								"exec": [
+									"pm.test(\"Kategorie\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -13532,9 +13886,58 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "data",
 									"type": "file",
-									"src": []
+									"src": "{{namedCsv}}"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/data/kategorie",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"kategorie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Massstab",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "31796f46-a36c-4b89-b9c2-21c0b6e0b9c2",
+								"exec": [
+									"pm.test(\"Kategorie\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"type": "file",
+									"src": "{{namedCsv}}"
 								}
 							],
 							"options": {
@@ -13555,7 +13958,19 @@
 					"response": []
 				},
 				{
-					"name": "MotorTyp",
+					"name": "Motor Typ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "525ceefa-af60-4b2b-8c1f-354cb2a0b3b5",
+								"exec": [
+									"pm.test(\"Motor Typ\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -13569,9 +13984,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "data",
 									"type": "file",
-									"src": []
+									"src": "{{namedCsv}}"
 								}
 							],
 							"options": {
@@ -13592,81 +14007,19 @@
 					"response": []
 				},
 				{
-					"name": "Produkt",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept-Language",
-								"value": "{{language}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "",
-									"type": "file",
-									"src": []
-								}
-							],
-							"options": {
-								"formdata": {}
-							}
-						},
-						"url": {
-							"raw": "{{api}}/data/produkt",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"produkt"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Produkt Teil",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept-Language",
-								"value": "{{language}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "",
-									"type": "file",
-									"src": []
-								}
-							],
-							"options": {
-								"formdata": {}
-							}
-						},
-						"url": {
-							"raw": "{{api}}/data/produktTeil",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"produktTeil"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Protokoll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "10ff6efb-33e8-4d07-9a1e-c9b438b36009",
+								"exec": [
+									"pm.test(\"Protokoll\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -13680,9 +14033,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "data",
 									"type": "file",
-									"src": []
+									"src": "{{namedCsv}}"
 								}
 							],
 							"options": {
@@ -13704,6 +14057,18 @@
 				},
 				{
 					"name": "Sondermodell",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2c76c05c-f290-4580-a2d5-41734f9950c6",
+								"exec": [
+									"pm.test(\"Sondermodell\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -13717,9 +14082,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "data",
 									"type": "file",
-									"src": []
+									"src": "{{namedCsv}}"
 								}
 							],
 							"options": {
@@ -13741,6 +14106,18 @@
 				},
 				{
 					"name": "Spurweite",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0f07b571-e4a0-4f6a-bdf2-3da9e075ccbd",
+								"exec": [
+									"pm.test(\"Spurweite\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -13754,9 +14131,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "data",
 									"type": "file",
-									"src": []
+									"src": "{{namedCsv}}"
 								}
 							],
 							"options": {
@@ -13778,6 +14155,18 @@
 				},
 				{
 					"name": "Steuerung",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "15808a84-4057-4d30-9023-b27e6539da88",
+								"exec": [
+									"pm.test(\"Steuerung\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -13791,9 +14180,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "data",
 									"type": "file",
-									"src": []
+									"src": "{{namedCsv}}"
 								}
 							],
 							"options": {
@@ -13814,7 +14203,19 @@
 					"response": []
 				},
 				{
-					"name": "UnterKategorie",
+					"name": "Zug Typ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ee956382-709f-45ca-9d08-ac6331d59c11",
+								"exec": [
+									"pm.test(\"Zug Typ\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -13828,9 +14229,58 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "data",
 									"type": "file",
-									"src": []
+									"src": "{{namedCsv}}"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/data/zugTyp",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"zugTyp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unter Kategorie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fb48fc15-37d9-48e8-b31c-4d605629bb73",
+								"exec": [
+									"pm.test(\"Unter Kategorie\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"type": "file",
+									"src": "{{unterKategorieCsv}}"
 								}
 							],
 							"options": {
@@ -13852,6 +14302,18 @@
 				},
 				{
 					"name": "Vorbild",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c6009a20-5f8a-4db8-a0e5-c2cdb64594cf",
+								"exec": [
+									"pm.test(\"Vorbild\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -13865,9 +14327,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "data",
 									"type": "file",
-									"src": []
+									"src": "{{vorbildCsv}}"
 								}
 							],
 							"options": {
@@ -13888,7 +14350,19 @@
 					"response": []
 				},
 				{
-					"name": "Zug Consist",
+					"name": "Decoder Typ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "94cc1fc3-56a2-4b12-9873-116d71594a92",
+								"exec": [
+									"pm.test(\"Decoder Typ\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -13902,9 +14376,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "data",
 									"type": "file",
-									"src": []
+									"src": "{{decoderTypCsv}}"
 								}
 							],
 							"options": {
@@ -13912,20 +14386,32 @@
 							}
 						},
 						"url": {
-							"raw": "{{api}}/data/zugConsist",
+							"raw": "{{api}}/data/decoderTyp",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"data",
-								"zugConsist"
+								"decoderTyp"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Zug",
+					"name": "Decoder Typ Adress",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f70752d1-a2d2-40a9-8432-327694b59e12",
+								"exec": [
+									"pm.test(\"Decoder Typ Adress\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -13939,9 +14425,548 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "data",
 									"type": "file",
-									"src": []
+									"src": "{{decoderTypAdressCsv}}"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/data/decoderTypAdress",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoderTypAdress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder Typ Cv",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8ce02a50-e2a0-4746-aea8-4d23ced8718d",
+								"exec": [
+									"pm.test(\"Decoder Typ Cv\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"type": "file",
+									"src": "{{decoderTypCvCsv}}"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/data/decoderTypCv",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoderTypCv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder Typ Funktion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0660bb8a-236c-4ad6-9f2c-e0dbb8072549",
+								"exec": [
+									"pm.test(\"Decoder Typ Funktion\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"type": "file",
+									"src": "{{decoderTypFunktionCsv}}"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/data/decoderTypFunktion",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoderTypFunktion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Produkt",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "361e22a3-08fb-4e71-aa64-4f074b86df25",
+								"exec": [
+									"pm.test(\"Produkt\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"type": "file",
+									"src": "{{produktCsv}}"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/data/produkt",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"produkt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Produkt Teil",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8e673cf2-d80a-42cf-a291-031f718245f6",
+								"exec": [
+									"pm.test(\"Produkt Teil\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"type": "file",
+									"src": "{{teilCsv}}"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/data/teil",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"teil"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b234dc42-b8ef-4dbf-ad02-4431b4f4c41b",
+								"exec": [
+									"pm.test(\"Decoder\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"type": "file",
+									"src": "{{decoderCsv}}"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/data/decoder",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder Adress",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ef895027-df0a-45d4-9d86-a42a36a34036",
+								"exec": [
+									"pm.test(\"Decoder Adress\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"type": "file",
+									"src": "{{decoderAdressCsv}}"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/data/decoderAdress",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoderAdress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder Cv",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "55a7af35-ebd3-41e2-8285-312a0cc2261c",
+								"exec": [
+									"pm.test(\"Decoder Cv\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"type": "file",
+									"src": "{{decoderCvCsv}}"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/data/decoderCv",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoderCv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder Funktion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3105821a-8536-4083-88ac-7470cc0bd29a",
+								"exec": [
+									"pm.test(\"Decoder Funktion\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"type": "file",
+									"src": "{{decoderFunktionCsv}}"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/data/decoderFunktion",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoderFunktion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Artikel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7204976a-6f8d-40af-8dd0-9ce0a917a5eb",
+								"exec": [
+									"pm.test(\"Artikel\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"type": "file",
+									"src": "{{artikelCsv}}"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/data/artikel",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"artikel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Anderung",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f53e4776-696a-4ac6-ad88-d44edcef59b0",
+								"exec": [
+									"pm.test(\"Anderung\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"type": "file",
+									"src": "{{anderungCsv}}"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/data/anderung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"anderung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Zug",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9c8c551c-e80e-4d42-8146-4c9e69d106f1",
+								"exec": [
+									"pm.test(\"Zug\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"type": "file",
+									"src": "{{zugCsv}}"
 								}
 							],
 							"options": {
@@ -13962,7 +14987,19 @@
 					"response": []
 				},
 				{
-					"name": "ZugTyp",
+					"name": "Zug Consist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e38e48b4-9f56-48a4-ad48-5be93b5a0e2a",
+								"exec": [
+									"pm.test(\"Zug Consist\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -13976,9 +15013,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "",
+									"key": "data",
 									"type": "file",
-									"src": []
+									"src": "{{consistCsv}}"
 								}
 							],
 							"options": {
@@ -13986,13 +15023,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{api}}/data/zugTyp",
+							"raw": "{{api}}/data/consist",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"data",
-								"zugTyp"
+								"consist"
 							]
 						}
 					},
@@ -14021,7 +15058,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "3aee076e-caba-498e-8b59-21ffe8afe28f",
+				"id": "68228e7d-4d5b-476b-b4be-b93822626539",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -14031,7 +15068,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "3039acd9-eb8b-452f-8a07-9bd8ae6bb242",
+				"id": "c124d9c4-e8e2-4999-8e60-5653888198dc",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -14559,6 +15596,106 @@
 			"id": "77632210-db46-4c37-8c27-8a87d0ed773d",
 			"key": "telefonUpdate",
 			"value": "030 2341347"
+		},
+		{
+			"id": "a52ecbb8-5373-47d4-9146-321f3500da8f",
+			"key": "abbildungCsv",
+			"value": "abbildungCsv.csv"
+		},
+		{
+			"id": "7872dee1-6d94-43fc-9025-8b3e781d4aab",
+			"key": "anderungCsv",
+			"value": "anderungCsv.csv"
+		},
+		{
+			"id": "831873a5-542a-47ea-9f1d-e4c4956e99a3",
+			"key": "artikelCsv",
+			"value": "artikelCsv.csv"
+		},
+		{
+			"id": "722f4144-b069-4f56-910c-1c75ff7e6167",
+			"key": "bahnverwaltungCsv",
+			"value": "bahnverwaltungCsv.csv"
+		},
+		{
+			"id": "ba917e80-a7c7-4951-bc83-dcc52f7f38f7",
+			"key": "consistCsv",
+			"value": "consistCsv.csv"
+		},
+		{
+			"id": "b4267669-c4d7-4f21-8770-d9e7ca24ccd1",
+			"key": "decoderCsv",
+			"value": "decoderCsv.csv"
+		},
+		{
+			"id": "89aff981-a590-4116-972c-3000ade6ba6c",
+			"key": "decoderAdressCsv",
+			"value": "decoderAdressCsv.csv"
+		},
+		{
+			"id": "9e9ca907-4b26-48ad-bf07-82eefd472942",
+			"key": "decoderCvCsv",
+			"value": "decoderCvCsv.csv"
+		},
+		{
+			"id": "7001b320-b8ca-44eb-8068-45b7cb4d2f4c",
+			"key": "decoderFunktionCsv",
+			"value": "decoderFunktionCsv.csv"
+		},
+		{
+			"id": "ac802374-f500-4953-bcb6-9a062780f503",
+			"key": "decoderTypCsv",
+			"value": "decoderTypCsv.csv"
+		},
+		{
+			"id": "ef8eb52c-fe83-4efa-8cda-aeb7a1cd1fe9",
+			"key": "decoderTypAdressCsv",
+			"value": "decoderTypAdressCsv.csv"
+		},
+		{
+			"id": "8efb2be5-ecac-42a9-901c-b12c0c0dcd16",
+			"key": "decoderTypCvCsv",
+			"value": "decoderTypCvCsv.csv"
+		},
+		{
+			"id": "bdebe508-502c-417a-bd55-1f17995fad87",
+			"key": "decoderTypFunktionCsv",
+			"value": "decoderTypFunktionCsv.csv"
+		},
+		{
+			"id": "6521b0d3-015c-4a02-a259-3d321d86a585",
+			"key": "herstellerCsv",
+			"value": "herstellerCsv.csv"
+		},
+		{
+			"id": "73efb1ec-5cd6-4618-96ae-48198c99db45",
+			"key": "namedCsv",
+			"value": "namedCsv.csv"
+		},
+		{
+			"id": "2db032cd-6f7a-407a-8fb9-ac5f32298036",
+			"key": "produktCsv",
+			"value": "produktCsv.csv"
+		},
+		{
+			"id": "3a9a2037-455c-48ba-a445-ebe31140689d",
+			"key": "teilCsv",
+			"value": "teilCsv.csv"
+		},
+		{
+			"id": "25f3d215-be31-4d07-8a13-3c1e2505d274",
+			"key": "unterKategorieCsv",
+			"value": "unterKategorieCsv.csv"
+		},
+		{
+			"id": "b531d797-d116-4c57-9d23-ce8dadef9c91",
+			"key": "vorbildCsv",
+			"value": "vorbildCsv.csv"
+		},
+		{
+			"id": "72977687-a123-4927-bf27-c65e2089cd4d",
+			"key": "zugCsv",
+			"value": "zugCsv.csv"
 		}
 	],
 	"protocolProfileBehavior": {}

@@ -2,6 +2,8 @@ package com.linepro.modellbahn.converter.entity.transcriber;
 
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
+import java.util.Optional;
+
 import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.converter.entity.ArtikelMutator;
 import com.linepro.modellbahn.entity.ZugConsist;
@@ -31,7 +33,7 @@ public class ZugConsistTranscriber implements Transcriber<ZugConsist, ZugConsist
             destination.setGattung(artikel.getGattung());
             destination.setBetreibsnummer(artikel.getBetreibsnummer());
             destination.setAbbildung(artikel.getAbbildung());
-            destination.setDeleted(source.getDeleted());
+            destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
 
         return destination;

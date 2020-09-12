@@ -1,6 +1,7 @@
 package com.linepro.modellbahn.util.impexp;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DataController {
 
+    private static final String FILE_FIELD = "data";
     @Autowired
     private final DataService service;
    
@@ -43,7 +45,7 @@ public class DataController {
         service.exportCSV(type, response);
     }
 
-    @PostMapping(path = ApiPaths.IMPORT, consumes = DataService.TEXT_CSV)
+    @PostMapping(path = ApiPaths.IMPORT, consumes = MediaType.MULTIPART_FORM_DATA)
     @Operation(summary = "Add an Aufbau picture", description = "Adds or updates the picture of a named Aufbau", operationId = "update", tags = { ApiNames.DATA })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content),
@@ -54,7 +56,7 @@ public class DataController {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> importCSV(@PathVariable(ApiNames.DATA_TYPE) String type, @RequestParam("file") MultipartFile multipart) {
+    public ResponseEntity<?> importCSV(@PathVariable(ApiNames.DATA_TYPE) String type, @RequestParam(FILE_FIELD) MultipartFile multipart) {
         service.importCSV(type, multipart);
         
         return ResponseEntity.ok().build();

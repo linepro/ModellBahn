@@ -316,7 +316,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> updateAnleitungen(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr,
-            @RequestParam("anleitungen") MultipartFile multipart) {
+            @RequestParam(ApiNames.ANLEITUNGEN) MultipartFile multipart) {
         return updated(service.updateAnleitungen(herstellerStr, bestellNr, multipart));
     }
 

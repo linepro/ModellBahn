@@ -2,6 +2,8 @@ package com.linepro.modellbahn.converter.entity.transcriber;
 
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
+import java.util.Optional;
+
 import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.entity.DecoderAdress;
 import com.linepro.modellbahn.model.DecoderAdressModel;
@@ -18,7 +20,7 @@ public class DecoderAdressTranscriber implements Transcriber<DecoderAdress,Decod
             destination.setAdressTyp(source.getTyp().getAdressTyp());
             destination.setWerkeinstellung(source.getTyp().getAdress());
             destination.setAdress(source.getAdress());
-            destination.setDeleted(source.getDeleted());
+            destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
         
         return destination;

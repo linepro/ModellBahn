@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 
 /**
  * Konfiguration.
@@ -37,19 +38,19 @@ public enum Konfiguration implements DescribedEnum {
     }
 
     @Override
-    @Schema(description = "Konfiguration name", example = "CV", required = true)
+    @Schema(description = "Konfiguration name", example = "CV", accessMode = AccessMode.READ_ONLY)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @Schema(description = "Konfiguration description", example = "The Decoder can be configured by CV values.", required = true)
+    @Schema(description = "Konfiguration description", example = "The Decoder can be configured by CV values.", accessMode = AccessMode.READ_ONLY)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @Schema(description = "AdressTyp tooltip", example = "0 - 10239.")
+    @Schema(description = "Konfiguration tooltip", example = "The Decoder can be configured by CV values.", accessMode = AccessMode.READ_ONLY)
     public String getTooltip() {
         return tooltip;
     }

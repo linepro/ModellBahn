@@ -15,9 +15,13 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpMediaTypeException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.HttpSessionRequiredException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -106,6 +110,14 @@ public class ErrorHandler {
             return HttpStatus.BAD_REQUEST;
         } else if (ex instanceof HttpMessageNotReadableException) {
             return HttpStatus.BAD_REQUEST;
+        } else if (ex instanceof HttpMediaTypeException) {
+            return HttpStatus.BAD_REQUEST;
+        } else if (ex instanceof MissingServletRequestPartException) {
+            return HttpStatus.BAD_REQUEST;
+        } else if (ex instanceof HttpRequestMethodNotSupportedException) {
+            return HttpStatus.BAD_REQUEST;
+        } else if (ex instanceof HttpSessionRequiredException) {
+            return HttpStatus.FORBIDDEN;
         }
 
         return HttpStatus.INTERNAL_SERVER_ERROR;

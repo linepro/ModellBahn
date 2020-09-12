@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -53,7 +54,7 @@ public class GattungModel extends RepresentationModel<GattungModel> implements N
     private String bezeichnung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(description = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
     private Boolean deleted;
 
     @Override

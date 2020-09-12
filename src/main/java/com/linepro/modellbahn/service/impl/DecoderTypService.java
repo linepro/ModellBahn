@@ -121,7 +121,12 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTy
     @Transactional
     public Optional<DecoderTypAdressModel> updateAdress(String hersteller, String bestellNr, Integer index, DecoderTypAdressModel model) {
         return adressRepository.findByIndex(hersteller, bestellNr, index)
-                               .map(a -> adressMutator.convert(adressRepository.saveAndFlush(adressModelMutator.apply(model, a))));
+                               .map(a -> {
+                                   Boolean deleted = a.getDeleted();
+                                   DecoderTypAdress adress = adressModelMutator.apply(model, a);
+                                   adress.setDeleted(deleted);
+                                   return adressMutator.convert(adressRepository.saveAndFlush(adress));
+                               });
     }
 
     @Transactional
@@ -154,7 +159,12 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTy
     @Transactional
     public Optional<DecoderTypCvModel> updateCv(String hersteller, String bestellNr, Integer cv, DecoderTypCvModel model) {
         return cvRepository.findByCv(hersteller, bestellNr, cv)
-                           .map(c -> cvMutator.convert(cvRepository.saveAndFlush(cvModelMutator.apply(model, c))));
+                           .map(c -> {
+                               Boolean deleted = c.getDeleted();
+                               DecoderTypCv item = cvModelMutator.apply(model, c);
+                               item.setDeleted(deleted);
+                               return cvMutator.convert(cvRepository.saveAndFlush(item));
+                           });
     }
 
     @Transactional
@@ -187,7 +197,12 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTy
     @Transactional
     public Optional<DecoderTypFunktionModel> updateFunktion(String hersteller, String bestellNr, Integer reihe, String funktion, DecoderTypFunktionModel model) {
         return funktionRepository.findByFunktion(hersteller, bestellNr, reihe, funktion)
-                                 .map(f -> funktionMutator.convert(funktionRepository.saveAndFlush(funktionModelMutator.apply(model, f))));
+                                 .map(f -> {
+                                     Boolean deleted = f.getDeleted();
+                                     DecoderTypFunktion fn = funktionModelMutator.apply(model, f);
+                                     fn.setDeleted(deleted);
+                                     return funktionMutator.convert(funktionRepository.saveAndFlush(fn));
+                                 });
     }
 
     @Transactional

@@ -65,7 +65,12 @@ public class ZugService extends NamedItemServiceImpl<ZugModel,Zug> implements It
     @Override
     public Optional<ZugModel> update(String name, ZugModel model) {
         return repository.findZug(name)
-                         .map(e -> repository.saveAndFlush(modelMutator.apply(model,e)))
+                         .map(e -> {
+                             Boolean deleted = e.getDeleted();
+                             Zug zug = modelMutator.apply(model,e);
+                             e.setDeleted(deleted);
+                             return repository.saveAndFlush(zug);
+                         })
                          .flatMap(e -> get(name)); // Fetch again to populate entity graphs
     }
 
@@ -75,8 +80,6 @@ public class ZugService extends NamedItemServiceImpl<ZugModel,Zug> implements It
                          .map(z -> {
                              ZugConsist fahrzeug = new ZugConsist();
                              fahrzeug.setArtikel(artikelRepository.findByArtikelId(artikelId).orElse(null));
-                             fahrzeug.setDeleted(false);
-
                              z.addConsist(fahrzeug);
 
                              consistRepository.saveAndFlush(fahrzeug);

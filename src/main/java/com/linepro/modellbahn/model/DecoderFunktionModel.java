@@ -47,15 +47,15 @@ public class DecoderFunktionModel extends RepresentationModel<DecoderFunktionMod
     private static final long serialVersionUID = -5315298133158215960L;
 
     @JsonProperty(ApiNames.DECODER_ID)
-    @Schema(description = "Decoder's id", example = "00001", accessMode = AccessMode.READ_ONLY, required = true)
+    @Schema(description = "Decoder's id", example = "00001", accessMode = AccessMode.READ_ONLY)
     private String decoderId;
 
     @JsonProperty(ApiNames.REIHE)
-    @Schema(description = "Bank number (0-1) always 0 for single panel decoders", example = "0", required = true)
+    @Schema(description = "Bank number (0-1) always 0 for single panel decoders", example = "0", accessMode = AccessMode.READ_ONLY)
     private Integer reihe;
 
     @JsonProperty(ApiNames.FUNKTION)
-    @Schema(description = "Function Key", example = "F0", required = true)
+    @Schema(description = "Function Key", example = "F0", accessMode = AccessMode.READ_ONLY)
     private String funktion;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
@@ -63,11 +63,11 @@ public class DecoderFunktionModel extends RepresentationModel<DecoderFunktionMod
     private String bezeichnung;
 
     @JsonProperty(ApiNames.PROGRAMMABLE)
-    @Schema(description = "True if this function can be reassigned", example = "false", required = true)
+    @Schema(description = "True if this function can be reassigned", example = "false", accessMode = AccessMode.READ_ONLY)
     private Boolean programmable;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(description = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
     private Boolean deleted;
 
     @Override

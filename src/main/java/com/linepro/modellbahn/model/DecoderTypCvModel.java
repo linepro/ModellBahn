@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -47,11 +48,11 @@ public class DecoderTypCvModel extends RepresentationModel<DecoderTypCvModel> im
     private static final long serialVersionUID = -8055283388490564394L;
 
     @JsonProperty(ApiNames.HERSTELLER)
-    @Schema(description = "Manufacturer", required = true)
+    @Schema(description = "Manufacturer", accessMode = AccessMode.READ_ONLY)
     private String hersteller;
 
     @JsonProperty(ApiNames.BESTELL_NR)
-    @Schema(description = "Product numer", example = "62499", required = true)
+    @Schema(description = "Product numer", example = "62499", accessMode = AccessMode.READ_ONLY)
     private String bestellNr;
 
     @JsonProperty(ApiNames.CV)
@@ -75,7 +76,7 @@ public class DecoderTypCvModel extends RepresentationModel<DecoderTypCvModel> im
     private Integer werkseinstellung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(description = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
     private Boolean deleted;
 
     @Override

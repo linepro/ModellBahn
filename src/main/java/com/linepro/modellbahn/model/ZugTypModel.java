@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -49,11 +50,11 @@ public class ZugTypModel extends RepresentationModel<ZugTypModel> implements Nam
     private String name;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(description = "Train description", example = "TEE äBavariaä")
+    @Schema(description = "Train description", example = "TEE „Bavaria“")
     private String bezeichnung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(description = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
     private Boolean deleted;
 
     @Override

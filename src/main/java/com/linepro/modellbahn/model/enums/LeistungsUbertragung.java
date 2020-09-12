@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 
 /**
  * Konfiguration.
@@ -39,19 +40,19 @@ public enum LeistungsUbertragung implements DescribedEnum {
     }
 
     @Override
-    @Schema(description = "LeistungsUbertragung name", example = "ELEKTRISH", required = true)
+    @Schema(description = "Drive mechanism name", example = "ELEKTRISH", accessMode = AccessMode.READ_ONLY)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @Schema(description = "LeistungsUbertragung description", example = "Elektrish", required = true)
+    @Schema(description = "Drive mechanism description", example = "Elektrish", accessMode = AccessMode.READ_ONLY)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @Schema(description = "AdressTyp tooltip", example = "0 - 10239.")
+    @Schema(description = "Drive mechanism tooltip", example = "Elektrish", accessMode = AccessMode.READ_ONLY)
     public String getTooltip() {
         return tooltip;
     }

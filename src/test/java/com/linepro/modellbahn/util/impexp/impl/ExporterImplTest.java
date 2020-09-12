@@ -100,7 +100,7 @@ public class ExporterImplTest {
         when(mutator.convert(any())).thenReturn(MODEL);
         when(mutator.get()).thenReturn(MODEL);
 
-        exporter = new ExporterImpl(repository, mutator);
+        exporter = new ExporterImpl(repository, mutator, DecoderModel.class);
     }
 
     @Test

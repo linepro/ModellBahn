@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -46,7 +47,7 @@ public class UnterKategorieModel extends RepresentationModel<UnterKategorieModel
     private static final long serialVersionUID = -6922373932038545571L;
 
     @JsonProperty(ApiNames.KATEGORIE)
-    @Schema(description = "Category coding", example = "LOKOMOTIV", required = true)
+    @Schema(description = "Category coding", example = "LOKOMOTIV", accessMode = AccessMode.READ_ONLY)
     private String kategorie;
 
     @JsonProperty(ApiNames.NAMEN)
@@ -58,7 +59,7 @@ public class UnterKategorieModel extends RepresentationModel<UnterKategorieModel
     private String bezeichnung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(description = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
     private Boolean deleted;
 
     @Override

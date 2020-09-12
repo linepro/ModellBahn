@@ -47,27 +47,27 @@ public class DecoderCvModel extends RepresentationModel<DecoderCvModel> implemen
     private static final long serialVersionUID = 6780491207710890606L;
 
     @JsonProperty(ApiNames.DECODER_ID)
-    @Schema(description = "Decoder's id", example = "00001", accessMode = AccessMode.READ_ONLY, required = true)
+    @Schema(description = "Decoder's id", example = "00001", accessMode = AccessMode.READ_ONLY)
     private String decoderId;
 
     @JsonProperty(ApiNames.CV)
-    @Schema(description = "CV number", example = "63", required = true)
+    @Schema(description = "CV number", example = "63", accessMode = AccessMode.READ_ONLY)
     private Integer cv;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(description = "CV usage", example = "Geräuschlautstärke", required = true)
+    @Schema(description = "CV usage", example = "Geräuschlautstärke", accessMode = AccessMode.READ_ONLY)
     private String bezeichnung;
 
     @JsonProperty(ApiNames.MINIMAL)
-    @Schema(description = "Minimum value", example = "1")
+    @Schema(description = "Minimum value", example = "1", accessMode = AccessMode.READ_ONLY)
     private Integer minimal;
 
     @JsonProperty(ApiNames.MAXIMAL)
-    @Schema(description = "Maximum value", example = "63")
+    @Schema(description = "Maximum value", example = "63", accessMode = AccessMode.READ_ONLY)
     private Integer maximal;
 
     @JsonProperty(ApiNames.WERKSEINSTELLUNG)
-    @Schema(description = "Default value", example = "63", required = true)
+    @Schema(description = "Default value", example = "63", accessMode = AccessMode.READ_ONLY)
     private Integer werkseinstellung;
 
     @JsonProperty(ApiNames.WERT)
@@ -75,7 +75,7 @@ public class DecoderCvModel extends RepresentationModel<DecoderCvModel> implemen
     private Integer wert;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(description = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
     private Boolean deleted;
 
     @Override

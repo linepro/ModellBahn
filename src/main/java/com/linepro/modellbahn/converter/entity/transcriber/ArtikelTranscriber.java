@@ -53,7 +53,7 @@ public class ArtikelTranscriber implements Transcriber<Artikel, ArtikelModel> {
             destination.setAufbau(produkt.getAufbau());
             destination.setAbbildung(source.getAbbildung() != null ? pathMutator.convert(source.getAbbildung()) : produkt.getAbbildung());
             destination.setStatus(source.getStatus());
-            destination.setDeleted(source.getDeleted());
+            destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
             destination.setLicht(source.getLicht() != null ? getCode(source.getLicht()) : produkt.getLicht());
             destination.setKupplung(source.getKupplung() != null ? getCode(source.getKupplung()) : produkt.getKupplung());
             destination.setSteuerung(source.getSteuerung() != null ? getCode(source.getSteuerung()) : produkt.getSteuerung());
@@ -66,7 +66,7 @@ public class ArtikelTranscriber implements Transcriber<Artikel, ArtikelModel> {
             destination.setVerbleibende(source.getVerbleibende());
             destination.setAnmerkung(source.getAnmerkung());
             destination.setBeladung(source.getBeladung());
-            destination.setDeleted(source.getDeleted());
+            destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
             
             if (isAvailable(source.getAnderungen())) {
                destination.setAnderungen(source.getAnderungen()

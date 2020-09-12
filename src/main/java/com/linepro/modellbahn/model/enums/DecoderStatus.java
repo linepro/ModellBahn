@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 
 /**
  * Stecker. Enumeration of Decoder connections
@@ -35,19 +36,19 @@ public enum DecoderStatus implements DescribedEnum {
     }
 
     @Override
-    @Schema(description = "Decoder status name", example = "INSTALIERT", required = true)
+    @Schema(description = "Decoder status name", example = "INSTALIERT", accessMode = AccessMode.READ_ONLY)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @Schema(description = "Decoder status description", example = "Instaliert.", required = true)
+    @Schema(description = "Decoder status description", example = "Instaliert.", accessMode = AccessMode.READ_ONLY)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @Schema(description = "AdressTyp tooltip", example = "0 - 10239.")
+    @Schema(description = "Decoder status tooltip", example = "Instaliert.", accessMode = AccessMode.READ_ONLY)
     public String getTooltip() {
         return tooltip;
     }

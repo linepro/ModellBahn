@@ -51,11 +51,11 @@ public class ZugConsistModel extends RepresentationModel<ZugConsistModel> implem
     private static final long serialVersionUID = -400353674903033600L;
 
     @JsonProperty(ApiNames.ZUG)
-    @Schema(description = "Train code", example = "BAVARIA", required = true)
+    @Schema(description = "Train code", example = "BAVARIA", accessMode = AccessMode.READ_ONLY)
     private String zug;
 
     @JsonProperty(ApiNames.POSITION)
-    @Schema(description = "Contiguous 1 based position in the train (1 = head)", example = "1", accessMode = AccessMode.READ_ONLY, required = true)
+    @Schema(description = "Contiguous 1 based position in the train (1 = head)", example = "1", accessMode = AccessMode.READ_ONLY)
     private Integer position;
 
     @JsonProperty(ApiNames.ARTIKEL_ID)
@@ -63,31 +63,31 @@ public class ZugConsistModel extends RepresentationModel<ZugConsistModel> implem
     private String artikelId;
 
     @JsonProperty(ApiNames.HERSTELLER)
-    @Schema(description = "Manufacturer", example = "Marklin", required = true)
+    @Schema(description = "Manufacturer", example = "Marklin", accessMode = AccessMode.READ_ONLY)
     private String hersteller;
 
     @JsonProperty(ApiNames.BESTELL_NR)
-    @Schema(description = "Part number", example = "3000", required = true)
+    @Schema(description = "Part number", example = "3000", accessMode = AccessMode.READ_ONLY)
     private String bestellNr;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(description = "Description", example = "Dampftenderlok BR 89.0")
+    @Schema(description = "Description", example = "Dampftenderlok BR 89.0", accessMode = AccessMode.READ_ONLY)
     private String bezeichnung;
 
     @JsonProperty(ApiNames.LANGE)
-    @Schema(description = "Length over puffers in cm.", example = "11.00")
+    @Schema(description = "Length over puffers in cm.", example = "11.00", accessMode = AccessMode.READ_ONLY)
     private BigDecimal lange;
 
     @JsonProperty(ApiNames.BAHNVERWALTUNG)
-    @Schema(description = "Railway company")
+    @Schema(description = "Railway company", accessMode = AccessMode.READ_ONLY)
     private String bahnverwaltung;
 
     @JsonProperty(ApiNames.GATTUNG)
-    @Schema(description = "Vehicle class")
+    @Schema(description = "Vehicle class", accessMode = AccessMode.READ_ONLY)
     private String gattung;
 
     @JsonProperty(ApiNames.BETREIBSNUMMER)
-    @Schema(description = "Service number", example = "89 006")
+    @Schema(description = "Service number", example = "89 006", accessMode = AccessMode.READ_ONLY)
     private String betreibsnummer;
 
     @JsonProperty(ApiNames.ABBILDUNG)
@@ -95,7 +95,7 @@ public class ZugConsistModel extends RepresentationModel<ZugConsistModel> implem
     private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(description = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
     private Boolean deleted;
 
     @Override

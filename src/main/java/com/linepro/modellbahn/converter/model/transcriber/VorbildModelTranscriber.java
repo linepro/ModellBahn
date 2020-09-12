@@ -2,6 +2,8 @@ package com.linepro.modellbahn.converter.model.transcriber;
 
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
+import java.util.Optional;
+
 import com.linepro.modellbahn.entity.Vorbild;
 import com.linepro.modellbahn.model.VorbildModel;
 import com.linepro.modellbahn.repository.AchsfolgRepository;
@@ -70,6 +72,7 @@ public class VorbildModelTranscriber extends NamedModelTranscriber<VorbildModel,
                 destination.setTriebkopf(source.getTriebkopf());
                 destination.setMittelwagen(source.getMittelwagen());
                 destination.setDrehgestellBauart(source.getDrehgestellBauart());
+                destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
             }
 
             return super.apply(source, destination);

@@ -57,15 +57,15 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
     private static final long serialVersionUID = 3146760791932382500L;
 
     @JsonProperty(ApiNames.ARTIKEL_ID)
-    @Schema(description = "Artikel id", example = "00001", required = true)
+    @Schema(description = "Artikel id", example = "00001", accessMode = AccessMode.READ_ONLY)
     private String artikelId;
 
     @JsonProperty(ApiNames.HERSTELLER)
-    @Schema(description = "Manufacturer", example = "Marklin", required = true)
+    @Schema(description = "Manufacturer", example = "Marklin", accessMode = AccessMode.READ_ONLY)
     private String hersteller;
 
     @JsonProperty(ApiNames.BESTELL_NR)
-    @Schema(description = "Part number", example = "3000", required = true)
+    @Schema(description = "Part number", example = "3000", accessMode = AccessMode.READ_ONLY)
     private String bestellNr;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
@@ -73,33 +73,35 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
     private String bezeichnung;
 
     @JsonProperty(ApiNames.KATEGORIE)
+    @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
     private String kategorie;
 
     @JsonProperty(ApiNames.UNTER_KATEGORIE)
+    @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
     private String unterKategorie;
 
     @JsonProperty(ApiNames.LANGE)
-    @Schema(description = "Length over puffers in cm.", example = "11.00")
+    @Schema(description = "Length over puffers in cm.", example = "11.00", accessMode = AccessMode.READ_ONLY)
     private BigDecimal lange;
 
     @JsonProperty(ApiNames.MASSSTAB)
-    @Schema(description = "Scale", example = "H0")
+    @Schema(description = "Scale", example = "H0", accessMode = AccessMode.READ_ONLY)
     private String massstab;
 
     @JsonProperty(ApiNames.SPURWEITE)
-    @Schema(description = "Track gauge", example = "H0")
+    @Schema(description = "Track gauge", example = "H0", accessMode = AccessMode.READ_ONLY)
     private String spurweite;
 
     @JsonProperty(ApiNames.EPOCH)
-    @Schema(description = "ERA", example = "IV")
+    @Schema(description = "ERA", example = "IV", accessMode = AccessMode.READ_ONLY)
     private String epoch;
 
     @JsonProperty(ApiNames.BAHNVERWALTUNG)
-    @Schema(description = "Railway company", example = "DB")
+    @Schema(description = "Railway company", example = "DB", accessMode = AccessMode.READ_ONLY)
     private String bahnverwaltung;
 
     @JsonProperty(ApiNames.GATTUNG)
-    @Schema(description = "Vehicle class", example = "BR89.0")
+    @Schema(description = "Vehicle class", example = "BR89.0", accessMode = AccessMode.READ_ONLY)
     private String gattung;
 
     @JsonProperty(ApiNames.BETREIBSNUMMER)
@@ -107,15 +109,15 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
     private String betreibsnummer;
 
     @JsonProperty(ApiNames.ACHSFOLG)
-    @Schema(description = "Axle configuration", example = "CH2T")
+    @Schema(description = "Axle configuration", example = "CH2T", accessMode = AccessMode.READ_ONLY)
     private String achsfolg;
 
     @JsonProperty(ApiNames.SONDERMODELL)
-    @Schema(description = "Special model indicator", example = "MHI")
+    @Schema(description = "Special model indicator", example = "MHI", accessMode = AccessMode.READ_ONLY)
     private String sondermodell;
 
     @JsonProperty(ApiNames.AUFBAU)
-    @Schema(description = "Construction")
+    @Schema(description = "Construction", accessMode = AccessMode.READ_ONLY)
     private String aufbau;
 
     @JsonProperty(ApiNames.LICHT)
@@ -180,7 +182,7 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
     private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(description = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
     private Boolean deleted;
 
     @Override

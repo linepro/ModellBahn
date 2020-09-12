@@ -5,6 +5,7 @@ import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import com.linepro.modellbahn.converter.PathMutator;
 import com.linepro.modellbahn.converter.Transcriber;
@@ -49,7 +50,7 @@ public class DecoderTypTranscriber implements Transcriber<DecoderTyp, DecoderTyp
             destination.setStecker(source.getStecker());
             destination.setAnleitungen(PathMutator.convert(source.getAnleitungen()));
             destination.setProtokoll(getCode(source.getProtokoll()));
-            destination.setDeleted(source.getDeleted());
+            destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
 
             if (isAvailable(source.getAdressen())) {
                 destination.setAdressen(source.getAdressen()

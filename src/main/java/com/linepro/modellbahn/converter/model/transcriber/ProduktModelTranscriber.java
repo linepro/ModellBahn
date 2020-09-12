@@ -2,6 +2,8 @@ package com.linepro.modellbahn.converter.model.transcriber;
 
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
+import java.util.Optional;
+
 import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.entity.Produkt;
 import com.linepro.modellbahn.model.ProduktModel;
@@ -87,6 +89,7 @@ public class ProduktModelTranscriber implements Transcriber<ProduktModel, Produk
             destination.setDecoderTyp(decoderTypLookup.find(source.getDecoderTypHersteller(), source.getDecoderTypBestellNr()));
             destination.setMotorTyp(lookup.find(source.getMotorTyp(),motorTypRepository));
             destination.setLange(source.getLange());
+            destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
         
         return destination;

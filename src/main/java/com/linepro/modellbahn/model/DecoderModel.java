@@ -55,23 +55,23 @@ public class DecoderModel extends RepresentationModel<DecoderModel> implements I
     private static final long serialVersionUID = 831411120845485848L;
 
     @JsonProperty(ApiNames.DECODER_ID)
-    @Schema(description = "Decoder's id", example = "00001", accessMode = AccessMode.READ_ONLY, required = true)
+    @Schema(description = "Decoder's id", example = "00001", accessMode = AccessMode.READ_ONLY)
     private String decoderId;
 
     @JsonProperty(ApiNames.HERSTELLER)
-    @Schema(description = "Manufacturer", required = true)
+    @Schema(description = "Manufacturer", example = "ESU", accessMode = AccessMode.READ_ONLY)
     private String hersteller;
 
     @JsonProperty(ApiNames.BESTELL_NR)
-    @Schema(description = "Product numer", example = "62499", required = true)
+    @Schema(description = "Product numer", example = "62499", accessMode = AccessMode.READ_ONLY)
     private String bestellNr;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(description = "Decoder's description", example = "ESU Loksound")
+    @Schema(description = "Decoder's description", example = "ESU Loksound", accessMode = AccessMode.READ_ONLY)
     private String bezeichnung;
 
     @JsonProperty(ApiNames.I_MAX)
-    @Schema(description = "Maximum current in mA", example = "1100")
+    @Schema(description = "Maximum current in A", example = "1.100", accessMode = AccessMode.READ_ONLY)
     private BigDecimal iMax;
 
     @JsonProperty(ApiNames.PROTOKOLL)
@@ -83,15 +83,15 @@ public class DecoderModel extends RepresentationModel<DecoderModel> implements I
     private Integer fahrstufe;
 
     @JsonProperty(ApiNames.GERAUSCH)
-    @Schema(description = "True if decoder supports sound", example = "true", required = true)
+    @Schema(description = "True if decoder supports sound", example = "true", accessMode = AccessMode.READ_ONLY)
     private Boolean sound;
 
     @JsonProperty(ApiNames.KONFIGURATION)
-    @Schema(description = "Configuration method", example = "CV", required = true)
+    @Schema(description = "Configuration method", example = "CV", accessMode = AccessMode.READ_ONLY)
     private Konfiguration konfiguration;
 
     @JsonProperty(ApiNames.STECKER)
-    @Schema(description = "Stecker", example = "NEM352")
+    @Schema(description = "Stecker", example = "NEM352", accessMode = AccessMode.READ_ONLY)
     private Stecker stecker;
 
     @JsonProperty(ApiNames.STATUS)
@@ -103,7 +103,7 @@ public class DecoderModel extends RepresentationModel<DecoderModel> implements I
     private String anleitungen;
 
     @JsonProperty(ApiNames.ADRESSEN)
-    @Schema(implementation = DecoderAdressModel.class, name = "Decoder addresses", accessMode = AccessMode.READ_ONLY, required = true)
+    @Schema(implementation = DecoderAdressModel.class, name = "Decoder addresses", accessMode = AccessMode.READ_ONLY)
     private List<DecoderAdressModel> adressen;
 
     @JsonProperty(ApiNames.CVS)
@@ -111,11 +111,11 @@ public class DecoderModel extends RepresentationModel<DecoderModel> implements I
     private List<DecoderCvModel> cvs;
 
     @JsonProperty(ApiNames.FUNKTIONEN)
-    @Schema(implementation = DecoderFunktionModel.class, name = "Decoder functions", accessMode = AccessMode.READ_ONLY, required = true)
+    @Schema(implementation = DecoderFunktionModel.class, name = "Decoder functions", accessMode = AccessMode.READ_ONLY)
     private List<DecoderFunktionModel> funktionen;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(description = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
     private Boolean deleted;
 
     @Override

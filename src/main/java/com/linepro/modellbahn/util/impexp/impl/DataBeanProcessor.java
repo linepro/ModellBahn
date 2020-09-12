@@ -12,9 +12,13 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.context.annotation.Configuration;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Configuration(PREFIX + "DataBeanProcessor")
 public class DataBeanProcessor implements BeanDefinitionRegistryPostProcessor {
 
+    /** TODO: Replace all this configuration with annotations */
     private static final List<String> EXPORTS = Arrays.asList("Achsfolg", "Anderung", "Antrieb", "Artikel", "Aufbau", "Bahnverwaltung",
                     "DecoderAdress", "DecoderCv", "DecoderFunktion", "Decoder", "DecoderTypAdress", "DecoderTypCv", "DecoderTypFunktion",
                     "DecoderTyp", "Epoch", "Gattung", "Hersteller", "Kategorie", "Kupplung", "Licht", "Massstab", "MotorTyp", "Produkt",
@@ -30,19 +34,26 @@ public class DataBeanProcessor implements BeanDefinitionRegistryPostProcessor {
     }
 
     protected void register(BeanDefinitionRegistry registry, String name) {
-        String prefix = PREFIX + name;
-        registry.registerBeanDefinition(prefix + "Exporter",
-                        BeanDefinitionBuilder.genericBeanDefinition(ExporterImpl.class)
-                                             .setLazyInit(true)
-                                             .addConstructorArgReference(prefix + "Repository")
-                                             .addConstructorArgReference(prefix + "Mutator")
-                                             .getBeanDefinition());
+        try {
+            String prefix = PREFIX + name;
+            Class<?> modelClass = Class.forName("com.linepro.modellbahn.model." + name + "Model");
 
-        registry.registerBeanDefinition(prefix + "Importer",
-                        BeanDefinitionBuilder.genericBeanDefinition(ExporterImpl.class)
-                                             .setLazyInit(true)
-                                             .addConstructorArgReference(prefix + "Repository")
-                                             .addConstructorArgReference(prefix + "ModelMutator")
-                                             .getBeanDefinition());
+            registry.registerBeanDefinition(prefix + "Exporter", BeanDefinitionBuilder.genericBeanDefinition(ExporterImpl.class)
+                                                                                      .setLazyInit(true)
+                                                                                      .addConstructorArgReference(prefix + "Repository")
+                                                                                      .addConstructorArgReference(prefix + "Mutator")
+                                                                                      .addConstructorArgValue(modelClass)
+                                                                                      .getBeanDefinition());
+
+            registry.registerBeanDefinition(prefix + "Importer", BeanDefinitionBuilder.genericBeanDefinition(ImporterImpl.class)
+                                                                                      .setLazyInit(true)
+                                                                                      .addConstructorArgReference(prefix + "Repository")
+                                                                                      .addConstructorArgReference(prefix + "ModelMutator")
+                                                                                      .addConstructorArgValue(modelClass)
+                                                                                      .getBeanDefinition());
+        } catch (ClassNotFoundException e) {
+            log.error("Could not create beans for " + name + ": " + e.getMessage(), e);
+            e.printStackTrace();
+        }
     }
 }

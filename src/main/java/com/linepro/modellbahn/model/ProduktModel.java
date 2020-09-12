@@ -55,11 +55,11 @@ public class ProduktModel extends RepresentationModel<ProduktModel> implements I
     private static final long serialVersionUID = 2584784787206478907L;
 
     @JsonProperty(ApiNames.HERSTELLER)
-    @Schema(description = "Manufacturer", example = "Marklin", required = true)
+    @Schema(description = "Manufacturer", example = "Marklin", accessMode = AccessMode.READ_ONLY)
     private String hersteller;
 
     @JsonProperty(ApiNames.BESTELL_NR)
-    @Schema(description = "Part number", example = "3000", required = true)
+    @Schema(description = "Part number", example = "3000", accessMode = AccessMode.READ_ONLY)
     private String bestellNr;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
@@ -67,9 +67,11 @@ public class ProduktModel extends RepresentationModel<ProduktModel> implements I
     private String bezeichnung;
 
     @JsonProperty(ApiNames.KATEGORIE)
+    @Schema(description = "Category and subcategory", required = true)
     private String kategorie;
 
     @JsonProperty(ApiNames.UNTER_KATEGORIE)
+    @Schema(description = "Category and subcategory", required = true)
     private String unterKategorie;
 
     @JsonProperty(ApiNames.LANGE)
@@ -162,7 +164,7 @@ public class ProduktModel extends RepresentationModel<ProduktModel> implements I
     private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(description = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
     private Boolean deleted;
 
     @Override

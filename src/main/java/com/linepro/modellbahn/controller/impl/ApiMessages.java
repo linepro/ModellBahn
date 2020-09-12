@@ -27,4 +27,7 @@ public interface ApiMessages {
     String UNTERKATEGORIE_KATEGORIE_FIXED = "{com.linepro.modellbahn.validation.UNTERKATEGORIE_KATEGORIE_FIXED}";
     String ZUG_CONSIST_DOES_NOT_EXIST = "{com.linepro.modellbahn.validation.ZUG_CONSIST_DOES_NOT_EXIST}";
     String ZUG_DOES_NOT_EXIST = "{com.linepro.modellbahn.validation.ZUG_DOES_NOT_EXIST}";
+    String EXPORT_ERROR = "{com.linepro.modellbahn.export.error}";
+    String IMPORT_ERROR = "{com.linepro.modellbahn.import.error}";
+    String FILE_ERROR = "{com.linepro.modellbahn.file.error}";
 }

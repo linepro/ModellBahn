@@ -4,6 +4,7 @@ import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.converter.entity.DecoderAdressMutator;
@@ -54,7 +55,7 @@ public class DecoderTranscriber implements Transcriber<Decoder, DecoderModel> {
             destination.setStatus(source.getStatus());
             destination.setProtokoll(getCode(source.getProtokoll()));
             destination.setFahrstufe(source.getFahrstufe());
-            destination.setDeleted(source.getDeleted());
+            destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
 
             if (isAvailable(source.getAdressen())) {
                 destination.setAdressen(source.getAdressen()
@@ -86,7 +87,7 @@ public class DecoderTranscriber implements Transcriber<Decoder, DecoderModel> {
                                                 .orElse(KEIN_FUNKTIONEN));
             }
 
-            destination.setDeleted(source.getDeleted());
+            destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
         
         return destination;

@@ -2,6 +2,8 @@ package com.linepro.modellbahn.converter.model.transcriber;
 
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
+import java.util.Optional;
+
 import com.linepro.modellbahn.converter.impl.SoftDeleteTranscriber;
 import com.linepro.modellbahn.model.Named;
 
@@ -10,8 +12,11 @@ public class NamedModelTranscriber<S extends Named, D extends Named> extends Sof
     @Override
     public D apply(S source, D destination) {
         if (isAvailable(source) && isAvailable(destination)) {
-            destination.setName(source.getName());
+            if (destination.getName() == null) {
+                destination.setName(source.getName());
+            }
             destination.setBezeichnung(source.getBezeichnung());
+            destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
         
         return destination;

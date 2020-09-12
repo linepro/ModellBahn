@@ -111,21 +111,26 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, Artikel> imple
     public Optional<AnderungModel> addAnderung(String artikelId, AnderungModel anderungModel) {
         return repository.findByArtikelId(artikelId)
                          .map(a -> {
-                            Anderung anderung = anderungModelMutator.convert(anderungModel);
-                            anderung.setDeleted(false);
+                             Anderung anderung = anderungModelMutator.convert(anderungModel);
 
-                            a.addAnderung(anderung);
+                             a.addAnderung(anderung);
             
-                            repository.saveAndFlush(a);
+                             repository.saveAndFlush(a);
                             
-                            return anderungMutator.convert(anderung);
-                        });
+                             return anderungMutator.convert(anderung);
+                         });
     }
 
     @Transactional
     public Optional<AnderungModel> updateAnderung(String artikelId, Integer anderungId, AnderungModel anderungModel) {
         return anderungRepository.findByAnderungId(artikelId, anderungId)
-                                 .map(a -> anderungMutator.convert(anderungRepository.saveAndFlush(anderungModelMutator.apply(anderungModel, a))));
+                                 .map(a -> {
+                                     Boolean deleted = a.getDeleted();
+                                     Anderung anderung = anderungModelMutator.apply(anderungModel, a);
+                                     anderung.setDeleted(deleted);
+                                     anderung.setDeleted(false);
+                                     return anderungMutator.convert(anderungRepository.saveAndFlush(anderung));
+                                 });
     }
 
     @Transactional

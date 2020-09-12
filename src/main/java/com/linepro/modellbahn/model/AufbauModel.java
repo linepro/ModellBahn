@@ -57,7 +57,7 @@ public class AufbauModel extends RepresentationModel<AufbauModel> implements Nam
     private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(description = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
     private Boolean deleted;
 
     @Override

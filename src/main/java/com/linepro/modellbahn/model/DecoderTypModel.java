@@ -94,7 +94,7 @@ public class DecoderTypModel extends RepresentationModel<DecoderTypModel> implem
     private String anleitungen;
 
     @JsonProperty(ApiNames.ADRESSEN)
-    @Schema(implementation = DecoderTypAdressModel.class, name = "Assignable adresses", accessMode = AccessMode.READ_ONLY, required = true)
+    @Schema(implementation = DecoderTypAdressModel.class, name = "Assignable adresses", accessMode = AccessMode.READ_ONLY)
     private List<DecoderTypAdressModel> adressen;
 
     @JsonProperty(ApiNames.CVS)
@@ -102,11 +102,11 @@ public class DecoderTypModel extends RepresentationModel<DecoderTypModel> implem
     private List<DecoderTypCvModel> cvs;
 
     @JsonProperty(ApiNames.FUNKTIONEN)
-    @Schema(implementation = DecoderTypFunktionModel.class, name = "Available function mappings", accessMode = AccessMode.READ_ONLY, required = true)
+    @Schema(implementation = DecoderTypFunktionModel.class, name = "Available function mappings", accessMode = AccessMode.READ_ONLY)
     private List<DecoderTypFunktionModel> funktionen;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(description = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
     private Boolean deleted;
 
     @Override

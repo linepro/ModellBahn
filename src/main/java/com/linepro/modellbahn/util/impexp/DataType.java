@@ -36,7 +36,8 @@ public enum DataType {
     PROTOKOLL(ApiNames.PROTOKOLL),
     SONDERMODELL(ApiNames.SONDERMODELL),
     SPURWEITE(ApiNames.SPURWEITE),
-    TEIL(ApiNames.TEIL),
+    STEUERUNG(ApiNames.STEUERUNG),
+    TEIL(ApiNames.TEIL, "ProduktTeil"),
     VORBILD(ApiNames.VORBILD),
     ZUG(ApiNames.ZUG),
     ZUG_TYP(ApiNames.ZUG_TYP, "ZugTyp");

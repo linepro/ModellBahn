@@ -20,10 +20,15 @@ public class ArtikelLookup {
 
     @Autowired
     private final ArtikelRepository repository;
-    
+
     public Artikel find(ArtikelModel artikel) {
         return Optional.ofNullable(artikel)
-                       .flatMap(m -> repository.findByArtikelId(m.getArtikelId()))
+                       .map(m -> find(m.getArtikelId()))
                        .orElse(null);
+    }
+
+    public Artikel find(String artikelId) {
+        return repository.findByArtikelId(artikelId)
+                         .orElse(null);
     }
 }

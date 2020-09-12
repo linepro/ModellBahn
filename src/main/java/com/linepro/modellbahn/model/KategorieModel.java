@@ -62,11 +62,11 @@ public class KategorieModel extends RepresentationModel<KategorieModel> implemen
     private String bezeichnung;
 
     @JsonProperty(ApiNames.UNTER_KATEGORIEN)
-    @Schema(implementation = UnterKategorieModel.class, name = "Sub categories", accessMode = AccessMode.READ_ONLY, required = true)
+    @Schema(implementation = UnterKategorieModel.class, name = "Sub categories", accessMode = AccessMode.READ_ONLY)
     private List<UnterKategorieModel> unterKategorien;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(description = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
     private Boolean deleted;
 
     @Override

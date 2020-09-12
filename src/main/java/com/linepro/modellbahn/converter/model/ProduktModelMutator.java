@@ -1,6 +1,9 @@
 package com.linepro.modellbahn.converter.model;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.impl.MutatorImpl;
 import com.linepro.modellbahn.converter.model.transcriber.ProduktModelTranscriber;
@@ -24,6 +27,7 @@ import com.linepro.modellbahn.repository.lookup.DecoderTypLookup;
 import com.linepro.modellbahn.repository.lookup.ItemLookup;
 import com.linepro.modellbahn.repository.lookup.UnterKategorieLookup;
 
+@Component(PREFIX + "ProduktModelMutator")
 public class ProduktModelMutator extends MutatorImpl<ProduktModel, Produkt> {
 
     @Autowired

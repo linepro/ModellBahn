@@ -10,13 +10,14 @@ import com.linepro.modellbahn.converter.model.transcriber.DecoderModelTranscribe
 import com.linepro.modellbahn.entity.Decoder;
 import com.linepro.modellbahn.model.DecoderModel;
 import com.linepro.modellbahn.repository.ProtokollRepository;
+import com.linepro.modellbahn.repository.lookup.DecoderTypLookup;
 import com.linepro.modellbahn.repository.lookup.ItemLookup;
 
 @Component(PREFIX + "DecoderModelMutator")
 public class DecoderModelMutator extends MutatorImpl<DecoderModel, Decoder> {
 
     @Autowired
-    public DecoderModelMutator(ProtokollRepository protokollRepository, ItemLookup lookup) {
-        super(() -> new Decoder(), new DecoderModelTranscriber(protokollRepository, lookup));
+    public DecoderModelMutator(DecoderTypLookup typLookup, ProtokollRepository protokollRepository, ItemLookup lookup) {
+        super(() -> new Decoder(), new DecoderModelTranscriber(typLookup, protokollRepository, lookup));
     }
 }

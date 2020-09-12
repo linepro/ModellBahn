@@ -65,7 +65,7 @@ public class ZugModel extends RepresentationModel<ZugModel> implements NamedItem
     private List<ZugConsistModel> consist;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(description = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
     private Boolean deleted;
 
     @Override

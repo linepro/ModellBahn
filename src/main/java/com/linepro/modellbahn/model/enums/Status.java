@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 
 /**
  * Status.
@@ -37,19 +38,19 @@ public enum Status implements DescribedEnum {
     }
 
     @Override
-    @Schema(description = "Article status name", example = "GEKAUFT", required = true)
+    @Schema(description = "Article status name", example = "GEKAUFT", accessMode = AccessMode.READ_ONLY)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @Schema(description = "Article status description", example = "Purchased.", required = true)
+    @Schema(description = "Article status description", example = "Purchased.", accessMode = AccessMode.READ_ONLY)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @Schema(description = "AdressTyp tooltip", example = "0 - 10239.")
+    @Schema(description = "Article status tooltip", example = "Purchased.", accessMode = AccessMode.READ_ONLY)
     public String getTooltip() {
         return tooltip;
     }

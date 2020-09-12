@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,7 +37,8 @@ public class FileServiceImpl implements FileService {
     @Override
     public Path updateFile(List<MediaType> mediaTypes, MultipartFile multipart, String modelType, String fieldName, String...identifiers) {
         if (!handler.isAcceptable(multipart, mediaTypes)) {
-            throw new ModellBahnException(ApiMessages.INVALID_FILE).addValue(multipart.getOriginalFilename());
+            throw new ModellBahnException(ApiMessages.INVALID_FILE).addValue(multipart.getOriginalFilename())
+                                                                   .setStatus(HttpStatus.BAD_REQUEST);
         }
 
         try {

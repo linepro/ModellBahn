@@ -50,7 +50,7 @@ public class AnderungModel extends RepresentationModel<AnderungModel> implements
     private static final long serialVersionUID = 7089488648732721954L;
 
     @JsonProperty(ApiNames.ARTIKEL_ID)
-    @Schema(description = "Artikel id", example = "00001", required = true)
+    @Schema(description = "Artikel id", example = "00001", accessMode = AccessMode.READ_ONLY)
     private String artikelId;
 
     @JsonProperty(ApiNames.ANDERUNG_ID)
@@ -79,7 +79,7 @@ public class AnderungModel extends RepresentationModel<AnderungModel> implements
     private String anmerkung;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(description = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
     private Boolean deleted;
 
     @Override

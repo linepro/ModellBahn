@@ -5,6 +5,7 @@ import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import com.linepro.modellbahn.converter.PathMutator;
 import com.linepro.modellbahn.converter.Transcriber;
@@ -61,7 +62,7 @@ public class ProduktTranscriber implements Transcriber<Produkt, ProduktModel> {
             destination.setMotorTyp(getCode(source.getMotorTyp()));
             destination.setAnleitungen(PathMutator.convert(source.getAnleitungen()));
             destination.setExplosionszeichnung(PathMutator.convert(source.getExplosionszeichnung()));
-            destination.setDeleted(source.getDeleted());
+            destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
 
             if (isAvailable(source.getTeilen())) {
                 destination.setTeilen(source.getTeilen()

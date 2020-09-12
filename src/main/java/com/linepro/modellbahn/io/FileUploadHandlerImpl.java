@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.linepro.modellbahn.controller.impl.ApiMessages;
 import com.linepro.modellbahn.util.exceptions.ModellBahnException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -105,7 +106,8 @@ public class FileUploadHandlerImpl implements FileUploadHandler {
     
             out.flush();
         } catch (Exception e) {
-            throw ModellBahnException.raise("{}", e);
+            throw ModellBahnException.raise(ApiMessages.FILE_ERROR, e)
+                                     .addValue(multipart.getName());
         }
     }
 }

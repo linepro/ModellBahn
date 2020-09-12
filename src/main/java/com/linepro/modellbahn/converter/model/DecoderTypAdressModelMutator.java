@@ -2,17 +2,20 @@ package com.linepro.modellbahn.converter.model;
 
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.impl.MutatorImpl;
 import com.linepro.modellbahn.converter.model.transcriber.DecoderTypAdressModelTranscriber;
 import com.linepro.modellbahn.entity.DecoderTypAdress;
 import com.linepro.modellbahn.model.DecoderTypAdressModel;
+import com.linepro.modellbahn.repository.lookup.DecoderTypLookup;
 
 @Component(PREFIX + "DecoderTypAdressModelMutator")
 public class DecoderTypAdressModelMutator extends MutatorImpl<DecoderTypAdressModel, DecoderTypAdress> {
 
-    public DecoderTypAdressModelMutator() {
-        super(() -> new DecoderTypAdress(), new DecoderTypAdressModelTranscriber());
+    @Autowired
+    public DecoderTypAdressModelMutator(DecoderTypLookup lookup) {
+        super(() -> new DecoderTypAdress(), new DecoderTypAdressModelTranscriber(lookup));
     }
 }

@@ -2,6 +2,8 @@ package com.linepro.modellbahn.converter.model.transcriber;
 
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
+import java.util.Optional;
+
 import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.entity.DecoderTyp;
 import com.linepro.modellbahn.model.DecoderTypModel;
@@ -23,15 +25,20 @@ public class DecoderTypModelTranscriber implements Transcriber<DecoderTypModel, 
     @Override
     public DecoderTyp apply(DecoderTypModel source, DecoderTyp destination) {
         if (isAvailable(source) && isAvailable(destination)) {
-            destination.setBestellNr(source.getBestellNr());
+            if (destination.getHersteller() == null) {
+                destination.setHersteller(lookup.find(source.getHersteller(), herstellerRepository));
+            }
+            if (destination.getBestellNr() == null) {
+                destination.setBestellNr(source.getBestellNr());
+            }
             destination.setBezeichnung(source.getBezeichnung());
-            destination.setHersteller(lookup.find(source.getHersteller(), herstellerRepository));
             destination.setIMax(source.getIMax());
             destination.setProtokoll(lookup.find(source.getProtokoll(), protokollRepository));
             destination.setFahrstufe(source.getFahrstufe());
             destination.setSound(source.getSound());
             destination.setKonfiguration(source.getKonfiguration());
             destination.setStecker(source.getStecker());
+            destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
         
         return destination;

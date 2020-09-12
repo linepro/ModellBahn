@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.controller;
 
-import static org.springframework.http.ResponseEntity.of;
-
 import java.util.Optional;
 
 import javax.ws.rs.core.MediaType;
@@ -148,7 +146,7 @@ public class KupplungController extends NamedItemController<KupplungModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
         })
-    public ResponseEntity<?> updateAbbildung(@PathVariable(ApiNames.NAMEN) String name, @RequestParam("abbildung") MultipartFile multipart) {
+    public ResponseEntity<?> updateAbbildung(@PathVariable(ApiNames.NAMEN) String name, @RequestParam(ApiNames.ABBILDUNG) MultipartFile multipart) {
         return updated(service.updateAbbildung(name, multipart));
     }
 

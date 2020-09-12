@@ -2,6 +2,7 @@ package com.linepro.modellbahn.io;
 
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 
+import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -42,7 +43,10 @@ public class FileStoreImpl implements FileStore {
 
         try {
             FileUtils.forceDelete(itemPath.toFile());
+        } catch(FileNotFoundException e) {
+            // That's ok. We didn't like it anyway.
         } catch(Exception e) {
+            // Should we throw it up?
             log.error("Failed to delete folder " + itemPath.toString(), e);
         }
     }
@@ -58,7 +62,10 @@ public class FileStoreImpl implements FileStore {
     public void removeFile(Path filePath) {
         try {
             FileUtils.forceDelete(filePath.toFile());
+        } catch(FileNotFoundException e) {
+            // That's ok. We didn't like it anyway.
         } catch(Exception e) {
+            // Should we throw it up?
             log.error("Failed to delete file " + filePath.toString(), e);
         }
     }

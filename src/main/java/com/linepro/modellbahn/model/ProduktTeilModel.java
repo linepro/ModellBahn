@@ -48,19 +48,19 @@ public class ProduktTeilModel extends RepresentationModel<ProduktTeilModel> impl
     private static final long serialVersionUID = 1L;
 
     @JsonProperty(ApiNames.HERSTELLER)
-    @Schema(description = "Manufacturer", accessMode = AccessMode.READ_ONLY, required = true)
+    @Schema(description = "Manufacturer", accessMode = AccessMode.READ_ONLY)
     private String hersteller;
 
     @JsonProperty(ApiNames.BESTELL_NR)
-    @Schema(description = "Part number", example = "3000", accessMode = AccessMode.READ_ONLY, required = true)
+    @Schema(description = "Part number", example = "3000", accessMode = AccessMode.READ_ONLY)
     private String bestellNr;
 
     @JsonProperty(ApiNames.TEIL_HERSTELLER)
-    @Schema(description = "Sub product Manufacturer", accessMode = AccessMode.READ_ONLY, required = true)
+    @Schema(description = "Sub product Manufacturer", accessMode = AccessMode.READ_ONLY)
     private String teilHersteller;
 
     @JsonProperty(ApiNames.TEIL_BESTELL_NR)
-    @Schema(description = "Sub product Part number", example = "3000", accessMode = AccessMode.READ_ONLY, required = true)
+    @Schema(description = "Sub product Part number", example = "3000", accessMode = AccessMode.READ_ONLY)
     private String teilBestellNr;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
@@ -80,7 +80,7 @@ public class ProduktTeilModel extends RepresentationModel<ProduktTeilModel> impl
     private Integer anzahl;
 
     @JsonProperty(ApiNames.DELETED)
-    @Schema(description = "True if soft deleted", example = "false", required = true)
+    @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
     private Boolean deleted;
 
     @Override

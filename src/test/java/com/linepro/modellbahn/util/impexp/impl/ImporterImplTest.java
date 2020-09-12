@@ -59,7 +59,7 @@ public class ImporterImplTest {
     @SuppressWarnings({"rawtypes", "unchecked"})
     @BeforeEach
     protected void setUp() throws Exception {
-        importer = new ImporterImpl(repository, mutator);
+        importer = new ImporterImpl(repository, mutator, DecoderModel.class);
 
         doAnswer(i -> {
             PageRequest pageRequest = (PageRequest) i.getArgument(0);

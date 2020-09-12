@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 
 /**
  * AdressTyp.
@@ -41,19 +42,19 @@ public enum AdressTyp implements DescribedEnum {
     }
 
     @Override
-    @Schema(description = "AdressTyp name", example = "DCC", required = true)
+    @Schema(description = "Adress Type name", example = "DCC", accessMode = AccessMode.READ_ONLY)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @Schema(description = "AdressTyp description", example = "DCC lang.", required = true)
+    @Schema(description = "Adress Type description", example = "DCC lang.", accessMode = AccessMode.READ_ONLY)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @Schema(description = "AdressTyp tooltip", example = "0 - 10239.", required = true)
+    @Schema(description = "Adress Type tooltip", example = "0 - 10239.", accessMode = AccessMode.READ_ONLY)
     public String getTooltip() {
         return tooltip;
     }
