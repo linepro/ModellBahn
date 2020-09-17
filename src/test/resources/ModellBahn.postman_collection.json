@@ -15163,9 +15163,37 @@
 							"script": {
 								"id": "1411af35-3986-4f77-9b09-5e759aacecfc",
 								"exec": [
-									"pm.environment.set(\"zug\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.environment.set(\"zugTyp\", pm.variables.get(\"zugTypAdd\"));\r",
-									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"const regex = /(token=)([^\"]+)/;\r",
+									"var apiKey = pm.variables.get(\"mail_key\");\r",
+									"var header = {\r",
+									"    'Api-Token': apiKey,\r",
+									"    'Content-Type': 'application/json'\r",
+									"};\r",
+									"var messagesUrl = pm.variables.replaceIn(\"{{mailhost}}/api/v1/inboxes/{{inbox}}/messages\");\r",
+									"pm.sendRequest({\r",
+									"    url: messagesUrl,\r",
+									"    method: 'GET',\r",
+									"    header: header\r",
+									"    }, (err, response) => {\r",
+									"        response.json().forEach(m => {\r",
+									"            if (m.to_email == pm.variables.get(\"eMail\")) {\r",
+									"                var bodyUrl = pm.variables.get(\"mailhost\") + m.html_path;\r",
+									"                console.log(bodyUrl);\r",
+									"                pm.sendRequest({\r",
+									"                    url: bodyUrl,\r",
+									"                    method: 'GET',\r",
+									"                    header: header\r",
+									"                }, (err, response) => {\r",
+									"                    var text = response.text();\r",
+									"                    console.log(text);\r",
+									"                    var token = text.match(regex)[2];\r",
+									"                    console.log(token);\r",
+									"                    pm.environment.set(\"token\", token);\r",
+									"                });\r",
+									"            };\r",
+									"    });\r",
+									"});\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -15175,21 +15203,11 @@
 							"script": {
 								"id": "10008d91-b60d-4449-8955-b45bf5e1145c",
 								"exec": [
-									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
-									"var jsonData = pm.response.json();\r",
-									"var zug = pm.variables.get(\"zug\");\r",
-									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
-									"var self = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
-									"pm.test(\"name\", () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"zug\")));\r",
-									"pm.test(\"zugTyp\", () => pm.expect(jsonData.zugTyp).to.eql(pm.variables.get(\"zugTyp\")));\r",
-									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
-									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
-									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
-									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
-									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
-									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
-									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
-									"pm.test(\"_links.consist\", () => pm.expect(jsonData._links.consist[0].href).to.eql(self+\"/consist\"));"
+									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"var message = pm.response.json();\r",
+									"pm.test(\"timestamp\", () => pm.expect(message.timestamp).to.be.gt(0));\r",
+									"pm.test(\"status\", () => pm.expect(message.timestamp).to.eql(202));\r",
+									"pm.test(\"message\", () => pm.expect(message.timestamp).to.eql(pm.variables.response(\"Eine Bestätigungs-E-Mail wurde an {{eMail}} gesendet. Bitte klicken Sie auf den Link, um die Anmeldung abzuschließen.\")));"
 								],
 								"type": "text/javascript"
 							}
@@ -15198,17 +15216,8 @@
 					"request": {
 						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n\t\"name\": \"{{user}}\",\r\n\t\"eMail\": \"{{eMail}}\",\r\n    \"firstName\": \"{{firstName}}\",\r\n\t\"lastName\": \"{{lastName}}\",\r\n    \"locale\": \"{{locale}}\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{api}}/confirm?token=x",
+							"raw": "{{api}}/confirm?token={{token}}",
 							"host": [
 								"{{api}}"
 							],
@@ -15218,7 +15227,7 @@
 							"query": [
 								{
 									"key": "token",
-									"value": "x"
+									"value": "{{token}}"
 								}
 							]
 						}
@@ -15243,21 +15252,11 @@
 							"script": {
 								"id": "79d0637b-efa9-42a4-bf64-c1a6744a88ca",
 								"exec": [
-									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
-									"var jsonData = pm.response.json();\r",
-									"var zug = pm.variables.get(\"zug\");\r",
-									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
-									"var self = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
-									"pm.test(\"name\", () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"zug\")));\r",
-									"pm.test(\"zugTyp\", () => pm.expect(jsonData.zugTyp).to.eql(pm.variables.get(\"zugTyp\")));\r",
-									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
-									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
-									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
-									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
-									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
-									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
-									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
-									"pm.test(\"_links.consist\", () => pm.expect(jsonData._links.consist[0].href).to.eql(self+\"/consist\"));"
+									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"var message = pm.response.json();\r",
+									"pm.test(\"timestamp\", () => pm.expect(message.timestamp).to.be.gt(0));\r",
+									"pm.test(\"status\", () => pm.expect(message.timestamp).to.eql(200));\r",
+									"pm.test(\"message\", () => pm.expect(message.timestamp).to.eql(pm.variables.response(\"Eine Bestätigungs-E-Mail wurde an {{eMail}} gesendet. Bitte klicken Sie auf den Link, um die Anmeldung abzuschließen.\")));"
 								],
 								"type": "text/javascript"
 							}
@@ -15266,15 +15265,6 @@
 					"request": {
 						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n\t\"name\": \"{{user}}\",\r\n\t\"eMail\": \"{{eMail}}\",\r\n    \"firstName\": \"{{firstName}}\",\r\n\t\"lastName\": \"{{lastName}}\",\r\n    \"locale\": \"{{locale}}\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "{{api}}/forgot?eMail=e@mail.com",
 							"host": [
@@ -15301,7 +15291,37 @@
 							"script": {
 								"id": "93df0903-63f4-466b-9738-f19f83de9776",
 								"exec": [
-									""
+									"pm.environment.set(\"password\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"const regex = /(token=)([^\"]+)/;\r",
+									"var apiKey = pm.variables.get(\"mail_key\");\r",
+									"var header = {\r",
+									"    'Api-Token': apiKey,\r",
+									"    'Content-Type': 'application/json'\r",
+									"};\r",
+									"var messagesUrl = pm.variables.replaceIn(\"{{mailhost}}/api/v1/inboxes/{{inbox}}/messages\");\r",
+									"pm.sendRequest({\r",
+									"    url: messagesUrl,\r",
+									"    method: 'GET',\r",
+									"    header: header\r",
+									"    }, (err, response) => {\r",
+									"        response.json().forEach(m => {\r",
+									"            if (m.to_email == pm.variables.get(\"eMail\")) {\r",
+									"                var bodyUrl = pm.variables.get(\"mailhost\") + m.html_path;\r",
+									"                console.log(bodyUrl);\r",
+									"                pm.sendRequest({\r",
+									"                    url: bodyUrl,\r",
+									"                    method: 'GET',\r",
+									"                    header: header\r",
+									"                }, (err, response) => {\r",
+									"                    var text = response.text();\r",
+									"                    console.log(text);\r",
+									"                    var token = text.match(regex)[2];\r",
+									"                    console.log(token);\r",
+									"                    pm.environment.set(\"token\", token);\r",
+									"                });\r",
+									"            };\r",
+									"    });\r",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -15311,21 +15331,11 @@
 							"script": {
 								"id": "32b031c7-965a-420f-a676-147cc33c9b1c",
 								"exec": [
-									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
-									"var jsonData = pm.response.json();\r",
-									"var zug = pm.variables.get(\"zug\");\r",
-									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
-									"var self = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
-									"pm.test(\"name\", () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"zug\")));\r",
-									"pm.test(\"zugTyp\", () => pm.expect(jsonData.zugTyp).to.eql(pm.variables.get(\"zugTyp\")));\r",
-									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
-									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
-									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
-									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
-									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
-									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
-									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
-									"pm.test(\"_links.consist\", () => pm.expect(jsonData._links.consist[0].href).to.eql(self+\"/consist\"));"
+									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"var message = pm.response.json();\r",
+									"pm.test(\"timestamp\", () => pm.expect(message.timestamp).to.be.gt(0));\r",
+									"pm.test(\"status\", () => pm.expect(message.timestamp).to.eql(200));\r",
+									"pm.test(\"message\", () => pm.expect(message.timestamp).to.eql(pm.variables.response(\"Eine Bestätigungs-E-Mail wurde an {{eMail}} gesendet. Bitte klicken Sie auf den Link, um die Anmeldung abzuschließen.\")));"
 								],
 								"type": "text/javascript"
 							}
@@ -15334,17 +15344,8 @@
 					"request": {
 						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n\t\"name\": \"{{user}}\",\r\n\t\"eMail\": \"{{eMail}}\",\r\n    \"firstName\": \"{{firstName}}\",\r\n\t\"lastName\": \"{{lastName}}\",\r\n    \"locale\": \"{{locale}}\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{api}}/reset?token=x&password=pa$$w0rd",
+							"raw": "{{api}}/reset?token={{token}}&password={{password}}",
 							"host": [
 								"{{api}}"
 							],
@@ -15354,11 +15355,11 @@
 							"query": [
 								{
 									"key": "token",
-									"value": "x"
+									"value": "{{token}}"
 								},
 								{
 									"key": "password",
-									"value": "pa$$w0rd"
+									"value": "{{password}}"
 								}
 							]
 						}
@@ -15373,7 +15374,7 @@
 							"script": {
 								"id": "4453ab4a-f588-45c8-8d96-085c61df9830",
 								"exec": [
-									""
+									"pm.environment.set(\"password\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -15383,21 +15384,11 @@
 							"script": {
 								"id": "8f6001e1-45a6-409d-9280-aa6054e0db41",
 								"exec": [
-									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
-									"var jsonData = pm.response.json();\r",
-									"var zug = pm.variables.get(\"zug\");\r",
-									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
-									"var self = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
-									"pm.test(\"name\", () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"zug\")));\r",
-									"pm.test(\"zugTyp\", () => pm.expect(jsonData.zugTyp).to.eql(pm.variables.get(\"zugTyp\")));\r",
-									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
-									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
-									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
-									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
-									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
-									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
-									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
-									"pm.test(\"_links.consist\", () => pm.expect(jsonData._links.consist[0].href).to.eql(self+\"/consist\"));"
+									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"var message = pm.response.json();\r",
+									"pm.test(\"timestamp\", () => pm.expect(message.timestamp).to.be.gt(0));\r",
+									"pm.test(\"status\", () => pm.expect(message.timestamp).to.eql(200));\r",
+									"pm.test(\"message\", () => pm.expect(message.timestamp).to.eql(pm.variables.response(\"Eine Bestätigungs-E-Mail wurde an {{eMail}} gesendet. Bitte klicken Sie auf den Link, um die Anmeldung abzuschließen.\")));"
 								],
 								"type": "text/javascript"
 							}
@@ -15407,7 +15398,7 @@
 						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "{{api}}/user/{{user}}?password=pa$$w0rd",
+							"raw": "{{api}}/user/{{user}}?password={{password}}",
 							"host": [
 								"{{api}}"
 							],
@@ -15418,7 +15409,7 @@
 							"query": [
 								{
 									"key": "password",
-									"value": "pa$$w0rd"
+									"value": "{{password}}"
 								}
 							]
 						}
@@ -15433,8 +15424,10 @@
 							"script": {
 								"id": "2b0b8fcf-9711-448a-b5ad-d1ddb6d110f8",
 								"exec": [
-									"pm.environment.set(\"zugTyp\", pm.variables.get(\"zugTypUpdate\"));\r",
-									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"eMail\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
+									"pm.environment.set(\"firstName\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));\r",
+									"pm.environment.set(\"lastName\", pm.variables.replaceIn(\"{{$randomLastName}}\"));\r",
+									"pm.environment.set(\"locale\", pm.variables.replaceIn(\"{{$randomLocale}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -15446,34 +15439,24 @@
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
-									"var zug = pm.variables.get(\"zug\");\r",
-									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
-									"var self = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
-									"var consistUrl = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}/consist/{{cnPosition}}\");\r",
-									"pm.test(\"name\", () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"zug\")));\r",
-									"pm.test(\"zugTyp\", () => pm.expect(jsonData.zugTyp).to.eql(pm.variables.get(\"zugTyp\")));\r",
-									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
-									"pm.test(\"consist[0].zug\", () => pm.expect(jsonData.consist[0].zug).to.eql(pm.variables.get(\"zug\")));\r",
-									"pm.test(\"consist[0].position\", () => pm.expect(jsonData.consist[0].position).to.eql(pm.variables.get(\"cnPosition\")));\r",
-									"pm.test(\"consist[0].artikelId\", () => pm.expect(jsonData.consist[0].artikelId).to.eql(pm.variables.get(\"cnArtikelId\")));\r",
-									"pm.test(\"consist[0].hersteller\", () => pm.expect(jsonData.consist[0].hersteller).to.eql(pm.variables.get(\"cnHersteller\")));\r",
-									"pm.test(\"consist[0].bestellNr\", () => pm.expect(jsonData.consist[0].bestellNr).to.eql(pm.variables.get(\"cnBestellNr\")));\r",
-									"pm.test(\"consist[0].bezeichnung\", () => pm.expect(jsonData.consist[0].bezeichnung).to.eql(pm.variables.get(\"cnBezeichnung\")));\r",
-									"pm.test(\"consist[0].lange\", () => pm.expect(jsonData.consist[0].lange).to.eql(pm.variables.get(\"cnLange\")));\r",
-									"pm.test(\"consist[0].bahnverwaltung\", () => pm.expect(jsonData.consist[0].bahnverwaltung).to.eql(pm.variables.get(\"cnBahnverwaltung\")));\r",
-									"pm.test(\"consist[0].gattung\", () => pm.expect(jsonData.consist[0].gattung).to.eql(pm.variables.get(\"cnGattung\")));\r",
-									"pm.test(\"consist[0].betreibsnummer\", () => pm.expect(jsonData.consist[0].betreibsnummer).to.eql(pm.variables.get(\"cnBetreibsnummer\")));\r",
-									"pm.test(\"consist[0].abbildung\", () => pm.expect(jsonData.consist[0].abbildung).to.eql(pm.variables.get(undefined)));\r",
-									"pm.test(\"consist[0].deleted\", () => pm.expect(jsonData.consist[0].deleted).to.be.false);\r",
-									"pm.test(\"consist[0]._links.parent\", () => pm.expect(jsonData.consist[0]._links.parent[0].href).to.eql(self));\r",
-									"pm.test(\"consist[0]._links.update\", () => pm.expect(jsonData.consist[0]._links.update[0].href).to.eql(consistUrl));\r",
-									"pm.test(\"consist[0]._links.delete\", () => pm.expect(jsonData.consist[0]._links.delete[0].href).to.eql(consistUrl));\r",
-									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
-									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
-									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
-									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
-									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
-									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));"
+									"var root = pm.variables.replaceIn(\"{{api}}/user\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/user/{{user}}\");\r",
+									"var register = pm.variables.replaceIn(\"{{api}}/register\");\r",
+									"var forgot = pm.variables.replaceIn(\"{{api}}/forgot\");\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"name\", () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"user\")));\r",
+									"pm.test(\"eMail\", () => pm.expect(jsonData.email).to.eql(pm.variables.get(\"eMail\")));\r",
+									"pm.test(\"firstName\", () => pm.expect(jsonData.email).to.eql(pm.variables.get(\"firstName\")));\r",
+									"pm.test(\"lastName\", () => pm.expect(jsonData.email).to.eql(pm.variables.get(\"lastName\")));\r",
+									"pm.test(\"locale\", () => pm.expect(jsonData.locale).to.eql(pm.variables.get(\"locale\")));\r",
+									"pm.test(\"enabled\", () => pm.expect(jsonData.enabled).to.be.true);\r",
+									"pm.test(\"search\", () => pm.expect(jsonData._links.self[0].href).to.eql(root));\r",
+									"pm.test(\"self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"password\", () => pm.expect(jsonData._links.self[0].href).to.eql(self + \"/password\"));\r",
+									"pm.test(\"update\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"delete\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"register\", () => pm.expect(jsonData._links.self[0].href).to.eql(register));\r",
+									"pm.test(\"forgot\", () => pm.expect(jsonData._links.self[0].href).to.eql(forgot));"
 								],
 								"type": "text/javascript"
 							}
@@ -15498,7 +15481,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"{{user}}\",\n\t\"eMail\": \"{{eMail}}\",\n    \"firstName\": \"{{firstName}}\",\n\t\"lastName\": \"{{lastName}}\",\n    \"locale\": \"{{locale}}\"\n}",
+							"raw": "{\n\t\"eMail\": \"{{eMail}}\",\n    \"firstName\": \"{{firstName}}\",\n\t\"lastName\": \"{{lastName}}\",\n    \"locale\": \"{{locale}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -15527,20 +15510,25 @@
 								"id": "942f3306-7d1c-448b-88d1-8d6b3edf6f98",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
-									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
 									"var jsonData = pm.response.json();\r",
-									"jsonData.content.forEach(function(u) { \r",
-									"    pm.test(\"name\", () => pm.expect(u.name).to.exist);\r",
-									"    pm.test(\"email\", () => pm.expect(u.email).to.exist);\r",
-									"    pm.test(\"lastName\", () => pm.expect(u.lastName).to.exist);\r",
-									"    pm.test(\"locale\", () => pm.expect(u.locale).to.exist);\r",
-									"    pm.test(\"enabled\", () => pm.expect(u.enabled).to.exist);\r",
-									"});\r",
-									"pm.test(\"page.size\", () => pm.expect(jsonData.page.size).to.eql(jsonData.content.length));\r",
-									"pm.test(\"page.totalElements\", () => pm.expect(jsonData.page.totalElements).to.eql(jsonData.content.length));\r",
-									"pm.test(\"page.totalPages\", () => pm.expect(jsonData.page.totalPages).to.eql(1));\r",
-									"pm.test(\"page.number\", () => pm.expect(jsonData.page.number).to.eql(0));\r",
-									""
+									"var root = pm.variables.replaceIn(\"{{api}}/user\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/user/{{user}}\");\r",
+									"var register = pm.variables.replaceIn(\"{{api}}/register\");\r",
+									"var forgot = pm.variables.replaceIn(\"{{api}}/forgot\");\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"name\", () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"user\")));\r",
+									"pm.test(\"eMail\", () => pm.expect(jsonData.email).to.eql(pm.variables.get(\"eMail\")));\r",
+									"pm.test(\"firstName\", () => pm.expect(jsonData.email).to.eql(pm.variables.get(\"firstName\")));\r",
+									"pm.test(\"lastName\", () => pm.expect(jsonData.email).to.eql(pm.variables.get(\"lastName\")));\r",
+									"pm.test(\"locale\", () => pm.expect(jsonData.locale).to.eql(pm.variables.get(\"locale\")));\r",
+									"pm.test(\"enabled\", () => pm.expect(jsonData.enabled).to.be.true);\r",
+									"pm.test(\"search\", () => pm.expect(jsonData._links.self[0].href).to.eql(root));\r",
+									"pm.test(\"self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"password\", () => pm.expect(jsonData._links.self[0].href).to.eql(self + \"/password\"));\r",
+									"pm.test(\"update\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"delete\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"register\", () => pm.expect(jsonData._links.self[0].href).to.eql(register));\r",
+									"pm.test(\"forgot\", () => pm.expect(jsonData._links.self[0].href).to.eql(forgot));"
 								],
 								"type": "text/javascript"
 							}
@@ -15646,622 +15634,623 @@
 	],
 	"variable": [
 		{
-			"id": "dab237a4-2a2e-4157-a5b1-992f64372cf0",
+			"id": "218a14f0-6c8e-4d55-af6e-9364ce72bc86",
 			"key": "host",
-			"value": "127.0.0.1"
+			"value": "127.0.0.1",
+			"disabled": true
 		},
 		{
-			"id": "36e54087-723b-40e3-b2f6-69ade55c2911",
+			"id": "73fb4420-d58c-42cb-a22c-97b79b6674b8",
 			"key": "port",
 			"value": ":8086"
 		},
 		{
-			"id": "fc401ebb-a8f6-4a6d-a78b-4ace892b4085",
+			"id": "d20e5385-af02-48e0-ab70-4f98e879da04",
 			"key": "server",
 			"value": "http://{{host}}{{port}}"
 		},
 		{
-			"id": "d72138de-5721-4151-b3c1-0ad6fd67b74b",
+			"id": "9a780e74-ff7e-418e-af5c-c6f29abd98b4",
 			"key": "root",
 			"value": "{{server}}/ModellBahn"
 		},
 		{
-			"id": "f70532d9-f7a1-4878-9c3e-d865c9620d1c",
+			"id": "7dee5b01-51d1-4f4d-88f6-4e47a4044ecc",
 			"key": "api",
 			"value": "{{root}}/api"
 		},
 		{
-			"id": "6ac40dc1-f9a0-40aa-bb49-4a38cc64381d",
+			"id": "f7a0bfc2-7609-4aa6-9000-be676955db1f",
 			"key": "language",
 			"value": "de"
 		},
 		{
-			"id": "51f529df-6858-4860-8805-240b70c50558",
+			"id": "0fb8dbac-bd26-4b1f-b9e2-608f304dbe25",
 			"key": "achsfolgAdd",
 			"value": "1C1H2T"
 		},
 		{
-			"id": "c1476b9a-87ba-495b-8c54-1da092108e6b",
+			"id": "81bf9ada-a887-4351-a4d7-f1e0d9cf189f",
 			"key": "achsfolgUpdate",
 			"value": "COCO"
 		},
 		{
-			"id": "ef9f6f47-b4df-4872-b7dc-26cbb4bb8645",
+			"id": "b735aecd-5745-41f9-b7a2-2d4d51bcb8a0",
 			"key": "adIndexAdd",
 			"value": "1"
 		},
 		{
-			"id": "aba16811-e984-4c95-9192-bf969de5228f",
+			"id": "aa77298e-2f0c-4442-9998-8a306b482326",
 			"key": "adIndexUpdate",
 			"value": "1"
 		},
 		{
-			"id": "93f03f4d-cbec-4396-ad84-07c4ed2aad65",
+			"id": "dbad4161-4124-4420-bcec-b89e6ef1e9fb",
 			"key": "adSpanAdd",
 			"value": "2"
 		},
 		{
-			"id": "4639edb8-63d9-4a71-85e9-577958e5ad31",
+			"id": "8587cdc8-0870-4417-a447-265b729ce437",
 			"key": "adSpanUpdate",
 			"value": "16"
 		},
 		{
-			"id": "35697b0c-5d7a-40ac-b193-4617491aec51",
+			"id": "99e3d2f9-4c16-4233-a9f9-50a42f36f005",
 			"key": "adTypAdd",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "b2aab47b-7e7a-45c0-bb7d-b10a7d5fb648",
+			"id": "9eda416a-1c82-49d3-9cbd-4914f857c6a8",
 			"key": "adTypUpdate",
 			"value": "DELTA"
 		},
 		{
-			"id": "5cedc991-46af-45be-b148-51c62d8f3df7",
+			"id": "4039bc13-5c72-4083-bbd9-1d3599d4c48f",
 			"key": "adAdd",
 			"value": "10"
 		},
 		{
-			"id": "c21daa8c-fa65-49a0-9028-ae333c02146e",
+			"id": "e9c8307c-f29b-4f50-94fc-3de2554a4650",
 			"key": "adUpdate",
 			"value": "80"
 		},
 		{
-			"id": "af9f70e8-12ab-4f2b-bc56-a44000b48fe8",
+			"id": "9a1a1110-8a84-4202-b839-b78a80e85604",
 			"key": "anderungAdd",
 			"value": "1"
 		},
 		{
-			"id": "c1daf3b0-3504-45ca-9717-4449aefd13f1",
+			"id": "f8700886-2140-4f2c-9308-7db9cb5e68db",
 			"key": "anderungUpdate",
 			"value": "1"
 		},
 		{
-			"id": "4e079951-de12-4e88-8ae0-7e467077d2e1",
+			"id": "82042f78-f94e-470c-9e44-395f46910cda",
 			"key": "antriebAdd",
 			"value": "DAMPF"
 		},
 		{
-			"id": "ed9232ea-34f4-4f27-a58f-ff04e45ec07f",
+			"id": "cb79ae83-09f9-44d9-90a5-26a00334d10a",
 			"key": "antriebUpdate",
 			"value": "ELEKTRO"
 		},
 		{
-			"id": "bcad1d4f-2ccd-47d3-85fd-f361136b967a",
+			"id": "c5fbd455-a9d1-4a09-8465-f9037fe0a770",
 			"key": "artikelAdd",
 			"value": "00001"
 		},
 		{
-			"id": "eb4f0b3d-e5d5-4070-87a4-e2aae819abca",
+			"id": "ff7d658b-ebe1-4cbb-aadd-ef3ce03d0164",
 			"key": "artikelUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "54071ca8-4f6c-4486-ae56-1ad1d47ba3f3",
+			"id": "00367651-f203-4659-ac40-141b8e9f5ac8",
 			"key": "aufbauAdd",
 			"value": "LK"
 		},
 		{
-			"id": "5450cea7-aa0b-446d-9d8e-699ab8c0e8d3",
+			"id": "886b2dc9-b1ac-47d6-aae4-2492f7bdb11a",
 			"key": "aufbauUpdate",
 			"value": "LK"
 		},
 		{
-			"id": "ca189017-f546-4109-a924-95b97f3ceb1a",
+			"id": "5a334afa-87dd-46f5-b123-3d5aa0007318",
 			"key": "bestellNrAdd",
 			"value": "3000"
 		},
 		{
-			"id": "605b4e32-8c83-4164-b250-be4a4b68973b",
+			"id": "6bbc9032-715b-4288-9142-9b7531ad77d8",
 			"key": "bestellNrUpdate",
 			"value": "3003"
 		},
 		{
-			"id": "002ddaff-e8bc-42b4-9e0a-06ab0e7c5c67",
+			"id": "5e1e2cef-5b8b-4b1f-a46f-1667064bb490",
 			"key": "bahnverwaltungAdd",
 			"value": "DB"
 		},
 		{
-			"id": "17e6fc83-5b09-4c26-94d5-1c1dc96e7475",
+			"id": "6cc54a1d-470c-46a1-82fe-b167689e9a74",
 			"key": "bahnverwaltungUpdate",
 			"value": "DBAG"
 		},
 		{
-			"id": "6a4f8b18-fea3-4fbd-8cd6-8c359d26d34e",
+			"id": "b650293e-d2a7-4184-92fd-0376db60776d",
 			"key": "cvAdd",
 			"value": "8"
 		},
 		{
-			"id": "7cbbe50e-585f-40f6-8ad6-730780ee6f46",
+			"id": "5585183e-d14c-4272-bc38-4d51f0f94526",
 			"key": "cvUpdate",
 			"value": "120"
 		},
 		{
-			"id": "592a58bd-637a-4172-8194-b6eb0337774f",
+			"id": "d02fcdb4-1b77-4aff-a0e4-f220292da73f",
 			"key": "cvMaxAdd",
 			"value": "63"
 		},
 		{
-			"id": "afc462e9-7ed1-484a-8934-7a427edf7fbe",
+			"id": "7f99a404-c104-4dba-918e-063abb124f85",
 			"key": "cvMaxUpdate",
 			"value": "80"
 		},
 		{
-			"id": "ba3824df-1069-4c1d-8c4d-bd338b2b4b6a",
+			"id": "1625e6ed-a487-46cd-8c2c-be20d4643068",
 			"key": "cvMinAdd",
 			"value": "0"
 		},
 		{
-			"id": "e6f0d63e-e58c-4a8b-b29d-0296112204a6",
+			"id": "092618b0-5de4-436a-86b9-d78486c8a7d4",
 			"key": "cvMinUpdate",
 			"value": "1"
 		},
 		{
-			"id": "db6eb5be-c596-4d04-b5be-90a55632da0f",
+			"id": "56c8fc2b-4c54-4d05-bd2f-bfcfc26e32e6",
 			"key": "cvValueAdd",
 			"value": "30"
 		},
 		{
-			"id": "8a44ed0b-8ccd-4a10-8fb7-deacb6686719",
+			"id": "012b0b8d-a27d-45ca-9f6d-dd72d495a684",
 			"key": "cvValueUpdate",
 			"value": "50"
 		},
 		{
-			"id": "51848cc3-7def-46b9-8fff-ba6e999fb470",
+			"id": "8e6cd35c-0865-43fa-8bb4-5512de405508",
 			"key": "decoderAdd",
 			"value": "00001"
 		},
 		{
-			"id": "0a972ab2-e67b-4a3c-af92-75a9668fe363",
+			"id": "854094e0-c793-4643-bce4-49facf771418",
 			"key": "decoderUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "bbbbb344-3c34-4b8f-98b6-8019ccd23d72",
+			"id": "81a57318-f109-4770-99a8-a41d965c24f8",
 			"key": "decoderAdd",
 			"value": "00001"
 		},
 		{
-			"id": "15aa1e18-2939-4473-80bb-27b1ac5e2521",
+			"id": "dc4942a3-9e3e-46e9-bd7c-20f8456be0e5",
 			"key": "decoderUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "342b5909-5492-4b02-b518-ced6e696e2db",
+			"id": "740cfeaa-ce51-47ee-aa49-39cbaa061cf6",
 			"key": "decoderHerstellerAdd",
 			"value": "ESU"
 		},
 		{
-			"id": "b0dbcc61-387b-4fef-8b82-38c4c753320b",
+			"id": "e80c7ee9-38a7-4d76-adfc-a49ae973d3f7",
 			"key": "decoderHerstellerUpdate",
 			"value": "ESU"
 		},
 		{
-			"id": "7b82f642-f228-47ba-9953-2bbf5c3c87bc",
+			"id": "52bc2f16-6520-4ea5-9603-45c884f35ba4",
 			"key": "decoderBestellNrAdd",
 			"value": "62400"
 		},
 		{
-			"id": "97949919-8848-4e0e-b9b7-00641d02409b",
+			"id": "9695f36b-030a-41a6-a542-41c4379af9b5",
 			"key": "decoderBestellNrUpdate",
 			"value": "62499"
 		},
 		{
-			"id": "7b44ccd6-8723-419c-9877-1783c9c33fe5",
+			"id": "1cd55543-057d-483d-94a6-a82901ede11d",
 			"key": "decoderBezeichnungAdd",
 			"value": "LokSound M4"
 		},
 		{
-			"id": "f95f6246-a237-4c81-a873-e087c8da50c0",
+			"id": "92a7b094-f82e-40e9-a5d6-cc0a6c3a325a",
 			"key": "epochAdd",
 			"value": "IV"
 		},
 		{
-			"id": "ca00e858-4aeb-468d-9c47-434000830974",
+			"id": "d9e13a30-b48e-451e-b4d0-df2d7c71373e",
 			"key": "epochUpdate",
 			"value": "IV"
 		},
 		{
-			"id": "3718bc66-6b78-42c0-aaec-822049e8403c",
+			"id": "85e0efb4-56cf-438f-8353-e4c861415a9a",
 			"key": "fahrstufeAdd",
 			"value": "27"
 		},
 		{
-			"id": "a28fb9f7-370b-442d-9dfb-0afdb2e9070e",
+			"id": "3f7faab6-3178-4e25-9ce2-edc0ae923706",
 			"key": "fahrstufeUpdate",
 			"value": "128"
 		},
 		{
-			"id": "0a933290-056d-4acc-9131-72e036dcce25",
+			"id": "617276b6-85b2-4d0d-961a-c365ac4a7ced",
 			"key": "fnFuntionAdd",
 			"value": "F0"
 		},
 		{
-			"id": "fec54101-46eb-4c2e-9133-eee4902e7af6",
+			"id": "94389140-3560-4924-9dfc-6e52bf37dc7b",
 			"key": "fnFuntionUpdate",
 			"value": "F0"
 		},
 		{
-			"id": "47acd624-3390-46b7-a115-13c0407c01d2",
+			"id": "5553d3b8-b85f-4223-b33b-6c8a2771eafc",
 			"key": "fnReiheAdd",
 			"value": "1"
 		},
 		{
-			"id": "9ef4dab9-dd02-4214-bc4f-5c30925a0dfa",
+			"id": "ef93c61a-156a-45f9-9c08-7e7fbbf4b295",
 			"key": "fnReiheUpdate",
 			"value": "1"
 		},
 		{
-			"id": "ce1cbcc6-92ac-4085-b808-54b6e9f5297c",
+			"id": "af17035b-2b29-4d34-a7b4-79f325735fdc",
 			"key": "gattungAdd",
 			"value": "BR89.0"
 		},
 		{
-			"id": "ea8e0de7-98a8-4b1f-9313-edf77c67045f",
+			"id": "47446a7e-2b89-4c3b-b758-3b8ed1a9dd2c",
 			"key": "gattungUpdate",
 			"value": "BR89.0"
 		},
 		{
-			"id": "6f4084bf-3b92-41fb-990d-998c807bcce3",
+			"id": "aa6166e3-2fe6-4fb8-9e4d-b95315b9911f",
 			"key": "herstellerAdd",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "77bf648c-6ea9-47d3-97be-803d976b05f5",
+			"id": "a7353224-ddfc-49ad-8ebd-3d02a827b7ef",
 			"key": "herstellerUpdate",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "fe3f14aa-0168-45ad-8c4e-c896e4173c95",
+			"id": "ecbfefe9-04c8-42c0-b25e-fc93124ed866",
 			"key": "iMaxAdd",
 			"value": "1.5"
 		},
 		{
-			"id": "2f9f4ca6-9783-41d7-b9ab-76a6a15eb871",
+			"id": "512be19e-524a-43ce-80e6-42ce4f6b37f2",
 			"key": "iMaxUpdate",
 			"value": "2.0"
 		},
 		{
-			"id": "395553b3-6f10-487a-807a-dd20d3c69773",
+			"id": "ff4cc8ee-7d9e-4b9a-af2f-55e583d478e4",
 			"key": "kategorieAdd",
 			"value": "LOKOMOTIV"
 		},
 		{
-			"id": "7611e4d5-155f-4ee1-82fd-48e170ac1157",
+			"id": "fc6623d6-04ce-4c4e-95ae-9f5598fa0aaa",
 			"key": "kategorieUpdate",
 			"value": "AUSGESTALTUNG"
 		},
 		{
-			"id": "ca69dd46-4389-4dca-90d3-de201e921722",
+			"id": "d72c2f07-01b3-43d3-b42e-47bde79e7679",
 			"key": "kupplungAdd",
 			"value": "RELEX"
 		},
 		{
-			"id": "e2d4a5b7-ee67-4bd8-b722-538c4c4e32f6",
+			"id": "91efa2e0-7a47-4cf0-873b-49c8d985c8f9",
 			"key": "kupplungUpdate",
 			"value": "RELEX"
 		},
 		{
-			"id": "c5e03f46-b610-4c66-8a9f-efad2ae1526f",
+			"id": "558e3597-79d6-4da3-92a8-87355bc53322",
 			"key": "konfigurationAdd",
 			"value": "CV"
 		},
 		{
-			"id": "00b9dc18-cdcd-4515-9744-9e08ae92a511",
+			"id": "31b7f9fe-8d2d-41f2-9368-da1f8cb99d59",
 			"key": "konfigurationUpdate",
 			"value": "STECKER"
 		},
 		{
-			"id": "2256b129-ce95-48dc-aeef-f27adcc1c8cd",
+			"id": "ba9d559a-13f7-49cf-850f-0309f7c399b6",
 			"key": "leistungsubertragungAdd",
 			"value": "MECHANISH"
 		},
 		{
-			"id": "7ef49cc8-b627-49f8-9d73-5c0c38d83203",
+			"id": "182bd0e6-6c28-4037-bfba-c4cdbd1c422c",
 			"key": "leistungsubertragungUpdate",
 			"value": "ELEKTRISH"
 		},
 		{
-			"id": "f5460ca3-ce00-4020-8d00-0f2aeeed3eaf",
+			"id": "661dac37-b04f-4540-a8ac-a6fb6ed4a545",
 			"key": "lichtAdd",
 			"value": "L1V"
 		},
 		{
-			"id": "68274f73-e62a-4ba8-bc84-70143bedab2f",
+			"id": "aa446e35-549d-47ea-bf52-b4ff384fa7de",
 			"key": "lichtUpdate",
 			"value": "L1V"
 		},
 		{
-			"id": "c6dc4174-3da8-4391-b812-13ee1999ea42",
+			"id": "831f80ed-826d-45da-958a-8ac4fff3f19c",
 			"key": "massstabAdd",
 			"value": "H0"
 		},
 		{
-			"id": "4342221a-e133-43f0-8fa2-44dd6237338a",
+			"id": "f2faeb9b-6907-4f11-a940-8396a4b90234",
 			"key": "massstabUpdate",
 			"value": "H0"
 		},
 		{
-			"id": "71d0eaf8-9cfe-4eac-ae6f-a1b8367fd3e4",
+			"id": "83a3fd60-8f6b-4932-9585-5a0be526d362",
 			"key": "motorTypAdd",
 			"value": "CSINUS"
 		},
 		{
-			"id": "70b8e264-5043-40cd-ba1e-28df789c48c1",
+			"id": "5cfbddd2-4089-496b-b7b0-ff5dcbc1bc4b",
 			"key": "motorTypUpdate",
 			"value": "CSINUS"
 		},
 		{
-			"id": "225b07f1-bdb8-40b2-a68f-f3b252362ed2",
+			"id": "8776ea1c-be22-4411-bbf2-ac54b020599c",
 			"key": "protokollAdd",
 			"value": "MFX"
 		},
 		{
-			"id": "173c24cb-dde3-49d2-aed4-1c897333071f",
+			"id": "21a68975-cdf6-470f-8612-4c4ce2f6b76e",
 			"key": "protokollUpdate",
 			"value": "DELTA"
 		},
 		{
-			"id": "0792f6ac-ae2e-49f4-af2d-4062d47f2c55",
+			"id": "bcb9e751-734e-4078-b265-789e27b55206",
 			"key": "sondermodellAdd",
 			"value": "MM"
 		},
 		{
-			"id": "149cd77c-6bf7-44c8-bc48-ff5caa0ffe37",
+			"id": "7e3b94ff-cecf-4880-8d60-1b22172a5b18",
 			"key": "sondermodellUpdate",
 			"value": "MM"
 		},
 		{
-			"id": "172fdd20-8728-4a5b-b3cc-5ff773e55bf5",
+			"id": "95d16232-4e9e-4d4b-8406-91d60df0e63c",
 			"key": "spurweiteAdd",
 			"value": "H0"
 		},
 		{
-			"id": "9dd62620-6e8c-47c9-90b3-35868c034ec9",
+			"id": "21a80c78-26fd-4c32-9e8c-139becf8148a",
 			"key": "spurweiteUpdate",
 			"value": "H0"
 		},
 		{
-			"id": "b11afeb7-e14e-4a6f-9bb5-35118703a7b9",
+			"id": "06ac31be-f853-426e-bc6a-e16efeb82eac",
 			"key": "steckerAdd",
 			"value": "NEM651"
 		},
 		{
-			"id": "09b57162-77db-460e-a2ad-469db0efe7c6",
+			"id": "f86c7596-46dc-4d2d-8e2c-1d9115811ec3",
 			"key": "steckerUpdate",
 			"value": "NEM652"
 		},
 		{
-			"id": "f095c5dd-f523-4803-9c05-68ec3c3f938f",
+			"id": "c4fa81b4-4ecf-4e6b-98d5-96fa6d7219ac",
 			"key": "steuerungAdd",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "134b4342-094e-4ce5-8ddf-399af1746769",
+			"id": "0900a2a0-01bc-4b78-8dd7-c7ddb17f68be",
 			"key": "steuerungUpdate",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "ed574cb2-da36-448c-949c-7232bbd1f64e",
+			"id": "99f36b0a-2c32-4d6a-98ac-09353667429f",
 			"key": "teilHerstellerAdd",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "911e6721-2499-44a5-9836-f929f1ff1440",
+			"id": "097b2a95-f67d-4691-9452-d64cf62722e6",
 			"key": "teilBestellNrAdd",
 			"value": "600300"
 		},
 		{
-			"id": "dbd9dd16-dc96-4f79-89fc-8db81d7c3ee8",
+			"id": "35e8d894-710c-4e20-8671-16f2e662d3cb",
 			"key": "teilKategorieAdd",
 			"value": "ERSATZTEIL"
 		},
 		{
-			"id": "130c32e9-f288-4cfd-8e44-e7a726c4ef8a",
+			"id": "1303f2a7-1eea-4d7e-9391-808c42db1c3e",
 			"key": "teilUnterKategorieAdd",
 			"value": "BURSTEN"
 		},
 		{
-			"id": "803a0095-05d5-4fcd-9a8f-7b48d69db595",
+			"id": "40f35c05-3e39-4b8c-841c-5000b629804c",
 			"key": "unterKategorieAdd",
 			"value": "DAMPF"
 		},
 		{
-			"id": "fed71b40-0025-4106-8243-278359862384",
+			"id": "e257fded-1a0f-4057-8b5a-f857f38ef9d3",
 			"key": "unterKategorieUpdate",
 			"value": "HECKEN"
 		},
 		{
-			"id": "926f0f9f-a513-4c36-840e-a238dc40ed60",
+			"id": "4d69c749-a02a-4fb1-a9ea-fc9cc77575b7",
 			"key": "teilBezeichnungAdd",
 			"value": "Bürsten"
 		},
 		{
-			"id": "e47f02fe-b04f-4b8b-a72d-cd519b8f4601",
+			"id": "9ecf30cf-ea52-43d6-89e6-8af0915ef0c4",
 			"key": "vorbildAdd",
 			"value": "HECKEN"
 		},
 		{
-			"id": "bb103f68-544c-4146-9225-fda4a559c04e",
+			"id": "7086d92e-b3c5-4392-b834-db3f0991ea76",
 			"key": "vorbildUpdate",
 			"value": "HECKEN"
 		},
 		{
-			"id": "01d629c5-68c5-4327-a3d7-6b87e078f091",
+			"id": "98722a36-a511-4db5-b057-f68c172089d4",
 			"key": "zugAdd",
 			"value": "BAVARIA"
 		},
 		{
-			"id": "a8f16e77-5abd-4337-a93c-dc80ae3ce463",
+			"id": "c79cc967-5c03-4957-bc57-6d17d35d695b",
 			"key": "zugUpdate",
 			"value": "BAVARIA"
 		},
 		{
-			"id": "e887a9aa-862b-4c2b-a304-a58141b4f33f",
+			"id": "2353f89a-0789-4424-9597-5390085e7a8a",
 			"key": "zugTypAdd",
 			"value": "TEE"
 		},
 		{
-			"id": "eaaac2e8-49a9-49de-9016-c6e682815184",
+			"id": "0ba75454-9bc2-4caa-a9ba-931e6ca4bbfe",
 			"key": "zugTypUpdate",
 			"value": "TEE"
 		},
 		{
-			"id": "5450c59d-2ebc-43ca-bcab-0633f5d9052f",
+			"id": "d5e7ee54-5db2-42f4-aecb-bd2197893e6a",
 			"key": "imageFile",
 			"value": "3000.jpg"
 		},
 		{
-			"id": "d261eeb9-d256-42ea-9858-fc6c32fd79c0",
+			"id": "9efd2d47-97ea-42e3-acd5-a26f623aaee1",
 			"key": "anleitungFile",
 			"value": "3000_betrieb.pdf"
 		},
 		{
-			"id": "24a95a99-56a5-48cf-bc11-369fce91ba30",
+			"id": "7c9352a1-6de6-4ebd-a431-f1a0195bf043",
 			"key": "explosionszeichnungFile",
 			"value": "3000_explo.pdf"
 		},
 		{
-			"id": "f70d97be-c739-41db-af96-c86ea0ddd265",
+			"id": "f24110b4-d435-4049-a62f-3011392bc87a",
 			"key": "xlFile",
 			"value": "3000.jpg"
 		},
 		{
-			"id": "5b28c440-ede7-4ec7-a545-eb10c8c655f5",
+			"id": "ff2158c0-9db8-4c39-a94d-9b54bf961c59",
 			"key": "landAdd",
 			"value": "DE"
 		},
 		{
-			"id": "19d71cb8-e6e0-4bed-9dc8-27176dde3b36",
+			"id": "d55d8d75-6315-4808-954f-4f587b3341dc",
 			"key": "landUpdate",
 			"value": "NL"
 		},
 		{
-			"id": "37946fe7-e1cc-4ea7-924e-66d39698bfd9",
+			"id": "45a9c651-94c1-4a0b-b80e-8abd551b6a15",
 			"key": "telefonAdd",
 			"value": "+497161608222"
 		},
 		{
-			"id": "77632210-db46-4c37-8c27-8a87d0ed773d",
+			"id": "ccf9ff54-a0b1-4633-b17b-eb9a131af644",
 			"key": "telefonUpdate",
 			"value": "030 2341347"
 		},
 		{
-			"id": "a52ecbb8-5373-47d4-9146-321f3500da8f",
+			"id": "dee940af-c8cc-4e8f-ba4e-f37bd51e7588",
 			"key": "abbildungCsv",
 			"value": "abbildungCsv.csv"
 		},
 		{
-			"id": "7872dee1-6d94-43fc-9025-8b3e781d4aab",
+			"id": "111620fb-deaf-4f5e-bde6-8dcaa97405cb",
 			"key": "anderungCsv",
 			"value": "anderungCsv.csv"
 		},
 		{
-			"id": "831873a5-542a-47ea-9f1d-e4c4956e99a3",
+			"id": "f6d36813-9b1b-4c04-a608-1ef740abd7cc",
 			"key": "artikelCsv",
 			"value": "artikelCsv.csv"
 		},
 		{
-			"id": "722f4144-b069-4f56-910c-1c75ff7e6167",
+			"id": "6882dbdd-a63b-4a05-a931-b9642a36d5a8",
 			"key": "bahnverwaltungCsv",
 			"value": "bahnverwaltungCsv.csv"
 		},
 		{
-			"id": "ba917e80-a7c7-4951-bc83-dcc52f7f38f7",
+			"id": "88515609-4625-4461-a3a6-4d13c09ec0ef",
 			"key": "consistCsv",
 			"value": "consistCsv.csv"
 		},
 		{
-			"id": "b4267669-c4d7-4f21-8770-d9e7ca24ccd1",
+			"id": "44847eeb-54f1-46ef-a5dc-6a1e3e1a2304",
 			"key": "decoderCsv",
 			"value": "decoderCsv.csv"
 		},
 		{
-			"id": "89aff981-a590-4116-972c-3000ade6ba6c",
+			"id": "0ba81723-46ed-456c-af7d-caad5e14705d",
 			"key": "decoderAdressCsv",
 			"value": "decoderAdressCsv.csv"
 		},
 		{
-			"id": "9e9ca907-4b26-48ad-bf07-82eefd472942",
+			"id": "ca45204c-0538-4d6e-b529-0dbc313d0bcc",
 			"key": "decoderCvCsv",
 			"value": "decoderCvCsv.csv"
 		},
 		{
-			"id": "7001b320-b8ca-44eb-8068-45b7cb4d2f4c",
+			"id": "0479d907-ccd8-4c29-bcac-ab5afbb82a04",
 			"key": "decoderFunktionCsv",
 			"value": "decoderFunktionCsv.csv"
 		},
 		{
-			"id": "ac802374-f500-4953-bcb6-9a062780f503",
+			"id": "ab354747-ea51-4f39-9b39-4a94bdc198ec",
 			"key": "decoderTypCsv",
 			"value": "decoderTypCsv.csv"
 		},
 		{
-			"id": "ef8eb52c-fe83-4efa-8cda-aeb7a1cd1fe9",
+			"id": "bc1e20a5-d01f-4189-92ef-0353b9b944c5",
 			"key": "decoderTypAdressCsv",
 			"value": "decoderTypAdressCsv.csv"
 		},
 		{
-			"id": "8efb2be5-ecac-42a9-901c-b12c0c0dcd16",
+			"id": "258a2cff-db2d-471c-afdd-4f15d17f36f0",
 			"key": "decoderTypCvCsv",
 			"value": "decoderTypCvCsv.csv"
 		},
 		{
-			"id": "bdebe508-502c-417a-bd55-1f17995fad87",
+			"id": "c8efb2eb-cd46-41cd-b96d-d5d7df80f062",
 			"key": "decoderTypFunktionCsv",
 			"value": "decoderTypFunktionCsv.csv"
 		},
 		{
-			"id": "6521b0d3-015c-4a02-a259-3d321d86a585",
+			"id": "1a9b360d-7599-4fce-adb7-7250c71b4a31",
 			"key": "herstellerCsv",
 			"value": "herstellerCsv.csv"
 		},
 		{
-			"id": "73efb1ec-5cd6-4618-96ae-48198c99db45",
+			"id": "df7fd384-c35a-4791-9c54-a7d745b042a1",
 			"key": "namedCsv",
 			"value": "namedCsv.csv"
 		},
 		{
-			"id": "2db032cd-6f7a-407a-8fb9-ac5f32298036",
+			"id": "0b2f7715-100d-4b4f-bb96-15e3342d45bb",
 			"key": "produktCsv",
 			"value": "produktCsv.csv"
 		},
 		{
-			"id": "3a9a2037-455c-48ba-a445-ebe31140689d",
+			"id": "aa9bdc82-4f4c-43f2-9101-dc5359cc6845",
 			"key": "teilCsv",
 			"value": "teilCsv.csv"
 		},
 		{
-			"id": "25f3d215-be31-4d07-8a13-3c1e2505d274",
+			"id": "f8089333-37a8-4344-ad2a-d54af315b8b5",
 			"key": "unterKategorieCsv",
 			"value": "unterKategorieCsv.csv"
 		},
 		{
-			"id": "b531d797-d116-4c57-9d23-ce8dadef9c91",
+			"id": "f188bd86-2bbc-4fb4-bb44-81450674c2ad",
 			"key": "vorbildCsv",
 			"value": "vorbildCsv.csv"
 		},
 		{
-			"id": "72977687-a123-4927-bf27-c65e2089cd4d",
+			"id": "cdec51b6-e8fb-46dc-849c-b562849b6c1e",
 			"key": "zugCsv",
 			"value": "zugCsv.csv"
 		}
