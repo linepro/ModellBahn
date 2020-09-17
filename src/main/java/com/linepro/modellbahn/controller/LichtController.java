@@ -45,11 +45,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class LichtController extends NamedItemController<LichtModel> {
 
     private final LichtService service;
-    
+
     @Autowired
     public LichtController(LichtService service) {
         super(service);
-        
+
         this.service = service;
     }
 
@@ -57,7 +57,7 @@ public class LichtController extends NamedItemController<LichtModel> {
     public static LichtModel create() {
         return new LichtModel();
     }
-    
+
     @Override
     @GetMapping(path = ApiPaths.GET_LICHT, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an Licht by name", description = "Finds a light configuration", operationId = "get", tags = { ApiNames.LICHT })
@@ -128,7 +128,6 @@ public class LichtController extends NamedItemController<LichtModel> {
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Licht not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> delete(@PathVariable(ApiNames.NAMEN) String name) {
@@ -158,7 +157,6 @@ public class LichtController extends NamedItemController<LichtModel> {
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Licht not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
         })
     public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiNames.NAMEN) String name) {

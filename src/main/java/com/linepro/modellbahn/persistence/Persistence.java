@@ -11,11 +11,16 @@ import com.linepro.modellbahn.persistence.util.AssetIdGenerator;
 import com.linepro.modellbahn.repository.base.RepositoryFactoryBean;
 import com.linepro.modellbahn.validation.UniqueValidator;
 
-@EnableJpaRepositories(basePackages = "com.linepro.modellbahn.repository", repositoryImplementationPostfix = "Impl", repositoryFactoryBeanClass = RepositoryFactoryBean.class) 
-@EntityScan( basePackages = {"com.linepro.modellbahn.entity"} )
+@EnableJpaRepositories(
+    basePackages = { "com.linepro.modellbahn.repository", "com.linepro.modellbahn.security.user" },
+    repositoryImplementationPostfix = "Impl", repositoryFactoryBeanClass = RepositoryFactoryBean.class)
+@EntityScan(basePackages = {
+    "com.linepro.modellbahn.entity", "com.linepro.modellbahn.security.user"
+})
 @Configuration(PREFIX + "Persistence")
 @Import({
     AssetIdGenerator.class,
-    UniqueValidator.class})
+    UniqueValidator.class
+})
 public class Persistence {
 }

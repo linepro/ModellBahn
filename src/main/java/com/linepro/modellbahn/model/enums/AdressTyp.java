@@ -16,20 +16,20 @@ import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
  */
 @JsonRootName(value = ApiNames.ADRESS_TYP)
 @JsonIgnoreProperties(ignoreUnknown=true)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG })
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.LINKS })
 @Schema(name = ApiNames.ADRESS_TYP, description = "Adress types")
 public enum AdressTyp implements DescribedEnum {
 
     DCC("dcc"),
-    
+
     DCC_SHORT("kurz"),
-    
+
     DELTA("delta"),
-    
+
     MOTOROLA("motorola"),
-    
+
     DIGITAL("digital"),
-    
+
     MAGNETARTIKEL("magnetartikel");
 
     private final String description;

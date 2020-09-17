@@ -65,7 +65,7 @@ public class VorbildRepositoryTest {
     @DatabaseSetup("vorbilder.xml")
     public void testFindByName() throws Exception {
         Optional<Vorbild> found = vorbildRepository.findByName("");
-        
+
         assertTrue(found.isPresent());
 
         Vorbild vorbild = found.get();

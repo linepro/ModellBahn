@@ -52,7 +52,7 @@ public class AntriebController extends NamedItemController<AntriebModel> {
     public static AntriebModel create() {
         return new AntriebModel();
     }
-    
+
     @Override
     @GetMapping(path = ApiPaths.GET_ANTRIEB, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an Antrieb by name", description = "Finds an drive method", operationId = "get", tags = { ApiNames.ANTRIEB })
@@ -122,7 +122,6 @@ public class AntriebController extends NamedItemController<AntriebModel> {
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> delete(@PathVariable(ApiNames.NAMEN) String name) {

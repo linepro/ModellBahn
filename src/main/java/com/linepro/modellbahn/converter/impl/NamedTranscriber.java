@@ -12,7 +12,7 @@ public class NamedTranscriber<S extends Named, D extends Named> extends SoftDele
             destination.setName(source.getName());
             destination.setBezeichnung(source.getBezeichnung());
         }
-        
+
         return super.apply(source, destination);
     }
 }

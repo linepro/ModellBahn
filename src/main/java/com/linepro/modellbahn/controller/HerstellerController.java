@@ -52,7 +52,7 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
     public static HerstellerModel create() {
         return new HerstellerModel();
     }
-    
+
     @Override
     @GetMapping(path = ApiPaths.GET_HERSTELLER, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an Hersteller by name", description = "Finds a manufacturer", operationId = "get", tags = { ApiNames.HERSTELLER })
@@ -123,7 +123,6 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> delete(@PathVariable(ApiNames.NAMEN) String name) {

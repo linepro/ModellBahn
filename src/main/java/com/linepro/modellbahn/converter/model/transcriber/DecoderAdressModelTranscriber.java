@@ -35,7 +35,7 @@ public class DecoderAdressModelTranscriber implements Transcriber<DecoderAdressM
             destination.setAdress(source.getAdress());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
-        
+
         return destination;
     }
 }

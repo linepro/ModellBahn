@@ -22,7 +22,7 @@ import com.linepro.modellbahn.entity.NamedItem;
 public class ItemRepositoryImpl<E extends NamedItem> extends SimpleJpaRepository<E, Long> implements ItemRepository<E> {
 
     private final Class<E> persistentClass;
-    
+
     private final EntityManager entityManager;
 
     public ItemRepositoryImpl(Class<E> persistentClass, EntityManager entityManager) {
@@ -75,7 +75,7 @@ public class ItemRepositoryImpl<E extends NamedItem> extends SimpleJpaRepository
 
         return typedQuery;
     }
-    
+
     protected Long getTotalRows(CriteriaBuilder criteriaBuilder, CriteriaQuery<E> criteriaQuery, Predicate[] where) {
         CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
         countQuery.select(criteriaBuilder.count(countQuery.from(persistentClass)));

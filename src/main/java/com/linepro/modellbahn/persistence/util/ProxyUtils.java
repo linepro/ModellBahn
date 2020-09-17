@@ -17,14 +17,14 @@ public class ProxyUtils {
             if (source instanceof PersistentSet) {
                 return ((PersistentSet) source).wasInitialized();
             }
-            
+
             return !CollectionUtils.isEmpty((Collection<?>) source);
         }
-        
+
         if (source instanceof HibernateProxy) {
             return !((HibernateProxy) source).getHibernateLazyInitializer().isUninitialized();
         }
-        
+
         return source != null;
     }
 }

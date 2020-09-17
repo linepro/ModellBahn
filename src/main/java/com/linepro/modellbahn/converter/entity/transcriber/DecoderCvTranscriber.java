@@ -22,7 +22,7 @@ public class DecoderCvTranscriber implements Transcriber<DecoderCv, DecoderCvMod
             destination.setWert(source.getWert());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
-        
+
         return destination;
     }
 }

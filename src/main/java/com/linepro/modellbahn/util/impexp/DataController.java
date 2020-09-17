@@ -30,7 +30,7 @@ public class DataController {
     private static final String FILE_FIELD = "data";
     @Autowired
     private final DataService service;
-   
+
     @GetMapping(path = ApiPaths.EXPORT, produces = DataService.TEXT_CSV)
     @Operation(summary = "Export data as CSV", description = "Finds an UIC axle configuration", operationId = "get", tags = { ApiNames.DATA })
     @ApiResponses(value = {
@@ -58,7 +58,7 @@ public class DataController {
     })
     public ResponseEntity<?> importCSV(@PathVariable(ApiNames.DATA_TYPE) String type, @RequestParam(FILE_FIELD) MultipartFile multipart) {
         service.importCSV(type, multipart);
-        
+
         return ResponseEntity.ok().build();
     }
 

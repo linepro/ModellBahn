@@ -464,7 +464,7 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
         anderung.setDeleted(false);
         anderungen.add(anderung);
     }
-    
+
     public void removeAnderung(Anderung anderung) {
         anderungen.remove(anderung);
     }

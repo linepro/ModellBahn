@@ -11,10 +11,10 @@ import com.linepro.modellbahn.service.NamedItemService;
 public abstract class NamedItemServiceImpl<M extends NamedItemModel, E extends NamedItem> extends ItemServiceImpl<M, E> implements NamedItemService<M> {
 
     protected final NamedItemRepository<E> repository;
-    
+
     protected NamedItemServiceImpl(NamedItemRepository<E> repository, Mutator<M, E> modelMutator, Mutator<E, M> entityMutator) {
         super(repository, modelMutator, entityMutator);
-        
+
         this.repository = repository;
     }
 

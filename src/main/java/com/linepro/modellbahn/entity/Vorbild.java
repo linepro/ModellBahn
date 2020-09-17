@@ -158,7 +158,7 @@ public class Vorbild extends NamedWithAbbildungImpl {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Bahnverwaltung.class)
     @JoinColumn(name = DBNames.BAHNVERWALTUNG_ID, nullable = true, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.VORBILD + "_fk3"))
     private Bahnverwaltung bahnverwaltung;
-    
+
     /** The hersteller. */
     @Column(name = DBNames.HERSTELLER, length = 100)
     @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")

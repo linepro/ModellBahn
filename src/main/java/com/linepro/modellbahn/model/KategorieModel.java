@@ -46,11 +46,11 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.UNTER_KATEGORIEN, ApiNames.DELETED})
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.UNTER_KATEGORIEN, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.KATEGORIE, itemRelation = ApiNames.KATEGORIE)
 @Schema(name = ApiNames.KATEGORIE, description = "Category.")
 public class KategorieModel extends RepresentationModel<KategorieModel> implements NamedItemModel, Comparable<KategorieModel> {
-    
+
     private static final long serialVersionUID = -1609829141621577668L;
 
     @JsonProperty(ApiNames.NAMEN)
@@ -94,7 +94,7 @@ public class KategorieModel extends RepresentationModel<KategorieModel> implemen
         }
 
         KategorieModel other = (KategorieModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(name, other.name)
                 .isEquals();

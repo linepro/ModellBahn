@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.hateoas.RepresentationModel;
 
 public class ModelProcessorImpl<M extends RepresentationModel<M>> implements ModelProcessor<M> {
-    
+
     protected final List<LinkTemplate> templates;
 
     public ModelProcessorImpl(LinkTemplate...templates) {

@@ -15037,6 +15037,574 @@
 				}
 			],
 			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4589ed98-8f36-48e8-9ee5-762c977390db",
+								"exec": [
+									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/user\");\r",
+									"var register = pm.variables.replaceIn(\"{{api}}/register\");\r",
+									"var forgot = pm.variables.replaceIn(\"{{api}}/forgot\");\r",
+									"var jsonData = pm.response.json();\r",
+									"jsonData._embedded.user.forEach(function(u) { \r",
+									"    var self = root + \"/\" + u.name;\r",
+									"    pm.test(\"name\", () => pm.expect(u.name).to.exist);\r",
+									"    pm.test(\"eMail\", () => pm.expect(u.email).to.exist);\r",
+									"    pm.test(\"locale\", () => pm.expect(u.locale).to.exist);\r",
+									"    pm.test(\"enabled\", () => pm.expect(u.enabled).to.exist);\r",
+									"    pm.test(\"search\", () => pm.expect(u._links.self[0].href).to.eql(root));\r",
+									"    pm.test(\"self\", () => pm.expect(u._links.self[0].href).to.eql(self));\r",
+									"    pm.test(\"password\", () => pm.expect(u._links.self[0].href).to.eql(self + \"/password\"));\r",
+									"    pm.test(\"update\", () => pm.expect(u._links.self[0].href).to.eql(self));\r",
+									"    pm.test(\"delete\", () => pm.expect(u._links.self[0].href).to.eql(self));\r",
+									"    pm.test(\"register\", () => pm.expect(u._links.self[0].href).to.eql(register));\r",
+									"    pm.test(\"forgot\", () => pm.expect(u._links.self[0].href).to.eql(forgot));\r",
+									"});\r",
+									"pm.test(\"page.size\", () => pm.expect(jsonData.page.size).to.eql(jsonData.content.length));\r",
+									"pm.test(\"page.totalElements\", () => pm.expect(jsonData.page.totalElements).to.eql(jsonData.content.length));\r",
+									"pm.test(\"page.totalPages\", () => pm.expect(jsonData.page.totalPages).to.eql(1));\r",
+									"pm.test(\"page.number\", () => pm.expect(jsonData.page.number).to.eql(0));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/html, application/xhtml+xml, application/xml"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/user",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "df5494c8-642f-46bf-9bac-3a302eeedcbc",
+								"exec": [
+									"pm.environment.set(\"user\", pm.variables.replaceIn(\"{{$randomUserName}}\"));\r",
+									"pm.environment.set(\"eMail\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
+									"pm.environment.set(\"firstName\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));\r",
+									"pm.environment.set(\"lastName\", pm.variables.replaceIn(\"{{$randomLastName}}\"));\r",
+									"pm.environment.set(\"locale\", pm.variables.replaceIn(\"{{$randomLocale}}\"));\r",
+									"pm.environment.set(\"password\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "0c654f7a-1c48-4775-b7a2-786ff2100536",
+								"exec": [
+									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"var message = pm.response.json();\r",
+									"pm.test(\"timestamp\", () => pm.expect(message.timestamp).to.be.gt(0));\r",
+									"pm.test(\"status\", () => pm.expect(message.timestamp).to.eql(200));\r",
+									"pm.test(\"message\", () => pm.expect(message.timestamp).to.eql(pm.variables.response(\"Eine Bestätigungs-E-Mail wurde an {{eMail}} gesendet. Bitte klicken Sie auf den Link, um die Anmeldung abzuschließen.\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"{{user}}\",\r\n\t\"eMail\": \"{{eMail}}\",\r\n    \"firstName\": \"{{firstName}}\",\r\n\t\"lastName\": \"{{lastName}}\",\r\n    \"locale\": \"{{locale}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/register",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm Registration",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1411af35-3986-4f77-9b09-5e759aacecfc",
+								"exec": [
+									"pm.environment.set(\"zug\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
+									"pm.environment.set(\"zugTyp\", pm.variables.get(\"zugTypAdd\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "10008d91-b60d-4449-8955-b45bf5e1145c",
+								"exec": [
+									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"var jsonData = pm.response.json();\r",
+									"var zug = pm.variables.get(\"zug\");\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
+									"pm.test(\"name\", () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"zugTyp\", () => pm.expect(jsonData.zugTyp).to.eql(pm.variables.get(\"zugTyp\")));\r",
+									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
+									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
+									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
+									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.consist\", () => pm.expect(jsonData._links.consist[0].href).to.eql(self+\"/consist\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"{{user}}\",\r\n\t\"eMail\": \"{{eMail}}\",\r\n    \"firstName\": \"{{firstName}}\",\r\n\t\"lastName\": \"{{lastName}}\",\r\n    \"locale\": \"{{locale}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/confirm?token=x",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"confirm"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "x"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1dc546eb-ea42-4d36-98e9-cc8044a224c9",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "79d0637b-efa9-42a4-bf64-c1a6744a88ca",
+								"exec": [
+									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"var jsonData = pm.response.json();\r",
+									"var zug = pm.variables.get(\"zug\");\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
+									"pm.test(\"name\", () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"zugTyp\", () => pm.expect(jsonData.zugTyp).to.eql(pm.variables.get(\"zugTyp\")));\r",
+									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
+									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
+									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
+									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.consist\", () => pm.expect(jsonData._links.consist[0].href).to.eql(self+\"/consist\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"{{user}}\",\r\n\t\"eMail\": \"{{eMail}}\",\r\n    \"firstName\": \"{{firstName}}\",\r\n\t\"lastName\": \"{{lastName}}\",\r\n    \"locale\": \"{{locale}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/forgot?eMail=e@mail.com",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"forgot"
+							],
+							"query": [
+								{
+									"key": "eMail",
+									"value": "e@mail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "93df0903-63f4-466b-9738-f19f83de9776",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "32b031c7-965a-420f-a676-147cc33c9b1c",
+								"exec": [
+									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"var jsonData = pm.response.json();\r",
+									"var zug = pm.variables.get(\"zug\");\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
+									"pm.test(\"name\", () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"zugTyp\", () => pm.expect(jsonData.zugTyp).to.eql(pm.variables.get(\"zugTyp\")));\r",
+									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
+									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
+									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
+									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.consist\", () => pm.expect(jsonData._links.consist[0].href).to.eql(self+\"/consist\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"{{user}}\",\r\n\t\"eMail\": \"{{eMail}}\",\r\n    \"firstName\": \"{{firstName}}\",\r\n\t\"lastName\": \"{{lastName}}\",\r\n    \"locale\": \"{{locale}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/reset?token=x&password=pa$$w0rd",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"reset"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "x"
+								},
+								{
+									"key": "password",
+									"value": "pa$$w0rd"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "4453ab4a-f588-45c8-8d96-085c61df9830",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "8f6001e1-45a6-409d-9280-aa6054e0db41",
+								"exec": [
+									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"var jsonData = pm.response.json();\r",
+									"var zug = pm.variables.get(\"zug\");\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
+									"pm.test(\"name\", () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"zugTyp\", () => pm.expect(jsonData.zugTyp).to.eql(pm.variables.get(\"zugTyp\")));\r",
+									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
+									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
+									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
+									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.consist\", () => pm.expect(jsonData._links.consist[0].href).to.eql(self+\"/consist\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/user/{{user}}?password=pa$$w0rd",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"user",
+								"{{user}}"
+							],
+							"query": [
+								{
+									"key": "password",
+									"value": "pa$$w0rd"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "2b0b8fcf-9711-448a-b5ad-d1ddb6d110f8",
+								"exec": [
+									"pm.environment.set(\"zugTyp\", pm.variables.get(\"zugTypUpdate\"));\r",
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "82947ea8-df80-413a-9625-d8cab80141e9",
+								"exec": [
+									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"var jsonData = pm.response.json();\r",
+									"var zug = pm.variables.get(\"zug\");\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
+									"var consistUrl = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}/consist/{{cnPosition}}\");\r",
+									"pm.test(\"name\", () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"zugTyp\", () => pm.expect(jsonData.zugTyp).to.eql(pm.variables.get(\"zugTyp\")));\r",
+									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"consist[0].zug\", () => pm.expect(jsonData.consist[0].zug).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"consist[0].position\", () => pm.expect(jsonData.consist[0].position).to.eql(pm.variables.get(\"cnPosition\")));\r",
+									"pm.test(\"consist[0].artikelId\", () => pm.expect(jsonData.consist[0].artikelId).to.eql(pm.variables.get(\"cnArtikelId\")));\r",
+									"pm.test(\"consist[0].hersteller\", () => pm.expect(jsonData.consist[0].hersteller).to.eql(pm.variables.get(\"cnHersteller\")));\r",
+									"pm.test(\"consist[0].bestellNr\", () => pm.expect(jsonData.consist[0].bestellNr).to.eql(pm.variables.get(\"cnBestellNr\")));\r",
+									"pm.test(\"consist[0].bezeichnung\", () => pm.expect(jsonData.consist[0].bezeichnung).to.eql(pm.variables.get(\"cnBezeichnung\")));\r",
+									"pm.test(\"consist[0].lange\", () => pm.expect(jsonData.consist[0].lange).to.eql(pm.variables.get(\"cnLange\")));\r",
+									"pm.test(\"consist[0].bahnverwaltung\", () => pm.expect(jsonData.consist[0].bahnverwaltung).to.eql(pm.variables.get(\"cnBahnverwaltung\")));\r",
+									"pm.test(\"consist[0].gattung\", () => pm.expect(jsonData.consist[0].gattung).to.eql(pm.variables.get(\"cnGattung\")));\r",
+									"pm.test(\"consist[0].betreibsnummer\", () => pm.expect(jsonData.consist[0].betreibsnummer).to.eql(pm.variables.get(\"cnBetreibsnummer\")));\r",
+									"pm.test(\"consist[0].abbildung\", () => pm.expect(jsonData.consist[0].abbildung).to.eql(pm.variables.get(undefined)));\r",
+									"pm.test(\"consist[0].deleted\", () => pm.expect(jsonData.consist[0].deleted).to.be.false);\r",
+									"pm.test(\"consist[0]._links.parent\", () => pm.expect(jsonData.consist[0]._links.parent[0].href).to.eql(self));\r",
+									"pm.test(\"consist[0]._links.update\", () => pm.expect(jsonData.consist[0]._links.update[0].href).to.eql(consistUrl));\r",
+									"pm.test(\"consist[0]._links.delete\", () => pm.expect(jsonData.consist[0]._links.delete[0].href).to.eql(consistUrl));\r",
+									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
+									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
+									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
+									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/html, application/xhtml+xml, application/xml"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{user}}\",\n\t\"eMail\": \"{{eMail}}\",\n    \"firstName\": \"{{firstName}}\",\n\t\"lastName\": \"{{lastName}}\",\n    \"locale\": \"{{locale}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/user/{{user}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"user",
+								"{{user}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "942f3306-7d1c-448b-88d1-8d6b3edf6f98",
+								"exec": [
+									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
+									"var jsonData = pm.response.json();\r",
+									"jsonData.content.forEach(function(u) { \r",
+									"    pm.test(\"name\", () => pm.expect(u.name).to.exist);\r",
+									"    pm.test(\"email\", () => pm.expect(u.email).to.exist);\r",
+									"    pm.test(\"lastName\", () => pm.expect(u.lastName).to.exist);\r",
+									"    pm.test(\"locale\", () => pm.expect(u.locale).to.exist);\r",
+									"    pm.test(\"enabled\", () => pm.expect(u.enabled).to.exist);\r",
+									"});\r",
+									"pm.test(\"page.size\", () => pm.expect(jsonData.page.size).to.eql(jsonData.content.length));\r",
+									"pm.test(\"page.totalElements\", () => pm.expect(jsonData.page.totalElements).to.eql(jsonData.content.length));\r",
+									"pm.test(\"page.totalPages\", () => pm.expect(jsonData.page.totalPages).to.eql(1));\r",
+									"pm.test(\"page.number\", () => pm.expect(jsonData.page.number).to.eql(0));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/html, application/xhtml+xml, application/xml"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/user/{{user}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"user",
+								"{{user}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "81a3a7e4-3350-4817-8091-bed6264dc85b",
+								"exec": [
+									"pm.test(\"response\", () => pm.response.to.have.status(204));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"type": "text",
+								"value": "{{language}}"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/user/{{user}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"user",
+								"{{user}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"auth": {

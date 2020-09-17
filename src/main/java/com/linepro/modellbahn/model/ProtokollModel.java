@@ -39,7 +39,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED })
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.PROTOKOLL, itemRelation = ApiNames.PROTOKOLL)
 @Schema(name = ApiNames.PROTOKOLL, description = "Digital protocoll.")
 public class ProtokollModel extends RepresentationModel<ProtokollModel> implements NamedItemModel, Comparable<ProtokollModel> {
@@ -83,7 +83,7 @@ public class ProtokollModel extends RepresentationModel<ProtokollModel> implemen
         }
 
         ProtokollModel other = (ProtokollModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(name, other.name)
                 .isEquals();

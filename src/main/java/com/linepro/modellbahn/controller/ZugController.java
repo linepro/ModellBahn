@@ -130,7 +130,6 @@ public class ZugController extends NamedItemController<ZugModel> {
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> delete(@PathVariable(ApiNames.NAMEN) String name) {
@@ -140,13 +139,13 @@ public class ZugController extends NamedItemController<ZugModel> {
     @PostMapping(path = ApiPaths.ADD_CONSIST, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds a vehicle to a train", description = "", operationId = "add", tags = { ApiNames.ZUG })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugModel.class)) }),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> addConsist(@PathVariable(ApiNames.NAMEN) String zugStr, @RequestParam(ApiNames.ARTIKEL_ID) String artikelId) {
         return added(service.addConsist(zugStr, artikelId));
@@ -155,13 +154,13 @@ public class ZugController extends NamedItemController<ZugModel> {
     @PutMapping(path = ApiPaths.UPDATE_CONSIST, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates a vehicle in a train", description = "", operationId = "updates", tags = { ApiNames.ZUG })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugModel.class)) }),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> updateConsist(@PathVariable(ApiNames.NAMEN) String zugStr, @PathVariable(ApiNames.POSITION) Integer position, @RequestParam(ApiNames.ARTIKEL_ID) String artikelId) {
         return updated(service.updateConsist(zugStr, position, artikelId));
@@ -170,13 +169,12 @@ public class ZugController extends NamedItemController<ZugModel> {
     @DeleteMapping(path = ApiPaths.DELETE_CONSIST)
     @Operation(summary = "Removes a vehicle from a train", description = "", operationId = "delete", tags = { ApiNames.ZUG })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> deleteConsist(@PathVariable(ApiNames.NAMEN) String zugStr, @PathVariable(ApiNames.POSITION) Integer position) {
         return deleted(service.deleteConsist(zugStr, position));

@@ -35,7 +35,7 @@ public class DecoderCvModelTranscriber implements Transcriber<DecoderCvModel, De
             destination.setWert(source.getWert());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
-        
+
         return destination;
     }
 }

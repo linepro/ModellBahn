@@ -13,9 +13,9 @@ import lombok.Data;
 public class LinkTemplateImpl implements LinkTemplate {
 
     private final String rel;
-    
+
     private final String path;
-    
+
     private final FieldsExtractor extractor;
 
     private final Predicate<RepresentationModel<?>> test;

@@ -40,7 +40,7 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.TEIL_HERSTELLER, ApiNames.TEIL_BESTELL_NR, ApiNames.BEZEICHNUNG,
-    ApiNames.KATEGORIE, ApiNames.UNTER_KATEGORIE, ApiNames.ANZAHL, ApiNames.DELETED})
+    ApiNames.KATEGORIE, ApiNames.UNTER_KATEGORIE, ApiNames.ANZAHL, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.TEIL, itemRelation = ApiNames.TEIL)
 @Schema(name = ApiNames.TEIL, description = "Part of product (spares for rolling stock - contents for set &c).")
 public class ProduktTeilModel extends RepresentationModel<ProduktTeilModel> implements ItemModel, Comparable<ProduktTeilModel> {
@@ -114,7 +114,7 @@ public class ProduktTeilModel extends RepresentationModel<ProduktTeilModel> impl
         }
 
         ProduktTeilModel other = (ProduktTeilModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(hersteller, other.hersteller)
                 .append(bestellNr, other.bestellNr)

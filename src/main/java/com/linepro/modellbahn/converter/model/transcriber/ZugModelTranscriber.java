@@ -21,7 +21,7 @@ public class ZugModelTranscriber extends NamedModelTranscriber<ZugModel, Zug> {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setZugTyp(lookup.find(source.getZugTyp(), repository));
         }
-        
+
         return super.apply(source, destination);
     }
 

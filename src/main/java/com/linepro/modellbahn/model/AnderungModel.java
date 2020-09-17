@@ -42,11 +42,11 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.ARTIKEL_ID, ApiNames.ANDERUNG_ID, ApiNames.ANDERUNGSDATUM, ApiNames.ANDERUNGS_TYP, ApiNames.BEZEICHNUNG, ApiNames.STUCK, ApiNames.ANMERKUNG, ApiNames.DELETED})
+@JsonPropertyOrder({ ApiNames.ARTIKEL_ID, ApiNames.ANDERUNG_ID, ApiNames.ANDERUNGSDATUM, ApiNames.ANDERUNGS_TYP, ApiNames.BEZEICHNUNG, ApiNames.STUCK, ApiNames.ANMERKUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.ANDERUNG, itemRelation = ApiNames.ANDERUNG)
 @Schema(name = ApiNames.ANDERUNG, description = "Changes tp an article")
 public class AnderungModel extends RepresentationModel<AnderungModel> implements ItemModel, Comparable<AnderungModel> {
-    
+
     private static final long serialVersionUID = 7089488648732721954L;
 
     @JsonProperty(ApiNames.ARTIKEL_ID)
@@ -69,7 +69,7 @@ public class AnderungModel extends RepresentationModel<AnderungModel> implements
     @JsonProperty(ApiNames.BEZEICHNUNG)
     @Schema(description = "Change description", example = "New 5* motor and decoder", required = true)
     private String bezeichnung;
-    
+
     @JsonProperty(ApiNames.STUCK)
     @Schema(description = "Changed Quantity", example = "1")
     private Integer stuck;
@@ -108,7 +108,7 @@ public class AnderungModel extends RepresentationModel<AnderungModel> implements
         }
 
         AnderungModel other = (AnderungModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(artikelId, other.artikelId)
                 .append(anderungId, other.anderungId)

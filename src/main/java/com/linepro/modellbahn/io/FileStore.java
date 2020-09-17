@@ -5,7 +5,7 @@ import java.nio.file.Path;
 public interface FileStore {
 
     Path fileStoreRoot();
-    
+
     Path getItemPath(String modelName, String...identifiers);
 
     void removeItem(String modelName, String...identifiers);

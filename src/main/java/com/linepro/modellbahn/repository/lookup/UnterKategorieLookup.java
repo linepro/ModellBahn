@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 
 @Component(PREFIX + "UnterKategorieLookup")
 public class UnterKategorieLookup {
-    
+
     @Autowired
     private final UnterKategorieRepository repository;
 
@@ -24,7 +24,7 @@ public class UnterKategorieLookup {
             return repository.findByName(kategorie, unterKategorie)
                              .orElse(null);
         }
-        
+
         return null;
     }
 }

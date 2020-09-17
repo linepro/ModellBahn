@@ -41,7 +41,7 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.INDEX,  ApiNames.BEZEICHNUNG, ApiNames.SPAN, ApiNames.ADRESS_TYP,
-    ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED})
+    ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.ADRESS, itemRelation = ApiNames.ADRESS)
 @Schema(name = ApiNames.ADRESS, description = "Decoder type address - template for Decoder.")
 public class DecoderTypAdressModel extends RepresentationModel<DecoderTypAdressModel> implements ItemModel, Comparable<DecoderTypAdressModel> {
@@ -109,7 +109,7 @@ public class DecoderTypAdressModel extends RepresentationModel<DecoderTypAdressM
         }
 
         DecoderTypAdressModel other = (DecoderTypAdressModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(hersteller, other.hersteller)
                 .append(bestellNr, other.bestellNr)

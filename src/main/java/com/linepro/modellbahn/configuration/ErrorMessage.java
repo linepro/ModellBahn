@@ -32,7 +32,7 @@ public class ErrorMessage {
     @JsonProperty("status")
     @Schema(description = "Status", example = "403", accessMode = AccessMode.READ_ONLY)
     private int status;
-    
+
     @JsonProperty("error")
     @Schema(description = "Error", example = "Forbidden", accessMode = AccessMode.READ_ONLY)
     private String error;

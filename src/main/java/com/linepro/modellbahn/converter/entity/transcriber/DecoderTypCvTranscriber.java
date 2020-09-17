@@ -9,7 +9,7 @@ import com.linepro.modellbahn.entity.DecoderTypCv;
 import com.linepro.modellbahn.model.DecoderTypCvModel;
 
 public class DecoderTypCvTranscriber implements Transcriber<DecoderTypCv,DecoderTypCvModel> {
-    
+
     @Override
     public DecoderTypCvModel apply(DecoderTypCv source, DecoderTypCvModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
@@ -22,7 +22,7 @@ public class DecoderTypCvTranscriber implements Transcriber<DecoderTypCv,Decoder
             destination.setWerkseinstellung(source.getWerkseinstellung());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
-        
+
         return destination;
     }
 }

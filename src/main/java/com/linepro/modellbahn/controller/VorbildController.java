@@ -52,7 +52,7 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
     @Autowired
     public VorbildController(VorbildService service) {
         super(service);
-        
+
         this.service = service;
     }
 
@@ -129,7 +129,6 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Vorbild not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
    public ResponseEntity<?> delete(@PathVariable(ApiNames.NAMEN) String gattung) {
@@ -159,7 +158,6 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Vorbild not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
         })
     public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiNames.NAMEN) String gattung) {

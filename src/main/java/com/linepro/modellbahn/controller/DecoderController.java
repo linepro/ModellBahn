@@ -128,7 +128,7 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> update(@PathVariable(ApiNames.DECODER_ID) String decoderId, @RequestBody DecoderModel model) {
         return updated(service.update(decoderId, model));
@@ -142,8 +142,7 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> delete(@PathVariable(ApiNames.DECODER_ID) String decoderId) {
         return deleted(service.delete(decoderId));
@@ -152,13 +151,13 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
     @PutMapping(path = ApiPaths.UPDATE_DECODER_ADRESS, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates a decoder address", description = "", operationId = "update", tags = { ApiNames.DECODER })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderAdressModel.class)) }),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderAdressModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> updateAdress(@PathVariable(ApiNames.DECODER_ID) String decoderId, @PathVariable(ApiNames.INDEX) Integer index, @RequestParam(ApiNames.ADRESS) Integer adress) {
         return updated(service.updateAdress(decoderId, index, adress));
@@ -167,13 +166,13 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
     @PutMapping(path = ApiPaths.UPDATE_DECODER_CV, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates a decoder cv", description = "", operationId = "update", tags = { ApiNames.DECODER })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderCvModel.class)) }),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderCvModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> updateCv(@PathVariable(ApiNames.DECODER_ID) String decoderId, @PathVariable(ApiNames.CV) Integer cv, @RequestParam(ApiNames.WERT) Integer wert) {
         return updated(service.updateCv(decoderId, cv, wert));
@@ -182,13 +181,13 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
     @PutMapping(path = ApiPaths.UPDATE_DECODER_FUNKTION, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates a decoder function", description = "", operationId = "update", tags = { ApiNames.DECODER })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderFunktionModel.class)) }),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderFunktionModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
    public ResponseEntity<?> updateFunktion(@PathVariable(ApiNames.DECODER_ID) String decoderId,
                     @PathVariable(ApiNames.REIHE) Integer reihe, @PathVariable(ApiNames.FUNKTION) String funktion,

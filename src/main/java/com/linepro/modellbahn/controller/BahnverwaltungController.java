@@ -52,7 +52,7 @@ public class BahnverwaltungController extends NamedItemController<Bahnverwaltung
     public static BahnverwaltungModel create() {
         return new BahnverwaltungModel();
     }
-    
+
     @Override
     @GetMapping(path = ApiPaths.GET_BAHNVERWALTUNG, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an Bahnverwaltung by name", description = "Finds an UIC axle configuration", operationId = "get",  tags = { ApiNames.BAHNVERWALTUNG })
@@ -123,7 +123,6 @@ public class BahnverwaltungController extends NamedItemController<Bahnverwaltung
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> delete(@PathVariable(ApiNames.NAMEN) String name) {

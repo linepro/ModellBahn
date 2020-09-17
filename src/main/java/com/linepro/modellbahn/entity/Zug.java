@@ -126,7 +126,7 @@ public class Zug extends NamedItemImpl {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.ZUG, targetEntity = ZugConsist.class, orphanRemoval = true)
     @Builder.Default
     private Set<ZugConsist> consist = new HashSet<>();
-    
+
     public void addConsist(ZugConsist fahrzeug) {
         if (consist == null) { 
             consist = new HashSet<>();

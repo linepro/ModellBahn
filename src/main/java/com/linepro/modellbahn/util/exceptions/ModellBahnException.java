@@ -20,7 +20,7 @@ public class ModellBahnException extends RuntimeException {
     public ModellBahnException(String message, Throwable cause) {
         super(message, cause);
     }
-    
+
     public ModellBahnException addValue(Object value) {
         values.add(value);
         return this;
@@ -38,11 +38,11 @@ public class ModellBahnException extends RuntimeException {
     public Object[] getValues() {
         return values.toArray();
     }
-    
+
     public static ModellBahnException raise(String message) {
         return new ModellBahnException(message);
     }
-    
+
     public static ModellBahnException raise(String message, Throwable cause) {
         return new ModellBahnException(message, cause);
     }

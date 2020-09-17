@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.service.impl;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Example;
@@ -10,7 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.entity.Item;
 import com.linepro.modellbahn.model.ItemModel;
@@ -27,18 +24,15 @@ import com.linepro.modellbahn.service.ItemService;
  */
 public abstract class ItemServiceImpl<M extends ItemModel, E extends Item> implements ItemService<M> {
 
-    protected static final List<String> PAGE_FIELDS = Arrays.asList(ApiNames.PAGE_NUMBER, ApiNames.PAGE_SIZE);
-
     protected static final Integer FIRST_PAGE = 0;
 
     protected static final Integer DEFAULT_PAGE_SIZE = 30;
 
-
     /** The repository. */
     protected final ItemRepository<E> repository;
-    
+
     protected final Mutator<M,E> modelMutator;
-    
+
     protected final Mutator<E,M> entityMutator;
     /**
      * Instantiates a new abstract service.

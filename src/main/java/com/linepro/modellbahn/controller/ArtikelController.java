@@ -60,12 +60,12 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     public static ArtikelModel create() {
         return new ArtikelModel();
     }
-    
+
     @JsonCreator(mode= Mode.DELEGATING)
     public static AnderungModel createAnderung() {
         return new AnderungModel();
     }
-    
+
     @GetMapping(path = ApiPaths.GET_ARTIKEL, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an Artikel by name", description = "Finds an article", operationId = "get", tags = { ApiNames.ARTIKEL })
         @ApiResponses(value = {
@@ -132,7 +132,6 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> delete(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId) {
@@ -162,7 +161,6 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId) {
@@ -172,13 +170,13 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     @PostMapping(path = ApiPaths.ADD_ANDERUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Record a change to an article", description = "Adds a change record", operationId = "add", tags = { ApiNames.ANDERUNG })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AnderungModel.class)) }),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AnderungModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> addAnderung(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId, @RequestBody AnderungModel anderungModel) {
         return added(service.addAnderung(artikelId, anderungModel));
@@ -187,13 +185,13 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     @PutMapping(path = ApiPaths.UPDATE_ANDERUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates a change to an Article", description = "Updates a change record", operationId = "update", tags = { ApiNames.ANDERUNG })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AnderungModel.class)) }),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AnderungModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> updateAnderung(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId, @PathVariable(ApiNames.ANDERUNG_ID) Integer anderungId, @RequestBody AnderungModel anderungModel) {
         return updated(service.updateAnderung(artikelId, anderungId, anderungModel));
@@ -202,13 +200,12 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     @DeleteMapping(path = ApiPaths.DELETE_ANDERUNG)
     @Operation(summary = "Removes a change from an article", description = "Remove a change record", operationId = "delete", tags = { ApiNames.ANDERUNG })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> deleteAnderung(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId, @PathVariable(ApiNames.ANDERUNG_ID) Integer anderungId) {
         return deleted(service.deleteAnderung(artikelId, anderungId));

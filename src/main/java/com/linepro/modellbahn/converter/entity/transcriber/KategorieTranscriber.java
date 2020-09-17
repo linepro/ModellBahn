@@ -25,7 +25,7 @@ public class KategorieTranscriber extends NamedTranscriber<Kategorie, KategorieM
     public KategorieModel apply(Kategorie source, KategorieModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             destination = super.apply(source, destination);
-            
+
             if (isAvailable(source.getUnterKategorien())) {
                 destination.setUnterKategorien(source.getUnterKategorien()
                                                      .stream()
@@ -36,7 +36,7 @@ public class KategorieTranscriber extends NamedTranscriber<Kategorie, KategorieM
                                                      .orElse(KEIN_UNTER_KATEGORIE));
             }
         }
-        
+
         return destination;
     }
 }

@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
  */
 @JsonRootName(value = ApiNames.STECKER)
 @JsonIgnoreProperties(ignoreUnknown=true)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG })
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.LINKS })
 @Schema(name = ApiNames.STECKER, description = "Decoder statues")
 public enum DecoderStatus implements DescribedEnum {
 

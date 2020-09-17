@@ -61,19 +61,19 @@ public class ErrorHandler {
                                                  .developerMessage(developerMessage(effective))
                                                  .build()
                                                  );
-                            
+
         }
-        
+
         return delegate.handleException(ex, request);
     }
 
     private String getRequestPath(WebRequest request) {
         String requestPath = ServletUriComponentsBuilder.fromCurrentRequest().toUriString();
-        
+
         if (StringUtils.contains(requestPath, ApiPaths.API_ROOT)) {
             return requestPath.substring(requestPath.lastIndexOf(ApiPaths.API_ROOT));
         }
-        
+
         return null;
     }
 
@@ -132,7 +132,7 @@ public class ErrorHandler {
 
         String message = ex.getMessage();
         int nested = message.indexOf("nested exception");
-        
+
         if (nested > 0) {
             return message.substring(0, nested).trim();
         }

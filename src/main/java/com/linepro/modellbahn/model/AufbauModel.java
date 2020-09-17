@@ -37,7 +37,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED})
+@JsonPropertyOrder({ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.AUFBAU, itemRelation = ApiNames.AUFBAU)
 @Schema(name = ApiNames.ARTIKEL, description = "An article - may differ from product because of modificiations")
 public class AufbauModel extends RepresentationModel<AufbauModel> implements NamedWithAbbildungModel, Comparable<AufbauModel> {
@@ -85,7 +85,7 @@ public class AufbauModel extends RepresentationModel<AufbauModel> implements Nam
         }
 
         AufbauModel other = (AufbauModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(name, other.name)
                 .isEquals();

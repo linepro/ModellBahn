@@ -37,7 +37,7 @@ public class DecoderTypFunktionModelProcessor extends ModelProcessorImpl<Decoder
         { REIHE, String.valueOf(((DecoderTypFunktionModel) m).getReihe()) }, 
         { FUNKTION, ((DecoderTypFunktionModel) m).getFunktion() } 
         });
-    
+
     @Autowired
     public DecoderTypFunktionModelProcessor() {
         super(

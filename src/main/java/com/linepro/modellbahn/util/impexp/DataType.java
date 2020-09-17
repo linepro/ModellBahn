@@ -7,7 +7,7 @@ import org.thymeleaf.util.StringUtils;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 
 public enum DataType {
-    
+
     ACHSFOLG(ApiNames.ACHSFOLG),
     ANDERUNG(ApiNames.ANDERUNG),
     ANTRIEB(ApiNames.ANTRIEB),
@@ -49,7 +49,7 @@ public enum DataType {
     private DataType(String typeName) {
         this(StringUtils.capitalizeWords(typeName, "_").replaceAll("_", ""), StringUtils.capitalizeWords(typeName, "_").replaceAll("_", ""));
     }
-    
+
     private DataType(String typeName, String beanPrefix) {
         this.typeName = StringUtils.unCapitalize(typeName);
         this.beanPrefix = beanPrefix; 
@@ -67,7 +67,7 @@ public enum DataType {
     public String toString() {
         return getTypeName();
     }
-    
+
     public static DataType fromTypeName(String typeName) {
         return Stream.of(DataType.values())
                      .filter(v -> v.typeName.equals(typeName))

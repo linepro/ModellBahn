@@ -39,7 +39,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.DECODER_ID, ApiNames.REIHE, ApiNames.FUNKTION, ApiNames.BEZEICHNUNG, ApiNames.PROGRAMMABLE, ApiNames.DELETED })
+@JsonPropertyOrder({ ApiNames.DECODER_ID, ApiNames.REIHE, ApiNames.FUNKTION, ApiNames.BEZEICHNUNG, ApiNames.PROGRAMMABLE, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.FUNKTION, itemRelation = ApiNames.FUNKTION)
 @Schema(name = ApiNames.FUNKTION, description = "Decoder function mapping.")
 public class DecoderFunktionModel extends RepresentationModel<DecoderFunktionModel> implements ItemModel, Comparable<DecoderFunktionModel> {
@@ -99,7 +99,7 @@ public class DecoderFunktionModel extends RepresentationModel<DecoderFunktionMod
         }
 
         DecoderFunktionModel other = (DecoderFunktionModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(decoderId, other.decoderId)
                 .append(reihe, other.reihe)

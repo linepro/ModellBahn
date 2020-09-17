@@ -2,19 +2,18 @@ package com.linepro.modellbahn.i18n;
 
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 
-import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.hibernate.validator.spi.resourceloading.ResourceBundleLocator;
+import org.slf4j.helpers.MessageFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 
 @Slf4j
 @Component(PREFIX + "MessageTranslatorImpl")
@@ -26,17 +25,25 @@ public class MessageTranslatorImpl implements MessageTranslator {
 
     @Override
     public String getMessage(String messageCode, Object... args) {
-        try {
+            return MessageFormatter.arrayFormat(getBundle(messageCode, args.length), args).getMessage();
+    }
+
+    private String getBundle(String messageCode, int argCount) {
+        if (messageCode.startsWith("{") && messageCode.endsWith("}")) {
             ResourceBundle bundle = locator.getResourceBundle(getLocale());
 
-            return new MessageFormat(bundle.getString(messageCode), getLocale()).format(args);
-        } catch (Exception e) {
-            String message = messageCode + " " + Stream.of(args).map(o -> o.toString()).collect(Collectors.joining(" "));
+            String codeValue = messageCode.substring(1, messageCode.length()-1);
 
-            log.error(message, e.getMessage());
+            try {
+                return bundle.getString(codeValue);
+            } catch (Exception e) {
+                 log.error("Can't find message: {} for {}: {}",  messageCode, getLocale(), e.getMessage(), e);
 
-            return message;
+                return codeValue + ":" + StringUtils.repeat(" {}", argCount);
+            }
         }
+
+        return messageCode;
     }
 
     private Locale getLocale() {

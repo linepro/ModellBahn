@@ -32,11 +32,11 @@ public class KupplungService extends NamedItemServiceImpl<KupplungModel,Kupplung
     private final KupplungRepository repository;
 
     private final FileService fileService;
-    
+
     @Autowired
     public KupplungService(KupplungRepository repository, KupplungModelMutator modelMutator, KupplungMutator entityMutator, FileService fileService) {
         super(repository, modelMutator, entityMutator);
-        
+
         this.repository = repository;
         this.fileService = fileService;
     }

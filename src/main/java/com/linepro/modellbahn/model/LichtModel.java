@@ -39,7 +39,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED })
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.LICHT, itemRelation = ApiNames.LICHT)
 @Schema(name = ApiNames.LICHT, description = "Light configuration - Märklin coding.")
 public class LichtModel extends RepresentationModel<LichtModel> implements NamedWithAbbildungModel, Comparable<LichtModel> {
@@ -49,7 +49,7 @@ public class LichtModel extends RepresentationModel<LichtModel> implements Named
     @JsonProperty(ApiNames.NAMEN)
     @Schema(description = "Light code", example = "L1V", required = true)
     private String name;
-    
+
     @JsonProperty(ApiNames.BEZEICHNUNG)
     @Schema(description = "Light description", example = "Einfach-Spitzensignal vorne")
     private String bezeichnung;
@@ -87,7 +87,7 @@ public class LichtModel extends RepresentationModel<LichtModel> implements Named
         }
 
         LichtModel other = (LichtModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(name, other.name)
                 .isEquals();

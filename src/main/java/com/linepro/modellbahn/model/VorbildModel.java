@@ -53,7 +53,7 @@ import lombok.ToString;
         ApiNames.FAHRMOTOREN, ApiNames.MOTORBAUART, ApiNames.LEISTUNGSUBERTRAGUNG, ApiNames.REICHWEITE,
         ApiNames.KAPAZITAT, ApiNames.KLASSE, ApiNames.SITZPLATZEKL1, ApiNames.SITZPLATZEKL2, ApiNames.SITZPLATZEKL3,
         ApiNames.SITZPLATZEKL4, ApiNames.AUFBAU, ApiNames.TRIEBKOPF, ApiNames.MITTELWAGEN, ApiNames.DREHGESTELLBAUART,
-        ApiNames.ABBILDUNG, ApiNames.DELETED})
+        ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.VORBILD, itemRelation = ApiNames.VORBILD)
 @Schema(name = ApiNames.VORBILD, description = "A real world prototype.")
 public class VorbildModel extends RepresentationModel<VorbildModel> implements NamedWithAbbildungModel, Comparable<VorbildModel> {
@@ -267,7 +267,7 @@ public class VorbildModel extends RepresentationModel<VorbildModel> implements N
         }
 
         VorbildModel other = (VorbildModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(gattung, other.gattung)
                 .isEquals();

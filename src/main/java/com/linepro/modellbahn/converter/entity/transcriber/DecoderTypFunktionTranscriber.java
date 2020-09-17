@@ -21,7 +21,7 @@ public class DecoderTypFunktionTranscriber implements Transcriber<DecoderTypFunk
             destination.setProgrammable(source.getProgrammable());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
-        
+
         return destination;
     }
 }

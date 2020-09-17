@@ -45,11 +45,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class KupplungController extends NamedItemController<KupplungModel> {
 
     private final KupplungService service;
-    
+
     @Autowired
     public KupplungController(KupplungService service) {
         super(service);
-        
+
         this.service = service;
     }
 
@@ -57,7 +57,7 @@ public class KupplungController extends NamedItemController<KupplungModel> {
     public static KupplungModel create() {
         return new KupplungModel();
     }
-    
+
     @Override
     @GetMapping(path = ApiPaths.GET_KUPPLUNG, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an Kupplung by name", description = "Finds a coupling configuration", operationId = "get", tags = { ApiNames.KUPPLUNG })
@@ -128,7 +128,6 @@ public class KupplungController extends NamedItemController<KupplungModel> {
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Kupplung not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> delete(@PathVariable(ApiNames.NAMEN) String name) {
@@ -158,7 +157,6 @@ public class KupplungController extends NamedItemController<KupplungModel> {
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Kupplung not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
         })
     public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiNames.NAMEN) String name) {

@@ -40,7 +40,7 @@ public interface AcceptableMediaTypes {
     MediaType PNG_TYPE = new MediaType(IMAGE, PNG);
     MediaType TIF_TYPE = new MediaType(IMAGE, TIFF);
     MediaType TIFF_TYPE = new MediaType(IMAGE, TIFF);
-    
+
     MediaType IDC_TYPE = new MediaType(TEXT, PLAIN);
     MediaType DOC_TYPE = new MediaType(APPLICATION, MSWORD);
     MediaType DOT_TYPE = new MediaType(APPLICATION, MSWORD);

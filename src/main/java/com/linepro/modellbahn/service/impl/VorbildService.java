@@ -30,7 +30,7 @@ import com.linepro.modellbahn.service.criterion.VorbildCriterion;
 public class VorbildService extends NamedItemServiceImpl<VorbildModel, Vorbild> {
 
     private final VorbildRepository repository;
-    
+
     private final FileService fileService;
 
     @Autowired

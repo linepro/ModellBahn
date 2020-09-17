@@ -3,16 +3,17 @@ package com.linepro.modellbahn.security;
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.API_ENDPOINTS;
 import static com.linepro.modellbahn.io.MvcConfig.RESOURCE_ENDPOINTS;
-import static com.linepro.modellbahn.security.UserController.USER_ENDPOINTS;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.linepro.modellbahn.service.impl.UserService;
+import com.linepro.modellbahn.controller.impl.ApiPaths;
+import com.linepro.modellbahn.security.user.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,9 +29,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] ACTUATOR_ENDPOINTS = { "/actuator/**" };
 
     private final PasswordEncoder passwordEncoder;
-    
+
     private final UserService userService;
-    
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService)
@@ -43,21 +44,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .csrf()
                  .disable()
-//            .headers()
-//            .and()
-//                .cors()
-//            .and()
-//                .exceptionHandling()
-//            .and()
-            .authorizeRequests()
-                .antMatchers(RESOURCE_ENDPOINTS)
-                    .permitAll()
-                .antMatchers(USER_ENDPOINTS)
-                    .permitAll()
-                .antMatchers(API_ENDPOINTS)
-                    .hasRole(USER_ROLE)
-                .antMatchers(ACTUATOR_ENDPOINTS)
-                    .hasRole(ADMIN_ROLE)
+            .headers()
+                 .frameOptions()
+                      .sameOrigin()
+            .and()
+                .cors()
+            .and()
+                .exceptionHandling()
+            .and()
+                .authorizeRequests()
+                    .antMatchers(RESOURCE_ENDPOINTS)
+                        .permitAll()
+                    .antMatchers(HttpMethod.POST, ApiPaths.REGISTER_USER, ApiPaths.CONFIRM_USER, ApiPaths.FORGOT_PASSWORD, ApiPaths.RESET_PASSWORD)
+                        .permitAll()
+                    .antMatchers(API_ENDPOINTS)
+                        .hasRole(USER_ROLE)
+                    .antMatchers(ACTUATOR_ENDPOINTS)
+                        .hasRole(ADMIN_ROLE)
 //               .and()
 //                   .formLogin()
 //                       .loginPage("/")

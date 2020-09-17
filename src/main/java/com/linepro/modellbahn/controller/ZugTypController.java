@@ -52,7 +52,7 @@ public class ZugTypController extends NamedItemController<ZugTypModel> {
     public static ZugTypModel create() {
         return new ZugTypModel();
     }
-    
+
     @Override
     @GetMapping(path = ApiPaths.GET_ZUG_TYP, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an ZugTyp by name", description = "Finds a train type", operationId = "get", tags = { ApiNames.ZUG_TYP })
@@ -123,7 +123,6 @@ public class ZugTypController extends NamedItemController<ZugTypModel> {
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> delete(@PathVariable(ApiNames.NAMEN) String name) {

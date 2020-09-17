@@ -47,7 +47,7 @@ public class FileStoreImpl implements FileStore {
             // That's ok. We didn't like it anyway.
         } catch(Exception e) {
             // Should we throw it up?
-            log.error("Failed to delete folder " + itemPath.toString(), e);
+            log.error("Failed to delete folder {}: {}", itemPath.toString(), e);
         }
     }
 
@@ -66,7 +66,7 @@ public class FileStoreImpl implements FileStore {
             // That's ok. We didn't like it anyway.
         } catch(Exception e) {
             // Should we throw it up?
-            log.error("Failed to delete file " + filePath.toString(), e);
+            log.error("Failed to delete file {}: {}", filePath.toString(), e);
         }
     }
 }

@@ -24,7 +24,7 @@ public class ReflectionUtils {
 
         return new Class<?>[0];
     }
-    
+
     private static Class<?>[] getType(ParameterizedType parameterizedType) {
     	List<Class<?>> types = new ArrayList<>();
         for (Type type : parameterizedType.getActualTypeArguments()) {

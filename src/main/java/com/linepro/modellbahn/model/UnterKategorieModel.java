@@ -39,7 +39,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.KATEGORIE, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED })
+@JsonPropertyOrder({ ApiNames.KATEGORIE, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.UNTER_KATEGORIE, itemRelation = ApiNames.UNTER_KATEGORIE)
 @Schema(name = ApiNames.UNTER_KATEGORIE, description = "Sub category.")
 public class UnterKategorieModel extends RepresentationModel<UnterKategorieModel> implements NamedItemModel, Comparable<UnterKategorieModel> {

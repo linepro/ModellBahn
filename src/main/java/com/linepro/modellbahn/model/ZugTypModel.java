@@ -38,7 +38,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED })
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.ZUG_TYP, itemRelation = ApiNames.ZUG_TYP)
 @Schema(name = ApiNames.ZUG_TYP, description = "Type of train.")
 public class ZugTypModel extends RepresentationModel<ZugTypModel> implements NamedItemModel, Comparable<ZugTypModel> {
@@ -82,7 +82,7 @@ public class ZugTypModel extends RepresentationModel<ZugTypModel> implements Nam
         }
 
         ZugTypModel other = (ZugTypModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(name, other.name)
                 .isEquals();

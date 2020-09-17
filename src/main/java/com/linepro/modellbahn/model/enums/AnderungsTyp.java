@@ -16,22 +16,22 @@ import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
  */
 @JsonRootName(value = ApiNames.ANDERUNGS_TYP)
 @JsonIgnoreProperties(ignoreUnknown=true)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG })
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.LINKS })
 @Schema(name = ApiNames.ANDERUNGS_TYP, description = "Change types")
 public enum AnderungsTyp implements DescribedEnum {
 
     AUSGETAUSCHT("ausgetauscht"),
-    
+
     ERSATZTEILE("ersatzteile"),
-    
+
     REPARIERT("repariert"), 
-    
+
     UMGEBAUT("umgebaut"),
-    
+
     VERKAUFT("verkauft"),
-    
+
     VERLOREN("verloren"),
-    
+
     VERSCHROTTET("verschrottet");
 
     private final String description;

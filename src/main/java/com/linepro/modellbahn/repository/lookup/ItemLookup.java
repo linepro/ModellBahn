@@ -11,7 +11,7 @@ import com.linepro.modellbahn.repository.base.NamedItemRepository;
 
 @Component(PREFIX + "ItemLookup")
 public class ItemLookup {
-    
+
     public <E extends NamedItem> E find(String name, NamedItemRepository<E> repository) {
         return Optional.ofNullable(name)
                        .flatMap(m -> repository.findByName(name))

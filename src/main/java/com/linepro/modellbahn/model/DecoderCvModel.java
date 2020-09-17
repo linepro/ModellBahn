@@ -39,7 +39,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.DECODER_ID, ApiNames.CV, ApiNames.BEZEICHNUNG, ApiNames.MINIMAL, ApiNames.MAXIMAL, ApiNames.WERKSEINSTELLUNG, ApiNames.WERT, ApiNames.DELETED })
+@JsonPropertyOrder({ ApiNames.DECODER_ID, ApiNames.CV, ApiNames.BEZEICHNUNG, ApiNames.MINIMAL, ApiNames.MAXIMAL, ApiNames.WERKSEINSTELLUNG, ApiNames.WERT, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.CV, itemRelation = ApiNames.CV)
 @Schema(name = ApiNames.CV, description = "Decoder CV setting.")
 public class DecoderCvModel extends RepresentationModel<DecoderCvModel> implements ItemModel, Comparable<DecoderCvModel> {
@@ -105,7 +105,7 @@ public class DecoderCvModel extends RepresentationModel<DecoderCvModel> implemen
         }
 
         DecoderCvModel other = (DecoderCvModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(decoderId, other.decoderId)
                 .append(cv, other.cv)

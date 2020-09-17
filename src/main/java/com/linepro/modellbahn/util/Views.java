@@ -7,7 +7,7 @@ package com.linepro.modellbahn.util;
  * @version  $Id$
  */
 public class Views {
-    
+
     /**
      * DropDown.
      * Marks fields for basic serialization.

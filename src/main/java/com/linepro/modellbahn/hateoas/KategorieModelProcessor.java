@@ -39,7 +39,7 @@ public class KategorieModelProcessor extends NamedModelProcessor<KategorieModel>
             SEARCH_KATEGORIE,
             new LinkTemplateImpl(UNTER_KATEGORIE, ADD_UNTER_KATEGORIE, KATEGORIE_EXTRACTOR)
             );
-        
+
         this.unterKategorieProcessor = unterKategorieProcessor;
     }
 

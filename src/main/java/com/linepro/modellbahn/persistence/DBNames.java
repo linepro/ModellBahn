@@ -145,16 +145,19 @@ public interface DBNames {
     String ZYLINDER = "zylinder";
 
     String USER = "person";
-    String EMAIL = "email";
     String PASSWORD = "password";
+    String EMAIL = "email";
     String FIRST_NAME = "firstName";
     String LAST_NAME = "lastName";
     String ENABLED = "enabled";
+    String LOGIN_ATTEMPTS = "login_attempts";
+    String LOGIN_FAILURES = "login_failures";
+    String PASSWORD_AGING = "password_aging";
+    String PASSWORD_CHANGED = "password_changed";
+    String LAST_LOGIN = "last_login";
     String CONFIRMATION_TOKEN = "confirmationToken";
     String RESET_TOKEN = "resetToken";
-    String EXPIRED = "expired";
-    String LOCKED = "locked";
-    String CREDENTIALS_EXPIRED = "credentialsExpired";
+    String LOCALE = "locale";
     String ROLES = "roles";
 }
-    
+

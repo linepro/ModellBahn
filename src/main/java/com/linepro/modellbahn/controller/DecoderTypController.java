@@ -131,7 +131,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> update(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody DecoderTypModel model) {
         return updated(service.update(herstellerStr, bestellNr, model));
@@ -145,8 +145,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> delete(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
         return deleted(service.delete(herstellerStr, bestellNr));
@@ -155,15 +154,15 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     @PostMapping(path = ApiPaths.ADD_DECODER_TYP_ADRESS, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds an Adress to a DecoderTyp", description = "", operationId = "add", tags = { ApiNames.DECODER_TYP })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypAdressModel.class)) }),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypAdressModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
- 
+
     public ResponseEntity<?> addAdress(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
                     @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody DecoderTypAdressModel model) {
             return added(service.addAdress(herstellerStr, bestellNr, model));
@@ -172,13 +171,13 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     @PutMapping(path = ApiPaths.UPDATE_DECODER_TYP_ADRESS, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Update an Adress of a DecoderTyp", description = "", operationId = "update", tags = { ApiNames.DECODER_TYP })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypAdressModel.class)) }),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypAdressModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> updateAdress(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
                     @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.INDEX) Integer index,
@@ -189,13 +188,12 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     @DeleteMapping(path = ApiPaths.DELETE_DECODER_TYP_ADRESS)
     @Operation(summary = "Removes an Adress from a DecoderTyp", description = "", operationId = "delete", tags = { ApiNames.DECODER_TYP })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> deleteAdress(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
                     @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.INDEX) Integer index) {
@@ -205,13 +203,13 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     @PostMapping(path = ApiPaths.ADD_DECODER_TYP_CV, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds a CV to a DecoderTyp", description = "", operationId = "add", tags = { ApiNames.DECODER_TYP })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypCvModel.class)) }),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypCvModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
      public ResponseEntity<?> addCV(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
                     @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody DecoderTypCvModel model) {
@@ -221,13 +219,13 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     @PutMapping(path = ApiPaths.UPDATE_DECODER_TYP_CV, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates a CV of a DecoderTyp", description = "", operationId = "update", tags = { ApiNames.DECODER_TYP })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypCvModel.class)) }),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypCvModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> updateCV(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
                     @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.CV) Integer cv,
@@ -238,13 +236,12 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     @DeleteMapping(path = ApiPaths.DELETE_DECODER_TYP_CV)
     @Operation(summary = "Removes a CV from a DecoderTyp", description = "", operationId = "delete", tags = { ApiNames.DECODER_TYP })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> deleteCV(
             @PathVariable(ApiNames.HERSTELLER) String herstellerStr,
@@ -256,13 +253,13 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     @PostMapping(path = ApiPaths.ADD_DECODER_TYP_FUNKTION, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds a Funktion to a DecoderTyp", description = "", operationId = "add", tags = { ApiNames.DECODER_TYP })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypFunktionModel.class)) }),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypFunktionModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
      public ResponseEntity<?> addFunktion(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
                     @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody DecoderTypFunktionModel model) {
@@ -272,14 +269,14 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     @PutMapping(path = ApiPaths.UPDATE_DECODER_TYP_FUNKTION, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Update a Funktion of a DecoderTyp", description = "", operationId = "update", tags = { ApiNames.DECODER_TYP })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "202", description = "Successful operation", content = {
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = {
                                     @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypFunktionModel.class)) }),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> updateFunktion(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
                     @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.REIHE) Integer reihe,
@@ -290,20 +287,19 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     @DeleteMapping(path = ApiPaths.DELETE_DECODER_TYP_FUNKTION)
     @Operation(summary = "Removes a Funktion from a DecoderTyp", description = "", operationId = "delete", tags = { ApiNames.DECODER_TYP })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> deleteFunktion(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
                     @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.REIHE) Integer reihe,
                     @PathVariable(ApiNames.FUNKTION) String funktion) {
         return deleted(service.deleteFunktion(herstellerStr, bestellNr, reihe, funktion));
     }
-    
+
     @PutMapping(path = ApiPaths.ADD_DECODER_TYP_ANLEITUNGEN, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds DecoderTyp instructions", description = "Adds or updates the instructions for a DecoderTyp", operationId = "update", tags = { ApiNames.DECODER_TYP })
     @ApiResponses(value = {
@@ -323,13 +319,12 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     @DeleteMapping(path = ApiPaths.DELETE_DECODER_TYP_ANLEITUNGEN, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Removes instructions from a DecoderTyp", description = "", operationId = "delete", tags = { ApiNames.DECODER_TYP })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "202", description = "Successful operation", content = @Content),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> deleteAnleitungen(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
         return updated(service.deleteAnleitungen(herstellerStr, bestellNr));

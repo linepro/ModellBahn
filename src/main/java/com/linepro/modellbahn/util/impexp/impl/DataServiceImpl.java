@@ -33,14 +33,14 @@ public class DataServiceImpl implements DataService {
 
     @Autowired
     private final ImporterFactory importerFactory;
-    
+
     @Override
     public void exportCSV(String type, HttpServletResponse response) {
         try {
             response.setContentType(TEXT_CSV);
             response.setCharacterEncoding(StandardCharsets.UTF_8.name());
             response.setHeader("Content-Disposition", String.format("attachment; filename=\"{}.csv\"", type));
-    
+
             DataType dataType = DataType.fromTypeName(type);
 
             if (dataType == null) {
@@ -48,9 +48,9 @@ public class DataServiceImpl implements DataService {
                                          .addValue(type)
                                          .setStatus(HttpStatus.BAD_REQUEST);
             }
-    
+
             Exporter exporter = exporterFactory.getExporter(dataType);
-    
+
             exporter.write(response.getWriter());
         } catch (ModellBahnException e) {
             throw e;
@@ -64,15 +64,15 @@ public class DataServiceImpl implements DataService {
     public void importCSV(String type, MultipartFile multipart) {
         try {
             DataType dataType = DataType.fromTypeName(type);
-    
+
             if (dataType == null) {
                 throw ModellBahnException.raise(ApiMessages.IMPORT_NOT_SUPPORTED)
                                          .addValue(type)
                                          .setStatus(HttpStatus.BAD_REQUEST);
             }
-    
+
             Importer importer = importerFactory.getImporter(dataType);
-    
+
             Reader in = new InputStreamReader(multipart.getInputStream());
 
             importer.read(in);

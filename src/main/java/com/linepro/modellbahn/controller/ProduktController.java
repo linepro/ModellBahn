@@ -48,7 +48,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class ProduktController extends AbstractItemController<ProduktModel> {
 
     private final ProduktService service;
-     
+
     @Autowired
     public ProduktController(ProduktService service) {
         super(service);
@@ -65,7 +65,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     public static ProduktTeilModel createProduktTeil() {
         return new ProduktTeilModel();
     }
-    
+
     @GetMapping(path = ApiPaths.GET_PRODUKT, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an Produkt by name", description = "Finds a product", operationId = "get", tags = { ApiNames.PRODUKT })
         @ApiResponses(value = {
@@ -133,7 +133,6 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> delete(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
@@ -143,13 +142,13 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     @PostMapping(path = ApiPaths.ADD_PRODUKT_TEIL, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds a component of a Produkt", description = "", operationId = "add", tags = { ApiNames.TEIL })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktTeilModel.class)) }),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktTeilModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> addTeil(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody ProduktTeilModel teil) {
         return added(service.addTeil(herstellerStr, bestellNr, teil.getTeilHersteller(), teil.getTeilBestellNr(), teil.getAnzahl()));
@@ -158,13 +157,13 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     @PutMapping(path = ApiPaths.UPDATE_PRODUKT_TEIL, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates a component of a Produkt", description = "", operationId = "update", tags = { ApiNames.TEIL })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktTeilModel.class)) }),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktTeilModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> updateTeil(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.TEIL_HERSTELLER) String teilHerstellerStr, @PathVariable(ApiNames.TEIL_BESTELL_NR) String teilBestellNr, @RequestParam(ApiNames.ANZAHL) Integer anzahl) {
         return updated(service.updateTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, anzahl));
@@ -173,13 +172,12 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     @DeleteMapping(path = ApiPaths.DELETE_PRODUKT_TEIL)
     @Operation(summary = "Removes a component of a Produkt", description = "", operationId = "delete", tags = { ApiNames.TEIL })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> deleteTeil(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.TEIL_HERSTELLER) String teilHerstellerStr, @PathVariable(ApiNames.TEIL_BESTELL_NR) String teilBestellNr) {
         return deleted(service.deleteTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr));
@@ -203,13 +201,12 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     @DeleteMapping(path = ApiPaths.DELETE_PRODUKT_ABBILDUNG, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Removes a picture from an Product", description = "", operationId = "delete", tags = { ApiNames.PRODUKT })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "202", description = "Successful operation", content = @Content),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
         return updated(service.deleteAbbildung(herstellerStr, bestellNr));
@@ -234,13 +231,12 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     @DeleteMapping(path = ApiPaths.DELETE_PRODUKT_ANLEITUNGEN, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Removes instructions from an Product", description = "", operationId = "delete", tags = { ApiNames.PRODUKT })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "202", description = "Successful operation", content = @Content),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> deleteAnleitungen(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
         return updated(service.deleteAnleitungen(herstellerStr, bestellNr));
@@ -265,13 +261,12 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     @DeleteMapping(path = ApiPaths.DELETE_PRODUKT_EXPLOSIONSZEICHNUNG, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Removes a Produkt parts diagram", description = "", operationId = "delete", tags = { ApiNames.PRODUKT })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "202", description = "Successful operation", content = @Content),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> deleteExplosionszeichnung(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
         return updated(service.deleteExplosionszeichnung(herstellerStr, bestellNr));

@@ -43,7 +43,7 @@ public class FileUploadHandlerImpl implements FileUploadHandler {
     @Override
     public boolean isAcceptable(MultipartFile multipart, Collection<MediaType> accepted) {
         MediaType mimeType = MediaType.valueOf(multipart.getContentType());
-        
+
         return accepted.contains(mimeType);
     }
 
@@ -103,7 +103,7 @@ public class FileUploadHandlerImpl implements FileUploadHandler {
                     out.write(buffer, 0, read);
                 }
             } while (read > 0);
-    
+
             out.flush();
         } catch (Exception e) {
             throw ModellBahnException.raise(ApiMessages.FILE_ERROR, e)

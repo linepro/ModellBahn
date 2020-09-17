@@ -39,7 +39,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED })
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.MASSSTAB, itemRelation = ApiNames.MASSSTAB)
 @Schema(name = ApiNames.MASSSTAB, description = "Scale - NEM 010.")
 public class MassstabModel extends RepresentationModel<MassstabModel> implements NamedItemModel, Comparable<MassstabModel> {
@@ -83,7 +83,7 @@ public class MassstabModel extends RepresentationModel<MassstabModel> implements
         }
 
         MassstabModel other = (MassstabModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(name, other.name)
                 .isEquals();

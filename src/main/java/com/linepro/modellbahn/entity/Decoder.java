@@ -262,11 +262,11 @@ public class Decoder extends ItemImpl implements Comparable<Decoder> {
         funktion.setDeleted(false);
         funktionen.add(funktion);
     }
-    
+
     public void removeFunktion(DecoderFunktion funktion) {
         funktionen.remove(funktion);
     }
-    
+
     @Override
     public int compareTo(Decoder other) {
         return new CompareToBuilder()

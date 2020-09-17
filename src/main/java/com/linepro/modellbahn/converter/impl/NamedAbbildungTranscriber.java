@@ -13,7 +13,7 @@ public class NamedAbbildungTranscriber<E extends NamedWithAbbildungItem, M exten
 
     @Override
     public M apply(E source, M destination) {
-        
+
         if (source != null && destination != null) {
             destination.setAbbildung(PathMutator.convert(source.getAbbildung()));
         }

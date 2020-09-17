@@ -38,7 +38,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED })
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.EPOCH, itemRelation = ApiNames.EPOCH)
 @Schema(name = ApiNames.EPOCH, description = "Era - NEM 800.")
 public class EpochModel extends RepresentationModel<EpochModel> implements NamedItemModel, Comparable<EpochModel> {
@@ -82,7 +82,7 @@ public class EpochModel extends RepresentationModel<EpochModel> implements Named
         }
 
         EpochModel other = (EpochModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(name, other.name)
                 .isEquals();

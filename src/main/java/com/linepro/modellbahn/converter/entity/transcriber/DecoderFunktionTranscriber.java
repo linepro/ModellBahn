@@ -20,7 +20,7 @@ public class DecoderFunktionTranscriber implements Transcriber<DecoderFunktion,D
             destination.setProgrammable(source.getFunktion().getProgrammable());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
-        
+
         return destination;
     }
 }

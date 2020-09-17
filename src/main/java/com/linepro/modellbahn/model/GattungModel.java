@@ -38,7 +38,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED })
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.GATTUNG, itemRelation = ApiNames.GATTUNG)
 @Schema(name = ApiNames.GATTUNG, description = "Rolling stock class (amalgamation of Baureihe and Gattung).")
 public class GattungModel extends RepresentationModel<GattungModel> implements NamedItemModel, Comparable<GattungModel> {
@@ -82,7 +82,7 @@ public class GattungModel extends RepresentationModel<GattungModel> implements N
         }
 
         GattungModel other = (GattungModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(name, other.name)
                 .isEquals();

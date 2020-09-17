@@ -31,7 +31,7 @@ public class ImporterImplTest {
     private static final String DECODER_ID = "00100";
     private static final String BEZEICHNUNG = "Bezeichnung";
     private static final Boolean DELETED = true;
-    
+
     private static final Decoder ENTITY = Decoder.builder()
                                                    .id(ID)
                                                    .decoderId(DECODER_ID)
@@ -47,9 +47,9 @@ public class ImporterImplTest {
     private final CharArrayReader reader;
 
     private final Mutator<DecoderModel,Decoder> mutator;  
-  
+
     private Importer importer;
-    
+
     public ImporterImplTest(@Mock JpaRepository<Decoder,Long> repository, @Mock DecoderModelMutator mutator) { 
         this.repository = repository;
         this.reader = new CharArrayReader(CSV.toCharArray());
@@ -64,7 +64,7 @@ public class ImporterImplTest {
         doAnswer(i -> {
             PageRequest pageRequest = (PageRequest) i.getArgument(0);
             Page data = new PageImpl(Collections.singletonList(ENTITY));
-            
+
             return pageRequest.getPageNumber() == 0 ? data : Page.empty();
         }).when(repository).findAll(any(Pageable.class));
     }

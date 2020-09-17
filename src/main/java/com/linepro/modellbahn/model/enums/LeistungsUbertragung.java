@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 public enum LeistungsUbertragung implements DescribedEnum {
 
     KEIN("kein"),
-    
+
     ELEKTRISH("elektrish"),
 
     HYDRAULISH("hydraulish"),

@@ -41,7 +41,7 @@ public class ExporterImpl<M extends ItemModel,E extends Item> implements Exporte
     private final Mutator<E,M> mutator;
 
     private final Class<M> modelClass;
-    
+
     private final CsvSchema schema;
 
     public ExporterImpl(PagingAndSortingRepository<E,Long> repository, Mutator<E,M> mutator, Class<M> modelClass) {
@@ -59,7 +59,7 @@ public class ExporterImpl<M extends ItemModel,E extends Item> implements Exporte
                                            .writeValues(out)) {
             for (int pageNumber = 0; ; pageNumber++) {
                 Page<E> page = repository.findAll(PageRequest.of(pageNumber, PAGE_SIZE));
-    
+
                 if (page.hasContent()) {
                     page.getContent()
                         .stream()
@@ -67,7 +67,7 @@ public class ExporterImpl<M extends ItemModel,E extends Item> implements Exporte
                         .map(i -> attempt(() -> writer.write(i)))
                         .collect(success())
                         .orElseThrow();
-                    
+
                     if (page.isLast()) {
                         break;
                     }

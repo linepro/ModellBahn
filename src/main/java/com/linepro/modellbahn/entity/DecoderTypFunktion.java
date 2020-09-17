@@ -93,7 +93,7 @@ public class DecoderTypFunktion extends ItemImpl implements Comparable<DecoderTy
     @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
     @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notempty}")
     private String bezeichnung;
-    
+
     /** The programmable. */
     @Column(name = DBNames.PROGRAMMABLE, nullable = false)
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.programmable.notnull}")

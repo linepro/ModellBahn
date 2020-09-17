@@ -10,7 +10,7 @@ public class HerstellerTranscriber extends NamedTranscriber<Hersteller, Herstell
         destination.setUrl(source.getUrl());
         destination.setTelefon(source.getTelefon());
         destination.setLand(source.getLand());
-        
+
         return super.apply(source, destination);
     }
 }

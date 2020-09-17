@@ -40,7 +40,7 @@ public class DecoderTypModelTranscriber implements Transcriber<DecoderTypModel, 
             destination.setStecker(source.getStecker());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
-        
+
         return destination;
     }
 }

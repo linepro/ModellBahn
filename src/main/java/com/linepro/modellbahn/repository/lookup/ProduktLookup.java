@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 
 @Component(PREFIX + "ProduktLookup")
 public class ProduktLookup {
-    
+
     @Autowired
     private final ProduktRepository repository;
 
@@ -24,7 +24,7 @@ public class ProduktLookup {
             return repository.findByBestellNr(hersteller, bestellNr)
                              .orElse(null);
         }
-        
+
         return null;
     }
 }

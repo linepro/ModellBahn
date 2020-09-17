@@ -9,7 +9,7 @@ import com.linepro.modellbahn.entity.DecoderTypAdress;
 import com.linepro.modellbahn.model.DecoderTypAdressModel;
 
 public class DecoderTypAdressTranscriber implements Transcriber<DecoderTypAdress,DecoderTypAdressModel> {
-    
+
     @Override
     public DecoderTypAdressModel apply(DecoderTypAdress source, DecoderTypAdressModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
@@ -22,7 +22,7 @@ public class DecoderTypAdressTranscriber implements Transcriber<DecoderTypAdress
             destination.setWerkeinstellung(source.getAdress());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
-        
+
         return destination;
     }
 }

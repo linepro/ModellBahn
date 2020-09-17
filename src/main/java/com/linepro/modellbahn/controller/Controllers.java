@@ -5,8 +5,6 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import com.linepro.modellbahn.security.UserController;
-
 @Import({
     AchsfolgController.class, 
     AntriebController.class, 
@@ -31,8 +29,7 @@ import com.linepro.modellbahn.security.UserController;
     SteuerungController.class, 
     VorbildController.class, 
     ZugController.class, 
-    ZugTypController.class,
-    UserController.class
+    ZugTypController.class
 })
 @Configuration(PREFIX + "Controllers")
 public class Controllers {

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.ConstraintViolationException;
 
+import org.slf4j.helpers.MessageFormatter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,21 +46,21 @@ public class ImporterImpl<M extends ItemModel,E extends Item> implements Importe
     private final CsvSchema schema; 
 
     private final Class<M> modelClass;
-    
+
     public ImporterImpl(JpaRepository<E,Long> repository, Mutator<M,E> mutator, Class<M> modelClass) {
         this.repository = repository;
         this.mutator = mutator;
         this.modelClass = modelClass;
         this.schema = new CsvSchemaGenerator().getSchema(modelClass);
     }
-    
+
     @Override
     @Transactional
     public void read(Reader in) {
         MappingIterator<M> mi;
 
         List<String> errors = new ArrayList<>();
-        int rowNum = 0;
+        Integer rowNum = 0;
 
         try {
             ObjectReader reader = MAPPER.readerFor(modelClass).with(schema);
@@ -86,10 +87,10 @@ public class ImporterImpl<M extends ItemModel,E extends Item> implements Importe
                     } else {
                         actual = e.getMessage();
                     }
-                    
-                    String error = String.format("#%d - '%s': %s", rowNum, next, actual);
-                    errors.add(error);
-                    log.error(error, e);
+
+                    errors.add(MessageFormatter.arrayFormat("#{} - '{}': {}", new Object[] { rowNum, next, actual }).getMessage());
+
+                    log.error("Error importing #{} - '{}': {}", rowNum, next, actual, e);
                 }
             }
         } catch (RuntimeJsonMappingException e) {
@@ -99,7 +100,7 @@ public class ImporterImpl<M extends ItemModel,E extends Item> implements Importe
         } catch (Exception e) {
             throw ModellBahnException.raise(ApiMessages.IMPORT_ERROR, e);
         }
-        
+
         if (!CollectionUtils.isEmpty(errors)) {
             throw ModellBahnException.raise(ApiMessages.IMPORT_ERROR)
                                      .addValue(errors.stream().collect(Collectors.joining("\n")))

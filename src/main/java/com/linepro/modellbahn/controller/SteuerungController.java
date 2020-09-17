@@ -52,7 +52,7 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
     public static SteuerungModel create() {
         return new SteuerungModel();
     }
-    
+
     @Override
     @GetMapping(path = ApiPaths.GET_STEUERUNG)
     @Operation(summary = "Finds an Steuerung by name", description = "Finds a control method", operationId = "get", tags = { ApiNames.STEUERUNG })
@@ -123,7 +123,6 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> delete(@PathVariable(ApiNames.NAMEN) String name) {

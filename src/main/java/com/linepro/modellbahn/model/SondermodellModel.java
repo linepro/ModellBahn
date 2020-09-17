@@ -39,7 +39,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED })
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.SONDERMODELL, itemRelation = ApiNames.SONDERMODELL)
 @Schema(name = ApiNames.SONDERMODELL, description = "Special model - e.g,. MHI &c.")
 public class SondermodellModel extends RepresentationModel<SondermodellModel> implements NamedItemModel, Comparable<SondermodellModel> {
@@ -83,7 +83,7 @@ public class SondermodellModel extends RepresentationModel<SondermodellModel> im
         }
 
         SondermodellModel other = (SondermodellModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(name, other.name)
                 .isEquals();

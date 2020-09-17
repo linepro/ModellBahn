@@ -39,7 +39,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED })
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.SPURWEITE, itemRelation = ApiNames.SPURWEITE)
 @Schema(name = ApiNames.SPURWEITE, description = "Track gauge - NEM 010.")
 public class SpurweiteModel extends RepresentationModel<SpurweiteModel> implements NamedItemModel, Comparable<SpurweiteModel> {
@@ -83,7 +83,7 @@ public class SpurweiteModel extends RepresentationModel<SpurweiteModel> implemen
         }
 
         SpurweiteModel other = (SpurweiteModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(name, other.name)
                 .isEquals();

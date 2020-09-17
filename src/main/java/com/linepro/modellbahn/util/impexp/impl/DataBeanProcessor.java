@@ -52,8 +52,7 @@ public class DataBeanProcessor implements BeanDefinitionRegistryPostProcessor {
                                                                                       .addConstructorArgValue(modelClass)
                                                                                       .getBeanDefinition());
         } catch (ClassNotFoundException e) {
-            log.error("Could not create beans for " + name + ": " + e.getMessage(), e);
-            e.printStackTrace();
+            log.error("Could not create beans for {}: {}", name, e.getMessage(), e);
         }
     }
 }

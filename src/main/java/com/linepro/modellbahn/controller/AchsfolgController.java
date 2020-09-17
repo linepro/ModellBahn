@@ -52,7 +52,7 @@ public class AchsfolgController extends NamedItemController<AchsfolgModel> {
     public static AchsfolgModel create() {
         return new AchsfolgModel();
     }
-    
+
     @Override
     @GetMapping(path = ApiPaths.GET_ACHSFOLG, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an Achsfolg by name", description = "Finds an UIC axle configuration", operationId = "get", tags = { ApiNames.ACHSFOLG })
@@ -122,7 +122,6 @@ public class AchsfolgController extends NamedItemController<AchsfolgModel> {
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> delete(@PathVariable(ApiNames.NAMEN) String name) {

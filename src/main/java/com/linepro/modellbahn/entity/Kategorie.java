@@ -82,7 +82,7 @@ public class Kategorie extends NamedItemImpl {
         unterKategorien.add(unterKategorie);
     }
 
-    
+
     public void removeUnterKategorie(UnterKategorie unterKategorie) {
         unterKategorien.remove(unterKategorie);
     }

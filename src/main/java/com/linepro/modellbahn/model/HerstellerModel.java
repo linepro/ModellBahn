@@ -39,7 +39,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.LAND, ApiNames.URL, ApiNames.TELEFON, ApiNames.DELETED})
+@JsonPropertyOrder({ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.LAND, ApiNames.URL, ApiNames.TELEFON, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.HERSTELLER, itemRelation = ApiNames.HERSTELLER)
 @Schema(name = ApiNames.HERSTELLER, description = "Manufacturer.")
 public class HerstellerModel extends RepresentationModel<HerstellerModel> implements NamedItemModel, Comparable<HerstellerModel> {
@@ -57,7 +57,7 @@ public class HerstellerModel extends RepresentationModel<HerstellerModel> implem
     @JsonProperty(ApiNames.LAND)
     @Schema(description = "Country ISO 3166 Code", example = "DE")
     private String land;
-    
+
     @JsonProperty(ApiNames.URL)
     @Schema(description = "Manufacturer's website", example = "https://www.maerklin.de")
     private String url;
@@ -95,7 +95,7 @@ public class HerstellerModel extends RepresentationModel<HerstellerModel> implem
         }
 
         HerstellerModel other = (HerstellerModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(name, other.name)
                 .isEquals();

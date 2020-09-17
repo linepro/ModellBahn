@@ -33,17 +33,17 @@ import com.linepro.modellbahn.service.criterion.ZugCriterion;
 public class ZugService extends NamedItemServiceImpl<ZugModel,Zug> implements ItemService<ZugModel> {
 
     private final ZugRepository repository;
-    
+
     private final  ArtikelRepository artikelRepository;
-    
+
     private final ZugConsistRepository consistRepository;
-    
+
     private final ZugConsistMutator consistMutator;
-    
+
     @Autowired
     public ZugService(ZugRepository repository, ZugModelMutator modelMutator, ZugMutator entityMutator, ArtikelRepository artikelRepository, ZugConsistRepository consistRepository, ZugConsistMutator consistMutator) {
         super(repository, modelMutator, entityMutator);
-        
+
         this.repository = repository;
         this.artikelRepository = artikelRepository;
         this.consistRepository = consistRepository;
@@ -117,7 +117,7 @@ public class ZugService extends NamedItemServiceImpl<ZugModel,Zug> implements It
                                        .sorted()
                                        .forEach(p -> {
                                            int pos = index.getAndIncrement();
-                                           
+
                                            if (p.getPosition() >= position) {
                                                p.setPosition(pos);
 

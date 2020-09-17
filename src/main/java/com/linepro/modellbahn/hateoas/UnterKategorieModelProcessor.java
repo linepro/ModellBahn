@@ -35,7 +35,7 @@ public class UnterKategorieModelProcessor extends ModelProcessorImpl<UnterKatego
         { KATEGORIE, ((UnterKategorieModel) m).getKategorie() }, 
         { UNTER_KATEGORIE, ((UnterKategorieModel) m).getName() } 
         });
-    
+
     @Autowired
     public UnterKategorieModelProcessor() {
         super(

@@ -42,9 +42,9 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, Artikel> imple
     private final FileService fileService;
 
     private final AnderungRepository anderungRepository;
-    
+
     private final AnderungMutator anderungMutator;
-    
+
     private final AnderungModelMutator anderungModelMutator;
 
     private final AssetIdGenerator assetIdGenerator;
@@ -53,10 +53,10 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, Artikel> imple
     public ArtikelService(ArtikelRepository repository, ArtikelModelMutator modelMutator, ArtikelMutator entityMutator, FileService fileService,
                     AnderungRepository anderungRepository, AnderungMutator anderungMutator, AnderungModelMutator anderungModelMutator, AssetIdGenerator assetIdGenerator) {
         super(repository, modelMutator, entityMutator);
-        
+
         this.repository = repository;
         this.fileService = fileService;
-        
+
         this.anderungRepository = anderungRepository;
         this.anderungMutator = anderungMutator;
         this.anderungModelMutator = anderungModelMutator;
@@ -114,9 +114,9 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, Artikel> imple
                              Anderung anderung = anderungModelMutator.convert(anderungModel);
 
                              a.addAnderung(anderung);
-            
+
                              repository.saveAndFlush(a);
-                            
+
                              return anderungMutator.convert(anderung);
                          });
     }

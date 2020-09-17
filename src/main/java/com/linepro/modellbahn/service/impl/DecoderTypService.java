@@ -46,9 +46,9 @@ import com.linepro.modellbahn.service.criterion.DecoderTypCriterion;
 public class DecoderTypService extends ItemServiceImpl<DecoderTypModel,DecoderTyp> implements ItemService<DecoderTypModel> {
 
     private final DecoderTypRepository repository;
-    
+
     private final FileService fileService;
-    
+
     private final DecoderTypAdressRepository adressRepository;
     private final DecoderTypAdressModelMutator adressModelMutator;
     private final DecoderTypAdressMutator adressMutator;

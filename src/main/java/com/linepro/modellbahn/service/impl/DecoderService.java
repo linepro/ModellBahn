@@ -44,9 +44,9 @@ import com.linepro.modellbahn.service.criterion.DecoderCriterion;
 public class DecoderService extends ItemServiceImpl<DecoderModel,Decoder> implements ItemService<DecoderModel> {
 
     private final DecoderRepository repository;
-    
+
     private final DecoderTypRepository typRepository;
-    
+
     private final DecoderAdressRepository adressRepository;
     private final DecoderAdressMutator adressMutator;
 
@@ -66,7 +66,7 @@ public class DecoderService extends ItemServiceImpl<DecoderModel,Decoder> implem
         this.repository = repository;
 
         this.typRepository = typRepository;
-        
+
         this.adressRepository = adressRepository;
         this.adressMutator = adressMutator;
 
@@ -82,7 +82,7 @@ public class DecoderService extends ItemServiceImpl<DecoderModel,Decoder> implem
     @Transactional
     public Optional<DecoderModel> add(String herstellerStr, String bestellNr) {
         Optional<DecoderTyp> found = typRepository.findByBestellNr(herstellerStr, bestellNr);
-        
+
         if (found.isPresent()) {
             DecoderTyp decoderTyp = found.get();
 
@@ -105,7 +105,7 @@ public class DecoderService extends ItemServiceImpl<DecoderModel,Decoder> implem
                                          .deleted(false)
                                          .build())
                             );
-  
+
             decoderTyp.getCvs()
                       .forEach(c -> decoder.addCv(
                             DecoderCv.builder()

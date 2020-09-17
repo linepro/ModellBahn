@@ -27,7 +27,6 @@ import org.springframework.context.annotation.Import;
     SondermodellService.class,
     SpurweiteService.class,
     SteuerungService.class,
-    UserService.class,
     VorbildService.class,
     ZugService.class,
     ZugTypService.class

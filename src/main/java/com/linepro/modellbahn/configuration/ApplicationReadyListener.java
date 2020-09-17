@@ -36,7 +36,7 @@ public class ApplicationReadyListener implements ApplicationListener<Application
     private ApplicationContext applicationContext;
 
     private static List<String> beanz = new ArrayList<>();
-    
+
     public void onApplicationEvent(final ApplicationReadyEvent event) {
         ApplicationContext context = event.getApplicationContext();
 
@@ -53,7 +53,7 @@ public class ApplicationReadyListener implements ApplicationListener<Application
                 beanz = contextBeanz;
 
                 List<String> endPoints;
-                
+
                 try {
                     endPoints = applicationContext.getBeansOfType(RequestMappingHandlerMapping.class)
                                                   .values()
@@ -63,7 +63,7 @@ public class ApplicationReadyListener implements ApplicationListener<Application
                 } catch (Exception e) {
                     endPoints = Collections.emptyList();
                 }
-                
+
                 log.info("{} started with {} endpoints: {} and {} beans: {}", application, endPoints.size(), endPoints, beanz.size(), beanz);
             }
         }

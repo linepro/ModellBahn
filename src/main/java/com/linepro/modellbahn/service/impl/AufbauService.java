@@ -32,11 +32,11 @@ public class AufbauService extends NamedItemServiceImpl<AufbauModel,Aufbau> impl
     private final AufbauRepository repository;
 
     private final FileService fileService;
-    
+
     @Autowired
     public AufbauService(AufbauRepository repository, AufbauModelMutator modelMutator, AufbauMutator entityMutator, FileService fileService) {
         super(repository, modelMutator, entityMutator);
-        
+
         this.repository = repository;
         this.fileService = fileService;
     }

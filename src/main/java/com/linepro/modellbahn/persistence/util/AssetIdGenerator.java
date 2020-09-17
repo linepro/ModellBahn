@@ -25,7 +25,7 @@ public class AssetIdGenerator {
 
             return StringUtils.leftPad(seq.toString(36).toUpperCase(), 5, '0');
         } catch (Exception e) {
-            log.error("Error getting assetId: " + e.getMessage(), e);
+            log.error("Error getting assetId: {}", e.getMessage(), e);
         }
 
         return null;

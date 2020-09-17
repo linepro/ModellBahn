@@ -22,7 +22,7 @@ public class TelephoneValidator implements ConstraintValidator<Telefon, HasTelef
             String sanitized = value.getTelefon()
                                     .replaceAll("[ -\\(\\)]","")
                                     .replaceAll("^00", "+");
-                                    
+
                 phoneUtil.parseAndKeepRawInput(sanitized, value.getLand());
 
                 return true;

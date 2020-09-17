@@ -52,7 +52,7 @@ public class MassstabController extends NamedItemController<MassstabModel> {
     public static MassstabModel create() {
         return new MassstabModel();
     }
-    
+
     @Override
     @GetMapping(path = ApiPaths.GET_MASSSTAB, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an Massstab by name", description = "Finds a scale", operationId = "get", tags = { ApiNames.MASSSTAB })
@@ -123,7 +123,6 @@ public class MassstabController extends NamedItemController<MassstabModel> {
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> delete(@PathVariable(ApiNames.NAMEN) String name) {

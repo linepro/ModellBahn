@@ -39,9 +39,9 @@ public enum Stecker implements DescribedEnum {
     PLUX16("plux16"),
 
     PLUX22("plux22"),
-    
+
     VERDRAHTET("verdrahtet");
-    
+
     private final String description;
 
     private final String tooltip;

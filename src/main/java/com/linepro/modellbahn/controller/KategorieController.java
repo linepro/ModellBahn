@@ -47,11 +47,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class KategorieController extends NamedItemController<KategorieModel> {
 
     private final KategorieService service;
-    
+
     @Autowired
     public KategorieController(KategorieService service) {
         super(service);
-        
+
         this.service = service;
     }
 
@@ -135,7 +135,6 @@ public class KategorieController extends NamedItemController<KategorieModel> {
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> delete(@PathVariable(ApiNames.NAMEN) String name) {
@@ -161,13 +160,13 @@ public class KategorieController extends NamedItemController<KategorieModel> {
     @PostMapping(path = ApiPaths.ADD_UNTER_KATEGORIE, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds an UnterKategorie to a Kategorie", description = "", operationId = "add", tags = { ApiNames.UNTER_KATEGORIE })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UnterKategorieModel.class)) }),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UnterKategorieModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> addUnterKategorie(@PathVariable(ApiNames.KATEGORIE) String kategorieStr, @RequestBody UnterKategorieModel unterKategorie) {
         return added(service.addUnterKategorie(kategorieStr, unterKategorie));
@@ -176,13 +175,13 @@ public class KategorieController extends NamedItemController<KategorieModel> {
     @PutMapping(path = ApiPaths.UPDATE_UNTER_KATEGORIE, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Updates an UnterKategorie to a Kategorie", description = "", operationId = "update", tags = { ApiNames.UNTER_KATEGORIE })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UnterKategorieModel.class)) }),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UnterKategorieModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> updateUnterKategorie(@PathVariable(ApiNames.KATEGORIE) String kategorieStr,
             @PathVariable(ApiNames.UNTER_KATEGORIE) String unterKategorieStr, @RequestBody UnterKategorieModel unterKategorie) {
@@ -192,13 +191,12 @@ public class KategorieController extends NamedItemController<KategorieModel> {
     @DeleteMapping(path = ApiPaths.DELETE_UNTER_KATEGORIE)
     @Operation(summary = "Removes an UnterKategorie from a Kategorie", description = "", operationId = "delete", tags = { ApiNames.UNTER_KATEGORIE })
     @ApiResponses(value = {
-                    @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
-                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
-                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+        @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
                 })
     public ResponseEntity<?> deleteUnterKategorie(@PathVariable(ApiNames.KATEGORIE) String kategorieStr,
             @PathVariable(ApiNames.UNTER_KATEGORIE) String unterKategorieStr) {

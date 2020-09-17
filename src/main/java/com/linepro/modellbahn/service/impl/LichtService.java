@@ -32,11 +32,11 @@ public class LichtService extends NamedItemServiceImpl<LichtModel,Licht> impleme
     private final LichtRepository repository;
 
     private final FileService fileService;
-    
+
     @Autowired
     public LichtService(LichtRepository repository, LichtModelMutator modelMutator, LichtMutator entityMutator, FileService fileService) {
         super(repository, modelMutator, entityMutator);
-        
+
         this.repository = repository;
         this.fileService = fileService;
     }

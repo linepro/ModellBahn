@@ -92,7 +92,7 @@
 		<appender-ref ref="console"/>
         <appender-ref ref="logfile"/>
 	</logger>
-	<logger additivity="false" level="WARN" name="com.linepro.modellbahn">
+	<logger additivity="false" level="DEBUG" name="com.linepro.modellbahn">
 		<appender-ref ref="console"/>
 		<appender-ref ref="logfile"/>
 	</logger>

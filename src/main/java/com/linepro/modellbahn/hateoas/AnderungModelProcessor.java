@@ -31,7 +31,7 @@ public class AnderungModelProcessor extends ModelProcessorImpl<AnderungModel> im
         { ARTIKEL_ID, ((AnderungModel) m).getArtikelId() }, 
         { ANDERUNG_ID, String.valueOf(((AnderungModel) m).getAnderungId()) } 
         });
-    
+
     @Autowired
     public AnderungModelProcessor() {
         super(

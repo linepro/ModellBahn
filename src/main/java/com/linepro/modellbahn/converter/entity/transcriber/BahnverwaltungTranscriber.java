@@ -8,7 +8,7 @@ public class BahnverwaltungTranscriber extends NamedTranscriber<Bahnverwaltung, 
     @Override
     public BahnverwaltungModel apply(Bahnverwaltung source, BahnverwaltungModel destination) {
         destination.setLand(source.getLand());
-        
+
         return super.apply(source, destination);
     }
 }

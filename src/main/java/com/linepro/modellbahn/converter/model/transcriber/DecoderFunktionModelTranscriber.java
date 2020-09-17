@@ -35,7 +35,7 @@ public class DecoderFunktionModelTranscriber implements Transcriber<DecoderFunkt
             destination.setBezeichnung(source.getBezeichnung());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
-        
+
         return destination;
     }
 }

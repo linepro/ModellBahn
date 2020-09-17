@@ -11,7 +11,7 @@ import com.linepro.modellbahn.model.DecoderTypCvModel;
 
 @Component(PREFIX + "DecoderTypCvMutator")
 public class DecoderTypCvMutator extends MutatorImpl<DecoderTypCv,DecoderTypCvModel> {
-    
+
     public DecoderTypCvMutator() {
         super(() -> new DecoderTypCvModel(), new DecoderTypCvTranscriber());
     }

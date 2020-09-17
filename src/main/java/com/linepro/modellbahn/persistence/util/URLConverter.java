@@ -25,7 +25,7 @@ public class URLConverter implements AttributeConverter<URL, String> {
             try {
                 return new URL(dbData);
             } catch (MalformedURLException e) {
-                log.error("Cannont convert {} to url: []", dbData, e.getMessage());
+                log.error("Cannont convert {} to url: {}", dbData, e.getMessage());
             }
         }
 

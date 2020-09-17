@@ -30,4 +30,7 @@ public interface ApiRels {
     String PRODUKT = "produkt";
     String TEIL = "teil";
     String UNTER_KATEGORIE = "unterKategorie";
+    String PASSWORD = "password";
+    String FORGOT = "forgot";
+    String REGISTER = "register";
 }

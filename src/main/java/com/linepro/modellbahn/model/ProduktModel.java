@@ -48,7 +48,7 @@ import lombok.ToString;
     ApiNames.LANGE, ApiNames.MASSSTAB, ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER,
     ApiNames.BAUZEIT, ApiNames.ACHSFOLG, ApiNames.SONDERMODELL, ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG,
     ApiNames.DECODER_HERSTELLER, ApiNames.DECODER_BESTELL_NR, ApiNames.MOTOR_TYP, ApiNames.ANMERKUNG, ApiNames.ANLEITUNGEN,
-    ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.TEILEN, ApiNames.ABBILDUNG, ApiNames.DELETED})
+    ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.TEILEN, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.PRODUKT, itemRelation = ApiNames.PRODUKT)
 @Schema(name = ApiNames.PRODUKT, description = "Product - template for article.")
 public class ProduktModel extends RepresentationModel<ProduktModel> implements ItemModel, Comparable<ProduktModel> {
@@ -194,7 +194,7 @@ public class ProduktModel extends RepresentationModel<ProduktModel> implements I
         }
 
         ProduktModel other = (ProduktModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(bestellNr, other.bestellNr)
                 .append(hersteller, other.hersteller)

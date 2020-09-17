@@ -39,7 +39,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED })
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.KUPPLUNG, itemRelation = ApiNames.KUPPLUNG)
 @Schema(name = ApiNames.KUPPLUNG, description = "Coupling configuration - Märklin coding.")
 public class KupplungModel extends RepresentationModel<KupplungModel> implements NamedWithAbbildungModel, Comparable<KupplungModel> {
@@ -49,7 +49,7 @@ public class KupplungModel extends RepresentationModel<KupplungModel> implements
     @JsonProperty(ApiNames.NAMEN)
     @Schema(description = "Kupplung code", example = "RELEX", required = true)
     private String name;
-    
+
     @JsonProperty(ApiNames.BEZEICHNUNG)
     @Schema(description = "Kupplung description", example = "Relex")
     private String bezeichnung;
@@ -87,7 +87,7 @@ public class KupplungModel extends RepresentationModel<KupplungModel> implements
         }
 
         KupplungModel other = (KupplungModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(name, other.name)
                 .isEquals();

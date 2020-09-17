@@ -471,7 +471,7 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.PRODUKT, targetEntity = ProduktTeil.class, orphanRemoval = true)
     @Builder.Default
     private Set<ProduktTeil> teilen = new HashSet<>();
-    
+
     public void addTeil(ProduktTeil teil) {
         if (teilen == null) { 
             teilen = new HashSet<>(); 
@@ -481,7 +481,7 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
         teilen.add(teil);
     }
 
-    
+
     public void removeTeil(ProduktTeil teil) {
         teilen.remove(teil);
     }

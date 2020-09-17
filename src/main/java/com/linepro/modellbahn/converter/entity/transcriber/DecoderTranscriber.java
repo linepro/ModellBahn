@@ -89,7 +89,7 @@ public class DecoderTranscriber implements Transcriber<Decoder, DecoderModel> {
 
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
-        
+
         return destination;
     }
 }

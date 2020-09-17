@@ -48,7 +48,7 @@ import org.springframework.hateoas.mediatype.hal.HalConfiguration.RenderSingleLi
 @EnableHypermediaSupport(type = {HypermediaType.HAL})
 @Configuration(PREFIX + "Hateoas")
 public class Hateoas {
-    
+
     @Bean(PREFIX + "HalConfiguration")
     public HalConfiguration globalPolicy() {
       return new HalConfiguration() //

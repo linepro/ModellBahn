@@ -21,7 +21,7 @@ public class AnderungTranscriber implements Transcriber<Anderung, AnderungModel>
             destination.setAnmerkung(source.getAnmerkung());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
-        
+
         return destination;
     }
 }

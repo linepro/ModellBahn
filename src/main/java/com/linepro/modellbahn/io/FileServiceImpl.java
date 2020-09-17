@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.ApiMessages;
-import com.linepro.modellbahn.i18n.MessageTranslator;
 import com.linepro.modellbahn.util.exceptions.ModellBahnException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,16 +21,13 @@ import lombok.extern.slf4j.Slf4j;
 public class FileServiceImpl implements FileService {
 
     private final FileStore fileStore;
-    
+
     private final FileUploadHandler handler;
 
-    private final MessageTranslator messageTranslator;
-    
     @Autowired
-    public FileServiceImpl(FileStore fileStore, FileUploadHandler handler, MessageTranslator messageTranslator) {
+    public FileServiceImpl(FileStore fileStore, FileUploadHandler handler) {
         this.fileStore = fileStore;
         this.handler = handler;
-        this.messageTranslator = messageTranslator;
     }
 
     @Override
@@ -44,7 +40,7 @@ public class FileServiceImpl implements FileService {
         try {
             return handler.upload(multipart, modelType, fieldName, identifiers);
         } catch (Exception e) {
-            log.error("Failed uploading '" + multipart.getOriginalFilename() + "': " + e.getMessage());
+            log.error("Failed uploading '{}': {}", multipart.getOriginalFilename(), e.getMessage(), e);
         }
 
         return null;
@@ -59,9 +55,9 @@ public class FileServiceImpl implements FileService {
 
             return null;
         } catch (Exception e) {
-            log.error(messageTranslator.getMessage(ApiMessages.INVALID_FILE, file.toString()));
+            log.error("Failed to delete file {}: {}", file.toString(), e);
         }
-        
+
         return file;
     }
 }

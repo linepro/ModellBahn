@@ -49,7 +49,7 @@ import com.linepro.modellbahn.validation.ValidationConfiguration;
     Data.class
 })
 public class ModellbahnApplication {
-    
+
     public static final String PREFIX = "modellBahn.";
 
 	public static void main(String[] args) {

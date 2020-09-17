@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 
 @Component(PREFIX + "DecoderTypLookup")
 public class DecoderTypLookup {
-    
+
     @Autowired
     private final DecoderTypRepository repository;
 
@@ -24,7 +24,7 @@ public class DecoderTypLookup {
             return repository.findByBestellNr(hersteller, bestellNr)
                              .orElse(null);
         }
-        
+
         return null;
     }
 }

@@ -91,7 +91,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 public class ProduktTeil extends ItemImpl implements Comparable<ProduktTeil> {
-    
+
     /** The produkt. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class, optional = false)
     @JoinColumn(name = DBNames.PRODUKT_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT_TEIL + "_fk1"))
@@ -103,7 +103,7 @@ public class ProduktTeil extends ItemImpl implements Comparable<ProduktTeil> {
     @JoinColumn(name = DBNames.TEIL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT_TEIL + "_fk2"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.teil.notnull}")
     private Produkt teil;
-    
+
     /** The count of this component. */
     @Column(name = DBNames.ANZAHL, nullable = false)
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.anzahl.positive}")

@@ -13,7 +13,7 @@ public class SoftDeleteTranscriber<S extends SoftDelete, D extends SoftDelete> i
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
-        
+
         return destination;
     }
 }

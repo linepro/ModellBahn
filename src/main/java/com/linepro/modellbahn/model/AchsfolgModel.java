@@ -40,7 +40,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED })
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.ACHSFOLG, itemRelation = ApiNames.ACHSFOLG)
 @Schema(name = ApiNames.ACHSFOLG, description = "Axle configuration - VDEV/VMEV/UIC-System")
 public class AchsfolgModel extends RepresentationModel<AchsfolgModel> implements NamedItemModel, Comparable<AchsfolgModel> {
@@ -84,7 +84,7 @@ public class AchsfolgModel extends RepresentationModel<AchsfolgModel> implements
         }
 
         AchsfolgModel other = (AchsfolgModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(name, other.name)
                 .isEquals();

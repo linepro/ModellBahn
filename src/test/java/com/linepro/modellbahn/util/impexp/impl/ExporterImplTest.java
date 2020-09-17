@@ -48,7 +48,7 @@ public class ExporterImplTest {
     private static final String NAME = "Name";
     private static final Boolean SOUND = true;
     private static final Stecker STECKER = Stecker.MTC21;
-    
+
     private static final Decoder ENTITY = Decoder.builder()
                                                  .id(ID)
                                                  .decoderId(DECODER_ID)
@@ -57,7 +57,7 @@ public class ExporterImplTest {
                                                  .status(STATUS)
                                                  .deleted(DELETED)
                                                  .build();
-   
+
     private static final DecoderModel MODEL = DecoderModel.builder()
                                                           .decoderId(DECODER_ID.toString())
                                                           .bezeichnung(LOK_SOUND)
@@ -93,10 +93,10 @@ public class ExporterImplTest {
         doAnswer(i -> {
             PageRequest pageRequest = (PageRequest) i.getArgument(0);
             Page data = new PageImpl(Collections.singletonList(ENTITY));
-            
+
             return pageRequest.getPageNumber() == 0 ? data : Page.empty();
         }).when(repository).findAll(any(Pageable.class));
-        
+
         when(mutator.convert(any())).thenReturn(MODEL);
         when(mutator.get()).thenReturn(MODEL);
 

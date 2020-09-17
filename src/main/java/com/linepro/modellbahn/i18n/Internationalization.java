@@ -81,7 +81,7 @@ public class Internationalization {
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename(MESSAGES);
+        messageSource.setBasename(APPLICATION_MESSAGES);
         messageSource.setDefaultEncoding(DEFAULT_ENCODING);
         messageSource.setCacheSeconds(CACHE_TIMEOUT);
 

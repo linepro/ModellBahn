@@ -52,7 +52,7 @@ public class SondermodellController extends NamedItemController<SondermodellMode
     public static SondermodellModel create() {
         return new SondermodellModel();
     }
-    
+
     @Override
     @GetMapping(path = ApiPaths.GET_SONDERMODELL, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Finds an Sondermodelll by name", description = "Finds a special model", operationId = "get", tags = { ApiNames.SONDERMODELL })
@@ -123,7 +123,6 @@ public class SondermodellController extends NamedItemController<SondermodellMode
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> delete(@PathVariable(ApiNames.NAMEN) String name) {

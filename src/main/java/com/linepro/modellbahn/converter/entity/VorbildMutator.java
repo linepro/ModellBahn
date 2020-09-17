@@ -13,7 +13,7 @@ import com.linepro.modellbahn.model.VorbildModel;
 
 @Component(PREFIX + "VorbildMutator")
 public class VorbildMutator extends MutatorImpl<Vorbild,VorbildModel> {
-    
+
     @Autowired
     public VorbildMutator(PathMutator pathMutator) {
         super(() -> new VorbildModel(), new VorbildTranscriber(pathMutator));

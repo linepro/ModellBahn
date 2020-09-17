@@ -37,11 +37,11 @@ import com.linepro.modellbahn.service.criterion.ProduktCriterion;
 public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implements ItemService<ProduktModel> {
 
     private final ProduktRepository repository;
-    
+
     private final FileService fileService;
-    
+
     private final ProduktTeilRepository teilRepository;
-    
+
     private final ProduktTeilMutator teilMutator;
 
     @Autowired
@@ -75,7 +75,7 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implem
     @Transactional
     public Optional<ProduktTeilModel> addTeil(String hersteller, String bestellNr, String teilHersteller, String teilBestellNr, Integer anzahl) {
         Optional<Produkt> pt = repository.findByBestellNr(teilHersteller, teilBestellNr);
-        
+
         if (pt.isPresent()) {
             return repository.findByBestellNr(hersteller, bestellNr)
                              .map(p -> {
@@ -83,15 +83,15 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implem
                                  teil.setTeil(pt.get());
                                  teil.setAnzahl(anzahl);
                                  teil.setDeleted(false);
-                              
+
                                  p.addTeil(teil);
-                              
+
                                  repository.saveAndFlush(p);
-                              
+
                                  return teilMutator.convert(teil);
                                  });
         }
-        
+
         return Optional.empty();
     }
 

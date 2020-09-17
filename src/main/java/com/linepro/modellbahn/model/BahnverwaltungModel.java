@@ -38,7 +38,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.LAND, ApiNames.DELETED })
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.LAND, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.BAHNVERWALTUNG, itemRelation = ApiNames.BAHNVERWALTUNG)
 @Schema(name = ApiNames.BAHNVERWALTUNG, description = "Railway company.")
 public class BahnverwaltungModel extends RepresentationModel<BahnverwaltungModel> implements NamedItemModel, Comparable<BahnverwaltungModel> {
@@ -87,7 +87,7 @@ public class BahnverwaltungModel extends RepresentationModel<BahnverwaltungModel
         }
 
         BahnverwaltungModel other = (BahnverwaltungModel) obj;
-        
+
         return new EqualsBuilder()
                 .append(name, other.name)
                 .isEquals();

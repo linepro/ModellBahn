@@ -44,7 +44,7 @@ public class DecoderModelProcessor extends ModelProcessorImpl<DecoderModel> impl
         { HERSTELLER, ((DecoderModel) m).getHersteller() }, 
         { BESTELL_NR, ((DecoderModel) m).getBestellNr() }, 
         });
-    
+
     private final DecoderAdressModelProcessor adressProcessor;
 
     private final DecoderCvModelProcessor cvProcessor;

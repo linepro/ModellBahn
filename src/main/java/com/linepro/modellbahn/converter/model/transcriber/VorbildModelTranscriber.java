@@ -29,7 +29,7 @@ public class VorbildModelTranscriber extends NamedModelTranscriber<VorbildModel,
         private final AchsfolgRepository achsfolgRepository;
 
         private final ItemLookup lookup;
-        
+
         public Vorbild apply(VorbildModel source, Vorbild destination) {
             if (isAvailable(source) && isAvailable(destination)) {
                 destination.setGattung(lookup.find(source.getGattung(), gattungRepository));

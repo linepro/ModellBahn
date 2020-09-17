@@ -1,7 +1,7 @@
 package com.linepro.modellbahn.controller.impl;
 
 public interface ApiNames {
-    
+
     // Entities
     String ACHSFOLG = "achsfolg";
     String ANDERUNG = "anderung";
@@ -85,7 +85,7 @@ public interface ApiNames {
     String LAND = "land";
     String LEISTUNG = "leistung";
     String LEISTUNGSUBERTRAGUNG = "leistungsubertragung";
-    String LINKS = "links";
+    String LINKS = "_links";
     String MAXIMAL = "maximal";
     String METHOD = "method";
     String MINIMAL = "minimal";
@@ -130,6 +130,18 @@ public interface ApiNames {
 
     String DATA = "data";
     String DATA_TYPE = "dataType";
+
+    // User related
+    String USER = "user";
+    String EMAIL = "eMail";
+    String FIRST_NAME = "lastName";
+    String LAST_NAME = "firstName";
+    String LOCALE = "locale";
+    String PASSWORD = "password";
+    String ENABLED = "enabled";
+    String LAST_LOGIN = "lastLogin";
+    String OLD_PASSWORD = "oldPassword";
+    String TOKEN = "token";
 
     // Navigation names
     String PAGE_NUMBER = "pageNumber";

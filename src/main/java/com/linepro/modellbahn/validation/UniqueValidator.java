@@ -56,7 +56,7 @@ public class UniqueValidator implements ConstraintValidator<Unique, Item>, Appli
 
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
             CriteriaQuery<?> criteriaQuery = criteriaBuilder.createQuery(Long.class);
-    
+
             Root<?> root = criteriaQuery.from(item.getClass());
 
             if (item instanceof UnterKategorie) {
@@ -104,11 +104,10 @@ public class UniqueValidator implements ConstraintValidator<Unique, Item>, Appli
             } catch (NoResultException e) {
                 return true;
             } catch (NonUniqueResultException e) {
-                log.error(e.getMessage(), e);
                 return false;
             }
         } catch (PersistenceException e) {
-            log.error(e.getMessage(), e);
+            log.error("Error checking for duplicate {}: {}", item, e.getMessage(), e);
         } finally {
             entityManager.setFlushMode(flushModeType);
         }
