@@ -1,6 +1,7 @@
 package com.linepro.modellbahn.security.user;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
@@ -69,4 +70,8 @@ public class UserModel extends RepresentationModel<UserModel> {
     @JsonProperty(ApiNames.LAST_LOGIN)
     @Schema(description = "Password, encrypted", example = "Pa$5w0rd", accessMode = AccessMode.READ_ONLY)
     private LocalDateTime lastLogin;
+
+    @JsonProperty(ApiNames.ROLES)
+    @Schema(description = "Roles", example = "USER", accessMode = AccessMode.READ_ONLY)
+    private List<String> roles;
 }

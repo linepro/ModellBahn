@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -105,7 +106,7 @@ public class User implements UserDetails {
     @Locale(message = "{com.linepro.modellbahn.validator.constraints.user.locale.valid}")
     private String locale;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = DBNames.ROLES, length = 50)
     private List<String> roles;
 
@@ -128,9 +129,9 @@ public class User implements UserDetails {
     public boolean isAccountNonLocked() {
         return Optional.ofNullable(getLoginFailures())
                         .map(f -> Optional.of(getLoginAttempts())
-                                          .map(a -> a < f)
-                                          .orElse(false))
-                        .orElse(false);
+                                          .map(a -> a > f)
+                                          .orElse(true))
+                        .orElse(true);
     }
 
     @Transient

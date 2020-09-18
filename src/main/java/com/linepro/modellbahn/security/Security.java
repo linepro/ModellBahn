@@ -20,6 +20,7 @@ import com.linepro.modellbahn.security.user.UserService;
 //    OAuth2ResourceServerConfig.class,
 //    OAuth2TokenForwardingContext.class,
     EmailService.class,
+    ModellBahnBasicAuthenticationEntryPoint.class,
     PasswordProcessor.class,
     UserModelProcessor.class,
     UserService.class,

@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.security.user.UserService;
@@ -22,11 +23,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static final String ADMIN_ROLE = "ADMIN";
+    public static final String ADMIN_ROLE = "ADMIN";
 
-    private static final String USER_ROLE = "USER";
+    public static final String USER_ROLE = "USER";
 
     private static final String[] ACTUATOR_ENDPOINTS = { "/actuator/**" };
+    
+    private final ModellBahnBasicAuthenticationEntryPoint authenticationEntryPoint;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -41,38 +44,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
-        http
-            .csrf()
-                 .disable()
-            .headers()
-                 .frameOptions()
-                      .sameOrigin()
-            .and()
-                .cors()
-            .and()
-                .exceptionHandling()
-            .and()
-                .authorizeRequests()
-                    .antMatchers(RESOURCE_ENDPOINTS)
-                        .permitAll()
-                    .antMatchers(HttpMethod.POST, ApiPaths.REGISTER_USER, ApiPaths.CONFIRM_USER, ApiPaths.FORGOT_PASSWORD, ApiPaths.RESET_PASSWORD)
-                        .permitAll()
-                    .antMatchers(API_ENDPOINTS)
-                        .hasRole(USER_ROLE)
-                    .antMatchers(ACTUATOR_ENDPOINTS)
-                        .hasRole(ADMIN_ROLE)
-//               .and()
-//                   .formLogin()
-//                       .loginPage("/")
-//                       .loginProcessingUrl("/login")
-//                       .defaultSuccessUrl("/home")
-//               .and()
-//                  .logout()
-//                       .logoutSuccessUrl("/")
-//                       .logoutUrl("/logout") // POST only
-            .and()
-               .anonymous()
-                   .authorities(USER_ROLE);
+        http.headers().frameOptions().sameOrigin()
+            .and().cors()
+            .and().csrf().disable()
+            .exceptionHandling()
+            .and().httpBasic().authenticationEntryPoint(authenticationEntryPoint)
+            .and().authorizeRequests()
+                  .antMatchers(RESOURCE_ENDPOINTS).permitAll()
+                  .antMatchers(HttpMethod.POST, ApiPaths.REGISTER_USER, ApiPaths.CONFIRM_USER, ApiPaths.FORGOT_PASSWORD, ApiPaths.RESET_PASSWORD).permitAll()
+                  .antMatchers(API_ENDPOINTS).hasRole(USER_ROLE)
+                  .antMatchers(ACTUATOR_ENDPOINTS).hasRole(ADMIN_ROLE)
+            //.and().anonymous().authorities(USER_ROLE)
+            //.and().oauth2ResourceServer(oauth2 -> oauth2.jwt())
+            //.and().formLogin().loginPage("/").loginProcessingUrl("/login").defaultSuccessUrl("/home").failureHandler(authenticationFailureHandler())
+            //.and().logout().logoutSuccessUrl("/").logoutUrl("/logout").deleteCookies("JSESSIONID").logoutSuccessHandler(logoutSuccessHandler())
+            ;
         // @formatter:on
     }
 }

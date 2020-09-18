@@ -140,6 +140,7 @@ public interface ApiNames {
     String PASSWORD = "password";
     String ENABLED = "enabled";
     String LAST_LOGIN = "lastLogin";
+    String ROLES = "roles";
     String OLD_PASSWORD = "oldPassword";
     String TOKEN = "token";
 

@@ -5,6 +5,7 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -40,13 +41,13 @@ import com.linepro.modellbahn.controller.impl.ApiMessages;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.i18n.MessageTranslator;
 import com.linepro.modellbahn.security.EmailService;
+import com.linepro.modellbahn.security.WebSecurityConfig;
 import com.linepro.modellbahn.security.password.PasswordProcessor;
 import com.linepro.modellbahn.security.password.RawPassword;
 import com.linepro.modellbahn.util.exceptions.ModellBahnException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.logstash.logback.encoder.org.apache.commons.lang3.ArrayUtils;
 
 @Slf4j
 @Service(PREFIX + "UserService")
@@ -154,6 +155,7 @@ public class UserService implements UserDetailsService {
                         .password(passwordProcessor.encode(model.getPassword()))
                         .locale(model.getLocale())
                         .enabled(false)
+                        .roles(Collections.singletonList(WebSecurityConfig.USER_ROLE))
                         .build();
 
         errors.addAll(validator.validate(user));
@@ -273,6 +275,7 @@ public class UserService implements UserDetailsService {
                            .locale(u.getLocale())
                            .enabled(u.isEnabled())
                            .lastLogin(u.getLastLogin())
+                           .roles(u.getRoles())
                            .build();
     }
 
