@@ -6,13 +6,13 @@ server:
    servlet:
       application-display-name: ModellBahn
       context-path: /
-#   ssl:
-#      enabled: true
-#      key-store-type: PKCS12
-#      key-store: ${HOME}/.ssh/keystore.p12
-#      key-store-password: password
-#      key-alias: yapily-dev
-#      key-password: password
+   ssl:
+      enabled: true
+      key-store-type: PKCS12
+      key-store: classpath:keystore.p12
+      key-store-password: password
+      key-alias: linepro-dev
+      key-password: password
    tomcat:
       accesslog:
          enabled: true

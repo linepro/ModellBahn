@@ -33,8 +33,8 @@ public enum Konfiguration implements DescribedEnum {
     private final String tooltip;
 
     Konfiguration(String description) {
-        this.description = "com.linepro.modellbahn.konfiguration." + description + ".bezeichnung";
-        this.tooltip = "com.linepro.modellbahn.konfiguration." + description + ".tooltip";
+        this.description = "{com.linepro.modellbahn.konfiguration." + description + ".bezeichnung}";
+        this.tooltip = "{com.linepro.modellbahn.konfiguration." + description + ".tooltip}";
     }
 
     @Override

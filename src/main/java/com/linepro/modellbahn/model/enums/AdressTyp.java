@@ -37,8 +37,8 @@ public enum AdressTyp implements DescribedEnum {
     private final String tooltip;
 
     AdressTyp(String description) {
-        this.description = "com.linepro.modellbahn.adressTyp." + description + ".bezeichnung";
-        this.tooltip = "com.linepro.modellbahn.adressTyp." + description + ".tooltip";
+        this.description = "{com.linepro.modellbahn.adressTyp." + description + ".bezeichnung}";
+        this.tooltip = "{com.linepro.modellbahn.adressTyp." + description + ".tooltip}";
     }
 
     @Override

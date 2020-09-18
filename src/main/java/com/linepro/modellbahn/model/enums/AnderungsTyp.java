@@ -39,8 +39,8 @@ public enum AnderungsTyp implements DescribedEnum {
     private final String tooltip;
 
     AnderungsTyp(String description) {
-        this.description = "com.linepro.modellbahn.anderungsTyp." + description + ".bezeichnung";
-        this.tooltip = "com.linepro.modellbahn.anderungsTyp." + description + ".tooltip";
+        this.description = "{com.linepro.modellbahn.anderungsTyp." + description + ".bezeichnung}";
+        this.tooltip = "{com.linepro.modellbahn.anderungsTyp." + description + ".tooltip}";
     }
 
     @Override

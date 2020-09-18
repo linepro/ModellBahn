@@ -31,8 +31,8 @@ public enum DecoderStatus implements DescribedEnum {
     private final String tooltip;
 
     DecoderStatus(String description) {
-        this.description = "com.linepro.modellbahn.decoder." + description + ".bezeichnung";
-        this.tooltip = "com.linepro.modellbahn.decoder." + description + ".tooltip";
+        this.description = "{com.linepro.modellbahn.decoder." + description + ".bezeichnung}";
+        this.tooltip = "{com.linepro.modellbahn.decoder." + description + ".tooltip}";
     }
 
     @Override

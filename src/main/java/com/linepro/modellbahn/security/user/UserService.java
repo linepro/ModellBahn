@@ -3,7 +3,10 @@ package com.linepro.modellbahn.security.user;
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -11,6 +14,7 @@ import java.util.stream.Collectors;
 
 import javax.mail.internet.MimeMessage;
 import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
 import javax.validation.Validator;
 import javax.validation.metadata.ConstraintDescriptor;
@@ -42,6 +46,7 @@ import com.linepro.modellbahn.util.exceptions.ModellBahnException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.logstash.logback.encoder.org.apache.commons.lang3.ArrayUtils;
 
 @Slf4j
 @Service(PREFIX + "UserService")
@@ -97,7 +102,28 @@ public class UserService implements UserDetailsService {
 
     public Optional<UserModel> update(String name, UserModel model) {
         return userRepository.findByName(name)
-                             .map(u -> toModel(userRepository.saveAndFlush(fromModel(u, model))));
+                             .map(u -> {
+                                 Set<ConstraintViolation<?>> errors = new HashSet<>();
+
+                                 if (StringUtils.hasText(model.getEmail()) && !u.getEmail().equals(model.getEmail())) {
+                                     // eMail change; ensure that we aren't using it already
+                                     if (userRepository.findByEmail(model.getEmail()).isPresent()) {
+                                         errors.add(userError(ApiMessages.USER_EXISTS, model.getEmail(), u));
+                                     }
+                                 }
+
+                                 if (errors.isEmpty()) {
+                                     u = fromModel(u, model);
+
+                                     errors.addAll(validator.validate(u));
+                                 }
+
+                                 if (!errors.isEmpty()) {
+                                     throw new ConstraintViolationException(errors);
+                                 }
+
+                                 return toModel(userRepository.saveAndFlush(u));
+                             });
     }
 
     public boolean delete(String name) {
@@ -116,7 +142,6 @@ public class UserService implements UserDetailsService {
     }
 
     public UserMessage register(UserModel model) {
-
         Set<ConstraintViolation<?>> errors = new HashSet<>();
 
         errors.addAll(passwordProcessor.validate(model.getPassword()));
@@ -127,6 +152,7 @@ public class UserService implements UserDetailsService {
                         .firstName(model.getFirstName())
                         .lastName(model.getLastName())
                         .password(passwordProcessor.encode(model.getPassword()))
+                        .locale(model.getLocale())
                         .enabled(false)
                         .build();
 
@@ -152,7 +178,6 @@ public class UserService implements UserDetailsService {
     }
 
     public UserMessage confirmRegistration(String token) {
-
         Optional<User> user = userRepository.findByConfirmationToken(UUID.fromString(token));
 
         if (user.isPresent()) {
@@ -193,7 +218,7 @@ public class UserService implements UserDetailsService {
 
             String resetLink = generateLink(found, resetUrl, found.getResetToken());
 
-            emailUser(found.getEmail(), ApiMessages.FORGOT_EMAIL_SUBJECT, ApiMessages.FORGOT_EMAIL_BODY, resetLink);
+            emailUser(found, ApiMessages.FORGOT_EMAIL_SUBJECT, ApiMessages.FORGOT_EMAIL_BODY, resetLink);
 
             return UserMessage.builder()
                               .timestamp(System.currentTimeMillis())
@@ -252,6 +277,7 @@ public class UserService implements UserDetailsService {
     }
 
     protected User fromModel(User user, UserModel model) {
+        if (StringUtils.hasText(model.getEmail())) user.setEmail(model.getEmail());
         if (StringUtils.hasText(model.getFirstName())) user.setFirstName(model.getFirstName());
         if (StringUtils.hasText(model.getLastName())) user.setLastName(model.getLastName());
         if (StringUtils.hasText(model.getLocale())) user.setLocale(model.getLocale());
@@ -265,7 +291,7 @@ public class UserService implements UserDetailsService {
 
         String confirmationLink = generateLink(user, confirmationUrl, user.getConfirmationToken());
 
-        emailUser(user.getEmail(), ApiMessages.REGISTER_EMAIL_SUBJECT, ApiMessages.REGISTER_EMAIL_BODY, confirmationLink);
+        emailUser(user, ApiMessages.REGISTER_EMAIL_SUBJECT, ApiMessages.REGISTER_EMAIL_BODY, confirmationLink);
 
         return UserMessage.builder()
                           .timestamp(System.currentTimeMillis())
@@ -281,22 +307,26 @@ public class UserService implements UserDetailsService {
                                    .toString();
     }
 
-    protected void emailUser(String email, String subject, String body, String... params) {
+    protected void emailUser(User user, String subject, String body, String... params) {
         try {
             MimeMessage message = emailService.createMessage();
 
+            List<Object> values = new ArrayList<Object>();
+            values.addAll(Arrays.asList(params));
+            values.add(user.getName());
+            
             MimeMessageHelper helper = new MimeMessageHelper(message, false, Charsets.ISO_8859_1.name());
-            helper.setTo(email);
+            helper.setTo(user.getEmail());
             helper.setFrom(noReply);
             helper.setSubject(translator.getMessage(subject));
-            helper.setText(translator.getMessage(body, (Object[]) params), true);
+            helper.setText(translator.getMessage(body, (Object[]) values.toArray()), true);
 
             emailService.sendEmail(message);
         } catch (Exception e) {
-            log.error("Error sending email {} {}: {}", email, subject, e.getMessage(), e);
+            log.error("Error sending email {} {}: {}", user.getEmail(), subject, e.getMessage(), e);
 
             ModellBahnException.raise(ApiMessages.MAIL_ERROR, e)
-                               .addValue(email);
+                               .addValue(user.getEmail());
         }
     }
 
