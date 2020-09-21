@@ -52,9 +52,13 @@ public class DecoderTranscriber implements Transcriber<Decoder, DecoderModel> {
             destination.setKonfiguration(decoderTyp.getKonfiguration());
             destination.setStecker(decoderTyp.getStecker());
             destination.setAnleitungen(decoderTyp.getAnleitungen());
-            destination.setStatus(source.getStatus());
+            destination.setKaufdatum(source.getKaufdatum());
+            destination.setWahrung(source.getWahrung());
+            destination.setPreis(source.getPreis());
+            destination.setAnmerkung(source.getAnmerkung());
             destination.setProtokoll(getCode(source.getProtokoll()));
             destination.setFahrstufe(source.getFahrstufe());
+            destination.setStatus(source.getStatus());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
 
             if (isAvailable(source.getAdressen())) {

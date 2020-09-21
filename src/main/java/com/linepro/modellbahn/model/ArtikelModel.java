@@ -49,7 +49,7 @@ import lombok.ToString;
     ApiNames.UNTER_KATEGORIE, ApiNames.LANGE, ApiNames.MASSSTAB, ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG,
     ApiNames.BETREIBSNUMMER, ApiNames.ACHSFOLG, ApiNames.SONDERMODELL, ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG,
     ApiNames.DECODER, ApiNames.MOTOR_TYP, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.STUCK, ApiNames.VERBLEIBENDE, ApiNames.ANMERKUNG,
-    ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.ANDERUNGEN, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
+    ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.ANDERUNGEN, ApiNames.ABBILDUNG, ApiNames.GROSSANSICHT, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.ARTIKEL, itemRelation = ApiNames.ARTIKEL)
 @Schema(name = ApiNames.ARTIKEL, description = "An article - may differ from product because of modificiations")
 public class ArtikelModel extends RepresentationModel<ArtikelModel> implements ItemModel, Comparable<ArtikelModel> {
@@ -180,6 +180,10 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
     @JsonProperty(ApiNames.ABBILDUNG)
     @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/artikel/00001/abbildung.jpg", accessMode = AccessMode.READ_ONLY)
     private String abbildung;
+
+    @JsonProperty(ApiNames.GROSSANSICHT)
+    @Schema(description = "Large Image URL", example = "http://localhost:8086/ModellBahn/artikel/00001/grossansicht.jpg", accessMode = AccessMode.READ_ONLY)
+    private String grossansicht;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)

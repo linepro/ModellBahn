@@ -22,4 +22,5 @@ public interface ApiMessages {
     String REGISTER_EMAIL_SUBJECT = "{com.linepro.modellbahn.user.register.SUBJECT}";
     String USER_CONFIRMED = "{com.linepro.modellbahn.user.CONFIRMED}";
     String USER_EXISTS = "{com.linepro.modellbahn.user.EXISTS}";
+    String TOKEN_EXPIRED = "{com.linepro.modellbahn.user.TOKEN_EXPIRED}";
 }

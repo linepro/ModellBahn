@@ -70,6 +70,7 @@ public interface ApiNames {
     String FUNKTIONEN = "funktionen";
     String GERAUSCH = "gerausch";
     String GESCHWINDIGKEIT = "geschwindigkeit";
+    String GROSSANSICHT = "grossansicht";
     String HREF= "HRef";
     String ID = "id";
     String I_MAX = "iMax";

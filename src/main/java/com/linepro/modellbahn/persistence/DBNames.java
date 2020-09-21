@@ -84,6 +84,7 @@ public interface DBNames {
     String FUNKTION_ID = "funktionId";
     String GATTUNG_ID = "gattungId";
     String GESCHWINDIGKEIT = "geschwindigkeit";
+    String GROSSANSICHT = "grossansicht";
     String HERSTELLER_ID = "herstellerId";
     String I_MAX = "iMax";
     String ID = "id";
@@ -156,7 +157,7 @@ public interface DBNames {
     String PASSWORD_CHANGED = "password_changed";
     String LAST_LOGIN = "last_login";
     String CONFIRMATION_TOKEN = "confirmationToken";
-    String RESET_TOKEN = "resetToken";
+    String CONFIRMATION_EXPIRES = "confirmationExpires";
     String LOCALE = "locale";
     String ROLES = "roles";
 }

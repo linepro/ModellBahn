@@ -115,8 +115,8 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> addDecoder(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
-        return added(service.add(herstellerStr, bestellNr));
+    public ResponseEntity<?> addDecoder(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody DecoderModel model) {
+        return added(service.add(herstellerStr, bestellNr, model));
     }
 
     @PutMapping(path = ApiPaths.UPDATE_DECODER, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)

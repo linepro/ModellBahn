@@ -10,8 +10,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.security.user.UserService;
@@ -25,11 +26,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     public static final String ADMIN_ROLE = "ADMIN";
 
+    public static final SimpleGrantedAuthority ADMIN = new SimpleGrantedAuthority(ADMIN_ROLE);
+
     public static final String USER_ROLE = "USER";
 
+    public static final SimpleGrantedAuthority USER = new SimpleGrantedAuthority(USER_ROLE);
+
     private static final String[] ACTUATOR_ENDPOINTS = { "/actuator/**" };
-    
-    private final ModellBahnBasicAuthenticationEntryPoint authenticationEntryPoint;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -47,12 +50,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().sameOrigin()
             .and().cors()
             .and().csrf().disable()
-            .exceptionHandling()
-            .and().httpBasic().authenticationEntryPoint(authenticationEntryPoint)
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and().exceptionHandling()
+            .and().httpBasic()//.authenticationEntryPoint(authenticationEntryPoint)
             .and().authorizeRequests()
                   .antMatchers(RESOURCE_ENDPOINTS).permitAll()
-                  .antMatchers(HttpMethod.POST, ApiPaths.REGISTER_USER, ApiPaths.CONFIRM_USER, ApiPaths.FORGOT_PASSWORD, ApiPaths.RESET_PASSWORD).permitAll()
-                  .antMatchers(API_ENDPOINTS).hasRole(USER_ROLE)
+                  .antMatchers(HttpMethod.POST, ApiPaths.REGISTER_ENDPOINTS).permitAll()
+                  .antMatchers(HttpMethod.POST, ApiPaths.USER_ENDPOINTS).hasAnyRole(ADMIN_ROLE,USER_ROLE)
+                  .antMatchers(API_ENDPOINTS).hasAnyRole(USER_ROLE)
                   .antMatchers(ACTUATOR_ENDPOINTS).hasRole(ADMIN_ROLE)
             //.and().anonymous().authorities(USER_ROLE)
             //.and().oauth2ResourceServer(oauth2 -> oauth2.jwt())

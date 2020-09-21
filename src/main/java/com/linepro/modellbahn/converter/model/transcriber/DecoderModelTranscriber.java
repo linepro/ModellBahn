@@ -32,9 +32,13 @@ public class DecoderModelTranscriber implements Transcriber<DecoderModel, Decode
                 destination.setDecoderTyp(typLookup.find(source.getHersteller(), source.getBestellNr()));
             }
             destination.setBezeichnung(source.getBezeichnung());
-            destination.setStatus(source.getStatus());
             destination.setProtokoll(lookup.find(source.getProtokoll(), protokollRepository));
             destination.setFahrstufe(source.getFahrstufe());
+            destination.setKaufdatum(source.getKaufdatum());
+            destination.setWahrung(source.getWahrung());
+            destination.setPreis(source.getPreis());
+            destination.setAnmerkung(source.getAnmerkung());
+            destination.setStatus(source.getStatus());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
 

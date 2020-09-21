@@ -2,7 +2,9 @@ package com.linepro.modellbahn.security.user;
 
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,6 +30,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -57,6 +62,15 @@ public class UserService implements UserDetailsService {
     protected static final Integer FIRST_PAGE = 0;
 
     protected static final Integer DEFAULT_PAGE_SIZE = 30;
+
+    @Value("${com.linepro.user.expiry:720}")
+    private Integer accountExpiry;
+
+    @Value("${com.linepro.user.login-attempts:5}")
+    private Integer loginAttempts;
+
+    @Value("${com.linepro.user.password-aging:60}")
+    private Integer passwordAging;
 
     @Autowired
     private final UserRepository userRepository;
@@ -101,9 +115,13 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll(pageable).map(this::toModel);
     }
 
-    public Optional<UserModel> update(String name, UserModel model) {
+    public Optional<UserModel> update(String name, UserModel model, Authentication authentication) {
         return userRepository.findByName(name)
                              .map(u -> {
+                                 if (!name.equals(authentication.getName())) {
+                                     throw new AccessDeniedException(translator.getMessage(ApiMessages.INVALID_USER, name));
+                                 }
+
                                  Set<ConstraintViolation<?>> errors = new HashSet<>();
 
                                  if (StringUtils.hasText(model.getEmail()) && !u.getEmail().equals(model.getEmail())) {
@@ -127,10 +145,15 @@ public class UserService implements UserDetailsService {
                              });
     }
 
-    public boolean delete(String name) {
+    public boolean delete(String name, Authentication authentication) {
         return userRepository.findByName(name)
                              .map(e -> {
+                                 if (!name.equals(authentication.getName())) {
+                                     throw new AccessDeniedException(translator.getMessage(ApiMessages.INVALID_USER, name));
+                                 }
+
                                  userRepository.delete(e);
+
                                  return true;
                              })
                              .orElse(false);
@@ -139,6 +162,13 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByName(username)
+                             .map(u -> UserDetailsImpl.builder()
+                                                      .user(u)
+                                                      .isAccountNonExpired(isAccountNonExpired(u))
+                                                      .isAccountNonLocked(isAccountNonLocked(u))
+                                                      .isCredentialsNonExpired(isCredentialsNonExpired(u))
+                                                      .authorities(getAuthorities(u))
+                                                      .build())
                              .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 
@@ -154,6 +184,8 @@ public class UserService implements UserDetailsService {
                         .lastName(model.getLastName())
                         .password(passwordProcessor.encode(model.getPassword()))
                         .locale(model.getLocale())
+                        .passwordAging(passwordAging)
+                        .loginAttempts(loginAttempts)
                         .enabled(false)
                         .roles(Collections.singletonList(WebSecurityConfig.USER_ROLE))
                         .build();
@@ -183,8 +215,16 @@ public class UserService implements UserDetailsService {
         Optional<User> user = userRepository.findByConfirmationToken(UUID.fromString(token));
 
         if (user.isPresent()) {
+            if (user.get().getConfirmationExpires().isAfter(LocalDateTime.now())) {
+                return UserMessage.builder()
+                                  .timestamp(System.currentTimeMillis())
+                                  .status(HttpStatus.BAD_REQUEST.value())
+                                  .message(translator.getMessage(ApiMessages.TOKEN_EXPIRED, token))
+                                  .build();
+            }
+
             User found = user.get();
-            found.clearConfirmationToken();
+            clearConfirmationToken(found);
             found.setEnabled(true);
 
             userRepository.saveAndFlush(found);
@@ -210,15 +250,16 @@ public class UserService implements UserDetailsService {
         if (user.isPresent()) {
             User found = user.get();
 
-            if (found.getConfirmationToken() != null && !found.isEnabled()) {
+            if (found.getConfirmationToken() != null && !found.getEnabled()) {
                 return requestConfirmation(found);
             }
 
-            found.setResetToken(UUID.randomUUID());
+            found.setConfirmationToken(UUID.randomUUID());
+            found.setConfirmationExpires(LocalDateTime.now().plus(30, ChronoUnit.MINUTES));
 
             userRepository.saveAndFlush(found);
 
-            String resetLink = generateLink(found, resetUrl, found.getResetToken());
+            String resetLink = generateLink(found, resetUrl, found.getConfirmationToken());
 
             emailUser(found, ApiMessages.FORGOT_EMAIL_SUBJECT, ApiMessages.FORGOT_EMAIL_BODY, resetLink);
 
@@ -237,11 +278,20 @@ public class UserService implements UserDetailsService {
     }
 
     public UserMessage resetPassword(String token, String password) {
+        Optional<User> found = userRepository.findByConfirmationToken(UUID.fromString(token));
 
-        Optional<User> user = userRepository.findByResetToken(UUID.fromString(token));
+        if (found.isPresent()) {
+            User user = found.get();
 
-        if (user.isPresent()) {
-            return updatePassword(password, user.get());
+            if (user.getConfirmationExpires().isAfter(LocalDateTime.now())) {
+                return UserMessage.builder()
+                                  .timestamp(System.currentTimeMillis())
+                                  .status(HttpStatus.BAD_REQUEST.value())
+                                  .message(translator.getMessage(ApiMessages.TOKEN_EXPIRED, token))
+                                  .build();
+            }
+
+            return updatePassword(password, user);
         }
 
         return UserMessage.builder()
@@ -251,19 +301,31 @@ public class UserService implements UserDetailsService {
                           .build();
     }
 
-    public UserMessage changePassword(String name, String password) {
+    public UserMessage changePassword(String name, String password, Authentication authentication) {
 
-        Optional<User> user = userRepository.findByName(name);
+        Optional<User> found = userRepository.findByName(name);
 
-        if (user.isPresent()) {
-            return updatePassword(password, user.get());
+        if (found.isPresent()) {
+            User user = found.get();
+
+            if (!name.equals(authentication.getName())) {
+                throw new AccessDeniedException(translator.getMessage(ApiMessages.INVALID_USER, name));
+            }
+
+            return updatePassword(password, user);
         }
 
         return UserMessage.builder()
                           .timestamp(System.currentTimeMillis())
                           .status(HttpStatus.BAD_REQUEST.value())
                           .message(translator.getMessage(ApiMessages.INVALID_USER, name))
-                         .build();
+                          .build();
+    }
+
+
+    private void clearConfirmationToken(User user) {
+        user.setConfirmationToken(null);
+        user.setConfirmationExpires(null);
     }
 
     protected UserModel toModel(User u) {
@@ -273,7 +335,7 @@ public class UserService implements UserDetailsService {
                            .firstName(u.getFirstName())
                            .lastName(u.getLastName())
                            .locale(u.getLocale())
-                           .enabled(u.isEnabled())
+                           .enabled(u.getEnabled())
                            .lastLogin(u.getLastLogin())
                            .roles(u.getRoles())
                            .build();
@@ -289,6 +351,7 @@ public class UserService implements UserDetailsService {
 
     protected UserMessage requestConfirmation(User user) {
         user.setConfirmationToken(UUID.randomUUID());
+        user.setConfirmationExpires(LocalDateTime.now().plus(24, ChronoUnit.HOURS));
 
         userRepository.saveAndFlush(user);
 
@@ -299,7 +362,7 @@ public class UserService implements UserDetailsService {
         return UserMessage.builder()
                           .timestamp(System.currentTimeMillis())
                           .status(HttpStatus.CREATED.value())
-                          .message(translator.getMessage(ApiMessages.REGISTER_EMAIL_SENT, user.getEmail()))
+                          .message(translator.getMessage(ApiMessages.REGISTER_EMAIL_SENT, user.getEmail(), user.getConfirmationExpires()))
                           .build();
     }
 
@@ -337,9 +400,10 @@ public class UserService implements UserDetailsService {
         Set<ConstraintViolation<RawPassword>> errors = passwordProcessor.validate(password);
 
         if (errors.isEmpty()) {
+            clearConfirmationToken(found);
+            found.setEnabled(true);
             found.setPassword(passwordProcessor.encode(password));
             found.setPasswordChanged(LocalDateTime.now());
-            found.clearResetToken();
 
             // Save user
             userRepository.saveAndFlush(found);
@@ -416,5 +480,43 @@ public class UserService implements UserDetailsService {
                 return null;
             }
         };
+    }
+
+    public boolean isAccountNonExpired(User user) {
+        if (user.getLastLogin() != null) {
+            return Duration.between(user.getLastLogin(), LocalDateTime.now()).toDays() < accountExpiry;
+        }
+
+        return true;
+    }
+
+    public boolean isAccountNonLocked(User user) {
+        if (user.getLoginFailures() != null) {
+            if (user.getLoginAttempts() != null) {
+                return user.getLoginFailures() < user.getLoginAttempts();
+            }
+        }
+
+        return true;
+    }
+
+    public boolean isCredentialsNonExpired(User user) {
+        if (user.getPasswordAging() != null) {
+            if (user.getPasswordChanged() != null) {
+                return Duration.between(user.getPasswordChanged(), LocalDateTime.now()).get(ChronoUnit.DAYS) < user.getPasswordAging();
+            }
+
+            return false;
+        }
+
+        return true;
+    }
+
+    public Set<SimpleGrantedAuthority> getAuthorities(User user) {
+        return Optional.ofNullable(user.getRoles())
+                       .map(r -> r.stream()
+                                  .map(o -> new SimpleGrantedAuthority(o))
+                                  .collect(Collectors.toSet()))
+                       .orElse(Collections.emptySet());
     }
 }

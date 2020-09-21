@@ -1,11 +1,13 @@
 package com.linepro.modellbahn.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
@@ -93,6 +95,23 @@ public class DecoderModel extends RepresentationModel<DecoderModel> implements I
     @JsonProperty(ApiNames.STECKER)
     @Schema(description = "Stecker", example = "NEM352", accessMode = AccessMode.READ_ONLY)
     private Stecker stecker;
+
+    @JsonProperty(ApiNames.KAUFDATUM)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Schema(implementation = LocalDate.class, name = "Purchase date", example = "1967-08-10")
+    private LocalDate kaufdatum;
+
+    @JsonProperty(ApiNames.WAHRUNG)
+    @Schema(description = "Purchase currency, ISO 4217 code", example = "EUR")
+    private String wahrung;
+
+    @JsonProperty(ApiNames.PREIS)
+    @Schema(description = "Purchase price", example = "115.95")
+    private BigDecimal preis;
+
+    @JsonProperty(ApiNames.ANMERKUNG)
+    @Schema(description = "Remarks", example = "ESU Project nnnn")
+    private String anmerkung;
 
     @JsonProperty(ApiNames.STATUS)
     @Schema(description = "Decoder status", example = "INSTALIERT", required = true)

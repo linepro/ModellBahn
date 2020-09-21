@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.security.password.PasswordProcessor;
+import com.linepro.modellbahn.security.user.UserAuthenticationListener;
 import com.linepro.modellbahn.security.user.UserController;
 import com.linepro.modellbahn.security.user.UserModelProcessor;
 import com.linepro.modellbahn.security.user.UserService;
@@ -22,9 +23,10 @@ import com.linepro.modellbahn.security.user.UserService;
     EmailService.class,
     ModellBahnBasicAuthenticationEntryPoint.class,
     PasswordProcessor.class,
-    UserModelProcessor.class,
+    UserAuthenticationListener.class,
     UserService.class,
     UserController.class,
+    UserModelProcessor.class,
     WebSecurityConfig.class
 })
 @Component(PREFIX + "Security")

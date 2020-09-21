@@ -162,6 +162,8 @@ public interface ApiPaths {
     String DELETE_PRODUKT_ANLEITUNGEN         = PRODUKT_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.ANLEITUNGEN;
     String ADD_PRODUKT_EXPLOSIONSZEICHNUNG    = PRODUKT_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.EXPLOSIONSZEICHNUNG;
     String DELETE_PRODUKT_EXPLOSIONSZEICHNUNG = PRODUKT_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.EXPLOSIONSZEICHNUNG;
+    String ADD_PRODUKT_GROSSANSICHT           = PRODUKT_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.GROSSANSICHT;
+    String DELETE_PRODUKT_GROSSANSICHT        = PRODUKT_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.GROSSANSICHT;
     String ADD_PRODUKT_TEIL                   = PRODUKT_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.TEILEN;
     String UPDATE_PRODUKT_TEIL                = PRODUKT_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.TEILEN + "/{" + ApiNames.TEIL_HERSTELLER + "}/{" + ApiNames.TEIL_BESTELL_NR + "}";
     String DELETE_PRODUKT_TEIL                = PRODUKT_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.TEILEN + "/{" + ApiNames.TEIL_HERSTELLER + "}/{" + ApiNames.TEIL_BESTELL_NR + "}";
@@ -240,4 +242,12 @@ public interface ApiPaths {
     String CHANGE_PASSWORD = USER_ROOT + "/{" + ApiNames.NAMEN + "}";
     String UPDATE_USER     = USER_ROOT + "/{" + ApiNames.NAMEN + "}";
     String DELETE_USER     = USER_ROOT + "/{" + ApiNames.NAMEN + "}";
+
+    String[] REGISTER_ENDPOINTS = {
+        REGISTER_USER, CONFIRM_USER, FORGOT_PASSWORD, RESET_PASSWORD
+    };
+
+    String[] USER_ENDPOINTS = {
+        SEARCH_USER, GET_USER, CHANGE_PASSWORD, UPDATE_USER, DELETE_USER
+    };
 }

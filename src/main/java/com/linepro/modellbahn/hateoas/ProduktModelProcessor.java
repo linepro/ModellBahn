@@ -7,6 +7,7 @@ import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_PRODUKT;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_PRODUKT_ABBILDUNG;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_PRODUKT_ANLEITUNGEN;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_PRODUKT_EXPLOSIONSZEICHNUNG;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_PRODUKT_GROSSANSICHT;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_PRODUKT_TEIL;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_PRODUKT;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_PRODUKT;
@@ -21,6 +22,7 @@ import static com.linepro.modellbahn.controller.impl.ApiRels.SEARCH;
 import static com.linepro.modellbahn.controller.impl.ApiRels.SELF;
 import static com.linepro.modellbahn.controller.impl.ApiRels.TEIL;
 import static com.linepro.modellbahn.controller.impl.ApiRels.UPDATE;
+import static com.linepro.modellbahn.controller.impl.ApiRels.GROSSANSICHT;
 
 import java.util.HashMap;
 
@@ -59,6 +61,7 @@ public class ProduktModelProcessor extends ModelProcessorImpl<ProduktModel> impl
             new LinkTemplateImpl(ABBILDUNG, ADD_PRODUKT_ABBILDUNG, EXTRACTOR),
             new LinkTemplateImpl(ANLEITUNG, ADD_PRODUKT_ANLEITUNGEN, EXTRACTOR),
             new LinkTemplateImpl(EXPLOSIONSZEICHNUNG, ADD_PRODUKT_EXPLOSIONSZEICHNUNG, EXTRACTOR),
+            new LinkTemplateImpl(GROSSANSICHT, ADD_PRODUKT_GROSSANSICHT, EXTRACTOR),
             new LinkTemplateImpl(TEIL, ADD_PRODUKT_TEIL, EXTRACTOR)
             );
 

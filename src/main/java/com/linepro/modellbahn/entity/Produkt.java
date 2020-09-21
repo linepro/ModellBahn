@@ -467,6 +467,11 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
     @Convert(converter = PathConverter.class)
     private Path abbildung;
 
+    /** The grossansicht. */
+    @Column(name = DBNames.GROSSANSICHT, length = 512)
+    @Convert(converter = PathConverter.class)
+    private Path grossansicht;
+
     /** The teilen. */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.PRODUKT, targetEntity = ProduktTeil.class, orphanRemoval = true)
     @Builder.Default
@@ -549,6 +554,7 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
             .append("explosionszeichnung", explosionszeichnung)
             .append("lange", lange)
             .append("abbildung", abbildung)
+            .append("grossansicht", grossansicht)
             .toString();
     }
 }

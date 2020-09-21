@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.linepro.modellbahn.controller.impl.ApiMessages;
 import com.linepro.modellbahn.util.exceptions.ModellBahnException;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -27,18 +28,12 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Component(PREFIX + "FileUploadHandlerImpl")
+@RequiredArgsConstructor
 public class FileUploadHandlerImpl implements FileUploadHandler {
 
     /** The file store. */
-    private final FileStore fileStore;
-
-    /**
-     * Instantiates a new file upload
-     */
     @Autowired
-    public FileUploadHandlerImpl(FileStore fileStore) {
-        this.fileStore = fileStore;
-    }
+    private final FileStore fileStore;
 
     @Override
     public boolean isAcceptable(MultipartFile multipart, Collection<MediaType> accepted) {
@@ -57,11 +52,21 @@ public class FileUploadHandlerImpl implements FileUploadHandler {
      */
     @Override
     public Path upload(MultipartFile multipart, String modelName, String fieldName, String...identifiers) {
+        try (InputStream in = multipart.getInputStream()) {
+            return saveFile(in, multipart.getOriginalFilename(), modelName, fieldName, identifiers);
+        } catch (Exception e) {
+            throw ModellBahnException.raise(ApiMessages.FILE_ERROR, e)
+                                     .addValue(multipart.getOriginalFilename());
+        }
+    }
+
+    @Override
+    public Path saveFile(InputStream inputStream, String originalFilename, String modelName, String fieldName, String...identifiers) {
         String pathname = fileStore.getItemPath(modelName, identifiers).toString();
 
         new File(pathname).mkdirs();
 
-        String fileName = multipart.getOriginalFilename();
+        String fileName = originalFilename;
         String extension = null;
 
         int extensionStart = fileName.lastIndexOf('.');
@@ -73,9 +78,9 @@ public class FileUploadHandlerImpl implements FileUploadHandler {
 
         Path filePath = fileStore.getFilePath(modelName, fieldName, extension, identifiers);
 
-        writeToFile(filePath, multipart);
+        writeToFile(filePath, inputStream, originalFilename);
 
-        log.info("File {} uploaded to {}", multipart.getOriginalFilename(), filePath);
+        log.info("File {} uploaded to {}", originalFilename, filePath);
 
         return filePath;
     }
@@ -87,12 +92,9 @@ public class FileUploadHandlerImpl implements FileUploadHandler {
      * @param fileDetail the file detail
      * @param fileData the file data
      */
-    private void writeToFile(Path filePath, MultipartFile multipart) {
+    private void writeToFile(Path filePath, InputStream inputStream, String originalFilename) {
 
-        try (
-            OutputStream out = new FileOutputStream(filePath.toFile(), false);
-            InputStream inputStream = multipart.getInputStream()) {
-
+        try (OutputStream out = new FileOutputStream(filePath.toFile(), false)) {
             int read = -1;
             byte[] buffer = new byte[1024*8];
 
@@ -107,7 +109,7 @@ public class FileUploadHandlerImpl implements FileUploadHandler {
             out.flush();
         } catch (Exception e) {
             throw ModellBahnException.raise(ApiMessages.FILE_ERROR, e)
-                                     .addValue(multipart.getName());
+                                     .addValue(originalFilename);
         }
     }
 }

@@ -18,6 +18,7 @@ import com.linepro.modellbahn.persistence.Persistence;
 import com.linepro.modellbahn.repository.lookup.Lookups;
 import com.linepro.modellbahn.security.Security;
 import com.linepro.modellbahn.service.impl.Services;
+import com.linepro.modellbahn.util.StaticPopulator;
 import com.linepro.modellbahn.util.impexp.Data;
 import com.linepro.modellbahn.validation.ValidationConfiguration;
 
@@ -46,7 +47,8 @@ import com.linepro.modellbahn.validation.ValidationConfiguration;
     // Utils
     FileIo.class,
     Internationalization.class,
-    Data.class
+    Data.class,
+    StaticPopulator.class
 })
 public class ModellbahnApplication {
 

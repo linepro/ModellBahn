@@ -27,7 +27,7 @@ public class MvcConfig implements WebMvcConfigurer {
     private int cacheTimeout;
 
     public static final String[] RESOURCE_ENDPOINTS = {
-                    "/webapp/**", "/webjars/**", "/static/**", "/resources/**"
+                    "/webapp/**", "/webjars/**", "/static/**",  "/resources/**", "/v3/api-docs**"
     };
 
     public static final String[] RESOURCE_LOCATIONS = {

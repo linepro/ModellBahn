@@ -5354,7 +5354,7 @@
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.kategorie.forEach(function(k) { \r",
 									"    var self = root + \"/\" + k.name;\r",
-									"    pm.test(\"name: \" + a.name, () => pm.expect(k.name).to.be.oneOf([\"AUSGESTALTUNG\",\"BELEUCHTUNG\"]));\r",
+									"    pm.test(\"name: \" + k.name, () => pm.expect(k.name).to.be.oneOf([\"AUSGESTALTUNG\",\"BELEUCHTUNG\"]));\r",
 									"    pm.test(\"bezeichnung\", () => pm.expect(k.bezeichnung).to.exist);\r",
 									"    k.unterKategorien.forEach(function(u){\r",
 									"        pm.expect(u.kategorie).to.eql(k.name);\r",
@@ -7800,6 +7800,7 @@
 									"    pm.test(\"_links.delete\", () => pm.expect(a._links.delete[0].href).to.eql(self));\r",
 									"    pm.test(\"_links.search\", () => pm.expect(a._links.search[0].href).to.eql(root));\r",
 									"    pm.test(\"_links.abbildung\", () => pm.expect(a._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
+									"    pm.test(\"_links.grossansicht\", () => pm.expect(a._links.grossansicht[0].href).to.eql(self + \"/grossansicht\"));\r",
 									"    pm.test(\"_links.anleitung\", () => pm.expect(a._links.anleitung[0].href).to.eql(self + \"/anleitungen\"));\r",
 									"    pm.test(\"_links.explosionszeichnung\", () => pm.expect(a._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\"));\r",
 									"    pm.test(\"_links.teil\", () => pm.expect(a._links.teil[0].href).to.eql(self + \"/teilen\"));\r",
@@ -7906,6 +7907,7 @@
 									"pm.test(\"explosionszeichnung\", () => pm.expect(jsonData.explosionszeichnung).to.eql(undefined));\r",
 									"pm.test(\"teilen.length\", () => pm.expect(jsonData.teilen.length).to.eql(0));\r",
 									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(undefined));\r",
+									"pm.test(\"grossansicht\", () => pm.expect(jsonData.abbildung).to.eql(undefined));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
@@ -7913,6 +7915,7 @@
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
 									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
+									"pm.test(\"_links.grossansicht\", () => pm.expect(jsonData._links.grossansicht[0].href).to.eql(self + \"/grossansicht\"));\r",
 									"pm.test(\"_links.anleitung\", () => pm.expect(jsonData._links.anleitung[0].href).to.eql(self + \"/anleitungen\"));\r",
 									"pm.test(\"_links.explosionszeichnung\", () => pm.expect(jsonData._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\"));\r",
 									"pm.test(\"_links.teil\", () => pm.expect(jsonData._links.teil[0].href).to.eql(self + \"/teilen\"));"
@@ -7999,6 +8002,7 @@
 									"pm.test(\"explosionszeichnung\", () => pm.expect(jsonData.explosionszeichnung).to.eql(undefined));\r",
 									"pm.test(\"teilen.length\", () => pm.expect(jsonData.teilen.length).to.eql(0));\r",
 									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(abbildung));\r",
+									"pm.test(\"grossansicht\", () => pm.expect(jsonData.grossansicht).to.eql(undefined));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
@@ -8006,6 +8010,7 @@
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
 									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
+									"pm.test(\"_links.grossansicht\", () => pm.expect(jsonData._links.grossansicht[0].href).to.eql(self + \"/grossansicht\"));\r",
 									"pm.test(\"_links.anleitung\", () => pm.expect(jsonData._links.anleitung[0].href).to.eql(self + \"/anleitungen\"));\r",
 									"pm.test(\"_links.explosionszeichnung\", () => pm.expect(jsonData._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\"));\r",
 									"pm.test(\"_links.teil\", () => pm.expect(jsonData._links.teil[0].href).to.eql(self + \"/teilen\"));"
@@ -8052,6 +8057,101 @@
 					"response": []
 				},
 				{
+					"name": "Add Grossansicht",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d781d6a8-4a7e-47e7-a97c-98228f812d25",
+								"exec": [
+									"pm.test(\"response\", () => pm.test(\"response\", () => pm.response.to.have.status(202)));\r",
+									"var jsonData = pm.response.json();\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
+									"var abbildung = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/abbildung.jpg\");\r",
+									"var grossansicht = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/grossansicht.jpg\");\r",
+									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\")));\r",
+									"pm.test(\"bestellNr\", () => pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\")));\r",
+									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"kategorie\", () => pm.expect(jsonData.kategorie).to.eql(pm.variables.get(\"kategorie\")));\r",
+									"pm.test(\"unterKategorie\", () => pm.expect(jsonData.unterKategorie).to.eql(pm.variables.get(\"unterKategorie\")));\r",
+									"pm.test(\"lange\", () => pm.expect(jsonData.lange).to.eql(pm.variables.get(\"lange\")));\r",
+									"pm.test(\"massstab\", () => pm.expect(jsonData.massstab).to.eql(pm.variables.get(\"massstab\")));\r",
+									"pm.test(\"spurweite\", () => pm.expect(jsonData.spurweite).to.eql(pm.variables.get(\"spurweite\")));\r",
+									"pm.test(\"epoch\", () => pm.expect(jsonData.epoch).to.eql(pm.variables.get(\"epoch\")));\r",
+									"pm.test(\"bahnverwaltung\", () => pm.expect(jsonData.bahnverwaltung).to.eql(pm.variables.get(\"bahnverwaltung\")));\r",
+									"pm.test(\"gattung\", () => pm.expect(jsonData.gattung).to.eql(pm.variables.get(\"gattung\")));\r",
+									"pm.test(\"betreibsnummer\", () => pm.expect(jsonData.betreibsnummer).to.eql(pm.variables.get(\"betreibsnummer\")));\r",
+									"pm.test(\"bauzeit\", () => pm.expect(jsonData.bauzeit).to.eql(pm.variables.get(\"bauzeit\")));\r",
+									"pm.test(\"achsfolg\", () => pm.expect(jsonData.achsfolg).to.eql(pm.variables.get(\"achsfolg\")));\r",
+									"pm.test(\"sondermodell\", () => pm.expect(jsonData.sondermodell).to.eql(pm.variables.get(\"sondermodell\")));\r",
+									"pm.test(\"aufbau\", () => pm.expect(jsonData.aufbau).to.eql(pm.variables.get(\"aufbau\")));\r",
+									"pm.test(\"licht\", () => pm.expect(jsonData.licht).to.eql(pm.variables.get(\"licht\")));\r",
+									"pm.test(\"kupplung\", () => pm.expect(jsonData.kupplung).to.eql(pm.variables.get(\"kupplung\")));\r",
+									"pm.test(\"steuerung\", () => pm.expect(jsonData.steuerung).to.eql(pm.variables.get(\"steuerung\")));\r",
+									"pm.test(\"decoderHersteller\", () => pm.expect(jsonData.decoderHersteller).to.eql(pm.variables.get(\"decoderHersteller\")));\r",
+									"pm.test(\"decoderBestellNr\", () => pm.expect(jsonData.decoderBestellNr).to.eql(pm.variables.get(\"decoderBestellNr\")));\r",
+									"pm.test(\"motorTyp\", () => pm.expect(jsonData.motorTyp).to.eql(pm.variables.get(\"motorTyp\")));\r",
+									"pm.test(\"anmerkung\", () => pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\")));\r",
+									"pm.test(\"anleitungen\", () => pm.expect(jsonData.anleitungen).to.eql(undefined));\r",
+									"pm.test(\"explosionszeichnung\", () => pm.expect(jsonData.explosionszeichnung).to.eql(undefined));\r",
+									"pm.test(\"teilen.length\", () => pm.expect(jsonData.teilen.length).to.eql(0));\r",
+									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(abbildung));\r",
+									"pm.test(\"grossansicht\", () => pm.expect(jsonData.grossansicht).to.eql(grossansicht));\r",
+									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
+									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
+									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
+									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
+									"pm.test(\"_links.grossansicht\", () => pm.expect(jsonData._links.grossansicht[0].href).to.eql(self + \"/grossansicht\"));\r",
+									"pm.test(\"_links.anleitung\", () => pm.expect(jsonData._links.anleitung[0].href).to.eql(self + \"/anleitungen\"));\r",
+									"pm.test(\"_links.explosionszeichnung\", () => pm.expect(jsonData._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\"));\r",
+									"pm.test(\"_links.teil\", () => pm.expect(jsonData._links.teil[0].href).to.eql(self + \"/teilen\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"type": "text",
+								"value": "{{language}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "abbildung",
+									"type": "file",
+									"src": "{{imageFile}}"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/produkt/{{hersteller}}/{{bestellNr}}/grossansicht",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"produkt",
+								"{{hersteller}}",
+								"{{bestellNr}}",
+								"grossansicht"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Add Anleitungen",
 					"event": [
 						{
@@ -8064,6 +8164,7 @@
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/abbildung.jpg\");\r",
+									"var grossansicht = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/grossansicht.jpg\");\r",
 									"var anleitungen = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/anleitungen.pdf\");\r",
 									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\")));\r",
 									"pm.test(\"bestellNr\", () => pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\")));\r",
@@ -8092,6 +8193,7 @@
 									"pm.test(\"explosionszeichnung\", () => pm.expect(jsonData.explosionszeichnung).to.eql(undefined));\r",
 									"pm.test(\"teilen.length\", () => pm.expect(jsonData.teilen.length).to.eql(0));\r",
 									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(abbildung));\r",
+									"pm.test(\"grossansicht\", () => pm.expect(jsonData.grossansicht).to.eql(grossansicht));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
@@ -8099,6 +8201,7 @@
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
 									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
+									"pm.test(\"_links.grossansicht\", () => pm.expect(jsonData._links.grossansicht[0].href).to.eql(self + \"/grossansicht\"));\r",
 									"pm.test(\"_links.anleitung\", () => pm.expect(jsonData._links.anleitung[0].href).to.eql(self + \"/anleitungen\"));\r",
 									"pm.test(\"_links.explosionszeichnung\", () => pm.expect(jsonData._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\"));\r",
 									"pm.test(\"_links.teil\", () => pm.expect(jsonData._links.teil[0].href).to.eql(self + \"/teilen\"));"
@@ -8157,6 +8260,7 @@
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/abbildung.jpg\");\r",
+									"var grossansicht = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/grossansicht.jpg\");\r",
 									"var anleitungen = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/anleitungen.pdf\");\r",
 									"var explosionszeichnung = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/explosionszeichnung.pdf\");\r",
 									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\")));\r",
@@ -8186,6 +8290,7 @@
 									"pm.test(\"explosionszeichnung\", () => pm.expect(jsonData.explosionszeichnung).to.eql(explosionszeichnung));\r",
 									"pm.test(\"teilen.length\", () => pm.expect(jsonData.teilen.length).to.eql(0));\r",
 									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(abbildung));\r",
+									"pm.test(\"grossansicht\", () => pm.expect(jsonData.grossansicht).to.eql(grossansicht));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
@@ -8193,6 +8298,7 @@
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
 									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
+									"pm.test(\"_links.grossansicht\", () => pm.expect(jsonData._links.grossansicht[0].href).to.eql(self + \"/grossansicht\"));\r",
 									"pm.test(\"_links.anleitung\", () => pm.expect(jsonData._links.anleitung[0].href).to.eql(self + \"/anleitungen\"));\r",
 									"pm.test(\"_links.explosionszeichnung\", () => pm.expect(jsonData._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\"));\r",
 									"pm.test(\"_links.teil\", () => pm.expect(jsonData._links.teil[0].href).to.eql(self + \"/teilen\"));"
@@ -8447,6 +8553,7 @@
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/abbildung.jpg\");\r",
+									"var grossansicht = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/grossansicht.jpg\");\r",
 									"var anleitungen = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/anleitungen.pdf\");\r",
 									"var explosionszeichnung = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/explosionszeichnung.pdf\");\r",
 									"var teilRoot = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen\");\r",
@@ -8490,6 +8597,7 @@
 									"pm.test(\"teilen[0]._links.update\", () => pm.expect(jsonData.teilen[0]._links.update[0].href).to.eql(teilUrl));\r",
 									"pm.test(\"teilen[0]._links.delete\", () => pm.expect(jsonData.teilen[0]._links.delete[0].href).to.eql(teilUrl));\r",
 									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(abbildung));\r",
+									"pm.test(\"grossansicht\", () => pm.expect(jsonData.grossansicht).to.eql(grossansicht));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
@@ -8497,6 +8605,7 @@
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
 									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
+									"pm.test(\"_links.grossansicht\", () => pm.expect(jsonData._links.grossansicht[0].href).to.eql(self + \"/grossansicht\"));\r",
 									"pm.test(\"_links.anleitung\", () => pm.expect(jsonData._links.anleitung[0].href).to.eql(self + \"/anleitungen\"));\r",
 									"pm.test(\"_links.explosionszeichnung\", () => pm.expect(jsonData._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\"));\r",
 									"pm.test(\"_links.teil\", () => pm.expect(jsonData._links.teil[0].href).to.eql(self + \"/teilen\"));"
@@ -8558,6 +8667,7 @@
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
 									"var abbildung = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/abbildung.jpg\");\r",
+									"var grossansicht = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/grossansicht.jpg\");\r",
 									"var anleitungen = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/anleitungen.pdf\");\r",
 									"var explosionszeichnung = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/explosionszeichnung.pdf\");\r",
 									"var teilRoot = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen\");\r",
@@ -8601,6 +8711,7 @@
 									"pm.test(\"teilen[0]._links.update\", () => pm.expect(jsonData.teilen[0]._links.update[0].href).to.eql(teilUrl));\r",
 									"pm.test(\"teilen[0]._links.delete\", () => pm.expect(jsonData.teilen[0]._links.delete[0].href).to.eql(teilUrl));\r",
 									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(abbildung));\r",
+									"pm.test(\"grossansicht\", () => pm.expect(jsonData.grossansicht).to.eql(grossansicht));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
@@ -8608,6 +8719,7 @@
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
 									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
+									"pm.test(\"_links.grossansicht\", () => pm.expect(jsonData._links.grossansicht[0].href).to.eql(self + \"/grossansicht\"));\r",
 									"pm.test(\"_links.anleitung\", () => pm.expect(jsonData._links.anleitung[0].href).to.eql(self + \"/anleitungen\"));\r",
 									"pm.test(\"_links.explosionszeichnung\", () => pm.expect(jsonData._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\"));\r",
 									"pm.test(\"_links.teil\", () => pm.expect(jsonData._links.teil[0].href).to.eql(self + \"/teilen\"));"
@@ -8691,6 +8803,7 @@
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
+									"var grossansicht = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/grossansicht.jpg\");\r",
 									"var anleitungen = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/anleitungen.pdf\");\r",
 									"var explosionszeichnung = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/explosionszeichnung.pdf\");\r",
 									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\")));\r",
@@ -8720,6 +8833,7 @@
 									"pm.test(\"explosionszeichnung\", () => pm.expect(jsonData.explosionszeichnung).to.eql(explosionszeichnung));\r",
 									"pm.test(\"teilen.length\", () => pm.expect(jsonData.teilen.length).to.eql(0));\r",
 									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(undefined));\r",
+									"pm.test(\"grossansicht\", () => pm.expect(jsonData.grossansicht).to.eql(grossansicht));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
@@ -8727,6 +8841,7 @@
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
 									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
+									"pm.test(\"_links.grossansicht\", () => pm.expect(jsonData._links.grossansicht[0].href).to.eql(self + \"/grossansicht\"));\r",
 									"pm.test(\"_links.anleitung\", () => pm.expect(jsonData._links.anleitung[0].href).to.eql(self + \"/anleitungen\"));\r",
 									"pm.test(\"_links.explosionszeichnung\", () => pm.expect(jsonData._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\"));\r",
 									"pm.test(\"_links.teil\", () => pm.expect(jsonData._links.teil[0].href).to.eql(self + \"/teilen\"));"
@@ -8754,6 +8869,88 @@
 								"{{hersteller}}",
 								"{{bestellNr}}",
 								"abbildung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Grossansicht",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c1096568-6dc1-4645-9d2d-842e4805cfae",
+								"exec": [
+									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"var jsonData = pm.response.json();\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
+									"var anleitungen = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/anleitungen.pdf\");\r",
+									"var explosionszeichnung = pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/explosionszeichnung.pdf\");\r",
+									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\")));\r",
+									"pm.test(\"bestellNr\", () => pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\")));\r",
+									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"kategorie\", () => pm.expect(jsonData.kategorie).to.eql(pm.variables.get(\"kategorie\")));\r",
+									"pm.test(\"unterKategorie\", () => pm.expect(jsonData.unterKategorie).to.eql(pm.variables.get(\"unterKategorie\")));\r",
+									"pm.test(\"lange\", () => pm.expect(jsonData.lange).to.eql(pm.variables.get(\"lange\")));\r",
+									"pm.test(\"massstab\", () => pm.expect(jsonData.massstab).to.eql(pm.variables.get(\"massstab\")));\r",
+									"pm.test(\"spurweite\", () => pm.expect(jsonData.spurweite).to.eql(pm.variables.get(\"spurweite\")));\r",
+									"pm.test(\"epoch\", () => pm.expect(jsonData.epoch).to.eql(pm.variables.get(\"epoch\")));\r",
+									"pm.test(\"bahnverwaltung\", () => pm.expect(jsonData.bahnverwaltung).to.eql(pm.variables.get(\"bahnverwaltung\")));\r",
+									"pm.test(\"gattung\", () => pm.expect(jsonData.gattung).to.eql(pm.variables.get(\"gattung\")));\r",
+									"pm.test(\"betreibsnummer\", () => pm.expect(jsonData.betreibsnummer).to.eql(pm.variables.get(\"betreibsnummer\")));\r",
+									"pm.test(\"bauzeit\", () => pm.expect(jsonData.bauzeit).to.eql(pm.variables.get(\"bauzeit\")));\r",
+									"pm.test(\"achsfolg\", () => pm.expect(jsonData.achsfolg).to.eql(pm.variables.get(\"achsfolg\")));\r",
+									"pm.test(\"sondermodell\", () => pm.expect(jsonData.sondermodell).to.eql(pm.variables.get(\"sondermodell\")));\r",
+									"pm.test(\"aufbau\", () => pm.expect(jsonData.aufbau).to.eql(pm.variables.get(\"aufbau\")));\r",
+									"pm.test(\"licht\", () => pm.expect(jsonData.licht).to.eql(pm.variables.get(\"licht\")));\r",
+									"pm.test(\"kupplung\", () => pm.expect(jsonData.kupplung).to.eql(pm.variables.get(\"kupplung\")));\r",
+									"pm.test(\"steuerung\", () => pm.expect(jsonData.steuerung).to.eql(pm.variables.get(\"steuerung\")));\r",
+									"pm.test(\"decoderTypHersteller\", () => pm.expect(jsonData.decoderTypHersteller).to.eql(pm.variables.get(\"decoderTypHersteller\")));\r",
+									"pm.test(\"decoderTypBestellNr\", () => pm.expect(jsonData.decoderTypBestellNr).to.eql(pm.variables.get(\"decoderTypBestellNr\")));\r",
+									"pm.test(\"motorTyp\", () => pm.expect(jsonData.motorTyp).to.eql(pm.variables.get(\"motorTyp\")));\r",
+									"pm.test(\"anmerkung\", () => pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\")));\r",
+									"pm.test(\"anleitungen\", () => pm.expect(jsonData.anleitungen).to.eql(anleitungen));\r",
+									"pm.test(\"explosionszeichnung\", () => pm.expect(jsonData.explosionszeichnung).to.eql(explosionszeichnung));\r",
+									"pm.test(\"teilen.length\", () => pm.expect(jsonData.teilen.length).to.eql(0));\r",
+									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(undefined));\r",
+									"pm.test(\"grossansicht\", () => pm.expect(jsonData.grossansicht).to.eql(undefined));\r",
+									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
+									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
+									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
+									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
+									"pm.test(\"_links.grossansicht\", () => pm.expect(jsonData._links.grossansicht[0].href).to.eql(self + \"/grossansicht\"));\r",
+									"pm.test(\"_links.anleitung\", () => pm.expect(jsonData._links.anleitung[0].href).to.eql(self + \"/anleitungen\"));\r",
+									"pm.test(\"_links.explosionszeichnung\", () => pm.expect(jsonData._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\"));\r",
+									"pm.test(\"_links.teil\", () => pm.expect(jsonData._links.teil[0].href).to.eql(self + \"/teilen\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/produkt/{{hersteller}}/{{bestellNr}}/grossansicht",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"produkt",
+								"{{hersteller}}",
+								"{{bestellNr}}",
+								"grossansicht"
 							]
 						}
 					},
@@ -8799,6 +8996,7 @@
 									"pm.test(\"explosionszeichnung\", () => pm.expect(jsonData.explosionszeichnung).to.eql(explosionszeichnung));\r",
 									"pm.test(\"teilen.length\", () => pm.expect(jsonData.teilen.length).to.eql(0));\r",
 									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(undefined));\r",
+									"pm.test(\"grossansicht\", () => pm.expect(jsonData.grossansicht).to.eql(undefined));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
@@ -8806,6 +9004,7 @@
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
 									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
+									"pm.test(\"_links.grossansicht\", () => pm.expect(jsonData._links.grossansicht[0].href).to.eql(self + \"/grossansicht\"));\r",
 									"pm.test(\"_links.anleitung\", () => pm.expect(jsonData._links.anleitung[0].href).to.eql(self + \"/anleitungen\"));\r",
 									"pm.test(\"_links.explosionszeichnung\", () => pm.expect(jsonData._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\"));\r",
 									"pm.test(\"_links.teil\", () => pm.expect(jsonData._links.teil[0].href).to.eql(self + \"/teilen\"));"
@@ -8877,6 +9076,7 @@
 									"pm.test(\"explosionszeichnung\", () => pm.expect(jsonData.explosionszeichnung).to.eql(undefined));\r",
 									"pm.test(\"teilen.length\", () => pm.expect(jsonData.teilen.length).to.eql(0));\r",
 									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(undefined));\r",
+									"pm.test(\"grossansicht\", () => pm.expect(jsonData.grossansicht).to.eql(undefined));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
@@ -8884,6 +9084,7 @@
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
 									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
+									"pm.test(\"_links.grossansicht\", () => pm.expect(jsonData._links.grossansicht[0].href).to.eql(self + \"/grossansicht\"));\r",
 									"pm.test(\"_links.anleitung\", () => pm.expect(jsonData._links.anleitung[0].href).to.eql(self + \"/anleitungen\"));\r",
 									"pm.test(\"_links.explosionszeichnung\", () => pm.expect(jsonData._links.explosionszeichnung[0].href).to.eql(self + \"/explosionszeichnung\"));\r",
 									"pm.test(\"_links.teil\", () => pm.expect(jsonData._links.teil[0].href).to.eql(self + \"/teilen\"));"
@@ -9038,7 +9239,13 @@
 									"pm.environment.set(\"sound\", new Boolean(\"true\"));\r",
 									"pm.environment.set(\"konfiguration\", \"CV\");\r",
 									"pm.environment.set(\"stecker\", \"NEM652\");\r",
-									"pm.environment.set(\"status\",\"FREI\");"
+									"pm.environment.set(\"status\",\"FREI\");\r",
+									"pm.environment.set(\"kaufdatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
+									"pm.environment.set(\"wahrung\", pm.variables.replaceIn(\"{{$randomCurrencyCode}}\"));\r",
+									"pm.environment.set(\"preis\", Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"anmerkung\", pm.variables.replaceIn(\"{{$randomCatchPhrase}}\"));\r",
+									"pm.environment.set(\"anleitungen\", pm.variables.replaceIn(\"{{server}}/decoderTyp/{{hersteller}}/{{bestellNr}}/anleitungen.pdf\"));\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -9063,8 +9270,12 @@
 									"pm.test(\"gerausch\", () => pm.expect(jsonData.gerausch).to.be.true);\r",
 									"pm.test(\"konfiguration\", () => pm.expect(jsonData.konfiguration).to.eql(pm.variables.get(\"konfiguration\")));\r",
 									"pm.test(\"stecker\", () => pm.expect(jsonData.stecker).to.eql(pm.variables.get(\"stecker\")));\r",
+									"pm.test(\"kaufdatum\", () => pm.expect(jsonData.kaufdatum).to.eql(pm.variables.get(\"kaufdatum\")));\r",
+									"pm.test(\"wahrung\", () => pm.expect(jsonData.wahrung).to.eql(pm.variables.get(\"wahrung\")));\r",
+									"pm.test(\"preis\", () => pm.expect(jsonData.preis).to.eql(pm.variables.get(\"preis\")));\r",
+									"pm.test(\"anmerkung\", () => pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\")));\r",
 									"pm.test(\"status\", () => pm.expect(jsonData.status).to.eql(pm.variables.get(\"status\")));\r",
-									"pm.test(\"anleitungen\", () => pm.expect(jsonData.anleitungen).to.eql(undefined));\r",
+									"pm.test(\"anleitungen\", () => pm.expect(jsonData.anleitungen).to.eql(pm.variables.get(\"anleitungen\")));\r",
 									"pm.test(\"adressen.length\", () => pm.expect(jsonData.adressen.length).to.eql(1));\r",
 									"pm.test(\"adressen[0].decoderId\", () => pm.expect(jsonData.adressen[0].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"adressen[0].index\", () => pm.expect(jsonData.adressen[0].index).to.eql(1));\r",
@@ -9440,6 +9651,15 @@
 								"value": "application/json"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"decoderId\": \"{{decoderId}}\",\r\n    \"hersteller\": \"{{decoderHersteller}}\",\r\n    \"bestellNr\": \"{{decoderBestellNr}}\",\r\n    \"bezeichnung\": \"{{bezeichnung}}\",\r\n    \"protokoll\": \"{{protokoll}}\",\r\n    \"fahrstufe\": \"{{fahrstufe}}\",\r\n    \"kaufdatum\": \"{{kaufdatum}}\",\r\n    \"wahrung\": \"{{wahrung}}\",\r\n    \"preis\": {{preis}},\r\n    \"anmerkung\": \"{{anmerkung}}\",\r\n    \"status\": \"{{status}}\",\r\n\t\"deleted\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{api}}/decoder/{{hersteller}}/{{bestellNr}}",
 							"host": [
@@ -9701,7 +9921,11 @@
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"protokoll\", \"DCC\");\r",
 									"pm.environment.set(\"fahrstufe\", 28);\r",
-									"pm.environment.set(\"status\", \"BASTLER\");"
+									"pm.environment.set(\"status\", \"BASTLER\");\r",
+									"pm.environment.set(\"kaufdatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
+									"pm.environment.set(\"wahrung\", pm.variables.replaceIn(\"{{$randomCurrencyCode}}\"));\r",
+									"pm.environment.set(\"preis\", Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
+									"pm.environment.set(\"anmerkung\", pm.variables.replaceIn(\"{{$randomCatchPhrase}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -9726,9 +9950,12 @@
 									"pm.test(\"gerausch\", () => pm.expect(jsonData.gerausch).to.be.true);\r",
 									"pm.test(\"konfiguration\", () => pm.expect(jsonData.konfiguration).to.eql(pm.variables.get(\"konfiguration\")));\r",
 									"pm.test(\"stecker\", () => pm.expect(jsonData.stecker).to.eql(pm.variables.get(\"stecker\")));\r",
+									"pm.test(\"kaufdatum\", () => pm.expect(jsonData.kaufdatum).to.eql(pm.variables.get(\"kaufdatum\")));\r",
+									"pm.test(\"wahrung\", () => pm.expect(jsonData.wahrung).to.eql(pm.variables.get(\"wahrung\")));\r",
+									"pm.test(\"preis\", () => pm.expect(jsonData.preis).to.eql(pm.variables.get(\"preis\")));\r",
+									"pm.test(\"anmerkung\", () => pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\")));\r",
 									"pm.test(\"status\", () => pm.expect(jsonData.status).to.eql(pm.variables.get(\"status\")));\r",
-									"pm.test(\"anleitungen\", () => pm.expect(jsonData.anleitungen).to.eql(undefined));\r",
-									"pm.test(\"adressen.length\", () => pm.expect(jsonData.adressen.length).to.eql(1));\r",
+									"pm.test(\"anleitungen\", () => pm.expect(jsonData.anleitungen).to.eql(pm.variables.get(\"anleitungen\")));pm.test(\"adressen.length\", () => pm.expect(jsonData.adressen.length).to.eql(1));\r",
 									"pm.test(\"adressen[0].decoderId\", () => pm.expect(jsonData.adressen[0].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"adressen[0].index\", () => pm.expect(jsonData.adressen[0].index).to.eql(pm.variables.get(\"adIndex\")));\r",
 									"pm.test(\"adressen[0].bezeichnung\", () => pm.expect(jsonData.adressen[0].bezeichnung).to.eql(pm.variables.get(\"adBezeichnung\")));\r",
@@ -10105,7 +10332,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"decoderId\": \"{{decoderId}}\",\n    \"hersteller\": \"{{decoderHersteller}}\",\n    \"bestellNr\": \"{{decoderBestellNr}}\",\n    \"bezeichnung\": \"{{bezeichnung}}\",\n    \"protokoll\": \"{{protokoll}}\",\n    \"fahrstufe\": \"{{fahrstufe}}\",\n    \"status\": \"{{status}}\",\n\t\"deleted\": true\n}",
+							"raw": "{\n\t\"decoderId\": \"{{decoderId}}\",\n    \"hersteller\": \"{{decoderHersteller}}\",\n    \"bestellNr\": \"{{decoderBestellNr}}\",\n    \"bezeichnung\": \"{{bezeichnung}}\",\n    \"protokoll\": \"{{protokoll}}\",\n    \"fahrstufe\": \"{{fahrstufe}}\",\n    \"kaufdatum\": \"{{kaufdatum}}\",\n    \"wahrung\": \"{{wahrung}}\",\n    \"preis\": {{preis}},\n    \"anmerkung\": \"{{anmerkung}}\",\n    \"status\": \"{{status}}\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -10148,9 +10375,12 @@
 									"pm.test(\"gerausch\", () => pm.expect(jsonData.gerausch).to.be.true);\r",
 									"pm.test(\"konfiguration\", () => pm.expect(jsonData.konfiguration).to.eql(pm.variables.get(\"konfiguration\")));\r",
 									"pm.test(\"stecker\", () => pm.expect(jsonData.stecker).to.eql(pm.variables.get(\"stecker\")));\r",
+									"pm.test(\"kaufdatum\", () => pm.expect(jsonData.kaufdatum).to.eql(pm.variables.get(\"kaufdatum\")));\r",
+									"pm.test(\"wahrung\", () => pm.expect(jsonData.wahrung).to.eql(pm.variables.get(\"wahrung\")));\r",
+									"pm.test(\"preis\", () => pm.expect(jsonData.preis).to.eql(pm.variables.get(\"preis\")));\r",
+									"pm.test(\"anmerkung\", () => pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\")));\r",
 									"pm.test(\"status\", () => pm.expect(jsonData.status).to.eql(pm.variables.get(\"status\")));\r",
-									"pm.test(\"anleitungen\", () => pm.expect(jsonData.anleitungen).to.eql(undefined));\r",
-									"pm.test(\"adressen.length\", () => pm.expect(jsonData.adressen.length).to.eql(1));\r",
+									"pm.test(\"anleitungen\", () => pm.expect(jsonData.anleitungen).to.eql(pm.variables.get(\"anleitungen\")));pm.test(\"adressen.length\", () => pm.expect(jsonData.adressen.length).to.eql(1));\r",
 									"pm.test(\"adressen[0].decoderId\", () => pm.expect(jsonData.adressen[0].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"adressen[0].index\", () => pm.expect(jsonData.adressen[0].index).to.eql(pm.variables.get(\"adIndex\")));\r",
 									"pm.test(\"adressen[0].bezeichnung\", () => pm.expect(jsonData.adressen[0].bezeichnung).to.eql(pm.variables.get(\"adBezeichnung\")));\r",
@@ -10663,6 +10893,7 @@
 									"pm.environment.set(\"verbleibende\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
 									"pm.environment.set(\"anmerkung\", pm.variables.replaceIn(\"{{$randomCatchPhrase}}\"));\r",
 									"pm.environment.set(\"beladung\", pm.variables.replaceIn(\"{{$randomProductMaterial}}\"));\r",
+									"pm.environment.set(\"abbildung\", pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/abbildung.jpg\"));\r",
 									"pm.environment.set(\"status\", \"GEKAUFT\");"
 								],
 								"type": "text/javascript"
@@ -10707,7 +10938,7 @@
 									"pm.test(\"anmerkung\", () => pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\")));\r",
 									"pm.test(\"beladung\", () => pm.expect(jsonData.beladung).to.eql(pm.variables.get(\"beladung\")));\r",
 									"pm.test(\"status\", () => pm.expect(jsonData.status).to.eql(pm.variables.get(\"status\")));\r",
-									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(undefined));\r",
+									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(pm.variables.get(\"abbildung\")));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"anderungen.length\", () => pm.expect(jsonData.anderungen.length).to.eql(0));\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
@@ -11297,7 +11528,7 @@
 									"pm.test(\"anmerkung\", () => pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\")));\r",
 									"pm.test(\"beladung\", () => pm.expect(jsonData.beladung).to.eql(pm.variables.get(\"beladung\")));\r",
 									"pm.test(\"status\", () => pm.expect(jsonData.status).to.eql(pm.variables.get(\"status\")));\r",
-									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(undefined));\r",
+									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(pm.variables.get(\"abbildung\")));\r",
 									"pm.test(\"anderungen.length\", () => pm.expect(jsonData.anderungen.length).to.eql(1));\r",
 									"pm.test(\"anderungen[0].artikelId\", () => pm.expect(jsonData.anderungen[0].artikelId).to.eql(pm.variables.get(\"artikelId\")));\r",
 									"pm.test(\"anderungen[0].anderungId\", () => pm.expect(jsonData.anderungen[0].anderungId).to.eql(pm.variables.get(\"anderungId\")));\r",
@@ -11318,6 +11549,16 @@
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
 									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
 									"pm.test(\"_links.anderung\", () => pm.expect(jsonData._links.anderung[0].href).to.eql(self + \"/anderungen\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5b8e1f8f-30df-4aec-b20f-88fade33216e",
+								"exec": [
+									"pm.environment.set(\"abbildung\", pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/abbildung.jpg\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -11585,7 +11826,8 @@
 									"pm.environment.set(\"cnBahnverwaltung\", \"DB\");\r",
 									"pm.environment.set(\"cnGattung\", \"BR89.0\");\r",
 									"pm.environment.set(\"cnBetreibsnummer\", \"89 028\");\r",
-									"pm.environment.set(\"cnKupplung\", \"RELEX\");"
+									"pm.environment.set(\"cnKupplung\", \"RELEX\");\r",
+									"pm.environment.set(\"abbildung\", pm.variables.replaceIn(\"{{server}}/produkt/{{cnHersteller}}/{{cnBestellNr}}/abbildung.jpg\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -11610,7 +11852,7 @@
 									"pm.test(\"bahnverwaltung\", () => pm.expect(jsonData.bahnverwaltung).to.eql(pm.variables.get(\"cnBahnverwaltung\")));\r",
 									"pm.test(\"gattung\", () => pm.expect(jsonData.gattung).to.eql(pm.variables.get(\"cnGattung\")));\r",
 									"pm.test(\"betreibsnummer\", () => pm.expect(jsonData.betreibsnummer).to.eql(pm.variables.get(\"cnBetreibsnummer\")));\r",
-									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(pm.variables.get(undefined)));\r",
+									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(pm.variables.get(\"abbildung\")));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.parent\", () => pm.expect(jsonData._links.parent[0].href).to.eql(parent));\r",
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
@@ -11673,7 +11915,8 @@
 									"pm.environment.set(\"cnBahnverwaltung\", \"DB\");\r",
 									"pm.environment.set(\"cnGattung\", \"BI\");\r",
 									"pm.environment.set(\"cnBetreibsnummer\", \"29 758 Stg\");\r",
-									"pm.environment.set(\"cnKupplung\", \"RELEX\");"
+									"pm.environment.set(\"cnKupplung\", \"RELEX\");\r",
+									"pm.environment.set(\"abbildung\", pm.variables.replaceIn(\"{{server}}/produkt/{{cnHersteller}}/{{cnBestellNr}}/abbildung.jpg\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -11697,7 +11940,7 @@
 									"pm.test(\"bahnverwaltung\", () => pm.expect(jsonData.bahnverwaltung).to.eql(pm.variables.get(\"cnBahnverwaltung\")));\r",
 									"pm.test(\"gattung\", () => pm.expect(jsonData.gattung).to.eql(pm.variables.get(\"cnGattung\")));\r",
 									"pm.test(\"betreibsnummer\", () => pm.expect(jsonData.betreibsnummer).to.eql(pm.variables.get(\"cnBetreibsnummer\")));\r",
-									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(pm.variables.get(undefined)));\r",
+									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(pm.variables.get(pm.variables.get(\"abbildung\"))));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.parent\", () => pm.expect(jsonData._links.parent[0].href).to.eql(parent));\r",
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
@@ -11783,7 +12026,7 @@
 									"pm.test(\"consist[0].bahnverwaltung\", () => pm.expect(jsonData.consist[0].bahnverwaltung).to.eql(pm.variables.get(\"cnBahnverwaltung\")));\r",
 									"pm.test(\"consist[0].gattung\", () => pm.expect(jsonData.consist[0].gattung).to.eql(pm.variables.get(\"cnGattung\")));\r",
 									"pm.test(\"consist[0].betreibsnummer\", () => pm.expect(jsonData.consist[0].betreibsnummer).to.eql(pm.variables.get(\"cnBetreibsnummer\")));\r",
-									"pm.test(\"consist[0].abbildung\", () => pm.expect(jsonData.consist[0].abbildung).to.eql(pm.variables.get(undefined)));\r",
+									"pm.test(\"consist[0].abbildung\", () => pm.expect(jsonData.consist[0].abbildung).to.exist);\r",
 									"pm.test(\"consist[0].deleted\", () => pm.expect(jsonData.consist[0].deleted).to.be.false);\r",
 									"pm.test(\"consist[0]._links.parent\", () => pm.expect(jsonData.consist[0]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"consist[0]._links.update\", () => pm.expect(jsonData.consist[0]._links.update[0].href).to.eql(consistUrl));\r",
@@ -12098,6 +12341,9 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -15148,6 +15394,9 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -15244,6 +15493,9 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"url": {
@@ -15307,6 +15559,9 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"url": {
@@ -15400,6 +15655,9 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"url": {
@@ -15432,7 +15690,7 @@
 							"script": {
 								"id": "00150030-6df3-46ba-bd2b-3c33a6b45c6c",
 								"exec": [
-									"pm.environment.set(\"password\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"newPassword\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -15453,10 +15711,25 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{user}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "{{api}}/user/{{user}}?password={{password}}",
+							"raw": "{{api}}/user/{{user}}?password={{newPassword}}",
 							"host": [
 								"{{api}}"
 							],
@@ -15467,7 +15740,7 @@
 							"query": [
 								{
 									"key": "password",
-									"value": "{{password}}"
+									"value": "{{newPassword}}"
 								}
 							]
 						}
@@ -15521,6 +15794,21 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{newPassword}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{user}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -15593,6 +15881,21 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{newPassword}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{user}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -15628,6 +15931,21 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{newPassword}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{user}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [
 							{
@@ -15658,12 +15976,12 @@
 		"basic": [
 			{
 				"key": "password",
-				"value": "password",
+				"value": "{{authPassword}}",
 				"type": "string"
 			},
 			{
 				"key": "username",
-				"value": "username",
+				"value": "{{authUser}}",
 				"type": "string"
 			}
 		]
@@ -15692,623 +16010,623 @@
 	],
 	"variable": [
 		{
-			"id": "22c63a5e-8746-484c-9f87-0d7feb680528",
+			"id": "926eea71-41fd-4f22-a530-d5babaaf4635",
 			"key": "host",
 			"value": "127.0.0.1",
 			"disabled": true
 		},
 		{
-			"id": "38c53f41-3e96-4c96-a472-9ab753259d0d",
+			"id": "a20eb8ce-137e-436b-9fe9-87687728c330",
 			"key": "port",
 			"value": ":8086"
 		},
 		{
-			"id": "17ab0df1-3d75-49d2-9230-aaf65220b0e1",
+			"id": "4fdbc707-4879-4141-ba61-3095988822f8",
 			"key": "server",
 			"value": "https://{{host}}{{port}}"
 		},
 		{
-			"id": "53c134d9-c2b9-4437-a43a-a4bfb0371868",
+			"id": "3de86d50-cdcb-4811-b6da-d43513ba0a03",
 			"key": "root",
 			"value": "{{server}}/ModellBahn"
 		},
 		{
-			"id": "8342e48c-f585-40b3-b05c-8090d7e82317",
+			"id": "492f2d8b-29b3-4b6f-bdcc-dd7b85286386",
 			"key": "api",
 			"value": "{{root}}/api"
 		},
 		{
-			"id": "e08973f1-3be6-476d-8896-7a05cdc807be",
+			"id": "920868cc-a31b-40f7-8981-b00b686cca3b",
 			"key": "language",
 			"value": "de"
 		},
 		{
-			"id": "0b818f58-f13c-4a11-be42-5e106b375f4d",
+			"id": "d6c0a2fa-ee24-4694-afd2-0642dab1e2a4",
 			"key": "achsfolgAdd",
 			"value": "1C1H2T"
 		},
 		{
-			"id": "f1e8308e-2222-43df-9533-1145a5f8cedc",
+			"id": "a0022cae-4010-400d-bef7-ad5ef26bbde8",
 			"key": "achsfolgUpdate",
 			"value": "COCO"
 		},
 		{
-			"id": "48fbc66e-d910-48e2-99c7-f0fccc9c3cd9",
+			"id": "10961902-7f78-4e57-8428-48e2c4ac1826",
 			"key": "adIndexAdd",
 			"value": "1"
 		},
 		{
-			"id": "c9659a18-835c-4ed8-a333-47b59fa66205",
+			"id": "c9c009dd-e5de-4cf4-a811-23cec058d3e9",
 			"key": "adIndexUpdate",
 			"value": "1"
 		},
 		{
-			"id": "647823c1-603e-4e8e-b239-bfde2c2cf38e",
+			"id": "77b8bb7d-ceaa-42cc-b16f-c99de85b9a71",
 			"key": "adSpanAdd",
 			"value": "2"
 		},
 		{
-			"id": "313a9670-f21b-4e53-9f8b-4ee083936ff5",
+			"id": "577f9606-7d06-47c1-9671-616aaec24dac",
 			"key": "adSpanUpdate",
 			"value": "16"
 		},
 		{
-			"id": "7ed3abd7-8446-4c27-bf38-3c6025cf2089",
+			"id": "4acb642c-c334-40bc-a241-7b1a3f4c9aed",
 			"key": "adTypAdd",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "6c073dec-2b54-45f3-aa53-7b3ea44d8b5f",
+			"id": "3a3c6b05-1f3c-4189-b448-246e2e99489f",
 			"key": "adTypUpdate",
 			"value": "DELTA"
 		},
 		{
-			"id": "39b18abd-6e7e-41ef-a426-294f74046f7a",
+			"id": "d4f20070-a590-4e40-a50c-f02007cc521a",
 			"key": "adAdd",
 			"value": "10"
 		},
 		{
-			"id": "5736a66f-3738-4d05-9c10-1174875e4f65",
+			"id": "84feade2-63a3-4221-b7b6-d8c74fa63edd",
 			"key": "adUpdate",
 			"value": "80"
 		},
 		{
-			"id": "4cf02cb6-7da1-49de-aab5-2dab616491f0",
+			"id": "35b12182-89de-47bd-9547-2ebd48b64b86",
 			"key": "anderungAdd",
 			"value": "1"
 		},
 		{
-			"id": "6b7ae0da-b1eb-48a6-b38c-a9adf3a8b5f9",
+			"id": "12520bef-7c2e-40b9-a5af-4d372d11ceeb",
 			"key": "anderungUpdate",
 			"value": "1"
 		},
 		{
-			"id": "4e3814f0-13aa-4f77-b60b-1fec159f3afb",
+			"id": "36de210f-f597-43b4-81f4-e9a9c822ea15",
 			"key": "antriebAdd",
 			"value": "DAMPF"
 		},
 		{
-			"id": "5fdfb73f-4c30-45c6-a5d0-5230ea12f30a",
+			"id": "a889ef28-8ff4-4e37-8b44-1dd2872166c7",
 			"key": "antriebUpdate",
 			"value": "ELEKTRO"
 		},
 		{
-			"id": "cc06777d-2848-4e50-b2a9-0093b2cb5c7f",
+			"id": "8f057874-d29c-440a-b5c8-b0e057808e6a",
 			"key": "artikelAdd",
 			"value": "00001"
 		},
 		{
-			"id": "2afcb123-616a-4d8d-beed-22bf6267829e",
+			"id": "e7fbaa55-c985-4a4c-b4e8-ef32ec98e976",
 			"key": "artikelUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "8a55079e-164e-4027-9236-3eae88ef3249",
+			"id": "41f648f0-6017-4ccc-b69d-0fe4a3783af6",
 			"key": "aufbauAdd",
 			"value": "LK"
 		},
 		{
-			"id": "c7a12ad8-c59f-486e-8b72-827edec3d93f",
+			"id": "9fee48fe-e066-4919-a2cb-547ee8ab9438",
 			"key": "aufbauUpdate",
 			"value": "LK"
 		},
 		{
-			"id": "0f369c79-f0b2-407b-9898-f8c217b3a440",
+			"id": "a3c3ed44-28b6-4415-ade9-32e64ba1908e",
 			"key": "bestellNrAdd",
 			"value": "3000"
 		},
 		{
-			"id": "022fc18c-05a2-49ae-9fd5-bb83270994f4",
+			"id": "5321366c-244b-4127-b496-8739408ce86c",
 			"key": "bestellNrUpdate",
 			"value": "3003"
 		},
 		{
-			"id": "43694e1e-6939-44af-b2e4-141e9924bec1",
+			"id": "807c5073-af33-4c25-af37-615b9d0e2732",
 			"key": "bahnverwaltungAdd",
 			"value": "DB"
 		},
 		{
-			"id": "24bc1ac3-bbfe-4b4a-97f2-3f529581ed4e",
+			"id": "968e8bee-eb17-4b9c-8277-33db543f40d0",
 			"key": "bahnverwaltungUpdate",
 			"value": "DBAG"
 		},
 		{
-			"id": "18016619-aad5-4740-8325-3bc7a7281026",
+			"id": "ac2ab1e3-23cc-4ff6-bb75-634fddf5f7c7",
 			"key": "cvAdd",
 			"value": "8"
 		},
 		{
-			"id": "89a2a2e6-80f2-4b2f-84ad-aaf95b6e128e",
+			"id": "aeea9a8e-5786-4fac-b666-7aeac95d8174",
 			"key": "cvUpdate",
 			"value": "120"
 		},
 		{
-			"id": "541b9c31-22ec-4cce-a444-e3f26dbde849",
+			"id": "f8720ee3-eaa8-4086-9350-baecb6872991",
 			"key": "cvMaxAdd",
 			"value": "63"
 		},
 		{
-			"id": "6dd6c7c1-a345-4954-9527-7f8aa17c138a",
+			"id": "d28eccf9-5105-40d7-8800-9115a8b22616",
 			"key": "cvMaxUpdate",
 			"value": "80"
 		},
 		{
-			"id": "5713914b-16ce-4b27-8c35-0af176935ed9",
+			"id": "c965e1cd-c009-4bd2-8ee6-0e64753faeed",
 			"key": "cvMinAdd",
 			"value": "0"
 		},
 		{
-			"id": "49cc0d76-cc0c-4863-a8be-ad6720360017",
+			"id": "f5c2d2c8-9a09-443d-8647-f3f45e0242f4",
 			"key": "cvMinUpdate",
 			"value": "1"
 		},
 		{
-			"id": "5930845f-972f-4223-9285-00a4c4604bca",
+			"id": "f2169934-acb8-4991-b6ed-8dc02eeb9b92",
 			"key": "cvValueAdd",
 			"value": "30"
 		},
 		{
-			"id": "ed7450fc-b012-45ea-b9e6-296814e5cfb7",
+			"id": "bfa23b40-8b74-45a9-be6d-a493215c214c",
 			"key": "cvValueUpdate",
 			"value": "50"
 		},
 		{
-			"id": "07da15a6-f0a9-4df4-baaf-fee3dea91743",
+			"id": "45a7b9ed-01e0-4417-a11c-dcb5560e382e",
 			"key": "decoderAdd",
 			"value": "00001"
 		},
 		{
-			"id": "c55780f6-afe4-4326-9476-2eacd9441e43",
+			"id": "c2e37a7e-ef3a-4257-9509-95cbb16f4479",
 			"key": "decoderUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "f0d1a67e-ab9e-4483-8f07-233d3f8897ea",
+			"id": "ca7e13b3-8057-47ab-ac22-db2a007b245b",
 			"key": "decoderAdd",
 			"value": "00001"
 		},
 		{
-			"id": "02f4fddf-7ea0-45af-aa1e-865e19426d8f",
+			"id": "0392c40a-1245-49f6-9e21-60e38f609c2f",
 			"key": "decoderUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "a27848e9-3f28-473c-a4b0-c1921f53481b",
+			"id": "e9f7b0d9-7f5b-4837-9798-2985778a39b7",
 			"key": "decoderHerstellerAdd",
 			"value": "ESU"
 		},
 		{
-			"id": "2076282c-2eb7-4a72-ba5b-f13344971a4c",
+			"id": "ffcfd363-89fd-4aae-a7cc-f632f7339fbc",
 			"key": "decoderHerstellerUpdate",
 			"value": "ESU"
 		},
 		{
-			"id": "d5f5b9c7-f0e6-4e17-bd3b-9c62351770de",
+			"id": "926928b6-9ac2-4d7e-b605-363be11b30e7",
 			"key": "decoderBestellNrAdd",
 			"value": "62400"
 		},
 		{
-			"id": "cd5588da-3c90-43c7-973d-66fd0a81c69d",
+			"id": "e9621ee7-907c-4490-9952-5fac59429081",
 			"key": "decoderBestellNrUpdate",
 			"value": "62499"
 		},
 		{
-			"id": "9eb72e96-a8d1-4732-8480-e2d6284ed34c",
+			"id": "8ee06864-b46e-4d70-9489-717a6a5cde93",
 			"key": "decoderBezeichnungAdd",
 			"value": "LokSound M4"
 		},
 		{
-			"id": "b6425a84-2678-4db0-962a-d93dde37f72a",
+			"id": "ff21ad1b-5f10-40d5-99cf-e5fcd09305f0",
 			"key": "epochAdd",
 			"value": "IV"
 		},
 		{
-			"id": "9ae9be81-f6ec-40be-ba47-f8dc53ecb72a",
+			"id": "b24e3796-225d-4154-82e6-284bc15a92fa",
 			"key": "epochUpdate",
 			"value": "IV"
 		},
 		{
-			"id": "8ce35f02-5652-4575-ad40-1525337c4126",
+			"id": "06abfb91-9315-4dcf-b232-a547735129f8",
 			"key": "fahrstufeAdd",
 			"value": "27"
 		},
 		{
-			"id": "c97c3911-5c93-44d2-910e-5fd5af30e16e",
+			"id": "4bb11970-c644-404a-a4f3-197838079c73",
 			"key": "fahrstufeUpdate",
 			"value": "128"
 		},
 		{
-			"id": "a7edd859-9381-4458-9034-b6f3acdba0dd",
+			"id": "e535f45d-4493-46dd-bc53-e589a61126b3",
 			"key": "fnFuntionAdd",
 			"value": "F0"
 		},
 		{
-			"id": "cdbedb33-7244-4aef-8880-19850cb42023",
+			"id": "d95890e1-c708-4933-8732-4e9af3fec80f",
 			"key": "fnFuntionUpdate",
 			"value": "F0"
 		},
 		{
-			"id": "0360ab8e-d461-42a2-a869-534710ced176",
+			"id": "98d21df8-9c54-446d-81bb-6d967f128fa2",
 			"key": "fnReiheAdd",
 			"value": "1"
 		},
 		{
-			"id": "55ef1c67-f636-44b5-9713-8b52be66dd6d",
+			"id": "4285326d-e44f-4583-a30b-60d90ad5b9f0",
 			"key": "fnReiheUpdate",
 			"value": "1"
 		},
 		{
-			"id": "dd30b97e-85b4-4571-a4c9-f458cbabbd8d",
+			"id": "1a9637f9-4a17-458c-a294-fa4426c36f1b",
 			"key": "gattungAdd",
 			"value": "BR89.0"
 		},
 		{
-			"id": "fa40607f-301b-4ab7-af5e-816ee0f87403",
+			"id": "dc9788cf-1469-4911-88a4-c7df24c91df6",
 			"key": "gattungUpdate",
 			"value": "BR89.0"
 		},
 		{
-			"id": "41e4ded1-b8c0-471c-80bc-9c9df07a4a95",
+			"id": "b1f4ec6c-37ac-4101-831e-abba7c1c7c20",
 			"key": "herstellerAdd",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "5223c6f6-53a4-4d55-9bf3-321f237ed2c7",
+			"id": "c9c03893-90c0-4e10-acd1-d67791bde0c4",
 			"key": "herstellerUpdate",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "1fae0edc-3b63-43f0-b7ea-c90400642e87",
+			"id": "e9b652fe-6e18-4e8c-8e51-734425b09b6d",
 			"key": "iMaxAdd",
 			"value": "1.5"
 		},
 		{
-			"id": "8ab6250f-4fa6-4f3a-b76d-254f1c6a81ab",
+			"id": "5e43db82-304f-42eb-9f59-7ea30599c906",
 			"key": "iMaxUpdate",
 			"value": "2.0"
 		},
 		{
-			"id": "dc8d08a0-3918-474b-9f56-ce01bc12c335",
+			"id": "3b649d7c-0026-472e-89ca-e5d0253e187a",
 			"key": "kategorieAdd",
 			"value": "LOKOMOTIV"
 		},
 		{
-			"id": "be1e311a-e392-40ad-8b97-cf74bbaff46c",
+			"id": "45ed3259-6a62-45ab-b490-e9020803f517",
 			"key": "kategorieUpdate",
 			"value": "AUSGESTALTUNG"
 		},
 		{
-			"id": "fb23712a-5aa5-4823-ba86-4430145db0e4",
+			"id": "b7ddffa5-a079-46cb-9977-ca41db35f0a9",
 			"key": "kupplungAdd",
 			"value": "RELEX"
 		},
 		{
-			"id": "5611006d-24cf-40f4-9397-c93d4993f16d",
+			"id": "a1683327-b68f-4f70-8867-2f79cfc7ce79",
 			"key": "kupplungUpdate",
 			"value": "RELEX"
 		},
 		{
-			"id": "ca9c7dab-bedf-44c5-b9d8-f6851eed9ce3",
+			"id": "bb5aa9ed-1e03-44de-ae29-2f4cf334816d",
 			"key": "konfigurationAdd",
 			"value": "CV"
 		},
 		{
-			"id": "a50f479b-216a-40f3-8392-14486060a0f3",
+			"id": "f1a0c4d9-94b6-4b21-a955-1267b0094b27",
 			"key": "konfigurationUpdate",
 			"value": "STECKER"
 		},
 		{
-			"id": "7fd2c921-bc74-46b4-b82e-4b4a6bf51145",
+			"id": "d3cde028-6019-4349-be51-9d76a34bf72e",
 			"key": "leistungsubertragungAdd",
 			"value": "MECHANISH"
 		},
 		{
-			"id": "fdd1a476-861b-44f1-838c-092f50db8445",
+			"id": "da79bcc3-092e-464b-9e72-ee0fab5ddd7e",
 			"key": "leistungsubertragungUpdate",
 			"value": "ELEKTRISH"
 		},
 		{
-			"id": "8eecc239-65af-413b-8a37-269d9387dfe9",
+			"id": "0036858b-89e4-4e5f-b2af-d74e74bc3801",
 			"key": "lichtAdd",
 			"value": "L1V"
 		},
 		{
-			"id": "154a20b3-9642-4944-98e7-a08141894249",
+			"id": "d0268928-ddc1-4ca2-a2bf-82650ddbdae2",
 			"key": "lichtUpdate",
 			"value": "L1V"
 		},
 		{
-			"id": "3ea3b9c9-1d0a-4f06-b1c8-dfe226c30542",
+			"id": "e9cd0156-132e-4bbb-87f7-966cdade140e",
 			"key": "massstabAdd",
 			"value": "H0"
 		},
 		{
-			"id": "4ad2faf3-93ad-4e39-83a8-43565f78df79",
+			"id": "9dcec270-9dd6-4a21-a0b6-020e506a1b33",
 			"key": "massstabUpdate",
 			"value": "H0"
 		},
 		{
-			"id": "4e3d39b3-3df0-4d93-a1d9-68f5e166f0b4",
+			"id": "b889fc4e-aac7-412a-9e21-ebb986a21731",
 			"key": "motorTypAdd",
 			"value": "CSINUS"
 		},
 		{
-			"id": "c1e46310-7d4c-485d-b190-8a384ee1690b",
+			"id": "d1fd5c71-6583-461c-b65a-9299549af546",
 			"key": "motorTypUpdate",
 			"value": "CSINUS"
 		},
 		{
-			"id": "e291d4d2-2f88-4a8a-9ca4-db70e14f5919",
+			"id": "980d3735-4539-4625-bb48-b31e281867dd",
 			"key": "protokollAdd",
 			"value": "MFX"
 		},
 		{
-			"id": "ffce7260-89b4-4b2e-a4db-90f1a155c1d5",
+			"id": "fc33bc0d-e2ae-44f8-959e-cb05fc057da9",
 			"key": "protokollUpdate",
 			"value": "DELTA"
 		},
 		{
-			"id": "451fa05e-58a9-42a2-bbce-d03524917a19",
+			"id": "fead3e36-7f80-4c79-8795-de3ab82109a0",
 			"key": "sondermodellAdd",
 			"value": "MM"
 		},
 		{
-			"id": "c70ef5e9-0d9c-4dc6-bcbe-2ca601d3d5cc",
+			"id": "78c36479-1425-4515-b102-441b29363380",
 			"key": "sondermodellUpdate",
 			"value": "MM"
 		},
 		{
-			"id": "b3e89afb-9361-4eae-9edb-a0f964d92b82",
+			"id": "2e806dd9-95ae-47b6-9177-b975e18ffb02",
 			"key": "spurweiteAdd",
 			"value": "H0"
 		},
 		{
-			"id": "4621c145-1ae5-4f2d-84b7-0750b4ebc892",
+			"id": "40e1fb99-19ce-49d2-9549-6bac64d15185",
 			"key": "spurweiteUpdate",
 			"value": "H0"
 		},
 		{
-			"id": "8beb811e-7e72-41e9-8e40-29f81d961bc2",
+			"id": "9e590886-db25-4199-b0c8-d7d2392fbe9e",
 			"key": "steckerAdd",
 			"value": "NEM651"
 		},
 		{
-			"id": "4835dccd-ba23-4638-81f4-bf539973388f",
+			"id": "c429d8ef-fda9-4c4d-a8ce-93ebb300be30",
 			"key": "steckerUpdate",
 			"value": "NEM652"
 		},
 		{
-			"id": "010cb9e5-3b3f-4fa0-91e1-1025e1d43de1",
+			"id": "7ec4c17d-1fbf-4dbc-8e1f-46e4dfdf929e",
 			"key": "steuerungAdd",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "6ea3f9d0-fa90-47fd-b4be-8a8393168657",
+			"id": "ff650001-1bcd-4726-9e12-a03f94c4c087",
 			"key": "steuerungUpdate",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "9ab773b0-a2c8-4610-adc4-e844ba902898",
+			"id": "44c55aaa-8534-44d5-b90c-cbae17513b67",
 			"key": "teilHerstellerAdd",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "8d85abb8-997c-4a91-8afb-adf517d71753",
+			"id": "d96957d2-e558-4f9a-86d2-51990f09c44f",
 			"key": "teilBestellNrAdd",
 			"value": "600300"
 		},
 		{
-			"id": "d2e0ba6e-614e-47c8-b178-c4b4c43266f1",
+			"id": "43c4ff08-213a-462f-8661-9aed81e9e259",
 			"key": "teilKategorieAdd",
 			"value": "ERSATZTEIL"
 		},
 		{
-			"id": "02b4e7ef-99b2-4054-860f-c9b51f793725",
+			"id": "89d0c897-f93f-4103-bea9-504fba6e085a",
 			"key": "teilUnterKategorieAdd",
 			"value": "BURSTEN"
 		},
 		{
-			"id": "a6854234-fc89-4c28-a46b-985a9742df06",
+			"id": "dfa6994b-8916-4fab-bec3-6d3d802e2996",
 			"key": "unterKategorieAdd",
 			"value": "DAMPF"
 		},
 		{
-			"id": "93203462-bebc-4c48-8c67-ac64c4582214",
+			"id": "fb952ff8-a1ac-4fc9-8b3b-90cbdfde6c8b",
 			"key": "unterKategorieUpdate",
 			"value": "HECKEN"
 		},
 		{
-			"id": "d2e65d47-12f0-44ee-9864-32509c7ff49d",
+			"id": "6a8829fa-c050-4189-8d04-c22fd6d2e560",
 			"key": "teilBezeichnungAdd",
 			"value": "Bürsten"
 		},
 		{
-			"id": "c1828252-9108-4681-b48e-bfd34daeb42f",
+			"id": "139925e6-6cab-4cc3-af09-4ae718ee1d0f",
 			"key": "vorbildAdd",
 			"value": "HECKEN"
 		},
 		{
-			"id": "ead951b8-d9c2-442a-8003-80beb3a9e1ba",
+			"id": "09ee9a29-d87a-4161-a9e7-440487947786",
 			"key": "vorbildUpdate",
 			"value": "HECKEN"
 		},
 		{
-			"id": "d292551b-8221-42eb-9e23-52a24cf2632d",
+			"id": "4dd69b4c-a651-4b88-b58e-5527e5eb09da",
 			"key": "zugAdd",
 			"value": "BAVARIA"
 		},
 		{
-			"id": "62521049-b3a6-4cee-b741-4db06f6040a5",
+			"id": "991f9fd6-527e-4153-81d5-f78d8f0e0b53",
 			"key": "zugUpdate",
 			"value": "BAVARIA"
 		},
 		{
-			"id": "9185e58b-cebd-4fe5-a26d-82a0a4fe659c",
+			"id": "7a2f6b0d-db26-4107-8b9d-22948654f9a6",
 			"key": "zugTypAdd",
 			"value": "TEE"
 		},
 		{
-			"id": "b921397a-411f-45a6-a59b-e666b5dde08a",
+			"id": "fff23707-8fc0-4073-82a6-7b7691aa84e4",
 			"key": "zugTypUpdate",
 			"value": "TEE"
 		},
 		{
-			"id": "dc39e43c-937b-4d52-97df-dcaf10bcb0b7",
+			"id": "6e4c193e-0dab-46ec-a467-a77012042e90",
 			"key": "imageFile",
 			"value": "3000.jpg"
 		},
 		{
-			"id": "c8d9dfc6-4f37-4347-ba42-e93ac93d697b",
+			"id": "0aebef8c-077f-467e-a3c3-fa4c482ee887",
 			"key": "anleitungFile",
 			"value": "3000_betrieb.pdf"
 		},
 		{
-			"id": "1a536090-b680-42ad-8438-f33f75eb78e6",
+			"id": "3dc70e36-e36b-4ef9-8995-238bb823e713",
 			"key": "explosionszeichnungFile",
 			"value": "3000_explo.pdf"
 		},
 		{
-			"id": "63068038-44ff-4b27-b95e-ddd048ea2e11",
+			"id": "4c121560-a1b2-49b0-b7c3-89e8b3bb573b",
 			"key": "xlFile",
 			"value": "3000.jpg"
 		},
 		{
-			"id": "439a9bbe-8264-4959-a5f1-ae0b8be41183",
+			"id": "bbfb1dc6-17c5-4d97-98f9-c9d976ade2c1",
 			"key": "landAdd",
 			"value": "DE"
 		},
 		{
-			"id": "de063bd3-f01d-46c8-a283-6eea95880032",
+			"id": "62829c2f-f3cd-4cc8-b28d-a4b59cd05949",
 			"key": "landUpdate",
 			"value": "NL"
 		},
 		{
-			"id": "40e22629-fcee-411b-8748-caa6b5894467",
+			"id": "4f0d9cc0-474f-4508-b624-cf3d05dba216",
 			"key": "telefonAdd",
 			"value": "+497161608222"
 		},
 		{
-			"id": "98eab7dc-9d38-4609-8fc8-64074028451f",
+			"id": "f0c751e8-1aee-46b6-ade6-7989702c2f51",
 			"key": "telefonUpdate",
 			"value": "030 2341347"
 		},
 		{
-			"id": "2bcf4bfd-cf9f-4e81-bd18-c7eab9f1b702",
+			"id": "e8840638-7625-4e06-88d2-5c6320b97e9f",
 			"key": "abbildungCsv",
 			"value": "abbildungCsv.csv"
 		},
 		{
-			"id": "095ae14c-7a5b-47ce-822c-2f309ed08d6e",
+			"id": "b40be7f5-bedf-4a4b-843f-1bff48c75dd9",
 			"key": "anderungCsv",
 			"value": "anderungCsv.csv"
 		},
 		{
-			"id": "751061fc-0556-4449-9316-27a882aade34",
+			"id": "35345896-99c3-4835-8fb2-e59e75dace8b",
 			"key": "artikelCsv",
 			"value": "artikelCsv.csv"
 		},
 		{
-			"id": "2925e4bd-4126-496c-8cb6-b99334c484b7",
+			"id": "85adc8af-209d-43a7-980d-910a7ff370b1",
 			"key": "bahnverwaltungCsv",
 			"value": "bahnverwaltungCsv.csv"
 		},
 		{
-			"id": "898eef21-83e4-4150-a669-be377363b70a",
+			"id": "4bb1c5bc-fa85-487a-9de9-8f4a5a548366",
 			"key": "consistCsv",
 			"value": "consistCsv.csv"
 		},
 		{
-			"id": "75dd0b3d-b2b8-4681-9406-b99e0406bb2b",
+			"id": "12dfb483-ba9d-428d-bef2-ab31b53cfe1b",
 			"key": "decoderCsv",
 			"value": "decoderCsv.csv"
 		},
 		{
-			"id": "cac9c7af-2918-42f8-a1b4-704b6289314e",
+			"id": "c3ec7da5-d123-4715-acd8-7a21960bec39",
 			"key": "decoderAdressCsv",
 			"value": "decoderAdressCsv.csv"
 		},
 		{
-			"id": "74ef405b-2f9a-4d00-a95e-9c4ce8fb2829",
+			"id": "01060236-5159-4919-b3c4-0f63beaf09be",
 			"key": "decoderCvCsv",
 			"value": "decoderCvCsv.csv"
 		},
 		{
-			"id": "9f8a3247-9ca2-48ef-a233-712f3eb09fe4",
+			"id": "66562f24-5cbc-4c07-935f-09e05724aaf8",
 			"key": "decoderFunktionCsv",
 			"value": "decoderFunktionCsv.csv"
 		},
 		{
-			"id": "5fddc082-9963-440f-a48a-b7cce672aab6",
+			"id": "2a3755af-37fc-4164-9734-84a87f4d8b7c",
 			"key": "decoderTypCsv",
 			"value": "decoderTypCsv.csv"
 		},
 		{
-			"id": "c4132cea-799a-4105-aa41-217102abd6fd",
+			"id": "11bba967-852b-4638-84e0-b4d10edecad3",
 			"key": "decoderTypAdressCsv",
 			"value": "decoderTypAdressCsv.csv"
 		},
 		{
-			"id": "127afb82-e159-4e9c-aa26-cb3f9742c37d",
+			"id": "9e5bc352-3e87-42e6-bbe8-e7ae7f0318df",
 			"key": "decoderTypCvCsv",
 			"value": "decoderTypCvCsv.csv"
 		},
 		{
-			"id": "e083081c-4a17-443b-a691-0cd674a0a48f",
+			"id": "69468e98-32e7-479a-b4e8-2278723c939a",
 			"key": "decoderTypFunktionCsv",
 			"value": "decoderTypFunktionCsv.csv"
 		},
 		{
-			"id": "d7e5742c-87e4-45f0-bd5b-be23b9d646fd",
+			"id": "3c099b79-ae1c-4d0e-80b6-b51dcfe2cbb8",
 			"key": "herstellerCsv",
 			"value": "herstellerCsv.csv"
 		},
 		{
-			"id": "bc010865-d86c-4fd6-a20c-ea3eeda99246",
+			"id": "82630403-a176-4235-839b-4074adb05f28",
 			"key": "namedCsv",
 			"value": "namedCsv.csv"
 		},
 		{
-			"id": "d3dd166b-9fc9-489f-b205-a5694c2a8745",
+			"id": "a940c140-f7a3-4e4d-85c8-600031b7249e",
 			"key": "produktCsv",
 			"value": "produktCsv.csv"
 		},
 		{
-			"id": "0ad06284-f516-4f12-95f4-74440914f210",
+			"id": "da99ce98-6356-4b57-b3f5-908b39af08bd",
 			"key": "teilCsv",
 			"value": "teilCsv.csv"
 		},
 		{
-			"id": "9d51190d-528d-474a-8131-ed9050ccd24d",
+			"id": "a4b2f735-adab-4e10-9ce0-c44d898bdf30",
 			"key": "unterKategorieCsv",
 			"value": "unterKategorieCsv.csv"
 		},
 		{
-			"id": "7da9f881-d90e-45b8-9fc6-08802af11f34",
+			"id": "473f853d-e5ac-4334-9f63-b30302c32289",
 			"key": "vorbildCsv",
 			"value": "vorbildCsv.csv"
 		},
 		{
-			"id": "2ffd5d2d-dbc5-43c7-a88f-210d2e3087e8",
+			"id": "86536363-fb71-4fbb-8c93-8cd9dd183aec",
 			"key": "zugCsv",
 			"value": "zugCsv.csv"
 		}

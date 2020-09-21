@@ -19,6 +19,7 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -105,8 +106,8 @@ public class UserController {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody UserModel model) {
-        return userService.update(name, model)
+    public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody UserModel model, Authentication authentication) {
+        return userService.update(name, model, authentication)
                           .map(b -> accepted().body(b))
                           .orElse(notFound().build());
     }
@@ -118,8 +119,8 @@ public class UserController {
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> changePassword(@PathVariable(ApiNames.NAMEN) String name, @RequestParam(ApiNames.PASSWORD) String password) {
-        return status(ACCEPTED).body(userService.changePassword(name, password));
+    public ResponseEntity<?> changePassword(@PathVariable(ApiNames.NAMEN) String name, @RequestParam(ApiNames.PASSWORD) String password, Authentication authentication) {
+        return status(ACCEPTED).body(userService.changePassword(name, password, authentication));
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_USER)
@@ -133,8 +134,8 @@ public class UserController {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> delete(@PathVariable(ApiNames.NAMEN) String name) {
-        return (userService.delete(name) ? noContent() : notFound()).build();
+    public ResponseEntity<?> delete(@PathVariable(ApiNames.NAMEN) String name, Authentication authentication) {
+        return (userService.delete(name, authentication) ? noContent() : notFound()).build();
     }
 
     @PostMapping(path = ApiPaths.REGISTER_USER)

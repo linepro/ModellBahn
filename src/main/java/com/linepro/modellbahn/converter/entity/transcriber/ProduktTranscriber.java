@@ -49,7 +49,6 @@ public class ProduktTranscriber implements Transcriber<Produkt, ProduktModel> {
             destination.setAchsfolg(getCode(source.getAchsfolg()));
             destination.setSondermodell(getCode(source.getSondermodell()));
             destination.setAufbau(getCode(source.getAufbau()));
-            destination.setAbbildung(PathMutator.convert(source.getAbbildung()));
             destination.setBauzeit(source.getBauzeit());
             destination.setAnmerkung(source.getAnmerkung());
             destination.setLicht(getCode(source.getLicht()));
@@ -62,6 +61,8 @@ public class ProduktTranscriber implements Transcriber<Produkt, ProduktModel> {
             destination.setMotorTyp(getCode(source.getMotorTyp()));
             destination.setAnleitungen(PathMutator.convert(source.getAnleitungen()));
             destination.setExplosionszeichnung(PathMutator.convert(source.getExplosionszeichnung()));
+            destination.setAbbildung(PathMutator.convert(source.getAbbildung()));
+            destination.setGrossansicht(PathMutator.convert(source.getGrossansicht()));
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
 
             if (isAvailable(source.getTeilen())) {

@@ -271,4 +271,33 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
     public ResponseEntity<?> deleteExplosionszeichnung(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
         return updated(service.deleteExplosionszeichnung(herstellerStr, bestellNr));
     }
+
+    @PutMapping(path = ApiPaths.ADD_PRODUKT_GROSSANSICHT, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
+    @Operation(summary = "Add an Produkt large view", description = "Adds or updates the large view of a named Produkt", operationId = "update", tags = { ApiNames.PRODUKT })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
+    public ResponseEntity<?> updateGrossansicht(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestParam(ApiNames.ABBILDUNG) MultipartFile multipart) {
+        return updated(service.updateGrossansicht(herstellerStr, bestellNr, multipart));
+    }
+
+    @DeleteMapping(path = ApiPaths.DELETE_PRODUKT_GROSSANSICHT, produces = MediaType.APPLICATION_JSON)
+    @Operation(summary = "Removes a large view from an Product", description = "", operationId = "delete", tags = { ApiNames.PRODUKT })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+                })
+    public ResponseEntity<?> deleteGrossansicht(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
+        return updated(service.deleteGrossansicht(herstellerStr, bestellNr));
+    }
 }

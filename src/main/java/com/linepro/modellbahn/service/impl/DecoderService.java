@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.linepro.modellbahn.converter.entity.DecoderAdressMutator;
 import com.linepro.modellbahn.converter.entity.DecoderCvMutator;
@@ -80,19 +81,17 @@ public class DecoderService extends ItemServiceImpl<DecoderModel,Decoder> implem
     }
 
     @Transactional
-    public Optional<DecoderModel> add(String herstellerStr, String bestellNr) {
+    public Optional<DecoderModel> add(String herstellerStr, String bestellNr, DecoderModel model) {
         Optional<DecoderTyp> found = typRepository.findByBestellNr(herstellerStr, bestellNr);
 
         if (found.isPresent()) {
             DecoderTyp decoderTyp = found.get();
 
             Decoder initial = new Decoder();
+            model.setDecoderId(null);
             initial.setDecoderId(assetIdGenerator.getNextAssetId());
             initial.setDecoderTyp(decoderTyp);
-            initial.setBezeichnung(decoderTyp.getBezeichnung());
-            initial.setFahrstufe(decoderTyp.getFahrstufe());
-            initial.setProtokoll(decoderTyp.getProtokoll());
-            initial.setStatus(DecoderStatus.FREI);
+            initial = modelMutator.apply(model, initial);
             initial.setDeleted(false);
 
             final Decoder decoder = repository.saveAndFlush(initial);

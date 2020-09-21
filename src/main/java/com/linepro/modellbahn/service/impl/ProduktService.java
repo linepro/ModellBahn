@@ -173,4 +173,24 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implem
                         })
                         .flatMap(e -> this.get(hersteller, bestellNr));
     }
+
+    @Transactional
+    public Optional<ProduktModel> updateGrossansicht(String hersteller, String bestellNr, MultipartFile multipart) {
+        return  repository.findByBestellNr(hersteller, bestellNr)
+                        .map(a -> {
+                            a.setGrossansicht(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.PRODUKT, ApiNames.GROSSANSICHT, hersteller, bestellNr));
+                            return repository.saveAndFlush(a);
+                        })
+                        .flatMap(e -> this.get(hersteller, bestellNr));
+    }
+
+    @Transactional
+    public Optional<ProduktModel> deleteGrossansicht(String hersteller, String bestellNr) {
+        return repository.findByBestellNr(hersteller, bestellNr)
+                        .map(a -> {
+                            a.setGrossansicht(fileService.deleteFile(a.getGrossansicht()));
+                            return repository.saveAndFlush(a);
+                        })
+                        .flatMap(e -> this.get(hersteller, bestellNr));
+    }
 }

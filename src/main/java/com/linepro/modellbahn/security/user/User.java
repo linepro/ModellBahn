@@ -1,14 +1,8 @@
 package com.linepro.modellbahn.security.user;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -18,14 +12,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.validation.Locale;
@@ -51,9 +40,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class User implements UserDetails {
-
-    private static final long serialVersionUID = -3641616292070768935L;
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -79,7 +66,7 @@ public class User implements UserDetails {
     private String lastName;
 
     @Column(name = DBNames.ENABLED, nullable = false)
-    private boolean enabled;
+    private Boolean enabled;
 
     @Column(name = DBNames.LOGIN_ATTEMPTS)
     private Integer loginAttempts;
@@ -99,8 +86,8 @@ public class User implements UserDetails {
     @Column(name = DBNames.CONFIRMATION_TOKEN, length = 36)
     private UUID confirmationToken;
 
-    @Column(name = DBNames.RESET_TOKEN, length = 36)
-    private UUID resetToken;
+    @Column(name = DBNames.CONFIRMATION_EXPIRES)
+    private LocalDateTime confirmationExpires;
 
     @Column(name = DBNames.LOCALE, length = 50)
     @Locale(message = "{com.linepro.modellbahn.validator.constraints.user.locale.valid}")
@@ -109,64 +96,4 @@ public class User implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = DBNames.ROLES, length = 50)
     private List<String> roles;
-
-    @Transient
-    @Override
-    public String getUsername() {
-        return getName();
-    }
-
-    @Transient
-    @Override
-    public boolean isAccountNonExpired() {
-        return Optional.ofNullable(getLastLogin())
-                       .map(l -> Duration.between(l, LocalDateTime.now()).get(ChronoUnit.YEARS) < 2)
-                       .orElse(true);
-    }
-
-    @Transient
-    @Override
-    public boolean isAccountNonLocked() {
-        return Optional.ofNullable(getLoginFailures())
-                        .map(f -> Optional.of(getLoginAttempts())
-                                          .map(a -> a > f)
-                                          .orElse(true))
-                        .orElse(true);
-    }
-
-    @Transient
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return Optional.ofNullable(getPasswordAging())
-                        .map(a -> Optional.of(getPasswordChanged())
-                                          .map(c -> Duration.between(c, LocalDateTime.now()).get(ChronoUnit.DAYS) < a)
-                                          .orElse(true))
-                        .orElse(true);
-    }
-
-    @Transient
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Optional.ofNullable(getRoles())
-                       .map(r -> r.stream()
-                                  .map(o -> new SimpleGrantedAuthority(o))
-                                  .collect(Collectors.toList()))
-                       .orElse(Collections.emptyList());
-    }
-
-    @Transient
-    public void setPassword(String password) {
-        this.password = password;
-        this.passwordChanged = LocalDateTime.now();
-    }
-
-    @Transient
-    public void clearConfirmationToken() {
-        setConfirmationToken(null);
-    }
-
-    @Transient
-    public void clearResetToken() {
-        setResetToken(null);
-    }
 }

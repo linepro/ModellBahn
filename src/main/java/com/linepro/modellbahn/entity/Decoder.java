@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.entity;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,7 +23,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -32,6 +36,7 @@ import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.model.enums.DecoderStatus;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.validation.Currency;
 import com.linepro.modellbahn.validation.Fahrstufe;
 
 import lombok.Builder;
@@ -210,6 +215,26 @@ public class Decoder extends ItemImpl implements Comparable<Decoder> {
     @Column(name = DBNames.FAHRSTUFE)
     @Fahrstufe
     private Integer fahrstufe;
+
+    /** The Kaufdatum. */
+    @Column(name = DBNames.KAUFDATUM)
+    @PastOrPresent(message = "{com.linepro.modellbahn.validator.constraints.kaufdatum.past}")
+    private LocalDate kaufdatum;
+
+    /** The wahrung. */
+    @Column(name = DBNames.WAHRUNG, length = 3)
+    @Currency(message = "{com.linepro.modellbahn.validator.constraints.wahrung.invalid}")
+    private String wahrung;
+
+    /** The preis. */
+    @Column(name = DBNames.PREIS, precision = 6, scale = 2)
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.preis.positive}")
+    private BigDecimal preis;
+
+    /** The anmerkung. */
+    @Column(name = DBNames.ANMERKUNG, length = 100)
+    @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
+    private String anmerkung;
 
     @Enumerated(EnumType.STRING)
     @Column(name = DBNames.STATUS, nullable = false, length = 11)

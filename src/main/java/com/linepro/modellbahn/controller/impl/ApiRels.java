@@ -26,11 +26,12 @@ public interface ApiRels {
     String DECODER = "decoder";
     String DECODER_TYP = "typ";
     String EXPLOSIONSZEICHNUNG = "explosionszeichnung";
+    String FORGOT = "forgot";
     String FUNKTION = "funktion";
+    String GROSSANSICHT = "grossansicht";
+    String PASSWORD = "password";
     String PRODUKT = "produkt";
+    String REGISTER = "register";
     String TEIL = "teil";
     String UNTER_KATEGORIE = "unterKategorie";
-    String PASSWORD = "password";
-    String FORGOT = "forgot";
-    String REGISTER = "register";
 }
