@@ -13,9 +13,7 @@ import org.springframework.security.authentication.event.AuthenticationSuccessEv
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Component(PREFIX + "AuthenticationListener")
 @RequiredArgsConstructor
 public class UserAuthenticationListener implements ApplicationListener<AbstractAuthenticationEvent> {

@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import org.springframework.util.StringUtils;
+
 public class CountryValidator implements ConstraintValidator<Country, String> {
 
     private static final Set<String> COUNTRIES = Arrays.asList(Locale.getISOCountries())
@@ -17,7 +19,7 @@ public class CountryValidator implements ConstraintValidator<Country, String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
 
-        if (value != null) {
+        if (StringUtils.hasText(value)) {
             return COUNTRIES.contains(value);
         }
 

@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -61,6 +62,7 @@ public class KategorieModel extends RepresentationModel<KategorieModel> implemen
     @Schema(description = "Category description", example = "Lokomotiv")
     private String bezeichnung;
 
+    @SuppressExport
     @JsonProperty(ApiNames.UNTER_KATEGORIEN)
     @Schema(implementation = UnterKategorieModel.class, name = "Sub categories", accessMode = AccessMode.READ_ONLY)
     private List<UnterKategorieModel> unterKategorien;

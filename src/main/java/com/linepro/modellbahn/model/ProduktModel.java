@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -155,6 +156,7 @@ public class ProduktModel extends RepresentationModel<ProduktModel> implements I
     @Schema(description = "Parts diagram URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/explosionszeichnung.pdf", accessMode = AccessMode.READ_ONLY)
     private String explosionszeichnung;
 
+    @SuppressExport
     @JsonProperty(ApiNames.TEILEN)
     @Schema(implementation = ProduktTeilModel.class, name = "Product components", accessMode = AccessMode.READ_ONLY)
     private List<ProduktTeilModel> teilen;

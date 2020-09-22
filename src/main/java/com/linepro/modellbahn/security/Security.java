@@ -15,11 +15,6 @@ import com.linepro.modellbahn.security.user.UserModelProcessor;
 import com.linepro.modellbahn.security.user.UserService;
 
 @Import({
-//    AuthorizationServerConfig.class,
-//    CorsConfig.class,
-//    CustomAccessTokenConverter.class,
-//    OAuth2ResourceServerConfig.class,
-//    OAuth2TokenForwardingContext.class,
     EmailService.class,
     ModellBahnBasicAuthenticationEntryPoint.class,
     PasswordProcessor.class,

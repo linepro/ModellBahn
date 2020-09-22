@@ -1,2 +1,2 @@
-decoderId,hersteller,bestellNr,bezeichnung,iMax,protokoll,fahrstufe,gerausch,konfiguration,stecker,status,anleitungen,deleted
-11111,ESU,62400,"LokSound M4",1.10,MFX,,true,CV,NEM652,INSTALIERT,,false
+decoderId,hersteller,bestellNr,bezeichnung,iMax,protokoll,fahrstufe,gerausch,konfiguration,stecker,kaufdatum,wahrung,preis,anmerkung,status,anleitungen,deleted
+11111,ESU,62400,LokSound M4,1.10,MFX,,true,CV,NEM652,,,,,INSTALIERT,,false

@@ -1,7 +1,6 @@
 package com.linepro.modellbahn.security.user;
 
 import static org.springframework.http.HttpStatus.ACCEPTED;
-import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.ResponseEntity.accepted;
 import static org.springframework.http.ResponseEntity.noContent;
 import static org.springframework.http.ResponseEntity.notFound;
@@ -63,8 +62,8 @@ public class UserController {
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> get(@PathVariable(ApiNames.NAMEN) String name) {
-        return userService.get(name)
+    public ResponseEntity<?> get(@PathVariable(ApiNames.NAMEN) String name, Authentication authentication) {
+        return userService.get(name, authentication)
                           .map(b -> ok(b))
                           .orElse(notFound().build());
     }
@@ -78,8 +77,8 @@ public class UserController {
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
-    public ResponseEntity<?> search(@RequestBody Optional<UserModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
-        Page<UserModel> page = userService.search(model, pageNumber, pageSize);
+    public ResponseEntity<?> search(@RequestBody Optional<UserModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize, Authentication authentication) {
+        Page<UserModel> page = userService.search(model, pageNumber, pageSize, authentication);
 
         if (page.hasContent()) {
             return ok(
@@ -146,7 +145,7 @@ public class UserController {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> register(@RequestBody UserModel model) {
-        return status(CREATED).body(userService.register(model));
+        return response(userService.register(model));
     }
 
     @PostMapping(path = ApiPaths.CONFIRM_USER)
@@ -157,7 +156,7 @@ public class UserController {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> confirm(@RequestParam(ApiNames.TOKEN) String token) {
-        return status(ACCEPTED).body(userService.confirmRegistration(token));
+        return response(userService.confirmRegistration(token));
     }
 
     @PostMapping(path = ApiPaths.FORGOT_PASSWORD)
@@ -168,7 +167,7 @@ public class UserController {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> forgot(@RequestParam(ApiNames.EMAIL) String email) {
-        return status(ACCEPTED).body(userService.forgotPassword(email));
+        return response(userService.forgotPassword(email));
     }
 
     @PostMapping(path = ApiPaths.RESET_PASSWORD)
@@ -179,6 +178,10 @@ public class UserController {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
     public ResponseEntity<?> resetPassword(@RequestParam(ApiNames.TOKEN) String token, @RequestParam(ApiNames.PASSWORD) String password) {
-        return status(ACCEPTED).body(userService.resetPassword(token, password));
+        return response(userService.resetPassword(token, password));
+    }
+
+    private ResponseEntity<UserMessage> response(UserMessage message) {
+        return status(message.getStatus()).body(message);
     }
 }

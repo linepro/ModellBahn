@@ -144,7 +144,11 @@ public interface ApiNames {
     String ROLES = "roles";
     String OLD_PASSWORD = "oldPassword";
     String TOKEN = "token";
-
+    String LOGIN_ATTEMPTS = "loginAttempts";
+    String PASSWORD_AGING = "passwordAging";
+    String PASSWORD_CHANGED = "passwordChanged";
+    String CONFIRMATION_EXPIRES = "confirmationExpires";
+    
     // Navigation names
     String PAGE_NUMBER = "pageNumber";
     String PAGE_SIZE = "pageSize";

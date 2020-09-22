@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.model.enums.Stecker;
+import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -93,14 +94,17 @@ public class DecoderTypModel extends RepresentationModel<DecoderTypModel> implem
     @Schema(description = "Instructions URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/betrieb_3000.pdf", accessMode = AccessMode.READ_ONLY)
     private String anleitungen;
 
+    @SuppressExport
     @JsonProperty(ApiNames.ADRESSEN)
     @Schema(implementation = DecoderTypAdressModel.class, name = "Assignable adresses", accessMode = AccessMode.READ_ONLY)
     private List<DecoderTypAdressModel> adressen;
 
+    @SuppressExport
     @JsonProperty(ApiNames.CVS)
     @Schema(implementation = DecoderTypCvModel.class, name = "Configurable CVs", accessMode = AccessMode.READ_ONLY)
     private List<DecoderTypCvModel> cvs;
 
+    @SuppressExport
     @JsonProperty(ApiNames.FUNKTIONEN)
     @Schema(implementation = DecoderTypFunktionModel.class, name = "Available function mappings", accessMode = AccessMode.READ_ONLY)
     private List<DecoderTypFunktionModel> funktionen;

@@ -24,8 +24,9 @@ public class CsvSchemaGenerator {
                                       .filter(f -> !Modifier.isStatic(f.getModifiers()))
                                       .filter(f -> !Modifier.isVolatile(f.getModifiers()))
                                       .filter(f -> !Modifier.isTransient(f.getModifiers()))
-                                      .filter(f -> !Collection.class.isAssignableFrom(f.getType()))
                                       .filter(f -> f.getAnnotation(JsonProperty.class) != null)
+                                      .filter(f -> f.getAnnotation(SuppressExport.class) == null)
+                                      .filter(f -> !Collection.class.isAssignableFrom(f.getType()))
                                       .map(f ->
                                            new Column(
                                                colNumber.getAndIncrement(),

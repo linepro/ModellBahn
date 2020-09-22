@@ -18,7 +18,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class CorsConfig implements WebMvcConfigurer {
 
     private static final String ALLOWED_ORIGINS = "*";
+
     private static final String ALLOWED_HEADERS = "*";
+
     private static final String[] ALLOWED_METHODS = {
             HttpMethod.DELETE.name(),
             HttpMethod.GET.name(),
@@ -26,7 +28,9 @@ public class CorsConfig implements WebMvcConfigurer {
             HttpMethod.PUT.name(),
             HttpMethod.POST.name()
     };
+
     private static final boolean ALLOW_CREDENTIALS = true;
+
     private static final long CORS_TIMEOUT = 3600L;
 
     private static final String ALL_ENDPOINTS = "/**";

@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -60,6 +61,7 @@ public class ZugModel extends RepresentationModel<ZugModel> implements NamedItem
     @Schema(description = "Train type", required = true)
     private String zugTyp;
 
+    @SuppressExport
     @JsonProperty(ApiNames.CONSIST)
     @Schema(implementation = ZugConsistModel.class, name = "Train composition", accessMode = AccessMode.READ_ONLY)
     private List<ZugConsistModel> consist;

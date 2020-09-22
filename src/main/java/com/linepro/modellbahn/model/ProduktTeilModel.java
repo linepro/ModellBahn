@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -63,14 +64,17 @@ public class ProduktTeilModel extends RepresentationModel<ProduktTeilModel> impl
     @Schema(description = "Sub product Part number", example = "3000", accessMode = AccessMode.READ_ONLY)
     private String teilBestellNr;
 
+    @SuppressExport
     @JsonProperty(ApiNames.BEZEICHNUNG)
     @Schema(description = "Description", example = "Dampftenderlok BR 89.0", accessMode = AccessMode.READ_ONLY)
     private String bezeichnung;
 
+    @SuppressExport
     @JsonProperty(ApiNames.KATEGORIE)
     @Schema(description = "Category", example = "LOKOMOTIV", accessMode = AccessMode.READ_ONLY)
     private String kategorie;
 
+    @SuppressExport
     @JsonProperty(ApiNames.UNTER_KATEGORIE)
     @Schema(description = "Sub Category", example = "DAMPF", accessMode = AccessMode.READ_ONLY)
     private String unterKategorie;

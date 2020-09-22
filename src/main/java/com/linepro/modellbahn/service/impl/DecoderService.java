@@ -15,7 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.linepro.modellbahn.converter.entity.DecoderAdressMutator;
 import com.linepro.modellbahn.converter.entity.DecoderCvMutator;
@@ -31,7 +30,6 @@ import com.linepro.modellbahn.model.DecoderAdressModel;
 import com.linepro.modellbahn.model.DecoderCvModel;
 import com.linepro.modellbahn.model.DecoderFunktionModel;
 import com.linepro.modellbahn.model.DecoderModel;
-import com.linepro.modellbahn.model.enums.DecoderStatus;
 import com.linepro.modellbahn.persistence.util.AssetIdGenerator;
 import com.linepro.modellbahn.repository.DecoderAdressRepository;
 import com.linepro.modellbahn.repository.DecoderCvRepository;

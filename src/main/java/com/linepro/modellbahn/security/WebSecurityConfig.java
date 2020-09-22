@@ -4,6 +4,7 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.API_ENDPOINTS;
 import static com.linepro.modellbahn.io.MvcConfig.RESOURCE_ENDPOINTS;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -38,6 +39,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
 
+    @Autowired
+    private final ModellBahnBasicAuthenticationEntryPoint authenticationEntryPoint;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService)
@@ -52,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and().csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and().exceptionHandling()
-            .and().httpBasic()//.authenticationEntryPoint(authenticationEntryPoint)
+            .and().httpBasic().authenticationEntryPoint(authenticationEntryPoint)
             .and().authorizeRequests()
                   .antMatchers(RESOURCE_ENDPOINTS).permitAll()
                   .antMatchers(HttpMethod.POST, ApiPaths.REGISTER_ENDPOINTS).permitAll()

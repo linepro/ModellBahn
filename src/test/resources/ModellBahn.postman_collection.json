@@ -13278,9 +13278,9 @@
 								"exec": [
 									"pm.test(\"Produkt\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,bezeichnung,kategorie,unterKategorie,lange,massstab,spurweite,epoch,bahnverwaltung,gattung,betreibsnummer,bauzeit,achsfolg,sondermodell,aufbau,licht,kupplung,steuerung,decoderHersteller,decoderBestellNr,motorTyp,anmerkung,anleitungen,explosionszeichnung,abbildung,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,bezeichnung,kategorie,unterKategorie,lange,massstab,spurweite,epoch,bahnverwaltung,gattung,betreibsnummer,bauzeit,achsfolg,sondermodell,aufbau,licht,kupplung,steuerung,decoderHersteller,decoderBestellNr,motorTyp,anmerkung,anleitungen,explosionszeichnung,abbildung,grossansicht,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){26}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){27}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}
@@ -13356,9 +13356,9 @@
 								"exec": [
 									"pm.test(\"Decoder\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"decoderId,hersteller,bestellNr,bezeichnung,iMax,protokoll,fahrstufe,gerausch,konfiguration,stecker,status,anleitungen,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"decoderId,hersteller,bestellNr,bezeichnung,iMax,protokoll,fahrstufe,gerausch,konfiguration,stecker,kaufdatum,wahrung,preis,anmerkung,status,anleitungen,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){12}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){16}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}
@@ -16010,623 +16010,623 @@
 	],
 	"variable": [
 		{
-			"id": "926eea71-41fd-4f22-a530-d5babaaf4635",
+			"id": "bd2c594c-b11f-4451-b2bb-228350cc7e3a",
 			"key": "host",
 			"value": "127.0.0.1",
 			"disabled": true
 		},
 		{
-			"id": "a20eb8ce-137e-436b-9fe9-87687728c330",
+			"id": "5b01b0dd-0437-494b-914c-3eab099a7b65",
 			"key": "port",
 			"value": ":8086"
 		},
 		{
-			"id": "4fdbc707-4879-4141-ba61-3095988822f8",
+			"id": "05f0b41a-212a-438f-84e0-7a44bf435d7f",
 			"key": "server",
 			"value": "https://{{host}}{{port}}"
 		},
 		{
-			"id": "3de86d50-cdcb-4811-b6da-d43513ba0a03",
+			"id": "0930ca4f-be70-40e9-8cd8-d8d25d84b45a",
 			"key": "root",
 			"value": "{{server}}/ModellBahn"
 		},
 		{
-			"id": "492f2d8b-29b3-4b6f-bdcc-dd7b85286386",
+			"id": "7142a945-b164-45c8-b362-f185ab0e8c39",
 			"key": "api",
 			"value": "{{root}}/api"
 		},
 		{
-			"id": "920868cc-a31b-40f7-8981-b00b686cca3b",
+			"id": "6085e790-db8d-4666-b5fc-445d93bf7540",
 			"key": "language",
 			"value": "de"
 		},
 		{
-			"id": "d6c0a2fa-ee24-4694-afd2-0642dab1e2a4",
+			"id": "8c34fc02-ee82-4d6c-8020-f1395a69fe60",
 			"key": "achsfolgAdd",
 			"value": "1C1H2T"
 		},
 		{
-			"id": "a0022cae-4010-400d-bef7-ad5ef26bbde8",
+			"id": "8a984617-d189-4411-bfb2-c5e28e43a76f",
 			"key": "achsfolgUpdate",
 			"value": "COCO"
 		},
 		{
-			"id": "10961902-7f78-4e57-8428-48e2c4ac1826",
+			"id": "e5b9b2fe-fcd4-464a-8b22-df0365171804",
 			"key": "adIndexAdd",
 			"value": "1"
 		},
 		{
-			"id": "c9c009dd-e5de-4cf4-a811-23cec058d3e9",
+			"id": "a0d770f8-bf64-461f-8619-d6629ef85ccb",
 			"key": "adIndexUpdate",
 			"value": "1"
 		},
 		{
-			"id": "77b8bb7d-ceaa-42cc-b16f-c99de85b9a71",
+			"id": "2616dc65-b2dd-483b-943c-dfa1c933bf6d",
 			"key": "adSpanAdd",
 			"value": "2"
 		},
 		{
-			"id": "577f9606-7d06-47c1-9671-616aaec24dac",
+			"id": "64075190-f184-4bc1-9c22-a4259609bd21",
 			"key": "adSpanUpdate",
 			"value": "16"
 		},
 		{
-			"id": "4acb642c-c334-40bc-a241-7b1a3f4c9aed",
+			"id": "5cdaf1f2-77dc-4204-9d14-3530b77806af",
 			"key": "adTypAdd",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "3a3c6b05-1f3c-4189-b448-246e2e99489f",
+			"id": "27cad273-41a6-4593-9811-2ed51ba6162f",
 			"key": "adTypUpdate",
 			"value": "DELTA"
 		},
 		{
-			"id": "d4f20070-a590-4e40-a50c-f02007cc521a",
+			"id": "c3bcc15a-7bd7-4409-bba1-4eb178800917",
 			"key": "adAdd",
 			"value": "10"
 		},
 		{
-			"id": "84feade2-63a3-4221-b7b6-d8c74fa63edd",
+			"id": "0664e83a-3877-4ac8-b8bc-c984240a35f1",
 			"key": "adUpdate",
 			"value": "80"
 		},
 		{
-			"id": "35b12182-89de-47bd-9547-2ebd48b64b86",
+			"id": "b219dca8-dc14-4357-99fe-2f0bc98be4b3",
 			"key": "anderungAdd",
 			"value": "1"
 		},
 		{
-			"id": "12520bef-7c2e-40b9-a5af-4d372d11ceeb",
+			"id": "23fe9881-5b7f-4ace-9658-e0e4daa057a9",
 			"key": "anderungUpdate",
 			"value": "1"
 		},
 		{
-			"id": "36de210f-f597-43b4-81f4-e9a9c822ea15",
+			"id": "accd330e-5e95-473e-b13b-5ecc4da2c82c",
 			"key": "antriebAdd",
 			"value": "DAMPF"
 		},
 		{
-			"id": "a889ef28-8ff4-4e37-8b44-1dd2872166c7",
+			"id": "48b79bdf-5771-4c51-bde7-e35d589c9548",
 			"key": "antriebUpdate",
 			"value": "ELEKTRO"
 		},
 		{
-			"id": "8f057874-d29c-440a-b5c8-b0e057808e6a",
+			"id": "6b49e5f9-a77c-4147-bde8-cde3bf5f8a82",
 			"key": "artikelAdd",
 			"value": "00001"
 		},
 		{
-			"id": "e7fbaa55-c985-4a4c-b4e8-ef32ec98e976",
+			"id": "32bd8150-f3b0-4d09-93cb-ff60c579bdd2",
 			"key": "artikelUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "41f648f0-6017-4ccc-b69d-0fe4a3783af6",
+			"id": "1964ba68-8287-4b9e-b301-fdfbd780fc0d",
 			"key": "aufbauAdd",
 			"value": "LK"
 		},
 		{
-			"id": "9fee48fe-e066-4919-a2cb-547ee8ab9438",
+			"id": "b4d4b89c-d570-4d64-8d88-be84abb94ebb",
 			"key": "aufbauUpdate",
 			"value": "LK"
 		},
 		{
-			"id": "a3c3ed44-28b6-4415-ade9-32e64ba1908e",
+			"id": "31883b35-85fa-4c3e-a96d-75c1afa95eb0",
 			"key": "bestellNrAdd",
 			"value": "3000"
 		},
 		{
-			"id": "5321366c-244b-4127-b496-8739408ce86c",
+			"id": "84f352db-89d3-45bb-a0ce-1c2f635dd384",
 			"key": "bestellNrUpdate",
 			"value": "3003"
 		},
 		{
-			"id": "807c5073-af33-4c25-af37-615b9d0e2732",
+			"id": "541ef303-937b-4e07-b5fc-2c22381ab854",
 			"key": "bahnverwaltungAdd",
 			"value": "DB"
 		},
 		{
-			"id": "968e8bee-eb17-4b9c-8277-33db543f40d0",
+			"id": "ee3fde60-d9c2-4724-8545-5114b67e6ef3",
 			"key": "bahnverwaltungUpdate",
 			"value": "DBAG"
 		},
 		{
-			"id": "ac2ab1e3-23cc-4ff6-bb75-634fddf5f7c7",
+			"id": "0dfa4b16-06cd-4f2b-8fd7-ade1669e6fc7",
 			"key": "cvAdd",
 			"value": "8"
 		},
 		{
-			"id": "aeea9a8e-5786-4fac-b666-7aeac95d8174",
+			"id": "82b08ec8-9dd2-4e4f-8a22-8da5fe34b7f4",
 			"key": "cvUpdate",
 			"value": "120"
 		},
 		{
-			"id": "f8720ee3-eaa8-4086-9350-baecb6872991",
+			"id": "cce1e153-6c9c-474c-beae-b811c769d2b2",
 			"key": "cvMaxAdd",
 			"value": "63"
 		},
 		{
-			"id": "d28eccf9-5105-40d7-8800-9115a8b22616",
+			"id": "6c41069c-0a35-4b2d-a0d1-518cc30d84a5",
 			"key": "cvMaxUpdate",
 			"value": "80"
 		},
 		{
-			"id": "c965e1cd-c009-4bd2-8ee6-0e64753faeed",
+			"id": "ff5592fb-14d4-478d-912c-6338b568c82e",
 			"key": "cvMinAdd",
 			"value": "0"
 		},
 		{
-			"id": "f5c2d2c8-9a09-443d-8647-f3f45e0242f4",
+			"id": "38f598b6-8fc8-4f13-ba78-483c41bc10cf",
 			"key": "cvMinUpdate",
 			"value": "1"
 		},
 		{
-			"id": "f2169934-acb8-4991-b6ed-8dc02eeb9b92",
+			"id": "cfd6b6c3-051b-4592-880d-98e82f8533a4",
 			"key": "cvValueAdd",
 			"value": "30"
 		},
 		{
-			"id": "bfa23b40-8b74-45a9-be6d-a493215c214c",
+			"id": "ab128c40-bb23-43b6-b768-9bcb329ac8ab",
 			"key": "cvValueUpdate",
 			"value": "50"
 		},
 		{
-			"id": "45a7b9ed-01e0-4417-a11c-dcb5560e382e",
+			"id": "30183cb7-5d67-4e69-b4d9-194810d496f2",
 			"key": "decoderAdd",
 			"value": "00001"
 		},
 		{
-			"id": "c2e37a7e-ef3a-4257-9509-95cbb16f4479",
+			"id": "b6f0cb5c-6daf-48ff-aa19-51d8bb544d18",
 			"key": "decoderUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "ca7e13b3-8057-47ab-ac22-db2a007b245b",
+			"id": "826a2900-7ebd-4cc4-8f00-5fca7b521ac4",
 			"key": "decoderAdd",
 			"value": "00001"
 		},
 		{
-			"id": "0392c40a-1245-49f6-9e21-60e38f609c2f",
+			"id": "2466090e-5f83-4632-bc86-7830d7e3ef54",
 			"key": "decoderUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "e9f7b0d9-7f5b-4837-9798-2985778a39b7",
+			"id": "cd17bd95-44c6-47f4-9291-5c297ef988c4",
 			"key": "decoderHerstellerAdd",
 			"value": "ESU"
 		},
 		{
-			"id": "ffcfd363-89fd-4aae-a7cc-f632f7339fbc",
+			"id": "5de2eb21-17a2-44d2-933e-52f8e2b82320",
 			"key": "decoderHerstellerUpdate",
 			"value": "ESU"
 		},
 		{
-			"id": "926928b6-9ac2-4d7e-b605-363be11b30e7",
+			"id": "571718fc-d530-4582-9c04-77dbeeb426ef",
 			"key": "decoderBestellNrAdd",
 			"value": "62400"
 		},
 		{
-			"id": "e9621ee7-907c-4490-9952-5fac59429081",
+			"id": "4d93b9a2-ae4f-44bc-90be-a5b3804ca758",
 			"key": "decoderBestellNrUpdate",
 			"value": "62499"
 		},
 		{
-			"id": "8ee06864-b46e-4d70-9489-717a6a5cde93",
+			"id": "a073a645-fb21-4b89-96e1-0493ea9fd5e3",
 			"key": "decoderBezeichnungAdd",
 			"value": "LokSound M4"
 		},
 		{
-			"id": "ff21ad1b-5f10-40d5-99cf-e5fcd09305f0",
+			"id": "7fea55e6-d629-43d8-9a77-83238ef751c5",
 			"key": "epochAdd",
 			"value": "IV"
 		},
 		{
-			"id": "b24e3796-225d-4154-82e6-284bc15a92fa",
+			"id": "4fe8f596-9c2d-449d-bcc8-a820c07d9ab5",
 			"key": "epochUpdate",
 			"value": "IV"
 		},
 		{
-			"id": "06abfb91-9315-4dcf-b232-a547735129f8",
+			"id": "f298873b-3a50-4d92-9be3-0b6310dcdf93",
 			"key": "fahrstufeAdd",
 			"value": "27"
 		},
 		{
-			"id": "4bb11970-c644-404a-a4f3-197838079c73",
+			"id": "5e984534-fc44-41a7-a978-ae6de07efa9c",
 			"key": "fahrstufeUpdate",
 			"value": "128"
 		},
 		{
-			"id": "e535f45d-4493-46dd-bc53-e589a61126b3",
+			"id": "57a79a8a-037c-4bc6-96a6-d78379451d7c",
 			"key": "fnFuntionAdd",
 			"value": "F0"
 		},
 		{
-			"id": "d95890e1-c708-4933-8732-4e9af3fec80f",
+			"id": "8b2683fe-55a7-4c64-906f-f7640a7b1901",
 			"key": "fnFuntionUpdate",
 			"value": "F0"
 		},
 		{
-			"id": "98d21df8-9c54-446d-81bb-6d967f128fa2",
+			"id": "b124987f-7ddb-4d46-bb79-fad69367758e",
 			"key": "fnReiheAdd",
 			"value": "1"
 		},
 		{
-			"id": "4285326d-e44f-4583-a30b-60d90ad5b9f0",
+			"id": "224adb41-5218-4cbb-9263-940760b0b906",
 			"key": "fnReiheUpdate",
 			"value": "1"
 		},
 		{
-			"id": "1a9637f9-4a17-458c-a294-fa4426c36f1b",
+			"id": "c8232a81-0f80-4122-a542-dbbec815a00f",
 			"key": "gattungAdd",
 			"value": "BR89.0"
 		},
 		{
-			"id": "dc9788cf-1469-4911-88a4-c7df24c91df6",
+			"id": "cd901fa8-57ed-4b23-bad6-d8934abb8408",
 			"key": "gattungUpdate",
 			"value": "BR89.0"
 		},
 		{
-			"id": "b1f4ec6c-37ac-4101-831e-abba7c1c7c20",
+			"id": "f068cc92-b8f5-407a-901c-d2c021c6d108",
 			"key": "herstellerAdd",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "c9c03893-90c0-4e10-acd1-d67791bde0c4",
+			"id": "1093f9f5-9664-4e76-b08e-9dab88b5223f",
 			"key": "herstellerUpdate",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "e9b652fe-6e18-4e8c-8e51-734425b09b6d",
+			"id": "08c43532-78ea-4e77-aa7e-ed7aed6aacf2",
 			"key": "iMaxAdd",
 			"value": "1.5"
 		},
 		{
-			"id": "5e43db82-304f-42eb-9f59-7ea30599c906",
+			"id": "a8b8478e-7d94-4dcc-b998-317dc29c7d2f",
 			"key": "iMaxUpdate",
 			"value": "2.0"
 		},
 		{
-			"id": "3b649d7c-0026-472e-89ca-e5d0253e187a",
+			"id": "51f14d5f-bf34-488c-b870-7d571a62f547",
 			"key": "kategorieAdd",
 			"value": "LOKOMOTIV"
 		},
 		{
-			"id": "45ed3259-6a62-45ab-b490-e9020803f517",
+			"id": "4a89fde3-13de-4257-8c48-9e598d0bf0c7",
 			"key": "kategorieUpdate",
 			"value": "AUSGESTALTUNG"
 		},
 		{
-			"id": "b7ddffa5-a079-46cb-9977-ca41db35f0a9",
+			"id": "2318b045-3214-43a8-9cc0-e6cbcf508e37",
 			"key": "kupplungAdd",
 			"value": "RELEX"
 		},
 		{
-			"id": "a1683327-b68f-4f70-8867-2f79cfc7ce79",
+			"id": "d5cdeb85-ad3e-4bf0-9b71-801ec7338d81",
 			"key": "kupplungUpdate",
 			"value": "RELEX"
 		},
 		{
-			"id": "bb5aa9ed-1e03-44de-ae29-2f4cf334816d",
+			"id": "7cf673d5-1369-49e1-8aed-34c286c5bc23",
 			"key": "konfigurationAdd",
 			"value": "CV"
 		},
 		{
-			"id": "f1a0c4d9-94b6-4b21-a955-1267b0094b27",
+			"id": "52db17b5-5e1c-43cd-8395-c0ec4110c08b",
 			"key": "konfigurationUpdate",
 			"value": "STECKER"
 		},
 		{
-			"id": "d3cde028-6019-4349-be51-9d76a34bf72e",
+			"id": "d0e9aa6a-fc67-4526-be96-2197b18518d3",
 			"key": "leistungsubertragungAdd",
 			"value": "MECHANISH"
 		},
 		{
-			"id": "da79bcc3-092e-464b-9e72-ee0fab5ddd7e",
+			"id": "d8bbfa34-337a-46c8-ad44-5f92917a65e2",
 			"key": "leistungsubertragungUpdate",
 			"value": "ELEKTRISH"
 		},
 		{
-			"id": "0036858b-89e4-4e5f-b2af-d74e74bc3801",
+			"id": "1a13eb36-a286-4ac9-a870-fcafc7f041d8",
 			"key": "lichtAdd",
 			"value": "L1V"
 		},
 		{
-			"id": "d0268928-ddc1-4ca2-a2bf-82650ddbdae2",
+			"id": "70d31543-d3a0-4346-87f8-163f80d88146",
 			"key": "lichtUpdate",
 			"value": "L1V"
 		},
 		{
-			"id": "e9cd0156-132e-4bbb-87f7-966cdade140e",
+			"id": "d9304373-b5d0-48d1-9abf-7e6cba0de016",
 			"key": "massstabAdd",
 			"value": "H0"
 		},
 		{
-			"id": "9dcec270-9dd6-4a21-a0b6-020e506a1b33",
+			"id": "0d312ebf-e0cd-4117-b2f3-8e7b51565d03",
 			"key": "massstabUpdate",
 			"value": "H0"
 		},
 		{
-			"id": "b889fc4e-aac7-412a-9e21-ebb986a21731",
+			"id": "deb6fbe6-c40d-4c5e-8a2a-57060a57d029",
 			"key": "motorTypAdd",
 			"value": "CSINUS"
 		},
 		{
-			"id": "d1fd5c71-6583-461c-b65a-9299549af546",
+			"id": "e8098728-bd93-49f6-8b92-270cd3b8dbd2",
 			"key": "motorTypUpdate",
 			"value": "CSINUS"
 		},
 		{
-			"id": "980d3735-4539-4625-bb48-b31e281867dd",
+			"id": "48e0865a-4b59-47cb-aaa0-2778b02fbbc4",
 			"key": "protokollAdd",
 			"value": "MFX"
 		},
 		{
-			"id": "fc33bc0d-e2ae-44f8-959e-cb05fc057da9",
+			"id": "4a60e60d-ae97-4066-a6b4-91c3cf3de911",
 			"key": "protokollUpdate",
 			"value": "DELTA"
 		},
 		{
-			"id": "fead3e36-7f80-4c79-8795-de3ab82109a0",
+			"id": "e709374d-02f4-41f7-bde9-fc5ca69211a1",
 			"key": "sondermodellAdd",
 			"value": "MM"
 		},
 		{
-			"id": "78c36479-1425-4515-b102-441b29363380",
+			"id": "15a69d27-73aa-41e0-96c9-1eaca51237dc",
 			"key": "sondermodellUpdate",
 			"value": "MM"
 		},
 		{
-			"id": "2e806dd9-95ae-47b6-9177-b975e18ffb02",
+			"id": "ed79c17f-528f-4746-94c1-bf79c6a5ab2a",
 			"key": "spurweiteAdd",
 			"value": "H0"
 		},
 		{
-			"id": "40e1fb99-19ce-49d2-9549-6bac64d15185",
+			"id": "f4067770-f129-4dea-b0a1-1c7697ee50b5",
 			"key": "spurweiteUpdate",
 			"value": "H0"
 		},
 		{
-			"id": "9e590886-db25-4199-b0c8-d7d2392fbe9e",
+			"id": "0bd6d227-76b0-4bb4-bb8e-480bf9cbda2f",
 			"key": "steckerAdd",
 			"value": "NEM651"
 		},
 		{
-			"id": "c429d8ef-fda9-4c4d-a8ce-93ebb300be30",
+			"id": "d20eae1c-9ec4-4554-8255-d0351216aa58",
 			"key": "steckerUpdate",
 			"value": "NEM652"
 		},
 		{
-			"id": "7ec4c17d-1fbf-4dbc-8e1f-46e4dfdf929e",
+			"id": "90f302b7-396f-4a85-8ca6-0cd9d6766742",
 			"key": "steuerungAdd",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "ff650001-1bcd-4726-9e12-a03f94c4c087",
+			"id": "ec154422-e986-41cf-b017-4148df85f16e",
 			"key": "steuerungUpdate",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "44c55aaa-8534-44d5-b90c-cbae17513b67",
+			"id": "fe9eef33-a72a-4123-8b9c-1fc2904725cc",
 			"key": "teilHerstellerAdd",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "d96957d2-e558-4f9a-86d2-51990f09c44f",
+			"id": "ea541e13-4510-4c85-9122-22a138e50bae",
 			"key": "teilBestellNrAdd",
 			"value": "600300"
 		},
 		{
-			"id": "43c4ff08-213a-462f-8661-9aed81e9e259",
+			"id": "2f84e78c-9c4a-4f57-b63f-f2f8b6ea311f",
 			"key": "teilKategorieAdd",
 			"value": "ERSATZTEIL"
 		},
 		{
-			"id": "89d0c897-f93f-4103-bea9-504fba6e085a",
+			"id": "f7692057-3c73-4e13-b35f-41d07cc239b3",
 			"key": "teilUnterKategorieAdd",
 			"value": "BURSTEN"
 		},
 		{
-			"id": "dfa6994b-8916-4fab-bec3-6d3d802e2996",
+			"id": "c23631af-1388-4112-a124-ea38352e0a9f",
 			"key": "unterKategorieAdd",
 			"value": "DAMPF"
 		},
 		{
-			"id": "fb952ff8-a1ac-4fc9-8b3b-90cbdfde6c8b",
+			"id": "701f7153-5d9d-4c8e-8faa-119cd068cd26",
 			"key": "unterKategorieUpdate",
 			"value": "HECKEN"
 		},
 		{
-			"id": "6a8829fa-c050-4189-8d04-c22fd6d2e560",
+			"id": "cefaeb68-25c5-45fb-bd9c-851f7d53013b",
 			"key": "teilBezeichnungAdd",
 			"value": "Bürsten"
 		},
 		{
-			"id": "139925e6-6cab-4cc3-af09-4ae718ee1d0f",
+			"id": "d4616199-4ae9-438a-9180-23e97e2fc142",
 			"key": "vorbildAdd",
 			"value": "HECKEN"
 		},
 		{
-			"id": "09ee9a29-d87a-4161-a9e7-440487947786",
+			"id": "2241e205-1886-4dc4-96b8-496efe6cdd1d",
 			"key": "vorbildUpdate",
 			"value": "HECKEN"
 		},
 		{
-			"id": "4dd69b4c-a651-4b88-b58e-5527e5eb09da",
+			"id": "f227c68a-7f9e-4e9e-9af6-1515db6454e6",
 			"key": "zugAdd",
 			"value": "BAVARIA"
 		},
 		{
-			"id": "991f9fd6-527e-4153-81d5-f78d8f0e0b53",
+			"id": "3d7e8a60-c481-41c3-bdd0-d829bd1dbb04",
 			"key": "zugUpdate",
 			"value": "BAVARIA"
 		},
 		{
-			"id": "7a2f6b0d-db26-4107-8b9d-22948654f9a6",
+			"id": "eca809cd-f5f0-49f3-a7df-2002d1642039",
 			"key": "zugTypAdd",
 			"value": "TEE"
 		},
 		{
-			"id": "fff23707-8fc0-4073-82a6-7b7691aa84e4",
+			"id": "958671ea-6c87-444d-a842-1dd377bb2b9f",
 			"key": "zugTypUpdate",
 			"value": "TEE"
 		},
 		{
-			"id": "6e4c193e-0dab-46ec-a467-a77012042e90",
+			"id": "c45c27c5-d63f-46fc-843c-6cd22623300a",
 			"key": "imageFile",
 			"value": "3000.jpg"
 		},
 		{
-			"id": "0aebef8c-077f-467e-a3c3-fa4c482ee887",
+			"id": "5ff30977-fdc8-4b5d-9c54-bcf8abd033db",
 			"key": "anleitungFile",
 			"value": "3000_betrieb.pdf"
 		},
 		{
-			"id": "3dc70e36-e36b-4ef9-8995-238bb823e713",
+			"id": "64e448dd-de2a-4421-889b-a899a1b681c7",
 			"key": "explosionszeichnungFile",
 			"value": "3000_explo.pdf"
 		},
 		{
-			"id": "4c121560-a1b2-49b0-b7c3-89e8b3bb573b",
+			"id": "b45a549f-b11b-46a1-88df-ccc7256b7e90",
 			"key": "xlFile",
 			"value": "3000.jpg"
 		},
 		{
-			"id": "bbfb1dc6-17c5-4d97-98f9-c9d976ade2c1",
+			"id": "0b72c746-5f9c-40f3-892f-9c4f19ba3081",
 			"key": "landAdd",
 			"value": "DE"
 		},
 		{
-			"id": "62829c2f-f3cd-4cc8-b28d-a4b59cd05949",
+			"id": "82c64e6c-a8a8-43dc-9055-2ac9763bfa1a",
 			"key": "landUpdate",
 			"value": "NL"
 		},
 		{
-			"id": "4f0d9cc0-474f-4508-b624-cf3d05dba216",
+			"id": "f77c1174-57cf-47cf-9edd-809225c62a73",
 			"key": "telefonAdd",
 			"value": "+497161608222"
 		},
 		{
-			"id": "f0c751e8-1aee-46b6-ade6-7989702c2f51",
+			"id": "ebd4fc7a-f0bf-44d1-bb8c-ddd89add0afb",
 			"key": "telefonUpdate",
 			"value": "030 2341347"
 		},
 		{
-			"id": "e8840638-7625-4e06-88d2-5c6320b97e9f",
+			"id": "05c75864-4fa1-48dd-8bdd-e09f28375fe3",
 			"key": "abbildungCsv",
 			"value": "abbildungCsv.csv"
 		},
 		{
-			"id": "b40be7f5-bedf-4a4b-843f-1bff48c75dd9",
+			"id": "dac5de3e-7221-43d3-b1a9-0135e0b2d526",
 			"key": "anderungCsv",
 			"value": "anderungCsv.csv"
 		},
 		{
-			"id": "35345896-99c3-4835-8fb2-e59e75dace8b",
+			"id": "58d2be01-3035-4112-9362-3673265712b7",
 			"key": "artikelCsv",
 			"value": "artikelCsv.csv"
 		},
 		{
-			"id": "85adc8af-209d-43a7-980d-910a7ff370b1",
+			"id": "8b24382c-e22d-4364-be9a-d44733815a2b",
 			"key": "bahnverwaltungCsv",
 			"value": "bahnverwaltungCsv.csv"
 		},
 		{
-			"id": "4bb1c5bc-fa85-487a-9de9-8f4a5a548366",
+			"id": "0ad2d5bb-7598-4504-957a-a2460e6f155e",
 			"key": "consistCsv",
 			"value": "consistCsv.csv"
 		},
 		{
-			"id": "12dfb483-ba9d-428d-bef2-ab31b53cfe1b",
+			"id": "5858bca3-8396-4b05-a0f4-15a22ac6c21f",
 			"key": "decoderCsv",
 			"value": "decoderCsv.csv"
 		},
 		{
-			"id": "c3ec7da5-d123-4715-acd8-7a21960bec39",
+			"id": "36a1d212-e9c2-4437-bf8b-1874b25be99b",
 			"key": "decoderAdressCsv",
 			"value": "decoderAdressCsv.csv"
 		},
 		{
-			"id": "01060236-5159-4919-b3c4-0f63beaf09be",
+			"id": "9af65877-7e6b-43fe-bc46-af5e1e13f1a2",
 			"key": "decoderCvCsv",
 			"value": "decoderCvCsv.csv"
 		},
 		{
-			"id": "66562f24-5cbc-4c07-935f-09e05724aaf8",
+			"id": "801c1c40-0700-4008-a2a8-a9b78bb06cdd",
 			"key": "decoderFunktionCsv",
 			"value": "decoderFunktionCsv.csv"
 		},
 		{
-			"id": "2a3755af-37fc-4164-9734-84a87f4d8b7c",
+			"id": "a43a4087-daf9-4272-b58e-e475158543c3",
 			"key": "decoderTypCsv",
 			"value": "decoderTypCsv.csv"
 		},
 		{
-			"id": "11bba967-852b-4638-84e0-b4d10edecad3",
+			"id": "7bf0120c-5355-4d06-bbfe-a274ce727b38",
 			"key": "decoderTypAdressCsv",
 			"value": "decoderTypAdressCsv.csv"
 		},
 		{
-			"id": "9e5bc352-3e87-42e6-bbe8-e7ae7f0318df",
+			"id": "ac5f9a41-4764-4e38-820c-b239ac592433",
 			"key": "decoderTypCvCsv",
 			"value": "decoderTypCvCsv.csv"
 		},
 		{
-			"id": "69468e98-32e7-479a-b4e8-2278723c939a",
+			"id": "f57381bf-4255-47aa-8b1d-83968b88d5f3",
 			"key": "decoderTypFunktionCsv",
 			"value": "decoderTypFunktionCsv.csv"
 		},
 		{
-			"id": "3c099b79-ae1c-4d0e-80b6-b51dcfe2cbb8",
+			"id": "4ca47930-0372-4120-9494-db9878b0399a",
 			"key": "herstellerCsv",
 			"value": "herstellerCsv.csv"
 		},
 		{
-			"id": "82630403-a176-4235-839b-4074adb05f28",
+			"id": "0e67fd46-117b-446f-b1e2-89673ce54b57",
 			"key": "namedCsv",
 			"value": "namedCsv.csv"
 		},
 		{
-			"id": "a940c140-f7a3-4e4d-85c8-600031b7249e",
+			"id": "8a84e6e4-7c9b-4057-9bc6-e3f75786801b",
 			"key": "produktCsv",
 			"value": "produktCsv.csv"
 		},
 		{
-			"id": "da99ce98-6356-4b57-b3f5-908b39af08bd",
+			"id": "45a88e41-8898-4122-8409-d909f90a4909",
 			"key": "teilCsv",
 			"value": "teilCsv.csv"
 		},
 		{
-			"id": "a4b2f735-adab-4e10-9ce0-c44d898bdf30",
+			"id": "9d91d4ec-3b5c-4730-aad8-5ce05dedba57",
 			"key": "unterKategorieCsv",
 			"value": "unterKategorieCsv.csv"
 		},
 		{
-			"id": "473f853d-e5ac-4334-9f63-b30302c32289",
+			"id": "38d207cf-d689-40af-b18a-fc64c628d694",
 			"key": "vorbildCsv",
 			"value": "vorbildCsv.csv"
 		},
 		{
-			"id": "86536363-fb71-4fbb-8c93-8cd9dd183aec",
+			"id": "7917e9e5-4cdf-4453-aa7a-ee11e020e2cd",
 			"key": "zugCsv",
 			"value": "zugCsv.csv"
 		}

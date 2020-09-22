@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.model.enums.Status;
+import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -173,17 +174,19 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
     @Schema(description = "Status", example = "GEKAUFT", required = true)
     private Status status;
 
-    @JsonProperty(ApiNames.ANDERUNGEN)
-    @Schema(implementation = AnderungModel.class, name = "Modifications", accessMode = AccessMode.READ_ONLY)
-    private List<AnderungModel> anderungen;
-
     @JsonProperty(ApiNames.ABBILDUNG)
     @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/artikel/00001/abbildung.jpg", accessMode = AccessMode.READ_ONLY)
     private String abbildung;
 
+    @SuppressExport
     @JsonProperty(ApiNames.GROSSANSICHT)
     @Schema(description = "Large Image URL", example = "http://localhost:8086/ModellBahn/artikel/00001/grossansicht.jpg", accessMode = AccessMode.READ_ONLY)
     private String grossansicht;
+
+    @SuppressExport
+    @JsonProperty(ApiNames.ANDERUNGEN)
+    @Schema(implementation = AnderungModel.class, name = "Modifications", accessMode = AccessMode.READ_ONLY)
+    private List<AnderungModel> anderungen;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)

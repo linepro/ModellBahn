@@ -22,6 +22,7 @@ import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.model.enums.DecoderStatus;
 import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.model.enums.Stecker;
+import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -121,14 +122,17 @@ public class DecoderModel extends RepresentationModel<DecoderModel> implements I
     @Schema(description = "Instructions URL", example = "http://localhost/Modelbahn/decoderTyp/ESU/62400/anleitungen.pdf", accessMode = AccessMode.READ_ONLY)
     private String anleitungen;
 
+    @SuppressExport
     @JsonProperty(ApiNames.ADRESSEN)
     @Schema(implementation = DecoderAdressModel.class, name = "Decoder addresses", accessMode = AccessMode.READ_ONLY)
     private List<DecoderAdressModel> adressen;
 
+    @SuppressExport
     @JsonProperty(ApiNames.CVS)
     @Schema(implementation = DecoderCvModel.class, name = "Decoder cv values", accessMode = AccessMode.READ_ONLY)
     private List<DecoderCvModel> cvs;
 
+    @SuppressExport
     @JsonProperty(ApiNames.FUNKTIONEN)
     @Schema(implementation = DecoderFunktionModel.class, name = "Decoder functions", accessMode = AccessMode.READ_ONLY)
     private List<DecoderFunktionModel> funktionen;

@@ -4,7 +4,9 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,6 +26,7 @@ import javax.validation.metadata.ConstraintDescriptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -49,6 +52,7 @@ import com.linepro.modellbahn.security.EmailService;
 import com.linepro.modellbahn.security.WebSecurityConfig;
 import com.linepro.modellbahn.security.password.PasswordProcessor;
 import com.linepro.modellbahn.security.password.RawPassword;
+import com.linepro.modellbahn.security.user.UserModel.UserModelBuilder;
 import com.linepro.modellbahn.util.exceptions.ModellBahnException;
 
 import lombok.RequiredArgsConstructor;
@@ -63,14 +67,20 @@ public class UserService implements UserDetailsService {
 
     protected static final Integer DEFAULT_PAGE_SIZE = 30;
 
-    @Value("${com.linepro.user.expiry:720}")
+    @Value("${com.linepro.modellbahn.user.expiry:720}")
     private Integer accountExpiry;
 
-    @Value("${com.linepro.user.login-attempts:5}")
+    @Value("${com.linepro.modellbahn.user.login-attempts:5}")
     private Integer loginAttempts;
 
-    @Value("${com.linepro.user.password-aging:60}")
+    @Value("${com.linepro.modellbahn.user.password-aging:60}")
     private Integer passwordAging;
+
+    @Value("${com.linepro.modellbahn.user.confirmation-time:24}")
+    protected Integer confirmationTime;
+
+    @Value("${com.linepro.modellbahn.user.reset-time:1}")
+    protected Integer resetTime;
 
     @Autowired
     private final UserRepository userRepository;
@@ -87,32 +97,36 @@ public class UserService implements UserDetailsService {
     @Autowired
     private final MessageTranslator translator;
 
-    @Value("${com.linepro.modellbahn.user.confirmUrl}")
+    @Value("${com.linepro.modellbahn.user.confirmUrl:}")
     private final String confirmationUrl;
 
-    @Value("${com.linepro.modellbahn.user.resetUrl}")
+    @Value("${com.linepro.modellbahn.user.resetUrl:}")
     private final String resetUrl;
 
     @Value("${com.linepro.modellbahn.noreply}")
     private final String noReply;
 
-    public Optional<UserModel> get(String name) {
+    public Optional<UserModel> get(String name, Authentication authentication) {
         return userRepository.findByName(name)
-                             .map(this::toModel);
+                             .map(u -> toModel(u, isAdmin(authentication)));
     }
 
-    public Page<UserModel> search(Optional<UserModel> model, Optional<Integer> pageNumber, Optional<Integer> pageSize) {
+    public Page<UserModel> search(Optional<UserModel> model, Optional<Integer> pageNumber, Optional<Integer> pageSize, Authentication authentication) {
         Pageable pageable = (pageNumber.isPresent() || pageSize.isPresent())  ? 
                         PageRequest.of(pageNumber.orElse(FIRST_PAGE), pageSize.orElse(DEFAULT_PAGE_SIZE)) : 
                         Pageable.unpaged();
 
+        Page<User> found;
+        
         if (model.isPresent()) {
-            Example<User> user = Example.of(fromModel(new User(), model.get()));
+            Example<User> user = Example.of(fromModel(new User(), model.get(), isAdmin(authentication)));
 
-            return userRepository.findAll(user, pageable).map(this::toModel);
+            found = userRepository.findAll(user, pageable);
+        } else {
+            found = userRepository.findAll(pageable);
         }
-
-        return userRepository.findAll(pageable).map(this::toModel);
+        
+        return found.map(u -> toModel(u, isAdmin(authentication)));
     }
 
     public Optional<UserModel> update(String name, UserModel model, Authentication authentication) {
@@ -132,7 +146,7 @@ public class UserService implements UserDetailsService {
                                  }
 
                                  if (errors.isEmpty()) {
-                                     u = fromModel(u, model);
+                                     u = fromModel(u, model, isAdmin(authentication));
 
                                      errors.addAll(validator.validate(u));
                                  }
@@ -141,7 +155,7 @@ public class UserService implements UserDetailsService {
                                      throw new ConstraintViolationException(errors);
                                  }
 
-                                 return toModel(userRepository.saveAndFlush(u));
+                                 return toModel(userRepository.saveAndFlush(u), isAdmin(authentication));
                              });
     }
 
@@ -215,7 +229,7 @@ public class UserService implements UserDetailsService {
         Optional<User> user = userRepository.findByConfirmationToken(UUID.fromString(token));
 
         if (user.isPresent()) {
-            if (user.get().getConfirmationExpires().isAfter(LocalDateTime.now())) {
+            if (user.get().getConfirmationExpires().isBefore(LocalDateTime.now())) {
                 return UserMessage.builder()
                                   .timestamp(System.currentTimeMillis())
                                   .status(HttpStatus.BAD_REQUEST.value())
@@ -244,29 +258,27 @@ public class UserService implements UserDetailsService {
     }
 
     public UserMessage forgotPassword(String email) {
+        Optional<User> found = userRepository.findByEmail(email);
 
-        Optional<User> user = userRepository.findByEmail(email);
+        if (found.isPresent()) {
+            User user = found.get();
 
-        if (user.isPresent()) {
-            User found = user.get();
-
-            if (found.getConfirmationToken() != null && !found.getEnabled()) {
-                return requestConfirmation(found);
+            if (user.getConfirmationToken() != null && !user.getEnabled()) {
+                return requestConfirmation(user);
             }
 
-            found.setConfirmationToken(UUID.randomUUID());
-            found.setConfirmationExpires(LocalDateTime.now().plus(30, ChronoUnit.MINUTES));
+            setConfirmationToken(user, resetTime);
 
-            userRepository.saveAndFlush(found);
+            userRepository.saveAndFlush(user);
 
-            String resetLink = generateLink(found, resetUrl, found.getConfirmationToken());
+            String resetLink = generateLink(user, resetUrl);
 
-            emailUser(found, ApiMessages.FORGOT_EMAIL_SUBJECT, ApiMessages.FORGOT_EMAIL_BODY, resetLink);
+            emailUser(user, ApiMessages.FORGOT_EMAIL_SUBJECT, ApiMessages.FORGOT_EMAIL_BODY, resetLink);
 
             return UserMessage.builder()
                               .timestamp(System.currentTimeMillis())
                               .status(HttpStatus.ACCEPTED.value())
-                              .message(translator.getMessage(ApiMessages.FORGOT_EMAIL_SENT, found.getEmail()))
+                              .message(translator.getMessage(ApiMessages.FORGOT_EMAIL_SENT, user.getEmail()))
                               .build();
         }
 
@@ -283,7 +295,7 @@ public class UserService implements UserDetailsService {
         if (found.isPresent()) {
             User user = found.get();
 
-            if (user.getConfirmationExpires().isAfter(LocalDateTime.now())) {
+            if (user.getConfirmationExpires().isBefore(LocalDateTime.now())) {
                 return UserMessage.builder()
                                   .timestamp(System.currentTimeMillis())
                                   .status(HttpStatus.BAD_REQUEST.value())
@@ -302,7 +314,6 @@ public class UserService implements UserDetailsService {
     }
 
     public UserMessage changePassword(String name, String password, Authentication authentication) {
-
         Optional<User> found = userRepository.findByName(name);
 
         if (found.isPresent()) {
@@ -322,65 +333,94 @@ public class UserService implements UserDetailsService {
                           .build();
     }
 
+    private void setConfirmationToken(User user, int hours) {
+        user.setConfirmationToken(UUID.randomUUID());
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime expiry = now.plusHours(hours);
+        user.setConfirmationExpires(expiry);
+    }
 
     private void clearConfirmationToken(User user) {
         user.setConfirmationToken(null);
         user.setConfirmationExpires(null);
     }
 
-    protected UserModel toModel(User u) {
-        return UserModel.builder()
+    protected boolean isAdmin(Authentication authentication) {
+        return (authentication.getAuthorities().contains(WebSecurityConfig.ADMIN));
+    }
+
+    protected UserModel toModel(User u, boolean isAdmin) {
+        UserModelBuilder builder = UserModel.builder()
                            .name(u.getName())
                            .email(u.getEmail())
                            .firstName(u.getFirstName())
                            .lastName(u.getLastName())
                            .locale(u.getLocale())
                            .enabled(u.getEnabled())
-                           .lastLogin(u.getLastLogin())
-                           .roles(u.getRoles())
-                           .build();
+                           .lastLogin(u.getLastLogin());
+
+             if (isAdmin) {
+                   builder = builder.passwordAging(u.getPasswordAging())
+                           .passwordChanged(u.getPasswordChanged())
+                           .confirmationExpires(u.getConfirmationExpires())
+                           .loginAttempts(u.getLoginAttempts())
+                           .roles(u.getRoles());
+            }
+
+           return builder.build();
     }
 
-    protected User fromModel(User user, UserModel model) {
-        if (StringUtils.hasText(model.getEmail())) user.setEmail(model.getEmail());
-        if (StringUtils.hasText(model.getFirstName())) user.setFirstName(model.getFirstName());
-        if (StringUtils.hasText(model.getLastName())) user.setLastName(model.getLastName());
-        if (StringUtils.hasText(model.getLocale())) user.setLocale(model.getLocale());
+    protected User fromModel(User user, UserModel model, boolean isAdmin) {
+        if (isAdmin) {
+            user.setPasswordAging(model.getPasswordAging());
+            user.setLoginAttempts(model.getLoginAttempts());
+            if (model.getEnabled() != null) user.setEnabled(model.getEnabled());
+            if (!CollectionUtils.isEmpty(model.getRoles())) user.setRoles(model.getRoles());
+        } else {
+                if (StringUtils.hasText(model.getEmail())) user.setEmail(model.getEmail());
+                if (StringUtils.hasText(model.getFirstName())) user.setFirstName(model.getFirstName());
+                if (StringUtils.hasText(model.getLastName())) user.setLastName(model.getLastName());
+                if (StringUtils.hasText(model.getLocale())) user.setLocale(model.getLocale());
+        }
+
         return user;
     }
 
     protected UserMessage requestConfirmation(User user) {
-        user.setConfirmationToken(UUID.randomUUID());
-        user.setConfirmationExpires(LocalDateTime.now().plus(24, ChronoUnit.HOURS));
+        setConfirmationToken(user, confirmationTime);
 
         userRepository.saveAndFlush(user);
 
-        String confirmationLink = generateLink(user, confirmationUrl, user.getConfirmationToken());
+        String confirmationLink = generateLink(user, confirmationUrl);
 
         emailUser(user, ApiMessages.REGISTER_EMAIL_SUBJECT, ApiMessages.REGISTER_EMAIL_BODY, confirmationLink);
 
         return UserMessage.builder()
                           .timestamp(System.currentTimeMillis())
                           .status(HttpStatus.CREATED.value())
-                          .message(translator.getMessage(ApiMessages.REGISTER_EMAIL_SENT, user.getEmail(), user.getConfirmationExpires()))
+                          .message(translator.getMessage(ApiMessages.REGISTER_EMAIL_SENT, user.getEmail()))
                           .build();
     }
 
-    protected String generateLink(User user, String path, UUID token) {
+    protected String generateLink(User user, String path) {
         return UriComponentsBuilder.fromPath(path)
-                                   .queryParam(ApiNames.TOKEN, token)
+                                   .queryParam(ApiNames.TOKEN, user.getConfirmationToken())
                                    .build()
                                    .toString();
     }
 
-    protected void emailUser(User user, String subject, String body, String... params) {
+    protected void emailUser(User user, String subject, String body, Object... params) {
         try {
             MimeMessage message = emailService.createMessage();
 
             List<Object> values = new ArrayList<Object>();
             values.addAll(Arrays.asList(params));
             values.add(user.getName());
-            
+            DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL)
+                                                           .withLocale(LocaleContextHolder.getLocale())
+                                                           .withZone(ZoneId.systemDefault());
+            values.add(user.getConfirmationExpires().format(formatter));
+
             MimeMessageHelper helper = new MimeMessageHelper(message, false, Charsets.ISO_8859_1.name());
             helper.setTo(user.getEmail());
             helper.setFrom(noReply);
@@ -503,7 +543,7 @@ public class UserService implements UserDetailsService {
     public boolean isCredentialsNonExpired(User user) {
         if (user.getPasswordAging() != null) {
             if (user.getPasswordChanged() != null) {
-                return Duration.between(user.getPasswordChanged(), LocalDateTime.now()).get(ChronoUnit.DAYS) < user.getPasswordAging();
+                return Duration.between(user.getPasswordChanged(), LocalDateTime.now()).toDays() < user.getPasswordAging();
             }
 
             return false;

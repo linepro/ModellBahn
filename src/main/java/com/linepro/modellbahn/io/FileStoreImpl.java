@@ -18,10 +18,10 @@ import lombok.extern.slf4j.Slf4j;
 @Component(PREFIX + "FileStoreImpl")
 public class FileStoreImpl implements FileStore {
 
-    @Value("${filestore.root:}")
+    @Value("${com.linepro.modellbahn.filestore.root:}")
     private String fileRoot;
 
-    @Value("${filestore.name:static}")
+    @Value("${com.linepro.modellbahn.filestore.name:static}")
     private String storeFolder;
 
     public FileStoreImpl() {

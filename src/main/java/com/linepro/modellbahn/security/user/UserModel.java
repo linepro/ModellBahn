@@ -3,6 +3,7 @@ package com.linepro.modellbahn.security.user;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
@@ -34,7 +35,9 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.EMAIL, ApiNames.FIRST_NAME, ApiNames.LAST_NAME, ApiNames.LOCALE, ApiNames.PASSWORD, ApiNames.LINKS })
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.EMAIL, ApiNames.FIRST_NAME, ApiNames.LAST_NAME, ApiNames.LOCALE, ApiNames.PASSWORD, ApiNames.ENABLED,
+                     ApiNames.LOGIN_ATTEMPTS, ApiNames.PASSWORD_AGING, ApiNames.PASSWORD_CHANGED, ApiNames.CONFIRMATION_EXPIRES, ApiNames.LAST_LOGIN,
+                     ApiNames.ROLES, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.USER, itemRelation = ApiNames.USER)
 @Schema(name = ApiNames.USER, description = "System User")
 public class UserModel extends RepresentationModel<UserModel> {
@@ -67,7 +70,26 @@ public class UserModel extends RepresentationModel<UserModel> {
     @Schema(description = "Password, encrypted", example = "Pa$5w0rd", accessMode = AccessMode.READ_ONLY)
     private Boolean enabled;
 
+    @JsonProperty(ApiNames.LOGIN_ATTEMPTS)
+    @Schema(description = "Password, encrypted", example = "Pa$5w0rd", accessMode = AccessMode.READ_ONLY)
+    private Integer loginAttempts;
+
+    @JsonProperty(ApiNames.PASSWORD_AGING)
+    @Schema(description = "Password, encrypted", example = "Pa$5w0rd", accessMode = AccessMode.READ_ONLY)
+    private Integer passwordAging;
+
+    @JsonProperty(ApiNames.PASSWORD_CHANGED)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Schema(description = "Password, encrypted", example = "Pa$5w0rd", accessMode = AccessMode.READ_ONLY)
+    private LocalDateTime passwordChanged;
+
+    @JsonProperty(ApiNames.CONFIRMATION_EXPIRES)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Schema(description = "Password, encrypted", example = "Pa$5w0rd", accessMode = AccessMode.READ_ONLY)
+    private LocalDateTime confirmationExpires;
+
     @JsonProperty(ApiNames.LAST_LOGIN)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Schema(description = "Password, encrypted", example = "Pa$5w0rd", accessMode = AccessMode.READ_ONLY)
     private LocalDateTime lastLogin;
 
