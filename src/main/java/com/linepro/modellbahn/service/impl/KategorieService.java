@@ -63,7 +63,7 @@ public class KategorieService extends NamedItemServiceImpl<KategorieModel, Kateg
 
                              repository.saveAndFlush(k);
 
-                             return (unterKategorieMutator.convert(unterKategorie));
+                             return unterKategorieMutator.convert(unterKategorie);
                              });
     }
 

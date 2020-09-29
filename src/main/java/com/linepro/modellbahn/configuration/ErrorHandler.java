@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -38,43 +37,27 @@ import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 @RequiredArgsConstructor
 public class ErrorHandler {
 
-    private ResponseEntityExceptionHandler delegate = new ResponseEntityExceptionHandler() {};
-
     private final MessageTranslator messageTranslator;
 
     @Produces(MediaType.APPLICATION_JSON)
     @ExceptionHandler({ Exception.class })
     public ResponseEntity<Object> handleException(Exception ex, WebRequest request) throws Exception {
-        String contextPath = getRequestPath(request);
-        if (StringUtils.isNotBlank(contextPath)) {
-            Throwable effective = getEffective(ex);
+        Throwable effective = getEffective(ex);
 
-            HttpStatus status = classify(effective);
-            return ResponseEntity.status(status)
-                                 .body(
-                                     ErrorMessage.builder()
-                                                 .timestamp(System.currentTimeMillis())
-                                                 .status(status.value())
-                                                 .error(status.getReasonPhrase())
-                                                 .message(message(effective))
-                                                 .path(contextPath)
-                                                 .developerMessage(developerMessage(effective))
-                                                 .build()
-                                                 );
+        HttpStatus status = classify(effective);
 
-        }
+        return ResponseEntity.status(status)
+                             .body(
+                                 ErrorMessage.builder()
+                                             .timestamp(System.currentTimeMillis())
+                                             .status(status.value())
+                                             .error(status.getReasonPhrase())
+                                             .message(message(effective))
+                                             .path(request.getContextPath())
+                                             .developerMessage(developerMessage(effective))
+                                             .build()
+                                             );
 
-        return delegate.handleException(ex, request);
-    }
-
-    private String getRequestPath(WebRequest request) {
-        String requestPath = ServletUriComponentsBuilder.fromCurrentRequest().toUriString();
-
-        if (StringUtils.contains(requestPath, ApiPaths.API_ROOT)) {
-            return requestPath.substring(requestPath.lastIndexOf(ApiPaths.API_ROOT));
-        }
-
-        return null;
     }
 
     private Throwable getEffective(Exception ex) {

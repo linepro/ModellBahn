@@ -1,10 +1,443 @@
 {
 	"info": {
-		"_postman_id": "4045950e-285b-4e96-b90d-4db82413e5e8",
+		"_postman_id": "38a6b076-1b1c-44dc-a0ec-b1660c94dc8a",
 		"name": "ModellBahn",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Actuator",
+			"item": [
+				{
+					"name": "Probe",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a75e073a-6929-4eb0-a56d-8b12aa640ed1",
+								"exec": [
+									"console.log(\"Waiting for startup\");\r",
+									"\r",
+									"var health = pm.variables.replaceIn(\"{{management}}/health\");\r",
+									"\r",
+									"var retries = pm.variables.get(\"startRetries\");\r",
+									"var delay = pm.variables.get(\"startDelay\");\r",
+									"\r",
+									"function probe(retries, delay) {\r",
+									"    if (retries > 0) {\r",
+									"    console.log(\"Probing: \" + retries);\r",
+									"        setTimeout(delay);\r",
+									"        return pm.sendRequest(health, (err, response) => {\r",
+									"            if (err || response.status != 200) {\r",
+									"                console.log(\"Retrying in \" + delay + \"ms\");\r",
+									"                probe(--retries, delay);\r",
+									"            } else {\r",
+									"                console.log(\"Started!\");\r",
+									"                return true;\r",
+									"            }\r",
+									"        });\r",
+									"    } else {\r",
+									"        console.log(\"Failed!\");\r",
+									"        return false;\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"var started = probe(retries, delay);\r",
+									"console.log(started);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "685d4236-3f5f-4bd2-8789-ea8e65f87f05",
+								"exec": [
+									"// Don't wrap in pm.test for fail hard...\r",
+									"pm.response.to.have.status(200);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/health",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Audit Events",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/auditevents",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"auditevents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Beans",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/beans",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"beans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Caches",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/caches",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"caches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Config Props",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/configprops",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"configprops"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Env",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/env",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"env"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Flyway",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/flyway",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"flyway"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Heap Dump",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/heapdump",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"heapdump"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/health",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "HTTP Trace",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/httptrace",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"httptrace"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/info",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/health",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log File",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/logfile",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"logfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Loggers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/loggers",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"loggers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Metrics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/metrics",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"metrics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mappings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/mappings",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"mappings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Prometheus",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/prometheus",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"prometheus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Scheduled Tasks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/scheduledtasks",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"scheduledtasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sessions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/sessions",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Thread Dump",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/threaddump",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"threaddump"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "password",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "admin",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4b41d8b2-fa7a-47e5-ae20-ad739c4e85e2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d0d2d1d9-0d5b-4233-a346-717d986b12a5",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
 		{
 			"name": "Enums",
 			"item": [
@@ -14,7 +447,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "89265004-d0b7-4307-bc1a-fabb24b5d42b",
+								"id": "8a6143ca-a7d6-4a1d-9719-76d4c477a400",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();"
@@ -50,7 +483,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cfe94c82-abc3-49f0-add4-834bc7b39328",
+								"id": "d93c02ad-9396-4d36-9e92-c69a420fd70c",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();"
@@ -86,7 +519,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ce8348f8-072a-40fa-bc38-18574a31452b",
+								"id": "95db490d-a61d-4694-b161-6675979eaabc",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();"
@@ -122,7 +555,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c2721e6e-e66f-4622-8920-63469d9eead2",
+								"id": "88bf40b7-7fb2-4398-8a3c-85aee492b70c",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();"
@@ -158,7 +591,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1cd9bebd-775c-47c7-b562-a5c21f2d5f72",
+								"id": "13aa7e36-25af-4b4b-b499-c83b55c51590",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();"
@@ -194,7 +627,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "73d9a574-a232-46d6-ad28-3ae29670f877",
+								"id": "4d871c68-c937-4364-a8d4-f11d4b481d96",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();"
@@ -230,7 +663,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6d2408c1-4dae-4abe-92ca-95530b90b4d5",
+								"id": "43dc8226-97f1-4ead-b5db-8479e61e8311",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();"
@@ -272,7 +705,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "25dd66e0-b178-4c7a-8a4a-6e6b6060566c",
+								"id": "5c3eeab9-7504-4f25-9636-05df3cc86a3f",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/achsfolg\");\r",
@@ -329,7 +762,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "da2bffe7-2361-4c7b-956b-7cfd6db3dfc4",
+								"id": "cba6f10c-fd3a-4a4e-92d2-802ec4b089f0",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -340,7 +773,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "79ea5a73-969f-412e-aba7-dee5fe6f3c49",
+								"id": "b12e01e9-0d12-4e68-a41b-528b2f78d8b6",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -403,7 +836,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "939f8e90-a3cd-4c55-8673-e70e5e26ca87",
+								"id": "edd0c9a7-50ec-4100-bd3b-a9f8b9878f8c",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -413,7 +846,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "532911d5-d3c2-45be-822f-acfe02e9f4d0",
+								"id": "7cce8cf3-aa78-4b45-8cb2-ed6369bde865",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -478,7 +911,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7554603f-c6fb-452e-bdd4-03173076ca60",
+								"id": "f3b2b186-19a8-430e-8b5e-c60d8359db0a",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -529,7 +962,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d866c579-36cc-4fb2-8f56-a9abdd5a1aff",
+								"id": "55dbb69f-7fa4-4a32-9534-d7700f281e82",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -571,7 +1004,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6e981ee3-dd41-46c4-9c65-599eea1ad717",
+								"id": "088b88df-1247-40bd-a029-e6437272207a",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/antrieb\");\r",
@@ -624,7 +1057,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "87ae0d2e-0ef2-413e-8f36-ffe708b901e9",
+								"id": "9eeb23ea-4692-4c51-8760-3c1883fa2c2b",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -635,7 +1068,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e3715b5-bdaf-4da4-9f4e-b708b867ff7c",
+								"id": "31b2724d-73c0-4240-a503-4bf090061776",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -698,7 +1131,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "638f193c-3a7b-4038-a9ed-7efaebd80a60",
+								"id": "2c2519b9-d095-4446-805d-968b526a1301",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -708,7 +1141,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b9be72e6-7038-4277-8fae-3f67216cb8e8",
+								"id": "5064989a-1475-455b-92a0-338304a556c4",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -772,7 +1205,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "31adae8d-fe4a-49c7-992f-0f1df20ae5e3",
+								"id": "b69cf068-f904-4d16-8466-46161f75b911",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -818,7 +1251,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "76109343-c911-44c9-bfc0-12b9f4ed5dae",
+								"id": "d61bcb01-053a-4073-8ec8-e87ed039c771",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -860,7 +1293,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "36d75bcd-5a76-4f7d-965e-d1b6544974ae",
+								"id": "75f04a54-cb6c-46b9-ac33-9640cb516806",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/aufbau\");\r",
@@ -914,7 +1347,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "9edafea2-f5bb-424b-8638-5ed764dbbdcd",
+								"id": "e7ef5b6f-9423-48c1-9985-fb0fcba41208",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -925,7 +1358,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c9a1d5de-6d0c-4986-a85e-d7d4d2ffff3e",
+								"id": "5e05a6a2-2814-485e-a9b5-c351fe0bec72",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -989,7 +1422,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "86c7da99-30c1-4d79-a64e-6bb40ded4882",
+								"id": "4ff3c306-fd28-44f0-8449-5bbb1d0eb9a5",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1053,7 +1486,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "e6d27c96-97e8-435e-9130-7352a29aee47",
+								"id": "25ce65e7-f83c-4165-98af-57dc21bc7ef1",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -1063,7 +1496,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d070f96f-8ec0-4152-be19-35bd50730238",
+								"id": "067f3fa4-e5fc-4964-baa3-f06963085133",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1130,7 +1563,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e300a511-67ef-4f82-bb7c-b51e3fff7958",
+								"id": "ae99c480-e729-4dbe-9de7-64b01413c76a",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1179,7 +1612,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2ed0bfaf-b34b-4254-b151-87dfaac41fbe",
+								"id": "f22ec8fe-272b-4f61-8cdf-33722551a05d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1229,7 +1662,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "98e7fdb6-d5ec-4cc7-97a4-36b439253300",
+								"id": "8ad0dec6-7897-4cd4-a506-9c863ba1d45c",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -1271,7 +1704,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5f8e570e-fe37-435a-9ced-60312416a171",
+								"id": "57227f11-cf8f-48c3-a325-a1a7de097a5e",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/bahnverwaltung\");\r",
@@ -1324,7 +1757,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "d72ba568-29eb-4dd1-8a3d-db56182583b4",
+								"id": "aec5bf02-3d98-47a4-954f-62259563facd",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
@@ -1336,7 +1769,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6aa5603d-8c09-47d5-b5d6-e7ab26e17e6a",
+								"id": "875a3c2a-0170-4b46-9557-4e7f24fff86a",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1400,7 +1833,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b7231c21-927d-49f6-9f15-f187eecb5bb4",
+								"id": "98f47ba2-0886-4677-a3af-ea54d54011ea",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"land\", pm.variables.replaceIn(\"{{$randomCountryCode}}\"));"
@@ -1411,7 +1844,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c8495ced-ca64-49a4-97f6-ea13cb8abef5",
+								"id": "d37530e5-28a4-4585-aa3e-a19e68d874b2",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1476,7 +1909,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c0bb16ce-2d15-4c3d-afbf-c429e824521b",
+								"id": "85c8fbbc-aebf-4b02-9529-e52f655156c0",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1523,7 +1956,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7b8aa962-967c-4448-a72e-f094b3a47f03",
+								"id": "757113aa-3720-400f-875f-764e6d65441e",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -1565,7 +1998,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dd1fc2a4-b5e2-4cac-9804-9b7516c7bae8",
+								"id": "6f74383e-d760-44ff-86a7-7d1e16c144f5",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/epoch\");\r",
@@ -1618,7 +2051,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "eb429d3c-0ca4-4445-af9b-54ff95166f08",
+								"id": "33bd47b2-853c-489d-aa71-c31f45e6c0b8",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -1629,7 +2062,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "909d22c5-7212-4ed2-a3bf-11b2f7de4601",
+								"id": "31ab681c-7829-4dce-b2e9-07c76ea24aa4",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1692,7 +2125,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "d6717eac-1f33-46e0-98eb-2831f53b509c",
+								"id": "b60ce60c-23fd-4b67-99b8-b3f8a90e7a56",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -1702,7 +2135,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "333a1f57-2427-4aeb-b00c-a73de260f8c8",
+								"id": "9718a297-dda2-4863-af4a-72a3d030e6e2",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1766,7 +2199,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b84e808f-b06c-4961-8fad-e20c69009298",
+								"id": "942b2478-2860-447b-be83-5664df9fd5e8",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1812,7 +2245,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7275c92b-b7dd-47c2-995e-a7b38d895ab6",
+								"id": "84735fd8-ff06-4ec3-b3d9-b6f653532641",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -1854,7 +2287,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b9734323-afae-42b0-b093-7c7d98c494c1",
+								"id": "f95aec6b-34fb-4776-bc61-1dbe2e1f748d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/gattung\");\r",
@@ -1907,7 +2340,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "c6f32d4a-eb0b-41b6-804f-0e618e59472b",
+								"id": "baa11cdf-9c60-4503-aa35-8366af6be3d2",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -1918,7 +2351,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "82d7a2f5-f10d-4038-8563-ef934d7e0b8b",
+								"id": "94395891-c4a7-4f57-8c35-b4eec6668a21",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -1981,7 +2414,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "e92a0973-3255-42e2-add9-c981a82fdf72",
+								"id": "80e645df-a3ba-4b7b-b0df-37229e1c242d",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -1991,7 +2424,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d33a0c67-637a-4c28-9b0f-d5368a2a7c7d",
+								"id": "18892d41-5828-407c-a3ba-87e1963d56d0",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2055,7 +2488,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8cc445b9-b375-458e-a339-c96f2835aeb2",
+								"id": "37f6a520-d39b-4020-bdac-4bc127ac9006",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2101,7 +2534,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d28c47c8-0527-4850-93d8-baf874776cbb",
+								"id": "e8073bd1-617a-488c-9e83-05396a14a869",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -2143,7 +2576,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b4e532a3-9e2b-4696-b3b4-45e33adb71e9",
+								"id": "b12be5af-6fb7-4606-bd84-181098082c4e",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/hersteller\");\r",
@@ -2196,7 +2629,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "e6505892-ee7a-43e1-8d9e-cc0166af0344",
+								"id": "b525f897-b3e9-4f2e-976a-2616ab1be0f1",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
@@ -2210,7 +2643,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a5b90ee4-8f23-4ea7-a8d2-d024b6cc4f1e",
+								"id": "0a4068ea-2b36-4c47-acca-cc86cab9b34b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2276,7 +2709,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b0144f17-bcb1-4bbd-b1bc-6f40ebe32aff",
+								"id": "66b91c42-34dd-4edd-8d9f-9a836a7066c8",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"url\", pm.variables.replaceIn(\"{{$randomUrl}}\"));\r",
@@ -2289,7 +2722,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cc018301-d0c0-42c6-94dc-7b6bd29bde0e",
+								"id": "c631afa0-d4b6-4a80-8b76-d8ba8cc015b9",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2356,7 +2789,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6d748e2b-e904-4952-8013-de7c35762fa8",
+								"id": "b244834f-ac25-4aeb-9236-fab951d97611",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2405,7 +2838,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b75fb13b-54b3-40ee-ab36-35cabcf7886f",
+								"id": "bff7fa8e-ed26-4ac5-bc56-854085315ccb",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -2447,7 +2880,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b0a8e564-df8e-4086-a985-a900da3bb151",
+								"id": "7033cdbe-2ed0-4365-a188-3b5710716d19",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kupplung\");\r",
@@ -2501,7 +2934,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "7d571ce3-18ef-46c8-91f7-05b49e5cab98",
+								"id": "0fb54fb4-d516-45bd-aea9-fee5837fcc19",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -2512,7 +2945,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9dab7462-afb2-43c2-a356-3d50c85511cf",
+								"id": "328f27bb-21b7-4ab7-ab5d-fd5b357edb15",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2576,7 +3009,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "569a239e-1cc3-4940-9346-aaf0217ea356",
+								"id": "44fd4b4d-8c4c-40f7-8e2e-fc8ce4ca6f41",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2640,7 +3073,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "647838b8-82bd-4ce4-aa2a-e1c3e0ddf5d7",
+								"id": "78a21934-371e-49bf-af06-baa0127b1345",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -2650,7 +3083,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a7fb6b15-a51a-4b5b-8ae6-5eaeb457272f",
+								"id": "b41d9768-859b-4007-8905-77c7cbe09c6d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2717,7 +3150,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d3c8eb85-9587-4551-a333-b5b4249f9a12",
+								"id": "1536f5ba-7c6d-4e22-a6e8-70b39d14466f",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2766,7 +3199,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "47f69203-869d-4cf4-9eda-91baf8d02c73",
+								"id": "a8113ea6-bad5-436e-bf06-41b7e8992d85",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2816,7 +3249,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f77fa161-11e3-4998-85d2-4b24f92d8f41",
+								"id": "a7de2dd4-2133-4ea7-afd5-dfb7c6ec83e8",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -2858,7 +3291,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "263fbb9a-e227-4903-b535-a6924399d5ac",
+								"id": "366b5004-ab83-456b-aaee-c5a3f18e68d9",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/licht\");\r",
@@ -2912,7 +3345,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "cab660ac-46a8-459e-b3de-385731766790",
+								"id": "a0c700d0-02bc-4e1a-81da-e3418f47ec85",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -2923,7 +3356,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0f5d43fb-9382-4e9a-94b8-1be885834249",
+								"id": "8cef56e1-9f01-41e8-9c9f-a46478b6a40b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -2987,7 +3420,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "72bb46fd-5589-4dcf-8e02-16f1131ef24e",
+								"id": "fd98b86c-06fc-443d-be83-6748cd8ad5d0",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3051,7 +3484,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "00bfa5a5-1d11-4794-a744-f8ae3de40515",
+								"id": "e10da8e7-e966-45b7-9bbf-96f6fadde6cf",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -3061,7 +3494,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9bede05a-6b12-4d0e-acd3-98a6a0e03c72",
+								"id": "f7418ac8-27cf-4c5f-b271-7479ba441fd7",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3128,7 +3561,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a3309905-4aeb-4caa-b645-dbfee88cc6f8",
+								"id": "a4ae0df4-742f-4fbc-90f3-d5210f8345d5",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3177,7 +3610,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a84412ee-4165-4025-9200-571c82382a6b",
+								"id": "6afc4ae4-93ed-4c27-b194-009a9816590d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3227,7 +3660,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d2d936df-567e-48f2-835a-9cf4da34dcc3",
+								"id": "8e2305c9-c79a-429d-b0c5-6600bfff5994",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -3269,7 +3702,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5016f6df-823c-47f4-9316-237d8ce167a6",
+								"id": "56558fd2-7af8-44f2-ab8f-0b95c0a76a41",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/massstab\");\r",
@@ -3322,7 +3755,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "d83d10ee-a3f0-4a1d-80c5-5299c76e9dbd",
+								"id": "a584db59-593c-4a1f-86b0-c2740bf43315",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -3333,7 +3766,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0e44bf51-b6fb-4262-85a5-2187902a8d23",
+								"id": "95d03286-8833-4bf9-99a3-a512988a26a3",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3396,7 +3829,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "9adfa72f-ab68-4fe9-a519-f9f34b1771cb",
+								"id": "cad479fd-5e17-462a-a493-789b5dc2161d",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -3406,7 +3839,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cf3b6c11-9694-4568-ba43-80bdb0fe3ee4",
+								"id": "2229a58f-e90e-40d3-90d4-31945a2f6e0e",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3470,7 +3903,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a1e9deef-3c8b-4209-b710-74078e06b3e2",
+								"id": "36d75f38-115f-47e3-977f-66b7da79063d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3516,7 +3949,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4492397f-b40c-41a4-aa99-e4e5239fa85c",
+								"id": "f0818f4d-30b0-49d0-9e9c-ce34204828d2",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -3558,7 +3991,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "52ad88a8-208a-451d-b0f8-ae0593ee4e39",
+								"id": "600b0e13-69a2-4160-b111-6afc815c4d45",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/motorTyp\");\r",
@@ -3611,7 +4044,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "aea38f11-208a-40fb-bd0f-17ca86dc03db",
+								"id": "373145ae-9f9d-4e05-9271-0b14caf3f098",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -3622,7 +4055,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "65a12a7a-bbe3-44c2-a482-cf186fdb2183",
+								"id": "84d73a34-444b-4ce8-b8f3-c341d36d9059",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3685,7 +4118,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b6a287b8-46ca-4aab-bc11-5457d3425827",
+								"id": "1a32b6a8-2fd8-4e0a-82c9-19e54fcd1c10",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -3695,7 +4128,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f63c9c4f-2c11-4907-b8db-06f5db6a5e40",
+								"id": "a4bbebc4-31b6-4704-8b01-5b05014ca2d5",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3759,7 +4192,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "33125ce2-3ef6-4874-ba9c-9a0825d44bb3",
+								"id": "af85beff-edb9-4752-836b-ac5f54fc3477",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3805,7 +4238,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "50dc3446-51c2-4497-91c9-510abf0dd010",
+								"id": "293d280a-cb5b-4888-8b91-f09648a74e4c",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -3847,7 +4280,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "77ab290b-cd69-4ed0-8a2c-7f8d0b2ab666",
+								"id": "5db2134c-7b23-41a3-8786-1b672af2037d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/protokoll\");\r",
@@ -3900,7 +4333,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "dac160be-abcf-4332-b7e1-2801266d015e",
+								"id": "a7b33a50-07e9-477c-9dd6-dd3dffee3c6c",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -3911,7 +4344,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8c2c4bbc-56cf-485c-b0d1-350f12806ea0",
+								"id": "212e580b-23f2-4056-b23d-cc6dd45a8269",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -3974,7 +4407,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "5220d817-988e-45c8-94f9-0a15b29a1ca5",
+								"id": "e7098dc1-e4a9-46fb-8bc0-a1f26648a4aa",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -3984,7 +4417,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ef44c5fa-9914-482c-a793-08d27f6ade51",
+								"id": "e359ca29-499c-4d4f-a07f-29cd0623c157",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4048,7 +4481,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "86b73b39-0727-44ea-9105-7f59f044c735",
+								"id": "ad2df799-ecd1-4c50-a579-f360437ff339",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4094,7 +4527,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e7f326e4-a4ce-4bb4-baa5-d33e69988718",
+								"id": "c03b9457-e111-4bfe-b8c9-cab193eb174c",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -4136,7 +4569,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0f7a0d38-caa1-4f27-bc67-79cd4ee276c9",
+								"id": "12c08a98-8c2d-42b5-b883-f45a671bc45f",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/sondermodell\");\r",
@@ -4189,7 +4622,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "97618d4e-ef59-48fe-9f33-663a6290bc39",
+								"id": "e929ca38-5a5a-4f4a-a406-bb9f57073963",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -4200,7 +4633,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d4a4fa19-6429-4613-9785-2013637b085d",
+								"id": "201a197e-9cca-4138-a2ae-7fedea5d37fd",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4263,7 +4696,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "e0c96448-c9d8-4dcc-b16d-47df04f4f75b",
+								"id": "162b2d71-ff29-4dca-8bcf-793f9ab3e3a7",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -4273,7 +4706,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fa04be2a-1fb3-493e-9cd8-f431fe7787d3",
+								"id": "1ef048e3-3927-4b33-b919-c39d675a8eb3",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4337,7 +4770,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bf43147c-5966-44d1-8989-04c01cda8aaa",
+								"id": "e7ea1fb8-72ba-4b4f-b7ae-033d2bdde410",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4383,7 +4816,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a5089088-8608-44af-a084-68b9d2685df1",
+								"id": "69cb208f-529e-44ba-b4c5-ee90957c01d4",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -4425,7 +4858,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "567373a6-edcb-4e63-b383-90c56893f83e",
+								"id": "9bf27b69-9e2e-4728-94cc-7995b8fb04a6",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/spurweite\");\r",
@@ -4478,7 +4911,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "71726233-0117-489d-a136-738849bc3287",
+								"id": "e19ad0b1-d085-44dd-babb-069049ed932d",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -4489,7 +4922,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fa76f953-78f3-4c49-bba0-3e9f84efd4c4",
+								"id": "9d4d0d82-16e1-4f86-9952-565da525c6e7",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4552,7 +4985,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "f2d52744-ac11-4072-8f14-ad47fe10772c",
+								"id": "ebc7a02b-bd61-49c9-95a6-280dc7b52797",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -4562,7 +4995,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c260887a-fa08-44ac-981c-5db5559fc075",
+								"id": "4008f88c-8ff7-4945-987f-2a6f718e6e15",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4626,7 +5059,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "06c26897-1998-4937-a9fa-217842e3e980",
+								"id": "5ecdf597-ae42-4197-82b4-8fb54ee5063a",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4672,7 +5105,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ebf9464b-3b9a-4201-abb2-44dbf8b68412",
+								"id": "b5e76c32-dfc1-445a-add5-c748a2c2e700",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -4714,7 +5147,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e916350f-f934-4099-ab41-f55287a0ac7e",
+								"id": "cb7bf4d9-79bc-4519-ac74-5cf8563c7deb",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/steuerung\");\r",
@@ -4767,7 +5200,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "878ec40c-884d-4b2c-8d83-65d03a5a6f6b",
+								"id": "aef02476-2e2d-4ed1-87e9-28aaa4745f6b",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -4778,7 +5211,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e4f52da8-e8c6-41ba-8670-b8dc20a30e96",
+								"id": "9518a8e2-0f55-4b54-928d-8ed73033e895",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4841,7 +5274,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "ce5321b6-2050-4301-aaf6-cb7a9cea8da6",
+								"id": "0d25475a-60fe-466a-8916-52e2450c314a",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -4851,7 +5284,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a486a7a8-c7cc-43a3-8974-7d8008fed7ce",
+								"id": "393ab146-7ac0-4cb3-bb0e-32655c346f6a",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4915,7 +5348,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b269788f-29d3-4b96-8c85-15ade715ac45",
+								"id": "9e4b92b9-02e8-45ca-9215-f07cb63107bc",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -4961,7 +5394,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "668a468a-de63-4540-a1e2-d5ef886ee2c1",
+								"id": "74bd1dc3-ab5b-41c8-a69b-e36d57ec8e6d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -5003,7 +5436,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a3276e45-08e4-404d-8690-85367bcf74b3",
+								"id": "c4d205b4-b62e-4a2e-a7b0-1e2cfd60b1fd",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zugTyp\");\r",
@@ -5056,7 +5489,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "68cc6026-e31c-4459-8624-eb669ecccd80",
+								"id": "314d1db0-533a-4272-bd1e-dcb602419b48",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -5067,7 +5500,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0ec44bb8-b9a2-49e9-8f38-41d172ba5176",
+								"id": "7d1b9286-d673-41b9-99c7-b5de3354f187",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -5130,7 +5563,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "6f2c29fe-e2f3-4a12-b359-8859be0bdda9",
+								"id": "78f01ec6-fc66-4ad1-8add-3c265cef09af",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -5140,7 +5573,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "295ad6ad-b5ac-4f22-a3dd-7fdcdf6ec771",
+								"id": "a622a791-a75a-47a3-bc69-578997386199",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -5204,7 +5637,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "33eb3a07-1f63-4171-92f3-adf8df7cc3d2",
+								"id": "a0fbaa9e-480c-403b-afde-a58327810a30",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -5250,7 +5683,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8b632780-e8bb-40ce-9fa0-e951b4a15c7e",
+								"id": "0d48009a-5dce-46cd-90fc-05c652ef3e83",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -5292,7 +5725,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dfaf08fb-7ca3-4c90-a3bb-97fd7f83e727",
+								"id": "307a725e-70e1-497f-9057-012e124e3945",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kategorie\");\r",
@@ -5347,7 +5780,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0392176e-04a8-4eb4-a69b-28e3decd0199",
+								"id": "30d6dd29-073a-4a7d-a5a8-a8fb6186b470",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kategorie\");\r",
@@ -5416,7 +5849,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "93b37877-fb87-4942-b75d-f95cb4cbc263",
+								"id": "a4eec96a-02f5-41f7-8873-208eea043350",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -5427,7 +5860,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "14a4f552-290b-4c70-8506-aa645c013f6a",
+								"id": "754efdf0-57fc-4948-8ee0-1a1b21d81da7",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -5492,7 +5925,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "7df204ce-f694-489c-ae4d-fff870b53849",
+								"id": "aa235bdc-07e7-4a94-9741-ea00c5a1db90",
 								"exec": [
 									"pm.environment.set(\"unterAdd\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"unterBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -5503,7 +5936,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5a00d282-157c-4c0b-9108-c19fb528bf30",
+								"id": "f4e5114c-972d-4cb4-befd-4b28e1de9358",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -5567,7 +6000,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "bd91d104-a672-407d-bf57-f544b918e958",
+								"id": "7488a4a9-f303-4fce-b053-826956ae6bc6",
 								"exec": [
 									"pm.environment.set(\"unterBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -5577,7 +6010,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2cfe1538-3992-45e7-b9e0-6b4b18adcbd4",
+								"id": "e10ff09e-25b3-4e77-ac47-366be668ff9c",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -5642,7 +6075,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "ef1dafed-8007-466c-b9c4-2396ad598081",
+								"id": "bb2c5e81-0e38-4d34-bc10-bd514deb4228",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -5652,7 +6085,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c04e1690-ff83-4744-9af8-73eb807b2f8f",
+								"id": "799112cb-9f68-4282-8cd4-11fa2e0307a3",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -5726,7 +6159,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "90d44bba-0294-4a65-8816-1bec5b6d08d7",
+								"id": "43fca96d-7a62-44ee-9fe1-b32e2938a979",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -5782,7 +6215,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3390a895-18ae-40e3-9376-8f61e3826173",
+								"id": "ef705228-24d4-411d-b819-181a65668640",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -5820,7 +6253,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0c9b2fcd-dac8-455f-b8e9-11309ac4eed3",
+								"id": "aee2c049-e3b7-4927-b2dd-d93b69946671",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -5862,7 +6295,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "218ed3ae-ca9f-427e-8696-b1aacba33936",
+								"id": "2d688d21-1a89-47c5-9654-4d100f031b83",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/vorbild\");\r",
@@ -5918,7 +6351,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "be1b06c8-f851-4f1f-9c21-990bc5452b7a",
+								"id": "f57b3298-7c7a-4dbf-a42f-00343bf80817",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}{{$randomInt}}.{{$randomInt}}\"));\r",
 									"pm.environment.set(\"gattung\", pm.variables.replaceIn(\"{{gattungAdd}}\"));\r",
@@ -5970,7 +6403,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c3245bc8-eb99-4c9a-9171-a1ecd5e2a7e9",
+								"id": "75619ad6-09a2-4ef4-aa17-6488c5647330",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -6072,7 +6505,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "09dab14a-4164-4e61-9d34-f86f14e69574",
+								"id": "293cef40-2ff2-48b8-a6f0-1b6b635177ab",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -6173,7 +6606,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b26e533a-6805-4140-ba24-b9141119c2e5",
+								"id": "48a65feb-816b-41ca-b2e7-dbe0aa60d076",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -6234,7 +6667,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "d4f53b77-02b8-4c66-916b-d219a60a2b6f",
+								"id": "e4d81155-729b-4d18-94a2-bb32539c085d",
 								"exec": [
 									"pm.environment.set(\"gattung\", pm.variables.replaceIn(\"{{gattungUpdate}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
@@ -6328,7 +6761,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8f001f68-6995-4237-aa43-fe160bef3bf3",
+								"id": "57f9368e-9fab-47d1-96f1-41458f521761",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -6414,7 +6847,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "daffaa3f-045c-4055-96a5-d83144946fb3",
+								"id": "57783d9d-1e1e-4192-8c15-76b4886c4e1d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -6501,7 +6934,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f44bc86a-7f73-4d96-a05b-b354fec835bb",
+								"id": "e2b1e256-5592-4d92-8201-d689fb740ea0",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -6543,7 +6976,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5169616c-f65b-41c9-8df7-d38fdc89158c",
+								"id": "590d4244-d2fa-4348-8d85-5bc819bea378",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp\");\r",
@@ -6605,7 +7038,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "49682200-6579-4cbd-a9ef-b7f4b7ea20b3",
+								"id": "59431675-7f8f-4457-bcd4-d25b450cc047",
 								"exec": [
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"decoderHerstellerAdd\"));\r",
 									"pm.environment.set(\"bestellNr\", pm.variables.replaceIn(\"{{$randomInt}}\"));\r",
@@ -6623,7 +7056,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7fa878b5-8947-46d1-b6f9-86863ab5e5e9",
+								"id": "27f20aa3-3340-4d27-91bc-70db68798986",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -6701,7 +7134,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bdeb0a49-183b-4070-a5dd-e173eec590bb",
+								"id": "aa3087b8-aa49-46bc-9f44-cec6dc5bd1d8",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -6779,7 +7212,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "cbc16176-1e43-459d-8eaa-2e25a1e934b0",
+								"id": "9191b3b8-723c-41e5-baf8-959d48e886a2",
 								"exec": [
 									"pm.environment.set(\"adIndex\", new Number(pm.variables.get(\"adIndexAdd\")));\r",
 									"pm.environment.set(\"adBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
@@ -6793,7 +7226,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "357c7529-44fc-487c-8b13-070300ab540a",
+								"id": "8fa8a523-b1ec-4a2f-856e-de9834faa71d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -6863,7 +7296,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "02e851dd-d0f8-47f4-a659-5b6a54b17f5e",
+								"id": "96bc4373-a54b-45ce-b077-c66065d9781d",
 								"exec": [
 									"pm.environment.set(\"adBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"adTyp\", pm.variables.get(\"adTypUpdate\"));\r",
@@ -6876,7 +7309,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b67f69c8-93be-4dd6-a3e7-a1f28e3dd0ac",
+								"id": "069413e3-86d3-4f72-87fc-466800e81ddf",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -6947,7 +7380,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "65872791-adfd-48e3-a8ed-1614cdb8d475",
+								"id": "50529092-1b85-45a2-8f07-09ecc26d1d81",
 								"exec": [
 									"pm.environment.set(\"cv\", new Number(pm.variables.get(\"cvAdd\")));\r",
 									"pm.environment.set(\"cvBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
@@ -6961,7 +7394,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "280f7dec-c259-4a2a-aad3-8085216f9b51",
+								"id": "3d919add-b7d7-44ab-96b8-09a918854167",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -7031,7 +7464,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "13d96bd6-e520-4e08-8989-aaa9178af066",
+								"id": "56f6a2a1-fa58-434f-99a0-264f40c612f0",
 								"exec": [
 									"pm.environment.set(\"cvBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"cvMinimal\", new Number(pm.variables.get(\"cvMinUpdate\")));\r",
@@ -7044,7 +7477,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f4fe9147-9313-4d7d-ae17-ab0e534a9704",
+								"id": "be44c001-ffad-45fb-8ee5-cd3759eb2a8d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -7115,7 +7548,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "f9c8e220-4cfe-433e-940b-e6350052829d",
+								"id": "07ca261d-0a91-42f1-9f39-0a275bdc2795",
 								"exec": [
 									"pm.environment.set(\"fnReihe\", new Number(pm.variables.get(\"fnReiheAdd\")));\r",
 									"pm.environment.set(\"fnFunktion\", pm.variables.get(\"fnFuntionAdd\"));\r",
@@ -7128,7 +7561,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "acbc8b4c-236a-4cd1-b7ea-ddd4512e149a",
+								"id": "04b34e7b-91cd-46cf-ad93-73e2491eb747",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -7197,7 +7630,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "455f4e40-1d62-4683-9ee8-a380d0e51a46",
+								"id": "3bbf3a79-822a-4af7-8305-0191c2790379",
 								"exec": [
 									"pm.environment.set(\"fnReihe\", new Number(pm.variables.get(\"fnReiheUpdate\")));\r",
 									"pm.environment.set(\"fnFunktion\", pm.variables.get(\"fnFuntionUpdate\"));\r",
@@ -7210,7 +7643,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bc6033f5-f563-4f53-8d0f-d0c4c92c4ba3",
+								"id": "097f81cd-88e1-4d7c-bf32-dc128b788e8c",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -7281,7 +7714,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b50281a7-01d9-405f-90a4-cbe3b9e790ad",
+								"id": "5be7ac09-2764-47e1-a197-98c6af71bf74",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"iMax\", new Number(pm.variables.get(\"iMaxUpdate\")));\r",
@@ -7297,7 +7730,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0cdfd7e9-64eb-4422-b8df-72779391194d",
+								"id": "b91fd814-1f52-45e9-9382-a260c4ec0942",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -7416,7 +7849,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "eadc4a01-e44d-47f5-81d2-404bb7d7bc71",
+								"id": "963f0015-2225-44b9-9ec0-aa2e2cbf2f55",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -7517,7 +7950,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b0408dc8-a566-4123-b705-840ab27d647f",
+								"id": "8c3175a2-197a-4acc-80a8-d3a2d82f6167",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -7620,7 +8053,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d4006224-7463-412b-b580-e5eb6bf422d7",
+								"id": "52c0b89e-fdc0-4259-8c58-47d959208230",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -7659,7 +8092,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8c1eaec8-8d4b-49fd-9641-afd655d92676",
+								"id": "cb4999cc-4029-497c-97ef-c2880df42a92",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -7698,7 +8131,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8c870d96-78ce-4c34-9ac9-209f5dafe176",
+								"id": "966ef452-4620-4c70-ba68-05ebd52cefbd",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -7738,7 +8171,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8d6eee11-1013-4f8c-8112-663c24b01430",
+								"id": "eb2cbb27-bcba-424b-b795-5148c4c146bc",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -7781,7 +8214,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "35613d0f-a4b0-4fcf-a4c9-f67e17c4a73f",
+								"id": "c0d78ba5-ba2e-4d91-a15a-6ec7ca8af3b2",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
@@ -7842,7 +8275,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "c3421044-7251-4c98-9766-bf25fd7e4617",
+								"id": "f6a25fea-dd0b-4bea-88f9-df03696e766b",
 								"exec": [
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
 									"pm.environment.set(\"bestellNr\", pm.variables.replaceIn(\"{{$randomAbbreviation}}{{$randomInt}}\"));\r",
@@ -7874,7 +8307,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "31c577e4-37a6-462c-ad69-be81c4492bc8",
+								"id": "022b8585-4080-4833-8b04-0fc235468aed",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -7968,7 +8401,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d2198c65-0b67-4892-92d7-8ed396d6d1de",
+								"id": "b43395c8-470e-47b2-bd42-f2d8deefb790",
 								"exec": [
 									"pm.test(\"response\", () => pm.test(\"response\", () => pm.response.to.have.status(202)));\r",
 									"var jsonData = pm.response.json();\r",
@@ -8062,7 +8495,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d781d6a8-4a7e-47e7-a97c-98228f812d25",
+								"id": "2191777a-aeb3-4bac-b72b-993ae8add2e5",
 								"exec": [
 									"pm.test(\"response\", () => pm.test(\"response\", () => pm.response.to.have.status(202)));\r",
 									"var jsonData = pm.response.json();\r",
@@ -8157,7 +8590,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "662c1768-1848-4c94-b8f7-5e3cb881a4ad",
+								"id": "1f13780b-2e46-4b66-8bcc-c4b4efe3e93b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -8253,7 +8686,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "60056f96-0374-424c-8366-3ccc76c511c6",
+								"id": "c8abf016-cb72-465b-aeed-73c6512e7afc",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -8350,7 +8783,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "57ae168f-f977-4f34-b61d-9a8e9ccde0f3",
+								"id": "8d736153-c9ba-4767-a214-0e03a63b7867",
 								"exec": [
 									"pm.environment.set(\"teilHersteller\", pm.variables.get(\"teilHerstellerAdd\"));\r",
 									"pm.environment.set(\"teilBestellNr\", pm.variables.get(\"teilBestellNrAdd\"));\r",
@@ -8365,7 +8798,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "26c1c930-8bf3-4072-bb1b-b399a98f012d",
+								"id": "093fc284-c366-4bea-89d8-487407e1a2a0",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -8436,7 +8869,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "43cb8b9a-c352-43c5-94e7-1420df3ffd99",
+								"id": "49d2c29d-8ece-44bc-a22e-c0f0983eb0f7",
 								"exec": [
 									"pm.environment.set(\"teilAnzahl\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
 								],
@@ -8446,7 +8879,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ccd7d8a0-c6e5-4750-b7cd-daaded6ab02d",
+								"id": "c40b8eb1-0495-4370-a535-6d8e76a1d2bb",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -8516,7 +8949,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "a26a04ff-a97a-42b4-9fac-4ba272fae5ee",
+								"id": "f04f99c3-e193-47a2-ba1a-9ef848e42cb0",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"kategorie\", pm.variables.get(\"kategorieUpdate\"));\r",
@@ -8546,7 +8979,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f8459d02-de2d-4f68-88b4-70b00a2ff52e",
+								"id": "fcafd94b-f1fc-4f8f-941c-8c400ed9b0e7",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -8660,7 +9093,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1f36c2c1-a95b-4f03-8d03-b8c77a4a5f71",
+								"id": "d0d2e775-fd03-4071-8712-98b256f5da09",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -8756,7 +9189,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "365485bc-fc7e-4e42-908d-97511ed4c99e",
+								"id": "901c6ba6-1c9f-4c9b-8a7a-a71756335610",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));\r",
 									""
@@ -8797,7 +9230,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "476a67b6-62ad-4e4e-825f-45625afe6c66",
+								"id": "dfd985a6-02a0-480f-a635-3e89fc3de824",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -8880,7 +9313,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c1096568-6dc1-4645-9d2d-842e4805cfae",
+								"id": "f9f41203-b621-4561-aec3-b498ca707071",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -8962,7 +9395,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f83d971b-4f72-459b-be52-eaec2839cbaa",
+								"id": "7e7a26b6-f2cc-4f6c-8231-270e95352387",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -9043,7 +9476,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4f1c8698-9d0a-4992-acdf-32c78793a4ba",
+								"id": "b1b040e9-4bed-44c7-9c78-a7f761accf7f",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -9123,7 +9556,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "01167018-ccd0-49fb-a620-c62ffb58f5af",
+								"id": "921ff9d2-29a0-4bd4-9586-f3516875ebd3",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -9166,7 +9599,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c31695b2-e4dd-4c36-968d-5d53dc801777",
+								"id": "e41cfd3b-ee3d-44b0-b48b-c778c3ae1884",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoder\");\r",
@@ -9228,7 +9661,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "8e7c2825-4fa9-4cef-b79c-2afd44a8f3f8",
+								"id": "9a56de83-3859-4e9a-9604-161b3c764303",
 								"exec": [
 									"pm.environment.set(\"hersteller\", \"ESU\");\r",
 									"pm.environment.set(\"bestellNr\", \"62400\");\r",
@@ -9253,7 +9686,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "788fdf9d-2ef1-481e-8bee-94735621a989",
+								"id": "a733ff2a-6f9f-434b-9ed7-e971a3f62ad8",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -9680,7 +10113,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "1b76d5dd-effa-4ff8-a8c8-0af6237c36e2",
+								"id": "98de31d7-8351-498c-ab9e-66badd072108",
 								"exec": [
 									"pm.environment.set(\"adIndex\", 1);\r",
 									"pm.environment.set(\"adBezeichnung\", \"Primary\");\r",
@@ -9695,7 +10128,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "72a55cbc-eeef-4ab3-9950-84e45fb93f15",
+								"id": "9e22638a-7be9-482d-b6b6-d89c017340c7",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -9760,7 +10193,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "152d0377-381a-4dba-9de8-69a0e859cf84",
+								"id": "bb2cf79e-d28f-4116-b8b0-3228e14d92a9",
 								"exec": [
 									"pm.environment.set(\"cvCv\", 1);\r",
 									"pm.environment.set(\"cvBezeichnung\", \"Adresse\");\r",
@@ -9775,7 +10208,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1e7e5dab-ca27-4758-b4ee-1a46a1785a72",
+								"id": "9b3b413a-42c2-42e4-b4d0-379f7fdaad6b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -9840,7 +10273,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "bba34a96-4a1b-49ad-81db-213338c42c15",
+								"id": "3af7d7bb-244d-4d1b-9ed0-f125127a6788",
 								"exec": [
 									"pm.environment.set(\"fnReihe\", 1);\r",
 									"pm.environment.set(\"fnFunktion\", \"F0\");\r",
@@ -9852,7 +10285,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "45dfa453-0664-4c2c-a493-d66bed7fab38",
+								"id": "ff72ee2a-d460-4bf6-9c91-f9fbc12e057e",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -9916,7 +10349,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "639a2cf8-7339-4b46-8d93-e1105e2f96bb",
+								"id": "6150fb7e-0371-4c0f-a7f1-426be63f87c9",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"protokoll\", \"DCC\");\r",
@@ -9933,7 +10366,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7c91304e-0162-48f1-a3e4-aca7f877963f",
+								"id": "fe3e72f5-a1c3-4fcf-9d97-8d82fdf5af36",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -10358,7 +10791,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6acaed58-9ef6-480c-963f-795f0bf2a6ce",
+								"id": "17e55df4-14a8-4350-ae13-70b51f30f827",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -10765,7 +11198,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dc2e3aba-d2a6-49ba-9637-e5510ecc2686",
+								"id": "22743ab9-c407-4379-8142-274fe10f40bd",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -10807,7 +11240,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "44565246-7213-4382-a13d-c5fb66683225",
+								"id": "101a0ec5-0a6d-44df-bff6-6bdc6596c69b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/artikel\");\r",
@@ -10826,6 +11259,7 @@
 									"    pm.test(\"_links.delete\", () => pm.expect(a._links.delete[0].href).to.eql(self));\r",
 									"    pm.test(\"_links.search\", () => pm.expect(a._links.search[0].href).to.eql(root));\r",
 									"    pm.test(\"_links.abbildung\", () => pm.expect(a._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
+									"    pm.test(\"_links.grossansicht\", () => pm.expect(a._links.grossansicht[0].href).to.eql(self + \"/grossansicht\"));\r",
 									"    pm.test(\"_links.anderung\", () => pm.expect(a._links.anderung[0].href).to.eql(self + \"/anderungen\"));\r",
 									"});\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(root));\r",
@@ -10865,7 +11299,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b7ca9c03-5710-42ff-bc0d-0228ca08b24f",
+								"id": "39ee9efa-6dbc-48ce-8697-41e5ec6e2a85",
 								"exec": [
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
 									"pm.environment.set(\"bestellNr\", pm.variables.get(\"bestellNrAdd\"));\r",
@@ -10894,6 +11328,7 @@
 									"pm.environment.set(\"anmerkung\", pm.variables.replaceIn(\"{{$randomCatchPhrase}}\"));\r",
 									"pm.environment.set(\"beladung\", pm.variables.replaceIn(\"{{$randomProductMaterial}}\"));\r",
 									"pm.environment.set(\"abbildung\", pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/abbildung.jpg\"));\r",
+									"pm.environment.set(\"grossansicht\", pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/grossansicht.jpg\"));\r",
 									"pm.environment.set(\"status\", \"GEKAUFT\");"
 								],
 								"type": "text/javascript"
@@ -10902,7 +11337,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6af62cca-21b4-43d0-9996-4dc72368cc3f",
+								"id": "b4bf83ba-606c-4dfe-9608-22bde9493b89",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -10939,6 +11374,7 @@
 									"pm.test(\"beladung\", () => pm.expect(jsonData.beladung).to.eql(pm.variables.get(\"beladung\")));\r",
 									"pm.test(\"status\", () => pm.expect(jsonData.status).to.eql(pm.variables.get(\"status\")));\r",
 									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(pm.variables.get(\"abbildung\")));\r",
+									"pm.test(\"grossansicht\", () => pm.expect(jsonData.grossansicht).to.eql(grossansicht));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"anderungen.length\", () => pm.expect(jsonData.anderungen.length).to.eql(0));\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
@@ -10947,6 +11383,7 @@
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
 									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
+									"pm.test(\"_links.grossansicht\", () => pm.expect(jsonData._links.grossansicht[0].href).to.eql(self + \"/grossansicht\"));\r",
 									"pm.test(\"_links.anderung\", () => pm.expect(jsonData._links.anderung[0].href).to.eql(self + \"/anderungen\"));"
 								],
 								"type": "text/javascript"
@@ -10997,13 +11434,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6d76cab2-942c-4731-8993-454df8afbdb4",
+								"id": "dcf70c7e-a5ac-4f6a-8872-f0fba9727616",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/artikel\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/artikel/{{artikelId}}\");\r",
-									"var abbildung = pm.variables.replaceIn(\"{{server}}/artikel/{{artikelId}}/abbildung.jpg\");\r",
 									"pm.test(\"artikelId\", () => pm.expect(jsonData.artikelId).to.eql(pm.variables.get(\"artikelId\")));\r",
 									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\")));\r",
 									"pm.test(\"bestellNr\", () => pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\")));\r",
@@ -11034,6 +11470,7 @@
 									"pm.test(\"beladung\", () => pm.expect(jsonData.beladung).to.eql(pm.variables.get(\"beladung\")));\r",
 									"pm.test(\"status\", () => pm.expect(jsonData.status).to.eql(pm.variables.get(\"status\")));\r",
 									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(abbildung));\r",
+									"pm.test(\"grossansicht\", () => pm.expect(jsonData.grossansicht).to.eql(grossansicht));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"anderungen.length\", () => pm.expect(jsonData.anderungen.length).to.eql(0));\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
@@ -11042,7 +11479,18 @@
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
 									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
+									"pm.test(\"_links.grossansicht\", () => pm.expect(jsonData._links.grossansicht[0].href).to.eql(self + \"/grossansicht\"));\r",
 									"pm.test(\"_links.anderung\", () => pm.expect(jsonData._links.anderung[0].href).to.eql(self + \"/anderungen\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "086379f4-d04b-420f-83b5-5c446fee30cd",
+								"exec": [
+									"pm.environment.set(\"abbildung\", pm.variables.replaceIn(\"{{server}}/artikel/{{artikelId}}/abbildung.jpg\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -11085,12 +11533,116 @@
 					"response": []
 				},
 				{
+					"name": "Add Grossansicht",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e43bce43-0b87-4c97-be7c-ef9c56a47c22",
+								"exec": [
+									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"var jsonData = pm.response.json();\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/artikel\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/artikel/{{artikelId}}\");\r",
+									"pm.test(\"artikelId\", () => pm.expect(jsonData.artikelId).to.eql(pm.variables.get(\"artikelId\")));\r",
+									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\")));\r",
+									"pm.test(\"bestellNr\", () => pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\")));\r",
+									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"kategorie\", () => pm.expect(jsonData.kategorie).to.eql(pm.variables.get(\"kategorie\")));\r",
+									"pm.test(\"unterKategorie\", () => pm.expect(jsonData.unterKategorie).to.eql(pm.variables.get(\"unterKategorie\")));\r",
+									"pm.test(\"lange\", () => pm.expect(jsonData.lange).to.eql(pm.variables.get(\"lange\")));\r",
+									"pm.test(\"massstab\", () => pm.expect(jsonData.massstab).to.eql(pm.variables.get(\"massstab\")));\r",
+									"pm.test(\"spurweite\", () => pm.expect(jsonData.spurweite).to.eql(pm.variables.get(\"spurweite\")));\r",
+									"pm.test(\"epoch\", () => pm.expect(jsonData.epoch).to.eql(pm.variables.get(\"epoch\")));\r",
+									"pm.test(\"bahnverwaltung\", () => pm.expect(jsonData.bahnverwaltung).to.eql(pm.variables.get(\"bahnverwaltung\")));\r",
+									"pm.test(\"gattung\", () => pm.expect(jsonData.gattung).to.eql(pm.variables.get(\"gattung\")));\r",
+									"pm.test(\"betreibsnummer\", () => pm.expect(jsonData.betreibsnummer).to.eql(pm.variables.get(\"betreibsnummer\")));\r",
+									"pm.test(\"achsfolg\", () => pm.expect(jsonData.achsfolg).to.eql(pm.variables.get(\"achsfolg\")));\r",
+									"pm.test(\"sondermodell\", () => pm.expect(jsonData.sondermodell).to.eql(undefined));\r",
+									"pm.test(\"aufbau\", () => pm.expect(jsonData.aufbau).to.eql(pm.variables.get(\"aufbau\")));\r",
+									"pm.test(\"licht\", () => pm.expect(jsonData.licht).to.eql(pm.variables.get(\"licht\")));\r",
+									"pm.test(\"kupplung\", () => pm.expect(jsonData.kupplung).to.eql(pm.variables.get(\"kupplung\")));\r",
+									"pm.test(\"steuerung\", () => pm.expect(jsonData.steuerung).to.eql(pm.variables.get(\"steuerung\")));\r",
+									"pm.test(\"decoder\", () => pm.expect(jsonData.decoder).to.eql(pm.variables.get(\"decoder\")));\r",
+									"pm.test(\"motorTyp\", () => pm.expect(jsonData.motorTyp).to.eql(pm.variables.get(\"motorTyp\")));\r",
+									"pm.test(\"kaufdatum\", () => pm.expect(jsonData.kaufdatum).to.eql(pm.variables.get(\"kaufdatum\")));\r",
+									"pm.test(\"wahrung\", () => pm.expect(jsonData.wahrung).to.eql(pm.variables.get(\"wahrung\")));\r",
+									"pm.test(\"preis\", () => pm.expect(jsonData.preis).to.eql(pm.variables.get(\"preis\")));\r",
+									"pm.test(\"stuck\", () => pm.expect(jsonData.stuck).to.eql(pm.variables.get(\"stuck\")));\r",
+									"pm.test(\"verbleibende\", () => pm.expect(jsonData.verbleibende).to.eql(pm.variables.get(\"verbleibende\")));\r",
+									"pm.test(\"anmerkung\", () => pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\")));\r",
+									"pm.test(\"beladung\", () => pm.expect(jsonData.beladung).to.eql(pm.variables.get(\"beladung\")));\r",
+									"pm.test(\"status\", () => pm.expect(jsonData.status).to.eql(pm.variables.get(\"status\")));\r",
+									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(abbildung));\r",
+									"pm.test(\"grossansicht\", () => pm.expect(jsonData.grossansicht).to.eql(grossansicht));\r",
+									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
+									"pm.test(\"anderungen.length\", () => pm.expect(jsonData.anderungen.length).to.eql(0));\r",
+									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
+									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
+									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
+									"pm.test(\"_links.grossansicht\", () => pm.expect(jsonData._links.grossansicht[0].href).to.eql(self + \"/grossansicht\"));\r",
+									"pm.test(\"_links.anderung\", () => pm.expect(jsonData._links.anderung[0].href).to.eql(self + \"/anderungen\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5a761107-ba2b-4af5-9cec-6abeec130fc9",
+								"exec": [
+									"pm.environment.set(\"grossansicht\", pm.variables.replaceIn(\"{{server}}/artikel/{{artikelId}}/grossansicht.jpg\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"type": "text",
+								"value": "{{language}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "abbildung",
+									"type": "file",
+									"src": "{{imageFile}}"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/artikel/{{artikelId}}/grossansicht",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"artikel",
+								"{{artikelId}}",
+								"grossansicht"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Add Anderung",
 					"event": [
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "41a1df06-2a07-4c9f-a091-3eda0e254c33",
+								"id": "c07137ad-d93a-4771-82e4-2a744b21d09d",
 								"exec": [
 									"pm.environment.set(\"anDatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
 									"pm.environment.set(\"anTyp\", \"UMGEBAUT\");\r",
@@ -11105,7 +11657,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b0416661-1a4a-443b-9703-75f17a611e9a",
+								"id": "acdd1a56-f705-47fd-9836-5e73433a2567",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -11174,7 +11726,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "c01861fe-24e3-446c-b677-80aec0c307c5",
+								"id": "3761b864-d2cd-463d-be85-950f42f8675b",
 								"exec": [
 									"pm.environment.set(\"anDatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
 									"pm.environment.set(\"anTyp\", \"REPARIERT\");\r",
@@ -11188,7 +11740,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4d50e2a0-6b4f-4743-a15f-943e860df684",
+								"id": "8fec20cd-07b2-40eb-87dc-b284da438dae",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -11257,7 +11809,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "39067aaa-6cba-4954-b658-88ba6dbc8972",
+								"id": "25956ffe-5159-4bd5-ac0e-6a6753273bfa",
 								"exec": [
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerUpdate\"));\r",
 									"pm.environment.set(\"bestellNr\", pm.variables.get(\"bestellNr\"));\r",
@@ -11294,13 +11846,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3747755b-fca4-4310-82a6-089a3c9b00ca",
+								"id": "6e485818-bae7-462e-bc93-a31b27ae11fc",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/artikel\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/artikel/{{artikelId}}\");\r",
-									"var abbildung = pm.variables.replaceIn(\"{{server}}/artikel/{{artikelId}}/abbildung.jpg\");\r",
 									"var anderungUrl = pm.variables.replaceIn(\"{{api}}/artikel/{{artikelId}}/anderungen/{{anderungId}}\");\r",
 									"pm.test(\"artikelId\", () => pm.expect(jsonData.artikelId).to.eql(pm.variables.get(\"artikelId\")));\r",
 									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\")));\r",
@@ -11332,6 +11883,7 @@
 									"pm.test(\"beladung\", () => pm.expect(jsonData.beladung).to.eql(pm.variables.get(\"beladung\")));\r",
 									"pm.test(\"status\", () => pm.expect(jsonData.status).to.eql(pm.variables.get(\"status\")));\r",
 									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(abbildung));\r",
+									"pm.test(\"grossansicht\", () => pm.expect(jsonData.grossansicht).to.eql(pm.variables.get(\"grossansicht\")));\r",
 									"pm.test(\"anderungen.length\", () => pm.expect(jsonData.anderungen.length).to.eql(1));\r",
 									"pm.test(\"anderungen[0].artikelId\", () => pm.expect(jsonData.anderungen[0].artikelId).to.eql(pm.variables.get(\"artikelId\")));\r",
 									"pm.test(\"anderungen[0].anderungId\", () => pm.expect(jsonData.anderungen[0].anderungId).to.eql(pm.variables.get(\"anderungId\")));\r",
@@ -11351,6 +11903,7 @@
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
 									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
+									"pm.test(\"_links.grossansicht\", () => pm.expect(jsonData._links.grossansicht[0].href).to.eql(self + \"/grossansicht\"));\r",
 									"pm.test(\"_links.anderung\", () => pm.expect(jsonData._links.anderung[0].href).to.eql(self + \"/anderungen\"));"
 								],
 								"type": "text/javascript"
@@ -11402,13 +11955,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8cf13979-8030-47e0-b55e-8b4bb7ab2dd4",
+								"id": "7a1f09f9-4791-4c3a-8484-6fae80f0b205",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/artikel\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/artikel/{{artikelId}}\");\r",
-									"var abbildung = pm.variables.replaceIn(\"{{server}}/artikel/{{artikelId}}/abbildung.jpg\");\r",
 									"var anderungUrl = pm.variables.replaceIn(\"{{api}}/artikel/{{artikelId}}/anderungen/{{anderungId}}\");\r",
 									"pm.test(\"artikelId\", () => pm.expect(jsonData.artikelId).to.eql(pm.variables.get(\"artikelId\")));\r",
 									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\")));\r",
@@ -11440,6 +11992,7 @@
 									"pm.test(\"beladung\", () => pm.expect(jsonData.beladung).to.eql(pm.variables.get(\"beladung\")));\r",
 									"pm.test(\"status\", () => pm.expect(jsonData.status).to.eql(pm.variables.get(\"status\")));\r",
 									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(abbildung));\r",
+									"pm.test(\"grossansicht\", () => pm.expect(jsonData.grossansicht).to.eql(pm.variables.get(\"grossansicht\")));\r",
 									"pm.test(\"anderungen.length\", () => pm.expect(jsonData.anderungen.length).to.eql(1));\r",
 									"pm.test(\"anderungen[0].artikelId\", () => pm.expect(jsonData.anderungen[0].artikelId).to.eql(pm.variables.get(\"artikelId\")));\r",
 									"pm.test(\"anderungen[0].anderungId\", () => pm.expect(jsonData.anderungen[0].anderungId).to.eql(pm.variables.get(\"anderungId\")));\r",
@@ -11459,6 +12012,7 @@
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
 									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
+									"pm.test(\"_links.grossansicht\", () => pm.expect(jsonData._links.grossansicht[0].href).to.eql(self + \"/grossansicht\"));\r",
 									"pm.test(\"_links.anderung\", () => pm.expect(jsonData._links.anderung[0].href).to.eql(self + \"/anderungen\"));"
 								],
 								"type": "text/javascript"
@@ -11492,7 +12046,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "003dd303-76b3-4c71-90ce-27aed4724f1f",
+								"id": "536389cd-965d-4c27-bc75-abee2c4ea8c9",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -11529,6 +12083,7 @@
 									"pm.test(\"beladung\", () => pm.expect(jsonData.beladung).to.eql(pm.variables.get(\"beladung\")));\r",
 									"pm.test(\"status\", () => pm.expect(jsonData.status).to.eql(pm.variables.get(\"status\")));\r",
 									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(pm.variables.get(\"abbildung\")));\r",
+									"pm.test(\"grossansicht\", () => pm.expect(jsonData.grossansicht).to.eql(pm.variables.get(\"grossansicht\")));\r",
 									"pm.test(\"anderungen.length\", () => pm.expect(jsonData.anderungen.length).to.eql(1));\r",
 									"pm.test(\"anderungen[0].artikelId\", () => pm.expect(jsonData.anderungen[0].artikelId).to.eql(pm.variables.get(\"artikelId\")));\r",
 									"pm.test(\"anderungen[0].anderungId\", () => pm.expect(jsonData.anderungen[0].anderungId).to.eql(pm.variables.get(\"anderungId\")));\r",
@@ -11548,6 +12103,7 @@
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
 									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
+									"pm.test(\"_links.grossansicht\", () => pm.expect(jsonData._links.grossansicht[0].href).to.eql(self + \"/grossansicht\"));\r",
 									"pm.test(\"_links.anderung\", () => pm.expect(jsonData._links.anderung[0].href).to.eql(self + \"/anderungen\"));"
 								],
 								"type": "text/javascript"
@@ -11556,7 +12112,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "5b8e1f8f-30df-4aec-b20f-88fade33216e",
+								"id": "36c06f20-8eb2-4a18-9836-49a6b7276067",
 								"exec": [
 									"pm.environment.set(\"abbildung\", pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/abbildung.jpg\"));"
 								],
@@ -11588,12 +12144,115 @@
 					"response": []
 				},
 				{
+					"name": "Delete Grossansicht",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "45523c60-a03a-4c9b-98dd-edf92e609965",
+								"exec": [
+									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"var jsonData = pm.response.json();\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/artikel\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/artikel/{{artikelId}}\");\r",
+									"var anderungUrl = pm.variables.replaceIn(\"{{api}}/artikel/{{artikelId}}/anderungen/{{anderungId}}\");\r",
+									"pm.test(\"artikelId\", () => pm.expect(jsonData.artikelId).to.eql(pm.variables.get(\"artikelId\")));\r",
+									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\")));\r",
+									"pm.test(\"bestellNr\", () => pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"bestellNr\")));\r",
+									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"kategorie\", () => pm.expect(jsonData.kategorie).to.eql(pm.variables.get(\"kategorie\")));\r",
+									"pm.test(\"unterKategorie\", () => pm.expect(jsonData.unterKategorie).to.eql(pm.variables.get(\"unterKategorie\")));\r",
+									"pm.test(\"lange\", () => pm.expect(jsonData.lange).to.eql(pm.variables.get(\"lange\")));\r",
+									"pm.test(\"massstab\", () => pm.expect(jsonData.massstab).to.eql(pm.variables.get(\"massstab\")));\r",
+									"pm.test(\"spurweite\", () => pm.expect(jsonData.spurweite).to.eql(pm.variables.get(\"spurweite\")));\r",
+									"pm.test(\"epoch\", () => pm.expect(jsonData.epoch).to.eql(pm.variables.get(\"epoch\")));\r",
+									"pm.test(\"bahnverwaltung\", () => pm.expect(jsonData.bahnverwaltung).to.eql(pm.variables.get(\"bahnverwaltung\")));\r",
+									"pm.test(\"gattung\", () => pm.expect(jsonData.gattung).to.eql(pm.variables.get(\"gattung\")));\r",
+									"pm.test(\"betreibsnummer\", () => pm.expect(jsonData.betreibsnummer).to.eql(pm.variables.get(\"betreibsnummer\")));\r",
+									"pm.test(\"achsfolg\", () => pm.expect(jsonData.achsfolg).to.eql(pm.variables.get(\"achsfolg\")));\r",
+									"pm.test(\"sondermodell\", () => pm.expect(jsonData.sondermodell).to.eql(undefined));\r",
+									"pm.test(\"aufbau\", () => pm.expect(jsonData.aufbau).to.eql(pm.variables.get(\"aufbau\")));\r",
+									"pm.test(\"licht\", () => pm.expect(jsonData.licht).to.eql(pm.variables.get(\"licht\")));\r",
+									"pm.test(\"kupplung\", () => pm.expect(jsonData.kupplung).to.eql(pm.variables.get(\"kupplung\")));\r",
+									"pm.test(\"steuerung\", () => pm.expect(jsonData.steuerung).to.eql(pm.variables.get(\"steuerung\")));\r",
+									"pm.test(\"decoder\", () => pm.expect(jsonData.decoder).to.eql(pm.variables.get(\"decoder\")));\r",
+									"pm.test(\"motorTyp\", () => pm.expect(jsonData.motorTyp).to.eql(pm.variables.get(\"motorTyp\")));\r",
+									"pm.test(\"kaufdatum\", () => pm.expect(jsonData.kaufdatum).to.eql(pm.variables.get(\"kaufdatum\")));\r",
+									"pm.test(\"wahrung\", () => pm.expect(jsonData.wahrung).to.eql(pm.variables.get(\"wahrung\")));\r",
+									"pm.test(\"preis\", () => pm.expect(jsonData.preis).to.eql(pm.variables.get(\"preis\")));\r",
+									"pm.test(\"stuck\", () => pm.expect(jsonData.stuck).to.eql(pm.variables.get(\"stuck\")));\r",
+									"pm.test(\"verbleibende\", () => pm.expect(jsonData.verbleibende).to.eql(pm.variables.get(\"verbleibende\")));\r",
+									"pm.test(\"anmerkung\", () => pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\")));\r",
+									"pm.test(\"beladung\", () => pm.expect(jsonData.beladung).to.eql(pm.variables.get(\"beladung\")));\r",
+									"pm.test(\"status\", () => pm.expect(jsonData.status).to.eql(pm.variables.get(\"status\")));\r",
+									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(pm.variables.get(\"abbildung\")));\r",
+									"pm.test(\"grossansicht\", () => pm.expect(jsonData.grossansicht).to.eql(pm.variables.get(\"grossansicht\")));\r",
+									"pm.test(\"anderungen.length\", () => pm.expect(jsonData.anderungen.length).to.eql(1));\r",
+									"pm.test(\"anderungen[0].artikelId\", () => pm.expect(jsonData.anderungen[0].artikelId).to.eql(pm.variables.get(\"artikelId\")));\r",
+									"pm.test(\"anderungen[0].anderungId\", () => pm.expect(jsonData.anderungen[0].anderungId).to.eql(pm.variables.get(\"anderungId\")));\r",
+									"pm.test(\"anderungen[0].anderungsDatum\", () => pm.expect(jsonData.anderungen[0].anderungsDatum).to.eql(pm.variables.get(\"anDatum\")));\r",
+									"pm.test(\"anderungen[0].anderungsTyp\", () => pm.expect(jsonData.anderungen[0].anderungsTyp).to.eql(pm.variables.get(\"anTyp\")));\r",
+									"pm.test(\"anderungen[0].bezeichnung\", () => pm.expect(jsonData.anderungen[0].bezeichnung).to.eql(pm.variables.get(\"anBezeichnung\")));\r",
+									"pm.test(\"anderungen[0].stuck\", () => pm.expect(jsonData.anderungen[0].stuck).to.eql(pm.variables.get(\"anStuck\")));\r",
+									"pm.test(\"anderungen[0].anmerkung\", () => pm.expect(jsonData.anderungen[0].anmerkung).to.eql(pm.variables.get(\"anAnmerkung\")));\r",
+									"pm.test(\"anderungen[0].deleted\", () => pm.expect(jsonData.anderungen[0].deleted).to.be.false);\r",
+									"pm.test(\"anderungen[0]._links.parent\", () => pm.expect(jsonData.anderungen[0]._links.parent[0].href).to.eql(self));\r",
+									"pm.test(\"anderungen[0]._links.update\", () => pm.expect(jsonData.anderungen[0]._links.update[0].href).to.eql(anderungUrl));\r",
+									"pm.test(\"anderungen[0]._links.delete\", () => pm.expect(jsonData.anderungen[0]._links.delete[0].href).to.eql(anderungUrl));\r",
+									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
+									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
+									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
+									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self + \"/abbildung\"));\r",
+									"pm.test(\"_links.grossansicht\", () => pm.expect(jsonData._links.grossansicht[0].href).to.eql(self + \"/grossansicht\"));\r",
+									"pm.test(\"_links.anderung\", () => pm.expect(jsonData._links.anderung[0].href).to.eql(self + \"/anderungen\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "68b94a00-700c-47f4-92f9-8870ee89888f",
+								"exec": [
+									"pm.environment.set(\"grossansicht\", pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/grossansicht.jpg\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"type": "text",
+								"value": "{{language}}"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/artikel/{{artikelId}}/grossansicht",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"artikel",
+								"{{artikelId}}",
+								"grossansicht"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Delete Anderung",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "2cde0e0b-f93e-46e1-8be8-56746dd31749",
+								"id": "154a3e3a-d8c3-4fbf-b767-5b8bec67628f",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -11639,7 +12298,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ceb4eca6-4067-47ac-9a9b-49263d9cf393",
+								"id": "46ff1d37-bb1e-449f-a3e0-548c7bb7507d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -11681,7 +12340,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e3817ab-de3e-4f62-a0e8-ebf059c0d097",
+								"id": "4e0ef044-3484-4464-b150-0849056b9026",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
@@ -11735,7 +12394,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "8ac4e1ee-db15-4eb1-8177-e3c04f3766cf",
+								"id": "f3ba5212-ba91-4928-987a-aebfbde62097",
 								"exec": [
 									"pm.environment.set(\"zug\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"zugTyp\", pm.variables.get(\"zugTypAdd\"));\r",
@@ -11747,7 +12406,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5aefe477-c74f-402b-bb01-0c9c56ad15af",
+								"id": "3c2182e6-02dd-4e52-b3bc-5f8981c34500",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -11813,7 +12472,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "237369bc-c1b5-4fd2-a4ae-fad361ad508f",
+								"id": "65e41a4f-4316-4137-b42c-5565cb0f8d6c",
 								"exec": [
 									"pm.environment.set(\"cnArtikelId\", \"00001\");\r",
 									"pm.environment.set(\"cnPosition\", 1);\r",
@@ -11835,7 +12494,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5475e83f-9158-4851-836c-19ad0ffeddcf",
+								"id": "3fbac28c-b859-4e1f-990b-bb04d289259f",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var jsonData = pm.response.json();\r",
@@ -11905,7 +12564,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "737403e8-af3e-4403-a061-961cb865381c",
+								"id": "94916bec-21d6-4ea3-b370-5e276f39f30e",
 								"exec": [
 									"pm.environment.set(\"cnArtikelId\", \"00002\");\r",
 									"pm.environment.set(\"cnHersteller\", \"MARKLIN\");\r",
@@ -11924,7 +12583,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bfc23de5-7e54-47b5-b3a5-af8785647b8c",
+								"id": "6911a3bb-8efe-477c-bfeb-43701bdb210c",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -11994,7 +12653,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "fdd3cdbd-1484-47ff-ac98-fa864216d5b0",
+								"id": "bea253a5-2946-4b57-81f4-af3e62bc390e",
 								"exec": [
 									"pm.environment.set(\"zugTyp\", pm.variables.get(\"zugTypUpdate\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -12005,7 +12664,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b5596b42-5899-4419-9d4b-ec915c0d7433",
+								"id": "a390ad17-d630-4864-9af0-34a6538add3e",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -12087,7 +12746,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "36fcf662-d21e-49df-936c-751eca643e2b",
+								"id": "28208601-c729-4bb9-9394-f5f49e7f2811",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -12151,7 +12810,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "39f75f01-2d08-4a98-8d62-3205dcf58d46",
+								"id": "bbdd65fd-3af9-4d70-bbd1-e1833bc17d67",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -12189,7 +12848,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "09523eba-4e3d-4d06-8763-9b529d5e7450",
+								"id": "2ba1fdb4-45b5-4241-9dac-33da2ff9b0e8",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -12231,7 +12890,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1fc3d2af-3515-44b7-9a0a-2daec9adca64",
+								"id": "9d553245-5c79-4d8b-a606-b57ccf0cee82",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -12377,7 +13036,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "de48922a-6af5-42c3-88fb-0e0d36a70d9a",
+								"id": "29cff1aa-d00d-4621-9426-daf8263975b6",
 								"exec": [
 									"pm.test(\"Achsfolg\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -12416,7 +13075,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5ca6958d-60c0-433f-a917-82fc595898ed",
+								"id": "7dd7653d-5a8e-435d-b223-ba4c0a707fb7",
 								"exec": [
 									"pm.test(\"Antrieb\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -12455,7 +13114,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "02c420ad-24af-4a8c-94da-d8b9adde3bff",
+								"id": "6642d0f7-963d-4f0e-acf8-9ca00257ea20",
 								"exec": [
 									"pm.test(\"Aufbau\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -12494,7 +13153,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8411b2fe-a9d9-44c5-9d8a-db6a5a7b6bc0",
+								"id": "f1addaaf-f290-4b1a-8870-6858122a6eed",
 								"exec": [
 									"pm.test(\"Bahnverwaltung\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -12533,7 +13192,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d3efd114-1a83-4ec1-b76d-c4dce1cfd9ce",
+								"id": "72eee387-8a56-40b3-bd71-56b8b759c45c",
 								"exec": [
 									"pm.test(\"Epoch\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -12572,7 +13231,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7e1a8ad7-e709-4ce0-bf24-34d4935bbf6e",
+								"id": "f285a24e-e829-4976-81c9-72f9c716f9ed",
 								"exec": [
 									"pm.test(\"Gattung\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -12611,7 +13270,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0634cf2a-307f-457e-88c1-4636aed8c77d",
+								"id": "14d54ff5-44b0-4483-894b-928c91de4736",
 								"exec": [
 									"pm.test(\"Hersteller\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -12650,7 +13309,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "018f722b-9d38-4364-b438-8eba88936213",
+								"id": "bcffda1a-eee1-4d48-807d-a9a064843300",
 								"exec": [
 									"pm.test(\"Kategorie\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -12689,7 +13348,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1faa6fee-8c5e-4fa0-b723-95d80b9ce819",
+								"id": "73d71d4c-b136-43f1-8ef3-fa2e0a702dae",
 								"exec": [
 									"pm.test(\"Kupplung\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -12728,7 +13387,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cbf58a07-1a96-4bc9-aeb6-fa6fe8fbfc94",
+								"id": "ec0b6444-733f-43b5-8686-55577aa7c689",
 								"exec": [
 									"pm.test(\"Licht\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -12767,7 +13426,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "97844e8a-d55c-4406-8ead-5255389a0e0c",
+								"id": "d11df328-ed05-4cd6-a028-3c5a61864779",
 								"exec": [
 									"pm.test(\"Massstab\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -12806,7 +13465,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c560bf33-dfe1-4160-82c6-d0ecaeb12627",
+								"id": "397eae1e-593d-42c9-8717-31cd97771816",
 								"exec": [
 									"pm.test(\"Motor Typ\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -12845,7 +13504,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e78e5dcd-d464-4eca-9cf4-05fd394b3d2a",
+								"id": "39be81ef-00df-44da-8f43-33b169e3b52a",
 								"exec": [
 									"pm.test(\"Protokoll\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -12884,7 +13543,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d68abf15-fac7-4347-bde5-b0fa8324eb31",
+								"id": "9f248d9d-df13-4cdc-9479-c71b94527070",
 								"exec": [
 									"pm.test(\"Sondermodell\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -12923,7 +13582,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "43492500-5a69-4319-a8fd-17a635c4f791",
+								"id": "4c41684b-2221-4221-b7b2-00d36a1f4bc5",
 								"exec": [
 									"pm.test(\"Spurweite\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -12962,7 +13621,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "259429a3-a363-4127-ba45-f9ee210cfdfb",
+								"id": "2d33a23f-4d56-4d98-870c-92d9db961024",
 								"exec": [
 									"pm.test(\"Steuerung\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -13001,7 +13660,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "994b99dd-b808-4701-bd7e-c001b11c51e7",
+								"id": "9d809172-51b9-44fe-83ea-f3752cef8267",
 								"exec": [
 									"pm.test(\"Zug Typ\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -13040,7 +13699,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fa4ede09-990b-4d65-8900-6baf891834f9",
+								"id": "601bd829-05fe-44ca-804e-8e5d6b38d2eb",
 								"exec": [
 									"pm.test(\"Unter Kategorie\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -13079,7 +13738,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d22d66ec-dc98-4f9d-adaa-52b908b3b5c3",
+								"id": "35cb9e5e-bbfa-43c6-95bd-bed1fb54b8f8",
 								"exec": [
 									"pm.test(\"Vorbild\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -13118,7 +13777,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "17600c51-844d-4a36-9067-4af9110de7dc",
+								"id": "dee76ce2-968c-4150-97ee-bb6a04510ac6",
 								"exec": [
 									"pm.test(\"Decoder Typ\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -13157,7 +13816,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6600c0c6-3e1d-444b-9f4d-8aab61304673",
+								"id": "11a66f58-8911-4156-b518-3a448994eb17",
 								"exec": [
 									"pm.test(\"Decoder Typ Adress\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -13196,7 +13855,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5f851d99-dc59-49f7-a5b8-13fb76f04786",
+								"id": "72bc4cf1-1bbb-4c75-9b15-a623e5925e1d",
 								"exec": [
 									"pm.test(\"Decoder Typ Cv\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -13235,7 +13894,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8a9d5df2-bd90-409e-9163-9451b4ae645a",
+								"id": "129a5010-718c-4446-8560-ea00bba3ecc5",
 								"exec": [
 									"pm.test(\"Decoder Typ Funktion\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -13274,7 +13933,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6b397cf8-800d-4782-8e30-a9d868617b8a",
+								"id": "de44f85c-39f4-45b2-84a5-1f5f9e529903",
 								"exec": [
 									"pm.test(\"Produkt\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -13313,7 +13972,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "58eb9e53-3895-4be0-a551-e5d0d6a63fcc",
+								"id": "4a9ca1b2-d8d4-40c8-a5fe-f7f600b5ea48",
 								"exec": [
 									"pm.test(\"Produkt Teil\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -13352,7 +14011,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "827722e8-8be6-4de8-868c-bc5a59429410",
+								"id": "bb6161f5-14ce-40ec-9649-0ee4a85fa346",
 								"exec": [
 									"pm.test(\"Decoder\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -13391,7 +14050,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f789f209-44a5-4c89-8774-1fbc39a1e07e",
+								"id": "e08f32e8-843a-49b0-8459-ae69a1c98229",
 								"exec": [
 									"pm.test(\"Decoder Adress\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -13430,7 +14089,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "af7d816c-1e32-4f7d-bae8-d14349d22ff2",
+								"id": "ba0d2958-01b3-443e-9c17-1ebb2f47772e",
 								"exec": [
 									"pm.test(\"Decoder Cv\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -13469,7 +14128,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "09191ae2-274e-4d71-b731-8fd9a3df0e8b",
+								"id": "42ccb27e-0d3b-4598-930d-14a094b1eceb",
 								"exec": [
 									"pm.test(\"Decoder Funktion\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -13508,7 +14167,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f62e6935-21df-41e1-8683-de1d80453e1a",
+								"id": "834eb696-c712-42fa-948e-98abafc3e776",
 								"exec": [
 									"pm.test(\"Artikel\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -13547,7 +14206,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1c4da27b-c74e-42b9-9c9e-49982fbdcbbb",
+								"id": "fc1d2139-4431-4184-8928-d2fa246522ee",
 								"exec": [
 									"pm.test(\"Anderung\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -13586,7 +14245,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "02e3c084-a8c2-4287-8b37-c524f03b7634",
+								"id": "3aa24feb-b4fa-471c-b5ed-39a8b5a148dc",
 								"exec": [
 									"pm.test(\"Zug\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -13625,7 +14284,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "abe6e43d-7191-4d04-8c9a-36278e794bd6",
+								"id": "d2d5813c-b613-42ac-8a93-2ec91eb2406d",
 								"exec": [
 									"pm.test(\"Zug Consist\", () => pm.response.to.have.status(200));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
@@ -13670,7 +14329,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9b190f37-cb5b-40c1-b495-6c54eab76de3",
+								"id": "bedfcd8b-ed35-4f87-b1f4-59f116ce8111",
 								"exec": [
 									"pm.test(\"Achsfolg\", () => pm.response.to.have.status(200));"
 								],
@@ -13719,7 +14378,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c22dac93-de22-4e2b-9947-b270b38f5069",
+								"id": "1140b1b9-692b-41c9-866d-ae950a654383",
 								"exec": [
 									"pm.test(\"Antrieb\", () => pm.response.to.have.status(200));"
 								],
@@ -13768,7 +14427,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bf67327f-cdc8-4629-b2af-f087d76f3381",
+								"id": "968144ba-ba0d-493d-8000-6749a6042025",
 								"exec": [
 									"pm.test(\"Aufbau\", () => pm.response.to.have.status(200));"
 								],
@@ -13817,7 +14476,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "672e66c5-62c5-4e57-a413-6b9b68ff44ea",
+								"id": "600f585a-ffdb-4906-9835-c93a36b5e258",
 								"exec": [
 									"pm.test(\"Bahnverwaltung\", () => pm.response.to.have.status(200));"
 								],
@@ -13866,7 +14525,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dbd67f3d-fc32-49d5-9934-e0e58656ed3a",
+								"id": "85cfa51d-1669-46a5-803d-1d53b5435e4b",
 								"exec": [
 									"pm.test(\"Epoch\", () => pm.response.to.have.status(200));"
 								],
@@ -13915,7 +14574,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bfba16d9-352d-4165-a34c-5d910875cc2e",
+								"id": "a77ab179-de08-4f8e-afe8-a912ec9fc7a6",
 								"exec": [
 									"pm.test(\"Gattung\", () => pm.response.to.have.status(200));"
 								],
@@ -13964,7 +14623,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8a976cf9-16db-467b-b2ae-175b62dc5d99",
+								"id": "b5a7c7e3-932e-423b-8644-ededc5cb16d1",
 								"exec": [
 									"pm.test(\"Hersteller\", () => pm.response.to.have.status(200));"
 								],
@@ -14013,7 +14672,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1f8dde36-1277-49a4-9d33-54dba5d70dbb",
+								"id": "85725831-2f76-4b5d-91b2-fe97461de6dc",
 								"exec": [
 									"pm.test(\"Kupplung\", () => pm.response.to.have.status(200));"
 								],
@@ -14062,7 +14721,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fd2c6c0a-eba6-4c3c-a292-92afc0786c94",
+								"id": "846b6e7f-567b-4472-bc2f-3269a6ddf2f6",
 								"exec": [
 									"pm.test(\"Licht\", () => pm.response.to.have.status(200));"
 								],
@@ -14111,7 +14770,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2e0fe893-712d-4706-a6df-c4e7ea600204",
+								"id": "2afe67ad-eb85-4648-a278-a0e50462ecc7",
 								"exec": [
 									"pm.test(\"Kategorie\", () => pm.response.to.have.status(200));"
 								],
@@ -14160,7 +14819,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5d8def96-848e-49bf-a69a-8d4f8329a737",
+								"id": "b8063218-26f0-4ec3-876d-8e97d290bff3",
 								"exec": [
 									"pm.test(\"Kategorie\", () => pm.response.to.have.status(200));"
 								],
@@ -14209,7 +14868,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a9026d37-1636-4e92-b336-fa135802b2b5",
+								"id": "cb4a6f4d-1c44-453b-870b-425bd4100efd",
 								"exec": [
 									"pm.test(\"Motor Typ\", () => pm.response.to.have.status(200));"
 								],
@@ -14258,7 +14917,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a12bfa20-cf8b-4ba6-999b-fd256286a5e9",
+								"id": "eee7347d-697c-477e-a321-4d450c63f4db",
 								"exec": [
 									"pm.test(\"Protokoll\", () => pm.response.to.have.status(200));"
 								],
@@ -14307,7 +14966,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2c0ef06f-5a60-4da1-afa7-08609aaabb45",
+								"id": "79d890e6-41ef-43ec-8081-282635aa96f7",
 								"exec": [
 									"pm.test(\"Sondermodell\", () => pm.response.to.have.status(200));"
 								],
@@ -14356,7 +15015,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9779508a-4f92-4b76-93dd-0a78ceef6abf",
+								"id": "a065c810-0f77-4c61-bd1c-b98dd2d00da4",
 								"exec": [
 									"pm.test(\"Spurweite\", () => pm.response.to.have.status(200));"
 								],
@@ -14405,7 +15064,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d852b4d3-9847-4370-99ee-670d06c62e84",
+								"id": "d32501b1-e8f7-4767-92f5-0efbf4acc9a7",
 								"exec": [
 									"pm.test(\"Steuerung\", () => pm.response.to.have.status(200));"
 								],
@@ -14454,7 +15113,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f645129f-5072-4e46-a60d-952010d07a93",
+								"id": "4f6f11d2-4005-4e95-88af-40079960c4c5",
 								"exec": [
 									"pm.test(\"Zug Typ\", () => pm.response.to.have.status(200));"
 								],
@@ -14503,7 +15162,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2052c2ac-47de-4ac8-9468-705289025b89",
+								"id": "6b140b86-a8b8-446d-b4ca-cebafa7f93c8",
 								"exec": [
 									"pm.test(\"Unter Kategorie\", () => pm.response.to.have.status(200));"
 								],
@@ -14552,7 +15211,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "43156dd1-be7c-473c-96d6-3575a71ae161",
+								"id": "e34db02d-1bd7-428c-a375-7f09eef62143",
 								"exec": [
 									"pm.test(\"Vorbild\", () => pm.response.to.have.status(200));"
 								],
@@ -14601,7 +15260,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "76b29650-ddbd-4ac6-9950-de4aae2e1230",
+								"id": "e93523d4-9584-4f03-b07a-e62fa99ae86d",
 								"exec": [
 									"pm.test(\"Decoder Typ\", () => pm.response.to.have.status(200));"
 								],
@@ -14650,7 +15309,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "70f72b1c-ff34-4eb4-8265-bf394d840718",
+								"id": "eb206b5a-4a72-40d5-9199-b5444eece6ee",
 								"exec": [
 									"pm.test(\"Decoder Typ Adress\", () => pm.response.to.have.status(200));"
 								],
@@ -14699,7 +15358,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ec669b99-eafb-4daf-a8bd-2c76f11e6266",
+								"id": "af102664-5de0-4b1b-a17a-80ea4cde7661",
 								"exec": [
 									"pm.test(\"Decoder Typ Cv\", () => pm.response.to.have.status(200));"
 								],
@@ -14748,7 +15407,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ca9213cb-1411-4e07-abd3-7d45f1eb4f49",
+								"id": "62cadc53-d7fc-427a-a224-0ff14c115f0e",
 								"exec": [
 									"pm.test(\"Decoder Typ Funktion\", () => pm.response.to.have.status(200));"
 								],
@@ -14797,7 +15456,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e58d6944-1d7a-4025-abc5-5235a1075f77",
+								"id": "0b8c552c-2f61-4c30-a6aa-ad43cb5402b7",
 								"exec": [
 									"pm.test(\"Produkt\", () => pm.response.to.have.status(200));"
 								],
@@ -14846,7 +15505,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8b3167bb-2064-4ee8-bab0-a21145b58156",
+								"id": "04c7c592-55b9-4d2f-800f-e08d89d82346",
 								"exec": [
 									"pm.test(\"Produkt Teil\", () => pm.response.to.have.status(200));"
 								],
@@ -14895,7 +15554,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "71637061-aee6-4e9c-ad56-f30567c30d41",
+								"id": "541d9f1b-194d-43ab-b5c2-e4e531df05c2",
 								"exec": [
 									"pm.test(\"Decoder\", () => pm.response.to.have.status(200));"
 								],
@@ -14944,7 +15603,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d012fc65-77b6-40b5-ac05-c1a608e36da2",
+								"id": "89546a5e-f40e-485c-98c0-42d6057a5651",
 								"exec": [
 									"pm.test(\"Decoder Adress\", () => pm.response.to.have.status(200));"
 								],
@@ -14993,7 +15652,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bc9c7ff2-2535-4bd6-8f46-3bb6c24bb2a8",
+								"id": "abd6a5a8-e910-45a1-85fe-cb2ad118e811",
 								"exec": [
 									"pm.test(\"Decoder Cv\", () => pm.response.to.have.status(200));"
 								],
@@ -15042,7 +15701,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6d000df2-b2d8-437c-9aae-a1860d37296e",
+								"id": "a8397554-98ae-4107-81b2-305a1d291ffb",
 								"exec": [
 									"pm.test(\"Decoder Funktion\", () => pm.response.to.have.status(200));"
 								],
@@ -15091,7 +15750,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "697434f4-1e75-4e44-9c46-c427e10604ca",
+								"id": "b9939e6f-9b77-4160-a655-0580e4289887",
 								"exec": [
 									"pm.test(\"Artikel\", () => pm.response.to.have.status(200));"
 								],
@@ -15140,7 +15799,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d7a7596a-ecd5-40ca-84c9-c260d7eb0019",
+								"id": "2182ca05-c197-473f-8788-d742f08082ac",
 								"exec": [
 									"pm.test(\"Anderung\", () => pm.response.to.have.status(200));"
 								],
@@ -15189,7 +15848,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "28bb66ae-f7dd-4434-950e-dd2ba74148b5",
+								"id": "e1201a0f-4233-4fcb-b638-47b8a4fa67de",
 								"exec": [
 									"pm.test(\"Zug\", () => pm.response.to.have.status(200));"
 								],
@@ -15238,7 +15897,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e88bae16-a30d-4e92-b71d-3db004a75419",
+								"id": "c98e63be-d840-48be-914b-7f8946e75965",
 								"exec": [
 									"pm.test(\"Zug Consist\", () => pm.response.to.have.status(200));"
 								],
@@ -15293,7 +15952,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "83cb714e-cdc9-4a47-8cab-5d77cf41680a",
+								"id": "7d1d16e6-ca68-422e-8189-e6674b7e7363",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/user\");\r",
@@ -15351,7 +16010,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "55ad3498-cfa2-42d2-912a-338d1030c9b3",
+								"id": "3473a770-8ab3-4101-81c7-af2aecd3d001",
 								"exec": [
 									"pm.environment.set(\"user\", pm.variables.replaceIn(\"{{$randomUserName}}\"));\r",
 									"pm.environment.set(\"eMail\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
@@ -15381,7 +16040,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e59f0769-7c44-462d-9b17-5f18ba676422",
+								"id": "2c964e72-684c-43c9-a549-0caec74178e0",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"var message = pm.response.json();\r",
@@ -15426,7 +16085,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "bea3f1c9-5906-4761-8045-3506dfb82727",
+								"id": "40634721-3cea-4b13-83a4-cdc0302ecc46",
 								"exec": [
 									"const regex = /(token=)([^\"]+)/;\r",
 									"var apiKey = pm.variables.get(\"mail_key\");\r",
@@ -15480,7 +16139,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "37708fae-6b26-47ef-a6e9-d811a9776742",
+								"id": "c0a2912b-4df0-4b68-8b77-1c73c4d37747",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var message = pm.response.json();\r",
@@ -15522,7 +16181,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "dee5d915-15a0-48f9-9ca7-f68432ffd3ab",
+								"id": "b30e8007-42c1-4c75-895e-d9fc2673b700",
 								"exec": [
 									"var apiKey = pm.variables.get(\"mail_key\");\r",
 									"var header = {\r",
@@ -15546,7 +16205,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a56c6d60-17a3-4a20-8a53-a600832338e1",
+								"id": "f31e90d6-f089-4848-8e33-119539425d8e",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var message = pm.response.json();\r",
@@ -15588,7 +16247,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "78118e9e-4759-404c-9303-a5823827edf0",
+								"id": "94a09e82-9be2-407b-8614-bd0602c83e4e",
 								"exec": [
 									"pm.environment.set(\"password\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"const regex = /(token=)([^\"]+)/;\r",
@@ -15642,7 +16301,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ccc9bed6-d705-483d-bf33-21debe69975a",
+								"id": "6574008c-2159-46b8-b4df-e25b1d42049a",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var message = pm.response.json();\r",
@@ -15688,7 +16347,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "00150030-6df3-46ba-bd2b-3c33a6b45c6c",
+								"id": "2f798ac8-fa08-4068-a1ac-af61f8b12254",
 								"exec": [
 									"pm.environment.set(\"newPassword\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -15698,7 +16357,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5b211302-38dc-4626-a3c1-1a795ffb8c18",
+								"id": "76e08123-f2ef-4c36-9a56-e83eb81a5a00",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var message = pm.response.json();\r",
@@ -15753,7 +16412,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "461e5495-7fd0-4486-8bac-51867793317b",
+								"id": "448b546b-38bd-4cd9-bca4-8f8a41d9c0cd",
 								"exec": [
 									"pm.environment.set(\"eMail\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
 									"pm.environment.set(\"firstName\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));\r",
@@ -15766,7 +16425,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a9a101df-4763-4262-8e78-15a56a4cb7f7",
+								"id": "f4f72808-6e23-4c8f-93f1-92f71f348b8d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"var jsonData = pm.response.json();\r",
@@ -15853,7 +16512,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a5e96d6d-571e-4cbf-a550-4826ca31a4c1",
+								"id": "e78c44fe-fbaa-4d0b-8692-115823283564",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
 									"var jsonData = pm.response.json();\r",
@@ -15922,7 +16581,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3cb4f393-1806-4858-a9f8-8f5e96091d95",
+								"id": "ed8e17d3-9991-4011-8033-096ec7a8990b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -15990,7 +16649,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "f79ae480-0aba-4cba-9bfa-979fa72cac38",
+				"id": "425d97fb-1a03-4ab6-8142-75521c037ad7",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -16000,7 +16659,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "54365930-5ffc-479c-af51-cb9b27da8e77",
+				"id": "2f6c0db4-b985-4ced-8c3e-db17da4d29c1",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -16010,624 +16669,654 @@
 	],
 	"variable": [
 		{
-			"id": "bd2c594c-b11f-4451-b2bb-228350cc7e3a",
+			"id": "8f5f746f-7206-4198-a28d-dee76cf190b3",
+			"key": "proto",
+			"value": "https://"
+		},
+		{
+			"id": "a696a48e-baf8-4a5e-ac2d-2fd621f6b8e6",
 			"key": "host",
 			"value": "127.0.0.1",
 			"disabled": true
 		},
 		{
-			"id": "5b01b0dd-0437-494b-914c-3eab099a7b65",
+			"id": "cb31f465-2cb0-491c-9095-56440add0f87",
 			"key": "port",
 			"value": ":8086"
 		},
 		{
-			"id": "05f0b41a-212a-438f-84e0-7a44bf435d7f",
+			"id": "43fa5334-11cd-4930-bc20-4754c3456bbc",
 			"key": "server",
-			"value": "https://{{host}}{{port}}"
+			"value": "{{proto}}{{host}}{{port}}"
 		},
 		{
-			"id": "0930ca4f-be70-40e9-8cd8-d8d25d84b45a",
+			"id": "4d6de961-5cfe-4f8d-83e2-7f6b158bd36c",
 			"key": "root",
 			"value": "{{server}}/ModellBahn"
 		},
 		{
-			"id": "7142a945-b164-45c8-b362-f185ab0e8c39",
+			"id": "7484464d-8544-45b9-b4b6-9bb1672d007f",
 			"key": "api",
 			"value": "{{root}}/api"
 		},
 		{
-			"id": "6085e790-db8d-4666-b5fc-445d93bf7540",
+			"id": "05d6fc48-2b90-429f-9d26-ec33407b0104",
+			"key": "mgmtPort",
+			"value": ":8087"
+		},
+		{
+			"id": "076704a1-0a0e-44fb-8411-d61a7db55e6d",
+			"key": "management",
+			"value": "{{proto}}{{host}}{{mgmtPort}}/management"
+		},
+		{
+			"id": "ce84b4d4-a318-452e-9674-b65ea778b8a0",
+			"key": "startRetries",
+			"value": "10"
+		},
+		{
+			"id": "d95ea11f-4390-4ef9-9920-06fd13b24c41",
+			"key": "startDelay",
+			"value": "5000"
+		},
+		{
+			"id": "c8eeba54-b834-4b43-81fc-b7ab3fcc94cd",
 			"key": "language",
 			"value": "de"
 		},
 		{
-			"id": "8c34fc02-ee82-4d6c-8020-f1395a69fe60",
+			"id": "9ddaf5ed-2fd2-4ead-9191-e8736d0bed61",
 			"key": "achsfolgAdd",
 			"value": "1C1H2T"
 		},
 		{
-			"id": "8a984617-d189-4411-bfb2-c5e28e43a76f",
+			"id": "5efcb0d3-9a69-46af-8cd0-9fafc8842999",
 			"key": "achsfolgUpdate",
 			"value": "COCO"
 		},
 		{
-			"id": "e5b9b2fe-fcd4-464a-8b22-df0365171804",
+			"id": "167ad8f3-ab26-4e0c-934f-ecfb9b7e8328",
 			"key": "adIndexAdd",
 			"value": "1"
 		},
 		{
-			"id": "a0d770f8-bf64-461f-8619-d6629ef85ccb",
+			"id": "da7907ef-8b76-4c94-b8f2-51c5a7b998b8",
 			"key": "adIndexUpdate",
 			"value": "1"
 		},
 		{
-			"id": "2616dc65-b2dd-483b-943c-dfa1c933bf6d",
+			"id": "a4543131-8289-41ab-90a9-880bc280b101",
 			"key": "adSpanAdd",
 			"value": "2"
 		},
 		{
-			"id": "64075190-f184-4bc1-9c22-a4259609bd21",
+			"id": "1e8da8a1-a36b-45dd-a26c-d3a82eaf437e",
 			"key": "adSpanUpdate",
 			"value": "16"
 		},
 		{
-			"id": "5cdaf1f2-77dc-4204-9d14-3530b77806af",
+			"id": "2eadddd2-4b6d-4b14-aea0-ad1dc0f01896",
 			"key": "adTypAdd",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "27cad273-41a6-4593-9811-2ed51ba6162f",
+			"id": "dd852389-0657-4b7b-9ed3-122f90fb360f",
 			"key": "adTypUpdate",
 			"value": "DELTA"
 		},
 		{
-			"id": "c3bcc15a-7bd7-4409-bba1-4eb178800917",
+			"id": "7bcfa668-e5b9-41ab-8c87-d3320e12d712",
 			"key": "adAdd",
 			"value": "10"
 		},
 		{
-			"id": "0664e83a-3877-4ac8-b8bc-c984240a35f1",
+			"id": "3ed5496a-b1d9-4ebe-b915-ed0c3e6641e5",
 			"key": "adUpdate",
 			"value": "80"
 		},
 		{
-			"id": "b219dca8-dc14-4357-99fe-2f0bc98be4b3",
+			"id": "16f84882-76be-45af-bc61-5e7d25afa8a8",
 			"key": "anderungAdd",
 			"value": "1"
 		},
 		{
-			"id": "23fe9881-5b7f-4ace-9658-e0e4daa057a9",
+			"id": "1732270a-ab8c-4a8f-9065-d0b07fefae71",
 			"key": "anderungUpdate",
 			"value": "1"
 		},
 		{
-			"id": "accd330e-5e95-473e-b13b-5ecc4da2c82c",
+			"id": "29bbf54f-fc23-42b4-b5d7-a4ae538fbd9c",
 			"key": "antriebAdd",
 			"value": "DAMPF"
 		},
 		{
-			"id": "48b79bdf-5771-4c51-bde7-e35d589c9548",
+			"id": "4d1ba3e8-4855-4717-93b6-69c7adbd3f45",
 			"key": "antriebUpdate",
 			"value": "ELEKTRO"
 		},
 		{
-			"id": "6b49e5f9-a77c-4147-bde8-cde3bf5f8a82",
+			"id": "eadce705-f4a0-40ca-9a01-87b08ccfc30f",
 			"key": "artikelAdd",
 			"value": "00001"
 		},
 		{
-			"id": "32bd8150-f3b0-4d09-93cb-ff60c579bdd2",
+			"id": "742ecc44-dbe2-4716-bce2-b96e7a1eef6b",
 			"key": "artikelUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "1964ba68-8287-4b9e-b301-fdfbd780fc0d",
+			"id": "2beb31e0-713f-4868-a4c0-c69439357214",
 			"key": "aufbauAdd",
 			"value": "LK"
 		},
 		{
-			"id": "b4d4b89c-d570-4d64-8d88-be84abb94ebb",
+			"id": "0d3799b5-35b8-4fca-8b52-94316cd079cc",
 			"key": "aufbauUpdate",
 			"value": "LK"
 		},
 		{
-			"id": "31883b35-85fa-4c3e-a96d-75c1afa95eb0",
+			"id": "55a86d93-adfa-4e9c-b0aa-f958783784f3",
 			"key": "bestellNrAdd",
 			"value": "3000"
 		},
 		{
-			"id": "84f352db-89d3-45bb-a0ce-1c2f635dd384",
+			"id": "312d1120-9545-43f1-9f91-04bba1a8b044",
 			"key": "bestellNrUpdate",
 			"value": "3003"
 		},
 		{
-			"id": "541ef303-937b-4e07-b5fc-2c22381ab854",
+			"id": "3cf6fe96-0fa2-4179-ba56-9a37b9d22e5b",
 			"key": "bahnverwaltungAdd",
 			"value": "DB"
 		},
 		{
-			"id": "ee3fde60-d9c2-4724-8545-5114b67e6ef3",
+			"id": "5d47b49e-342c-4c23-8d7e-1358e76616d8",
 			"key": "bahnverwaltungUpdate",
 			"value": "DBAG"
 		},
 		{
-			"id": "0dfa4b16-06cd-4f2b-8fd7-ade1669e6fc7",
+			"id": "de5aa8a4-6c30-474c-ad16-7ea2cf034a11",
 			"key": "cvAdd",
 			"value": "8"
 		},
 		{
-			"id": "82b08ec8-9dd2-4e4f-8a22-8da5fe34b7f4",
+			"id": "a67f160e-27a1-4659-972c-74cfedb0853a",
 			"key": "cvUpdate",
 			"value": "120"
 		},
 		{
-			"id": "cce1e153-6c9c-474c-beae-b811c769d2b2",
+			"id": "1f32ec52-af9a-43d4-a4a5-0150227734d6",
 			"key": "cvMaxAdd",
 			"value": "63"
 		},
 		{
-			"id": "6c41069c-0a35-4b2d-a0d1-518cc30d84a5",
+			"id": "5a71dde9-8930-4801-989a-b601e431be4f",
 			"key": "cvMaxUpdate",
 			"value": "80"
 		},
 		{
-			"id": "ff5592fb-14d4-478d-912c-6338b568c82e",
+			"id": "6b1fbb5f-2c2b-4bf7-a380-42e80ba951ce",
 			"key": "cvMinAdd",
 			"value": "0"
 		},
 		{
-			"id": "38f598b6-8fc8-4f13-ba78-483c41bc10cf",
+			"id": "201da097-e2ca-4e8e-877d-d455597f79a3",
 			"key": "cvMinUpdate",
 			"value": "1"
 		},
 		{
-			"id": "cfd6b6c3-051b-4592-880d-98e82f8533a4",
+			"id": "75bff984-e8aa-46c4-84f3-034aea2a2ac4",
 			"key": "cvValueAdd",
 			"value": "30"
 		},
 		{
-			"id": "ab128c40-bb23-43b6-b768-9bcb329ac8ab",
+			"id": "8f4330b8-6dd0-4ced-ab60-493b7e968b01",
 			"key": "cvValueUpdate",
 			"value": "50"
 		},
 		{
-			"id": "30183cb7-5d67-4e69-b4d9-194810d496f2",
+			"id": "db98c6e8-8343-4a55-ba7f-a3fa2ec6300d",
 			"key": "decoderAdd",
 			"value": "00001"
 		},
 		{
-			"id": "b6f0cb5c-6daf-48ff-aa19-51d8bb544d18",
+			"id": "8f68f59a-d2fb-4319-9297-c8c92a0eb0f6",
 			"key": "decoderUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "826a2900-7ebd-4cc4-8f00-5fca7b521ac4",
+			"id": "eed62886-16b6-4ac4-88bf-d22977fd5d60",
 			"key": "decoderAdd",
 			"value": "00001"
 		},
 		{
-			"id": "2466090e-5f83-4632-bc86-7830d7e3ef54",
+			"id": "53f5ef09-31fb-4a22-a4b1-cefa6759f15d",
 			"key": "decoderUpdate",
 			"value": "00001"
 		},
 		{
-			"id": "cd17bd95-44c6-47f4-9291-5c297ef988c4",
+			"id": "d4e7863b-7353-48fc-af0b-1dfdc1e46a4b",
 			"key": "decoderHerstellerAdd",
 			"value": "ESU"
 		},
 		{
-			"id": "5de2eb21-17a2-44d2-933e-52f8e2b82320",
+			"id": "1c0fd681-1998-49f9-b5c9-3e37e7fbf105",
 			"key": "decoderHerstellerUpdate",
 			"value": "ESU"
 		},
 		{
-			"id": "571718fc-d530-4582-9c04-77dbeeb426ef",
+			"id": "773d2f42-6f4e-4bb8-96e7-47fdd35f12cb",
 			"key": "decoderBestellNrAdd",
 			"value": "62400"
 		},
 		{
-			"id": "4d93b9a2-ae4f-44bc-90be-a5b3804ca758",
+			"id": "542c3ecf-7961-4381-bb57-7d9275f5b3e2",
 			"key": "decoderBestellNrUpdate",
 			"value": "62499"
 		},
 		{
-			"id": "a073a645-fb21-4b89-96e1-0493ea9fd5e3",
+			"id": "6695cbc2-6793-4250-be33-4ee24f9cdb32",
 			"key": "decoderBezeichnungAdd",
 			"value": "LokSound M4"
 		},
 		{
-			"id": "7fea55e6-d629-43d8-9a77-83238ef751c5",
+			"id": "bf22661e-792b-4cd3-ae7d-f5955cb8584a",
 			"key": "epochAdd",
 			"value": "IV"
 		},
 		{
-			"id": "4fe8f596-9c2d-449d-bcc8-a820c07d9ab5",
+			"id": "fdfb1507-fc44-4bc2-b744-edb8b8f46d8c",
 			"key": "epochUpdate",
 			"value": "IV"
 		},
 		{
-			"id": "f298873b-3a50-4d92-9be3-0b6310dcdf93",
+			"id": "16564ea8-74f5-4e98-a419-8176d1168ee4",
 			"key": "fahrstufeAdd",
 			"value": "27"
 		},
 		{
-			"id": "5e984534-fc44-41a7-a978-ae6de07efa9c",
+			"id": "13294810-c659-4b38-82d2-46fbc8a49252",
 			"key": "fahrstufeUpdate",
 			"value": "128"
 		},
 		{
-			"id": "57a79a8a-037c-4bc6-96a6-d78379451d7c",
+			"id": "77e0491e-b240-4742-87f2-83d538be54f0",
 			"key": "fnFuntionAdd",
 			"value": "F0"
 		},
 		{
-			"id": "8b2683fe-55a7-4c64-906f-f7640a7b1901",
+			"id": "f90e5b4a-99c2-4f64-a18b-82ee9acae432",
 			"key": "fnFuntionUpdate",
 			"value": "F0"
 		},
 		{
-			"id": "b124987f-7ddb-4d46-bb79-fad69367758e",
+			"id": "7c5f3164-1eac-4362-b3b7-7ca3d5da5b7f",
 			"key": "fnReiheAdd",
 			"value": "1"
 		},
 		{
-			"id": "224adb41-5218-4cbb-9263-940760b0b906",
+			"id": "c2a867f1-ae11-4e19-9e5e-5f36f03dcd5b",
 			"key": "fnReiheUpdate",
 			"value": "1"
 		},
 		{
-			"id": "c8232a81-0f80-4122-a542-dbbec815a00f",
+			"id": "66af0f41-618b-4961-911e-f56c4cf7e0d0",
 			"key": "gattungAdd",
 			"value": "BR89.0"
 		},
 		{
-			"id": "cd901fa8-57ed-4b23-bad6-d8934abb8408",
+			"id": "7f770c4f-7bfe-462e-931d-e73533a4b2cd",
 			"key": "gattungUpdate",
 			"value": "BR89.0"
 		},
 		{
-			"id": "f068cc92-b8f5-407a-901c-d2c021c6d108",
+			"id": "50f4b375-e76f-4c25-953a-f8ba6437b38d",
 			"key": "herstellerAdd",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "1093f9f5-9664-4e76-b08e-9dab88b5223f",
+			"id": "defa9979-4479-480d-a1aa-628be581103f",
 			"key": "herstellerUpdate",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "08c43532-78ea-4e77-aa7e-ed7aed6aacf2",
+			"id": "a40b8b67-c0b0-4b5f-9cce-1978662b23e8",
 			"key": "iMaxAdd",
 			"value": "1.5"
 		},
 		{
-			"id": "a8b8478e-7d94-4dcc-b998-317dc29c7d2f",
+			"id": "bb4047ed-9ab3-4987-8246-d7fb0fc64075",
 			"key": "iMaxUpdate",
 			"value": "2.0"
 		},
 		{
-			"id": "51f14d5f-bf34-488c-b870-7d571a62f547",
+			"id": "f9f95dae-b991-4c98-be23-34860fb989f5",
 			"key": "kategorieAdd",
 			"value": "LOKOMOTIV"
 		},
 		{
-			"id": "4a89fde3-13de-4257-8c48-9e598d0bf0c7",
+			"id": "c5a1906c-71b3-41be-901d-f8162e0a4e48",
 			"key": "kategorieUpdate",
 			"value": "AUSGESTALTUNG"
 		},
 		{
-			"id": "2318b045-3214-43a8-9cc0-e6cbcf508e37",
+			"id": "4f7b3d5e-5587-4119-a075-849949adbc6d",
 			"key": "kupplungAdd",
 			"value": "RELEX"
 		},
 		{
-			"id": "d5cdeb85-ad3e-4bf0-9b71-801ec7338d81",
+			"id": "c4ae48d3-265a-41e8-8bf5-e478b8042254",
 			"key": "kupplungUpdate",
 			"value": "RELEX"
 		},
 		{
-			"id": "7cf673d5-1369-49e1-8aed-34c286c5bc23",
+			"id": "d7eb07ff-9e6d-4c06-ba2b-459accfe669a",
 			"key": "konfigurationAdd",
 			"value": "CV"
 		},
 		{
-			"id": "52db17b5-5e1c-43cd-8395-c0ec4110c08b",
+			"id": "58372dab-2957-412c-b1a8-fa70230c911b",
 			"key": "konfigurationUpdate",
 			"value": "STECKER"
 		},
 		{
-			"id": "d0e9aa6a-fc67-4526-be96-2197b18518d3",
+			"id": "a19ac3f8-4610-487c-b26f-cfe6107afbc6",
 			"key": "leistungsubertragungAdd",
 			"value": "MECHANISH"
 		},
 		{
-			"id": "d8bbfa34-337a-46c8-ad44-5f92917a65e2",
+			"id": "3e0b7dc7-a76f-4eb0-bcb2-ea3c2dd77074",
 			"key": "leistungsubertragungUpdate",
 			"value": "ELEKTRISH"
 		},
 		{
-			"id": "1a13eb36-a286-4ac9-a870-fcafc7f041d8",
+			"id": "fe3bc8cf-9522-42e4-89b7-6d598356424c",
 			"key": "lichtAdd",
 			"value": "L1V"
 		},
 		{
-			"id": "70d31543-d3a0-4346-87f8-163f80d88146",
+			"id": "9b42b246-4217-4ecd-b800-8e5efe118c89",
 			"key": "lichtUpdate",
 			"value": "L1V"
 		},
 		{
-			"id": "d9304373-b5d0-48d1-9abf-7e6cba0de016",
+			"id": "66786060-9f7f-4f64-a214-1022e43d444a",
 			"key": "massstabAdd",
 			"value": "H0"
 		},
 		{
-			"id": "0d312ebf-e0cd-4117-b2f3-8e7b51565d03",
+			"id": "641294b4-4ace-4f4b-96d6-9f1161028a77",
 			"key": "massstabUpdate",
 			"value": "H0"
 		},
 		{
-			"id": "deb6fbe6-c40d-4c5e-8a2a-57060a57d029",
+			"id": "fdba6570-1595-43ed-be55-948435cda792",
 			"key": "motorTypAdd",
 			"value": "CSINUS"
 		},
 		{
-			"id": "e8098728-bd93-49f6-8b92-270cd3b8dbd2",
+			"id": "9759aaca-e07e-4b2f-9789-eeb868d42741",
 			"key": "motorTypUpdate",
 			"value": "CSINUS"
 		},
 		{
-			"id": "48e0865a-4b59-47cb-aaa0-2778b02fbbc4",
+			"id": "36428ca1-77dc-423b-bdb9-8df0409785d8",
 			"key": "protokollAdd",
 			"value": "MFX"
 		},
 		{
-			"id": "4a60e60d-ae97-4066-a6b4-91c3cf3de911",
+			"id": "506398c3-7362-48d2-807b-4a6e9af5d075",
 			"key": "protokollUpdate",
 			"value": "DELTA"
 		},
 		{
-			"id": "e709374d-02f4-41f7-bde9-fc5ca69211a1",
+			"id": "24028431-c027-4dc0-9575-acd506ba9c5b",
 			"key": "sondermodellAdd",
 			"value": "MM"
 		},
 		{
-			"id": "15a69d27-73aa-41e0-96c9-1eaca51237dc",
+			"id": "dcde2e7a-9c28-4f52-b223-3d99054a59ba",
 			"key": "sondermodellUpdate",
 			"value": "MM"
 		},
 		{
-			"id": "ed79c17f-528f-4746-94c1-bf79c6a5ab2a",
+			"id": "eee9bc6d-5d3f-4715-aa64-d84bfd429384",
 			"key": "spurweiteAdd",
 			"value": "H0"
 		},
 		{
-			"id": "f4067770-f129-4dea-b0a1-1c7697ee50b5",
+			"id": "fadaa17a-2f8e-4e2c-a379-4a1fa1847a68",
 			"key": "spurweiteUpdate",
 			"value": "H0"
 		},
 		{
-			"id": "0bd6d227-76b0-4bb4-bb8e-480bf9cbda2f",
+			"id": "f66fdb9e-5fe5-407b-94d3-1dd967c85618",
 			"key": "steckerAdd",
 			"value": "NEM651"
 		},
 		{
-			"id": "d20eae1c-9ec4-4554-8255-d0351216aa58",
+			"id": "d9394d3a-1715-4f5c-aa81-4b890ab4926b",
 			"key": "steckerUpdate",
 			"value": "NEM652"
 		},
 		{
-			"id": "90f302b7-396f-4a85-8ca6-0cd9d6766742",
+			"id": "8d2ef602-e608-4ad2-8c98-ee1b4c6abbd3",
 			"key": "steuerungAdd",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "ec154422-e986-41cf-b017-4148df85f16e",
+			"id": "39b5d74c-c893-4a31-a008-6c10510ea8d2",
 			"key": "steuerungUpdate",
 			"value": "DIGITAL"
 		},
 		{
-			"id": "fe9eef33-a72a-4123-8b9c-1fc2904725cc",
+			"id": "8c4e89e2-17bc-4de1-bc4c-e6520efb0baa",
 			"key": "teilHerstellerAdd",
 			"value": "MARKLIN"
 		},
 		{
-			"id": "ea541e13-4510-4c85-9122-22a138e50bae",
+			"id": "82686fae-7217-4c8f-81d8-08fcfffb1b22",
 			"key": "teilBestellNrAdd",
 			"value": "600300"
 		},
 		{
-			"id": "2f84e78c-9c4a-4f57-b63f-f2f8b6ea311f",
+			"id": "f79b98ac-de26-40b1-a21e-eee052420eea",
 			"key": "teilKategorieAdd",
 			"value": "ERSATZTEIL"
 		},
 		{
-			"id": "f7692057-3c73-4e13-b35f-41d07cc239b3",
+			"id": "0b556c7b-1155-47a0-8719-af325f37df29",
 			"key": "teilUnterKategorieAdd",
 			"value": "BURSTEN"
 		},
 		{
-			"id": "c23631af-1388-4112-a124-ea38352e0a9f",
+			"id": "40225c05-1525-44db-a121-3b5d6da64079",
 			"key": "unterKategorieAdd",
 			"value": "DAMPF"
 		},
 		{
-			"id": "701f7153-5d9d-4c8e-8faa-119cd068cd26",
+			"id": "0ffa6d00-3cf4-4c8c-90bc-4d933233a19e",
 			"key": "unterKategorieUpdate",
 			"value": "HECKEN"
 		},
 		{
-			"id": "cefaeb68-25c5-45fb-bd9c-851f7d53013b",
+			"id": "a8ebaa3f-96aa-48f6-980b-fa6a54b07818",
 			"key": "teilBezeichnungAdd",
 			"value": "Bürsten"
 		},
 		{
-			"id": "d4616199-4ae9-438a-9180-23e97e2fc142",
+			"id": "4f9aa724-dbd2-4c7c-92f0-a86e71f377b2",
 			"key": "vorbildAdd",
 			"value": "HECKEN"
 		},
 		{
-			"id": "2241e205-1886-4dc4-96b8-496efe6cdd1d",
+			"id": "626ecf1f-518b-48a6-b711-25eb60e82e30",
 			"key": "vorbildUpdate",
 			"value": "HECKEN"
 		},
 		{
-			"id": "f227c68a-7f9e-4e9e-9af6-1515db6454e6",
+			"id": "94e5bc4c-9e64-48e7-8855-952940928603",
 			"key": "zugAdd",
 			"value": "BAVARIA"
 		},
 		{
-			"id": "3d7e8a60-c481-41c3-bdd0-d829bd1dbb04",
+			"id": "5caaf248-c8a7-4efc-9a39-4ad6ceb73e26",
 			"key": "zugUpdate",
 			"value": "BAVARIA"
 		},
 		{
-			"id": "eca809cd-f5f0-49f3-a7df-2002d1642039",
+			"id": "a7a0c8d2-2de9-4d35-a618-a54c2b09950d",
 			"key": "zugTypAdd",
 			"value": "TEE"
 		},
 		{
-			"id": "958671ea-6c87-444d-a842-1dd377bb2b9f",
+			"id": "5dc3801d-219d-4a01-8601-909619c5a1e2",
 			"key": "zugTypUpdate",
 			"value": "TEE"
 		},
 		{
-			"id": "c45c27c5-d63f-46fc-843c-6cd22623300a",
+			"id": "50baea5f-a370-4a25-8eca-733a5ce2ed35",
 			"key": "imageFile",
 			"value": "3000.jpg"
 		},
 		{
-			"id": "5ff30977-fdc8-4b5d-9c54-bcf8abd033db",
+			"id": "be8f800c-67eb-48f6-992f-1324ec9f5a28",
 			"key": "anleitungFile",
 			"value": "3000_betrieb.pdf"
 		},
 		{
-			"id": "64e448dd-de2a-4421-889b-a899a1b681c7",
+			"id": "54c78ad8-703f-4263-be0b-ed77329d1d8b",
 			"key": "explosionszeichnungFile",
 			"value": "3000_explo.pdf"
 		},
 		{
-			"id": "b45a549f-b11b-46a1-88df-ccc7256b7e90",
+			"id": "a31ec77c-1403-49b3-87d8-e2c4a717f894",
 			"key": "xlFile",
 			"value": "3000.jpg"
 		},
 		{
-			"id": "0b72c746-5f9c-40f3-892f-9c4f19ba3081",
+			"id": "62c1d9de-6fc4-4272-99eb-cb346ebcea86",
 			"key": "landAdd",
 			"value": "DE"
 		},
 		{
-			"id": "82c64e6c-a8a8-43dc-9055-2ac9763bfa1a",
+			"id": "31cdb825-2ddf-47ed-b103-a904349fd75c",
 			"key": "landUpdate",
 			"value": "NL"
 		},
 		{
-			"id": "f77c1174-57cf-47cf-9edd-809225c62a73",
+			"id": "59090534-f798-469c-9761-5c5b602c0595",
 			"key": "telefonAdd",
 			"value": "+497161608222"
 		},
 		{
-			"id": "ebd4fc7a-f0bf-44d1-bb8c-ddd89add0afb",
+			"id": "45b20303-3834-42cf-866e-15b65037e62d",
 			"key": "telefonUpdate",
 			"value": "030 2341347"
 		},
 		{
-			"id": "05c75864-4fa1-48dd-8bdd-e09f28375fe3",
-			"key": "abbildungCsv",
+			"id": "9505e53a-891f-4c8e-9301-f635372da751",
+			"key": "testFiles",
+			"value": "."
+		},
+		{
+			"id": "9505e53a-891f-4c8e-9301-f635372da751",
+			"key": "{{testFiles}}abbildungCsv",
 			"value": "abbildungCsv.csv"
 		},
 		{
-			"id": "dac5de3e-7221-43d3-b1a9-0135e0b2d526",
-			"key": "anderungCsv",
+			"id": "24c04aeb-1c60-4967-a790-def91ce0aba6",
+			"key": "{{testFiles}}anderungCsv",
 			"value": "anderungCsv.csv"
 		},
 		{
-			"id": "58d2be01-3035-4112-9362-3673265712b7",
-			"key": "artikelCsv",
+			"id": "25c76491-3963-44ab-8ee8-7556060786bb",
+			"key": "{{testFiles}}artikelCsv",
 			"value": "artikelCsv.csv"
 		},
 		{
-			"id": "8b24382c-e22d-4364-be9a-d44733815a2b",
-			"key": "bahnverwaltungCsv",
+			"id": "00572444-b91f-4256-a28e-ea3770afae38",
+			"key": "{{testFiles}}bahnverwaltungCsv",
 			"value": "bahnverwaltungCsv.csv"
 		},
 		{
-			"id": "0ad2d5bb-7598-4504-957a-a2460e6f155e",
-			"key": "consistCsv",
+			"id": "c38988ad-2bc3-4652-8f73-ec12d2afaf0a",
+			"key": "{{testFiles}}consistCsv",
 			"value": "consistCsv.csv"
 		},
 		{
-			"id": "5858bca3-8396-4b05-a0f4-15a22ac6c21f",
-			"key": "decoderCsv",
+			"id": "69a4e302-6974-4028-a1ab-03d890892af6",
+			"key": "{{testFiles}}decoderCsv",
 			"value": "decoderCsv.csv"
 		},
 		{
-			"id": "36a1d212-e9c2-4437-bf8b-1874b25be99b",
-			"key": "decoderAdressCsv",
+			"id": "2aaaa524-35e8-4dc0-8359-e061f9759087",
+			"key": "{{testFiles}}decoderAdressCsv",
 			"value": "decoderAdressCsv.csv"
 		},
 		{
-			"id": "9af65877-7e6b-43fe-bc46-af5e1e13f1a2",
-			"key": "decoderCvCsv",
+			"id": "43e7605b-8ecc-4142-bd7c-5c5ab254b53e",
+			"key": "{{testFiles}}decoderCvCsv",
 			"value": "decoderCvCsv.csv"
 		},
 		{
-			"id": "801c1c40-0700-4008-a2a8-a9b78bb06cdd",
-			"key": "decoderFunktionCsv",
+			"id": "238b850b-e6a7-48fb-9db4-7615e8a0b672",
+			"key": "{{testFiles}}decoderFunktionCsv",
 			"value": "decoderFunktionCsv.csv"
 		},
 		{
-			"id": "a43a4087-daf9-4272-b58e-e475158543c3",
-			"key": "decoderTypCsv",
+			"id": "9bee42fe-53f3-407c-876b-58a38ccd4371",
+			"key": "{{testFiles}}decoderTypCsv",
 			"value": "decoderTypCsv.csv"
 		},
 		{
-			"id": "7bf0120c-5355-4d06-bbfe-a274ce727b38",
-			"key": "decoderTypAdressCsv",
+			"id": "80b168e5-f27b-4fae-8b4a-166ceccffc1d",
+			"key": "{{testFiles}}decoderTypAdressCsv",
 			"value": "decoderTypAdressCsv.csv"
 		},
 		{
-			"id": "ac5f9a41-4764-4e38-820c-b239ac592433",
-			"key": "decoderTypCvCsv",
+			"id": "66759d53-7554-4270-8876-8a9e103189a0",
+			"key": "{{testFiles}}decoderTypCvCsv",
 			"value": "decoderTypCvCsv.csv"
 		},
 		{
-			"id": "f57381bf-4255-47aa-8b1d-83968b88d5f3",
-			"key": "decoderTypFunktionCsv",
+			"id": "b38dccbd-68e1-4357-9f42-d5831293b8e0",
+			"key": "{{testFiles}}decoderTypFunktionCsv",
 			"value": "decoderTypFunktionCsv.csv"
 		},
 		{
-			"id": "4ca47930-0372-4120-9494-db9878b0399a",
-			"key": "herstellerCsv",
+			"id": "51cf79b5-de62-40dc-bae1-5a1090b054fc",
+			"key": "{{testFiles}}herstellerCsv",
 			"value": "herstellerCsv.csv"
 		},
 		{
-			"id": "0e67fd46-117b-446f-b1e2-89673ce54b57",
-			"key": "namedCsv",
+			"id": "0338913b-5fa2-465f-9077-0b9dfab906ca",
+			"key": "{{testFiles}}namedCsv",
 			"value": "namedCsv.csv"
 		},
 		{
-			"id": "8a84e6e4-7c9b-4057-9bc6-e3f75786801b",
-			"key": "produktCsv",
+			"id": "b7480e5c-19cf-45af-ba94-c8e566eb2482",
+			"key": "{{testFiles}}produktCsv",
 			"value": "produktCsv.csv"
 		},
 		{
-			"id": "45a88e41-8898-4122-8409-d909f90a4909",
-			"key": "teilCsv",
+			"id": "b7fe1928-3616-4bdf-91d8-838a8505a132",
+			"key": "{{testFiles}}teilCsv",
 			"value": "teilCsv.csv"
 		},
 		{
-			"id": "9d91d4ec-3b5c-4730-aad8-5ce05dedba57",
-			"key": "unterKategorieCsv",
+			"id": "e32af1d6-7c07-4dd5-8f80-460f9d70fc7a",
+			"key": "{{testFiles}}unterKategorieCsv",
 			"value": "unterKategorieCsv.csv"
 		},
 		{
-			"id": "38d207cf-d689-40af-b18a-fc64c628d694",
-			"key": "vorbildCsv",
+			"id": "bf1f1027-e6fd-4cce-8383-25a45c2bd604",
+			"key": "{{testFiles}}vorbildCsv",
 			"value": "vorbildCsv.csv"
 		},
 		{
-			"id": "7917e9e5-4cdf-4453-aa7a-ee11e020e2cd",
-			"key": "zugCsv",
+			"id": "64fcd7df-9c72-49a6-ba10-3608a26b1c90",
+			"key": "{{testFiles}}zugCsv",
 			"value": "zugCsv.csv"
 		}
 	],

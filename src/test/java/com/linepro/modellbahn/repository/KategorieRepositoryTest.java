@@ -1,6 +1,7 @@
 package com.linepro.modellbahn.repository;
 
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
+import static com.linepro.modellbahn.repository.TestPersistence.TEST_PROPERTIES;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -25,7 +26,6 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
-import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.linepro.modellbahn.entity.Kategorie;
 import com.linepro.modellbahn.persistence.Persistence;
 import com.linepro.modellbahn.repository.base.Criterion;
@@ -43,21 +43,7 @@ import com.linepro.modellbahn.service.criterion.KategorieenCriteria;
     TestPersistence.class
     })
 @DataJpaTest
-@TestPropertySource(properties = {
-    "hibernate.dialect=org.hibernate.dialect.H2Dialect",
-    "spring.application.name=ModellBahn",
-    "spring.datasource.driverClassName=org.h2.Driver",
-    "spring.datasource.url=jdbc:h2:mem:modellbahn;DB_CLOSE_DELAY=-1",
-    "spring.datasource.username=sa",
-    "spring.datasource.password=password",
-    "spring.flyway.enabled=false",
-    "spring.jpa.database-platform=org.hibernate.dialect.H2Dialect",
-    "spring.jpa.hibernate.ddl-auto=create",
-    "spring.jpa.open-in-view=false",
-    "spring.jpa.properties.hibernate.format_sql=false",
-    "spring.jpa.properties.hibernate.show-sql=true",
-    "spring.main.banner-mode=off",
-    })
+@TestPropertySource(locations = TEST_PROPERTIES)
 @DirtiesContext
 public class KategorieRepositoryTest {
 
@@ -65,7 +51,6 @@ public class KategorieRepositoryTest {
     private KategorieRepository kategorieRepository;
 
     @Test
-    @DatabaseSetup("kategorien.xml")
     public void testFindByName() throws Exception {
         Optional<Kategorie> found = kategorieRepository.findByName("LOKOMOTIV");
 
@@ -78,17 +63,15 @@ public class KategorieRepositoryTest {
     }
 
     @Test
-    @DatabaseSetup("kategorien.xml")
     public void testFindAllPageable() throws Exception {
         Page<Kategorie> page = kategorieRepository.findAll(Pageable.unpaged());
 
         List<Kategorie> kategorien = page.getContent();
-        assertEquals(3, kategorien.size());
+        assertEquals(18, kategorien.size());
         assertFalse(isAvailable(kategorien.get(0).getUnterKategorien()));
     }
 
     @Test
-    @DatabaseSetup("kategorien.xml")
     public void testFindAllCriterion() {
         Criterion criterion = new KategorieenCriteria(Optional.of(Arrays.asList("LOKOMOTIV", "WAGEN")));
         Page<Kategorie> page = kategorieRepository.findAll(criterion, Pageable.unpaged());

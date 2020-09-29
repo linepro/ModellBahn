@@ -1,3 +1,11 @@
+com:
+   linepro:
+      modellbahn:
+         user:
+            confirmUrl: https://localhost:8086/ModellBahn/confirm 
+            resetUrl: https://localhost:8086/ModellBahn/reset
+         noreply: modellbahn-3f2861@inbox.mailtrap.io
+
 server:
    error:
       whitelabel:
@@ -23,6 +31,75 @@ server:
 #         client-id: first-client
 #         client-secret: noonewilleverguess
 #   require-ssl: true
+
+management:
+   endpoint:
+      auditevents:
+         enabled: true
+      beans:
+         enabled: true
+      caches:
+         enabled: true
+      configprops:
+         enabled: true
+      env:
+         enabled: true
+      flyway:
+         enabled: true
+      health:
+         enabled: true
+         show-components: always
+         show-details: when-authorized
+      heapdump:
+         enabled: true
+      httptrace:
+         enabled: true
+      info:
+         enabled: true
+      logfile:
+         enabled: true
+      loggers:
+         enabled: true
+      metrics:
+         enabled: true
+      mappings:
+         enabled: true
+      prometheus:
+         enabled: true
+      scheduledtasks:
+         enabled: true
+      sessions:
+         enabled: true
+      shutdown:
+         enabled: true
+      threaddump:
+         enabled: true
+   endpoints:
+      enabled-by-default: true
+      jmx:
+         exposure:
+            exclude: "*"
+      web:
+         base-path: /management
+         exposure:
+            include: auditevents,beans,caches,configprops,env,flyway,health,heapdump,httptrace,info,logfile,loggers,metrics,mappings,prometheus,scheduledtasks,sessions,shutdown,threaddump
+   health:
+      defaults:
+         enabled: false
+      datasource:
+         enabled: true
+      diskspace:
+         enabled: true
+      livenessstate:
+         enabled: true
+      mail:
+         enabled: true
+      ping:
+         enabled: true
+      readinessstate:
+         enabled: true
+   server:
+      port: 8087
 
 spring:
    application:
@@ -73,12 +150,7 @@ spring:
             generate_statistics: false
             temp:
                use_jdbc_metadata_defaults: false
-      show-sql: true
-   management:
-      endpoints:
-         web:
-            exposure:
-               include: "*"
+      show-sql: false
    mail:
       host: smtp.mailtrap.io
       username: 66516d07b82677
@@ -107,17 +179,5 @@ spring:
             max-file-size: 5MB
    quartz:
       auto-startup: false
-            
 #   resources:
 #      static-locations: classpath:/files/,classpath:/static-files,file:./store
-   thymeleaf:
-      mode: LEGACYHTML5
-      cache: false
-      
-com:
-   linepro:
-      modellbahn:
-         user:
-            confirmUrl: https://localhost:8086/ModellBahn/confirm 
-            resetUrl: https://localhost:8086/ModellBahn/reset
-         noreply: modellbahn-3f2861@inbox.mailtrap.io

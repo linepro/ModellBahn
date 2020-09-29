@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.CharArrayWriter;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Collections;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -31,23 +32,25 @@ import com.linepro.modellbahn.util.impexp.Exporter;
 @ExtendWith(MockitoExtension.class)
 public class ExporterImplTest {
 
-    private static final String BESTELL_NR = "62400";
-    private static final String BEZEICHNUNG = "Bezeichnung";
     private static final String DECODER_ID = "00010";
-    private static final Boolean DELETED = true;
-    private static final String ELECTRONIC_SOLUTIONS_ULM = "Electronic Solutions Ulm";
-    private static final String ESU = "ESU";
-    private static final Integer FAHRSTUFE = 127;
-    private static final String LOK_SOUND = "LokSound";
-    private static final String MARKLIN_MFX = "Marklin mfx";
-    private static final String MFX = "MFX";
+    private static final String HERSTELLER = "ESU";
+    private static final String BESTELL_NR = "62400";
+    private static final String BEZEICHNUNG = "LokSound M4";
     private static final BigDecimal I_MAX = BigDecimal.ONE;
-    private static final Long ID = 1L;
-    private static final DecoderStatus STATUS = DecoderStatus.INSTALIERT;
+    private static final String PROTOKOLL = "MFX";
+    private static final Integer FAHRSTUFE = 127;
+    private static final Boolean GERAUSCH = true;
     private static final Konfiguration KONFIGURATION = Konfiguration.CV;
-    private static final String NAME = "Name";
-    private static final Boolean SOUND = true;
     private static final Stecker STECKER = Stecker.MTC21;
+    private static final LocalDate KAUFDATUM = LocalDate.now();
+    private static final String WAHRUNG = "EUR";
+    private static final BigDecimal PREIS = BigDecimal.TEN;
+    private static final String ANMERKUNG = "remarks";
+    private static final DecoderStatus STATUS = DecoderStatus.INSTALIERT;
+    private static final String ANLEITUNGEN = "instrutions.pdf";
+    private static final Boolean DELETED = true;
+
+    private static final Long ID = 1L;
 
     private static final Decoder ENTITY = Decoder.builder()
                                                  .id(ID)
@@ -59,19 +62,27 @@ public class ExporterImplTest {
                                                  .build();
 
     private static final DecoderModel MODEL = DecoderModel.builder()
-                                                          .decoderId(DECODER_ID.toString())
-                                                          .bezeichnung(LOK_SOUND)
-                                                          .hersteller(ESU)
-                                                          .bestellNr(BESTELL_NR)
                                                           .decoderId(DECODER_ID)
+                                                          .hersteller(HERSTELLER)
+                                                          .bestellNr(BESTELL_NR)
+                                                          .bezeichnung(BEZEICHNUNG)
+                                                          .iMax(I_MAX)
+                                                          .protokoll(PROTOKOLL)
                                                           .fahrstufe(FAHRSTUFE)
-                                                          .protokoll(MFX)
+                                                          .sound(GERAUSCH)
+                                                          .konfiguration(KONFIGURATION)
+                                                          .stecker(STECKER)
+                                                          .kaufdatum(KAUFDATUM)
+                                                          .wahrung(WAHRUNG)
+                                                          .preis(PREIS)
+                                                          .anmerkung(ANMERKUNG)
                                                           .status(STATUS)
+                                                          .anleitungen(ANLEITUNGEN)
                                                           .deleted(DELETED)
                                                           .build();
 
-    private static final String CSV = "name,bezeichnung,deleted\n" +
-                                      NAME + "," + BEZEICHNUNG + "," + DELETED +"\n";
+    private static final String CSV = "decoderId,hersteller,bestellNr,bezeichnung,iMax,protokoll,fahrstufe,gerausch,konfiguration,stecker,kaufdatum,wahrung,preis,anmerkung,status,anleitungen,deleted\n" +
+                                      DECODER_ID + "," + HERSTELLER + "," + BESTELL_NR + ",\"" + BEZEICHNUNG + "\"," + I_MAX + "," + PROTOKOLL + "," + FAHRSTUFE + "," + GERAUSCH + "," + KONFIGURATION + "," + STECKER + "," + KAUFDATUM + "," + WAHRUNG + "," + PREIS + "," + ANMERKUNG + "," + STATUS + "," + ANLEITUNGEN + "," + DELETED +"\n";
 
     private final JpaRepository<Decoder,Long> repository;
 

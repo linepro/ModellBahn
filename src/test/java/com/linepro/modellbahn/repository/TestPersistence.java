@@ -13,6 +13,8 @@ import com.github.springtestdbunit.bean.DatabaseDataSourceConnectionFactoryBean;
 @Configuration
 public class TestPersistence {
 
+    public static final String TEST_PROPERTIES = "classpath:application-test.yml";
+
     @Autowired
     private DataSource dataSource;
 

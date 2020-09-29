@@ -167,6 +167,35 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         return updated(service.deleteAbbildung(artikelId));
     }
 
+    @PutMapping(path = ApiPaths.ADD_ARTIKEL_GROSSANSICHT, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
+    @Operation(summary = "Add an Artikel picture", description = "Adds or updates the picture of a named Artikel", operationId = "update", tags = { ApiNames.ARTIKEL })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArtikelModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
+    public ResponseEntity<?> updateGrossansicht(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId, @RequestParam(ApiNames.GROSSANSICHT) MultipartFile multipart) {
+        return updated(service.updateGrossansicht(artikelId, multipart));
+    }
+
+    @DeleteMapping(path = ApiPaths.DELETE_ARTIKEL_GROSSANSICHT, produces = MediaType.APPLICATION_JSON)
+    @Operation(summary = "Delete an Artikel picture", description = "Deletes the picture of a named Artikel", operationId = "update", tags = { ApiNames.ARTIKEL })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
+    })
+    public ResponseEntity<?> deleteGrossansicht(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId) {
+        return updated(service.deleteGrossansicht(artikelId));
+    }
+
     @PostMapping(path = ApiPaths.ADD_ANDERUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Record a change to an article", description = "Adds a change record", operationId = "add", tags = { ApiNames.ANDERUNG })
     @ApiResponses(value = {

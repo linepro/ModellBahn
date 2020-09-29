@@ -4,30 +4,39 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
 
-	<id>dist</id>
-	<formats>
-		<format>zip</format>
-	</formats>
-	<files>
-		<file>
-			<source>target/${pom.artifactId}-${pom.version}.jar</source>
-			<outputDirectory>lib/</outputDirectory>
-		</file>
-	</files>
-	<fileSets>
-		<fileSet>
-			<directory>src/main/assembly</directory>
-			<outputDirectory>/</outputDirectory>
-			<fileMode>0755</fileMode>
-			<lineEnding>keep</lineEnding>
-			<includes>
-				<include>StartModellBahn.bat</include>
-				<include>StartModellBahn.sh</include>
-			</includes>
-		</fileSet>
+    <id>dist</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <files>
+        <file>
+            <source>target/${pom.artifactId}-${pom.version}.jar</source>
+            <outputDirectory />
+        </file>
+    </files>
+    <fileSets>
         <fileSet>
-            <directory>src/main/resources/webapp</directory>
-            <outputDirectory>/webapp</outputDirectory>
+            <directory>src/main/assembly</directory>
+            <outputDirectory />
+            <fileMode>0755</fileMode>
+            <lineEnding>keep</lineEnding>
+            <includes>
+                <include>StartModellBahn.*</include>
+                <include>StopModellBahn.*</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>target/lib</directory>
+            <outputDirectory>lib</outputDirectory>
+            <fileMode>0755</fileMode>
+            <lineEnding>keep</lineEnding>
+            <includes>
+                <include>**/*</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>target/webjars</directory>
+            <outputDirectory>webjars</outputDirectory>
             <fileMode>0755</fileMode>
             <lineEnding>keep</lineEnding>
             <includes>

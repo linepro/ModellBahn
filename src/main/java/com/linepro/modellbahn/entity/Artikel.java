@@ -84,7 +84,8 @@ import lombok.experimental.SuperBuilder;
                     @NamedAttributeNode(value = "bestellNr"),
                     @NamedAttributeNode(value = "bezeichnung"),
                     @NamedAttributeNode(value = "gattung", subgraph = "artikel.gattung"),
-                    @NamedAttributeNode(value = "abbildung")
+                    @NamedAttributeNode(value = "abbildung"),
+                    @NamedAttributeNode(value = "grossansicht")
                 }),
             @NamedSubgraph(name = "artikel.hersteller",
                 attributeNodes = {
@@ -114,6 +115,7 @@ import lombok.experimental.SuperBuilder;
             @NamedAttributeNode(value = "anmerkung"),
             @NamedAttributeNode(value = "beladung"),
             @NamedAttributeNode(value = "abbildung"),
+            @NamedAttributeNode(value = "grossansicht"),
             @NamedAttributeNode(value = "status"),
             @NamedAttributeNode(value = "deleted")
         },
@@ -133,7 +135,8 @@ import lombok.experimental.SuperBuilder;
                 @NamedAttributeNode(value = "achsfolg", subgraph = "artikel.achsfolg"),
                 @NamedAttributeNode(value = "sondermodell", subgraph = "artikel.sondermodell"),
                 @NamedAttributeNode(value = "aufbau", subgraph = "artikel.aufbau"),
-                @NamedAttributeNode(value = "abbildung")
+                @NamedAttributeNode(value = "abbildung"),
+                @NamedAttributeNode(value = "grossansicht")
             }),
             @NamedSubgraph(name = "artikel.steuerung",
                 attributeNodes = {
@@ -249,7 +252,8 @@ import lombok.experimental.SuperBuilder;
                 @NamedAttributeNode(value = "achsfolg", subgraph = "artikel.achsfolg"),
                 @NamedAttributeNode(value = "sondermodell", subgraph = "artikel.sondermodell"),
                 @NamedAttributeNode(value = "aufbau", subgraph = "artikel.aufbau"),
-                @NamedAttributeNode(value = "abbildung")
+                @NamedAttributeNode(value = "abbildung"),
+                @NamedAttributeNode(value = "grossansicht")
             }),
             @NamedSubgraph(name = "artikel.steuerung",
                 attributeNodes = {
@@ -440,6 +444,11 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
     @Column(name = DBNames.ABBILDUNG, length = 512)
     @Convert(converter = PathConverter.class)
     private Path abbildung;
+
+    /** The grossansicht. */
+    @Column(name = DBNames.GROSSANSICHT, length = 512)
+    @Convert(converter = PathConverter.class)
+    private Path grossansicht;
 
     /** The status. */
     @Enumerated(EnumType.STRING)

@@ -33,6 +33,10 @@ public class ErrorMessage {
     @Schema(description = "Status", example = "403", accessMode = AccessMode.READ_ONLY)
     private int status;
 
+    @JsonProperty("code")
+    @Schema(description = "Code", example = "user.invalid", accessMode = AccessMode.READ_ONLY)
+    private int code;
+
     @JsonProperty("error")
     @Schema(description = "Error", example = "Forbidden", accessMode = AccessMode.READ_ONLY)
     private String error;
@@ -42,7 +46,7 @@ public class ErrorMessage {
     private String message;
 
     @JsonProperty("path")
-    @Schema(description = "Request path", example = "Forbidden", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Request path", example = "/user/{id}", accessMode = AccessMode.READ_ONLY)
     private String path;
 
     @JsonProperty("developerMessage")

@@ -108,6 +108,24 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, Artikel> imple
     }
 
     @Transactional
+    public Optional<ArtikelModel> updateGrossansicht(String artikelId, MultipartFile multipart) {
+        return  repository.findByArtikelId(artikelId)
+                         .map(a -> {
+                             a.setGrossansicht(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.ARTIKEL, ApiNames.GROSSANSICHT, artikelId));
+                             return entityMutator.convert(a);
+                             });
+    }
+
+    @Transactional
+    public Optional<ArtikelModel> deleteGrossansicht(String artikelId) {
+        return repository.findByArtikelId(artikelId)
+                         .map(a -> {
+                            a.setGrossansicht(fileService.deleteFile(a.getGrossansicht()));
+                            return entityMutator.convert(a);
+                            });
+    }
+
+    @Transactional
     public Optional<AnderungModel> addAnderung(String artikelId, AnderungModel anderungModel) {
         return repository.findByArtikelId(artikelId)
                          .map(a -> {

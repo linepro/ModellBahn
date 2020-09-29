@@ -16,6 +16,7 @@ import com.linepro.modellbahn.security.user.UserService;
 
 @Import({
     EmailService.class,
+    ModellBahnAccessDeniedHandler.class,
     ModellBahnBasicAuthenticationEntryPoint.class,
     PasswordProcessor.class,
     UserAuthenticationListener.class,

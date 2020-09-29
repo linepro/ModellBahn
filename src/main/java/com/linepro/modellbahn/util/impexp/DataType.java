@@ -2,7 +2,7 @@ package com.linepro.modellbahn.util.impexp;
 
 import java.util.stream.Stream;
 
-import org.thymeleaf.util.StringUtils;
+import org.apache.commons.text.WordUtils;
 
 import com.linepro.modellbahn.controller.impl.ApiNames;
 
@@ -47,11 +47,11 @@ public enum DataType {
     private final String beanPrefix;
 
     private DataType(String typeName) {
-        this(StringUtils.capitalizeWords(typeName, "_").replaceAll("_", ""), StringUtils.capitalizeWords(typeName, "_").replaceAll("_", ""));
+        this(WordUtils.capitalize(typeName, '_').replaceAll("_", ""), WordUtils.capitalize(typeName, '_').replaceAll("_", ""));
     }
 
     private DataType(String typeName, String beanPrefix) {
-        this.typeName = StringUtils.unCapitalize(typeName);
+        this.typeName = WordUtils.uncapitalize(typeName);
         this.beanPrefix = beanPrefix; 
     }
 

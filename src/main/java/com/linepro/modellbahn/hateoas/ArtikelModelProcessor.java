@@ -9,6 +9,7 @@ import static com.linepro.modellbahn.controller.impl.ApiNames.HERSTELLER;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_ANDERUNG;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_ARTIKEL;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_ARTIKEL_ABBILDUNG;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_ARTIKEL_GROSSANSICHT;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_ARTIKEL;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_ARTIKEL;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_DECODER;
@@ -19,6 +20,7 @@ import static com.linepro.modellbahn.controller.impl.ApiRels.ABBILDUNG;
 import static com.linepro.modellbahn.controller.impl.ApiRels.ADD;
 import static com.linepro.modellbahn.controller.impl.ApiRels.DECODER;
 import static com.linepro.modellbahn.controller.impl.ApiRels.DELETE;
+import static com.linepro.modellbahn.controller.impl.ApiRels.GROSSANSICHT;
 import static com.linepro.modellbahn.controller.impl.ApiRels.PRODUKT;
 import static com.linepro.modellbahn.controller.impl.ApiRels.SEARCH;
 import static com.linepro.modellbahn.controller.impl.ApiRels.SELF;
@@ -65,6 +67,7 @@ public class ArtikelModelProcessor extends ModelProcessorImpl<ArtikelModel> impl
             new LinkTemplateImpl(UPDATE, UPDATE_ARTIKEL, EXTRACTOR),
             new LinkTemplateImpl(DELETE, DELETE_ARTIKEL, EXTRACTOR, (m) -> BooleanUtils.isFalse(((ArtikelModel) m).getDeleted())),
             new LinkTemplateImpl(ABBILDUNG, ADD_ARTIKEL_ABBILDUNG, EXTRACTOR),
+            new LinkTemplateImpl(GROSSANSICHT, ADD_ARTIKEL_GROSSANSICHT, EXTRACTOR),
             new LinkTemplateImpl(ANDERUNG, ADD_ANDERUNG, EXTRACTOR),
             new LinkTemplateImpl(DECODER, GET_DECODER, DECODER_EXTRACTOR, (m) -> StringUtils.hasText(((ArtikelModel) m).getDecoder())),
             new LinkTemplateImpl(PRODUKT, GET_PRODUKT, PRODUKT_EXTRACTOR)

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<dataset>
-	<kategorie id="1" name="LOKOMOTIV" bezeichnung="Lokomotiv" deleted="false" />
-	<unter_kategorie id="1" kategorie_id="1" name="DAMPF" bezeichnung="Dampf" deleted="false" />
-	<achsfolg />
-	<antrieb />
-	<bahnverwaltung />
-	<vorbild />
-</dataset>

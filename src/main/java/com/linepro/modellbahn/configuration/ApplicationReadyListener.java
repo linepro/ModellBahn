@@ -38,33 +38,35 @@ public class ApplicationReadyListener implements ApplicationListener<Application
     private static List<String> beanz = new ArrayList<>();
 
     public void onApplicationEvent(final ApplicationReadyEvent event) {
-        ApplicationContext context = event.getApplicationContext();
-
-        if (applicationContext.equals(context)) {
-            String application = context.getApplicationName();
-            List<String> contextBeanz = Stream.of(context.getBeanDefinitionNames())
-                    .map(this::beanEntry)
-                    .sorted(Comparator.comparing(Entry::getKey))
-                    .filter(e -> StringUtils.hasText(e.getValue()))
-                    .map(e -> String.join(": " , e.getKey(), e.getValue()))
-                    .collect(Collectors.toList());
-
-            if (CollectionUtils.isNotEmpty(contextBeanz) && !CollectionUtils.isEqualCollection(beanz, contextBeanz)) {
-                beanz = contextBeanz;
-
-                List<String> endPoints;
-
-                try {
-                    endPoints = applicationContext.getBeansOfType(RequestMappingHandlerMapping.class)
-                                                  .values()
-                                                  .stream()
-                                                  .flatMap(r -> r.getHandlerMethods().keySet().stream().map(h -> h.toString()))
-                                                  .collect(Collectors.toList());
-                } catch (Exception e) {
-                    endPoints = Collections.emptyList();
+        if (log.isDebugEnabled()) {
+            ApplicationContext context = event.getApplicationContext();
+    
+            if (applicationContext.equals(context)) {
+                String application = context.getApplicationName();
+                List<String> contextBeanz = Stream.of(context.getBeanDefinitionNames())
+                        .map(this::beanEntry)
+                        .sorted(Comparator.comparing(Entry::getKey))
+                        .filter(e -> StringUtils.hasText(e.getValue()))
+                        .map(e -> String.join(": " , e.getKey(), e.getValue()))
+                        .collect(Collectors.toList());
+    
+                if (CollectionUtils.isNotEmpty(contextBeanz) && !CollectionUtils.isEqualCollection(beanz, contextBeanz)) {
+                    beanz = contextBeanz;
+    
+                    List<String> endPoints;
+    
+                    try {
+                        endPoints = applicationContext.getBeansOfType(RequestMappingHandlerMapping.class)
+                                                      .values()
+                                                      .stream()
+                                                      .flatMap(r -> r.getHandlerMethods().keySet().stream().map(h -> h.toString()))
+                                                      .collect(Collectors.toList());
+                    } catch (Exception e) {
+                        endPoints = Collections.emptyList();
+                    }
+    
+                    log.debug("{} started with {} endpoints: {} and {} beans: {}", application, endPoints.size(), endPoints, beanz.size(), beanz);
                 }
-
-                log.info("{} started with {} endpoints: {} and {} beans: {}", application, endPoints.size(), endPoints, beanz.size(), beanz);
             }
         }
     }

@@ -28,6 +28,8 @@ public interface ApiPaths {
     String UPDATE_ARTIKEL           = ARTIKEL_ROOT + "/{" + ApiNames.ARTIKEL_ID + "}";
     String ADD_ARTIKEL_ABBILDUNG    = ARTIKEL_ROOT + "/{" + ApiNames.ARTIKEL_ID + "}/" + ApiNames.ABBILDUNG;
     String DELETE_ARTIKEL_ABBILDUNG = ARTIKEL_ROOT + "/{" + ApiNames.ARTIKEL_ID + "}/" + ApiNames.ABBILDUNG;
+    String ADD_ARTIKEL_GROSSANSICHT    = ARTIKEL_ROOT + "/{" + ApiNames.ARTIKEL_ID + "}/" + ApiNames.GROSSANSICHT;
+    String DELETE_ARTIKEL_GROSSANSICHT = ARTIKEL_ROOT + "/{" + ApiNames.ARTIKEL_ID + "}/" + ApiNames.GROSSANSICHT;
     String ADD_ANDERUNG             = ARTIKEL_ROOT + "/{" + ApiNames.ARTIKEL_ID + "}/" + ApiNames.ANDERUNGEN;
     String UPDATE_ANDERUNG          = ARTIKEL_ROOT + "/{" + ApiNames.ARTIKEL_ID + "}/" + ApiNames.ANDERUNGEN + "/{" + ApiNames.ANDERUNG_ID + "}";
     String DELETE_ANDERUNG          = ARTIKEL_ROOT + "/{" + ApiNames.ARTIKEL_ID + "}/" + ApiNames.ANDERUNGEN + "/{" + ApiNames.ANDERUNG_ID + "}";
@@ -230,18 +232,18 @@ public interface ApiPaths {
     String MULTIPART_FILE_DETAIL = "FileData";
     String MULTIPART_FILE_DATA = "FileData";
 
-    String[] API_ENDPOINTS = { API_ROOT + "/**" };
+    String[] API_ENDPOINTS = { API_ROOT + "**" };
 
-    String USER_ROOT       = API_ROOT + "/user";
+    String USER_ROOT       = API_ROOT + "user/";
     String SEARCH_USER     = USER_ROOT;
-    String REGISTER_USER   = API_ROOT + "/register";
-    String CONFIRM_USER    = API_ROOT + "/confirm";
-    String FORGOT_PASSWORD = API_ROOT + "/forgot";
-    String RESET_PASSWORD  = API_ROOT + "/reset";
-    String GET_USER        = USER_ROOT + "/{" + ApiNames.NAMEN + "}";
-    String CHANGE_PASSWORD = USER_ROOT + "/{" + ApiNames.NAMEN + "}";
-    String UPDATE_USER     = USER_ROOT + "/{" + ApiNames.NAMEN + "}";
-    String DELETE_USER     = USER_ROOT + "/{" + ApiNames.NAMEN + "}";
+    String REGISTER_USER   = API_ROOT + "register";
+    String CONFIRM_USER    = API_ROOT + "confirm";
+    String FORGOT_PASSWORD = API_ROOT + "forgot";
+    String RESET_PASSWORD  = API_ROOT + "reset";
+    String GET_USER        = USER_ROOT + "{" + ApiNames.NAMEN + "}";
+    String CHANGE_PASSWORD = USER_ROOT + "{" + ApiNames.NAMEN + "}";
+    String UPDATE_USER     = USER_ROOT + "{" + ApiNames.NAMEN + "}";
+    String DELETE_USER     = USER_ROOT + "{" + ApiNames.NAMEN + "}";
 
     String[] REGISTER_ENDPOINTS = {
         REGISTER_USER, CONFIRM_USER, FORGOT_PASSWORD, RESET_PASSWORD

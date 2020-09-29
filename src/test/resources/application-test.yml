@@ -1,0 +1,24 @@
+hibernate:
+   dialect: org.hibernate.dialect.H2Dialect
+
+spring:
+   application:
+      name: ModellBahn Test
+   banner:
+      location: classpath:banner-test.txt
+   datasource:
+      url: jdbc:h2:mem:modellbahn;DB_CLOSE_DELAY=-1
+      driverClassName: org.h2.Driver
+      username: sa
+      password: password
+   flyway:
+      enabled: false
+   jpa:
+      database-platform: org.hibernate.dialect.H2Dialect
+      hibernate:
+         ddl-auto: create
+      open-in-view: false
+      properties:
+         hibernate:
+            format_sql: false
+      show-sql: false

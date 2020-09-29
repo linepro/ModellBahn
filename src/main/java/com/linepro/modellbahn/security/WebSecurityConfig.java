@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.security.user.UserService;
@@ -33,8 +34,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     public static final SimpleGrantedAuthority USER = new SimpleGrantedAuthority(USER_ROLE);
 
-    private static final String[] ACTUATOR_ENDPOINTS = { "/actuator/**" };
+    private static final String MANAGEMENT_ROOT = "/management";
 
+    private static final String[] MANAGEMENT_PUBLIC = { MANAGEMENT_ROOT, MANAGEMENT_ROOT + "/health", MANAGEMENT_ROOT + "/info" };
+
+    private static final String[] MANAGEMENT_SECURED = { MANAGEMENT_ROOT + "/**" };
+
+    private final AccessDeniedHandler accessDeniedHandler;
+    
     private final PasswordEncoder passwordEncoder;
 
     private final UserService userService;
@@ -55,14 +62,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and().cors()
             .and().csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and().exceptionHandling()
+            .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler)
             .and().httpBasic().authenticationEntryPoint(authenticationEntryPoint)
             .and().authorizeRequests()
                   .antMatchers(RESOURCE_ENDPOINTS).permitAll()
+                  .antMatchers(MANAGEMENT_PUBLIC).permitAll()
                   .antMatchers(HttpMethod.POST, ApiPaths.REGISTER_ENDPOINTS).permitAll()
                   .antMatchers(HttpMethod.POST, ApiPaths.USER_ENDPOINTS).hasAnyRole(ADMIN_ROLE,USER_ROLE)
                   .antMatchers(API_ENDPOINTS).hasAnyRole(USER_ROLE)
-                  .antMatchers(ACTUATOR_ENDPOINTS).hasRole(ADMIN_ROLE)
+                  .antMatchers(MANAGEMENT_SECURED).hasRole(ADMIN_ROLE)
             //.and().anonymous().authorities(USER_ROLE)
             //.and().oauth2ResourceServer(oauth2 -> oauth2.jwt())
             //.and().formLogin().loginPage("/").loginProcessingUrl("/login").defaultSuccessUrl("/home").failureHandler(authenticationFailureHandler())

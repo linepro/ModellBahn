@@ -1,100 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-	<appender name="console" class="ch.qos.logback.classic.AsyncAppender">
-		<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-			<encoder>
-				<pattern>%green(%d{dd-MM-yyyy HH:mm:ss.SSS}) %magenta([%thread]) %highlight(%-5level) %red(%logger{30}) - %magenta(%msg) %rEx{full,java.lang.reflect.Method,
-					ByCGLIB,
-					BySpringCGLIB,
-					com.zaxxer.hikari,
-					java.lang.Thread,
-					java.net,
-					java.util.concurrent,
-					javax,
-					net.sf.cglib,
-					org.apache.catalina,
-					org.apache.coyote,
-					org.apache.http,
-					org.apache.tomcat,
-					org.eclipse.jetty,
-					org.h2,
+    <appender name="console" class="ch.qos.logback.classic.AsyncAppender">
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter"> 
+                <level>INFO</level>
+            </filter>
+
+            <encoder>
+                <pattern>%green(%d{dd-MM-yyyy HH:mm:ss.SSS}) %magenta([%thread]) %highlight(%-5level) %red(%logger{30}) - %magenta(%msg) %rEx{full,java.lang.reflect.Method,
+                    ByCGLIB,
+                    BySpringCGLIB,
+                    com.zaxxer.hikari,
+                    java.lang.Thread,
+                    java.net,
+                    java.util.concurrent,
+                    javax,
+                    net.sf.cglib,
+                    org.apache.catalina,
+                    org.apache.coyote,
+                    org.apache.http,
+                    org.apache.tomcat,
+                    org.eclipse.jetty,
+                    org.h2,
                     org.hibernate,
-					org.springframework,
-					sun.reflect,
-					sun.security.ssl
-					}%n
-				</pattern>
-			</encoder>
-		</appender>
-	</appender>
+                    org.springframework,
+                    sun.reflect,
+                    sun.security.ssl
+                    }%n
+                </pattern>
+            </encoder>
+        </appender>
+    </appender>
 
-	<appender name="logfile" class="ch.qos.logback.classic.AsyncAppender">
-		<appender name="logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-			<file>./logs/modellbahn.jsonl</file>
+    <appender name="logfile" class="ch.qos.logback.classic.AsyncAppender">
+        <appender name="logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>./logs/modellbahn.jsonl</file>
 
-			<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-				<fileNamePattern>./logs/modellbahn.%d{yyyy-MM-dd}.%i.jsonl.gz</fileNamePattern>
-				<!-- each archived file, size max 100MB -->
-				<maxFileSize>100MB</maxFileSize>
-				<!-- total size of all archive files, if total size > 1GB, it will delete old archived file -->
-				<totalSizeCap>1GB</totalSizeCap>
-				<!-- 3 days to keep -->
-				<maxHistory>3</maxHistory>
-			</rollingPolicy>
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter"> 
+                <level>DEBUG</level>
+            </filter>
 
-			<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-				<providers>
-					<timestamp>
-						<fieldName>timestamp</fieldName>
-						<pattern>yyyy-MM-dd'T'HH:mm:ss.SSSZZ</pattern>
-					</timestamp>
-					<logLevel/>
-					<context/>
-					<loggerName/>
-					<logstashMarkers/>
-					<message/>
-					<tags/>
-					<stackTrace>
-						<throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter"/>
-					</stackTrace>
-					<mdc/>
-				</providers>
-			</encoder>
-		</appender>
-	</appender>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <fileNamePattern>./logs/modellbahn.%d{yyyy-MM-dd}.%i.jsonl.gz</fileNamePattern>
+                <!-- each archived file, size max 100MB -->
+                <maxFileSize>100MB</maxFileSize>
+                <!-- total size of all archive files, if total size > 1GB, it will delete old archived file -->
+                <totalSizeCap>1GB</totalSizeCap>
+                <!-- 3 days to keep -->
+                <maxHistory>3</maxHistory>
+            </rollingPolicy>
 
-	<root level="WARN">
-		<appender-ref ref="console"/>
+            <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+                <providers>
+                    <timestamp>
+                        <fieldName>timestamp</fieldName>
+                        <pattern>yyyy-MM-dd'T'HH:mm:ss.SSSZZ</pattern>
+                    </timestamp>
+                    <logLevel/>
+                    <context/>
+                    <loggerName/>
+                    <logstashMarkers/>
+                    <message/>
+                    <tags/>
+                    <stackTrace>
+                        <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter"/>
+                    </stackTrace>
+                    <mdc/>
+                </providers>
+            </encoder>
+        </appender>
+    </appender>
+
+    <root level="WARN">
+        <appender-ref ref="console"/>
         <appender-ref ref="logfile"/>
-	</root>
-	<logger additivity="false" level="INFO" name="org.apache.http.http.headers">
-		<appender-ref ref="console"/>
+    </root>
+    <logger additivity="false" level="INFO" name="org.apache.http.http.headers">
+        <appender-ref ref="console"/>
         <appender-ref ref="logfile"/>
-	</logger>
-	<logger additivity="false" level="INFO" name="org.apache.http.wire">
-		<appender-ref ref="console"/>
+    </logger>
+    <logger additivity="false" level="INFO" name="org.apache.http.wire">
+        <appender-ref ref="console"/>
         <appender-ref ref="logfile"/>
-	</logger>
-	<logger additivity="false" level="INFO" name="org.hibernate">
-		<appender-ref ref="console"/>
+    </logger>
+    <logger additivity="false" level="INFO" name="org.hibernate">
+        <appender-ref ref="console"/>
         <appender-ref ref="logfile"/>
-	</logger>
-	<logger additivity="false" level="INFO" name="log4j.logger.org.hibernate.validator">
-		<appender-ref ref="console"/>
+    </logger>
+    <logger additivity="false" level="INFO" name="log4j.logger.org.hibernate.validator">
+        <appender-ref ref="console"/>
         <appender-ref ref="logfile"/>
-	</logger>
-	<logger additivity="false" level="INFO" name="org.hibernate.type.descriptor.sql">
-		<appender-ref ref="console"/>
+    </logger>
+    <logger additivity="false" level="INFO" name="org.hibernate.type.descriptor.sql">
+        <appender-ref ref="console"/>
         <appender-ref ref="logfile"/>
-	</logger>
-	<logger additivity="false" level="INFO" name="org.springframework">
-		<appender-ref ref="console"/>
+    </logger>
+    <logger additivity="false" level="INFO" name="org.springframework">
+        <appender-ref ref="console"/>
         <appender-ref ref="logfile"/>
-	</logger>
-	<logger additivity="false" level="DEBUG" name="com.linepro.modellbahn">
-		<appender-ref ref="console"/>
-		<appender-ref ref="logfile"/>
-	</logger>
+    </logger>
+    <logger additivity="false" level="DEBUG" name="org.springframework.security">
+        <appender-ref ref="console"/>
+        <appender-ref ref="logfile"/>
+    </logger>
+    <logger additivity="false" level="DEBUG" name="org.springframework.web">
+        <appender-ref ref="console"/>
+        <appender-ref ref="logfile"/>
+    </logger>
+    <logger additivity="false" level="DEBUG" name="com.linepro.modellbahn">
+        <appender-ref ref="console"/>
+        <appender-ref ref="logfile"/>
+    </logger>
 
 </configuration>

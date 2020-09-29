@@ -52,6 +52,7 @@ public class ArtikelTranscriber implements Transcriber<Artikel, ArtikelModel> {
             destination.setSondermodell(produkt.getSondermodell());
             destination.setAufbau(produkt.getAufbau());
             destination.setAbbildung(source.getAbbildung() != null ? pathMutator.convert(source.getAbbildung()) : produkt.getAbbildung());
+            destination.setGrossansicht(source.getGrossansicht() != null ? pathMutator.convert(source.getGrossansicht()) : produkt.getGrossansicht());
             destination.setStatus(source.getStatus());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
             destination.setLicht(source.getLicht() != null ? getCode(source.getLicht()) : produkt.getLicht());

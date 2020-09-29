@@ -1,2 +1,2 @@
-artikelId,hersteller,bestellNr,bezeichnung,kategorie,unterKategorie,lange,massstab,spurweite,epoch,bahnverwaltung,gattung,betreibsnummer,achsfolg,sondermodell,aufbau,licht,kupplung,steuerung,decoder,motorTyp,kaufdatum,wahrung,preis,stuck,verbleibende,anmerkung,beladung,status,abbildung,deleted
-10001,MARKLIN,3000,"BR 89.0",LOKOMOTIV,DAMPF,11.00,H0,H0,III,DB,BR89.0,"89 028",CH2T,,LK,L1V,RELEX,FRU,,SFCM,1967-01-01,EUR,100.00,1,1,,,GEKAUFT,,false
+artikelId,hersteller,bestellNr,bezeichnung,kategorie,unterKategorie,lange,massstab,spurweite,epoch,bahnverwaltung,gattung,betreibsnummer,achsfolg,sondermodell,aufbau,licht,kupplung,steuerung,decoder,motorTyp,kaufdatum,wahrung,preis,stuck,verbleibende,anmerkung,beladung,status,abbildung,grossansicht,deleted
+10001,MARKLIN,3000,"BR 89.0",LOKOMOTIV,DAMPF,11.00,H0,H0,III,DB,BR89.0,"89 028",CH2T,,LK,L1V,RELEX,FRU,,SFCM,1967-01-01,EUR,100.00,1,1,,,GEKAUFT,,,false
