@@ -961,9 +961,9 @@
                                 <argument>--environment</argument>
                                 <argument>${test.dir}ModellBahn.postman_environment.json</argument>
                                 <argument>--env-var</argument>
-                                <argument>"testFiles=${project.basedir}/src/test"</argument>
+                                <argument>"testFiles=${test.dir}${file.separator}"</argument>
                                 <argument>--reporters</argument>
-                                <argument>cli,json,junit</argument>
+                                <argument>cli,junit</argument>
                                 <argument>--timeout-request</argument>
                                 <argument>2000</argument>
                                 <argument>--timeout</argument>

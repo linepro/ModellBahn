@@ -18064,22 +18064,22 @@
 		{
 			"id": "657f59ac-8dd1-46c0-839f-6b27c55d3808",
 			"key": "imageFile",
-			"value": "3000.jpg"
+			"value": "{{testFiles}}3000.jpg"
 		},
 		{
 			"id": "db928f5c-5488-4177-be52-04bc3136c9c1",
 			"key": "anleitungFile",
-			"value": "3000_betrieb.pdf"
+			"value": "{{testFiles}}3000_betrieb.pdf"
 		},
 		{
 			"id": "301a18b4-a504-4d04-9709-a80e25433277",
 			"key": "explosionszeichnungFile",
-			"value": "3000_explo.pdf"
+			"value": "{{testFiles}}3000_explo.pdf"
 		},
 		{
 			"id": "6ea10e15-26d2-4c8c-a2b5-83699af33f5b",
 			"key": "xlFile",
-			"value": "3000.jpg"
+			"value": "{{testFiles}}3000xl.jpg"
 		},
 		{
 			"id": "539ce71a-4797-45fa-b3f7-bf5e05da042d",
