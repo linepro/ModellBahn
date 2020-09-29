@@ -201,7 +201,7 @@ public class UserService implements UserDetailsService {
                         .passwordAging(passwordAging)
                         .loginAttempts(loginAttempts)
                         .enabled(false)
-                        .roles(Collections.singletonList(WebSecurityConfig.USER_ROLE))
+                        .roles(Collections.singletonList(WebSecurityConfig.USER_AUTHORITY))
                         .build();
 
         errors.addAll(validator.validate(user));

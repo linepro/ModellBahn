@@ -26,19 +26,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    public static final String ADMIN_ROLE = "ADMIN";
+    public static final String ADMIN_AUTHORITY = "ADMIN";
 
-    public static final SimpleGrantedAuthority ADMIN = new SimpleGrantedAuthority(ADMIN_ROLE);
+    public static final SimpleGrantedAuthority ADMIN = new SimpleGrantedAuthority(ADMIN_AUTHORITY);
 
-    public static final String USER_ROLE = "USER";
+    public static final String USER_AUTHORITY = "USER";
 
-    public static final SimpleGrantedAuthority USER = new SimpleGrantedAuthority(USER_ROLE);
+    public static final SimpleGrantedAuthority USER = new SimpleGrantedAuthority(USER_AUTHORITY);
 
-    private static final String MANAGEMENT_ROOT = "/management";
+    public static final String MANAGEMENT_ROOT = "/management";
 
-    private static final String[] MANAGEMENT_PUBLIC = { MANAGEMENT_ROOT, MANAGEMENT_ROOT + "/health", MANAGEMENT_ROOT + "/info" };
+    public static final String[] MANAGEMENT_PUBLIC = { MANAGEMENT_ROOT, MANAGEMENT_ROOT + "/health", MANAGEMENT_ROOT + "/info" };
 
-    private static final String[] MANAGEMENT_SECURED = { MANAGEMENT_ROOT + "/**" };
+    public static final String[] MANAGEMENT_SECURED = { MANAGEMENT_ROOT + "/**" };
 
     private final AccessDeniedHandler accessDeniedHandler;
     
@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserService userService;
 
     @Autowired
-    private final ModellBahnBasicAuthenticationEntryPoint authenticationEntryPoint;
+    private final ModellBahnAuthenticationEntryPoint authenticationEntryPoint;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -68,9 +68,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                   .antMatchers(RESOURCE_ENDPOINTS).permitAll()
                   .antMatchers(MANAGEMENT_PUBLIC).permitAll()
                   .antMatchers(HttpMethod.POST, ApiPaths.REGISTER_ENDPOINTS).permitAll()
-                  .antMatchers(HttpMethod.POST, ApiPaths.USER_ENDPOINTS).hasAnyRole(ADMIN_ROLE,USER_ROLE)
-                  .antMatchers(API_ENDPOINTS).hasAnyRole(USER_ROLE)
-                  .antMatchers(MANAGEMENT_SECURED).hasRole(ADMIN_ROLE)
+                  .antMatchers(HttpMethod.POST, ApiPaths.USER_ENDPOINTS).hasAnyAuthority(ADMIN_AUTHORITY,USER_AUTHORITY)
+                  .antMatchers(API_ENDPOINTS).hasAuthority(USER_AUTHORITY)
+                  .antMatchers(MANAGEMENT_SECURED).hasAuthority(ADMIN_AUTHORITY)
             //.and().anonymous().authorities(USER_ROLE)
             //.and().oauth2ResourceServer(oauth2 -> oauth2.jwt())
             //.and().formLogin().loginPage("/").loginProcessingUrl("/login").defaultSuccessUrl("/home").failureHandler(authenticationFailureHandler())

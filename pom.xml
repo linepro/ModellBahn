@@ -957,8 +957,13 @@
                                 <argument>run</argument>
                                 <argument>${test.dir}ModellBahn.postman_collection.json</argument>
                                 <argument>--insecure</argument>
+                                <argument>--ignore-redirects</argument>
                                 <argument>--environment</argument>
                                 <argument>${test.dir}ModellBahn.postman_environment.json</argument>
+                                <argument>--env-var</argument>
+                                <argument>"testFiles=${project.basedir}/src/test"</argument>
+                                <argument>--reporters</argument>
+                                <argument>cli,json,junit</argument>
                                 <argument>--timeout-request</argument>
                                 <argument>2000</argument>
                                 <argument>--timeout</argument>
