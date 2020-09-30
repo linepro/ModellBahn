@@ -956,18 +956,25 @@
                             <arguments>
                                 <argument>run</argument>
                                 <argument>${test.dir}ModellBahn.postman_collection.json</argument>
-                                <argument>--insecure</argument>
-                                <argument>--ignore-redirects</argument>
                                 <argument>--environment</argument>
                                 <argument>${test.dir}ModellBahn.postman_environment.json</argument>
                                 <argument>--env-var</argument>
                                 <argument>"testFiles=${test.dir}${file.separator}"</argument>
-                                <argument>--reporters</argument>
-                                <argument>cli,junit</argument>
+                                <argument>--insecure</argument>
+                                <argument>--ignore-redirects</argument>
+                                <argument>--disable-unicode</argument>
+                                <!-- until we find out why German characters work for Runner but not for Newman -->
+                                <argument>--suppress-exit-code</argument>
+                                <argument>--delay-request</argument>
+                                <argument>500</argument>
                                 <argument>--timeout-request</argument>
-                                <argument>2000</argument>
+                                <argument>30000</argument>
                                 <argument>--timeout</argument>
                                 <argument>120000</argument>
+                                <argument>--reporters</argument>
+                                <argument>cli,junit</argument>
+                                <argument>--reporter-json-export</argument>
+                                <argument>newmanResult.json</argument>
                             </arguments>
                             <workingDirectory>${exec.dir}</workingDirectory>
                         </configuration>

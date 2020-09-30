@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ea20d560-078f-4b19-9895-a9b4b591c298",
+		"_postman_id": "f5874dff-e0eb-44aa-ae88-b5fd7c1099e6",
 		"name": "ModellBahn",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,7 +14,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "a6df6f04-ae94-4d77-a341-8bba46f23552",
+								"id": "a3af848e-4991-4a39-8b9c-ff27dffd539d",
 								"exec": [
 									"console.log(\"Waiting for startup\");\r",
 									"\r",
@@ -50,7 +50,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ed99e57b-3b2a-4c89-8418-6b35abb39c82",
+								"id": "e7db16a0-5f5b-4344-96e8-f4e8397969fa",
 								"exec": [
 									"// Don't wrap in pm.test for fail hard...\r",
 									"pm.response.to.have.status(200);"
@@ -94,7 +94,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "5e4064bf-15ac-40b6-90c5-30cbb41c18d4",
+						"id": "e930d3e2-6c96-4030-b7c2-216009f07b94",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -104,7 +104,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "b395d5ad-fbb4-469d-8e24-421d5f488eba",
+						"id": "407d1542-a28a-45e2-9a29-a9a8e0341c6f",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -118,14 +118,45 @@
 			"name": "Management (Open)",
 			"item": [
 				{
+					"name": "Actuator",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ac314b02-0474-4d39-b4f2-4321a37bef2b",
+								"exec": [
+									"pm.test(\"Actuator\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Audit Events",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "69a6a1b7-3646-42e7-b96d-e6457a60decd",
+								"id": "edc13b02-309c-4fa3-84f3-3bc32d37b46c",
 								"exec": [
-									"pm.test(\"Audit Events\", () => pm.response.to.have.status(401));"
+									"pm.test(\"Audit Events\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -152,9 +183,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "072cb6ba-eadb-45c2-a6b7-02dec6cdc64e",
+								"id": "995b6e8b-19fd-4e65-919d-e95bf6222360",
 								"exec": [
-									"pm.test(\"Beans\", () => pm.response.to.have.status(401));"
+									"pm.test(\"Beans\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -181,9 +213,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0c36b2e7-d391-41ab-8e61-b8eeef742f7d",
+								"id": "391c61da-95be-4031-8023-8223c410cc9c",
 								"exec": [
-									"pm.test(\"Caches\", () => pm.response.to.have.status(401));"
+									"pm.test(\"Caches\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -210,9 +243,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "65a727c2-f474-45b4-9604-8133700afc17",
+								"id": "e4c02d74-379b-48d6-b945-e0132d2efbb0",
 								"exec": [
-									"pm.test(\"Config Props\", () => pm.response.to.have.status(401));"
+									"pm.test(\"Config Props\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -239,7 +273,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "cbcc62a1-3688-4013-be32-1176fe6bce34",
+								"id": "c3013c11-ee30-4123-a191-40ce51493997",
 								"exec": [
 									""
 								],
@@ -249,9 +283,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2de96d91-a52c-4587-86b8-a999ad260316",
+								"id": "5d44585a-417b-41d2-b4b9-c947d1cfef00",
 								"exec": [
-									"pm.test(\"Env\", () => pm.response.to.have.status(401));"
+									"pm.test(\"Env\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -278,9 +313,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f2601fe5-cfc5-4ab9-9345-6c1465895f11",
+								"id": "0eea8eab-84e3-467d-872d-1e907663f950",
 								"exec": [
-									"pm.test(\"Flyway\", () => pm.response.to.have.status(401));"
+									"pm.test(\"Flyway\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -302,43 +338,15 @@
 					"response": []
 				},
 				{
-					"name": "Heap Dump",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "1123c95c-f76f-4f95-a4a8-3c622ff4c9e8",
-								"exec": [
-									"pm.test(\"Heap Dump\", () => pm.response.to.have.status(401));"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{management}}/heapdump",
-							"host": [
-								"{{management}}"
-							],
-							"path": [
-								"heapdump"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Health",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "2ba8b4c7-9a7e-4820-9a43-7c41a58d3248",
+								"id": "66d3d3cc-a53d-465d-a201-aa904b380fdb",
 								"exec": [
-									"pm.test(\"Health\", () => pm.response.to.have.status(200));"
+									"pm.test(\"Health\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(1500));"
 								],
 								"type": "text/javascript"
 							}
@@ -365,9 +373,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "85281590-418a-4d45-b2bc-008f8a67023c",
+								"id": "fdd2e82a-990e-476b-b8ff-fcd3cbde92a4",
 								"exec": [
-									"pm.test(\"HTTP Trace\", () => pm.response.to.have.status(401));"
+									"pm.test(\"HTTP Trace\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -394,9 +403,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f8a83638-972e-48bd-8f0c-cb6c0d662710",
+								"id": "64d56932-dcd4-42bb-96ac-55d59cad0419",
 								"exec": [
-									"pm.test(\"Info\", () => pm.response.to.have.status(200));"
+									"pm.test(\"Info\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -423,9 +433,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8cfa91fc-10bc-43bf-b1c6-f3e978c91f3a",
+								"id": "687d5125-2ace-4b6c-87ec-1bf516fa0cd3",
 								"exec": [
-									"pm.test(\"Log File\", () => pm.response.to.have.status(401));"
+									"pm.test(\"Log File\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -452,9 +463,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "36eb3fe0-5a6b-442e-8dad-cc3522521b1f",
+								"id": "a9b4afe4-c847-432d-95d1-b00164c1ed5a",
 								"exec": [
-									"pm.test(\"Loggers\", () => pm.response.to.have.status(401));"
+									"pm.test(\"Loggers\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -476,43 +488,15 @@
 					"response": []
 				},
 				{
-					"name": "Metrics",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "ef9bd818-892e-4335-96a4-d58e51085e13",
-								"exec": [
-									"pm.test(\"Metrics\", () => pm.response.to.have.status(401));"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{management}}/metrics",
-							"host": [
-								"{{management}}"
-							],
-							"path": [
-								"metrics"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Mappings",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "7dc45faa-4d11-4880-809a-3a03eced19cb",
+								"id": "fba68e59-889c-4ecd-9e69-59bd1d3ad932",
 								"exec": [
-									"pm.test(\"Mappings\", () => pm.response.to.have.status(401));"
+									"pm.test(\"Mappings\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -534,14 +518,15 @@
 					"response": []
 				},
 				{
-					"name": "Prometheus",
+					"name": "Metrics",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "ba982106-ff5a-40cb-9509-f37429dfc33c",
+								"id": "0bc6a3d2-e68d-4fb5-9975-2d74c2bcf089",
 								"exec": [
-									"pm.test(\"Prometheus\", () => pm.response.to.have.status(401));"
+									"pm.test(\"Metrics\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -551,12 +536,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{management}}/prometheus",
+							"raw": "{{management}}/metrics",
 							"host": [
 								"{{management}}"
 							],
 							"path": [
-								"prometheus"
+								"metrics"
 							]
 						}
 					},
@@ -568,9 +553,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b3582d4b-f618-43dd-b05e-078385f0be78",
+								"id": "1624bc94-444b-4571-86d0-29d6a936a5ae",
 								"exec": [
-									"pm.test(\"Scheduled Tasks\", () => pm.response.to.have.status(401));"
+									"pm.test(\"Scheduled Tasks\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -592,43 +578,15 @@
 					"response": []
 				},
 				{
-					"name": "Sessions",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "aeb12ecc-4267-4dc7-be8d-b466903ed11b",
-								"exec": [
-									"pm.test(\"Sessions\", () => pm.response.to.have.status(401));"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{management}}/sessions",
-							"host": [
-								"{{management}}"
-							],
-							"path": [
-								"sessions"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Thread Dump",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "c22c970e-165f-46f4-b8fe-2292918eaab9",
+								"id": "d68c5e3b-26b6-45be-b80b-7249e2da7d34",
 								"exec": [
-									"pm.test(\"Thread Dump\", () => pm.response.to.have.status(401));"
+									"pm.test(\"Thread Dump\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -657,7 +615,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "58b0334c-3a0b-4e05-b113-d54f4a3e0c0b",
+						"id": "f83683bf-67ef-44e5-9d42-3868e9881659",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -667,7 +625,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a745c026-1356-47e5-9076-d3396d9695cd",
+						"id": "906c95da-444d-4525-9e72-2442a2e39a3f",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -681,14 +639,45 @@
 			"name": "Management (Auth)",
 			"item": [
 				{
+					"name": "Actuator",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f4719442-00b1-4cd7-9801-20fa5eb518c7",
+								"exec": [
+									"pm.test(\"Actuator\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Audit Events",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "9083e4c1-1de7-4f00-aee9-a83b29cc725c",
+								"id": "721b3076-5986-4afe-ac1b-c09bd5bac29a",
 								"exec": [
-									"pm.test(\"Audit Events\", () => pm.response.to.have.status(200));"
+									"pm.test(\"Audit Events\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -715,9 +704,20 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b1e771fb-87c7-47be-ab45-903721ee0a60",
+								"id": "d3d755b7-2383-4612-bd8d-e0f73be372c8",
 								"exec": [
-									"pm.test(\"Beans\", () => pm.response.to.have.status(200));"
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "ad99cdd8-8012-43a3-9e0c-90d02517b3ed",
+								"exec": [
+									"pm.test(\"Beans\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -744,9 +744,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cb71483e-c880-450c-ae86-157efbc1a5c0",
+								"id": "fb18f400-4e66-43ef-b5ec-d8e5b1e45281",
 								"exec": [
-									"pm.test(\"Caches\", () => pm.response.to.have.status(200));"
+									"pm.test(\"Caches\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -773,9 +774,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "23b03c1a-bbae-4397-bbcb-59a3ae9a53c4",
+								"id": "4f4cef8c-e9f7-4468-bc16-9067d78d6343",
 								"exec": [
-									"pm.test(\"Config Props\", () => pm.response.to.have.status(200));"
+									"pm.test(\"Config Props\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -802,9 +804,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e4eaf3ae-b8da-4745-988c-f4087ef60e24",
+								"id": "e33a3b6e-6554-4a9a-a44d-3f8df9c8f85e",
 								"exec": [
-									"pm.test(\"Env\", () => pm.response.to.have.status(200));"
+									"pm.test(\"Env\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -831,9 +834,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "793bff38-cda8-4f72-ab22-c958fd90684a",
+								"id": "14e2cdfb-97b2-4162-9ba2-1e47b29c4425",
 								"exec": [
-									"pm.test(\"Flyway\", () => pm.response.to.have.status(200));"
+									"pm.test(\"Flyway\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -855,43 +859,15 @@
 					"response": []
 				},
 				{
-					"name": "Heap Dump",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "0d121d64-555e-415c-be80-19f13da89421",
-								"exec": [
-									"pm.test(\"Heap Dump\", () => pm.response.to.have.status(200));"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{management}}/heapdump",
-							"host": [
-								"{{management}}"
-							],
-							"path": [
-								"heapdump"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Health",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "ef97f606-0396-41d9-aa49-8c05f9b614a6",
+								"id": "e0aaa6c8-6c50-41ca-8058-e1b4874b848a",
 								"exec": [
-									"pm.test(\"Health\", () => pm.response.to.have.status(200));"
+									"pm.test(\"Health\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(1500));"
 								],
 								"type": "text/javascript"
 							}
@@ -918,9 +894,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a1f5a7bd-3c97-44bf-a2e1-8350bc53450d",
+								"id": "88b0aeb0-4c87-47dc-8584-2c60c28cf75d",
 								"exec": [
-									"pm.test(\"HTTP Trace\", () => pm.response.to.have.status(200));"
+									"pm.test(\"HTTP Trace\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -947,9 +924,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "076f94a9-2b66-4b21-885c-00dcab1b1311",
+								"id": "b1cafce2-dddd-4764-bad2-98544af38f7d",
 								"exec": [
-									"pm.test(\"Info\", () => pm.response.to.have.status(200));"
+									"pm.test(\"Info\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -976,9 +954,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "69e44015-aef3-4b78-9ac5-26825f45582d",
+								"id": "c1ce0427-bbba-4160-baaf-cef83dd5f464",
 								"exec": [
-									"pm.test(\"Log File\", () => pm.response.to.have.status(200));"
+									"pm.test(\"Log File\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -1005,9 +984,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4545d77b-87a1-45a5-b2c0-a27d5a266417",
+								"id": "c005ea81-1af3-458c-8a20-4258a8f37f6d",
 								"exec": [
-									"pm.test(\"Loggers\", () => pm.response.to.have.status(200));"
+									"pm.test(\"Loggers\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -1029,43 +1009,15 @@
 					"response": []
 				},
 				{
-					"name": "Metrics",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "1e82bcf0-bc7e-4364-b850-97ae0b4b79d3",
-								"exec": [
-									"pm.test(\"Metrics\", () => pm.response.to.have.status(200));"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{management}}/metrics",
-							"host": [
-								"{{management}}"
-							],
-							"path": [
-								"metrics"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Mappings",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "f82320be-1747-41d2-9972-7e913fbb4aee",
+								"id": "d67c7f25-ae07-42c2-b36d-cc2d04a75921",
 								"exec": [
-									"pm.test(\"Mappings\", () => pm.response.to.have.status(200));"
+									"pm.test(\"Mappings\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -1087,14 +1039,15 @@
 					"response": []
 				},
 				{
-					"name": "Prometheus",
+					"name": "Metrics",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "daf5be63-8701-4df9-8497-01a2f5c2737e",
+								"id": "a8dff774-c0d8-4797-bd0d-a6c27d1c9c04",
 								"exec": [
-									"pm.test(\"Prometheus\", () => pm.response.to.have.status(200));"
+									"pm.test(\"Metrics\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -1104,12 +1057,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{management}}/prometheus",
+							"raw": "{{management}}/metrics",
 							"host": [
 								"{{management}}"
 							],
 							"path": [
-								"prometheus"
+								"metrics"
 							]
 						}
 					},
@@ -1121,9 +1074,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "faf3aadf-6940-4900-b4fb-746bdaf8f39b",
+								"id": "1113e1ff-9e05-4f51-b74f-8e9766f93b39",
 								"exec": [
-									"pm.test(\"Scheduled Tasks\", () => pm.response.to.have.status(200));"
+									"pm.test(\"Scheduled Tasks\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -1145,43 +1099,15 @@
 					"response": []
 				},
 				{
-					"name": "Sessions",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "64f58dff-f611-4f96-94c1-f2ca3895d655",
-								"exec": [
-									"pm.test(\"Sessions\", () => pm.response.to.have.status(200));"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{management}}/sessions",
-							"host": [
-								"{{management}}"
-							],
-							"path": [
-								"sessions"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Thread Dump",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "52b04406-1f31-41cd-9e67-3181a064e21f",
+								"id": "9cd3fc95-da06-4ae2-9de7-df9b78aa779f",
 								"exec": [
-									"pm.test(\"Trhead Dump\", () => pm.response.to.have.status(200));"
+									"pm.test(\"Thread Dump\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -1222,7 +1148,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "1688e173-2c71-40da-8a4a-35167c70be5e",
+						"id": "77396272-c14e-4135-be0f-15e0656985e1",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1232,7 +1158,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "d10c50d0-4f66-494a-bcf8-d17a086d444d",
+						"id": "992bf1dc-2ef5-4c7f-8287-024858e1cacb",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1251,10 +1177,17 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "92b65fab-3892-48e0-afc0-770d5011301e",
+								"id": "63d83fc5-0a68-4ac1-a73b-7d7ae6871a57",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
-									"var jsonData = pm.response.json();"
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
+									"var jsonData = pm.response.json();\r",
+									"jsonData.forEach((a) => { \r",
+									"    pm.test(\"name: \" + a.name, () => pm.expect(a.name).to.exist);\r",
+									"    pm.test(\"bezeichnung\", () => pm.expect(a.bezeichnung).to.exist);\r",
+									"    //pm.test(\"tooltip\", () => pm.expect(a.deleted).to.exist);\r",
+									"});\r",
+									"pm.test(\"enums\", () => pm.expect(jsonData.length).to.eql(6));"
 								],
 								"type": "text/javascript"
 							}
@@ -1287,10 +1220,17 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1223fb4d-0d55-46e1-b0ee-50e398dae7c2",
+								"id": "76af397a-7c0b-4b34-b875-933738a21fea",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
-									"var jsonData = pm.response.json();"
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
+									"var jsonData = pm.response.json();\r",
+									"jsonData.forEach((a) => { \r",
+									"    pm.test(\"name: \" + a.name, () => pm.expect(a.name).to.exist);\r",
+									"    pm.test(\"bezeichnung\", () => pm.expect(a.bezeichnung).to.exist);\r",
+									"    //pm.test(\"tooltip\", () => pm.expect(a.deleted).to.exist);\r",
+									"});\r",
+									"pm.test(\"enums\", () => pm.expect(jsonData.length).to.eql(7));"
 								],
 								"type": "text/javascript"
 							}
@@ -1323,10 +1263,17 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a4e926a9-1787-4e14-9be6-2f0b6ae68193",
+								"id": "5562f899-a826-4e9e-8203-4730cdb8a1e4",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
-									"var jsonData = pm.response.json();"
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
+									"var jsonData = pm.response.json();\r",
+									"jsonData.forEach((a) => { \r",
+									"    pm.test(\"name: \" + a.name, () => pm.expect(a.name).to.exist);\r",
+									"    pm.test(\"bezeichnung\", () => pm.expect(a.bezeichnung).to.exist);\r",
+									"    //pm.test(\"tooltip\", () => pm.expect(a.deleted).to.exist);\r",
+									"});\r",
+									"pm.test(\"enums\", () => pm.expect(jsonData.length).to.eql(3));"
 								],
 								"type": "text/javascript"
 							}
@@ -1359,10 +1306,17 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b22666e0-1508-433c-b9e9-e96932e948ad",
+								"id": "465c72ab-1fb3-4c7b-92ac-990547c76f2f",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
-									"var jsonData = pm.response.json();"
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
+									"var jsonData = pm.response.json();\r",
+									"jsonData.forEach((a) => { \r",
+									"    pm.test(\"name: \" + a.name, () => pm.expect(a.name).to.exist);\r",
+									"    pm.test(\"bezeichnung\", () => pm.expect(a.bezeichnung).to.exist);\r",
+									"    //pm.test(\"tooltip\", () => pm.expect(a.deleted).to.exist);\r",
+									"});\r",
+									"pm.test(\"enums\", () => pm.expect(jsonData.length).to.eql(4));"
 								],
 								"type": "text/javascript"
 							}
@@ -1390,15 +1344,22 @@
 					"response": []
 				},
 				{
-					"name": "leistungsubertragung",
+					"name": "Leistungsubertragung",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "bf82c01e-fc25-457f-815c-5b12ca056cb0",
+								"id": "901c4877-07f4-4a3e-8069-ff3adac13f96",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
-									"var jsonData = pm.response.json();"
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
+									"var jsonData = pm.response.json();\r",
+									"jsonData.forEach((a) => { \r",
+									"    pm.test(\"name: \" + a.name, () => pm.expect(a.name).to.exist);\r",
+									"    pm.test(\"bezeichnung\", () => pm.expect(a.bezeichnung).to.exist);\r",
+									"    //pm.test(\"tooltip\", () => pm.expect(a.deleted).to.exist);\r",
+									"});\r",
+									"pm.test(\"enums\", () => pm.expect(jsonData.length).to.eql(5));"
 								],
 								"type": "text/javascript"
 							}
@@ -1431,10 +1392,17 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a47372c3-74d0-4dd5-a33b-af4f32e67fe1",
+								"id": "b3ffbbd5-1a15-41ec-978b-d305538bca02",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
-									"var jsonData = pm.response.json();"
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
+									"var jsonData = pm.response.json();\r",
+									"jsonData.forEach((a) => { \r",
+									"    pm.test(\"name: \" + a.name, () => pm.expect(a.name).to.exist);\r",
+									"    pm.test(\"bezeichnung\", () => pm.expect(a.bezeichnung).to.exist);\r",
+									"    //pm.test(\"tooltip\", () => pm.expect(a.deleted).to.exist);\r",
+									"});\r",
+									"pm.test(\"enums\", () => pm.expect(jsonData.length).to.eql(4));"
 								],
 								"type": "text/javascript"
 							}
@@ -1467,10 +1435,17 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8a2a78a8-988c-4282-826e-1ba78ccdcec5",
+								"id": "5169bdf1-f2b9-426a-a744-6a23d63f0926",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
-									"var jsonData = pm.response.json();"
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
+									"var jsonData = pm.response.json();\r",
+									"jsonData.forEach((a) => { \r",
+									"    pm.test(\"name: \" + a.name, () => pm.expect(a.name).to.exist);\r",
+									"    pm.test(\"bezeichnung\", () => pm.expect(a.bezeichnung).to.exist);\r",
+									"    //pm.test(\"tooltip\", () => pm.expect(a.deleted).to.exist);\r",
+									"});\r",
+									"pm.test(\"enums\", () => pm.expect(jsonData.length).to.eql(11));"
 								],
 								"type": "text/javascript"
 							}
@@ -1509,9 +1484,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "87a44e1f-a328-485e-98b8-1cece8b8fc41",
+								"id": "adc4bf79-d17c-4e4a-bac2-88f8dbfe2a9a",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/achsfolg\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.achsfolg.forEach((a) => { \r",
@@ -1566,7 +1542,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "6440350a-7d7f-4eaa-9abd-635d39823d48",
+								"id": "23960f08-5879-49f1-a20f-733a579d2136",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -1577,9 +1553,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d60fee44-900d-4875-8738-1565535ea96e",
+								"id": "a299a4f6-5452-4594-a903-4a354c81bf6b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/achsfolg\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/achsfolg/{{name}}\");\r",
@@ -1640,7 +1617,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "3875f404-3a60-43d2-9536-d40b96b6fe69",
+								"id": "357ffc03-2b56-4ddf-86f8-a5805cecc013",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -1650,9 +1627,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "aba0c738-618f-42dc-977b-7c3624a6d927",
+								"id": "78341476-2ae1-46e7-af5c-5822744675e8",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/achsfolg\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/achsfolg/{{name}}\");\r",
@@ -1715,9 +1693,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ac544bf9-ec75-45bb-af89-b2bb86b8c4bc",
+								"id": "cdb144bb-92d1-439c-b24b-3467c51a61a4",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/achsfolg\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/achsfolg/{{name}}\");\r",
@@ -1766,7 +1745,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "55ae1a7b-b662-43f3-84cc-3090eaff42c5",
+								"id": "e20d416e-39c7-4056-b502-9b56ceebdb8c",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -1808,9 +1787,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0e73b5b3-21f3-4f1b-91d7-037694e2859d",
+								"id": "57040da7-7030-489b-ad61-434a5476d195",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/antrieb\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.antrieb.forEach((a) => { \r",
@@ -1861,7 +1841,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "42958f56-d100-4494-8cd4-365eb883abca",
+								"id": "d69a7270-d6eb-4e10-8ecb-80ce712745a9",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -1872,9 +1852,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "36f01098-d8f8-4d03-a205-77c17c22d46b",
+								"id": "410fe199-2eb9-4980-890d-b02a6a3d29b2",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/antrieb\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/antrieb/{{name}}\");\r",
@@ -1935,7 +1916,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "7ad0f1be-45f5-4fea-b109-54b6cf178483",
+								"id": "afba268b-4162-4a94-9555-911cc6a1bc30",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -1945,9 +1926,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1f8ee546-4059-4d94-a48e-6605032f1bdf",
+								"id": "94b258a3-5142-4fb8-93fa-4fff153c3063",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/antrieb\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/antrieb/{{name}}\");\r",
@@ -2009,9 +1991,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f9129e69-c4ca-49a4-a57a-c6768aea717d",
+								"id": "332b384d-0a41-433e-8670-4c67d1cae9f4",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/antrieb\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/antrieb/{{name}}\");\r",
@@ -2055,7 +2038,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3e9b9bf4-6c77-431f-baf9-7326128023cf",
+								"id": "badc6779-64cc-4bef-a6a1-aee0fae486fe",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -2097,9 +2080,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "292f065d-c8d6-4c93-9b16-b59ab0caea6b",
+								"id": "0473bda3-77ee-4030-a898-7a24e84ce826",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/aufbau\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.aufbau.forEach((a) => { \r",
@@ -2151,7 +2135,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b3ffac00-7f61-4ae7-b6d6-a3edcd6b4987",
+								"id": "ed1482bb-3d48-413f-aad6-56bfd4a507e1",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -2162,9 +2146,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "49c621cd-6914-4d50-ac1e-e578bd9daeca",
+								"id": "5dd5f311-d779-4f01-ae49-9a7c4fe49d1e",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/aufbau\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/aufbau/{{name}}\");\r",
@@ -2226,9 +2211,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3fcf0b7c-fb27-41be-90d4-79c2b5a9117f",
+								"id": "5345f631-6c70-4bdd-b9c3-426e112cff54",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/aufbau\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/aufbau/{{name}}\");\r",
@@ -2290,7 +2276,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "9c275a80-4e16-47f2-8357-1a89d79119a4",
+								"id": "fc173557-0b91-441d-adbd-94330ee7fad8",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -2300,9 +2286,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9107f96a-c6a4-4ff4-86b9-7bece17f4ace",
+								"id": "7c7292ae-4e3a-48c1-a4c3-6a7523efb695",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/aufbau\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/aufbau/{{name}}\");\r",
@@ -2367,9 +2354,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d0fdcc56-9a29-49f8-a0ef-8a8b6b1e37ee",
+								"id": "518ca18e-9fe1-4af8-8bc4-52b52d471b41",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/aufbau\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/aufbau/{{name}}\");\r",
@@ -2416,9 +2404,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e4755e3-cb45-49fa-916f-457b2ac40e9b",
+								"id": "dc73655d-f548-48ea-8a92-1ec7641c865c",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/aufbau\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/aufbau/{{name}}\");\r",
@@ -2466,7 +2455,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3e0323e6-6642-4b09-83ac-d72505bf880c",
+								"id": "3325e834-1f4a-488a-aa80-dd24b974e27f",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -2508,9 +2497,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d0cc4c68-5100-4e5a-8095-8d32fda33518",
+								"id": "f1d3f31b-54e5-4927-8b68-e6d922a9249f",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/bahnverwaltung\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.bahnverwaltung.forEach((a) => { \r",
@@ -2561,7 +2551,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "ec97951f-fb13-4f35-ba9c-654a326e9e2a",
+								"id": "b7635c41-c878-4a29-b944-840d7848a9d6",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
@@ -2573,9 +2563,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4f365f63-7652-4b37-92e3-4c9f21be3d92",
+								"id": "3d542bd8-86bb-461a-8034-da4854db3690",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/bahnverwaltung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/bahnverwaltung/{{name}}\");\r",
@@ -2637,7 +2628,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "c3581e2c-1c9e-4d4c-9d34-394cede944ff",
+								"id": "1cac25a8-654e-4edd-9674-0f2c1f83bf90",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"land\", pm.variables.replaceIn(\"{{$randomCountryCode}}\"));"
@@ -2648,9 +2639,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2b7518aa-a7d0-4c05-92ac-1b7efd8a4863",
+								"id": "b0bc8458-cff8-4fbb-9a88-34c59bb449f7",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/bahnverwaltung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/bahnverwaltung/{{name}}\");\r",
@@ -2713,9 +2705,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0c5519f9-9ae8-4524-88fd-41f935391fb6",
+								"id": "a31f1ef9-6b44-446c-9342-b7c3ee7c87c8",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/bahnverwaltung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/bahnverwaltung/{{name}}\");\r",
@@ -2760,7 +2753,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "10573eb2-ee64-47e0-925e-d9e4374bd623",
+								"id": "36142c12-e808-48e8-bf6c-672ef3b0be1f",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -2802,9 +2795,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e02e9d2c-55be-4446-8911-db2d74bb6333",
+								"id": "a0362784-75a8-4d6f-852d-45541e9d7878",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/epoch\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.epoch.forEach((a) => { \r",
@@ -2855,7 +2849,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "d02c9f92-28b4-486b-99b5-4f7877f4bf79",
+								"id": "6644ad96-ad98-4c62-b771-91c425129b88",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -2866,9 +2860,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d9e051eb-47e4-401e-b8ca-8c1aca6eaee7",
+								"id": "5a61cf05-f136-43f5-9334-a16cd4018f06",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/epoch\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/epoch/{{name}}\");\r",
@@ -2929,7 +2924,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "3206ec4d-0e47-4ed9-9206-35db66fda217",
+								"id": "de1163d7-25f2-4bdf-bd8a-9f7a86778efb",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -2939,9 +2934,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b77c3d8b-105d-4e22-96a5-e69da2f9c6a2",
+								"id": "f9679316-9059-40d6-867d-89dfc2aaa578",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/epoch\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/epoch/{{name}}\");\r",
@@ -3003,9 +2999,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d0e53e50-822d-44fe-958a-e463bd68ee7a",
+								"id": "d0ed6405-2113-48ab-aa78-09883ee56b89",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/epoch\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/epoch/{{name}}\");\r",
@@ -3049,7 +3046,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "02c092f6-b525-4ec8-8ddb-f22c8f1f6e6f",
+								"id": "7e4f8629-0ef9-473d-924d-7a69910d3264",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -3091,9 +3088,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ed251db0-2951-47bb-be15-43a07130e982",
+								"id": "feb80d91-d333-4358-805f-c0f3c6a00c7b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/gattung\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.gattung.forEach((a) => { \r",
@@ -3144,7 +3142,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "635877c5-0aeb-4605-a739-483cdd5b130c",
+								"id": "b8f23c85-9b6a-4195-8538-22b739be9c33",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -3155,9 +3153,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3f18e2c1-3d99-4d45-a049-8b94312d72fb",
+								"id": "66125aa2-0035-4111-b6a3-d5c9fe8fdc98",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/gattung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/gattung/{{name}}\");\r",
@@ -3218,7 +3217,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "21e2d17f-250f-4f6a-9928-3d8b2599afff",
+								"id": "82b287d8-46ea-4406-bea2-1fee8f408c32",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -3228,9 +3227,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6b1bfef5-c30b-42de-897f-76de66d26129",
+								"id": "87bad47e-69ee-4522-9cc6-4fc60e3c2c39",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/gattung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/gattung/{{name}}\");\r",
@@ -3292,9 +3292,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "adb8dc3c-1051-40cb-bdc0-52f9e8207d7f",
+								"id": "bdccd7a6-59d2-4462-9a76-32491755fa94",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/gattung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/gattung/{{name}}\");\r",
@@ -3338,7 +3339,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9ed31d7c-bb33-47ec-addd-9263f27c29a9",
+								"id": "85526f68-5d8a-4141-9056-9f8c2def43bb",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -3380,9 +3381,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e60e071c-1c7c-4911-9f79-cfea6fdc9fdd",
+								"id": "3e7dcae6-2581-473c-b5ca-b752281eb8d0",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/hersteller\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.hersteller.forEach((a) => { \r",
@@ -3433,7 +3435,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "1f1c70ba-046c-4bd2-a963-bb7b696ffc64",
+								"id": "99d7835f-cd3e-452d-a033-e78c1d4ccc01",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
@@ -3447,9 +3449,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "97f1993e-e054-401d-acbd-670e82b95750",
+								"id": "fdd2c3ab-63c3-4e1e-bb09-0dda3cd1aceb",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/hersteller\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/hersteller/{{name}}\");\r",
@@ -3513,7 +3516,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "2a3e2774-8460-44ab-97ad-ca9947db0113",
+								"id": "228255c6-adb4-4041-ae38-041859abb114",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"url\", pm.variables.replaceIn(\"{{$randomUrl}}\"));\r",
@@ -3526,9 +3529,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "57650613-ccdf-49e8-af2f-9f43412bd182",
+								"id": "c1a722de-8fa5-4a7c-8893-1a1f9ef292d7",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/hersteller\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/hersteller/{{name}}\");\r",
@@ -3593,9 +3597,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "966c25df-41e7-4a55-bf9f-9b9e72e52365",
+								"id": "be35431c-334c-4ab4-aff3-cea737ca09b1",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/hersteller\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/hersteller/{{name}}\");\r",
@@ -3642,7 +3647,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dc75cb23-4209-4492-ae18-23053e6933b0",
+								"id": "01caad9c-47cd-4ba1-925f-b1ee673fea06",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -3684,9 +3689,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "712897c1-4aef-4677-ad11-4f45d33eb2fe",
+								"id": "4e252fff-a2b4-4648-9ff7-9608e924144b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kupplung\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.kupplung.forEach((a) => { \r",
@@ -3738,7 +3744,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "27b94b71-d631-408c-b335-4f7479a93d9a",
+								"id": "189ce016-2729-435b-a03f-b046354591e9",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -3749,9 +3755,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a05172c3-d9cf-4360-bf50-f7ca3446effe",
+								"id": "de4b6a63-7839-4f28-a896-87f0d2e6eb04",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kupplung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kupplung/{{name}}\");\r",
@@ -3813,9 +3820,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f97e16bb-39f0-4f24-8367-456e4cc0ada4",
+								"id": "255a1495-6271-4ca9-a0eb-c2443e516d36",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kupplung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kupplung/{{name}}\");\r",
@@ -3877,7 +3885,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "dc2d3a1f-7b8a-4882-97a5-dfecc79e62f4",
+								"id": "3de908d3-74a8-499d-b304-7785b38bce57",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -3887,9 +3895,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dc877228-cef8-400f-bd2c-2bc347c5dbf3",
+								"id": "1494a23d-417d-47d1-87d2-4a79620b775d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kupplung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kupplung/{{name}}\");\r",
@@ -3954,9 +3963,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "44805b61-2e04-446b-9e88-16a99714e5c1",
+								"id": "909d1505-db02-4103-b256-3d1bf4f858fd",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kupplung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kupplung/{{name}}\");\r",
@@ -4003,9 +4013,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1f270994-7e5e-4913-83c3-5b702c19c021",
+								"id": "6654ec50-8869-4973-9881-120cfbd6aee2",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kupplung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kupplung/{{name}}\");\r",
@@ -4053,7 +4064,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e7013daa-9e5d-4802-8daf-546ae49a7c65",
+								"id": "18f25bbd-7f54-4763-b00f-6147ff2d9408",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -4095,9 +4106,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9e5b742e-877a-4a54-a173-feabf1dae963",
+								"id": "f3d54136-6665-4113-81ab-cce8532b5c5a",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/licht\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.licht.forEach((a) => { \r",
@@ -4149,7 +4161,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "7951e0ce-b9dc-4b5e-9119-42977e5caa47",
+								"id": "656af0c6-bbd8-4628-b508-4edd4f42e867",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -4160,9 +4172,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f84d737e-6484-4683-990f-5ce10fbed460",
+								"id": "20ab7d71-199f-495d-b912-aa147aa08ab5",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/licht\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/licht/{{name}}\");\r",
@@ -4224,9 +4237,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0bcaf047-8f15-4dad-bdd3-073ea7d7b195",
+								"id": "b164a031-cb97-4958-8e6b-74ceb2b19829",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/licht\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/licht/{{name}}\");\r",
@@ -4288,7 +4302,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "029ee006-9e77-44c2-a7af-9615c3ffa07f",
+								"id": "9410100a-3290-4a1b-86aa-c668fb2f0913",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -4298,9 +4312,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8686b8e3-b4aa-49db-a0ee-141073186ec5",
+								"id": "e7f4a513-ba60-4d6f-ab91-13688416ca3c",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/licht\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/licht/{{name}}\");\r",
@@ -4365,9 +4380,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "207e5d80-de36-4b40-a78d-0f5a7424d7e2",
+								"id": "7902c7c4-cee5-457f-8952-ee72a6de14ff",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/licht\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/licht/{{name}}\");\r",
@@ -4414,9 +4430,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ff188dbd-2725-4c62-87d3-ade51b453421",
+								"id": "63dcc319-1813-422e-8109-089c8b712a71",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/licht\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/licht/{{name}}\");\r",
@@ -4464,7 +4481,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "07d59d51-ec4b-4d4d-a4a2-bf7737e331e5",
+								"id": "7dd45120-1d3a-4c3b-8720-87d45e33dba5",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -4506,9 +4523,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "faf468da-8366-421f-8c23-7dfda396f5e2",
+								"id": "16e5b507-e035-4d49-8eac-e86798ae0c22",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/massstab\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.massstab.forEach((a) => { \r",
@@ -4559,7 +4577,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b04ac687-7d3e-4a6e-8d33-337aa8e451cc",
+								"id": "2a893a60-ab69-4ce2-975f-41ee865db6be",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -4570,9 +4588,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8d591629-e685-47b8-86cc-6dc6a8ca6b7d",
+								"id": "a3371c0f-ccba-4b43-b56c-59a6431f636a",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/massstab\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/massstab/{{name}}\");\r",
@@ -4633,7 +4652,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "2ca2dc18-813a-4b8a-aa8f-860e4975a906",
+								"id": "13dcbea4-f66d-47db-bf22-b962b15c63e2",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -4643,9 +4662,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "217773b0-6861-4056-ad9b-85f0c8be8470",
+								"id": "dbc36d37-f82d-4e25-8bc9-e6f1280850b8",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/massstab\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/massstab/{{name}}\");\r",
@@ -4707,9 +4727,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "582ade3a-816d-438b-8ba1-fd02dd3eb555",
+								"id": "cbc3d16c-81bf-44eb-aff7-56c46402f807",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/massstab\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/massstab/{{name}}\");\r",
@@ -4753,7 +4774,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7ca09bda-0d17-486f-8331-77c26034e15e",
+								"id": "5fac07d9-fbd5-46b7-8c71-5fbfcac159bb",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -4795,9 +4816,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9f243452-2ffe-4f7b-a710-6a98744d4da4",
+								"id": "44f7769f-aa3b-482f-90d5-a3372d848356",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/motorTyp\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.motorTyp.forEach((a) => { \r",
@@ -4848,7 +4870,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "8be21bae-dc78-41cd-85fb-7032e1f37715",
+								"id": "1bc3b0c7-013b-4a16-903c-7b7a90fa41b5",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -4859,9 +4881,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7120b4ed-f135-4be4-a9d1-d376ad4bf8ef",
+								"id": "1c91d59c-59a3-4b5e-a0cd-f78416643d30",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/motorTyp\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/motorTyp/{{name}}\");\r",
@@ -4922,7 +4945,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "fabd29a9-b51d-4ed5-b0a4-e7879586230b",
+								"id": "376c3eeb-41a9-4996-93d9-25e09193d474",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -4932,9 +4955,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1e17ce6d-5ce8-458e-b720-3d69daef18cd",
+								"id": "d365677d-203c-4da8-bc25-5d094ccf1995",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/motorTyp\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/motorTyp/{{name}}\");\r",
@@ -4996,9 +5020,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "43e402e2-4116-486c-a3b0-3a37365a0868",
+								"id": "6d1a3d1e-935e-4bfd-8f98-a4ede99b6b4c",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/motorTyp\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/motorTyp/{{name}}\");\r",
@@ -5042,7 +5067,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "be0d87b2-501b-4697-8cd5-5882841457a7",
+								"id": "3db42006-3485-45cf-b706-bc3c158f0423",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -5084,9 +5109,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2cc11ab0-b0d2-4861-ae74-2bd62a65a609",
+								"id": "e51609c1-5eec-45e2-a86d-b8477a7aba41",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/protokoll\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.protokoll.forEach((a) => { \r",
@@ -5137,7 +5163,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b47c547f-20c6-4d9a-9acf-74746ed581a3",
+								"id": "19bd3f74-0167-47ef-b68e-09629369dbfa",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -5148,9 +5174,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cb026536-6321-4592-b3fc-edf7e8316c1b",
+								"id": "57c3ae46-e903-43cd-ab52-c97d96dd69ff",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/protokoll\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/protokoll/{{name}}\");\r",
@@ -5211,7 +5238,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "1e44bea7-25ef-4fad-a362-e33342b13b31",
+								"id": "f93c6102-7d81-4565-b34a-bf8791cb27c1",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -5221,9 +5248,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8a1af7bf-6c40-4403-a5de-bdc38e004691",
+								"id": "0b90b81b-f5f9-4264-be3c-1280b785f74d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/protokoll\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/protokoll/{{name}}\");\r",
@@ -5285,9 +5313,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5ea04d39-39aa-4681-99e6-0c28542c8731",
+								"id": "9644d5d4-45aa-4d02-904d-613becf50fbf",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/protokoll\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/protokoll/{{name}}\");\r",
@@ -5331,7 +5360,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7f371072-924c-4eef-8f4e-1dde1edebbda",
+								"id": "b59e0040-d624-491b-943f-b23df4fd4b34",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -5373,9 +5402,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6beb32a7-9aa1-4961-a08e-6dfbd3170879",
+								"id": "304dc90f-2f65-47a2-900c-7f0795c034ff",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/sondermodell\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.sondermodell.forEach((a) => { \r",
@@ -5426,7 +5456,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "a93ce597-d5f1-4b9f-aef9-a7843b802712",
+								"id": "9446e5d1-fa49-41d7-a634-28b7f8c90c0f",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -5437,9 +5467,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d334fbd6-5a4d-4884-8d38-75944f708d8a",
+								"id": "9e71c488-6cd2-4042-8fe2-175ef9369ed2",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/sondermodell\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/sondermodell/{{name}}\");\r",
@@ -5500,7 +5531,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "5bd2bb4d-6d3b-4a4e-8f28-505df5df6eb7",
+								"id": "3095d8e8-bfa7-4f94-b1fa-ece63f74a98b",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -5510,9 +5541,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "23cdcd40-8b85-4901-95e8-7d181135c437",
+								"id": "f8a14934-1744-4a4c-a250-bc9c077da213",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/sondermodell\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/sondermodell/{{name}}\");\r",
@@ -5574,9 +5606,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c348c5ab-6936-45ef-85e2-9fe5523a3bbe",
+								"id": "36b5c991-c146-42a7-8b3f-b1566b51a4cb",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/sondermodell\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/sondermodell/{{name}}\");\r",
@@ -5620,7 +5653,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e3483eff-1238-4574-b980-3e358ea12401",
+								"id": "51becfe9-1dba-4980-a870-5a4cc5fc396b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -5662,9 +5695,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0381cfc8-c678-476d-9a6e-b196ffd49a6b",
+								"id": "1c8595fc-3acd-4c18-bf4d-f7ae8daee8d1",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/spurweite\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.spurweite.forEach((a) => { \r",
@@ -5715,7 +5749,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "4bd49182-3c9d-4048-ba96-9bcae2d140b9",
+								"id": "094118ab-aeb6-434b-aaa2-d979c03c9c5c",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -5726,9 +5760,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bee814b1-ac2d-44ff-8701-b4f45c79454f",
+								"id": "78c3742f-6dcc-49a4-909d-25320cf6f70b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/spurweite\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/spurweite/{{name}}\");\r",
@@ -5789,7 +5824,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "5369af06-7704-4d9a-907f-eade35cb2085",
+								"id": "6404fd6e-7e45-4b4a-8201-e9c9972ea569",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -5799,9 +5834,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5ce56c18-522f-4f81-8b02-c550561b4f10",
+								"id": "9d27cfc3-8561-40e6-9f44-046bae189b44",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/spurweite\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/spurweite/{{name}}\");\r",
@@ -5863,9 +5899,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6b176060-23f1-488d-b4a1-68a777a8b5d9",
+								"id": "aae0dc60-5e66-4f28-bcdc-2d10747fb693",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/spurweite\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/spurweite/{{name}}\");\r",
@@ -5909,7 +5946,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "68a5e10d-18ba-437c-9c32-3cc59a8184f1",
+								"id": "66d63b77-70da-4195-b3ce-06af7597bf61",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -5951,9 +5988,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a1e6e5d5-41a9-4a80-bb93-2b3b99e1b80f",
+								"id": "ec71cd05-1af6-4113-b7d1-fd403cd403e0",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/steuerung\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.steuerung.forEach((a) => { \r",
@@ -6004,7 +6042,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "186c878d-3424-4c42-94f3-00b7e9e2a94d",
+								"id": "f4677f8c-e4a5-4d98-becd-ec09b35cc179",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -6015,9 +6053,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "94d07697-9547-49fa-9a86-1a1510a040ed",
+								"id": "e8b8cfee-3c35-4888-a5fb-74dce2092e24",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/steuerung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/steuerung/{{name}}\");\r",
@@ -6078,7 +6117,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "65b0d00d-13de-4b46-8774-fd8f18f122c2",
+								"id": "383c6867-9fe1-4560-a25d-ea0a78370763",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -6088,9 +6127,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "59286129-08e3-4543-86cf-05c31badd92d",
+								"id": "823f299e-5ba2-4191-be98-65ffc11ae641",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/steuerung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/steuerung/{{name}}\");\r",
@@ -6152,9 +6192,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fb900085-1cf1-412c-8cde-1b3f0441afc2",
+								"id": "990a053f-6003-49ec-a7ae-53b5cfad10c2",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/steuerung\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/steuerung/{{name}}\");\r",
@@ -6198,7 +6239,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c1f4751e-646c-4926-a888-635c4277f140",
+								"id": "ec3eeb34-5f75-4c1c-bb3d-2af2f539136d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -6240,9 +6281,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b724bd2d-48c8-4f5a-8a3b-49431a55dbdb",
+								"id": "6dee8406-9ee1-495e-9f36-41f051df7b2e",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zugTyp\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.zugTyp.forEach((a) => { \r",
@@ -6293,7 +6335,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "c23a422d-d8cb-4d74-ac22-73874c20c742",
+								"id": "8ba0cc43-edef-4abb-96ac-c29c4a97173a",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -6304,9 +6346,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ce7052f9-ddee-4be6-9e68-556ef921b3e3",
+								"id": "1ca3030f-3849-4629-a65d-d7d6a9d12ac4",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zugTyp\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/zugTyp/{{name}}\");\r",
@@ -6367,7 +6410,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "08a49001-0956-40b4-8d58-27483c942a10",
+								"id": "2ad1cd33-c823-479f-a601-a7d38db258f5",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -6377,9 +6420,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a849a492-027a-4372-9b3e-76a50d8fe7dd",
+								"id": "e3535c55-9e92-4e8d-8ea4-459c9e259b78",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zugTyp\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/zugTyp/{{name}}\");\r",
@@ -6441,9 +6485,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "056f1d81-b45f-483d-adaa-cee15e2087f1",
+								"id": "82fbf274-2e71-41ea-a7c4-386bd64f7bf6",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zugTyp\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/zugTyp/{{name}}\");\r",
@@ -6487,7 +6532,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "81a689ef-8f7d-455b-8d6c-77102de5aab9",
+								"id": "2b327ffa-f77f-4321-ac94-4d68d09cffa2",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -6529,9 +6574,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d4c4e557-fe69-41c9-a1cf-497d22748afb",
+								"id": "143522f3-5a03-4669-bc3b-2fbd8b563957",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kategorie\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.kategorie.forEach((a) => { \r",
@@ -6584,9 +6630,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "79bf677c-5df3-4f53-920b-33a64a4b233e",
+								"id": "164b292e-9fed-48be-9b7b-2012f15cab66",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kategorie\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.kategorie.forEach(function(k) { \r",
@@ -6653,7 +6700,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "ebaf298b-a0ac-496e-ab5e-82ad4f082678",
+								"id": "f760d201-2f2a-4554-816e-29970aed182b",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -6664,9 +6711,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c18bb7dc-92c6-4ba1-a689-402c06206c9c",
+								"id": "766db7a1-dc74-4ef1-994e-41e4bdc95628",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kategorie\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kategorie/{{name}}\");\r",
@@ -6729,7 +6777,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "02e5f0d1-454d-4b9c-9cf2-0ffc879c35a4",
+								"id": "44120b70-6034-4366-b141-ec72303c84ea",
 								"exec": [
 									"pm.environment.set(\"unterAdd\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"unterBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -6740,9 +6788,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f5860a4d-f8b3-47e9-b6a8-66517c575b47",
+								"id": "f75bf811-8a7e-48e0-adac-1efb1505497d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kategorie/{{name}}\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kategorie/{{name}}/unterKategorien/{{unterAdd}}\");\r",
@@ -6804,7 +6853,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "ff997c65-debd-4372-a1db-aa0a1381e1e0",
+								"id": "9ff5a2ef-a4ae-4669-a46c-c6571e82b285",
 								"exec": [
 									"pm.environment.set(\"unterBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -6814,9 +6863,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5b3da50a-7a2a-4043-86f6-c00ca6b55918",
+								"id": "111d1d52-8246-43e8-aa19-c5c50a30bdc2",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kategorie/{{name}}\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kategorie/{{name}}/unterKategorien/{{unterAdd}}\");\r",
@@ -6879,7 +6929,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "3b7b7921-29dc-404e-9eb0-ada5faafe656",
+								"id": "f8367c8a-41ea-4bce-bb87-e0d3095888d6",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -6889,9 +6939,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f5c228e1-98e3-4c80-be28-d48c98db1c08",
+								"id": "9c5aecb0-ea1a-4d97-902c-77f3edbae51b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kategorie\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kategorie/{{name}}\");\r",
@@ -6963,9 +7014,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4bd75fe3-0347-4ef8-bc5e-3706ec22a769",
+								"id": "e346f14b-20db-4d5e-aaab-883c3240b187",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/kategorie\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/kategorie/{{name}}\");\r",
@@ -7019,7 +7071,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "13d342fe-bd9e-4787-ae38-c49d6cd44873",
+								"id": "cd149021-0ab5-4b88-9684-7ac891a9981a",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -7057,7 +7109,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "09401535-3d5b-4834-b5f5-ec586c661cad",
+								"id": "6a9fa33a-b6e1-4550-bb18-f4e9458bcc66",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -7099,9 +7151,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "243a53ba-116d-49c4-ba15-d8109f3efe79",
+								"id": "46a07146-0f52-4881-920d-9bf19ef0637b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/vorbild\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.vorbild.forEach((a) => { \r",
@@ -7155,7 +7208,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "34cd9b14-22a5-4acd-abd8-b4266b0c13ab",
+								"id": "db829d59-71a7-42e9-8b61-cfe6f3b70d90",
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}{{$randomInt}}.{{$randomInt}}\"));\r",
 									"pm.environment.set(\"gattung\", pm.variables.replaceIn(\"{{gattungAdd}}\"));\r",
@@ -7207,9 +7260,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e4428d5d-f0ef-4391-8777-c5d69bfea67e",
+								"id": "77222059-b06e-4bbf-8d43-3056d74a7176",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/vorbild\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/vorbild/{{name}}\");\r",
@@ -7309,9 +7363,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8a9805a7-4f66-48b8-a485-757435832bd4",
+								"id": "1d5472b7-f575-4714-b77d-73afb08f2b8f",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/vorbild\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/vorbild/{{name}}\");\r",
@@ -7410,9 +7465,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7c6c1b53-6da2-4ab1-85e1-2336b798f581",
+								"id": "fd090056-314d-433f-bc5a-a22dbea2c2ce",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/vorbild\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/vorbild/{{name}}\");\r",
@@ -7471,7 +7527,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "c76a36a6-815a-4189-813c-11a74e07e387",
+								"id": "77cb5682-cd8e-4450-8bc9-2e5a05dc3658",
 								"exec": [
 									"pm.environment.set(\"gattung\", pm.variables.replaceIn(\"{{gattungUpdate}}\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
@@ -7565,9 +7621,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b057dee2-f90b-428f-92ee-4f19dfb6ce6c",
+								"id": "8ce6b02f-9d25-4c23-8b97-9c73bece2e70",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/vorbild\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/vorbild/{{name}}\");\r",
@@ -7651,9 +7708,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1d6ed557-8623-4399-b1c5-9ade3e9b5156",
+								"id": "179a19d3-ad07-453a-8742-3fdbb72fedb4",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/vorbild\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/vorbild/{{name}}\");\r",
@@ -7738,7 +7796,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3a39d1ad-a367-453d-a343-233503da9171",
+								"id": "cb01f83c-a7a6-43c9-9b87-4ed85d2ee251",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -7780,9 +7838,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "33ee2f99-67f7-4b99-895d-f2ab0e7f105a",
+								"id": "437288d8-58c2-48cf-95ea-b447202be686",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.decoderTyp.forEach((a) => { \r",
@@ -7842,7 +7901,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "84f6bcfc-0af1-4a18-9903-ef8f46ff1360",
+								"id": "809c0c20-50fc-4732-b7fb-f695ecff99c4",
 								"exec": [
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"decoderHerstellerAdd\"));\r",
 									"pm.environment.set(\"bestellNr\", pm.variables.replaceIn(\"{{$randomInt}}\"));\r",
@@ -7860,9 +7919,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "29a09cbd-68ee-4846-9632-34c466c1d236",
+								"id": "dc33f216-4605-4b58-aa93-0a74212fcfae",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
@@ -7938,9 +7998,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cc7031a9-6f1b-43fd-8232-df518700c8de",
+								"id": "57c0963c-87e7-4f3e-b6d0-96e4ff9dca47",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
@@ -8016,7 +8077,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "58fbfe83-6755-4f27-b159-650f8668c46b",
+								"id": "8dbeb478-ae7b-4294-ae26-ae1e519aba81",
 								"exec": [
 									"pm.environment.set(\"adIndex\", new Number(pm.variables.get(\"adIndexAdd\")));\r",
 									"pm.environment.set(\"adBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
@@ -8030,9 +8091,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "778f5f4e-36bd-4304-945b-4ce58d4f8ab3",
+								"id": "41e6d144-5bb1-436d-9d65-93619235cd6b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var parent = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress\");\r",
@@ -8100,7 +8162,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "73260be2-c2ed-40aa-84cb-ea92cbb9c7a2",
+								"id": "6ed98d53-7149-492c-8167-cd05ff778b45",
 								"exec": [
 									"pm.environment.set(\"adBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"adTyp\", pm.variables.get(\"adTypUpdate\"));\r",
@@ -8113,9 +8175,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "124e3123-04bd-46db-b9d3-73c357a7d15a",
+								"id": "444f0fc3-5905-41aa-a99e-f8d8673fcb2c",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var parent = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/adress\");\r",
@@ -8184,7 +8247,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "03e06aa6-b125-4e22-a8d4-a316076cc08e",
+								"id": "3ac426f8-b923-4cd5-9023-20559e26a0dd",
 								"exec": [
 									"pm.environment.set(\"cv\", new Number(pm.variables.get(\"cvAdd\")));\r",
 									"pm.environment.set(\"cvBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
@@ -8198,9 +8261,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9657ece4-763b-4fd0-87b3-a999a517e8d0",
+								"id": "450ec20a-da81-469b-8bf8-aef55e73c244",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var parent = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/cv\");\r",
@@ -8268,7 +8332,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "0abae1d1-39fb-422e-9b02-b48dc57eb6af",
+								"id": "9fd7f0a2-bb70-4b82-a802-6224a8da6f12",
 								"exec": [
 									"pm.environment.set(\"cvBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"cvMinimal\", new Number(pm.variables.get(\"cvMinUpdate\")));\r",
@@ -8281,9 +8345,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8e4dcf5a-8837-424e-992c-7dce8c3c8ce8",
+								"id": "ae292664-9068-4124-97c4-a0fdb3f0b6c7",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var parent = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/cv\");\r",
@@ -8352,7 +8417,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "4932f742-b192-4daa-844d-c18256dc85dd",
+								"id": "511cbb92-f5f3-48fc-bcc6-4c45e289f92a",
 								"exec": [
 									"pm.environment.set(\"fnReihe\", new Number(pm.variables.get(\"fnReiheAdd\")));\r",
 									"pm.environment.set(\"fnFunktion\", pm.variables.get(\"fnFuntionAdd\"));\r",
@@ -8365,9 +8430,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fdae8494-b5e1-4547-b1cd-c3d3affa751c",
+								"id": "d50ebba4-57a3-4f13-85b2-737214e9811f",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var parent = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/funktion\");\r",
@@ -8434,7 +8500,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "bc2ca47a-e553-484c-a622-6f188c344698",
+								"id": "097d203d-be49-47d3-8795-91a34ce08c35",
 								"exec": [
 									"pm.environment.set(\"fnReihe\", new Number(pm.variables.get(\"fnReiheUpdate\")));\r",
 									"pm.environment.set(\"fnFunktion\", pm.variables.get(\"fnFuntionUpdate\"));\r",
@@ -8447,9 +8513,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "52dd60f3-1728-4c5a-b9f4-a228c41419ac",
+								"id": "2aa28f33-f0cb-4554-b600-9b6f4fd8576d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var parent = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}/funktion\");\r",
@@ -8518,7 +8585,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "ded5fbf4-6950-4214-a18b-484830090ecc",
+								"id": "8cc0e128-e73e-4c47-afcb-2c3c8ea3a045",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"iMax\", new Number(pm.variables.get(\"iMaxUpdate\")));\r",
@@ -8534,9 +8601,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7ab2e997-c315-4552-87fd-5caadc9fab87",
+								"id": "2ab9cbf2-ab95-4e86-a3dd-d91b304e50ab",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
@@ -8653,9 +8721,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "45136589-ac30-4d43-9081-8c651c6eef00",
+								"id": "446f2438-41e1-4c4b-8586-0b7ba355b135",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
@@ -8754,9 +8823,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dcc4309c-4ebf-4e80-87a5-e6cf99c5f6b7",
+								"id": "c8c29f00-c103-4690-bc61-9606fa2df2d7",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoderTyp\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/decoderTyp/{{hersteller}}/{{bestellNr}}\");\r",
@@ -8857,7 +8927,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "26253158-16c5-4046-9ddd-f6ee12458830",
+								"id": "5d834ed9-63ec-408e-a4ff-f7cea57b25a4",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -8896,7 +8966,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4e71a7c5-6d44-4189-881c-4dd900e5c72f",
+								"id": "8a755ac5-2b63-438d-b77d-27f1f35cb513",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -8935,7 +9005,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "89aa80a9-469c-403f-93c2-a5e9ba221217",
+								"id": "6ee42365-3388-4951-a8d5-13bf1a200481",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -8975,7 +9045,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0424e8a9-8eb8-47c0-8d61-6e3635117cc0",
+								"id": "335adc02-2a04-48d2-87a6-be813453a949",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -9018,9 +9088,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "30874009-b747-49c5-8e9f-fe38393cfbd3",
+								"id": "96368573-dcc2-4069-9c36-50405de9fb25",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.produkt.forEach((a) => { \r",
@@ -9079,7 +9150,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "82694744-9752-4669-a8c0-87e911367bb6",
+								"id": "5a248154-bbb5-4cb3-85f5-958c7089b629",
 								"exec": [
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
 									"pm.environment.set(\"bestellNr\", pm.variables.replaceIn(\"{{$randomAbbreviation}}{{$randomInt}}\"));\r",
@@ -9111,9 +9182,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fc2fef97-d35e-4b00-ae08-2e0bb6de2f89",
+								"id": "54a377b7-e9d5-4a19-a042-80a5d2ceca45",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
@@ -9205,7 +9277,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3bee9754-8ba3-438d-8010-c0e4f151ab92",
+								"id": "47be251b-9f9b-4550-9a4d-81f63d0a5e5b",
 								"exec": [
 									"pm.test(\"response\", () => pm.test(\"response\", () => pm.response.to.have.status(202)));\r",
 									"var jsonData = pm.response.json();\r",
@@ -9299,7 +9371,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b29fb9f2-fb7c-41cb-a3e8-88c8d4aa1682",
+								"id": "cda23a64-8959-46ab-9004-3a9e0bc0a0a8",
 								"exec": [
 									"pm.test(\"response\", () => pm.test(\"response\", () => pm.response.to.have.status(202)));\r",
 									"var jsonData = pm.response.json();\r",
@@ -9394,9 +9466,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c288d3b0-9af7-4451-bf53-4e48e9c1f17a",
+								"id": "633c1025-7e35-42f4-a248-3e9fcce85f16",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
@@ -9490,9 +9563,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2f07300e-e4cf-472f-86a1-df42dbf515f7",
+								"id": "e686d31a-7296-4f99-ae5d-5adb8c959af5",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
@@ -9587,7 +9661,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "1857bc76-594c-42c3-8ce0-b6bc904cbcf7",
+								"id": "3e6528ec-3178-4769-8884-9d865db9bf0b",
 								"exec": [
 									"pm.environment.set(\"teilHersteller\", pm.variables.get(\"teilHerstellerAdd\"));\r",
 									"pm.environment.set(\"teilBestellNr\", pm.variables.get(\"teilBestellNrAdd\"));\r",
@@ -9602,9 +9676,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bdd8f12f-5ca2-4fd8-9294-b09301990563",
+								"id": "807c829d-1ebe-4958-978e-b25a468e7f8a",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var parent = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen\");\r",
@@ -9673,7 +9748,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b8322701-704d-47bf-9e44-49becdd8ef09",
+								"id": "b4829d6f-abe7-41c7-95dd-4c7baadc449c",
 								"exec": [
 									"pm.environment.set(\"teilAnzahl\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
 								],
@@ -9683,9 +9758,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "131f0030-1a43-423d-a052-d9c0ca5fdfb6",
+								"id": "87428dd9-a92a-4ad8-9fa8-03d8bf30d82e",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var parent = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen\");\r",
@@ -9753,7 +9829,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "61283595-f6ed-474f-bd9f-2519d73b7f29",
+								"id": "a3170db7-39e8-4fd9-ac62-c6938e6cd937",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"kategorie\", pm.variables.get(\"kategorieUpdate\"));\r",
@@ -9783,9 +9859,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "926758a1-895d-4862-8a99-0e1745d9de49",
+								"id": "875f8d10-0660-4f83-9175-b4cdfb23df5b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
@@ -9897,9 +9974,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "289f4bfc-8ab1-4681-908c-0a098dbff271",
+								"id": "7e987e4c-827f-4409-b882-379fcfe8d2fa",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
@@ -9993,9 +10071,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c271771d-dfd6-45d1-bae4-590bd1feee12",
+								"id": "0cabb4e9-1c70-480e-b992-0efd3d38b047",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									""
 								],
 								"type": "text/javascript"
@@ -10034,9 +10113,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bcf42ac2-3b75-4695-87e1-10274ae95d23",
+								"id": "e6af2c00-55fd-4a24-a27c-dbb359c7d7e7",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
@@ -10117,9 +10197,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "31702312-2701-4630-9686-df9104888d88",
+								"id": "3b4d7fe3-12f1-4323-a515-e105b1c1a3f9",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
@@ -10199,9 +10280,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b2f3f952-ddea-40fb-8b29-dacaf2928260",
+								"id": "7798d898-8a5d-4d24-827d-426b9bdcfe62",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
@@ -10280,9 +10362,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f7cfce9a-a4a0-48c2-bac8-dd57559d3bd4",
+								"id": "91e08c7b-bb2c-4472-8b52-9aa93d72c07d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/produkt\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/produkt/{{hersteller}}/{{bestellNr}}\");\r",
@@ -10360,7 +10443,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "583c7bc0-60bc-489b-8492-b288f3278075",
+								"id": "aa8018ce-14bf-4488-95e4-44bd82898bf7",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -10403,9 +10486,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "599741c1-317e-411b-a86e-a87c4dc90b3a",
+								"id": "85b792cd-b58c-4377-9aa7-85ac635f2144",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoder\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.decoder.forEach((a) => { \r",
@@ -10465,7 +10549,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "7b2c61f1-3434-46a2-bd4f-80b7f978b70b",
+								"id": "1eaae830-b9aa-4430-9db1-b8e2880e1646",
 								"exec": [
 									"pm.environment.set(\"hersteller\", \"ESU\");\r",
 									"pm.environment.set(\"bestellNr\", \"62400\");\r",
@@ -10490,9 +10574,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e4c19393-0c05-4e19-8ed3-601a5c6dc745",
+								"id": "4a632920-87b8-4024-b597-4898bcc685fa",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"pm.environment.set(\"decoderId\", jsonData.decoderId);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoder\");\r",
@@ -10917,7 +11002,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "c6f9d335-7b6a-4454-872a-a55270290e6d",
+								"id": "45a36a42-5e13-4bea-b81f-67e8af5c56b4",
 								"exec": [
 									"pm.environment.set(\"adIndex\", 1);\r",
 									"pm.environment.set(\"adBezeichnung\", \"Primary\");\r",
@@ -10932,9 +11017,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a0cf029b-1e48-4270-ac0d-885251614385",
+								"id": "faebec1a-d977-4597-9108-771f0566dafb",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var parent = pm.variables.replaceIn(\"{{api}}/decoder/{{decoderId}}\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/decoder/{{decoderId}}/adress/{{adIndex}}\");\r",
@@ -10997,7 +11083,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "e61a872d-58ae-49a9-8a16-a276ad1135a9",
+								"id": "15c5c8a8-241c-4842-8e87-8eb4efafb1c2",
 								"exec": [
 									"pm.environment.set(\"cvCv\", 1);\r",
 									"pm.environment.set(\"cvBezeichnung\", \"Adresse\");\r",
@@ -11012,9 +11098,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5ca06835-6f91-4cc8-a079-2ecc0f028959",
+								"id": "ce2f89d5-d3ba-4356-821e-116256a9954b",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var parent = pm.variables.replaceIn(\"{{api}}/decoder/{{decoderId}}\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/decoder/{{decoderId}}/cv/{{cvCv}}\");\r",
@@ -11077,7 +11164,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "591f33dd-48f0-4331-8bbb-971315f778ca",
+								"id": "8bbc536a-83ec-4a4e-8c76-2d3d75cfd1b7",
 								"exec": [
 									"pm.environment.set(\"fnReihe\", 1);\r",
 									"pm.environment.set(\"fnFunktion\", \"F0\");\r",
@@ -11089,9 +11176,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c42386d8-e205-4999-84fe-1afcc2974a68",
+								"id": "026c275c-c485-4b3e-b31b-166412bd3d56",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var parent = pm.variables.replaceIn(\"{{api}}/decoder/{{decoderId}}\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/decoder/{{decoderId}}/funktion/{{fnReihe}}/{{fnFunktion}}\");\r",
@@ -11153,7 +11241,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "561c17df-7bd4-4d7a-8d0f-c7c629e0506d",
+								"id": "029fb08a-844c-4466-adaf-dabfe656c3bf",
 								"exec": [
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"protokoll\", \"DCC\");\r",
@@ -11170,9 +11258,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "08be2ec2-8d8b-4fcb-9a24-40aa1f0ebe5e",
+								"id": "131ba5aa-28e2-44ea-9b21-b1b2b06eeea0",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"pm.variables.set(\"decoderId\", jsonData.decoderId);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoder\");\r",
@@ -11595,9 +11684,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "85fa7fc8-cd1a-421a-a751-0c69bb7e568d",
+								"id": "b1743c81-65b0-4dc5-8cb8-3471766c487a",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"pm.variables.set(\"decoderId\", jsonData.decoderId);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/decoder\");\r",
@@ -12002,7 +12092,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "89f83005-b227-4fb7-9858-3ba65acd6213",
+								"id": "e25555dc-bbf2-42ca-8849-da73960d0ae8",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -12044,9 +12134,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "02735c42-93b7-411e-9a8e-ce05d71f2f2f",
+								"id": "22a58cb3-baf6-43c7-a33e-d1ed59a2c7ff",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/artikel\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.artikel.forEach((a) => { \r",
@@ -12103,7 +12194,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "4225199d-ab14-437a-a239-312364cf091a",
+								"id": "de1299e2-3ba1-48cd-8a56-419f32219e4a",
 								"exec": [
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerAdd\"));\r",
 									"pm.environment.set(\"bestellNr\", pm.variables.get(\"bestellNrAdd\"));\r",
@@ -12141,9 +12232,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b3be1376-b7f0-474e-9236-e11e8da087ea",
+								"id": "f1621923-e45b-4ee3-830b-869feccf788d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"pm.environment.set(\"artikelId\", jsonData.artikelId);\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/artikel\");\r",
@@ -12238,9 +12330,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b6312e94-3f64-410e-b9e7-d2ba324748fb",
+								"id": "3a1d9658-ce4f-4ee1-9ac4-f8e824391f78",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/artikel\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/artikel/{{artikelId}}\");\r",
@@ -12292,7 +12385,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "34dd5b27-ef3e-4745-bd54-4d36f9a90d39",
+								"id": "16c38ffc-d1af-488f-b16e-bb2d598da4b7",
 								"exec": [
 									"pm.environment.set(\"abbildung\", pm.variables.replaceIn(\"{{server}}/artikel/{{artikelId}}/abbildung.jpg\"));"
 								],
@@ -12342,9 +12435,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b1b54bf2-4975-4f4a-96e3-752f2cbec212",
+								"id": "7f4c4576-78d5-4ba9-8f39-4d4ce78525c6",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/artikel\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/artikel/{{artikelId}}\");\r",
@@ -12396,7 +12490,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "2dbe8ef9-8f42-4db0-a7b9-828ad3074d0d",
+								"id": "ff662edb-26a0-4e08-9501-303229024877",
 								"exec": [
 									"pm.environment.set(\"grossansicht\", pm.variables.replaceIn(\"{{server}}/artikel/{{artikelId}}/grossansicht.jpg\"));"
 								],
@@ -12446,7 +12540,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "ebdfa0b5-fe08-4f26-9965-4256c2877045",
+								"id": "7056e6e1-642e-48b4-a988-0a70a3da6c43",
 								"exec": [
 									"pm.environment.set(\"anDatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
 									"pm.environment.set(\"anTyp\", \"UMGEBAUT\");\r",
@@ -12461,9 +12555,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d03df9e6-59d9-41fb-ba4f-562cc103bc9b",
+								"id": "3a460f16-0727-4c80-a7fa-9698424b8122",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"pm.environment.set(\"anderungId\", jsonData.anderungId);\r",
 									"var parent = pm.variables.replaceIn(\"{{api}}/artikel/{{artikelId}}\");\r",
@@ -12530,7 +12625,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "f1b901f6-063d-4bbc-94a2-f13426e009ef",
+								"id": "cceb3559-57cd-43aa-97c0-913d81618fe7",
 								"exec": [
 									"pm.environment.set(\"anDatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
 									"pm.environment.set(\"anTyp\", \"REPARIERT\");\r",
@@ -12544,9 +12639,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "473d100a-8bd3-4bb0-8be2-adba78886d7c",
+								"id": "a5a227ab-6c3f-4dfe-b550-47af8f9896a8",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var parent = pm.variables.replaceIn(\"{{api}}/artikel/{{artikelId}}\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/artikel/{{artikelId}}/anderungen/{{anderungId}}\");\r",
@@ -12613,7 +12709,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "67673974-c25b-44a7-9b3b-5d534688bd1e",
+								"id": "35d68d63-a265-4986-9e4e-e11cd8bc88e5",
 								"exec": [
 									"pm.environment.set(\"hersteller\", pm.variables.get(\"herstellerUpdate\"));\r",
 									"pm.environment.set(\"bestellNr\", pm.variables.get(\"bestellNr\"));\r",
@@ -12650,9 +12746,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a256f9db-c506-4985-a52e-c073be6db17d",
+								"id": "cd5070dc-aaf6-49e1-aa33-a8d22e87751f",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/artikel\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/artikel/{{artikelId}}\");\r",
@@ -12759,9 +12856,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2ea1069f-c634-483a-8ec9-40179b8eef1c",
+								"id": "d266fea9-9cc5-43a0-b914-b4586384bdf2",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/artikel\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/artikel/{{artikelId}}\");\r",
@@ -12850,9 +12948,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "58682144-a791-44a9-8a2e-75c3c55ae547",
+								"id": "8a5f7829-b305-48d5-a35d-c0cd966cff28",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/artikel\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/artikel/{{artikelId}}\");\r",
@@ -12916,7 +13015,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "4bab2b4c-64fd-4ee8-8487-e8b66761a542",
+								"id": "2b238c53-4575-4007-9899-2e2c7bed2270",
 								"exec": [
 									"pm.environment.set(\"abbildung\", pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/abbildung.jpg\"));"
 								],
@@ -12953,9 +13052,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b06c1801-5312-48ca-af70-3a1a263b4695",
+								"id": "80d5dfed-a431-4794-9268-16df45c57bed",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/artikel\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/artikel/{{artikelId}}\");\r",
@@ -13019,7 +13119,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "a2a5aecc-8f19-42b0-abde-ff0052658d73",
+								"id": "f356091a-69c9-40fa-805b-d8f6831f5d0b",
 								"exec": [
 									"pm.environment.set(\"grossansicht\", pm.variables.replaceIn(\"{{server}}/produkt/{{hersteller}}/{{bestellNr}}/grossansicht.jpg\"));"
 								],
@@ -13056,7 +13156,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "321d4195-029b-44bb-820b-e44547c5745b",
+								"id": "28c1bc4c-cd0b-452b-a0e9-7280db96c533",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -13102,7 +13202,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9e671bc5-2d70-42b1-aed7-f5a4a1d39a2d",
+								"id": "45723bec-5630-4a8e-9433-dccd5fee25fb",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -13144,9 +13244,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8241f5dc-3a38-4744-96ea-32ace82825cb",
+								"id": "1a0fe9d8-ecb8-404d-8c76-b7f38b180d2e",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.zug.forEach((a) => { \r",
@@ -13198,7 +13299,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "7f7c5a3b-5751-482c-8691-d6b3a81c55d4",
+								"id": "5607e6b8-da5b-4389-8516-d70aa9c76ce2",
 								"exec": [
 									"pm.environment.set(\"zug\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"zugTyp\", pm.variables.get(\"zugTypAdd\"));\r",
@@ -13210,9 +13311,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "786b5e57-b394-4f00-a405-74fc1cb5d1a9",
+								"id": "f7f315b2-9cff-4d03-ab9a-f9ea8975df8e",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var zug = pm.variables.get(\"zug\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
@@ -13276,7 +13378,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "6bbfe7b7-3f4f-4205-b7b6-81921dce5ba7",
+								"id": "f3c8790b-d77d-441f-a6ce-541690677134",
 								"exec": [
 									"pm.environment.set(\"cnArtikelId\", \"00001\");\r",
 									"pm.environment.set(\"cnPosition\", 1);\r",
@@ -13298,9 +13400,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "48bb90ce-2a90-4a58-949a-5a6262f8a27e",
+								"id": "9affedc1-cf6b-4b9c-87dd-8ec8d26652f8",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"pm.environment.set(\"cnPosition\", jsonData.position);\r",
 									"var parent = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
@@ -13368,7 +13471,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "6da3f9b1-a55d-40f9-859b-93ccbbdae4c2",
+								"id": "297e5444-80c1-4f78-83cb-e9a03840c7ab",
 								"exec": [
 									"pm.environment.set(\"cnArtikelId\", \"00002\");\r",
 									"pm.environment.set(\"cnHersteller\", \"MARKLIN\");\r",
@@ -13387,9 +13490,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "79932b6e-ab1c-4dba-a306-132baeecb518",
+								"id": "293e05b8-41af-4b3f-bdee-00f4fabee4bb",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var parent = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}/consist/{{cnPosition}}\");\r",
@@ -13457,7 +13561,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "1b1972e2-cfa7-4ca5-9a83-7a552287a6b9",
+								"id": "559cb92d-94a3-4a2c-8fde-eabb65582a37",
 								"exec": [
 									"pm.environment.set(\"zugTyp\", pm.variables.get(\"zugTypUpdate\"));\r",
 									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
@@ -13468,9 +13572,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ea3e16ea-3ae1-4139-a073-0620d95cbe89",
+								"id": "1c2f34f7-5ba0-4b5b-a030-2e7eff5ee5b1",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var zug = pm.variables.get(\"zug\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
@@ -13550,9 +13655,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cc2efd69-7d4c-418f-8cd6-d3189e531d75",
+								"id": "2b56a1d3-b9fe-4362-9e82-7840b6e6bd01",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var zug = pm.variables.get(\"zug\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
@@ -13614,7 +13720,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f3a798a3-c85e-4fb8-90c7-a5db89facc84",
+								"id": "0295232f-3eb6-4651-9836-766853bc9e78",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -13652,7 +13758,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9300867a-2e12-42bd-a827-811e616419c5",
+								"id": "6a506a2f-b12d-4da7-9c45-d9b531df8451",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -13694,9 +13800,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "27745115-6e99-4dc4-b114-170f6c910f53",
+								"id": "f20a7631-01a8-4790-97f2-d7ee8c35d84e",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(2500));\r",
 									"var jsonData = pm.response.json();\r",
 									"pm.test(\"openapi\", () => pm.expect(jsonData.openapi).to.eql( \"3.0.1\"));\r",
 									"pm.test(\"info\", () => {\r",
@@ -13840,9 +13947,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cc6002e8-3b61-4aa4-8145-a696b2fe3678",
+								"id": "d285fb2b-b9be-47da-9926-6622dc9bdc20",
 								"exec": [
 									"pm.test(\"Achsfolg\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -13879,9 +13987,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7c122937-0bc0-47cc-b702-4c9527e961f4",
+								"id": "cf7fe775-9182-48de-a14d-5925c49fb285",
 								"exec": [
 									"pm.test(\"Antrieb\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -13918,9 +14027,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8f84f3fb-a573-4ef5-af6c-8612ee226dc9",
+								"id": "8c3df2eb-41a2-498b-b48d-f7bd9e669a0a",
 								"exec": [
 									"pm.test(\"Aufbau\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,abbildung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -13957,9 +14067,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "683581d9-c121-473c-8cd1-ef11ce5c0ca1",
+								"id": "bc107a87-5e7f-41c1-9a8b-214561ba3322",
 								"exec": [
 									"pm.test(\"Bahnverwaltung\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,land,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -13996,9 +14107,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5fd96263-b408-42cc-869e-4e43661757bd",
+								"id": "69d8931b-cadb-4d2c-9a82-456c9ba358ea",
 								"exec": [
 									"pm.test(\"Epoch\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14035,9 +14147,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5aaaf0f3-ed7b-4cd2-8cf2-9c8b8050e217",
+								"id": "2e21c325-b1c4-4872-9768-728fe9ecb87d",
 								"exec": [
 									"pm.test(\"Gattung\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14074,9 +14187,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a8874e94-3336-4f2c-b5da-1c4ac0dba493",
+								"id": "312b1ba6-ad27-4feb-9c08-c66e0185516a",
 								"exec": [
 									"pm.test(\"Hersteller\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,land,url,telefon,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14113,9 +14227,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "27fc0d78-9280-4f16-8829-b98b7cc0beb4",
+								"id": "9703e4a1-2d85-41d0-b5e1-0b30e8c3b5e2",
 								"exec": [
 									"pm.test(\"Kategorie\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14152,9 +14267,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f4b792d9-d935-4949-83d3-9a826ce1d0fc",
+								"id": "803506d2-fb28-4596-91b3-2db33320ffb5",
 								"exec": [
 									"pm.test(\"Kupplung\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,abbildung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14191,9 +14307,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "234ea0a4-8112-4f4a-bfe3-62c5d1142eac",
+								"id": "3b14adf8-9a7f-4656-a53e-5056b0e5fbed",
 								"exec": [
 									"pm.test(\"Licht\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,abbildung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14230,9 +14347,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c5a915dc-1c40-4001-8e07-1526f3198146",
+								"id": "afeb9905-b613-4277-880a-426d1293f5e6",
 								"exec": [
 									"pm.test(\"Massstab\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14269,9 +14387,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6e4331d5-6fd8-4cb9-aac7-242d3b34817a",
+								"id": "71359df4-32c1-4da8-9e06-ee83f14edc89",
 								"exec": [
 									"pm.test(\"Motor Typ\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14308,9 +14427,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9bc471d2-4c1f-4e52-ab44-b2d411b3097c",
+								"id": "992510a4-21ad-4772-9829-d697b24fb132",
 								"exec": [
 									"pm.test(\"Protokoll\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14347,9 +14467,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ad5b1dad-13cd-4e6d-8310-19fa43d8e9d3",
+								"id": "b70670a3-dd81-415b-9202-aa271c769e6a",
 								"exec": [
 									"pm.test(\"Sondermodell\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14386,9 +14507,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f2676f67-ba83-4940-aad5-7ea32a62aa22",
+								"id": "fa1d7c1d-36ea-4100-9535-112ce273f477",
 								"exec": [
 									"pm.test(\"Spurweite\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14425,9 +14547,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "87c7ab10-1b3a-4129-9489-e1c1cf5e5f41",
+								"id": "121c5148-c945-4739-961e-3ca8874dabd4",
 								"exec": [
 									"pm.test(\"Steuerung\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14464,9 +14587,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "02708dc2-b90c-4494-b328-8b8157e9426f",
+								"id": "b828050d-56c8-45ad-902c-d1e735df6468",
 								"exec": [
 									"pm.test(\"Zug Typ\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14503,9 +14627,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6536ef39-aa4f-4ebe-b3e8-aabe6e66ae33",
+								"id": "4ecacdc7-4f03-4904-8bf0-7376cb4cfd04",
 								"exec": [
 									"pm.test(\"Unter Kategorie\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"kategorie,name,bezeichnung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14542,9 +14667,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a03850f5-7b9e-41c1-85e2-ccc3eef5528c",
+								"id": "d052c943-a8b5-4e36-899b-c5d7579bbaba",
 								"exec": [
 									"pm.test(\"Vorbild\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,gattung,bezeichnung,kategorie,unterKategorie,bahnverwaltung,hersteller,bauzeit,anzahl,betreibsnummer,antrieb,achsfolg,anfahrzugkraft,leistung,dienstgewicht,geschwindigkeit,lange,ausserdienst,dmTreibrad,dmLaufradVorn,dmLaufradHinten,zylinder,dmZylinder,kolbenhub,kesseluberdruck,rostflache,uberhitzerflache,wasservorrat,verdampfung,fahrmotoren,motorbauart,leistungsubertragung,reichweite,kapazitat,klasse,sitzplatzeKL1,sitzplatzeKL2,sitzplatzeKL3,sitzplatzeKL4,aufbau,triebkopf,mittelwagen,drehgestellBauart,abbildung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14581,9 +14707,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1ab8dac1-ab5a-4f48-98b8-b19664094bfd",
+								"id": "75f89945-4e0b-4b73-a640-7e6534dee6a6",
 								"exec": [
 									"pm.test(\"Decoder Typ\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,bezeichnung,iMax,protokoll,fahrstufe,gerausch,konfiguration,stecker,anleitungen,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14620,9 +14747,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "942c48ed-2979-4ed1-a8be-51b534e2bb24",
+								"id": "04ae32a1-b987-4ea4-b68d-e10dc3a4ea33",
 								"exec": [
 									"pm.test(\"Decoder Typ Adress\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,index,bezeichnung,span,adressTyp,werkseinstellung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14659,9 +14787,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2794cd0b-b8f5-4660-a224-be32dc2ee8b5",
+								"id": "e32aa625-28bf-4213-963c-43dad97164fb",
 								"exec": [
 									"pm.test(\"Decoder Typ Cv\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,cv,bezeichnung,minimal,maximal,werkseinstellung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14698,9 +14827,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "30e2da0d-498b-4a51-b70d-33e99a771029",
+								"id": "d9cd1ca5-96a4-4f26-9715-902168e7fea5",
 								"exec": [
 									"pm.test(\"Decoder Typ Funktion\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,reihe,funktion,bezeichnung,programmable,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14737,9 +14867,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7a9963d7-ccb9-448b-bb94-7b5954ffe94f",
+								"id": "49d8bde7-7cce-4f65-8a2d-8bed1aaabdea",
 								"exec": [
 									"pm.test(\"Produkt\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,bezeichnung,kategorie,unterKategorie,lange,massstab,spurweite,epoch,bahnverwaltung,gattung,betreibsnummer,bauzeit,achsfolg,sondermodell,aufbau,licht,kupplung,steuerung,decoderHersteller,decoderBestellNr,motorTyp,anmerkung,anleitungen,explosionszeichnung,abbildung,grossansicht,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14776,9 +14907,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6ceac379-fb13-406a-b62e-5b5ceb97710f",
+								"id": "3ab8e28b-749c-4e4f-bb3e-413c8509fbcc",
 								"exec": [
 									"pm.test(\"Produkt Teil\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,teilHersteller,teilBestellNr,bezeichnung,kategorie,unterKategorie,anzahl,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14815,9 +14947,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "aba1153d-dc7f-455f-8779-0763ca963017",
+								"id": "aef4ff2d-cfa7-40db-8de3-3c24f19f7012",
 								"exec": [
 									"pm.test(\"Decoder\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"decoderId,hersteller,bestellNr,bezeichnung,iMax,protokoll,fahrstufe,gerausch,konfiguration,stecker,kaufdatum,wahrung,preis,anmerkung,status,anleitungen,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14854,9 +14987,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "25c22647-4fab-412f-aea2-5bfa5883230f",
+								"id": "3a86aa56-6773-461a-9b13-5466c86f1b64",
 								"exec": [
 									"pm.test(\"Decoder Adress\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"decoderId,index,bezeichnung,span,adressTyp,werkseinstellung,adress,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14893,9 +15027,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2c72264c-1ce8-4fc6-aca9-08c4f7660946",
+								"id": "0e1ac4ee-cd2d-4fa1-96fb-e95dd2d27093",
 								"exec": [
 									"pm.test(\"Decoder Cv\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"decoderId,cv,bezeichnung,minimal,maximal,werkseinstellung,wert,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14932,9 +15067,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ca30e9bf-6d9d-4922-89bd-0e6972e7ed34",
+								"id": "dcd42cb5-70f5-4af9-95ef-d4b2b4f71b0d",
 								"exec": [
 									"pm.test(\"Decoder Funktion\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"decoderId,reihe,funktion,bezeichnung,programmable,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -14971,13 +15107,14 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e8bff403-fb38-4d61-93ce-1b9443b07023",
+								"id": "7de2590a-c574-4aaa-9ba9-ba881183ed54",
 								"exec": [
 									"pm.test(\"Artikel\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"artikelId,hersteller,bestellNr,bezeichnung,kategorie,unterKategorie,lange,massstab,spurweite,epoch,bahnverwaltung,gattung,betreibsnummer,achsfolg,sondermodell,aufbau,licht,kupplung,steuerung,decoder,motorTyp,kaufdatum,wahrung,preis,stuck,verbleibende,anmerkung,beladung,status,abbildung,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"artikelId,hersteller,bestellNr,bezeichnung,kategorie,unterKategorie,lange,massstab,spurweite,epoch,bahnverwaltung,gattung,betreibsnummer,achsfolg,sondermodell,aufbau,licht,kupplung,steuerung,decoder,motorTyp,kaufdatum,wahrung,preis,stuck,verbleibende,anmerkung,beladung,status,abbildung,grossansicht,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){30}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){31}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}
@@ -15010,9 +15147,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "42d5c540-0f68-41e2-a4b8-77aa2daf3621",
+								"id": "b8956d0c-e861-4a36-93ea-b066f81f4e59",
 								"exec": [
 									"pm.test(\"Anderung\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"artikelId,anderungId,anderungsDatum,anderungsTyp,bezeichnung,stuck,anmerkung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -15049,9 +15187,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "964f9d92-ec13-4d79-ba68-7533df93c424",
+								"id": "d8de78b5-052f-48e1-a797-194e6db52474",
 								"exec": [
 									"pm.test(\"Zug\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,zugTyp,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -15088,9 +15227,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "562e9db8-a6c0-4509-b175-48711811ebf3",
+								"id": "c5b14738-0f19-4380-b762-062348f394f8",
 								"exec": [
 									"pm.test(\"Zug Consist\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"zug,position,artikelId,hersteller,bestellNr,bezeichnung,lange,bahnverwaltung,gattung,betreibsnummer,abbildung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
@@ -15133,7 +15273,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f640f128-3eae-4f67-b2cf-aadd6ee22e04",
+								"id": "53dca8dc-ff85-4c3f-aefe-c95ffa2a1d42",
 								"exec": [
 									"pm.test(\"Achsfolg\", () => pm.response.to.have.status(200));"
 								],
@@ -15182,7 +15322,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0de0ff93-e8e9-4bd9-926c-28bc86224d44",
+								"id": "3abdf8cb-7096-4eaf-8816-91d9ea1c2f0a",
 								"exec": [
 									"pm.test(\"Antrieb\", () => pm.response.to.have.status(200));"
 								],
@@ -15231,7 +15371,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2e6a468f-ffe6-47c0-8958-9a6cd0764bc9",
+								"id": "342fdd60-e135-49bc-a0d2-22ee9fd4ba92",
 								"exec": [
 									"pm.test(\"Aufbau\", () => pm.response.to.have.status(200));"
 								],
@@ -15280,7 +15420,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2a1153b8-880f-49b2-8a46-fa9c1746a6a8",
+								"id": "56dc5c08-c535-4d77-b8e8-a77b375be9cd",
 								"exec": [
 									"pm.test(\"Bahnverwaltung\", () => pm.response.to.have.status(200));"
 								],
@@ -15329,7 +15469,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "38858eb8-572c-4dfb-b2ee-fa9bf1d5c4a7",
+								"id": "15946936-1692-4236-852f-9f2de3e1172b",
 								"exec": [
 									"pm.test(\"Epoch\", () => pm.response.to.have.status(200));"
 								],
@@ -15378,7 +15518,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a5d53131-8079-42b6-8496-7e29cdd982b7",
+								"id": "fa3cd570-994b-4c4f-96ca-373534736e59",
 								"exec": [
 									"pm.test(\"Gattung\", () => pm.response.to.have.status(200));"
 								],
@@ -15427,7 +15567,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "df7e7549-336a-4234-9e8f-bc30a54b0345",
+								"id": "4e2cc2df-c6af-4e8f-9e8f-e59cbfd1cce7",
 								"exec": [
 									"pm.test(\"Hersteller\", () => pm.response.to.have.status(200));"
 								],
@@ -15476,7 +15616,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a72e4d74-93d2-4d2e-84e9-23c699ce32a2",
+								"id": "17e0b222-829b-4966-910d-77805958f02e",
 								"exec": [
 									"pm.test(\"Kupplung\", () => pm.response.to.have.status(200));"
 								],
@@ -15525,7 +15665,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e8e0515f-3515-4583-a817-53ff38d3e293",
+								"id": "036aced8-e563-4526-a75f-da6fa7eccd68",
 								"exec": [
 									"pm.test(\"Licht\", () => pm.response.to.have.status(200));"
 								],
@@ -15574,7 +15714,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2a084fab-2926-4363-aa72-1a165c23c022",
+								"id": "7b239e00-391e-42ab-8fc6-36c53c2489fa",
 								"exec": [
 									"pm.test(\"Kategorie\", () => pm.response.to.have.status(200));"
 								],
@@ -15623,7 +15763,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "05d6e723-96b2-4672-9f0d-723061acebe7",
+								"id": "9c894470-38d1-41ed-ba2e-ed7335c2a8b8",
 								"exec": [
 									"pm.test(\"Kategorie\", () => pm.response.to.have.status(200));"
 								],
@@ -15672,7 +15812,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "136351fb-d932-44c4-915f-ddacf94a5806",
+								"id": "e8d23f52-980c-4d22-8794-f7f28fd46bc6",
 								"exec": [
 									"pm.test(\"Motor Typ\", () => pm.response.to.have.status(200));"
 								],
@@ -15721,7 +15861,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b73d67e5-ed44-4298-b5ca-97bb10938b02",
+								"id": "93917f66-8694-43a7-9a23-41dac1d79d49",
 								"exec": [
 									"pm.test(\"Protokoll\", () => pm.response.to.have.status(200));"
 								],
@@ -15770,7 +15910,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1a17c225-9140-4c0b-8463-abe869128546",
+								"id": "9c01c7ec-4d4b-492e-8aa5-0eab0be37d8f",
 								"exec": [
 									"pm.test(\"Sondermodell\", () => pm.response.to.have.status(200));"
 								],
@@ -15819,7 +15959,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8e227308-2687-40f1-bd7a-b7986d5148f8",
+								"id": "c19ba0db-b06e-4439-ab90-fee466ed7430",
 								"exec": [
 									"pm.test(\"Spurweite\", () => pm.response.to.have.status(200));"
 								],
@@ -15868,7 +16008,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9908e255-838d-4322-90bc-dddbdea0a507",
+								"id": "1329c6bf-6dcc-4bba-9fbf-87d93cfb29a2",
 								"exec": [
 									"pm.test(\"Steuerung\", () => pm.response.to.have.status(200));"
 								],
@@ -15917,7 +16057,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "db4f4552-9b4b-4f42-8d21-002bc3ecaaad",
+								"id": "afca7d18-64a0-44a6-801c-2cc15b67425e",
 								"exec": [
 									"pm.test(\"Zug Typ\", () => pm.response.to.have.status(200));"
 								],
@@ -15966,7 +16106,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f2d560bf-3d37-46dd-bd17-c4b8131d766b",
+								"id": "34d418ac-fee3-47e2-b1c9-679dbdd116c4",
 								"exec": [
 									"pm.test(\"Unter Kategorie\", () => pm.response.to.have.status(200));"
 								],
@@ -16015,7 +16155,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f7cb1f83-1438-481a-b02e-a7590c55ae7b",
+								"id": "3516e85f-bcf8-40a9-9584-0c5db5a7c99a",
 								"exec": [
 									"pm.test(\"Vorbild\", () => pm.response.to.have.status(200));"
 								],
@@ -16064,7 +16204,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a2cb042c-24ca-4888-b6c7-af8ae442182f",
+								"id": "1ba8b677-b5eb-4b1d-b8f9-0c0c34f2e248",
 								"exec": [
 									"pm.test(\"Decoder Typ\", () => pm.response.to.have.status(200));"
 								],
@@ -16113,7 +16253,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "26b665cb-3358-4521-83d1-b83b46c6dfd8",
+								"id": "4f5a29f6-3048-409d-b208-09c057904a18",
 								"exec": [
 									"pm.test(\"Decoder Typ Adress\", () => pm.response.to.have.status(200));"
 								],
@@ -16162,7 +16302,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f26887db-9808-4610-905a-31fb8e916811",
+								"id": "dae9031a-250d-4973-9063-4dec8baa8f3c",
 								"exec": [
 									"pm.test(\"Decoder Typ Cv\", () => pm.response.to.have.status(200));"
 								],
@@ -16211,7 +16351,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c598db01-5c43-4dca-9d6a-4808bdcca208",
+								"id": "3103724b-d272-45ff-9fc2-e4e5e6903a17",
 								"exec": [
 									"pm.test(\"Decoder Typ Funktion\", () => pm.response.to.have.status(200));"
 								],
@@ -16260,7 +16400,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4c43c86f-830a-4b27-88db-2e6a89ed9226",
+								"id": "af39bff2-4aa1-4ffb-a69c-342213e3a77a",
 								"exec": [
 									"pm.test(\"Produkt\", () => pm.response.to.have.status(200));"
 								],
@@ -16309,7 +16449,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9541ea8b-58a4-4d15-bfdb-ca3354f2e765",
+								"id": "ef325b38-ba21-434e-a472-69dadf930b2d",
 								"exec": [
 									"pm.test(\"Produkt Teil\", () => pm.response.to.have.status(200));"
 								],
@@ -16358,7 +16498,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "974a3185-b065-4969-b6bc-96d77abc6369",
+								"id": "f8df9456-3943-4b1c-8bb6-237198ec2c50",
 								"exec": [
 									"pm.test(\"Decoder\", () => pm.response.to.have.status(200));"
 								],
@@ -16407,7 +16547,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6a5329bd-d486-4ee6-b213-8d64e05c617e",
+								"id": "af547b6a-36b1-4fc6-9121-61bb434acbc8",
 								"exec": [
 									"pm.test(\"Decoder Adress\", () => pm.response.to.have.status(200));"
 								],
@@ -16456,7 +16596,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fd098e3e-430c-4698-8122-b545027b8baa",
+								"id": "6ae09899-9920-4925-9fe2-a9325d3c4c10",
 								"exec": [
 									"pm.test(\"Decoder Cv\", () => pm.response.to.have.status(200));"
 								],
@@ -16505,7 +16645,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fad777f8-d408-47f8-9f2e-9eb0ef4985a2",
+								"id": "edfcb18f-cf83-494a-8e47-e91a02931f76",
 								"exec": [
 									"pm.test(\"Decoder Funktion\", () => pm.response.to.have.status(200));"
 								],
@@ -16554,7 +16694,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "eb7915b7-8f10-44f4-a5b0-649d62969dc5",
+								"id": "a64e004d-e56c-4e05-9b4e-cce65eaeed84",
 								"exec": [
 									"pm.test(\"Artikel\", () => pm.response.to.have.status(200));"
 								],
@@ -16603,7 +16743,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "21efca5f-c260-45de-bfe9-f899884cf908",
+								"id": "ad200c89-f457-4fbd-a39e-6e247d7a6bec",
 								"exec": [
 									"pm.test(\"Anderung\", () => pm.response.to.have.status(200));"
 								],
@@ -16652,7 +16792,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f2083a10-4e2d-4aa3-a0c2-58a80393a14e",
+								"id": "d03d8d3b-f54c-49fc-92c1-463f1c471bec",
 								"exec": [
 									"pm.test(\"Zug\", () => pm.response.to.have.status(200));"
 								],
@@ -16701,7 +16841,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4bd01772-8feb-4931-aeba-9a5803a87c16",
+								"id": "a39e0fb1-54b7-435d-88ce-42ab49a91ebc",
 								"exec": [
 									"pm.test(\"Zug Consist\", () => pm.response.to.have.status(200));"
 								],
@@ -16756,9 +16896,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1f54222d-970f-4768-92db-d38ebfaf4e66",
+								"id": "1f06d5d9-e59d-4ba4-86c6-3370e9002abc",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/user\");\r",
 									"var register = pm.variables.replaceIn(\"{{api}}/register\");\r",
 									"var forgot = pm.variables.replaceIn(\"{{api}}/forgot\");\r",
@@ -16814,7 +16955,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "8980cc69-6d0d-41fd-8d01-97141c5f0f4d",
+								"id": "bfd2a94d-dcea-40d1-be4c-49a7a0960035",
 								"exec": [
 									"pm.environment.set(\"user\", pm.variables.replaceIn(\"{{$randomUserName}}\"));\r",
 									"pm.environment.set(\"eMail\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
@@ -16844,9 +16985,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e040dcd1-0ebc-4b91-8adf-aae69c40129a",
+								"id": "c354c4f4-8a62-4001-9b3f-0a8b40cc1d80",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(2000));\r",
 									"var message = pm.response.json();\r",
 									"pm.test(\"timestamp\", () => pm.expect(message.timestamp).to.be.gt(0));\r",
 									"pm.test(\"status\", () => pm.expect(message.status).to.eql(201));\r",
@@ -16889,7 +17031,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "1768f33e-1530-4297-8d60-9adc7288cf4d",
+								"id": "8bb3acf9-2f4a-40ed-9e21-0fe8cb4b4f37",
 								"exec": [
 									"const regex = /(token=)([^\"]+)/;\r",
 									"var apiKey = pm.variables.get(\"mail_key\");\r",
@@ -16943,9 +17085,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "40f4d3bb-599e-4fe8-bdd9-662bfdf7c734",
+								"id": "c42375de-c2df-4f7d-bf7a-71c571e3c17e",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var message = pm.response.json();\r",
 									"pm.test(\"timestamp\", () => pm.expect(message.timestamp).to.be.gt(0));\r",
 									"pm.test(\"status\", () => pm.expect(message.status).to.eql(202));\r",
@@ -16985,7 +17128,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b990f15b-eb8f-4ec7-b579-3b099cbdc33a",
+								"id": "81b2052a-fe5c-4063-bbe7-516ad59276db",
 								"exec": [
 									"var apiKey = pm.variables.get(\"mail_key\");\r",
 									"var header = {\r",
@@ -17009,9 +17152,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b4f9630e-5837-4cca-a0cd-dac6eaac9b91",
+								"id": "26df761b-2276-48ac-87a1-61a41aa645c2",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(2000));\r",
 									"var message = pm.response.json();\r",
 									"pm.test(\"timestamp\", () => pm.expect(message.timestamp).to.be.gt(0));\r",
 									"pm.test(\"status\", () => pm.expect(message.status).to.eql(202));\r",
@@ -17051,7 +17195,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "10a333ec-faca-4e86-b42b-c7bc7604d0a0",
+								"id": "5804aa70-d7a3-42bc-bc34-6f9ddcf3966b",
 								"exec": [
 									"pm.environment.set(\"password\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"const regex = /(token=)([^\"]+)/;\r",
@@ -17105,9 +17249,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4f98f765-6a53-4874-8c01-9b335f6f2f1c",
+								"id": "2bf1d229-d3cb-4e11-b907-ce41fa268ae9",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var message = pm.response.json();\r",
 									"pm.test(\"timestamp\", () => pm.expect(message.timestamp).to.be.gt(0));\r",
 									"pm.test(\"status\", () => pm.expect(message.status).to.eql(202));\r",
@@ -17151,7 +17296,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "690a1251-9952-4900-86db-cdc627adedc2",
+								"id": "2ef232d9-0723-488c-86f3-20422f36235f",
 								"exec": [
 									"pm.environment.set(\"newPassword\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
@@ -17161,9 +17306,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5f97e6c7-9bbf-4cac-a306-1b1c99608f8a",
+								"id": "dddb0846-a7cc-4caa-947b-320bee6ac963",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(2000));\r",
 									"var message = pm.response.json();\r",
 									"pm.test(\"timestamp\", () => pm.expect(message.timestamp).to.be.gt(0));\r",
 									"pm.test(\"status\", () => pm.expect(message.status).to.eql(202));\r",
@@ -17216,7 +17362,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "2f96fa4b-2c2e-4849-ac10-c2fcf784cc23",
+								"id": "33a507a8-cd52-4163-bee9-cbb08fb40883",
 								"exec": [
 									"pm.environment.set(\"eMail\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
 									"pm.environment.set(\"firstName\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));\r",
@@ -17229,9 +17375,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c3c24364-b805-4405-8e05-f7c3f18402f5",
+								"id": "ec0b6ba1-de4e-45b7-af66-22c5a77b198d",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/user\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/user/{{user}}\");\r",
@@ -17316,9 +17463,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "de13fe9c-2103-4a6d-9508-29eea540efe6",
+								"id": "f2555302-24e0-41f7-8d4d-fdccdc9b8a39",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/user\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/user/{{user}}\");\r",
@@ -17385,7 +17533,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d4d71e89-6704-4ef9-854e-572cf2aa6230",
+								"id": "aa99453f-53e0-4787-bbd9-d2a57588615c",
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(204));"
 								],
@@ -17442,7 +17590,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "9c7c3d52-ae91-40fb-94b4-71fdab10c04d",
+								"id": "5bd6c3a7-890b-4192-9e5e-c495b2b66314",
 								"exec": [
 									""
 								],
@@ -17452,7 +17600,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "12e067d5-4e26-4f4c-b16e-adc32c7a16fa",
+								"id": "79c92839-9112-4473-8108-b62872a1fc04",
 								"exec": [
 									"// Don't wrap in pm.test for fail hard...\r",
 									"pm.response.to.have.status(200);"
@@ -17496,7 +17644,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "192f9957-bd2e-48db-bc8c-0f7148b41d92",
+						"id": "a787f815-d714-4e82-84bc-e3196e1f5a0e",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -17506,7 +17654,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f40d6ccb-168b-4e02-bb30-0803b5fc1422",
+						"id": "11f059cf-9484-4b5c-9a1e-ccb4cbf0ad72",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -17536,7 +17684,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "c99d4797-3497-4be4-8212-9825734572c1",
+				"id": "1e47255d-8930-4f46-a2b9-4eef68e74f57",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -17546,7 +17694,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "43255242-3dd0-4908-9542-dfd08e5e8815",
+				"id": "e3483de7-22a2-4dd5-925e-1bc8b074bc0b",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -17610,6 +17758,11 @@
 			"id": "52106966-5a12-4e86-a68e-f3724bb44316",
 			"key": "language",
 			"value": "de"
+		},
+		{
+			"id": "8ceb3570-42e1-40a3-8d6c-ba7ff0645eff",
+			"key": "testFiles",
+			"value": ""
 		},
 		{
 			"id": "5b7effb1-ff64-4840-8d73-fe9f49676e14",
@@ -18100,11 +18253,6 @@
 			"id": "38c9c1e0-519a-4b0b-88be-f80b3798f6e6",
 			"key": "telefonUpdate",
 			"value": "030 2341347"
-		},
-		{
-			"id": "8ceb3570-42e1-40a3-8d6c-ba7ff0645eff",
-			"key": "testFiles",
-			"value": ""
 		},
 		{
 			"id": "aa4cd428-d3b7-4731-9bac-1fe0ebaa9495",

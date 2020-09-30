@@ -29,9 +29,9 @@ public class ModellBahnAuthenticationEntryPoint extends BasicAuthenticationEntry
     private final ObjectMapper mapper;
 
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authEx) throws IOException {
-        if (request.getContextPath().startsWith(ApiPaths.API_ROOT) ||
-            request.getContextPath().startsWith(WebSecurityConfig.MANAGEMENT_ROOT)) {
+        String requestUri = request.getRequestURI();
 
+        if (requestUri.startsWith(ApiPaths.API_ROOT) || requestUri.startsWith(ApiPaths.MANAGEMENT_ROOT)) {
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.getWriter()
@@ -39,7 +39,7 @@ public class ModellBahnAuthenticationEntryPoint extends BasicAuthenticationEntry
                         mapper.writeValueAsString(
                             ErrorMessage.builder()
                                         .code(HttpStatus.UNAUTHORIZED.value())
-                                        .path(request.getContextPath())
+                                        .path(requestUri)
                                         .timestamp(System.currentTimeMillis())
                                         .message(HttpStatus.UNAUTHORIZED.name())
                                         .build()));

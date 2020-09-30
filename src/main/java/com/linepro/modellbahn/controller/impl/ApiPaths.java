@@ -236,10 +236,10 @@ public interface ApiPaths {
 
     String USER_ROOT       = API_ROOT + "user";
     String SEARCH_USER     = USER_ROOT;
-    String REGISTER_USER   = API_ROOT + "/register";
-    String CONFIRM_USER    = API_ROOT + "/confirm";
-    String FORGOT_PASSWORD = API_ROOT + "/forgot";
-    String RESET_PASSWORD  = API_ROOT + "/reset";
+    String REGISTER_USER   = API_ROOT + "register";
+    String CONFIRM_USER    = API_ROOT + "confirm";
+    String FORGOT_PASSWORD = API_ROOT + "forgot";
+    String RESET_PASSWORD  = API_ROOT + "reset";
     String GET_USER        = USER_ROOT + "/{" + ApiNames.NAMEN + "}";
     String CHANGE_PASSWORD = USER_ROOT + "/{" + ApiNames.NAMEN + "}";
     String UPDATE_USER     = USER_ROOT + "/{" + ApiNames.NAMEN + "}";
@@ -251,5 +251,18 @@ public interface ApiPaths {
 
     String[] USER_ENDPOINTS = {
         SEARCH_USER, GET_USER, CHANGE_PASSWORD, UPDATE_USER, DELETE_USER
+    };
+
+    String MANAGEMENT_ROOT = "/management/";
+    String MANAGEMENT_HEALTH = MANAGEMENT_ROOT + "health";
+    String MANAGEMENT_INDEX = MANAGEMENT_ROOT;
+    String MANAGEMENT_INFO = MANAGEMENT_ROOT + "info";
+
+    String[] MANAGEMENT_PUBLIC = {
+        MANAGEMENT_INDEX, MANAGEMENT_HEALTH, MANAGEMENT_INFO
+    };
+
+    String[] MANAGEMENT_SECURED = {
+       MANAGEMENT_ROOT + "**"
     };
 }

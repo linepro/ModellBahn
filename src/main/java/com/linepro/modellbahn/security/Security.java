@@ -2,6 +2,10 @@ package com.linepro.modellbahn.security;
 
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 
+import org.springframework.boot.actuate.audit.AuditEventRepository;
+import org.springframework.boot.actuate.audit.InMemoryAuditEventRepository;
+import org.springframework.boot.actuate.trace.http.HttpTraceRepository;
+import org.springframework.boot.actuate.trace.http.InMemoryHttpTraceRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,6 +31,16 @@ import com.linepro.modellbahn.security.user.UserService;
 })
 @Component(PREFIX + "Security")
 public class Security {
+
+    @Bean(PREFIX + "AuditEventRepository")
+    public AuditEventRepository getAuditEventRepository() {
+        return new InMemoryAuditEventRepository();
+    }
+
+    @Bean(PREFIX + "HttpTraceRepository ")
+    public HttpTraceRepository getHttpTraceRepository () {
+        return new InMemoryHttpTraceRepository();
+    }
 
     @Bean(PREFIX + "PasswordEncoder")
     public PasswordEncoder getPasswordEncoder() {

@@ -34,12 +34,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     public static final SimpleGrantedAuthority USER = new SimpleGrantedAuthority(USER_AUTHORITY);
 
-    public static final String MANAGEMENT_ROOT = "/management";
-
-    public static final String[] MANAGEMENT_PUBLIC = { MANAGEMENT_ROOT, MANAGEMENT_ROOT + "/health", MANAGEMENT_ROOT + "/info" };
-
-    public static final String[] MANAGEMENT_SECURED = { MANAGEMENT_ROOT + "/**" };
-
     private final AccessDeniedHandler accessDeniedHandler;
     
     private final PasswordEncoder passwordEncoder;
@@ -66,11 +60,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and().httpBasic().authenticationEntryPoint(authenticationEntryPoint)
             .and().authorizeRequests()
                   .antMatchers(RESOURCE_ENDPOINTS).permitAll()
-                  .antMatchers(MANAGEMENT_PUBLIC).permitAll()
+                  .antMatchers(ApiPaths.MANAGEMENT_PUBLIC).permitAll()
                   .antMatchers(HttpMethod.POST, ApiPaths.REGISTER_ENDPOINTS).permitAll()
                   .antMatchers(HttpMethod.POST, ApiPaths.USER_ENDPOINTS).hasAnyAuthority(ADMIN_AUTHORITY,USER_AUTHORITY)
                   .antMatchers(API_ENDPOINTS).hasAuthority(USER_AUTHORITY)
-                  .antMatchers(MANAGEMENT_SECURED).hasAuthority(ADMIN_AUTHORITY)
+                  .antMatchers(ApiPaths.MANAGEMENT_SECURED).hasAuthority(ADMIN_AUTHORITY)
             //.and().anonymous().authorities(USER_ROLE)
             //.and().oauth2ResourceServer(oauth2 -> oauth2.jwt())
             //.and().formLogin().loginPage("/").loginProcessingUrl("/login").defaultSuccessUrl("/home").failureHandler(authenticationFailureHandler())

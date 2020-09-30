@@ -37,8 +37,10 @@ public class ModellBahnAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException exception) throws IOException, ServletException {
-        if (request.getContextPath().startsWith(ApiPaths.API_ROOT) ||
-            request.getContextPath().startsWith(WebSecurityConfig.MANAGEMENT_ROOT)) {
+        String requestUri = request.getRequestURI();
+
+        if (requestUri.startsWith(ApiPaths.API_ROOT) ||
+            requestUri.startsWith(ApiPaths.MANAGEMENT_ROOT)) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     
             if (auth != null) {
@@ -52,7 +54,7 @@ public class ModellBahnAccessDeniedHandler implements AccessDeniedHandler {
                         mapper.writeValueAsString(
                             ErrorMessage.builder()
                                         .code(HttpStatus.FORBIDDEN.value())
-                                        .path(request.getContextPath())
+                                        .path(requestUri)
                                         .timestamp(System.currentTimeMillis())
                                         .message(HttpStatus.FORBIDDEN.name())
                                         .build()));

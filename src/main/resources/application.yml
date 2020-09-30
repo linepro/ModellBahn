@@ -24,13 +24,10 @@ server:
    tomcat:
       accesslog:
          enabled: true
-      
-#security:
-#   oauth2:
-#      client:
-#         client-id: first-client
-#         client-secret: noonewilleverguess
-#   require-ssl: true
+
+logging:
+   file: logs/modellbahn.jsonl
+   path: logs
 
 management:
    endpoint:
@@ -39,6 +36,8 @@ management:
       beans:
          enabled: true
       caches:
+         enabled: true
+      conditions:
          enabled: true
       configprops:
          enabled: true
@@ -64,25 +63,21 @@ management:
          enabled: true
       mappings:
          enabled: true
-      prometheus:
-         enabled: true
       scheduledtasks:
-         enabled: true
-      sessions:
          enabled: true
       shutdown:
          enabled: true
       threaddump:
          enabled: true
    endpoints:
-      enabled-by-default: true
+      enabled-by-default: false
       jmx:
          exposure:
             exclude: "*"
       web:
          base-path: /management
          exposure:
-            include: auditevents,beans,caches,configprops,env,flyway,health,heapdump,httptrace,info,logfile,loggers,metrics,mappings,prometheus,scheduledtasks,sessions,shutdown,threaddump
+            include: auditevents,beans,caches,configprops,env,flyway,health,heapdump,httptrace,info,logfile,loggers,metrics,mappings,scheduledtasks,shutdown,threaddump
    health:
       defaults:
          enabled: false
