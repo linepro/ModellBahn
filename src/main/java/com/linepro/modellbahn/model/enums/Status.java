@@ -3,11 +3,10 @@ package com.linepro.modellbahn.model.enums;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.linepro.modellbahn.model.refs.IDescribedEnum;
-import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.controller.impl.ApiNames;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 
 /**
  * Status.
@@ -18,40 +17,40 @@ import io.swagger.annotations.ApiModelProperty;
 @JsonRootName(value = ApiNames.STATUS)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG })
-@ApiModel(value = ApiNames.STATUS, description = "Article status")
-public enum Status implements IDescribedEnum {
+@Schema(name = ApiNames.STATUS, description = "Article status")
+public enum Status implements DescribedEnum {
 	
-    WUNSCHMODEL("Wunschmodel", ""),
+    WUNSCHMODEL("wunschmodel"),
 	
-    GEKAUFT("Gekauft", ""),
+    GEKAUFT("gekauft"),
 
-    BASTLER("Bastler", ""),
+    BASTELN("basteln"),
 	
-    VERKAUFT("Verkauft", "");
+    VERKAUFT("verkauft");
 
     private final String description;
 
     private final String tooltip;
 
-    Status(String description, String tooltip) {
-        this.description = description;
-        this.tooltip = tooltip;
+    Status(String description) {
+        this.description = "{com.linepro.modellbahn.status." + description + ".bezeichnung}";
+        this.tooltip = "{com.linepro.modellbahn.status." + description + ".tooltip}";
     }
 
     @Override
-    @ApiModelProperty(value = "Article status name", example = "GEKAUFT", required = true)
+    @Schema(description = "Article status name", example = "GEKAUFT", accessMode = AccessMode.READ_ONLY)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @ApiModelProperty(value = "Article status description", example = "Purchased.", required = true)
+    @Schema(description = "Article status description", example = "Purchased.", accessMode = AccessMode.READ_ONLY)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @ApiModelProperty(value = "AdressTyp tooltip", example = "0 - 10239.")
+    @Schema(description = "Article status tooltip", example = "Purchased.", accessMode = AccessMode.READ_ONLY)
     public String getTooltip() {
         return tooltip;
     }

@@ -1,0 +1,7 @@
+decoderId,cv,bezeichnung,minimal,maximal,werkseinstellung,wert,deleted
+11111,1,Adresse,1,80,3,3,false
+11111,2,Anfahrverzögerung,1,63,3,3,false
+11111,3,Beschleunigungszeit,1,63,16,16,false
+11111,4,Bremsverzögerung,1,63,12,12,false
+11111,5,Höchstgeschwindigkeit,1,63,63,63,false
+11111,8,"Rückstellen auf Serienwerte",,,8,8,false

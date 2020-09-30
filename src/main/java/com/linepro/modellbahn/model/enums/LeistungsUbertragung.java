@@ -3,11 +3,10 @@ package com.linepro.modellbahn.model.enums;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.linepro.modellbahn.model.refs.IDescribedEnum;
-import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.controller.impl.ApiNames;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 
 /**
  * Konfiguration.
@@ -18,42 +17,42 @@ import io.swagger.annotations.ApiModelProperty;
 @JsonRootName(value = ApiNames.LEISTUNGSUBERTRAGUNG)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG })
-@ApiModel(value = ApiNames.LEISTUNGSUBERTRAGUNG, description = "Drive mechanisms")
-public enum LeistungsUbertragung implements IDescribedEnum {
+@Schema(name = ApiNames.LEISTUNGSUBERTRAGUNG, description = "Drive mechanisms")
+public enum LeistungsUbertragung implements DescribedEnum {
 
-    NONE("", ""),
-    
-    ELEKTRISH("Elektrish", ""),
+    KEIN("kein"),
 
-    HYDRAULISH("Hydraulish", ""),
+    ELEKTRISH("elektrish"),
 
-    MECHANISH("Mechanish", ""),
+    HYDRAULISH("hydraulish"),
 
-    PRESSLUFT("Pressluft", "");
+    MECHANISH("mechanish"),
+
+    PRESSLUFT("pressluft");
 
     private final String description;
 
     private final String tooltip;
 
-    LeistungsUbertragung(String description, String tooltip) {
-        this.description = description;
-        this.tooltip = tooltip;
+    LeistungsUbertragung(String description) {
+        this.description = "{com.linepro.modellbahn.leistungsUbertragung." + description + ".bezeichnung}";
+        this.tooltip = "{com.linepro.modellbahn.leistungsUbertragung." + description + ".tooltip}";
     }
 
     @Override
-    @ApiModelProperty(value = "LeistungsUbertragung name", example = "ELEKTRISH", required = true)
+    @Schema(description = "Drive mechanism name", example = "ELEKTRISH", accessMode = AccessMode.READ_ONLY)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @ApiModelProperty(value = "LeistungsUbertragung description", example = "Elektrish", required = true)
+    @Schema(description = "Drive mechanism description", example = "Elektrish", accessMode = AccessMode.READ_ONLY)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @ApiModelProperty(value = "AdressTyp tooltip", example = "0 - 10239.")
+    @Schema(description = "Drive mechanism tooltip", example = "Elektrish", accessMode = AccessMode.READ_ONLY)
     public String getTooltip() {
         return tooltip;
     }

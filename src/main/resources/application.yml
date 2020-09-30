@@ -1,0 +1,178 @@
+com:
+   linepro:
+      modellbahn:
+         user:
+            confirmUrl: https://localhost:8086/ModellBahn/confirm 
+            resetUrl: https://localhost:8086/ModellBahn/reset
+         noreply: modellbahn-3f2861@inbox.mailtrap.io
+
+server:
+   error:
+      whitelabel:
+         enabled: false
+   port: 8086
+   servlet:
+      application-display-name: ModellBahn
+      context-path: /
+   ssl:
+      enabled: true
+      key-store-type: PKCS12
+      key-store: classpath:keystore.p12
+      key-store-password: password
+      key-alias: linepro-dev
+      key-password: password
+   tomcat:
+      accesslog:
+         enabled: true
+
+logging:
+   file: logs/modellbahn.jsonl
+   path: logs
+
+management:
+   endpoint:
+      auditevents:
+         enabled: true
+      beans:
+         enabled: true
+      caches:
+         enabled: true
+      conditions:
+         enabled: true
+      configprops:
+         enabled: true
+      env:
+         enabled: true
+      flyway:
+         enabled: true
+      health:
+         enabled: true
+         show-components: always
+         show-details: when-authorized
+      heapdump:
+         enabled: true
+      httptrace:
+         enabled: true
+      info:
+         enabled: true
+      logfile:
+         enabled: true
+      loggers:
+         enabled: true
+      metrics:
+         enabled: true
+      mappings:
+         enabled: true
+      scheduledtasks:
+         enabled: true
+      shutdown:
+         enabled: true
+      threaddump:
+         enabled: true
+   endpoints:
+      enabled-by-default: false
+      jmx:
+         exposure:
+            exclude: "*"
+      web:
+         base-path: /management
+         exposure:
+            include: auditevents,beans,caches,configprops,env,flyway,health,heapdump,httptrace,info,logfile,loggers,metrics,mappings,scheduledtasks,shutdown,threaddump
+   health:
+      defaults:
+         enabled: false
+      datasource:
+         enabled: true
+      diskspace:
+         enabled: true
+      livenessstate:
+         enabled: true
+      mail:
+         enabled: true
+      ping:
+         enabled: true
+      readinessstate:
+         enabled: true
+   server:
+      port: 8087
+
+spring:
+   application:
+      name: ModellBahn
+   datasource:
+      url: jdbc:h2:./modellbahn;TRACE_LEVEL_FILE=4;TRACE_LEVEL_SYSTEM_OUT=1;AUTO_SERVER=TRUE;AUTO_SERVER_PORT=9090
+      driverClassName: org.h2.Driver
+      username: sa
+      password: password
+      tomcat:
+         initial-size: 1
+         max-wait: 10000
+         max-active: 5
+         test-on-borrow: true
+   flyway:
+      baseline-description: Initial
+      baseline-on-migrate: true
+      baseline-version: 1
+      check-location: true
+      clean-disabled: true
+      clean-on-validation-error: false
+      enabled: true
+      encoding: UTF-8
+      installed-by: flyway
+      locations: classpath:db/migration
+      mixed: false
+      repeatable-sql-migration-prefix: R
+      sql-migration-prefix: V
+      sql-migration-separator: __
+      sql-migration-suffixes: .sql
+      validate-on-migrate: true
+   h2:
+      console:
+         enabled: true
+         path: /h2-console
+         settings:
+            web-allow-others: true
+   jmx:
+      enabled: false
+   jpa:
+      database-platform: org.hibernate.dialect.H2Dialect
+      hibernate:
+         ddl-auto: none
+      open-in-view: false
+      properties:
+         hibernate:
+            format_sql: false
+            generate_statistics: false
+            temp:
+               use_jdbc_metadata_defaults: false
+      show-sql: false
+   mail:
+      host: smtp.mailtrap.io
+      username: 66516d07b82677
+      password: c1a7e1e6a3aa07
+      port: 2525
+      properties:
+         mail:
+            smtp:
+               auth: true
+               starttls:
+                  enable: true
+   messages:
+      basename: ValidationMessages
+      cache-duration: 3600
+      use-code-as-default-message: true
+   mvc:
+      locale: de
+      locale-resolver: accept-header
+      resource:
+         cache:
+            timeout: 1
+      servlet:
+         path: /ModellBahn
+         multipart:
+            enabled: true
+            max-file-size: 5MB
+   quartz:
+      auto-startup: false
+#   resources:
+#      static-locations: classpath:/files/,classpath:/static-files,file:./store

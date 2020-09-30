@@ -3,10 +3,10 @@ package com.linepro.modellbahn.model.enums;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.linepro.modellbahn.model.refs.IDescribedEnum;
-import com.linepro.modellbahn.rest.util.ApiNames;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.linepro.modellbahn.controller.impl.ApiNames;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 
 /**
  * Stecker. Enumeration of Decoder connections
@@ -16,39 +16,39 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @JsonRootName(value = ApiNames.STECKER)
 @JsonIgnoreProperties(ignoreUnknown=true)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG })
-@ApiModel(value = ApiNames.STECKER, description = "Decoder statues")
-public enum DecoderStatus implements IDescribedEnum {
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.LINKS })
+@Schema(name = ApiNames.STECKER, description = "Decoder statues")
+public enum DecoderStatus implements DescribedEnum {
 
-    INSTALIERT("Instaliert.",""),
+    INSTALIERT("instaliert"),
 
-    FREI("Frei.", ""),
+    FREI("frei"),
 
-    BASTLER("Bastler.", "");
+    BASTLER("bastler");
 
     private final String description;
 
     private final String tooltip;
 
-    DecoderStatus(String description, String tooltip) {
-        this.description = description;
-        this.tooltip = tooltip;
+    DecoderStatus(String description) {
+        this.description = "{com.linepro.modellbahn.decoder." + description + ".bezeichnung}";
+        this.tooltip = "{com.linepro.modellbahn.decoder." + description + ".tooltip}";
     }
 
     @Override
-    @ApiModelProperty(value = "Decoder status name", example = "INSTALIERT", required = true)
+    @Schema(description = "Decoder status name", example = "INSTALIERT", accessMode = AccessMode.READ_ONLY)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @ApiModelProperty(value = "Decoder status description", example = "Instaliert.", required = true)
+    @Schema(description = "Decoder status description", example = "Instaliert.", accessMode = AccessMode.READ_ONLY)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @ApiModelProperty(value = "AdressTyp tooltip", example = "0 - 10239.")
+    @Schema(description = "Decoder status tooltip", example = "Instaliert.", accessMode = AccessMode.READ_ONLY)
     public String getTooltip() {
         return tooltip;
     }

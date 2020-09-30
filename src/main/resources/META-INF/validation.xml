@@ -6,5 +6,5 @@
             http://xmlns.jcp.org/xml/ns/validation/configuration/validation-configuration-2.0.xsd"
   version="2.0">
 
-  <message-interpolator>com.linepro.modellbahn.util.i18n.LocaleSpecificMessageInterpolator</message-interpolator>
+  <message-interpolator>com.linepro.modellbahn.i18n.ModellBahnInterpolator</message-interpolator>
 </validation-config>

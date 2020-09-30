@@ -1,0 +1,15 @@
+hersteller,bestellNr,cv,bezeichnung,minimal,maximal,werkseinstellung,deleted
+ESU,66666,1,Adresse,1,80,3,false
+ESU,66666,2,Anfahrverzögerung,1,63,3,false
+ESU,66666,3,Beschleunigungszeit,1,63,16,false
+ESU,66666,4,Bremsverzögerung,1,63,12,false
+ESU,66666,5,Höchstgeschwindigkeit,1,63,63,false
+ESU,66666,8,"Rückstellen auf Serienwerte",,,8,false
+ESU,66666,53,Regelungsreferenz,1,63,45,false
+ESU,66666,54,"Lastregelung Param. K",1,63,32,false
+ESU,66666,55,"Lastregelung Param. L",1,63,24,false
+ESU,66666,56,Regelungseinfluss,1,63,63,false
+ESU,66666,73,Speicheroptionen,0,7,3,false
+ESU,66666,75,"Märklin Addresse 2",1,80,4,false
+ESU,66666,78,"Anfahrspannung Analog AC",1,63,25,false
+ESU,66666,79,"Höchstgeschwindigkeit Analog AC",1,63,63,false

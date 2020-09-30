@@ -3,11 +3,10 @@ package com.linepro.modellbahn.model.enums;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.linepro.modellbahn.model.refs.IDescribedEnum;
-import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.controller.impl.ApiNames;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 
 /**
  * AdressTyp.
@@ -17,45 +16,45 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @JsonRootName(value = ApiNames.ADRESS_TYP)
 @JsonIgnoreProperties(ignoreUnknown=true)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG })
-@ApiModel(value = ApiNames.ADRESS_TYP, description = "Adress types")
-public enum AdressTyp implements IDescribedEnum {
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.LINKS })
+@Schema(name = ApiNames.ADRESS_TYP, description = "Adress types")
+public enum AdressTyp implements DescribedEnum {
 
-    DCC("DCC lang", "0 - 10239."),
-    
-    DCC_SHORT("DCC kurz", "1 - 27."),
-    
-    DELTA("Märklin DELTA", "(2,6,8,18,20,24,26,54,56,60,62,72,74,78,80."),
-    
-    MM("Märklin Motorola", "1 - 80."),
-    
-    DIGITAL("Märklin Digital", "(fx or mfx) 1 - 255."),
-    
-    WEICHE("Märklin Magnetartikel", "1 - 256.");
+    DCC("dcc"),
+
+    DCC_SHORT("kurz"),
+
+    DELTA("delta"),
+
+    MOTOROLA("motorola"),
+
+    DIGITAL("digital"),
+
+    MAGNETARTIKEL("magnetartikel");
 
     private final String description;
 
     private final String tooltip;
 
-    AdressTyp(String description, String tooltip) {
-        this.description = description;
-        this.tooltip = tooltip;
+    AdressTyp(String description) {
+        this.description = "{com.linepro.modellbahn.adressTyp." + description + ".bezeichnung}";
+        this.tooltip = "{com.linepro.modellbahn.adressTyp." + description + ".tooltip}";
     }
 
     @Override
-    @ApiModelProperty(value = "AdressTyp name", example = "DCC", required = true)
+    @Schema(description = "Adress Type name", example = "DCC", accessMode = AccessMode.READ_ONLY)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @ApiModelProperty(value = "AdressTyp description", example = "DCC lang.", required = true)
+    @Schema(description = "Adress Type description", example = "DCC lang.", accessMode = AccessMode.READ_ONLY)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @ApiModelProperty(value = "AdressTyp tooltip", example = "0 - 10239.", required = true)
+    @Schema(description = "Adress Type tooltip", example = "0 - 10239.", accessMode = AccessMode.READ_ONLY)
     public String getTooltip() {
         return tooltip;
     }

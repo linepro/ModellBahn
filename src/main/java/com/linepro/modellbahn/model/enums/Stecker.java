@@ -3,11 +3,10 @@ package com.linepro.modellbahn.model.enums;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.linepro.modellbahn.model.refs.IDescribedEnum;
-import com.linepro.modellbahn.rest.util.ApiNames;
+import com.linepro.modellbahn.controller.impl.ApiNames;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 
 /**
  * Stecker. Enumeration of Decoder connections
@@ -18,52 +17,54 @@ import io.swagger.annotations.ApiModelProperty;
 @JsonRootName(value = ApiNames.STECKER)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG })
-@ApiModel(value = ApiNames.STECKER, description = "Stecker types")
-public enum Stecker implements IDescribedEnum {
+@Schema(name = ApiNames.STECKER, description = "Stecker types")
+public enum Stecker implements DescribedEnum {
 
-    EINGEBAUT("Eingebaut", "Eingebaut / bedrahten"),
+    EINGEBAUT("eingebaut"),
 
-    NEM651("NEM 651", "MOROP 6 poliges stecker."),
+    NEM651("nem651"),
 
-    NEM652("NEM 652", "MOROP 8 poliges stecker."),
+    NEM652("nem652"),
 
-    NEM654("NEM 654", "MOROP 4 poliges stecker."),
+    NEM654("nem654"),
 
-    MTC21("MTC21", "Märklin 21 poliges stecker"),
+    MTC21("mtc21"),
 
-    NEXT18("NextX18", "NEM 662 18 poliges stecker"),
+    NEXT18("nextx18"),
 
-    PLUX8("PluX8", "NEM 658 8 poliges stecker"),
+    PLUX8("plux8"),
 
-    PLUX12("PluX12", "NEM 658 12 poliges stecker"),
+    PLUX12("plux12"),
 
-    PLUX16("PluX16", "NEM 658 16 poliges stecker"),
+    PLUX16("plux16"),
 
-    plux22("PluX22", "NEM 658 22 poliges stecker");
+    PLUX22("plux22"),
+
+    VERDRAHTET("verdrahtet");
 
     private final String description;
 
     private final String tooltip;
 
-    Stecker(String description, String tooltip) {
-        this.description = description;
-        this.tooltip = tooltip;
+    Stecker(String description) {
+        this.description = "{com.linepro.modellbahn.stecker." + description + ".bezeichnung}";
+        this.tooltip = "{com.linepro.modellbahn.stecker." + description + ".tooltip}";
     }
 
     @Override
-    @ApiModelProperty(value = "Stecker type name", example = "EINGEBAUT", required = true)
+    @Schema(description = "Stecker type name", example = "EINGEBAUT", accessMode = AccessMode.READ_ONLY)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @ApiModelProperty(value = "Stecker type description", example = "Builin / Hardwired.", required = true)
+    @Schema(description = "Stecker type description", example = "Built in / Hardwired.", accessMode = AccessMode.READ_ONLY)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @ApiModelProperty(value = "AdressTyp tooltip", example = "0 - 10239.")
+    @Schema(description = "Stecker type tooltip", example = "Wired.", accessMode = AccessMode.READ_ONLY)
     public String getTooltip() {
         return tooltip;
     }
