@@ -1,34 +1,100 @@
 # ModellBahn
-ModellBahn
+
 An educational project to learn about REST and Web apps.
 Aims to replace those features of Modellbahnverwaltung MoVe (http://www.henningvoosen.de/Site/Downloads/Modellbahnverwaltung.htm) by Henning Voosen that I use with something cross platform (and not obsolete).
 
-The plan:
+The SpringBoot version with the following features (checkout the Jackson branch for the previous version).
+What I learned from this - it's easier to add features using Spring but the result is a disk space and memory hog compared to the Jackson version.
 
-Server:
-Phase 1:
-Implement with Jackson / Jetty / Jersey / Hibernate / JPA / HK2 and Swagger so we learn the basics (and prove the requirements).
+What's in here (could be more, but I forget):
 
-Phase 2:
-Change to SpringBoot
+# Database
 
-Phase 3:
-Make multi user and add Spring Security
-Change HK2 to Mongo or someother NoSQL
-Use docker and/or cloud deployment
+* H2 (in memory for tests : file for runtime)
+* H2 Console.
+* Flyway migrations
+* JPA DDL Annotations
+* Validation Annotations
+* Custom Annotations
+* Parent Child relationships
+* Spring Repositories with Custom Repository extensions
+* Criteria API Queries (including wild card)
+* Paging (Spring and custom)
+* Lazy loading with Hibernate Proxy aware consumers
+* OpenInView=false
+* Entity Graphs to resolve that last one.
+* Custom data type converters
 
-UI:
-Phase 1:
-Basics in HTML / jQuery
+# Spring
 
-Phase 2:
-React / Redux / Node.js
+* AOP Interceptors
+* Application Listener
+* Bean Factory Post Processor
+* Logback logging
+* HTTPS only
 
-Phase 3:
-WebPack?
+# Spring Security
 
-Other niceness:
-Along the way add JUnits / Cucumber / Selenium
-See if we can shrink a single user deployment on an Android phone?
+* Authorities secured endpoints
+* Basic Auth
+* User Registration with email confirm
+* Forgot Password with email confirm
+* Failed login lockout
 
-All comers welcome. 
+# Internationalization
+
+* Bean Validation with multilingual error messages
+* Multilingual error and user messages
+* I18n by Accept Languages Header or user preference
+
+# REST
+
+* DTOs (I called them Models, get over it)
+* Converters (I called them Mutators / Transcribers, get over it)
+* HATEOAS links (with some made up relations) with Model processors (see where models came from now?)
+* Actuator with selected endpoints
+* File upload via multipart messages
+* Optional paging
+* Standardized error / exception handling
+
+# Web
+
+* Static content serving (including those uploaded files)
+* Webjars serving javascript UI
+
+# OpenApi
+
+* OpenApi documentation endpoint
+* Embedded Swagger UI via webjars
+
+# Testing
+
+* JUnit 5
+* Mockito Tests
+* Spring Data Tests
+* Postman / newman integration tests (happy case only)
+
+
+# Build
+
+Builds as jar with a lib folder (because SpringBoot fat jars don't really work on Windows and are problematic for maven integration tests).
+Demonstrates use of maven archiver and manifest in anycase.
+
+* git
+
+* Java 1.8
+  Probably not an issue to go higher.
+  
+* Maven
+  3.6.0 as it happens, but no great dependencies
+  
+* node (for newman)
+
+* newman 
+  npm install -g newman
+
+Just pull.
+
+mvn clean install
+
+java -jar ModellBahn-xxx.jar

@@ -22,16 +22,13 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.i18n.MessageTranslator;
 import com.linepro.modellbahn.util.exceptions.ModellBahnException;
 
 import lombok.RequiredArgsConstructor;
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 
 @ControllerAdvice
 @RequiredArgsConstructor
