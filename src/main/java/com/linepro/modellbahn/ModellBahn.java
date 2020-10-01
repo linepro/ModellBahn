@@ -1,7 +1,6 @@
 package com.linepro.modellbahn;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.regex.Pattern;
 
