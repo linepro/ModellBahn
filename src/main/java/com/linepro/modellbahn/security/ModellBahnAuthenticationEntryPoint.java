@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
@@ -19,10 +20,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.linepro.modellbahn.configuration.ErrorMessage;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Component(PREFIX + "AuthenticationEntryPoint")
+@SecurityScheme(type = SecuritySchemeType.HTTP, name = "BasicAuth", description = "Basic Authentication", paramName = HttpHeaders.AUTHORIZATION, in = SecuritySchemeIn.HEADER, scheme = "Basic")
 public class ModellBahnAuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
 
     @Autowired

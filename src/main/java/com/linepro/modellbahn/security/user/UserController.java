@@ -38,6 +38,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
@@ -62,6 +63,7 @@ public class UserController {
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
+    @SecurityRequirement(name = "BasicAuth")
     public ResponseEntity<?> get(@PathVariable(ApiNames.NAMEN) String name, Authentication authentication) {
         return userService.get(name, authentication)
                           .map(b -> ok(b))
@@ -77,6 +79,7 @@ public class UserController {
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
+    @SecurityRequirement(name = "BasicAuth")
     public ResponseEntity<?> search(@RequestBody Optional<UserModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize, Authentication authentication) {
         Page<UserModel> page = userService.search(model, pageNumber, pageSize, authentication);
 
@@ -105,6 +108,7 @@ public class UserController {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
+    @SecurityRequirement(name = "BasicAuth")
     public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody UserModel model, Authentication authentication) {
         return userService.update(name, model, authentication)
                           .map(b -> accepted().body(b))
@@ -118,6 +122,7 @@ public class UserController {
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
+    @SecurityRequirement(name = "BasicAuth")
     public ResponseEntity<?> changePassword(@PathVariable(ApiNames.NAMEN) String name, @RequestParam(ApiNames.PASSWORD) String password, Authentication authentication) {
         return status(ACCEPTED).body(userService.changePassword(name, password, authentication));
     }
@@ -133,6 +138,7 @@ public class UserController {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
     })
+    @SecurityRequirement(name = "BasicAuth")
     public ResponseEntity<?> delete(@PathVariable(ApiNames.NAMEN) String name, Authentication authentication) {
         return (userService.delete(name, authentication) ? noContent() : notFound()).build();
     }

@@ -23,6 +23,7 @@ import com.linepro.modellbahn.model.enums.Stecker;
 import com.linepro.modellbahn.service.impl.EnumsService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
@@ -32,6 +33,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 @Tag(name = ApiNames.ENUMS)
 @RestController("EnumsController")
+@SecurityRequirement(name = "BasicAuth")
 public class EnumsController {
 
     private final EnumsService service;

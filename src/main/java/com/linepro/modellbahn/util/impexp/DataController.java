@@ -19,12 +19,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @Tag(name = ApiNames.DATA)
 @RestController("DataController")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "BasicAuth")
 public class DataController {
 
     private static final String FILE_FIELD = "data";

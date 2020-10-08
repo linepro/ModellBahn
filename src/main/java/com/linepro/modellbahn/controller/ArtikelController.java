@@ -34,6 +34,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
@@ -45,6 +46,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = ApiNames.ARTIKEL)
 @RestController("ArtikelController") 
 @ExposesResourceFor(ArtikelModel.class)
+@SecurityRequirement(name = "BasicAuth")
 public class ArtikelController extends AbstractItemController<ArtikelModel> {
 
     protected final ArtikelService service;
