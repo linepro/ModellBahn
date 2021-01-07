@@ -24,6 +24,7 @@ What's in here (could be more, but I forget):
 * OpenInView=false
 * Entity Graphs to resolve that last one.
 * Custom data type converters
+* Cycle detection for parent - child relationships
 
 # Spring
 
@@ -56,6 +57,7 @@ What's in here (could be more, but I forget):
 * File upload via multipart messages
 * Optional paging
 * Standardized error / exception handling
+* CSV Import / Export
 
 # Web
 
@@ -73,7 +75,6 @@ What's in here (could be more, but I forget):
 * Mockito Tests
 * Spring Data Tests
 * Postman / newman integration tests (happy case only)
-
 
 # Build
 

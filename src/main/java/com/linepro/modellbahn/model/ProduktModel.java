@@ -8,7 +8,6 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -19,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -50,9 +50,9 @@ import lombok.ToString;
     ApiNames.BAUZEIT, ApiNames.ACHSFOLG, ApiNames.SONDERMODELL, ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG,
     ApiNames.DECODER_HERSTELLER, ApiNames.DECODER_BESTELL_NR, ApiNames.MOTOR_TYP, ApiNames.ANMERKUNG, ApiNames.ANLEITUNGEN,
     ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.TEILEN, ApiNames.ABBILDUNG, ApiNames.GROSSANSICHT, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.PRODUKT, itemRelation = ApiNames.PRODUKT)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.PRODUKT)
 @Schema(name = ApiNames.PRODUKT, description = "Product - template for article.")
-public class ProduktModel extends RepresentationModel<ProduktModel> implements ItemModel, Comparable<ProduktModel> {
+public class ProduktModel extends SpringdocModel<ProduktModel> implements ItemModel, Comparable<ProduktModel> {
     private static final long serialVersionUID = 2584784787206478907L;
 
     @JsonProperty(ApiNames.HERSTELLER)
@@ -105,7 +105,7 @@ public class ProduktModel extends RepresentationModel<ProduktModel> implements I
 
     @JsonProperty(ApiNames.BAUZEIT)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @Schema(implementation = LocalDate.class, name = "Construction date", example = "1934-01-01")
+    @Schema(implementation = LocalDate.class, description = "Construction date", example = "1934-01-01")
     private LocalDate bauzeit;
 
     @JsonProperty(ApiNames.ACHSFOLG)
@@ -158,7 +158,7 @@ public class ProduktModel extends RepresentationModel<ProduktModel> implements I
 
     @SuppressExport
     @JsonProperty(ApiNames.TEILEN)
-    @Schema(implementation = ProduktTeilModel.class, name = "Product components", accessMode = AccessMode.READ_ONLY)
+    @Schema(implementation = ProduktTeilModel.class, description = "Product components", accessMode = AccessMode.READ_ONLY)
     private List<ProduktTeilModel> teilen;
 
     @JsonProperty(ApiNames.ABBILDUNG)
@@ -206,4 +206,7 @@ public class ProduktModel extends RepresentationModel<ProduktModel> implements I
                 .append(hersteller, other.hersteller)
                 .isEquals();
     }
+
+    @Schema(name = ApiNames.PRODUKT + "Page")
+    public static class PagedProduktModel extends PagedSchema<ProduktModel>{}
 }

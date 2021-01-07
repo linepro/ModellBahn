@@ -104,7 +104,7 @@
         <libphonenumber.version>8.12.10</libphonenumber.version>
         <log4j.version>2.13.3</log4j.version>
         <logstash-logback-encoder.version>6.4</logstash-logback-encoder.version>
-        <springdoc-openapi.version>1.3.9</springdoc-openapi.version>
+        <springdoc-openapi.version>1.5.2</springdoc-openapi.version>
         <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
         <zxcvbn.version>1.3.0</zxcvbn.version>
 
@@ -135,6 +135,7 @@
         <org.webjars.fugue-icons.version>3.5.6</org.webjars.fugue-icons.version>
         <org.webjars.jquery.version>3.5.1</org.webjars.jquery.version>
         <org.webjars.js-cookie.version>2.2.1</org.webjars.js-cookie.version>
+        <org.webjars.modellbahn-ui.version>1.0.0-SNAPSHOT</org.webjars.modellbahn-ui.version>
         <org.webjars.momentjs.version>2.24.0</org.webjars.momentjs.version>
         <org.webjars.pdf-js.version>2.6.347</org.webjars.pdf-js.version>
         <org.webjars.popper.js.version>1.16.0</org.webjars.popper.js.version>
@@ -291,11 +292,6 @@
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-data-rest</artifactId>
-            <version>${springdoc-openapi.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-security</artifactId>
             <version>${springdoc-openapi.version}</version>
         </dependency>
@@ -348,6 +344,12 @@
             <groupId>org.webjars</groupId>
             <artifactId>webjars-locator-core</artifactId>
             <version>${org.webjars.webjars-locator-core.version}</version><!--$NO-MVN-MAN-VER$ -->
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>modellbahn-ui</artifactId>
+            <version>${org.webjars.modellbahn-ui.version}</version>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
@@ -843,6 +845,7 @@
                                     <include>org.webjars:fugue-icons:*</include>
                                     <include>org.webjars:jquery:*</include>
                                     <include>org.webjars:js-cookie:*</include>
+                                    <include>org.webjars:modellbahn-ui:*</include>
                                     <include>org.webjars:momentjs:*</include>
                                     <include>org.webjars:pdf-js:*</include>
                                     <include>org.webjars:popper.js:*</include>

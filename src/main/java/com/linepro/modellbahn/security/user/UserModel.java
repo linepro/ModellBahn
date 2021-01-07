@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -15,6 +14,8 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
+import com.linepro.modellbahn.model.SpringdocModel;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -38,9 +39,9 @@ import lombok.ToString;
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.EMAIL, ApiNames.FIRST_NAME, ApiNames.LAST_NAME, ApiNames.LOCALE, ApiNames.PASSWORD, ApiNames.ENABLED,
                      ApiNames.LOGIN_ATTEMPTS, ApiNames.PASSWORD_AGING, ApiNames.PASSWORD_CHANGED, ApiNames.CONFIRMATION_EXPIRES, ApiNames.LAST_LOGIN,
                      ApiNames.ROLES, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.USER, itemRelation = ApiNames.USER)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.USER)
 @Schema(name = ApiNames.USER, description = "System User")
-public class UserModel extends RepresentationModel<UserModel> {
+public class UserModel extends SpringdocModel<UserModel> {
 
     @JsonProperty(ApiNames.NAMEN)
     @Schema(description = "Screen Name", example = "linepro", accessMode = AccessMode.READ_ONLY)
@@ -96,4 +97,7 @@ public class UserModel extends RepresentationModel<UserModel> {
     @JsonProperty(ApiNames.ROLES)
     @Schema(description = "Roles", example = "USER", accessMode = AccessMode.READ_ONLY)
     private List<String> roles;
+
+    @Schema(name = ApiNames.USER + "Page")
+    public static class PagedUserModel extends PagedSchema<UserModel>{}
 }

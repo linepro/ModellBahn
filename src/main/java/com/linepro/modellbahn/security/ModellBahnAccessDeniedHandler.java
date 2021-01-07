@@ -19,7 +19,7 @@ import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.linepro.modellbahn.configuration.ErrorMessage;
+import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 
 import lombok.RequiredArgsConstructor;
@@ -52,7 +52,7 @@ public class ModellBahnAccessDeniedHandler implements AccessDeniedHandler {
             response.getWriter()
                     .write(
                         mapper.writeValueAsString(
-                            ErrorMessage.builder()
+                            UserMessage.builder()
                                         .code(HttpStatus.FORBIDDEN.value())
                                         .path(requestUri)
                                         .timestamp(System.currentTimeMillis())

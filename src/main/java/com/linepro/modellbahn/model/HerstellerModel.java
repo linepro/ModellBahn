@@ -3,7 +3,6 @@ package com.linepro.modellbahn.model;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -14,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -40,9 +40,9 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.LAND, ApiNames.URL, ApiNames.TELEFON, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.HERSTELLER, itemRelation = ApiNames.HERSTELLER)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.HERSTELLER)
 @Schema(name = ApiNames.HERSTELLER, description = "Manufacturer.")
-public class HerstellerModel extends RepresentationModel<HerstellerModel> implements NamedItemModel, Comparable<HerstellerModel> {
+public class HerstellerModel extends SpringdocModel<HerstellerModel> implements NamedItemModel, Comparable<HerstellerModel> {
 
     private static final long serialVersionUID = 2975751105718552754L;
 
@@ -100,4 +100,7 @@ public class HerstellerModel extends RepresentationModel<HerstellerModel> implem
                 .append(name, other.name)
                 .isEquals();
     }
+
+    @Schema(name = ApiNames.HERSTELLER + "Page")
+    public static class PagedHerstellerModel extends PagedSchema<HerstellerModel>{}
 }

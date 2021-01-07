@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -48,9 +47,9 @@ import lombok.ToString;
 @JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.I_MAX, ApiNames.PROTOKOLL,
         ApiNames.FAHRSTUFE, ApiNames.GERAUSCH, ApiNames.KONFIGURATION, ApiNames.STECKER, ApiNames.ANLEITUNGEN, ApiNames.ADRESSEN,
         ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.DECODER_TYP, itemRelation = ApiNames.DECODER_TYP)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.DECODER_TYP)
 @Schema(name = ApiNames.DECODER_TYP, description = "Decoder type - template for Decoder.")
-public class DecoderTypModel extends RepresentationModel<DecoderTypModel> implements ItemModel, Comparable<DecoderTypModel> {
+public class DecoderTypModel extends SpringdocModel<DecoderTypModel> implements ItemModel, Comparable<DecoderTypModel> {
 
     private static final long serialVersionUID = 8572025031906541322L;
 
@@ -96,17 +95,17 @@ public class DecoderTypModel extends RepresentationModel<DecoderTypModel> implem
 
     @SuppressExport
     @JsonProperty(ApiNames.ADRESSEN)
-    @Schema(implementation = DecoderTypAdressModel.class, name = "Assignable adresses", accessMode = AccessMode.READ_ONLY)
+    @Schema(implementation = DecoderTypAdressModel.class, description = "Assignable adresses", accessMode = AccessMode.READ_ONLY)
     private List<DecoderTypAdressModel> adressen;
 
     @SuppressExport
     @JsonProperty(ApiNames.CVS)
-    @Schema(implementation = DecoderTypCvModel.class, name = "Configurable CVs", accessMode = AccessMode.READ_ONLY)
+    @Schema(implementation = DecoderTypCvModel.class, description = "Configurable CVs", accessMode = AccessMode.READ_ONLY)
     private List<DecoderTypCvModel> cvs;
 
     @SuppressExport
     @JsonProperty(ApiNames.FUNKTIONEN)
-    @Schema(implementation = DecoderTypFunktionModel.class, name = "Available function mappings", accessMode = AccessMode.READ_ONLY)
+    @Schema(implementation = DecoderTypFunktionModel.class, description = "Available function mappings", accessMode = AccessMode.READ_ONLY)
     private List<DecoderTypFunktionModel> funktionen;
 
     @JsonProperty(ApiNames.DELETED)

@@ -2,7 +2,6 @@ package com.linepro.modellbahn.security;
 
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.API_ENDPOINTS;
-import static com.linepro.modellbahn.io.MvcConfig.RESOURCE_ENDPOINTS;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
 import com.linepro.modellbahn.controller.impl.ApiPaths;
+import com.linepro.modellbahn.io.ResourceEndpoints;
 import com.linepro.modellbahn.security.user.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -43,6 +43,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private final ModellBahnAuthenticationEntryPoint authenticationEntryPoint;
 
+    @Autowired
+    private final ResourceEndpoints resourceEndpoints;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService)
@@ -59,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler)
             .and().httpBasic().authenticationEntryPoint(authenticationEntryPoint)
             .and().authorizeRequests()
-                  .antMatchers(RESOURCE_ENDPOINTS).permitAll()
+                  .antMatchers(resourceEndpoints.getEndPoints().keySet().toArray(new String[0])).permitAll()
                   .antMatchers(ApiPaths.MANAGEMENT_PUBLIC).permitAll()
                   .antMatchers(HttpMethod.POST, ApiPaths.REGISTER_ENDPOINTS).permitAll()
                   .antMatchers(HttpMethod.POST, ApiPaths.USER_ENDPOINTS).hasAnyAuthority(ADMIN_AUTHORITY,USER_AUTHORITY)

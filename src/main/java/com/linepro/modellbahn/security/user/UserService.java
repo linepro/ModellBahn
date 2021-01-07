@@ -45,6 +45,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.google.common.base.Charsets;
+import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.ApiMessages;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.i18n.MessageTranslator;

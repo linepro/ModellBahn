@@ -65,7 +65,7 @@ public class ApplicationReadyListener implements ApplicationListener<Application
                         endPoints = Collections.emptyList();
                     }
     
-                    log.debug("{} started with {} endpoints: {} and {} beans: {}", application, endPoints.size(), endPoints, beanz.size(), beanz);
+                    log.info("{} started with {} endpoints: {} and {} beans: {}", application, endPoints.size(), endPoints, beanz.size(), beanz);
                 }
             }
         }

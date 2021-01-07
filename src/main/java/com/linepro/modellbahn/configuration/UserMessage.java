@@ -21,9 +21,9 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ "timestamp", "status", "error", "message", "path", "developerMessage", "moreInfo" })
-@Schema(description = "Error Messages")
-public class ErrorMessage {
+@JsonPropertyOrder({ "timestamp", "status", "code", "error", "message", "path", "developerMessage", "moreInfo" })
+@Schema(name = "userMessage", description = "Message to Users")
+public class UserMessage {
 
     @JsonProperty("timestamp")
     @Schema(description = "Timestamp", example = "1593346288902", accessMode = AccessMode.READ_ONLY)
@@ -34,7 +34,7 @@ public class ErrorMessage {
     private int status;
 
     @JsonProperty("code")
-    @Schema(description = "Code", example = "user.invalid", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Error Code", example = "user.invalid", accessMode = AccessMode.READ_ONLY)
     private int code;
 
     @JsonProperty("error")

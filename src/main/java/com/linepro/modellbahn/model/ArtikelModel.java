@@ -51,7 +51,7 @@ import lombok.ToString;
     ApiNames.BETREIBSNUMMER, ApiNames.ACHSFOLG, ApiNames.SONDERMODELL, ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG,
     ApiNames.DECODER, ApiNames.MOTOR_TYP, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.STUCK, ApiNames.VERBLEIBENDE, ApiNames.ANMERKUNG,
     ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.ANDERUNGEN, ApiNames.ABBILDUNG, ApiNames.GROSSANSICHT, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.ARTIKEL, itemRelation = ApiNames.ARTIKEL)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.ARTIKEL)
 @Schema(name = ApiNames.ARTIKEL, description = "An article - may differ from product because of modificiations")
 public class ArtikelModel extends RepresentationModel<ArtikelModel> implements ItemModel, Comparable<ArtikelModel> {
 
@@ -143,7 +143,7 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
 
     @JsonProperty(ApiNames.KAUFDATUM)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @Schema(implementation = LocalDate.class, name = "Purchase date", example = "1967-08-10")
+    @Schema(implementation = LocalDate.class, description = "Purchase date", example = "1967-08-10")
     private LocalDate kaufdatum;
 
     @JsonProperty(ApiNames.WAHRUNG)
@@ -178,14 +178,13 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
     @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/artikel/00001/abbildung.jpg", accessMode = AccessMode.READ_ONLY)
     private String abbildung;
 
-    @SuppressExport
     @JsonProperty(ApiNames.GROSSANSICHT)
     @Schema(description = "Large Image URL", example = "http://localhost:8086/ModellBahn/artikel/00001/grossansicht.jpg", accessMode = AccessMode.READ_ONLY)
     private String grossansicht;
 
     @SuppressExport
     @JsonProperty(ApiNames.ANDERUNGEN)
-    @Schema(implementation = AnderungModel.class, name = "Modifications", accessMode = AccessMode.READ_ONLY)
+    @Schema(implementation = AnderungModel.class, description = "Modifications", accessMode = AccessMode.READ_ONLY)
     private List<AnderungModel> anderungen;
 
     @JsonProperty(ApiNames.DELETED)

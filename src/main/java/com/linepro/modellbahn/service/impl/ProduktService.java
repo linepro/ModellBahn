@@ -74,25 +74,32 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implem
 
     @Transactional
     public Optional<ProduktTeilModel> addTeil(String hersteller, String bestellNr, String teilHersteller, String teilBestellNr, Integer anzahl) {
-        Optional<Produkt> pt = repository.findByBestellNr(teilHersteller, teilBestellNr);
+        Optional<Produkt> produktFound = repository.findByBestellNr(hersteller, bestellNr);
+        Optional<Produkt> subFound = repository.findByBestellNr(teilHersteller, teilBestellNr);
 
-        if (pt.isPresent()) {
-            return repository.findByBestellNr(hersteller, bestellNr)
-                             .map(p -> {
-                                 ProduktTeil teil = new ProduktTeil();
-                                 teil.setTeil(pt.get());
-                                 teil.setAnzahl(anzahl);
-                                 teil.setDeleted(false);
+        if (subFound.isPresent() && produktFound.isPresent()) {
+            Produkt sub = subFound.get();
+            Produkt produkt = produktFound.get();
 
-                                 p.addTeil(teil);
+            if (!isCycle(produkt, sub)) {
+                 ProduktTeil teil = new ProduktTeil();
+                 teil.setTeil(sub);
+                 teil.setAnzahl(anzahl);
+                 teil.setDeleted(false);
 
-                                 repository.saveAndFlush(p);
+                 produkt.addTeil(teil);
 
-                                 return teilMutator.convert(teil);
-                                 });
+                 repository.saveAndFlush(produkt);
+
+                 return Optional.of(teilMutator.convert(teil));
+            }
         }
 
         return Optional.empty();
+    }
+
+    protected boolean isCycle(Produkt produkt, Produkt sub) {
+        return !teilRepository.findTeilen(produkt.getId(), sub.getId()).isEmpty();
     }
 
     @Transactional

@@ -3,7 +3,6 @@ package com.linepro.modellbahn.model;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -14,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -40,9 +40,9 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.MOTOR_TYP, itemRelation = ApiNames.MOTOR_TYP)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.MOTOR_TYP)
 @Schema(name = ApiNames.MOTOR_TYP, description = "Type of motor - Märklin coding.")
-public class MotorTypModel extends RepresentationModel<MotorTypModel> implements NamedItemModel, Comparable<MotorTypModel> {
+public class MotorTypModel extends SpringdocModel<MotorTypModel> implements NamedItemModel, Comparable<MotorTypModel> {
 
     private static final long serialVersionUID = -3424740287690628265L;
 
@@ -88,4 +88,7 @@ public class MotorTypModel extends RepresentationModel<MotorTypModel> implements
                 .append(name, other.name)
                 .isEquals();
     }
+
+    @Schema(name = ApiNames.MOTOR_TYP + "Page")
+    public static class PagedMotorTypModel extends PagedSchema<MotorTypModel>{}
 }

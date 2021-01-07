@@ -2,7 +2,6 @@ package com.linepro.modellbahn.io;
 
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,27 +12,19 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import lombok.RequiredArgsConstructor;
-import net.logstash.logback.encoder.org.apache.commons.lang3.ArrayUtils;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Configuration(PREFIX + "MvcConfig")
 @EnableWebMvc
 @RequiredArgsConstructor
 public class MvcConfig implements WebMvcConfigurer {
 
     @Autowired
-    private final FileStore fileStore;
+    private final ResourceEndpoints resourceEndpoints;
 
     @Value("${spring.mvc.resource.cache.timeout:3600}")
     private int cacheTimeout;
-
-    public static final String[] RESOURCE_ENDPOINTS = {
-                    "/webapp/**", "/webjars/**", "/static/**",  "/resources/**", "/v3/api-docs**"
-    };
-
-    public static final String[] RESOURCE_LOCATIONS = {
-                    "file:webapp/", "file:webjars/", "file:static/", "file:resources/", "file:",
-                    "classpath:webapp/", "classpath:webjars/", "classpath:static/", "classpath:resources/"
-    };
 
     @Bean(PREFIX + "BaseURL")
     public String getBaseURL(RepositoryRestConfiguration configuration) {
@@ -42,13 +33,14 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(RESOURCE_ENDPOINTS)
-                .addResourceLocations(getResourceLocations());
-    }
+        resourceEndpoints.getEndPoints()
+                         .entrySet()
+                          .forEach(e -> {
+                              log.debug(e.getKey() + "=" + e.getValue());
 
-    private String[] getResourceLocations() {
-        String fileStoreLoc = "file:" + FilenameUtils.separatorsToUnix(fileStore.fileStoreRoot().toString());
-
-        return ArrayUtils.toStringArray(RESOURCE_LOCATIONS, fileStoreLoc);
+                              registry.addResourceHandler(e.getKey())
+                                      .addResourceLocations(e.getValue())
+                                      .setCachePeriod(cacheTimeout);
+                             });
     }
 }

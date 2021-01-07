@@ -1,23 +1,11 @@
 package com.linepro.modellbahn.model.enums;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonRootName;
-import com.linepro.modellbahn.controller.impl.ApiNames;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
-
 /**
  * Stecker. Enumeration of Decoder connections
  * 
  * @author $Author:$
  * @version $Id:$
  */
-@JsonRootName(value = ApiNames.STECKER)
-@JsonIgnoreProperties(ignoreUnknown=true)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG })
-@Schema(name = ApiNames.STECKER, description = "Stecker types")
 public enum Stecker implements DescribedEnum {
 
     EINGEBAUT("eingebaut"),
@@ -52,19 +40,16 @@ public enum Stecker implements DescribedEnum {
     }
 
     @Override
-    @Schema(description = "Stecker type name", example = "EINGEBAUT", accessMode = AccessMode.READ_ONLY)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @Schema(description = "Stecker type description", example = "Built in / Hardwired.", accessMode = AccessMode.READ_ONLY)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @Schema(description = "Stecker type tooltip", example = "Wired.", accessMode = AccessMode.READ_ONLY)
     public String getTooltip() {
         return tooltip;
     }

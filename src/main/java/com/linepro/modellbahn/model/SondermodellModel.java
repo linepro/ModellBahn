@@ -3,7 +3,6 @@ package com.linepro.modellbahn.model;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -14,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -40,9 +40,9 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.SONDERMODELL, itemRelation = ApiNames.SONDERMODELL)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.SONDERMODELL)
 @Schema(name = ApiNames.SONDERMODELL, description = "Special model - e.g,. MHI &c.")
-public class SondermodellModel extends RepresentationModel<SondermodellModel> implements NamedItemModel, Comparable<SondermodellModel> {
+public class SondermodellModel extends SpringdocModel<SondermodellModel> implements NamedItemModel, Comparable<SondermodellModel> {
 
     private static final long serialVersionUID = 5454366267511451526L;
 
@@ -88,4 +88,7 @@ public class SondermodellModel extends RepresentationModel<SondermodellModel> im
                 .append(name, other.name)
                 .isEquals();
     }
+
+    @Schema(name = ApiNames.SONDERMODELL + "Page")
+    public static class PagedSondermodellModel extends PagedSchema<SondermodellModel>{}
 }

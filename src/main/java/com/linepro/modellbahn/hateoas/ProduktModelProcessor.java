@@ -18,11 +18,11 @@ import static com.linepro.modellbahn.controller.impl.ApiRels.ADD;
 import static com.linepro.modellbahn.controller.impl.ApiRels.ANLEITUNG;
 import static com.linepro.modellbahn.controller.impl.ApiRels.DELETE;
 import static com.linepro.modellbahn.controller.impl.ApiRels.EXPLOSIONSZEICHNUNG;
+import static com.linepro.modellbahn.controller.impl.ApiRels.GROSSANSICHT;
 import static com.linepro.modellbahn.controller.impl.ApiRels.SEARCH;
 import static com.linepro.modellbahn.controller.impl.ApiRels.SELF;
 import static com.linepro.modellbahn.controller.impl.ApiRels.TEIL;
 import static com.linepro.modellbahn.controller.impl.ApiRels.UPDATE;
-import static com.linepro.modellbahn.controller.impl.ApiRels.GROSSANSICHT;
 
 import java.util.HashMap;
 

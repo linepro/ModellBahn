@@ -85,18 +85,21 @@ public class ImporterImplTest {
 
     private final Mutator<DecoderModel,Decoder> mutator;  
 
+    private final CsvSchemaGenerator generator;
+
     private Importer importer;
 
     public ImporterImplTest(@Mock JpaRepository<Decoder,Long> repository, @Mock DecoderModelMutator mutator) { 
         this.repository = repository;
         this.reader = new CharArrayReader(CSV.toCharArray());
+        this.generator = new CsvSchemaGenerator();
         this.mutator = mutator;
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     @BeforeEach
     protected void setUp() throws Exception {
-        importer = new ImporterImpl(repository, mutator, DecoderModel.class);
+        importer = new ImporterImpl(repository, mutator, generator, DecoderModel.class);
 
         doAnswer(i -> {
             assertEquals(MODEL, i.getArgument(0));

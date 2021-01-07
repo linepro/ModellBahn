@@ -10,7 +10,6 @@ import java.util.List;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -21,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -48,9 +48,9 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.UNTER_KATEGORIEN, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.KATEGORIE, itemRelation = ApiNames.KATEGORIE)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.KATEGORIE)
 @Schema(name = ApiNames.KATEGORIE, description = "Category.")
-public class KategorieModel extends RepresentationModel<KategorieModel> implements NamedItemModel, Comparable<KategorieModel> {
+public class KategorieModel extends SpringdocModel<KategorieModel> implements NamedItemModel, Comparable<KategorieModel> {
 
     private static final long serialVersionUID = -1609829141621577668L;
 
@@ -64,7 +64,7 @@ public class KategorieModel extends RepresentationModel<KategorieModel> implemen
 
     @SuppressExport
     @JsonProperty(ApiNames.UNTER_KATEGORIEN)
-    @Schema(implementation = UnterKategorieModel.class, name = "Sub categories", accessMode = AccessMode.READ_ONLY)
+    @Schema(implementation = UnterKategorieModel.class, description = "Sub categories", accessMode = AccessMode.READ_ONLY)
     private List<UnterKategorieModel> unterKategorien;
 
     @JsonProperty(ApiNames.DELETED)
@@ -101,4 +101,7 @@ public class KategorieModel extends RepresentationModel<KategorieModel> implemen
                 .append(name, other.name)
                 .isEquals();
     }
+
+    @Schema(name = ApiNames.KATEGORIE + "Page")
+    public static class PagedKategorieModel extends PagedSchema<KategorieModel>{}
 }

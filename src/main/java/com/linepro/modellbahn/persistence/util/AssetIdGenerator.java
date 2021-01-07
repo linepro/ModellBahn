@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.persistence.util;
 
+import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+
 import java.math.BigInteger;
 
 import javax.persistence.EntityManager;
@@ -10,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 
-@Component
+@Component(PREFIX + "AssetIdGenerator")
 @RequiredArgsConstructor
 @Slf4j
 public class AssetIdGenerator {

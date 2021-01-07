@@ -3,7 +3,6 @@ package com.linepro.modellbahn.model;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -14,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -40,9 +40,9 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ ApiNames.KATEGORIE, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.UNTER_KATEGORIE, itemRelation = ApiNames.UNTER_KATEGORIE)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.UNTER_KATEGORIE)
 @Schema(name = ApiNames.UNTER_KATEGORIE, description = "Sub category.")
-public class UnterKategorieModel extends RepresentationModel<UnterKategorieModel> implements NamedItemModel, Comparable<UnterKategorieModel> {
+public class UnterKategorieModel extends SpringdocModel<UnterKategorieModel> implements NamedItemModel, Comparable<UnterKategorieModel> {
 
     private static final long serialVersionUID = -6922373932038545571L;
 
@@ -95,4 +95,7 @@ public class UnterKategorieModel extends RepresentationModel<UnterKategorieModel
                         .append(name, other.name)
                         .isEquals();
     }
+
+    @Schema(name = ApiNames.UNTER_KATEGORIE + "Page")
+    public static class PagedUnterKategorieModel extends PagedSchema<UnterKategorieModel>{}
 }

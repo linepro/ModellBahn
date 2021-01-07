@@ -56,6 +56,7 @@ public interface ApiNames {
     String DECODER_ID = "decoderId";
     String DECODER_BESTELL_NR = "decoderBestellNr";
     String DECODER_HERSTELLER = "decoderHersteller";
+    String DECODER_STATUS = "decoderStatus";
     String DELETED = "deleted";
     String DIENSTGEWICHT = "dienstgewicht";
     String DMLAUFRADHINTEN = "dmLaufradHinten";
@@ -66,12 +67,13 @@ public interface ApiNames {
     String EXPLOSIONSZEICHNUNG = "explosionszeichnung";
     String FAHRMOTOREN = "fahrmotoren";
     String FAHRSTUFE = "fahrstufe";
+    String FAHRZEUGEN = "fahrzeugen";
     String FUNKTION = "funktion";
     String FUNKTIONEN = "funktionen";
     String GERAUSCH = "gerausch";
     String GESCHWINDIGKEIT = "geschwindigkeit";
     String GROSSANSICHT = "grossansicht";
-    String HREF= "HRef";
+    String HREF = "href";
     String ID = "id";
     String I_MAX = "iMax";
     String INDEX = "index";

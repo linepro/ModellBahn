@@ -3,7 +3,6 @@ package com.linepro.modellbahn.model;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -41,9 +40,9 @@ import lombok.ToString;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.CV, ApiNames.BEZEICHNUNG, ApiNames.MINIMAL, ApiNames.MAXIMAL,
     ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.CV, itemRelation = ApiNames.CV)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.CV)
 @Schema(name = ApiNames.CV, description = "Decoder type CV - template for Decoder.")
-public class DecoderTypCvModel extends RepresentationModel<DecoderTypCvModel> implements ItemModel, Comparable<DecoderTypCvModel> {
+public class DecoderTypCvModel extends SpringdocModel<DecoderTypCvModel> implements ItemModel, Comparable<DecoderTypCvModel> {
 
     private static final long serialVersionUID = -8055283388490564394L;
 

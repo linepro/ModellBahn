@@ -45,7 +45,7 @@ public class ErrorHandler {
 
         return ResponseEntity.status(status)
                              .body(
-                                 ErrorMessage.builder()
+                                 UserMessage.builder()
                                              .timestamp(System.currentTimeMillis())
                                              .status(status.value())
                                              .error(status.getReasonPhrase())

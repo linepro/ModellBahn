@@ -56,9 +56,9 @@ public interface ApiPaths {
     String SEARCH_DECODER          = DECODER_ROOT;
     String DELETE_DECODER          = DECODER_ROOT + "/{" + ApiNames.DECODER_ID + "}";
     String UPDATE_DECODER          = DECODER_ROOT + "/{" + ApiNames.DECODER_ID + "}";
-    String UPDATE_DECODER_ADRESS   = DECODER_ROOT + "/{" + ApiNames.DECODER_ID + "}/" + ApiNames.ADRESS + "/{" + ApiNames.INDEX + "}";
-    String UPDATE_DECODER_CV       = DECODER_ROOT + "/{" + ApiNames.DECODER_ID + "}/"  + ApiNames.CV + "/{" + ApiNames.CV + "}";
-    String UPDATE_DECODER_FUNKTION = DECODER_ROOT + "/{" + ApiNames.DECODER_ID + "}/" + ApiNames.FUNKTION + "/{" + ApiNames.REIHE + "}/{" + ApiNames.FUNKTION + "}";
+    String UPDATE_DECODER_ADRESS   = DECODER_ROOT + "/{" + ApiNames.DECODER_ID + "}/" + ApiNames.ADRESSEN + "/{" + ApiNames.INDEX + "}";
+    String UPDATE_DECODER_CV       = DECODER_ROOT + "/{" + ApiNames.DECODER_ID + "}/"  + ApiNames.CVS + "/{" + ApiNames.CV + "}";
+    String UPDATE_DECODER_FUNKTION = DECODER_ROOT + "/{" + ApiNames.DECODER_ID + "}/" + ApiNames.FUNKTIONEN + "/{" + ApiNames.REIHE + "}/{" + ApiNames.FUNKTION + "}";
 
     String DECODER_TYP_ROOT               = API_ROOT + ApiNames.DECODER_TYP;
     String ADD_DECODER_TYP                = DECODER_TYP_ROOT;
@@ -68,15 +68,15 @@ public interface ApiPaths {
     String UPDATE_DECODER_TYP             = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}";
     String ADD_DECODER_TYP_ANLEITUNGEN    = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.ANLEITUNGEN;
     String DELETE_DECODER_TYP_ANLEITUNGEN = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.ANLEITUNGEN;
-    String ADD_DECODER_TYP_ADRESS         = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.ADRESS;
-    String UPDATE_DECODER_TYP_ADRESS      = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.ADRESS + "/{" + ApiNames.INDEX + "}";
-    String DELETE_DECODER_TYP_ADRESS      = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.ADRESS + "/{" + ApiNames.INDEX + "}";
-    String ADD_DECODER_TYP_CV             = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.CV;
-    String UPDATE_DECODER_TYP_CV          = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.CV + "/{" + ApiNames.CV + "}";
-    String DELETE_DECODER_TYP_CV          = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.CV + "/{" + ApiNames.CV + "}";
-    String ADD_DECODER_TYP_FUNKTION       = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.FUNKTION;
-    String UPDATE_DECODER_TYP_FUNKTION    = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.FUNKTION + "/{" + ApiNames.REIHE + "}/{" + ApiNames.FUNKTION + "}";
-    String DELETE_DECODER_TYP_FUNKTION    = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.FUNKTION + "/{" + ApiNames.REIHE + "}/{" + ApiNames.FUNKTION + "}";
+    String ADD_DECODER_TYP_ADRESS         = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.ADRESSEN;
+    String UPDATE_DECODER_TYP_ADRESS      = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.ADRESSEN + "/{" + ApiNames.INDEX + "}";
+    String DELETE_DECODER_TYP_ADRESS      = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.ADRESSEN + "/{" + ApiNames.INDEX + "}";
+    String ADD_DECODER_TYP_CV             = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.CVS;
+    String UPDATE_DECODER_TYP_CV          = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.CVS + "/{" + ApiNames.CV + "}";
+    String DELETE_DECODER_TYP_CV          = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.CVS + "/{" + ApiNames.CV + "}";
+    String ADD_DECODER_TYP_FUNKTION       = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.FUNKTIONEN;
+    String UPDATE_DECODER_TYP_FUNKTION    = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.FUNKTIONEN + "/{" + ApiNames.REIHE + "}/{" + ApiNames.FUNKTION + "}";
+    String DELETE_DECODER_TYP_FUNKTION    = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + "}/{" + ApiNames.BESTELL_NR + "}/" + ApiNames.FUNKTIONEN + "/{" + ApiNames.REIHE + "}/{" + ApiNames.FUNKTION + "}";
 
     String EPOCH_ROOT   = API_ROOT + ApiNames.EPOCH;
     String ADD_EPOCH    = EPOCH_ROOT;
@@ -88,9 +88,9 @@ public interface ApiPaths {
     String ENUMS_ROOT                       = API_ROOT + ApiNames.ENUMS;
     String ENUMS_ADRESS_TYP_PATH            = ENUMS_ROOT + "/" + ApiNames.ADRESS_TYP;
     String ENUMS_ANDERUNGS_TYP_PATH         = ENUMS_ROOT + "/" + ApiNames.ANDERUNGS_TYP;
-    String ENUMS_DECODER_STATUS_PATH        = ENUMS_ROOT + "/" + ApiNames.DECODER;
+    String ENUMS_DECODER_STATUS_PATH        = ENUMS_ROOT + "/" + ApiNames.DECODER_STATUS;
     String ENUMS_KONFIGURATION_PATH         = ENUMS_ROOT + "/" + ApiNames.KONFIGURATION;
-    String ENUMS_LEISTUNGS_UBERTRAGUNG_PATH = ENUMS_ROOT + "/" + ApiNames.LEISTUNGSUBERTRAGUNG;
+    String ENUMS_LEISTUNGSUBERTRAGUNG_PATH = ENUMS_ROOT + "/" + ApiNames.LEISTUNGSUBERTRAGUNG;
     String ENUMS_STATUS_PATH                = ENUMS_ROOT + "/" + ApiNames.STATUS;
     String ENUMS_STECKER_PATH               = ENUMS_ROOT + "/" + ApiNames.STECKER;
 
@@ -200,12 +200,12 @@ public interface ApiPaths {
 
     String VORBILD_ROOT             = API_ROOT + ApiNames.VORBILD;
     String ADD_VORBILD              = VORBILD_ROOT;
-    String GET_VORBILD              = VORBILD_ROOT + "/{" + ApiNames.NAMEN + ":[A-Za-z0-9 \\.]+}";
+    String GET_VORBILD              = VORBILD_ROOT + "/{" + ApiNames.NAMEN + "}";
     String SEARCH_VORBILD           = VORBILD_ROOT;
-    String DELETE_VORBILD           = VORBILD_ROOT + "/{" + ApiNames.NAMEN + ":[A-Za-z0-9 \\\\.]+}";
-    String UPDATE_VORBILD           = VORBILD_ROOT + "/{" + ApiNames.NAMEN + ":[A-Za-z0-9 \\\\.]+}";
-    String ADD_VORBILD_ABBILDUNG    = VORBILD_ROOT + "/{" + ApiNames.NAMEN + ":[A-Za-z0-9 \\\\.]+}/" + ApiNames.ABBILDUNG;
-    String DELETE_VORBILD_ABBILDUNG = VORBILD_ROOT + "/{" + ApiNames.NAMEN + ":[A-Za-z0-9 \\\\.]+}/" + ApiNames.ABBILDUNG;
+    String DELETE_VORBILD           = VORBILD_ROOT + "/{" + ApiNames.NAMEN + "}";
+    String UPDATE_VORBILD           = VORBILD_ROOT + "/{" + ApiNames.NAMEN + "}";
+    String ADD_VORBILD_ABBILDUNG    = VORBILD_ROOT + "/{" + ApiNames.NAMEN + "}/" + ApiNames.ABBILDUNG;
+    String DELETE_VORBILD_ABBILDUNG = VORBILD_ROOT + "/{" + ApiNames.NAMEN + "}/" + ApiNames.ABBILDUNG;
 
     String ZUG_ROOT       = API_ROOT + ApiNames.ZUG;
     String ADD_ZUG        = ZUG_ROOT;
@@ -213,9 +213,9 @@ public interface ApiPaths {
     String SEARCH_ZUG     = ZUG_ROOT;
     String DELETE_ZUG     = ZUG_ROOT + "/{" + ApiNames.NAMEN + "}";
     String UPDATE_ZUG     = ZUG_ROOT + "/{" + ApiNames.NAMEN + "}";
-    String ADD_CONSIST    = ZUG_ROOT + "/{" + ApiNames.NAMEN + "}/" + ApiNames.CONSIST;
-    String DELETE_CONSIST = ZUG_ROOT + "/{" + ApiNames.NAMEN + "}/" + ApiNames.CONSIST + "/{" + ApiNames.POSITION + "}";
-    String UPDATE_CONSIST = ZUG_ROOT + "/{" + ApiNames.NAMEN + "}/" + ApiNames.CONSIST + "/{" + ApiNames.POSITION + "}";
+    String ADD_CONSIST    = ZUG_ROOT + "/{" + ApiNames.NAMEN + "}/" + ApiNames.FAHRZEUGEN;
+    String DELETE_CONSIST = ZUG_ROOT + "/{" + ApiNames.NAMEN + "}/" + ApiNames.FAHRZEUGEN + "/{" + ApiNames.POSITION + "}";
+    String UPDATE_CONSIST = ZUG_ROOT + "/{" + ApiNames.NAMEN + "}/" + ApiNames.FAHRZEUGEN + "/{" + ApiNames.POSITION + "}";
 
     String ZUG_TYP_ROOT   = API_ROOT + ApiNames.ZUG_TYP;
     String ADD_ZUG_TYP    = ZUG_TYP_ROOT;

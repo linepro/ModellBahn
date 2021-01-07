@@ -3,7 +3,6 @@ package com.linepro.modellbahn.model;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -41,9 +40,9 @@ import lombok.ToString;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.REIHE, ApiNames.FUNKTION, ApiNames.BEZEICHNUNG,
     ApiNames.PROGRAMMABLE, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.FUNKTION, itemRelation = ApiNames.FUNKTION)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.FUNKTION)
 @Schema(name = ApiNames.FUNKTION, description = "Decoder type function mapping - template for Decoder.")
-public class DecoderTypFunktionModel extends RepresentationModel<DecoderTypFunktionModel> implements ItemModel, Comparable<DecoderTypFunktionModel> {
+public class DecoderTypFunktionModel extends SpringdocModel<DecoderTypFunktionModel> implements ItemModel, Comparable<DecoderTypFunktionModel> {
 
     private static final long serialVersionUID = -4632521396017459814L;
 

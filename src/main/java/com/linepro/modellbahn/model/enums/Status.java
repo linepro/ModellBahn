@@ -1,23 +1,11 @@
 package com.linepro.modellbahn.model.enums;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonRootName;
-import com.linepro.modellbahn.controller.impl.ApiNames;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
-
 /**
  * Status.
  * The status of an article
  * @author   $Author$
  * @version  $Id$
  */
-@JsonRootName(value = ApiNames.STATUS)
-@JsonIgnoreProperties(ignoreUnknown=true)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG })
-@Schema(name = ApiNames.STATUS, description = "Article status")
 public enum Status implements DescribedEnum {
 	
     WUNSCHMODEL("wunschmodel"),
@@ -38,19 +26,16 @@ public enum Status implements DescribedEnum {
     }
 
     @Override
-    @Schema(description = "Article status name", example = "GEKAUFT", accessMode = AccessMode.READ_ONLY)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @Schema(description = "Article status description", example = "Purchased.", accessMode = AccessMode.READ_ONLY)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @Schema(description = "Article status tooltip", example = "Purchased.", accessMode = AccessMode.READ_ONLY)
     public String getTooltip() {
         return tooltip;
     }

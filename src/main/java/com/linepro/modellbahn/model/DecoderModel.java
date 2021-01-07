@@ -8,7 +8,6 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -51,9 +50,9 @@ import lombok.ToString;
 @JsonPropertyOrder({ApiNames.DECODER_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.I_MAX,
     ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.GERAUSCH, ApiNames.KONFIGURATION, ApiNames.STECKER, ApiNames.STATUS,
     ApiNames.ANLEITUNGEN, ApiNames.ADRESSEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.DECODER, itemRelation = ApiNames.DECODER)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.DECODER)
 @Schema(name = ApiNames.DECODER, description = "Decoder - installed or spare.")
-public class DecoderModel extends RepresentationModel<DecoderModel> implements ItemModel, Comparable<DecoderModel> {
+public class DecoderModel extends SpringdocModel<DecoderModel> implements ItemModel, Comparable<DecoderModel> {
 
     private static final long serialVersionUID = 831411120845485848L;
 
@@ -78,7 +77,7 @@ public class DecoderModel extends RepresentationModel<DecoderModel> implements I
     private BigDecimal iMax;
 
     @JsonProperty(ApiNames.PROTOKOLL)
-    @Schema(description = "Decoder protocol", required = true)
+    @Schema(description = "Decoder protocol", example = "MFX", required = true)
     private String protokoll;
 
     @JsonProperty(ApiNames.FAHRSTUFE)
@@ -99,7 +98,7 @@ public class DecoderModel extends RepresentationModel<DecoderModel> implements I
 
     @JsonProperty(ApiNames.KAUFDATUM)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @Schema(implementation = LocalDate.class, name = "Purchase date", example = "1967-08-10")
+    @Schema(implementation = LocalDate.class, description = "Purchase date", example = "1967-08-10")
     private LocalDate kaufdatum;
 
     @JsonProperty(ApiNames.WAHRUNG)
@@ -124,17 +123,17 @@ public class DecoderModel extends RepresentationModel<DecoderModel> implements I
 
     @SuppressExport
     @JsonProperty(ApiNames.ADRESSEN)
-    @Schema(implementation = DecoderAdressModel.class, name = "Decoder addresses", accessMode = AccessMode.READ_ONLY)
+    @Schema(implementation = DecoderAdressModel.class, description = "Decoder addresses", accessMode = AccessMode.READ_ONLY)
     private List<DecoderAdressModel> adressen;
 
     @SuppressExport
     @JsonProperty(ApiNames.CVS)
-    @Schema(implementation = DecoderCvModel.class, name = "Decoder cv values", accessMode = AccessMode.READ_ONLY)
+    @Schema(implementation = DecoderCvModel.class, description = "Decoder cv values", accessMode = AccessMode.READ_ONLY)
     private List<DecoderCvModel> cvs;
 
     @SuppressExport
     @JsonProperty(ApiNames.FUNKTIONEN)
-    @Schema(implementation = DecoderFunktionModel.class, name = "Decoder functions", accessMode = AccessMode.READ_ONLY)
+    @Schema(implementation = DecoderFunktionModel.class, description = "Decoder functions", accessMode = AccessMode.READ_ONLY)
     private List<DecoderFunktionModel> funktionen;
 
     @JsonProperty(ApiNames.DELETED)

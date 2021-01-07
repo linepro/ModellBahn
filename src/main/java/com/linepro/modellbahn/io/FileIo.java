@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component;
     FileServiceImpl.class,
     FileStoreImpl.class,
     FileUploadHandlerImpl.class,
-    MvcConfig.class
+    MvcConfig.class,
+    ResourceEndpoints.class
 })
 @Component(PREFIX + "FileIo")
 public class FileIo {

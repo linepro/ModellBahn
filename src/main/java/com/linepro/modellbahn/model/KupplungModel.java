@@ -3,7 +3,6 @@ package com.linepro.modellbahn.model;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -14,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -40,9 +40,9 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.KUPPLUNG, itemRelation = ApiNames.KUPPLUNG)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.KUPPLUNG)
 @Schema(name = ApiNames.KUPPLUNG, description = "Coupling configuration - Märklin coding.")
-public class KupplungModel extends RepresentationModel<KupplungModel> implements NamedWithAbbildungModel, Comparable<KupplungModel> {
+public class KupplungModel extends SpringdocModel<KupplungModel> implements NamedWithAbbildungModel, Comparable<KupplungModel> {
 
     private static final long serialVersionUID = -4227031769285101775L;
 
@@ -92,4 +92,7 @@ public class KupplungModel extends RepresentationModel<KupplungModel> implements
                 .append(name, other.name)
                 .isEquals();
     }
+
+    @Schema(name = ApiNames.KUPPLUNG + "Page")
+    public static class PagedKupplungModel extends PagedSchema<KupplungModel>{}
 }

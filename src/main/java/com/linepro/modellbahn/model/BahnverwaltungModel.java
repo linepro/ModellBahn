@@ -2,7 +2,6 @@ package com.linepro.modellbahn.model;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -39,9 +38,9 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.LAND, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.BAHNVERWALTUNG, itemRelation = ApiNames.BAHNVERWALTUNG)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.BAHNVERWALTUNG)
 @Schema(name = ApiNames.BAHNVERWALTUNG, description = "Railway company.")
-public class BahnverwaltungModel extends RepresentationModel<BahnverwaltungModel> implements NamedItemModel, Comparable<BahnverwaltungModel> {
+public class BahnverwaltungModel extends SpringdocModel<BahnverwaltungModel> implements NamedItemModel, Comparable<BahnverwaltungModel> {
 
     private static final long serialVersionUID = -6997053850560073389L;
 

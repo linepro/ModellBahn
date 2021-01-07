@@ -6,7 +6,6 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -43,9 +42,9 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ ApiNames.ARTIKEL_ID, ApiNames.ANDERUNG_ID, ApiNames.ANDERUNGSDATUM, ApiNames.ANDERUNGS_TYP, ApiNames.BEZEICHNUNG, ApiNames.STUCK, ApiNames.ANMERKUNG, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.ANDERUNG, itemRelation = ApiNames.ANDERUNG)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.ANDERUNG)
 @Schema(name = ApiNames.ANDERUNG, description = "Changes tp an article")
-public class AnderungModel extends RepresentationModel<AnderungModel> implements ItemModel, Comparable<AnderungModel> {
+public class AnderungModel extends SpringdocModel<AnderungModel> implements ItemModel, Comparable<AnderungModel> {
 
     private static final long serialVersionUID = 7089488648732721954L;
 
@@ -59,7 +58,7 @@ public class AnderungModel extends RepresentationModel<AnderungModel> implements
 
     @JsonProperty(ApiNames.ANDERUNGSDATUM)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @Schema(implementation = LocalDate.class, name = "Change date", example = "1967-08-10")
+    @Schema(implementation = LocalDate.class, description = "Change date", example = "1967-08-10")
     private LocalDate anderungsDatum;
 
     @JsonProperty(ApiNames.ANDERUNGS_TYP)

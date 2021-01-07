@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -16,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -43,9 +43,9 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.ZUG_TYP, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.CONSIST, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.ZUG, itemRelation = ApiNames.ZUG)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.ZUG)
 @Schema(name = ApiNames.ZUG, description = "A running train configuration.")
-public class ZugModel extends RepresentationModel<ZugModel> implements NamedItemModel, Comparable<ZugModel> {
+public class ZugModel extends SpringdocModel<ZugModel> implements NamedItemModel, Comparable<ZugModel> {
 
     private static final long serialVersionUID = -3702381278455257877L;
 
@@ -62,8 +62,8 @@ public class ZugModel extends RepresentationModel<ZugModel> implements NamedItem
     private String zugTyp;
 
     @SuppressExport
-    @JsonProperty(ApiNames.CONSIST)
-    @Schema(implementation = ZugConsistModel.class, name = "Train composition", accessMode = AccessMode.READ_ONLY)
+    @JsonProperty(ApiNames.FAHRZEUGEN)
+    @Schema(implementation = ZugConsistModel.class, description = "Train composition", accessMode = AccessMode.READ_ONLY)
     private List<ZugConsistModel> consist;
 
     @JsonProperty(ApiNames.DELETED)
@@ -100,4 +100,7 @@ public class ZugModel extends RepresentationModel<ZugModel> implements NamedItem
                 .append(name, other.name)
                 .isEquals();
     }
+
+    @Schema(name = ApiNames.ZUG + "Page")
+    public static class PagedZugModel extends PagedSchema<ZugModel>{}
 }

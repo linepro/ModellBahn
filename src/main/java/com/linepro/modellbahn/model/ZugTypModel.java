@@ -2,7 +2,6 @@ package com.linepro.modellbahn.model;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -13,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -39,9 +39,9 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.ZUG_TYP, itemRelation = ApiNames.ZUG_TYP)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.ZUG_TYP)
 @Schema(name = ApiNames.ZUG_TYP, description = "Type of train.")
-public class ZugTypModel extends RepresentationModel<ZugTypModel> implements NamedItemModel, Comparable<ZugTypModel> {
+public class ZugTypModel extends SpringdocModel<ZugTypModel> implements NamedItemModel, Comparable<ZugTypModel> {
 
     private static final long serialVersionUID = 4015651013461558863L;
 
@@ -87,4 +87,7 @@ public class ZugTypModel extends RepresentationModel<ZugTypModel> implements Nam
                 .append(name, other.name)
                 .isEquals();
     }
+
+    @Schema(name = ApiNames.ZUG_TYP + "Page")
+    public static class PagedZugTypModel extends PagedSchema<ZugTypModel>{}
 }

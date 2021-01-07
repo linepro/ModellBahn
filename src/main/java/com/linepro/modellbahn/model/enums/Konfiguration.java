@@ -1,23 +1,11 @@
 package com.linepro.modellbahn.model.enums;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonRootName;
-import com.linepro.modellbahn.controller.impl.ApiNames;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
-
 /**
  * Konfiguration.
  * Enum defining the supported Decoder configuration methods
  * @author   $Author$
  * @version  $Id$
  */
-@JsonRootName(value = ApiNames.KONFIGURATION)
-@JsonIgnoreProperties(ignoreUnknown=true)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG })
-@Schema(name = ApiNames.KONFIGURATION, description = "Configuration methods")
 public enum Konfiguration implements DescribedEnum {
 
     KEIN("kein"),
@@ -38,19 +26,16 @@ public enum Konfiguration implements DescribedEnum {
     }
 
     @Override
-    @Schema(description = "Konfiguration name", example = "CV", accessMode = AccessMode.READ_ONLY)
     public String getName() {
         return this.name();
     }
 
     @Override
-    @Schema(description = "Konfiguration description", example = "The Decoder can be configured by CV values.", accessMode = AccessMode.READ_ONLY)
     public String getBezeichnung() {
         return description;
     }
 
     @Override
-    @Schema(description = "Konfiguration tooltip", example = "The Decoder can be configured by CV values.", accessMode = AccessMode.READ_ONLY)
     public String getTooltip() {
         return tooltip;
     }

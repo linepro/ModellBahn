@@ -1,0 +1,285 @@
+{
+    "_embedded": {
+        "aufbau": [
+            {
+                "name": "LK",
+                "bezeichnung": "Fahrgestell der Lok aus Metall",
+                "abbildung": "https://linepro2.home:8086/aufbau/LK/abbildung.jpg",
+                "deleted": false,
+                "_links": {
+                    "search": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau"
+                        }
+                    ],
+                    "add": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau"
+                        }
+                    ],
+                    "self": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/LK"
+                        }
+                    ],
+                    "update": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/LK"
+                        }
+                    ],
+                    "delete": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/LK"
+                        }
+                    ],
+                    "abbildung": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/LK/abbildung"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "LMK",
+                "bezeichnung": "Fahrgestell und vorwiegender Aufbau der Loks aus Metall",
+                "abbildung": "https://linepro2.home:8086/aufbau/LMK/abbildung.jpg",
+                "deleted": false,
+                "_links": {
+                    "search": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau"
+                        }
+                    ],
+                    "add": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau"
+                        }
+                    ],
+                    "self": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/LMK"
+                        }
+                    ],
+                    "update": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/LMK"
+                        }
+                    ],
+                    "delete": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/LMK"
+                        }
+                    ],
+                    "abbildung": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/LMK/abbildung"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "LM",
+                "bezeichnung": "Fahrgestell und Aufbau der Lokomotive aus Metall",
+                "abbildung": "https://linepro2.home:8086/aufbau/LM/abbildung.jpg",
+                "deleted": false,
+                "_links": {
+                    "search": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau"
+                        }
+                    ],
+                    "add": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau"
+                        }
+                    ],
+                    "self": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/LM"
+                        }
+                    ],
+                    "update": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/LM"
+                        }
+                    ],
+                    "delete": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/LM"
+                        }
+                    ],
+                    "abbildung": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/LM/abbildung"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "WK",
+                "bezeichnung": "Fahrgestell des Wagens aus Metall",
+                "abbildung": "https://linepro2.home:8086/aufbau/WK/abbildung.jpg",
+                "deleted": false,
+                "_links": {
+                    "search": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau"
+                        }
+                    ],
+                    "add": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau"
+                        }
+                    ],
+                    "self": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/WK"
+                        }
+                    ],
+                    "update": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/WK"
+                        }
+                    ],
+                    "delete": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/WK"
+                        }
+                    ],
+                    "abbildung": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/WK/abbildung"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "WMK",
+                "bezeichnung": "Überwiegender Teil des Wagenaufbaus aus Metall",
+                "abbildung": "https://linepro2.home:8086/aufbau/WMK/abbildung.jpg",
+                "deleted": false,
+                "_links": {
+                    "search": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau"
+                        }
+                    ],
+                    "add": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau"
+                        }
+                    ],
+                    "self": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/WMK"
+                        }
+                    ],
+                    "update": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/WMK"
+                        }
+                    ],
+                    "delete": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/WMK"
+                        }
+                    ],
+                    "abbildung": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/WMK/abbildung"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "WM",
+                "bezeichnung": "Fahrgestell und Aufbau des Wagens aus Metall",
+                "abbildung": "https://linepro2.home:8086/aufbau/WM/abbildung.jpg",
+                "deleted": false,
+                "_links": {
+                    "search": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau"
+                        }
+                    ],
+                    "add": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau"
+                        }
+                    ],
+                    "self": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/WM"
+                        }
+                    ],
+                    "update": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/WM"
+                        }
+                    ],
+                    "delete": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/WM"
+                        }
+                    ],
+                    "abbildung": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/WM/abbildung"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "LKM",
+                "bezeichnung": "Überwiegender Teil des Lokaufbaues aus Metall",
+                "abbildung": "https://linepro2.home:8086/aufbau/LKM/abbildung.jpg",
+                "deleted": false,
+                "_links": {
+                    "search": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau"
+                        }
+                    ],
+                    "add": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau"
+                        }
+                    ],
+                    "self": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/LKM"
+                        }
+                    ],
+                    "update": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/LKM"
+                        }
+                    ],
+                    "delete": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/LKM"
+                        }
+                    ],
+                    "abbildung": [
+                        {
+                            "href": "https://linepro2.home:8086/ModellBahn/api/aufbau/LKM/abbildung"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "_links": {
+        "self": [
+            {
+                "href": "https://linepro2.home:8086/ModellBahn/api/aufbau"
+            }
+        ]
+    },
+    "page": {
+        "size": 7,
+        "totalElements": 7,
+        "totalPages": 1,
+        "number": 0
+    }
+}

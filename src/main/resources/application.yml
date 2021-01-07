@@ -174,5 +174,11 @@ spring:
             max-file-size: 5MB
    quartz:
       auto-startup: false
-#   resources:
-#      static-locations: classpath:/files/,classpath:/static-files,file:./store
+
+springdoc:
+   swagger-ui:
+      configUrl: /ModellBahn/v3/api-docs.json
+      enabled: true
+      url: /ModellBahn/v3/api-docs.json
+   writer-with-default-pretty-printer: true
+   writer-with-order-by-keys: true

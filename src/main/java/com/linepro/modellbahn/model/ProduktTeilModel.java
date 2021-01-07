@@ -3,7 +3,6 @@ package com.linepro.modellbahn.model;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -42,9 +41,9 @@ import lombok.ToString;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.TEIL_HERSTELLER, ApiNames.TEIL_BESTELL_NR, ApiNames.BEZEICHNUNG,
     ApiNames.KATEGORIE, ApiNames.UNTER_KATEGORIE, ApiNames.ANZAHL, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.TEIL, itemRelation = ApiNames.TEIL)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.TEIL)
 @Schema(name = ApiNames.TEIL, description = "Part of product (spares for rolling stock - contents for set &c).")
-public class ProduktTeilModel extends RepresentationModel<ProduktTeilModel> implements ItemModel, Comparable<ProduktTeilModel> {
+public class ProduktTeilModel extends SpringdocModel<ProduktTeilModel> implements ItemModel, Comparable<ProduktTeilModel> {
 
     private static final long serialVersionUID = 1L;
 

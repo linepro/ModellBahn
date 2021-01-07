@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -44,9 +43,9 @@ import lombok.ToString;
 @JsonPropertyOrder({ ApiNames.ZUG, ApiNames.POSITION, ApiNames.ARTIKEL_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR,
     ApiNames.BEZEICHNUNG, ApiNames.LANGE, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER,
     ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.CONSIST, itemRelation = ApiNames.CONSIST)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.CONSIST)
 @Schema(name = ApiNames.CONSIST, description = "Rolling stock by poisition in a train.")
-public class ZugConsistModel extends RepresentationModel<ZugConsistModel> implements ItemModel, Comparable<ZugConsistModel> {
+public class ZugConsistModel extends SpringdocModel<ZugConsistModel> implements ItemModel, Comparable<ZugConsistModel> {
 
     private static final long serialVersionUID = -400353674903033600L;
 

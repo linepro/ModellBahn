@@ -7,7 +7,6 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -18,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -54,9 +54,9 @@ import lombok.ToString;
         ApiNames.KAPAZITAT, ApiNames.KLASSE, ApiNames.SITZPLATZEKL1, ApiNames.SITZPLATZEKL2, ApiNames.SITZPLATZEKL3,
         ApiNames.SITZPLATZEKL4, ApiNames.AUFBAU, ApiNames.TRIEBKOPF, ApiNames.MITTELWAGEN, ApiNames.DREHGESTELLBAUART,
         ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.VORBILD, itemRelation = ApiNames.VORBILD)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.VORBILD)
 @Schema(name = ApiNames.VORBILD, description = "A real world prototype.")
-public class VorbildModel extends RepresentationModel<VorbildModel> implements NamedWithAbbildungModel, Comparable<VorbildModel> {
+public class VorbildModel extends SpringdocModel<VorbildModel> implements NamedWithAbbildungModel, Comparable<VorbildModel> {
 
     private static final long serialVersionUID = 4657238952018125793L;
 
@@ -90,7 +90,7 @@ public class VorbildModel extends RepresentationModel<VorbildModel> implements N
 
     @JsonProperty(ApiNames.BAUZEIT)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @Schema(implementation = LocalDate.class, name = "Construction date", example = "1934-01-01")
+    @Schema(implementation = LocalDate.class, description = "Construction date", example = "1934-01-01")
     private LocalDate bauzeit;
 
     @JsonProperty(ApiNames.ANZAHL)
@@ -131,7 +131,7 @@ public class VorbildModel extends RepresentationModel<VorbildModel> implements N
 
     @JsonProperty(ApiNames.AUSSERDIENST)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @Schema(implementation = LocalDate.class, name = "Out of service date", example = "1962")
+    @Schema(implementation = LocalDate.class, description = "Out of service date", example = "1962")
     private LocalDate ausserdienst;
 
     @JsonProperty(ApiNames.DMTREIBRAD)
@@ -272,4 +272,7 @@ public class VorbildModel extends RepresentationModel<VorbildModel> implements N
                 .append(gattung, other.gattung)
                 .isEquals();
     }
+
+    @Schema(name = ApiNames.VORBILD + "Page")
+    public static class PagedVorbildModel extends PagedSchema<VorbildModel>{}
 }

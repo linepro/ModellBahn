@@ -44,11 +44,11 @@ public class ExporterImpl<M extends ItemModel,E extends Item> implements Exporte
 
     private final CsvSchema schema;
 
-    public ExporterImpl(PagingAndSortingRepository<E,Long> repository, Mutator<E,M> mutator, Class<M> modelClass) {
+    public ExporterImpl(PagingAndSortingRepository<E,Long> repository, Mutator<E,M> mutator, CsvSchemaGenerator generator, Class<M> modelClass) {
         this.repository = repository;
         this.mutator = mutator;
         this.modelClass = modelClass;
-        this.schema = new CsvSchemaGenerator().getSchema(modelClass);
+        this.schema = generator.getSchema(modelClass);
     }
 
     @Override

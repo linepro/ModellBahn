@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -38,8 +39,8 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.AUFBAU, itemRelation = ApiNames.AUFBAU)
-@Schema(name = ApiNames.ARTIKEL, description = "An article - may differ from product because of modificiations")
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.AUFBAU)
+@Schema(name = ApiNames.AUFBAU, description = "Model construction")
 public class AufbauModel extends RepresentationModel<AufbauModel> implements NamedWithAbbildungModel, Comparable<AufbauModel> {
 
     private static final long serialVersionUID = 8740426021195802502L;
@@ -90,4 +91,7 @@ public class AufbauModel extends RepresentationModel<AufbauModel> implements Nam
                 .append(name, other.name)
                 .isEquals();
     }
+
+    @Schema(name = ApiNames.AUFBAU + "Page")
+    public static class PagedAufbauModel extends PagedSchema<AufbauModel>{}
 }

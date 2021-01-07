@@ -1,24 +1,21 @@
-package com.linepro.modellbahn.model;
+package com.linepro.modellbahn.model.enums;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
-import org.springframework.hateoas.RepresentationModel;
 
-import com.linepro.modellbahn.model.enums.DescribedEnum;
+import com.linepro.modellbahn.model.SpringdocModel;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @ToString
-public class DescribedEnumModel extends RepresentationModel<DescribedEnumModel> implements DescribedEnum, Comparable<DescribedEnumModel> {
+@NoArgsConstructor
+@AllArgsConstructor
+public abstract class DescribedEnumModel extends SpringdocModel<DescribedEnumModel> implements Comparable<DescribedEnumModel> {
 
     private String name;
 

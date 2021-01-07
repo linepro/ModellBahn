@@ -3,7 +3,6 @@ package com.linepro.modellbahn.model;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -14,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -40,9 +40,9 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.PROTOKOLL, itemRelation = ApiNames.PROTOKOLL)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.PROTOKOLL)
 @Schema(name = ApiNames.PROTOKOLL, description = "Digital protocoll.")
-public class ProtokollModel extends RepresentationModel<ProtokollModel> implements NamedItemModel, Comparable<ProtokollModel> {
+public class ProtokollModel extends SpringdocModel<ProtokollModel> implements NamedItemModel, Comparable<ProtokollModel> {
 
     private static final long serialVersionUID = 1L;
 
@@ -88,4 +88,7 @@ public class ProtokollModel extends RepresentationModel<ProtokollModel> implemen
                 .append(name, other.name)
                 .isEquals();
     }
+
+    @Schema(name = ApiNames.PROTOKOLL + "Page")
+    public static class PagedProtokollModel extends PagedSchema<ProtokollModel>{}
 }

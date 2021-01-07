@@ -3,7 +3,6 @@ package com.linepro.modellbahn.model;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -14,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -41,9 +41,9 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.ACHSFOLG, itemRelation = ApiNames.ACHSFOLG)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.ACHSFOLG)
 @Schema(name = ApiNames.ACHSFOLG, description = "Axle configuration - VDEV/VMEV/UIC-System")
-public class AchsfolgModel extends RepresentationModel<AchsfolgModel> implements NamedItemModel, Comparable<AchsfolgModel> {
+public class AchsfolgModel extends SpringdocModel<AchsfolgModel> implements NamedItemModel, Comparable<AchsfolgModel> {
 
     private static final long serialVersionUID = 1860366231843697997L;
 
@@ -89,4 +89,7 @@ public class AchsfolgModel extends RepresentationModel<AchsfolgModel> implements
                 .append(name, other.name)
                 .isEquals();
     }
+
+    @Schema(name = ApiNames.ACHSFOLG + "Page")
+    public static class PagedAchsfolgModel extends PagedSchema<AchsfolgModel>{}
 }

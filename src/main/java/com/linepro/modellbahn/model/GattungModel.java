@@ -1,8 +1,8 @@
 package com.linepro.modellbahn.model;
+
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -39,9 +40,9 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.GATTUNG, itemRelation = ApiNames.GATTUNG)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.GATTUNG)
 @Schema(name = ApiNames.GATTUNG, description = "Rolling stock class (amalgamation of Baureihe and Gattung).")
-public class GattungModel extends RepresentationModel<GattungModel> implements NamedItemModel, Comparable<GattungModel> {
+public class GattungModel extends SpringdocModel<GattungModel> implements NamedItemModel, Comparable<GattungModel> {
 
     private static final long serialVersionUID = 6469845818541632226L;
 
@@ -78,7 +79,7 @@ public class GattungModel extends RepresentationModel<GattungModel> implements N
         }
 
         if (!(obj instanceof GattungModel)) {
-            return false; 
+            return false;
         }
 
         GattungModel other = (GattungModel) obj;
@@ -86,5 +87,9 @@ public class GattungModel extends RepresentationModel<GattungModel> implements N
         return new EqualsBuilder()
                 .append(name, other.name)
                 .isEquals();
+    }
+
+    @Schema(name = ApiNames.GATTUNG + "Page")
+    public static class PagedGattungModel extends PagedSchema<GattungModel> {
     }
 }

@@ -90,12 +90,15 @@ public class ExporterImplTest {
 
     private final Mutator<Decoder,DecoderModel> mutator;  
 
+    private final CsvSchemaGenerator generator;
+
     private Exporter exporter;
 
     public ExporterImplTest(@Mock JpaRepository<Decoder,Long> repository, @Mock Mutator<Decoder,DecoderModel> mutator) { 
         this.repository = repository;
         this.mutator = mutator;
-        this.writer = new CharArrayWriter();;
+        this.generator = new CsvSchemaGenerator();
+        this.writer = new CharArrayWriter();
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
@@ -111,7 +114,7 @@ public class ExporterImplTest {
         when(mutator.convert(any())).thenReturn(MODEL);
         when(mutator.get()).thenReturn(MODEL);
 
-        exporter = new ExporterImpl(repository, mutator, DecoderModel.class);
+        exporter = new ExporterImpl(repository, mutator, generator, DecoderModel.class);
     }
 
     @Test

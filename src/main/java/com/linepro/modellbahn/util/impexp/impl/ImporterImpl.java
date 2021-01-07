@@ -2,6 +2,7 @@ package com.linepro.modellbahn.util.impexp.impl;
 
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.RuntimeJsonMappingException;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
+import com.google.common.io.LineReader;
 import com.linepro.modellbahn.controller.impl.ApiMessages;
 import com.linepro.modellbahn.converter.Mutator;
 import com.linepro.modellbahn.entity.Item;
@@ -47,11 +49,15 @@ public class ImporterImpl<M extends ItemModel,E extends Item> implements Importe
 
     private final Class<M> modelClass;
 
-    public ImporterImpl(JpaRepository<E,Long> repository, Mutator<M,E> mutator, Class<M> modelClass) {
+    private final CsvSchemaGenerator generator;
+
+    public ImporterImpl(JpaRepository<E,Long> repository, Mutator<M,E> mutator, CsvSchemaGenerator generator, Class<M> modelClass) {
         this.repository = repository;
         this.mutator = mutator;
+        this.generator = generator;
         this.modelClass = modelClass;
-        this.schema = new CsvSchemaGenerator().getSchema(modelClass);
+
+        this.schema = generator.getSchema(modelClass);
     }
 
     @Override
@@ -63,7 +69,27 @@ public class ImporterImpl<M extends ItemModel,E extends Item> implements Importe
         Integer rowNum = 0;
 
         try {
-            ObjectReader reader = MAPPER.readerFor(modelClass).with(schema);
+            CsvSchema actual = schema;
+
+            if (in.markSupported()) {
+                in.mark(schema.toString().length());
+                try {
+                    String headerLine = new LineReader(in).readLine();
+
+                    // Filter schema with columns actually in input file header and re-create using specified order...
+                    actual = generator.getSchema(Arrays.asList(headerLine.split(","))
+                                                       .stream()
+                                                       .map(c -> schema.column(c))
+                                                       .filter(c -> c != null)
+                                                       .collect(Collectors.toList()));
+                } catch (Exception e) {
+                    log.error("Failed to customise schema {}: {}", e.getMessage(), e);
+                }
+
+                in.reset();
+            }
+
+            ObjectReader reader = MAPPER.readerFor(modelClass).with(actual);
 
             mi = reader.readValues(in);
 
@@ -75,22 +101,11 @@ public class ImporterImpl<M extends ItemModel,E extends Item> implements Importe
                 try {
                     repository.save(mutator.convert(next));
                 } catch(Exception e) {
-                    String actual;
+                    String error = getError(e);
 
-                    if (e instanceof ConstraintViolationException) {
-                        actual = ((ConstraintViolationException) e).getConstraintViolations()
-                                                                   .stream()
-                                                                   .map(c -> c.getMessage())
-                                                                   .collect(Collectors.joining(","));
-                    } else if (e.getCause() != null) {
-                        actual = e.getCause().getMessage();
-                    } else {
-                        actual = e.getMessage();
-                    }
+                    errors.add(MessageFormatter.arrayFormat("#{} - '{}': {}", new Object[] { rowNum, next, error }).getMessage());
 
-                    errors.add(MessageFormatter.arrayFormat("#{} - '{}': {}", new Object[] { rowNum, next, actual }).getMessage());
-
-                    log.error("Error importing #{} - '{}': {}", rowNum, next, actual, e);
+                    log.error("Error importing #{} - '{}': {}", rowNum, next, error, e);
                 }
             }
         } catch (RuntimeJsonMappingException e) {
@@ -106,5 +121,21 @@ public class ImporterImpl<M extends ItemModel,E extends Item> implements Importe
                                      .addValue(errors.stream().collect(Collectors.joining("\n")))
                                      .setStatus(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    private String getError(Exception e) {
+        String error;
+
+        if (e instanceof ConstraintViolationException) {
+            error = ((ConstraintViolationException) e).getConstraintViolations()
+                                                       .stream()
+                                                       .map(c -> c.getMessage())
+                                                       .collect(Collectors.joining(","));
+        } else if (e.getCause() != null) {
+            error = e.getCause().getMessage();
+        } else {
+            error = e.getMessage();
+        }
+        return error;
     }
 }

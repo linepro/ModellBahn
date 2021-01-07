@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.linepro.modellbahn.configuration.ErrorMessage;
+import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
@@ -42,7 +42,7 @@ public class ModellBahnAuthenticationEntryPoint extends BasicAuthenticationEntry
             response.getWriter()
                     .write(
                         mapper.writeValueAsString(
-                            ErrorMessage.builder()
+                            UserMessage.builder()
                                         .code(HttpStatus.UNAUTHORIZED.value())
                                         .path(requestUri)
                                         .timestamp(System.currentTimeMillis())

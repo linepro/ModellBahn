@@ -3,7 +3,6 @@ package com.linepro.modellbahn.model;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -42,9 +41,9 @@ import lombok.ToString;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.INDEX,  ApiNames.BEZEICHNUNG, ApiNames.SPAN, ApiNames.ADRESS_TYP,
     ApiNames.WERKSEINSTELLUNG, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.ADRESS, itemRelation = ApiNames.ADRESS)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.ADRESS)
 @Schema(name = ApiNames.ADRESS, description = "Decoder type address - template for Decoder.")
-public class DecoderTypAdressModel extends RepresentationModel<DecoderTypAdressModel> implements ItemModel, Comparable<DecoderTypAdressModel> {
+public class DecoderTypAdressModel extends SpringdocModel<DecoderTypAdressModel> implements ItemModel, Comparable<DecoderTypAdressModel> {
 
     private static final long serialVersionUID = 1826497356359114726L;
 

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Service(PREFIX + ".PasswordProcessor")
+@Service(PREFIX + "PasswordProcessor")
 public class PasswordProcessor {
 
     @Autowired
