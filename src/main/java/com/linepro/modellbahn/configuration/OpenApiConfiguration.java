@@ -10,9 +10,18 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 
 import java.util.Arrays;
 
+import org.springdoc.core.Constants;
+import org.springdoc.core.SwaggerUiConfigProperties;
+import org.springdoc.core.SwaggerUiOAuthProperties;
+import org.springdoc.webmvc.ui.SwaggerIndexPageTransformer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.ExternalDocumentation;
@@ -24,9 +33,50 @@ import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.security.SecurityScheme.In;
 import io.swagger.v3.oas.models.security.SecurityScheme.Type;
+import lombok.Getter;
 
+@Getter
 @Configuration(PREFIX + "OpenApiConfiguration")
 public class OpenApiConfiguration {
+
+    @Value("${spring.mvc.servlet.path:ModellBahn}")
+    private String servletPath;
+
+    @Value("${springdoc.api-docs.path:/v3/api-docs}")
+    private String path;
+
+    @Value("${springdoc.use-management-port:false}")
+    private boolean useManagementPort;
+    
+    @Value("${management.server.port:8087}")
+    private int managementPort;
+
+    protected static final class IndexPageTransformer extends SwaggerIndexPageTransformer {
+        private OpenApiConfiguration config;
+
+        protected IndexPageTransformer(SwaggerUiConfigProperties uiConfig, SwaggerUiOAuthProperties oAuthProperties, ObjectMapper objectMapper, OpenApiConfiguration config) {
+            super(uiConfig, oAuthProperties, objectMapper);
+
+            swaggerUiConfig.setDisableSwaggerDefaultUrl(true);
+
+            this.config = config;
+        }
+
+        @Override
+        protected String overwriteSwaggerDefaultUrl(String html) {
+            UriComponentsBuilder uri = ServletUriComponentsBuilder.fromCurrentContextPath();
+            
+            if (config.isUseManagementPort()) {
+                uri.port(config.getManagementPort());
+            }
+
+            uri.path(config.getServletPath());
+            uri.path(config.getPath());
+            uri.path(".json");
+
+            return html.replace(Constants.SWAGGER_UI_DEFAULT_URL, uri.toUriString());
+        }
+    }
 
     private static final String CONTACT_NAME = "John Goff";
 
@@ -82,4 +132,9 @@ public class OpenApiConfiguration {
                 new SecurityRequirement().addList("BasicAuth", Arrays.asList("read", "write"))
             );
         }
+
+    @Bean(PREFIX + "SwaggerIndexPageTransformer")
+    public SwaggerIndexPageTransformer getSwaggerIndexPageTransformer(SwaggerUiConfigProperties swaggerUiConfig, SwaggerUiOAuthProperties swaggerUiOAuthProperties, ObjectMapper objectMapper) {
+        return new IndexPageTransformer(swaggerUiConfig, swaggerUiOAuthProperties, objectMapper, this);
+    }
 }
