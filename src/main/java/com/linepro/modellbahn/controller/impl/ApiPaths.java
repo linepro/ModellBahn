@@ -85,14 +85,16 @@ public interface ApiPaths {
     String DELETE_EPOCH = EPOCH_ROOT + "/{" + ApiNames.NAMEN + "}";
     String UPDATE_EPOCH = EPOCH_ROOT + "/{" + ApiNames.NAMEN + "}";
 
-    String ENUMS_ROOT                       = API_ROOT + ApiNames.ENUMS;
-    String ENUMS_ADRESS_TYP_PATH            = ENUMS_ROOT + "/" + ApiNames.ADRESS_TYP;
-    String ENUMS_ANDERUNGS_TYP_PATH         = ENUMS_ROOT + "/" + ApiNames.ANDERUNGS_TYP;
-    String ENUMS_DECODER_STATUS_PATH        = ENUMS_ROOT + "/" + ApiNames.DECODER_STATUS;
-    String ENUMS_KONFIGURATION_PATH         = ENUMS_ROOT + "/" + ApiNames.KONFIGURATION;
+    String ENUMS_ROOT                      = API_ROOT + ApiNames.ENUMS;
+    String ENUMS_ADRESS_TYP_PATH           = ENUMS_ROOT + "/" + ApiNames.ADRESS_TYP;
+    String ENUMS_ANDERUNGS_TYP_PATH        = ENUMS_ROOT + "/" + ApiNames.ANDERUNGS_TYP;
+    String ENUMS_DECODER_STATUS_PATH       = ENUMS_ROOT + "/" + ApiNames.DECODER_STATUS;
+    String ENUMS_KONFIGURATION_PATH        = ENUMS_ROOT + "/" + ApiNames.KONFIGURATION;
+    String ENUMS_LAND_PATH                 = ENUMS_ROOT + "/" + ApiNames.LAND;
     String ENUMS_LEISTUNGSUBERTRAGUNG_PATH = ENUMS_ROOT + "/" + ApiNames.LEISTUNGSUBERTRAGUNG;
-    String ENUMS_STATUS_PATH                = ENUMS_ROOT + "/" + ApiNames.STATUS;
-    String ENUMS_STECKER_PATH               = ENUMS_ROOT + "/" + ApiNames.STECKER;
+    String ENUMS_STATUS_PATH               = ENUMS_ROOT + "/" + ApiNames.STATUS;
+    String ENUMS_STECKER_PATH              = ENUMS_ROOT + "/" + ApiNames.STECKER;
+    String ENUMS_WAHRUNG_PATH              = ENUMS_ROOT + "/" + ApiNames.WAHRUNG;
 
     String GATTUNG_ROOT   = API_ROOT + ApiNames.GATTUNG;
     String ADD_GATTUNG    = GATTUNG_ROOT;

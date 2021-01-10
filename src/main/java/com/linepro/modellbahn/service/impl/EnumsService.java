@@ -2,11 +2,15 @@ package com.linepro.modellbahn.service.impl;
 
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 
+import java.util.Currency;
+import java.util.List;
+import java.util.Locale;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -24,12 +28,14 @@ import com.linepro.modellbahn.model.enums.DescribedEnum;
 import com.linepro.modellbahn.model.enums.DescribedEnumModel;
 import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.model.enums.KonfigurationModel;
+import com.linepro.modellbahn.model.enums.LandModel;
 import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
 import com.linepro.modellbahn.model.enums.LeistungsUbertragungModel;
 import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.model.enums.StatusModel;
 import com.linepro.modellbahn.model.enums.Stecker;
 import com.linepro.modellbahn.model.enums.SteckerModel;
+import com.linepro.modellbahn.model.enums.WahrungModel;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,45 +47,74 @@ public class EnumsService {
     private final MessageTranslator messageTranslator;
 
     public Page<AdressTypModel> getAdressTyp() {
-        return new PageImpl<>(Stream.of(AdressTyp.values())
-                        .map(v -> getModel(AdressTypModel::new, v))
-                        .collect(Collectors.toList()), Pageable.unpaged(), AdressTyp.values().length);
+        return getPage(AdressTypModel::new, AdressTyp.values());
     }
 
     public Page<AnderungsTypModel> getAnderungTyp() {
-        return new PageImpl<>(Stream.of(AnderungsTyp.values())
-                        .map(v -> getModel(AnderungsTypModel::new, v))
-                        .collect(Collectors.toList()), Pageable.unpaged(), AnderungsTyp.values().length);
+        return getPage(AnderungsTypModel::new, AnderungsTyp.values());
     }
 
     public Page<DecoderStatusModel> getDecoderStatus() {
-        return new PageImpl<>(Stream.of(DecoderStatus.values())
-                        .map(v -> getModel(DecoderStatusModel::new, v))
-                        .collect(Collectors.toList()), Pageable.unpaged(), DecoderStatus.values().length);
-    }
-
-    public Page<SteckerModel> getStecker() {
-        return new PageImpl<>(Stream.of(Stecker.values())
-                        .map(v -> getModel(SteckerModel::new, v))
-                        .collect(Collectors.toList()), Pageable.unpaged(), Stecker.values().length);
+        return getPage(DecoderStatusModel::new, DecoderStatus.values());
     }
 
     public Page<KonfigurationModel> getKonfiguration() {
-        return new PageImpl<>(Stream.of(Konfiguration.values())
-                        .map(v -> getModel(KonfigurationModel::new, v))
-                        .collect(Collectors.toList()), Pageable.unpaged(), Konfiguration.values().length);
+        return getPage(KonfigurationModel::new, Konfiguration.values());
     }
 
-    public Page<StatusModel> getStatus() {
-        return new PageImpl<>(Stream.of(Status.values())
-                        .map(v -> getModel(StatusModel::new, v))
-                        .collect(Collectors.toList()), Pageable.unpaged(), Status.values().length);
+    public Page<LandModel> getLand() {
+        final Locale locale = LocaleContextHolder.getLocale();
+
+        return getPage(Stream.of(Locale.getISOCountries())
+                             .sorted((c1, c2) -> c1.compareTo(c2))
+                             .map(c -> new Locale("", c))
+                             .map(l -> new LandModel(
+                                                 l.getCountry(), 
+                                                 l.getDisplayCountry(locale) 
+                                                 )
+                             )
+                             .collect(Collectors.toList())
+                      );
     }
 
     public Page<LeistungsUbertragungModel> getLeistungsUbertragung() {
-        return new PageImpl<>(Stream.of(LeistungsUbertragung.values())
-                        .map(v -> getModel(LeistungsUbertragungModel::new, v))
-                        .collect(Collectors.toList()), Pageable.unpaged(), LeistungsUbertragung.values().length);
+        return getPage(LeistungsUbertragungModel::new, LeistungsUbertragung.values());
+    }
+
+    public Page<StatusModel> getStatus() {
+        return getPage(StatusModel::new, Status.values());
+    }
+
+    public Page<SteckerModel> getStecker() {
+        return getPage(SteckerModel::new, Stecker.values());
+    }
+
+    public Page<WahrungModel> getWahrung() {
+        final Locale locale = LocaleContextHolder.getLocale();
+
+        return getPage(Currency.getAvailableCurrencies()
+                               .stream()
+                               .sorted((c1, c2) -> c1.getCurrencyCode().compareTo(c2.getCurrencyCode()))
+                               .map(c -> new WahrungModel(
+                                               c.getCurrencyCode(),
+                                               c.getDisplayName(locale), 
+                                               c.getSymbol(locale), 
+                                               c.getDefaultFractionDigits()
+                                               )
+                               )
+                               .collect(Collectors.toList())
+                      );
+    }
+
+    private <I> Page<I> getPage(List<I> items) {
+        return new PageImpl<I>(items, Pageable.unpaged(), items.size());
+    }
+
+    private <M extends DescribedEnumModel, E extends DescribedEnum> Page<M> getPage(Supplier<M> supplier, DescribedEnum[] items) {
+        return getPage(Stream.of(items)
+                             .map(v -> getModel(supplier, v))
+                             .collect(Collectors.toList())
+                             );
     }
 
     private <M extends DescribedEnumModel, E extends DescribedEnum> M getModel(Supplier<M> supplier, E value) {
