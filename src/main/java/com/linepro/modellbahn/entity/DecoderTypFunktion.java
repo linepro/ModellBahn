@@ -86,7 +86,7 @@ public class DecoderTypFunktion extends ItemImpl implements Comparable<DecoderTy
     private Integer reihe;
 
     @Column(name = DBNames.FUNKTION, length = 4)
-    @Pattern(regexp = "^F([12]\\d|3[012]|\\d)$|^K(1[012345]|\\d)$|^S[0123456]$", message = "{com.linepro.modellbahn.validator.constraints.funktion.invalid}")
+    @Pattern(regexp = "^" + DBNames.FUNKTION_PATTERN + "$", message = "{com.linepro.modellbahn.validator.constraints.funktion.invalid}")
     private String funktion;
 
     @Column(name = DBNames.BEZEICHNUNG, length = 100)

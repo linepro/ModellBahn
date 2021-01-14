@@ -347,7 +347,7 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
 
     @Column(name = DBNames.BESTELL_NR, length = 50)
     @Size(max = 50, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
-    @Pattern(regexp = "^[A-Z0-9\\-.]+$", message = "{com.linepro.modellbahn.validator.constraints.bestellNr.invalid}")
+    @Pattern(regexp = "^" + DBNames.NAME_PATTERN + "$", message = "{com.linepro.modellbahn.validator.constraints.bestellNr.invalid}")
     private String bestellNr;
 
     @Column(name = DBNames.BEZEICHNUNG, length = 100)

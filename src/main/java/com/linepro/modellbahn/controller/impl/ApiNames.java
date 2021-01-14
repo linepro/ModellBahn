@@ -112,6 +112,7 @@ public interface ApiNames {
     String STECKER = "stecker";
     String STEUERUNG = "steuerung";
     String STUCK = "stuck";
+    String SYMBOL = "symbol";
     String TEIL_BESTELL_NR = "teilBestellNr";
     String TEIL_HERSTELLER = "teilHersteller";
     String TEILEN = "teilen";

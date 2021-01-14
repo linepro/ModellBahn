@@ -363,7 +363,7 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
 
     /** The abbildung. */
     @Column(name = DBNames.ARTIKEL_ID, length = 6, nullable = false, updatable = false)
-    @Pattern(regexp = "^[A-Z0-9]+$", message = "{com.linepro.modellbahn.validator.constraints.artikelId.invalid}")
+    @Pattern(regexp = "^" + DBNames.ID_PATTERN + "$", message = "{com.linepro.modellbahn.validator.constraints.artikelId.invalid}")
     private String artikelId;
 
     /** The produkt. */

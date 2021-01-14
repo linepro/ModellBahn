@@ -160,5 +160,9 @@ public interface DBNames {
     String CONFIRMATION_EXPIRES = "confirmationExpires";
     String LOCALE = "locale";
     String ROLES = "roles";
+
+    String NAME_PATTERN = "[A-Z0-9\\-\\.]+";
+    public String ID_PATTERN = "[A-Z0-9]+";
+    public String FUNKTION_PATTERN = "F([12]\\d|3[012]|\\d)$|^K(1[012345]|\\d)$|^S[0123456]";
 }
 

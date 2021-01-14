@@ -36,7 +36,7 @@ public class NamedItemImpl extends ItemImpl implements NamedItem, Comparable<Nam
      * The name.
      */
     @Column(name = DBNames.NAME, length = 50, nullable = false)
-    @Pattern(regexp = "^[A-Z0-9\\-.]+$", message = "{com.linepro.modellbahn.validator.constraints.name.invalid}")
+    @Pattern(regexp = "^" + DBNames.NAME_PATTERN + "$", message = "{com.linepro.modellbahn.validator.constraints.name.invalid}")
     @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.name.notempty}")
     private String name;
 

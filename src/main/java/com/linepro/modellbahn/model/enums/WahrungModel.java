@@ -3,6 +3,8 @@ package com.linepro.modellbahn.model.enums;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -16,6 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonRootName(value = ApiNames.WAHRUNG)
 @JsonIgnoreProperties(ignoreUnknown=true)
+@JsonInclude(Include.NON_NULL)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.WAHRUNG)
 @Schema(name = ApiNames.WAHRUNG, description = "Currencies")
@@ -23,10 +26,13 @@ public class WahrungModel extends DescribedEnumModel {
 
     private Integer decimals;
 
-    public WahrungModel(String currencyCode, String displayName, String symbol, Integer decimals) {
-        super(currencyCode, displayName, symbol);
+    private String symbol;
+
+    public WahrungModel(String currencyCode, String displayName, String toolTip, String symbol, Integer decimals) {
+        super(currencyCode, displayName, toolTip);
 
         this.decimals = decimals;
+        this.symbol = symbol;
     }
 
     @Override
@@ -54,6 +60,12 @@ public class WahrungModel extends DescribedEnumModel {
     @Schema(description = "Wahrung decimals", example = "2", accessMode = AccessMode.READ_ONLY)
     public Integer getDecimals() {
         return decimals;
+    }
+
+    @JsonProperty(ApiNames.SYMBOL)
+    @Schema(description = "Wahrung symbol", example = "$", accessMode = AccessMode.READ_ONLY)
+    public String getSymbol() {
+        return symbol;
     }
 
     @Schema(name = ApiNames.WAHRUNG + "Page")

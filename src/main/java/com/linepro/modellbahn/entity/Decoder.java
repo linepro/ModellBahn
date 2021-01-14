@@ -191,7 +191,7 @@ import lombok.experimental.SuperBuilder;
 public class Decoder extends ItemImpl implements Comparable<Decoder> {
 
     @Column(name=DBNames.DECODER_ID, unique=true, length=6, nullable = false, updatable = false)
-    @Pattern(regexp = "^[A-Z0-9]+$", message = "{com.linepro.modellbahn.validator.constraints.decoderId.invalid}")
+    @Pattern(regexp = "^" + DBNames.ID_PATTERN + "$", message = "{com.linepro.modellbahn.validator.constraints.decoderId.invalid}")
     private String decoderId;
 
     @Column(name = DBNames.BEZEICHNUNG, length = 100)
