@@ -153,6 +153,6 @@ public interface ApiNames {
     String CONFIRMATION_EXPIRES = "confirmationExpires";
     
     // Navigation names
-    String PAGE_NUMBER = "pageNumber";
-    String PAGE_SIZE = "pageSize";
+    String PAGE_NUMBER = "page";
+    String PAGE_SIZE = "size";
 }
