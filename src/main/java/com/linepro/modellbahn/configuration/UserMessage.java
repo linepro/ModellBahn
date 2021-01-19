@@ -33,10 +33,6 @@ public class UserMessage {
     @Schema(description = "Status", example = "403", accessMode = AccessMode.READ_ONLY)
     private int status;
 
-    @JsonProperty("code")
-    @Schema(description = "Error Code", example = "user.invalid", accessMode = AccessMode.READ_ONLY)
-    private int code;
-
     @JsonProperty("error")
     @Schema(description = "Error", example = "Forbidden", accessMode = AccessMode.READ_ONLY)
     private String error;

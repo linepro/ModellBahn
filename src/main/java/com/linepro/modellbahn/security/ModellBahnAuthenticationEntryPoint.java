@@ -43,11 +43,10 @@ public class ModellBahnAuthenticationEntryPoint extends BasicAuthenticationEntry
                     .write(
                         mapper.writeValueAsString(
                             UserMessage.builder()
-                                        .code(HttpStatus.UNAUTHORIZED.value())
-                                        .path(requestUri)
-                                        .timestamp(System.currentTimeMillis())
-                                        .message(HttpStatus.UNAUTHORIZED.name())
-                                        .build()));
+                                       .path(requestUri)
+                                       .timestamp(System.currentTimeMillis())
+                                       .message(HttpStatus.UNAUTHORIZED.name())
+                                       .build()));
         } else {
             response.addHeader("WWW-Authenticate", "Basic realm=" + getRealmName());
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

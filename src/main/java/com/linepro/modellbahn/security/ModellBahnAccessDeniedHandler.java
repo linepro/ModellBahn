@@ -53,7 +53,6 @@ public class ModellBahnAccessDeniedHandler implements AccessDeniedHandler {
                     .write(
                         mapper.writeValueAsString(
                             UserMessage.builder()
-                                        .code(HttpStatus.FORBIDDEN.value())
                                         .path(requestUri)
                                         .timestamp(System.currentTimeMillis())
                                         .message(HttpStatus.FORBIDDEN.name())

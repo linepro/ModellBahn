@@ -22,7 +22,7 @@ import com.linepro.modellbahn.security.user.UserService;
 import lombok.RequiredArgsConstructor;
 
 @Configuration(PREFIX + "WebSecurityConfig")
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -62,12 +62,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler)
             .and().httpBasic().authenticationEntryPoint(authenticationEntryPoint)
             .and().authorizeRequests()
-                  .antMatchers(resourceEndpoints.getEndPoints().keySet().toArray(new String[0])).permitAll()
-                  .antMatchers(ApiPaths.MANAGEMENT_PUBLIC).permitAll()
-                  .antMatchers(HttpMethod.POST, ApiPaths.REGISTER_ENDPOINTS).permitAll()
-                  .antMatchers(HttpMethod.POST, ApiPaths.USER_ENDPOINTS).hasAnyAuthority(ADMIN_AUTHORITY,USER_AUTHORITY)
                   .antMatchers(API_ENDPOINTS).hasAuthority(USER_AUTHORITY)
+                  .antMatchers(HttpMethod.POST, ApiPaths.USER_ENDPOINTS).hasAnyAuthority(ADMIN_AUTHORITY, USER_AUTHORITY)
                   .antMatchers(ApiPaths.MANAGEMENT_SECURED).hasAuthority(ADMIN_AUTHORITY)
+                  .antMatchers(HttpMethod.POST, ApiPaths.REGISTER_ENDPOINTS).permitAll()
+                  .antMatchers(ApiPaths.MANAGEMENT_PUBLIC).permitAll()
+                  .antMatchers(resourceEndpoints.getEndPoints().keySet().toArray(new String[0])).permitAll()
             //.and().anonymous().authorities(USER_ROLE)
             //.and().oauth2ResourceServer(oauth2 -> oauth2.jwt())
             //.and().formLogin().loginPage("/").loginProcessingUrl("/login").defaultSuccessUrl("/home").failureHandler(authenticationFailureHandler())
