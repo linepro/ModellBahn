@@ -5,10 +5,15 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -18,42 +23,53 @@ import lombok.extern.slf4j.Slf4j;
 @Component(PREFIX + "FileStoreImpl")
 public class FileStoreImpl implements FileStore {
 
-    @Value("${com.linepro.modellbahn.filestore.root:}")
-    private String fileRoot;
+    protected static final String FILE = "file:";
+    protected static final String STATIC_FILE_FOLDER = "static";
+    protected static final String STATIC_FILE_LOCATIONS = FILE + STATIC_FILE_FOLDER;
+    protected static final String WILDCARD = "/**";
+    protected static final String STATIC_FILE_PATH = "/content" + WILDCARD;
 
-    @Value("${com.linepro.modellbahn.filestore.name:static}")
+    @Value("${spring.mvc.static-path-pattern:" + STATIC_FILE_PATH + "}")
+    private String staticPathPattern;
+
+    @Value("${spring.resources.static-locations:" + STATIC_FILE_LOCATIONS + "}")
+    private List<String> staticLocations;
+
+    @Value("${spring.mvc.servlet.path:}")
+    private String servletPath;
+    
+    private String storePath;
+
     private String storeFolder;
 
     public FileStoreImpl() {
     }
 
-    @Override
-    public Path fileStoreRoot() {
-         return Paths.get(fileRoot, storeFolder);
+    @PostConstruct
+    public void initialize() {
+        storePath   = staticPathPattern.replace(WILDCARD, "");
+        storeFolder = staticLocations.stream()
+                                     .filter(s -> s.startsWith(FILE))
+                                     .findFirst()
+                                     .map(s -> s.replace(FILE, ""))
+                                     .orElse(STATIC_FILE_FOLDER);
     }
 
     @Override
-    public Path getItemPath(String modelName, String...identifiers) {
-        return fileStoreRoot().resolve(Paths.get(modelName, identifiers));
-   }
-
-    @Override
-    public void removeItem(String modelName, String...identifiers) {
-        Path itemPath = getItemPath(modelName, identifiers).toAbsolutePath();
-
-        try {
-            FileUtils.forceDelete(itemPath.toFile());
-        } catch(FileNotFoundException e) {
-            // That's ok. We didn't like it anyway.
-        } catch(Exception e) {
-            // Should we throw it up?
-            log.error("Failed to delete folder {}: {}", itemPath.toString(), e);
-        }
+    public Path itemPath(String modelName, String... identifiers) {
+        return Paths.get(storeFolder).resolve(Paths.get(modelName, identifiers));
     }
 
     @Override
-    public Path getFilePath(String modelName, String fieldName, String fileType, String...identifiers) {
-        Path itemPath = getItemPath(modelName, identifiers);
+    public String fileUrl(Path source) {
+        String filePath = FilenameUtils.separatorsToUnix(Paths.get(storeFolder).relativize(source).toString());
+
+        return ServletUriComponentsBuilder.fromCurrentContextPath().path(servletPath + "/" + storePath + "/").path(filePath).toUriString();
+    }
+
+    @Override
+    public Path getFilePath(String modelName, String fieldName, String fileType, String... identifiers) {
+        Path itemPath = itemPath(modelName, identifiers);
 
         return itemPath.resolve(String.join(".", fieldName, fileType));
     }
@@ -62,9 +78,9 @@ public class FileStoreImpl implements FileStore {
     public void removeFile(Path filePath) {
         try {
             FileUtils.forceDelete(filePath.toFile());
-        } catch(FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             // That's ok. We didn't like it anyway.
-        } catch(Exception e) {
+        } catch (Exception e) {
             // Should we throw it up?
             log.error("Failed to delete file {}: {}", filePath.toString(), e);
         }

@@ -1,17 +1,14 @@
 package com.linepro.modellbahn.hateoas;
 
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
-import static com.linepro.modellbahn.controller.impl.ApiNames.ARTIKEL_ID;
 import static com.linepro.modellbahn.controller.impl.ApiNames.NAMEN;
 import static com.linepro.modellbahn.controller.impl.ApiNames.POSITION;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_CONSIST;
-import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_ARTIKEL;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_ZUG;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_CONSIST;
 import static com.linepro.modellbahn.controller.impl.ApiRels.DELETE;
 import static com.linepro.modellbahn.controller.impl.ApiRels.PARENT;
 import static com.linepro.modellbahn.controller.impl.ApiRels.UPDATE;
-import static com.linepro.modellbahn.controller.impl.ApiRels.SELF;
 
 import java.util.HashMap;
 
@@ -37,17 +34,14 @@ public class ZugConsistModelProcessor extends ModelProcessorImpl<ZugConsistModel
         { POSITION, String.valueOf(((ZugConsistModel) m).getPosition()) } 
         });
 
-    private static final FieldsExtractor ARTIKEL_EXTRACTOR = (m) -> MapUtils.putAll(new HashMap<String,Object>(), new String[][] { 
-        { ARTIKEL_ID, ((ZugConsistModel) m).getArtikelId() } 
-        });
-
     @Autowired
     public ZugConsistModelProcessor() {
         super(
             new LinkTemplateImpl(PARENT, GET_ZUG, EXTRACTOR),
+            //new LinkTemplateImpl(ADD, ADD_CONSIST, EXTRACTOR),
+            //new LinkTemplateImpl(SELF, UPDATE_CONSIST, EXTRACTOR),
             new LinkTemplateImpl(UPDATE, UPDATE_CONSIST, EXTRACTOR),
-            new LinkTemplateImpl(DELETE, DELETE_CONSIST, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted())),
-            new LinkTemplateImpl(SELF, GET_ARTIKEL, ARTIKEL_EXTRACTOR)
+            new LinkTemplateImpl(DELETE, DELETE_CONSIST, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted()))
             );
     }
 }

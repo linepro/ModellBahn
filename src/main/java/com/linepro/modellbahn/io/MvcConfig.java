@@ -36,7 +36,7 @@ public class MvcConfig implements WebMvcConfigurer {
         resourceEndpoints.getEndPoints()
                          .entrySet()
                           .forEach(e -> {
-                              log.debug(e.getKey() + "=" + e.getValue());
+                              log.info(e.getKey() + "=" + e.getValue());
 
                               registry.addResourceHandler(e.getKey())
                                       .addResourceLocations(e.getValue())

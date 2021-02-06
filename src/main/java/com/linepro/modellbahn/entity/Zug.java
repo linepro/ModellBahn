@@ -57,6 +57,18 @@ import lombok.experimental.SuperBuilder;
             @NamedSubgraph(name = "zug.zugTyp",
                 attributeNodes = {
                     @NamedAttributeNode(value = "name")
+            }),
+            @NamedSubgraph(name = "zug.consist",
+            attributeNodes = {
+                @NamedAttributeNode(value = "artikel", subgraph = "consist.artikel")
+            }),
+            @NamedSubgraph(name = "consist.artikel",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "produkt", subgraph = "consist.produkt"),
+            }),
+            @NamedSubgraph(name = "consist.produkt",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "lange"),
             })
         }),
     @NamedEntityGraph(name="zug.withChildren",

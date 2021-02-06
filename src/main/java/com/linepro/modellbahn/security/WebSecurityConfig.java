@@ -30,6 +30,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     public static final SimpleGrantedAuthority ADMIN = new SimpleGrantedAuthority(ADMIN_AUTHORITY);
 
+    public static final String GUEST_AUTHORITY = "GUEST";
+
+    public static final SimpleGrantedAuthority GUEST = new SimpleGrantedAuthority(GUEST_AUTHORITY);
+
     public static final String USER_AUTHORITY = "USER";
 
     public static final SimpleGrantedAuthority USER = new SimpleGrantedAuthority(USER_AUTHORITY);
@@ -65,10 +69,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                   .antMatchers(API_ENDPOINTS).hasAuthority(USER_AUTHORITY)
                   .antMatchers(HttpMethod.POST, ApiPaths.USER_ENDPOINTS).hasAnyAuthority(ADMIN_AUTHORITY, USER_AUTHORITY)
                   .antMatchers(ApiPaths.MANAGEMENT_SECURED).hasAuthority(ADMIN_AUTHORITY)
-                  .antMatchers(HttpMethod.POST, ApiPaths.REGISTER_ENDPOINTS).permitAll()
-                  .antMatchers(ApiPaths.MANAGEMENT_PUBLIC).permitAll()
+                  .antMatchers(HttpMethod.POST, ApiPaths.REGISTER_ENDPOINTS).hasAuthority(GUEST_AUTHORITY)
+                  .antMatchers(ApiPaths.MANAGEMENT_PUBLIC).hasAnyAuthority(ADMIN_AUTHORITY, GUEST_AUTHORITY, USER_AUTHORITY)
                   .antMatchers(resourceEndpoints.getEndPoints().keySet().toArray(new String[0])).permitAll()
-            //.and().anonymous().authorities(USER_ROLE)
+            .and().anonymous().authorities(GUEST_AUTHORITY)
             //.and().oauth2ResourceServer(oauth2 -> oauth2.jwt())
             //.and().formLogin().loginPage("/").loginProcessingUrl("/login").defaultSuccessUrl("/home").failureHandler(authenticationFailureHandler())
             //.and().logout().logoutSuccessUrl("/").logoutUrl("/logout").deleteCookies("JSESSIONID").logoutSuccessHandler(logoutSuccessHandler())

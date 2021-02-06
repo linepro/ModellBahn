@@ -4,11 +4,15 @@ import java.nio.file.Path;
 
 public interface FileStore {
 
-    Path fileStoreRoot();
+    String getStaticPathPattern();
+    
+    String getStorePath();
 
-    Path getItemPath(String modelName, String...identifiers);
+    String getStoreFolder();
 
-    void removeItem(String modelName, String...identifiers);
+    Path itemPath(String modelName, String...identifiers);
+
+    String fileUrl(Path source);
 
     Path getFilePath(String modelName, String fieldName, String fileType, String...identifiers);
 

@@ -62,7 +62,7 @@ public class FileUploadHandlerImpl implements FileUploadHandler {
 
     @Override
     public Path saveFile(InputStream inputStream, String originalFilename, String modelName, String fieldName, String...identifiers) {
-        String pathname = fileStore.getItemPath(modelName, identifiers).toString();
+        String pathname = fileStore.itemPath(modelName, identifiers).toString();
 
         new File(pathname).mkdirs();
 

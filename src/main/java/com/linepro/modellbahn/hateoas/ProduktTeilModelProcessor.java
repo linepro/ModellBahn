@@ -10,7 +10,6 @@ import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_PRODUKT;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_PRODUKT_TEIL;
 import static com.linepro.modellbahn.controller.impl.ApiRels.DELETE;
 import static com.linepro.modellbahn.controller.impl.ApiRels.PARENT;
-import static com.linepro.modellbahn.controller.impl.ApiRels.TEIL;
 import static com.linepro.modellbahn.controller.impl.ApiRels.UPDATE;
 
 import java.util.HashMap;
@@ -39,18 +38,14 @@ public class ProduktTeilModelProcessor extends ModelProcessorImpl<ProduktTeilMod
         { TEIL_BESTELL_NR, ((ProduktTeilModel) m).getTeilBestellNr() }
         });
 
-    private static final FieldsExtractor TEIL_EXTRACTOR = (m) -> MapUtils.putAll(new HashMap<String, Object>(), new String[][] {
-        { HERSTELLER, ((ProduktTeilModel) m).getTeilHersteller() },
-        { BESTELL_NR, ((ProduktTeilModel) m).getTeilBestellNr() }
-        });
-
     @Autowired
     public ProduktTeilModelProcessor() {
         super(
               new LinkTemplateImpl(PARENT, GET_PRODUKT, EXTRACTOR),
+              //new LinkTemplateImpl(ADD, ADD_PRODUKT_TEIL, EXTRACTOR),
+              //new LinkTemplateImpl(SELF, UPDATE_PRODUKT_TEIL, EXTRACTOR),
               new LinkTemplateImpl(UPDATE, UPDATE_PRODUKT_TEIL, EXTRACTOR),
-              new LinkTemplateImpl(DELETE, DELETE_PRODUKT_TEIL, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted())),
-              new LinkTemplateImpl(TEIL, GET_PRODUKT, TEIL_EXTRACTOR)
+              new LinkTemplateImpl(DELETE, DELETE_PRODUKT_TEIL, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted()))
               );
     }
 }

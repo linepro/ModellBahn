@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -60,6 +61,10 @@ public class ZugModel extends SpringdocModel<ZugModel> implements NamedItemModel
     @JsonProperty(ApiNames.ZUG_TYP)
     @Schema(description = "Train type", required = true)
     private String zugTyp;
+
+    @JsonProperty(ApiNames.LANGE)
+    @Schema(description = "Length over puffers in cm.", example = "11.00", accessMode = AccessMode.READ_ONLY)
+    private BigDecimal lange;
 
     @SuppressExport
     @JsonProperty(ApiNames.FAHRZEUGEN)
