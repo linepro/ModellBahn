@@ -149,7 +149,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
                 })
     public ResponseEntity<?> addTeil(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody ProduktTeilModel teil) {
-        return added(service.addTeil(herstellerStr, bestellNr, teil.getTeilHersteller(), teil.getTeilBestellNr(), teil.getAnzahl()));
+        return added(service.addTeil(herstellerStr, bestellNr, teil.getTeilHersteller(), teil.getTeilBestellNr(), teil.getMenge()));
     }
 
     @PutMapping(path = ApiPaths.UPDATE_PRODUKT_TEIL, produces = MediaType.APPLICATION_JSON)
@@ -162,8 +162,8 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
                 })
-    public ResponseEntity<?> updateTeil(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.TEIL_HERSTELLER) String teilHerstellerStr, @PathVariable(ApiNames.TEIL_BESTELL_NR) String teilBestellNr, @RequestParam(ApiNames.ANZAHL) Integer anzahl) {
-        return updated(service.updateTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, anzahl));
+    public ResponseEntity<?> updateTeil(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.TEIL_HERSTELLER) String teilHerstellerStr, @PathVariable(ApiNames.TEIL_BESTELL_NR) String teilBestellNr, @RequestParam(ApiNames.MENGE) Integer menge) {
+        return updated(service.updateTeil(herstellerStr, bestellNr, teilHerstellerStr, teilBestellNr, menge));
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_PRODUKT_TEIL)

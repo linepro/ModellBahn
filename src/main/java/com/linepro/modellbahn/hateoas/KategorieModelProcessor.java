@@ -8,7 +8,7 @@ import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_KATEGORIE;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_KATEGORIE;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.SEARCH_KATEGORIE;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_KATEGORIE;
-import static com.linepro.modellbahn.controller.impl.ApiRels.UNTER_KATEGORIE;
+import static com.linepro.modellbahn.controller.impl.ApiRels.UNTER_KATEGORIEN;
 
 import java.util.Collections;
 
@@ -37,7 +37,7 @@ public class KategorieModelProcessor extends NamedModelProcessor<KategorieModel>
             UPDATE_KATEGORIE, 
             DELETE_KATEGORIE, 
             SEARCH_KATEGORIE,
-            new LinkTemplateImpl(UNTER_KATEGORIE, ADD_UNTER_KATEGORIE, KATEGORIE_EXTRACTOR)
+            new LinkTemplateImpl(UNTER_KATEGORIEN, ADD_UNTER_KATEGORIE, KATEGORIE_EXTRACTOR)
             );
 
         this.unterKategorieProcessor = unterKategorieProcessor;

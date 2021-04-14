@@ -143,8 +143,8 @@ public class ZugController extends NamedItemController<ZugModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
                 })
-    public ResponseEntity<?> addConsist(@PathVariable(ApiNames.NAMEN) String zugStr, @RequestParam(ApiNames.ARTIKEL_ID) String artikelId) {
-        return added(service.addConsist(zugStr, artikelId));
+    public ResponseEntity<?> addConsist(@PathVariable(ApiNames.NAMEN) String zugStr, @RequestBody ZugConsistModel model) {
+        return added(service.addConsist(zugStr, model.getArtikelId()));
     }
 
     @PutMapping(path = ApiPaths.UPDATE_CONSIST, produces = MediaType.APPLICATION_JSON)

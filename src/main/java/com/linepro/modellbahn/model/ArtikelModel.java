@@ -49,7 +49,7 @@ import lombok.ToString;
 @JsonPropertyOrder({ApiNames.ARTIKEL_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.KATEGORIE, ApiNames.KAUFDATUM, 
     ApiNames.UNTER_KATEGORIE, ApiNames.LANGE, ApiNames.MASSSTAB, ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG,
     ApiNames.BETREIBSNUMMER, ApiNames.ACHSFOLG, ApiNames.SONDERMODELL, ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG,
-    ApiNames.DECODER, ApiNames.MOTOR_TYP, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.STUCK, ApiNames.VERBLEIBENDE, ApiNames.ANMERKUNG,
+    ApiNames.DECODER, ApiNames.MOTOR_TYP, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.MENGE, ApiNames.VERBLEIBENDE, ApiNames.ANMERKUNG,
     ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.ANDERUNGEN, ApiNames.ABBILDUNG, ApiNames.GROSSANSICHT, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.ARTIKEL)
 @Schema(name = ApiNames.ARTIKEL, description = "An article - may differ from product because of modificiations")
@@ -74,11 +74,11 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
     private String bezeichnung;
 
     @JsonProperty(ApiNames.KATEGORIE)
-    @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Category", accessMode = AccessMode.READ_ONLY)
     private String kategorie;
 
     @JsonProperty(ApiNames.UNTER_KATEGORIE)
-    @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Subcategory", accessMode = AccessMode.READ_ONLY)
     private String unterKategorie;
 
     @JsonProperty(ApiNames.LANGE)
@@ -154,9 +154,9 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
     @Schema(description = "Purchase price", example = "115.95")
     private BigDecimal preis;
 
-    @JsonProperty(ApiNames.STUCK)
+    @JsonProperty(ApiNames.MENGE)
     @Schema(description = "Purchase Quantity", example = "1", required = true)
-    private Integer stuck;
+    private Integer menge;
 
     @JsonProperty(ApiNames.VERBLEIBENDE)
     @Schema(description = "Remaining Quantity", example = "1", required = true)

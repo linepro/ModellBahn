@@ -4,10 +4,12 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.controller.impl.ApiNames.KATEGORIE;
 import static com.linepro.modellbahn.controller.impl.ApiNames.NAMEN;
 import static com.linepro.modellbahn.controller.impl.ApiNames.UNTER_KATEGORIE;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_UNTER_KATEGORIE;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_UNTER_KATEGORIE;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_KATEGORIE;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_UNTER_KATEGORIE;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_UNTER_KATEGORIE;
+import static com.linepro.modellbahn.controller.impl.ApiRels.ADD;
 import static com.linepro.modellbahn.controller.impl.ApiRels.DELETE;
 import static com.linepro.modellbahn.controller.impl.ApiRels.PARENT;
 import static com.linepro.modellbahn.controller.impl.ApiRels.SELF;
@@ -43,7 +45,7 @@ public class UnterKategorieModelProcessor extends ModelProcessorImpl<UnterKatego
         super(
             new LinkTemplateImpl(PARENT, GET_KATEGORIE, EXTRACTOR),
             new LinkTemplateImpl(SELF, GET_UNTER_KATEGORIE, EXTRACTOR),
-            //new LinkTemplateImpl(ADD, ADD_UNTER_KATEGORIE, EXTRACTOR),
+            new LinkTemplateImpl(ADD, ADD_UNTER_KATEGORIE, EXTRACTOR),
             new LinkTemplateImpl(UPDATE, UPDATE_UNTER_KATEGORIE, EXTRACTOR),
             new LinkTemplateImpl(DELETE, DELETE_UNTER_KATEGORIE, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted()))
             );

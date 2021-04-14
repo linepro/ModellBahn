@@ -50,6 +50,7 @@ import lombok.experimental.SuperBuilder;
         attributeNodes = {
             @NamedAttributeNode(value = "name"),
             @NamedAttributeNode(value = "zugTyp", subgraph = "zug.zugTyp"),
+            @NamedAttributeNode(value = "consist", subgraph = "zug.consist"),
             @NamedAttributeNode(value = "bezeichnung"),
             @NamedAttributeNode(value = "deleted")
         }, 
@@ -60,15 +61,16 @@ import lombok.experimental.SuperBuilder;
             }),
             @NamedSubgraph(name = "zug.consist",
             attributeNodes = {
-                @NamedAttributeNode(value = "artikel", subgraph = "consist.artikel")
+                @NamedAttributeNode(value = "position"),
+                @NamedAttributeNode(value = "artikel", subgraph = "zug.artikel")
             }),
-            @NamedSubgraph(name = "consist.artikel",
-                attributeNodes = {
-                    @NamedAttributeNode(value = "produkt", subgraph = "consist.produkt"),
+            @NamedSubgraph(name = "zug.artikel",
+            attributeNodes = {
+                @NamedAttributeNode(value = "produkt", subgraph = "zug.produkt")
             }),
-            @NamedSubgraph(name = "consist.produkt",
+            @NamedSubgraph(name = "zug.produkt",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "lange"),
+                    @NamedAttributeNode(value = "lange")
             })
         }),
     @NamedEntityGraph(name="zug.withChildren",
@@ -85,35 +87,45 @@ import lombok.experimental.SuperBuilder;
             @NamedSubgraph(name = "zug.consist",
                 attributeNodes = {
                     @NamedAttributeNode(value = "position"),
-                    @NamedAttributeNode(value = "artikel", subgraph = "consist.artikel")
+                    @NamedAttributeNode(value = "artikel", subgraph = "zug.artikel")
             }),
-            @NamedSubgraph(name = "consist.artikel",
+            @NamedSubgraph(name = "zug.artikel",
                 attributeNodes = {
                     @NamedAttributeNode(value = "artikelId"),
                     @NamedAttributeNode(value = "bezeichnung"),
-                    @NamedAttributeNode(value = "produkt", subgraph = "consist.produkt"),
+                    @NamedAttributeNode(value = "produkt", subgraph = "zug.produkt"),
                     @NamedAttributeNode(value = "abbildung")
             }),
-            @NamedSubgraph(name = "consist.produkt",
+            @NamedSubgraph(name = "zug.produkt",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "hersteller", subgraph = "consist.hersteller"),
+                    @NamedAttributeNode(value = "hersteller", subgraph = "zug.hersteller"),
                     @NamedAttributeNode(value = "bestellNr"),
                     @NamedAttributeNode(value = "bezeichnung"),
                     @NamedAttributeNode(value = "lange"),
-                    @NamedAttributeNode(value = "bahnverwaltung", subgraph = "consist.bahnverwaltung"),
-                    @NamedAttributeNode(value = "gattung", subgraph = "consist.gattung"),
+                    @NamedAttributeNode(value = "unterKategorie", subgraph = "zug.unterkategorie"),
+                    @NamedAttributeNode(value = "bahnverwaltung", subgraph = "zug.bahnverwaltung"),
+                    @NamedAttributeNode(value = "gattung", subgraph = "zug.gattung"),
                     @NamedAttributeNode(value = "betreibsnummer"),
                     @NamedAttributeNode(value = "abbildung")
             }),
-            @NamedSubgraph(name = "consist.hersteller",
+            @NamedSubgraph(name = "zug.hersteller",
                 attributeNodes = {
                     @NamedAttributeNode(value = "name")
             }),
-            @NamedSubgraph(name = "consist.bahnverwaltung",
+            @NamedSubgraph(name = "zug.unterkategorie",
+            attributeNodes = {
+                @NamedAttributeNode(value = "kategorie", subgraph = "zug.kategorie"),
+                @NamedAttributeNode(value = "name")
+            }),
+            @NamedSubgraph(name = "zug.kategorie",
                 attributeNodes = {
                     @NamedAttributeNode(value = "name")
             }),
-            @NamedSubgraph(name = "consist.gattung",
+            @NamedSubgraph(name = "zug.bahnverwaltung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "name")
+            }),
+            @NamedSubgraph(name = "zug.gattung",
                 attributeNodes = {
                     @NamedAttributeNode(value = "name")
             })
@@ -140,15 +152,17 @@ public class Zug extends NamedItemImpl {
     private Set<ZugConsist> consist = new HashSet<>();
 
     public void addConsist(ZugConsist fahrzeug) {
-        if (consist == null) { 
+        if (consist == null) {
             consist = new HashSet<>();
         }
 
+        int position = getConsist().stream()
+                                   .mapToInt(c -> c.getPosition())
+                                   .max()
+                                   .orElse(0);
+
         fahrzeug.setZug(this);
-        fahrzeug.setPosition(getConsist().stream()
-                                         .mapToInt(c -> c.getPosition())
-                                         .max()
-                                         .orElse(1));
+        fahrzeug.setPosition(position + 1);
         fahrzeug.setDeleted(false);
         consist.add(fahrzeug);
     }
@@ -159,10 +173,6 @@ public class Zug extends NamedItemImpl {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-            .appendSuper(super.toString())
-            .append("zugTyp", zugTyp)
-            .append("consist", consist)
-            .toString();
+        return new ToStringBuilder(this).appendSuper(super.toString()).append("zugTyp", zugTyp).append("consist", consist).toString();
     }
 }

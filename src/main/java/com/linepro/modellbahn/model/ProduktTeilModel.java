@@ -40,7 +40,7 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.TEIL_HERSTELLER, ApiNames.TEIL_BESTELL_NR, ApiNames.BEZEICHNUNG,
-    ApiNames.KATEGORIE, ApiNames.UNTER_KATEGORIE, ApiNames.ANZAHL, ApiNames.DELETED, ApiNames.LINKS })
+    ApiNames.KATEGORIE, ApiNames.UNTER_KATEGORIE, ApiNames.MENGE, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.TEIL)
 @Schema(name = ApiNames.TEIL, description = "Part of product (spares for rolling stock - contents for set &c).")
 public class ProduktTeilModel extends SpringdocModel<ProduktTeilModel> implements ItemModel, Comparable<ProduktTeilModel> {
@@ -78,9 +78,9 @@ public class ProduktTeilModel extends SpringdocModel<ProduktTeilModel> implement
     @Schema(description = "Sub Category", example = "DAMPF", accessMode = AccessMode.READ_ONLY)
     private String unterKategorie;
 
-    @JsonProperty(ApiNames.ANZAHL)
+    @JsonProperty(ApiNames.MENGE)
     @Schema(description = "Number included", example = "1", required = true)
-    private Integer anzahl;
+    private Integer menge;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)

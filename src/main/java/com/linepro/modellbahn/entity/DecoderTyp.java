@@ -119,7 +119,6 @@ import lombok.experimental.SuperBuilder;
              }),
              @NamedSubgraph(name = "decoderTyp.adressen",
                  attributeNodes = {
-                     @NamedAttributeNode(value = "id"),
                      @NamedAttributeNode(value = "position"),
                      @NamedAttributeNode(value = "bezeichnung"),
                      @NamedAttributeNode(value = "adressTyp"),
@@ -129,7 +128,6 @@ import lombok.experimental.SuperBuilder;
              }),
              @NamedSubgraph(name = "decoderTyp.cvs",
                  attributeNodes = {
-                     @NamedAttributeNode(value = "id"),
                      @NamedAttributeNode(value = "cv"),
                      @NamedAttributeNode(value = "bezeichnung"),
                      @NamedAttributeNode(value = "minimal"),
@@ -139,7 +137,6 @@ import lombok.experimental.SuperBuilder;
              }),
              @NamedSubgraph(name = "decoderTyp.funktionen",
                  attributeNodes = {
-                     @NamedAttributeNode(value = "id"),
                      @NamedAttributeNode(value = "reihe"),
                      @NamedAttributeNode(value = "funktion"),
                      @NamedAttributeNode(value = "bezeichnung"),

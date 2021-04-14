@@ -169,10 +169,10 @@ public class Vorbild extends NamedWithAbbildungImpl {
     @Past(message = "{com.linepro.modellbahn.validator.constraints.bauzeit.past}")
     private LocalDate bauzeit;
 
-    /** The anzahl. */
-    @Column(name = DBNames.ANZAHL)
-    @Positive(message = "{com.linepro.modellbahn.validator.constraints.anzahl.positive}")
-    private Integer anzahl;
+    /** The menge. */
+    @Column(name = DBNames.MENGE)
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.menge.positive}")
+    private Integer menge;
 
     /** The betreibs nummer. */
     @Column(name = DBNames.BETREIBSNUMMER, length = 100)
@@ -354,7 +354,7 @@ public class Vorbild extends NamedWithAbbildungImpl {
             .append("achsfolg", achsfolg)
             .append("hersteller", hersteller)
             .append("bauzeit", bauzeit)
-            .append("anzahl", anzahl)
+            .append("menge", menge)
             .append("betreibsNummer", betreibsNummer)
             .append("anfahrzugkraft", anfahrzugkraft)
             .append("leistung", leistung)

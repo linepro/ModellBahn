@@ -49,7 +49,6 @@ import lombok.experimental.SuperBuilder;
         }, subgraphs = {
             @NamedSubgraph(name = "unterKategorie.kategorie",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
                     @NamedAttributeNode(value = "name")
             })
         })

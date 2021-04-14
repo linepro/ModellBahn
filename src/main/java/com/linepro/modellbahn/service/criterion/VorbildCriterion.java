@@ -41,7 +41,7 @@ public class VorbildCriterion extends AbstractCriterion<Vorbild> implements Crit
             addCondition(criteriaBuilder, vorbild, where, DBNames.BAHNVERWALTUNG, model.getBahnverwaltung());
             addCondition(criteriaBuilder, vorbild, where, DBNames.HERSTELLER, model.getHersteller());
             addCondition(criteriaBuilder, vorbild, where, DBNames.BAUZEIT, model.getBauzeit());
-            addCondition(criteriaBuilder, vorbild, where, DBNames.ANZAHL, model.getAnzahl());
+            addCondition(criteriaBuilder, vorbild, where, DBNames.MENGE, model.getMenge());
             addCondition(criteriaBuilder, vorbild, where, DBNames.BETREIBSNUMMER, model.getBetreibsNummer());
             addJoinCondition(criteriaBuilder, vorbild, where, DBNames.ANTRIEB, model.getAntrieb());
             addJoinCondition(criteriaBuilder, vorbild, where, DBNames.ACHSFOLG, model.getAchsfolg());

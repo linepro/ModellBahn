@@ -50,7 +50,7 @@ public class ArtikelModelTranscriber implements Transcriber<ArtikelModel, Artike
             destination.setDecoder(decoderLookup.find(source.getDecoder()));
             destination.setBezeichnung(source.getBezeichnung());
             destination.setPreis(source.getPreis());
-            destination.setStuck(source.getStuck());
+            destination.setMenge(source.getMenge());
             destination.setVerbleibende(source.getVerbleibende());
             destination.setAnmerkung(source.getAnmerkung());
             destination.setBeladung(source.getBeladung());

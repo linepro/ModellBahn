@@ -25,7 +25,7 @@ public class ProduktTeilModelTranscriber implements Transcriber<ProduktTeilModel
             if (destination.getTeil() == null) {
                 destination.setTeil(produktLookup.find(source.getTeilHersteller(), source.getTeilBestellNr()));
             }
-            destination.setAnzahl(source.getAnzahl());
+            destination.setMenge(source.getMenge());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
 

@@ -21,7 +21,7 @@ public class VorbildTranscriber extends NamedAbbildungTranscriber<Vorbild, Vorbi
             destination.setBahnverwaltung(getCode(source.getBahnverwaltung()));
             destination.setHersteller(source.getHersteller());
             destination.setBauzeit(source.getBauzeit());
-            destination.setAnzahl(source.getAnzahl());
+            destination.setMenge(source.getMenge());
             destination.setBetreibsNummer(source.getBetreibsNummer());
             destination.setAntrieb(getCode(source.getAntrieb()));
             destination.setAchsfolg(getCode(source.getAchsfolg()));

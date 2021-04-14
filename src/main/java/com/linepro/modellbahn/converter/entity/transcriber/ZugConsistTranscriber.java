@@ -28,6 +28,8 @@ public class ZugConsistTranscriber implements Transcriber<ZugConsist, ZugConsist
             destination.setHersteller(artikel.getHersteller());
             destination.setBestellNr(artikel.getBestellNr());
             destination.setBezeichnung(artikel.getBezeichnung());
+            destination.setKategorie(artikel.getKategorie());
+            destination.setUnterKategorie(artikel.getUnterKategorie());
             destination.setLange(artikel.getLange());
             destination.setBahnverwaltung(artikel.getBahnverwaltung());
             destination.setGattung(artikel.getGattung());

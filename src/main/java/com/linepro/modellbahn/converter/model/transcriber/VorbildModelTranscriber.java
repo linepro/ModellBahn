@@ -37,7 +37,7 @@ public class VorbildModelTranscriber extends NamedModelTranscriber<VorbildModel,
                 destination.setBahnverwaltung(lookup.find(source.getBahnverwaltung(), bahnverwaltungRepository));
                 destination.setHersteller(source.getHersteller());
                 destination.setBauzeit(source.getBauzeit());
-                destination.setAnzahl(source.getAnzahl());
+                destination.setMenge(source.getMenge());
                 destination.setBetreibsNummer(source.getBetreibsNummer());
                 destination.setAntrieb(lookup.find(source.getAntrieb(), antriebRepository));
                 destination.setAchsfolg(lookup.find(source.getAchsfolg(), achsfolgRepository));

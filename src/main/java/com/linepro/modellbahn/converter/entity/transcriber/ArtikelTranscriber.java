@@ -63,7 +63,7 @@ public class ArtikelTranscriber implements Transcriber<Artikel, ArtikelModel> {
             destination.setKaufdatum(source.getKaufdatum());
             destination.setWahrung(source.getWahrung());
             destination.setPreis(source.getPreis());
-            destination.setStuck(source.getStuck());
+            destination.setMenge(source.getMenge());
             destination.setVerbleibende(source.getVerbleibende());
             destination.setAnmerkung(source.getAnmerkung());
             destination.setBeladung(source.getBeladung());

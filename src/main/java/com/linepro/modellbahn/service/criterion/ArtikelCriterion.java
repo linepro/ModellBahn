@@ -62,7 +62,7 @@ public class ArtikelCriterion extends AbstractCriterion<Artikel> implements Crit
             addCondition(criteriaBuilder, artikel, where, DBNames.KAUFDATUM, model.getKaufdatum());
             addCondition(criteriaBuilder, artikel, where, DBNames.WAHRUNG, model.getWahrung());
             addCondition(criteriaBuilder, artikel, where, DBNames.PREIS, model.getPreis());
-            addCondition(criteriaBuilder, artikel, where, DBNames.STUCK, model.getStuck());
+            addCondition(criteriaBuilder, artikel, where, DBNames.MENGE, model.getMenge());
             addCondition(criteriaBuilder, artikel, where, DBNames.VERBLEIBENDE, model.getVerbleibende());
             addCondition(criteriaBuilder, artikel, where, DBNames.ANMERKUNG, model.getAnmerkung());
             addCondition(criteriaBuilder, artikel, where, DBNames.BELADUNG, model.getBeladung());

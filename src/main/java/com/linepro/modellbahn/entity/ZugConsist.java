@@ -45,45 +45,60 @@ import lombok.experimental.SuperBuilder;
         @UniqueConstraint(name = DBNames.ZUG_CONSIST + "_UC1", columnNames = { DBNames.ZUG_ID, DBNames.POSITION })
         })
 @NamedEntityGraphs({
-    @NamedEntityGraph(name="zugConsist",
+    @NamedEntityGraph(name="consist",
         includeAllAttributes = true,
         attributeNodes = {
-            @NamedAttributeNode(value = "zug", subgraph = "zugConsist.zug"),
-            @NamedAttributeNode(value = "artikel", subgraph = "zugConsist.artikel")
-        }, subgraphs = {
-            @NamedSubgraph(name = "zugConsist.zug",
+            @NamedAttributeNode(value = "zug", subgraph = "consist.zug"),
+            @NamedAttributeNode(value = "artikel", subgraph = "consist.artikel")
+        },
+        subgraphs = {
+            @NamedSubgraph(name = "consist.zug",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "zugTyp", subgraph = "consist.zugTyp"),
+                    @NamedAttributeNode(value = "bezeichnung"),
+            }),
+            @NamedSubgraph(name = "consist.zugTyp",
+                attributeNodes = {
                     @NamedAttributeNode(value = "name")
             }),
-            @NamedSubgraph(name = "zugConsist.artikel",
+            @NamedSubgraph(name = "consist.artikel",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
                     @NamedAttributeNode(value = "artikelId"),
                     @NamedAttributeNode(value = "bezeichnung"),
-                    @NamedAttributeNode(value = "produkt", subgraph = "zugConsist.produkt"),
+                    @NamedAttributeNode(value = "produkt", subgraph = "consist.produkt"),
                     @NamedAttributeNode(value = "abbildung")
             }),
-            @NamedSubgraph(name = "zugConsist.produkt",
+            @NamedSubgraph(name = "consist.produkt",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "hersteller", subgraph = "zugConsist.hersteller"),
+                    @NamedAttributeNode(value = "hersteller", subgraph = "consist.hersteller"),
                     @NamedAttributeNode(value = "bestellNr"),
                     @NamedAttributeNode(value = "bezeichnung"),
                     @NamedAttributeNode(value = "lange"),
-                    @NamedAttributeNode(value = "bahnverwaltung", subgraph = "zugConsist.bahnverwaltung"),
-                    @NamedAttributeNode(value = "gattung", subgraph = "zugConsist.gattung"),
+                    @NamedAttributeNode(value = "unterKategorie", subgraph = "consist.unterkategorie"),
+                    @NamedAttributeNode(value = "bahnverwaltung", subgraph = "consist.bahnverwaltung"),
+                    @NamedAttributeNode(value = "gattung", subgraph = "consist.gattung"),
                     @NamedAttributeNode(value = "betreibsnummer"),
                     @NamedAttributeNode(value = "abbildung")
             }),
-            @NamedSubgraph(name = "zugConsist.hersteller",
+            @NamedSubgraph(name = "consist.hersteller",
                 attributeNodes = {
                     @NamedAttributeNode(value = "name")
             }),
-            @NamedSubgraph(name = "zugConsist.bahnverwaltung",
+            @NamedSubgraph(name = "consist.unterkategorie",
+            attributeNodes = {
+                @NamedAttributeNode(value = "kategorie", subgraph = "consist.kategorie"),
+                @NamedAttributeNode(value = "name")
+            }),
+            @NamedSubgraph(name = "consist.kategorie",
                 attributeNodes = {
                     @NamedAttributeNode(value = "name")
             }),
-            @NamedSubgraph(name = "zugConsist.gattung",
+            @NamedSubgraph(name = "consist.bahnverwaltung",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "name")
+            }),
+            @NamedSubgraph(name = "consist.gattung",
                 attributeNodes = {
                     @NamedAttributeNode(value = "name")
             })

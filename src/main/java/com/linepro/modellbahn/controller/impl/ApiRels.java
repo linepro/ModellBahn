@@ -16,22 +16,25 @@ public interface ApiRels {
     String PREVIOUS = "previous";
     String NEXT = "next";
 
-    String ABBILDUNG = "abbildung";
-    String ADRESS = "adress";
-    String ANDERUNG = "anderung";
-    String ANLEITUNG = "anleitung";
-    String ARTIKEL = "artikel";
-    String CONSIST = "consist";
-    String CV = "cv";
-    String DECODER = "decoder";
-    String DECODER_TYP = "typ";
-    String EXPLOSIONSZEICHNUNG = "explosionszeichnung";
     String FORGOT = "forgot";
-    String FUNKTION = "funktion";
-    String GROSSANSICHT = "grossansicht";
-    String PASSWORD = "password";
-    String PRODUKT = "produkt";
     String REGISTER = "register";
-    String TEIL = "teil";
-    String UNTER_KATEGORIE = "unterKategorie";
+    String PASSWORD = "password";
+
+    String ARTIKEL = ApiNames.ARTIKEL;
+    String DECODER = ApiNames.DECODER;
+    String DECODER_TYP = ApiNames.DECODER_TYP;
+    String PRODUKT = ApiNames.PRODUKT;
+
+    String ADRESSEN = ApiNames.ADRESSEN;
+    String ANDERUNGEN = ApiNames.ANDERUNGEN;
+    String CONSIST = ApiNames.CONSIST;
+    String CVS = ApiNames.CVS;
+    String FUNKTIONEN = ApiNames.FUNKTIONEN;
+    String TEILEN = ApiNames.TEILEN;
+    String UNTER_KATEGORIEN = ApiNames.UNTER_KATEGORIEN;
+
+    String ABBILDUNG = ApiNames.ABBILDUNG;
+    String ANLEITUNGEN = ApiNames.ANLEITUNGEN;
+    String EXPLOSIONSZEICHNUNG = ApiNames.EXPLOSIONSZEICHNUNG;
+    String GROSSANSICHT = ApiNames.GROSSANSICHT;
 }

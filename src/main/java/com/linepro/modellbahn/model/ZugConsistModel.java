@@ -73,6 +73,14 @@ public class ZugConsistModel extends SpringdocModel<ZugConsistModel> implements 
     @Schema(description = "Description", example = "Dampftenderlok BR 89.0", accessMode = AccessMode.READ_ONLY)
     private String bezeichnung;
 
+    @JsonProperty(ApiNames.KATEGORIE)
+    @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
+    private String kategorie;
+
+    @JsonProperty(ApiNames.UNTER_KATEGORIE)
+    @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
+    private String unterKategorie;
+
     @JsonProperty(ApiNames.LANGE)
     @Schema(description = "Length over puffers in cm.", example = "11.00", accessMode = AccessMode.READ_ONLY)
     private BigDecimal lange;

@@ -45,7 +45,7 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.NAMEN, ApiNames.GATTUNG, ApiNames.BEZEICHNUNG, ApiNames.UNTER_KATEGORIE,
-        ApiNames.BAHNVERWALTUNG, ApiNames.HERSTELLER, ApiNames.BAUZEIT, ApiNames.ANZAHL, ApiNames.BETREIBSNUMMER,
+        ApiNames.BAHNVERWALTUNG, ApiNames.HERSTELLER, ApiNames.BAUZEIT, ApiNames.MENGE, ApiNames.BETREIBSNUMMER,
         ApiNames.ANTRIEB, ApiNames.ACHSFOLG, ApiNames.ANFAHRZUGKRAFT, ApiNames.LEISTUNG, ApiNames.DIENSTGEWICHT,
         ApiNames.GESCHWINDIGKEIT, ApiNames.LANGE, ApiNames.AUSSERDIENST, ApiNames.DMTREIBRAD, ApiNames.DMLAUFRADVORN,
         ApiNames.DMLAUFRADHINTEN, ApiNames.ZYLINDER, ApiNames.DMZYLINDER, ApiNames.KOLBENHUB, ApiNames.KESSELUBERDRUCK,
@@ -93,9 +93,9 @@ public class VorbildModel extends SpringdocModel<VorbildModel> implements NamedW
     @Schema(implementation = LocalDate.class, description = "Construction date", example = "1934-01-01")
     private LocalDate bauzeit;
 
-    @JsonProperty(ApiNames.ANZAHL)
+    @JsonProperty(ApiNames.MENGE)
     @Schema(description = "Number built", example = "10")
-    private Integer Anzahl;
+    private Integer Menge;
 
     @JsonProperty(ApiNames.BETREIBSNUMMER)
     @Schema(description = "Service number", example = "89 006")

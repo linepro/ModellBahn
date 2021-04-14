@@ -303,9 +303,8 @@ import lombok.experimental.SuperBuilder;
                 }),
             @NamedSubgraph(name = "produkt.teilen", 
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
                     @NamedAttributeNode(value = "teil", subgraph = "produkt.teil"),
-                    @NamedAttributeNode(value = "anzahl"),
+                    @NamedAttributeNode(value = "menge"),
                     @NamedAttributeNode(value = "deleted")
                 }),
             @NamedSubgraph(name = "produkt.teil", 

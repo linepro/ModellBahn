@@ -110,7 +110,7 @@ import lombok.experimental.SuperBuilder;
             @NamedAttributeNode(value = "decoder", subgraph = "artikel.decoder"),
             @NamedAttributeNode(value = "bezeichnung"),
             @NamedAttributeNode(value = "preis"),
-            @NamedAttributeNode(value = "stuck"),
+            @NamedAttributeNode(value = "menge"),
             @NamedAttributeNode(value = "verbleibende"),
             @NamedAttributeNode(value = "anmerkung"),
             @NamedAttributeNode(value = "beladung"),
@@ -210,7 +210,6 @@ import lombok.experimental.SuperBuilder;
                 }),
             @NamedSubgraph(name = "artikel.decoderTyp",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
                     @NamedAttributeNode(value = "hersteller", subgraph = "artikel.decoderHersteller"),
                     @NamedAttributeNode(value = "bestellNr"),
                     @NamedAttributeNode(value = "bezeichnung")
@@ -273,7 +272,6 @@ import lombok.experimental.SuperBuilder;
                 }),
             @NamedSubgraph(name = "artikel.decoder",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
                     @NamedAttributeNode(value = "decoderId"),
                     @NamedAttributeNode(value = "bezeichnung"),
                     @NamedAttributeNode(value = "decoderTyp", subgraph = "artikel.decoderTyp"),
@@ -328,7 +326,6 @@ import lombok.experimental.SuperBuilder;
             }),
             @NamedSubgraph(name = "artikel.decoderTyp",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
                     @NamedAttributeNode(value = "hersteller", subgraph = "artikel.decoderHersteller"),
                     @NamedAttributeNode(value = "bestellNr"),
                     @NamedAttributeNode(value = "bezeichnung")
@@ -343,12 +340,11 @@ import lombok.experimental.SuperBuilder;
             }),
             @NamedSubgraph(name = "artikel.anderungen",
                  attributeNodes = {
-                     @NamedAttributeNode(value = "id"),
                      @NamedAttributeNode(value = "anderungId"),
                      @NamedAttributeNode(value = "anderungsDatum"),
                      @NamedAttributeNode(value = "anderungsTyp"),
                      @NamedAttributeNode(value = "bezeichnung"),
-                     @NamedAttributeNode(value = "stuck"),
+                     @NamedAttributeNode(value = "menge"),
                      @NamedAttributeNode(value = "anmerkung"),
                      @NamedAttributeNode(value = "deleted")
                  })
@@ -418,13 +414,13 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.preis.positive}")
     private BigDecimal preis;
 
-    /** The stuck. */
-    @Column(name = DBNames.STUCK, nullable = false)
-    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.stuck.notnull}")
-    @Min(value=1, message = "{com.linepro.modellbahn.validator.constraints.stuck.positive}")
-    private Integer stuck;
+    /** The menge. */
+    @Column(name = DBNames.MENGE, nullable = false)
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.menge.notnull}")
+    @Min(value=1, message = "{com.linepro.modellbahn.validator.constraints.menge.positive}")
+    private Integer menge;
 
-    /** The stuck. */
+    /** The menge. */
     @Column(name = DBNames.VERBLEIBENDE, nullable = false)
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.verbleibende.notnull}")
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.verbleibende.positive}")
@@ -465,11 +461,14 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
         if (anderungen == null) {
             anderungen = new HashSet<>();
         }
+
+        int anderungId = anderungen.stream()
+                                   .mapToInt(a -> a.getAnderungId())
+                                   .max()
+                                   .orElse(0);
+
         anderung.setArtikel(this);
-        anderung.setAnderungId(anderungen.stream()
-                                         .mapToInt(a -> a.getAnderungId())
-                                         .max()
-                                         .orElse(1));
+        anderung.setAnderungId(anderungId+1);
         anderung.setDeleted(false);
         anderungen.add(anderung);
     }
@@ -524,7 +523,7 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
             .append("decoder", decoder)
             .append("bezeichnung", bezeichnung)
             .append("preis", preis)
-            .append("stuck", stuck)
+            .append("menge", menge)
             .append("verbleibende", verbleibende)
             .append("anmerkung", anmerkung)
             .append("beladung", beladung)

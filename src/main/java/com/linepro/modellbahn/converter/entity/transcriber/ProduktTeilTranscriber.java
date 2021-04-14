@@ -23,7 +23,7 @@ public class ProduktTeilTranscriber implements Transcriber<ProduktTeil, ProduktT
             destination.setBezeichnung(source.getTeil().getBezeichnung());
             destination.setKategorie(getCode(source.getTeil().getUnterKategorie().getKategorie()));
             destination.setUnterKategorie(getCode(source.getTeil().getUnterKategorie()));
-            destination.setAnzahl(source.getAnzahl());
+            destination.setMenge(source.getMenge());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }
 

@@ -3,9 +3,11 @@ package com.linepro.modellbahn.hateoas;
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.controller.impl.ApiNames.ANDERUNG_ID;
 import static com.linepro.modellbahn.controller.impl.ApiNames.ARTIKEL_ID;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_ANDERUNG;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_ANDERUNG;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_ARTIKEL;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_ANDERUNG;
+import static com.linepro.modellbahn.controller.impl.ApiRels.ADD;
 import static com.linepro.modellbahn.controller.impl.ApiRels.DELETE;
 import static com.linepro.modellbahn.controller.impl.ApiRels.PARENT;
 import static com.linepro.modellbahn.controller.impl.ApiRels.UPDATE;
@@ -36,6 +38,7 @@ public class AnderungModelProcessor extends ModelProcessorImpl<AnderungModel> im
     public AnderungModelProcessor() {
         super(
             new LinkTemplateImpl(PARENT, GET_ARTIKEL, EXTRACTOR),
+            new LinkTemplateImpl(ADD, ADD_ANDERUNG, EXTRACTOR),
             new LinkTemplateImpl(UPDATE, UPDATE_ANDERUNG, EXTRACTOR),
             new LinkTemplateImpl(DELETE, DELETE_ANDERUNG, EXTRACTOR, (m) -> !(((AnderungModel) m).getDeleted()))
             );

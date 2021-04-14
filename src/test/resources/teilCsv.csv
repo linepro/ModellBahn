@@ -1,2 +1,2 @@
-hersteller,bestellNr,teilHersteller,teilBestellNr,bezeichnung,kategorie,unterKategorie,anzahl,deleted
+hersteller,bestellNr,teilHersteller,teilBestellNr,bezeichnung,kategorie,unterKategorie,menge,deleted
 MARKLIN,3003,MARKLIN,600300,Bürsten,ERSATZTEIL,BURSTEN,1,false

@@ -1,7 +1,6 @@
 package com.linepro.modellbahn.hateoas;
 
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
-import static com.linepro.modellbahn.controller.impl.ApiNames.ANDERUNG;
 import static com.linepro.modellbahn.controller.impl.ApiNames.ARTIKEL_ID;
 import static com.linepro.modellbahn.controller.impl.ApiNames.BESTELL_NR;
 import static com.linepro.modellbahn.controller.impl.ApiNames.DECODER_ID;
@@ -18,6 +17,7 @@ import static com.linepro.modellbahn.controller.impl.ApiPaths.SEARCH_ARTIKEL;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_ARTIKEL;
 import static com.linepro.modellbahn.controller.impl.ApiRels.ABBILDUNG;
 import static com.linepro.modellbahn.controller.impl.ApiRels.ADD;
+import static com.linepro.modellbahn.controller.impl.ApiRels.ANDERUNGEN;
 import static com.linepro.modellbahn.controller.impl.ApiRels.DECODER;
 import static com.linepro.modellbahn.controller.impl.ApiRels.DELETE;
 import static com.linepro.modellbahn.controller.impl.ApiRels.GROSSANSICHT;
@@ -68,7 +68,7 @@ public class ArtikelModelProcessor extends ModelProcessorImpl<ArtikelModel> impl
             new LinkTemplateImpl(DELETE, DELETE_ARTIKEL, EXTRACTOR, (m) -> BooleanUtils.isFalse(((ArtikelModel) m).getDeleted())),
             new LinkTemplateImpl(ABBILDUNG, ADD_ARTIKEL_ABBILDUNG, EXTRACTOR),
             new LinkTemplateImpl(GROSSANSICHT, ADD_ARTIKEL_GROSSANSICHT, EXTRACTOR),
-            new LinkTemplateImpl(ANDERUNG, ADD_ANDERUNG, EXTRACTOR),
+            new LinkTemplateImpl(ANDERUNGEN, ADD_ANDERUNG, EXTRACTOR),
             new LinkTemplateImpl(DECODER, GET_DECODER, DECODER_EXTRACTOR, (m) -> StringUtils.hasText(((ArtikelModel) m).getDecoder())),
             new LinkTemplateImpl(PRODUKT, GET_PRODUKT, PRODUKT_EXTRACTOR)
             );

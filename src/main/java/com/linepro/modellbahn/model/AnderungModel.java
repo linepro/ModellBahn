@@ -41,7 +41,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.ARTIKEL_ID, ApiNames.ANDERUNG_ID, ApiNames.ANDERUNGSDATUM, ApiNames.ANDERUNGS_TYP, ApiNames.BEZEICHNUNG, ApiNames.STUCK, ApiNames.ANMERKUNG, ApiNames.DELETED, ApiNames.LINKS })
+@JsonPropertyOrder({ ApiNames.ARTIKEL_ID, ApiNames.ANDERUNG_ID, ApiNames.ANDERUNGSDATUM, ApiNames.ANDERUNGS_TYP, ApiNames.BEZEICHNUNG, ApiNames.MENGE, ApiNames.ANMERKUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.ANDERUNG)
 @Schema(name = ApiNames.ANDERUNG, description = "Changes tp an article")
 public class AnderungModel extends SpringdocModel<AnderungModel> implements ItemModel, Comparable<AnderungModel> {
@@ -69,9 +69,9 @@ public class AnderungModel extends SpringdocModel<AnderungModel> implements Item
     @Schema(description = "Change description", example = "New 5* motor and decoder", required = true)
     private String bezeichnung;
 
-    @JsonProperty(ApiNames.STUCK)
+    @JsonProperty(ApiNames.MENGE)
     @Schema(description = "Changed Quantity", example = "1")
-    private Integer stuck;
+    private Integer menge;
 
     @JsonProperty(ApiNames.ANMERKUNG)
     @Schema(description = "Remarks", example = "5* Motor and decoder")

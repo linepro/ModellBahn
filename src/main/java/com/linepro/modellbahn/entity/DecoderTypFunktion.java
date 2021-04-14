@@ -101,9 +101,11 @@ public class DecoderTypFunktion extends ItemImpl implements Comparable<DecoderTy
 
     @Override
     public int compareTo(DecoderTypFunktion other) {
+        // if FUNKTION_PATTERN changes change this; shame we can't attach the comparator to it....
         return new CompareToBuilder()
             .append(getReihe(), other.getReihe())
-            .append(getFunktion(), other.getFunktion())
+            .append(getFunktion().substring(0, 1), other.getFunktion().substring(0, 1))
+            .append(Integer.valueOf(getFunktion().substring(1)), Integer.valueOf(other.getFunktion().substring(1)))
             .toComparison();
     }
 

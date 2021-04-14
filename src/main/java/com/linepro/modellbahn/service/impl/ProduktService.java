@@ -73,7 +73,7 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implem
     }
 
     @Transactional
-    public Optional<ProduktTeilModel> addTeil(String hersteller, String bestellNr, String teilHersteller, String teilBestellNr, Integer anzahl) {
+    public Optional<ProduktTeilModel> addTeil(String hersteller, String bestellNr, String teilHersteller, String teilBestellNr, Integer menge) {
         Optional<Produkt> produktFound = repository.findByBestellNr(hersteller, bestellNr);
         Optional<Produkt> subFound = repository.findByBestellNr(teilHersteller, teilBestellNr);
 
@@ -84,7 +84,7 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implem
             if (!isCycle(produkt, sub)) {
                  ProduktTeil teil = new ProduktTeil();
                  teil.setTeil(sub);
-                 teil.setAnzahl(anzahl);
+                 teil.setMenge(menge);
                  teil.setDeleted(false);
 
                  produkt.addTeil(teil);
@@ -103,10 +103,10 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implem
     }
 
     @Transactional
-    public Optional<ProduktTeilModel> updateTeil(String hersteller, String bestellNr, String teilHersteller, String teilBestellNr, Integer anzahl) {
+    public Optional<ProduktTeilModel> updateTeil(String hersteller, String bestellNr, String teilHersteller, String teilBestellNr, Integer menge) {
         return teilRepository.findByTeil(hersteller, bestellNr, teilHersteller, teilBestellNr)
                              .map(t -> {
-                                 t.setAnzahl(anzahl);
+                                 t.setMenge(menge);
                                  return teilMutator.convert(teilRepository.saveAndFlush(t));
                              });
     }

@@ -57,7 +57,6 @@ import lombok.experimental.SuperBuilder;
         }, subgraphs = {
             @NamedSubgraph(name = "decoderAdress.decoder",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
                     @NamedAttributeNode(value = "decoderId")
             }),
             @NamedSubgraph(name = "decoderAdress.typ",

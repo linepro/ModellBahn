@@ -42,7 +42,6 @@ public interface ApiNames {
     String ANFAHRZUGKRAFT = "anfahrzugkraft";
     String ANLEITUNGEN = "anleitungen";
     String ANMERKUNG = "anmerkung";
-    String ANZAHL = "anzahl";
     String ARTIKEL_ID = "artikelId";
     String AUSSERDIENST = "ausserdienst";
     String BAUZEIT = "bauzeit";
@@ -90,6 +89,7 @@ public interface ApiNames {
     String LEISTUNGSUBERTRAGUNG = "leistungsubertragung";
     String LINKS = "_links";
     String MAXIMAL = "maximal";
+    String MENGE = "menge";
     String METHOD = "method";
     String MINIMAL = "minimal";
     String MITTELWAGEN = "mittelwagen";
@@ -111,7 +111,6 @@ public interface ApiNames {
     String STATUS = "status";
     String STECKER = "stecker";
     String STEUERUNG = "steuerung";
-    String STUCK = "stuck";
     String SYMBOL = "symbol";
     String TEIL_BESTELL_NR = "teilBestellNr";
     String TEIL_HERSTELLER = "teilHersteller";

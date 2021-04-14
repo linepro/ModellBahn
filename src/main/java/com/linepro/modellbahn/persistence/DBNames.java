@@ -54,7 +54,6 @@ public interface DBNames {
     String ANLEITUNGEN = "anleitungen";
     String ANMERKUNG = "anmerkung";
     String ANTRIEB_ID = "antriebId";
-    String ANZAHL = "anzahl";
     String ARTIKEL_ID = "artikelId";
     String AUFBAU_ID = "aufbauId";
     String AUSSERDIENST = "ausserdienst";
@@ -103,6 +102,7 @@ public interface DBNames {
     String LINKS = "links";
     String MASSSTAB_ID = "massstabId";
     String MAXIMAL = "maximal";
+    String MENGE = "menge";
     String MINIMAL = "minimal";
     String MITTELWAGEN = "mittelwagen";
     String MOTOR_TYP_ID = "motorTypId";
@@ -126,7 +126,6 @@ public interface DBNames {
     String SPURWEITE_ID = "spurweiteId";
     String STATUS = "status";
     String STEUERUNG_ID = "steuerungId";
-    String STUCK = "stuck";
     String TEIL = "teil";
     String TEIL_ID = "teilId";
     String TELEFON = "telefon";

@@ -23,7 +23,7 @@ public class MvcConfig implements WebMvcConfigurer {
     @Autowired
     private final ResourceEndpoints resourceEndpoints;
 
-    @Value("${spring.mvc.resource.cache.timeout:3600}")
+    @Value("${spring.mvc.resource.cache.timeout:60}")
     private int cacheTimeout;
 
     @Bean(PREFIX + "BaseURL")

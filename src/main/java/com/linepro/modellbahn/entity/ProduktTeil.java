@@ -54,7 +54,6 @@ import lombok.experimental.SuperBuilder;
         }, subgraphs = {
             @NamedSubgraph(name = "produktTeil.produkt",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
                     @NamedAttributeNode(value = "hersteller", subgraph = "produkt.hersteller"),
                     @NamedAttributeNode(value = "bestellNr")
             }),
@@ -64,7 +63,6 @@ import lombok.experimental.SuperBuilder;
             }),
             @NamedSubgraph(name = "produktTeil.teil",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
                     @NamedAttributeNode(value = "hersteller", subgraph = "teil.hersteller"),
                     @NamedAttributeNode(value = "bestellNr"),
                     @NamedAttributeNode(value = "bezeichnung"),
@@ -105,9 +103,9 @@ public class ProduktTeil extends ItemImpl implements Comparable<ProduktTeil> {
     private Produkt teil;
 
     /** The count of this component. */
-    @Column(name = DBNames.ANZAHL, nullable = false)
-    @Positive(message = "{com.linepro.modellbahn.validator.constraints.anzahl.positive}")
-    private Integer anzahl;
+    @Column(name = DBNames.MENGE, nullable = false)
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.menge.positive}")
+    private Integer menge;
 
     @Override
     public int compareTo(ProduktTeil other) {
@@ -148,7 +146,7 @@ public class ProduktTeil extends ItemImpl implements Comparable<ProduktTeil> {
             .appendSuper(super.toString())
             .append("produkt", produkt)
             .append("teil", teil)
-            .append("anzahl", anzahl)
+            .append("menge", menge)
             .toString();
     }
 }

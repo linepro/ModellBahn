@@ -60,7 +60,6 @@ import lombok.experimental.SuperBuilder;
         }, subgraphs = {
             @NamedSubgraph(name = "anderung.artikel",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "id"),
                     @NamedAttributeNode(value = "artikelId")
             })
         })
@@ -95,9 +94,9 @@ public class Anderung extends ItemImpl implements Comparable<Anderung> {
     @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
     private String bezeichnung;
 
-    @Column(name = DBNames.STUCK)
-    @Positive(message = "{com.linepro.modellbahn.validator.constraints.stuck.positive}")
-    private Integer stuck;
+    @Column(name = DBNames.MENGE)
+    @Positive(message = "{com.linepro.modellbahn.validator.constraints.menge.positive}")
+    private Integer menge;
 
     @Column(name = DBNames.ANMERKUNG, length = 255)
     @Size(max = 255, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
@@ -145,7 +144,7 @@ public class Anderung extends ItemImpl implements Comparable<Anderung> {
             .append("anderungsDatum", anderungsDatum)
             .append("anderungsTyp",  anderungsTyp)
             .append("bezeichnung",  bezeichnung)
-            .append("stuck",  stuck)
+            .append("menge", menge)
             .append("anmerkung",  anmerkung)
             .toString();
     }
