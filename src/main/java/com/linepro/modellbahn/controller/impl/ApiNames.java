@@ -128,6 +128,7 @@ public interface ApiNames {
     String WERKSEINSTELLUNG = "werkseinstellung";
     String WERT = "wert";
     String ZYLINDER = "zylinder";
+    String KATEGORIE_BEZEICHNUNG = "kategorieBezeichnung";
 
     String ENUMS = "enums";
 

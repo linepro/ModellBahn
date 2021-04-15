@@ -11,6 +11,7 @@ public class UnterKategorieTranscriber extends NamedTranscriber<UnterKategorie, 
     public UnterKategorieModel apply(UnterKategorie source, UnterKategorieModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setKategorie(source.getKategorie().getName());
+            destination.setKategorieBezeichnung(source.getKategorie().getBezeichnung());
         }
 
         return super.apply(source, destination);

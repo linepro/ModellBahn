@@ -39,7 +39,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.KATEGORIE, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
+@JsonPropertyOrder({ ApiNames.KATEGORIE, ApiNames.KATEGORIE_BEZEICHNUNG, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.UNTER_KATEGORIE)
 @Schema(name = ApiNames.UNTER_KATEGORIE, description = "Sub category.")
 public class UnterKategorieModel extends SpringdocModel<UnterKategorieModel> implements NamedItemModel, Comparable<UnterKategorieModel> {
@@ -49,6 +49,10 @@ public class UnterKategorieModel extends SpringdocModel<UnterKategorieModel> imp
     @JsonProperty(ApiNames.KATEGORIE)
     @Schema(description = "Category coding", example = "LOKOMOTIV", accessMode = AccessMode.READ_ONLY)
     private String kategorie;
+
+    @JsonProperty(ApiNames.KATEGORIE_BEZEICHNUNG)
+    @Schema(description = "Category description", example = "Lokomotiv", accessMode = AccessMode.READ_ONLY)
+    private String kategorieBezeichnung;
 
     @JsonProperty(ApiNames.NAMEN)
     @Schema(description = "Sub category coding", example = "ELEKTRO", required = true)
