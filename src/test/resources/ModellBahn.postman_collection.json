@@ -17749,83 +17749,83 @@
 		},
 		{
 			"key": "abbildungCsv",
-			"value": "{{testFiles}}abbildungCsv.csv"
+			"value": "{{testFiles}}abbildung.csv"
 		},
 		{
 			"key": "anderungCsv",
-			"value": "{{testFiles}}anderungCsv.csv"
+			"value": "{{testFiles}}anderung.csv"
 		},
 		{
 			"key": "artikelCsv",
-			"value": "{{testFiles}}artikelCsv.csv"
+			"value": "{{testFiles}}artikel.csv"
 		},
 		{
 			"key": "bahnverwaltungCsv",
-			"value": "{{testFiles}}bahnverwaltungCsv.csv"
+			"value": "{{testFiles}}bahnverwaltung.csv"
 		},
 		{
 			"key": "consistCsv",
-			"value": "{{testFiles}}consistCsv.csv"
+			"value": "{{testFiles}}consist.csv"
 		},
 		{
 			"key": "decoderCsv",
-			"value": "{{testFiles}}decoderCsv.csv"
+			"value": "{{testFiles}}decoder.csv"
 		},
 		{
 			"key": "decoderAdressCsv",
-			"value": "{{testFiles}}decoderAdressCsv.csv"
+			"value": "{{testFiles}}decoderAdress.csv"
 		},
 		{
 			"key": "decoderCvCsv",
-			"value": "{{testFiles}}decoderCvCsv.csv"
+			"value": "{{testFiles}}decoderCv.csv"
 		},
 		{
 			"key": "decoderFunktionCsv",
-			"value": "{{testFiles}}decoderFunktionCsv.csv"
+			"value": "{{testFiles}}decoderFunktion.csv"
 		},
 		{
 			"key": "decoderTypCsv",
-			"value": "{{testFiles}}decoderTypCsv.csv"
+			"value": "{{testFiles}}decoderTyp.csv"
 		},
 		{
 			"key": "decoderTypAdressCsv",
-			"value": "{{testFiles}}decoderTypAdressCsv.csv"
+			"value": "{{testFiles}}decoderTypAdress.csv"
 		},
 		{
 			"key": "decoderTypCvCsv",
-			"value": "{{testFiles}}decoderTypCvCsv.csv"
+			"value": "{{testFiles}}decoderTypCv.csv"
 		},
 		{
 			"key": "decoderTypFunktionCsv",
-			"value": "{{testFiles}}decoderTypFunktionCsv.csv"
+			"value": "{{testFiles}}decoderTypFunktion.csv"
 		},
 		{
 			"key": "herstellerCsv",
-			"value": "{{testFiles}}herstellerCsv.csv"
+			"value": "{{testFiles}}hersteller.csv"
 		},
 		{
 			"key": "namedCsv",
-			"value": "{{testFiles}}namedCsv.csv"
+			"value": "{{testFiles}}named.csv"
 		},
 		{
 			"key": "produktCsv",
-			"value": "{{testFiles}}produktCsv.csv"
+			"value": "{{testFiles}}produkt.csv"
 		},
 		{
 			"key": "teilCsv",
-			"value": "{{testFiles}}teilCsv.csv"
+			"value": "{{testFiles}}teil.csv"
 		},
 		{
 			"key": "unterKategorieCsv",
-			"value": "{{testFiles}}unterKategorieCsv.csv"
+			"value": "{{testFiles}}unterKategorie.csv"
 		},
 		{
 			"key": "vorbildCsv",
-			"value": "{{testFiles}}vorbildCsv.csv"
+			"value": "{{testFiles}}vorbild.csv"
 		},
 		{
 			"key": "zugCsv",
-			"value": "{{testFiles}}zugCsv.csv"
+			"value": "{{testFiles}}zug.csv"
 		}
 	]
 }
