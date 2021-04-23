@@ -63,6 +63,7 @@ public interface ApiNames {
     String DMTREIBRAD = "dmTreibrad";
     String DMZYLINDER = "dmZylinder";
     String DREHGESTELLBAUART = "drehgestellBauart";
+    String END_YEAR = "endYear";
     String EXPLOSIONSZEICHNUNG = "explosionszeichnung";
     String FAHRMOTOREN = "fahrmotoren";
     String FAHRSTUFE = "fahrstufe";
@@ -108,6 +109,7 @@ public interface ApiNames {
     String SITZPLATZEKL3 = "sitzplatzeKL3";
     String SITZPLATZEKL4 = "sitzplatzeKL4";
     String SPAN = "span";
+    String START_YEAR = "startYear";
     String STATUS = "status";
     String STECKER = "stecker";
     String STEUERUNG = "steuerung";

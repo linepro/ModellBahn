@@ -2850,6 +2850,8 @@
 									"    var self = root + \"/\" + a.name;\r",
 									"    pm.test(\"name: \" + a.name, () => pm.expect(a.name).to.exist);\r",
 									"    pm.test(\"bezeichnung\", () => pm.expect(a.bezeichnung).to.exist);\r",
+                                    "    pm.test(\"startYear\", () => pm.expect(a.startYear).to.exist);\r",
+                                    "    pm.test(\"endYear\", () => pm.expect(a.endYear).to.exist);\r",
 									"    pm.test(\"deleted\", () => pm.expect(a.deleted).to.be.false);\r",
 									"    pm.test(\"_links.add\", () => pm.expect(a._links.add[0].href).to.eql(root));\r",
 									"    pm.test(\"_links.self\", () => pm.expect(a._links.self[0].href).to.eql(self));\r",
@@ -2896,7 +2898,9 @@
 							"script": {
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+                                    "pm.environment.set(\"startYear\", pm.variables.replaceIn(\"{{$randomYear}}\"));\r",
+                                    "pm.environment.set(\"endYear\", pm.variables.replaceIn(\"{{$randomYear}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -2912,6 +2916,8 @@
 									"var self = pm.variables.replaceIn(\"{{api}}/epoch/{{name}}\");\r",
 									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\")));\r",
 									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+                                    "pm.test(\"startYear\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"startYear\")));\r",
+                                    "pm.test(\"endYear\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"endYear\")));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
@@ -2942,7 +2948,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"{{name}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n\t\"deleted\": true\n}",
+                            "raw": "{\n\t\"name\": \"{{name}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n\t\"startYear\": \"{{startYear}}\",\n\t\"endYear\": \"{{endYear}}\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2968,7 +2974,9 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));",
+                                    "pm.environment.set(\"startYear\", pm.variables.replaceIn(\"{{$randomYear}}\"));\r",
+                                    "pm.environment.set(\"endYear\", pm.variables.replaceIn(\"{{$randomYear}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -2984,6 +2992,8 @@
 									"var self = pm.variables.replaceIn(\"{{api}}/epoch/{{name}}\");\r",
 									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\")));\r",
 									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+                                    "pm.test(\"startYear\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"startYear\")));\r",
+                                    "pm.test(\"endYear\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"endYear\")));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
@@ -3014,7 +3024,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"{{name}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n\t\"deleted\": true\n}",
+							"raw": "{\n\t\"name\": \"{{name}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n\t\"startYear\": \"{{startYear}}\",\n\t\"endYear\": \"{{endYear}}\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3048,6 +3058,8 @@
 									"var self = pm.variables.replaceIn(\"{{api}}/epoch/{{name}}\");\r",
 									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\")));\r",
 									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+                                    "pm.test(\"startYear\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"startYear\")));\r",
+                                    "pm.test(\"endYear\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"endYear\")));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
@@ -13901,9 +13913,9 @@
 									"pm.test(\"Epoch\", () => pm.response.to.have.status(200));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,startYear,endYear,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){2}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){4}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}
@@ -15235,7 +15247,7 @@
 								{
 									"key": "data",
 									"type": "file",
-									"src": "{{namedCsv}}"
+									"src": "{{epochCsv}}"
 								}
 							]
 						},
@@ -17799,6 +17811,10 @@
 			"key": "decoderTypFunktionCsv",
 			"value": "{{testFiles}}decoderTypFunktion.csv"
 		},
+        {
+            "key": "epochCsv",
+            "value": "{{testFiles}}epoch.csv"
+        },
 		{
 			"key": "herstellerCsv",
 			"value": "{{testFiles}}hersteller.csv"

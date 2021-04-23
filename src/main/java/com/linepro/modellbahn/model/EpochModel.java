@@ -53,6 +53,14 @@ public class EpochModel extends SpringdocModel<EpochModel> implements NamedItemM
     @Schema(description = "ERA description", example = "III : 1949 - 1970")
     private String bezeichnung;
 
+    @JsonProperty(ApiNames.START_YEAR)
+    @Schema(description = "Start year", example = "1949")
+    private Integer startYear;
+
+    @JsonProperty(ApiNames.END_YEAR)
+    @Schema(description = "End year", example = "1970")
+    private Integer endYear;
+
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
     private Boolean deleted;

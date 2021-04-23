@@ -75,6 +75,7 @@ public interface DBNames {
     String DMTREIBRAD = "dmTreibrad";
     String DMZYLINDER = "dmZylinder";
     String DREHGESTELLBAUART = "drehgestellBauart";
+    String END_YEAR = "endYear";
     String EPOCH_ID = "epochId";
     String EXPLOSIONSZEICHNUNG = "explosionszeichnung";
     String FAHRMOTOREN = "fahrmotoren";
@@ -124,6 +125,7 @@ public interface DBNames {
     String SOUND = "sound";
     String SPAN = "span";
     String SPURWEITE_ID = "spurweiteId";
+    String START_YEAR = "startYear";
     String STATUS = "status";
     String STEUERUNG_ID = "steuerungId";
     String TEIL = "teil";
@@ -161,7 +163,7 @@ public interface DBNames {
     String ROLES = "roles";
 
     String NAME_PATTERN = "[A-Z0-9\\-\\.]+";
-    public String ID_PATTERN = "[A-Z0-9]+";
-    public String FUNKTION_PATTERN = "F([12]\\d|3[012]|\\d)$|^K(1[012345]|\\d)$|^S[0123456]";
+    String ID_PATTERN = "[A-Z0-9]+";
+    String FUNKTION_PATTERN = "F([12]\\d|3[012]|\\d)$|^K(1[012345]|\\d)$|^S[0123456]";
 }
 
