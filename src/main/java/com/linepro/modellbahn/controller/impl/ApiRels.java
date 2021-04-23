@@ -27,8 +27,8 @@ public interface ApiRels {
 
     String ADRESSEN = ApiNames.ADRESSEN;
     String ANDERUNGEN = ApiNames.ANDERUNGEN;
-    String CONSIST = ApiNames.CONSIST;
     String CVS = ApiNames.CVS;
+    String FAHRZEUGEN = ApiNames.FAHRZEUGEN;
     String FUNKTIONEN = ApiNames.FUNKTIONEN;
     String TEILEN = ApiNames.TEILEN;
     String UNTER_KATEGORIEN = ApiNames.UNTER_KATEGORIEN;

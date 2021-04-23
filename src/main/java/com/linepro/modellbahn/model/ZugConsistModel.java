@@ -43,7 +43,7 @@ import lombok.ToString;
 @JsonPropertyOrder({ ApiNames.ZUG, ApiNames.POSITION, ApiNames.ARTIKEL_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR,
     ApiNames.BEZEICHNUNG, ApiNames.LANGE, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER,
     ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.CONSIST)
+@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.FAHRZEUGEN)
 @Schema(name = ApiNames.CONSIST, description = "Rolling stock by poisition in a train.")
 public class ZugConsistModel extends SpringdocModel<ZugConsistModel> implements ItemModel, Comparable<ZugConsistModel> {
 

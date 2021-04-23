@@ -7,7 +7,7 @@ import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_ZUG;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_ZUG;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.SEARCH_ZUG;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_ZUG;
-import static com.linepro.modellbahn.controller.impl.ApiRels.CONSIST;
+import static com.linepro.modellbahn.controller.impl.ApiRels.FAHRZEUGEN;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class ZugModelProcessor extends NamedModelProcessor<ZugModel> implements 
             UPDATE_ZUG, 
             DELETE_ZUG, 
             SEARCH_ZUG,
-            new LinkTemplateImpl(CONSIST, ADD_CONSIST, EXTRACTOR)
+            new LinkTemplateImpl(FAHRZEUGEN, ADD_CONSIST, EXTRACTOR)
             );
 
         this.consistProcessor = consistProcessor;
