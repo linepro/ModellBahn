@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
@@ -35,7 +36,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * SteuerungService. CRUD service for Steuerung
- * 
  * @author $Author:$
  * @version $Id:$
  */
@@ -45,25 +45,33 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @SecurityRequirement(name = "BasicAuth")
 public class SteuerungController extends NamedItemController<SteuerungModel> {
 
+    private final SteuerungService service;
+
     @Autowired
     public SteuerungController(SteuerungService service) {
         super(service);
+
+        this.service = service;
     }
 
-    @JsonCreator(mode= Mode.DELEGATING)
+    @JsonCreator(mode = Mode.DELEGATING)
     public static SteuerungModel create() {
         return new SteuerungModel();
     }
 
     @Override
     @GetMapping(path = ApiPaths.GET_STEUERUNG)
-    @Operation(summary = "Finds an Steuerung by name", description = "Finds a control method", operationId = "get", tags = { ApiNames.STEUERUNG }, responses = {
-        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SteuerungModel.class)) }),
-        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
+    @Operation(summary = "Finds an Steuerung by name", description = "Finds a control method", operationId = "get", tags = {
+                    ApiNames.STEUERUNG
+    }, responses = {
+                    @ApiResponse(responseCode = "200", content = {
+                                    @Content(mediaType = "application/json", schema = @Schema(implementation = SteuerungModel.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
     public ResponseEntity<?> get(@PathVariable(ApiNames.NAMEN) String name) {
         return super.get(name);
@@ -71,27 +79,37 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
 
     @Override
     @GetMapping(path = ApiPaths.SEARCH_STEUERUNG, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Steuerungen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { ApiNames.STEUERUNG }, responses = {
-        @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedSteuerungModel.class)) }),
-        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "404", description = "Not found, content = @Content"),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
+    @Operation(summary = "Finds Steuerungen by example", description = "Finds UIC axle configurations", operationId = "find", tags = {
+                    ApiNames.STEUERUNG
+    }, responses = {
+                    @ApiResponse(responseCode = "200", content = {
+                                    @Content(mediaType = "application/json", schema = @Schema(implementation = PagedSteuerungModel.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "404", description = "Not found, content = @Content"),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> search(@RequestBody Optional<SteuerungModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
+    public ResponseEntity<?> search(@RequestBody Optional<SteuerungModel> model,
+                    @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber,
+                    @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
         return super.search(model, pageNumber, pageSize);
     }
 
     @Override
     @PostMapping(path = ApiPaths.ADD_STEUERUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Add a new Steuerung", description = "Add a new UIC axle configuration", operationId = "add", tags = { ApiNames.STEUERUNG }, responses = {
-        @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SteuerungModel.class)) }),
-        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
+    @Operation(summary = "Add a new Steuerung", description = "Add a new UIC axle configuration", operationId = "add", tags = {
+                    ApiNames.STEUERUNG
+    }, responses = {
+                    @ApiResponse(responseCode = "201", description = "Successful operation", content = {
+                                    @Content(mediaType = "application/json", schema = @Schema(implementation = SteuerungModel.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
     public ResponseEntity<?> add(@RequestBody SteuerungModel model) {
         return super.add(model);
@@ -99,14 +117,18 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
 
     @Override
     @PutMapping(path = ApiPaths.UPDATE_STEUERUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates an Steuerung by name", description = "Update a control method", operationId = "update", tags = { ApiNames.STEUERUNG }, responses = {
-        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SteuerungModel.class)) }),
-        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
+    @Operation(summary = "Updates an Steuerung by name", description = "Update a control method", operationId = "update", tags = {
+                    ApiNames.STEUERUNG
+    }, responses = {
+                    @ApiResponse(responseCode = "202", description = "Successful operation", content = {
+                                    @Content(mediaType = "application/json", schema = @Schema(implementation = SteuerungModel.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
     public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody SteuerungModel model) {
         return super.update(name, model);
@@ -114,15 +136,52 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
 
     @Override
     @DeleteMapping(path = ApiPaths.DELETE_STEUERUNG)
-    @Operation(summary = "Deletes an Steuerung by name", description = "Delete a control method", operationId = "delete", tags = { ApiNames.STEUERUNG }, responses = {
-        @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
-        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
+    @Operation(summary = "Deletes an Steuerung by name", description = "Delete a control method", operationId = "delete", tags = {
+                    ApiNames.STEUERUNG
+    }, responses = {
+                    @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
+                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
     public ResponseEntity<?> delete(@PathVariable(ApiNames.NAMEN) String name) {
         return super.delete(name);
+    }
+
+    @PutMapping(path = ApiPaths.ADD_STEUERUNG_ABBILDUNG, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
+    @Operation(summary = "Add an Steuerung picture", description = "Adds or updates the picture of a named Steuerung", operationId = "update", tags = {
+                    ApiNames.STEUERUNG
+    }, responses = {
+                    @ApiResponse(responseCode = "202", description = "Successful operation", content = {
+                                    @Content(mediaType = "application/json", schema = @Schema(implementation = SteuerungModel.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "404", description = "Steuerung not found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
+    })
+    public ResponseEntity<?> updateAbbildung(@PathVariable(ApiNames.NAMEN) String name, @RequestParam(ApiNames.ABBILDUNG) MultipartFile multipart) {
+        return updated(service.updateAbbildung(name, multipart));
+    }
+
+    @DeleteMapping(path = ApiPaths.DELETE_STEUERUNG_ABBILDUNG, produces = MediaType.APPLICATION_JSON)
+    @Operation(summary = "Delete an Steuerung picture", description = "Deletes the picture of a named Steuerung", operationId = "update", tags = {
+                    ApiNames.STEUERUNG
+    }, responses = {
+                    @ApiResponse(responseCode = "202", description = "Successful operation", content = {
+                                    @Content(mediaType = "application/json", schema = @Schema(implementation = SteuerungModel.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "404", description = "Steuerung not found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
+    })
+    public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiNames.NAMEN) String name) {
+        return updated(service.deleteAbbildung(name));
     }
 }

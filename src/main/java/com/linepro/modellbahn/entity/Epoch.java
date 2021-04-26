@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Positive;
 
-import com.linepro.modellbahn.entity.impl.NamedItemImpl;
+import com.linepro.modellbahn.entity.impl.NamedWithAbbildungImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.validation.Unique;
 
@@ -35,7 +35,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.epoch.notunique}")
-public class Epoch extends NamedItemImpl {
+public class Epoch extends NamedWithAbbildungImpl {
     @Column(name = DBNames.START_YEAR)
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.startYear}")
     private Integer startYear;

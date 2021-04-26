@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
@@ -45,9 +46,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @SecurityRequirement(name = "BasicAuth")
 public class BahnverwaltungController extends NamedItemController<BahnverwaltungModel> {
 
+    private final BahnverwaltungService service;
+
     @Autowired
     public BahnverwaltungController(BahnverwaltungService service) {
         super(service);
+
+        this.service = service;
     }
 
     @JsonCreator(mode= Mode.DELEGATING)
@@ -127,5 +132,32 @@ public class BahnverwaltungController extends NamedItemController<Bahnverwaltung
     })
     public ResponseEntity<?> delete(@PathVariable(ApiNames.NAMEN) String name) {
         return super.delete(name);
+    }
+
+    @PutMapping(path = ApiPaths.ADD_BAHNVERWALTUNG_ABBILDUNG, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
+    @Operation(summary = "Add an Bahnverwaltung picture", description = "Adds or updates the picture of a named Bahnverwaltung", operationId = "update", tags = { ApiNames.BAHNVERWALTUNG }, responses = {
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BahnverwaltungModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "404", description = "Bahnverwaltung not found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
+    })
+    public ResponseEntity<?> updateAbbildung(@PathVariable(ApiNames.NAMEN) String name, @RequestParam(ApiNames.ABBILDUNG) MultipartFile multipart) {
+        return updated(service.updateAbbildung(name, multipart));
+    }
+
+    @DeleteMapping(path = ApiPaths.DELETE_BAHNVERWALTUNG_ABBILDUNG, produces = MediaType.APPLICATION_JSON)
+    @Operation(summary = "Delete an Bahnverwaltung picture", description = "Deletes the picture of a named Bahnverwaltung", operationId = "update", tags = { ApiNames.BAHNVERWALTUNG }, responses = {
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BahnverwaltungModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "404", description = "Bahnverwaltung not found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
+    })
+    public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiNames.NAMEN) String name) {
+        return updated(service.deleteAbbildung(name));
     }
 }

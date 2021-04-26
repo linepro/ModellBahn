@@ -45,12 +45,14 @@ public interface ApiPaths {
     String ADD_AUFBAU_ABBILDUNG    = AUFBAU_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.ABBILDUNG;
     String DELETE_AUFBAU_ABBILDUNG = AUFBAU_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.ABBILDUNG;
 
-    String BAHNVERWALTUNG_ROOT   = API_ROOT + ApiNames.BAHNVERWALTUNG;
-    String ADD_BAHNVERWALTUNG    = BAHNVERWALTUNG_ROOT;
-    String GET_BAHNVERWALTUNG    = BAHNVERWALTUNG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
-    String SEARCH_BAHNVERWALTUNG = BAHNVERWALTUNG_ROOT;
-    String DELETE_BAHNVERWALTUNG = BAHNVERWALTUNG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
-    String UPDATE_BAHNVERWALTUNG = BAHNVERWALTUNG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String BAHNVERWALTUNG_ROOT             = API_ROOT + ApiNames.BAHNVERWALTUNG;
+    String ADD_BAHNVERWALTUNG              = BAHNVERWALTUNG_ROOT;
+    String GET_BAHNVERWALTUNG              = BAHNVERWALTUNG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String SEARCH_BAHNVERWALTUNG           = BAHNVERWALTUNG_ROOT;
+    String DELETE_BAHNVERWALTUNG           = BAHNVERWALTUNG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String UPDATE_BAHNVERWALTUNG           = BAHNVERWALTUNG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String ADD_BAHNVERWALTUNG_ABBILDUNG    = BAHNVERWALTUNG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.ABBILDUNG;
+    String DELETE_BAHNVERWALTUNG_ABBILDUNG = BAHNVERWALTUNG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.ABBILDUNG;
 
     String DECODER_ROOT            = API_ROOT + ApiNames.DECODER;
     String ADD_DECODER             = DECODER_ROOT + "/{" + ApiNames.HERSTELLER + ":" + DBNames.NAME_PATTERN + "}/{" + ApiNames.BESTELL_NR + ":" + DBNames.NAME_PATTERN + "}";
@@ -80,12 +82,14 @@ public interface ApiPaths {
     String UPDATE_DECODER_TYP_FUNKTION    = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + ":" + DBNames.NAME_PATTERN + "}/{" + ApiNames.BESTELL_NR + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.FUNKTIONEN + "/{" + ApiNames.REIHE + "}/{" + ApiNames.FUNKTION + ":" + DBNames.FUNKTION_PATTERN + "}";
     String DELETE_DECODER_TYP_FUNKTION    = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + ":" + DBNames.NAME_PATTERN + "}/{" + ApiNames.BESTELL_NR + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.FUNKTIONEN + "/{" + ApiNames.REIHE + "}/{" + ApiNames.FUNKTION + ":" + DBNames.FUNKTION_PATTERN + "}";
 
-    String EPOCH_ROOT   = API_ROOT + ApiNames.EPOCH;
-    String ADD_EPOCH    = EPOCH_ROOT;
-    String GET_EPOCH    = EPOCH_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
-    String SEARCH_EPOCH = EPOCH_ROOT;
-    String DELETE_EPOCH = EPOCH_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
-    String UPDATE_EPOCH = EPOCH_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String EPOCH_ROOT             = API_ROOT + ApiNames.EPOCH;
+    String ADD_EPOCH              = EPOCH_ROOT;
+    String GET_EPOCH              = EPOCH_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String SEARCH_EPOCH           = EPOCH_ROOT;
+    String DELETE_EPOCH           = EPOCH_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String UPDATE_EPOCH           = EPOCH_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String ADD_EPOCH_ABBILDUNG    = EPOCH_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.ABBILDUNG;
+    String DELETE_EPOCH_ABBILDUNG = EPOCH_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.ABBILDUNG;
 
     String ENUMS_ROOT                      = API_ROOT + ApiNames.ENUMS;
     String ENUMS_ADRESS_TYP_PATH           = ENUMS_ROOT + "/" + ApiNames.ADRESS_TYP;
@@ -105,12 +109,14 @@ public interface ApiPaths {
     String DELETE_GATTUNG = GATTUNG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
     String UPDATE_GATTUNG = GATTUNG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
 
-    String HERSTELLER_ROOT   = API_ROOT + ApiNames.HERSTELLER;
-    String ADD_HERSTELLER    = HERSTELLER_ROOT;
-    String GET_HERSTELLER    = HERSTELLER_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
-    String SEARCH_HERSTELLER = HERSTELLER_ROOT;
-    String DELETE_HERSTELLER = HERSTELLER_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
-    String UPDATE_HERSTELLER = HERSTELLER_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String HERSTELLER_ROOT             = API_ROOT + ApiNames.HERSTELLER;
+    String ADD_HERSTELLER              = HERSTELLER_ROOT;
+    String GET_HERSTELLER              = HERSTELLER_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String SEARCH_HERSTELLER           = HERSTELLER_ROOT;
+    String DELETE_HERSTELLER           = HERSTELLER_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String UPDATE_HERSTELLER           = HERSTELLER_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String ADD_HERSTELLER_ABBILDUNG    = HERSTELLER_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.ABBILDUNG;
+    String DELETE_HERSTELLER_ABBILDUNG = HERSTELLER_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.ABBILDUNG;
 
     String KATEGORIE_ROOT         = API_ROOT + ApiNames.KATEGORIE;
     String ADD_KATEGORIE          = KATEGORIE_ROOT;
@@ -149,12 +155,14 @@ public interface ApiPaths {
     String DELETE_MASSSTAB = MASSSTAB_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
     String UPDATE_MASSSTAB = MASSSTAB_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
 
-    String MOTOR_TYP_ROOT   = API_ROOT + ApiNames.MOTOR_TYP;
-    String ADD_MOTOR_TYP    = MOTOR_TYP_ROOT;
-    String GET_MOTOR_TYP    = MOTOR_TYP_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
-    String SEARCH_MOTOR_TYP = MOTOR_TYP_ROOT;
-    String DELETE_MOTOR_TYP = MOTOR_TYP_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
-    String UPDATE_MOTOR_TYP = MOTOR_TYP_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String MOTOR_TYP_ROOT             = API_ROOT + ApiNames.MOTOR_TYP;
+    String ADD_MOTOR_TYP              = MOTOR_TYP_ROOT;
+    String GET_MOTOR_TYP              = MOTOR_TYP_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String SEARCH_MOTOR_TYP           = MOTOR_TYP_ROOT;
+    String DELETE_MOTOR_TYP           = MOTOR_TYP_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String UPDATE_MOTOR_TYP           = MOTOR_TYP_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String ADD_MOTOR_TYP_ABBILDUNG    = MOTOR_TYP_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.ABBILDUNG;
+    String DELETE_MOTOR_TYP_ABBILDUNG = MOTOR_TYP_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.ABBILDUNG;
 
     String PRODUKT_ROOT                       = API_ROOT + ApiNames.PRODUKT;
     String ADD_PRODUKT                        = PRODUKT_ROOT;
@@ -174,12 +182,14 @@ public interface ApiPaths {
     String UPDATE_PRODUKT_TEIL                = PRODUKT_ROOT + "/{" + ApiNames.HERSTELLER + ":" + DBNames.NAME_PATTERN + "}/{" + ApiNames.BESTELL_NR + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.TEILEN + "/{" + ApiNames.TEIL_HERSTELLER + ":" + DBNames.NAME_PATTERN + "}/{" + ApiNames.TEIL_BESTELL_NR + ":" + DBNames.NAME_PATTERN + "}";
     String DELETE_PRODUKT_TEIL                = PRODUKT_ROOT + "/{" + ApiNames.HERSTELLER + ":" + DBNames.NAME_PATTERN + "}/{" + ApiNames.BESTELL_NR + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.TEILEN + "/{" + ApiNames.TEIL_HERSTELLER + ":" + DBNames.NAME_PATTERN + "}/{" + ApiNames.TEIL_BESTELL_NR + ":" + DBNames.NAME_PATTERN + "}";
 
-    String PROTOKOLL_ROOT   = API_ROOT + ApiNames.PROTOKOLL;
-    String ADD_PROTOKOLL    = PROTOKOLL_ROOT;
-    String GET_PROTOKOLL    = PROTOKOLL_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
-    String SEARCH_PROTOKOLL = PROTOKOLL_ROOT;
-    String DELETE_PROTOKOLL = PROTOKOLL_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
-    String UPDATE_PROTOKOLL = PROTOKOLL_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String PROTOKOLL_ROOT             = API_ROOT + ApiNames.PROTOKOLL;
+    String ADD_PROTOKOLL              = PROTOKOLL_ROOT;
+    String GET_PROTOKOLL              = PROTOKOLL_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String SEARCH_PROTOKOLL           = PROTOKOLL_ROOT;
+    String DELETE_PROTOKOLL           = PROTOKOLL_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String UPDATE_PROTOKOLL           = PROTOKOLL_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String ADD_PROTOKOLL_ABBILDUNG    = PROTOKOLL_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.ABBILDUNG;
+    String DELETE_PROTOKOLL_ABBILDUNG = PROTOKOLL_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.ABBILDUNG;
 
     String SONDERMODELL_ROOT   = API_ROOT + ApiNames.SONDERMODELL;
     String ADD_SONDERMODELL    = SONDERMODELL_ROOT;
@@ -195,12 +205,14 @@ public interface ApiPaths {
     String DELETE_SPURWEITE = SPURWEITE_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
     String UPDATE_SPURWEITE = SPURWEITE_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
 
-    String STEUERUNG_ROOT   = API_ROOT + ApiNames.STEUERUNG;
-    String ADD_STEUERUNG    = STEUERUNG_ROOT;
-    String GET_STEUERUNG    = STEUERUNG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
-    String SEARCH_STEUERUNG = STEUERUNG_ROOT;
-    String DELETE_STEUERUNG = STEUERUNG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
-    String UPDATE_STEUERUNG = STEUERUNG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String STEUERUNG_ROOT             = API_ROOT + ApiNames.STEUERUNG;
+    String ADD_STEUERUNG              = STEUERUNG_ROOT;
+    String GET_STEUERUNG              = STEUERUNG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String SEARCH_STEUERUNG           = STEUERUNG_ROOT;
+    String DELETE_STEUERUNG           = STEUERUNG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String UPDATE_STEUERUNG           = STEUERUNG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String ADD_STEUERUNG_ABBILDUNG    = STEUERUNG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.ABBILDUNG;
+    String DELETE_STEUERUNG_ABBILDUNG = STEUERUNG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.ABBILDUNG;
 
     String VORBILD_ROOT             = API_ROOT + ApiNames.VORBILD;
     String ADD_VORBILD              = VORBILD_ROOT;

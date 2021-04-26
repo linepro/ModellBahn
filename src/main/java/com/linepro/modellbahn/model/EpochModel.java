@@ -41,7 +41,7 @@ import lombok.ToString;
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.EPOCH)
 @Schema(name = ApiNames.EPOCH, description = "Era - NEM 800.")
-public class EpochModel extends SpringdocModel<EpochModel> implements NamedItemModel, Comparable<EpochModel> {
+public class EpochModel extends SpringdocModel<EpochModel> implements NamedWithAbbildungModel, Comparable<EpochModel> {
 
     private static final long serialVersionUID = 2877272020386187147L;
 
@@ -60,6 +60,10 @@ public class EpochModel extends SpringdocModel<EpochModel> implements NamedItemM
     @JsonProperty(ApiNames.END_YEAR)
     @Schema(description = "End year", example = "1970")
     private Integer endYear;
+
+    @JsonProperty(ApiNames.ABBILDUNG)
+    @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/epoch/I/abbildung.jpg", accessMode = AccessMode.READ_ONLY)
+    private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)

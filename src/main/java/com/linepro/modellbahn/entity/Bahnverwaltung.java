@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.linepro.modellbahn.entity.impl.NamedItemImpl;
+import com.linepro.modellbahn.entity.impl.NamedWithAbbildungImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.validation.Country;
@@ -36,7 +36,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.bahnverwaltung.notunique}")
-public class Bahnverwaltung extends NamedItemImpl {
+public class Bahnverwaltung extends NamedWithAbbildungImpl {
 
     @Column(name = DBNames.LAND, length = 2)
     @Country(message = "{com.linepro.modellbahn.validator.constraints.land.invalid}")

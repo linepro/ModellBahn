@@ -42,7 +42,7 @@ import lombok.ToString;
 @JsonPropertyOrder({ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.MOTOR_TYP)
 @Schema(name = ApiNames.MOTOR_TYP, description = "Type of motor - Märklin coding.")
-public class MotorTypModel extends SpringdocModel<MotorTypModel> implements NamedItemModel, Comparable<MotorTypModel> {
+public class MotorTypModel extends SpringdocModel<MotorTypModel> implements NamedWithAbbildungModel, Comparable<MotorTypModel> {
 
     private static final long serialVersionUID = -3424740287690628265L;
 
@@ -53,6 +53,10 @@ public class MotorTypModel extends SpringdocModel<MotorTypModel> implements Name
     @JsonProperty(ApiNames.BEZEICHNUNG)
     @Schema(description = "Motor Type description", example = "Scheibenkollektor (klein)")
     private String bezeichnung;
+
+    @JsonProperty(ApiNames.ABBILDUNG)
+    @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/motorTyp/HLM/abbildung.jpg", accessMode = AccessMode.READ_ONLY)
+    private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)

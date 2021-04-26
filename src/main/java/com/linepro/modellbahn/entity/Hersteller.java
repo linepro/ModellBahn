@@ -8,7 +8,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.hibernate.validator.constraints.URL;
 
-import com.linepro.modellbahn.entity.impl.NamedItemImpl;
+import com.linepro.modellbahn.entity.impl.NamedWithAbbildungImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.validation.Country;
@@ -40,7 +40,7 @@ import lombok.experimental.SuperBuilder;
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.hersteller.notunique}")
 @Telefon(message = "{com.linepro.modellbahn.validator.constraints.telephone.invalid}")
-public class Hersteller extends NamedItemImpl implements HasTelefon {
+public class Hersteller extends NamedWithAbbildungImpl implements HasTelefon {
 
     /** The url. */
     @URL(message = "{com.linepro.modellbahn.validator.constraints.url.invalid}")
