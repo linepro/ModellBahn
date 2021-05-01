@@ -1,4 +1,5 @@
 package com.linepro.modellbahn.model;
+
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -25,7 +26,7 @@ import lombok.ToString;
 
 /**
  * IAntrieb.
- * Represents an axle configuration (German nomenclature)
+ * Represents an drive method
  * @author   $Author$
  * @version  $Id$
  */
@@ -39,10 +40,10 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.ANTRIEB)
 @Schema(name = ApiNames.ANTRIEB, description = "Drive method")
-public class AntriebModel extends SpringdocModel<AntriebModel> implements NamedItemModel, Comparable<AntriebModel> {
+public class AntriebModel extends SpringdocModel<AntriebModel> implements NamedWithAbbildungModel, Comparable<AntriebModel> {
 
     private static final long serialVersionUID = 5645402222171634730L;
 
@@ -52,7 +53,11 @@ public class AntriebModel extends SpringdocModel<AntriebModel> implements NamedI
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
     @Schema(description = "Drive description", example = "Dampf")
-    public String bezeichnung;
+    private String bezeichnung;
+
+    @JsonProperty(ApiNames.ABBILDUNG)
+    @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/antreib/DAMPF/abbildung.jpg", accessMode = AccessMode.READ_ONLY)
+    private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)

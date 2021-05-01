@@ -16,10 +16,9 @@ import com.linepro.modellbahn.converter.model.GattungModelMutator;
 import com.linepro.modellbahn.entity.Gattung;
 import com.linepro.modellbahn.model.GattungModel;
 import com.linepro.modellbahn.repository.GattungRepository;
-import com.linepro.modellbahn.service.ItemService;
 
 @Service(PREFIX + "GattungService")
-public class GattungService extends NamedItemServiceImpl<GattungModel,Gattung> implements ItemService<GattungModel> {
+public class GattungService extends NamedItemServiceImpl<GattungModel,Gattung> {
 
     @Autowired
     public GattungService(GattungRepository repository, GattungModelMutator modelMutator, GattungMutator entityMutator) {

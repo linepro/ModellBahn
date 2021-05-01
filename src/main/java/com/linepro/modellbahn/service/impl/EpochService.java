@@ -2,7 +2,6 @@ package com.linepro.modellbahn.service.impl;
 
 /**
  * EpochService. CRUD service for Epoch
- * 
  * @author $Author:$
  * @version $Id:$
  */
@@ -24,10 +23,9 @@ import com.linepro.modellbahn.entity.Epoch;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.EpochModel;
 import com.linepro.modellbahn.repository.EpochRepository;
-import com.linepro.modellbahn.service.ItemService;
 
 @Service(PREFIX + "EpochService")
-public class EpochService extends NamedItemServiceImpl<EpochModel,Epoch> implements ItemService<EpochModel> {
+public class EpochService extends NamedItemServiceImpl<EpochModel, Epoch> {
 
     private final FileService fileService;
 
@@ -40,21 +38,15 @@ public class EpochService extends NamedItemServiceImpl<EpochModel,Epoch> impleme
 
     @Transactional
     public Optional<EpochModel> updateAbbildung(String name, MultipartFile multipart) {
-        return repository.findByName(name)
-                        .map(a -> {
-                            a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.EPOCH, ApiNames.ABBILDUNG, name));
-                            return repository.saveAndFlush(a);
-                        })
-                        .flatMap(e -> this.get(name));
+        return repository.findByName(name).map(a -> {
+            a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.EPOCH, ApiNames.ABBILDUNG, name));
+            return repository.saveAndFlush(a);
+        }).flatMap(e -> this.get(name));
     }
 
     @Transactional
     public Optional<EpochModel> deleteAbbildung(String name) {
-        return repository.findByName(name)
-                        .map(a -> {
-                            a.setAbbildung(fileService.deleteFile(a.getAbbildung()));
-                            return repository.saveAndFlush(a);
-                        })
+        return repository.findByName(name).map(a -> { a.setAbbildung(fileService.deleteFile(a.getAbbildung())); return repository.saveAndFlush(a); })
                         .flatMap(e -> this.get(name));
     }
 }

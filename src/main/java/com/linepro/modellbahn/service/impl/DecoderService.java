@@ -36,31 +36,34 @@ import com.linepro.modellbahn.repository.DecoderCvRepository;
 import com.linepro.modellbahn.repository.DecoderFunktionRepository;
 import com.linepro.modellbahn.repository.DecoderRepository;
 import com.linepro.modellbahn.repository.DecoderTypRepository;
-import com.linepro.modellbahn.service.ItemService;
 import com.linepro.modellbahn.service.criterion.DecoderCriterion;
 
 @Service(PREFIX + "DecoderService")
-public class DecoderService extends ItemServiceImpl<DecoderModel,Decoder> implements ItemService<DecoderModel> {
+public class DecoderService extends ItemServiceImpl<DecoderModel, Decoder> {
 
     private final DecoderRepository repository;
 
     private final DecoderTypRepository typRepository;
 
     private final DecoderAdressRepository adressRepository;
+
     private final DecoderAdressMutator adressMutator;
 
     private final DecoderCvRepository cvRepository;
+
     private final DecoderCvMutator cvMutator;
 
     private final DecoderFunktionRepository funktionRepository;
+
     private final DecoderFunktionMutator funktionMutator;
 
     private final AssetIdGenerator assetIdGenerator;
 
     @Autowired
-    public DecoderService(DecoderRepository repository, DecoderTypRepository typRepository, DecoderModelMutator decoderModelMutator, DecoderMutator decoderMutator,
-                    DecoderAdressRepository adressRepository, DecoderAdressMutator adressMutator, DecoderCvRepository cvRepository, DecoderCvMutator cvMutator,
-                    DecoderFunktionRepository funktionRepository, DecoderFunktionMutator funktionMutator, AssetIdGenerator assetIdGenerator) {
+    public DecoderService(DecoderRepository repository, DecoderTypRepository typRepository, DecoderModelMutator decoderModelMutator,
+                    DecoderMutator decoderMutator, DecoderAdressRepository adressRepository, DecoderAdressMutator adressMutator,
+                    DecoderCvRepository cvRepository, DecoderCvMutator cvMutator, DecoderFunktionRepository funktionRepository,
+                    DecoderFunktionMutator funktionMutator, AssetIdGenerator assetIdGenerator) {
         super(repository, decoderModelMutator, decoderMutator);
         this.repository = repository;
 
@@ -94,32 +97,12 @@ public class DecoderService extends ItemServiceImpl<DecoderModel,Decoder> implem
 
             final Decoder decoder = repository.saveAndFlush(initial);
 
-            decoderTyp.getAdressen()
-                      .forEach(a -> decoder.addAdress(
-                            DecoderAdress.builder()
-                                         .typ(a)
-                                         .adress(a.getAdress())
-                                         .deleted(false)
-                                         .build())
-                            );
+            decoderTyp.getAdressen().forEach(a -> decoder.addAdress(DecoderAdress.builder().typ(a).adress(a.getAdress()).deleted(false).build()));
 
-            decoderTyp.getCvs()
-                      .forEach(c -> decoder.addCv(
-                            DecoderCv.builder()
-                                     .cv(c)
-                                     .wert(c.getWerkseinstellung())
-                                     .deleted(false)
-                                     .build())
-                            );
+            decoderTyp.getCvs().forEach(c -> decoder.addCv(DecoderCv.builder().cv(c).wert(c.getWerkseinstellung()).deleted(false).build()));
 
-            decoderTyp.getFunktionen()
-                      .forEach(f -> decoder.addFunktion(
-                            DecoderFunktion.builder()
-                                           .funktion(f)
-                                           .bezeichnung(f.getBezeichnung())
-                                           .deleted(false)
-                                           .build())
-                            );
+            decoderTyp.getFunktionen().forEach(
+                            f -> decoder.addFunktion(DecoderFunktion.builder().funktion(f).bezeichnung(f.getBezeichnung()).deleted(false).build()));
 
             return Optional.of(entityMutator.convert(repository.saveAndFlush(decoder)));
         }
@@ -147,27 +130,17 @@ public class DecoderService extends ItemServiceImpl<DecoderModel,Decoder> implem
     @Transactional
     public Optional<DecoderAdressModel> updateAdress(String decoderId, Integer index, Integer adress) {
         return adressRepository.findByIndex(decoderId, index)
-                               .map(a -> {
-                                    a.setAdress(adress);
-                                    return adressMutator.convert(adressRepository.saveAndFlush(a));
-                               });
+                        .map(a -> { a.setAdress(adress); return adressMutator.convert(adressRepository.saveAndFlush(a)); });
     }
 
     @Transactional
     public Optional<DecoderCvModel> updateCv(String decoderId, Integer cv, Integer wert) {
-        return cvRepository.findByCv(decoderId, cv)
-                           .map(c -> {
-                               c.setWert(wert);
-                               return cvMutator.convert(cvRepository.saveAndFlush(c));
-                           });
+        return cvRepository.findByCv(decoderId, cv).map(c -> { c.setWert(wert); return cvMutator.convert(cvRepository.saveAndFlush(c)); });
     }
 
     @Transactional
     public Optional<DecoderFunktionModel> updateFunktion(String decoderId, Integer reihe, String funktion, String bezeichnung) {
         return funktionRepository.findByFunktion(decoderId, reihe, funktion)
-                                 .map(f -> {
-                                     f.setBezeichnung(bezeichnung);
-                                     return funktionMutator.convert(funktionRepository.saveAndFlush(f));
-                                 });
+                        .map(f -> { f.setBezeichnung(bezeichnung); return funktionMutator.convert(funktionRepository.saveAndFlush(f)); });
     }
 }

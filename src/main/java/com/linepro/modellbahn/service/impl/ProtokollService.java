@@ -23,10 +23,9 @@ import com.linepro.modellbahn.entity.Protokoll;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.ProtokollModel;
 import com.linepro.modellbahn.repository.ProtokollRepository;
-import com.linepro.modellbahn.service.ItemService;
 
 @Service(PREFIX + "ProtokollService")
-public class ProtokollService extends NamedItemServiceImpl<ProtokollModel, Protokoll> implements ItemService<ProtokollModel> {
+public class ProtokollService extends NamedItemServiceImpl<ProtokollModel, Protokoll> {
 
     private final FileService fileService;
 

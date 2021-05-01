@@ -23,10 +23,9 @@ import com.linepro.modellbahn.entity.Bahnverwaltung;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.BahnverwaltungModel;
 import com.linepro.modellbahn.repository.BahnverwaltungRepository;
-import com.linepro.modellbahn.service.ItemService;
 
 @Service(PREFIX + "BahnverwaltungService")
-public class BahnverwaltungService extends NamedItemServiceImpl<BahnverwaltungModel, Bahnverwaltung> implements ItemService<BahnverwaltungModel> {
+public class BahnverwaltungService extends NamedItemServiceImpl<BahnverwaltungModel, Bahnverwaltung> {
 
     private final FileService fileService;
 

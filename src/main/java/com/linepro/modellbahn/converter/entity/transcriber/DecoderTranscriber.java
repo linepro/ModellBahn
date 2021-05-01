@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import com.linepro.modellbahn.converter.Transcriber;
+import com.linepro.modellbahn.converter.entity.ArtikelMutator;
 import com.linepro.modellbahn.converter.entity.DecoderAdressMutator;
 import com.linepro.modellbahn.converter.entity.DecoderCvMutator;
 import com.linepro.modellbahn.converter.entity.DecoderFunktionMutator;
 import com.linepro.modellbahn.converter.entity.DecoderTypMutator;
 import com.linepro.modellbahn.entity.Decoder;
+import com.linepro.modellbahn.model.ArtikelModel;
 import com.linepro.modellbahn.model.DecoderAdressModel;
 import com.linepro.modellbahn.model.DecoderCvModel;
 import com.linepro.modellbahn.model.DecoderFunktionModel;
@@ -30,6 +32,8 @@ public class DecoderTranscriber implements Transcriber<Decoder, DecoderModel> {
 
     private static final ArrayList<DecoderFunktionModel> KEIN_FUNKTIONEN = new ArrayList<>();
 
+    private final ArtikelMutator artikelMutator;
+
     private final DecoderTypMutator decoderTypMutator;
 
     private final DecoderAdressMutator adressMutator;
@@ -42,11 +46,13 @@ public class DecoderTranscriber implements Transcriber<Decoder, DecoderModel> {
     public DecoderModel apply(Decoder source, DecoderModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             final DecoderTypModel decoderTyp = decoderTypMutator.convert(source.getDecoderTyp());
+            final ArtikelModel artikel = artikelMutator.convert(source.getArtikel());
 
             destination.setDecoderId(source.getDecoderId());
             destination.setHersteller(decoderTyp.getHersteller());
             destination.setBestellNr(decoderTyp.getBestellNr());
             destination.setBezeichnung(source.getBezeichnung());
+            destination.setArtikelId(artikel != null ? artikel.getArtikelId() : null);
             destination.setIMax(decoderTyp.getIMax());
             destination.setSound(decoderTyp.getSound());
             destination.setKonfiguration(decoderTyp.getKonfiguration());

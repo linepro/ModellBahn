@@ -23,10 +23,9 @@ import com.linepro.modellbahn.entity.Hersteller;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.HerstellerModel;
 import com.linepro.modellbahn.repository.HerstellerRepository;
-import com.linepro.modellbahn.service.ItemService;
 
 @Service(PREFIX + "HerstellerService")
-public class HerstellerService extends NamedItemServiceImpl<HerstellerModel, Hersteller> implements ItemService<HerstellerModel> {
+public class HerstellerService extends NamedItemServiceImpl<HerstellerModel, Hersteller> {
 
     private final FileService fileService;
 

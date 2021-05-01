@@ -2,7 +2,6 @@ package com.linepro.modellbahn.service.impl;
 
 /**
  * AufbauService. CRUD service for Aufbau
- * 
  * @author $Author:$
  * @version $Id:$
  */
@@ -11,9 +10,10 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
@@ -24,10 +24,9 @@ import com.linepro.modellbahn.entity.Aufbau;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.AufbauModel;
 import com.linepro.modellbahn.repository.AufbauRepository;
-import com.linepro.modellbahn.service.ItemService;
 
 @Service(PREFIX + "AufbauService")
-public class AufbauService extends NamedItemServiceImpl<AufbauModel,Aufbau> implements ItemService<AufbauModel> {
+public class AufbauService extends NamedItemServiceImpl<AufbauModel, Aufbau> {
 
     private final AufbauRepository repository;
 
@@ -43,21 +42,15 @@ public class AufbauService extends NamedItemServiceImpl<AufbauModel,Aufbau> impl
 
     @Transactional
     public Optional<AufbauModel> updateAbbildung(String name, MultipartFile multipart) {
-        return repository.findByName(name)
-                        .map(a -> {
-                            a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.AUFBAU, ApiNames.ABBILDUNG, name));
-                            return repository.saveAndFlush(a);
-                        })
-                        .flatMap(e -> this.get(name));
+        return repository.findByName(name).map(a -> {
+            a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.AUFBAU, ApiNames.ABBILDUNG, name));
+            return repository.saveAndFlush(a);
+        }).flatMap(e -> this.get(name));
     }
 
     @Transactional
     public Optional<AufbauModel> deleteAbbildung(String name) {
-        return repository.findByName(name)
-                        .map(a -> {
-                            a.setAbbildung(fileService.deleteFile(a.getAbbildung()));
-                            return repository.saveAndFlush(a);
-                        })
+        return repository.findByName(name).map(a -> { a.setAbbildung(fileService.deleteFile(a.getAbbildung())); return repository.saveAndFlush(a); })
                         .flatMap(e -> this.get(name));
     }
 }

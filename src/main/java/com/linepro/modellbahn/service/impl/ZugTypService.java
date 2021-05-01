@@ -16,10 +16,9 @@ import com.linepro.modellbahn.converter.model.ZugTypModelMutator;
 import com.linepro.modellbahn.entity.ZugTyp;
 import com.linepro.modellbahn.model.ZugTypModel;
 import com.linepro.modellbahn.repository.ZugTypRepository;
-import com.linepro.modellbahn.service.ItemService;
 
 @Service(PREFIX + "ZugTypService")
-public class ZugTypService extends NamedItemServiceImpl<ZugTypModel,ZugTyp> implements ItemService<ZugTypModel> {
+public class ZugTypService extends NamedItemServiceImpl<ZugTypModel,ZugTyp> {
 
     @Autowired
     public ZugTypService(ZugTypRepository repository, ZugTypModelMutator modelMutator, ZugTypMutator entityMutator) {

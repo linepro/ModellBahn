@@ -17,10 +17,9 @@ import com.linepro.modellbahn.converter.model.SondermodellModelMutator;
 import com.linepro.modellbahn.entity.Sondermodell;
 import com.linepro.modellbahn.model.SondermodellModel;
 import com.linepro.modellbahn.repository.SondermodellRepository;
-import com.linepro.modellbahn.service.ItemService;
 
 @Service(PREFIX + "SondermodellService")
-public class SondermodellService extends NamedItemServiceImpl<SondermodellModel,Sondermodell> implements ItemService<SondermodellModel> {
+public class SondermodellService extends NamedItemServiceImpl<SondermodellModel,Sondermodell> {
 
     @Autowired
     public SondermodellService(SondermodellRepository repository, SondermodellModelMutator modelMutator, SondermodellMutator entityMutator) {

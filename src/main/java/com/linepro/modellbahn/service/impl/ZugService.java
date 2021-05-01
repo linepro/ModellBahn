@@ -26,11 +26,10 @@ import com.linepro.modellbahn.model.ZugModel;
 import com.linepro.modellbahn.repository.ArtikelRepository;
 import com.linepro.modellbahn.repository.ZugConsistRepository;
 import com.linepro.modellbahn.repository.ZugRepository;
-import com.linepro.modellbahn.service.ItemService;
 import com.linepro.modellbahn.service.criterion.ZugCriterion;
 
 @Service(PREFIX + "ZugService")
-public class ZugService extends NamedItemServiceImpl<ZugModel,Zug> implements ItemService<ZugModel> {
+public class ZugService extends NamedItemServiceImpl<ZugModel,Zug> {
 
     private final ZugRepository repository;
 

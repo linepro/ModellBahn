@@ -3,7 +3,6 @@ package com.linepro.modellbahn.model;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -19,6 +18,7 @@ import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,6 +29,7 @@ import lombok.ToString;
  * @author $Author$
  * @version $Id$
  */
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -41,7 +42,7 @@ import lombok.ToString;
 @JsonPropertyOrder({ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.AUFBAU)
 @Schema(name = ApiNames.AUFBAU, description = "Model construction")
-public class AufbauModel extends RepresentationModel<AufbauModel> implements NamedWithAbbildungModel, Comparable<AufbauModel> {
+public class AufbauModel extends SpringdocModel<AufbauModel> implements NamedWithAbbildungModel, Comparable<AufbauModel> {
 
     private static final long serialVersionUID = 8740426021195802502L;
 

@@ -14,7 +14,7 @@ import com.linepro.modellbahn.model.DecoderModel;
 public class DecoderMutator extends MutatorImpl<Decoder, DecoderModel> {
 
     @Autowired
-    public DecoderMutator(DecoderTypMutator decoderTypMutator, DecoderAdressMutator adressMutator, DecoderCvMutator cvMutator, DecoderFunktionMutator funktionMutator) {
-        super(() -> new DecoderModel(), new DecoderTranscriber(decoderTypMutator, adressMutator, cvMutator, funktionMutator));
+    public DecoderMutator(ArtikelMutator artikelMutator, DecoderTypMutator decoderTypMutator, DecoderAdressMutator adressMutator, DecoderCvMutator cvMutator, DecoderFunktionMutator funktionMutator) {
+        super(() -> new DecoderModel(), new DecoderTranscriber(artikelMutator, decoderTypMutator, adressMutator, cvMutator, funktionMutator));
     }
 }

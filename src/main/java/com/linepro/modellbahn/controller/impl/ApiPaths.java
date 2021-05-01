@@ -15,12 +15,14 @@ public interface ApiPaths {
     String DELETE_ACHSFOLG = ADD_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
     String UPDATE_ACHSFOLG = ADD_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
 
-    String ANTRIEB_ROOT   = API_ROOT + ApiNames.ANTRIEB;
-    String ADD_ANTRIEB    = ANTRIEB_ROOT;
-    String GET_ANTRIEB    = ANTRIEB_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
-    String SEARCH_ANTRIEB = ANTRIEB_ROOT;
-    String DELETE_ANTRIEB = ANTRIEB_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
-    String UPDATE_ANTRIEB = ANTRIEB_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String ANTRIEB_ROOT             = API_ROOT + ApiNames.ANTRIEB;
+    String ADD_ANTRIEB              = ANTRIEB_ROOT;
+    String GET_ANTRIEB              = ANTRIEB_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String SEARCH_ANTRIEB           = ANTRIEB_ROOT;
+    String DELETE_ANTRIEB           = ANTRIEB_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String UPDATE_ANTRIEB           = ANTRIEB_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String ADD_ANTRIEB_ABBILDUNG    = ANTRIEB_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.ABBILDUNG;
+    String DELETE_ANTRIEB_ABBILDUNG = ANTRIEB_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.ABBILDUNG;
 
     String ARTIKEL_ROOT                = API_ROOT + ApiNames.ARTIKEL;
     String ADD_ARTIKEL                 = ARTIKEL_ROOT;

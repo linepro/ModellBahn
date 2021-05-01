@@ -8,7 +8,6 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -53,7 +52,7 @@ import lombok.ToString;
     ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.ANDERUNGEN, ApiNames.ABBILDUNG, ApiNames.GROSSANSICHT, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.ARTIKEL)
 @Schema(name = ApiNames.ARTIKEL, description = "An article - may differ from product because of modificiations")
-public class ArtikelModel extends RepresentationModel<ArtikelModel> implements ItemModel, Comparable<ArtikelModel> {
+public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemModel, Comparable<ArtikelModel> {
 
     private static final long serialVersionUID = 3146760791932382500L;
 
@@ -133,8 +132,8 @@ public class ArtikelModel extends RepresentationModel<ArtikelModel> implements I
     @Schema(description = "Control method", example = "Digital")
     private String steuerung;
 
-    @JsonProperty(ApiNames.DECODER)
-    @Schema(description = "Decoder", example = "1")
+    @JsonProperty(ApiNames.DECODER_ID)
+    @Schema(description = "Decoder", example = "00001")
     private String decoder;
 
     @JsonProperty(ApiNames.MOTOR_TYP)

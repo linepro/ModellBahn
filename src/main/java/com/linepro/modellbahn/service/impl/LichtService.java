@@ -24,10 +24,9 @@ import com.linepro.modellbahn.entity.Licht;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.LichtModel;
 import com.linepro.modellbahn.repository.LichtRepository;
-import com.linepro.modellbahn.service.ItemService;
 
 @Service(PREFIX + "LichtService")
-public class LichtService extends NamedItemServiceImpl<LichtModel,Licht> implements ItemService<LichtModel> {
+public class LichtService extends NamedItemServiceImpl<LichtModel,Licht> {
 
     private final LichtRepository repository;
 

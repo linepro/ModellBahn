@@ -24,10 +24,9 @@ import com.linepro.modellbahn.entity.Kupplung;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.KupplungModel;
 import com.linepro.modellbahn.repository.KupplungRepository;
-import com.linepro.modellbahn.service.ItemService;
 
 @Service(PREFIX + "KupplungService")
-public class KupplungService extends NamedItemServiceImpl<KupplungModel,Kupplung> implements ItemService<KupplungModel> {
+public class KupplungService extends NamedItemServiceImpl<KupplungModel,Kupplung> {
 
     private final KupplungRepository repository;
 

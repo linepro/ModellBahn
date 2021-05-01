@@ -23,10 +23,9 @@ import com.linepro.modellbahn.entity.Steuerung;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.SteuerungModel;
 import com.linepro.modellbahn.repository.SteuerungRepository;
-import com.linepro.modellbahn.service.ItemService;
 
 @Service(PREFIX + "SteuerungService")
-public class SteuerungService extends NamedItemServiceImpl<SteuerungModel, Steuerung> implements ItemService<SteuerungModel> {
+public class SteuerungService extends NamedItemServiceImpl<SteuerungModel, Steuerung> {
 
     private final FileService fileService;
 

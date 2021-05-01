@@ -63,8 +63,7 @@ import lombok.experimental.SuperBuilder;
         @Index(name = DBNames.ARTIKEL + "_IX3", columnList = DBNames.STEUERUNG_ID),
         @Index(name = DBNames.ARTIKEL + "_IX4", columnList = DBNames.MOTOR_TYP_ID),
         @Index(name = DBNames.ARTIKEL + "_IX5", columnList = DBNames.LICHT_ID),
-        @Index(name = DBNames.ARTIKEL + "_IX6", columnList = DBNames.KUPPLUNG_ID),
-        @Index(name = DBNames.ARTIKEL + "_IX7", columnList = DBNames.DECODER_ID) 
+        @Index(name = DBNames.ARTIKEL + "_IX6", columnList = DBNames.KUPPLUNG_ID)
     }, uniqueConstraints = {
         @UniqueConstraint(name = DBNames.ARTIKEL + "_UC1", columnNames = { DBNames.ARTIKEL_ID }) 
     })
@@ -399,8 +398,7 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
     private Kupplung kupplung;
 
     /** The decoder. */
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class)
-    @JoinColumn(name = DBNames.DECODER_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk7"))
+    @OneToOne(mappedBy = "artikel", fetch = FetchType.LAZY, targetEntity = Decoder.class, optional = true)
     private Decoder decoder;
 
     /** The bezeichnung. */

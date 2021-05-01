@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.linepro.modellbahn.entity.impl.NamedItemImpl;
+import com.linepro.modellbahn.entity.impl.NamedWithAbbildungImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.validation.Unique;
 
@@ -33,5 +33,5 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.antrieb.notunique}")
-public class Antrieb extends NamedItemImpl {
+public class Antrieb extends NamedWithAbbildungImpl {
 }

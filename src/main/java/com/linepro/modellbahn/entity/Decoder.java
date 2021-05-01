@@ -20,6 +20,7 @@ import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
 import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -48,7 +49,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * Decoder.
  * Represents a decoder (with its settings).
- * @author  $Author:$
+ * @author $Author:$
  * @version $Id:$
  */
 //@formatter:off
@@ -56,7 +57,8 @@ import lombok.experimental.SuperBuilder;
 @Table(name = DBNames.DECODER, 
     indexes = {
         @Index(name = DBNames.DECODER + "_IX1", columnList = DBNames.DECODER_TYP_ID),
-        @Index(name = DBNames.DECODER + "_IX2", columnList = DBNames.PROTOKOLL_ID)
+        @Index(name = DBNames.DECODER + "_IX2", columnList = DBNames.PROTOKOLL_ID),
+        @Index(name = DBNames.DECODER + "_IX3", columnList = DBNames.ARTIKEL_ID) 
     }, uniqueConstraints = {
         @UniqueConstraint(name = DBNames.DECODER + "_UC1", columnNames = { DBNames.DECODER_ID }) 
     })
@@ -84,6 +86,7 @@ import lombok.experimental.SuperBuilder;
             @NamedAttributeNode(value = "decoderId"),
             @NamedAttributeNode(value = "bezeichnung"),
             @NamedAttributeNode(value = "decoderTyp", subgraph = "decoder.decoderTyp"),
+            @NamedAttributeNode(value = "artikel", subgraph = "decoder.artikel"),
             @NamedAttributeNode(value = "protokoll", subgraph = "decoder.protokoll"),
             @NamedAttributeNode(value = "fahrstufe"),
             @NamedAttributeNode(value = "status"),
@@ -100,6 +103,10 @@ import lombok.experimental.SuperBuilder;
                     @NamedAttributeNode(value = "stecker"),
                     @NamedAttributeNode(value = "anleitungen")
             }),
+            @NamedSubgraph(name = "decoder.artikel",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "artikelId")
+            }),
             @NamedSubgraph(name = "decoder.hersteller",
                 attributeNodes = {
                     @NamedAttributeNode(value = "name")
@@ -113,6 +120,7 @@ import lombok.experimental.SuperBuilder;
         includeAllAttributes = true,
         attributeNodes = {
             @NamedAttributeNode(value = "decoderTyp", subgraph = "decoder.decoderTyp"),
+            @NamedAttributeNode(value = "artikel", subgraph = "decoder.artikel"),
             @NamedAttributeNode(value = "protokoll", subgraph = "decoder.protokoll"),
             @NamedAttributeNode(value = "adressen", subgraph = "decoder.adressen"),
             @NamedAttributeNode(value = "cvs", subgraph = "decoder.cvs"),
@@ -128,6 +136,10 @@ import lombok.experimental.SuperBuilder;
                     @NamedAttributeNode(value = "konfiguration"),
                     @NamedAttributeNode(value = "stecker"),
                     @NamedAttributeNode(value = "anleitungen")
+            }),
+            @NamedSubgraph(name = "decoder.artikel",
+            attributeNodes = {
+                @NamedAttributeNode(value = "artikelId")
             }),
             @NamedSubgraph(name = "decoder.hersteller",
                 attributeNodes = {
@@ -190,9 +202,13 @@ import lombok.experimental.SuperBuilder;
 @Setter
 public class Decoder extends ItemImpl implements Comparable<Decoder> {
 
-    @Column(name=DBNames.DECODER_ID, unique=true, length=6, nullable = false, updatable = false)
+    @Column(name = DBNames.DECODER_ID, unique = true, length = 6, nullable = false, updatable = false)
     @Pattern(regexp = "^" + DBNames.ID_PATTERN + "$", message = "{com.linepro.modellbahn.validator.constraints.decoderId.invalid}")
     private String decoderId;
+
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Artikel.class)
+    @JoinColumn(name = DBNames.ARTIKEL_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER + "_fk3"))
+    private Artikel artikel;
 
     @Column(name = DBNames.BEZEICHNUNG, length = 100)
     @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
@@ -201,13 +217,15 @@ public class Decoder extends ItemImpl implements Comparable<Decoder> {
 
     /** The typ. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class, optional = false)
-    @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER + "_fk1"))
+    @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER
+                    + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoderTyp.notnull}")
     private DecoderTyp decoderTyp;
 
     /** The protokoll. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Protokoll.class, optional = false)
-    @JoinColumn(name = DBNames.PROTOKOLL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER + "_fk2"))
+    @JoinColumn(name = DBNames.PROTOKOLL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER
+                    + "_fk2"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.protokoll.notnull}")
     private Protokoll protokoll;
 
@@ -294,48 +312,33 @@ public class Decoder extends ItemImpl implements Comparable<Decoder> {
 
     @Override
     public int compareTo(Decoder other) {
-        return new CompareToBuilder()
-            .append(getDecoderId(), other.getDecoderId())
-            .toComparison();
+        return new CompareToBuilder().append(getDecoderId(), other.getDecoderId()).toComparison();
     }
 
     @Override
     public int hashCode() {
-      return new HashCodeBuilder()
-          .append(getDecoderId())
-          .hashCode();
+        return new HashCodeBuilder().append(getDecoderId()).hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-      if (this == obj) {
-        return true;
-      }
+        if (this == obj) {
+            return true;
+        }
 
-      if (!(obj instanceof Decoder)) {
-        return false;
-      }
+        if (!(obj instanceof Decoder)) {
+            return false;
+        }
 
-      Decoder other = (Decoder) obj;
+        Decoder other = (Decoder) obj;
 
-      return new EqualsBuilder()
-          .append(getDecoderId(), other.getDecoderId())
-          .isEquals();
+        return new EqualsBuilder().append(getDecoderId(), other.getDecoderId()).isEquals();
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-            .appendSuper(super.toString())
-            .append("decoderId", decoderId)
-            .append("bezeichnung",  bezeichnung)
-            .append("decoderTyp",  decoderTyp)
-            .append("protokoll",  protokoll)
-            .append("fahrstufe",  fahrstufe)
-            .append("status",  status)
-            .append("adressen", adressen)
-            .append("cvs", cvs)
-            .append("funktionen", funktionen)
-            .toString();
+        return new ToStringBuilder(this).appendSuper(super.toString()).append("decoderId", decoderId).append("bezeichnung", bezeichnung)
+                        .append("decoderTyp", decoderTyp).append("protokoll", protokoll).append("fahrstufe", fahrstufe).append("status", status)
+                        .append("adressen", adressen).append("cvs", cvs).append("funktionen", funktionen).toString();
     }
 }

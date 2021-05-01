@@ -68,6 +68,10 @@ public class DecoderModel extends SpringdocModel<DecoderModel> implements ItemMo
     @Schema(description = "Product numer", example = "62499", accessMode = AccessMode.READ_ONLY)
     private String bestellNr;
 
+    @JsonProperty(ApiNames.ARTIKEL_ID)
+    @Schema(description = "Artikel id", example = "00001", accessMode = AccessMode.READ_ONLY)
+    private String artikelId;
+
     @JsonProperty(ApiNames.BEZEICHNUNG)
     @Schema(description = "Decoder's description", example = "ESU Loksound", accessMode = AccessMode.READ_ONLY)
     private String bezeichnung;

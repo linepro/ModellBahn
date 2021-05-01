@@ -29,12 +29,11 @@ import com.linepro.modellbahn.model.ProduktModel;
 import com.linepro.modellbahn.model.ProduktTeilModel;
 import com.linepro.modellbahn.repository.ProduktRepository;
 import com.linepro.modellbahn.repository.ProduktTeilRepository;
-import com.linepro.modellbahn.service.ItemService;
 import com.linepro.modellbahn.service.criterion.ProduktCriterion;
 
 @Service(PREFIX + "ProduktService")
 
-public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> implements ItemService<ProduktModel> {
+public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> {
 
     private final ProduktRepository repository;
 

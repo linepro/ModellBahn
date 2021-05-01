@@ -9,6 +9,7 @@ import static com.linepro.modellbahn.controller.impl.ApiPaths.SEARCH_AUFBAU;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_AUFBAU;
 import static com.linepro.modellbahn.controller.impl.ApiRels.ABBILDUNG;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ import com.linepro.modellbahn.model.AufbauModel;
 @Component(PREFIX + "AufbauModelProcessor")
 public class AufbauModelProcessor extends NamedModelProcessor<AufbauModel> implements RepresentationModelProcessor<AufbauModel> {
 
+    @Autowired
     public AufbauModelProcessor() {
         super(
             ADD_AUFBAU,

@@ -28,11 +28,10 @@ import com.linepro.modellbahn.model.KategorieModel;
 import com.linepro.modellbahn.model.UnterKategorieModel;
 import com.linepro.modellbahn.repository.KategorieRepository;
 import com.linepro.modellbahn.repository.UnterKategorieRepository;
-import com.linepro.modellbahn.service.ItemService;
 import com.linepro.modellbahn.service.criterion.KategorieenCriteria;
 
 @Service(PREFIX + "KategorieService")
-public class KategorieService extends NamedItemServiceImpl<KategorieModel, Kategorie> implements ItemService<KategorieModel> {
+public class KategorieService extends NamedItemServiceImpl<KategorieModel, Kategorie> {
 
     private final KategorieRepository repository;
 
