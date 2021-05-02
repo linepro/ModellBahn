@@ -273,6 +273,20 @@ public class Decoder extends ItemImpl implements Comparable<Decoder> {
     @Builder.Default
     private Set<DecoderFunktion> funktionen = new HashSet<>();
 
+    public void setArtikel(Artikel artikel) {
+        this.artikel = artikel;
+
+        if (artikel == null) {
+            if (status == null || DecoderStatus.INSTALIERT == status) {
+                status = DecoderStatus.FREI;
+            }
+        } else {
+            if (status == null || DecoderStatus.FREI == status) {
+                status = DecoderStatus.INSTALIERT;
+            }
+        }
+    }
+
     public void addAdress(DecoderAdress adress) {
         if (adressen == null) {
             adressen = new HashSet<>();
