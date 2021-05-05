@@ -27,7 +27,7 @@ public class FileStoreImpl implements FileStore {
     protected static final String STATIC_FILE_FOLDER = "static";
     protected static final String STATIC_FILE_LOCATIONS = FILE + STATIC_FILE_FOLDER;
     protected static final String WILDCARD = "/**";
-    protected static final String STATIC_FILE_PATH = "/content" + WILDCARD;
+    protected static final String STATIC_FILE_PATH = WILDCARD;
 
     @Value("${spring.mvc.static-path-pattern:" + STATIC_FILE_PATH + "}")
     private String staticPathPattern;
@@ -35,7 +35,7 @@ public class FileStoreImpl implements FileStore {
     @Value("${spring.resources.static-locations:" + STATIC_FILE_LOCATIONS + "}")
     private List<String> staticLocations;
 
-    @Value("${spring.mvc.servlet.path:}")
+    @Value("${spring.mvc.servlet.context-path:}")
     private String servletPath;
     
     private String storePath;

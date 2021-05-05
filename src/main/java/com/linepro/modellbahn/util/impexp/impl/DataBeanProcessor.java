@@ -42,7 +42,7 @@ public class DataBeanProcessor implements BeanDefinitionRegistryPostProcessor {
                                                                                       .setLazyInit(true)
                                                                                       .addConstructorArgReference(prefix + "Repository")
                                                                                       .addConstructorArgReference(prefix + "Mutator")
-                                                                                      .addConstructorArgReference(prefix + "CsvSchemaGenerator")
+                                                                                      .addConstructorArgReference(PREFIX + "CsvSchemaGenerator")
                                                                                       .addConstructorArgValue(modelClass)
                                                                                       .getBeanDefinition());
 
@@ -50,7 +50,7 @@ public class DataBeanProcessor implements BeanDefinitionRegistryPostProcessor {
                                                                                       .setLazyInit(true)
                                                                                       .addConstructorArgReference(prefix + "Repository")
                                                                                       .addConstructorArgReference(prefix + "ModelMutator")
-                                                                                      .addConstructorArgReference(prefix + "CsvSchemaGenerator")
+                                                                                      .addConstructorArgReference(PREFIX + "CsvSchemaGenerator")
                                                                                       .addConstructorArgValue(modelClass)
                                                                                       .getBeanDefinition());
         } catch (ClassNotFoundException e) {

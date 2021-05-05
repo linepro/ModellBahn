@@ -44,6 +44,7 @@ public class ImporterImplTest {
     private static final DecoderStatus STATUS = DecoderStatus.INSTALIERT;
     private static final String ANLEITUNGEN = "instrutions.pdf";
     private static final Boolean DELETED = true;
+    private static final String ARTIKEL_ID = "00010";
 
     private static final Long ID = 1L;
 
@@ -60,6 +61,7 @@ public class ImporterImplTest {
                                                           .decoderId(DECODER_ID)
                                                           .hersteller(HERSTELLER)
                                                           .bestellNr(BESTELL_NR)
+                                                          .artikelId(ARTIKEL_ID)
                                                           .bezeichnung(BEZEICHNUNG)
                                                           .iMax(I_MAX)
                                                           .protokoll(PROTOKOLL)

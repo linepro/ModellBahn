@@ -1138,10 +1138,10 @@
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.data.forEach((a) => { \r",
 									"    pm.test(\"name: \" + a.name, () => pm.expect(a.name).to.exist);\r",
-									"    pm.test(\"bezeichnung\", () => pm.expect(a.bezeichnung).to.exist);\r",
+									"    pm.test(\"bezeichnung \" + a.name, () => pm.expect(a.bezeichnung).to.exist);\r",
 									"    //pm.test(\"tooltip\", () => pm.expect(a.tooltip).to.exist);\r",
 									"});\r",
-									"pm.test(\"enums\", () => pm.expect(jsonData.length).to.eql(6));"
+									"pm.test(\"enums\", () => pm.expect(jsonData._embedded.data.length).to.eql(6));"
 								],
 								"type": "text/javascript"
 							}
@@ -1186,10 +1186,10 @@
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.data.forEach((a) => { \r",
 									"    pm.test(\"name: \" + a.name, () => pm.expect(a.name).to.exist);\r",
-									"    pm.test(\"bezeichnung\", () => pm.expect(a.bezeichnung).to.exist);\r",
+									"    pm.test(\"bezeichnung \" + a.name, () => pm.expect(a.bezeichnung).to.exist);\r",
 									"    //pm.test(\"tooltip\", () => pm.expect(a.tooltip).to.exist);\r",
 									"});\r",
-									"pm.test(\"enums\", () => pm.expect(jsonData.length).to.eql(7));"
+									"pm.test(\"enums\", () => pm.expect(jsonData._embedded.data.length).to.eql(7));"
 								],
 								"type": "text/javascript"
 							}
@@ -1234,10 +1234,10 @@
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.data.forEach((a) => { \r",
 									"    pm.test(\"name: \" + a.name, () => pm.expect(a.name).to.exist);\r",
-									"    pm.test(\"bezeichnung\", () => pm.expect(a.bezeichnung).to.exist);\r",
+									"    pm.test(\"bezeichnung \" + a.name, () => pm.expect(a.bezeichnung).to.exist);\r",
 									"    //pm.test(\"tooltip\", () => pm.expect(a.tooltip).to.exist);\r",
 									"});\r",
-									"pm.test(\"enums\", () => pm.expect(jsonData.length).to.eql(3));"
+									"pm.test(\"enums\", () => pm.expect(jsonData._embedded.data.length).to.eql(3));"
 								],
 								"type": "text/javascript"
 							}
@@ -1282,10 +1282,10 @@
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.data.forEach((a) => { \r",
 									"    pm.test(\"name: \" + a.name, () => pm.expect(a.name).to.exist);\r",
-									"    pm.test(\"bezeichnung\", () => pm.expect(a.bezeichnung).to.exist);\r",
+									"    pm.test(\"bezeichnung \" + a.name, () => pm.expect(a.bezeichnung).to.exist);\r",
 									"    //pm.test(\"tooltip\", () => pm.expect(a.tooltip).to.exist);\r",
 									"});\r",
-									"pm.test(\"enums\", () => pm.expect(jsonData.length).to.eql(4));"
+									"pm.test(\"enums\", () => pm.expect(jsonData._embedded.data.length).to.eql(4));"
 								],
 								"type": "text/javascript"
 							}
@@ -1330,10 +1330,10 @@
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.data.forEach((a) => { \r",
 									"    pm.test(\"name: \" + a.name, () => pm.expect(a.name).to.exist);\r",
-									"    pm.test(\"bezeichnung\", () => pm.expect(a.bezeichnung).to.exist);\r",
+									"    pm.test(\"bezeichnung \" + a.name, () => pm.expect(a.bezeichnung).to.exist);\r",
 									"    //pm.test(\"tooltip\", () => pm.expect(a.tooltip).to.exist);\r",
 									"});\r",
-									"pm.test(\"enums\", () => pm.expect(jsonData.length).to.eql(6));"
+									"pm.test(\"enums\", () => pm.expect(jsonData._embedded.data.length).to.eql(250));"
 								],
 								"type": "text/javascript"
 							}
@@ -1378,10 +1378,10 @@
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.data.forEach((a) => { \r",
 									"    pm.test(\"name: \" + a.name, () => pm.expect(a.name).to.exist);\r",
-									"    pm.test(\"bezeichnung\", () => pm.expect(a.bezeichnung).to.exist);\r",
+									"    pm.test(\"bezeichnung \" + a.name, () => pm.expect(a.bezeichnung).to.exist);\r",
 									"    //pm.test(\"tooltip\", () => pm.expect(a.tooltip).to.exist);\r",
 									"});\r",
-									"pm.test(\"enums\", () => pm.expect(jsonData.length).to.eql(5));"
+									"pm.test(\"enums\", () => pm.expect(jsonData._embedded.data.length).to.eql(5));"
 								],
 								"type": "text/javascript"
 							}
@@ -1426,10 +1426,10 @@
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.data.forEach((a) => { \r",
 									"    pm.test(\"name: \" + a.name, () => pm.expect(a.name).to.exist);\r",
-									"    pm.test(\"bezeichnung\", () => pm.expect(a.bezeichnung).to.exist);\r",
-									"    //pm.test(\"tooltip\", () => pm.expect(a.tooltip).to.exist);\r",
+									"    pm.test(\"bezeichnung \" + a.name, () => pm.expect(a.bezeichnung).to.exist);\r",
+									"    //pm.test(\"tooltip \" + a.name, () => pm.expect(a.tooltip).to.exist);\r",
 									"});\r",
-									"pm.test(\"enums\", () => pm.expect(jsonData.length).to.eql(4));"
+									"pm.test(\"enums\", () => pm.expect(jsonData._embedded.data.length).to.eql(4));"
 								],
 								"type": "text/javascript"
 							}
@@ -1474,10 +1474,10 @@
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.data.forEach((a) => { \r",
 									"    pm.test(\"name: \" + a.name, () => pm.expect(a.name).to.exist);\r",
-									"    pm.test(\"bezeichnung\", () => pm.expect(a.bezeichnung).to.exist);\r",
+									"    pm.test(\"bezeichnung \" + a.name, () => pm.expect(a.bezeichnung).to.exist);\r",
 									"    //pm.test(\"tooltip\", () => pm.expect(a.tooltip).to.exist);\r",
 									"});\r",
-									"pm.test(\"enums\", () => pm.expect(jsonData.length).to.eql(11));"
+									"pm.test(\"enums\", () => pm.expect(jsonData._embedded.data.length).to.eql(11));"
 								],
 								"type": "text/javascript"
 							}
@@ -1522,12 +1522,12 @@
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.data.forEach((a) => { \r",
 									"    pm.test(\"name: \" + a.name, () => pm.expect(a.name).to.exist);\r",
-									"    pm.test(\"bezeichnung\", () => pm.expect(a.bezeichnung).to.exist);\r",
-									"    //pm.test(\"tooltip\", () => pm.expect(a.tooltip).to.exist);\r",
-									"    //pm.test(\"decimals\", () => pm.expect(a.decimals).to.exist);\r",
-									"    pm.test(\"symbol\", () => pm.expect(a.symbol).to.exist);\r",
+									"    pm.test(\"bezeichnung \" + a.name, () => pm.expect(a.bezeichnung).to.exist);\r",
+									"    pm.test(\"tooltip \" + a.name, () => pm.expect(a.tooltip).to.exist);\r",
+									"    pm.test(\"decimals \" + a.name, () => pm.expect(a.dezimal).to.exist);\r",
+									"    pm.test(\"symbol \" + a.name, () => pm.expect(a.symbol).to.exist);\r",
 									"});\r",
-									"pm.test(\"enums\", () => pm.expect(jsonData.length).to.eql(6));"
+									"pm.test(\"enums\", () => pm.expect(jsonData._embedded.data.length).to.eql(228));"
 								],
 								"type": "text/javascript"
 							}
@@ -1877,6 +1877,7 @@
 									"    pm.test(\"_links.update\", () => pm.expect(a._links.update[0].href).to.eql(self));\r",
 									"    pm.test(\"_links.delete\", () => pm.expect(a._links.delete[0].href).to.eql(self));\r",
 									"    pm.test(\"_links.search\", () => pm.expect(a._links.search[0].href).to.eql(root));\r",
+									"    pm.test(\"_links.abbildung\", () => pm.expect(a._links.abbildung[0].href).to.eql(self+\"/abbildung\"));\r",
 									"});\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(root));\r",
 									"pm.test(\"page.size\", () => pm.expect(jsonData.page.size).to.eql(jsonData._embedded.data.length));\r",
@@ -1938,7 +1939,8 @@
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
-									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));"
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -1983,6 +1985,67 @@
 					"response": []
 				},
 				{
+					"name": "Add Abbildung",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
+									"var jsonData = pm.response.json();\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/antrieb\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/antrieb/{{name}}\");\r",
+									"var abbildung = pm.variables.replaceIn(\"{{server}}/antrieb/{{name}}/abbildung.jpg\");\r",
+									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\")));\r",
+									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(abbildung));\r",
+									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
+									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
+									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
+									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "abbildung",
+									"type": "file",
+									"src": "{{imageFile}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/antrieb/{{name}}/abbildung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"antrieb",
+								"{{name}}",
+								"abbildung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update",
 					"event": [
 						{
@@ -2003,14 +2066,17 @@
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/antrieb\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/antrieb/{{name}}\");\r",
+									"var abbildung = pm.variables.replaceIn(\"{{server}}/antrieb/{{name}}/abbildung.jpg\");\r",
 									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\")));\r",
 									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(abbildung));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
-									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));"
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -2067,14 +2133,17 @@
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/antrieb\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/antrieb/{{name}}\");\r",
+									"var abbildung = pm.variables.replaceIn(\"{{server}}/antrieb/{{name}}/abbildung.jpg\");\r",
 									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\")));\r",
 									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(abbildung));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
-									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));"
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -2096,6 +2165,56 @@
 							"path": [
 								"antrieb",
 								"{{name}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Abbildung",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
+									"var jsonData = pm.response.json();\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/antrieb\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/antrieb/{{name}}\");\r",
+									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\")));\r",
+									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(undefined));\r",
+									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
+									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
+									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
+									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/antrieb/{{name}}/abbildung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"antrieb",
+								"{{name}}",
+								"abbildung"
 							]
 						}
 					},
@@ -2850,8 +2969,6 @@
 									"    var self = root + \"/\" + a.name;\r",
 									"    pm.test(\"name: \" + a.name, () => pm.expect(a.name).to.exist);\r",
 									"    pm.test(\"bezeichnung\", () => pm.expect(a.bezeichnung).to.exist);\r",
-                                    "    pm.test(\"startYear\", () => pm.expect(a.startYear).to.exist);\r",
-                                    "    pm.test(\"endYear\", () => pm.expect(a.endYear).to.exist);\r",
 									"    pm.test(\"deleted\", () => pm.expect(a.deleted).to.be.false);\r",
 									"    pm.test(\"_links.add\", () => pm.expect(a._links.add[0].href).to.eql(root));\r",
 									"    pm.test(\"_links.self\", () => pm.expect(a._links.self[0].href).to.eql(self));\r",
@@ -2898,9 +3015,7 @@
 							"script": {
 								"exec": [
 									"pm.environment.set(\"name\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
-									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-                                    "pm.environment.set(\"startYear\", pm.variables.replaceIn(\"{{$randomYear}}\"));\r",
-                                    "pm.environment.set(\"endYear\", pm.variables.replaceIn(\"{{$randomYear}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -2916,8 +3031,6 @@
 									"var self = pm.variables.replaceIn(\"{{api}}/epoch/{{name}}\");\r",
 									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\")));\r",
 									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
-                                    "pm.test(\"startYear\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"startYear\")));\r",
-                                    "pm.test(\"endYear\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"endYear\")));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
@@ -2948,7 +3061,7 @@
 						],
 						"body": {
 							"mode": "raw",
-                            "raw": "{\n\t\"name\": \"{{name}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n\t\"startYear\": \"{{startYear}}\",\n\t\"endYear\": \"{{endYear}}\",\n\t\"deleted\": true\n}",
+							"raw": "{\n\t\"name\": \"{{name}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2974,9 +3087,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));",
-                                    "pm.environment.set(\"startYear\", pm.variables.replaceIn(\"{{$randomYear}}\"));\r",
-                                    "pm.environment.set(\"endYear\", pm.variables.replaceIn(\"{{$randomYear}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -2992,8 +3103,6 @@
 									"var self = pm.variables.replaceIn(\"{{api}}/epoch/{{name}}\");\r",
 									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\")));\r",
 									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
-                                    "pm.test(\"startYear\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"startYear\")));\r",
-                                    "pm.test(\"endYear\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"endYear\")));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
@@ -3024,7 +3133,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"{{name}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n\t\"startYear\": \"{{startYear}}\",\n\t\"endYear\": \"{{endYear}}\",\n\t\"deleted\": true\n}",
+							"raw": "{\n\t\"name\": \"{{name}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3058,8 +3167,6 @@
 									"var self = pm.variables.replaceIn(\"{{api}}/epoch/{{name}}\");\r",
 									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\")));\r",
 									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
-                                    "pm.test(\"startYear\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"startYear\")));\r",
-                                    "pm.test(\"endYear\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"endYear\")));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
@@ -7154,7 +7261,7 @@
 									"pm.environment.set(\"bahnverwaltung\", pm.variables.replaceIn(\"{{bahnverwaltungAdd}}\"));\r",
 									"pm.environment.set(\"hersteller\", pm.variables.replaceIn(\"{{$randomCompanyName}}\"));\r",
 									"pm.environment.set(\"bauzeit\", new Date(pm.variables.replaceIn(\"{{$randomDatePast}}\")).toISOString().substring(0, 10));\r",
-									"pm.environment.set(\"menge\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"anzahl\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
 									"pm.environment.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));\r",
 									"pm.environment.set(\"antrieb\", pm.variables.replaceIn(\"{{antriebAdd}}\"));\r",
 									"pm.environment.set(\"achsfolg\", pm.variables.replaceIn(\"{{achsfolgAdd}}\"));\r",
@@ -7210,7 +7317,7 @@
 									"pm.test(\"bahnverwaltung\", () => pm.expect(jsonData.bahnverwaltung).to.eql(pm.variables.get(\"bahnverwaltung\")));\r",
 									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\")));\r",
 									"pm.test(\"bauzeit\", () => pm.expect(jsonData.bauzeit).to.eql(pm.variables.get(\"bauzeit\")));\r",
-									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"menge\")));\r",
+									"pm.test(\"anzahl\", () => pm.expect(jsonData.anzahl).to.eql(pm.variables.get(\"anzahl\")));\r",
 									"pm.test(\"betreibsnummer\", () => pm.expect(jsonData.betreibsnummer).to.eql(pm.variables.get(\"betreibsnummer\")));\r",
 									"pm.test(\"antrieb\", () => pm.expect(jsonData.antrieb).to.eql(pm.variables.get(\"antrieb\")));\r",
 									"pm.test(\"achsfolg\", () => pm.expect(jsonData.achsfolg).to.eql(pm.variables.get(\"achsfolg\")));\r",
@@ -7273,7 +7380,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{name}}\",\n    \"gattung\": \"{{gattung}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"hersteller\": \"{{hersteller}}\",\n    \"bauzeit\": \"{{bauzeit}}\",\n    \"menge\": {{menge}},\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"antrieb\":\"{{antrieb}}\",\n    \"achsfolg\":\"{{achsfolg}}\",\n    \"leistung\": {{leistung}},\n    \"dienstgewicht\": {{dienstgewicht}},\n    \"geschwindigkeit\": {{geschwindigkeit}},\n    \"lange\": {{lange}},\n    \"ausserdienst\": \"{{ausserdienst}}\",\n    \"dmTreibrad\": {{dmTreibrad}},\n    \"zylinder\": {{zylinder}},\n    \"dmZylinder\": {{dmZylinder}},\n    \"kolbenhub\": {{kolbenhub}},\n    \"kesseluberdruck\": {{kesseluberdruck}},\n    \"rostflache\": {{rostflache}},\n    \"uberhitzerflache\": {{uberhitzerflache}},\n    \"wasservorrat\": {{wasservorrat}},\n    \"verdampfung\": {{verdampfung}},\n    \"fahrmotoren\": {{fahrmotoren}},\n    \"motorbauart\": \"{{motorbauart}}\",\n    \"leistungsubertragung\": \"{{leistungsubertragung}}\",\n    \"reichweite\": {{reichweite}},\n    \"kapazitat\": {{kapazitat}},\n    \"klasse\": {{klasse}},\n    \"sitzplatzeKL1\": {{sitzplatzeKL1}},\n    \"sitzplatzeKL2\": {{sitzplatzeKL2}},\n    \"sitzplatzeKL3\": {{sitzplatzeKL3}},\n    \"sitzplatzeKL4\": {{sitzplatzeKL4}},\n    \"aufbau\": \"{{aufbau}}\",\n    \"triebkopf\": {{triebkopf}},\n    \"mittelwagen\": {{mittelwagen}},\n    \"drehgestellBauart\": \"{{drehgestellBauart}}\",\n\t\"deleted\": true\n}",
+							"raw": "{\n    \"name\": \"{{name}}\",\n    \"gattung\": \"{{gattung}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"hersteller\": \"{{hersteller}}\",\n    \"bauzeit\": \"{{bauzeit}}\",\n    \"anzahl\": {{anzahl}},\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"antrieb\":\"{{antrieb}}\",\n    \"achsfolg\":\"{{achsfolg}}\",\n    \"leistung\": {{leistung}},\n    \"dienstgewicht\": {{dienstgewicht}},\n    \"geschwindigkeit\": {{geschwindigkeit}},\n    \"lange\": {{lange}},\n    \"ausserdienst\": \"{{ausserdienst}}\",\n    \"dmTreibrad\": {{dmTreibrad}},\n    \"zylinder\": {{zylinder}},\n    \"dmZylinder\": {{dmZylinder}},\n    \"kolbenhub\": {{kolbenhub}},\n    \"kesseluberdruck\": {{kesseluberdruck}},\n    \"rostflache\": {{rostflache}},\n    \"uberhitzerflache\": {{uberhitzerflache}},\n    \"wasservorrat\": {{wasservorrat}},\n    \"verdampfung\": {{verdampfung}},\n    \"fahrmotoren\": {{fahrmotoren}},\n    \"motorbauart\": \"{{motorbauart}}\",\n    \"leistungsubertragung\": \"{{leistungsubertragung}}\",\n    \"reichweite\": {{reichweite}},\n    \"kapazitat\": {{kapazitat}},\n    \"klasse\": {{klasse}},\n    \"sitzplatzeKL1\": {{sitzplatzeKL1}},\n    \"sitzplatzeKL2\": {{sitzplatzeKL2}},\n    \"sitzplatzeKL3\": {{sitzplatzeKL3}},\n    \"sitzplatzeKL4\": {{sitzplatzeKL4}},\n    \"aufbau\": \"{{aufbau}}\",\n    \"triebkopf\": {{triebkopf}},\n    \"mittelwagen\": {{mittelwagen}},\n    \"drehgestellBauart\": \"{{drehgestellBauart}}\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -7313,7 +7420,7 @@
 									"pm.test(\"bahnverwaltung\", () => pm.expect(jsonData.bahnverwaltung).to.eql(pm.variables.get(\"bahnverwaltung\")));\r",
 									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\")));\r",
 									"pm.test(\"bauzeit\", () => pm.expect(jsonData.bauzeit).to.eql(pm.variables.get(\"bauzeit\")));\r",
-									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"menge\")));\r",
+									"pm.test(\"anzahl\", () => pm.expect(jsonData.anzahl).to.eql(pm.variables.get(\"anzahl\")));\r",
 									"pm.test(\"betreibsnummer\", () => pm.expect(jsonData.betreibsnummer).to.eql(pm.variables.get(\"betreibsnummer\")));\r",
 									"pm.test(\"antrieb\", () => pm.expect(jsonData.antrieb).to.eql(pm.variables.get(\"antrieb\")));\r",
 									"pm.test(\"achsfolg\", () => pm.expect(jsonData.achsfolg).to.eql(pm.variables.get(\"achsfolg\")));\r",
@@ -7411,7 +7518,7 @@
 									"pm.test(\"bahnverwaltung\", () => pm.expect(jsonData.bahnverwaltung).to.eql(pm.variables.get(\"bahnverwaltung\")));\r",
 									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\")));\r",
 									"pm.test(\"bauzeit\", () => pm.expect(jsonData.bauzeit).to.eql(pm.variables.get(\"bauzeit\")));\r",
-									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"menge\")));\r",
+									"pm.test(\"anzahl\", () => pm.expect(jsonData.anzahl).to.eql(pm.variables.get(\"anzahl\")));\r",
 									"pm.test(\"betreibsnummer\", () => pm.expect(jsonData.betreibsnummer).to.eql(pm.variables.get(\"betreibsnummer\")));\r",
 									"pm.test(\"antrieb\", () => pm.expect(jsonData.antrieb).to.eql(pm.variables.get(\"antrieb\")));\r",
 									"pm.test(\"achsfolg\", () => pm.expect(jsonData.achsfolg).to.eql(pm.variables.get(\"achsfolg\")));\r",
@@ -7465,7 +7572,7 @@
 									"pm.environment.set(\"bahnverwaltung\", pm.variables.replaceIn(\"{{bahnverwaltungUpdate}}\"));\r",
 									"pm.environment.set(\"hersteller\", pm.variables.replaceIn(\"{{$randomCompanyName}}\"));\r",
 									"pm.environment.set(\"bauzeit\", new Date(pm.variables.replaceIn(\"{{$randomDatePast}}\")).toISOString().substring(0,10));\r",
-									"pm.environment.set(\"menge\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"anzahl\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
 									"pm.environment.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));\r",
 									"pm.environment.set(\"antrieb\", pm.variables.replaceIn(\"{{antriebUpdate}}\"));\r",
 									"pm.environment.set(\"achsfolg\", pm.variables.replaceIn(\"{{achsfolgUpdate}}\"));\r",
@@ -7524,7 +7631,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{name}}\",\n    \"gattung\": \"{{gattung}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"hersteller\": \"{{hersteller}}\",\n    \"bauzeit\": \"{{bauzeit}}\",\n    \"menge\": {{menge}},\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"antrieb\":\"{{antrieb}}\",\n    \"achsfolg\":\"{{achsfolg}}\",\n    \"leistung\": {{leistung}},\n    \"dienstgewicht\": {{dienstgewicht}},\n    \"geschwindigkeit\": {{geschwindigkeit}},\n    \"lange\": {{lange}},\n    \"ausserdienst\": \"{{ausserdienst}}\",\n    \"dmTreibrad\": {{dmTreibrad}},\n    \"zylinder\": {{zylinder}},\n    \"dmZylinder\": {{dmZylinder}},\n    \"kolbenhub\": {{kolbenhub}},\n    \"kesseluberdruck\": {{kesseluberdruck}},\n    \"rostflache\": {{rostflache}},\n    \"uberhitzerflache\": {{uberhitzerflache}},\n    \"wasservorrat\": {{wasservorrat}},\n    \"verdampfung\": {{verdampfung}},\n    \"fahrmotoren\": {{fahrmotoren}},\n    \"motorbauart\": \"{{motorbauart}}\",\n    \"leistungsubertragung\": \"{{leistungsubertragung}}\",\n    \"reichweite\": {{reichweite}},\n    \"kapazitat\": {{kapazitat}},\n    \"klasse\": {{klasse}},\n    \"sitzplatzeKL1\": {{sitzplatzeKL1}},\n    \"sitzplatzeKL2\": {{sitzplatzeKL2}},\n    \"sitzplatzeKL3\": {{sitzplatzeKL3}},\n    \"sitzplatzeKL4\": {{sitzplatzeKL4}},\n    \"aufbau\": \"{{aufbau}}\",\n    \"triebkopf\": {{triebkopf}},\n    \"mittelwagen\": {{mittelwagen}},\n    \"drehgestellBauart\": \"{{drehgestellBauart}}\",\n\t\"deleted\": true\n}",
+							"raw": "{\n    \"name\": \"{{name}}\",\n    \"gattung\": \"{{gattung}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"hersteller\": \"{{hersteller}}\",\n    \"bauzeit\": \"{{bauzeit}}\",\n    \"anzahl\": {{anzahl}},\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"antrieb\":\"{{antrieb}}\",\n    \"achsfolg\":\"{{achsfolg}}\",\n    \"leistung\": {{leistung}},\n    \"dienstgewicht\": {{dienstgewicht}},\n    \"geschwindigkeit\": {{geschwindigkeit}},\n    \"lange\": {{lange}},\n    \"ausserdienst\": \"{{ausserdienst}}\",\n    \"dmTreibrad\": {{dmTreibrad}},\n    \"zylinder\": {{zylinder}},\n    \"dmZylinder\": {{dmZylinder}},\n    \"kolbenhub\": {{kolbenhub}},\n    \"kesseluberdruck\": {{kesseluberdruck}},\n    \"rostflache\": {{rostflache}},\n    \"uberhitzerflache\": {{uberhitzerflache}},\n    \"wasservorrat\": {{wasservorrat}},\n    \"verdampfung\": {{verdampfung}},\n    \"fahrmotoren\": {{fahrmotoren}},\n    \"motorbauart\": \"{{motorbauart}}\",\n    \"leistungsubertragung\": \"{{leistungsubertragung}}\",\n    \"reichweite\": {{reichweite}},\n    \"kapazitat\": {{kapazitat}},\n    \"klasse\": {{klasse}},\n    \"sitzplatzeKL1\": {{sitzplatzeKL1}},\n    \"sitzplatzeKL2\": {{sitzplatzeKL2}},\n    \"sitzplatzeKL3\": {{sitzplatzeKL3}},\n    \"sitzplatzeKL4\": {{sitzplatzeKL4}},\n    \"aufbau\": \"{{aufbau}}\",\n    \"triebkopf\": {{triebkopf}},\n    \"mittelwagen\": {{mittelwagen}},\n    \"drehgestellBauart\": \"{{drehgestellBauart}}\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -7565,7 +7672,7 @@
 									"pm.test(\"bahnverwaltung\", () => pm.expect(jsonData.bahnverwaltung).to.eql(pm.variables.get(\"bahnverwaltung\")));\r",
 									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\")));\r",
 									"pm.test(\"bauzeit\", () => pm.expect(jsonData.bauzeit).to.eql(pm.variables.get(\"bauzeit\")));\r",
-									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"menge\")));\r",
+									"pm.test(\"anzahl\", () => pm.expect(jsonData.anzahl).to.eql(pm.variables.get(\"anzahl\")));\r",
 									"pm.test(\"betreibsnummer\", () => pm.expect(jsonData.betreibsnummer).to.eql(pm.variables.get(\"betreibsnummer\")));\r",
 									"pm.test(\"antrieb\", () => pm.expect(jsonData.antrieb).to.eql(pm.variables.get(\"antrieb\")));\r",
 									"pm.test(\"achsfolg\", () => pm.expect(jsonData.achsfolg).to.eql(pm.variables.get(\"achsfolg\")));\r",
@@ -7650,7 +7757,7 @@
 									"pm.test(\"bahnverwaltung\", () => pm.expect(jsonData.bahnverwaltung).to.eql(pm.variables.get(\"bahnverwaltung\")));\r",
 									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\")));\r",
 									"pm.test(\"bauzeit\", () => pm.expect(jsonData.bauzeit).to.eql(pm.variables.get(\"bauzeit\")));\r",
-									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"menge\")));\r",
+									"pm.test(\"anzahl\", () => pm.expect(jsonData.anzahl).to.eql(pm.variables.get(\"anzahl\")));\r",
 									"pm.test(\"betreibsnummer\", () => pm.expect(jsonData.betreibsnummer).to.eql(pm.variables.get(\"betreibsnummer\")));\r",
 									"pm.test(\"antrieb\", () => pm.expect(jsonData.antrieb).to.eql(pm.variables.get(\"antrieb\")));\r",
 									"pm.test(\"achsfolg\", () => pm.expect(jsonData.achsfolg).to.eql(pm.variables.get(\"achsfolg\")));\r",
@@ -9545,7 +9652,7 @@
 									"pm.environment.set(\"teilBezeichnung\", pm.variables.get(\"teilBezeichnungAdd\"));\r",
 									"pm.environment.set(\"teilKategorie\", pm.variables.get(\"teilKategorieAdd\"));\r",
 									"pm.environment.set(\"teilUnterKategorie\", pm.variables.get(\"teilUnterKategorieAdd\"));\r",
-									"pm.environment.set(\"teilMenge\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
+									"pm.environment.set(\"teilAnzahl\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
 								],
 								"type": "text/javascript"
 							}
@@ -9567,7 +9674,7 @@
 									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"teilBezeichnung\")));\r",
 									"pm.test(\"kategorie\", () => pm.expect(jsonData.kategorie).to.eql(pm.variables.get(\"teilKategorie\")));\r",
 									"pm.test(\"unterKategorie\", () => pm.expect(jsonData.unterKategorie).to.eql(pm.variables.get(\"teilUnterKategorie\")));\r",
-									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"teilMenge\")));\r",
+									"pm.test(\"anzahl\", () => pm.expect(jsonData.anzahl).to.eql(pm.variables.get(\"teilAnzahl\")));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.parent\", () => pm.expect(jsonData._links.parent[0].href).to.eql(parent));\r",
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
@@ -9596,7 +9703,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"hersteller\": \"{{hersteller}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n    \"teilHersteller\": \"{{teilHersteller}}\",\n    \"teilBestellNr\": \"{{teilBestellNr}}\",\n    \"bezeichnung\": \"{{teilBezeichnung}}\",\n    \"kategorie\": \"{{teilKategorie}}\",\n    \"unterKategorie\": \"{{teilUnterKategorie}}\",\n    \"menge\": {{teilMenge}},\n    \"deleted\": true\n}",
+							"raw": "{\n    \"hersteller\": \"{{hersteller}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n    \"teilHersteller\": \"{{teilHersteller}}\",\n    \"teilBestellNr\": \"{{teilBestellNr}}\",\n    \"bezeichnung\": \"{{teilBezeichnung}}\",\n    \"kategorie\": \"{{teilKategorie}}\",\n    \"unterKategorie\": \"{{teilUnterKategorie}}\",\n    \"anzahl\": {{teilAnzahl}},\n    \"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -9625,7 +9732,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"pm.environment.set(\"teilMenge\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
+									"pm.environment.set(\"teilAnzahl\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));"
 								],
 								"type": "text/javascript"
 							}
@@ -9647,7 +9754,7 @@
 									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"teilBezeichnung\")));\r",
 									"pm.test(\"kategorie\", () => pm.expect(jsonData.kategorie).to.eql(pm.variables.get(\"teilKategorie\")));\r",
 									"pm.test(\"unterKategorie\", () => pm.expect(jsonData.unterKategorie).to.eql(pm.variables.get(\"teilUnterKategorie\")));\r",
-									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"teilMenge\")));\r",
+									"pm.test(\"anzahl\", () => pm.expect(jsonData.anzahl).to.eql(pm.variables.get(\"teilAnzahl\")));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.parent\", () => pm.expect(jsonData._links.parent[0].href).to.eql(parent));\r",
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
@@ -9675,7 +9782,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen/{{teilHersteller}}/{{teilBestellNr}}?menge={{teilMenge}}",
+							"raw": "{{api}}/produkt/{{hersteller}}/{{bestellNr}}/teilen/{{teilHersteller}}/{{teilBestellNr}}?anzahl={{teilAnzahl}}",
 							"host": [
 								"{{api}}"
 							],
@@ -9689,8 +9796,8 @@
 							],
 							"query": [
 								{
-									"key": "menge",
-									"value": "{{teilMenge}}"
+									"key": "anzahl",
+									"value": "{{teilAnzahl}}"
 								}
 							]
 						}
@@ -9777,7 +9884,7 @@
 									"pm.test(\"teilen[0].bezeichnung\", () => pm.expect(jsonData.teilen[0].bezeichnung).to.eql(pm.variables.get(\"teilBezeichnung\")));\r",
 									"pm.test(\"teilen[0].kategorie\", () => pm.expect(jsonData.teilen[0].kategorie).to.eql(pm.variables.get(\"teilKategorie\")));\r",
 									"pm.test(\"teilen[0].unterKategorie\", () => pm.expect(jsonData.teilen[0].unterKategorie).to.eql(pm.variables.get(\"teilUnterKategorie\")));\r",
-									"pm.test(\"teilen[0].menge\", () => pm.expect(jsonData.teilen[0].menge).to.eql(pm.variables.get(\"teilMenge\")));\r",
+									"pm.test(\"teilen[0].anzahl\", () => pm.expect(jsonData.teilen[0].anzahl).to.eql(pm.variables.get(\"teilAnzahl\")));\r",
 									"pm.test(\"teilen[0].deleted\", () => pm.expect(jsonData.teilen[0].deleted).to.be.false);\r",
 									"pm.test(\"teilen[0]._links.parent\", () => pm.expect(jsonData.teilen[0]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"teilen[0]._links.update\", () => pm.expect(jsonData.teilen[0]._links.update[0].href).to.eql(teilUrl));\r",
@@ -9891,7 +9998,7 @@
 									"pm.test(\"teilen[0].bezeichnung\", () => pm.expect(jsonData.teilen[0].bezeichnung).to.eql(pm.variables.get(\"teilBezeichnung\")));\r",
 									"pm.test(\"teilen[0].kategorie\", () => pm.expect(jsonData.teilen[0].kategorie).to.eql(pm.variables.get(\"teilKategorie\")));\r",
 									"pm.test(\"teilen[0].unterKategorie\", () => pm.expect(jsonData.teilen[0].unterKategorie).to.eql(pm.variables.get(\"teilUnterKategorie\")));\r",
-									"pm.test(\"teilen[0].menge\", () => pm.expect(jsonData.teilen[0].menge).to.eql(pm.variables.get(\"teilMenge\")));\r",
+									"pm.test(\"teilen[0].anzahl\", () => pm.expect(jsonData.teilen[0].anzahl).to.eql(pm.variables.get(\"teilAnzahl\")));\r",
 									"pm.test(\"teilen[0].deleted\", () => pm.expect(jsonData.teilen[0].deleted).to.be.false);\r",
 									"pm.test(\"teilen[0]._links.parent\", () => pm.expect(jsonData.teilen[0]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"teilen[0]._links.update\", () => pm.expect(jsonData.teilen[0]._links.update[0].href).to.eql(teilUrl));\r",
@@ -12066,7 +12173,7 @@
 									"pm.environment.set(\"kaufdatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
 									"pm.environment.set(\"wahrung\", pm.variables.replaceIn(\"{{$randomCurrencyCode}}\"));\r",
 									"pm.environment.set(\"preis\", Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.environment.set(\"menge\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"stuck\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
 									"pm.environment.set(\"verbleibende\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
 									"pm.environment.set(\"anmerkung\", pm.variables.replaceIn(\"{{$randomCatchPhrase}}\"));\r",
 									"pm.environment.set(\"beladung\", pm.variables.replaceIn(\"{{$randomProductMaterial}}\"));\r",
@@ -12111,7 +12218,7 @@
 									"pm.test(\"kaufdatum\", () => pm.expect(jsonData.kaufdatum).to.eql(pm.variables.get(\"kaufdatum\")));\r",
 									"pm.test(\"wahrung\", () => pm.expect(jsonData.wahrung).to.eql(pm.variables.get(\"wahrung\")));\r",
 									"pm.test(\"preis\", () => pm.expect(jsonData.preis).to.eql(pm.variables.get(\"preis\")));\r",
-									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"menge\")));\r",
+									"pm.test(\"stuck\", () => pm.expect(jsonData.stuck).to.eql(pm.variables.get(\"stuck\")));\r",
 									"pm.test(\"verbleibende\", () => pm.expect(jsonData.verbleibende).to.eql(pm.variables.get(\"verbleibende\")));\r",
 									"pm.test(\"anmerkung\", () => pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\")));\r",
 									"pm.test(\"beladung\", () => pm.expect(jsonData.beladung).to.eql(pm.variables.get(\"beladung\")));\r",
@@ -12152,7 +12259,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"hersteller\": \"{{hersteller}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"lange\": {{lange}},\n    \"massstab\": \"{{massstab}}\",\n    \"spurweite\": \"{{spurweite}}\",\n    \"epoch\": \"{{epoch}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"gattung\": \"{{gattung}}\",\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"achsfolg\": \"{{achsfolg}}\",\n    \"aufbau\": \"{{aufbau}}\",\n    \"licht\": \"{{licht}}\",\n    \"kupplung\": \"{{kupplung}}\",\n    \"steuerung\": \"{{steuerung}}\",\n    \"decoder\": \"{{decoder}}\",\n    \"motorTyp\": \"{{motorTyp}}\",\n    \"kaufdatum\": \"{{kaufdatum}}\",\n    \"wahrung\": \"{{wahrung}}\",\n    \"preis\": {{preis}},\n    \"menge\": {{menge}},\n    \"verbleibende\": {{verbleibende}},\n    \"anmerkung\": \"{{anmerkung}}\",\n    \"beladung\": \"{{beladung}}\",\n    \"status\": \"{{status}}\",\n    \"deleted\": false\n}\n\n",
+							"raw": "{\n    \"hersteller\": \"{{hersteller}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"lange\": {{lange}},\n    \"massstab\": \"{{massstab}}\",\n    \"spurweite\": \"{{spurweite}}\",\n    \"epoch\": \"{{epoch}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"gattung\": \"{{gattung}}\",\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"achsfolg\": \"{{achsfolg}}\",\n    \"aufbau\": \"{{aufbau}}\",\n    \"licht\": \"{{licht}}\",\n    \"kupplung\": \"{{kupplung}}\",\n    \"steuerung\": \"{{steuerung}}\",\n    \"decoder\": \"{{decoder}}\",\n    \"motorTyp\": \"{{motorTyp}}\",\n    \"kaufdatum\": \"{{kaufdatum}}\",\n    \"wahrung\": \"{{wahrung}}\",\n    \"preis\": {{preis}},\n    \"stuck\": {{stuck}},\n    \"verbleibende\": {{verbleibende}},\n    \"anmerkung\": \"{{anmerkung}}\",\n    \"beladung\": \"{{beladung}}\",\n    \"status\": \"{{status}}\",\n    \"deleted\": false\n}\n\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -12207,7 +12314,7 @@
 									"pm.test(\"kaufdatum\", () => pm.expect(jsonData.kaufdatum).to.eql(pm.variables.get(\"kaufdatum\")));\r",
 									"pm.test(\"wahrung\", () => pm.expect(jsonData.wahrung).to.eql(pm.variables.get(\"wahrung\")));\r",
 									"pm.test(\"preis\", () => pm.expect(jsonData.preis).to.eql(pm.variables.get(\"preis\")));\r",
-									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"menge\")));\r",
+									"pm.test(\"stuck\", () => pm.expect(jsonData.stuck).to.eql(pm.variables.get(\"stuck\")));\r",
 									"pm.test(\"verbleibende\", () => pm.expect(jsonData.verbleibende).to.eql(pm.variables.get(\"verbleibende\")));\r",
 									"pm.test(\"anmerkung\", () => pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\")));\r",
 									"pm.test(\"beladung\", () => pm.expect(jsonData.beladung).to.eql(pm.variables.get(\"beladung\")));\r",
@@ -12307,7 +12414,7 @@
 									"pm.test(\"kaufdatum\", () => pm.expect(jsonData.kaufdatum).to.eql(pm.variables.get(\"kaufdatum\")));\r",
 									"pm.test(\"wahrung\", () => pm.expect(jsonData.wahrung).to.eql(pm.variables.get(\"wahrung\")));\r",
 									"pm.test(\"preis\", () => pm.expect(jsonData.preis).to.eql(pm.variables.get(\"preis\")));\r",
-									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"menge\")));\r",
+									"pm.test(\"stuck\", () => pm.expect(jsonData.stuck).to.eql(pm.variables.get(\"stuck\")));\r",
 									"pm.test(\"verbleibende\", () => pm.expect(jsonData.verbleibende).to.eql(pm.variables.get(\"verbleibende\")));\r",
 									"pm.test(\"anmerkung\", () => pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\")));\r",
 									"pm.test(\"beladung\", () => pm.expect(jsonData.beladung).to.eql(pm.variables.get(\"beladung\")));\r",
@@ -12380,7 +12487,7 @@
 								"exec": [
 									"pm.environment.set(\"anDatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
 									"pm.environment.set(\"anTyp\", \"UMGEBAUT\");\r",
-									"pm.environment.set(\"anMenge\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"anStuck\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
 									"pm.environment.set(\"anBezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
 									"pm.environment.set(\"anStatus\", \"GEKAUFT\");\r",
 									"pm.environment.set(\"anAnmerkung\", pm.variables.replaceIn(\"{{$randomLoremParagraph}}\").substring(0,254));"
@@ -12403,7 +12510,7 @@
 									"pm.test(\"anderungsDatum\", () => pm.expect(jsonData.anderungsDatum).to.eql(pm.variables.get(\"anDatum\")));\r",
 									"pm.test(\"anderungsTyp\", () => pm.expect(jsonData.anderungsTyp).to.eql(pm.variables.get(\"anTyp\")));\r",
 									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"anBezeichnung\")));\r",
-									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"anMenge\")));\r",
+									"pm.test(\"stuck\", () => pm.expect(jsonData.stuck).to.eql(pm.variables.get(\"anStuck\")));\r",
 									"pm.test(\"anmerkung\", () => pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anAnmerkung\")));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.parent\", () => pm.expect(jsonData._links.parent[0].href).to.eql(parent));\r",
@@ -12433,7 +12540,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"anderungsDatum\": \"{{anDatum}}\",\n    \"anderungsTyp\": \"{{anTyp}}\",\n    \"bezeichnung\": \"{{anBezeichnung}}\",\n    \"menge\": {{anMenge}},\n    \"anmerkung\": \"{{anAnmerkung}}\",\n\t\"deleted\": true\n}",
+							"raw": "{\n    \"anderungsDatum\": \"{{anDatum}}\",\n    \"anderungsTyp\": \"{{anTyp}}\",\n    \"bezeichnung\": \"{{anBezeichnung}}\",\n    \"stuck\": {{anStuck}},\n    \"anmerkung\": \"{{anAnmerkung}}\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -12464,7 +12571,7 @@
 									"pm.environment.set(\"anDatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
 									"pm.environment.set(\"anTyp\", \"REPARIERT\");\r",
 									"pm.environment.set(\"anBezeichnung\",  pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
-									"pm.environment.set(\"anMenge\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"anStuck\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
 									"pm.environment.set(\"anAnmerkung\", pm.variables.replaceIn(\"{{$randomLoremParagraph}}\").substring(0,254));"
 								],
 								"type": "text/javascript"
@@ -12484,7 +12591,7 @@
 									"pm.test(\"anderungsDatum\", () => pm.expect(jsonData.anderungsDatum).to.eql(pm.variables.get(\"anDatum\")));\r",
 									"pm.test(\"anderungsTyp\", () => pm.expect(jsonData.anderungsTyp).to.eql(pm.variables.get(\"anTyp\")));\r",
 									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"anBezeichnung\")));\r",
-									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"anMenge\")));\r",
+									"pm.test(\"stuck\", () => pm.expect(jsonData.stuck).to.eql(pm.variables.get(\"anStuck\")));\r",
 									"pm.test(\"anmerkung\", () => pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anAnmerkung\")));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.parent\", () => pm.expect(jsonData._links.parent[0].href).to.eql(parent));\r",
@@ -12514,7 +12621,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"anderungsDatum\": \"{{anDatum}}\",\n    \"anderungsTyp\": \"{{anTyp}}\",\n    \"bezeichnung\": \"{{anBezeichnung}}\",\n    \"menge\": {{anMenge}},\n    \"anmerkung\": \"{{anAnmerkung}}\",\n\t\"deleted\": true\n}",
+							"raw": "{\n    \"anderungsDatum\": \"{{anDatum}}\",\n    \"anderungsTyp\": \"{{anTyp}}\",\n    \"bezeichnung\": \"{{anBezeichnung}}\",\n    \"stuck\": {{anStuck}},\n    \"anmerkung\": \"{{anAnmerkung}}\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -12566,7 +12673,7 @@
 									"pm.environment.set(\"kaufdatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
 									"pm.environment.set(\"wahrung\", pm.variables.replaceIn(\"{{$randomCurrencyCode}}\"));\r",
 									"pm.environment.set(\"preis\", Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
-									"pm.environment.set(\"menge\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"stuck\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
 									"pm.environment.set(\"verbleibende\", Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
 									"pm.environment.set(\"anmerkung\", pm.variables.replaceIn(\"{{$randomCatchPhrase}}\"));\r",
 									"pm.environment.set(\"beladung\", pm.variables.replaceIn(\"{{$randomProductMaterial}}\"));\r",
@@ -12609,7 +12716,7 @@
 									"pm.test(\"kaufdatum\", () => pm.expect(jsonData.kaufdatum).to.eql(pm.variables.get(\"kaufdatum\")));\r",
 									"pm.test(\"wahrung\", () => pm.expect(jsonData.wahrung).to.eql(pm.variables.get(\"wahrung\")));\r",
 									"pm.test(\"preis\", () => pm.expect(jsonData.preis).to.eql(pm.variables.get(\"preis\")));\r",
-									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"menge\")));\r",
+									"pm.test(\"stuck\", () => pm.expect(jsonData.stuck).to.eql(pm.variables.get(\"stuck\")));\r",
 									"pm.test(\"verbleibende\", () => pm.expect(jsonData.verbleibende).to.eql(pm.variables.get(\"verbleibende\")));\r",
 									"pm.test(\"anmerkung\", () => pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\")));\r",
 									"pm.test(\"beladung\", () => pm.expect(jsonData.beladung).to.eql(pm.variables.get(\"beladung\")));\r",
@@ -12622,7 +12729,7 @@
 									"pm.test(\"anderungen[0].anderungsDatum\", () => pm.expect(jsonData.anderungen[0].anderungsDatum).to.eql(pm.variables.get(\"anDatum\")));\r",
 									"pm.test(\"anderungen[0].anderungsTyp\", () => pm.expect(jsonData.anderungen[0].anderungsTyp).to.eql(pm.variables.get(\"anTyp\")));\r",
 									"pm.test(\"anderungen[0].bezeichnung\", () => pm.expect(jsonData.anderungen[0].bezeichnung).to.eql(pm.variables.get(\"anBezeichnung\")));\r",
-									"pm.test(\"anderungen[0].menge\", () => pm.expect(jsonData.anderungen[0].menge).to.eql(pm.variables.get(\"anMenge\")));\r",
+									"pm.test(\"anderungen[0].stuck\", () => pm.expect(jsonData.anderungen[0].stuck).to.eql(pm.variables.get(\"anStuck\")));\r",
 									"pm.test(\"anderungen[0].anmerkung\", () => pm.expect(jsonData.anderungen[0].anmerkung).to.eql(pm.variables.get(\"anAnmerkung\")));\r",
 									"pm.test(\"anderungen[0].deleted\", () => pm.expect(jsonData.anderungen[0].deleted).to.be.false);\r",
 									"pm.test(\"anderungen[0]._links.parent\", () => pm.expect(jsonData.anderungen[0]._links.parent[0].href).to.eql(self));\r",
@@ -12661,7 +12768,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"artikelId\": \"{{artikelId}}\",\n    \"hersteller\": \"{{hersteller}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"lange\": {{lange}},\n    \"massstab\": \"{{massstab}}\",\n    \"spurweite\": \"{{spurweite}}\",\n    \"epoch\": \"{{epoch}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"gattung\": \"{{gattung}}\",\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"achsfolg\": \"{{achsfolg}}\",\n    \"sondermodell\": \"{{sondermodell}}\",\n    \"aufbau\": \"{{aufbau}}\",\n    \"licht\": \"{{licht}}\",\n    \"kupplung\": \"{{kupplung}}\",\n    \"steuerung\": \"{{steuerung}}\",\n    \"decoder\": \"{{decoder}}\",\n    \"motorTyp\": \"{{motorTyp}}\",\n    \"kaufdatum\": \"{{kaufdatum}}\",\n    \"wahrung\": \"{{wahrung}}\",\n    \"preis\": {{preis}},\n    \"menge\": {{menge}},\n    \"verbleibende\": {{verbleibende}},\n    \"anmerkung\": \"{{anmerkung}}\",\n    \"beladung\": \"{{beladung}}\",\n    \"status\": \"{{status}}\",\n    \"deleted\": true\n}",
+							"raw": "{\n\t\"artikelId\": \"{{artikelId}}\",\n    \"hersteller\": \"{{hersteller}}\",\n    \"bestellNr\": \"{{bestellNr}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"lange\": {{lange}},\n    \"massstab\": \"{{massstab}}\",\n    \"spurweite\": \"{{spurweite}}\",\n    \"epoch\": \"{{epoch}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"gattung\": \"{{gattung}}\",\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"achsfolg\": \"{{achsfolg}}\",\n    \"sondermodell\": \"{{sondermodell}}\",\n    \"aufbau\": \"{{aufbau}}\",\n    \"licht\": \"{{licht}}\",\n    \"kupplung\": \"{{kupplung}}\",\n    \"steuerung\": \"{{steuerung}}\",\n    \"decoder\": \"{{decoder}}\",\n    \"motorTyp\": \"{{motorTyp}}\",\n    \"kaufdatum\": \"{{kaufdatum}}\",\n    \"wahrung\": \"{{wahrung}}\",\n    \"preis\": {{preis}},\n    \"stuck\": {{stuck}},\n    \"verbleibende\": {{verbleibende}},\n    \"anmerkung\": \"{{anmerkung}}\",\n    \"beladung\": \"{{beladung}}\",\n    \"status\": \"{{status}}\",\n    \"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -12718,7 +12825,7 @@
 									"pm.test(\"kaufdatum\", () => pm.expect(jsonData.kaufdatum).to.eql(pm.variables.get(\"kaufdatum\")));\r",
 									"pm.test(\"wahrung\", () => pm.expect(jsonData.wahrung).to.eql(pm.variables.get(\"wahrung\")));\r",
 									"pm.test(\"preis\", () => pm.expect(jsonData.preis).to.eql(pm.variables.get(\"preis\")));\r",
-									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"menge\")));\r",
+									"pm.test(\"stuck\", () => pm.expect(jsonData.stuck).to.eql(pm.variables.get(\"stuck\")));\r",
 									"pm.test(\"verbleibende\", () => pm.expect(jsonData.verbleibende).to.eql(pm.variables.get(\"verbleibende\")));\r",
 									"pm.test(\"anmerkung\", () => pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\")));\r",
 									"pm.test(\"beladung\", () => pm.expect(jsonData.beladung).to.eql(pm.variables.get(\"beladung\")));\r",
@@ -12731,7 +12838,7 @@
 									"pm.test(\"anderungen[0].anderungsDatum\", () => pm.expect(jsonData.anderungen[0].anderungsDatum).to.eql(pm.variables.get(\"anDatum\")));\r",
 									"pm.test(\"anderungen[0].anderungsTyp\", () => pm.expect(jsonData.anderungen[0].anderungsTyp).to.eql(pm.variables.get(\"anTyp\")));\r",
 									"pm.test(\"anderungen[0].bezeichnung\", () => pm.expect(jsonData.anderungen[0].bezeichnung).to.eql(pm.variables.get(\"anBezeichnung\")));\r",
-									"pm.test(\"anderungen[0].menge\", () => pm.expect(jsonData.anderungen[0].menge).to.eql(pm.variables.get(\"anMenge\")));\r",
+									"pm.test(\"anderungen[0].stuck\", () => pm.expect(jsonData.anderungen[0].stuck).to.eql(pm.variables.get(\"anStuck\")));\r",
 									"pm.test(\"anderungen[0].anmerkung\", () => pm.expect(jsonData.anderungen[0].anmerkung).to.eql(pm.variables.get(\"anAnmerkung\")));\r",
 									"pm.test(\"anderungen[0].deleted\", () => pm.expect(jsonData.anderungen[0].deleted).to.be.false);\r",
 									"pm.test(\"anderungen[0]._links.parent\", () => pm.expect(jsonData.anderungen[0]._links.parent[0].href).to.eql(self));\r",
@@ -12809,7 +12916,7 @@
 									"pm.test(\"kaufdatum\", () => pm.expect(jsonData.kaufdatum).to.eql(pm.variables.get(\"kaufdatum\")));\r",
 									"pm.test(\"wahrung\", () => pm.expect(jsonData.wahrung).to.eql(pm.variables.get(\"wahrung\")));\r",
 									"pm.test(\"preis\", () => pm.expect(jsonData.preis).to.eql(pm.variables.get(\"preis\")));\r",
-									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"menge\")));\r",
+									"pm.test(\"stuck\", () => pm.expect(jsonData.stuck).to.eql(pm.variables.get(\"stuck\")));\r",
 									"pm.test(\"verbleibende\", () => pm.expect(jsonData.verbleibende).to.eql(pm.variables.get(\"verbleibende\")));\r",
 									"pm.test(\"anmerkung\", () => pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\")));\r",
 									"pm.test(\"beladung\", () => pm.expect(jsonData.beladung).to.eql(pm.variables.get(\"beladung\")));\r",
@@ -12822,7 +12929,7 @@
 									"pm.test(\"anderungen[0].anderungsDatum\", () => pm.expect(jsonData.anderungen[0].anderungsDatum).to.eql(pm.variables.get(\"anDatum\")));\r",
 									"pm.test(\"anderungen[0].anderungsTyp\", () => pm.expect(jsonData.anderungen[0].anderungsTyp).to.eql(pm.variables.get(\"anTyp\")));\r",
 									"pm.test(\"anderungen[0].bezeichnung\", () => pm.expect(jsonData.anderungen[0].bezeichnung).to.eql(pm.variables.get(\"anBezeichnung\")));\r",
-									"pm.test(\"anderungen[0].menge\", () => pm.expect(jsonData.anderungen[0].menge).to.eql(pm.variables.get(\"anMenge\")));\r",
+									"pm.test(\"anderungen[0].stuck\", () => pm.expect(jsonData.anderungen[0].stuck).to.eql(pm.variables.get(\"anStuck\")));\r",
 									"pm.test(\"anderungen[0].anmerkung\", () => pm.expect(jsonData.anderungen[0].anmerkung).to.eql(pm.variables.get(\"anAnmerkung\")));\r",
 									"pm.test(\"anderungen[0].deleted\", () => pm.expect(jsonData.anderungen[0].deleted).to.be.false);\r",
 									"pm.test(\"anderungen[0]._links.parent\", () => pm.expect(jsonData.anderungen[0]._links.parent[0].href).to.eql(self));\r",
@@ -12911,7 +13018,7 @@
 									"pm.test(\"kaufdatum\", () => pm.expect(jsonData.kaufdatum).to.eql(pm.variables.get(\"kaufdatum\")));\r",
 									"pm.test(\"wahrung\", () => pm.expect(jsonData.wahrung).to.eql(pm.variables.get(\"wahrung\")));\r",
 									"pm.test(\"preis\", () => pm.expect(jsonData.preis).to.eql(pm.variables.get(\"preis\")));\r",
-									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"menge\")));\r",
+									"pm.test(\"stuck\", () => pm.expect(jsonData.stuck).to.eql(pm.variables.get(\"stuck\")));\r",
 									"pm.test(\"verbleibende\", () => pm.expect(jsonData.verbleibende).to.eql(pm.variables.get(\"verbleibende\")));\r",
 									"pm.test(\"anmerkung\", () => pm.expect(jsonData.anmerkung).to.eql(pm.variables.get(\"anmerkung\")));\r",
 									"pm.test(\"beladung\", () => pm.expect(jsonData.beladung).to.eql(pm.variables.get(\"beladung\")));\r",
@@ -12924,7 +13031,7 @@
 									"pm.test(\"anderungen[0].anderungsDatum\", () => pm.expect(jsonData.anderungen[0].anderungsDatum).to.eql(pm.variables.get(\"anDatum\")));\r",
 									"pm.test(\"anderungen[0].anderungsTyp\", () => pm.expect(jsonData.anderungen[0].anderungsTyp).to.eql(pm.variables.get(\"anTyp\")));\r",
 									"pm.test(\"anderungen[0].bezeichnung\", () => pm.expect(jsonData.anderungen[0].bezeichnung).to.eql(pm.variables.get(\"anBezeichnung\")));\r",
-									"pm.test(\"anderungen[0].menge\", () => pm.expect(jsonData.anderungen[0].menge).to.eql(pm.variables.get(\"anMenge\")));\r",
+									"pm.test(\"anderungen[0].stuck\", () => pm.expect(jsonData.anderungen[0].stuck).to.eql(pm.variables.get(\"anStuck\")));\r",
 									"pm.test(\"anderungen[0].anmerkung\", () => pm.expect(jsonData.anderungen[0].anmerkung).to.eql(pm.variables.get(\"anAnmerkung\")));\r",
 									"pm.test(\"anderungen[0].deleted\", () => pm.expect(jsonData.anderungen[0].deleted).to.be.false);\r",
 									"pm.test(\"anderungen[0]._links.parent\", () => pm.expect(jsonData.anderungen[0]._links.parent[0].href).to.eql(self));\r",
@@ -13796,9 +13903,9 @@
 									"pm.test(\"Antrieb\", () => pm.response.to.have.status(200));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,abbildung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){2}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){3}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}
@@ -13913,9 +14020,9 @@
 									"pm.test(\"Epoch\", () => pm.response.to.have.status(200));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,startYear,endYear,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,startYear,endYear,abbildung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){4}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){5}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}
@@ -13991,9 +14098,9 @@
 									"pm.test(\"Hersteller\", () => pm.response.to.have.status(200));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,land,url,telefon,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,land,url,telefon,abbildung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){5}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){6}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}
@@ -14186,9 +14293,9 @@
 									"pm.test(\"Motor Typ\", () => pm.response.to.have.status(200));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,abbildung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){2}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){3}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}
@@ -14225,9 +14332,9 @@
 									"pm.test(\"Protokoll\", () => pm.response.to.have.status(200));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,abbildung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){2}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){3}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}
@@ -14342,9 +14449,9 @@
 									"pm.test(\"Steuerung\", () => pm.response.to.have.status(200));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,abbildung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){2}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){3}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}
@@ -14420,9 +14527,9 @@
 									"pm.test(\"Unter Kategorie\", () => pm.response.to.have.status(200));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"kategorie,name,bezeichnung,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"kategorie,kategorieBezeichnung,name,bezeichnung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){3}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){4}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}
@@ -14732,9 +14839,9 @@
 									"pm.test(\"Decoder\", () => pm.response.to.have.status(200));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"decoderId,hersteller,bestellNr,bezeichnung,iMax,protokoll,fahrstufe,gerausch,konfiguration,stecker,kaufdatum,wahrung,preis,anmerkung,status,anleitungen,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"decoderId,hersteller,bestellNr,artikelId,bezeichnung,iMax,protokoll,fahrstufe,gerausch,konfiguration,stecker,kaufdatum,wahrung,preis,anmerkung,status,anleitungen,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){16}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){17}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}
@@ -14888,7 +14995,7 @@
 									"pm.test(\"Artikel\", () => pm.response.to.have.status(200));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"artikelId,hersteller,bestellNr,bezeichnung,kategorie,unterKategorie,lange,massstab,spurweite,epoch,bahnverwaltung,gattung,betreibsnummer,achsfolg,sondermodell,aufbau,licht,kupplung,steuerung,decoder,motorTyp,kaufdatum,wahrung,preis,menge,verbleibende,anmerkung,beladung,status,abbildung,grossansicht,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"artikelId,hersteller,bestellNr,bezeichnung,kategorie,unterKategorie,lange,massstab,spurweite,epoch,bahnverwaltung,gattung,betreibsnummer,achsfolg,sondermodell,aufbau,licht,kupplung,steuerung,decoderId,motorTyp,kaufdatum,wahrung,preis,menge,verbleibende,anmerkung,beladung,status,abbildung,grossansicht,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
 									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){31}(true|false)$/).length).to.eql(3)));"
 								],
@@ -14966,9 +15073,9 @@
 									"pm.test(\"Zug\", () => pm.response.to.have.status(200));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,zugTyp,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,zugTyp,lange,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){3}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){4}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}
@@ -15005,9 +15112,9 @@
 									"pm.test(\"Zug Consist\", () => pm.response.to.have.status(200));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"zug,position,artikelId,hersteller,bestellNr,bezeichnung,lange,bahnverwaltung,gattung,betreibsnummer,abbildung,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"zug,position,artikelId,hersteller,bestellNr,bezeichnung,kategorie,unterKategorie,lange,bahnverwaltung,gattung,betreibsnummer,abbildung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){11}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){5}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}
@@ -15247,7 +15354,7 @@
 								{
 									"key": "data",
 									"type": "file",
-									"src": "{{epochCsv}}"
+									"src": "{{namedCsv}}"
 								}
 							]
 						},
@@ -17789,7 +17896,7 @@
 		},
 		{
 			"key": "decoderCvCsv",
-			"value": "{{testFiles}}decoderCv.csv"
+			"value": "{{testFiles}}decoder.csv"
 		},
 		{
 			"key": "decoderFunktionCsv",
@@ -17811,10 +17918,6 @@
 			"key": "decoderTypFunktionCsv",
 			"value": "{{testFiles}}decoderTypFunktion.csv"
 		},
-        {
-            "key": "epochCsv",
-            "value": "{{testFiles}}epoch.csv"
-        },
 		{
 			"key": "herstellerCsv",
 			"value": "{{testFiles}}hersteller.csv"
@@ -17842,6 +17945,10 @@
 		{
 			"key": "zugCsv",
 			"value": "{{testFiles}}zug.csv"
+		},
+		{
+			"key": "maxResponseTime",
+			"value": "500"
 		}
 	]
 }

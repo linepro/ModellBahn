@@ -49,6 +49,7 @@ public class ExporterImplTest {
     private static final DecoderStatus STATUS = DecoderStatus.INSTALIERT;
     private static final String ANLEITUNGEN = "instrutions.pdf";
     private static final Boolean DELETED = true;
+    private static final String ARTIKEL_ID = "00010";
 
     private static final Long ID = 1L;
 
@@ -65,6 +66,7 @@ public class ExporterImplTest {
                                                           .decoderId(DECODER_ID)
                                                           .hersteller(HERSTELLER)
                                                           .bestellNr(BESTELL_NR)
+                                                          .artikelId(ARTIKEL_ID)
                                                           .bezeichnung(BEZEICHNUNG)
                                                           .iMax(I_MAX)
                                                           .protokoll(PROTOKOLL)
@@ -81,8 +83,8 @@ public class ExporterImplTest {
                                                           .deleted(DELETED)
                                                           .build();
 
-    private static final String CSV = "decoderId,hersteller,bestellNr,bezeichnung,iMax,protokoll,fahrstufe,gerausch,konfiguration,stecker,kaufdatum,wahrung,preis,anmerkung,status,anleitungen,deleted\n" +
-                                      DECODER_ID + "," + HERSTELLER + "," + BESTELL_NR + ",\"" + BEZEICHNUNG + "\"," + I_MAX + "," + PROTOKOLL + "," + FAHRSTUFE + "," + GERAUSCH + "," + KONFIGURATION + "," + STECKER + "," + KAUFDATUM + "," + WAHRUNG + "," + PREIS + "," + ANMERKUNG + "," + STATUS + "," + ANLEITUNGEN + "," + DELETED +"\n";
+    private static final String CSV = "decoderId,hersteller,bestellNr,artikelId,bezeichnung,iMax,protokoll,fahrstufe,gerausch,konfiguration,stecker,kaufdatum,wahrung,preis,anmerkung,status,anleitungen,deleted\n" +
+                                      DECODER_ID + "," + HERSTELLER + "," + BESTELL_NR + "," + ARTIKEL_ID + ",\"" + BEZEICHNUNG + "\"," + I_MAX + "," + PROTOKOLL + "," + FAHRSTUFE + "," + GERAUSCH + "," + KONFIGURATION + "," + STECKER + "," + KAUFDATUM + "," + WAHRUNG + "," + PREIS + "," + ANMERKUNG + "," + STATUS + "," + ANLEITUNGEN + "," + DELETED +"\n";
 
     private final JpaRepository<Decoder,Long> repository;
 
