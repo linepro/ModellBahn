@@ -6649,7 +6649,7 @@
 									"    pm.test(\"_links.update\", () => pm.expect(a._links.update[0].href).to.eql(self));\r",
 									"    pm.test(\"_links.delete\", () => pm.expect(a._links.delete[0].href).to.eql(self));\r",
 									"    pm.test(\"_links.search\", () => pm.expect(a._links.search[0].href).to.eql(root));\r",
-									"    pm.test(\"_links.unterKategorie\", () => pm.expect(a._links.unterKategorie[0].href).to.eql(self+\"/unterKategorien\"));\r",
+									"    pm.test(\"_links.unterKategorien\", () => pm.expect(a._links.unterKategorien[0].href).to.eql(self+\"/unterKategorien\"));\r",
 									"});\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(root));\r",
 									"pm.test(\"page.size\", () => pm.expect(jsonData.page.size).to.eql(jsonData._embedded.data.length));\r",
@@ -6712,7 +6712,7 @@
 									"    pm.test(\"_links.update\", () => pm.expect(k._links.update[0].href).to.eql(self));\r",
 									"    pm.test(\"_links.delete\", () => pm.expect(k._links.delete[0].href).to.eql(self));\r",
 									"    pm.test(\"_links.search\", () => pm.expect(k._links.search[0].href).to.eql(root));\r",
-									"    pm.test(\"_links.unterKategorie\", () => pm.expect(k._links.unterKategorie[0].href).to.eql(self+\"/unterKategorien\"));\r",
+									"    pm.test(\"_links.unterKategorien\", () => pm.expect(k._links.unterKategorien[0].href).to.eql(self+\"/unterKategorien\"));\r",
 									"});\r",
 									"root = pm.variables.replaceIn(\"{{api}}/unterKategorien?kategorien=AUSGESTALTUNG,BELEUCHTUNG\");\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(root));\r",
@@ -6782,7 +6782,7 @@
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
-									"pm.test(\"_links.unterKategorie\", () => pm.expect(jsonData._links.unterKategorie[0].href).to.eql(self+\"/unterKategorien\"));"
+									"pm.test(\"_links.unterKategorien\", () => pm.expect(jsonData._links.unterKategorien[0].href).to.eql(self+\"/unterKategorien\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -7012,7 +7012,7 @@
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
-									"pm.test(\"_links.unterKategorie\", () => pm.expect(jsonData._links.unterKategorie[0].href).to.eql(self+\"/unterKategorien\"));"
+									"pm.test(\"_links.unterKategorien\", () => pm.expect(jsonData._links.unterKategorien[0].href).to.eql(self+\"/unterKategorien\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -7086,7 +7086,7 @@
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
-									"pm.test(\"_links.unterKategorie\", () => pm.expect(jsonData._links.unterKategorie[0].href).to.eql(self+\"/unterKategorien\"));"
+									"pm.test(\"_links.unterKategorien\", () => pm.expect(jsonData._links.unterKategorien[0].href).to.eql(self+\"/unterKategorien\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -7261,7 +7261,7 @@
 									"pm.environment.set(\"bahnverwaltung\", pm.variables.replaceIn(\"{{bahnverwaltungAdd}}\"));\r",
 									"pm.environment.set(\"hersteller\", pm.variables.replaceIn(\"{{$randomCompanyName}}\"));\r",
 									"pm.environment.set(\"bauzeit\", new Date(pm.variables.replaceIn(\"{{$randomDatePast}}\")).toISOString().substring(0, 10));\r",
-									"pm.environment.set(\"anzahl\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"menge\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
 									"pm.environment.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));\r",
 									"pm.environment.set(\"antrieb\", pm.variables.replaceIn(\"{{antriebAdd}}\"));\r",
 									"pm.environment.set(\"achsfolg\", pm.variables.replaceIn(\"{{achsfolgAdd}}\"));\r",
@@ -7317,7 +7317,7 @@
 									"pm.test(\"bahnverwaltung\", () => pm.expect(jsonData.bahnverwaltung).to.eql(pm.variables.get(\"bahnverwaltung\")));\r",
 									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\")));\r",
 									"pm.test(\"bauzeit\", () => pm.expect(jsonData.bauzeit).to.eql(pm.variables.get(\"bauzeit\")));\r",
-									"pm.test(\"anzahl\", () => pm.expect(jsonData.anzahl).to.eql(pm.variables.get(\"anzahl\")));\r",
+									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"menge\")));\r",
 									"pm.test(\"betreibsnummer\", () => pm.expect(jsonData.betreibsnummer).to.eql(pm.variables.get(\"betreibsnummer\")));\r",
 									"pm.test(\"antrieb\", () => pm.expect(jsonData.antrieb).to.eql(pm.variables.get(\"antrieb\")));\r",
 									"pm.test(\"achsfolg\", () => pm.expect(jsonData.achsfolg).to.eql(pm.variables.get(\"achsfolg\")));\r",
@@ -7380,7 +7380,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{name}}\",\n    \"gattung\": \"{{gattung}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"hersteller\": \"{{hersteller}}\",\n    \"bauzeit\": \"{{bauzeit}}\",\n    \"anzahl\": {{anzahl}},\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"antrieb\":\"{{antrieb}}\",\n    \"achsfolg\":\"{{achsfolg}}\",\n    \"leistung\": {{leistung}},\n    \"dienstgewicht\": {{dienstgewicht}},\n    \"geschwindigkeit\": {{geschwindigkeit}},\n    \"lange\": {{lange}},\n    \"ausserdienst\": \"{{ausserdienst}}\",\n    \"dmTreibrad\": {{dmTreibrad}},\n    \"zylinder\": {{zylinder}},\n    \"dmZylinder\": {{dmZylinder}},\n    \"kolbenhub\": {{kolbenhub}},\n    \"kesseluberdruck\": {{kesseluberdruck}},\n    \"rostflache\": {{rostflache}},\n    \"uberhitzerflache\": {{uberhitzerflache}},\n    \"wasservorrat\": {{wasservorrat}},\n    \"verdampfung\": {{verdampfung}},\n    \"fahrmotoren\": {{fahrmotoren}},\n    \"motorbauart\": \"{{motorbauart}}\",\n    \"leistungsubertragung\": \"{{leistungsubertragung}}\",\n    \"reichweite\": {{reichweite}},\n    \"kapazitat\": {{kapazitat}},\n    \"klasse\": {{klasse}},\n    \"sitzplatzeKL1\": {{sitzplatzeKL1}},\n    \"sitzplatzeKL2\": {{sitzplatzeKL2}},\n    \"sitzplatzeKL3\": {{sitzplatzeKL3}},\n    \"sitzplatzeKL4\": {{sitzplatzeKL4}},\n    \"aufbau\": \"{{aufbau}}\",\n    \"triebkopf\": {{triebkopf}},\n    \"mittelwagen\": {{mittelwagen}},\n    \"drehgestellBauart\": \"{{drehgestellBauart}}\",\n\t\"deleted\": true\n}",
+							"raw": "{\n    \"name\": \"{{name}}\",\n    \"gattung\": \"{{gattung}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"hersteller\": \"{{hersteller}}\",\n    \"bauzeit\": \"{{bauzeit}}\",\n    \"menge\": {{menge}},\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"antrieb\":\"{{antrieb}}\",\n    \"achsfolg\":\"{{achsfolg}}\",\n    \"leistung\": {{leistung}},\n    \"dienstgewicht\": {{dienstgewicht}},\n    \"geschwindigkeit\": {{geschwindigkeit}},\n    \"lange\": {{lange}},\n    \"ausserdienst\": \"{{ausserdienst}}\",\n    \"dmTreibrad\": {{dmTreibrad}},\n    \"zylinder\": {{zylinder}},\n    \"dmZylinder\": {{dmZylinder}},\n    \"kolbenhub\": {{kolbenhub}},\n    \"kesseluberdruck\": {{kesseluberdruck}},\n    \"rostflache\": {{rostflache}},\n    \"uberhitzerflache\": {{uberhitzerflache}},\n    \"wasservorrat\": {{wasservorrat}},\n    \"verdampfung\": {{verdampfung}},\n    \"fahrmotoren\": {{fahrmotoren}},\n    \"motorbauart\": \"{{motorbauart}}\",\n    \"leistungsubertragung\": \"{{leistungsubertragung}}\",\n    \"reichweite\": {{reichweite}},\n    \"kapazitat\": {{kapazitat}},\n    \"klasse\": {{klasse}},\n    \"sitzplatzeKL1\": {{sitzplatzeKL1}},\n    \"sitzplatzeKL2\": {{sitzplatzeKL2}},\n    \"sitzplatzeKL3\": {{sitzplatzeKL3}},\n    \"sitzplatzeKL4\": {{sitzplatzeKL4}},\n    \"aufbau\": \"{{aufbau}}\",\n    \"triebkopf\": {{triebkopf}},\n    \"mittelwagen\": {{mittelwagen}},\n    \"drehgestellBauart\": \"{{drehgestellBauart}}\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -7420,7 +7420,7 @@
 									"pm.test(\"bahnverwaltung\", () => pm.expect(jsonData.bahnverwaltung).to.eql(pm.variables.get(\"bahnverwaltung\")));\r",
 									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\")));\r",
 									"pm.test(\"bauzeit\", () => pm.expect(jsonData.bauzeit).to.eql(pm.variables.get(\"bauzeit\")));\r",
-									"pm.test(\"anzahl\", () => pm.expect(jsonData.anzahl).to.eql(pm.variables.get(\"anzahl\")));\r",
+									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"menge\")));\r",
 									"pm.test(\"betreibsnummer\", () => pm.expect(jsonData.betreibsnummer).to.eql(pm.variables.get(\"betreibsnummer\")));\r",
 									"pm.test(\"antrieb\", () => pm.expect(jsonData.antrieb).to.eql(pm.variables.get(\"antrieb\")));\r",
 									"pm.test(\"achsfolg\", () => pm.expect(jsonData.achsfolg).to.eql(pm.variables.get(\"achsfolg\")));\r",
@@ -7518,7 +7518,7 @@
 									"pm.test(\"bahnverwaltung\", () => pm.expect(jsonData.bahnverwaltung).to.eql(pm.variables.get(\"bahnverwaltung\")));\r",
 									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\")));\r",
 									"pm.test(\"bauzeit\", () => pm.expect(jsonData.bauzeit).to.eql(pm.variables.get(\"bauzeit\")));\r",
-									"pm.test(\"anzahl\", () => pm.expect(jsonData.anzahl).to.eql(pm.variables.get(\"anzahl\")));\r",
+									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"menge\")));\r",
 									"pm.test(\"betreibsnummer\", () => pm.expect(jsonData.betreibsnummer).to.eql(pm.variables.get(\"betreibsnummer\")));\r",
 									"pm.test(\"antrieb\", () => pm.expect(jsonData.antrieb).to.eql(pm.variables.get(\"antrieb\")));\r",
 									"pm.test(\"achsfolg\", () => pm.expect(jsonData.achsfolg).to.eql(pm.variables.get(\"achsfolg\")));\r",
@@ -7572,7 +7572,7 @@
 									"pm.environment.set(\"bahnverwaltung\", pm.variables.replaceIn(\"{{bahnverwaltungUpdate}}\"));\r",
 									"pm.environment.set(\"hersteller\", pm.variables.replaceIn(\"{{$randomCompanyName}}\"));\r",
 									"pm.environment.set(\"bauzeit\", new Date(pm.variables.replaceIn(\"{{$randomDatePast}}\")).toISOString().substring(0,10));\r",
-									"pm.environment.set(\"anzahl\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
+									"pm.environment.set(\"menge\", new Number(pm.variables.replaceIn(\"{{$randomInt}}\")));\r",
 									"pm.environment.set(\"betreibsnummer\", pm.variables.replaceIn(\"{{$randomAbbreviation}} {{$randomInt}}.{{$randomInt}}\"));\r",
 									"pm.environment.set(\"antrieb\", pm.variables.replaceIn(\"{{antriebUpdate}}\"));\r",
 									"pm.environment.set(\"achsfolg\", pm.variables.replaceIn(\"{{achsfolgUpdate}}\"));\r",
@@ -7631,7 +7631,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{name}}\",\n    \"gattung\": \"{{gattung}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"hersteller\": \"{{hersteller}}\",\n    \"bauzeit\": \"{{bauzeit}}\",\n    \"anzahl\": {{anzahl}},\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"antrieb\":\"{{antrieb}}\",\n    \"achsfolg\":\"{{achsfolg}}\",\n    \"leistung\": {{leistung}},\n    \"dienstgewicht\": {{dienstgewicht}},\n    \"geschwindigkeit\": {{geschwindigkeit}},\n    \"lange\": {{lange}},\n    \"ausserdienst\": \"{{ausserdienst}}\",\n    \"dmTreibrad\": {{dmTreibrad}},\n    \"zylinder\": {{zylinder}},\n    \"dmZylinder\": {{dmZylinder}},\n    \"kolbenhub\": {{kolbenhub}},\n    \"kesseluberdruck\": {{kesseluberdruck}},\n    \"rostflache\": {{rostflache}},\n    \"uberhitzerflache\": {{uberhitzerflache}},\n    \"wasservorrat\": {{wasservorrat}},\n    \"verdampfung\": {{verdampfung}},\n    \"fahrmotoren\": {{fahrmotoren}},\n    \"motorbauart\": \"{{motorbauart}}\",\n    \"leistungsubertragung\": \"{{leistungsubertragung}}\",\n    \"reichweite\": {{reichweite}},\n    \"kapazitat\": {{kapazitat}},\n    \"klasse\": {{klasse}},\n    \"sitzplatzeKL1\": {{sitzplatzeKL1}},\n    \"sitzplatzeKL2\": {{sitzplatzeKL2}},\n    \"sitzplatzeKL3\": {{sitzplatzeKL3}},\n    \"sitzplatzeKL4\": {{sitzplatzeKL4}},\n    \"aufbau\": \"{{aufbau}}\",\n    \"triebkopf\": {{triebkopf}},\n    \"mittelwagen\": {{mittelwagen}},\n    \"drehgestellBauart\": \"{{drehgestellBauart}}\",\n\t\"deleted\": true\n}",
+							"raw": "{\n    \"name\": \"{{name}}\",\n    \"gattung\": \"{{gattung}}\",\n\t\"bezeichnung\": \"{{bezeichnung}}\",\n    \"kategorie\": \"{{kategorie}}\",\n    \"unterKategorie\": \"{{unterKategorie}}\",\n    \"bahnverwaltung\": \"{{bahnverwaltung}}\",\n    \"hersteller\": \"{{hersteller}}\",\n    \"bauzeit\": \"{{bauzeit}}\",\n    \"menge\": {{menge}},\n    \"betreibsnummer\": \"{{betreibsnummer}}\",\n    \"antrieb\":\"{{antrieb}}\",\n    \"achsfolg\":\"{{achsfolg}}\",\n    \"leistung\": {{leistung}},\n    \"dienstgewicht\": {{dienstgewicht}},\n    \"geschwindigkeit\": {{geschwindigkeit}},\n    \"lange\": {{lange}},\n    \"ausserdienst\": \"{{ausserdienst}}\",\n    \"dmTreibrad\": {{dmTreibrad}},\n    \"zylinder\": {{zylinder}},\n    \"dmZylinder\": {{dmZylinder}},\n    \"kolbenhub\": {{kolbenhub}},\n    \"kesseluberdruck\": {{kesseluberdruck}},\n    \"rostflache\": {{rostflache}},\n    \"uberhitzerflache\": {{uberhitzerflache}},\n    \"wasservorrat\": {{wasservorrat}},\n    \"verdampfung\": {{verdampfung}},\n    \"fahrmotoren\": {{fahrmotoren}},\n    \"motorbauart\": \"{{motorbauart}}\",\n    \"leistungsubertragung\": \"{{leistungsubertragung}}\",\n    \"reichweite\": {{reichweite}},\n    \"kapazitat\": {{kapazitat}},\n    \"klasse\": {{klasse}},\n    \"sitzplatzeKL1\": {{sitzplatzeKL1}},\n    \"sitzplatzeKL2\": {{sitzplatzeKL2}},\n    \"sitzplatzeKL3\": {{sitzplatzeKL3}},\n    \"sitzplatzeKL4\": {{sitzplatzeKL4}},\n    \"aufbau\": \"{{aufbau}}\",\n    \"triebkopf\": {{triebkopf}},\n    \"mittelwagen\": {{mittelwagen}},\n    \"drehgestellBauart\": \"{{drehgestellBauart}}\",\n\t\"deleted\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -7672,7 +7672,7 @@
 									"pm.test(\"bahnverwaltung\", () => pm.expect(jsonData.bahnverwaltung).to.eql(pm.variables.get(\"bahnverwaltung\")));\r",
 									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\")));\r",
 									"pm.test(\"bauzeit\", () => pm.expect(jsonData.bauzeit).to.eql(pm.variables.get(\"bauzeit\")));\r",
-									"pm.test(\"anzahl\", () => pm.expect(jsonData.anzahl).to.eql(pm.variables.get(\"anzahl\")));\r",
+									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"menge\")));\r",
 									"pm.test(\"betreibsnummer\", () => pm.expect(jsonData.betreibsnummer).to.eql(pm.variables.get(\"betreibsnummer\")));\r",
 									"pm.test(\"antrieb\", () => pm.expect(jsonData.antrieb).to.eql(pm.variables.get(\"antrieb\")));\r",
 									"pm.test(\"achsfolg\", () => pm.expect(jsonData.achsfolg).to.eql(pm.variables.get(\"achsfolg\")));\r",
@@ -7757,7 +7757,7 @@
 									"pm.test(\"bahnverwaltung\", () => pm.expect(jsonData.bahnverwaltung).to.eql(pm.variables.get(\"bahnverwaltung\")));\r",
 									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"hersteller\")));\r",
 									"pm.test(\"bauzeit\", () => pm.expect(jsonData.bauzeit).to.eql(pm.variables.get(\"bauzeit\")));\r",
-									"pm.test(\"anzahl\", () => pm.expect(jsonData.anzahl).to.eql(pm.variables.get(\"anzahl\")));\r",
+									"pm.test(\"menge\", () => pm.expect(jsonData.menge).to.eql(pm.variables.get(\"menge\")));\r",
 									"pm.test(\"betreibsnummer\", () => pm.expect(jsonData.betreibsnummer).to.eql(pm.variables.get(\"betreibsnummer\")));\r",
 									"pm.test(\"antrieb\", () => pm.expect(jsonData.antrieb).to.eql(pm.variables.get(\"antrieb\")));\r",
 									"pm.test(\"achsfolg\", () => pm.expect(jsonData.achsfolg).to.eql(pm.variables.get(\"achsfolg\")));\r",
@@ -7890,10 +7890,10 @@
 									"    pm.test(\"_links.update\", () => pm.expect(a._links.update[0].href).to.eql(self));\r",
 									"    pm.test(\"_links.delete\", () => pm.expect(a._links.delete[0].href).to.eql(self));\r",
 									"    pm.test(\"_links.search\", () => pm.expect(a._links.search[0].href).to.eql(root));\r",
-									"    pm.test(\"_links.anleitung\", () => pm.expect(a._links.anleitung[0].href).to.eql(self+\"/anleitungen\"));\r",
-									"    pm.test(\"_links.adress\", () => pm.expect(a._links.adress[0].href).to.eql(self+\"/adressen\"));\r",
-									"    pm.test(\"_links.cv\", () => pm.expect(a._links.cv[0].href).to.eql(self+\"/cvs\"));\r",
-									"    pm.test(\"_links.funktion\", () => pm.expect(a._links.funktion[0].href).to.eql(self+\"/funktionen\"));\r",
+									"    pm.test(\"_links.anleitungen\", () => pm.expect(a._links.anleitungen[0].href).to.eql(self+\"/anleitungen\"));\r",
+									"    pm.test(\"_links.adressen\", () => pm.expect(a._links.adressen[0].href).to.eql(self+\"/adressen\"));\r",
+									"    pm.test(\"_links.cvs\", () => pm.expect(a._links.cvs[0].href).to.eql(self+\"/cvs\"));\r",
+									"    pm.test(\"_links.funktionen\", () => pm.expect(a._links.funktionen[0].href).to.eql(self+\"/funktionen\"));\r",
 									"});\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(root));\r",
 									"pm.test(\"page.size\", () => pm.expect(jsonData.page.size).to.eql(jsonData._embedded.data.length));\r",
@@ -7974,10 +7974,10 @@
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
-									"pm.test(\"_links.anleitung\", () => pm.expect(jsonData._links.anleitung[0].href).to.eql(self+\"/anleitungen\"));\r",
-									"pm.test(\"_links.adress\", () => pm.expect(jsonData._links.adress[0].href).to.eql(self+\"/adressen\"));\r",
-									"pm.test(\"_links.cv\", () => pm.expect(jsonData._links.cv[0].href).to.eql(self+\"/cvs\"));\r",
-									"pm.test(\"_links.funktion\", () => pm.expect(jsonData._links.funktion[0].href).to.eql(self+\"/funktionen\"));"
+									"pm.test(\"_links.anleitungen\", () => pm.expect(jsonData._links.anleitungen[0].href).to.eql(self+\"/anleitungen\"));\r",
+									"pm.test(\"_links.adressen\", () => pm.expect(jsonData._links.adressen[0].href).to.eql(self+\"/adressen\"));\r",
+									"pm.test(\"_links.cvs\", () => pm.expect(jsonData._links.cvs[0].href).to.eql(self+\"/cvs\"));\r",
+									"pm.test(\"_links.funktionen\", () => pm.expect(jsonData._links.funktionen[0].href).to.eql(self+\"/funktionen\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -8053,10 +8053,10 @@
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
-									"pm.test(\"_links.anleitung\", () => pm.expect(jsonData._links.anleitung[0].href).to.eql(self+\"/anleitungen\"));\r",
-									"pm.test(\"_links.adress\", () => pm.expect(jsonData._links.adress[0].href).to.eql(self+\"/adressen\"));\r",
-									"pm.test(\"_links.cv\", () => pm.expect(jsonData._links.cv[0].href).to.eql(self+\"/cvs\"));\r",
-									"pm.test(\"_links.funktion\", () => pm.expect(jsonData._links.funktion[0].href).to.eql(self+\"/funktionen\"));"
+									"pm.test(\"_links.anleitungen\", () => pm.expect(jsonData._links.anleitungen[0].href).to.eql(self+\"/anleitungen\"));\r",
+									"pm.test(\"_links.adressen\", () => pm.expect(jsonData._links.adressen[0].href).to.eql(self+\"/adressen\"));\r",
+									"pm.test(\"_links.cvs\", () => pm.expect(jsonData._links.cvs[0].href).to.eql(self+\"/cvs\"));\r",
+									"pm.test(\"_links.funktionen\", () => pm.expect(jsonData._links.funktionen[0].href).to.eql(self+\"/funktionen\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -8677,10 +8677,10 @@
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
-									"pm.test(\"_links.anleitung\", () => pm.expect(jsonData._links.anleitung[0].href).to.eql(self+\"/anleitungen\"));\r",
-									"pm.test(\"_links.adress\", () => pm.expect(jsonData._links.adress[0].href).to.eql(self+\"/adressen\"));\r",
-									"pm.test(\"_links.cv\", () => pm.expect(jsonData._links.cv[0].href).to.eql(self+\"/cvs\"));\r",
-									"pm.test(\"_links.funktion\", () => pm.expect(jsonData._links.funktion[0].href).to.eql(self+\"/funktionen\"));"
+									"pm.test(\"_links.anleitungen\", () => pm.expect(jsonData._links.anleitungen[0].href).to.eql(self+\"/anleitungen\"));\r",
+									"pm.test(\"_links.adressen\", () => pm.expect(jsonData._links.adressen[0].href).to.eql(self+\"/adressen\"));\r",
+									"pm.test(\"_links.cvs\", () => pm.expect(jsonData._links.cvs[0].href).to.eql(self+\"/cvs\"));\r",
+									"pm.test(\"_links.funktionen\", () => pm.expect(jsonData._links.funktionen[0].href).to.eql(self+\"/funktionen\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -8796,10 +8796,10 @@
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
-									"pm.test(\"_links.anleitung\", () => pm.expect(jsonData._links.anleitung[0].href).to.eql(self+\"/anleitungen\"));\r",
-									"pm.test(\"_links.adress\", () => pm.expect(jsonData._links.adress[0].href).to.eql(self+\"/adressen\"));\r",
-									"pm.test(\"_links.cv\", () => pm.expect(jsonData._links.cv[0].href).to.eql(self+\"/cvs\"));\r",
-									"pm.test(\"_links.funktion\", () => pm.expect(jsonData._links.funktion[0].href).to.eql(self+\"/funktionen\"));"
+									"pm.test(\"_links.anleitungen\", () => pm.expect(jsonData._links.anleitungen[0].href).to.eql(self+\"/anleitungen\"));\r",
+									"pm.test(\"_links.adressen\", () => pm.expect(jsonData._links.adressen[0].href).to.eql(self+\"/adressen\"));\r",
+									"pm.test(\"_links.cvs\", () => pm.expect(jsonData._links.cvs[0].href).to.eql(self+\"/cvs\"));\r",
+									"pm.test(\"_links.funktionen\", () => pm.expect(jsonData._links.funktionen[0].href).to.eql(self+\"/funktionen\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -8897,10 +8897,10 @@
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
-									"pm.test(\"_links.anleitung\", () => pm.expect(jsonData._links.anleitung[0].href).to.eql(self+\"/anleitungen\"));\r",
-									"pm.test(\"_links.adress\", () => pm.expect(jsonData._links.adress[0].href).to.eql(self+\"/adressen\"));\r",
-									"pm.test(\"_links.cv\", () => pm.expect(jsonData._links.cv[0].href).to.eql(self+\"/cvs\"));\r",
-									"pm.test(\"_links.funktion\", () => pm.expect(jsonData._links.funktion[0].href).to.eql(self+\"/funktionen\"));"
+									"pm.test(\"_links.anleitungen\", () => pm.expect(jsonData._links.anleitungen[0].href).to.eql(self+\"/anleitungen\"));\r",
+									"pm.test(\"_links.adressen\", () => pm.expect(jsonData._links.adressen[0].href).to.eql(self+\"/adressen\"));\r",
+									"pm.test(\"_links.cvs\", () => pm.expect(jsonData._links.cvs[0].href).to.eql(self+\"/cvs\"));\r",
+									"pm.test(\"_links.funktionen\", () => pm.expect(jsonData._links.funktionen[0].href).to.eql(self+\"/funktionen\"));"
 								],
 								"type": "text/javascript"
 							}
