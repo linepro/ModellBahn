@@ -1,2 +1,2 @@
-zug,position,artikelId,hersteller,bestellNr,bezeichnung,lange,bahnverwaltung,gattung,betreibsnummer,abbildung,deleted
-TEST,1,00001,MARKLIN,3000,"BR 89.0",11.00,DB,BR89.0,"89 028",,false
+zug,position,artikelId,hersteller,bestellNr,bezeichnung,kategorie,unterKategorie,lange,bahnverwaltung,gattung,betreibsnummer,abbildung,deleted
+TEST,1,00001,MARKLIN,3000,"BR 89.0",,,11.00,DB,BR89.0,"89 028",,false

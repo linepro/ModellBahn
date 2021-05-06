@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "6e65a8f8-468a-4a2e-ab7f-47f4db6e5a3b",
+		"_postman_id": "3ffff194-097c-4fe4-a5d8-969639cb3430",
 		"name": "ModellBahn",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15963,7 +15963,7 @@
 								{
 									"key": "data",
 									"type": "file",
-									"src": "{{namedCsv}}"
+									"src": "{{abbildungCsv}}"
 								}
 							]
 						},
@@ -16098,7 +16098,7 @@
 								{
 									"key": "data",
 									"type": "file",
-									"src": "{{namedCsv}}"
+									"src": "{{epochCsv}}"
 								}
 							]
 						},
@@ -16413,7 +16413,7 @@
 								{
 									"key": "data",
 									"type": "file",
-									"src": "{{namedCsv}}"
+									"src": "{{abbildungCsv}}"
 								}
 							]
 						},
@@ -16458,7 +16458,7 @@
 								{
 									"key": "data",
 									"type": "file",
-									"src": "{{namedCsv}}"
+									"src": "{{abbildungCsv}}"
 								}
 							]
 						},
@@ -16593,7 +16593,7 @@
 								{
 									"key": "data",
 									"type": "file",
-									"src": "{{namedCsv}}"
+									"src": "{{abbildungCsv}}"
 								}
 							]
 						},
@@ -17445,12 +17445,12 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"pm.environment.set(\"user\", pm.variables.replaceIn(\"{{$randomUserName}}\"));\r",
-									"pm.environment.set(\"eMail\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
 									"pm.environment.set(\"firstName\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));\r",
 									"pm.environment.set(\"lastName\", pm.variables.replaceIn(\"{{$randomLastName}}\"));\r",
+									"pm.environment.set(\"username\", pm.variables.replaceIn(\"{{firstName}}{{$randomInt}}\"));\r",
+									"pm.environment.set(\"eMail\", pm.variables.replaceIn(\"{{firstName}}.{{lastName}}@{{$randomDomainName}}\"));\r",
 									"pm.environment.set(\"locale\", pm.variables.replaceIn(\"{{$randomLocale}}\"));\r",
-									"pm.environment.set(\"password\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"password\", pm.variables.replaceIn(\"{{$randomPassword}}\"));\r",
 									"var apiKey = pm.variables.get(\"mail_key\");\r",
 									"var header = {\r",
 									"    'Api-Token': apiKey,\r",
@@ -17493,7 +17493,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\t\"name\": \"{{user}}\",\r\n\t\"eMail\": \"{{eMail}}\",\r\n    \"firstName\": \"{{firstName}}\",\r\n\t\"lastName\": \"{{lastName}}\",\r\n    \"locale\": \"{{locale}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+							"raw": "{\r\n\t\"name\": \"{{username}}\",\r\n\t\"eMail\": \"{{eMail}}\",\r\n\t\"firstName\": \"{{firstName}}\",\r\n\t\"lastName\": \"{{lastName}}\",\r\n\t\"locale\": \"{{locale}}\",\r\n\t\"password\": \"{{password}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -17679,7 +17679,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"pm.environment.set(\"password\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"password\", pm.variables.replaceIn(\"{{$randomPassword}}\"));\r",
 									"const regex = /(token=)([^\"]+)/;\r",
 									"var apiKey = pm.variables.get(\"mail_key\");\r",
 									"var header = {\r",
@@ -17778,7 +17778,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"pm.environment.set(\"newPassword\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"newPassword\", pm.variables.replaceIn(\"{{$randomPassword}}\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -17809,7 +17809,7 @@
 								},
 								{
 									"key": "username",
-									"value": "{{user}}",
+									"value": "{{username}}",
 									"type": "string"
 								}
 							]
@@ -17817,13 +17817,13 @@
 						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "{{api}}/user/{{user}}?password={{newPassword}}",
+							"raw": "{{api}}/user/{{username}}?password={{newPassword}}",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"user",
-								"{{user}}"
+								"{{username}}"
 							],
 							"query": [
 								{
@@ -17842,10 +17842,11 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"pm.environment.set(\"eMail\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
 									"pm.environment.set(\"firstName\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));\r",
 									"pm.environment.set(\"lastName\", pm.variables.replaceIn(\"{{$randomLastName}}\"));\r",
-									"pm.environment.set(\"locale\", pm.variables.replaceIn(\"{{$randomLocale}}\"));"
+									"pm.environment.set(\"eMail\", pm.variables.replaceIn(\"{{firstName}}.{{lastName}}@{{$randomDomainName}}\"));\r",
+									"pm.environment.set(\"locale\", pm.variables.replaceIn(\"{{$randomLocale}}\"));\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -17858,11 +17859,11 @@
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/user\");\r",
-									"var self = pm.variables.replaceIn(\"{{api}}/user/{{user}}\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/user/{{username}}\");\r",
 									"var register = pm.variables.replaceIn(\"{{api}}/register\");\r",
 									"var forgot = pm.variables.replaceIn(\"{{api}}/forgot\");\r",
 									"var jsonData = pm.response.json();\r",
-									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"user\")));\r",
+									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"username\")));\r",
 									"pm.test(\"eMail\", () => pm.expect(jsonData.eMail).to.eql(pm.variables.get(\"eMail\")));\r",
 									"pm.test(\"firstName\", () => pm.expect(jsonData.firstName).to.eql(pm.variables.get(\"firstName\")));\r",
 									"pm.test(\"lastName\", () => pm.expect(jsonData.lastName).to.eql(pm.variables.get(\"lastName\")));\r",
@@ -17891,7 +17892,7 @@
 								},
 								{
 									"key": "username",
-									"value": "{{user}}",
+									"value": "{{username}}",
 									"type": "string"
 								}
 							]
@@ -17922,13 +17923,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{api}}/user/{{user}}",
+							"raw": "{{api}}/user/{{username}}",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"user",
-								"{{user}}"
+								"{{username}}"
 							]
 						}
 					},
@@ -17945,11 +17946,11 @@
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));\r",
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/user\");\r",
-									"var self = pm.variables.replaceIn(\"{{api}}/user/{{user}}\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/user/{{username}}\");\r",
 									"var register = pm.variables.replaceIn(\"{{api}}/register\");\r",
 									"var forgot = pm.variables.replaceIn(\"{{api}}/forgot\");\r",
 									"var jsonData = pm.response.json();\r",
-									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"user\")));\r",
+									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"username\")));\r",
 									"pm.test(\"eMail\", () => pm.expect(jsonData.eMail).to.eql(pm.variables.get(\"eMail\")));\r",
 									"pm.test(\"firstName\", () => pm.expect(jsonData.firstName).to.eql(pm.variables.get(\"firstName\")));\r",
 									"pm.test(\"lastName\", () => pm.expect(jsonData.lastName).to.eql(pm.variables.get(\"lastName\")));\r",
@@ -17978,7 +17979,7 @@
 								},
 								{
 									"key": "username",
-									"value": "{{user}}",
+									"value": "{{username}}",
 									"type": "string"
 								}
 							]
@@ -17991,13 +17992,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/user/{{user}}",
+							"raw": "{{api}}/user/{{username}}",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"user",
-								"{{user}}"
+								"{{username}}"
 							]
 						}
 					},
@@ -18027,7 +18028,7 @@
 								},
 								{
 									"key": "username",
-									"value": "{{user}}",
+									"value": "{{username}}",
 									"type": "string"
 								}
 							]
@@ -18041,13 +18042,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/user/{{user}}",
+							"raw": "{{api}}/user/{{username}}",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"user",
-								"{{user}}"
+								"{{username}}"
 							]
 						}
 					},
@@ -18640,7 +18641,7 @@
 		},
 		{
 			"key": "decoderCvCsv",
-			"value": "{{testFiles}}decoder.csv"
+			"value": "{{testFiles}}decoderCv.csv"
 		},
 		{
 			"key": "decoderFunktionCsv",
@@ -18661,6 +18662,10 @@
 		{
 			"key": "decoderTypFunktionCsv",
 			"value": "{{testFiles}}decoderTypFunktion.csv"
+		},
+		{
+			"key": "epochCsv",
+			"value": "{{testFiles}}epoch.csv"
 		},
 		{
 			"key": "herstellerCsv",

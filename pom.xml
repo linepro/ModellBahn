@@ -975,9 +975,13 @@
                                 <argument>--timeout</argument>
                                 <argument>120000</argument>
                                 <argument>--reporters</argument>
-                                <argument>cli,junit</argument>
+                                <argument>cli,junit,htmlextra</argument>
+                                <argument> --reporter-htmlextra-title</argument>
+                                <argument>"ModellBahn Collection"</argument>
+                                <argument> --reporter-htmlextra-export</argument>
+                                <argument>${exec.dir}surefire-reports/ModellBahn-collection.html</argument>
                                 <argument>--reporter-json-export</argument>
-                                <argument>newmanResult.json</argument>
+                                <argument>${exec.dir}surefire-reports/ModellBahn-collection.json</argument>
                             </arguments>
                             <workingDirectory>${exec.dir}</workingDirectory>
                         </configuration>

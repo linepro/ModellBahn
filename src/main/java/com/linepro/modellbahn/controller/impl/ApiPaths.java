@@ -258,10 +258,10 @@ public interface ApiPaths {
     String CONFIRM_USER    = API_ROOT + "confirm";
     String FORGOT_PASSWORD = API_ROOT + "forgot";
     String RESET_PASSWORD  = API_ROOT + "reset";
-    String GET_USER        = USER_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
-    String CHANGE_PASSWORD = USER_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
-    String UPDATE_USER     = USER_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
-    String DELETE_USER     = USER_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String GET_USER        = USER_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.USERNAME_PATTERN + "}";
+    String CHANGE_PASSWORD = USER_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.USERNAME_PATTERN + "}";
+    String UPDATE_USER     = USER_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.USERNAME_PATTERN + "}";
+    String DELETE_USER     = USER_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.USERNAME_PATTERN + "}";
 
     String[] REGISTER_ENDPOINTS = {
         REGISTER_USER, CONFIRM_USER, FORGOT_PASSWORD, RESET_PASSWORD

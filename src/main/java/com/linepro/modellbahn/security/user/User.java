@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.validation.Locale;
@@ -48,6 +49,7 @@ public class User {
     private Long id;
 
     @Column(name = DBNames.NAME, length = 50, nullable = false)
+    @Pattern(regexp = "^" + DBNames.USERNAME_PATTERN + "$", message = "{com.linepro.modellbahn.validator.constraints.username.invalid}")
     @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.name.notempty}")
     private String name;
 

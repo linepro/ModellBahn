@@ -1,2 +1,2 @@
-hersteller,bestellNr,bezeichnung,kategorie,unterKategorie,lange,massstab,spurweite,epoch,bahnverwaltung,gattung,betreibsnummer,bauzeit,achsfolg,sondermodell,aufbau,licht,kupplung,steuerung,decoderHersteller,decoderBestellNr,motorTyp,anmerkung,anleitungen,explosionszeichnung,abbildung,deleted
-MARKLIN,3003,"BR 24",LOKOMOTIV,DAMPF,11.00,H0,H0,III,DB,BR24,"24 001",1907-01-01,CH2T,,LK,L1V,RELEX,FRU,,,SFCM,,,,,false
+hersteller,bestellNr,bezeichnung,kategorie,unterKategorie,lange,massstab,spurweite,epoch,bahnverwaltung,gattung,betreibsnummer,bauzeit,achsfolg,sondermodell,aufbau,licht,kupplung,steuerung,decoderHersteller,decoderBestellNr,motorTyp,anmerkung,anleitungen,explosionszeichnung,abbildung,grossansicht,deleted
+MARKLIN,3003,"BR 24",LOKOMOTIV,DAMPF,11.00,H0,H0,III,DB,BR24,"24 001",1907-01-01,CH2T,,LK,L3V,RELEX,FRU,,,SFCM,,,,,,false

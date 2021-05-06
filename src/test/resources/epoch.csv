@@ -1,2 +1,2 @@
-name,bezeichnung,startYear,endYear,deleted
-TEST,Test,1990,2000,false
+name,bezeichnung,startYear,endYear,abbildung,deleted
+TEST,Test,1990,2000,,false

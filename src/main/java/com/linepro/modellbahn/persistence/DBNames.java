@@ -162,8 +162,9 @@ public interface DBNames {
     String LOCALE = "locale";
     String ROLES = "roles";
 
-    String NAME_PATTERN = "[A-Z0-9\\-\\.]+";
     String ID_PATTERN = "[A-Z0-9]+";
     String FUNKTION_PATTERN = "(?:F\\d|F[12]\\d|F3[012]|K\\d|K1[012345]|S[0123456])";
+    String NAME_PATTERN = "[A-Z0-9\\-\\.]+";
+    String USERNAME_PATTERN = "[A-Za-z0-9_\\-\\.]+";
 }
 
