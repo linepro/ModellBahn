@@ -45,7 +45,7 @@ import lombok.experimental.SuperBuilder;
         @UniqueConstraint(name = DBNames.ZUG_CONSIST + "_UC1", columnNames = { DBNames.ZUG_ID, DBNames.POSITION })
         })
 @NamedEntityGraphs({
-    @NamedEntityGraph(name="consist",
+    @NamedEntityGraph(name="zugConsist",
         includeAllAttributes = true,
         attributeNodes = {
             @NamedAttributeNode(value = "zug", subgraph = "consist.zug"),

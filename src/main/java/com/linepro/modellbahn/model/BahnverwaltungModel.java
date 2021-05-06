@@ -37,10 +37,10 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.LAND, ApiNames.DELETED, ApiNames.LINKS })
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.LAND, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.BAHNVERWALTUNG)
 @Schema(name = ApiNames.BAHNVERWALTUNG, description = "Railway company.")
-public class BahnverwaltungModel extends SpringdocModel<BahnverwaltungModel> implements NamedItemModel, Comparable<BahnverwaltungModel> {
+public class BahnverwaltungModel extends SpringdocModel<BahnverwaltungModel> implements NamedWithAbbildungModel, Comparable<BahnverwaltungModel> {
 
     private static final long serialVersionUID = -6997053850560073389L;
 
@@ -56,10 +56,13 @@ public class BahnverwaltungModel extends SpringdocModel<BahnverwaltungModel> imp
     @Schema(description = "Country ISO 3166 Code", example = "DE")
     private String land;
 
+    @JsonProperty(ApiNames.ABBILDUNG)
+    @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/bahnverwaltung/DB/abbildung.jpg", accessMode = AccessMode.READ_ONLY)
+    private String abbildung;
+
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
     private Boolean deleted;
-
 
     @Override
     public int compareTo(BahnverwaltungModel other) {

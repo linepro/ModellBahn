@@ -9,6 +9,7 @@ import javax.validation.constraints.Positive;
 
 import com.linepro.modellbahn.entity.impl.NamedWithAbbildungImpl;
 import com.linepro.modellbahn.persistence.DBNames;
+import com.linepro.modellbahn.util.ToStringBuilder;
 import com.linepro.modellbahn.validation.Unique;
 
 import lombok.Getter;
@@ -43,4 +44,13 @@ public class Epoch extends NamedWithAbbildungImpl {
     @Column(name = DBNames.END_YEAR)
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.endYear}")
     private Integer endYear;
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("startYear", startYear)
+            .append("endYear", endYear)
+            .toString();
+    }
 }

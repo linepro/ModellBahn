@@ -43,7 +43,7 @@ INSERT INTO bahnverwaltung (deleted, land, bezeichnung, name, abbildung, id) VAL
 INSERT INTO bahnverwaltung (deleted, land, bezeichnung, name, abbildung, id) VALUES (FALSE, 'DE', 'Deutsche Schlafwagen und Speisewagengesellschaft (DSG)', 'DSG', NULL, 83);
 INSERT INTO bahnverwaltung (deleted, land, bezeichnung, name, abbildung, id) VALUES (FALSE, 'DE', 'Elmshorn-Barmstedt-Oldesloer Eisenbahn (EBOE)', 'EBOE', NULL, 84);
 INSERT INTO bahnverwaltung (deleted, land, bezeichnung, name, abbildung, id) VALUES (FALSE, 'DE', 'Eisenbahn-Service GmbH (ESG)', 'ESG', NULL, 85);
-INSERT INTO bahnverwaltung (deleted, land, bezeichnung, name, abbildung, id) VALUES (FALSE, 'FR', ' Société Nationale des Chemins de Fer Français (SNCF)', 'EST', NULL, 86);
+INSERT INTO bahnverwaltung (deleted, land, bezeichnung, name, abbildung, id) VALUES (FALSE, 'FR', 'Société Nationale des Chemins de Fer Français (SNCF)', 'EST', NULL, 86);
 INSERT INTO bahnverwaltung (deleted, land, bezeichnung, name, abbildung, id) VALUES (FALSE, 'DE', 'Eisenbahnen und Verkehrsbetriebe Elbe-Weser GmbH (EVB)', 'EVB', NULL, 87);
 INSERT INTO bahnverwaltung (deleted, land, bezeichnung, name, abbildung, id) VALUES (FALSE, 'US', 'GM Electro Motive Division (EMD)', 'EMD', NULL, 88);
 INSERT INTO bahnverwaltung (deleted, land, bezeichnung, name, abbildung, id) VALUES (FALSE, 'DE', '„Eisenbahn + Häfen“', 'EUH', NULL, 89);

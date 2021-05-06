@@ -164,6 +164,6 @@ public interface DBNames {
 
     String NAME_PATTERN = "[A-Z0-9\\-\\.]+";
     String ID_PATTERN = "[A-Z0-9]+";
-    String FUNKTION_PATTERN = "F([12]\\d|3[012]|\\d)$|^K(1[012345]|\\d)$|^S[0123456]";
+    String FUNKTION_PATTERN = "(?:F\\d|F[12]\\d|F3[012]|K\\d|K1[012345]|S[0123456])";
 }
 

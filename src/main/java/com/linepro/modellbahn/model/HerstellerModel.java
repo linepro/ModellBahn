@@ -39,7 +39,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.LAND, ApiNames.URL, ApiNames.TELEFON, ApiNames.DELETED, ApiNames.LINKS })
+@JsonPropertyOrder({ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.LAND, ApiNames.URL, ApiNames.TELEFON, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.HERSTELLER)
 @Schema(name = ApiNames.HERSTELLER, description = "Manufacturer.")
 public class HerstellerModel extends SpringdocModel<HerstellerModel> implements NamedWithAbbildungModel, Comparable<HerstellerModel> {

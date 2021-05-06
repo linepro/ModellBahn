@@ -132,7 +132,7 @@ public class ZugController extends NamedItemController<ZugModel> {
         return super.delete(name);
     }
 
-    @PostMapping(path = ApiPaths.ADD_CONSIST, produces = MediaType.APPLICATION_JSON)
+    @PostMapping(path = ApiPaths.ADD_CONSIST, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     @Operation(summary = "Adds a vehicle to a train", description = "", operationId = "add", tags = { ApiNames.ZUG }, responses = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
