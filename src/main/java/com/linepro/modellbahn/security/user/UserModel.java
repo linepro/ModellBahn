@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
@@ -34,18 +34,20 @@ import lombok.ToString;
 @ToString
 @JsonRootName(value = ApiNames.USER)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown=true)
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.EMAIL, ApiNames.FIRST_NAME, ApiNames.LAST_NAME, ApiNames.LOCALE, ApiNames.PASSWORD, ApiNames.ENABLED,
-                     ApiNames.LOGIN_ATTEMPTS, ApiNames.PASSWORD_AGING, ApiNames.PASSWORD_CHANGED, ApiNames.CONFIRMATION_EXPIRES, ApiNames.LAST_LOGIN,
-                     ApiNames.ROLES, ApiNames.LINKS })
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonNaming(SnakeCaseStrategy.class)
+@JsonPropertyOrder({
+                ApiNames.NAMEN, ApiNames.EMAIL, ApiNames.FIRST_NAME, ApiNames.LAST_NAME, ApiNames.LOCALE, ApiNames.PASSWORD, ApiNames.ENABLED,
+                ApiNames.LOGIN_ATTEMPTS, ApiNames.PASSWORD_AGING, ApiNames.PASSWORD_CHANGED, ApiNames.CONFIRMATION_EXPIRES, ApiNames.LAST_LOGIN,
+                ApiNames.ROLES, ApiNames.LINKS
+})
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.USER)
 @Schema(name = ApiNames.USER, description = "System User")
 public class UserModel extends SpringdocModel<UserModel> {
 
     @JsonProperty(ApiNames.NAMEN)
     @Schema(description = "Screen Name", example = "linepro", accessMode = AccessMode.READ_ONLY)
-    private String name;
+    private String username;
 
     @JsonProperty(ApiNames.EMAIL)
     @Schema(description = "eMail address", example = "linepro@compuserve.com")
@@ -68,36 +70,37 @@ public class UserModel extends SpringdocModel<UserModel> {
     private String password;
 
     @JsonProperty(ApiNames.ENABLED)
-    @Schema(description = "Password, encrypted", example = "Pa$5w0rd", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "false if user blocked", example = "true")
     private Boolean enabled;
 
     @JsonProperty(ApiNames.LOGIN_ATTEMPTS)
-    @Schema(description = "Password, encrypted", example = "Pa$5w0rd", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Number of login attempts before lockout", example = "5")
     private Integer loginAttempts;
 
     @JsonProperty(ApiNames.PASSWORD_AGING)
-    @Schema(description = "Password, encrypted", example = "Pa$5w0rd", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Password aging enabled", example = "true")
     private Integer passwordAging;
 
     @JsonProperty(ApiNames.PASSWORD_CHANGED)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @Schema(description = "Password, encrypted", example = "Pa$5w0rd", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Las Password change", example = "1960-02-15T07:00:00", accessMode = AccessMode.READ_ONLY)
     private LocalDateTime passwordChanged;
 
     @JsonProperty(ApiNames.CONFIRMATION_EXPIRES)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @Schema(description = "Password, encrypted", example = "Pa$5w0rd", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Confirmation token expires", example = "2011-12-31T00:00:00", accessMode = AccessMode.READ_ONLY)
     private LocalDateTime confirmationExpires;
 
     @JsonProperty(ApiNames.LAST_LOGIN)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @Schema(description = "Password, encrypted", example = "Pa$5w0rd", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Date of last login", example = "2021-05-31T12:00:00", accessMode = AccessMode.READ_ONLY)
     private LocalDateTime lastLogin;
 
     @JsonProperty(ApiNames.ROLES)
-    @Schema(description = "Roles", example = "USER", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Roles", example = "[USER]", accessMode = AccessMode.READ_ONLY)
     private List<String> roles;
 
     @Schema(name = ApiNames.USER + "Page")
-    public static class PagedUserModel extends PagedSchema<UserModel>{}
+    public static class PagedUserModel extends PagedSchema<UserModel> {
+    }
 }

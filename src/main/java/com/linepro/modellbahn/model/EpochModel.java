@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
@@ -37,7 +37,7 @@ import lombok.ToString;
 @JsonRootName(value = ApiNames.EPOCH)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+@JsonNaming(SnakeCaseStrategy.class)
 @JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.START_YEAR, ApiNames.END_YEAR, ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.EPOCH)
 @Schema(name = ApiNames.EPOCH, description = "Era - NEM 800.")

@@ -1,6 +1,7 @@
 package com.linepro.modellbahn.security.user;
 
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+import static com.linepro.modellbahn.security.WebSecurityConfig.isAdmin;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
@@ -48,6 +50,7 @@ import com.google.common.base.Charsets;
 import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.ApiMessages;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.i18n.LocaleSetter;
 import com.linepro.modellbahn.i18n.MessageTranslator;
 import com.linepro.modellbahn.security.EmailService;
 import com.linepro.modellbahn.security.WebSecurityConfig;
@@ -83,6 +86,15 @@ public class UserService implements UserDetailsService {
     @Value("${com.linepro.modellbahn.user.reset-time:1}")
     protected Integer resetTime;
 
+    @Value("${com.linepro.modellbahn.user.confirmUrl:}")
+    private final String confirmationUrl;
+
+    @Value("${com.linepro.modellbahn.user.resetUrl:}")
+    private final String resetUrl;
+
+    @Value("${com.linepro.modellbahn.noreply}")
+    private final String noReply;
+
     @Autowired
     private final UserRepository userRepository;
 
@@ -98,14 +110,8 @@ public class UserService implements UserDetailsService {
     @Autowired
     private final MessageTranslator translator;
 
-    @Value("${com.linepro.modellbahn.user.confirmUrl:}")
-    private final String confirmationUrl;
-
-    @Value("${com.linepro.modellbahn.user.resetUrl:}")
-    private final String resetUrl;
-
-    @Value("${com.linepro.modellbahn.noreply}")
-    private final String noReply;
+    @Autowired
+    private final LocaleSetter localeSetter;
 
     public Optional<UserModel> get(String name, Authentication authentication) {
         return userRepository.findByName(name)
@@ -118,7 +124,7 @@ public class UserService implements UserDetailsService {
                         Pageable.unpaged();
 
         Page<User> found;
-        
+
         if (model.isPresent()) {
             Example<User> user = Example.of(fromModel(new User(), model.get(), isAdmin(authentication)));
 
@@ -126,13 +132,15 @@ public class UserService implements UserDetailsService {
         } else {
             found = userRepository.findAll(pageable);
         }
-        
+
         return found.map(u -> toModel(u, isAdmin(authentication)));
     }
 
     public Optional<UserModel> update(String name, UserModel model, Authentication authentication) {
         return userRepository.findByName(name)
                              .map(u -> {
+                                 // localeSetter.setLocale(u.getLocale()); // TODO: model.locale ? : Should really be authentication's locale
+
                                  if (!name.equals(authentication.getName())) {
                                      throw new AccessDeniedException(translator.getMessage(ApiMessages.INVALID_USER, name));
                                  }
@@ -163,6 +171,8 @@ public class UserService implements UserDetailsService {
     public boolean delete(String name, Authentication authentication) {
         return userRepository.findByName(name)
                              .map(e -> {
+                                 // localeSetter.setLocale(e.getLocale()); // should really be Authentication's locale
+
                                  if (!name.equals(authentication.getName())) {
                                      throw new AccessDeniedException(translator.getMessage(ApiMessages.INVALID_USER, name));
                                  }
@@ -178,22 +188,26 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByName(username)
                              .map(u -> UserDetailsImpl.builder()
-                                                      .user(u)
-                                                      .isAccountNonExpired(isAccountNonExpired(u))
-                                                      .isAccountNonLocked(isAccountNonLocked(u))
-                                                      .isCredentialsNonExpired(isCredentialsNonExpired(u))
-                                                      .authorities(getAuthorities(u))
-                                                      .build())
+                                                       .user(u)
+                                                       .isAccountNonExpired(isAccountNonExpired(u))
+                                                       .isAccountNonLocked(isAccountNonLocked(u))
+                                                       .isCredentialsNonExpired(isCredentialsNonExpired(u))
+                                                       .authorities(getAuthorities(u))
+                                                       
+                                                       .build()
+                             )
                              .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 
-    public UserMessage register(UserModel model) {
+    public UserMessage register(HttpSession session, UserModel model) {
         Set<ConstraintViolation<?>> errors = new HashSet<>();
+
+        localeSetter.setLocale(session, model.getLocale());
 
         errors.addAll(passwordProcessor.validate(model.getPassword()));
 
         User user = User.builder()
-                        .name(model.getName())
+                        .name(model.getUsername())
                         .email(model.getEmail())
                         .firstName(model.getFirstName())
                         .lastName(model.getLastName())
@@ -320,6 +334,8 @@ public class UserService implements UserDetailsService {
         if (found.isPresent()) {
             User user = found.get();
 
+            // localeSetter.setLocale(user.getLocale()); // should be authentication's locale
+
             if (!name.equals(authentication.getName())) {
                 throw new AccessDeniedException(translator.getMessage(ApiMessages.INVALID_USER, name));
             }
@@ -346,29 +362,25 @@ public class UserService implements UserDetailsService {
         user.setConfirmationExpires(null);
     }
 
-    protected boolean isAdmin(Authentication authentication) {
-        return (authentication.getAuthorities().contains(WebSecurityConfig.ADMIN));
-    }
-
     protected UserModel toModel(User u, boolean isAdmin) {
         UserModelBuilder builder = UserModel.builder()
-                           .name(u.getName())
-                           .email(u.getEmail())
-                           .firstName(u.getFirstName())
-                           .lastName(u.getLastName())
-                           .locale(u.getLocale())
-                           .enabled(u.getEnabled())
-                           .lastLogin(u.getLastLogin());
+                                            .username(u.getName())
+                                            .email(u.getEmail())
+                                            .firstName(u.getFirstName())
+                                            .lastName(u.getLastName())
+                                            .locale(u.getLocale())
+                                            .enabled(u.getEnabled())
+                                            .lastLogin(u.getLastLogin());
 
-             if (isAdmin) {
-                   builder = builder.passwordAging(u.getPasswordAging())
-                           .passwordChanged(u.getPasswordChanged())
-                           .confirmationExpires(u.getConfirmationExpires())
-                           .loginAttempts(u.getLoginAttempts())
-                           .roles(u.getRoles());
-            }
+        if (isAdmin) {
+            builder = builder.passwordAging(u.getPasswordAging())
+                             .passwordChanged(u.getPasswordChanged())
+                             .confirmationExpires(u.getConfirmationExpires())
+                             .loginAttempts(u.getLoginAttempts())
+                             .roles(u.getRoles());
+        }
 
-           return builder.build();
+        return builder.build();
     }
 
     protected User fromModel(User user, UserModel model, boolean isAdmin) {
@@ -378,10 +390,10 @@ public class UserService implements UserDetailsService {
             if (model.getEnabled() != null) user.setEnabled(model.getEnabled());
             if (!CollectionUtils.isEmpty(model.getRoles())) user.setRoles(model.getRoles());
         } else {
-                if (StringUtils.hasText(model.getEmail())) user.setEmail(model.getEmail());
-                if (StringUtils.hasText(model.getFirstName())) user.setFirstName(model.getFirstName());
-                if (StringUtils.hasText(model.getLastName())) user.setLastName(model.getLastName());
-                if (StringUtils.hasText(model.getLocale())) user.setLocale(model.getLocale());
+            if (StringUtils.hasText(model.getEmail())) user.setEmail(model.getEmail());
+            if (StringUtils.hasText(model.getFirstName())) user.setFirstName(model.getFirstName());
+            if (StringUtils.hasText(model.getLastName())) user.setLastName(model.getLastName());
+            if (StringUtils.hasText(model.getLocale())) user.setLocale(model.getLocale());
         }
 
         return user;
@@ -490,7 +502,6 @@ public class UserService implements UserDetailsService {
                 return value;
             }
 
-
             @Override
             public <U> U unwrap(Class<U> type) {
                 return null;
@@ -557,7 +568,8 @@ public class UserService implements UserDetailsService {
         return Optional.ofNullable(user.getRoles())
                        .map(r -> r.stream()
                                   .map(o -> new SimpleGrantedAuthority(o))
-                                  .collect(Collectors.toSet()))
+                                  .collect(Collectors.toSet())
+                       )
                        .orElse(Collections.emptySet());
     }
 }

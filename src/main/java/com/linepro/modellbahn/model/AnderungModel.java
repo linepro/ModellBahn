@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.model.enums.AnderungsTyp;
@@ -40,7 +40,7 @@ import lombok.ToString;
 @JsonRootName(value = ApiNames.ANDERUNG)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+@JsonNaming(SnakeCaseStrategy.class)
 @JsonPropertyOrder({ ApiNames.ARTIKEL_ID, ApiNames.ANDERUNG_ID, ApiNames.ANDERUNGSDATUM, ApiNames.ANDERUNGS_TYP, ApiNames.BEZEICHNUNG, ApiNames.MENGE, ApiNames.ANMERKUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.ANDERUNG)
 @Schema(name = ApiNames.ANDERUNG, description = "Changes tp an article")

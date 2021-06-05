@@ -16,16 +16,19 @@ import com.linepro.modellbahn.security.password.PasswordProcessor;
 import com.linepro.modellbahn.security.user.UserAuthenticationListener;
 import com.linepro.modellbahn.security.user.UserController;
 import com.linepro.modellbahn.security.user.UserModelProcessor;
+import com.linepro.modellbahn.security.user.UserRestController;
 import com.linepro.modellbahn.security.user.UserService;
 
 @Import({
     EmailService.class,
+    JsonAccessDeniedHandler.class,
     ModellBahnAccessDeniedHandler.class,
     ModellBahnAuthenticationEntryPoint.class,
     PasswordProcessor.class,
     UserAuthenticationListener.class,
-    UserService.class,
     UserController.class,
+    UserService.class,
+    UserRestController.class,
     UserModelProcessor.class,
     WebSecurityConfig.class
 })

@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
@@ -38,7 +38,7 @@ import lombok.ToString;
 @JsonRootName(value = ApiNames.TEIL)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+@JsonNaming(SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.TEIL_HERSTELLER, ApiNames.TEIL_BESTELL_NR, ApiNames.BEZEICHNUNG,
     ApiNames.KATEGORIE, ApiNames.UNTER_KATEGORIE, ApiNames.MENGE, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.TEILEN)

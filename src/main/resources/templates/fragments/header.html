@@ -1,0 +1,35 @@
+<html lang="de" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="header-css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"></meta>
+    <meta name="author" content="John Goff"></meta>
+    <link rel="stylesheet" href="/css/templates.css"></link>
+    <script type="text/javascript" src="/js/templates.js"></script>
+    <link rel="icon" href="favicon.ico"></link>
+</head>
+<body>
+    <div th:fragment="header">
+        <header>
+            <nav>
+                <div class="home">
+                    <h1 class="title" th:text="#{template.title}"></h1>
+                    <div class="logo dropdown">
+                        <img src="/img/ModellBahn.svg" class="logo"></img>
+                        <div class="dropdown-content">
+                            <a th:if="${#authentication != null}" th:href="@{'/account/' + #authentication.name}" th:text="#{template.profile}">
+                                <span th:text="#{authentication.name}"></span>
+                            </a>
+                            <a th:if="${#authentication != null}" th:href="@{/logout}" th:text="#{template.logout}"></a>
+                            <a th:href="@{/about.html}" th:text="#{template.about}"></a>
+                        </div>
+                    </div>
+                </div>
+                <hr class="highlight"></hr>
+            </nav>
+        </header>
+    </div>
+</body>
+</html>

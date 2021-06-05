@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="de" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/header :: header-css">
+<title>Error</title>
+</head>
+<body>
+    <div th:replace="fragments/header :: header"></div>
+
+    <section style="top: 300.722px;">
+        <article>
+            <div id="data">
+                <h3 th:text="#{template.failure}"></h3>
+                <p th:text="${#httpServletRequest.requestURL}"></p>
+                <table>
+                    <tr>
+                        <td th:text="#{template.timestamp}"></td>
+                        <td>${timestamp}</td>
+                    </tr>
+                    <tr>
+                        <td th:text="#{template.error}"></td>
+                        <td>${error}</td>
+                    </tr>
+                    <tr>
+                        <td th:text="#{template.status}"></td>
+                        <td>${status}</td>
+                    </tr>
+                    <tr>
+                        <td th:text="#{template.message}"></td>
+                        <td>${message}</td>
+                    </tr>
+                </table>
+            </div>
+        </article>
+    </section>
+
+    <footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

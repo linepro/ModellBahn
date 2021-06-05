@@ -1,0 +1,15 @@
+<html lang="de" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+    <footer th:fragment="footer">
+        <hr class="highlight"></hr>
+        <ul class="footer">
+            <li style="float: left; position: relative; transform: translate(1rem, 0);">
+	            <a class="nav-button" style="float: left; position: relative; transform: translate(1rem, -0.5rem);" th:href="@{/swagger-ui/index.html}" th:text="#{template.api}"></a>
+	        </li>
+            <li style="margin-right: 0.5rem;" th:text="#{template.copyright}"></li>
+        </ul>
+    </footer>
+</body>
+</html>

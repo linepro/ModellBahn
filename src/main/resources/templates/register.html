@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="de" xmlns="http://www.w3.org/1999/xhtml"	 xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/header :: header-css">
+<title>Registration</title>
+</head>
+<body>
+    <div th:replace="fragments/header :: header"></div>
+
+    <section style="top: 300.722px;">
+        <article>
+            <ul class="centered">
+                <li>
+                    <form id="registration" action="#" th:action="@{/register}" th:object="${user}" method="post"
+                          onchange="document.getElementById('register').disabled = !document.getElementById('registration').checkValidity()">
+                        <h3 th:text="#{template.registration}"></h3>
+                        <ul>
+                            <li th:replace="fragments/fields :: username"></li>
+                            <li th:replace="fragments/fields :: firstName"></li>
+                            <li th:replace="fragments/fields :: lastName"></li>
+                            <li th:replace="fragments/fields :: email"></li>
+                            <li th:replace="fragments/fields :: emailConfirm"></li>
+                            <li th:replace="fragments/fields :: password"></li>
+                            <li th:replace="fragments/fields :: passwordConfirm"></li>
+                            <li th:replace="fragments/fields :: locale"></li>
+                            <li class="field">
+                                <button type="submit" id="register" class="nav-button" th:text="#{template.register}" disabled="disabled"></button>
+                            </li>
+                        </ul>
+                    </form>
+                </li>
+                <li th:replace="fragments/fields :: messages"></li>
+            </ul>
+        </article>
+    </section>
+
+    <footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

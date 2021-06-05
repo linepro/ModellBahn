@@ -7,9 +7,10 @@ import org.springframework.stereotype.Component;
 
 @Import({
     ApplicationReadyListener.class,
-    ErrorHandler.class
+    ErrorHandler.class,
+    MvcConfig.class,
+    ThymleafConfiguration.class
 })
 @Component(PREFIX + "Configuration")
 public class Configuration {
-
 }

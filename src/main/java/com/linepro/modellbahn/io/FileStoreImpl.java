@@ -32,7 +32,7 @@ public class FileStoreImpl implements FileStore {
     @Value("${spring.mvc.static-path-pattern:" + STATIC_FILE_PATH + "}")
     private String staticPathPattern;
 
-    @Value("${spring.resources.static-locations:" + STATIC_FILE_LOCATIONS + "}")
+    @Value("${com.linepro.modellbahn.fileStore:" + STATIC_FILE_LOCATIONS + "}")
     private List<String> staticLocations;
 
     @Value("${spring.mvc.servlet.context-path:}")
@@ -57,7 +57,7 @@ public class FileStoreImpl implements FileStore {
 
     @Override
     public Path itemPath(String modelName, String... identifiers) {
-        return Paths.get(storeFolder).resolve(Paths.get(modelName, identifiers));
+        return Paths.get(storeFolder, "data").resolve(Paths.get(modelName, identifiers));
     }
 
     @Override

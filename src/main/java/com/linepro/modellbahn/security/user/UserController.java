@@ -1,184 +1,113 @@
 package com.linepro.modellbahn.security.user;
 
-import static org.springframework.http.HttpStatus.ACCEPTED;
-import static org.springframework.http.ResponseEntity.accepted;
-import static org.springframework.http.ResponseEntity.noContent;
-import static org.springframework.http.ResponseEntity.notFound;
-import static org.springframework.http.ResponseEntity.ok;
-import static org.springframework.http.ResponseEntity.status;
-
-import java.util.Optional;
-
-import javax.ws.rs.core.MediaType;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.RepresentationModel;
-import org.springframework.hateoas.server.ExposesResourceFor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.linepro.modellbahn.configuration.UserMessage;
-import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.controller.impl.ApiPaths;
-import com.linepro.modellbahn.security.user.UserModel.PagedUserModel;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-@Tag(name = ApiNames.USER)
+@Controller("UserController")
 @RequiredArgsConstructor
-@RestController("User")
-@ExposesResourceFor(UserModel.class)
 public class UserController {
 
     @Autowired
     private final UserService userService;
 
-    private final PagedResourcesAssembler<UserModel> assembler = new PagedResourcesAssembler<UserModel>(null, null);
-
-    @GetMapping(path = ApiPaths.GET_USER, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds an User by name", description = "Finds a user", operationId = "get", tags = { ApiNames.USER }, responses = {
-        @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserModel.class)) }),
-        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
-    })
-    @SecurityRequirement(name = "BasicAuth")
-    public ResponseEntity<?> get(@PathVariable(ApiNames.NAMEN) String name, Authentication authentication) {
-        return userService.get(name, authentication)
-                          .map(b -> ok(b))
-                          .orElse(notFound().build());
+    @GetMapping({ "/about", "/about.*" })
+    public String about() {
+        return "about";
     }
 
-    @GetMapping(path = ApiPaths.SEARCH_USER, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Finds Users by example", description = "Finds users", operationId = "find", tags = { ApiNames.USER }, responses = {
-        @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedUserModel.class)) }),
-        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
-    })
-    @SecurityRequirement(name = "BasicAuth")
-    public ResponseEntity<?> search(@RequestBody Optional<UserModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize, Authentication authentication) {
-        Page<UserModel> page = userService.search(model, pageNumber, pageSize, authentication);
+    @GetMapping("/account/{username}")
+    public ModelAndView account(@PathVariable("username") String username, Authentication authentication, HttpSession session) {
+        return userService.get(username, authentication)
+                          .map(user -> {
+                              session.setAttribute("locale", user.getLocale());
+                              return new ModelAndView("account", "user", user);
+                          })
+                          .orElse(new ModelAndView("login", HttpStatus.NOT_FOUND));
+    }
 
-        if (page.hasContent()) {
-            return ok(
-                assembler.toModel(
-                    page.getPageable().isUnpaged() && page.hasContent() ?
-                        new PageImpl<>(page.getContent(), page.getPageable(), page.getContent().size()) :
-                        page,
-                    it -> (RepresentationModel<?>) it
-                )
-            );
+    @PostMapping("/account/{username}")
+    public ModelAndView account(@PathVariable("username") String username, @ModelAttribute("user") UserModel userModel, Model model, Authentication authentication, HttpSession session) {
+        return new ModelAndView("account", "user", userService.update(username, userModel, authentication));
+    }
+
+    @GetMapping("/login")
+    public ModelAndView login(ServletRequest request, Authentication authentication, HttpSession session) {
+        ModelAndView mav = new ModelAndView("login");
+        mav.addObject("error", request.getParameterMap().containsKey("error"));
+        mav.addObject("logout", request.getParameterMap().containsKey("logout"));
+        return mav;
+    }
+
+    @GetMapping("/password/{username}")
+    public ModelAndView changePassword(@PathVariable("username") String username, Authentication authentication, HttpSession session) {
+        return new ModelAndView("password", "name", username);
+    }
+
+    @PatchMapping("/password/{username}")
+    public ModelAndView changePassword(@PathVariable("username") String username, @RequestParam("password") String password, Authentication authentication, HttpSession session) {
+        return new ModelAndView("password", "message", userService.changePassword(username, password, authentication).getMessage());
+    }
+
+    @GetMapping("/register")
+    public String register() {
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String register(@ModelAttribute("user") UserModel userModel, Model model, HttpSession session) {
+        UserMessage message = userService.register(session, userModel);
+        userModel.setPassword(null);
+        model.addAttribute("user", userModel);
+        model.addAttribute("message", message.getMessage());
+        return "register";
+    }
+
+    @GetMapping("/confirm")
+    public ModelAndView confirm(@RequestParam("token") String token) {
+        UserMessage message = userService.confirmRegistration(token);
+
+        if (message.getStatus() == HttpStatus.ACCEPTED.value()) {
+            return new ModelAndView("login", "message", message.getMessage());
         }
 
-        return notFound().build();
+        return new ModelAndView("confirm", "message", message.getMessage());
     }
 
-    @PutMapping(path = ApiPaths.UPDATE_USER, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    @Operation(summary = "Updates a User by name", description = "Update a User", operationId = "update", tags = { ApiNames.USER }, responses = {
-        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserModel.class)) }),
-        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
-    })
-    @SecurityRequirement(name = "BasicAuth")
-    public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody UserModel model, Authentication authentication) {
-        return userService.update(name, model, authentication)
-                          .map(b -> accepted().body(b))
-                          .orElse(notFound().build());
+    @GetMapping("/forgot")
+    public String forgot() {
+        return "forgot";
     }
 
-    @PatchMapping(path = ApiPaths.CHANGE_PASSWORD)
-    @Operation(summary = "Changes password for a named user", description = "Changes password for a user", operationId = "patch", tags = { ApiNames.USER }, responses = {
-        @ApiResponse(responseCode = "202", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)) }),
-        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
-    })
-    @SecurityRequirement(name = "BasicAuth")
-    public ResponseEntity<?> changePassword(@PathVariable(ApiNames.NAMEN) String name, @RequestParam(ApiNames.PASSWORD) String password, Authentication authentication) {
-        return status(ACCEPTED).body(userService.changePassword(name, password, authentication));
+    @PostMapping("/forgot")
+    public ModelAndView forgot(@RequestParam("email") String email) {
+        UserMessage message = userService.forgotPassword(email);
+        return new ModelAndView("forgot", "message", message.getMessage());
     }
 
-    @DeleteMapping(path = ApiPaths.DELETE_USER)
-    @Operation(summary = "Deletes a User by name", description = "Delete a User", operationId = "delete", tags = { ApiNames.USER }, responses = {
-        @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
-        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
-    })
-    @SecurityRequirement(name = "BasicAuth")
-    public ResponseEntity<?> delete(@PathVariable(ApiNames.NAMEN) String name, Authentication authentication) {
-        return (userService.delete(name, authentication) ? noContent() : notFound()).build();
+    @GetMapping("/reset")
+    public String resetPassword() {
+        return "reset";
     }
 
-    @PostMapping(path = ApiPaths.REGISTER_USER)
-    @Operation(summary = "Registers a new user", description = "Registers a user", operationId = "post", tags = { ApiNames.USER }, responses = {
-        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)) }),
-        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
-    })
-    public ResponseEntity<?> register(@RequestBody UserModel model) {
-        return response(userService.register(model));
-    }
-
-    @PostMapping(path = ApiPaths.CONFIRM_USER)
-    @Operation(summary = "Confirms a new user registration", description = "Confirms a new user registration", operationId = "post", tags = { ApiNames.USER }, responses = {
-        @ApiResponse(responseCode = "202", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)) }),
-        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
-    })
-    public ResponseEntity<?> confirm(@RequestParam(ApiNames.TOKEN) String token) {
-        return response(userService.confirmRegistration(token));
-    }
-
-    @PostMapping(path = ApiPaths.FORGOT_PASSWORD)
-    @Operation(summary = "Requests a password reset", description = "Requests a password reset", operationId = "post", tags = { ApiNames.USER }, responses = {
-        @ApiResponse(responseCode = "202", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)) }),
-        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
-    })
-    public ResponseEntity<?> forgot(@RequestParam(ApiNames.EMAIL) String email) {
-        return response(userService.forgotPassword(email));
-    }
-
-    @PostMapping(path = ApiPaths.RESET_PASSWORD)
-    @Operation(summary = "Resets a password reset", description = "Resets a password reset", operationId = "post", tags = { ApiNames.USER }, responses = {
-        @ApiResponse(responseCode = "202", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)) }),
-        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
-    })
-    public ResponseEntity<?> resetPassword(@RequestParam(ApiNames.TOKEN) String token, @RequestParam(ApiNames.PASSWORD) String password) {
-        return response(userService.resetPassword(token, password));
-    }
-
-    private ResponseEntity<UserMessage> response(UserMessage message) {
-        return status(message.getStatus()).body(message);
+    @PostMapping("/reset")
+    public ModelAndView resetPassword(@RequestParam("token") String token, @RequestParam("password") String password) {
+        return new ModelAndView("reset", "message", userService.resetPassword(token, password));
     }
 }

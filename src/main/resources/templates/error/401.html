@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="de" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/header :: header-css">
+<title>Not Authorized</title>
+
+</head>
+<body>
+    <div th:replace="fragments/header :: header"></div>
+
+    <section style="top: 300.722px;">
+        <article>
+            <div id="data">
+                <h3 th:text="#{template.notAuthorized}"></h3>
+                <p th:text="#{template.message}"></p>
+            </div>
+        </article>
+    </section>
+
+    <footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

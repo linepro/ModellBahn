@@ -14,17 +14,17 @@ import org.hibernate.validator.spi.resourceloading.ResourceBundleLocator;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator;
 import org.springframework.validation.beanvalidation.MessageSourceResourceBundleLocator;
-import org.springframework.web.server.i18n.AcceptHeaderLocaleContextResolver;
-import org.springframework.web.server.i18n.LocaleContextResolver;
 import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @Import({
+    LocaleSetterImpl.class,
     MessageTranslatorImpl.class
 })
 @Component(PREFIX + "Internationalization")
@@ -44,21 +44,13 @@ public class Internationalization {
 
     @Bean
     public LocaleResolver localeResolver() {
-        AcceptHeaderLocaleResolver resolver = new AcceptHeaderLocaleResolver();
-        resolver.setSupportedLocales(SUPPORTED_LOCALES);
+        SessionLocaleResolver resolver = new SessionLocaleResolver();
         resolver.setDefaultLocale(DEFAULT_LOCALE);
         return resolver;
     }
 
     @Bean
-    public LocaleContextResolver localeContextResolver() {
-        AcceptHeaderLocaleContextResolver resolver = new AcceptHeaderLocaleContextResolver();
-        resolver.setSupportedLocales(SUPPORTED_LOCALES);
-        resolver.setDefaultLocale(DEFAULT_LOCALE);
-        return resolver;
-    }
-
-    @Bean
+    @Primary
     public javax.validation.Validator validatorFactory() {
         LocalValidatorFactoryBean validatorFactory = new LocalValidatorFactoryBean();
         validatorFactory.setValidationMessageSource(messageSource());
@@ -81,7 +73,7 @@ public class Internationalization {
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename(APPLICATION_MESSAGES);
+        messageSource.setBasename(MESSAGES);
         messageSource.setDefaultEncoding(DEFAULT_ENCODING);
         messageSource.setCacheSeconds(CACHE_TIMEOUT);
 

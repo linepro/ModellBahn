@@ -32,7 +32,7 @@ import com.linepro.modellbahn.hateoas.impl.ModelProcessorImpl;
 @Component(PREFIX + "UserModelProcessor")
 public class UserModelProcessor extends ModelProcessorImpl<UserModel> implements RepresentationModelProcessor<UserModel> {
 
-    private static final FieldsExtractor EXTRACTOR = (m) -> Collections.singletonMap(NAMEN, ((UserModel) m).getName());
+    private static final FieldsExtractor EXTRACTOR = (m) -> Collections.singletonMap(NAMEN, ((UserModel) m).getUsername());
 
     @Autowired
     public UserModelProcessor() {

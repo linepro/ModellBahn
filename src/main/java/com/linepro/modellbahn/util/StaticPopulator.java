@@ -4,6 +4,8 @@ import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.annotation.PostConstruct;
@@ -13,6 +15,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.stereotype.Component;
 
+import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.io.FileStore;
 import com.linepro.modellbahn.io.FileUploadHandler;
@@ -26,7 +29,9 @@ import net.logstash.logback.encoder.org.apache.commons.lang3.ArrayUtils;
 @RequiredArgsConstructor
 public class StaticPopulator {
 
-    private static final String FOLDER_START = "static/";
+    private static final String DATA_STORE = "/static/data/";
+
+    private static final String DATA_STORE_BUILD_FOLDER = "classpath:" + DATA_STORE + "**/*";
 
     @Autowired
     private final FileStore fileStore;
@@ -37,35 +42,39 @@ public class StaticPopulator {
     @PostConstruct
     void populate() {
         try {
+            Set<String> acceptable = Stream.concat(
+                            AcceptableMediaTypes.DOCUMENT_TYPES.stream(), 
+                            AcceptableMediaTypes.IMAGE_TYPES.stream()
+                            )
+                            .map(t -> t.getSubtype())
+                            .collect(Collectors.toSet());
+
             ResourcePatternResolver patternResolver = new PathMatchingResourcePatternResolver();   
-            Stream.of(patternResolver.getResources("classpath:" + FOLDER_START + "**/*"))
+            Stream.of(patternResolver.getResources(DATA_STORE_BUILD_FOLDER))
                                      .forEach(r -> {
                                          try {
                                              if (r.contentLength() > 0) {
                                                  String uri = r.getURI().toString();
-                                                 String[] parts = uri.substring(uri.indexOf(FOLDER_START)).split("/");
+                                                 String[] parts = uri.substring(uri.indexOf(DATA_STORE)+DATA_STORE.length()).split("/");
 
-                                                 String modelName = parts[1];
+                                                 String modelName = parts[0];
                                                  String fileName = parts[parts.length-1];
 
-                                                 String fieldName = fileName.endsWith(".pdf") ?
-                                                                        fileName.contains("explo") ? ApiNames.EXPLOSIONSZEICHNUNG : ApiNames.ANLEITUNGEN :
-                                                                        fileName.contains("_xl") ? ApiNames.GROSSANSICHT : ApiNames.ABBILDUNG;
+                                                 int extIndex = fileName.lastIndexOf(".");
+                                                 String extension = extIndex > -1 ? fileName.substring(extIndex+1).toLowerCase() : null;
 
-                                                 String identifiers[] = ArrayUtils.subarray(parts, 2, parts.length-1);
-                                                 
-                                                 String extension = null;
+                                                 if (extension != null && acceptable.contains(extension)) {
+                                                     String fieldName = fileName.endsWith(".pdf") ?
+                                                                            fileName.contains("explo") ? ApiNames.EXPLOSIONSZEICHNUNG : ApiNames.ANLEITUNGEN :
+                                                                            fileName.contains("_xl") ? ApiNames.GROSSANSICHT : ApiNames.ABBILDUNG;
 
-                                                 int extensionStart = fileName.lastIndexOf('.');
+                                                     String identifiers[] = ArrayUtils.subarray(parts, 1, parts.length-1);
 
-                                                 if (extensionStart >= 0) {
-                                                     extension = fileName.substring(extensionStart+1).toLowerCase();
-                                                 }
+                                                     Path filePath = fileStore.getFilePath(modelName, fieldName, extension, identifiers);
 
-                                                 Path filePath = fileStore.getFilePath(modelName, fieldName, extension, identifiers);
-
-                                                 if (!filePath.toFile().exists()) {
-                                                     fileHandler.saveFile(r.getInputStream(), fileName, modelName, fieldName, identifiers);
+                                                     if (!filePath.toFile().exists()) {
+                                                         fileHandler.saveFile(r.getInputStream(), fileName, modelName, fieldName, identifiers);
+                                                     }
                                                  }
                                              }
                                          } catch (IOException e) {
