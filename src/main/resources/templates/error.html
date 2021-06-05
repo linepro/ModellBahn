@@ -12,21 +12,25 @@
                 <h3 th:text="#{template.failure}"></h3>
                 <p th:text="${#httpServletRequest.requestURL}"></p>
                 <table>
-                    <tr>
+                    <tr th:if="${timestamp}">
                         <td th:text="#{template.timestamp}"></td>
-                        <td>${timestamp}</td>
+                        <td th:text="${timestamp}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${error}">
                         <td th:text="#{template.error}"></td>
-                        <td>${error}</td>
+                        <td th:text="${error}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${status}">
                         <td th:text="#{template.status}"></td>
-                        <td>${status}</td>
+                        <td th:text="${status}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${message}">
                         <td th:text="#{template.message}"></td>
-                        <td>${message}</td>
+                        <td th:text="${message}"></td>
+                    </tr>
+                    <tr th:if="${trace}">
+                        <td th:text="#{template.trace}"></td>
+                        <td th:text="${trace}"></td>
                     </tr>
                 </table>
             </div>
