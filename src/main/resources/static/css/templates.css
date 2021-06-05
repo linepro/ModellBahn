@@ -68,6 +68,10 @@ a.nav-button {
   padding: 0.3rem;
 }
 
+a.nav-button {
+  padding: 0.3rem;
+}
+
 a.nav-button,
 button.nav-button {
   background-color: LightSkyBlue;
