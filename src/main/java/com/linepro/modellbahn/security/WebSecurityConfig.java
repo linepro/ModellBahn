@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,6 +32,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final int SECONDS_IN__DAY = 86400;
     // Authorities
     public static final String ADMIN_AUTHORITY = "ADMIN";
     protected static final SimpleGrantedAuthority ADMIN = new SimpleGrantedAuthority(ADMIN_AUTHORITY);
@@ -49,13 +51,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected static final String ERRORS = "/error/*";
     protected static final String FORGOT_PASSWORD = "/forgot";
     protected static final String GENERAL_ERROR = "/error";
-    protected static final String HOME = "/";
+    protected static final String MODELLBAHN = "/modellbahn-ui/index.html";
     protected static final String LOGIN = "/login";
+    protected static final String LOGIN_FAILURE = LOGIN + "Failure";
+    protected static final String LOGOUT_SUCCESS = "/logoutSuccess";
     protected static final String LOGOUT = "/logout";
     protected static final String REGISTER = "/register";
 
     protected static final String LOGIN_PAGE = LOGIN + PAGE;
-    protected static final String LOGIN_FAILURE_PAGE = LOGIN_PAGE + "?error=true";
+    protected static final String LOGIN_FAILURE_PAGE = LOGIN_FAILURE + PAGE;
+    protected static final String LOGOUT_SUCCESS_PAGE = LOGOUT_SUCCESS + PAGE;
     protected static final String REGISTER_PAGE = REGISTER + PAGE;
 
     // Open API
@@ -85,7 +90,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                                            .stream()
                                                            .map(u -> u + PAGE).collect(Collectors.toList())
                                                            .toArray(new String[0]);
-    
+
     protected static final String[] INSECURE_RESOURCES = {
         SWAGGER,
         DOCS,
@@ -140,6 +145,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and().csrf().disable()
             .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
             .and().httpBasic().authenticationEntryPoint(authenticationEntryPoint)
+            .and().sessionManagement()
+                  .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                  .sessionFixation().migrateSession()
+                  .invalidSessionUrl(LOGIN_PAGE)
             //.and().oauth2ResourceServer(oauth2 -> oauth2.jwt())
             //.and().anonymous().authorities(GUEST_AUTHORITY)
             .and().authorizeRequests()
@@ -155,18 +164,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and().formLogin()
                   .loginPage(LOGIN_PAGE)
                   .loginProcessingUrl(LOGIN)
-                  .defaultSuccessUrl(HOME)
+                  .defaultSuccessUrl(MODELLBAHN)
                   .failureUrl(LOGIN_FAILURE_PAGE)
                   .permitAll()
             .and().logout()
-                  .logoutUrl(HOME)
-                  .logoutSuccessUrl(HOME)
+                  .logoutUrl(LOGOUT)
+                  .logoutSuccessUrl(LOGOUT_SUCCESS_PAGE)
                   .deleteCookies(SESSION_COOKIE)
                   .permitAll()
             .and().rememberMe()
                   .rememberMeParameter(REMEMBER_ME_PARAM)
                   .key(rememberMeKey)
-                  .tokenValiditySeconds(rememberMeValidity * 86400)
+                  .tokenValiditySeconds(rememberMeValidity * SECONDS_IN__DAY)
             ;
         // @formatter:on
     }

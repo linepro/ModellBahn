@@ -5,27 +5,27 @@
     <ul>
         <li th:fragment="username" class="field">
             <label for="username" th:text="#{template.username}"><span>*</span></label>
-            <input type="text" id="username" name="username" th:placeholder="#{template.username}" th:value="${username != null ? username : ''}"
+            <input type="text" id="username" name="username" th:placeholder="#{template.username}" th:value="${user?.username}"
                    th:pattern="#{template.usernamePattern}" th:title="#{template.usernameInvalid}" required="required"></input>
         </li>
         <li th:fragment="firstName"  class="field">
             <label for="firstName" th:text="#{template.firstName}"><span>*</span></label>
-            <input type="text" id="firstName" name="firstName" th:placeholder="#{template.firstName}" th:value="${firstName != null ? firstName : ''}"
+            <input type="text" id="firstName" name="firstName" th:placeholder="#{template.firstName}" th:value="${user?.firstName}"
                    th:title="#{template.firstNameInvalid}" required="required"></input>
         </li>
         <li th:fragment="lastName" class="field">
             <label for="lastName" th:text="#{template.lastName}"><span>*</span></label>
-            <input type="text" id="lastName" name="lastName" th:placeholder="#{template.lastName}" th:value="${lastName != null ? lastName : ''}"
+            <input type="text" id="lastName" name="lastName" th:placeholder="#{template.lastName}" th:value="${user?.lastName}"
                    th:title="#{template.lastNameInvalid}" required="required"></input>
         </li>
         <li th:fragment="email" class="field">
             <label for="email" th:text="#{template.email}"><span>*</span></label>
-            <input type="email" id="email" name="email" th:placeholder="#{template.email}" th:value="${email != null ? email : ''}"
+            <input type="email" id="email" name="email" th:placeholder="#{template.email}" th:value="${user?.email}"
                    th:title="#{template.emailInvalid}" required="required"></input>
         </li>
         <li th:fragment="emailConfirm" class="field">
             <label for="emailConfirm" th:text="#{template.confirmEmail}"><span>*</span></label>
-            <input type="email" id="emailConfirm" name="email" th:placeholder="#{template.confirmEmail}" th:value="${email != null ? email : ''}"
+            <input type="email" id="emailConfirm" name="email" th:placeholder="#{template.confirmEmail}" th:value="${user?.email}"
                    th:title="#{template.confirmEmail}" onblur="equalityCheck('email', 'emailConfirm', /*[[#{template.emailMismatch}]])*/'')"
                    required="required"></input>
         </li>
@@ -46,11 +46,13 @@
         <li th:fragment="locale" class="field">
             <label for="language" th:text="#{template.language}"><span>*</span></label>
             <select id="language" name="language">
-                <option value="de-DE" th:text="#{template.deutsch}" th:selected="${locale != null ? locale : 'de-DE'}=='de-DE'"></option>
-                <option value="en-GB" th:text="#{template.english}" th:selected="${locale != null ? locale : 'de-DE'}=='en-GB'"></option>
+                <option value="de-DE" th:text="#{template.deutsch}" th:selected="${user.locale?:'de-DE'}=='de-DE'"></option>
+                <option value="en-GB" th:text="#{template.english}" th:selected="${user.locale?:'de-DE'}=='en-GB'"></option>
             </select>
         </li>
         <li th:fragment="messages">
+		    <p class="messages" th:if="${error}==true" th:text="#{template.invalidCredentials}"></p>
+		    <p class="messages" th:if="${logout}==true" th:text="#{template.loggedOut}"></p>
             <th:block th:each="message : ${#strings.arraySplit(#strings.replace(messages,'\n','|'),'|')}">
                 <p class="messages" th:text="${#strings.replace(message,' {}', '')}"></p>
             </th:block>

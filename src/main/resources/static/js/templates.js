@@ -35,8 +35,3 @@ const toggle = (element, toggle) => {
     field.type = "password";
   }
 };
-
-const setAuthorisation = (userName, password) => {
-  sessionStorage.setItem("username", userName);
-  sessionStorage.setItem("authorisation", "Basic " + btoa(userName + ":" + password));
-};

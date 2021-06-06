@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="fragments/header :: header-css">
-<title>Home</title>
+<title>About</title>
 </head>
 <body>
     <div th:replace="fragments/header :: header"></div>
@@ -9,13 +9,8 @@
     <section style="top: 300.722px;">
         <article>
             <div class="centered">
-                <h3 th:text="#{template.about}"></h3>
-                <p th:text="#{template.license-type}"></p>
-                <p th:text="#{template.copyright}"></p>
-                <p th:text="#{template.license-conditions}"></p>
-                <p th:text="#{template.license-permission}"></p>
-                <p th:text="#{template.license-warranty}"></p>
-                <a th:replace="fragments/fields :: back"></a>
+                <h3 th:text="#{template.home}"></h3>
+                <a href="/modellbahn-ui/index.html">ModellBahn</a>
             </div>
         </article>
     </section>

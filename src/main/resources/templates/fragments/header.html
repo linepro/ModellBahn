@@ -19,10 +19,10 @@
                     <div class="logo dropdown">
                         <img src="/img/ModellBahn.svg" class="logo"></img>
                         <div class="dropdown-content">
-                            <a th:if="${#authentication != null}" th:href="@{'/account/' + #authentication.name}" th:text="#{template.profile}">
-                                <span th:text="#{authentication.name}"></span>
-                            </a>
+                            <a href="/" th:text="#{template.home}"></a>
+                            <a th:if="${#authentication != null}" th:href="@{'/account/'" th:text="#{template.profile}"></a>
                             <a th:if="${#authentication != null}" th:href="@{/logout}" th:text="#{template.logout}"></a>
+                            <a th:if="${#authentication != null}" th:href="@{'/password/'" th:text="#{template.change}"></a>
                             <a th:href="@{/about.html}" th:text="#{template.about}"></a>
                         </div>
                     </div>

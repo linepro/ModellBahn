@@ -16,6 +16,11 @@ server:
    servlet:
       application-display-name: ModellBahn
       context-path: /
+      session:
+        cookie:
+           http-only: false
+           secure: false
+           timeout: 15m
    ssl:
       enabled: true
       key-store-type: PKCS12
