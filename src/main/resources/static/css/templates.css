@@ -329,3 +329,8 @@ ul.footer {
 .fa-eye-slash:before {
   content: "\f070";
 }
+
+.messages {
+  color: red;
+  font-weight: bold;
+}

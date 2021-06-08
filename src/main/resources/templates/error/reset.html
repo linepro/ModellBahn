@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="fragments/header :: header-css">
-<title>Login Failed</title>
+<title>Reset Error</title>
 </head>
 <body>
     <div th:replace="fragments/header :: header"></div>
@@ -9,13 +9,8 @@
     <section style="top: 300.722px;">
         <article>
             <div class="centered">
-                <h3 th:text="#{template.login}"></h3>
-                <ul>
-                    <li th:replace="fragments/fields :: messages"></li>
-                    <li class="field">
-                        <a th:replace="fragments/fields :: back"></a>
-                    </li>
-                </ul>
+                <h3 th:text="#{template.reset}"></h3>
+                <div th:replace="fragments/fields :: messages"></div>
             </div>
         </article>
     </section>

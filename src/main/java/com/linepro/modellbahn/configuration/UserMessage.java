@@ -1,5 +1,8 @@
 package com.linepro.modellbahn.configuration;
 
+import org.springframework.http.HttpStatus;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,14 +13,14 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-@Builder
+@Getter
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
@@ -52,4 +55,9 @@ public class UserMessage {
     @JsonProperty("moreInfo")
     @Schema(description = "URL for extended information", accessMode = AccessMode.READ_ONLY)
     private String moreInfo;
+
+    @JsonIgnore
+    public boolean isAccepted() {
+        return status == HttpStatus.ACCEPTED.value() || status == HttpStatus.OK.value() ;
+    }
 }

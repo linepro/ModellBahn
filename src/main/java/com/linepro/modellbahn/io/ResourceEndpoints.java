@@ -33,11 +33,26 @@ public class ResourceEndpoints {
     @Value("#{'${spring.resources.static-locations:classpath:/static/,classpath:/public/,classpath:/resources/}'.split(',')}")
     private List<String> locations;
 
+    @Value("${com.linepro.modellbahn.apiDocs:/swagger-ui/index.html}")
+    public String apiDocs;
+
+    @Value("${com.linepro.modellbahn.homePage:/modellbahn-ui/index.html}")
+    public String homePage;
+
+
     @Autowired
     private final FileStore fileStore;
 
     @Getter
     private Map<String,List<String>> endPoints;
+
+    public String getHomePage() {
+        return "redirect:" + homePage;
+    }
+
+    public String getApiDocs() {
+        return "redirect:" + apiDocs;
+    }
 
     @PostConstruct
     public void initialize() {

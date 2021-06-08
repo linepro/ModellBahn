@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="fragments/header :: header-css">
-<title>Password</title>
+<title>Reset</title>
 </head>
 <body>
     <div th:replace="fragments/header :: header"></div>
@@ -10,16 +10,11 @@
         <article>
             <ul class="centered">
                 <li>
-                    <form id="change" action="#" th:action="@{'/password/'" th:object="${user}" method="post"
+                    <form id="change" action="#" th:action="@{'/password/'" method="post"
                           onchange="document.getElementById('submit').disabled = !document.getElementById('change').checkValidity()">
-                        <h3 th:text="#{template.change}"></h3>
+                        <h3 th:text="#{template.reset}"></h3>
+                        <input type="hidden" name="token" th:value="${token}" readonly="readonly"></input>
                         <ul>
-                            <li th:replace="fragments/fields :: username"></li>
-                            <li class="field">
-                                <label for="oldPassword" th:text="#{template.password}"><span>*</span></label>
-                                <input type="password" id="oldPassword" name="oldPassword" th:placeholder="#{template.oldPassword}"
-                                       th:title="#{template.oldPasswordRequirements}" required="required" />
-                            </li>
                             <li th:replace="fragments/fields :: password"></li>
                             <li th:replace="fragments/fields :: confirmPassword"></li>
                             <li class="field">

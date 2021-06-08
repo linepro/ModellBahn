@@ -10,14 +10,14 @@
         <article>
             <ul class="centered">
                 <li>
-                    <form id="account" action="#" th:action="@{'/account/'}" th:object="${user}" method="post"
+                    <form id="account" action="#" style="margin-bottom: 0; padding-top: 1rem;"
+                          th:action="@{'/account/'}" th:object="${user}" method="post"
                           onchange="document.getElementById('save').disabled = !document.getElementById('account').checkValidity()">
                         <h3 th:text="#{template.account}"></h3>
                         <ul>
                             <li class="field">
                                 <label for="username" th:text="#{template.username}"><span>*</span></label>
-                                <input type="text" id="username" name="username" th:placeholder="#{template.username}" th:value="${user.username}"
-                                       th:pattern="#{template.usernamePattern}" th:title="#{template.usernameInvalid}" readonly="readonly"></input>
+                                <input type="text" name="username" th:value="${user.username}" readonly="readonly"></input>
                             </li>
                             <li th:replace="fragments/fields :: firstName"></li>
                             <li th:replace="fragments/fields :: lastName"></li>
@@ -29,6 +29,25 @@
                             </li>
                         </ul>
                     </form>
+                </li>
+                <li>
+                    <form id="change" action="#" style="margin-top: 0; padding-top: 1rem;" 
+                          th:action="@{'/changePassword'}" th:object="${user}" method="post"
+                          onchange="document.getElementById('submit').disabled = !document.getElementById('change').checkValidity()">
+                        <h3 th:text="#{template.change}"></h3>
+                        <input type="hidden" name="username" th:value="${user.username}" readonly="readonly"></input>
+                        <ul>
+                            <li class="field">
+                                <label for="oldPassword" th:text="#{template.password}"><span>*</span></label>
+                                <input type="password" id="oldPassword" th:placeholder="#{template.oldPassword}" required="required" />
+                            </li>
+                            <li th:replace="fragments/fields :: password"></li>
+                            <li th:replace="fragments/fields :: passwordConfirm"></li>
+                            <li class="field">
+                                <button type="submit" id="submit" class="nav-button" th:text="#{template.submit}" disabled="disabled"></button>
+                            </li>
+                       </ul>
+                   </form>
                 </li>
                 <li th:replace="fragments/fields :: messages"></li>
             </ul>

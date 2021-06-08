@@ -47,7 +47,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.google.common.base.Charsets;
-import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.ApiMessages;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.i18n.LocaleSetter;
@@ -199,7 +198,7 @@ public class UserService implements UserDetailsService {
                              .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 
-    public UserMessage register(HttpSession session, UserModel model) {
+    public UserResponse register(HttpSession session, UserModel model) {
         Set<ConstraintViolation<?>> errors = new HashSet<>();
 
         localeSetter.setLocale(session, model.getLocale());
@@ -233,23 +232,15 @@ public class UserService implements UserDetailsService {
             return requestConfirmation(user);
         }
 
-        return UserMessage.builder()
-                          .timestamp(System.currentTimeMillis())
-                          .status(HttpStatus.BAD_REQUEST.value())
-                          .message(errors.stream().map(v -> v.getMessage()).collect(Collectors.joining("\\n")))
-                          .build();
+        return userResponse(user, HttpStatus.BAD_REQUEST, errors.stream().map(v -> v.getMessage()).collect(Collectors.joining("\\n")));
     }
 
-    public UserMessage confirmRegistration(String token) {
+    public UserResponse confirmRegistration(String token) {
         Optional<User> user = userRepository.findByConfirmationToken(UUID.fromString(token));
 
         if (user.isPresent()) {
             if (user.get().getConfirmationExpires().isBefore(LocalDateTime.now())) {
-                return UserMessage.builder()
-                                  .timestamp(System.currentTimeMillis())
-                                  .status(HttpStatus.BAD_REQUEST.value())
-                                  .message(translator.getMessage(ApiMessages.TOKEN_EXPIRED, token))
-                                  .build();
+                return userResponse(user.get(), HttpStatus.BAD_REQUEST, translator.getMessage(ApiMessages.TOKEN_EXPIRED, token));
             }
 
             User found = user.get();
@@ -258,21 +249,13 @@ public class UserService implements UserDetailsService {
 
             userRepository.saveAndFlush(found);
 
-            return UserMessage.builder()
-                              .timestamp(System.currentTimeMillis())
-                              .status(HttpStatus.ACCEPTED.value())
-                              .message(translator.getMessage(ApiMessages.USER_CONFIRMED, found.getEmail()))
-                              .build();
+            return userResponse(user.get(), HttpStatus.ACCEPTED, translator.getMessage(ApiMessages.USER_CONFIRMED, found.getEmail()));
         }
 
-        return UserMessage.builder()
-                          .timestamp(System.currentTimeMillis())
-                          .status(HttpStatus.BAD_REQUEST.value())
-                          .message(translator.getMessage(ApiMessages.INVALID_TOKEN, token))
-                          .build();
+        return userResponse(user.orElse(null), HttpStatus.BAD_REQUEST, translator.getMessage(ApiMessages.INVALID_TOKEN, token));
     }
 
-    public UserMessage forgotPassword(String email) {
+    public UserResponse forgotPassword(String email) {
         Optional<User> found = userRepository.findByEmail(email);
 
         if (found.isPresent()) {
@@ -290,51 +273,33 @@ public class UserService implements UserDetailsService {
 
             emailUser(user, ApiMessages.FORGOT_EMAIL_SUBJECT, ApiMessages.FORGOT_EMAIL_BODY, resetLink);
 
-            return UserMessage.builder()
-                              .timestamp(System.currentTimeMillis())
-                              .status(HttpStatus.ACCEPTED.value())
-                              .message(translator.getMessage(ApiMessages.FORGOT_EMAIL_SENT, user.getEmail()))
-                              .build();
+            return userResponse(user, HttpStatus.ACCEPTED, translator.getMessage(ApiMessages.FORGOT_EMAIL_SENT, user.getEmail()));
         }
 
-        return UserMessage.builder()
-                          .timestamp(System.currentTimeMillis())
-                          .status(HttpStatus.BAD_REQUEST.value())
-                          .message(translator.getMessage(ApiMessages.INVALID_USER, email))
-                          .build();
+        return userResponse(found.orElse(null), HttpStatus.BAD_REQUEST, translator.getMessage(ApiMessages.INVALID_USER, email));
     }
 
-    public UserMessage resetPassword(String token, String password) {
+    public UserResponse resetPassword(String token, String password) {
         Optional<User> found = userRepository.findByConfirmationToken(UUID.fromString(token));
 
         if (found.isPresent()) {
             User user = found.get();
 
             if (user.getConfirmationExpires().isBefore(LocalDateTime.now())) {
-                return UserMessage.builder()
-                                  .timestamp(System.currentTimeMillis())
-                                  .status(HttpStatus.BAD_REQUEST.value())
-                                  .message(translator.getMessage(ApiMessages.TOKEN_EXPIRED, token))
-                                  .build();
+                return userResponse(user, HttpStatus.BAD_REQUEST, translator.getMessage(ApiMessages.TOKEN_EXPIRED, token));
             }
 
             return updatePassword(password, user);
         }
 
-        return UserMessage.builder()
-                          .timestamp(System.currentTimeMillis())
-                          .status(HttpStatus.BAD_REQUEST.value())
-                          .message(translator.getMessage(ApiMessages.INVALID_TOKEN, token))
-                          .build();
+        return userResponse(found.orElse(null), HttpStatus.BAD_REQUEST, translator.getMessage(ApiMessages.INVALID_TOKEN, token));
     }
 
-    public UserMessage changePassword(String name, String password, Authentication authentication) {
+    public UserResponse changePassword(String name, String password, Authentication authentication) {
         Optional<User> found = userRepository.findByName(name);
 
         if (found.isPresent()) {
             User user = found.get();
-
-            // localeSetter.setLocale(user.getLocale()); // should be authentication's locale
 
             if (!name.equals(authentication.getName())) {
                 throw new AccessDeniedException(translator.getMessage(ApiMessages.INVALID_USER, name));
@@ -343,11 +308,7 @@ public class UserService implements UserDetailsService {
             return updatePassword(password, user);
         }
 
-        return UserMessage.builder()
-                          .timestamp(System.currentTimeMillis())
-                          .status(HttpStatus.BAD_REQUEST.value())
-                          .message(translator.getMessage(ApiMessages.INVALID_USER, name))
-                          .build();
+        return userResponse(found.orElse(null), HttpStatus.BAD_REQUEST, translator.getMessage(ApiMessages.INVALID_USER, name));
     }
 
     private void setConfirmationToken(User user, int hours) {
@@ -399,7 +360,7 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    protected UserMessage requestConfirmation(User user) {
+    protected UserResponse requestConfirmation(User user) {
         setConfirmationToken(user, confirmationTime);
 
         userRepository.saveAndFlush(user);
@@ -408,11 +369,7 @@ public class UserService implements UserDetailsService {
 
         emailUser(user, ApiMessages.REGISTER_EMAIL_SUBJECT, ApiMessages.REGISTER_EMAIL_BODY, confirmationLink);
 
-        return UserMessage.builder()
-                          .timestamp(System.currentTimeMillis())
-                          .status(HttpStatus.CREATED.value())
-                          .message(translator.getMessage(ApiMessages.REGISTER_EMAIL_SENT, user.getEmail()))
-                          .build();
+        return userResponse(user, HttpStatus.CREATED, translator.getMessage(ApiMessages.REGISTER_EMAIL_SENT, user.getEmail()));
     }
 
     protected String generateLink(User user, String path) {
@@ -441,6 +398,8 @@ public class UserService implements UserDetailsService {
             helper.setText(translator.getMessage(body, (Object[]) values.toArray()), true);
 
             emailService.sendEmail(message);
+
+            log.info("{}", params);
         } catch (Exception e) {
             log.error("Error sending email {} {}: {}", user.getEmail(), subject, e.getMessage(), e);
 
@@ -449,7 +408,7 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    protected UserMessage updatePassword(String password, User found) {
+    protected UserResponse updatePassword(String password, User found) {
         Set<ConstraintViolation<RawPassword>> errors = passwordProcessor.validate(password);
 
         if (errors.isEmpty()) {
@@ -461,18 +420,21 @@ public class UserService implements UserDetailsService {
             // Save user
             userRepository.saveAndFlush(found);
 
-            return UserMessage.builder()
-                              .timestamp(System.currentTimeMillis())
-                              .status(HttpStatus.ACCEPTED.value())
-                              .message(translator.getMessage(ApiMessages.PASSWORD_CHANGED, found.getEmail()))
-                              .build();
+            return userResponse(found, HttpStatus.ACCEPTED, translator.getMessage(ApiMessages.PASSWORD_CHANGED, found.getEmail()));
         }
 
-        return UserMessage.builder()
-                          .timestamp(System.currentTimeMillis())
-                          .status(HttpStatus.BAD_REQUEST.value())
-                          .message(errors.stream().map(v -> v.getMessage()).collect(Collectors.joining("\\n")))
-                          .build();
+        return userResponse(found, HttpStatus.BAD_REQUEST, errors.stream()
+                                                                 .map(v -> v.getMessage())
+                                                                 .collect(Collectors.joining("\\n")));
+    }
+
+    protected UserResponse userResponse(User user, HttpStatus status, String message) {
+        return UserResponse.builder()
+                           .user(toModel(user, false))
+                           .timestamp(System.currentTimeMillis())
+                           .status(status.value())
+                           .message(message)
+                           .build();
     }
 
     protected ConstraintViolation<User> userError(String message, String value, User user) {

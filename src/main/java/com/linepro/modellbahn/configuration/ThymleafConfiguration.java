@@ -4,8 +4,9 @@ import org.apache.commons.codec.CharEncoding;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring5.ISpringTemplateEngine;
 import org.thymeleaf.spring5.SpringTemplateEngine;
@@ -41,6 +42,7 @@ public class ThymleafConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
+    @Order(Ordered.LOWEST_PRECEDENCE)
     public ViewResolver viewResolver(ISpringTemplateEngine templateEngine) {
 
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
@@ -48,16 +50,5 @@ public class ThymleafConfiguration implements WebMvcConfigurer {
         viewResolver.setCharacterEncoding(CharEncoding.UTF_8);
 
         return viewResolver;
-    }
-
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("index");
-        addPattern(registry, "index");
-    }
-
-    private void addPattern(ViewControllerRegistry registry, String pattern) {
-        registry.addViewController("/" + pattern).setViewName(pattern);
-        registry.addViewController("/" + pattern + ".htm*").setViewName(pattern);
     }
 }
