@@ -2,9 +2,9 @@ package com.linepro.modellbahn.repository;
 
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.repository.TestPersistence.TEST_PROPERTIES;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;

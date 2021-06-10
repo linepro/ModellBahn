@@ -34,11 +34,12 @@ public class ResourceEndpoints {
     private List<String> locations;
 
     @Value("${com.linepro.modellbahn.apiDocs:/swagger-ui/index.html}")
-    public String apiDocs;
+    @Getter
+    private String swaggerUi;
 
     @Value("${com.linepro.modellbahn.homePage:/modellbahn-ui/index.html}")
-    public String homePage;
-
+    @Getter
+    private String homePage;
 
     @Autowired
     private final FileStore fileStore;
@@ -46,12 +47,12 @@ public class ResourceEndpoints {
     @Getter
     private Map<String,List<String>> endPoints;
 
-    public String getHomePage() {
+    public String getHomePageRedirect() {
         return "redirect:" + homePage;
     }
 
-    public String getApiDocs() {
-        return "redirect:" + apiDocs;
+    public String getSwaggerUiRedirect() {
+        return "redirect:" + swaggerUi;
     }
 
     @PostConstruct

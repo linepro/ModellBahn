@@ -4,34 +4,35 @@
 <title>Error</title>
 </head>
 <body>
-    <div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/header :: loggedin"></div>
 
     <section style="top: 300.722px;">
         <article>
-            <div id="data">
+            <div class="centered" style="max-height: 70%; max-width: 90%;">
                 <h3 th:text="#{template.failure}"></h3>
-                <p th:text="${#httpServletRequest.requestURL}"></p>
                 <table>
-                    <tr th:if="${timestamp}">
-                        <td th:text="#{template.timestamp}"></td>
-                        <td th:text="${timestamp}"></td>
-                    </tr>
-                    <tr th:if="${error}">
-                        <td th:text="#{template.error}"></td>
-                        <td th:text="${error}"></td>
-                    </tr>
-                    <tr th:if="${status}">
-                        <td th:text="#{template.status}"></td>
-                        <td th:text="${status}"></td>
-                    </tr>
-                    <tr th:if="${message}">
-                        <td th:text="#{template.message}"></td>
-                        <td th:text="${message}"></td>
-                    </tr>
-                    <tr th:if="${trace}">
-                        <td th:text="#{template.trace}"></td>
-                        <td th:text="${trace}"></td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td th:text="#{template.timestamp}"></td>
+                            <td th:text="${timestamp}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{template.path}"></td>
+                            <td th:text="${path}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{template.error}"></td>
+                            <td th:text="${error}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{template.status}"></td>
+                            <td th:text="${status}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{template.message}"></td>
+                            <td th:text="${message}"></td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </article>

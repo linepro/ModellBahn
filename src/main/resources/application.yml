@@ -1,17 +1,15 @@
 com:
    linepro:
       modellbahn:
-         user:
-            confirmUrl: https://localhost:8086/confirm 
-            resetUrl: https://localhost:8086/reset
          noreply: modellbahn-3f2861@inbox.mailtrap.io
          fileStore: /static/data
 
 server:
    error:
+      include-stacktrace: always
       path: /error
       whitelabel:
-         enabled: false
+         enabled: true
    port: 8086
    servlet:
       application-display-name: ModellBahn

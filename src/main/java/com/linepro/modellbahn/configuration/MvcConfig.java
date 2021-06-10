@@ -50,10 +50,10 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName(resourceEndpoints.getHomePage());
-        registry.addViewController("/index.*").setViewName(resourceEndpoints.getHomePage());
-        registry.addViewController("/ModellBahn").setViewName(resourceEndpoints.getHomePage());
-        registry.addViewController("/swagger").setViewName(resourceEndpoints.getApiDocs());
+        registry.addViewController("/").setViewName(resourceEndpoints.getHomePageRedirect());
+        registry.addViewController("/index.*").setViewName(resourceEndpoints.getHomePageRedirect());
+        registry.addViewController("/ModellBahn").setViewName(resourceEndpoints.getHomePageRedirect());
+        registry.addViewController("/swagger").setViewName(resourceEndpoints.getSwaggerUiRedirect());
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 }

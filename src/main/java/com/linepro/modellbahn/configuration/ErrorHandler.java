@@ -2,7 +2,6 @@ package com.linepro.modellbahn.configuration;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
@@ -27,6 +26,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.linepro.modellbahn.i18n.MessageTranslator;
 import com.linepro.modellbahn.util.exceptions.ModellBahnException;
+import com.linepro.modellbahn.util.exceptions.StackTraceFilter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,6 +35,8 @@ import lombok.RequiredArgsConstructor;
 public class ErrorHandler {
 
     private final MessageTranslator messageTranslator;
+
+    private final StackTraceFilter stackTraceFilter;
 
     @Produces(MediaType.APPLICATION_JSON)
     @ExceptionHandler({ Exception.class })
@@ -123,10 +125,7 @@ public class ErrorHandler {
     private String developerMessage(Throwable ex) {
         return String.join(": ", 
                         Optional.ofNullable(ex.getMessage()).orElse(ex.getClass().getSimpleName()), 
-                        Stream.of(ex.getStackTrace())
-                              .filter(t -> t.getClassName().contains("linepro"))
-                              .map(t -> t.toString())
-                              .collect(Collectors.joining("\n"))
+                        stackTraceFilter.getStackTrace(ex.getStackTrace())
                         );
     }
 }

@@ -4,14 +4,13 @@
 <title>Not Found</title>
 </head>
 <body>
-    <div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/header :: loggedin"></div>
 
     <section style="top: 300.722px;">
         <article>
-            <div id="data">
+            <div class="centered" style="max-height: 70%; max-width: 90%;">
                 <h3 th:text="#{template.notFound}"></h3>
-                <p th:text="${#httpServletRequest.requestURL}"></p>
-                <p th:text="#{template.message}"></p>
+                <table th:replace="fragments/fields :: error"></table>
             </div>
         </article>
     </section>

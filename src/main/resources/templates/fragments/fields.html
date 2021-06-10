@@ -62,5 +62,25 @@
     <button th:fragment="back" class="nav-button" id="back" th:text="#{template.back}" onclick="javascript:window.history.back();"></button>
     <button th:fragment="home" class="nav-button" id="back" th:text="#{template.home}" onclick="window.location.href='/'"></button>
     <button th:fragment="login" class="nav-button" id="back" th:text="#{template.login}" onclick="window.location.href='/login'"></button>
+    <table th:fragment="error">
+        <tbody>
+            <tr>
+                <td th:text="#{template.timestamp}"></td>
+                <td th:text="${timestamp}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{template.path}"></td>
+                <td th:text="${path}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{template.error}"></td>
+                <td th:text="${error}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{template.message}"></td>
+                <td th:text="${message}"></td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>

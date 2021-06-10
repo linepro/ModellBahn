@@ -233,6 +233,22 @@ span.far {
   z-index: 2;
 }
 
+table {
+  display: contents;
+  line-height: 1.25rem;
+}
+
+tbody {
+  max-width: 100%;
+  overflow-x: clip;
+  overflow-y: auto;
+}
+
+td:nth-child(1) {
+  font-weight: bold;
+  vertical-align: top;
+}
+
 ul {
   align-content: flex-start;
   align-items: baseline;

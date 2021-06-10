@@ -11,7 +11,7 @@
     <link rel="icon" href="favicon.ico"></link>
 </head>
 <body>
-    <div th:fragment="header">
+    <div th:fragment="loggedout">
         <header>
             <nav>
                 <div class="home">
@@ -20,9 +20,25 @@
                         <img src="/img/ModellBahn.svg" class="logo"></img>
                         <div class="dropdown-content">
                             <a href="/" th:text="#{template.home}"></a>
-                            <a th:if="${#authentication != null}" th:href="@{'/account/'" th:text="#{template.profile}"></a>
-                            <a th:if="${#authentication != null}" th:href="@{/logout}" th:text="#{template.logout}"></a>
-                            <a th:if="${#authentication != null}" th:href="@{'/password/'" th:text="#{template.change}"></a>
+                            <a th:href="@{/about.html}" th:text="#{template.about}"></a>
+                        </div>
+                    </div>
+                </div>
+                <hr class="highlight"></hr>
+            </nav>
+        </header>
+    </div>
+    <div th:fragment="loggedin">
+        <header>
+            <nav>
+                <div class="home">
+                    <h1 class="title" th:text="#{template.title}"></h1>
+                    <div class="logo dropdown">
+                        <img src="/img/ModellBahn.svg" class="logo"></img>
+                        <div class="dropdown-content">
+                            <a href="/" th:text="#{template.home}"></a>
+                            <a sec:authorize="isFullyAuthenticated()" th:href="@{'/account'}" th:text="#{template.profile}"><span th:text="${#authentication.name}"></span></a>
+                            <a sec:authorize="isFullyAuthenticated()" th:href="@{'/logout'}" th:text="#{template.logout}"></a>
                             <a th:href="@{/about.html}" th:text="#{template.about}"></a>
                         </div>
                     </div>

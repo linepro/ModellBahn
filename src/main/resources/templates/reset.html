@@ -4,19 +4,19 @@
 <title>Reset</title>
 </head>
 <body>
-    <div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/header :: loggedout"></div>
 
     <section style="top: 300.722px;">
         <article>
             <ul class="centered">
                 <li>
-                    <form id="change" action="#" th:action="@{'/password/'" method="post"
+                    <form id="change" action="#" th:action="@{'/changePassword'}" method="post"
                           onchange="document.getElementById('submit').disabled = !document.getElementById('change').checkValidity()">
                         <h3 th:text="#{template.reset}"></h3>
                         <input type="hidden" name="token" th:value="${token}" readonly="readonly"></input>
                         <ul>
                             <li th:replace="fragments/fields :: password"></li>
-                            <li th:replace="fragments/fields :: confirmPassword"></li>
+                            <li th:replace="fragments/fields :: passwordConfirm"></li>
                             <li class="field">
                                 <button type="submit" id="submit" class="nav-button" th:text="#{template.submit}" disabled="disabled"></button>
                             </li>

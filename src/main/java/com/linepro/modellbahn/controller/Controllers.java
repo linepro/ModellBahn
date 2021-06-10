@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Import;
     DecoderTypController.class, 
     EnumsController.class, 
     EpochController.class, 
-    ErrorController.class,
     GattungController.class, 
     HerstellerController.class, 
     KategorieController.class, 

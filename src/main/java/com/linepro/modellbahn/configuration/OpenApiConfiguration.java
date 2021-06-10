@@ -43,7 +43,7 @@ public class OpenApiConfiguration {
     private String servletPath;
 
     @Value("${springdoc.api-docs.path:/v3/api-docs}")
-    private String path;
+    private String apiDocsPath;
 
     @Value("${springdoc.use-management-port:false}")
     private boolean useManagementPort;
@@ -71,7 +71,7 @@ public class OpenApiConfiguration {
             }
 
             uri.path(config.getServletPath());
-            uri.path(config.getPath());
+            uri.path(config.getApiDocsPath());
             uri.path(".json");
 
             return html.replace(Constants.SWAGGER_UI_DEFAULT_URL, uri.toUriString());

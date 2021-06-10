@@ -2,11 +2,19 @@ package com.linepro.modellbahn.security;
 
 import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.API_ENDPOINTS;
+import static com.linepro.modellbahn.security.user.UserController.ABOUT_ENDPOINT;
+import static com.linepro.modellbahn.security.user.UserController.CONFIRM_REGISTRATION_ENDPOINT;
+import static com.linepro.modellbahn.security.user.UserController.FORGOT_PASSWORD_ENDPOINT;
+import static com.linepro.modellbahn.security.user.UserController.LOGIN_ENDPOINT;
+import static com.linepro.modellbahn.security.user.UserController.LOGIN_FAILURE_ENDPOINT;
+import static com.linepro.modellbahn.security.user.UserController.LOGOUT_ENDPOINT;
+import static com.linepro.modellbahn.security.user.UserController.LOGOUT_SUCCESS_ENDPOINT;
+import static com.linepro.modellbahn.security.user.UserController.REGISTER_ENDPOINT;
+import static com.linepro.modellbahn.security.user.UserController.RESET_PASSWORD_ENDPOINT;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +29,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
+import com.linepro.modellbahn.configuration.OpenApiConfiguration;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.io.ResourceEndpoints;
 import com.linepro.modellbahn.security.user.UserService;
@@ -33,40 +42,28 @@ import lombok.RequiredArgsConstructor;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final int SECONDS_IN__DAY = 86400;
+
     // Authorities
     public static final String ADMIN_AUTHORITY = "ADMIN";
-    protected static final SimpleGrantedAuthority ADMIN = new SimpleGrantedAuthority(ADMIN_AUTHORITY);
+    public static final SimpleGrantedAuthority ADMIN = new SimpleGrantedAuthority(ADMIN_AUTHORITY);
 
     public static final String GUEST_AUTHORITY = "GUEST";
-    protected static final SimpleGrantedAuthority GUEST = new SimpleGrantedAuthority(GUEST_AUTHORITY);
+    public static final SimpleGrantedAuthority GUEST = new SimpleGrantedAuthority(GUEST_AUTHORITY);
 
     public static final String USER_AUTHORITY = "USER";
-    protected static final SimpleGrantedAuthority USER = new SimpleGrantedAuthority(USER_AUTHORITY);
+    public static final SimpleGrantedAuthority USER = new SimpleGrantedAuthority(USER_AUTHORITY);
 
     // Pages
     protected static final String PAGE = ".html";
 
-    protected static final String ABOUT = "/about";
-    protected static final String CONFIRM_REGISTRATION = "/confirm";
     protected static final String ERRORS = "/error/*";
-    protected static final String FORGOT_PASSWORD = "/forgot";
     protected static final String GENERAL_ERROR = "/error";
-    protected static final String MODELLBAHN = "/modellbahn-ui/index.html";
-    protected static final String LOGIN = "/login";
-    protected static final String LOGIN_FAILURE = LOGIN + "Failure";
-    protected static final String LOGOUT_SUCCESS = "/logoutSuccess";
-    protected static final String LOGOUT = "/logout";
-    protected static final String REGISTER = "/register";
 
-    protected static final String LOGIN_PAGE = LOGIN + PAGE;
-    protected static final String LOGIN_FAILURE_PAGE = LOGIN_FAILURE + PAGE;
-    protected static final String LOGOUT_SUCCESS_PAGE = LOGOUT_SUCCESS + PAGE;
-    protected static final String REGISTER_PAGE = REGISTER + PAGE;
-
-    // Open API
-    protected static final String SWAGGER_UI = "/swagger-ui";
-    protected static final String SWAGGER = SWAGGER_UI + "*/**";
-    protected static final String DOCS = "/v3/api-docs.*";
+    protected static final String LOGIN_PAGE = LOGIN_ENDPOINT + PAGE;
+    protected static final String LOGIN_FAILURE_PAGE = LOGIN_FAILURE_ENDPOINT + PAGE;
+    protected static final String LOGOUT_PAGE = LOGOUT_ENDPOINT + PAGE;
+    protected static final String LOGOUT_SUCCESS_PAGE = LOGOUT_SUCCESS_ENDPOINT + PAGE;
+    protected static final String REGISTER_PAGE = REGISTER_ENDPOINT + PAGE;
 
     // Resources
     protected static final String FAVICON_ICO = "/favicon.ico";
@@ -76,25 +73,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected static final String JS = "/js/*";
 
     protected static final String[] INSECURE_URLS = {
-        ABOUT,
-        CONFIRM_REGISTRATION,
+        ABOUT_ENDPOINT,
         ERRORS,
-        FORGOT_PASSWORD,
-        GENERAL_ERROR,
-        LOGIN,
-        LOGOUT,
-        REGISTER
+        GENERAL_ERROR
     };
+
+    protected static final String[] REGISTER_URLS = {
+                    CONFIRM_REGISTRATION_ENDPOINT,
+                    FORGOT_PASSWORD_ENDPOINT,
+                    LOGIN_ENDPOINT,
+                    REGISTER_ENDPOINT,
+                    RESET_PASSWORD_ENDPOINT
+                };
 
     protected static final String[] INSECURE_PAGES = Arrays.asList(INSECURE_URLS)
                                                            .stream()
                                                            .map(u -> u + PAGE).collect(Collectors.toList())
                                                            .toArray(new String[0]);
 
-    protected static final String[] INSECURE_RESOURCES = {
-        SWAGGER,
-        DOCS,
+    protected static final String[] REGISTER_PAGES = Arrays.asList(REGISTER_URLS)
+                    .stream()
+                    .map(u -> u + PAGE).collect(Collectors.toList())
+                    .toArray(new String[0]);
 
+    protected static final String[] INSECURE_RESOURCES = {
         FAVICON_ICO,
         CSS,
         FONTS,
@@ -125,6 +127,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private final ResourceEndpoints resourceEndpoints;
 
+    @Autowired
+    private final OpenApiConfiguration docConfig;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
@@ -136,7 +141,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         String[] endPoints = resourceEndpoints.getEndPoints()
                                               .keySet()
                                               .stream()
-                                              .filter(e -> !StringUtils.contains(e, SWAGGER_UI))
                                               .collect(Collectors.toList())
                                               .toArray(new String[0]);
 
@@ -155,20 +159,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                   .antMatchers(INSECURE_PAGES).permitAll()
                   .antMatchers(INSECURE_RESOURCES).permitAll()
                   .antMatchers(INSECURE_URLS).permitAll()
+                  .antMatchers(resourceEndpoints.getSwaggerUi()).permitAll()
+                  .antMatchers(docConfig.getApiDocsPath()).permitAll()
+                  .antMatchers(REGISTER_URLS).anonymous()
+                  .antMatchers(REGISTER_PAGES).anonymous()
+                  .antMatchers(LOGOUT_ENDPOINT).authenticated()
+                  .antMatchers(LOGOUT_PAGE).authenticated()
                   .antMatchers(API_ENDPOINTS).hasAuthority(USER_AUTHORITY)
-                  .antMatchers(HttpMethod.POST, ApiPaths.REGISTER_ENDPOINTS).permitAll()
+                  .antMatchers(HttpMethod.POST, ApiPaths.REGISTER_ENDPOINTS).anonymous()
                   .antMatchers(HttpMethod.POST, ApiPaths.USER_ENDPOINTS).hasAnyAuthority(ADMIN_AUTHORITY, USER_AUTHORITY)
                   .antMatchers(ApiPaths.MANAGEMENT_PUBLIC).hasAnyAuthority(ADMIN_AUTHORITY, USER_AUTHORITY)
                   .antMatchers(ApiPaths.MANAGEMENT_SECURED).hasAuthority(ADMIN_AUTHORITY)
                   .antMatchers(endPoints).hasAnyAuthority(ADMIN_AUTHORITY, USER_AUTHORITY)
             .and().formLogin()
                   .loginPage(LOGIN_PAGE)
-                  .loginProcessingUrl(LOGIN)
-                  .defaultSuccessUrl(MODELLBAHN)
+                  .loginProcessingUrl(LOGIN_ENDPOINT)
+                  .defaultSuccessUrl(resourceEndpoints.getHomePage())
                   .failureUrl(LOGIN_FAILURE_PAGE)
                   .permitAll()
             .and().logout()
-                  .logoutUrl(LOGOUT)
+                  .logoutUrl(LOGOUT_ENDPOINT)
                   .logoutSuccessUrl(LOGOUT_SUCCESS_PAGE)
                   .deleteCookies(SESSION_COOKIE)
                   .permitAll()
