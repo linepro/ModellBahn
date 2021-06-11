@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 
 @Service
 public class StackTraceFilter {

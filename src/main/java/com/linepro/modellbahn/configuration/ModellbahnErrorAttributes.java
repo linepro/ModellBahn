@@ -29,7 +29,8 @@ public class ModellbahnErrorAttributes extends DefaultErrorAttributes {
         if (includeStackTrace) {
             Throwable error = getError(request);
             if (error != null) {
-                errorAttributes.put("trace", stackTraceFilter.getStackTrace(error.getStackTrace()));
+                StackTraceElement[] trace = (error.getCause() != null ? error.getCause() : error).getStackTrace();
+                errorAttributes.put("trace", stackTraceFilter.getStackTrace(trace));
             }
         }
 

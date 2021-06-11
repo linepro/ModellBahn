@@ -12,6 +12,7 @@ import com.linepro.modellbahn.util.exceptions.StackTraceFilter;
     ErrorHandler.class,
     ErrorViewResolver.class,
     MvcConfig.class,
+    ModellbahnErrorAttributes.class,
     StackTraceFilter.class,
     ThymleafConfiguration.class
 })

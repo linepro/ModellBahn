@@ -37,8 +37,8 @@
                         <img src="/img/ModellBahn.svg" class="logo"></img>
                         <div class="dropdown-content">
                             <a href="/" th:text="#{template.home}"></a>
-                            <a sec:authorize="isFullyAuthenticated()" th:href="@{'/account'}" th:text="#{template.profile}"><span th:text="${#authentication.name}"></span></a>
-                            <a sec:authorize="isFullyAuthenticated()" th:href="@{'/logout'}" th:text="#{template.logout}"></a>
+                            <a sec:authorize="isFullyAuthenticated()" th:href="@{/account}" th:text="#{template.profile}"></a>
+                            <a sec:authorize="isFullyAuthenticated()" th:href="@{/logout}" th:text="#{template.logout}"></a>
                             <a th:href="@{/about.html}" th:text="#{template.about}"></a>
                         </div>
                     </div>
