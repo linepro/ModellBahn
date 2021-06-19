@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
 import javax.validation.Validator;
 import javax.validation.metadata.ConstraintDescriptor;
@@ -54,7 +53,6 @@ import com.linepro.modellbahn.i18n.MessageTranslator;
 import com.linepro.modellbahn.security.EmailService;
 import com.linepro.modellbahn.security.WebSecurityConfig;
 import com.linepro.modellbahn.security.password.PasswordProcessor;
-import com.linepro.modellbahn.security.password.RawPassword;
 import com.linepro.modellbahn.security.user.UserModel.UserModelBuilder;
 import com.linepro.modellbahn.util.exceptions.ModellBahnException;
 
@@ -128,49 +126,39 @@ public class UserService implements UserDetailsService {
         return found.map(u -> toModel(u, isAdmin(authentication)));
     }
 
-    public Optional<UserModel> update(String name, UserModel model, Authentication authentication) {
-        return userRepository.findByName(name).map(u -> {
-            // localeSetter.setLocale(u.getLocale()); // TODO: model.locale ? : Should really be authentication's locale
+    public UserResponse update(String name, UserModel model, HttpSession session, Authentication authentication) {
+        User user = getUser(name, authentication);
 
-            if (!name.equals(authentication.getName())) {
-                throw new AccessDeniedException(translator.getMessage(ApiMessages.INVALID_USER, name));
+        Set<ConstraintViolation<?>> errors = new HashSet<>();
+
+        if (StringUtils.hasText(model.getEmail()) && !user.getEmail().equals(model.getEmail())) {
+            // eMail change; ensure that we aren't using it already
+            if (userRepository.findByEmail(model.getEmail()).isPresent()) {
+                errors.add(userError(ApiMessages.USER_EXISTS, model.getEmail(), user));
             }
+        }
 
-            Set<ConstraintViolation<?>> errors = new HashSet<>();
+        if (errors.isEmpty()) {
+            user = fromModel(user, model, isAdmin(authentication));
 
-            if (StringUtils.hasText(model.getEmail()) && !u.getEmail().equals(model.getEmail())) {
-                // eMail change; ensure that we aren't using it already
-                if (userRepository.findByEmail(model.getEmail()).isPresent()) {
-                    errors.add(userError(ApiMessages.USER_EXISTS, model.getEmail(), u));
-                }
-            }
+            errors.addAll(validator.validate(user));
+        }
 
-            if (errors.isEmpty()) {
-                u = fromModel(u, model, isAdmin(authentication));
+        if (!errors.isEmpty()) {
+            return userResponse(user, HttpStatus.BAD_REQUEST, errors);
+        }
 
-                errors.addAll(validator.validate(u));
-            }
+        localeSetter.setLocale(session, user.getLocale()); // TODO: model.locale ? : Should really be authentication's locale
 
-            if (!errors.isEmpty()) {
-                throw new ConstraintViolationException(errors);
-            }
-
-            return toModel(userRepository.saveAndFlush(u), isAdmin(authentication));
-        });
+        return userResponse(userRepository.saveAndFlush(user), HttpStatus.ACCEPTED, translator.getMessage(ApiMessages.USER_UPDATED, name));
     }
 
     public boolean delete(String name, Authentication authentication) {
-        return userRepository.findByName(name).map(e -> {
-            // localeSetter.setLocale(e.getLocale()); // should really be Authentication's locale
+        User user = getUser(name, authentication);
 
-            if (!name.equals(authentication.getName())) {
-                throw new AccessDeniedException(translator.getMessage(ApiMessages.INVALID_USER, name));
-            }
+        userRepository.delete(user);
 
-            userRepository.delete(e);
-
-            return true;
-        }).orElse(false);
+        return true;
     }
 
     @Override
@@ -270,19 +258,9 @@ public class UserService implements UserDetailsService {
     }
 
     public UserResponse changePassword(String name, String password, Authentication authentication) {
-        Optional<User> found = userRepository.findByName(name);
+        User user = getUser(name, authentication);
 
-        if (found.isPresent()) {
-            User user = found.get();
-
-            if (!name.equals(authentication.getName())) {
-                throw new AccessDeniedException(translator.getMessage(ApiMessages.INVALID_USER, name));
-            }
-
-            return updatePassword(password, user);
-        }
-
-        return userResponse(found.orElse(null), HttpStatus.BAD_REQUEST, translator.getMessage(ApiMessages.INVALID_USER, name));
+        return updatePassword(password, user);
     }
 
     private void setConfirmationToken(User user, int hours) {
@@ -369,27 +347,49 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    protected UserResponse updatePassword(String password, User found) {
-        Set<ConstraintViolation<RawPassword>> errors = passwordProcessor.validate(password);
+    protected UserResponse updatePassword(String password, User user) {
+        Set<ConstraintViolation<?>> errors = passwordProcessor.validate(password)
+                                                              .stream()
+                                                              .map(c -> (ConstraintViolation<?>) c)
+                                                              .collect(Collectors.toSet());
 
         if (errors.isEmpty()) {
-            clearConfirmationToken(found);
-            found.setEnabled(true);
-            found.setPassword(passwordProcessor.encode(password));
-            found.setPasswordChanged(LocalDateTime.now());
+            clearConfirmationToken(user);
+            user.setEnabled(true);
+            user.setPassword(passwordProcessor.encode(password));
+            user.setPasswordChanged(LocalDateTime.now());
 
             // Save user
-            userRepository.saveAndFlush(found);
+            user = userRepository.saveAndFlush(user);
 
-            return userResponse(found, HttpStatus.ACCEPTED, translator.getMessage(ApiMessages.PASSWORD_CHANGED, found.getEmail()));
+            return userResponse(user, HttpStatus.ACCEPTED, translator.getMessage(ApiMessages.PASSWORD_CHANGED, user.getEmail()));
         }
 
-        return userResponse(found, HttpStatus.BAD_REQUEST, errors.stream().map(v -> v.getMessage()).collect(Collectors.joining("\\n")));
+        return userResponse(user, HttpStatus.BAD_REQUEST, errors);
     }
 
+    protected User getUser(String name, Authentication authentication) {
+        Optional<User> found = userRepository.findByName(name);
+
+        if (!name.equals(authentication.getName()) || !found.isPresent()) {
+            throw new AccessDeniedException(translator.getMessage(ApiMessages.INVALID_USER, name));
+        }
+
+        User user = found.get();
+        return user;
+    }
+
+    protected UserResponse userResponse(User user, HttpStatus status, Set<ConstraintViolation<?>> errors) {
+        return userResponse(user, status, errors.stream().map(v -> v.getMessage()).collect(Collectors.joining("\\n")));
+    }
+    
     protected UserResponse userResponse(User user, HttpStatus status, String message) {
-        return UserResponse.builder().user(toModel(user, false)).timestamp(System.currentTimeMillis()).status(status.value()).message(message)
-                        .build();
+        return UserResponse.builder()
+                           .user(toModel(user, false))
+                           .timestamp(System.currentTimeMillis())
+                           .status(status.value())
+                           .message(message)
+                           .build();
     }
 
     protected ConstraintViolation<User> userError(String message, String value, User user) {

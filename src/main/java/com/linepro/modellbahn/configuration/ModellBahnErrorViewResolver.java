@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
 @Component
-public class ErrorViewResolver extends DefaultErrorViewResolver {
+public class ModellBahnErrorViewResolver extends DefaultErrorViewResolver {
 
     private static final Map<HttpStatus,String> ERRORS = Stream.of(
                       new SimpleImmutableEntry<>(HttpStatus.BAD_REQUEST, "error/400"),
@@ -28,7 +28,7 @@ public class ErrorViewResolver extends DefaultErrorViewResolver {
                     )
                     .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 
-    public ErrorViewResolver(ApplicationContext applicationContext, ResourceProperties resourceProperties) {
+    public ModellBahnErrorViewResolver(ApplicationContext applicationContext, ResourceProperties resourceProperties) {
         super(applicationContext, resourceProperties);
     }
 

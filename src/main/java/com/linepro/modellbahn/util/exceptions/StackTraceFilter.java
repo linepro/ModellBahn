@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class StackTraceFilter {
 
-    private static final String DEFAULT_EXCLUSIONS = 
+    protected static final String DEFAULT_EXCLUSIONS = 
                     "java.lang.reflect.Method" + "," +
                     "ByCGLIB" + "," +
                     "BySpringCGLIB" + "," +
@@ -35,11 +35,15 @@ public class StackTraceFilter {
                     "sun.security.ssl"
                     ;
 
-    private static final int DEFAULT_DEPTH = 10;
+    protected static final int DEFAULT_DEPTH = 10;
 
     private List<String> exclusions;
 
     private int maxDepth;
+
+    public StackTraceFilter() {
+        this(DEFAULT_EXCLUSIONS.split(","), DEFAULT_DEPTH);
+    }
 
     public StackTraceFilter(
         @Value("${com.linepro.modellbahn.stackTrace.exclude:" + DEFAULT_EXCLUSIONS +"}") String[] exclusions,

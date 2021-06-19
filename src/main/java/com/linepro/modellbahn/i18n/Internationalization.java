@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator;
 import org.springframework.validation.beanvalidation.MessageSourceResourceBundleLocator;
-import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.LocaleContextResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @Import({
@@ -43,7 +43,7 @@ public class Internationalization {
     protected static final List<Locale> SUPPORTED_LOCALES = Arrays.asList(Locale.ENGLISH, DEFAULT_LOCALE);
 
     @Bean
-    public LocaleResolver localeResolver() {
+    public LocaleContextResolver localeContextResolver() {
         SessionLocaleResolver resolver = new SessionLocaleResolver();
         resolver.setDefaultLocale(DEFAULT_LOCALE);
         return resolver;

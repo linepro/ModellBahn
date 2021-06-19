@@ -100,11 +100,11 @@ public class UserController {
 
     public static final String RESET_PASSWORD_ENDPOINT = "/" + RESET_PASSWORD;
 
-    protected static final String CONFIRM_ERROR = "error/confirm";
+    public static final String CONFIRM_ERROR = "error/confirm";
 
-    protected static final String LOGIN_ERROR = "error/login";
+    public static final String LOGIN_ERROR = "error/login";
 
-    protected static final String RESET_ERROR = "error/reset";
+    public static final String RESET_ERROR = "error/reset";
 
     protected static final String EMAIL_PARAM = "email";
 
@@ -229,18 +229,7 @@ public class UserController {
      */
     @PostMapping(ACCOUNT_ENDPOINT)
     public ModelAndView account(@ModelAttribute(PARAM_USER) UserModel userModel, Authentication authentication, HttpSession session) {
-        ModelAndView mav = modelAndView(ACCOUNT);
-
-        try {
-            addUser(mav, userService.update(authentication.getName(), userModel, authentication)
-                                    .map(u -> setLocale(u, session))
-                                    .orElse(userModel));
-        } catch (ConstraintViolationException ex) {
-            addUser(mav, userModel);
-            addErrors(mav, ex);
-        }
-
-        return mav;
+        return modelAndView(userService.update(authentication.getName(), userModel, session, authentication), ACCOUNT, ACCOUNT);
     }
 
     /**
@@ -249,7 +238,7 @@ public class UserController {
      * <li><strong>POST</strong> /changePassword [authorization] -&gt;
      * <ul>
      * <li><strong>Error:</strong> templates/account.html (message=validation fails, preload)</li>
-     * <li><strong>OK:</strong> templates/account.html (message=saved, preload)</li>
+     * <li><strong>OK:</strong> templates/login.html (message=changed, preload)</li>
      * </ul>
      * </li>
      * </ul>
@@ -257,17 +246,7 @@ public class UserController {
      */
     @PostMapping(CHANGE_PASSWORD_ENDPOINT)
     public ModelAndView changePassword(@RequestParam(PARAM_PASSWORD) String password, Authentication authentication, HttpSession session) {
-        ModelAndView mav = modelAndView(ACCOUNT);
-
-        addUser(mav, userService.get(authentication.getName(), authentication).get());
-
-        try {
-            addMessage(mav, userService.changePassword(authentication.getName(), password, authentication).getMessage());
-        } catch (ConstraintViolationException ex) {
-            addErrors(mav, ex);
-        }
-
-        return mav;
+        return modelAndView(userService.changePassword(authentication.getName(), password, authentication), LOGIN, ACCOUNT);
     }
 
     /**

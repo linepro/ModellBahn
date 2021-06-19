@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.security.user;
 
-import static org.springframework.http.HttpStatus.ACCEPTED;
-import static org.springframework.http.ResponseEntity.accepted;
 import static org.springframework.http.ResponseEntity.noContent;
 import static org.springframework.http.ResponseEntity.notFound;
 import static org.springframework.http.ResponseEntity.ok;
@@ -18,6 +16,7 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -107,9 +106,16 @@ public class UserRestController {
     })
     @SecurityRequirement(name = "BasicAuth")
     public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody UserModel model, Authentication authentication) {
-        return userService.update(name, model, authentication)
-                          .map(b -> accepted().body(b))
-                          .orElse(notFound().build());
+        UserResponse response = userService.update(name, model, null, authentication);
+
+        BodyBuilder status = status(response.getStatus());
+
+        if (response.isAccepted()) {
+            return status.body(response.getUser());
+        }
+
+        response.setUser(null);
+        return status.body(response);
     }
 
     @PatchMapping(path = ApiPaths.CHANGE_PASSWORD)
@@ -120,7 +126,16 @@ public class UserRestController {
     })
     @SecurityRequirement(name = "BasicAuth")
     public ResponseEntity<?> changePassword(@PathVariable(ApiNames.NAMEN) String name, @RequestParam(ApiNames.PASSWORD) String password, Authentication authentication) {
-        return status(ACCEPTED).body(userService.changePassword(name, password, authentication));
+        UserResponse response = userService.changePassword(name, password, authentication);
+
+        BodyBuilder status = status(response.getStatus());
+
+        if (response.isAccepted()) {
+            return status.body(response.getUser());
+        }
+
+        response.setUser(null);
+        return status.body(response);
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_USER)

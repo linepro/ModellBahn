@@ -20,6 +20,7 @@ import com.linepro.modellbahn.security.user.UserRestController;
 import com.linepro.modellbahn.security.user.UserService;
 
 @Import({
+    CorsConfig.class,
     EmailService.class,
     JsonAccessDeniedHandler.class,
     ModellBahnAccessDeniedHandler.class,

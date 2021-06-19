@@ -30,20 +30,68 @@ import com.linepro.modellbahn.util.exceptions.StackTraceFilter;
 
 import lombok.RequiredArgsConstructor;
 
-@ControllerAdvice
+@ControllerAdvice(basePackages = {"com.linepro.modellbahn.controller"})
 @RequiredArgsConstructor
-public class ErrorHandler {
+public class ModellBahnErrorHandler {
 
     private final MessageTranslator messageTranslator;
 
     private final StackTraceFilter stackTraceFilter;
 
     @Produces(MediaType.APPLICATION_JSON)
-    @ExceptionHandler({ Exception.class })
-    public ResponseEntity<Object> handleException(Exception ex, WebRequest request) throws Exception {
-        Throwable effective = getEffective(ex);
+    @ExceptionHandler({ 
+        ConstraintViolationException.class, 
+        DataIntegrityViolationException.class, 
+        IllegalArgumentException.class, 
+        IllegalStateException.class, 
+        JsonMappingException.class, 
+        JsonParseException.class,
+        HttpMessageNotReadableException.class,
+        HttpMediaTypeException.class,
+        MissingServletRequestPartException.class,
+        HttpRequestMethodNotSupportedException.class})
+    public ResponseEntity<Object> badRequest(Exception ex, WebRequest request) throws Exception {
+        return handle(ex, request, HttpStatus.BAD_REQUEST);
+    }
 
-        HttpStatus status = classify(effective);
+    @Produces(MediaType.APPLICATION_JSON)
+    @ExceptionHandler({ EntityExistsException.class })
+    public ResponseEntity<Object> conflict(Exception ex, WebRequest request) throws Exception {
+        return handle(ex, request, HttpStatus.CONFLICT);
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @ExceptionHandler({ ModellBahnException.class })
+    public ResponseEntity<Object> modellBahn(Exception ex, WebRequest request) throws Exception {
+        return handle(ex, request, ((ModellBahnException) ex).getStatus());
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @ExceptionHandler({ EntityNotFoundException.class })
+    public ResponseEntity<Object> notFound(Exception ex, WebRequest request) throws Exception {
+        return handle(ex, request, HttpStatus.NOT_FOUND);
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @ExceptionHandler({ NoResultException.class })
+    public ResponseEntity<Object> noContent(Exception ex, WebRequest request) throws Exception {
+        return  handle(ex, request, HttpStatus.NO_CONTENT);
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @ExceptionHandler({ SecurityException.class, HttpSessionRequiredException.class })
+    public ResponseEntity<Object> forbidden(Exception ex, WebRequest request) throws Exception {
+        return handle(ex, request, HttpStatus.FORBIDDEN);
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @ExceptionHandler({ Exception.class })
+    public ResponseEntity<Object> others(Exception ex, WebRequest request) throws Exception {
+        return handle(ex, request, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    protected ResponseEntity<Object> handle(Exception ex, WebRequest request, HttpStatus status) throws Exception {
+        Throwable effective = ex.getCause() != null ? ex.getCause() : ex;
 
         return ResponseEntity.status(status)
                              .body(
@@ -59,53 +107,7 @@ public class ErrorHandler {
 
     }
 
-    private Throwable getEffective(Exception ex) {
-        if (ex.getCause() != null) {
-            return ex;   
-        }
-
-        return ex;
-    }
-
-    private HttpStatus classify(Throwable ex) {
-        if (ex instanceof ConstraintViolationException) {
-            return HttpStatus.BAD_REQUEST;
-        } else if (ex instanceof ModellBahnException) {
-            return ((ModellBahnException) ex).getStatus();
-        } else if (ex instanceof DataIntegrityViolationException) {
-            return HttpStatus.BAD_REQUEST;
-        } else if (ex instanceof EntityExistsException) {
-            return HttpStatus.BAD_REQUEST;
-        } else if (ex instanceof EntityNotFoundException) {
-            return HttpStatus.NOT_FOUND;
-        } else if (ex instanceof IllegalArgumentException) {
-            return HttpStatus.BAD_REQUEST;
-        } else if (ex instanceof IllegalStateException) {
-            return HttpStatus.BAD_REQUEST;
-        } else if (ex instanceof NoResultException) {
-            return HttpStatus.NO_CONTENT;
-        } else if (ex instanceof SecurityException) {
-            return HttpStatus.FORBIDDEN;
-        } else if (ex instanceof JsonMappingException) {
-            return HttpStatus.BAD_REQUEST;
-        } else if (ex instanceof JsonParseException) {
-            return HttpStatus.BAD_REQUEST;
-        } else if (ex instanceof HttpMessageNotReadableException) {
-            return HttpStatus.BAD_REQUEST;
-        } else if (ex instanceof HttpMediaTypeException) {
-            return HttpStatus.BAD_REQUEST;
-        } else if (ex instanceof MissingServletRequestPartException) {
-            return HttpStatus.BAD_REQUEST;
-        } else if (ex instanceof HttpRequestMethodNotSupportedException) {
-            return HttpStatus.BAD_REQUEST;
-        } else if (ex instanceof HttpSessionRequiredException) {
-            return HttpStatus.FORBIDDEN;
-        }
-
-        return HttpStatus.INTERNAL_SERVER_ERROR;
-    }
-
-    private String message(Throwable ex) {
+    protected String message(Throwable ex) {
         if (ex instanceof ConstraintViolationException) {
             return ((ConstraintViolationException) ex).getConstraintViolations().stream().map(v -> v.getMessage()).collect(Collectors.joining(",\n"));
         } else if (ex instanceof ModellBahnException) {

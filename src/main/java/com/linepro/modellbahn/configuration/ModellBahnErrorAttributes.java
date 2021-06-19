@@ -6,7 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
+import org.springframework.boot.web.error.ErrorAttributeOptions.Include;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,29 +20,29 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import com.google.common.net.HttpHeaders;
 import com.linepro.modellbahn.util.exceptions.StackTraceFilter;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ModellBahnErrorAttributes extends DefaultErrorAttributes {
 
-    @Autowired
-    private StackTraceFilter stackTraceFilter;
+    private static final ErrorAttributeOptions OPTIONS = ErrorAttributeOptions.of(
+                    Include.BINDING_ERRORS, 
+                    Include.EXCEPTION, 
+                    Include.MESSAGE, 
+                    Include.STACK_TRACE
+                    );
 
-    @Autowired
-    private ModellBahnErrorViewResolver resolver;
+    private final StackTraceFilter stackTraceFilter;
 
-    public ModellBahnErrorAttributes() {
-        this(true);
-    }
-
-    public ModellBahnErrorAttributes(boolean includeException) {
-        super(includeException);
-    }
+    private final ModellBahnErrorViewResolver resolver;
 
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         super.resolveException(request, response, handler, ex);
 
         HttpStatus status = HttpStatus.valueOf(response.getStatus());
-        Map<String, Object> attributes = getErrorAttributes(new ServletWebRequest(request), true);
+        Map<String, Object> attributes = getErrorAttributes(new ServletWebRequest(request), OPTIONS);
 
         ModelAndView mav;
         if (StringUtils.contains(request.getHeader(HttpHeaders.ACCEPT), MediaType.APPLICATION_JSON_VALUE)) {
@@ -56,9 +57,9 @@ public class ModellBahnErrorAttributes extends DefaultErrorAttributes {
     }
 
     @Override
-    public Map<String, Object> getErrorAttributes(WebRequest request, boolean includeException) {
-        Map<String, Object> errorAttributes = super.getErrorAttributes(request, includeException);
-        if (includeException) {
+    public Map<String, Object> getErrorAttributes(WebRequest request, ErrorAttributeOptions options) {
+        Map<String, Object> errorAttributes = super.getErrorAttributes(request, options);
+        if (options.isIncluded(Include.STACK_TRACE)) {
             Throwable error = getError(request);
             if (error != null) {
                 StackTraceElement[] trace = (error.getCause() != null ? error.getCause() : error).getStackTrace();

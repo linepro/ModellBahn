@@ -29,7 +29,7 @@ public class CorsConfig implements WebMvcConfigurer {
             HttpMethod.POST.name()
     };
 
-    private static final boolean ALLOW_CREDENTIALS = true;
+    private static final boolean ALLOW_CREDENTIALS = false;
 
     private static final long CORS_TIMEOUT = 3600L;
 

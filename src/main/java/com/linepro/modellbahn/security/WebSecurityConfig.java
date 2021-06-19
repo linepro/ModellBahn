@@ -28,7 +28,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 
+import com.linepro.modellbahn.configuration.ModellBahnErrorFilter;
 import com.linepro.modellbahn.configuration.OpenApiConfiguration;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.io.ResourceEndpoints;
@@ -84,7 +86,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     LOGIN_ENDPOINT,
                     REGISTER_ENDPOINT,
                     RESET_PASSWORD_ENDPOINT
-                };
+                    };
 
     protected static final String[] INSECURE_PAGES = Arrays.asList(INSECURE_URLS)
                                                            .stream()
@@ -130,6 +132,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private final OpenApiConfiguration docConfig;
 
+    @Autowired
+    private final ModellBahnErrorFilter errorFilter;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
@@ -144,7 +149,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                               .collect(Collectors.toList())
                                               .toArray(new String[0]);
 
-        http.headers().frameOptions().sameOrigin()
+        http.addFilterBefore(errorFilter, LogoutFilter.class)
+            .headers().frameOptions().sameOrigin()
             .and().cors()
             .and().csrf().disable()
             .exceptionHandling().accessDeniedHandler(accessDeniedHandler)

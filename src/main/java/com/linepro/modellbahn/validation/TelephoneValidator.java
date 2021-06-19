@@ -12,7 +12,7 @@ public class TelephoneValidator implements ConstraintValidator<Telefon, HasTelef
 
     @Override
     public boolean isValid(HasTelefon value, ConstraintValidatorContext context) {
-        if (StringUtils.isEmpty(value.getTelefon())) {
+        if (!StringUtils.hasText(value.getTelefon())) {
             return true;
         }
 

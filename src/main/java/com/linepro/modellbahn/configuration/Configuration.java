@@ -9,10 +9,11 @@ import com.linepro.modellbahn.util.exceptions.StackTraceFilter;
 
 @Import({
     ApplicationReadyListener.class,
-    ErrorHandler.class,
-    ErrorViewResolver.class,
+    ModellBahnErrorAttributes.class,
+    ModellBahnErrorHandler.class,
+    ModellBahnErrorFilter.class,
+    ModellBahnErrorViewResolver.class,
     MvcConfig.class,
-    ModellbahnErrorAttributes.class,
     StackTraceFilter.class,
     ThymleafConfiguration.class
 })

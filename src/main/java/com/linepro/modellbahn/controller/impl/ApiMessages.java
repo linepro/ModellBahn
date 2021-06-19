@@ -23,4 +23,5 @@ public interface ApiMessages {
     String USER_CONFIRMED = "{com.linepro.modellbahn.user.CONFIRMED}";
     String USER_EXISTS = "{com.linepro.modellbahn.user.EXISTS}";
     String TOKEN_EXPIRED = "{com.linepro.modellbahn.user.TOKEN_EXPIRED}";
+    String USER_UPDATED = "{com.linepro.modellbahn.user.USER_UPDATED}";
 }
