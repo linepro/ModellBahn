@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class ModellBahnErrorFilter extends OncePerRequestFilter {
 
-    private final ModellBahnErrorAttributes attributes;
+    private final ModellbahnErrorAttributes attributes;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

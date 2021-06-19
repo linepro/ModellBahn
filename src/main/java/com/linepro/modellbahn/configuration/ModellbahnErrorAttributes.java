@@ -20,7 +20,7 @@ import com.google.common.net.HttpHeaders;
 import com.linepro.modellbahn.util.exceptions.StackTraceFilter;
 
 @Service
-public class ModellBahnErrorAttributes extends DefaultErrorAttributes {
+public class ModellbahnErrorAttributes extends DefaultErrorAttributes {
 
     @Autowired
     private StackTraceFilter stackTraceFilter;
@@ -28,11 +28,11 @@ public class ModellBahnErrorAttributes extends DefaultErrorAttributes {
     @Autowired
     private ModellBahnErrorViewResolver resolver;
 
-    public ModellBahnErrorAttributes() {
+    public ModellbahnErrorAttributes() {
         this(true);
     }
 
-    public ModellBahnErrorAttributes(boolean includeException) {
+    public ModellbahnErrorAttributes(boolean includeException) {
         super(includeException);
     }
 
