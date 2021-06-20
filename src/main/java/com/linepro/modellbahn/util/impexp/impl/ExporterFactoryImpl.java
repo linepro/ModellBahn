@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.util.impexp.impl;
 
-import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;

@@ -38,7 +38,7 @@ public class LinkTemplateImpl implements LinkTemplate {
 
             String path = ServletUriComponentsBuilder.fromCurrentServletMapping().path(this.path).buildAndExpand(names).toString();
 
-            model.add(new Link(path, rel));
+            model.add(Link.of(path, rel));
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.security.user;
 
-import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 
 import java.time.LocalDateTime;
 import java.util.Optional;

@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.validation;
 
-import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

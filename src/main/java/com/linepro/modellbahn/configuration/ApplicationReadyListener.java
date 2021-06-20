@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.configuration;
 
-import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;

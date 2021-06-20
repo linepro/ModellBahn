@@ -2,7 +2,7 @@ package com.linepro.modellbahn.service.impl;
 
 import static com.fasterxml.jackson.dataformat.csv.CsvSchema.ColumnType.NUMBER;
 import static com.fasterxml.jackson.dataformat.csv.CsvSchema.ColumnType.STRING;
-import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 
 import java.util.Currency;
 import java.util.HashMap;

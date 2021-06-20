@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.repository;
 
-import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 
 import java.util.Optional;
 

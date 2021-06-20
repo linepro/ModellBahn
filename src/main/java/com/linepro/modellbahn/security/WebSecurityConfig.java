@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.security;
 
-import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.API_ENDPOINTS;
 import static com.linepro.modellbahn.security.user.UserController.ABOUT_ENDPOINT;
 import static com.linepro.modellbahn.security.user.UserController.CONFIRM_REGISTRATION_ENDPOINT;

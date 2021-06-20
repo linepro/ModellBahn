@@ -50,12 +50,12 @@ import com.linepro.modellbahn.validation.ValidationConfiguration;
     Data.class,
     StaticPopulator.class
 })
-public class ModellbahnApplication {
+public class ModellBahnApplication {
 
     public static final String PREFIX = "modellBahn.";
 
 	public static void main(String[] args) {
-		SpringApplication.run(ModellbahnApplication.class, args);
+		SpringApplication.run(ModellBahnApplication.class, args);
 	}
 }
 

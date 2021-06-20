@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.io;
 
-import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import static org.webjars.WebJarAssetLocator.WEBJARS_PATH_PREFIX;
 
 import java.util.ArrayList;

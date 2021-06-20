@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.io;
 
-import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 
 import java.nio.file.Path;
 import java.util.List;

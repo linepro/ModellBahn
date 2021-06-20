@@ -3,7 +3,7 @@ package com.linepro.modellbahn.logging;
 /**
  * Formalized business logging on a common root logger so that we can filter it to the composite log.
  */
-import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;

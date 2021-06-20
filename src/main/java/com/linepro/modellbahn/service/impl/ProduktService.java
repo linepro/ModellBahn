@@ -6,7 +6,7 @@ package com.linepro.modellbahn.service.impl;
  * @author  $Author:$
  * @version $Id:$
  */
-import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 
 import java.util.Optional;
 

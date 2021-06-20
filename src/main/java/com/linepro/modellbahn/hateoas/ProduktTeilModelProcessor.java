@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.hateoas;
 
-import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import static com.linepro.modellbahn.controller.impl.ApiNames.BESTELL_NR;
 import static com.linepro.modellbahn.controller.impl.ApiNames.HERSTELLER;
 import static com.linepro.modellbahn.controller.impl.ApiNames.TEIL_BESTELL_NR;

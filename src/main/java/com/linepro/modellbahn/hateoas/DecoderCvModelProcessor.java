@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.hateoas;
 
-import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import static com.linepro.modellbahn.controller.impl.ApiNames.CV;
 import static com.linepro.modellbahn.controller.impl.ApiNames.DECODER_ID;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_DECODER;
