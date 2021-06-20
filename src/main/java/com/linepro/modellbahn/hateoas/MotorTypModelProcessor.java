@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.hateoas;
 
-import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_MOTOR_TYP;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_MOTOR_TYP_ABBILDUNG;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_MOTOR_TYP;

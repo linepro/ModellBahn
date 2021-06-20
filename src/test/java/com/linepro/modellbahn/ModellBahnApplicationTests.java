@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @Disabled("Used for manual testing of spring changes.")
-class ModellbahnApplicationTests {
+class ModellBahnApplicationTests {
 
 	@Test
 	void contextLoads() {

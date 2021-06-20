@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.util.impexp.impl;
 
-import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

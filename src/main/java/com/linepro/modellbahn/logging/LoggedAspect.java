@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.logging;
 
-import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

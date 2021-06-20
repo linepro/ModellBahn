@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.hateoas;
 
-import static com.linepro.modellbahn.ModellbahnApplication.PREFIX;
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_CONSIST;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_ZUG;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_ZUG;
