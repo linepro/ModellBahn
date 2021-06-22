@@ -76,7 +76,7 @@ public class UserController {
 
     public static final String ABOUT_ENDPOINT = "/" + ABOUT;
 
-    public static final String ABOUT_PAGE = ABOUT_ENDPOINT + ".*";
+    protected static final String ABOUT_PAGE = ABOUT_ENDPOINT + ".*";
 
     public static final String ACCOUNT_ENDPOINT = "/" + ACCOUNT;
 
@@ -86,9 +86,11 @@ public class UserController {
 
     public static final String FORGOT_PASSWORD_ENDPOINT = "/" + FORGOT_PASSWORD;
 
-    public static final String INDEX_PAGE = "/" + INDEX + ".*";
+    protected static final String INDEX_PAGE = "/" + INDEX + ".*";
 
     public static final String LOGIN_ENDPOINT = "/" + LOGIN;
+
+    protected static final String LOGIN_PAGE = LOGIN_ENDPOINT + ".*";
 
     public static final String LOGIN_FAILURE_ENDPOINT = "/" + LOGIN_FAILURE;
 
@@ -127,16 +129,12 @@ public class UserController {
 
     private final ResourceEndpoints resourceEndpoints;
 
-    @GetMapping({
-                    HOME, INDEX_PAGE
-    })
+    @GetMapping({ HOME, INDEX_PAGE })
     public ModelAndView home() {
         return modelAndView(resourceEndpoints.getHomePageRedirect());
     }
 
-    @GetMapping({
-                    ABOUT_ENDPOINT, ABOUT_PAGE
-    })
+    @GetMapping({ ABOUT_ENDPOINT, ABOUT_PAGE })
     public ModelAndView about() {
         return modelAndView(ABOUT);
     }
@@ -260,7 +258,7 @@ public class UserController {
      * </ul>
      */
     @PreAuthorize("isAnonymous()")
-    @GetMapping(LOGIN_ENDPOINT)
+    @GetMapping({ LOGIN_ENDPOINT, LOGIN_PAGE })
     public ModelAndView login(Authentication authentication) {
         return modelAndView(LOGIN);
     }
