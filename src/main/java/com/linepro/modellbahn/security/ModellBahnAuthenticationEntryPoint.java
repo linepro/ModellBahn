@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import static com.linepro.modellbahn.security.user.UserController.LOGIN_ENDPOINT;
 
 @Component(PREFIX + "AuthenticationEntryPoint")
 @SecurityScheme(type = SecuritySchemeType.HTTP, name = "BasicAuth", description = "Basic Authentication", paramName = HttpHeaders.AUTHORIZATION, in = SecuritySchemeIn.HEADER, scheme = "Basic")
@@ -24,7 +25,7 @@ public class ModellBahnAuthenticationEntryPoint extends LoginUrlAuthenticationEn
     private final JsonAccessDeniedHandler handler;
 
     public ModellBahnAuthenticationEntryPoint(JsonAccessDeniedHandler handler) {
-        super("/login.html");
+        super(LOGIN_ENDPOINT);
 
         this.handler = handler;
     }
