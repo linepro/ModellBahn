@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -37,14 +38,18 @@ public class JsonAccessDeniedHandler {
             }
 
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            response.setStatus(HttpStatus.FORBIDDEN.value());
+
+            HttpStatus status = (exception instanceof AuthenticationException) ? HttpStatus.UNAUTHORIZED : HttpStatus.FORBIDDEN;
+
+            response.setStatus(status.value());
             response.getWriter()
                     .write(
                         mapper.writeValueAsString(
                             UserMessage.builder()
                                         .path(request.getRequestURI())
                                         .timestamp(System.currentTimeMillis())
-                                        .message(HttpStatus.FORBIDDEN.name())
+                                        .status(status.value())
+                                        .message(status.name())
                                         .build()));
 
             return true;

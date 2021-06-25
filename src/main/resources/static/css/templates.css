@@ -86,16 +86,17 @@ button.nav-button {
   vertical-align: middle;
 }
 
-div.logo {
-  display: flex;
-  float: right;
-  margin-right: 2rem;
-}
-
 div.home,
 div.title {
   display: flex;
   justify-content: space-between;
+}
+
+div.logo {
+  display: flex;
+  float: right;
+  margin-right: 1rem;
+  margin-top: 1rem;
 }
 
 form {

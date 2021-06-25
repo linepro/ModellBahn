@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,6 +30,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 
 import com.linepro.modellbahn.configuration.ModellBahnErrorFilter;
 import com.linepro.modellbahn.configuration.OpenApiConfiguration;
@@ -42,6 +44,12 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @SuppressWarnings("deprecation")
+    protected static final MediaTypeRequestMatcher JSON_MATCHER = new MediaTypeRequestMatcher(
+                    MediaType.APPLICATION_JSON,
+                    MediaType.APPLICATION_JSON_UTF8
+                    );
 
     private static final int SECONDS_IN__DAY = 86400;
 
@@ -154,6 +162,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and().cors()
             .and().csrf().disable()
             .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
+                                .defaultAccessDeniedHandlerFor(accessDeniedHandler, JSON_MATCHER)
+                                .defaultAuthenticationEntryPointFor(authenticationEntryPoint, JSON_MATCHER)
             .and().httpBasic().authenticationEntryPoint(authenticationEntryPoint)
             .and().sessionManagement()
                   .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
@@ -178,14 +188,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                   .antMatchers(ApiPaths.MANAGEMENT_SECURED).hasAuthority(ADMIN_AUTHORITY)
                   .antMatchers(endPoints).hasAnyAuthority(ADMIN_AUTHORITY, USER_AUTHORITY)
             .and().formLogin()
-                  .loginPage(LOGIN_PAGE)
+                  .loginPage(LOGIN_ENDPOINT)
                   .loginProcessingUrl(LOGIN_ENDPOINT)
                   .defaultSuccessUrl(resourceEndpoints.getHomePage())
-                  .failureUrl(LOGIN_FAILURE_PAGE)
+                  .failureUrl(LOGIN_FAILURE_ENDPOINT)
                   .permitAll()
             .and().logout()
                   .logoutUrl(LOGOUT_ENDPOINT)
-                  .logoutSuccessUrl(LOGOUT_SUCCESS_PAGE)
+                  .logoutSuccessUrl(LOGOUT_SUCCESS_ENDPOINT)
                   .deleteCookies(SESSION_COOKIE)
                   .permitAll()
             .and().rememberMe()
