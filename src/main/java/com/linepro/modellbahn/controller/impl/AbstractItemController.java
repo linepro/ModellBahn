@@ -9,10 +9,13 @@ import static org.springframework.http.ResponseEntity.status;
 
 import java.util.Optional;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
 import com.linepro.modellbahn.model.ItemModel;
@@ -41,11 +44,12 @@ public abstract class AbstractItemController<M extends ItemModel> {
     }
 
     public <I extends ItemModel> ResponseEntity<?> found(Optional<I> body) {
-        return body.map(b -> ok(b)).orElse(notFound().build());
+        return body.map(b -> ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON).body(b))
+                   .orElse(notFound().build());
     }
 
     public <I extends ItemModel> ResponseEntity<?> added(I body) {
-        return status(CREATED).body(body);
+        return status(CREATED).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON).body(body);
     }
 
     public <I extends ItemModel> ResponseEntity<?> added(Optional<I> body) {
@@ -53,7 +57,7 @@ public abstract class AbstractItemController<M extends ItemModel> {
     }
 
     public <I extends ItemModel> ResponseEntity<?> updated(I body) {
-        return status(ACCEPTED).body(body);
+        return status(ACCEPTED).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON).body(body);
     }
 
     public <I extends ItemModel> ResponseEntity<?> updated(Optional<I> body) {
@@ -68,7 +72,8 @@ public abstract class AbstractItemController<M extends ItemModel> {
         if (page.hasContent()) {
             PagedResourcesAssembler<I> assembler = new PagedResourcesAssembler<I>(null, null);
 
-            return ok(
+            return ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                       .body(
                 assembler.toModel(
                     page.getPageable().isUnpaged() && page.hasContent() ?
                         new PageImpl<>(page.getContent(), page.getPageable(), page.getContent().size()) :
