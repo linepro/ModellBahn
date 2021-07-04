@@ -65,7 +65,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <app.main.class>com.linepro.modellbahn.ModellbahnApplication</app.main.class>
+        <app.main.class>com.linepro.modellbahn.ModellBahnApplication</app.main.class>
         <start-class>${app.main.class}</start-class>
 
         <java.version>11</java.version>
