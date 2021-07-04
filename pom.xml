@@ -365,6 +365,7 @@
             <artifactId>modellbahn-ui</artifactId>
             <version>${org.webjars.modellbahn-ui.version}</version>
             <scope>runtime</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
