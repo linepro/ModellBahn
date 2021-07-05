@@ -3,6 +3,8 @@
  */
 package com.linepro.modellbahn.security;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,12 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 public class SecurityTest {
 
-    private static final String[] PASSWORDS  = {
-        "password",
-        "Password",
-        "P4ssw0rd",
-        "P!55Word",
-        "IAmAGod"
+    private static final String[][] PASSWORDS  = {
+        { "Password", "$2a$10$MbNfLBG245kQ01dvWmiyn.RH8bhFJQEwvxM1/MP1fzHBL/unhPv1e" },
+        { "IAmAGod", "$2a$10$qMxTrsr2sJsGtk5gY2DntuffR2iO5lfW1r99v3btdpWwJaDo82x0G" }
     };
 
     private Security security;
@@ -35,11 +34,11 @@ public class SecurityTest {
      * Test method for {@link com.linepro.modellbahn.security.Security#getPasswordEncoder()}.
      */
     @Test
-    public void testGetPasswordEncoder() throws Exception {
+    void passwordEncoder() throws Exception {
         PasswordEncoder encoder = security.getPasswordEncoder();
-        for (String password : PASSWORDS) {
-            System.out.println(password + "=" + encoder.encode("Password"));
+
+        for (String[] password : PASSWORDS) {
+            assertTrue(encoder.matches(password[0], password[1]));
         }
     }
-
 }
