@@ -19083,7 +19083,7 @@
 		},
 		{
 			"key": "root",
-			"value": "{{server}}/ModellBahn"
+			"value": "{{server}}"
 		},
 		{
 			"key": "api",
