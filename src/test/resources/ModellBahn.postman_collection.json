@@ -19242,14 +19242,6 @@
 			"value": "00001"
 		},
 		{
-			"key": "decoderAdd",
-			"value": "00001"
-		},
-		{
-			"key": "decoderUpdate",
-			"value": "00001"
-		},
-		{
 			"key": "decoderHerstellerAdd",
 			"value": "ESU"
 		},
