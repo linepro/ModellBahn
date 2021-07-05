@@ -46,11 +46,11 @@ public class JsonAccessDeniedHandler {
                     .write(
                         mapper.writeValueAsString(
                             UserMessage.builder()
-                                        .path(request.getRequestURI())
-                                        .timestamp(System.currentTimeMillis())
-                                        .status(status.value())
-                                        .message(status.name())
-                                        .build()));
+                                       .path(request.getRequestURI())
+                                       .timestamp(System.currentTimeMillis())
+                                       .status(status.value())
+                                       .message(status.name())
+                                       .build()));
 
             return true;
         }
@@ -59,10 +59,10 @@ public class JsonAccessDeniedHandler {
     }
 
     public boolean isJsonRequest(HttpServletRequest request) {
-        String requestUri = request.getRequestURI();
+        String path = request.getContextPath();
 
-        return requestUri.startsWith(ApiPaths.API_ROOT) ||
-               requestUri.startsWith(ApiPaths.MANAGEMENT_ROOT) || 
+        return path.startsWith(ApiPaths.API_ROOT) ||
+               path.startsWith(ApiPaths.MANAGEMENT_ROOT) || 
                StringUtils.contains(request.getHeader(HttpHeaders.ACCEPT), MediaType.APPLICATION_JSON_VALUE);
     }
 }

@@ -176,7 +176,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                   .antMatchers(INSECURE_RESOURCES).permitAll()
                   .antMatchers(INSECURE_URLS).permitAll()
                   .antMatchers(resourceEndpoints.getSwaggerUi()).permitAll()
-                  .antMatchers(docConfig.getApiDocsPath()).permitAll()
+                  .antMatchers(docConfig.getApiDocsPath()+".*").permitAll()
                   .antMatchers(REGISTER_URLS).anonymous()
                   .antMatchers(REGISTER_PAGES).anonymous()
                   .antMatchers(LOGOUT_ENDPOINT).authenticated()
