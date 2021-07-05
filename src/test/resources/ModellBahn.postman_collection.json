@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2e4c897c-8e76-4c3a-8cc1-68141d2e501d",
+		"_postman_id": "2eff3e6e-8955-4d03-9d01-cc8eae11c78d",
 		"name": "ModellBahn",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -638,19 +638,7 @@
 				}
 			],
 			"auth": {
-				"type": "basic",
-				"basic": [
-					{
-						"key": "password",
-						"value": "{{basePassword}}",
-						"type": "string"
-					},
-					{
-						"key": "username",
-						"value": "{{baseUser}}",
-						"type": "string"
-					}
-				]
+				"type": "noauth"
 			},
 			"event": [
 				{
@@ -1456,7 +1444,7 @@
 									"    pm.test(\"bezeichnung \" + a.name, () => pm.expect(a.bezeichnung).to.exist);\r",
 									"    //pm.test(\"tooltip\", () => pm.expect(a.tooltip).to.exist);\r",
 									"});\r",
-									"pm.test(\"enums\", () => pm.expect(jsonData._embedded.data.length).to.eql(250));"
+									"pm.test(\"enums\", () => pm.expect(jsonData._embedded.data.length).to.eql(249));"
 								],
 								"type": "text/javascript"
 							}

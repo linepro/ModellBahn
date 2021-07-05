@@ -184,7 +184,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                   .antMatchers(API_ENDPOINTS).hasAuthority(USER_AUTHORITY)
                   .antMatchers(HttpMethod.POST, ApiPaths.REGISTER_ENDPOINTS).anonymous()
                   .antMatchers(HttpMethod.POST, ApiPaths.USER_ENDPOINTS).hasAnyAuthority(ADMIN_AUTHORITY, USER_AUTHORITY)
-                  .antMatchers(ApiPaths.MANAGEMENT_PUBLIC).hasAnyAuthority(ADMIN_AUTHORITY, USER_AUTHORITY)
+                  .antMatchers(ApiPaths.MANAGEMENT_PUBLIC).permitAll()
                   .antMatchers(ApiPaths.MANAGEMENT_SECURED).hasAuthority(ADMIN_AUTHORITY)
                   .antMatchers(endPoints).hasAnyAuthority(ADMIN_AUTHORITY, USER_AUTHORITY)
             .and().formLogin()
