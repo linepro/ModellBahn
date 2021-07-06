@@ -157,6 +157,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                               .collect(Collectors.toList())
                                               .toArray(new String[0]);
 
+        String[] apiDocs = new String[] {
+            docConfig.getApiDocsPath(),
+            docConfig.getApiDocsPath() + "/*",
+            resourceEndpoints.getSwaggerUi()
+        };
+        
         http.addFilterBefore(errorFilter, LogoutFilter.class)
             .headers().frameOptions().sameOrigin()
             .and().cors()
@@ -175,15 +181,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                   .antMatchers(INSECURE_PAGES).permitAll()
                   .antMatchers(INSECURE_RESOURCES).permitAll()
                   .antMatchers(INSECURE_URLS).permitAll()
-                  .antMatchers(resourceEndpoints.getSwaggerUi()).permitAll()
-                  .antMatchers(docConfig.getApiDocsPath()+".*").permitAll()
+                  .antMatchers(apiDocs).permitAll()
                   .antMatchers(REGISTER_URLS).anonymous()
                   .antMatchers(REGISTER_PAGES).anonymous()
                   .antMatchers(LOGOUT_ENDPOINT).authenticated()
                   .antMatchers(LOGOUT_PAGE).authenticated()
-                  .antMatchers(API_ENDPOINTS).hasAuthority(USER_AUTHORITY)
                   .antMatchers(HttpMethod.POST, ApiPaths.REGISTER_ENDPOINTS).anonymous()
                   .antMatchers(HttpMethod.POST, ApiPaths.USER_ENDPOINTS).hasAnyAuthority(ADMIN_AUTHORITY, USER_AUTHORITY)
+                  .antMatchers(API_ENDPOINTS).hasAuthority(USER_AUTHORITY)
                   .antMatchers(ApiPaths.MANAGEMENT_PUBLIC).permitAll()
                   .antMatchers(ApiPaths.MANAGEMENT_SECURED).hasAuthority(ADMIN_AUTHORITY)
                   .antMatchers(endPoints).hasAnyAuthority(ADMIN_AUTHORITY, USER_AUTHORITY)
