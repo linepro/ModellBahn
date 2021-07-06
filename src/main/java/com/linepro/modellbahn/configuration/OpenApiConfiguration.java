@@ -39,10 +39,10 @@ import lombok.Getter;
 @Configuration(PREFIX + "OpenApiConfiguration")
 public class OpenApiConfiguration {
 
-    @Value("${spring.mvc.servlet.path:ModellBahn}")
+    @Value("${spring.mvc.servlet.path:/}")
     private String servletPath;
 
-    @Value("${springdoc.api-docs.path:/v3/api-docs}")
+    @Value("${springdoc.api-docs.path:/v3/api-docs.json}")
     private String apiDocsPath;
 
     @Value("${springdoc.use-management-port:false}")

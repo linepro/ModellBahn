@@ -189,9 +189,11 @@ spring:
       auto-startup: false
 
 springdoc:
+   api-docs:
+      path: /v3/api-docs.json
    swagger-ui:
-      configUrl: /ModellBahn/v3/api-docs.json
+      configUrl: /v3/api-docs.json
       enabled: true
-      url: /ModellBahn/v3/api-docs.json
+      url: /v3/api-docs.json
    writer-with-default-pretty-printer: true
    writer-with-order-by-keys: true

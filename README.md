@@ -98,4 +98,4 @@ Just pull.
 
 mvn clean install
 
-java -jar ModellBahn-xxx.jar
+java -jar modellbahn-xxx.jar

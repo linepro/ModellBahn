@@ -1,5 +1,5 @@
 #!/bin/zsh
-java -jar ModellBahn-1.0.0.jar &!
+java -jar modellbahn-1.0.0.jar &!
 echo $!>.pid
 LOOP=0
 EXIT_CODE=0

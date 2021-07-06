@@ -59,7 +59,7 @@ public class JsonAccessDeniedHandler {
     }
 
     public boolean isJsonRequest(HttpServletRequest request) {
-        String path = request.getContextPath();
+        String path = StringUtils.isBlank(request.getContextPath()) ? request.getRequestURI() : request.getContextPath();
 
         return path.startsWith(ApiPaths.API_ROOT) ||
                path.startsWith(ApiPaths.MANAGEMENT_ROOT) || 
