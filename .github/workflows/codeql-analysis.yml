@@ -20,9 +20,8 @@ on:
   schedule:
     - cron: '35 9 * * 6'
 
-
 jobs:
-  setup:
+  build:
     name: Analyze
     runs-on: ubuntu-latest
     permissions:
@@ -55,28 +54,22 @@ jobs:
         GITHUB_ACTOR: ${{ github.actor }}
         GITHUB_TOKEN: ${{ github.token }}
 
-  analyze:
-    needs: setup
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [ 'java', 'javascript' ]
-        # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python' ]
-        # Learn more:
-        # https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#changing-the-languages-that-are-analyzed
-
-    steps:
-    - name: Initialize CodeQL ${{ matrix.language }}
+    - name: Initialize CodeQL java
       uses: github/codeql-action/init@v1
       with:
-        languages: ${{ matrix.language }}
+        languages: 'java'
 
-    - name: Perform CodeQL ${{ matrix.language }} Analysis
+    - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
 
-  deploy:
-    needs: analyze
-    steps:
+    - name: Initialize CodeQL javascript
+      uses: github/codeql-action/init@v1
+      with:
+        languages: 'javascript'
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
+
     - name: Publish to GitHub Packages
       run: mvn --batch-mode deploy -s $GITHUB_WORKSPACE/settings.xml
       env:
