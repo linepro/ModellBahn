@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.controller.impl;
 
-import org.springframework.http.MediaType;
-
 import com.linepro.modellbahn.persistence.DBNames;
 
 public interface ApiPaths {
@@ -285,7 +283,4 @@ public interface ApiPaths {
     String[] MANAGEMENT_SECURED = {
        MANAGEMENT_ROOT + "**"
     };
-
-    String APPLICATION_HAL_JSON = "application/hal+json";
-    MediaType APPLICATION_HAL_JSON_TYPE = new MediaType("application", "hal+json");
 }
