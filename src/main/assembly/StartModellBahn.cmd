@@ -1,6 +1,6 @@
 @SETLOCAL
 @ECHO OFF
-START "ModellBahn" /MIN java -jar modellbahn-1.0.0.jar
+START "ModellBahn" /MIN java -jar modellbahn-1.0.0-SNAPSHOT.jar
 WAITFOR /T 5 DummyEvent 2>NUL
 JPS -l | FIND "ModellBahn">.pid
 SET loop=0
