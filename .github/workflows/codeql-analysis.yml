@@ -30,6 +30,14 @@ jobs:
       security-events: write
 
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: [ 'java', 'javascript' ]
+
     - name: Prepare
       uses: actions/setup-java@v2
       with:
@@ -37,9 +45,6 @@ jobs:
         java-version: 11
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
-
-    - name: Checkout repository
-      uses: actions/checkout@v2
 
     - name: Cache Maven packages
       uses: actions/cache@v2
@@ -53,19 +58,6 @@ jobs:
       env:
         GITHUB_ACTOR: ${{ github.actor }}
         GITHUB_TOKEN: ${{ github.token }}
-
-    - name: Initialize CodeQL java
-      uses: github/codeql-action/init@v1
-      with:
-        languages: 'java'
-
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
-
-    - name: Initialize CodeQL javascript
-      uses: github/codeql-action/init@v1
-      with:
-        languages: 'javascript'
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
