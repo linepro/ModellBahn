@@ -21,7 +21,7 @@ on:
     - cron: '35 9 * * 6'
 
 jobs:
-  build:
+  analyze:
     name: Analyze
     runs-on: ubuntu-latest
     permissions:
@@ -36,7 +36,7 @@ jobs:
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v1
       with:
-        languages: [ 'java', 'javascript' ]
+        languages: java, javascript
 
     - name: Prepare
       uses: actions/setup-java@v2
