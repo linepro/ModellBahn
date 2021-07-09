@@ -145,6 +145,7 @@ public class AntriebController extends NamedItemController<AntriebModel> {
         return updated(service.updateAbbildung(name, multipart));
     }
 
+
     @DeleteMapping(path = ApiPaths.DELETE_ANTRIEB_ABBILDUNG, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Delete an ANTRIEB picture", description = "Deletes the picture of a named ANTRIEB", operationId = "update", tags = { ApiNames.ANTRIEB }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AntriebModel.class)) }),

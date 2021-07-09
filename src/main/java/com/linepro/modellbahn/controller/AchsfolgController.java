@@ -98,6 +98,7 @@ public class AchsfolgController extends NamedItemController<AchsfolgModel> {
     }
 
     @Override
+
     @PutMapping(path = ApiPaths.UPDATE_ACHSFOLG, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Updates an Achsfolg by name", description = "Update an UIC axle configuration", operationId = "update", tags = { ApiNames.ACHSFOLG }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AchsfolgModel.class)) }),
