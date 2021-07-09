@@ -70,7 +70,7 @@ public class SpurweiteController extends NamedItemController<SpurweiteModel> {
     }
 
     @Override
-    @GetMapping(path = ApiPaths.SEARCH_SPURWEITE, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(path = ApiPaths.SEARCH_SPURWEITE, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Finds Spurweiteen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { ApiNames.SPURWEITE }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedSpurweiteModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -83,7 +83,7 @@ public class SpurweiteController extends NamedItemController<SpurweiteModel> {
     }
 
     @Override
-    @PostMapping(path = ApiPaths.ADD_SPURWEITE, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PostMapping(path = ApiPaths.ADD_SPURWEITE, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Add a new Spurweite", description = "Add a new UIC axle configuration", operationId = "add", tags = { ApiNames.SPURWEITE }, responses = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SpurweiteModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -97,7 +97,7 @@ public class SpurweiteController extends NamedItemController<SpurweiteModel> {
     }
 
     @Override
-    @PutMapping(path = ApiPaths.UPDATE_SPURWEITE, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PutMapping(path = ApiPaths.UPDATE_SPURWEITE, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Updates an Spurweite by name", description = "Update a track guage", operationId = "update", tags = { ApiNames.SPURWEITE }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SpurweiteModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),

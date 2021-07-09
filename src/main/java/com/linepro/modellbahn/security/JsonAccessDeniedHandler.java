@@ -6,8 +6,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -16,8 +14,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.linepro.modellbahn.configuration.JsonRequestFilter;
 import com.linepro.modellbahn.configuration.UserMessage;
-import com.linepro.modellbahn.controller.impl.ApiPaths;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,9 +26,11 @@ import lombok.extern.slf4j.Slf4j;
 public class JsonAccessDeniedHandler {
 
     private final ObjectMapper mapper;
-    
+
+    private final JsonRequestFilter requestFilter;
+
     public boolean isDenied(HttpServletRequest request, HttpServletResponse response, Exception exception) throws IOException, ServletException {
-        if (isJsonRequest(request)) {
+        if (requestFilter.isJsonRequest(request)) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     
             if (auth != null) {
@@ -50,19 +50,13 @@ public class JsonAccessDeniedHandler {
                                        .timestamp(System.currentTimeMillis())
                                        .status(status.value())
                                        .message(status.name())
-                                       .build()));
+                                       .build()
+                            )
+                        );
 
             return true;
         }
 
         return false;
-    }
-
-    public boolean isJsonRequest(HttpServletRequest request) {
-        String path = StringUtils.isBlank(request.getContextPath()) ? request.getRequestURI() : request.getContextPath();
-
-        return path.startsWith(ApiPaths.API_ROOT) ||
-               path.startsWith(ApiPaths.MANAGEMENT_ROOT) || 
-               StringUtils.contains(request.getHeader(HttpHeaders.ACCEPT), MediaType.APPLICATION_JSON_VALUE);
     }
 }

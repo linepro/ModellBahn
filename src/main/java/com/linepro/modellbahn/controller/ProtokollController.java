@@ -60,7 +60,7 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
     }
 
     @Override
-    @GetMapping(path = ApiPaths.GET_PROTOKOLL, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(path = ApiPaths.GET_PROTOKOLL, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Finds an Protokoll by name", description = "Finds a decoder protocol", operationId = "get", tags = {
                     ApiNames.PROTOKOLL
     }, responses = {
@@ -78,7 +78,7 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
     }
 
     @Override
-    @GetMapping(path = ApiPaths.SEARCH_PROTOKOLL, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(path = ApiPaths.SEARCH_PROTOKOLL, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Finds Protokollen by example", description = "Finds UIC axle configurations", operationId = "find", tags = {
                     ApiNames.PROTOKOLL
     }, responses = {
@@ -97,7 +97,7 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
     }
 
     @Override
-    @PostMapping(path = ApiPaths.ADD_PROTOKOLL, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PostMapping(path = ApiPaths.ADD_PROTOKOLL, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Add a new Protokoll", description = "Add a new UIC axle configuration", operationId = "add", tags = {
                     ApiNames.PROTOKOLL
     }, responses = {
@@ -115,7 +115,7 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
     }
 
     @Override
-    @PutMapping(path = ApiPaths.UPDATE_PROTOKOLL, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PutMapping(path = ApiPaths.UPDATE_PROTOKOLL, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Updates an Protokoll by name", description = "Update a decoder protocol", operationId = "update", tags = {
                     ApiNames.PROTOKOLL
     }, responses = {
@@ -149,7 +149,7 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
         return super.delete(name);
     }
 
-    @PutMapping(path = ApiPaths.ADD_PROTOKOLL_ABBILDUNG, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
+    @PutMapping(path = ApiPaths.ADD_PROTOKOLL_ABBILDUNG, consumes = { MediaType.MULTIPART_FORM_DATA }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Add an Protokoll picture", description = "Adds or updates the picture of a named Protokoll", operationId = "update", tags = {
                     ApiNames.PROTOKOLL
     }, responses = {
@@ -167,7 +167,7 @@ public class ProtokollController extends NamedItemController<ProtokollModel> {
         return updated(service.updateAbbildung(name, multipart));
     }
 
-    @DeleteMapping(path = ApiPaths.DELETE_PROTOKOLL_ABBILDUNG, produces = MediaType.APPLICATION_JSON)
+    @DeleteMapping(path = ApiPaths.DELETE_PROTOKOLL_ABBILDUNG, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Delete an Protokoll picture", description = "Deletes the picture of a named Protokoll", operationId = "update", tags = {
                     ApiNames.PROTOKOLL
     }, responses = {

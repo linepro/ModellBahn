@@ -61,7 +61,7 @@ public class BahnverwaltungController extends NamedItemController<Bahnverwaltung
     }
 
     @Override
-    @GetMapping(path = ApiPaths.GET_BAHNVERWALTUNG, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(path = ApiPaths.GET_BAHNVERWALTUNG, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Finds an Bahnverwaltung by name", description = "Finds an UIC axle configuration", operationId = "get",  tags = { ApiNames.BAHNVERWALTUNG }, responses = {
         @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BahnverwaltungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -78,7 +78,7 @@ public class BahnverwaltungController extends NamedItemController<Bahnverwaltung
     class PagedBahnverwaltungModel extends PagedSchema<BahnverwaltungModel>{}
 
     @Override
-    @GetMapping(path = ApiPaths.SEARCH_BAHNVERWALTUNG, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(path = ApiPaths.SEARCH_BAHNVERWALTUNG, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Finds Bahnverwaltungen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { ApiNames.BAHNVERWALTUNG }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedBahnverwaltungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -91,7 +91,7 @@ public class BahnverwaltungController extends NamedItemController<Bahnverwaltung
     }
 
     @Override
-    @PostMapping(path = ApiPaths.ADD_BAHNVERWALTUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PostMapping(path = ApiPaths.ADD_BAHNVERWALTUNG, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Adds an Bahnverwaltung", description = "Update a railway company", operationId = "update", tags = { ApiNames.BAHNVERWALTUNG }, responses = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BahnverwaltungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -105,7 +105,7 @@ public class BahnverwaltungController extends NamedItemController<Bahnverwaltung
     }
 
     @Override
-    @PutMapping(path = ApiPaths.UPDATE_BAHNVERWALTUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PutMapping(path = ApiPaths.UPDATE_BAHNVERWALTUNG, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Updates an Bahnverwaltung by name", description = "Update a railway company", operationId = "update", tags = { ApiNames.BAHNVERWALTUNG }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BahnverwaltungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -133,7 +133,7 @@ public class BahnverwaltungController extends NamedItemController<Bahnverwaltung
         return super.delete(name);
     }
 
-    @PutMapping(path = ApiPaths.ADD_BAHNVERWALTUNG_ABBILDUNG, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
+    @PutMapping(path = ApiPaths.ADD_BAHNVERWALTUNG_ABBILDUNG, consumes = { MediaType.MULTIPART_FORM_DATA }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Add an Bahnverwaltung picture", description = "Adds or updates the picture of a named Bahnverwaltung", operationId = "update", tags = { ApiNames.BAHNVERWALTUNG }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BahnverwaltungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -147,7 +147,7 @@ public class BahnverwaltungController extends NamedItemController<Bahnverwaltung
         return updated(service.updateAbbildung(name, multipart));
     }
 
-    @DeleteMapping(path = ApiPaths.DELETE_BAHNVERWALTUNG_ABBILDUNG, produces = MediaType.APPLICATION_JSON)
+    @DeleteMapping(path = ApiPaths.DELETE_BAHNVERWALTUNG_ABBILDUNG, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Delete an Bahnverwaltung picture", description = "Deletes the picture of a named Bahnverwaltung", operationId = "update", tags = { ApiNames.BAHNVERWALTUNG }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BahnverwaltungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),

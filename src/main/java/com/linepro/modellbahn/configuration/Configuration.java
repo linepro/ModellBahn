@@ -9,6 +9,7 @@ import com.linepro.modellbahn.util.exceptions.StackTraceFilter;
 
 @Import({
     ApplicationReadyListener.class,
+    JsonRequestFilter.class,
     ModellBahnErrorAttributes.class,
     ModellBahnErrorHandler.class,
     ModellBahnErrorFilter.class,

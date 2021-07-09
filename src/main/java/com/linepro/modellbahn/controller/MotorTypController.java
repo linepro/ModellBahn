@@ -60,7 +60,7 @@ public class MotorTypController extends NamedItemController<MotorTypModel> {
     }
 
     @Override
-    @GetMapping(path = ApiPaths.GET_MOTOR_TYP, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(path = ApiPaths.GET_MOTOR_TYP, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Finds an MotorTyp by name", description = "Finds a motor type", operationId = "get", tags = {
                     ApiNames.MOTOR_TYP
     }, responses = {
@@ -78,7 +78,7 @@ public class MotorTypController extends NamedItemController<MotorTypModel> {
     }
 
     @Override
-    @GetMapping(path = ApiPaths.SEARCH_MOTOR_TYP, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(path = ApiPaths.SEARCH_MOTOR_TYP, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Finds MotorTypen by example", description = "Finds UIC axle configurations", operationId = "find", tags = {
                     ApiNames.MOTOR_TYP
     }, responses = {
@@ -97,7 +97,7 @@ public class MotorTypController extends NamedItemController<MotorTypModel> {
     }
 
     @Override
-    @PostMapping(path = ApiPaths.ADD_MOTOR_TYP, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PostMapping(path = ApiPaths.ADD_MOTOR_TYP, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Add a new MotorTyp", description = "Add a new UIC axle configuration", operationId = "add", tags = {
                     ApiNames.MOTOR_TYP
     }, responses = {
@@ -115,7 +115,7 @@ public class MotorTypController extends NamedItemController<MotorTypModel> {
     }
 
     @Override
-    @PutMapping(path = ApiPaths.UPDATE_MOTOR_TYP, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PutMapping(path = ApiPaths.UPDATE_MOTOR_TYP, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Updates an MotorTyp by name", description = "Update a motor type", operationId = "update", tags = {
                     ApiNames.MOTOR_TYP
     }, responses = {
@@ -149,7 +149,7 @@ public class MotorTypController extends NamedItemController<MotorTypModel> {
         return super.delete(name);
     }
 
-    @PutMapping(path = ApiPaths.ADD_MOTOR_TYP_ABBILDUNG, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
+    @PutMapping(path = ApiPaths.ADD_MOTOR_TYP_ABBILDUNG, consumes = { MediaType.MULTIPART_FORM_DATA }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Add an Motor Typ picture", description = "Adds or updates the picture of a named Motor Typ", operationId = "update", tags = {
                     ApiNames.MOTOR_TYP
     }, responses = {
@@ -167,7 +167,7 @@ public class MotorTypController extends NamedItemController<MotorTypModel> {
         return updated(service.updateAbbildung(name, multipart));
     }
 
-    @DeleteMapping(path = ApiPaths.DELETE_MOTOR_TYP_ABBILDUNG, produces = MediaType.APPLICATION_JSON)
+    @DeleteMapping(path = ApiPaths.DELETE_MOTOR_TYP_ABBILDUNG, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Delete an Motor Typ picture", description = "Deletes the picture of a named Motor Typ", operationId = "update", tags = {
                     ApiNames.MOTOR_TYP
     }, responses = {

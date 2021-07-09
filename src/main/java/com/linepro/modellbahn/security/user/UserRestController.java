@@ -52,7 +52,7 @@ public class UserRestController {
 
     private final PagedResourcesAssembler<UserModel> assembler = new PagedResourcesAssembler<UserModel>(null, null);
 
-    @GetMapping(path = ApiPaths.GET_USER, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(path = ApiPaths.GET_USER, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Finds an User by name", description = "Finds a user", operationId = "get", tags = { ApiNames.USER }, responses = {
         @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -68,7 +68,7 @@ public class UserRestController {
                           .orElse(notFound().build());
     }
 
-    @GetMapping(path = ApiPaths.SEARCH_USER, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(path = ApiPaths.SEARCH_USER, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Finds Users by example", description = "Finds users", operationId = "find", tags = { ApiNames.USER }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedUserModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -94,7 +94,7 @@ public class UserRestController {
         return notFound().build();
     }
 
-    @PutMapping(path = ApiPaths.UPDATE_USER, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PutMapping(path = ApiPaths.UPDATE_USER, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Updates a User by name", description = "Update a User", operationId = "update", tags = { ApiNames.USER }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),

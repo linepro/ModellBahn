@@ -56,7 +56,7 @@ public class GattungController extends NamedItemController<GattungModel> {
     }
 
     @Override
-    @GetMapping(path = ApiPaths.GET_GATTUNG, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(path = ApiPaths.GET_GATTUNG, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Finds an Gattung by name", description = "Finds a vehicle code", operationId = "get", tags = { ApiNames.GATTUNG }, responses = {
         @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = GattungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -70,7 +70,7 @@ public class GattungController extends NamedItemController<GattungModel> {
     }
 
     @Override
-    @GetMapping(path = ApiPaths.SEARCH_GATTUNG, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(path = ApiPaths.SEARCH_GATTUNG, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Finds Gattungen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { ApiNames.GATTUNG }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedGattungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -83,7 +83,7 @@ public class GattungController extends NamedItemController<GattungModel> {
     }
 
     @Override
-    @PostMapping(path = ApiPaths.ADD_GATTUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PostMapping(path = ApiPaths.ADD_GATTUNG, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Add a new Gattung", description = "Add a new UIC axle configuration", operationId = "add", tags = { ApiNames.GATTUNG }, responses = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = GattungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -97,7 +97,7 @@ public class GattungController extends NamedItemController<GattungModel> {
     }
 
     @Override
-    @PutMapping(path = ApiPaths.UPDATE_GATTUNG, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PutMapping(path = ApiPaths.UPDATE_GATTUNG, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Updates an Gattung by name", description = "Update a vehicle code", operationId = "update", tags = { ApiNames.GATTUNG }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = GattungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),

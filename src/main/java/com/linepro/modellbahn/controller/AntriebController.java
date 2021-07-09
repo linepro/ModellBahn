@@ -61,7 +61,7 @@ public class AntriebController extends NamedItemController<AntriebModel> {
     }
 
     @Override
-    @GetMapping(path = ApiPaths.GET_ANTRIEB, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(path = ApiPaths.GET_ANTRIEB, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Finds an Antrieb by name", description = "Finds an drive method", operationId = "get", tags = { ApiNames.ANTRIEB }, responses = {
         @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AntriebModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -75,7 +75,7 @@ public class AntriebController extends NamedItemController<AntriebModel> {
     }
 
     @Override
-    @GetMapping(path = ApiPaths.SEARCH_ANTRIEB, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(path = ApiPaths.SEARCH_ANTRIEB, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Finds Antrieben by example", description = "Finds drive methods", operationId = "find", tags = { ApiNames.ANTRIEB }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedAntriebModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -88,7 +88,7 @@ public class AntriebController extends NamedItemController<AntriebModel> {
     }
 
     @Override
-    @PostMapping(path = ApiPaths.ADD_ANTRIEB, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PostMapping(path = ApiPaths.ADD_ANTRIEB, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Add a new Antrieb", description = "Add a new drive method", operationId = "add", tags = { ApiNames.ANTRIEB }, responses = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AntriebModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -102,7 +102,7 @@ public class AntriebController extends NamedItemController<AntriebModel> {
     }
 
     @Override
-    @PutMapping(path = ApiPaths.UPDATE_ANTRIEB, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PutMapping(path = ApiPaths.UPDATE_ANTRIEB, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Updates an Antrieb by name", description = "Update a drive method", operationId = "update", tags = { ApiNames.ANTRIEB }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AntriebModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -130,7 +130,7 @@ public class AntriebController extends NamedItemController<AntriebModel> {
         return super.delete(name);
     }
 
-    @PutMapping(path = ApiPaths.ADD_ANTRIEB_ABBILDUNG, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
+    @PutMapping(path = ApiPaths.ADD_ANTRIEB_ABBILDUNG, consumes = { MediaType.MULTIPART_FORM_DATA }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Add an ANTRIEB picture", description = "Adds or updates the picture of a named ANTRIEB", operationId = "update", tags = { ApiNames.ANTRIEB }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AntriebModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -144,7 +144,7 @@ public class AntriebController extends NamedItemController<AntriebModel> {
         return updated(service.updateAbbildung(name, multipart));
     }
 
-    @DeleteMapping(path = ApiPaths.DELETE_ANTRIEB_ABBILDUNG, produces = MediaType.APPLICATION_JSON)
+    @DeleteMapping(path = ApiPaths.DELETE_ANTRIEB_ABBILDUNG, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Delete an ANTRIEB picture", description = "Deletes the picture of a named ANTRIEB", operationId = "update", tags = { ApiNames.ANTRIEB }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AntriebModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
