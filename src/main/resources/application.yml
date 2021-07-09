@@ -31,8 +31,8 @@ server:
          enabled: true
 
 logging:
-   file: logs/modellbahn.jsonl
-   path: logs
+   file:
+      name: ./logs/modellbahn.jsonl
 
 management:
    endpoint:
@@ -186,6 +186,9 @@ spring:
              github:
                 client-id: 8ffe85e30a236d5a2959
                 client-secret: 7475ac7f3b1f2d3d652ef5f38866ffd5efddecc7
+   output:
+      ansi:
+         enabled: DETECT
    servlet:
       multipart:
          enabled: true

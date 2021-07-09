@@ -48,7 +48,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @SuppressWarnings("deprecation")
     protected static final MediaTypeRequestMatcher JSON_MATCHER = new MediaTypeRequestMatcher(
                     MediaType.APPLICATION_JSON,
-                    MediaType.APPLICATION_JSON_UTF8
+                    MediaType.APPLICATION_JSON_UTF8,
+                    ApiPaths.APPLICATION_HAL_JSON_TYPE
                     );
 
     private static final int SECONDS_IN__DAY = 86400;

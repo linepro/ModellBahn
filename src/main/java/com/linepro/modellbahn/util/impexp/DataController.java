@@ -34,7 +34,7 @@ public class DataController {
     @Autowired
     private final DataService service;
 
-    @GetMapping(path = ApiPaths.EXPORT, produces = DataService.TEXT_CSV)
+    @GetMapping(path = ApiPaths.EXPORT, produces = { DataService.TEXT_CSV })
     @Operation(summary = "Export data as CSV", description = "Exports the type as a CSV file", operationId = "get", tags = { ApiNames.DATA }, responses = {
         @ApiResponse(responseCode = "200", content = { @Content(mediaType = "text/csv") }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -47,7 +47,7 @@ public class DataController {
         service.exportCSV(type, response);
     }
 
-    @PostMapping(path = ApiPaths.IMPORT, consumes = MediaType.MULTIPART_FORM_DATA)
+    @PostMapping(path = ApiPaths.IMPORT, consumes = { MediaType.MULTIPART_FORM_DATA })
     @Operation(summary = "Import data from CSV", description = "Imports the type from a CSV file", operationId = "update", tags = { ApiNames.DATA }, responses = {
         @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),

@@ -87,9 +87,9 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, Artikel> {
         artikel = repository.saveAndFlush(artikel);
 
         if (decoder != null) {
-          decoder.setArtikel(artikel);
+            decoder.setArtikel(artikel);
 
-          decoderRepository.saveAndFlush(decoder);
+            decoderRepository.saveAndFlush(decoder);
         }
 
         return entityMutator.convert(artikel);
@@ -110,14 +110,14 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, Artikel> {
            updated = repository.saveAndFlush(updated);
 
            if (currentDecoder != newDecoder) {
-             if (currentDecoder != null) {
-               currentDecoder.setArtikel(null);
-               decoderRepository.saveAndFlush(currentDecoder);
-             }
-             if (newDecoder != null) {
-               newDecoder.setArtikel(updated);
-               decoderRepository.saveAndFlush(newDecoder);
-             }
+               if (currentDecoder != null) {
+                   currentDecoder.setArtikel(null);
+                   decoderRepository.saveAndFlush(currentDecoder);
+               }
+               if (newDecoder != null) {
+                  newDecoder.setArtikel(updated);
+                  decoderRepository.saveAndFlush(newDecoder);
+               }
            }
         }
 

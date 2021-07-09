@@ -76,7 +76,7 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
         return new DecoderFunktionModel();
     }
 
-    @GetMapping(path = ApiPaths.GET_DECODER, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(path = ApiPaths.GET_DECODER, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Finds an Decoder by id", description = "Finds a decoder", operationId = "get", tags = { ApiNames.DECODER }, responses = {
         @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -93,7 +93,7 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
     class PagedDecoderModel extends PagedSchema<DecoderModel>{}
 
     @Override
-    @GetMapping(path = ApiPaths.SEARCH_DECODER, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(path = ApiPaths.SEARCH_DECODER, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Finds Decoders by example", description = "Finds decoders", operationId = "find", tags = { ApiNames.DECODER }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedDecoderModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -105,7 +105,7 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
         return super.search(model, pageNumber, pageSize);
     }
 
-    @PostMapping(path = ApiPaths.ADD_DECODER, produces = MediaType.APPLICATION_JSON)
+    @PostMapping(path = ApiPaths.ADD_DECODER, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Adds an Decoder by Typ", description = "Add a decoder", operationId = "add", tags = { ApiNames.DECODER }, responses = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -118,7 +118,7 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
         return added(service.add(herstellerStr, bestellNr, model));
     }
 
-    @PutMapping(path = ApiPaths.UPDATE_DECODER, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PutMapping(path = ApiPaths.UPDATE_DECODER, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Updates an Decoder by id", description = "Update a decoder", operationId = "update", tags = { ApiNames.DECODER }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -145,7 +145,7 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
         return deleted(service.delete(decoderId));
     }
 
-    @PutMapping(path = ApiPaths.UPDATE_DECODER_ADRESS, produces = MediaType.APPLICATION_JSON)
+    @PutMapping(path = ApiPaths.UPDATE_DECODER_ADRESS, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Updates a decoder address", description = "", operationId = "update", tags = { ApiNames.DECODER }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderAdressModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -159,7 +159,7 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
         return updated(service.updateAdress(decoderId, index, adress));
     }
 
-    @PutMapping(path = ApiPaths.UPDATE_DECODER_CV, produces = MediaType.APPLICATION_JSON)
+    @PutMapping(path = ApiPaths.UPDATE_DECODER_CV, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Updates a decoder cv", description = "", operationId = "update", tags = { ApiNames.DECODER }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderCvModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -173,7 +173,7 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
         return updated(service.updateCv(decoderId, cv, wert));
     }
 
-    @PutMapping(path = ApiPaths.UPDATE_DECODER_FUNKTION, produces = MediaType.APPLICATION_JSON)
+    @PutMapping(path = ApiPaths.UPDATE_DECODER_FUNKTION, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Updates a decoder function", description = "", operationId = "update", tags = { ApiNames.DECODER }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderFunktionModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),

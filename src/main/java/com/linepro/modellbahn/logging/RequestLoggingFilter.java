@@ -16,7 +16,7 @@ public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
         setIncludeClientInfo(true);
         setIncludeQueryString(true);
         setIncludePayload(true);
-        setIncludeHeaders(false);
+        setIncludeHeaders(true);
     }
 
     @Override

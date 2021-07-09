@@ -60,7 +60,7 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
     }
 
     @Override
-    @GetMapping(path = ApiPaths.GET_HERSTELLER, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(path = ApiPaths.GET_HERSTELLER, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Finds an Hersteller by name", description = "Finds a manufacturer", operationId = "get", tags = {
                     ApiNames.HERSTELLER
     }, responses = {
@@ -78,7 +78,7 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
     }
 
     @Override
-    @GetMapping(path = ApiPaths.SEARCH_HERSTELLER, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(path = ApiPaths.SEARCH_HERSTELLER, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Finds Herstelleren by example", description = "Finds UIC axle configurations", operationId = "find", tags = {
                     ApiNames.HERSTELLER
     }, responses = {
@@ -97,7 +97,7 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
     }
 
     @Override
-    @PostMapping(path = ApiPaths.ADD_HERSTELLER, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PostMapping(path = ApiPaths.ADD_HERSTELLER, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Add a new Hersteller", description = "Add a new UIC axle configuration", operationId = "add", tags = {
                     ApiNames.HERSTELLER
     }, responses = {
@@ -115,7 +115,7 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
     }
 
     @Override
-    @PutMapping(path = ApiPaths.UPDATE_HERSTELLER, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PutMapping(path = ApiPaths.UPDATE_HERSTELLER, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Updates an Hersteller by name", description = "Update a manufacturer", operationId = "update", tags = {
                     ApiNames.HERSTELLER
     }, responses = {
@@ -149,7 +149,7 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
         return super.delete(name);
     }
 
-    @PutMapping(path = ApiPaths.ADD_HERSTELLER_ABBILDUNG, consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.APPLICATION_JSON)
+    @PutMapping(path = ApiPaths.ADD_HERSTELLER_ABBILDUNG, consumes = { MediaType.MULTIPART_FORM_DATA }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Add an Hersteller picture", description = "Adds or updates the picture of a named Hersteller", operationId = "update", tags = {
                     ApiNames.HERSTELLER
     }, responses = {
@@ -167,7 +167,7 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
         return updated(service.updateAbbildung(name, multipart));
     }
 
-    @DeleteMapping(path = ApiPaths.DELETE_HERSTELLER_ABBILDUNG, produces = MediaType.APPLICATION_JSON)
+    @DeleteMapping(path = ApiPaths.DELETE_HERSTELLER_ABBILDUNG, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Delete an Hersteller picture", description = "Deletes the picture of a named Hersteller", operationId = "update", tags = {
                     ApiNames.HERSTELLER
     }, responses = {

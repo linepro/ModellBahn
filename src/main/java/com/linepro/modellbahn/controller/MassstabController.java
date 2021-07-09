@@ -56,7 +56,7 @@ public class MassstabController extends NamedItemController<MassstabModel> {
     }
 
     @Override
-    @GetMapping(path = ApiPaths.GET_MASSSTAB, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(path = ApiPaths.GET_MASSSTAB, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Finds an Massstab by name", description = "Finds a scale", operationId = "get", tags = { ApiNames.MASSSTAB }, responses = {
         @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MassstabModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -70,7 +70,7 @@ public class MassstabController extends NamedItemController<MassstabModel> {
     }
 
     @Override
-    @GetMapping(path = ApiPaths.SEARCH_MASSSTAB, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(path = ApiPaths.SEARCH_MASSSTAB, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Finds Massstaben by example", description = "Finds UIC axle configurations", operationId = "find", tags = { ApiNames.MASSSTAB }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedMassstabModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -83,7 +83,7 @@ public class MassstabController extends NamedItemController<MassstabModel> {
     }
 
     @Override
-    @PostMapping(path = ApiPaths.ADD_MASSSTAB, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PostMapping(path = ApiPaths.ADD_MASSSTAB, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Add a new Massstab", description = "Add a new UIC axle configuration", operationId = "add", tags = { ApiNames.MASSSTAB }, responses = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MassstabModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -97,7 +97,7 @@ public class MassstabController extends NamedItemController<MassstabModel> {
     }
 
     @Override
-    @PutMapping(path = ApiPaths.UPDATE_MASSSTAB, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PutMapping(path = ApiPaths.UPDATE_MASSSTAB, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
     @Operation(summary = "Updates an Massstab by name", description = "Update a scale", operationId = "update", tags = { ApiNames.MASSSTAB }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = MassstabModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
