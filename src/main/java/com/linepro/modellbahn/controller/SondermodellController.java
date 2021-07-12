@@ -2,9 +2,10 @@ package com.linepro.modellbahn.controller;
 
 import java.util.Optional;
 
-import javax.ws.rs.core.MediaType;
+import org.springframework.http.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -56,7 +57,7 @@ public class SondermodellController extends NamedItemController<SondermodellMode
     }
 
     @Override
-    @GetMapping(path = ApiPaths.GET_SONDERMODELL, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @GetMapping(path = ApiPaths.GET_SONDERMODELL, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds an Sondermodelll by name", description = "Finds a special model", operationId = "get", tags = { ApiNames.SONDERMODELL }, responses = {
         @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SondermodellModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -70,7 +71,7 @@ public class SondermodellController extends NamedItemController<SondermodellMode
     }
 
     @Override
-    @GetMapping(path = ApiPaths.SEARCH_SONDERMODELL, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @GetMapping(path = ApiPaths.SEARCH_SONDERMODELL, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds Sondermodelln by example", description = "Finds UIC axle configurations", operationId = "find", tags = { ApiNames.SONDERMODELL }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedSondermodellModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -83,7 +84,7 @@ public class SondermodellController extends NamedItemController<SondermodellMode
     }
 
     @Override
-    @PostMapping(path = ApiPaths.ADD_SONDERMODELL, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @PostMapping(path = ApiPaths.ADD_SONDERMODELL, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Add a new SonderModell", description = "Add a new UIC axle configuration", operationId = "add", tags = { ApiNames.SONDERMODELL }, responses = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SondermodellModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -97,7 +98,7 @@ public class SondermodellController extends NamedItemController<SondermodellMode
     }
 
     @Override
-    @PutMapping(path = ApiPaths.UPDATE_SONDERMODELL, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @PutMapping(path = ApiPaths.UPDATE_SONDERMODELL, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Updates an SonderModell by name", description = "Update a special model", operationId = "update", tags = { ApiNames.SONDERMODELL }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = SondermodellModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),

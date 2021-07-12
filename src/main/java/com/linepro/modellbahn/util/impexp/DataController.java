@@ -1,7 +1,7 @@
 package com.linepro.modellbahn.util.impexp;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.MediaType;
+import org.springframework.http.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +47,7 @@ public class DataController {
         service.exportCSV(type, response);
     }
 
-    @PostMapping(path = ApiPaths.IMPORT, consumes = { MediaType.MULTIPART_FORM_DATA })
+    @PostMapping(path = ApiPaths.IMPORT, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     @Operation(summary = "Import data from CSV", description = "Imports the type from a CSV file", operationId = "update", tags = { ApiNames.DATA }, responses = {
         @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),

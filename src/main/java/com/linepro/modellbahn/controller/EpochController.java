@@ -2,10 +2,10 @@ package com.linepro.modellbahn.controller;
 
 import java.util.Optional;
 
-import javax.ws.rs.core.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,7 +61,7 @@ public class EpochController extends NamedItemController<EpochModel> {
     }
 
     @Override
-    @GetMapping(path = ApiPaths.GET_EPOCH, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @GetMapping(path = ApiPaths.GET_EPOCH, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds a Epoch by name", description = "Finds an Epoch", operationId = "get", tags = { ApiNames.EPOCH }, responses = {
         @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = EpochModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -75,7 +75,7 @@ public class EpochController extends NamedItemController<EpochModel> {
     }
 
     @Override
-    @GetMapping(path = ApiPaths.SEARCH_EPOCH, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @GetMapping(path = ApiPaths.SEARCH_EPOCH, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds Epochen by example", description = "Finds Epochs", operationId = "find", tags = { ApiNames.EPOCH }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedEpochModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -88,7 +88,7 @@ public class EpochController extends NamedItemController<EpochModel> {
     }
 
     @Override
-    @PostMapping(path = ApiPaths.ADD_EPOCH, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @PostMapping(path = ApiPaths.ADD_EPOCH, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Add a new Epoch", description = "Add a new Epoch", operationId = "add", tags = { ApiNames.EPOCH }, responses = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = EpochModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -102,7 +102,7 @@ public class EpochController extends NamedItemController<EpochModel> {
     }
 
     @Override
-    @PutMapping(path = ApiPaths.UPDATE_EPOCH, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @PutMapping(path = ApiPaths.UPDATE_EPOCH, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Updates an Epoch by name", description = "Update an Epoch", operationId = "update", tags = { ApiNames.EPOCH }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = EpochModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -130,7 +130,7 @@ public class EpochController extends NamedItemController<EpochModel> {
         return super.delete(name);
     }
 
-    @PutMapping(path = ApiPaths.ADD_EPOCH_ABBILDUNG, consumes = { MediaType.MULTIPART_FORM_DATA }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @PutMapping(path = ApiPaths.ADD_EPOCH_ABBILDUNG, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Add an Epoch picture", description = "Adds or updates the picture of a named Epoch", operationId = "update", tags = { ApiNames.EPOCH }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = EpochModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -144,7 +144,7 @@ public class EpochController extends NamedItemController<EpochModel> {
         return updated(service.updateAbbildung(name, multipart));
     }
 
-    @DeleteMapping(path = ApiPaths.DELETE_EPOCH_ABBILDUNG, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @DeleteMapping(path = ApiPaths.DELETE_EPOCH_ABBILDUNG, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Delete an Epoch picture", description = "Deletes the picture of a named Epoch", operationId = "update", tags = { ApiNames.EPOCH }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = EpochModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),

@@ -4,9 +4,10 @@ import static org.springframework.http.ResponseEntity.of;
 
 import java.util.Optional;
 
-import javax.ws.rs.core.MediaType;
+import org.springframework.http.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -69,7 +70,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         return new AnderungModel();
     }
 
-    @GetMapping(path = ApiPaths.GET_ARTIKEL, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @GetMapping(path = ApiPaths.GET_ARTIKEL, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds an Artikel by name", description = "Finds an article", operationId = "get", tags = { ApiNames.ARTIKEL })
         @ApiResponses(value = {
         @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArtikelModel.class)) }),
@@ -87,7 +88,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     class PagedArtikelModel extends PagedSchema<ArtikelModel>{}
 
     @Override
-    @GetMapping(path = ApiPaths.SEARCH_ARTIKEL, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @GetMapping(path = ApiPaths.SEARCH_ARTIKEL, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds Artikelen by example", description = "Finds articles", operationId = "find", tags = { ApiNames.ARTIKEL }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedArtikelModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -100,7 +101,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
     }
 
     @Override
-    @PostMapping(path = ApiPaths.ADD_ARTIKEL, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @PostMapping(path = ApiPaths.ADD_ARTIKEL, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Add a new Artikel", description = "Add a new article", operationId = "add", tags = { ApiNames.ARTIKEL }, responses = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArtikelModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -113,7 +114,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         return super.add(model);
     }
 
-    @PutMapping(path = ApiPaths.UPDATE_ARTIKEL, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @PutMapping(path = ApiPaths.UPDATE_ARTIKEL, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Updates an Artikel by name", description = "Update an article", operationId = "update", tags = { ApiNames.ARTIKEL }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArtikelModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -140,7 +141,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         return deleted(service.delete(artikelId));
     }
 
-    @PutMapping(path = ApiPaths.ADD_ARTIKEL_ABBILDUNG, consumes = { MediaType.MULTIPART_FORM_DATA }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @PutMapping(path = ApiPaths.ADD_ARTIKEL_ABBILDUNG, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Add an Artikel picture", description = "Adds or updates the picture of a named Artikel", operationId = "update", tags = { ApiNames.ARTIKEL }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArtikelModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -154,7 +155,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         return updated(service.updateAbbildung(artikelId, multipart));
     }
 
-    @DeleteMapping(path = ApiPaths.DELETE_ARTIKEL_ABBILDUNG, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @DeleteMapping(path = ApiPaths.DELETE_ARTIKEL_ABBILDUNG, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Delete an Artikel picture", description = "Deletes the picture of a named Artikel", operationId = "update", tags = { ApiNames.ARTIKEL }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -167,7 +168,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         return updated(service.deleteAbbildung(artikelId));
     }
 
-    @PutMapping(path = ApiPaths.ADD_ARTIKEL_GROSSANSICHT, consumes = { MediaType.MULTIPART_FORM_DATA }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @PutMapping(path = ApiPaths.ADD_ARTIKEL_GROSSANSICHT, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Add an Artikel picture", description = "Adds or updates the picture of a named Artikel", operationId = "update", tags = { ApiNames.ARTIKEL }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArtikelModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -181,7 +182,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         return updated(service.updateGrossansicht(artikelId, multipart));
     }
 
-    @DeleteMapping(path = ApiPaths.DELETE_ARTIKEL_GROSSANSICHT, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @DeleteMapping(path = ApiPaths.DELETE_ARTIKEL_GROSSANSICHT, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Delete an Artikel picture", description = "Deletes the picture of a named Artikel", operationId = "update", tags = { ApiNames.ARTIKEL }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -194,7 +195,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         return updated(service.deleteGrossansicht(artikelId));
     }
 
-    @PostMapping(path = ApiPaths.ADD_ANDERUNG, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @PostMapping(path = ApiPaths.ADD_ANDERUNG, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Record a change to an article", description = "Adds a change record", operationId = "add", tags = { ApiNames.ANDERUNG }, responses = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AnderungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -208,7 +209,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         return added(service.addAnderung(artikelId, anderungModel));
     }
 
-    @PutMapping(path = ApiPaths.UPDATE_ANDERUNG, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @PutMapping(path = ApiPaths.UPDATE_ANDERUNG, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Updates a change to an Article", description = "Updates a change record", operationId = "update", tags = { ApiNames.ANDERUNG }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AnderungModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),

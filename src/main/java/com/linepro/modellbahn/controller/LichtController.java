@@ -2,9 +2,10 @@ package com.linepro.modellbahn.controller;
 
 import java.util.Optional;
 
-import javax.ws.rs.core.MediaType;
+import org.springframework.http.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -61,7 +62,7 @@ public class LichtController extends NamedItemController<LichtModel> {
     }
 
     @Override
-    @GetMapping(path = ApiPaths.GET_LICHT, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @GetMapping(path = ApiPaths.GET_LICHT, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds an Licht by name", description = "Finds a light configuration", operationId = "get", tags = { ApiNames.LICHT }, responses = {
         @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LichtModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -75,7 +76,7 @@ public class LichtController extends NamedItemController<LichtModel> {
     }
 
     @Override
-    @GetMapping(path = ApiPaths.SEARCH_LICHT, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @GetMapping(path = ApiPaths.SEARCH_LICHT, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds Lichten by example", description = "Finds light configurations", operationId = "get", tags = { ApiNames.LICHT }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedLichtModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -88,7 +89,7 @@ public class LichtController extends NamedItemController<LichtModel> {
     }
 
     @Override
-    @PostMapping(path = ApiPaths.ADD_LICHT, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @PostMapping(path = ApiPaths.ADD_LICHT, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Adds an Licht", description = "Update a light configuration", operationId = "update", tags = { ApiNames.LICHT }, responses = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LichtModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -102,7 +103,7 @@ public class LichtController extends NamedItemController<LichtModel> {
     }
 
     @Override
-    @PutMapping(path = ApiPaths.UPDATE_LICHT, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @PutMapping(path = ApiPaths.UPDATE_LICHT, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Updates an Licht by name", description = "Update a light configuration", operationId = "update", tags = { ApiNames.LICHT }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LichtModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -130,7 +131,7 @@ public class LichtController extends NamedItemController<LichtModel> {
         return super.delete(name);
     }
 
-    @PutMapping(path = ApiPaths.ADD_LICHT_ABBILDUNG, consumes = { MediaType.MULTIPART_FORM_DATA }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @PutMapping(path = ApiPaths.ADD_LICHT_ABBILDUNG, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Add an Licht picture", description = "Adds or updates the picture of a named Licht", operationId = "update", tags = { ApiNames.LICHT }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LichtModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -144,7 +145,7 @@ public class LichtController extends NamedItemController<LichtModel> {
         return updated(service.updateAbbildung(name, multipart));
     }
 
-    @DeleteMapping(path = ApiPaths.DELETE_LICHT_ABBILDUNG, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @DeleteMapping(path = ApiPaths.DELETE_LICHT_ABBILDUNG, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Delete an Licht picture", description = "Deletes the picture of a named Licht", operationId = "update", tags = { ApiNames.LICHT }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = LichtModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),

@@ -8,7 +8,8 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+
+import org.springframework.http.MediaType;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -38,7 +39,7 @@ public class ModellBahnErrorHandler {
 
     private final StackTraceFilter stackTraceFilter;
 
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON_VALUE)
     @ExceptionHandler({ 
         ConstraintViolationException.class, 
         DataIntegrityViolationException.class, 
@@ -54,37 +55,37 @@ public class ModellBahnErrorHandler {
         return handle(ex, request, HttpStatus.BAD_REQUEST);
     }
 
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON_VALUE)
     @ExceptionHandler({ EntityExistsException.class })
     public ResponseEntity<Object> conflict(Exception ex, WebRequest request) throws Exception {
         return handle(ex, request, HttpStatus.CONFLICT);
     }
 
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON_VALUE)
     @ExceptionHandler({ ModellBahnException.class })
     public ResponseEntity<Object> modellBahn(Exception ex, WebRequest request) throws Exception {
         return handle(ex, request, ((ModellBahnException) ex).getStatus());
     }
 
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON_VALUE)
     @ExceptionHandler({ EntityNotFoundException.class })
     public ResponseEntity<Object> notFound(Exception ex, WebRequest request) throws Exception {
         return handle(ex, request, HttpStatus.NOT_FOUND);
     }
 
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON_VALUE)
     @ExceptionHandler({ NoResultException.class })
     public ResponseEntity<Object> noContent(Exception ex, WebRequest request) throws Exception {
         return  handle(ex, request, HttpStatus.NO_CONTENT);
     }
 
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON_VALUE)
     @ExceptionHandler({ SecurityException.class, HttpSessionRequiredException.class })
     public ResponseEntity<Object> forbidden(Exception ex, WebRequest request) throws Exception {
         return handle(ex, request, HttpStatus.FORBIDDEN);
     }
 
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON_VALUE)
     @ExceptionHandler({ Exception.class })
     public ResponseEntity<Object> others(Exception ex, WebRequest request) throws Exception {
         return handle(ex, request, HttpStatus.INTERNAL_SERVER_ERROR);

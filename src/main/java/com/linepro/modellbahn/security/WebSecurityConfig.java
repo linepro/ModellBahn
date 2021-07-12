@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -49,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected static final MediaTypeRequestMatcher JSON_MATCHER = new MediaTypeRequestMatcher(
                     MediaType.APPLICATION_JSON,
                     MediaType.APPLICATION_JSON_UTF8,
-                    ApiPaths.APPLICATION_HAL_JSON_TYPE
+                    MediaTypes.HAL_JSON
                     );
 
     private static final int SECONDS_IN__DAY = 86400;

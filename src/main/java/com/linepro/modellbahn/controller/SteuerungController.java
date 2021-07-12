@@ -2,9 +2,10 @@ package com.linepro.modellbahn.controller;
 
 import java.util.Optional;
 
-import javax.ws.rs.core.MediaType;
+import org.springframework.http.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -78,7 +79,7 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
     }
 
     @Override
-    @GetMapping(path = ApiPaths.SEARCH_STEUERUNG, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @GetMapping(path = ApiPaths.SEARCH_STEUERUNG, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds Steuerungen by example", description = "Finds UIC axle configurations", operationId = "find", tags = {
                     ApiNames.STEUERUNG
     }, responses = {
@@ -97,7 +98,7 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
     }
 
     @Override
-    @PostMapping(path = ApiPaths.ADD_STEUERUNG, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @PostMapping(path = ApiPaths.ADD_STEUERUNG, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Add a new Steuerung", description = "Add a new UIC axle configuration", operationId = "add", tags = {
                     ApiNames.STEUERUNG
     }, responses = {
@@ -115,7 +116,7 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
     }
 
     @Override
-    @PutMapping(path = ApiPaths.UPDATE_STEUERUNG, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @PutMapping(path = ApiPaths.UPDATE_STEUERUNG, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Updates an Steuerung by name", description = "Update a control method", operationId = "update", tags = {
                     ApiNames.STEUERUNG
     }, responses = {
@@ -149,7 +150,7 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
         return super.delete(name);
     }
 
-    @PutMapping(path = ApiPaths.ADD_STEUERUNG_ABBILDUNG, consumes = { MediaType.MULTIPART_FORM_DATA }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @PutMapping(path = ApiPaths.ADD_STEUERUNG_ABBILDUNG, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Add an Steuerung picture", description = "Adds or updates the picture of a named Steuerung", operationId = "update", tags = {
                     ApiNames.STEUERUNG
     }, responses = {
@@ -167,7 +168,7 @@ public class SteuerungController extends NamedItemController<SteuerungModel> {
         return updated(service.updateAbbildung(name, multipart));
     }
 
-    @DeleteMapping(path = ApiPaths.DELETE_STEUERUNG_ABBILDUNG, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @DeleteMapping(path = ApiPaths.DELETE_STEUERUNG_ABBILDUNG, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Delete an Steuerung picture", description = "Deletes the picture of a named Steuerung", operationId = "update", tags = {
                     ApiNames.STEUERUNG
     }, responses = {

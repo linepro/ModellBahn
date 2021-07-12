@@ -2,9 +2,10 @@ package com.linepro.modellbahn.controller;
 
 import java.util.Optional;
 
-import javax.ws.rs.core.MediaType;
+import org.springframework.http.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -60,7 +61,7 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
     }
 
     @Override
-    @GetMapping(path = ApiPaths.GET_HERSTELLER, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @GetMapping(path = ApiPaths.GET_HERSTELLER, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds an Hersteller by name", description = "Finds a manufacturer", operationId = "get", tags = {
                     ApiNames.HERSTELLER
     }, responses = {
@@ -78,7 +79,7 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
     }
 
     @Override
-    @GetMapping(path = ApiPaths.SEARCH_HERSTELLER, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @GetMapping(path = ApiPaths.SEARCH_HERSTELLER, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds Herstelleren by example", description = "Finds UIC axle configurations", operationId = "find", tags = {
                     ApiNames.HERSTELLER
     }, responses = {
@@ -97,7 +98,7 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
     }
 
     @Override
-    @PostMapping(path = ApiPaths.ADD_HERSTELLER, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @PostMapping(path = ApiPaths.ADD_HERSTELLER, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Add a new Hersteller", description = "Add a new UIC axle configuration", operationId = "add", tags = {
                     ApiNames.HERSTELLER
     }, responses = {
@@ -115,7 +116,7 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
     }
 
     @Override
-    @PutMapping(path = ApiPaths.UPDATE_HERSTELLER, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @PutMapping(path = ApiPaths.UPDATE_HERSTELLER, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Updates an Hersteller by name", description = "Update a manufacturer", operationId = "update", tags = {
                     ApiNames.HERSTELLER
     }, responses = {
@@ -149,7 +150,7 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
         return super.delete(name);
     }
 
-    @PutMapping(path = ApiPaths.ADD_HERSTELLER_ABBILDUNG, consumes = { MediaType.MULTIPART_FORM_DATA }, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @PutMapping(path = ApiPaths.ADD_HERSTELLER_ABBILDUNG, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Add an Hersteller picture", description = "Adds or updates the picture of a named Hersteller", operationId = "update", tags = {
                     ApiNames.HERSTELLER
     }, responses = {
@@ -167,7 +168,7 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
         return updated(service.updateAbbildung(name, multipart));
     }
 
-    @DeleteMapping(path = ApiPaths.DELETE_HERSTELLER_ABBILDUNG, produces = { MediaType.APPLICATION_JSON, ApiPaths.APPLICATION_HAL_JSON })
+    @DeleteMapping(path = ApiPaths.DELETE_HERSTELLER_ABBILDUNG, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Delete an Hersteller picture", description = "Deletes the picture of a named Hersteller", operationId = "update", tags = {
                     ApiNames.HERSTELLER
     }, responses = {

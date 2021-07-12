@@ -12,6 +12,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -42,12 +43,12 @@ public abstract class AbstractItemController<M extends ItemModel> {
     }
 
     public <I extends ItemModel> ResponseEntity<?> found(Optional<I> body) {
-        return body.map(b -> ok().header(HttpHeaders.CONTENT_TYPE, ApiPaths.APPLICATION_HAL_JSON).body(b))
+        return body.map(b -> ok().header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE).body(b))
                    .orElse(notFound().build());
     }
 
     public <I extends ItemModel> ResponseEntity<?> added(I body) {
-        return status(CREATED).header(HttpHeaders.CONTENT_TYPE, ApiPaths.APPLICATION_HAL_JSON).body(body);
+        return status(CREATED).header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE).body(body);
     }
 
     public <I extends ItemModel> ResponseEntity<?> added(Optional<I> body) {
@@ -55,7 +56,7 @@ public abstract class AbstractItemController<M extends ItemModel> {
     }
 
     public <I extends ItemModel> ResponseEntity<?> updated(I body) {
-        return status(ACCEPTED).header(HttpHeaders.CONTENT_TYPE, ApiPaths.APPLICATION_HAL_JSON).body(body);
+        return status(ACCEPTED).header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE).body(body);
     }
 
     public <I extends ItemModel> ResponseEntity<?> updated(Optional<I> body) {
@@ -70,7 +71,7 @@ public abstract class AbstractItemController<M extends ItemModel> {
         if (page.hasContent()) {
             PagedResourcesAssembler<I> assembler = new PagedResourcesAssembler<I>(null, null);
 
-            return ok().header(HttpHeaders.CONTENT_TYPE, ApiPaths.APPLICATION_HAL_JSON)
+            return ok().header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE)
                        .body(
                 assembler.toModel(
                     page.getPageable().isUnpaged() && page.hasContent() ?
