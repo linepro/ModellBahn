@@ -50,6 +50,8 @@ management:
          enabled: true
       flyway:
          enabled: true
+      git:
+         mode: full
       health:
          enabled: true
          show-components: always
