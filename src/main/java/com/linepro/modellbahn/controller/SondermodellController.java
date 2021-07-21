@@ -1,12 +1,9 @@
 package com.linepro.modellbahn.controller;
 
-import java.util.Optional;
-
-import org.springframework.http.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,17 +11,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.controller.impl.NamedItemController;
 import com.linepro.modellbahn.model.SondermodellModel;
 import com.linepro.modellbahn.model.SondermodellModel.PagedSondermodellModel;
+import com.linepro.modellbahn.request.SondermodellRequest;
+import com.linepro.modellbahn.service.criterion.NamedCriterion;
+import com.linepro.modellbahn.service.criterion.PageCriteria;
 import com.linepro.modellbahn.service.impl.SondermodellService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -44,16 +41,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController("Sondermodell")
 @ExposesResourceFor(SondermodellModel.class)
 @SecurityRequirement(name = "BasicAuth")
-public class SondermodellController extends NamedItemController<SondermodellModel> {
+public class SondermodellController extends NamedItemController<SondermodellModel, SondermodellRequest> {
 
     @Autowired
     public SondermodellController(SondermodellService service) {
         super(service);
-    }
-
-    @JsonCreator(mode= Mode.DELEGATING)
-    public static SondermodellModel create() {
-        return new SondermodellModel();
     }
 
     @Override
@@ -70,7 +62,6 @@ public class SondermodellController extends NamedItemController<SondermodellMode
         return super.get(name);
     }
 
-    @Override
     @GetMapping(path = ApiPaths.SEARCH_SONDERMODELL, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds Sondermodelln by example", description = "Finds UIC axle configurations", operationId = "find", tags = { ApiNames.SONDERMODELL }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedSondermodellModel.class)) }),
@@ -79,8 +70,8 @@ public class SondermodellController extends NamedItemController<SondermodellMode
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> search(@RequestBody Optional<SondermodellModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
-        return super.search(model, pageNumber, pageSize);
+    public ResponseEntity<?> search(NamedCriterion request, PageCriteria page) {
+        return super.search(request, page);
     }
 
     @Override
@@ -93,8 +84,8 @@ public class SondermodellController extends NamedItemController<SondermodellMode
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> add(@RequestBody SondermodellModel model) {
-        return super.add(model);
+    public ResponseEntity<?> add(@RequestBody SondermodellRequest request) {
+        return super.add(request);
     }
 
     @Override
@@ -108,8 +99,8 @@ public class SondermodellController extends NamedItemController<SondermodellMode
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody SondermodellModel model) {
-        return super.update(name, model);
+    public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody SondermodellRequest request) {
+        return super.update(name, request);
     }
 
     @Override

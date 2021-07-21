@@ -10,17 +10,18 @@ import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.linepro.modellbahn.converter.entity.AchsfolgMutator;
-import com.linepro.modellbahn.converter.model.AchsfolgModelMutator;
+import com.linepro.modellbahn.converter.entity.AchsfolgMapper;
+import com.linepro.modellbahn.converter.request.AchsfolgRequestMapper;
 import com.linepro.modellbahn.entity.Achsfolg;
 import com.linepro.modellbahn.model.AchsfolgModel;
 import com.linepro.modellbahn.repository.AchsfolgRepository;
+import com.linepro.modellbahn.request.AchsfolgRequest;
 
 @Service(PREFIX + "AchsfolgService")
-public class AchsfolgService extends NamedItemServiceImpl<AchsfolgModel,Achsfolg> {
+public class AchsfolgService extends NamedItemServiceImpl<AchsfolgModel, AchsfolgRequest, Achsfolg> {
 
     @Autowired
-    public AchsfolgService(AchsfolgRepository repository, AchsfolgModelMutator modelMutator, AchsfolgMutator entityMutator) {
-        super(repository, modelMutator, entityMutator);
+    public AchsfolgService(AchsfolgRepository repository, AchsfolgRequestMapper requestMapper, AchsfolgMapper entityMapper) {
+        super(repository, requestMapper, entityMapper);
     }
 }

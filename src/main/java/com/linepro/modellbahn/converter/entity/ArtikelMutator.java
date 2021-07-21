@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.PathMutator;
 import com.linepro.modellbahn.converter.entity.transcriber.ArtikelTranscriber;
-import com.linepro.modellbahn.converter.impl.MutatorImpl;
+import com.linepro.modellbahn.converter.impl.MapperImpl;
 import com.linepro.modellbahn.entity.Artikel;
 import com.linepro.modellbahn.model.ArtikelModel;
 
 @Component(PREFIX + "ArtikelMutator")
-public class ArtikelMutator extends MutatorImpl<Artikel, ArtikelModel> {
+public class ArtikelMutator extends MapperImpl<Artikel, ArtikelModel> {
 
     @Autowired
     public ArtikelMutator(AnderungMutator anderungMutator, ProduktMutator produktMutator, PathMutator pathMutator) {

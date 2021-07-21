@@ -21,7 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.linepro.modellbahn.converter.Mutator;
+import com.linepro.modellbahn.converter.Mapper;
 import com.linepro.modellbahn.entity.Decoder;
 import com.linepro.modellbahn.model.DecoderModel;
 import com.linepro.modellbahn.model.enums.DecoderStatus;
@@ -90,13 +90,13 @@ public class ExporterImplTest {
 
     private final CharArrayWriter writer;
 
-    private final Mutator<Decoder,DecoderModel> mutator;  
+    private final Mapper<Decoder,DecoderModel> mutator;  
 
     private final CsvSchemaGenerator generator;
 
     private Exporter exporter;
 
-    public ExporterImplTest(@Mock JpaRepository<Decoder,Long> repository, @Mock Mutator<Decoder,DecoderModel> mutator) { 
+    public ExporterImplTest(@Mock JpaRepository<Decoder,Long> repository, @Mock Mapper<Decoder,DecoderModel> mutator) { 
         this.repository = repository;
         this.mutator = mutator;
         this.generator = new CsvSchemaGenerator();

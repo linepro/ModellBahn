@@ -11,38 +11,31 @@ import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.converter.entity.VorbildMutator;
-import com.linepro.modellbahn.converter.model.VorbildModelMutator;
+import com.linepro.modellbahn.converter.request.VorbildRequestMapper;
 import com.linepro.modellbahn.entity.Vorbild;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.VorbildModel;
 import com.linepro.modellbahn.repository.VorbildRepository;
-import com.linepro.modellbahn.service.criterion.VorbildCriterion;
+import com.linepro.modellbahn.request.VorbildRequest;
 
 @Service(PREFIX + "VorbildService")
-public class VorbildService extends NamedItemServiceImpl<VorbildModel, Vorbild> {
+public class VorbildService extends NamedItemServiceImpl<VorbildModel, VorbildRequest,  Vorbild> {
 
     private final VorbildRepository repository;
 
     private final FileService fileService;
 
     @Autowired
-    public VorbildService(VorbildRepository repository, FileService fileService, VorbildModelMutator vorbildModelMutator, VorbildMutator vorbildMutator) {
-        super(repository, vorbildModelMutator, vorbildMutator);
+    public VorbildService(VorbildRepository repository, FileService fileService, VorbildRequestMapper vorbildRequestMapper, VorbildMutator vorbildMutator) {
+        super(repository, vorbildRequestMapper, vorbildMutator);
         this.repository = repository;
         this.fileService = fileService;
-    }
-
-    @Override
-    protected Page<Vorbild> findAll(Optional<VorbildModel> model, Pageable pageRequest) {
-        return repository.findAll(new VorbildCriterion(model), pageRequest);
     }
 
     public Optional<VorbildModel> updateAbbildung(String name, MultipartFile multipart) {

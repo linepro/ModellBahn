@@ -3,6 +3,7 @@ package com.linepro.modellbahn.configuration;
 import java.util.Date;
 import java.util.Map;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -42,7 +43,10 @@ public class ModellBahnErrorAttributes extends DefaultErrorAttributes {
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         super.resolveException(request, response, handler, ex);
 
-        HttpStatus status = HttpStatus.valueOf(response.getStatus());
+        HttpStatus status = (ex instanceof ServletException) ? HttpStatus.BAD_REQUEST : HttpStatus.valueOf(response.getStatus());
+
+        status = status.is2xxSuccessful() ? HttpStatus.INTERNAL_SERVER_ERROR : status; 
+
         Map<String, Object> attributes = getErrorAttributes(new ServletWebRequest(request), OPTIONS);
 
         ModelAndView mav;

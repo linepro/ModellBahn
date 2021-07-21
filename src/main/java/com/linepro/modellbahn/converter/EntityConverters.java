@@ -5,7 +5,7 @@ import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import com.linepro.modellbahn.converter.entity.AchsfolgMutator;
+import com.linepro.modellbahn.converter.entity.AchsfolgMapper;
 import com.linepro.modellbahn.converter.entity.AnderungMutator;
 import com.linepro.modellbahn.converter.entity.AntriebMutator;
 import com.linepro.modellbahn.converter.entity.ArtikelMutator;
@@ -40,7 +40,7 @@ import com.linepro.modellbahn.converter.entity.ZugMutator;
 import com.linepro.modellbahn.converter.entity.ZugTypMutator;
 
 @Import({
-    AchsfolgMutator.class, 
+    AchsfolgMapper.class, 
     AnderungMutator.class, 
     AntriebMutator.class, 
     ArtikelMutator.class, 

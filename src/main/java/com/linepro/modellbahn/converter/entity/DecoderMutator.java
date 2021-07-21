@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.entity.transcriber.DecoderTranscriber;
-import com.linepro.modellbahn.converter.impl.MutatorImpl;
+import com.linepro.modellbahn.converter.impl.MapperImpl;
 import com.linepro.modellbahn.entity.Decoder;
 import com.linepro.modellbahn.model.DecoderModel;
 
 @Component(PREFIX + "DecoderMutator")
-public class DecoderMutator extends MutatorImpl<Decoder, DecoderModel> {
+public class DecoderMutator extends MapperImpl<Decoder, DecoderModel> {
 
     @Autowired
     public DecoderMutator(ArtikelMutator artikelMutator, DecoderTypMutator decoderTypMutator, DecoderAdressMutator adressMutator, DecoderCvMutator cvMutator, DecoderFunktionMutator funktionMutator) {

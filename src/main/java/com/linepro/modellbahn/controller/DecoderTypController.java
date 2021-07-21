@@ -2,13 +2,10 @@ package com.linepro.modellbahn.controller;
 
 import static org.springframework.http.ResponseEntity.of;
 
-import java.util.Optional;
-
-import org.springframework.http.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.AbstractItemController;
 import com.linepro.modellbahn.controller.impl.ApiNames;
@@ -32,6 +27,12 @@ import com.linepro.modellbahn.model.DecoderTypCvModel;
 import com.linepro.modellbahn.model.DecoderTypFunktionModel;
 import com.linepro.modellbahn.model.DecoderTypModel;
 import com.linepro.modellbahn.model.ProduktModel;
+import com.linepro.modellbahn.request.DecoderTypAdressRequest;
+import com.linepro.modellbahn.request.DecoderTypCvRequest;
+import com.linepro.modellbahn.request.DecoderTypFunktionRequest;
+import com.linepro.modellbahn.request.DecoderTypRequest;
+import com.linepro.modellbahn.service.criterion.DecoderTypCriterion;
+import com.linepro.modellbahn.service.criterion.PageCriteria;
 import com.linepro.modellbahn.service.impl.DecoderTypService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,7 +51,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController("DecoderTyp")
 @ExposesResourceFor(DecoderTypModel.class)
 @SecurityRequirement(name = "BasicAuth")
-public class DecoderTypController extends AbstractItemController<DecoderTypModel> {
+public class DecoderTypController extends AbstractItemController<DecoderTypModel, DecoderTypRequest> {
 
     private final DecoderTypService service;
 
@@ -59,26 +60,6 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         super(service);
 
         this.service = service;
-    }
-
-    @JsonCreator(mode = Mode.DELEGATING)
-    public static DecoderTypModel create() {
-        return new DecoderTypModel();
-    }
-
-    @JsonCreator(mode = Mode.DELEGATING)
-    public static DecoderTypAdressModel createAdress() {
-        return new DecoderTypAdressModel();
-    }
-
-    @JsonCreator(mode = Mode.DELEGATING)
-    public static DecoderTypCvModel createCV() {
-        return new DecoderTypCvModel();
-    }
-
-    @JsonCreator(mode = Mode.DELEGATING)
-    public static DecoderTypFunktionModel createFunktion() {
-        return new DecoderTypFunktionModel();
     }
 
     @GetMapping(path = ApiPaths.GET_DECODER_TYP, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
@@ -97,7 +78,6 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
     @Schema(name = ApiNames.DECODER_TYP + "Page")
     class PagedDecoderTypModel extends PagedSchema<DecoderTypModel>{}
 
-    @Override
     @GetMapping(path = ApiPaths.SEARCH_DECODER_TYP, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds DecoderTypen by example", description = "Finds train configurations", operationId = "find", tags = { ApiNames.DECODER_TYP }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedDecoderTypModel.class)) }),
@@ -106,8 +86,8 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> search(@RequestBody Optional<DecoderTypModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
-        return super.search(model, pageNumber, pageSize);
+    public ResponseEntity<?> search(DecoderTypCriterion request, PageCriteria page) {
+        return super.search(request, page);
     }
 
     @PostMapping(path = ApiPaths.ADD_DECODER_TYP, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
@@ -120,8 +100,8 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> add(@RequestBody DecoderTypModel model) {
-        return super.add(model);
+    public ResponseEntity<?> add(@RequestBody DecoderTypRequest request) {
+        return super.add(request);
     }
 
     @PutMapping(path = ApiPaths.UPDATE_DECODER_TYP, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
@@ -134,8 +114,8 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> update(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody DecoderTypModel model) {
-        return updated(service.update(herstellerStr, bestellNr, model));
+    public ResponseEntity<?> update(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody DecoderTypRequest request) {
+        return updated(service.update(herstellerStr, bestellNr, request));
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_DECODER_TYP)
@@ -163,8 +143,8 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
                 })
 
     public ResponseEntity<?> addAdress(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
-                    @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody DecoderTypAdressModel model) {
-            return added(service.addAdress(herstellerStr, bestellNr, model));
+                    @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody DecoderTypAdressRequest request) {
+            return added(service.addAdress(herstellerStr, bestellNr, request));
     }
 
     @PutMapping(path = ApiPaths.UPDATE_DECODER_TYP_ADRESS, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
@@ -179,8 +159,8 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
                 })
     public ResponseEntity<?> updateAdress(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
                     @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.INDEX) Integer index,
-                    @RequestBody DecoderTypAdressModel model) {
-        return updated(service.updateAdress(herstellerStr, bestellNr, index, model));
+                    @RequestBody DecoderTypAdressRequest request) {
+        return updated(service.updateAdress(herstellerStr, bestellNr, index, request));
    }
 
     @DeleteMapping(path = ApiPaths.DELETE_DECODER_TYP_ADRESS)
@@ -208,8 +188,8 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
                 })
      public ResponseEntity<?> addCV(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
-                    @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody DecoderTypCvModel model) {
-            return added(service.addCv(herstellerStr, bestellNr, model));
+                    @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody DecoderTypCvRequest request) {
+            return added(service.addCv(herstellerStr, bestellNr, request));
      }
 
     @PutMapping(path = ApiPaths.UPDATE_DECODER_TYP_CV, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
@@ -224,8 +204,8 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
                 })
     public ResponseEntity<?> updateCV(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
                     @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.CV) Integer cv,
-                    @RequestBody DecoderTypCvModel model) {
-        return updated(service.updateCv(herstellerStr, bestellNr, cv, model));
+                    @RequestBody DecoderTypCvRequest request) {
+        return updated(service.updateCv(herstellerStr, bestellNr, cv, request));
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_DECODER_TYP_CV)
@@ -255,8 +235,8 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
                 })
      public ResponseEntity<?> addFunktion(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
-                    @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody DecoderTypFunktionModel model) {
-        return added(service.addFunktion(herstellerStr, bestellNr, model));
+                    @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody DecoderTypFunktionRequest request) {
+        return added(service.addFunktion(herstellerStr, bestellNr, request));
     }
 
     @PutMapping(path = ApiPaths.UPDATE_DECODER_TYP_FUNKTION, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
@@ -272,8 +252,8 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
                 })
     public ResponseEntity<?> updateFunktion(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
                     @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.REIHE) Integer reihe,
-                    @PathVariable(ApiNames.FUNKTION) String funktion, @RequestBody DecoderTypFunktionModel model) {
-        return updated(service.updateFunktion(herstellerStr, bestellNr, reihe, funktion, model));
+                    @PathVariable(ApiNames.FUNKTION) String funktion, @RequestBody DecoderTypFunktionRequest request) {
+        return updated(service.updateFunktion(herstellerStr, bestellNr, reihe, funktion, request));
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_DECODER_TYP_FUNKTION)

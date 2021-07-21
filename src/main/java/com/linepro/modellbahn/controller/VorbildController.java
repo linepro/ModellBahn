@@ -2,13 +2,10 @@ package com.linepro.modellbahn.controller;
 
 import static org.springframework.http.ResponseEntity.of;
 
-import java.util.Optional;
-
-import org.springframework.http.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +25,9 @@ import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.model.VorbildModel;
 import com.linepro.modellbahn.model.VorbildModel.PagedVorbildModel;
+import com.linepro.modellbahn.request.VorbildRequest;
+import com.linepro.modellbahn.service.criterion.PageCriteria;
+import com.linepro.modellbahn.service.criterion.VorbildCriterion;
 import com.linepro.modellbahn.service.impl.VorbildService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,7 +47,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController("Vorbild")
 @ExposesResourceFor(VorbildModel.class)
 @SecurityRequirement(name = "BasicAuth")
-public class VorbildController extends AbstractItemController<VorbildModel> {
+public class VorbildController extends AbstractItemController<VorbildModel, VorbildRequest> {
 
 	private final VorbildService service;
 
@@ -76,7 +76,6 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
         return of(service.get(gattung));
     }
 
-    @Override
     @GetMapping(path = ApiPaths.SEARCH_VORBILD, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds Vorbilder by example", description = "Finds prototypes", operationId = "find", tags = { ApiNames.VORBILD }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedVorbildModel.class)) }),
@@ -85,8 +84,8 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> search(@RequestBody Optional<VorbildModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
-        return super.search(model, pageNumber, pageSize);
+    public ResponseEntity<?> search(VorbildCriterion request, PageCriteria page) {
+        return super.search(request, page);
     }
 
     @Override
@@ -100,8 +99,8 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> add(@RequestBody VorbildModel model) {
-        return super.add(model);
+    public ResponseEntity<?> add(@RequestBody VorbildRequest request) {
+        return super.add(request);
     }
 
     @PutMapping(path = ApiPaths.UPDATE_VORBILD, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
@@ -114,8 +113,8 @@ public class VorbildController extends AbstractItemController<VorbildModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String gattung, @RequestBody VorbildModel model) {
-        return updated(service.update(gattung, model));
+    public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String gattung, @RequestBody VorbildRequest request) {
+        return updated(service.update(gattung, request));
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_VORBILD)

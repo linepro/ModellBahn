@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.entity.transcriber.KategorieTranscriber;
-import com.linepro.modellbahn.converter.impl.MutatorImpl;
+import com.linepro.modellbahn.converter.impl.MapperImpl;
 import com.linepro.modellbahn.entity.Kategorie;
 import com.linepro.modellbahn.model.KategorieModel;
 
 @Component(PREFIX + "KategorieMutator")
-public class KategorieMutator extends MutatorImpl<Kategorie, KategorieModel> {
+public class KategorieMutator extends MapperImpl<Kategorie, KategorieModel> {
     @Autowired
     public KategorieMutator(UnterKategorieMutator unterKategorieMutator) {
         super(() -> new KategorieModel(), new KategorieTranscriber(unterKategorieMutator));

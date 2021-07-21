@@ -1,12 +1,9 @@
 package com.linepro.modellbahn.controller;
 
-import java.util.Optional;
-
-import org.springframework.http.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,14 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.controller.impl.NamedItemController;
 import com.linepro.modellbahn.model.AntriebModel;
 import com.linepro.modellbahn.model.AntriebModel.PagedAntriebModel;
+import com.linepro.modellbahn.request.AntriebRequest;
+import com.linepro.modellbahn.service.criterion.NamedCriterion;
+import com.linepro.modellbahn.service.criterion.PageCriteria;
 import com.linepro.modellbahn.service.impl.AntriebService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,7 +43,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController("Antrieb")
 @ExposesResourceFor(AntriebModel.class)
 @SecurityRequirement(name = "BasicAuth")
-public class AntriebController extends NamedItemController<AntriebModel> {
+public class AntriebController extends NamedItemController<AntriebModel, AntriebRequest> {
 
     private final AntriebService service;
 
@@ -54,11 +52,6 @@ public class AntriebController extends NamedItemController<AntriebModel> {
         super(service);
 
         this.service = service;
-    }
-
-    @JsonCreator(mode= Mode.DELEGATING)
-    public static AntriebModel create() {
-        return new AntriebModel();
     }
 
     @Override
@@ -75,7 +68,6 @@ public class AntriebController extends NamedItemController<AntriebModel> {
         return super.get(name);
     }
 
-    @Override
     @GetMapping(path = ApiPaths.SEARCH_ANTRIEB, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds Antrieben by example", description = "Finds drive methods", operationId = "find", tags = { ApiNames.ANTRIEB }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedAntriebModel.class)) }),
@@ -84,8 +76,8 @@ public class AntriebController extends NamedItemController<AntriebModel> {
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> search(@RequestBody Optional<AntriebModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
-        return super.search(model, pageNumber, pageSize);
+    public ResponseEntity<?> search(NamedCriterion request, PageCriteria page) {
+        return super.search(request, page);
     }
 
     @Override
@@ -98,8 +90,8 @@ public class AntriebController extends NamedItemController<AntriebModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> add(@RequestBody AntriebModel model) {
-        return super.add(model);
+    public ResponseEntity<?> add(@RequestBody AntriebRequest request) {
+        return super.add(request);
     }
 
     @Override
@@ -113,8 +105,8 @@ public class AntriebController extends NamedItemController<AntriebModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody AntriebModel model) {
-        return super.update(name, model);
+    public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody AntriebRequest request) {
+        return super.update(name, request);
     }
 
     @Override

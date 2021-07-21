@@ -18,21 +18,22 @@ import org.springframework.web.multipart.MultipartFile;
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.converter.entity.SteuerungMutator;
-import com.linepro.modellbahn.converter.model.SteuerungModelMutator;
+import com.linepro.modellbahn.converter.request.SteuerungRequestMapper;
 import com.linepro.modellbahn.entity.Steuerung;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.SteuerungModel;
 import com.linepro.modellbahn.repository.SteuerungRepository;
+import com.linepro.modellbahn.request.SteuerungRequest;
 
 @Service(PREFIX + "SteuerungService")
-public class SteuerungService extends NamedItemServiceImpl<SteuerungModel, Steuerung> {
+public class SteuerungService extends NamedItemServiceImpl<SteuerungModel, SteuerungRequest,  Steuerung> {
 
     private final FileService fileService;
 
     @Autowired
-    public SteuerungService(SteuerungRepository repository, SteuerungModelMutator modelMutator, SteuerungMutator entityMutator,
+    public SteuerungService(SteuerungRepository repository, SteuerungRequestMapper requestMapper, SteuerungMutator entityMapper,
                     FileService fileService) {
-        super(repository, modelMutator, entityMutator);
+        super(repository, requestMapper, entityMapper);
 
         this.fileService = fileService;
     }

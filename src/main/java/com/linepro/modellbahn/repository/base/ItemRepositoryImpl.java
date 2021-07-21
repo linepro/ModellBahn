@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.linepro.modellbahn.entity.NamedItem;
+import com.linepro.modellbahn.service.criterion.Criterion;
 
 @NoRepositoryBean
 @Transactional

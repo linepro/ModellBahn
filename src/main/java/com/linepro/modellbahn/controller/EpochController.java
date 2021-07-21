@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
@@ -17,14 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.controller.impl.NamedItemController;
 import com.linepro.modellbahn.model.EpochModel;
 import com.linepro.modellbahn.model.EpochModel.PagedEpochModel;
+import com.linepro.modellbahn.request.EpochRequest;
+import com.linepro.modellbahn.service.criterion.EpochCriterion;
+import com.linepro.modellbahn.service.criterion.PageCriteria;
 import com.linepro.modellbahn.service.impl.EpochService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -44,7 +43,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController("Epoch")
 @ExposesResourceFor(EpochModel.class)
 @SecurityRequirement(name = "BasicAuth")
-public class EpochController extends NamedItemController<EpochModel> {
+public class EpochController extends NamedItemController<EpochModel, EpochRequest> {
 
     private final EpochService service;
 
@@ -53,11 +52,6 @@ public class EpochController extends NamedItemController<EpochModel> {
         super(service);
 
         this.service = service;
-    }
-
-    @JsonCreator(mode= Mode.DELEGATING)
-    public static EpochModel create() {
-        return new EpochModel();
     }
 
     @Override
@@ -74,7 +68,6 @@ public class EpochController extends NamedItemController<EpochModel> {
         return super.get(name);
     }
 
-    @Override
     @GetMapping(path = ApiPaths.SEARCH_EPOCH, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds Epochen by example", description = "Finds Epochs", operationId = "find", tags = { ApiNames.EPOCH }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedEpochModel.class)) }),
@@ -83,8 +76,8 @@ public class EpochController extends NamedItemController<EpochModel> {
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> search(@RequestBody Optional<EpochModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
-        return super.search(model, pageNumber, pageSize);
+    public ResponseEntity<?> search(EpochCriterion request, PageCriteria page) {
+        return super.search(request, page);
     }
 
     @Override
@@ -97,8 +90,8 @@ public class EpochController extends NamedItemController<EpochModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> add(@RequestBody EpochModel model) {
-        return super.add(model);
+    public ResponseEntity<?> add(@RequestBody EpochRequest request) {
+        return super.add(request);
     }
 
     @Override
@@ -112,8 +105,8 @@ public class EpochController extends NamedItemController<EpochModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody EpochModel model) {
-        return super.update(name, model);
+    public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody EpochRequest request) {
+        return super.update(name, request);
     }
 
     @Override

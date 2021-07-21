@@ -18,7 +18,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
 import com.linepro.modellbahn.model.ItemModel;
+import com.linepro.modellbahn.request.ItemRequest;
 import com.linepro.modellbahn.service.ItemService;
+import com.linepro.modellbahn.service.criterion.Criterion;
+import com.linepro.modellbahn.service.criterion.PageCriteria;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,16 +33,16 @@ import lombok.RequiredArgsConstructor;
  * @param <M> the element type
  */
 @RequiredArgsConstructor
-public abstract class AbstractItemController<M extends ItemModel> {
+public abstract class AbstractItemController<M extends ItemModel, R extends ItemRequest> {
 
-    protected final ItemService<M> service;
+    protected final ItemService<M,R> service;
 
-    protected ResponseEntity<?> add(M model) {
-        return added(service.add(model));
+    protected ResponseEntity<?> add(R request) {
+        return added(service.add(request));
     }
 
-    protected ResponseEntity<?> search(Optional<M> model, Optional<Integer> pageNumber, Optional<Integer> pageSize) {
-        return found(service.search(model, pageNumber, pageSize));
+    protected ResponseEntity<?> search(Criterion criterion, PageCriteria page) {
+        return found(service.search(criterion, page));
     }
 
     public <I extends ItemModel> ResponseEntity<?> found(Optional<I> body) {
@@ -68,7 +71,7 @@ public abstract class AbstractItemController<M extends ItemModel> {
     }
 
     public <I extends ItemModel> ResponseEntity<?> found(Page<I> page) {
-        if (page.hasContent()) {
+//        if (page.hasContent()) {
             PagedResourcesAssembler<I> assembler = new PagedResourcesAssembler<I>(null, null);
 
             return ok().header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE)
@@ -80,8 +83,8 @@ public abstract class AbstractItemController<M extends ItemModel> {
                     it -> (RepresentationModel<?>) it
                 )
             );
-        }
-
-        return notFound().build();
+//        }
+//
+//        return notFound().build();
     }
 }

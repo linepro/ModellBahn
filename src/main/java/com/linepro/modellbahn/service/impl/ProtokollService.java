@@ -18,21 +18,22 @@ import org.springframework.web.multipart.MultipartFile;
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.converter.entity.ProtokollMutator;
-import com.linepro.modellbahn.converter.model.ProtokollModelMutator;
+import com.linepro.modellbahn.converter.request.ProtokollRequestMapper;
 import com.linepro.modellbahn.entity.Protokoll;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.ProtokollModel;
 import com.linepro.modellbahn.repository.ProtokollRepository;
+import com.linepro.modellbahn.request.ProtokollRequest;
 
 @Service(PREFIX + "ProtokollService")
-public class ProtokollService extends NamedItemServiceImpl<ProtokollModel, Protokoll> {
+public class ProtokollService extends NamedItemServiceImpl<ProtokollModel, ProtokollRequest,  Protokoll> {
 
     private final FileService fileService;
 
     @Autowired
-    public ProtokollService(ProtokollRepository repository, ProtokollModelMutator modelMutator, ProtokollMutator entityMutator,
+    public ProtokollService(ProtokollRepository repository, ProtokollRequestMapper requestMapper, ProtokollMutator entityMapper,
                     FileService fileService) {
-        super(repository, modelMutator, entityMutator);
+        super(repository, requestMapper, entityMapper);
 
         this.fileService = fileService;
     }

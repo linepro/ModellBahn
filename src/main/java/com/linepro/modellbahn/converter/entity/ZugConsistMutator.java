@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.entity.transcriber.ZugConsistTranscriber;
-import com.linepro.modellbahn.converter.impl.MutatorImpl;
+import com.linepro.modellbahn.converter.impl.MapperImpl;
 import com.linepro.modellbahn.entity.ZugConsist;
 import com.linepro.modellbahn.model.ZugConsistModel;
 
 @Component(PREFIX + "ZugConsistMutator")
-public class ZugConsistMutator extends MutatorImpl<ZugConsist, ZugConsistModel> {
+public class ZugConsistMutator extends MapperImpl<ZugConsist, ZugConsistModel> {
 
     @Autowired
     public ZugConsistMutator(ArtikelMutator artikelMutator) {

@@ -23,16 +23,16 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.google.common.io.LineReader;
 import com.linepro.modellbahn.controller.impl.ApiMessages;
-import com.linepro.modellbahn.converter.Mutator;
+import com.linepro.modellbahn.converter.Mapper;
 import com.linepro.modellbahn.entity.Item;
-import com.linepro.modellbahn.model.ItemModel;
+import com.linepro.modellbahn.request.ItemRequest;
 import com.linepro.modellbahn.util.exceptions.ModellBahnException;
 import com.linepro.modellbahn.util.impexp.Importer;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ImporterImpl<M extends ItemModel,E extends Item> implements Importer {
+public class ImporterImpl<R extends ItemRequest,E extends Item> implements Importer {
 
     private static final CsvMapper MAPPER = CsvMapper.builder()
                     .findAndAddModules()
@@ -43,27 +43,27 @@ public class ImporterImpl<M extends ItemModel,E extends Item> implements Importe
 
     private final JpaRepository<E,Long> repository;
 
-    private final Mutator<M,E> mutator;
+    private final Mapper<R,E> mapper;
 
     private final CsvSchema schema; 
 
-    private final Class<M> modelClass;
+    private final Class<R> requestClass;
 
     private final CsvSchemaGenerator generator;
 
-    public ImporterImpl(JpaRepository<E,Long> repository, Mutator<M,E> mutator, CsvSchemaGenerator generator, Class<M> modelClass) {
+    public ImporterImpl(JpaRepository<E,Long> repository, Mapper<R,E> mapper, CsvSchemaGenerator generator, Class<R> requestClass) {
         this.repository = repository;
-        this.mutator = mutator;
+        this.mapper = mapper;
         this.generator = generator;
-        this.modelClass = modelClass;
+        this.requestClass = requestClass;
 
-        this.schema = generator.getSchema(modelClass);
+        this.schema = generator.getSchema(requestClass);
     }
 
     @Override
     @Transactional
     public void read(Reader in) {
-        MappingIterator<M> mi;
+        MappingIterator<R> mi;
 
         List<String> errors = new ArrayList<>();
         Integer rowNum = 0;
@@ -89,17 +89,17 @@ public class ImporterImpl<M extends ItemModel,E extends Item> implements Importe
                 in.reset();
             }
 
-            ObjectReader reader = MAPPER.readerFor(modelClass).with(actual);
+            ObjectReader reader = MAPPER.readerFor(requestClass).with(actual);
 
             mi = reader.readValues(in);
 
             while (mi.hasNext()) {
                 rowNum++;
 
-                M next = mi.next();
+                R next = mi.next();
 
                 try {
-                    repository.save(mutator.convert(next));
+                    repository.save(mapper.convert(next));
                 } catch(Exception e) {
                     String error = getError(e);
 

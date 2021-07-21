@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.linepro.modellbahn.controller.impl.ApiMessages;
-import com.linepro.modellbahn.converter.Mutator;
+import com.linepro.modellbahn.converter.Mapper;
 import com.linepro.modellbahn.entity.Item;
 import com.linepro.modellbahn.model.ItemModel;
 import com.linepro.modellbahn.util.exceptions.ModellBahnException;
@@ -38,13 +38,13 @@ public class ExporterImpl<M extends ItemModel,E extends Item> implements Exporte
 
     private final PagingAndSortingRepository<E,Long> repository;
 
-    private final Mutator<E,M> mutator;
+    private final Mapper<E,M> mutator;
 
     private final Class<M> modelClass;
 
     private final CsvSchema schema;
 
-    public ExporterImpl(PagingAndSortingRepository<E,Long> repository, Mutator<E,M> mutator, CsvSchemaGenerator generator, Class<M> modelClass) {
+    public ExporterImpl(PagingAndSortingRepository<E,Long> repository, Mapper<E,M> mutator, CsvSchemaGenerator generator, Class<M> modelClass) {
         this.repository = repository;
         this.mutator = mutator;
         this.modelClass = modelClass;

@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.PathMutator;
 import com.linepro.modellbahn.converter.entity.transcriber.DecoderTypTranscriber;
-import com.linepro.modellbahn.converter.impl.MutatorImpl;
+import com.linepro.modellbahn.converter.impl.MapperImpl;
 import com.linepro.modellbahn.entity.DecoderTyp;
 import com.linepro.modellbahn.model.DecoderTypModel;
 
 @Component(PREFIX + "DecoderTypMutator")
-public class DecoderTypMutator extends MutatorImpl<DecoderTyp, DecoderTypModel> {
+public class DecoderTypMutator extends MapperImpl<DecoderTyp, DecoderTypModel> {
 
     @Autowired
     public DecoderTypMutator(DecoderTypAdressMutator adressMutator, DecoderTypCvMutator cvMutator, DecoderTypFunktionMutator funktionMutator,

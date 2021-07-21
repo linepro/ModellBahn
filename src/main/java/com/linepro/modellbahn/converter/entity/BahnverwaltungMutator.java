@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.PathMutator;
 import com.linepro.modellbahn.converter.entity.transcriber.BahnverwaltungTranscriber;
-import com.linepro.modellbahn.converter.impl.MutatorImpl;
+import com.linepro.modellbahn.converter.impl.MapperImpl;
 import com.linepro.modellbahn.entity.Bahnverwaltung;
 import com.linepro.modellbahn.model.BahnverwaltungModel;
 
 @Component(PREFIX + "BahnverwaltungMutator")
-public class BahnverwaltungMutator extends MutatorImpl<Bahnverwaltung, BahnverwaltungModel> {
+public class BahnverwaltungMutator extends MapperImpl<Bahnverwaltung, BahnverwaltungModel> {
 
     @Autowired
     public BahnverwaltungMutator(PathMutator pathMutator) {

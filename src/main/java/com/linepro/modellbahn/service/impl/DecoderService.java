@@ -11,8 +11,6 @@ import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +18,7 @@ import com.linepro.modellbahn.converter.entity.DecoderAdressMutator;
 import com.linepro.modellbahn.converter.entity.DecoderCvMutator;
 import com.linepro.modellbahn.converter.entity.DecoderFunktionMutator;
 import com.linepro.modellbahn.converter.entity.DecoderMutator;
-import com.linepro.modellbahn.converter.model.DecoderModelMutator;
+import com.linepro.modellbahn.converter.request.DecoderRequestMapper;
 import com.linepro.modellbahn.entity.Decoder;
 import com.linepro.modellbahn.entity.DecoderAdress;
 import com.linepro.modellbahn.entity.DecoderCv;
@@ -36,10 +34,10 @@ import com.linepro.modellbahn.repository.DecoderCvRepository;
 import com.linepro.modellbahn.repository.DecoderFunktionRepository;
 import com.linepro.modellbahn.repository.DecoderRepository;
 import com.linepro.modellbahn.repository.DecoderTypRepository;
-import com.linepro.modellbahn.service.criterion.DecoderCriterion;
+import com.linepro.modellbahn.request.DecoderRequest;
 
 @Service(PREFIX + "DecoderService")
-public class DecoderService extends ItemServiceImpl<DecoderModel, Decoder> {
+public class DecoderService extends ItemServiceImpl<DecoderModel, DecoderRequest,  Decoder> {
 
     private final DecoderRepository repository;
 
@@ -60,11 +58,11 @@ public class DecoderService extends ItemServiceImpl<DecoderModel, Decoder> {
     private final AssetIdGenerator assetIdGenerator;
 
     @Autowired
-    public DecoderService(DecoderRepository repository, DecoderTypRepository typRepository, DecoderModelMutator decoderModelMutator,
+    public DecoderService(DecoderRepository repository, DecoderTypRepository typRepository, DecoderRequestMapper decoderRequestMapper,
                     DecoderMutator decoderMutator, DecoderAdressRepository adressRepository, DecoderAdressMutator adressMutator,
                     DecoderCvRepository cvRepository, DecoderCvMutator cvMutator, DecoderFunktionRepository funktionRepository,
                     DecoderFunktionMutator funktionMutator, AssetIdGenerator assetIdGenerator) {
-        super(repository, decoderModelMutator, decoderMutator);
+        super(repository, decoderRequestMapper, decoderMutator);
         this.repository = repository;
 
         this.typRepository = typRepository;
@@ -82,17 +80,17 @@ public class DecoderService extends ItemServiceImpl<DecoderModel, Decoder> {
     }
 
     @Transactional
-    public Optional<DecoderModel> add(String herstellerStr, String bestellNr, DecoderModel model) {
+    public Optional<DecoderModel> add(String herstellerStr, String bestellNr, DecoderRequest request) {
         Optional<DecoderTyp> found = typRepository.findByBestellNr(herstellerStr, bestellNr);
 
         if (found.isPresent()) {
             DecoderTyp decoderTyp = found.get();
 
             Decoder initial = new Decoder();
-            model.setDecoderId(null);
+            request.setDecoderId(null);
             initial.setDecoderId(assetIdGenerator.getNextAssetId());
             initial.setDecoderTyp(decoderTyp);
-            initial = modelMutator.apply(model, initial);
+            initial = requestMapper.apply(request, initial);
             initial.setDeleted(false);
 
             final Decoder decoder = repository.saveAndFlush(initial);
@@ -104,23 +102,18 @@ public class DecoderService extends ItemServiceImpl<DecoderModel, Decoder> {
             decoderTyp.getFunktionen().forEach(
                             f -> decoder.addFunktion(DecoderFunktion.builder().funktion(f).bezeichnung(f.getBezeichnung()).deleted(false).build()));
 
-            return Optional.of(entityMutator.convert(repository.saveAndFlush(decoder)));
+            return Optional.of(entityMapper.convert(repository.saveAndFlush(decoder)));
         }
 
         return Optional.empty();
-    }
-
-    @Override
-    protected Page<Decoder> findAll(Optional<DecoderModel> model, Pageable pageRequest) {
-        return repository.findAll(new DecoderCriterion(model), pageRequest);
     }
 
     public Optional<DecoderModel> get(String decoderId) {
         return super.get(() -> repository.findByDecoderId(decoderId));
     }
 
-    public Optional<DecoderModel> update(String decoderId, DecoderModel model) {
-        return super.update(() -> repository.findByDecoderId(decoderId), model);
+    public Optional<DecoderModel> update(String decoderId, DecoderRequest request) {
+        return super.update(() -> repository.findByDecoderId(decoderId), request);
     }
 
     public boolean delete(String decoderId) {

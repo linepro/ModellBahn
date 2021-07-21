@@ -3,12 +3,10 @@ package com.linepro.modellbahn.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.http.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
@@ -29,6 +25,10 @@ import com.linepro.modellbahn.model.KategorieModel;
 import com.linepro.modellbahn.model.KategorieModel.PagedKategorieModel;
 import com.linepro.modellbahn.model.UnterKategorieModel;
 import com.linepro.modellbahn.model.UnterKategorieModel.PagedUnterKategorieModel;
+import com.linepro.modellbahn.request.KategorieRequest;
+import com.linepro.modellbahn.request.UnterKategorieRequest;
+import com.linepro.modellbahn.service.criterion.NamedCriterion;
+import com.linepro.modellbahn.service.criterion.PageCriteria;
 import com.linepro.modellbahn.service.impl.KategorieService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -48,7 +48,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController("Kategorie")
 @ExposesResourceFor(KategorieModel.class)
 @SecurityRequirement(name = "BasicAuth")
-public class KategorieController extends NamedItemController<KategorieModel> {
+public class KategorieController extends NamedItemController<KategorieModel, KategorieRequest> {
 
     private final KategorieService service;
 
@@ -57,16 +57,6 @@ public class KategorieController extends NamedItemController<KategorieModel> {
         super(service);
 
         this.service = service;
-    }
-
-    @JsonCreator(mode = Mode.DELEGATING)
-    public static KategorieModel create() {
-        return new KategorieModel();
-    }
-
-    @JsonCreator(mode = Mode.DELEGATING)
-    public static UnterKategorieModel createUnterKategorie() {
-        return new UnterKategorieModel();
     }
 
     @Override
@@ -83,7 +73,6 @@ public class KategorieController extends NamedItemController<KategorieModel> {
         return super.get(name);
     }
 
-    @Override
     @GetMapping(path = ApiPaths.SEARCH_KATEGORIE, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds Kategorieen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { ApiNames.KATEGORIE }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedKategorieModel.class)) }),
@@ -92,8 +81,8 @@ public class KategorieController extends NamedItemController<KategorieModel> {
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> search(@RequestBody Optional<KategorieModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
-        return super.search(model, pageNumber, pageSize);
+    public ResponseEntity<?> search(NamedCriterion request, PageCriteria page) {
+        return super.search(request, page);
     }
 
     @Override
@@ -106,8 +95,8 @@ public class KategorieController extends NamedItemController<KategorieModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> add(@RequestBody KategorieModel model) {
-        return super.add(model);
+    public ResponseEntity<?> add(@RequestBody KategorieRequest request) {
+        return super.add(request);
     }
 
     @Override
@@ -121,8 +110,8 @@ public class KategorieController extends NamedItemController<KategorieModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody KategorieModel model) {
-        return super.update(name, model);
+    public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody KategorieRequest request) {
+        return super.update(name, request);
     }
 
     @Override
@@ -147,10 +136,8 @@ public class KategorieController extends NamedItemController<KategorieModel> {
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> searchUnterKategorie(@RequestParam(ApiNames.KATEGORIEN) Optional<List<String>> kategorieen, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
-        Page<KategorieModel> page = service.searchUnterKategorie(kategorieen, pageNumber, pageSize);
-
-        return found(page);
+    public ResponseEntity<?> searchUnterKategorie(@RequestParam(ApiNames.KATEGORIEN) Optional<List<String>> kategorieen, PageCriteria page) {
+        return found(service.searchUnterKategorie(kategorieen, page));
     }
 
     @PostMapping(path = ApiPaths.ADD_UNTER_KATEGORIE, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
@@ -163,7 +150,7 @@ public class KategorieController extends NamedItemController<KategorieModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
                 })
-    public ResponseEntity<?> addUnterKategorie(@PathVariable(ApiNames.KATEGORIE) String kategorieStr, @RequestBody UnterKategorieModel unterKategorie) {
+    public ResponseEntity<?> addUnterKategorie(@PathVariable(ApiNames.KATEGORIE) String kategorieStr, @RequestBody UnterKategorieRequest unterKategorie) {
         return added(service.addUnterKategorie(kategorieStr, unterKategorie));
     }
 
@@ -178,7 +165,7 @@ public class KategorieController extends NamedItemController<KategorieModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
                 })
     public ResponseEntity<?> updateUnterKategorie(@PathVariable(ApiNames.KATEGORIE) String kategorieStr,
-            @PathVariable(ApiNames.UNTER_KATEGORIE) String unterKategorieStr, @RequestBody UnterKategorieModel unterKategorie) {
+            @PathVariable(ApiNames.UNTER_KATEGORIE) String unterKategorieStr, @RequestBody UnterKategorieRequest unterKategorie) {
         return updated(service.updateUnterKategorie(kategorieStr, unterKategorieStr, unterKategorie));
     }
 

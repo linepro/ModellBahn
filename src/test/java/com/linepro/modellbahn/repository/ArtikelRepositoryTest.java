@@ -25,10 +25,9 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.linepro.modellbahn.entity.Artikel;
-import com.linepro.modellbahn.model.ArtikelModel;
 import com.linepro.modellbahn.persistence.Persistence;
-import com.linepro.modellbahn.repository.base.Criterion;
 import com.linepro.modellbahn.service.criterion.ArtikelCriterion;
+import com.linepro.modellbahn.service.criterion.Criterion;
 
 @ExtendWith(SpringExtension.class)
 @TestExecutionListeners({
@@ -72,7 +71,7 @@ public class ArtikelRepositoryTest {
 
     @Test
     public void testFindAllCriterion() {
-        Criterion criterion = new ArtikelCriterion(Optional.of(new ArtikelModel()));
+        Criterion criterion = new ArtikelCriterion();
         Page<Artikel> page = artikelRepository.findAll(criterion, Pageable.unpaged());
 
         List<Artikel> artikeln = page.getContent();

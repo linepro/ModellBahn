@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component(PREFIX + "PathMutator")
 @RequiredArgsConstructor
-public class PathMutator implements Mutator<Path, String> {
+public class PathMutator implements Mapper<Path, String> {
 
     @Autowired
     private FileStore fileStore;
