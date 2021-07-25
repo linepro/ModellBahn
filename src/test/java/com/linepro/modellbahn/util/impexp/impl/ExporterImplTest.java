@@ -90,15 +90,15 @@ public class ExporterImplTest {
 
     private final CharArrayWriter writer;
 
-    private final Mapper<Decoder,DecoderModel> mutator;  
+    private final Mapper<Decoder,DecoderModel> Mapper;  
 
     private final CsvSchemaGenerator generator;
 
     private Exporter exporter;
 
-    public ExporterImplTest(@Mock JpaRepository<Decoder,Long> repository, @Mock Mapper<Decoder,DecoderModel> mutator) { 
+    public ExporterImplTest(@Mock JpaRepository<Decoder,Long> repository, @Mock Mapper<Decoder,DecoderModel> Mapper) { 
         this.repository = repository;
-        this.mutator = mutator;
+        this.Mapper = Mapper;
         this.generator = new CsvSchemaGenerator();
         this.writer = new CharArrayWriter();
     }
@@ -113,10 +113,10 @@ public class ExporterImplTest {
             return pageRequest.getPageNumber() == 0 ? data : Page.empty();
         }).when(repository).findAll(any(Pageable.class));
 
-        when(mutator.convert(any())).thenReturn(MODEL);
-        when(mutator.get()).thenReturn(MODEL);
+        when(Mapper.convert(any())).thenReturn(MODEL);
+        when(Mapper.get()).thenReturn(MODEL);
 
-        exporter = new ExporterImpl(repository, mutator, generator, DecoderModel.class);
+        exporter = new ExporterImpl(repository, Mapper, generator, DecoderModel.class);
     }
 
     @Test

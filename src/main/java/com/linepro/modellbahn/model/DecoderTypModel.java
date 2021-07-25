@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.model.enums.Stecker;
 import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
@@ -145,4 +146,7 @@ public class DecoderTypModel extends SpringdocModel<DecoderTypModel> implements 
                 .append(bestellNr, other.bestellNr)
                 .isEquals();
     }
+
+    @Schema(name = ApiNames.DECODER_TYP + "Page")
+    public static class PagedDecoderTypModel extends PagedSchema<DecoderTypModel>{}
 }

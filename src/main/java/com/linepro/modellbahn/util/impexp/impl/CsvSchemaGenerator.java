@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -33,11 +34,26 @@ public class CsvSchemaGenerator {
                                .collect(Collectors.toList()));
     }
 
-    private String getColumnName(Field f) {
+    public CsvSchema getSchema(Class<?> modelClass, List<String> columns) {
+        AtomicInteger colNumber = new AtomicInteger();
+
+        CsvSchema classSchema = getSchema(modelClass);
+        
+        return getSchema(columns.stream()
+                                .map(n -> getColumn(classSchema, colNumber, n))
+                                .collect(Collectors.toList()));
+    }
+    
+    protected Column getColumn(CsvSchema schema, AtomicInteger colNumber, String name) {
+        return Optional.ofNullable(schema.column(name))
+                       .orElse(new Column(colNumber.getAndIncrement(), name));
+    }
+
+    protected String getColumnName(Field f) {
         return StringUtils.defaultIfBlank(f.getAnnotation(JsonProperty.class).value(), f.getName());
     }
     
-    public CsvSchema getSchema(List<Column> columns) {
+    protected CsvSchema getSchema(List<Column> columns) {
         AtomicInteger colNumber = new AtomicInteger();
 
         return CsvSchema.builder()
@@ -46,8 +62,7 @@ public class CsvSchemaGenerator {
                                    .map(c -> new Column(colNumber.getAndIncrement(),c.getName(), c.getType()))
                                    .collect(Collectors.toList())
                         )
-                        .build()
-                        .withHeader();
+                        .build();
     }
 
     protected ColumnType getColumnType(Field f) {

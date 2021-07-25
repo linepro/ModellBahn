@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -94,4 +95,7 @@ public class BahnverwaltungModel extends SpringdocModel<BahnverwaltungModel> imp
                 .append(name, other.name)
                 .isEquals();
     }
+
+    @Schema(name = ApiNames.BAHNVERWALTUNG + "Page")
+    public static class PagedBahnverwaltungModel extends PagedSchema<BahnverwaltungModel>{}
 }

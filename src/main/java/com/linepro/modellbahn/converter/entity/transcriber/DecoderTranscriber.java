@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import com.linepro.modellbahn.converter.Transcriber;
-import com.linepro.modellbahn.converter.entity.ArtikelMutator;
-import com.linepro.modellbahn.converter.entity.DecoderAdressMutator;
-import com.linepro.modellbahn.converter.entity.DecoderCvMutator;
-import com.linepro.modellbahn.converter.entity.DecoderFunktionMutator;
-import com.linepro.modellbahn.converter.entity.DecoderTypMutator;
+import com.linepro.modellbahn.converter.entity.ArtikelMapper;
+import com.linepro.modellbahn.converter.entity.DecoderAdressMapper;
+import com.linepro.modellbahn.converter.entity.DecoderCvMapper;
+import com.linepro.modellbahn.converter.entity.DecoderFunktionMapper;
+import com.linepro.modellbahn.converter.entity.DecoderTypMapper;
 import com.linepro.modellbahn.entity.Decoder;
 import com.linepro.modellbahn.model.ArtikelModel;
 import com.linepro.modellbahn.model.DecoderAdressModel;
@@ -32,21 +32,21 @@ public class DecoderTranscriber implements Transcriber<Decoder, DecoderModel> {
 
     private static final ArrayList<DecoderFunktionModel> KEIN_FUNKTIONEN = new ArrayList<>();
 
-    private final ArtikelMutator artikelMutator;
+    private final ArtikelMapper artikelMapper;
 
-    private final DecoderTypMutator decoderTypMutator;
+    private final DecoderTypMapper decoderTypMapper;
 
-    private final DecoderAdressMutator adressMutator;
+    private final DecoderAdressMapper adressMapper;
 
-    private final DecoderCvMutator cvMutator;
+    private final DecoderCvMapper cvMapper;
 
-    private final DecoderFunktionMutator funktionMutator;
+    private final DecoderFunktionMapper funktionMapper;
 
     @Override
     public DecoderModel apply(Decoder source, DecoderModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
-            final DecoderTypModel decoderTyp = decoderTypMutator.convert(source.getDecoderTyp());
-            final ArtikelModel artikel = artikelMutator.convert(source.getArtikel());
+            final DecoderTypModel decoderTyp = decoderTypMapper.convert(source.getDecoderTyp());
+            final ArtikelModel artikel = artikelMapper.convert(source.getArtikel());
 
             destination.setDecoderId(source.getDecoderId());
             destination.setHersteller(decoderTyp.getHersteller());
@@ -71,7 +71,7 @@ public class DecoderTranscriber implements Transcriber<Decoder, DecoderModel> {
                 destination.setAdressen(source.getAdressen()
                                               .stream()
                                               .sorted()
-                                              .map(a -> attempt(() ->adressMutator.convert(a)))
+                                              .map(a -> attempt(() ->adressMapper.convert(a)))
                                               .collect(new ResultCollector<>())
                                               .getValue()
                                               .orElse(KEIN_ADRESS));
@@ -81,7 +81,7 @@ public class DecoderTranscriber implements Transcriber<Decoder, DecoderModel> {
                 destination.setCvs(source.getCvs()
                                          .stream()
                                          .sorted()
-                                         .map(c -> attempt(() ->cvMutator.convert(c)))
+                                         .map(c -> attempt(() ->cvMapper.convert(c)))
                                          .collect(new ResultCollector<>())
                                          .getValue()
                                          .orElse(KEIN_CV));
@@ -91,7 +91,7 @@ public class DecoderTranscriber implements Transcriber<Decoder, DecoderModel> {
                 destination.setFunktionen(source.getFunktionen()
                                                 .stream()
                                                 .sorted()
-                                                .map(f -> attempt(() -> funktionMutator.convert(f)))
+                                                .map(f -> attempt(() -> funktionMapper.convert(f)))
                                                 .collect(new ResultCollector<>())
                                                 .getValue()
                                                 .orElse(KEIN_FUNKTIONEN));

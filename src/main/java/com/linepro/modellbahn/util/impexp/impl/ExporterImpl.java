@@ -38,17 +38,17 @@ public class ExporterImpl<M extends ItemModel,E extends Item> implements Exporte
 
     private final PagingAndSortingRepository<E,Long> repository;
 
-    private final Mapper<E,M> mutator;
+    private final Mapper<E,M> Mapper;
 
     private final Class<M> modelClass;
 
     private final CsvSchema schema;
 
-    public ExporterImpl(PagingAndSortingRepository<E,Long> repository, Mapper<E,M> mutator, CsvSchemaGenerator generator, Class<M> modelClass) {
+    public ExporterImpl(PagingAndSortingRepository<E,Long> repository, Mapper<E,M> Mapper, CsvSchemaGenerator generator, Class<M> modelClass) {
         this.repository = repository;
-        this.mutator = mutator;
+        this.Mapper = Mapper;
         this.modelClass = modelClass;
-        this.schema = generator.getSchema(modelClass);
+        this.schema = generator.getSchema(modelClass).withHeader();
     }
 
     @Override
@@ -63,7 +63,7 @@ public class ExporterImpl<M extends ItemModel,E extends Item> implements Exporte
                 if (page.hasContent()) {
                     page.getContent()
                         .stream()
-                        .map(i -> mutator.convert(i))
+                        .map(i -> Mapper.convert(i))
                         .map(i -> attempt(() -> writer.write(i)))
                         .collect(success())
                         .orElseThrow();

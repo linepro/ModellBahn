@@ -17,8 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.converter.entity.AnderungMutator;
-import com.linepro.modellbahn.converter.entity.ArtikelMutator;
+import com.linepro.modellbahn.converter.entity.AnderungMapper;
+import com.linepro.modellbahn.converter.entity.ArtikelMapper;
 import com.linepro.modellbahn.converter.request.AnderungRequestMapper;
 import com.linepro.modellbahn.converter.request.ArtikelRequestMapper;
 import com.linepro.modellbahn.entity.Anderung;
@@ -45,7 +45,7 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
 
     private final AnderungRepository anderungRepository;
 
-    private final AnderungMutator anderungMutator;
+    private final AnderungMapper anderungMapper;
 
     private final AnderungRequestMapper anderungRequestMapper;
 
@@ -53,8 +53,8 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
 
     @Autowired
     public ArtikelService(ArtikelRepository repository, DecoderRepository decoderRepository, ArtikelRequestMapper requestMapper, 
-                    ArtikelMutator entityMapper, FileService fileService, AnderungRepository anderungRepository, 
-                    AnderungMutator anderungMutator, AnderungRequestMapper anderungRequestMapper, AssetIdGenerator assetIdGenerator) {
+                    ArtikelMapper entityMapper, FileService fileService, AnderungRepository anderungRepository, 
+                    AnderungMapper anderungMapper, AnderungRequestMapper anderungRequestMapper, AssetIdGenerator assetIdGenerator) {
         super(repository, requestMapper, entityMapper);
 
         this.repository = repository;
@@ -62,7 +62,7 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
         this.fileService = fileService;
 
         this.anderungRepository = anderungRepository;
-        this.anderungMutator = anderungMutator;
+        this.anderungMapper = anderungMapper;
         this.anderungRequestMapper = anderungRequestMapper;
 
         this.assetIdGenerator = assetIdGenerator;
@@ -160,7 +160,7 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
 
             repository.saveAndFlush(a);
 
-            return anderungMutator.convert(anderung);
+            return anderungMapper.convert(anderung);
         });
     }
 
@@ -171,7 +171,7 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
             Anderung anderung = anderungRequestMapper.apply(anderungRequest, a);
             anderung.setDeleted(deleted);
             anderung.setDeleted(false);
-            return anderungMutator.convert(anderungRepository.saveAndFlush(anderung));
+            return anderungMapper.convert(anderungRepository.saveAndFlush(anderung));
         });
     }
 

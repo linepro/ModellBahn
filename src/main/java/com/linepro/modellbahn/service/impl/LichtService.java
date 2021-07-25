@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.converter.entity.LichtMutator;
+import com.linepro.modellbahn.converter.entity.LichtMapper;
 import com.linepro.modellbahn.converter.request.LichtRequestMapper;
 import com.linepro.modellbahn.entity.Licht;
 import com.linepro.modellbahn.io.FileService;
@@ -34,7 +34,7 @@ public class LichtService extends NamedItemServiceImpl<LichtModel, LichtRequest,
     private final FileService fileService;
 
     @Autowired
-    public LichtService(LichtRepository repository, LichtRequestMapper requestMapper, LichtMutator entityMapper, FileService fileService) {
+    public LichtService(LichtRepository repository, LichtRequestMapper requestMapper, LichtMapper entityMapper, FileService fileService) {
         super(repository, requestMapper, entityMapper);
 
         this.repository = repository;

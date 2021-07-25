@@ -17,8 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.linepro.modellbahn.converter.entity.KategorieMutator;
-import com.linepro.modellbahn.converter.entity.UnterKategorieMutator;
+import com.linepro.modellbahn.converter.entity.KategorieMapper;
+import com.linepro.modellbahn.converter.entity.UnterKategorieMapper;
 import com.linepro.modellbahn.converter.request.KategorieRequestMapper;
 import com.linepro.modellbahn.converter.request.UnterKategorieRequestMapper;
 import com.linepro.modellbahn.entity.Kategorie;
@@ -39,17 +39,17 @@ public class KategorieService extends NamedItemServiceImpl<KategorieModel, Kateg
 
     private final UnterKategorieRepository unterKategorieRepository;
 
-    private final UnterKategorieMutator unterKategorieMutator;
+    private final UnterKategorieMapper unterKategorieMapper;
 
     private final UnterKategorieRequestMapper unterKategorieRequestMapper;
 
     @Autowired
-    public KategorieService(KategorieRepository repository, KategorieRequestMapper requestMapper, KategorieMutator entityMapper, UnterKategorieRepository unterKategorieRepository, UnterKategorieMutator unterKategorieMutator, UnterKategorieRequestMapper unterKategorieRequestMapper) {
+    public KategorieService(KategorieRepository repository, KategorieRequestMapper requestMapper, KategorieMapper entityMapper, UnterKategorieRepository unterKategorieRepository, UnterKategorieMapper unterKategorieMapper, UnterKategorieRequestMapper unterKategorieRequestMapper) {
         super(repository, requestMapper, entityMapper);
 
         this.repository = repository;
         this.unterKategorieRepository = unterKategorieRepository;
-        this.unterKategorieMutator = unterKategorieMutator;
+        this.unterKategorieMapper = unterKategorieMapper;
         this.unterKategorieRequestMapper = unterKategorieRequestMapper;
      }
 
@@ -64,7 +64,7 @@ public class KategorieService extends NamedItemServiceImpl<KategorieModel, Kateg
 
                              repository.saveAndFlush(k);
 
-                             return unterKategorieMutator.convert(unterKategorie);
+                             return unterKategorieMapper.convert(unterKategorie);
                              });
     }
 
@@ -75,7 +75,7 @@ public class KategorieService extends NamedItemServiceImpl<KategorieModel, Kateg
                                            Boolean deleted = u.getDeleted();
                                            UnterKategorie unterKategorie = unterKategorieRequestMapper.apply(request, u);
                                            unterKategorie.setDeleted(deleted);
-                                           return unterKategorieMutator.convert(unterKategorieRepository.saveAndFlush(unterKategorie));
+                                           return unterKategorieMapper.convert(unterKategorieRepository.saveAndFlush(unterKategorie));
                                        });
     }
 

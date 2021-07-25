@@ -14,10 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.linepro.modellbahn.converter.entity.DecoderAdressMutator;
-import com.linepro.modellbahn.converter.entity.DecoderCvMutator;
-import com.linepro.modellbahn.converter.entity.DecoderFunktionMutator;
-import com.linepro.modellbahn.converter.entity.DecoderMutator;
+import com.linepro.modellbahn.converter.entity.DecoderAdressMapper;
+import com.linepro.modellbahn.converter.entity.DecoderCvMapper;
+import com.linepro.modellbahn.converter.entity.DecoderFunktionMapper;
+import com.linepro.modellbahn.converter.entity.DecoderMapper;
 import com.linepro.modellbahn.converter.request.DecoderRequestMapper;
 import com.linepro.modellbahn.entity.Decoder;
 import com.linepro.modellbahn.entity.DecoderAdress;
@@ -45,36 +45,36 @@ public class DecoderService extends ItemServiceImpl<DecoderModel, DecoderRequest
 
     private final DecoderAdressRepository adressRepository;
 
-    private final DecoderAdressMutator adressMutator;
+    private final DecoderAdressMapper adressMapper;
 
     private final DecoderCvRepository cvRepository;
 
-    private final DecoderCvMutator cvMutator;
+    private final DecoderCvMapper cvMapper;
 
     private final DecoderFunktionRepository funktionRepository;
 
-    private final DecoderFunktionMutator funktionMutator;
+    private final DecoderFunktionMapper funktionMapper;
 
     private final AssetIdGenerator assetIdGenerator;
 
     @Autowired
     public DecoderService(DecoderRepository repository, DecoderTypRepository typRepository, DecoderRequestMapper decoderRequestMapper,
-                    DecoderMutator decoderMutator, DecoderAdressRepository adressRepository, DecoderAdressMutator adressMutator,
-                    DecoderCvRepository cvRepository, DecoderCvMutator cvMutator, DecoderFunktionRepository funktionRepository,
-                    DecoderFunktionMutator funktionMutator, AssetIdGenerator assetIdGenerator) {
-        super(repository, decoderRequestMapper, decoderMutator);
+                    DecoderMapper decoderMapper, DecoderAdressRepository adressRepository, DecoderAdressMapper adressMapper,
+                    DecoderCvRepository cvRepository, DecoderCvMapper cvMapper, DecoderFunktionRepository funktionRepository,
+                    DecoderFunktionMapper funktionMapper, AssetIdGenerator assetIdGenerator) {
+        super(repository, decoderRequestMapper, decoderMapper);
         this.repository = repository;
 
         this.typRepository = typRepository;
 
         this.adressRepository = adressRepository;
-        this.adressMutator = adressMutator;
+        this.adressMapper = adressMapper;
 
         this.cvRepository = cvRepository;
-        this.cvMutator = cvMutator;
+        this.cvMapper = cvMapper;
 
         this.funktionRepository = funktionRepository;
-        this.funktionMutator = funktionMutator;
+        this.funktionMapper = funktionMapper;
 
         this.assetIdGenerator = assetIdGenerator;
     }
@@ -123,17 +123,17 @@ public class DecoderService extends ItemServiceImpl<DecoderModel, DecoderRequest
     @Transactional
     public Optional<DecoderAdressModel> updateAdress(String decoderId, Integer index, Integer adress) {
         return adressRepository.findByIndex(decoderId, index)
-                        .map(a -> { a.setAdress(adress); return adressMutator.convert(adressRepository.saveAndFlush(a)); });
+                        .map(a -> { a.setAdress(adress); return adressMapper.convert(adressRepository.saveAndFlush(a)); });
     }
 
     @Transactional
     public Optional<DecoderCvModel> updateCv(String decoderId, Integer cv, Integer wert) {
-        return cvRepository.findByCv(decoderId, cv).map(c -> { c.setWert(wert); return cvMutator.convert(cvRepository.saveAndFlush(c)); });
+        return cvRepository.findByCv(decoderId, cv).map(c -> { c.setWert(wert); return cvMapper.convert(cvRepository.saveAndFlush(c)); });
     }
 
     @Transactional
     public Optional<DecoderFunktionModel> updateFunktion(String decoderId, Integer reihe, String funktion, String bezeichnung) {
         return funktionRepository.findByFunktion(decoderId, reihe, funktion)
-                        .map(f -> { f.setBezeichnung(bezeichnung); return funktionMutator.convert(funktionRepository.saveAndFlush(f)); });
+                        .map(f -> { f.setBezeichnung(bezeichnung); return funktionMapper.convert(funktionRepository.saveAndFlush(f)); });
     }
 }

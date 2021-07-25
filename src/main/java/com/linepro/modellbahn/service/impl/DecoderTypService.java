@@ -16,10 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.converter.entity.DecoderTypAdressMutator;
-import com.linepro.modellbahn.converter.entity.DecoderTypCvMutator;
-import com.linepro.modellbahn.converter.entity.DecoderTypFunktionMutator;
-import com.linepro.modellbahn.converter.entity.DecoderTypMutator;
+import com.linepro.modellbahn.converter.entity.DecoderTypAdressMapper;
+import com.linepro.modellbahn.converter.entity.DecoderTypCvMapper;
+import com.linepro.modellbahn.converter.entity.DecoderTypFunktionMapper;
+import com.linepro.modellbahn.converter.entity.DecoderTypMapper;
 import com.linepro.modellbahn.converter.request.DecoderTypAdressRequestMapper;
 import com.linepro.modellbahn.converter.request.DecoderTypCvRequestMapper;
 import com.linepro.modellbahn.converter.request.DecoderTypFunktionRequestMapper;
@@ -52,37 +52,37 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel, DecoderT
 
     private final DecoderTypAdressRepository adressRepository;
     private final DecoderTypAdressRequestMapper adressRequestMapper;
-    private final DecoderTypAdressMutator adressMutator;
+    private final DecoderTypAdressMapper adressMapper;
 
     private final DecoderTypCvRepository cvRepository;
     private final DecoderTypCvRequestMapper cvRequestMapper;
-    private final DecoderTypCvMutator cvMutator;
+    private final DecoderTypCvMapper cvMapper;
 
     private final DecoderTypFunktionRepository funktionRepository;
     private final DecoderTypFunktionRequestMapper funktionRequestMapper;
-    private final DecoderTypFunktionMutator funktionMutator;
+    private final DecoderTypFunktionMapper funktionMapper;
 
     @Autowired
     public DecoderTypService(DecoderTypRepository repository, FileService fileService, DecoderTypRequestMapper decoderTypRequestMapper, 
-                    DecoderTypMutator decoderTypMutator, DecoderTypAdressRepository adressRepository, DecoderTypAdressRequestMapper adressRequestMapper, 
-                    DecoderTypAdressMutator adressMutator, DecoderTypCvRepository cvRepository, DecoderTypCvRequestMapper cvRequestMapper, DecoderTypCvMutator cvMutator,
-                    DecoderTypFunktionRepository funktionRepository,  DecoderTypFunktionRequestMapper funktionRequestMapper, DecoderTypFunktionMutator funktionMutator) {
-        super(repository, decoderTypRequestMapper, decoderTypMutator);
+                    DecoderTypMapper decoderTypMapper, DecoderTypAdressRepository adressRepository, DecoderTypAdressRequestMapper adressRequestMapper, 
+                    DecoderTypAdressMapper adressMapper, DecoderTypCvRepository cvRepository, DecoderTypCvRequestMapper cvRequestMapper, DecoderTypCvMapper cvMapper,
+                    DecoderTypFunktionRepository funktionRepository,  DecoderTypFunktionRequestMapper funktionRequestMapper, DecoderTypFunktionMapper funktionMapper) {
+        super(repository, decoderTypRequestMapper, decoderTypMapper);
         this.repository = repository;
 
         this.fileService = fileService;
 
         this.adressRepository = adressRepository;
         this.adressRequestMapper = adressRequestMapper;
-        this.adressMutator = adressMutator;
+        this.adressMapper = adressMapper;
 
         this.cvRepository = cvRepository;
         this.cvRequestMapper = cvRequestMapper;
-        this.cvMutator = cvMutator;
+        this.cvMapper = cvMapper;
 
         this.funktionRepository = funktionRepository;
         this.funktionRequestMapper= funktionRequestMapper;
-        this.funktionMutator = funktionMutator;
+        this.funktionMapper = funktionMapper;
     }
 
     public Optional<DecoderTypModel> get(String hersteller, String bestellNr) {
@@ -100,7 +100,7 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel, DecoderT
     @Transactional(readOnly = true)
     public Optional<DecoderTypAdressModel> getAdress(String hersteller, String bestellNr, Integer index) {
         return adressRepository.findByIndex(hersteller, bestellNr, index)
-                               .map(a -> adressMutator.convert(a));
+                               .map(a -> adressMapper.convert(a));
     }
 
     @Transactional
@@ -110,7 +110,7 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel, DecoderT
                              DecoderTypAdress adress = adressRequestMapper.convert(request);
                              d.addAdress(adress);
                              repository.saveAndFlush(d);
-                             return adressMutator.convert(adress);
+                             return adressMapper.convert(adress);
                          });
     }
 
@@ -121,7 +121,7 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel, DecoderT
                                    Boolean deleted = a.getDeleted();
                                    DecoderTypAdress adress = adressRequestMapper.apply(request, a);
                                    adress.setDeleted(deleted);
-                                   return adressMutator.convert(adressRepository.saveAndFlush(adress));
+                                   return adressMapper.convert(adressRepository.saveAndFlush(adress));
                                });
     }
 
@@ -138,7 +138,7 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel, DecoderT
     @Transactional(readOnly = true)
     public Optional<DecoderTypCvModel> getCV(String hersteller, String bestellNr, Integer cv) {
         return cvRepository.findByCv(hersteller, bestellNr, cv)
-                           .map(c -> cvMutator.convert(c));
+                           .map(c -> cvMapper.convert(c));
     }
 
     @Transactional
@@ -148,7 +148,7 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel, DecoderT
                              DecoderTypCv cv = cvRequestMapper.convert(request);
                              d.addCv(cv);
                              repository.saveAndFlush(d);
-                             return cvMutator.convert(cv);
+                             return cvMapper.convert(cv);
                          });
     }
 
@@ -159,7 +159,7 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel, DecoderT
                                Boolean deleted = c.getDeleted();
                                DecoderTypCv item = cvRequestMapper.apply(request, c);
                                item.setDeleted(deleted);
-                               return cvMutator.convert(cvRepository.saveAndFlush(item));
+                               return cvMapper.convert(cvRepository.saveAndFlush(item));
                            });
     }
 
@@ -176,7 +176,7 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel, DecoderT
     @Transactional(readOnly = true)
     public Optional<DecoderTypFunktionModel> getFunktion(String hersteller, String bestellNr, Integer reihe, String funktion) {
         return funktionRepository.findByFunktion(hersteller, bestellNr, reihe, funktion)
-                                 .map(f -> funktionMutator.convert(f));
+                                 .map(f -> funktionMapper.convert(f));
     }
 
     @Transactional
@@ -186,7 +186,7 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel, DecoderT
                              DecoderTypFunktion funktion = funktionRequestMapper.convert(request);
                              d.addFunktion(funktion);
                              repository.saveAndFlush(d);
-                             return funktionMutator.convert(funktion);
+                             return funktionMapper.convert(funktion);
                          });
     }
 
@@ -197,7 +197,7 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel, DecoderT
                                      Boolean deleted = f.getDeleted();
                                      DecoderTypFunktion fn = funktionRequestMapper.apply(request, f);
                                      fn.setDeleted(deleted);
-                                     return funktionMutator.convert(funktionRepository.saveAndFlush(fn));
+                                     return funktionMapper.convert(funktionRepository.saveAndFlush(fn));
                                  });
     }
 

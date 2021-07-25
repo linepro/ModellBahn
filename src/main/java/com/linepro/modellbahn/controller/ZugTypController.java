@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
@@ -48,11 +46,6 @@ public class ZugTypController extends NamedItemController<ZugTypModel, ZugTypReq
     @Autowired
     public ZugTypController(ZugTypService service) {
         super(service);
-    }
-
-    @JsonCreator(mode= Mode.DELEGATING)
-    public static ZugTypModel create() {
-        return new ZugTypModel();
     }
 
     @Override

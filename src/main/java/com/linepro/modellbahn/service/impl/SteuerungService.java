@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.converter.entity.SteuerungMutator;
+import com.linepro.modellbahn.converter.entity.SteuerungMapper;
 import com.linepro.modellbahn.converter.request.SteuerungRequestMapper;
 import com.linepro.modellbahn.entity.Steuerung;
 import com.linepro.modellbahn.io.FileService;
@@ -31,7 +31,7 @@ public class SteuerungService extends NamedItemServiceImpl<SteuerungModel, Steue
     private final FileService fileService;
 
     @Autowired
-    public SteuerungService(SteuerungRepository repository, SteuerungRequestMapper requestMapper, SteuerungMutator entityMapper,
+    public SteuerungService(SteuerungRepository repository, SteuerungRequestMapper requestMapper, SteuerungMapper entityMapper,
                     FileService fileService) {
         super(repository, requestMapper, entityMapper);
 

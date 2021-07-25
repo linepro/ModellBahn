@@ -176,9 +176,17 @@ public class UserService implements UserDetailsService {
 
         errors.addAll(passwordProcessor.validate(model.getPassword()));
 
-        User user = User.builder().name(model.getUsername()).email(model.getEmail()).firstName(model.getFirstName()).lastName(model.getLastName())
-                        .password(passwordProcessor.encode(model.getPassword())).locale(model.getLocale()).passwordAging(passwordAging)
-                        .loginAttempts(loginAttempts).enabled(false).roles(Collections.singletonList(WebSecurityConfig.USER_AUTHORITY)).build();
+        User user = User.builder()
+                        .name(model.getUsername())
+                        .email(model.getEmail())
+                        .firstName(model.getFirstName())
+                        .lastName(model.getLastName())
+                        .password(passwordProcessor.encode(model.getPassword())).locale(model.getLocale())
+                        .passwordAging(passwordAging)
+                        .loginAttempts(loginAttempts)
+                        .enabled(false)
+                        .roles(Collections.singletonList(WebSecurityConfig.USER_AUTHORITY))
+                        .build();
 
         errors.addAll(validator.validate(user));
 

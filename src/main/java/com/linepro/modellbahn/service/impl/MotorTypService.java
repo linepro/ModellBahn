@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.converter.entity.MotorTypMutator;
+import com.linepro.modellbahn.converter.entity.MotorTypMapper;
 import com.linepro.modellbahn.converter.request.MotorTypRequestMapper;
 import com.linepro.modellbahn.entity.MotorTyp;
 import com.linepro.modellbahn.io.FileService;
@@ -31,7 +31,7 @@ public class MotorTypService extends NamedItemServiceImpl<MotorTypModel, MotorTy
     private final FileService fileService;
 
     @Autowired
-    public MotorTypService(MotorTypRepository repository, MotorTypRequestMapper requestMapper, MotorTypMutator entityMapper, FileService fileService) {
+    public MotorTypService(MotorTypRepository repository, MotorTypRequestMapper requestMapper, MotorTypMapper entityMapper, FileService fileService) {
         super(repository, requestMapper, entityMapper);
 
         this.fileService = fileService;

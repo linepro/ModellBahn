@@ -14,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.linepro.modellbahn.converter.entity.ZugConsistMutator;
-import com.linepro.modellbahn.converter.entity.ZugMutator;
+import com.linepro.modellbahn.converter.entity.ZugConsistMapper;
+import com.linepro.modellbahn.converter.entity.ZugMapper;
 import com.linepro.modellbahn.converter.request.ZugRequestMapper;
 import com.linepro.modellbahn.entity.Zug;
 import com.linepro.modellbahn.entity.ZugConsist;
@@ -35,16 +35,16 @@ public class ZugService extends NamedItemServiceImpl<ZugModel, ZugRequest, Zug> 
 
     private final ZugConsistRepository consistRepository;
 
-    private final ZugConsistMutator consistMutator;
+    private final ZugConsistMapper consistMapper;
 
     @Autowired
-    public ZugService(ZugRepository repository, ZugRequestMapper requestMapper, ZugMutator entityMapper, ArtikelRepository artikelRepository, ZugConsistRepository consistRepository, ZugConsistMutator consistMutator) {
+    public ZugService(ZugRepository repository, ZugRequestMapper requestMapper, ZugMapper entityMapper, ArtikelRepository artikelRepository, ZugConsistRepository consistRepository, ZugConsistMapper consistMapper) {
         super(repository, requestMapper, entityMapper);
 
         this.repository = repository;
         this.artikelRepository = artikelRepository;
         this.consistRepository = consistRepository;
-        this.consistMutator = consistMutator;
+        this.consistMapper = consistMapper;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class ZugService extends NamedItemServiceImpl<ZugModel, ZugRequest, Zug> 
 
                              consistRepository.saveAndFlush(fahrzeug);
 
-                             return consistMutator.convert(fahrzeug);
+                             return consistMapper.convert(fahrzeug);
                          });
     }
 
@@ -86,7 +86,7 @@ public class ZugService extends NamedItemServiceImpl<ZugModel, ZugRequest, Zug> 
                                 .map(c -> {
                                     c.setArtikel(artikelRepository.findByArtikelId(artikelId).orElse(null));
 
-                                    return consistMutator.convert(consistRepository.saveAndFlush(c));
+                                    return consistMapper.convert(consistRepository.saveAndFlush(c));
                                 });
     }
 

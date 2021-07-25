@@ -7,10 +7,10 @@ import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import com.linepro.modellbahn.converter.PathMutator;
+import com.linepro.modellbahn.converter.PathMapper;
 import com.linepro.modellbahn.converter.Transcriber;
-import com.linepro.modellbahn.converter.entity.ProduktTeilMutator;
-import com.linepro.modellbahn.converter.entity.UnterKategorieMutator;
+import com.linepro.modellbahn.converter.entity.ProduktTeilMapper;
+import com.linepro.modellbahn.converter.entity.UnterKategorieMapper;
 import com.linepro.modellbahn.entity.Produkt;
 import com.linepro.modellbahn.model.ProduktModel;
 import com.linepro.modellbahn.model.ProduktTeilModel;
@@ -23,16 +23,16 @@ public class ProduktTranscriber implements Transcriber<Produkt, ProduktModel> {
 
     private static final ArrayList<ProduktTeilModel> KEIN_TEILEN = new ArrayList<>();
 
-    private final UnterKategorieMutator unterKategorieMutator;
+    private final UnterKategorieMapper unterKategorieMapper;
 
-    private final ProduktTeilMutator teilMutator;
+    private final ProduktTeilMapper teilMapper;
 
-    private final PathMutator PathMutator;
+    private final PathMapper PathMapper;
 
     @Override
     public ProduktModel apply(Produkt source, ProduktModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
-            final UnterKategorieModel unterKategorie = unterKategorieMutator.convert(source.getUnterKategorie());
+            final UnterKategorieModel unterKategorie = unterKategorieMapper.convert(source.getUnterKategorie());
 
             destination.setHersteller(getCode(source.getHersteller()));
             destination.setBestellNr(source.getBestellNr());
@@ -59,17 +59,17 @@ public class ProduktTranscriber implements Transcriber<Produkt, ProduktModel> {
                 destination.setDecoderTypBestellNr(source.getDecoderTyp().getBestellNr());
             }
             destination.setMotorTyp(getCode(source.getMotorTyp()));
-            destination.setAnleitungen(PathMutator.convert(source.getAnleitungen()));
-            destination.setExplosionszeichnung(PathMutator.convert(source.getExplosionszeichnung()));
-            destination.setAbbildung(PathMutator.convert(source.getAbbildung()));
-            destination.setGrossansicht(PathMutator.convert(source.getGrossansicht()));
+            destination.setAnleitungen(PathMapper.convert(source.getAnleitungen()));
+            destination.setExplosionszeichnung(PathMapper.convert(source.getExplosionszeichnung()));
+            destination.setAbbildung(PathMapper.convert(source.getAbbildung()));
+            destination.setGrossansicht(PathMapper.convert(source.getGrossansicht()));
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
 
             if (isAvailable(source.getTeilen())) {
                 destination.setTeilen(source.getTeilen()
                                             .stream()
                                             .sorted()
-                                            .map(t -> attempt(() -> teilMutator.convert(t)))
+                                            .map(t -> attempt(() -> teilMapper.convert(t)))
                                             .collect(success())
                                             .getValue()
                                             .orElse(KEIN_TEILEN));

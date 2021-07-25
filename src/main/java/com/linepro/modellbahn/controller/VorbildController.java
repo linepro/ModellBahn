@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.controller;
 
-import static org.springframework.http.ResponseEntity.of;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
@@ -17,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.AbstractItemController;
 import com.linepro.modellbahn.controller.impl.ApiNames;
@@ -58,11 +54,6 @@ public class VorbildController extends AbstractItemController<VorbildModel, Vorb
         this.service = service;
     }
 
-    @JsonCreator(mode= Mode.DELEGATING)
-    public static VorbildModel create() {
-        return new VorbildModel();
-    }
-
     @GetMapping(path = ApiPaths.GET_VORBILD, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds an Vorbild by name", description = "Finds a prototype", operationId = "get", tags = { ApiNames.VORBILD }, responses = {
         @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VorbildModel.class)) }),
@@ -73,7 +64,7 @@ public class VorbildController extends AbstractItemController<VorbildModel, Vorb
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
     public ResponseEntity<?> get(@PathVariable(ApiNames.NAMEN) String gattung) {
-        return of(service.get(gattung));
+        return found(service.get(gattung));
     }
 
     @GetMapping(path = ApiPaths.SEARCH_VORBILD, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })

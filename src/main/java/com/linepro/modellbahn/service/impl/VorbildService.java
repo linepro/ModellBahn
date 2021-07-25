@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.converter.entity.VorbildMutator;
+import com.linepro.modellbahn.converter.entity.VorbildMapper;
 import com.linepro.modellbahn.converter.request.VorbildRequestMapper;
 import com.linepro.modellbahn.entity.Vorbild;
 import com.linepro.modellbahn.io.FileService;
@@ -32,8 +32,8 @@ public class VorbildService extends NamedItemServiceImpl<VorbildModel, VorbildRe
     private final FileService fileService;
 
     @Autowired
-    public VorbildService(VorbildRepository repository, FileService fileService, VorbildRequestMapper vorbildRequestMapper, VorbildMutator vorbildMutator) {
-        super(repository, vorbildRequestMapper, vorbildMutator);
+    public VorbildService(VorbildRepository repository, FileService fileService, VorbildRequestMapper vorbildRequestMapper, VorbildMapper vorbildMapper) {
+        super(repository, vorbildRequestMapper, vorbildMapper);
         this.repository = repository;
         this.fileService = fileService;
     }

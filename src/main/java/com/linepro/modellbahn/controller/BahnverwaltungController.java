@@ -19,8 +19,8 @@ import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.controller.impl.NamedItemController;
-import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 import com.linepro.modellbahn.model.BahnverwaltungModel;
+import com.linepro.modellbahn.model.BahnverwaltungModel.PagedBahnverwaltungModel;
 import com.linepro.modellbahn.request.BahnverwaltungRequest;
 import com.linepro.modellbahn.service.criterion.BahnverwaltungCriterion;
 import com.linepro.modellbahn.service.criterion.PageCriteria;
@@ -67,9 +67,6 @@ public class BahnverwaltungController extends NamedItemController<Bahnverwaltung
     public ResponseEntity<?> get(@PathVariable(ApiNames.NAMEN) String name) {
         return super.get(name);
     }
-
-    @Schema(name = ApiNames.BAHNVERWALTUNG + "Page")
-    class PagedBahnverwaltungModel extends PagedSchema<BahnverwaltungModel>{}
 
     @GetMapping(path = ApiPaths.SEARCH_BAHNVERWALTUNG, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds Bahnverwaltungen by example", description = "Finds UIC axle configurations", operationId = "find", tags = { ApiNames.BAHNVERWALTUNG }, responses = {

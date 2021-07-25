@@ -13,15 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.controller.impl.NamedItemController;
-import com.linepro.modellbahn.model.ZugConsistModel;
 import com.linepro.modellbahn.model.ZugModel;
 import com.linepro.modellbahn.model.ZugModel.PagedZugModel;
+import com.linepro.modellbahn.request.ZugConsistRequest;
 import com.linepro.modellbahn.request.ZugRequest;
 import com.linepro.modellbahn.service.criterion.PageCriteria;
 import com.linepro.modellbahn.service.criterion.ZugCriterion;
@@ -51,16 +49,6 @@ public class ZugController extends NamedItemController<ZugModel, ZugRequest> {
         super(service);
 
         this.service = service;
-    }
-
-    @JsonCreator(mode = Mode.DELEGATING)
-    public static ZugModel create() {
-        return new ZugModel();
-    }
-
-    @JsonCreator(mode = Mode.DELEGATING)
-    public static ZugConsistModel createZugConsist() {
-        return new ZugConsistModel();
     }
 
     @Override
@@ -142,7 +130,7 @@ public class ZugController extends NamedItemController<ZugModel, ZugRequest> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
                 })
-    public ResponseEntity<?> addConsist(@PathVariable(ApiNames.NAMEN) String zugStr, @RequestBody ZugConsistModel model) {
+    public ResponseEntity<?> addConsist(@PathVariable(ApiNames.NAMEN) String zugStr, @RequestBody ZugConsistRequest model) {
         return added(service.addConsist(zugStr, model.getArtikelId()));
     }
 

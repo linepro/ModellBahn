@@ -378,7 +378,7 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Health\", () => pm.response.to.have.status(200));\r",
-									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(1500));"
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(2500));"
 								],
 								"type": "text/javascript"
 							}
@@ -976,7 +976,7 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Health\", () => pm.response.to.have.status(200));\r",
-									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(1500));"
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(2500));"
 								],
 								"type": "text/javascript"
 							}

@@ -2,12 +2,9 @@ package com.linepro.modellbahn.security.user;
 
 import static org.springframework.http.ResponseEntity.noContent;
 import static org.springframework.http.ResponseEntity.notFound;
-import static org.springframework.http.ResponseEntity.ok;
 import static org.springframework.http.ResponseEntity.status;
 
 import java.util.Optional;
-
-import org.springframework.http.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +13,9 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.ExposesResourceFor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.security.core.Authentication;
@@ -65,7 +65,7 @@ public class UserRestController {
     @SecurityRequirement(name = "BasicAuth")
     public ResponseEntity<?> get(@PathVariable(ApiNames.NAMEN) String name, Authentication authentication) {
         return userService.get(name, authentication)
-                          .map(b -> ok(b))
+                          .map(b -> status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE).body(b))
                           .orElse(notFound().build());
     }
 
@@ -82,7 +82,8 @@ public class UserRestController {
         Page<UserModel> page = userService.search(model, pageNumber, pageSize, authentication);
 
         if (page.hasContent()) {
-            return ok(
+            return status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE)
+                                        .body(
                 assembler.toModel(
                     page.getPageable().isUnpaged() && page.hasContent() ?
                         new PageImpl<>(page.getContent(), page.getPageable(), page.getContent().size()) :
@@ -109,13 +110,14 @@ public class UserRestController {
     public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody UserModel model, Authentication authentication) {
         UserResponse response = userService.update(name, model, null, authentication);
 
-        BodyBuilder status = status(response.getStatus());
+        BodyBuilder status = status(response.getStatus()).header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE);
 
         if (response.isAccepted()) {
             return status.body(response.getUser());
         }
 
         response.setUser(null);
+
         return status.body(response);
     }
 
@@ -186,6 +188,6 @@ public class UserRestController {
     }
 
     private ResponseEntity<UserMessage> response(UserMessage message) {
-        return status(message.getStatus()).body(message);
+        return status(message.getStatus()).header(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE).body(message);
     }
 }

@@ -17,8 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.converter.entity.ProduktMutator;
-import com.linepro.modellbahn.converter.entity.ProduktTeilMutator;
+import com.linepro.modellbahn.converter.entity.ProduktMapper;
+import com.linepro.modellbahn.converter.entity.ProduktTeilMapper;
 import com.linepro.modellbahn.converter.request.ProduktRequestMapper;
 import com.linepro.modellbahn.entity.Produkt;
 import com.linepro.modellbahn.entity.ProduktTeil;
@@ -39,17 +39,17 @@ public class ProduktService extends ItemServiceImpl<ProduktModel, ProduktRequest
 
     private final ProduktTeilRepository teilRepository;
 
-    private final ProduktTeilMutator teilMutator;
+    private final ProduktTeilMapper teilMapper;
 
     @Autowired
-    public ProduktService(ProduktRepository repository, ProduktRequestMapper produktRequestMapper, ProduktMutator produktMutator, FileService fileService, 
-                    ProduktTeilRepository teilRepository, ProduktTeilMutator teilMutator) {
-        super(repository, produktRequestMapper, produktMutator);
+    public ProduktService(ProduktRepository repository, ProduktRequestMapper produktRequestMapper, ProduktMapper produktMapper, FileService fileService, 
+                    ProduktTeilRepository teilRepository, ProduktTeilMapper teilMapper) {
+        super(repository, produktRequestMapper, produktMapper);
         this.repository = repository;
         this.fileService = fileService;
 
         this.teilRepository = teilRepository;
-        this.teilMutator = teilMutator;
+        this.teilMapper = teilMapper;
     }
 
     public Optional<ProduktModel> get(String hersteller, String bestellNr) {
@@ -83,7 +83,7 @@ public class ProduktService extends ItemServiceImpl<ProduktModel, ProduktRequest
 
                  repository.saveAndFlush(produkt);
 
-                 return Optional.of(teilMutator.convert(teil));
+                 return Optional.of(teilMapper.convert(teil));
             }
         }
 
@@ -99,7 +99,7 @@ public class ProduktService extends ItemServiceImpl<ProduktModel, ProduktRequest
         return teilRepository.findByTeil(hersteller, bestellNr, teilHersteller, teilBestellNr)
                              .map(t -> {
                                  t.setMenge(menge);
-                                 return teilMutator.convert(teilRepository.saveAndFlush(t));
+                                 return teilMapper.convert(teilRepository.saveAndFlush(t));
                              });
     }
 

@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.controller;
 
-import static org.springframework.http.ResponseEntity.of;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
@@ -21,11 +19,11 @@ import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.AbstractItemController;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
-import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 import com.linepro.modellbahn.model.DecoderTypAdressModel;
 import com.linepro.modellbahn.model.DecoderTypCvModel;
 import com.linepro.modellbahn.model.DecoderTypFunktionModel;
 import com.linepro.modellbahn.model.DecoderTypModel;
+import com.linepro.modellbahn.model.DecoderTypModel.PagedDecoderTypModel;
 import com.linepro.modellbahn.model.ProduktModel;
 import com.linepro.modellbahn.request.DecoderTypAdressRequest;
 import com.linepro.modellbahn.request.DecoderTypCvRequest;
@@ -72,11 +70,8 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
     public ResponseEntity<?> get(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
-        return of(service.get(herstellerStr, bestellNr));
+        return found(service.get(herstellerStr, bestellNr));
     }
-
-    @Schema(name = ApiNames.DECODER_TYP + "Page")
-    class PagedDecoderTypModel extends PagedSchema<DecoderTypModel>{}
 
     @GetMapping(path = ApiPaths.SEARCH_DECODER_TYP, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds DecoderTypen by example", description = "Finds train configurations", operationId = "find", tags = { ApiNames.DECODER_TYP }, responses = {

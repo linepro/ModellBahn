@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.controller;
 
-import static org.springframework.http.ResponseEntity.of;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
@@ -20,11 +18,11 @@ import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.AbstractItemController;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
-import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 import com.linepro.modellbahn.model.DecoderAdressModel;
 import com.linepro.modellbahn.model.DecoderCvModel;
 import com.linepro.modellbahn.model.DecoderFunktionModel;
 import com.linepro.modellbahn.model.DecoderModel;
+import com.linepro.modellbahn.model.DecoderModel.PagedDecoderModel;
 import com.linepro.modellbahn.request.DecoderRequest;
 import com.linepro.modellbahn.service.criterion.DecoderCriterion;
 import com.linepro.modellbahn.service.criterion.PageCriteria;
@@ -65,11 +63,8 @@ public class DecoderController extends AbstractItemController<DecoderModel, Deco
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
     public ResponseEntity<?> get(@PathVariable(ApiNames.DECODER_ID) String decoderId) {
-        return of(service.get(decoderId));
+        return found(service.get(decoderId));
     }
-
-    @Schema(name = ApiNames.DECODER + "Page")
-    class PagedDecoderModel extends PagedSchema<DecoderModel>{}
 
     @GetMapping(path = ApiPaths.SEARCH_DECODER, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds Decoders by example", description = "Finds decoders", operationId = "find", tags = { ApiNames.DECODER }, responses = {

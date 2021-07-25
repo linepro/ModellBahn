@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.controller;
 
-import static org.springframework.http.ResponseEntity.of;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
@@ -21,9 +19,9 @@ import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.AbstractItemController;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
-import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 import com.linepro.modellbahn.model.AnderungModel;
 import com.linepro.modellbahn.model.ArtikelModel;
+import com.linepro.modellbahn.model.ArtikelModel.PagedArtikelModel;
 import com.linepro.modellbahn.request.AnderungRequest;
 import com.linepro.modellbahn.request.ArtikelRequest;
 import com.linepro.modellbahn.service.criterion.ArtikelCriterion;
@@ -70,11 +68,8 @@ public class ArtikelController extends AbstractItemController<ArtikelModel, Arti
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
     public ResponseEntity<?> get(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId) {
-        return of(service.get(artikelId));
+        return found(service.get(artikelId));
     }
-
-    @Schema(name = ApiNames.ARTIKEL + "Page")
-    class PagedArtikelModel extends PagedSchema<ArtikelModel>{}
 
     @GetMapping(path = ApiPaths.SEARCH_ARTIKEL, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds Artikelen by example", description = "Finds articles", operationId = "find", tags = { ApiNames.ARTIKEL }, responses = {

@@ -18,7 +18,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.linepro.modellbahn.converter.Mapper;
 import com.linepro.modellbahn.converter.request.DecoderRequestMapper;
 import com.linepro.modellbahn.entity.Decoder;
-import com.linepro.modellbahn.model.DecoderModel;
 import com.linepro.modellbahn.model.enums.DecoderStatus;
 import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.model.enums.Stecker;
@@ -58,7 +57,7 @@ public class ImporterImplTest {
                                                  .deleted(DELETED)
                                                  .build();
 
-    private static final DecoderModel MODEL = DecoderModel.builder()
+    private static final DecoderRequest MODEL = DecoderRequest.builder()
                                                           .decoderId(DECODER_ID)
                                                           .hersteller(HERSTELLER)
                                                           .bestellNr(BESTELL_NR)
@@ -75,7 +74,6 @@ public class ImporterImplTest {
                                                           .preis(PREIS)
                                                           .anmerkung(ANMERKUNG)
                                                           .status(STATUS)
-                                                          .anleitungen(ANLEITUNGEN)
                                                           .deleted(DELETED)
                                                           .build();
 
@@ -102,7 +100,7 @@ public class ImporterImplTest {
     @SuppressWarnings({"rawtypes", "unchecked"})
     @BeforeEach
     protected void setUp() throws Exception {
-        importer = new ImporterImpl(repository, mapper, generator, DecoderModel.class);
+        importer = new ImporterImpl(repository, mapper, generator, DecoderRequest.class);
 
         doAnswer(i -> {
             assertEquals(MODEL, i.getArgument(0));

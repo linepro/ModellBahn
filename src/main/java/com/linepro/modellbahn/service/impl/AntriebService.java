@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.converter.entity.AntriebMutator;
+import com.linepro.modellbahn.converter.entity.AntriebMapper;
 import com.linepro.modellbahn.converter.request.AntriebRequestMapper;
 import com.linepro.modellbahn.entity.Antrieb;
 import com.linepro.modellbahn.io.FileService;
@@ -34,7 +34,7 @@ public class AntriebService extends NamedItemServiceImpl<AntriebModel, AntriebRe
     private final FileService fileService;
 
     @Autowired
-    public AntriebService(AntriebRepository repository, AntriebRequestMapper requestMapper, AntriebMutator entityMapper, FileService fileService) {
+    public AntriebService(AntriebRepository repository, AntriebRequestMapper requestMapper, AntriebMapper entityMapper, FileService fileService) {
         super(repository, requestMapper, entityMapper);
 
         this.repository = repository;

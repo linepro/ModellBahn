@@ -1,7 +1,5 @@
 package com.linepro.modellbahn.controller;
 
-import static org.springframework.http.ResponseEntity.of;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
@@ -25,6 +23,7 @@ import com.linepro.modellbahn.model.ProduktModel;
 import com.linepro.modellbahn.model.ProduktModel.PagedProduktModel;
 import com.linepro.modellbahn.model.ProduktTeilModel;
 import com.linepro.modellbahn.request.ProduktRequest;
+import com.linepro.modellbahn.request.ProduktTeilRequest;
 import com.linepro.modellbahn.service.criterion.PageCriteria;
 import com.linepro.modellbahn.service.criterion.ProduktCriterion;
 import com.linepro.modellbahn.service.impl.ProduktService;
@@ -69,7 +68,7 @@ public class ProduktController extends AbstractItemController<ProduktModel, Prod
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
     public ResponseEntity<?> get(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
-        return of(service.get(herstellerStr, bestellNr));
+        return found(service.get(herstellerStr, bestellNr));
     }
 
     @GetMapping(path = ApiPaths.SEARCH_PRODUKT, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
@@ -135,7 +134,7 @@ public class ProduktController extends AbstractItemController<ProduktModel, Prod
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
                 })
-    public ResponseEntity<?> addTeil(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody ProduktTeilModel teil) {
+    public ResponseEntity<?> addTeil(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody ProduktTeilRequest teil) {
         return added(service.addTeil(herstellerStr, bestellNr, teil.getTeilHersteller(), teil.getTeilBestellNr(), teil.getMenge()));
     }
 

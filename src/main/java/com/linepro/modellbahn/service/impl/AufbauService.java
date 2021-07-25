@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.converter.entity.AufbauMutator;
+import com.linepro.modellbahn.converter.entity.AufbauMapper;
 import com.linepro.modellbahn.converter.request.AufbauRequestMapper;
 import com.linepro.modellbahn.entity.Aufbau;
 import com.linepro.modellbahn.io.FileService;
@@ -34,7 +34,7 @@ public class AufbauService extends NamedItemServiceImpl<AufbauModel, AufbauReque
     private final FileService fileService;
 
     @Autowired
-    public AufbauService(AufbauRepository repository, AufbauRequestMapper requestMapper, AufbauMutator entityMapper, FileService fileService) {
+    public AufbauService(AufbauRepository repository, AufbauRequestMapper requestMapper, AufbauMapper entityMapper, FileService fileService) {
         super(repository, requestMapper, entityMapper);
 
         this.repository = repository;

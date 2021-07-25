@@ -32,7 +32,7 @@ import com.linepro.modellbahn.util.impexp.Importer;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ImporterImpl<R extends ItemRequest,E extends Item> implements Importer {
+public class ImporterImpl<R extends ItemRequest, E extends Item> implements Importer {
 
     private static final CsvMapper MAPPER = CsvMapper.builder()
                     .findAndAddModules()
@@ -45,8 +45,6 @@ public class ImporterImpl<R extends ItemRequest,E extends Item> implements Impor
 
     private final Mapper<R,E> mapper;
 
-    private final CsvSchema schema; 
-
     private final Class<R> requestClass;
 
     private final CsvSchemaGenerator generator;
@@ -56,42 +54,24 @@ public class ImporterImpl<R extends ItemRequest,E extends Item> implements Impor
         this.mapper = mapper;
         this.generator = generator;
         this.requestClass = requestClass;
-
-        this.schema = generator.getSchema(requestClass);
     }
 
     @Override
     @Transactional
     public void read(Reader in) {
-        MappingIterator<R> mi;
-
-        List<String> errors = new ArrayList<>();
-        Integer rowNum = 0;
-
         try {
-            CsvSchema actual = schema;
+            String headerLine = new LineReader(in).readLine();
 
-            if (in.markSupported()) {
-                in.mark(schema.toString().length());
-                try {
-                    String headerLine = new LineReader(in).readLine();
+            // Filter schema with columns actually in input file header and re-create using specified order...
+            CsvSchema schema = generator.getSchema(requestClass, Arrays.asList(headerLine.split(",")));
 
-                    // Filter schema with columns actually in input file header and re-create using specified order...
-                    actual = generator.getSchema(Arrays.asList(headerLine.split(","))
-                                                       .stream()
-                                                       .map(c -> schema.column(c))
-                                                       .filter(c -> c != null)
-                                                       .collect(Collectors.toList()));
-                } catch (Exception e) {
-                    log.error("Failed to customise schema {}: {}", e.getMessage(), e);
-                }
+            ObjectReader reader = MAPPER.readerFor(requestClass).with(schema);
 
-                in.reset();
-            }
+            MappingIterator<R> mi = reader.readValues(in);
 
-            ObjectReader reader = MAPPER.readerFor(requestClass).with(actual);
+            List<String> errors = new ArrayList<>();
+            Integer rowNum = 0;
 
-            mi = reader.readValues(in);
 
             while (mi.hasNext()) {
                 rowNum++;
@@ -108,18 +88,18 @@ public class ImporterImpl<R extends ItemRequest,E extends Item> implements Impor
                     log.error("Error importing #{} - '{}': {}", rowNum, next, error, e);
                 }
             }
+
+            if (!CollectionUtils.isEmpty(errors)) {
+                throw ModellBahnException.raise(ApiMessages.IMPORT_ERROR)
+                                         .addValue(errors.stream().collect(Collectors.joining("\n")))
+                                         .setStatus(HttpStatus.BAD_REQUEST);
+            }
         } catch (RuntimeJsonMappingException e) {
             throw ModellBahnException.raise(ApiMessages.IMPORT_ERROR, e)
                                      .addValue(e.getMessage())
                                      .setStatus(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             throw ModellBahnException.raise(ApiMessages.IMPORT_ERROR, e);
-        }
-
-        if (!CollectionUtils.isEmpty(errors)) {
-            throw ModellBahnException.raise(ApiMessages.IMPORT_ERROR)
-                                     .addValue(errors.stream().collect(Collectors.joining("\n")))
-                                     .setStatus(HttpStatus.BAD_REQUEST);
         }
     }
 
