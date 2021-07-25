@@ -11,6 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
@@ -34,6 +37,50 @@ import lombok.ToString;
       @UniqueConstraint(name = DBNames.USER + "_UC1", columnNames = { DBNames.NAME }), 
       @UniqueConstraint(name = DBNames.USER + "_UC2", columnNames = { DBNames.EMAIL }) 
   })
+@NamedEntityGraphs({
+    @NamedEntityGraph(name="user.lookup",
+        attributeNodes = {
+            @NamedAttributeNode(value = "name"),
+            @NamedAttributeNode(value = "email"),
+            @NamedAttributeNode(value = "firstName"),
+            @NamedAttributeNode(value = "lastName"),
+            @NamedAttributeNode(value = "enabled")
+        },
+        subgraphs = {
+        }),
+    @NamedEntityGraph(name="user.basic",
+        attributeNodes = {
+            @NamedAttributeNode(value = "name"),
+            @NamedAttributeNode(value = "email"),
+            @NamedAttributeNode(value = "firstName"),
+            @NamedAttributeNode(value = "lastName"),
+            @NamedAttributeNode(value = "enabled"),
+            @NamedAttributeNode(value = "lastLogin"),
+            @NamedAttributeNode(value = "locale"),
+            @NamedAttributeNode(value = "roles")
+        },
+        subgraphs = {
+        }),
+    @NamedEntityGraph(name="user.detail",
+        includeAllAttributes = true, 
+        attributeNodes = {
+            @NamedAttributeNode(value = "name"),
+            @NamedAttributeNode(value = "email"),
+            @NamedAttributeNode(value = "firstName"),
+            @NamedAttributeNode(value = "lastName"),
+            @NamedAttributeNode(value = "enabled"),
+            @NamedAttributeNode(value = "loginAttempts"),
+            @NamedAttributeNode(value = "loginFailures"),
+            @NamedAttributeNode(value = "passwordAging"),
+            @NamedAttributeNode(value = "passwordChanged"),
+            @NamedAttributeNode(value = "lastLogin"),
+            @NamedAttributeNode(value = "confirmationExpires"),
+            @NamedAttributeNode(value = "locale"),
+            @NamedAttributeNode(value = "roles")
+        },
+        subgraphs = {
+        })
+    })
 //@formatter:on
 @Builder
 @AllArgsConstructor

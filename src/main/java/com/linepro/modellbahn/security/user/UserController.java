@@ -168,8 +168,8 @@ public class UserController {
      */
     @PreAuthorize("isAnonymous()")
     @PostMapping(REGISTER_ENDPOINT)
-    public ModelAndView register(@ModelAttribute(PARAM_USER) UserModel userModel, HttpSession session) {
-        UserResponse response = userService.register(session, userModel);
+    public ModelAndView register(@ModelAttribute(PARAM_USER) UserRequest request, HttpSession session) {
+        UserResponse response = userService.register(session, request);
 
         return modelAndView(response, CONFIRM_EMAIL_SENT, REGISTER);
     }
@@ -226,8 +226,8 @@ public class UserController {
      * </ul>
      */
     @PostMapping(ACCOUNT_ENDPOINT)
-    public ModelAndView account(@ModelAttribute(PARAM_USER) UserModel userModel, Authentication authentication, HttpSession session) {
-        return modelAndView(userService.update(authentication.getName(), userModel, session, authentication), ACCOUNT, ACCOUNT);
+    public ModelAndView account(@ModelAttribute(PARAM_USER) UserRequest request, Authentication authentication, HttpSession session) {
+        return modelAndView(userService.update(authentication.getName(), request, session, authentication), ACCOUNT, ACCOUNT);
     }
 
     /**

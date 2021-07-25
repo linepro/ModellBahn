@@ -28,10 +28,7 @@ import javax.validation.metadata.ConstraintDescriptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.AccessDeniedException;
@@ -54,6 +51,7 @@ import com.linepro.modellbahn.security.EmailService;
 import com.linepro.modellbahn.security.WebSecurityConfig;
 import com.linepro.modellbahn.security.password.PasswordProcessor;
 import com.linepro.modellbahn.security.user.UserModel.UserModelBuilder;
+import com.linepro.modellbahn.service.criterion.PageCriteria;
 import com.linepro.modellbahn.util.exceptions.ModellBahnException;
 
 import lombok.RequiredArgsConstructor;
@@ -108,25 +106,12 @@ public class UserService implements UserDetailsService {
         return userRepository.findByName(name).map(u -> toModel(u, isAdmin(authentication)));
     }
 
-    public Page<UserModel> search(Optional<UserModel> model, Optional<Integer> pageNumber, Optional<Integer> pageSize,
-                    Authentication authentication) {
-        Pageable pageable = (pageNumber.isPresent() || pageSize.isPresent()) ?
-                        PageRequest.of(pageNumber.orElse(FIRST_PAGE), pageSize.orElse(DEFAULT_PAGE_SIZE)) : Pageable.unpaged();
-
-        Page<User> found;
-
-        if (model.isPresent()) {
-            Example<User> user = Example.of(fromModel(new User(), model.get(), isAdmin(authentication)));
-
-            found = userRepository.findAll(user, pageable);
-        } else {
-            found = userRepository.findAll(pageable);
-        }
-
+    public Page<UserModel> search(UserCriterion model, PageCriteria paging, Authentication authentication) {
+        Page<User> found = userRepository.findAll(model, paging.getPageRequest());
         return found.map(u -> toModel(u, isAdmin(authentication)));
     }
 
-    public UserResponse update(String name, UserModel model, HttpSession session, Authentication authentication) {
+    public UserResponse update(String name, UserRequest model, HttpSession session, Authentication authentication) {
         User user = getUser(name, authentication);
 
         Set<ConstraintViolation<?>> errors = new HashSet<>();
@@ -169,19 +154,19 @@ public class UserService implements UserDetailsService {
                         .build()).orElseThrow(() -> new UsernameNotFoundException(username));
     }
 
-    public UserResponse register(HttpSession session, UserModel model) {
+    public UserResponse register(HttpSession session, UserRequest request) {
         Set<ConstraintViolation<?>> errors = new HashSet<>();
 
-        localeSetter.setLocale(session, model.getLocale());
+        localeSetter.setLocale(session, request.getLocale());
 
-        errors.addAll(passwordProcessor.validate(model.getPassword()));
+        errors.addAll(passwordProcessor.validate(request.getPassword()));
 
         User user = User.builder()
-                        .name(model.getUsername())
-                        .email(model.getEmail())
-                        .firstName(model.getFirstName())
-                        .lastName(model.getLastName())
-                        .password(passwordProcessor.encode(model.getPassword())).locale(model.getLocale())
+                        .name(request.getUsername())
+                        .email(request.getEmail())
+                        .firstName(request.getFirstName())
+                        .lastName(request.getLastName())
+                        .password(passwordProcessor.encode(request.getPassword())).locale(request.getLocale())
                         .passwordAging(passwordAging)
                         .loginAttempts(loginAttempts)
                         .enabled(false)
@@ -295,17 +280,17 @@ public class UserService implements UserDetailsService {
         return builder.build();
     }
 
-    protected User fromModel(User user, UserModel model, boolean isAdmin) {
+    protected User fromModel(User user, UserRequest request, boolean isAdmin) {
         if (isAdmin) {
-            user.setPasswordAging(model.getPasswordAging());
-            user.setLoginAttempts(model.getLoginAttempts());
-            if (model.getEnabled() != null) user.setEnabled(model.getEnabled());
-            if (!CollectionUtils.isEmpty(model.getRoles())) user.setRoles(model.getRoles());
+            user.setPasswordAging(request.getPasswordAging());
+            user.setLoginAttempts(request.getLoginAttempts());
+            if (request.getEnabled() != null) user.setEnabled(request.getEnabled());
+            if (!CollectionUtils.isEmpty(request.getRoles())) user.setRoles(request.getRoles());
         } else {
-            if (StringUtils.hasText(model.getEmail())) user.setEmail(model.getEmail());
-            if (StringUtils.hasText(model.getFirstName())) user.setFirstName(model.getFirstName());
-            if (StringUtils.hasText(model.getLastName())) user.setLastName(model.getLastName());
-            if (StringUtils.hasText(model.getLocale())) user.setLocale(model.getLocale());
+            if (StringUtils.hasText(request.getEmail())) user.setEmail(request.getEmail());
+            if (StringUtils.hasText(request.getFirstName())) user.setFirstName(request.getFirstName());
+            if (StringUtils.hasText(request.getLastName())) user.setLastName(request.getLastName());
+            if (StringUtils.hasText(request.getLocale())) user.setLocale(request.getLocale());
         }
 
         return user;
