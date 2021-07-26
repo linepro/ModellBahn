@@ -42,6 +42,7 @@ public class ModellBahnErrorHandler {
     @Produces(MediaType.APPLICATION_JSON_VALUE)
     @ExceptionHandler({ 
         ConstraintViolationException.class, 
+        org.hibernate.exception.ConstraintViolationException.class,
         DataIntegrityViolationException.class, 
         IllegalArgumentException.class, 
         IllegalStateException.class, 
