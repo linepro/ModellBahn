@@ -6,10 +6,13 @@ com:
 
 server:
    error:
+      include-binding-errors: always
+      include-exception: always
+      include-message: always
       include-stacktrace: always
       path: /error
       whitelabel:
-         enabled: true
+         enabled: false
    port: 8086
    servlet:
       application-display-name: ModellBahn

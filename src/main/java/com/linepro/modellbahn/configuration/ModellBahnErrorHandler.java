@@ -7,21 +7,18 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.validation.ConstraintViolationException;
-import javax.ws.rs.Produces;
-
-import org.springframework.http.MediaType;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeException;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.HttpSessionRequiredException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.multipart.support.MissingServletRequestPartException;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -31,81 +28,75 @@ import com.linepro.modellbahn.util.exceptions.StackTraceFilter;
 
 import lombok.RequiredArgsConstructor;
 
-@ControllerAdvice(basePackages = {"com.linepro.modellbahn.controller"})
+@ControllerAdvice
 @RequiredArgsConstructor
-public class ModellBahnErrorHandler {
+public class ModellBahnErrorHandler extends ResponseEntityExceptionHandler {
 
     private final MessageTranslator messageTranslator;
 
     private final StackTraceFilter stackTraceFilter;
 
-    @Produces(MediaType.APPLICATION_JSON_VALUE)
     @ExceptionHandler({ 
-        ConstraintViolationException.class, 
-        org.hibernate.exception.ConstraintViolationException.class,
+        ConstraintViolationException.class,
         DataIntegrityViolationException.class, 
         IllegalArgumentException.class, 
         IllegalStateException.class, 
         JsonMappingException.class, 
         JsonParseException.class,
-        HttpMessageNotReadableException.class,
-        HttpMediaTypeException.class,
-        MissingServletRequestPartException.class,
-        HttpRequestMethodNotSupportedException.class})
+        HttpMediaTypeException.class})
     public ResponseEntity<Object> badRequest(Exception ex, WebRequest request) throws Exception {
-        return handle(ex, request, HttpStatus.BAD_REQUEST);
+        return handleExceptionInternal(ex, null, null, HttpStatus.BAD_REQUEST, request);
     }
 
-    @Produces(MediaType.APPLICATION_JSON_VALUE)
     @ExceptionHandler({ EntityExistsException.class })
     public ResponseEntity<Object> conflict(Exception ex, WebRequest request) throws Exception {
-        return handle(ex, request, HttpStatus.CONFLICT);
+        return handleExceptionInternal(ex, null, null, HttpStatus.CONFLICT, request);
     }
 
-    @Produces(MediaType.APPLICATION_JSON_VALUE)
     @ExceptionHandler({ ModellBahnException.class })
     public ResponseEntity<Object> modellBahn(Exception ex, WebRequest request) throws Exception {
-        return handle(ex, request, ((ModellBahnException) ex).getStatus());
+        return handleExceptionInternal(ex, null, null, ((ModellBahnException) ex).getStatus(), request);
     }
 
-    @Produces(MediaType.APPLICATION_JSON_VALUE)
     @ExceptionHandler({ EntityNotFoundException.class })
     public ResponseEntity<Object> notFound(Exception ex, WebRequest request) throws Exception {
-        return handle(ex, request, HttpStatus.NOT_FOUND);
+        return handleExceptionInternal(ex, null, null, HttpStatus.NOT_FOUND, request);
     }
 
-    @Produces(MediaType.APPLICATION_JSON_VALUE)
     @ExceptionHandler({ NoResultException.class })
     public ResponseEntity<Object> noContent(Exception ex, WebRequest request) throws Exception {
-        return  handle(ex, request, HttpStatus.NO_CONTENT);
+        return  handleExceptionInternal(ex, null, null, HttpStatus.NO_CONTENT, request);
     }
 
-    @Produces(MediaType.APPLICATION_JSON_VALUE)
-    @ExceptionHandler({ SecurityException.class, HttpSessionRequiredException.class })
+    @ExceptionHandler({ 
+        SecurityException.class, 
+        HttpSessionRequiredException.class 
+        })
     public ResponseEntity<Object> forbidden(Exception ex, WebRequest request) throws Exception {
-        return handle(ex, request, HttpStatus.FORBIDDEN);
+        return handleExceptionInternal(ex, null, null, HttpStatus.FORBIDDEN, request);
     }
 
-    @Produces(MediaType.APPLICATION_JSON_VALUE)
     @ExceptionHandler({ Exception.class })
     public ResponseEntity<Object> others(Exception ex, WebRequest request) throws Exception {
-        return handle(ex, request, HttpStatus.INTERNAL_SERVER_ERROR);
+        return handleExceptionInternal(ex, null, null, HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
-    protected ResponseEntity<Object> handle(Exception ex, WebRequest request, HttpStatus status) throws Exception {
+    @Override
+    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
         Throwable effective = ex.getCause() != null ? ex.getCause() : ex;
 
         return ResponseEntity.status(status)
+                             .contentType(MediaType.APPLICATION_JSON)
                              .body(
                                  UserMessage.builder()
-                                             .timestamp(System.currentTimeMillis())
-                                             .status(status.value())
-                                             .error(status.getReasonPhrase())
-                                             .message(message(effective))
-                                             .path(request.getContextPath())
-                                             .developerMessage(developerMessage(effective))
-                                             .build()
-                                             );
+                                            .timestamp(System.currentTimeMillis())
+                                            .status(status.value())
+                                            .error(status.getReasonPhrase())
+                                            .message(message(effective))
+                                            .path(request.getContextPath())
+                                            .developerMessage(developerMessage(effective))
+                                            .build()
+                             );
 
     }
 

@@ -142,7 +142,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final OpenApiConfiguration docConfig;
 
     @Autowired
-    private final ModellBahnErrorFilter errorFilter;
+    //private final ModellBahnErrorFilter errorFilter;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -173,7 +173,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .collect(Collectors.toList())
                 .toArray(new String[0]);
 
-        http.addFilterBefore(errorFilter, LogoutFilter.class)
+        http//.addFilterBefore(errorFilter, LogoutFilter.class)
             .headers().frameOptions().sameOrigin()
             .and().cors()
             .and().csrf().disable()
