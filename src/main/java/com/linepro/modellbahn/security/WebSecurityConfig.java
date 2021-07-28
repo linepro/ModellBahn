@@ -36,10 +36,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 
-import com.linepro.modellbahn.configuration.ModellBahnErrorFilter;
 import com.linepro.modellbahn.configuration.OpenApiConfiguration;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.io.ResourceEndpoints;
@@ -173,8 +171,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .collect(Collectors.toList())
                 .toArray(new String[0]);
 
-        http//.addFilterBefore(errorFilter, LogoutFilter.class)
-            .headers().frameOptions().sameOrigin()
+        http.headers().frameOptions().sameOrigin()
             .and().cors()
             .and().csrf().disable()
             .exceptionHandling().accessDeniedHandler(accessDeniedHandler)

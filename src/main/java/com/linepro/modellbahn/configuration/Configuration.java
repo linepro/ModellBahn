@@ -12,7 +12,6 @@ import com.linepro.modellbahn.util.exceptions.StackTraceFilter;
     JsonRequestFilter.class,
     ModellBahnErrorAttributes.class,
     ModellBahnErrorHandler.class,
-    //ModellBahnErrorFilter.class,
     ModellBahnErrorViewResolver.class,
     MvcConfig.class,
     StackTraceFilter.class,
