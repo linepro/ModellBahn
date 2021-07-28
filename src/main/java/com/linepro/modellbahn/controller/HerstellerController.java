@@ -1,12 +1,9 @@
 package com.linepro.modellbahn.controller;
 
-import java.util.Optional;
-
-import org.springframework.http.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,14 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.controller.impl.NamedItemController;
 import com.linepro.modellbahn.model.HerstellerModel;
 import com.linepro.modellbahn.model.HerstellerModel.PagedHerstellerModel;
+import com.linepro.modellbahn.request.HerstellerRequest;
+import com.linepro.modellbahn.service.criterion.HerstellerCriterion;
+import com.linepro.modellbahn.service.criterion.PageCriteria;
 import com.linepro.modellbahn.service.impl.HerstellerService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -44,7 +42,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController("Hersteller")
 @ExposesResourceFor(HerstellerModel.class)
 @SecurityRequirement(name = "BasicAuth")
-public class HerstellerController extends NamedItemController<HerstellerModel> {
+public class HerstellerController extends NamedItemController<HerstellerModel, HerstellerRequest> {
 
     private final HerstellerService service;
 
@@ -53,11 +51,6 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
         super(service);
 
         this.service = service;
-    }
-
-    @JsonCreator(mode = Mode.DELEGATING)
-    public static HerstellerModel create() {
-        return new HerstellerModel();
     }
 
     @Override
@@ -78,7 +71,6 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
         return super.get(name);
     }
 
-    @Override
     @GetMapping(path = ApiPaths.SEARCH_HERSTELLER, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds Herstelleren by example", description = "Finds UIC axle configurations", operationId = "find", tags = {
                     ApiNames.HERSTELLER
@@ -91,10 +83,8 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> search(@RequestBody Optional<HerstellerModel> model,
-                    @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber,
-                    @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
-        return super.search(model, pageNumber, pageSize);
+    public ResponseEntity<?> search(HerstellerCriterion request, PageCriteria page) {
+        return super.search(request, page);
     }
 
     @Override
@@ -111,8 +101,8 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> add(@RequestBody HerstellerModel model) {
-        return super.add(model);
+    public ResponseEntity<?> add(@RequestBody HerstellerRequest request) {
+        return super.add(request);
     }
 
     @Override
@@ -130,8 +120,8 @@ public class HerstellerController extends NamedItemController<HerstellerModel> {
                     @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody HerstellerModel model) {
-        return super.update(name, model);
+    public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody HerstellerRequest request) {
+        return super.update(name, request);
     }
 
     @Override

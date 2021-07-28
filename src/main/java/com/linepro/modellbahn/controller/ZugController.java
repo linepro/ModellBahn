@@ -1,11 +1,8 @@
 package com.linepro.modellbahn.controller;
 
-import java.util.Optional;
-
-import org.springframework.http.MediaType;
-
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,15 +13,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.controller.impl.NamedItemController;
-import com.linepro.modellbahn.model.ZugConsistModel;
 import com.linepro.modellbahn.model.ZugModel;
 import com.linepro.modellbahn.model.ZugModel.PagedZugModel;
+import com.linepro.modellbahn.request.ZugConsistRequest;
+import com.linepro.modellbahn.request.ZugRequest;
+import com.linepro.modellbahn.service.criterion.PageCriteria;
+import com.linepro.modellbahn.service.criterion.ZugCriterion;
 import com.linepro.modellbahn.service.impl.ZugService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -43,7 +41,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController("Zug")
 @ExposesResourceFor(ZugModel.class)
 @SecurityRequirement(name = "BasicAuth")
-public class ZugController extends NamedItemController<ZugModel> {
+public class ZugController extends NamedItemController<ZugModel, ZugRequest> {
 
     private final ZugService service;
 
@@ -51,16 +49,6 @@ public class ZugController extends NamedItemController<ZugModel> {
         super(service);
 
         this.service = service;
-    }
-
-    @JsonCreator(mode = Mode.DELEGATING)
-    public static ZugModel create() {
-        return new ZugModel();
-    }
-
-    @JsonCreator(mode = Mode.DELEGATING)
-    public static ZugConsistModel createZugConsist() {
-        return new ZugConsistModel();
     }
 
     @Override
@@ -77,7 +65,6 @@ public class ZugController extends NamedItemController<ZugModel> {
         return super.get(name);
     }
 
-    @Override
     @GetMapping(path = ApiPaths.SEARCH_ZUG, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds Zugen by example", description = "Finds train configurations", operationId = "find", tags = { ApiNames.ZUG }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedZugModel.class)) }),
@@ -86,8 +73,8 @@ public class ZugController extends NamedItemController<ZugModel> {
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> search(@RequestBody Optional<ZugModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
-        return super.search(model, pageNumber, pageSize);
+    public ResponseEntity<?> search(ZugCriterion request, PageCriteria page) {
+        return super.search(request, page);
     }
 
     @Override
@@ -100,8 +87,8 @@ public class ZugController extends NamedItemController<ZugModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> add(@RequestBody ZugModel model) {
-        return super.add(model);
+    public ResponseEntity<?> add(@RequestBody ZugRequest request) {
+        return super.add(request);
     }
 
     @Override
@@ -115,8 +102,8 @@ public class ZugController extends NamedItemController<ZugModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody ZugModel model) {
-        return super.update(name, model);
+    public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody ZugRequest request) {
+        return super.update(name, request);
     }
 
     @Override
@@ -143,7 +130,7 @@ public class ZugController extends NamedItemController<ZugModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
                 })
-    public ResponseEntity<?> addConsist(@PathVariable(ApiNames.NAMEN) String zugStr, @RequestBody ZugConsistModel model) {
+    public ResponseEntity<?> addConsist(@PathVariable(ApiNames.NAMEN) String zugStr, @RequestBody ZugConsistRequest model) {
         return added(service.addConsist(zugStr, model.getArtikelId()));
     }
 

@@ -15,13 +15,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.linepro.modellbahn.converter.Mutator;
-import com.linepro.modellbahn.converter.model.DecoderModelMutator;
+import com.linepro.modellbahn.converter.Mapper;
+import com.linepro.modellbahn.converter.request.DecoderRequestMapper;
 import com.linepro.modellbahn.entity.Decoder;
-import com.linepro.modellbahn.model.DecoderModel;
 import com.linepro.modellbahn.model.enums.DecoderStatus;
 import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.model.enums.Stecker;
+import com.linepro.modellbahn.request.DecoderRequest;
 import com.linepro.modellbahn.util.impexp.Importer;
 
 @ExtendWith(MockitoExtension.class)
@@ -57,7 +57,7 @@ public class ImporterImplTest {
                                                  .deleted(DELETED)
                                                  .build();
 
-    private static final DecoderModel MODEL = DecoderModel.builder()
+    private static final DecoderRequest MODEL = DecoderRequest.builder()
                                                           .decoderId(DECODER_ID)
                                                           .hersteller(HERSTELLER)
                                                           .bestellNr(BESTELL_NR)
@@ -74,7 +74,6 @@ public class ImporterImplTest {
                                                           .preis(PREIS)
                                                           .anmerkung(ANMERKUNG)
                                                           .status(STATUS)
-                                                          .anleitungen(ANLEITUNGEN)
                                                           .deleted(DELETED)
                                                           .build();
 
@@ -85,28 +84,28 @@ public class ImporterImplTest {
 
     private final CharArrayReader reader;
 
-    private final Mutator<DecoderModel,Decoder> mutator;  
+    private final Mapper<DecoderRequest,Decoder> mapper;  
 
     private final CsvSchemaGenerator generator;
 
     private Importer importer;
 
-    public ImporterImplTest(@Mock JpaRepository<Decoder,Long> repository, @Mock DecoderModelMutator mutator) { 
+    public ImporterImplTest(@Mock JpaRepository<Decoder,Long> repository, @Mock DecoderRequestMapper mapper) { 
         this.repository = repository;
         this.reader = new CharArrayReader(CSV.toCharArray());
         this.generator = new CsvSchemaGenerator();
-        this.mutator = mutator;
+        this.mapper = mapper;
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     @BeforeEach
     protected void setUp() throws Exception {
-        importer = new ImporterImpl(repository, mutator, generator, DecoderModel.class);
+        importer = new ImporterImpl(repository, mapper, generator, DecoderRequest.class);
 
         doAnswer(i -> {
             assertEquals(MODEL, i.getArgument(0));
             return ENTITY;
-        }).when(mutator).convert(any(DecoderModel.class));
+        }).when(mapper).convert(any(DecoderRequest.class));
 
         doAnswer(i -> {
             assertEquals(ENTITY, i.getArgument(0));

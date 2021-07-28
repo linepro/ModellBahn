@@ -1,14 +1,9 @@
 package com.linepro.modellbahn.controller;
 
-import static org.springframework.http.ResponseEntity.of;
-
-import java.util.Optional;
-
-import org.springframework.http.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,15 +15,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.AbstractItemController;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
-import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 import com.linepro.modellbahn.model.AnderungModel;
 import com.linepro.modellbahn.model.ArtikelModel;
+import com.linepro.modellbahn.model.ArtikelModel.PagedArtikelModel;
+import com.linepro.modellbahn.request.AnderungRequest;
+import com.linepro.modellbahn.request.ArtikelRequest;
+import com.linepro.modellbahn.service.criterion.ArtikelCriterion;
+import com.linepro.modellbahn.service.criterion.PageCriteria;
 import com.linepro.modellbahn.service.impl.ArtikelService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -49,7 +46,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController("Artikel") 
 @ExposesResourceFor(ArtikelModel.class)
 @SecurityRequirement(name = "BasicAuth")
-public class ArtikelController extends AbstractItemController<ArtikelModel> {
+public class ArtikelController extends AbstractItemController<ArtikelModel, ArtikelRequest> {
 
     protected final ArtikelService service;
 
@@ -58,16 +55,6 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         super(service);
 
         this.service = service;
-    }
-
-    @JsonCreator(mode= Mode.DELEGATING)
-    public static ArtikelModel create() {
-        return new ArtikelModel();
-    }
-
-    @JsonCreator(mode= Mode.DELEGATING)
-    public static AnderungModel createAnderung() {
-        return new AnderungModel();
     }
 
     @GetMapping(path = ApiPaths.GET_ARTIKEL, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
@@ -81,13 +68,9 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
     public ResponseEntity<?> get(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId) {
-        return of(service.get(artikelId));
+        return found(service.get(artikelId));
     }
 
-    @Schema(name = ApiNames.ARTIKEL + "Page")
-    class PagedArtikelModel extends PagedSchema<ArtikelModel>{}
-
-    @Override
     @GetMapping(path = ApiPaths.SEARCH_ARTIKEL, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds Artikelen by example", description = "Finds articles", operationId = "find", tags = { ApiNames.ARTIKEL }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedArtikelModel.class)) }),
@@ -96,8 +79,8 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> search(@RequestBody Optional<ArtikelModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
-        return super.search(model, pageNumber, pageSize);
+    public ResponseEntity<?> search(ArtikelCriterion request, PageCriteria page) {
+        return super.search(request, page);
     }
 
     @Override
@@ -110,8 +93,8 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> add(@RequestBody ArtikelModel model) {
-        return super.add(model);
+    public ResponseEntity<?> add(@RequestBody ArtikelRequest request) {
+        return super.add(request);
     }
 
     @PutMapping(path = ApiPaths.UPDATE_ARTIKEL, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
@@ -124,8 +107,8 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> update(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId, @RequestBody ArtikelModel model) {
-        return updated(service.update(artikelId, model));
+    public ResponseEntity<?> update(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId, @RequestBody ArtikelRequest request) {
+        return updated(service.update(artikelId, request));
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_ARTIKEL)
@@ -205,8 +188,8 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
                 })
-    public ResponseEntity<?> addAnderung(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId, @RequestBody AnderungModel anderungModel) {
-        return added(service.addAnderung(artikelId, anderungModel));
+    public ResponseEntity<?> addAnderung(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId, @RequestBody AnderungRequest anderungRequest) {
+        return added(service.addAnderung(artikelId, anderungRequest));
     }
 
     @PutMapping(path = ApiPaths.UPDATE_ANDERUNG, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
@@ -219,8 +202,8 @@ public class ArtikelController extends AbstractItemController<ArtikelModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
                 })
-    public ResponseEntity<?> updateAnderung(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId, @PathVariable(ApiNames.ANDERUNG_ID) Integer anderungId, @RequestBody AnderungModel anderungModel) {
-        return updated(service.updateAnderung(artikelId, anderungId, anderungModel));
+    public ResponseEntity<?> updateAnderung(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId, @PathVariable(ApiNames.ANDERUNG_ID) Integer anderungId, @RequestBody AnderungRequest anderungRequest) {
+        return updated(service.updateAnderung(artikelId, anderungId, anderungRequest));
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_ANDERUNG)

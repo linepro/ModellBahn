@@ -28,7 +28,7 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.linepro.modellbahn.entity.Kategorie;
 import com.linepro.modellbahn.persistence.Persistence;
-import com.linepro.modellbahn.repository.base.Criterion;
+import com.linepro.modellbahn.service.criterion.Criterion;
 import com.linepro.modellbahn.service.criterion.KategorieenCriteria;
 
 @ExtendWith(SpringExtension.class)

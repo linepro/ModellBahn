@@ -6,10 +6,13 @@ com:
 
 server:
    error:
+      include-binding-errors: always
+      include-exception: always
+      include-message: always
       include-stacktrace: always
       path: /error
       whitelabel:
-         enabled: true
+         enabled: false
    port: 8086
    servlet:
       application-display-name: ModellBahn
@@ -181,16 +184,22 @@ spring:
          multipart:
             enabled: true
             max-file-size: 5MB
+   output:
+      ansi:
+         enabled: DETECT
    security:
+      config:
+         annotation:
+            web:
+               builders:
+                  WebSecurity:
+                     debugEnabled: true
       oauth2:
          client:
            registration:
              github:
                 client-id: 8ffe85e30a236d5a2959
                 client-secret: 7475ac7f3b1f2d3d652ef5f38866ffd5efddecc7
-   output:
-      ansi:
-         enabled: DETECT
    servlet:
       multipart:
          enabled: true
@@ -204,8 +213,8 @@ springdoc:
    api-docs:
       path: /v3/api-docs.json
    swagger-ui:
-      configUrl: /v3/api-docs.json
+      disable-swagger-default-url: true
       enabled: true
-      url: /v3/api-docs.json
+      tryItOutEnabled: true
    writer-with-default-pretty-printer: true
    writer-with-order-by-keys: true

@@ -7,11 +7,11 @@ import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import com.linepro.modellbahn.converter.PathMutator;
+import com.linepro.modellbahn.converter.PathMapper;
 import com.linepro.modellbahn.converter.Transcriber;
-import com.linepro.modellbahn.converter.entity.DecoderTypAdressMutator;
-import com.linepro.modellbahn.converter.entity.DecoderTypCvMutator;
-import com.linepro.modellbahn.converter.entity.DecoderTypFunktionMutator;
+import com.linepro.modellbahn.converter.entity.DecoderTypAdressMapper;
+import com.linepro.modellbahn.converter.entity.DecoderTypCvMapper;
+import com.linepro.modellbahn.converter.entity.DecoderTypFunktionMapper;
 import com.linepro.modellbahn.entity.DecoderTyp;
 import com.linepro.modellbahn.model.DecoderTypAdressModel;
 import com.linepro.modellbahn.model.DecoderTypCvModel;
@@ -29,13 +29,13 @@ public class DecoderTypTranscriber implements Transcriber<DecoderTyp, DecoderTyp
 
     private static final ArrayList<DecoderTypFunktionModel> KEIN_FUNKTIONEN = new ArrayList<>();
 
-    private final DecoderTypAdressMutator adressMutator;
+    private final DecoderTypAdressMapper adressMapper;
 
-    private final DecoderTypCvMutator cvMutator;
+    private final DecoderTypCvMapper cvMapper;
 
-    private final DecoderTypFunktionMutator funktionMutator;
+    private final DecoderTypFunktionMapper funktionMapper;
 
-    private final PathMutator PathMutator;
+    private final PathMapper PathMapper;
 
     @Override
     public DecoderTypModel apply(DecoderTyp source, DecoderTypModel destination) {
@@ -48,7 +48,7 @@ public class DecoderTypTranscriber implements Transcriber<DecoderTyp, DecoderTyp
             destination.setSound(source.getSound());
             destination.setKonfiguration(source.getKonfiguration());
             destination.setStecker(source.getStecker());
-            destination.setAnleitungen(PathMutator.convert(source.getAnleitungen()));
+            destination.setAnleitungen(PathMapper.convert(source.getAnleitungen()));
             destination.setProtokoll(getCode(source.getProtokoll()));
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
 
@@ -56,7 +56,7 @@ public class DecoderTypTranscriber implements Transcriber<DecoderTyp, DecoderTyp
                 destination.setAdressen(source.getAdressen()
                                               .stream()
                                               .sorted()
-                                              .map(a -> attempt(() -> adressMutator.convert(a)))
+                                              .map(a -> attempt(() -> adressMapper.convert(a)))
                                               .collect(success())
                                               .getValue()
                                               .orElse(KEIN_ADRESS));
@@ -66,7 +66,7 @@ public class DecoderTypTranscriber implements Transcriber<DecoderTyp, DecoderTyp
                 destination.setCvs(source.getCvs()
                                          .stream()
                                          .sorted()
-                                         .map(c -> attempt(() -> cvMutator.convert(c)))
+                                         .map(c -> attempt(() -> cvMapper.convert(c)))
                                          .collect(success())
                                          .getValue()
                                          .orElse(KEIN_CV));
@@ -76,7 +76,7 @@ public class DecoderTypTranscriber implements Transcriber<DecoderTyp, DecoderTyp
                 destination.setFunktionen(source.getFunktionen()
                                                 .stream()
                                                 .sorted()
-                                                .map(f -> attempt(() -> funktionMutator.convert(f)))
+                                                .map(f -> attempt(() -> funktionMapper.convert(f)))
                                                 .collect(success())
                                                 .getValue()
                                                 .orElse(KEIN_FUNKTIONEN));

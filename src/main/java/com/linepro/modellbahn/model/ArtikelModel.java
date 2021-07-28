@@ -15,9 +15,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy.SnakeCaseStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
 
@@ -220,4 +221,7 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
                 .append(artikelId, other.artikelId)
                 .isEquals();
     }
+
+    @Schema(name = ApiNames.ARTIKEL + "Page")
+    public static class PagedArtikelModel extends PagedSchema<ArtikelModel>{}
 }

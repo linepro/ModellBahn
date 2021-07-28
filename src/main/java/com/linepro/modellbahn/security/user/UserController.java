@@ -72,64 +72,78 @@ public class UserController {
 
     protected static final String RESET_PASSWORD = "reset";
 
-    public static final String HOME = "/";
+    protected static final String PAGE = ".html";
 
-    public static final String ABOUT_ENDPOINT = "/" + ABOUT;
+    protected static final String USER_HOME = "/";
 
-    protected static final String ABOUT_PAGE = ABOUT_ENDPOINT + ".*";
+    public static final String ABOUT_ENDPOINT = USER_HOME + ABOUT;
 
-    public static final String ACCOUNT_ENDPOINT = "/" + ACCOUNT;
+    public static final String ABOUT_PAGE = ABOUT_ENDPOINT + PAGE;
 
-    public static final String CHANGE_PASSWORD_ENDPOINT = "/" + CHANGE_PASSWORD;
+    public static final String ACCOUNT_ENDPOINT = USER_HOME + ACCOUNT;
 
-    public static final String CONFIRM_REGISTRATION_ENDPOINT = "/" + CONFIRM_REGISTRATION;
+    public static final String ACCOUNT_PAGE = ACCOUNT_ENDPOINT + PAGE;
 
-    public static final String FORGOT_PASSWORD_ENDPOINT = "/" + FORGOT_PASSWORD;
+    public static final String CHANGE_PASSWORD_ENDPOINT = USER_HOME + CHANGE_PASSWORD;
 
-    protected static final String INDEX_PAGE = "/" + INDEX + ".*";
+    public static final String CHANGE_PASSWORD_PAGE = CHANGE_PASSWORD_ENDPOINT + PAGE;
 
-    public static final String LOGIN_ENDPOINT = "/" + LOGIN;
+    public static final String CONFIRM_REGISTRATION_ENDPOINT = USER_HOME + CONFIRM_REGISTRATION;
 
-    protected static final String LOGIN_PAGE = LOGIN_ENDPOINT + ".*";
+    public static final String FORGOT_PASSWORD_ENDPOINT = USER_HOME + FORGOT_PASSWORD;
 
-    public static final String LOGIN_FAILURE_ENDPOINT = "/" + LOGIN_FAILURE;
+    public static final String FORGOT_PASSWORD_PAGE = FORGOT_PASSWORD_ENDPOINT + PAGE;
 
-    public static final String LOGOUT_ENDPOINT = "/" + LOGOUT;
+    public static final String INDEX_PAGE = USER_HOME + INDEX + PAGE;
 
-    public static final String LOGOUT_SUCCESS_ENDPOINT = "/" + LOGOUT_SUCCESS;
+    public static final String LOGIN_ENDPOINT = USER_HOME + LOGIN;
 
-    public static final String REGISTER_ENDPOINT = "/" + REGISTER;
+    public static final String LOGIN_PAGE = LOGIN_ENDPOINT + PAGE;
 
-    public static final String RESET_PASSWORD_ENDPOINT = "/" + RESET_PASSWORD;
+    public static final String LOGIN_FAILURE_ENDPOINT = USER_HOME + LOGIN_FAILURE;
 
-    public static final String CONFIRM_ERROR = "error/confirm";
+    public static final String LOGOUT_ENDPOINT = USER_HOME + LOGOUT;
 
-    public static final String LOGIN_ERROR = "error/login";
+    public static final String LOGOUT_PAGE = LOGOUT_ENDPOINT + PAGE;
 
-    public static final String RESET_ERROR = "error/reset";
+    public static final String LOGOUT_SUCCESS_ENDPOINT = USER_HOME + LOGOUT_SUCCESS;
 
-    protected static final String EMAIL_PARAM = "email";
+    public static final String REGISTER_ENDPOINT = USER_HOME + REGISTER;
 
-    protected static final String MESSAGE_DELIMITER = "\n";
+    public static final String REGISTER_PAGE = REGISTER_ENDPOINT + PAGE;
 
-    protected static final String PARAM_PASSWORD = "password";
+    public static final String RESET_PASSWORD_ENDPOINT = USER_HOME + RESET_PASSWORD;
 
-    protected static final String PARAM_TOKEN = ApiNames.TOKEN;
+    public static final String RESET_PASSWORD_PAGE = RESET_PASSWORD_ENDPOINT + PAGE;
 
-    protected static final String PARAM_USER = "user";
+    private static final String CONFIRM_ERROR = "error/confirm";
 
-    protected static final String VIEW_MESSAGES = "messages";
+    private static final String LOGIN_ERROR = "error/login";
 
-    protected static final String VIEW_TOKEN = "token";
+    private static final String RESET_ERROR = "error/reset";
 
-    protected static final String VIEW_USER = "user";
+    private static final String EMAIL_PARAM = "email";
+
+    private static final String MESSAGE_DELIMITER = "\n";
+
+    private static final String PARAM_PASSWORD = "password";
+
+    private static final String PARAM_TOKEN = ApiNames.TOKEN;
+
+    private static final String PARAM_USER = "user";
+
+    private static final String VIEW_MESSAGES = "messages";
+
+    private static final String VIEW_TOKEN = "token";
+
+    private static final String VIEW_USER = "user";
 
     @Autowired
     private final UserService userService;
 
     private final ResourceEndpoints resourceEndpoints;
 
-    @GetMapping({ HOME, INDEX_PAGE })
+    @GetMapping({ USER_HOME, INDEX_PAGE })
     public ModelAndView home() {
         return modelAndView(resourceEndpoints.getHomePageRedirect());
     }
@@ -150,7 +164,7 @@ public class UserController {
      * </ul>
      */
     @PreAuthorize("isAnonymous()")
-    @GetMapping(REGISTER_ENDPOINT)
+    @GetMapping({ REGISTER_ENDPOINT, REGISTER_PAGE })
     public ModelAndView register() {
         return modelAndView(REGISTER);
     }
@@ -168,8 +182,8 @@ public class UserController {
      */
     @PreAuthorize("isAnonymous()")
     @PostMapping(REGISTER_ENDPOINT)
-    public ModelAndView register(@ModelAttribute(PARAM_USER) UserModel userModel, HttpSession session) {
-        UserResponse response = userService.register(session, userModel);
+    public ModelAndView register(@ModelAttribute(PARAM_USER) UserRequest request, HttpSession session) {
+        UserResponse response = userService.register(session, request);
 
         return modelAndView(response, CONFIRM_EMAIL_SENT, REGISTER);
     }
@@ -204,7 +218,7 @@ public class UserController {
      * </ul>
      * </ul>
      */
-    @GetMapping(ACCOUNT_ENDPOINT)
+    @GetMapping({ ACCOUNT_ENDPOINT, ACCOUNT_PAGE })
     public ModelAndView account(Authentication authentication, HttpSession session) {
         ModelAndView mav = modelAndView(ACCOUNT);
         addUser(mav, userService.get(authentication.getName(), authentication)
@@ -226,8 +240,8 @@ public class UserController {
      * </ul>
      */
     @PostMapping(ACCOUNT_ENDPOINT)
-    public ModelAndView account(@ModelAttribute(PARAM_USER) UserModel userModel, Authentication authentication, HttpSession session) {
-        return modelAndView(userService.update(authentication.getName(), userModel, session, authentication), ACCOUNT, ACCOUNT);
+    public ModelAndView account(@ModelAttribute(PARAM_USER) UserRequest request, Authentication authentication, HttpSession session) {
+        return modelAndView(userService.update(authentication.getName(), request, session, authentication), ACCOUNT, ACCOUNT);
     }
 
     /**
@@ -242,7 +256,7 @@ public class UserController {
      * </ul>
      * </ul>
      */
-    @PostMapping(CHANGE_PASSWORD_ENDPOINT)
+    @PostMapping({ CHANGE_PASSWORD_ENDPOINT, CHANGE_PASSWORD_PAGE })
     public ModelAndView changePassword(@RequestParam(PARAM_PASSWORD) String password, Authentication authentication, HttpSession session) {
         return modelAndView(userService.changePassword(authentication.getName(), password, authentication), LOGIN, ACCOUNT);
     }
@@ -304,7 +318,7 @@ public class UserController {
      * </ul>
      */
     @PreAuthorize("isAnonymous()")
-    @GetMapping(FORGOT_PASSWORD_ENDPOINT)
+    @GetMapping({ FORGOT_PASSWORD_ENDPOINT, FORGOT_PASSWORD_PAGE })
     public ModelAndView forgot() {
         return modelAndView(FORGOT_PASSWORD);
     }
@@ -336,7 +350,7 @@ public class UserController {
      * </ul>
      */
     @PreAuthorize("isAnonymous()")
-    @GetMapping(RESET_PASSWORD_ENDPOINT)
+    @GetMapping({ RESET_PASSWORD_ENDPOINT, RESET_PASSWORD_PAGE })
     public ModelAndView reset(@RequestParam(PARAM_TOKEN) String token) {
         ModelAndView mav = modelAndView(RESET_PASSWORD);
         mav.addObject(VIEW_TOKEN, token);

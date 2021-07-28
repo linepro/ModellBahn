@@ -51,7 +51,7 @@ What's in here (could be more, but I forget):
 # REST
 
 * DTOs (I called them Models, get over it)
-* Converters (I called them Mutators / Transcribers, get over it)
+* Converters (I called them Mappers / Transcribers, get over it)
 * HATEOAS links (with some made up relations) with Model processors (see where models came from now?)
 * Actuator with selected endpoints
 * File upload via multipart messages

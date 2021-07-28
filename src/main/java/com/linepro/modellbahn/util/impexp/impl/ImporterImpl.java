@@ -23,16 +23,16 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.google.common.io.LineReader;
 import com.linepro.modellbahn.controller.impl.ApiMessages;
-import com.linepro.modellbahn.converter.Mutator;
+import com.linepro.modellbahn.converter.Mapper;
 import com.linepro.modellbahn.entity.Item;
-import com.linepro.modellbahn.model.ItemModel;
+import com.linepro.modellbahn.request.ItemRequest;
 import com.linepro.modellbahn.util.exceptions.ModellBahnException;
 import com.linepro.modellbahn.util.impexp.Importer;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ImporterImpl<M extends ItemModel,E extends Item> implements Importer {
+public class ImporterImpl<R extends ItemRequest, E extends Item> implements Importer {
 
     private static final CsvMapper MAPPER = CsvMapper.builder()
                     .findAndAddModules()
@@ -43,63 +43,43 @@ public class ImporterImpl<M extends ItemModel,E extends Item> implements Importe
 
     private final JpaRepository<E,Long> repository;
 
-    private final Mutator<M,E> mutator;
+    private final Mapper<R,E> mapper;
 
-    private final CsvSchema schema; 
-
-    private final Class<M> modelClass;
+    private final Class<R> requestClass;
 
     private final CsvSchemaGenerator generator;
 
-    public ImporterImpl(JpaRepository<E,Long> repository, Mutator<M,E> mutator, CsvSchemaGenerator generator, Class<M> modelClass) {
+    public ImporterImpl(JpaRepository<E,Long> repository, Mapper<R,E> mapper, CsvSchemaGenerator generator, Class<R> requestClass) {
         this.repository = repository;
-        this.mutator = mutator;
+        this.mapper = mapper;
         this.generator = generator;
-        this.modelClass = modelClass;
-
-        this.schema = generator.getSchema(modelClass);
+        this.requestClass = requestClass;
     }
 
     @Override
     @Transactional
     public void read(Reader in) {
-        MappingIterator<M> mi;
-
-        List<String> errors = new ArrayList<>();
-        Integer rowNum = 0;
-
         try {
-            CsvSchema actual = schema;
+            String headerLine = new LineReader(in).readLine();
 
-            if (in.markSupported()) {
-                in.mark(schema.toString().length());
-                try {
-                    String headerLine = new LineReader(in).readLine();
+            // Filter schema with columns actually in input file header and re-create using specified order...
+            CsvSchema schema = generator.getSchema(requestClass, Arrays.asList(headerLine.split(",")));
 
-                    // Filter schema with columns actually in input file header and re-create using specified order...
-                    actual = generator.getSchema(Arrays.asList(headerLine.split(","))
-                                                       .stream()
-                                                       .map(c -> schema.column(c))
-                                                       .filter(c -> c != null)
-                                                       .collect(Collectors.toList()));
-                } catch (Exception e) {
-                    log.error("Failed to customise schema {}: {}", e.getMessage(), e);
-                }
+            ObjectReader reader = MAPPER.readerFor(requestClass).with(schema);
 
-                in.reset();
-            }
+            MappingIterator<R> mi = reader.readValues(in);
 
-            ObjectReader reader = MAPPER.readerFor(modelClass).with(actual);
+            List<String> errors = new ArrayList<>();
+            Integer rowNum = 0;
 
-            mi = reader.readValues(in);
 
             while (mi.hasNext()) {
                 rowNum++;
 
-                M next = mi.next();
+                R next = mi.next();
 
                 try {
-                    repository.save(mutator.convert(next));
+                    repository.save(mapper.convert(next));
                 } catch(Exception e) {
                     String error = getError(e);
 
@@ -108,18 +88,18 @@ public class ImporterImpl<M extends ItemModel,E extends Item> implements Importe
                     log.error("Error importing #{} - '{}': {}", rowNum, next, error, e);
                 }
             }
+
+            if (!CollectionUtils.isEmpty(errors)) {
+                throw ModellBahnException.raise(ApiMessages.IMPORT_ERROR)
+                                         .addValue(errors.stream().collect(Collectors.joining("\n")))
+                                         .setStatus(HttpStatus.BAD_REQUEST);
+            }
         } catch (RuntimeJsonMappingException e) {
             throw ModellBahnException.raise(ApiMessages.IMPORT_ERROR, e)
                                      .addValue(e.getMessage())
                                      .setStatus(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             throw ModellBahnException.raise(ApiMessages.IMPORT_ERROR, e);
-        }
-
-        if (!CollectionUtils.isEmpty(errors)) {
-            throw ModellBahnException.raise(ApiMessages.IMPORT_ERROR)
-                                     .addValue(errors.stream().collect(Collectors.joining("\n")))
-                                     .setStatus(HttpStatus.BAD_REQUEST);
         }
     }
 

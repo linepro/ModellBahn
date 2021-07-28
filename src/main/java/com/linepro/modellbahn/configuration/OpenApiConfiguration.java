@@ -39,9 +39,6 @@ import lombok.Getter;
 @Configuration(PREFIX + "OpenApiConfiguration")
 public class OpenApiConfiguration {
 
-    @Value("${spring.mvc.servlet.path:/}")
-    private String servletPath;
-
     @Value("${springdoc.api-docs.path:/v3/api-docs.json}")
     private String apiDocsPath;
 
@@ -70,9 +67,7 @@ public class OpenApiConfiguration {
                 uri.port(config.getManagementPort());
             }
 
-            uri.path(config.getServletPath());
             uri.path(config.getApiDocsPath());
-            uri.path(".json");
 
             return html.replace(Constants.SWAGGER_UI_DEFAULT_URL, uri.toUriString());
         }

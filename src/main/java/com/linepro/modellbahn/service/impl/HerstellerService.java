@@ -17,22 +17,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.converter.entity.HerstellerMutator;
-import com.linepro.modellbahn.converter.model.HerstellerModelMutator;
+import com.linepro.modellbahn.converter.entity.HerstellerMapper;
+import com.linepro.modellbahn.converter.request.HerstellerRequestMapper;
 import com.linepro.modellbahn.entity.Hersteller;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.HerstellerModel;
 import com.linepro.modellbahn.repository.HerstellerRepository;
+import com.linepro.modellbahn.request.HerstellerRequest;
 
 @Service(PREFIX + "HerstellerService")
-public class HerstellerService extends NamedItemServiceImpl<HerstellerModel, Hersteller> {
+public class HerstellerService extends NamedItemServiceImpl<HerstellerModel, HerstellerRequest,  Hersteller> {
 
     private final FileService fileService;
 
     @Autowired
-    public HerstellerService(HerstellerRepository repository, HerstellerModelMutator modelMutator, HerstellerMutator entityMutator,
+    public HerstellerService(HerstellerRepository repository, HerstellerRequestMapper requestMapper, HerstellerMapper entityMapper,
                     FileService fileService) {
-        super(repository, modelMutator, entityMutator);
+        super(repository, requestMapper, entityMapper);
 
         this.fileService = fileService;
     }

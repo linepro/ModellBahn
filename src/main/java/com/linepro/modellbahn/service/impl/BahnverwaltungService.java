@@ -17,22 +17,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.converter.entity.BahnverwaltungMutator;
-import com.linepro.modellbahn.converter.model.BahnverwaltungModelMutator;
+import com.linepro.modellbahn.converter.entity.BahnverwaltungMapper;
+import com.linepro.modellbahn.converter.request.BahnverwaltungRequestMapper;
 import com.linepro.modellbahn.entity.Bahnverwaltung;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.BahnverwaltungModel;
 import com.linepro.modellbahn.repository.BahnverwaltungRepository;
+import com.linepro.modellbahn.request.BahnverwaltungRequest;
 
 @Service(PREFIX + "BahnverwaltungService")
-public class BahnverwaltungService extends NamedItemServiceImpl<BahnverwaltungModel, Bahnverwaltung> {
+public class BahnverwaltungService extends NamedItemServiceImpl<BahnverwaltungModel, BahnverwaltungRequest,  Bahnverwaltung> {
 
     private final FileService fileService;
 
     @Autowired
-    public BahnverwaltungService(BahnverwaltungRepository repository, BahnverwaltungModelMutator modelMutator, BahnverwaltungMutator entityMutator,
+    public BahnverwaltungService(BahnverwaltungRepository repository, BahnverwaltungRequestMapper requestMapper, BahnverwaltungMapper entityMapper,
                     FileService fileService) {
-        super(repository, modelMutator, entityMutator);
+        super(repository, requestMapper, entityMapper);
 
         this.fileService = fileService;
     }

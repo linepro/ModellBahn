@@ -1,18 +1,23 @@
 package com.linepro.modellbahn.security;
 
 import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
+import static com.linepro.modellbahn.configuration.MvcConfig.SWAGGER;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.API_ENDPOINTS;
 import static com.linepro.modellbahn.security.user.UserController.ABOUT_ENDPOINT;
+import static com.linepro.modellbahn.security.user.UserController.ABOUT_PAGE;
 import static com.linepro.modellbahn.security.user.UserController.CONFIRM_REGISTRATION_ENDPOINT;
 import static com.linepro.modellbahn.security.user.UserController.FORGOT_PASSWORD_ENDPOINT;
+import static com.linepro.modellbahn.security.user.UserController.FORGOT_PASSWORD_PAGE;
 import static com.linepro.modellbahn.security.user.UserController.LOGIN_ENDPOINT;
 import static com.linepro.modellbahn.security.user.UserController.LOGIN_FAILURE_ENDPOINT;
+import static com.linepro.modellbahn.security.user.UserController.LOGIN_PAGE;
 import static com.linepro.modellbahn.security.user.UserController.LOGOUT_ENDPOINT;
 import static com.linepro.modellbahn.security.user.UserController.LOGOUT_SUCCESS_ENDPOINT;
 import static com.linepro.modellbahn.security.user.UserController.REGISTER_ENDPOINT;
+import static com.linepro.modellbahn.security.user.UserController.REGISTER_PAGE;
 import static com.linepro.modellbahn.security.user.UserController.RESET_PASSWORD_ENDPOINT;
+import static com.linepro.modellbahn.security.user.UserController.RESET_PASSWORD_PAGE;
 
-import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +28,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -30,13 +36,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 
-import com.linepro.modellbahn.configuration.ModellBahnErrorFilter;
 import com.linepro.modellbahn.configuration.OpenApiConfiguration;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.io.ResourceEndpoints;
+import com.linepro.modellbahn.security.user.UserController;
 import com.linepro.modellbahn.security.user.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -66,47 +71,39 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static final SimpleGrantedAuthority USER = new SimpleGrantedAuthority(USER_AUTHORITY);
 
     // Pages
-    protected static final String PAGE = ".html";
+    public static final String PAGE = ".html";
 
-    protected static final String ERRORS = "/error/*";
+    protected static final String ERRORS = "/error/**";
     protected static final String GENERAL_ERROR = "/error";
-
-    protected static final String LOGIN_PAGE = LOGIN_ENDPOINT + PAGE;
-    protected static final String LOGIN_FAILURE_PAGE = LOGIN_FAILURE_ENDPOINT + PAGE;
-    protected static final String LOGOUT_PAGE = LOGOUT_ENDPOINT + PAGE;
-    protected static final String LOGOUT_SUCCESS_PAGE = LOGOUT_SUCCESS_ENDPOINT + PAGE;
-    protected static final String REGISTER_PAGE = REGISTER_ENDPOINT + PAGE;
 
     // Resources
     protected static final String FAVICON_ICO = "/favicon.ico";
-    protected static final String CSS = "/css/*";
-    protected static final String FONTS = "/fonts/*";
-    protected static final String IMAGES = "/img/*";
-    protected static final String JS = "/js/*";
+    protected static final String CSS = "/css/**";
+    protected static final String FONTS = "/fonts/**";
+    protected static final String IMAGES = "/img/**";
+    protected static final String JS = "/js/**";
 
     protected static final String[] INSECURE_URLS = {
-        ABOUT_ENDPOINT,
         ERRORS,
         GENERAL_ERROR
     };
 
-    protected static final String[] REGISTER_URLS = {
+    protected static final String[] REGISTER_PAGES = {
+                    ABOUT_ENDPOINT,
+                    ABOUT_PAGE,
                     CONFIRM_REGISTRATION_ENDPOINT,
                     FORGOT_PASSWORD_ENDPOINT,
+                    FORGOT_PASSWORD_PAGE,
                     LOGIN_ENDPOINT,
+                    LOGIN_PAGE,
+                    LOGIN_FAILURE_ENDPOINT,
+                    LOGOUT_ENDPOINT,
+                    LOGOUT_SUCCESS_ENDPOINT,
                     REGISTER_ENDPOINT,
-                    RESET_PASSWORD_ENDPOINT
+                    REGISTER_PAGE,
+                    RESET_PASSWORD_ENDPOINT,
+                    RESET_PASSWORD_PAGE
                     };
-
-    protected static final String[] INSECURE_PAGES = Arrays.asList(INSECURE_URLS)
-                                                           .stream()
-                                                           .map(u -> u + PAGE).collect(Collectors.toList())
-                                                           .toArray(new String[0]);
-
-    protected static final String[] REGISTER_PAGES = Arrays.asList(REGISTER_URLS)
-                    .stream()
-                    .map(u -> u + PAGE).collect(Collectors.toList())
-                    .toArray(new String[0]);
 
     protected static final String[] INSECURE_RESOURCES = {
         FAVICON_ICO,
@@ -143,7 +140,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final OpenApiConfiguration docConfig;
 
     @Autowired
-    private final ModellBahnErrorFilter errorFilter;
+    //private final ModellBahnErrorFilter errorFilter;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -151,22 +148,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure(WebSecurity web) throws Exception {
+        // @formatter:off
+        String[] apiDocs = new String[] {
+            SWAGGER,
+            docConfig.getApiDocsPath(),
+            resourceEndpoints.getSwaggerResources()
+        };
+
+        web.ignoring()
+           .antMatchers(INSECURE_RESOURCES)
+           .antMatchers(INSECURE_URLS)
+           .antMatchers(apiDocs);
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         String[] endPoints = resourceEndpoints.getEndPoints()
-                                              .keySet()
-                                              .stream()
-                                              .collect(Collectors.toList())
-                                              .toArray(new String[0]);
+                .keySet()
+                .stream()
+                .collect(Collectors.toList())
+                .toArray(new String[0]);
 
-        String[] apiDocs = new String[] {
-            docConfig.getApiDocsPath(),
-            docConfig.getApiDocsPath() + "/*",
-            resourceEndpoints.getSwaggerUi()
-        };
-        
-        http.addFilterBefore(errorFilter, LogoutFilter.class)
-            .headers().frameOptions().sameOrigin()
+        http.headers().frameOptions().sameOrigin()
             .and().cors()
             .and().csrf().disable()
             .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
@@ -176,18 +181,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and().sessionManagement()
                   .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                   .sessionFixation().migrateSession()
-                  .invalidSessionUrl(LOGIN_PAGE)
+                  .invalidSessionUrl(UserController.LOGIN_PAGE)
             //.and().oauth2ResourceServer(oauth2 -> oauth2.jwt())
             //.and().anonymous().authorities(GUEST_AUTHORITY)
             .and().authorizeRequests()
-                  .antMatchers(INSECURE_PAGES).permitAll()
-                  .antMatchers(INSECURE_RESOURCES).permitAll()
-                  .antMatchers(INSECURE_URLS).permitAll()
-                  .antMatchers(apiDocs).permitAll()
-                  .antMatchers(REGISTER_URLS).anonymous()
                   .antMatchers(REGISTER_PAGES).anonymous()
                   .antMatchers(LOGOUT_ENDPOINT).authenticated()
-                  .antMatchers(LOGOUT_PAGE).authenticated()
+                  .antMatchers(UserController.LOGOUT_PAGE).authenticated()
                   .antMatchers(HttpMethod.POST, ApiPaths.REGISTER_ENDPOINTS).anonymous()
                   .antMatchers(HttpMethod.POST, ApiPaths.USER_ENDPOINTS).hasAnyAuthority(ADMIN_AUTHORITY, USER_AUTHORITY)
                   .antMatchers(API_ENDPOINTS).hasAuthority(USER_AUTHORITY)

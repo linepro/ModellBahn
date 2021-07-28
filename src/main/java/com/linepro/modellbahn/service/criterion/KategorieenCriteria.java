@@ -9,11 +9,12 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.repository.base.Criterion;
 
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@RequiredArgsConstructor
+@Data
+@EqualsAndHashCode(callSuper=false)
 public class KategorieenCriteria implements Criterion {
 
     private final Optional<List<String>> kategorieen;

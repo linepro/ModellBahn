@@ -41,17 +41,19 @@ public class DataBeanProcessor implements BeanDefinitionRegistryPostProcessor {
             registry.registerBeanDefinition(prefix + "Exporter", BeanDefinitionBuilder.genericBeanDefinition(ExporterImpl.class)
                                                                                       .setLazyInit(true)
                                                                                       .addConstructorArgReference(prefix + "Repository")
-                                                                                      .addConstructorArgReference(prefix + "Mutator")
+                                                                                      .addConstructorArgReference(prefix + "Mapper")
                                                                                       .addConstructorArgReference(PREFIX + "CsvSchemaGenerator")
                                                                                       .addConstructorArgValue(modelClass)
                                                                                       .getBeanDefinition());
 
+            Class<?> requestClass = Class.forName("com.linepro.modellbahn.request." + name + "Request");
+
             registry.registerBeanDefinition(prefix + "Importer", BeanDefinitionBuilder.genericBeanDefinition(ImporterImpl.class)
                                                                                       .setLazyInit(true)
                                                                                       .addConstructorArgReference(prefix + "Repository")
-                                                                                      .addConstructorArgReference(prefix + "ModelMutator")
+                                                                                      .addConstructorArgReference(prefix + "RequestMapper")
                                                                                       .addConstructorArgReference(PREFIX + "CsvSchemaGenerator")
-                                                                                      .addConstructorArgValue(modelClass)
+                                                                                      .addConstructorArgValue(requestClass)
                                                                                       .getBeanDefinition());
         } catch (ClassNotFoundException e) {
             log.error("Could not create beans for {}: {}", name, e.getMessage(), e);

@@ -9,31 +9,8 @@
     <section style="top: 300.722px;">
         <article>
             <div class="centered" style="max-height: 70%; max-width: 90%;">
-                <h3 th:text="#{template.failure}"></h3>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td th:text="#{template.timestamp}"></td>
-                            <td th:text="${timestamp}"></td>
-                        </tr>
-                        <tr>
-                            <td th:text="#{template.path}"></td>
-                            <td th:text="${path}"></td>
-                        </tr>
-                        <tr>
-                            <td th:text="#{template.error}"></td>
-                            <td th:text="${error}"></td>
-                        </tr>
-                        <tr>
-                            <td th:text="#{template.status}"></td>
-                            <td th:text="${status}"></td>
-                        </tr>
-                        <tr>
-                            <td th:text="#{template.message}"></td>
-                            <td th:text="${message}"></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <h3 th:text="#{template.failure} : ${status}"></h3>
+                <table th:replace="fragments/fields :: error"></table>
             </div>
         </article>
     </section>

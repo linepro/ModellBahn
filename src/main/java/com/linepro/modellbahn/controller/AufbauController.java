@@ -1,12 +1,9 @@
 package com.linepro.modellbahn.controller;
 
-import java.util.Optional;
-
-import org.springframework.http.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,14 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.controller.impl.NamedItemController;
 import com.linepro.modellbahn.model.AufbauModel;
 import com.linepro.modellbahn.model.AufbauModel.PagedAufbauModel;
+import com.linepro.modellbahn.request.AufbauRequest;
+import com.linepro.modellbahn.service.criterion.NamedCriterion;
+import com.linepro.modellbahn.service.criterion.PageCriteria;
 import com.linepro.modellbahn.service.impl.AufbauService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,7 +43,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController("Aufbau")
 @ExposesResourceFor(AufbauModel.class)
 @SecurityRequirement(name = "BasicAuth")
-public class AufbauController extends NamedItemController<AufbauModel> {
+public class AufbauController extends NamedItemController<AufbauModel, AufbauRequest> {
 
     private final AufbauService service;
 
@@ -54,11 +52,6 @@ public class AufbauController extends NamedItemController<AufbauModel> {
         super(service);
 
         this.service = service;
-    }
-
-    @JsonCreator(mode= Mode.DELEGATING)
-    public static AufbauModel create() {
-        return new AufbauModel();
     }
 
     @Override
@@ -75,7 +68,6 @@ public class AufbauController extends NamedItemController<AufbauModel> {
         return super.get(name);
     }
 
-    @Override
     @GetMapping(path = ApiPaths.SEARCH_AUFBAU, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds Aufbauen by example", description = "Finds costruction styles", operationId = "get", tags = { ApiNames.AUFBAU }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedAufbauModel.class)) }),
@@ -84,8 +76,8 @@ public class AufbauController extends NamedItemController<AufbauModel> {
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> search(@RequestBody Optional<AufbauModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
-        return super.search(model, pageNumber, pageSize);
+    public ResponseEntity<?> search(NamedCriterion request, PageCriteria page) {
+        return super.search(request, page);
     }
 
     @Override
@@ -98,8 +90,8 @@ public class AufbauController extends NamedItemController<AufbauModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> add(@RequestBody AufbauModel model) {
-        return super.add(model);
+    public ResponseEntity<?> add(@RequestBody AufbauRequest request) {
+        return super.add(request);
     }
 
     @Override
@@ -113,8 +105,8 @@ public class AufbauController extends NamedItemController<AufbauModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody AufbauModel model) {
-        return super.update(name, model);
+    public ResponseEntity<?> update(@PathVariable(ApiNames.NAMEN) String name, @RequestBody AufbauRequest request) {
+        return super.update(name, request);
     }
 
     @Override

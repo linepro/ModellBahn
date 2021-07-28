@@ -12,17 +12,18 @@ import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.linepro.modellbahn.converter.entity.MassstabMutator;
-import com.linepro.modellbahn.converter.model.MassstabModelMutator;
+import com.linepro.modellbahn.converter.entity.MassstabMapper;
+import com.linepro.modellbahn.converter.request.MassstabRequestMapper;
 import com.linepro.modellbahn.entity.Massstab;
 import com.linepro.modellbahn.model.MassstabModel;
 import com.linepro.modellbahn.repository.MassstabRepository;
+import com.linepro.modellbahn.request.MassstabRequest;
 
 @Service(PREFIX + "MassstabService")
-public class MassstabService extends NamedItemServiceImpl<MassstabModel,Massstab> {
+public class MassstabService extends NamedItemServiceImpl<MassstabModel, MassstabRequest, Massstab> {
 
     @Autowired
-    public MassstabService(MassstabRepository repository, MassstabModelMutator modelMutator, MassstabMutator entityMutator) {
-        super(repository, modelMutator, entityMutator);
+    public MassstabService(MassstabRepository repository, MassstabRequestMapper requestMapper, MassstabMapper entityMapper) {
+        super(repository, requestMapper, entityMapper);
     }
 }

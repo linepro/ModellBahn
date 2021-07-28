@@ -2,18 +2,18 @@ package com.linepro.modellbahn.service.impl;
 
 import java.util.Optional;
 
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.linepro.modellbahn.converter.Mutator;
+import com.linepro.modellbahn.converter.Mapper;
 import com.linepro.modellbahn.entity.Item;
 import com.linepro.modellbahn.model.ItemModel;
 import com.linepro.modellbahn.repository.base.ItemRepository;
 import com.linepro.modellbahn.repository.lookup.Lookup;
+import com.linepro.modellbahn.request.ItemRequest;
 import com.linepro.modellbahn.service.ItemService;
+import com.linepro.modellbahn.service.criterion.Criterion;
+import com.linepro.modellbahn.service.criterion.PageCriteria;
 
 /**
  * AbstractService.
@@ -22,47 +22,43 @@ import com.linepro.modellbahn.service.ItemService;
  * @version $Id$
  * @param <E> the element type
  */
-public abstract class ItemServiceImpl<M extends ItemModel, E extends Item> implements ItemService<M> {
-
-    protected static final Integer FIRST_PAGE = 0;
-
-    protected static final Integer DEFAULT_PAGE_SIZE = 30;
+public abstract class ItemServiceImpl<M extends ItemModel, R extends ItemRequest, E extends Item> implements ItemService<M,R> {
 
     /** The repository. */
     protected final ItemRepository<E> repository;
 
-    protected final Mutator<M,E> modelMutator;
+    protected final Mapper<R,E> requestMapper;
 
-    protected final Mutator<E,M> entityMutator;
+    protected final Mapper<E,M> entityMapper;
     /**
      * Instantiates a new abstract service.
      * @param entityClass the entity class
      */
-    protected ItemServiceImpl(ItemRepository<E> repository, Mutator<M,E> modelMutator, Mutator<E,M> entityMutator) {
+    protected ItemServiceImpl(ItemRepository<E> repository, Mapper<R,E> requestMapper, Mapper<E,M> entityMapper) {
         this.repository = repository;
-        this.modelMutator = modelMutator;
-        this.entityMutator = entityMutator;
+        this.requestMapper = requestMapper;
+        this.entityMapper = entityMapper;
     }
 
     @Transactional(readOnly = true)
     protected Optional<M> get(Lookup<E> lookup) {
         return lookup.find()
-                     .map(e -> entityMutator.convert(e));
+                     .map(e -> entityMapper.convert(e));
     }
 
     @Transactional
-    public M add(M model) {
-        E item = modelMutator.convert(model);
+    public M add(R request) {
+        E item = requestMapper.convert(request);
         item.setDeleted(false);
-        return entityMutator.convert(repository.saveAndFlush(item));
+        return entityMapper.convert(repository.saveAndFlush(item));
     }
 
     @Transactional
-    protected Optional<M> update(Lookup<E> lookup, M model) {
+    protected Optional<M> update(Lookup<E> lookup, R request) {
         return lookup.find()
                      .map(e -> {
                          Boolean deleted = e.getDeleted();
-                         E item = modelMutator.apply(model,e);
+                         E item = requestMapper.apply(request,e);
                          item.setDeleted(deleted);
                          return repository.saveAndFlush(item);
                      })
@@ -81,27 +77,13 @@ public abstract class ItemServiceImpl<M extends ItemModel, E extends Item> imple
 
     @Override
     @Transactional(readOnly = true)
-    public Page<M> search(Optional<M> model, Optional<Integer> pageNumber, Optional<Integer> pageSize) {
-        Pageable pageRequest = getPageRequest(pageNumber, pageSize);
-
-        final Page<E> data = findAll(model, pageRequest);
+    public Page<M> search(Criterion criterion, PageCriteria page) {
+        final Page<E> data = repository.findAll(criterion, page.getPageRequest());
 
         return getModelPage(data);
     }
 
-    protected Pageable getPageRequest(Optional<Integer> pageNumber, Optional<Integer> pageSize) {
-        if (!pageNumber.isPresent() && !pageSize.isPresent()) return Pageable.unpaged();
-
-        return PageRequest.of(pageNumber.orElse(FIRST_PAGE), pageSize.orElse(DEFAULT_PAGE_SIZE));
-    }
-
-    protected Page<E> findAll(Optional<M> model, Pageable pageRequest) {
-        Example<E> example = Example.of(model.map(m -> modelMutator.convert(m)).orElse(modelMutator.get()));
-        final Page<E> data = repository.findAll(example, pageRequest);
-        return data;
-    }
-
     protected Page<M> getModelPage(Page<E> data) {
-        return data.map(e -> entityMutator.convert(e));
+        return data.map(e -> entityMapper.convert(e));
     }
 }

@@ -2,18 +2,19 @@ package com.linepro.modellbahn.service.impl;
 
 import java.util.Optional;
 
-import com.linepro.modellbahn.converter.Mutator;
+import com.linepro.modellbahn.converter.Mapper;
 import com.linepro.modellbahn.entity.NamedItem;
 import com.linepro.modellbahn.model.NamedItemModel;
 import com.linepro.modellbahn.repository.base.NamedItemRepository;
+import com.linepro.modellbahn.request.NamedItemRequest;
 import com.linepro.modellbahn.service.NamedItemService;
 
-public abstract class NamedItemServiceImpl<M extends NamedItemModel, E extends NamedItem> extends ItemServiceImpl<M, E> implements NamedItemService<M> {
+public abstract class NamedItemServiceImpl<M extends NamedItemModel, R extends NamedItemRequest, E extends NamedItem> extends ItemServiceImpl<M, R, E> implements NamedItemService<M,R> {
 
     protected final NamedItemRepository<E> repository;
 
-    protected NamedItemServiceImpl(NamedItemRepository<E> repository, Mutator<M, E> modelMutator, Mutator<E, M> entityMutator) {
-        super(repository, modelMutator, entityMutator);
+    protected NamedItemServiceImpl(NamedItemRepository<E> repository, Mapper<R, E> requestMapper, Mapper<E, M> entityMapper) {
+        super(repository, requestMapper, entityMapper);
 
         this.repository = repository;
     }
@@ -24,8 +25,8 @@ public abstract class NamedItemServiceImpl<M extends NamedItemModel, E extends N
     }
 
     @Override
-    public Optional<M> update(String name, M model) {
-        return super.update(() -> repository.findByName(name), model);
+    public Optional<M> update(String name, R request) {
+        return super.update(() -> repository.findByName(name), request);
     }
 
     @Override

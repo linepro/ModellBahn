@@ -2,45 +2,44 @@ package com.linepro.modellbahn.service.criterion;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.linepro.modellbahn.entity.NamedItem;
-import com.linepro.modellbahn.model.Named;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.repository.base.Criterion;
 
-public class NamedCriterion<E extends NamedItem> extends AbstractCriterion<E> implements Criterion {
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-    private final String name;
+@Data
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper=false)
+public class NamedCriterion extends AbstractCriterion {
 
-    private final String bezeichnung;
+    @JsonProperty(ApiNames.NAMEN)
+    @Schema(description = "Name")
+    private String name;
 
-    private final Boolean deleted;
+    @JsonProperty(ApiNames.BEZEICHNUNG)
+    @Schema(description = "Description")
+    private String bezeichnung;
 
-    public NamedCriterion(Optional<Named> item) {
-        this(
-            item.map(Named::getName).orElse(null), 
-            item.map(Named::getBezeichnung).orElse(null), 
-            item.map(Named::getDeleted).orElse(null)
-            );
-    }
-
-    public NamedCriterion(String name, String bezeichnung, Boolean deleted) {
-        this.name = name;
-        this.bezeichnung = bezeichnung;
-        this.deleted = deleted;
-    }
+    @JsonProperty(ApiNames.DELETED)
+    @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
+    private Boolean deleted;
 
     @Override
     public Predicate[] getCriteria(CriteriaBuilder criteriaBuilder, Root<?> root) {
         List<Predicate> where = new ArrayList<>();
-        addCondition(criteriaBuilder, root, where, DBNames.NAME, name);
-        addCondition(criteriaBuilder, root, where, DBNames.BEZEICHNUNG, bezeichnung);
-        addCondition(criteriaBuilder, root, where, DBNames.DELETED, deleted);
+        addCondition(criteriaBuilder, root, where, DBNames.NAME, getName());
+        addCondition(criteriaBuilder, root, where, DBNames.BEZEICHNUNG, getBezeichnung());
+        addCondition(criteriaBuilder, root, where, DBNames.DELETED, getDeleted());
         return where.toArray(new Predicate[0]);
     }
 }

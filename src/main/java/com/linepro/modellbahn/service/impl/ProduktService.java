@@ -11,17 +11,15 @@ import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.converter.entity.ProduktMutator;
-import com.linepro.modellbahn.converter.entity.ProduktTeilMutator;
-import com.linepro.modellbahn.converter.model.ProduktModelMutator;
+import com.linepro.modellbahn.converter.entity.ProduktMapper;
+import com.linepro.modellbahn.converter.entity.ProduktTeilMapper;
+import com.linepro.modellbahn.converter.request.ProduktRequestMapper;
 import com.linepro.modellbahn.entity.Produkt;
 import com.linepro.modellbahn.entity.ProduktTeil;
 import com.linepro.modellbahn.io.FileService;
@@ -29,11 +27,11 @@ import com.linepro.modellbahn.model.ProduktModel;
 import com.linepro.modellbahn.model.ProduktTeilModel;
 import com.linepro.modellbahn.repository.ProduktRepository;
 import com.linepro.modellbahn.repository.ProduktTeilRepository;
-import com.linepro.modellbahn.service.criterion.ProduktCriterion;
+import com.linepro.modellbahn.request.ProduktRequest;
 
 @Service(PREFIX + "ProduktService")
 
-public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> {
+public class ProduktService extends ItemServiceImpl<ProduktModel, ProduktRequest, Produkt> {
 
     private final ProduktRepository repository;
 
@@ -41,30 +39,25 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> {
 
     private final ProduktTeilRepository teilRepository;
 
-    private final ProduktTeilMutator teilMutator;
+    private final ProduktTeilMapper teilMapper;
 
     @Autowired
-    public ProduktService(ProduktRepository repository, ProduktModelMutator produktModelMutator, ProduktMutator produktMutator, FileService fileService, 
-                    ProduktTeilRepository teilRepository, ProduktTeilMutator teilMutator) {
-        super(repository, produktModelMutator, produktMutator);
+    public ProduktService(ProduktRepository repository, ProduktRequestMapper produktRequestMapper, ProduktMapper produktMapper, FileService fileService, 
+                    ProduktTeilRepository teilRepository, ProduktTeilMapper teilMapper) {
+        super(repository, produktRequestMapper, produktMapper);
         this.repository = repository;
         this.fileService = fileService;
 
         this.teilRepository = teilRepository;
-        this.teilMutator = teilMutator;
-    }
-
-    @Override
-    protected Page<Produkt> findAll(Optional<ProduktModel> model, Pageable pageRequest) {
-        return repository.findAll(new ProduktCriterion(model), pageRequest);
+        this.teilMapper = teilMapper;
     }
 
     public Optional<ProduktModel> get(String hersteller, String bestellNr) {
         return super.get(() -> repository.findByBestellNr(hersteller, bestellNr));
     }
 
-    public Optional<ProduktModel> update(String hersteller, String bestellNr, ProduktModel model) {
-        return super.update(() -> repository.findByBestellNr(hersteller, bestellNr), model);
+    public Optional<ProduktModel> update(String hersteller, String bestellNr, ProduktRequest request) {
+        return super.update(() -> repository.findByBestellNr(hersteller, bestellNr), request);
     }
 
     public boolean delete(String hersteller, String bestellNr) {
@@ -90,7 +83,7 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> {
 
                  repository.saveAndFlush(produkt);
 
-                 return Optional.of(teilMutator.convert(teil));
+                 return Optional.of(teilMapper.convert(teil));
             }
         }
 
@@ -106,7 +99,7 @@ public class ProduktService extends ItemServiceImpl<ProduktModel,Produkt> {
         return teilRepository.findByTeil(hersteller, bestellNr, teilHersteller, teilBestellNr)
                              .map(t -> {
                                  t.setMenge(menge);
-                                 return teilMutator.convert(teilRepository.saveAndFlush(t));
+                                 return teilMapper.convert(teilRepository.saveAndFlush(t));
                              });
     }
 

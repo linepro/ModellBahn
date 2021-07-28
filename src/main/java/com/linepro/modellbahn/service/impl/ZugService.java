@@ -11,14 +11,12 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.linepro.modellbahn.converter.entity.ZugConsistMutator;
-import com.linepro.modellbahn.converter.entity.ZugMutator;
-import com.linepro.modellbahn.converter.model.ZugModelMutator;
+import com.linepro.modellbahn.converter.entity.ZugConsistMapper;
+import com.linepro.modellbahn.converter.entity.ZugMapper;
+import com.linepro.modellbahn.converter.request.ZugRequestMapper;
 import com.linepro.modellbahn.entity.Zug;
 import com.linepro.modellbahn.entity.ZugConsist;
 import com.linepro.modellbahn.model.ZugConsistModel;
@@ -26,10 +24,10 @@ import com.linepro.modellbahn.model.ZugModel;
 import com.linepro.modellbahn.repository.ArtikelRepository;
 import com.linepro.modellbahn.repository.ZugConsistRepository;
 import com.linepro.modellbahn.repository.ZugRepository;
-import com.linepro.modellbahn.service.criterion.ZugCriterion;
+import com.linepro.modellbahn.request.ZugRequest;
 
 @Service(PREFIX + "ZugService")
-public class ZugService extends NamedItemServiceImpl<ZugModel,Zug> {
+public class ZugService extends NamedItemServiceImpl<ZugModel, ZugRequest, Zug> {
 
     private final ZugRepository repository;
 
@@ -37,36 +35,31 @@ public class ZugService extends NamedItemServiceImpl<ZugModel,Zug> {
 
     private final ZugConsistRepository consistRepository;
 
-    private final ZugConsistMutator consistMutator;
+    private final ZugConsistMapper consistMapper;
 
     @Autowired
-    public ZugService(ZugRepository repository, ZugModelMutator modelMutator, ZugMutator entityMutator, ArtikelRepository artikelRepository, ZugConsistRepository consistRepository, ZugConsistMutator consistMutator) {
-        super(repository, modelMutator, entityMutator);
+    public ZugService(ZugRepository repository, ZugRequestMapper requestMapper, ZugMapper entityMapper, ArtikelRepository artikelRepository, ZugConsistRepository consistRepository, ZugConsistMapper consistMapper) {
+        super(repository, requestMapper, entityMapper);
 
         this.repository = repository;
         this.artikelRepository = artikelRepository;
         this.consistRepository = consistRepository;
-        this.consistMutator = consistMutator;
+        this.consistMapper = consistMapper;
     }
 
     @Override
     public Optional<ZugModel> get(String name) {
         return repository.findZug(name)
-                         .map(e -> entityMutator.convert(e));
-    }
-
-    @Override
-    protected Page<Zug> findAll(Optional<ZugModel> model, Pageable pageRequest) {
-        return repository.findAll(new ZugCriterion(model), pageRequest);
+                         .map(e -> entityMapper.convert(e));
     }
 
     @Transactional
     @Override
-    public Optional<ZugModel> update(String name, ZugModel model) {
+    public Optional<ZugModel> update(String name, ZugRequest request) {
         return repository.findZug(name)
                          .map(e -> {
                              Boolean deleted = e.getDeleted();
-                             Zug zug = modelMutator.apply(model,e);
+                             Zug zug = requestMapper.apply(request,e);
                              e.setDeleted(deleted);
                              return repository.saveAndFlush(zug);
                          })
@@ -83,7 +76,7 @@ public class ZugService extends NamedItemServiceImpl<ZugModel,Zug> {
 
                              consistRepository.saveAndFlush(fahrzeug);
 
-                             return consistMutator.convert(fahrzeug);
+                             return consistMapper.convert(fahrzeug);
                          });
     }
 
@@ -93,7 +86,7 @@ public class ZugService extends NamedItemServiceImpl<ZugModel,Zug> {
                                 .map(c -> {
                                     c.setArtikel(artikelRepository.findByArtikelId(artikelId).orElse(null));
 
-                                    return consistMutator.convert(consistRepository.saveAndFlush(c));
+                                    return consistMapper.convert(consistRepository.saveAndFlush(c));
                                 });
     }
 

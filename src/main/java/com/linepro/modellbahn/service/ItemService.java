@@ -1,11 +1,12 @@
 package com.linepro.modellbahn.service;
 
-import java.util.Optional;
-
 import org.springframework.data.domain.Page;
 
-public interface ItemService<M> {
-    M add(M model);
+import com.linepro.modellbahn.service.criterion.Criterion;
+import com.linepro.modellbahn.service.criterion.PageCriteria;
 
-    Page<M> search(Optional<M> model, Optional<Integer> pageNumber, Optional<Integer> pageSize);
+public interface ItemService<M,R> {
+    M add(R model);
+
+    Page<M> search(Criterion criterion, PageCriteria page);
 }

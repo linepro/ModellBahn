@@ -17,21 +17,22 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.converter.entity.EpochMutator;
-import com.linepro.modellbahn.converter.model.EpochModelMutator;
+import com.linepro.modellbahn.converter.entity.EpochMapper;
+import com.linepro.modellbahn.converter.request.EpochRequestMapper;
 import com.linepro.modellbahn.entity.Epoch;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.EpochModel;
 import com.linepro.modellbahn.repository.EpochRepository;
+import com.linepro.modellbahn.request.EpochRequest;
 
 @Service(PREFIX + "EpochService")
-public class EpochService extends NamedItemServiceImpl<EpochModel, Epoch> {
+public class EpochService extends NamedItemServiceImpl<EpochModel, EpochRequest,  Epoch> {
 
     private final FileService fileService;
 
     @Autowired
-    public EpochService(EpochRepository repository, EpochModelMutator modelMutator, EpochMutator entityMutator, FileService fileService) {
-        super(repository, modelMutator, entityMutator);
+    public EpochService(EpochRepository repository, EpochRequestMapper requestMapper, EpochMapper entityMapper, FileService fileService) {
+        super(repository, requestMapper, entityMapper);
 
         this.fileService = fileService;
     }

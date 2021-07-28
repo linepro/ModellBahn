@@ -6,7 +6,7 @@ import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
 
 import java.util.ArrayList;
 
-import com.linepro.modellbahn.converter.entity.UnterKategorieMutator;
+import com.linepro.modellbahn.converter.entity.UnterKategorieMapper;
 import com.linepro.modellbahn.converter.impl.NamedTranscriber;
 import com.linepro.modellbahn.entity.Kategorie;
 import com.linepro.modellbahn.model.KategorieModel;
@@ -19,7 +19,7 @@ public class KategorieTranscriber extends NamedTranscriber<Kategorie, KategorieM
 
     private static final ArrayList<UnterKategorieModel> KEIN_UNTER_KATEGORIE = new ArrayList<>();
 
-    private final UnterKategorieMutator unterKategorieMutator;
+    private final UnterKategorieMapper unterKategorieMapper;
 
     @Override
     public KategorieModel apply(Kategorie source, KategorieModel destination) {
@@ -30,7 +30,7 @@ public class KategorieTranscriber extends NamedTranscriber<Kategorie, KategorieM
                 destination.setUnterKategorien(source.getUnterKategorien()
                                                      .stream()
                                                      .sorted()
-                                                     .map(u -> attempt(() -> unterKategorieMutator.convert(u)))
+                                                     .map(u -> attempt(() -> unterKategorieMapper.convert(u)))
                                                      .collect(success())
                                                      .getValue()
                                                      .orElse(KEIN_UNTER_KATEGORIE));

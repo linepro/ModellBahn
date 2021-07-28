@@ -1,14 +1,14 @@
 package com.linepro.modellbahn.converter.entity.transcriber;
 
-import com.linepro.modellbahn.converter.PathMutator;
+import com.linepro.modellbahn.converter.PathMapper;
 import com.linepro.modellbahn.converter.impl.NamedAbbildungTranscriber;
 import com.linepro.modellbahn.entity.Epoch;
 import com.linepro.modellbahn.model.EpochModel;
 
 public class EpochTranscriber extends NamedAbbildungTranscriber<Epoch, EpochModel> {
 
-    public EpochTranscriber(PathMutator pathMutator) {
-        super(pathMutator);
+    public EpochTranscriber(PathMapper pathMapper) {
+        super(pathMapper);
     }
 
     @Override

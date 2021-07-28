@@ -9,10 +9,9 @@ import javax.persistence.criteria.Predicate;
 
 import org.springframework.util.StringUtils;
 
-import com.linepro.modellbahn.entity.Item;
 import com.linepro.modellbahn.persistence.DBNames;
 
-public abstract class AbstractCriterion<E extends Item> {
+public abstract class AbstractCriterion implements Criterion {
 
     private static final String ANY_CHAR = "?";
     private static final String ANY_STRING = "*";
@@ -25,7 +24,8 @@ public abstract class AbstractCriterion<E extends Item> {
     protected List<Predicate> addCondition(CriteriaBuilder criteriaBuilder, From<?,?> root, List<Predicate> where, String columnName, String name) {
         if (StringUtils.hasText(name)) {
             if (name.contains(ANY_STRING) || name.contains(ANY_CHAR)) {
-                where.add(criteriaBuilder.like(root.get(columnName), name.replaceAll(ESCAPE + ANY_STRING, SQL_ANY_STRING).replaceAll(ESCAPE + ANY_CHAR, SQL_ANY_CHAR)));
+                String pattern = name.replaceAll(ESCAPE + ANY_STRING, SQL_ANY_STRING).replaceAll(ESCAPE + ANY_CHAR, SQL_ANY_CHAR);
+                where.add(criteriaBuilder.like(root.<String>get(columnName), pattern));
             } else {
                 where.add(criteriaBuilder.equal(root.get(columnName), name));
             }

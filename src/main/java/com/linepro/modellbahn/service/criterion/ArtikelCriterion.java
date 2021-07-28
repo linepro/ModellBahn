@@ -1,73 +1,197 @@
 package com.linepro.modellbahn.service.criterion;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.StringUtils;
 
-import com.linepro.modellbahn.entity.Artikel;
-import com.linepro.modellbahn.model.ArtikelModel;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.model.enums.Status;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.repository.base.Criterion;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 
+@Data
+@EqualsAndHashCode(callSuper = false)
 @RequiredArgsConstructor
-public class ArtikelCriterion extends AbstractCriterion<Artikel> implements Criterion {
+public class ArtikelCriterion extends AbstractCriterion {
 
-    private final Optional<ArtikelModel> artikelModel;
+    @JsonProperty(ApiNames.ARTIKEL_ID)
+    @Schema(description = "Artikel id", example = "00001", accessMode = AccessMode.READ_ONLY)
+    private String artikelId;
+
+    @JsonProperty(ApiNames.HERSTELLER)
+    @Schema(description = "Manufacturer", example = "Marklin", accessMode = AccessMode.READ_ONLY)
+    private String hersteller;
+
+    @JsonProperty(ApiNames.BESTELL_NR)
+    @Schema(description = "Part number", example = "3000", accessMode = AccessMode.READ_ONLY)
+    private String bestellNr;
+
+    @JsonProperty(ApiNames.BEZEICHNUNG)
+    @Schema(description = "Description", example = "Dampftenderlok BR 89.0")
+    private String bezeichnung;
+
+    @JsonProperty(ApiNames.KATEGORIE)
+    @Schema(description = "Category", accessMode = AccessMode.READ_ONLY)
+    private String kategorie;
+
+    @JsonProperty(ApiNames.UNTER_KATEGORIE)
+    @Schema(description = "Subcategory", accessMode = AccessMode.READ_ONLY)
+    private String unterKategorie;
+
+    @JsonProperty(ApiNames.LANGE)
+    @Schema(description = "Length over puffers in cm.", example = "11.00", accessMode = AccessMode.READ_ONLY)
+    private BigDecimal lange;
+
+    @JsonProperty(ApiNames.MASSSTAB)
+    @Schema(description = "Scale", example = "H0", accessMode = AccessMode.READ_ONLY)
+    private String massstab;
+
+    @JsonProperty(ApiNames.SPURWEITE)
+    @Schema(description = "Track gauge", example = "H0", accessMode = AccessMode.READ_ONLY)
+    private String spurweite;
+
+    @JsonProperty(ApiNames.EPOCH)
+    @Schema(description = "ERA", example = "IV", accessMode = AccessMode.READ_ONLY)
+    private String epoch;
+
+    @JsonProperty(ApiNames.BAHNVERWALTUNG)
+    @Schema(description = "Railway company", example = "DB", accessMode = AccessMode.READ_ONLY)
+    private String bahnverwaltung;
+
+    @JsonProperty(ApiNames.GATTUNG)
+    @Schema(description = "Vehicle class", example = "BR89.0", accessMode = AccessMode.READ_ONLY)
+    private String gattung;
+
+    @JsonProperty(ApiNames.BETREIBSNUMMER)
+    @Schema(description = "Service number", example = "89 006")
+    private String betreibsnummer;
+
+    @JsonProperty(ApiNames.ACHSFOLG)
+    @Schema(description = "Axle configuration", example = "CH2T", accessMode = AccessMode.READ_ONLY)
+    private String achsfolg;
+
+    @JsonProperty(ApiNames.SONDERMODELL)
+    @Schema(description = "Special model indicator", example = "MHI", accessMode = AccessMode.READ_ONLY)
+    private String sondermodell;
+
+    @JsonProperty(ApiNames.AUFBAU)
+    @Schema(description = "Construction", accessMode = AccessMode.READ_ONLY)
+    private String aufbau;
+
+    @JsonProperty(ApiNames.LICHT)
+    @Schema(description = "Light Configuration", example = "L1V")
+    private String licht;
+
+    @JsonProperty(ApiNames.KUPPLUNG)
+    @Schema(description = "Coupling configuration", example = "RELEX")
+    private String kupplung;
+
+    @JsonProperty(ApiNames.STEUERUNG)
+    @Schema(description = "Control method", example = "Digital")
+    private String steuerung;
+
+    @JsonProperty(ApiNames.DECODER_ID)
+    @Schema(description = "Decoder", example = "00001")
+    private String decoder;
+
+    @JsonProperty(ApiNames.MOTOR_TYP)
+    @Schema(description = "Motor type", example = "5*")
+    private String motorTyp;
+
+    @JsonProperty(ApiNames.KAUFDATUM)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Schema(implementation = LocalDate.class, description = "Purchase date", example = "1967-08-10")
+    private LocalDate kaufdatum;
+
+    @JsonProperty(ApiNames.WAHRUNG)
+    @Schema(description = "Purchase currency, ISO 4217 code", example = "EUR")
+    private String wahrung;
+
+    @JsonProperty(ApiNames.PREIS)
+    @Schema(description = "Purchase price", example = "115.95")
+    private BigDecimal preis;
+
+    @JsonProperty(ApiNames.MENGE)
+    @Schema(description = "Purchase Quantity", example = "1", required = true)
+    private Integer menge;
+
+    @JsonProperty(ApiNames.VERBLEIBENDE)
+    @Schema(description = "Remaining Quantity", example = "1", required = true)
+    private Integer verbleibende;
+
+    @JsonProperty(ApiNames.ANMERKUNG)
+    @Schema(description = "Remarks", example = "5* Motor and decoder")
+    private String anmerkung;
+
+    @JsonProperty(ApiNames.BELADUNG)
+    @Schema(description = "Wagon load", example = "holz")
+    private String beladung;
+
+    @JsonProperty(ApiNames.STATUS)
+    @Schema(description = "Status", example = "GEKAUFT", required = true)
+    private Status status;
+
+    @JsonProperty(ApiNames.DELETED)
+    @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
+    private Boolean deleted;
 
     @Override
     public Predicate[] getCriteria(CriteriaBuilder criteriaBuilder, Root<?> artikel) {
         List<Predicate> where = new ArrayList<>();
-        if (artikelModel.isPresent()) {
-            ArtikelModel model = artikelModel.get();
-            addCondition(criteriaBuilder, artikel, where, DBNames.ARTIKEL_ID, model.getArtikelId());
-            if (StringUtils.hasText(model.getHersteller()) || StringUtils.hasText(model.getBestellNr())) {
-                Join<?,?> produkt = artikel.join(DBNames.PRODUKT);
-                if (StringUtils.hasText(model.getHersteller())) {
-                    addJoinCondition(criteriaBuilder, produkt, where, DBNames.HERSTELLER, model.getHersteller());
-                }
-                addCondition(criteriaBuilder, produkt, where, DBNames.BESTELL_NR, model.getBestellNr());
-                if (StringUtils.hasText(model.getKategorie()) || StringUtils.hasText(model.getUnterKategorie())) {
-                    Join<?,?> unterkategorie = produkt.join(DBNames.UNTER_KATEGORIE);
-                    if (StringUtils.hasText(model.getKategorie())) {
-                        addJoinCondition(criteriaBuilder, unterkategorie, where, DBNames.KATEGORIE, model.getKategorie());
-                    }
-                    addCondition(criteriaBuilder, unterkategorie, where, DBNames.NAME, model.getUnterKategorie());
-                }
-                addJoinCondition(criteriaBuilder, produkt, where, DBNames.MASSSTAB, model.getMassstab());
-                addJoinCondition(criteriaBuilder, produkt, where, DBNames.SPURWEITE, model.getSpurweite());
-                addJoinCondition(criteriaBuilder, produkt, where, DBNames.EPOCH, model.getEpoch());
-                addJoinCondition(criteriaBuilder, produkt, where, DBNames.BAHNVERWALTUNG, model.getBahnverwaltung());
-                addJoinCondition(criteriaBuilder, produkt, where, DBNames.GATTUNG, model.getGattung());
-                addJoinCondition(criteriaBuilder, produkt, where, DBNames.ACHSFOLG, model.getAchsfolg());
-                addJoinCondition(criteriaBuilder, produkt, where, DBNames.SONDERMODELL, model.getSondermodell());
-                addJoinCondition(criteriaBuilder, produkt, where, DBNames.AUFBAU, model.getAufbau());
-                addCondition(criteriaBuilder, produkt, where, DBNames.BETREIBSNUMMER, model.getBetreibsnummer());
-                addCondition(criteriaBuilder, produkt, where, DBNames.LANGE, model.getLange());
+        addCondition(criteriaBuilder, artikel, where, DBNames.ARTIKEL_ID, getArtikelId());
+        if (StringUtils.hasText(getHersteller()) || StringUtils.hasText(getBestellNr())) {
+            Join<?, ?> produkt = artikel.join(DBNames.PRODUKT);
+            if (StringUtils.hasText(getHersteller())) {
+                addJoinCondition(criteriaBuilder, produkt, where, DBNames.HERSTELLER, getHersteller());
             }
-            addCondition(criteriaBuilder, artikel, where, DBNames.BEZEICHNUNG, model.getBezeichnung());
-            addJoinCondition(criteriaBuilder, artikel, where, DBNames.LICHT, model.getLicht());
-            addJoinCondition(criteriaBuilder, artikel, where, DBNames.KUPPLUNG, model.getKupplung());
-            addJoinCondition(criteriaBuilder, artikel, where, DBNames.STEUERUNG, model.getSteuerung());
-            addJoinCondition(criteriaBuilder, artikel, where, DBNames.DECODER, model.getDecoder());
-            addJoinCondition(criteriaBuilder, artikel, where, DBNames.MOTOR_TYP, model.getMotorTyp());
-            addCondition(criteriaBuilder, artikel, where, DBNames.KAUFDATUM, model.getKaufdatum());
-            addCondition(criteriaBuilder, artikel, where, DBNames.WAHRUNG, model.getWahrung());
-            addCondition(criteriaBuilder, artikel, where, DBNames.PREIS, model.getPreis());
-            addCondition(criteriaBuilder, artikel, where, DBNames.MENGE, model.getMenge());
-            addCondition(criteriaBuilder, artikel, where, DBNames.VERBLEIBENDE, model.getVerbleibende());
-            addCondition(criteriaBuilder, artikel, where, DBNames.ANMERKUNG, model.getAnmerkung());
-            addCondition(criteriaBuilder, artikel, where, DBNames.BELADUNG, model.getBeladung());
-            addCondition(criteriaBuilder, artikel, where, DBNames.STATUS, model.getStatus());
+            addCondition(criteriaBuilder, produkt, where, DBNames.BESTELL_NR, getBestellNr());
+            if (StringUtils.hasText(getKategorie()) || StringUtils.hasText(getUnterKategorie())) {
+                Join<?, ?> unterkategorie = produkt.join(DBNames.UNTER_KATEGORIE);
+                if (StringUtils.hasText(getKategorie())) {
+                    addJoinCondition(criteriaBuilder, unterkategorie, where, DBNames.KATEGORIE, getKategorie());
+                }
+                addCondition(criteriaBuilder, unterkategorie, where, DBNames.NAME, getUnterKategorie());
+            }
+            addJoinCondition(criteriaBuilder, produkt, where, DBNames.MASSSTAB, getMassstab());
+            addJoinCondition(criteriaBuilder, produkt, where, DBNames.SPURWEITE, getSpurweite());
+            addJoinCondition(criteriaBuilder, produkt, where, DBNames.EPOCH, getEpoch());
+            addJoinCondition(criteriaBuilder, produkt, where, DBNames.BAHNVERWALTUNG, getBahnverwaltung());
+            addJoinCondition(criteriaBuilder, produkt, where, DBNames.GATTUNG, getGattung());
+            addJoinCondition(criteriaBuilder, produkt, where, DBNames.ACHSFOLG, getAchsfolg());
+            addJoinCondition(criteriaBuilder, produkt, where, DBNames.SONDERMODELL, getSondermodell());
+            addJoinCondition(criteriaBuilder, produkt, where, DBNames.AUFBAU, getAufbau());
+            addCondition(criteriaBuilder, produkt, where, DBNames.BETREIBSNUMMER, getBetreibsnummer());
+            addCondition(criteriaBuilder, produkt, where, DBNames.LANGE, getLange());
         }
+        addCondition(criteriaBuilder, artikel, where, DBNames.BEZEICHNUNG, getBezeichnung());
+        addJoinCondition(criteriaBuilder, artikel, where, DBNames.LICHT, getLicht());
+        addJoinCondition(criteriaBuilder, artikel, where, DBNames.KUPPLUNG, getKupplung());
+        addJoinCondition(criteriaBuilder, artikel, where, DBNames.STEUERUNG, getSteuerung());
+        addJoinCondition(criteriaBuilder, artikel, where, DBNames.DECODER, getDecoder());
+        addJoinCondition(criteriaBuilder, artikel, where, DBNames.MOTOR_TYP, getMotorTyp());
+        addCondition(criteriaBuilder, artikel, where, DBNames.KAUFDATUM, getKaufdatum());
+        addCondition(criteriaBuilder, artikel, where, DBNames.WAHRUNG, getWahrung());
+        addCondition(criteriaBuilder, artikel, where, DBNames.PREIS, getPreis());
+        addCondition(criteriaBuilder, artikel, where, DBNames.MENGE, getMenge());
+        addCondition(criteriaBuilder, artikel, where, DBNames.VERBLEIBENDE, getVerbleibende());
+        addCondition(criteriaBuilder, artikel, where, DBNames.ANMERKUNG, getAnmerkung());
+        addCondition(criteriaBuilder, artikel, where, DBNames.BELADUNG, getBeladung());
+        addCondition(criteriaBuilder, artikel, where, DBNames.STATUS, getStatus());
         return where.toArray(new Predicate[0]);
     }
 

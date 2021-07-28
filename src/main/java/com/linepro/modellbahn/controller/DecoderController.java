@@ -1,14 +1,9 @@
 package com.linepro.modellbahn.controller;
 
-import static org.springframework.http.ResponseEntity.of;
-
-import java.util.Optional;
-
-import org.springframework.http.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,17 +14,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.AbstractItemController;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
-import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 import com.linepro.modellbahn.model.DecoderAdressModel;
 import com.linepro.modellbahn.model.DecoderCvModel;
 import com.linepro.modellbahn.model.DecoderFunktionModel;
 import com.linepro.modellbahn.model.DecoderModel;
+import com.linepro.modellbahn.model.DecoderModel.PagedDecoderModel;
+import com.linepro.modellbahn.request.DecoderRequest;
+import com.linepro.modellbahn.service.criterion.DecoderCriterion;
+import com.linepro.modellbahn.service.criterion.PageCriteria;
 import com.linepro.modellbahn.service.impl.DecoderService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,7 +42,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = ApiNames.DECODER)
 @RestController("Decoder")
 @ExposesResourceFor(DecoderModel.class)
-public class DecoderController extends AbstractItemController<DecoderModel> {
+public class DecoderController extends AbstractItemController<DecoderModel, DecoderRequest> {
 
     private final DecoderService service;
 
@@ -55,26 +51,6 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
         super(service);
 
         this.service = service;
-    }
-
-    @JsonCreator(mode = Mode.DELEGATING)
-    public static DecoderModel create() {
-        return new DecoderModel();
-    }
-
-    @JsonCreator(mode = Mode.DELEGATING)
-    public static DecoderAdressModel createAdress() {
-        return new DecoderAdressModel();
-    }
-
-    @JsonCreator(mode = Mode.DELEGATING)
-    public static DecoderCvModel createCV() {
-        return new DecoderCvModel();
-    }
-
-    @JsonCreator(mode = Mode.DELEGATING)
-    public static DecoderFunktionModel createFunktion() {
-        return new DecoderFunktionModel();
     }
 
     @GetMapping(path = ApiPaths.GET_DECODER, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
@@ -87,13 +63,9 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
     public ResponseEntity<?> get(@PathVariable(ApiNames.DECODER_ID) String decoderId) {
-        return of(service.get(decoderId));
+        return found(service.get(decoderId));
     }
 
-    @Schema(name = ApiNames.DECODER + "Page")
-    class PagedDecoderModel extends PagedSchema<DecoderModel>{}
-
-    @Override
     @GetMapping(path = ApiPaths.SEARCH_DECODER, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds Decoders by example", description = "Finds decoders", operationId = "find", tags = { ApiNames.DECODER }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedDecoderModel.class)) }),
@@ -102,8 +74,8 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> search(@RequestBody Optional<DecoderModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
-        return super.search(model, pageNumber, pageSize);
+    public ResponseEntity<?> search(DecoderCriterion request, PageCriteria page) {
+        return super.search(request, page);
     }
 
     @PostMapping(path = ApiPaths.ADD_DECODER, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
@@ -115,8 +87,8 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> addDecoder(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody DecoderModel model) {
-        return added(service.add(herstellerStr, bestellNr, model));
+    public ResponseEntity<?> addDecoder(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody DecoderRequest request) {
+        return added(service.add(herstellerStr, bestellNr, request));
     }
 
     @PutMapping(path = ApiPaths.UPDATE_DECODER, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
@@ -129,8 +101,8 @@ public class DecoderController extends AbstractItemController<DecoderModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> update(@PathVariable(ApiNames.DECODER_ID) String decoderId, @RequestBody DecoderModel model) {
-        return updated(service.update(decoderId, model));
+    public ResponseEntity<?> update(@PathVariable(ApiNames.DECODER_ID) String decoderId, @RequestBody DecoderRequest request) {
+        return updated(service.update(decoderId, request));
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_DECODER)

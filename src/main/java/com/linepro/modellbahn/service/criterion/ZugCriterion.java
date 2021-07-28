@@ -1,8 +1,8 @@
 package com.linepro.modellbahn.service.criterion;
 
-import java.util.Arrays;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Join;
@@ -11,34 +11,48 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.util.StringUtils;
 
-import com.linepro.modellbahn.entity.Zug;
-import com.linepro.modellbahn.model.Named;
-import com.linepro.modellbahn.model.ZugModel;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.persistence.DBNames;
-import com.linepro.modellbahn.repository.base.Criterion;
 
-public class ZugCriterion extends NamedCriterion<Zug> implements Criterion {
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-    private final Optional<ZugModel> zugModel;
+@Data
+@EqualsAndHashCode(callSuper=false)
+public class ZugCriterion extends AbstractCriterion {
 
-    public ZugCriterion(Optional<ZugModel> zugModel) {
-        super(
-            zugModel.map(Named::getName).orElse(null), 
-            zugModel.map(Named::getBezeichnung).orElse(null), 
-            zugModel.map(Named::getDeleted).orElse(null)
-            );
-        this.zugModel = zugModel;
-    }
+    @JsonProperty(ApiNames.NAMEN)
+    @Schema(description = "Train code", example = "BAVARIA", required = true)
+    private String name;
+
+    @JsonProperty(ApiNames.BEZEICHNUNG)
+    @Schema(description = "Train description", example = "TEE „Bavaria“")
+    private String bezeichnung;
+
+    @JsonProperty(ApiNames.ZUG_TYP)
+    @Schema(description = "Train type", required = true)
+    private String zugTyp;
+
+    @JsonProperty(ApiNames.LANGE)
+    @Schema(description = "Length over puffers in cm.", example = "11.00", accessMode = AccessMode.READ_ONLY)
+    private BigDecimal lange;
+
+    @JsonProperty(ApiNames.DELETED)
+    @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
+    private Boolean deleted;
 
     @Override
     public Predicate[] getCriteria(CriteriaBuilder criteriaBuilder, Root<?> zug) {
-        List<Predicate> where = Arrays.asList(super.getCriteria(criteriaBuilder, zug));
-        if (zugModel.isPresent()) {
-            ZugModel model = zugModel.get();
-            if (StringUtils.hasText(model.getZugTyp())) {
-                Join<?,?> zugTyp = zug.join(DBNames.ZUG_TYP);
-                addJoinCondition(criteriaBuilder, zugTyp, where, DBNames.NAME, model.getZugTyp());
-            }
+        List<Predicate> where = new ArrayList<>();
+        addCondition(criteriaBuilder, zug, where, DBNames.NAME, getName());
+        addCondition(criteriaBuilder, zug, where, DBNames.BEZEICHNUNG, getBezeichnung());
+        addCondition(criteriaBuilder, zug, where, DBNames.DELETED, getDeleted());
+        if (StringUtils.hasText(getZugTyp())) {
+            Join<?,?> zugTyp = zug.join(DBNames.ZUG_TYP);
+            addJoinCondition(criteriaBuilder, zugTyp, where, DBNames.NAME, getZugTyp());
         }
         return where.toArray(new Predicate[0]);
     }

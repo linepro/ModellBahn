@@ -33,9 +33,12 @@ public class ResourceEndpoints {
     @Value("#{'${spring.resources.static-locations:classpath:/static/,classpath:/public/,classpath:/resources/}'.split(',')}")
     private List<String> locations;
 
-    @Value("${com.linepro.modellbahn.apiDocs:/swagger-ui/index.html}")
+    @Value("${springdoc.swagger-ui.path:/swagger-ui/index.html}")
     @Getter
     private String swaggerUi;
+
+    @Getter
+    private String swaggerResources;
 
     @Value("${com.linepro.modellbahn.homePage:/modellbahn-ui/index.html}")
     @Getter
@@ -76,6 +79,8 @@ public class ResourceEndpoints {
         endPoints.put(fileStore.getStaticPathPattern(), staticFolders);
 
         log.info("Resource endpoints: {}", endPoints);
+
+        swaggerResources = swaggerUi.replace("/index.html", "/**");
     }
 
     protected String pathPattern(String root) {

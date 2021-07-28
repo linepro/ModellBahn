@@ -18,23 +18,24 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.converter.entity.KupplungMutator;
-import com.linepro.modellbahn.converter.model.KupplungModelMutator;
+import com.linepro.modellbahn.converter.entity.KupplungMapper;
+import com.linepro.modellbahn.converter.request.KupplungRequestMapper;
 import com.linepro.modellbahn.entity.Kupplung;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.KupplungModel;
 import com.linepro.modellbahn.repository.KupplungRepository;
+import com.linepro.modellbahn.request.KupplungRequest;
 
 @Service(PREFIX + "KupplungService")
-public class KupplungService extends NamedItemServiceImpl<KupplungModel,Kupplung> {
+public class KupplungService extends NamedItemServiceImpl<KupplungModel, KupplungRequest, Kupplung> {
 
     private final KupplungRepository repository;
 
     private final FileService fileService;
 
     @Autowired
-    public KupplungService(KupplungRepository repository, KupplungModelMutator modelMutator, KupplungMutator entityMutator, FileService fileService) {
-        super(repository, modelMutator, entityMutator);
+    public KupplungService(KupplungRepository repository, KupplungRequestMapper requestMapper, KupplungMapper entityMapper, FileService fileService) {
+        super(repository, requestMapper, entityMapper);
 
         this.repository = repository;
         this.fileService = fileService;

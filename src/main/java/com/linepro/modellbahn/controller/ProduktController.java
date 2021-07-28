@@ -1,14 +1,9 @@
 package com.linepro.modellbahn.controller;
 
-import static org.springframework.http.ResponseEntity.of;
-
-import java.util.Optional;
-
-import org.springframework.http.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.ExposesResourceFor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.AbstractItemController;
 import com.linepro.modellbahn.controller.impl.ApiNames;
@@ -29,6 +22,10 @@ import com.linepro.modellbahn.controller.impl.ApiPaths;
 import com.linepro.modellbahn.model.ProduktModel;
 import com.linepro.modellbahn.model.ProduktModel.PagedProduktModel;
 import com.linepro.modellbahn.model.ProduktTeilModel;
+import com.linepro.modellbahn.request.ProduktRequest;
+import com.linepro.modellbahn.request.ProduktTeilRequest;
+import com.linepro.modellbahn.service.criterion.PageCriteria;
+import com.linepro.modellbahn.service.criterion.ProduktCriterion;
 import com.linepro.modellbahn.service.impl.ProduktService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -49,7 +46,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController("Produkt")
 @ExposesResourceFor(ProduktModel.class)
 @SecurityRequirement(name = "BasicAuth")
-public class ProduktController extends AbstractItemController<ProduktModel> {
+public class ProduktController extends AbstractItemController<ProduktModel, ProduktRequest> {
 
     private final ProduktService service;
 
@@ -58,16 +55,6 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         super(service);
 
         this.service = service;
-    }
-
-    @JsonCreator(mode= Mode.DELEGATING)
-    public static ProduktModel create() {
-        return new ProduktModel();
-    }
-
-    @JsonCreator(mode= Mode.DELEGATING)
-    public static ProduktTeilModel createProduktTeil() {
-        return new ProduktTeilModel();
     }
 
     @GetMapping(path = ApiPaths.GET_PRODUKT, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
@@ -81,10 +68,9 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
     public ResponseEntity<?> get(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr) {
-        return of(service.get(herstellerStr, bestellNr));
+        return found(service.get(herstellerStr, bestellNr));
     }
 
-    @Override
     @GetMapping(path = ApiPaths.SEARCH_PRODUKT, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Finds Produkten by example", description = "Finds products", operationId = "find", tags = { ApiNames.PRODUKT }, responses = {
         @ApiResponse(responseCode = "200",  content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PagedProduktModel.class)) }),
@@ -93,8 +79,8 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> search(@RequestBody Optional<ProduktModel> model, @RequestParam(name = ApiNames.PAGE_NUMBER) Optional<Integer> pageNumber, @RequestParam(name = ApiNames.PAGE_SIZE) Optional<Integer> pageSize) {
-        return super.search(model, pageNumber, pageSize);
+    public ResponseEntity<?> search(ProduktCriterion request, PageCriteria page) {
+        return super.search(request, page);
     }
 
     @Override
@@ -107,8 +93,8 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> add(@RequestBody ProduktModel model) {
-        return super.add(model);
+    public ResponseEntity<?> add(@RequestBody ProduktRequest request) {
+        return super.add(request);
     }
 
     @PutMapping(path = ApiPaths.UPDATE_PRODUKT, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
@@ -121,8 +107,8 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> update(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody ProduktModel model) {
-        return updated(service.update(herstellerStr, bestellNr, model));
+    public ResponseEntity<?> update(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody ProduktRequest request) {
+        return updated(service.update(herstellerStr, bestellNr, request));
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_PRODUKT)
@@ -148,7 +134,7 @@ public class ProduktController extends AbstractItemController<ProduktModel> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
                 })
-    public ResponseEntity<?> addTeil(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody ProduktTeilModel teil) {
+    public ResponseEntity<?> addTeil(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody ProduktTeilRequest teil) {
         return added(service.addTeil(herstellerStr, bestellNr, teil.getTeilHersteller(), teil.getTeilBestellNr(), teil.getMenge()));
     }
 

@@ -24,6 +24,14 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class MvcConfig implements WebMvcConfigurer {
 
+    public static final String INDEX = "/index.*";
+
+    private static final String HOME = "/";
+
+    public static final String SWAGGER = "/swagger";
+
+    public static final String MODELL_BAHN = "/ModellBahn";
+
     @Autowired
     private final ResourceEndpoints resourceEndpoints;
 
@@ -50,10 +58,10 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName(resourceEndpoints.getHomePageRedirect());
-        registry.addViewController("/index.*").setViewName(resourceEndpoints.getHomePageRedirect());
-        registry.addViewController("/ModellBahn").setViewName(resourceEndpoints.getHomePageRedirect());
-        registry.addViewController("/swagger").setViewName(resourceEndpoints.getSwaggerUiRedirect());
+        registry.addViewController(HOME).setViewName(resourceEndpoints.getHomePageRedirect());
+        registry.addViewController(INDEX).setViewName(resourceEndpoints.getHomePageRedirect());
+        registry.addViewController(MODELL_BAHN).setViewName(resourceEndpoints.getHomePageRedirect());
+        registry.addViewController(SWAGGER).setViewName(resourceEndpoints.getSwaggerUiRedirect());
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 }

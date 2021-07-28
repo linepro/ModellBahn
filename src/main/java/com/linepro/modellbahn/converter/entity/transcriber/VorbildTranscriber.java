@@ -8,8 +8,8 @@ import com.linepro.modellbahn.model.VorbildModel;
 
 public class VorbildTranscriber extends NamedAbbildungTranscriber<Vorbild, VorbildModel> {
 
-    public VorbildTranscriber(com.linepro.modellbahn.converter.PathMutator PathMutator) {
-        super(PathMutator);
+    public VorbildTranscriber(com.linepro.modellbahn.converter.PathMapper PathMapper) {
+        super(PathMapper);
     }
 
     @Override
