@@ -1,5 +1,5 @@
 INSERT INTO licht (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Einfach-Spitzensignal vorne', 'L1V', 'static/data/licht/L1V/abbildung.png', 383);
-INSERT INTO licht (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Einfach-Spitzensignal mit der Fahrtrichtung wechselnd.', 'L1W', 'static/data/licht/L1W/abbildung.png', 384);
+INSERT INTO licht (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Einfach-Spitzensignal mit der Fahrtrichtung wechselnd', 'L1W', 'static/data/licht/L1W/abbildung.png', 384);
 INSERT INTO licht (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Zweilicht-Spitzensignal vorne', 'L2V', 'static/data/licht/L2V/abbildung.png', 385);
 INSERT INTO licht (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Zweilicht-Spitzensignal vorne und hinten', 'L2L2', 'static/data/licht/L2L2/abbildung.png', 386);
 INSERT INTO licht (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Zweilicht-Spitzensignal mit der Fahrtrichtung wechselnd', 'L2W', 'static/data/licht/L2W/abbildung.png', 387);

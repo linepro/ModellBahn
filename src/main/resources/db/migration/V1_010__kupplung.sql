@@ -4,5 +4,5 @@ INSERT INTO kupplung (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 
 INSERT INTO kupplung (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Märklin-Kurzkupplungen in Norm-Aufnahme mit Kulissenführung', 'NEMKK', 'static/data/kupplung/NEMKK/abbildung.png', 380);
 INSERT INTO kupplung (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Märklin-Kurzkupplungen in Norm-Aufnahme mit Stromfürhrender Kulissenführung', 'SFKK', 'static/data/kupplung/SFKK/abbildung.png', 381);
 INSERT INTO kupplung (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Telex Kupplung', 'TELEX', 'static/data/kupplung/TELEX/abbildung.png', 382);
-INSERT INTO kupplung (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Kupplung', 'EINFACH', 'static/data/kupplung/EINFACH/abbildung.png', 383);
+INSERT INTO kupplung (deleted, bezeichnung, name, abbildung, id) VALUES (FALSE, 'Einfach Kupplung', 'EINFACH', 'static/data/kupplung/EINFACH/abbildung.png', 383);
 ALTER TABLE kupplung ALTER COLUMN id RESTART WITH 384;
