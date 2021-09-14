@@ -84,7 +84,7 @@
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
         <maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>
-        <maven-javadoc-plugin.version>3.3.0</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
         <maven-plugin-plugin.version>3.6.1</maven-plugin-plugin.version>
         <maven-project-info-reports-plugin.version>3.1.2</maven-project-info-reports-plugin.version>
         <maven-release-plugin.version>3.0.0-M4</maven-release-plugin.version>
@@ -110,7 +110,7 @@
         <guava.version>30.1.1-jre</guava.version>
         <jackson.version>2.12.3</jackson.version>
         <junidecode.version>0.4.1</junidecode.version>
-        <libphonenumber.version>8.12.29</libphonenumber.version>
+        <libphonenumber.version>8.12.32</libphonenumber.version>
         <log4j.version>2.14.1</log4j.version>
         <logstash-logback-encoder.version>6.6</logstash-logback-encoder.version>
         <springdoc-openapi.version>1.5.10</springdoc-openapi.version>
@@ -118,7 +118,7 @@
         <zxcvbn.version>1.5.2</zxcvbn.version>
 
         <!-- database -->
-        <org.flywaydb.flyway-core.version>7.13.0</org.flywaydb.flyway-core.version>
+        <org.flywaydb.flyway-core.version>7.15.0</org.flywaydb.flyway-core.version>
         <org.hsqldb.hsqldb.version>2.5.1</org.hsqldb.hsqldb.version>
         <com.h2database.h2.version>1.4.200</com.h2database.h2.version>
         <org.mariadb.jdbc.mariadb-java-client.version>2.6.2</org.mariadb.jdbc.mariadb-java-client.version>
@@ -129,7 +129,7 @@
         <dbunit.version>2.7.2</dbunit.version>
 
         <!-- javascript serving -->
-        <org.webjars.webjars-locator-core.version>0.47</org.webjars.webjars-locator-core.version>
+        <org.webjars.webjars-locator-core.version>0.48</org.webjars.webjars-locator-core.version>
         <org.webjars.modellbahn-ui.version>1.0.0</org.webjars.modellbahn-ui.version>
         <org.webjars.swagger-ui.version>3.52.1</org.webjars.swagger-ui.version>
 
