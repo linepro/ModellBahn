@@ -4,31 +4,44 @@ import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import com.linepro.modellbahn.entity.Artikel;
 import com.linepro.modellbahn.model.ArtikelModel;
 import com.linepro.modellbahn.repository.ArtikelRepository;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
-
+@RequiredArgsConstructor
 @Component(PREFIX + "ArtikelLookup")
-public class ArtikelLookup {
+public class ArtikelLookup implements Lookup<Artikel, ArtikelModel> {
 
-    @Autowired
     private final ArtikelRepository repository;
 
-    public Artikel find(ArtikelModel artikel) {
-        return Optional.ofNullable(artikel)
-                       .map(m -> find(m.getArtikelId()))
-                       .orElse(null);
+    public Optional<Artikel> find(String artikelId) {
+        if (StringUtils.hasText(artikelId)) {
+            return repository.findByArtikelId(artikelId);
+        }
+
+        return Optional.empty();
     }
 
-    public Artikel find(String artikelId) {
-        return repository.findByArtikelId(artikelId)
-                         .orElse(null);
+    @Override
+    public Optional<Artikel> find(ArtikelModel model) {
+        if (model != null) {
+            return find(model.getArtikelId());
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Artikel> find(Artikel artikel) {
+        if (artikel != null) {
+            return find(artikel.getArtikelId());
+        }
+
+        return Optional.empty();
     }
 }

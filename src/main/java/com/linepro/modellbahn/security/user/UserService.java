@@ -67,13 +67,13 @@ public class UserService implements UserDetailsService {
     protected static final Integer DEFAULT_PAGE_SIZE = 30;
 
     @Value("${com.linepro.modellbahn.user.expiry:720}")
-    private Integer accountExpiry;
+    protected Integer accountExpiry;
 
     @Value("${com.linepro.modellbahn.user.login-attempts:5}")
-    private Integer loginAttempts;
+    protected Integer loginAttempts;
 
     @Value("${com.linepro.modellbahn.user.password-aging:60}")
-    private Integer passwordAging;
+    protected Integer passwordAging;
 
     @Value("${com.linepro.modellbahn.user.confirmation-time:24}")
     protected Integer confirmationTime;
@@ -82,7 +82,7 @@ public class UserService implements UserDetailsService {
     protected Integer resetTime;
 
     @Value("${com.linepro.modellbahn.noreply}")
-    private final String noReply;
+    protected String noReply;
 
     @Autowired
     private final UserRepository userRepository;

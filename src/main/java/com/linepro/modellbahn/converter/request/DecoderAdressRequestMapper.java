@@ -8,15 +8,15 @@ import org.springframework.stereotype.Component;
 import com.linepro.modellbahn.converter.impl.MapperImpl;
 import com.linepro.modellbahn.converter.request.transcriber.DecoderAdressRequestTranscriber;
 import com.linepro.modellbahn.entity.DecoderAdress;
-import com.linepro.modellbahn.repository.DecoderTypAdressRepository;
 import com.linepro.modellbahn.repository.lookup.DecoderLookup;
+import com.linepro.modellbahn.repository.lookup.DecoderTypAdressLookup;
 import com.linepro.modellbahn.request.DecoderAdressRequest;
 
 @Component(PREFIX + "DecoderAdressRequestMapper")
 public class DecoderAdressRequestMapper extends MapperImpl<DecoderAdressRequest,DecoderAdress> {
 
     @Autowired
-    public DecoderAdressRequestMapper(DecoderLookup decoderLookup, DecoderTypAdressRepository adressLookup) {
+    public DecoderAdressRequestMapper(DecoderLookup decoderLookup, DecoderTypAdressLookup adressLookup) {
         super(() -> new DecoderAdress(), new DecoderAdressRequestTranscriber(decoderLookup, adressLookup));
     }
 }

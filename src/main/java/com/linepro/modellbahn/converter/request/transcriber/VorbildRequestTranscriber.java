@@ -5,11 +5,10 @@ import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import java.util.Optional;
 
 import com.linepro.modellbahn.entity.Vorbild;
-import com.linepro.modellbahn.repository.AchsfolgRepository;
-import com.linepro.modellbahn.repository.AntriebRepository;
-import com.linepro.modellbahn.repository.BahnverwaltungRepository;
-import com.linepro.modellbahn.repository.GattungRepository;
-import com.linepro.modellbahn.repository.lookup.ItemLookup;
+import com.linepro.modellbahn.repository.lookup.AchsfolgLookup;
+import com.linepro.modellbahn.repository.lookup.AntriebLookup;
+import com.linepro.modellbahn.repository.lookup.BahnverwaltungLookup;
+import com.linepro.modellbahn.repository.lookup.GattungLookup;
 import com.linepro.modellbahn.repository.lookup.UnterKategorieLookup;
 import com.linepro.modellbahn.request.VorbildRequest;
 
@@ -18,29 +17,27 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class VorbildRequestTranscriber extends NamedRequestTranscriber<VorbildRequest, Vorbild> {
 
-        private final GattungRepository gattungRepository;
+        private final GattungLookup gattungLookup;
 
         private final UnterKategorieLookup unterKategorieLookup;
 
-        private final AntriebRepository antriebRepository;
+        private final AntriebLookup antriebLookup;
 
-        private final BahnverwaltungRepository bahnverwaltungRepository;
+        private final BahnverwaltungLookup bahnverwaltungLookup;
 
-        private final AchsfolgRepository achsfolgRepository;
-
-        private final ItemLookup lookup;
+        private final AchsfolgLookup achsfolgLookup;
 
         public Vorbild apply(VorbildRequest source, Vorbild destination) {
             if (isAvailable(source) && isAvailable(destination)) {
-                destination.setGattung(lookup.find(source.getGattung(), gattungRepository));
-                destination.setUnterKategorie(unterKategorieLookup.find(source.getKategorie(), source.getUnterKategorie()));
-                destination.setBahnverwaltung(lookup.find(source.getBahnverwaltung(), bahnverwaltungRepository));
+                destination.setGattung(gattungLookup.find(source.getGattung()).orElse(null));
+                unterKategorieLookup.find(source.getKategorie(), source.getUnterKategorie()).ifPresent(u -> destination.setUnterKategorie(u));
+                destination.setBahnverwaltung(bahnverwaltungLookup.find(source.getBahnverwaltung()).orElse(null));
                 destination.setHersteller(source.getHersteller());
                 destination.setBauzeit(source.getBauzeit());
                 destination.setMenge(source.getMenge());
                 destination.setBetreibsNummer(source.getBetreibsNummer());
-                destination.setAntrieb(lookup.find(source.getAntrieb(), antriebRepository));
-                destination.setAchsfolg(lookup.find(source.getAchsfolg(), achsfolgRepository));
+                destination.setAntrieb(antriebLookup.find(source.getAntrieb()).orElse(null));
+                destination.setAchsfolg(achsfolgLookup.find(source.getAchsfolg()).orElse(null));
                 destination.setAnfahrzugkraft(source.getAnfahrzugkraft());
                 destination.setLeistung(source.getLeistung());
                 destination.setDienstgewicht(source.getDienstgewicht());

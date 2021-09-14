@@ -4,10 +4,8 @@ import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
-import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -37,11 +35,6 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Value("${spring.mvc.resource.cache.timeout:60}")
     private int cacheTimeout;
-
-    @Bean(PREFIX + "BaseURL")
-    public String getBaseURL(RepositoryRestConfiguration configuration) {
-        return configuration.getBasePath().toString();
-    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

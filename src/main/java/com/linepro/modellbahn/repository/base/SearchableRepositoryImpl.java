@@ -12,13 +12,11 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.linepro.modellbahn.service.criterion.Criterion;
 
 @NoRepositoryBean
-@Transactional
 public class SearchableRepositoryImpl<E> extends SimpleJpaRepository<E, Long> implements RepositorySearch<E> {
 
     private final Class<E> persistentClass;

@@ -8,16 +8,15 @@ import org.springframework.stereotype.Component;
 import com.linepro.modellbahn.converter.impl.MapperImpl;
 import com.linepro.modellbahn.converter.request.transcriber.UnterKategorieRequestTranscriber;
 import com.linepro.modellbahn.entity.UnterKategorie;
-import com.linepro.modellbahn.repository.KategorieRepository;
-import com.linepro.modellbahn.repository.lookup.ItemLookup;
+import com.linepro.modellbahn.repository.lookup.KategorieLookup;
 import com.linepro.modellbahn.request.UnterKategorieRequest;
 
 @Component(PREFIX + "UnterKategorieRequestMapper")
 public class UnterKategorieRequestMapper extends MapperImpl<UnterKategorieRequest, UnterKategorie> {
 
     @Autowired
-    public UnterKategorieRequestMapper(KategorieRepository kategorieRepository, ItemLookup lookup) {
-        super(() -> new UnterKategorie(), new UnterKategorieRequestTranscriber(kategorieRepository, lookup));
+    public UnterKategorieRequestMapper(KategorieLookup kategorieLookup) {
+        super(() -> new UnterKategorie(), new UnterKategorieRequestTranscriber(kategorieLookup));
     }
 
 }

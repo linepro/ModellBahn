@@ -17,13 +17,14 @@ import com.linepro.modellbahn.converter.request.SondermodellRequestMapper;
 import com.linepro.modellbahn.entity.Sondermodell;
 import com.linepro.modellbahn.model.SondermodellModel;
 import com.linepro.modellbahn.repository.SondermodellRepository;
+import com.linepro.modellbahn.repository.lookup.SondermodellLookup;
 import com.linepro.modellbahn.request.SondermodellRequest;
 
 @Service(PREFIX + "SondermodellService")
 public class SondermodellService extends NamedItemServiceImpl<SondermodellModel, SondermodellRequest, Sondermodell> {
 
     @Autowired
-    public SondermodellService(SondermodellRepository repository, SondermodellRequestMapper requestMapper, SondermodellMapper entityMapper) {
-        super(repository, requestMapper, entityMapper);
+    public SondermodellService(SondermodellRepository repository, SondermodellRequestMapper requestMapper, SondermodellMapper entityMapper, SondermodellLookup lookup) {
+        super(repository, requestMapper, entityMapper, lookup);
     }
 }

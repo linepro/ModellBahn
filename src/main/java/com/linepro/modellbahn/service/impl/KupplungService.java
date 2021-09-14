@@ -24,6 +24,7 @@ import com.linepro.modellbahn.entity.Kupplung;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.KupplungModel;
 import com.linepro.modellbahn.repository.KupplungRepository;
+import com.linepro.modellbahn.repository.lookup.KupplungLookup;
 import com.linepro.modellbahn.request.KupplungRequest;
 
 @Service(PREFIX + "KupplungService")
@@ -34,8 +35,8 @@ public class KupplungService extends NamedItemServiceImpl<KupplungModel, Kupplun
     private final FileService fileService;
 
     @Autowired
-    public KupplungService(KupplungRepository repository, KupplungRequestMapper requestMapper, KupplungMapper entityMapper, FileService fileService) {
-        super(repository, requestMapper, entityMapper);
+    public KupplungService(KupplungRepository repository, KupplungRequestMapper requestMapper, KupplungMapper entityMapper, FileService fileService, KupplungLookup lookup) {
+        super(repository, requestMapper, entityMapper, lookup);
 
         this.repository = repository;
         this.fileService = fileService;
@@ -44,20 +45,20 @@ public class KupplungService extends NamedItemServiceImpl<KupplungModel, Kupplun
     @Transactional
     public Optional<KupplungModel> updateAbbildung(String name, MultipartFile multipart) {
         return repository.findByName(name)
-                        .map(a -> {
-                            a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.KUPPLUNG, ApiNames.ABBILDUNG, name));
-                            return repository.saveAndFlush(a);
-                        })
-                        .flatMap(e -> this.get(name));
+                         .map(a -> {
+                             a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.KUPPLUNG, ApiNames.ABBILDUNG, name));
+                             return repository.saveAndFlush(a);
+                             })
+                         .flatMap(e -> this.get(name));
     }
 
     @Transactional
     public Optional<KupplungModel> deleteAbbildung(String name) {
         return repository.findByName(name)
-                        .map(a -> {
-                            a.setAbbildung(fileService.deleteFile(a.getAbbildung()));
-                            return repository.saveAndFlush(a);
-                        })
-                        .flatMap(e -> this.get(name));
+                         .map(a -> {
+                             a.setAbbildung(fileService.deleteFile(a.getAbbildung()));
+                             return repository.saveAndFlush(a);
+                             })
+                         .flatMap(e -> this.get(name));
     }
 }

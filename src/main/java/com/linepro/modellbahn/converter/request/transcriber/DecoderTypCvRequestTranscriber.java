@@ -20,7 +20,7 @@ public class DecoderTypCvRequestTranscriber implements Transcriber<DecoderTypCvR
     public DecoderTypCv apply(DecoderTypCvRequest source, DecoderTypCv destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             if (destination.getDecoderTyp() == null) {
-                destination.setDecoderTyp(typLookup.find(source.getHersteller(), source.getBestellNr()));
+                typLookup.find(source.getHersteller(), source.getBestellNr()).ifPresent(t -> destination.setDecoderTyp(t));
             }
             if (destination.getCv() == null) {
                 destination.setCv(source.getCv());

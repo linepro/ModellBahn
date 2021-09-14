@@ -20,7 +20,7 @@ public class DecoderTypAdressRequestTranscriber implements Transcriber<DecoderTy
     public DecoderTypAdress apply(DecoderTypAdressRequest source, DecoderTypAdress destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             if (destination.getDecoderTyp() == null) {
-                destination.setDecoderTyp(typLookup.find(source.getHersteller(), source.getBestellNr()));
+                typLookup.find(source.getHersteller(), source.getBestellNr()).ifPresent(t -> destination.setDecoderTyp(t));
             }
             if (destination.getPosition() == null) {
                 destination.setPosition(source.getIndex());
